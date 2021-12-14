@@ -1,0 +1,2494 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D6D7A494-722E-4763-959B-C2D6B6A42B01}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Planetside</RootNamespace>
+    <AssemblyName>Planetside</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\CustomItems\CustomItems\bin\Debug\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Assembly-CSharp.Base.mm, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\CustomItems\CustomItems\bin\Debug\Assembly-CSharp.Base.mm.dll</HintPath>
+    </Reference>
+    <Reference Include="Ionic.Zip">
+      <HintPath>.\Ionic.Zip.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoMod.RuntimeDetour">
+      <HintPath>..\CustomItems\CustomItems\bin\Debug\MonoMod.RuntimeDetour.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoMod.Utils">
+      <HintPath>..\CustomItems\CustomItems\bin\Debug\MonoMod.Utils.dll</HintPath>
+    </Reference>
+    <Reference Include="PlayMaker, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Enter the Gungeon\EtG_Data\Managed\PlayMaker.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UnityEngine">
+      <HintPath>.\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Base.mm">
+      <HintPath>..\CustomItems\CustomItems\bin\Debug\UnityEngine.Base.mm.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\CustomItems\CustomItems\bin\Debug\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule.Base.mm, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\CustomItems\CustomItems\bin\Debug\UnityEngine.CoreModule.Base.mm.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ImageConversionModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\CustomItems\CustomItems\bin\Debug\UnityEngine.ImageConversionModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.JSONSerializeModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\CustomItems\CustomItems\bin\Debug\UnityEngine.JSONSerializeModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ParticleSystemModule">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Enter the Gungeon\EtG_Data\Managed\UnityEngine.ParticleSystemModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\CustomItems\CustomItems\bin\Debug\UnityEngine.TextRenderingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\CustomItems\CustomItems\bin\Debug\UnityEngine.UI.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="APIs\LootTableAPI\CustomLootTableInitialiser.cs" />
+    <Compile Include="APIs\LootTableAPI\LootTableTools.cs" />
+    <Compile Include="Assetbundle Stuff\Assetbundle Loader.cs" />
+    <Compile Include="EnemySetupCode\EnemyAPI %28The one that modifies behaviors%29\OverrideBehavior.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\Update3\PrisonerPhaseOne.cs" />
+    <Compile Include="Toolboxes\EnemyToolbox.cs" />
+    <Compile Include="Unsorted Garbage\KnuckleBackerUIController.cs" />
+    <Compile Include="Components\Projectile Components\PierceDeadActors.cs" />
+    <Compile Include="Components\Item Components\CustomScarfDoer.cs" />
+    <Compile Include="Components\Projectile Components\MaintainDPSOnPierce.cs" />
+    <Compile Include="Components\Projectile Components\TemplateMovementModule.cs" />
+    <Compile Include="Components\Projectile Components\DerpyMovementModule.cs" />
+    <Compile Include="Debuff Stuff\CurseSpeedEffect.cs" />
+    <Compile Include="APIs\GungeonAPI\FoolproofedChallengeShrineController.cs" />
+    <Compile Include="DungeonGenStuff\FlowInjectionInitialiser.cs" />
+    <Compile Include="DungeonPlaceables\RainPlaceable.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\GoldenRevolverBullet.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\NotSoAIBullet.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\TurboBullet.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\Update3\SomethingWicked.cs" />
+    <Compile Include="EnemySetupCode\EnemyRelatedStuff\Behavior Stuff\CustomDashBehavior.cs" />
+    <Compile Include="EnemySetupCode\EnemyRelatedStuff\Behavior Stuff\TimeStopBehavior.cs" />
+    <Compile Include="EnemySetupCode\EnemyRelatedStuff\ProjectileStuff\UndodgeableBulletsCode.cs" />
+    <Compile Include="Guns\Init Release\LaserChainsawProjectile.cs" />
+    <Compile Include="Guns\Update3\LilPewProjectile.cs" />
+    <Compile Include="Guns\Update3\LilPew.cs" />
+    <Compile Include="Guns\Update3\AttractorBeam.cs" />
+    <Compile Include="Guns\Update3\HellLightProjectile.cs" />
+    <Compile Include="Guns\Update3\HellLight.cs" />
+    <Compile Include="Guns\Update3\DivineLightProjectile.cs" />
+    <Compile Include="Guns\Update3\DivineLight.cs" />
+    <Compile Include="Guns\Update3\LockOnGunProjectile.cs" />
+    <Compile Include="Guns\Update3\LockOnGun.cs" />
+    <Compile Include="Guns\Update3\PlanetBladeProjectile.cs" />
+    <Compile Include="Guns\Update3\PlanetBlade.cs" />
+    <Compile Include="Guns\Update3\ChargerGunProjectile.cs" />
+    <Compile Include="Guns\Update3\ChargerGun.cs" />
+    <Compile Include="Guns\Update4\BoscoDesignator.cs" />
+    <Compile Include="Guns\Update4\Help.cs" />
+    <Compile Include="ItemIDs.cs" />
+    <Compile Include="Items\Test Items\balls.cs" />
+    <Compile Include="Items\Update4\TrapDefusalKit.cs" />
+    <Compile Include="Items\Update4\VengefulShell.cs" />
+    <Compile Include="Items\Update3\Thing.cs" />
+    <Compile Include="Items\Update3\Preigniter.cs" />
+    <Compile Include="Items\Update3\KnuckleBlaster.cs" />
+    <Compile Include="Items\Update3\Action.cs" />
+    <Compile Include="Items\Update3\CoinTosser.cs" />
+    <Compile Include="Items\Update3\PrayerAmulet.cs" />
+    <Compile Include="Items\Test Items\TestShaderBullets.cs" />
+    <Compile Include="Items\Test Items\TestShaderItem.cs" />
+    <Compile Include="Items\Update3\DerpyBullets.cs" />
+    <Compile Include="Misc Stuff\Static Storage\CrossModShopComponents.cs" />
+    <Compile Include="Misc Stuff\Item And Gun Addons\LabelablePlayeItem.cs" />
+    <Compile Include="DungeonGenStuff\NevernamedsDarknessController.cs" />
+    <Compile Include="Misc Stuff\Static Storage\StaticExplosions.cs" />
+    <Compile Include="Misc Stuff\Item And Gun Addons\SlashBehavior.cs" />
+    <Compile Include="Misc Stuff\Synergy Stuff\BSGSynergy.cs" />
+    <Compile Include="NPC Stuff\CustomShopInitialiser.cs" />
+    <Compile Include="APIs\NPCAPI\CustomShopController.cs" />
+    <Compile Include="APIs\NPCAPI\CustomShopItemController.cs" />
+    <Compile Include="APIs\NPCAPI\Examples.cs" />
+    <Compile Include="APIs\NPCAPI\Hooks.cs" />
+    <Compile Include="APIs\NPCAPI\ItsDaFuckinShopApi.cs" />
+    <Compile Include="APIs\NPCAPI\NpcTools.cs" />
+    <Compile Include="Shrine Stuff\ShrineCode\TooLate.cs" />
+    <Compile Include="Shrine Stuff\ShrineCode\SWQuest\RedShrine.cs" />
+    <Compile Include="Shrine Stuff\ShrineCode\SWQuest\BlueShrine.cs" />
+    <Compile Include="Shrine Stuff\ShrineCode\SWQuest\SWMinesShrine.cs" />
+    <Compile Include="Strings Setup And Logging\AdvancedLogging.cs" />
+    <Compile Include="Strings Setup And Logging\AdvancedStrings1.cs" />
+    <Compile Include="Strings Setup And Logging\AdvancedStrings2.cs" />
+    <Compile Include="APIs\AudioBuilder\AudioResourceLoader.cs" />
+    <Compile Include="APIs\AudioBuilder\resourceLoaderSoundbanks.cs" />
+    <Compile Include="Components\Spec Item And Gun Components\PickupGuonComponent.cs" />
+    <Compile Include="EnemySetupCode\EnemyRelatedStuff\Behavior Stuff\AddDashComponent.cs" />
+    <Compile Include="EnemySetupCode\EnemyRelatedStuff\Behavior Stuff\AddBeamsBehavior.cs" />
+    <Compile Include="EnemySetupCode\EnemyRelatedStuff\Behavior Stuff\AddOrbitingBulletsComponent.cs" />
+    <Compile Include="EnemySetupCode\EnemyRelatedStuff\Behavior Stuff\AddBeholsterBeamComponent.cs" />
+    <Compile Include="EnemySetupCode\EnemyRelatedStuff\Behavior Stuff\AIBeamShooter2.cs" />
+    <Compile Include="EnemySetupCode\EnemyRelatedStuff\Behavior Stuff\PetrifyThing.cs" />
+    <Compile Include="EnemySetupCode\EnemyRelatedStuff\Behavior Stuff\Enrage.cs" />
+    <Compile Include="EnemySetupCode\EnemyRelatedStuff\Behavior Stuff\Step2.cs" />
+    <Compile Include="EnemySetupCode\EnemyRelatedStuff\Behavior Stuff\FriendlyGhostEnemyComponent.cs" />
+    <Compile Include="EnemySetupCode\EnemyRelatedStuff\Behavior Stuff\MarkWithColorComponent.cs" />
+    <Compile Include="EnemySetupCode\EnemyRelatedStuff\Behavior Stuff\CheatDeathComponent.cs" />
+    <Compile Include="EnemySetupCode\EnemyRelatedStuff\Behavior Stuff\PingPongComponent.cs" />
+    <Compile Include="Components\Spec Item And Gun Components\GunknownGuonComponent.cs" />
+    <Compile Include="Components\Effect Components\ApplyFear.cs" />
+    <Compile Include="Components\Effect Components\ApplyEnrage.cs" />
+    <Compile Include="Components\Effect Components\ApplyStep2.cs" />
+    <Compile Include="Components\Effect Components\GreenFireModifier.cs" />
+    <Compile Include="Components\Effect Components\ApplySlow.cs" />
+    <Compile Include="Components\Effect Components\SlowOnHit.cs" />
+    <Compile Include="Components\Projectile Components\LockedRangeComponent.cs" />
+    <Compile Include="Components\Effect Components\SelfDestructComponent.cs" />
+    <Compile Include="EnemySetupCode\EnemyRelatedStuff\Behavior Stuff\UmbraMinionsBehavior.cs" />
+    <Compile Include="Components\Spec Item And Gun Components\DamnedGuonComponent.cs" />
+    <Compile Include="Components\Spec Item And Gun Components\CreatedGuonBulletsController.cs" />
+    <Compile Include="EnemySetupCode\EnemyRelatedStuff\Behavior Stuff\UmbraController.cs" />
+    <Compile Include="Debuff Stuff\HolyBlessingEffect.cs" />
+    <Compile Include="Debuff Stuff\HeatStrokeEffect.cs" />
+    <Compile Include="Debuff Stuff\DebuffStatics.cs" />
+    <Compile Include="Misc Stuff\Static Storage\EasyGoopDefs.cs" />
+    <Compile Include="EnemySetupCode\EnemyRelatedStuff\CustomEnemyBulletsInitialiser.cs" />
+    <Compile Include="EnemySetupCode\EnemyRelatedStuff\Behavior Stuff\CustomZeldaChargeBehavior.cs" />
+    <Compile Include="EnemySetupCode\EnemyRelatedStuff\Behavior Stuff\CustomBeholsterBeamBehavior.cs" />
+    <Compile Include="EnemySetupCode\EnemyRelatedStuff\EnemyBulletBuilder\BulletBuilder.cs" />
+    <Compile Include="EnemySetupCode\EnemyRelatedStuff\EnemyBulletBuilder\FakePrefab\FakePrefab.cs" />
+    <Compile Include="EnemySetupCode\EnemyRelatedStuff\EnemyBulletBuilder\FakePrefab\FakePrefabHooks.cs" />
+    <Compile Include="EnemySetupCode\EnemyRelatedStuff\EnemyBulletBuilder\ResourceExtractor.cs" />
+    <Compile Include="EnemySetupCode\EnemyRelatedStuff\EnemyBulletBuilder\SpriteBuilder.cs" />
+    <Compile Include="EnemySetupCode\EnemyRelatedStuff\EnemyComponents\DebrisOnDeathEnemy.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\Update2\Annihi-Chamber\AnnihiChamber.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\Update2\Detscavator.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\Update2\Fungannon\FungannonIntroController.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\Update2\Ophanaim\Ophanaim.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\Update2\Annihi-Chamber\AnnihiChamberIntroController.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\Update2\Ophanaim\OphanaimIntroController.cs" />
+    <Compile Include="Guns\Init Release\BurningSunProjectile.cs" />
+    <Compile Include="Guns\Init Release\WitherLancePROJECTILE.cs" />
+    <Compile Include="Guns\Init Release\VeteranShotgunProjectile.cs" />
+    <Compile Include="Guns\Init Release\StatiBlastProjectile.cs" />
+    <Compile Include="Guns\Init Release\SoulLanternProjectile.cs" />
+    <Compile Include="Guns\Init Release\ShockChainProjectile.cs" />
+    <Compile Include="Guns\Init Release\RevenantProjectile.cs" />
+    <Compile Include="Guns\Init Release\PolarityProjectile.cs" />
+    <Compile Include="Guns\Init Release\OscillatorProjectile.cs" />
+    <Compile Include="Guns\Update2\PerfectedColossus.cs" />
+    <Compile Include="Guns\Update2\EmmisiveBeams.cs" />
+    <Compile Include="Guns\Update2\Colossus.cs" />
+    <Compile Include="Guns\Update2\RiftakerProjectile.cs" />
+    <Compile Include="Guns\Update2\GunknownProjectile.cs" />
+    <Compile Include="Guns\Update2\Gunknown.cs" />
+    <Compile Include="Guns\Update2\MopProjectile.cs" />
+    <Compile Include="Guns\Update2\Mop.cs" />
+    <Compile Include="Guns\Update2\Riftaker.cs" />
+    <Compile Include="Guns\Update2\ParasiticHeart.cs" />
+    <Compile Include="Guns\Update2\ChamberEyeProjectile.cs" />
+    <Compile Include="Guns\Update2\ChamberEye.cs" />
+    <Compile Include="Guns\Update2\BanditsRevolver.cs" />
+    <Compile Include="Guns\Update2\BanditsRevolverFinale.cs" />
+    <Compile Include="Guns\Update2\SirenSynergyForme.cs" />
+    <Compile Include="Guns\Update2\Funcannon.cs" />
+    <Compile Include="Guns\Update2\Petrifier.cs" />
+    <Compile Include="Misc Stuff\Synergy Stuff\RevenantSynergyPlus.cs" />
+    <Compile Include="Items\Update2\BloodIdol.cs" />
+    <Compile Include="Items\Update2\EnergyShield.cs" />
+    <Compile Include="Items\Update2\GunWarrant.cs" />
+    <Compile Include="Items\Update2\WispInABottle.cs" />
+    <Compile Include="Items\Update2\JammedJar.cs" />
+    <Compile Include="Items\Update2\TomeOfGuonmancy.cs" />
+    <Compile Include="Items\Update2\TatteredRobes.cs" />
+    <Compile Include="Items\Update2\InjectorRoundsComponent.cs" />
+    <Compile Include="EnemySetupCode\EnemyRelatedStuff\EnemyComponents\ShamberController.cs" />
+    <Compile Include="EnemySetupCode\EnemyRelatedStuff\EnemyComponents\FungannonController.cs" />
+    <Compile Include="EnemySetupCode\EnemyRelatedStuff\EnemyComponents\CoalletController.cs" />
+    <Compile Include="EnemySetupCode\EnemyRelatedStuff\I Need This.cs" />
+    <Compile Include="EnemySetupCode\EnemyRelatedStuff\Behavior Stuff\CustomSpinBulletsBehavior.cs" />
+    <Compile Include="Code That IDK When I%27ll Use.cs" />
+    <Compile Include="Unsorted Garbage\GunPieces.cs" />
+    <Compile Include="Components\Item Components\LoaderPylonSynergyFormeController.cs" />
+    <Compile Include="Components\Item Components\LoaderPylonController.cs" />
+    <Compile Include="Unsorted Garbage\BloodbathOnKill.cs" />
+    <Compile Include="Components\Projectile Components\TinyPlanetMovementModule.cs" />
+    <Compile Include="Components\Projectile Components\OscillatingBulletsMovementModule.cs" />
+    <Compile Include="Debuff Stuff\BrokenArmorEffect.cs" />
+    <Compile Include="APIs\GungeonAPI\DungeonHandler.cs" />
+    <Compile Include="APIs\GungeonAPI\DungeonHooks.cs" />
+    <Compile Include="APIs\GungeonAPI\OfficialFlows.cs" />
+    <Compile Include="APIs\GungeonAPI\RoomFactory.cs" />
+    <Compile Include="APIs\GungeonAPI\SampleFlow.cs" />
+    <Compile Include="APIs\GungeonAPI\ShrineTools.cs" />
+    <Compile Include="APIs\GungeonAPI\StaticReferences.cs" />
+    <Compile Include="APIs\EnemyBuilders\BossBuilder.cs" />
+    <Compile Include="EnemySetupCode\EnemyAPI %28The one that modifies behaviors%29\Hooks.cs" />
+    <Compile Include="EnemySetupCode\EnemyAPI %28The one that modifies behaviors%29\TestModule.cs" />
+    <Compile Include="EnemySetupCode\EnemyAPI %28The one that modifies behaviors%29\Tools.cs" />
+    <Compile Include="APIs\EnemyBuilders\EnemyBuilder.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\ArchGunjurer.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\BulletBank\BulletBanker.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\Cursebulon.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\Barretina.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\DeTurretLeft.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\DeTurretRight.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\Glockulus.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\BotBullet.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\BunnyBullet.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\SpcreatBullet.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\WowBullet.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\KyleBullet.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\RetrashBullet.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\PandaBullet.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\KingBullet.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\BleakBullet.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\ApacheBullet.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\NeighborinoBullet.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\GlaurBullet.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\An3sBullet.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\RevolverSkull.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\FodderEnemy.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\HunterBullet.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\SkilotarBullet.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\NevernamedBullet.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\SpapiBullet.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\BlazeyBullet.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\CelBullet.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\BulletBank\BulletBankIntro.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\Shellrax\ShellraxIntro.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\Shellrax\Shellrax.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\Update2\Fungannon\Fungannon.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\Update2\Grenadier.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\Update2\ProperCube.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\Update2\Shamber.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\Update2\Coallet.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\Wailer.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\WallDweller.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\JammedGuardian.cs" />
+    <Compile Include="Misc Stuff\Static Storage\EnemyGUIDs.cs" />
+    <Compile Include="Guns\Init Release\ExecutionersCrossbow.cs" />
+    <Compile Include="Guns\Init Release\ExecutionersCrossbowSpecial.cs" />
+    <Compile Include="Guns\Update2\CapacitorProjectile.cs" />
+    <Compile Include="Guns\Init Release\RebarPuncher.cs" />
+    <Compile Include="Guns\Init Release\ImmateriaProjectile.cs" />
+    <Compile Include="Guns\Init Release\Immateria.cs" />
+    <Compile Include="Guns\Init Release\HardlightNailgun.cs" />
+    <Compile Include="Guns\Init Release\OscillatoSynergyForme.cs" />
+    <Compile Include="Guns\Init Release\Oscillato.cs" />
+    <Compile Include="Guns\Init Release\LaserChainsaw.cs" />
+    <Compile Include="Guns\Update2\Capacitor.cs" />
+    <Compile Include="Guns\Init Release\ShockChain.cs" />
+    <Compile Include="Guns\Init Release\PolaritySynergyForme.cs" />
+    <Compile Include="Guns\Init Release\GunToEndEverything.cs" />
+    <Compile Include="Guns\Init Release\ArmWarmer.cs" />
+    <Compile Include="Guns\Init Release\StSWpNTsT.cs" />
+    <Compile Include="Guns\Init Release\Revenant.cs" />
+    <Compile Include="Guns\Init Release\SoulLantern.cs" />
+    <Compile Include="Guns\Init Release\UglyDuckling.cs" />
+    <Compile Include="Guns\Init Release\VeteranerShotgun.cs" />
+    <Compile Include="Guns\Init Release\VeteranShotgun.cs" />
+    <Compile Include="Guns\Init Release\Resault.cs" />
+    <Compile Include="Guns\Init Release\WitherLance.cs" />
+    <Compile Include="Guns\Init Release\SwanOff.cs" />
+    <Compile Include="Guns\Init Release\Polarity.cs" />
+    <Compile Include="Hooks.cs" />
+    <Compile Include="Misc Stuff\Synergy Stuff\Synergy Processors\AdvancedDualWieldProcessor.cs" />
+    <Compile Include="Unsorted Garbage\EndOfEverything.cs" />
+    <Compile Include="Misc Stuff\Non-Functioning Stuff\BulletsOnBulletDestructionComponent.cs" />
+    <Compile Include="Debuff Stuff\DebuffLibrary.cs" />
+    <Compile Include="Debuff Stuff\PossessedEffect.cs" />
+    <Compile Include="Debuff Stuff\FrailtyEffect.cs" />
+    <Compile Include="Components\Item Components\BrokenChamberComponent.cs" />
+    <Compile Include="Unsorted Garbage\ImprovedAfterImage.cs" />
+    <Compile Include="Misc Stuff\Synergy Stuff\Synergy Processors\AdvancedGunBehaviour.cs" />
+    <Compile Include="Misc Stuff\Synergy Stuff\Synergy Processors\AdvancedSynergyFormProcessor.cs" />
+    <Compile Include="Misc Stuff\Non-Functioning Stuff\CustomLightningVFXThing.cs" />
+    <Compile Include="Misc Stuff\Item And Gun Addons\MultiActiveReload.cs" />
+    <Compile Include="Misc Stuff\Synergy Stuff\Synergy Processors\SynergyOrbitingGunProcessor.cs" />
+    <Compile Include="Misc Stuff\Synergy Stuff\Synergy Processors\OrbitingGunAdder.cs" />
+    <Compile Include="Components\Projectile Components\AoEDamageComponent.cs" />
+    <Compile Include="Misc Stuff\Synergy Stuff\Synergy Processors\NonSynergyOrbitingGunProcessor.cs" />
+    <Compile Include="Guns\Init Release\StatiBlast.cs" />
+    <Compile Include="Guns\Init Release\BurningSun.cs" />
+    <Compile Include="Misc Stuff\Non-Functioning Stuff\ShadowBulletsButGunfire.cs" />
+    <Compile Include="Misc Stuff\Synergy Stuff\Synergy Processors\InitSynergies.cs" />
+    <Compile Include="Unsorted Garbage\GTEEInitialiser.cs" />
+    <Compile Include="Misc Stuff\Synergy Stuff\Synergy Forms and Other Gun Synergy Stuff.cs" />
+    <Compile Include="Items\Init Release\DeathWarrant.cs" />
+    <Compile Include="Items\Init Release\DeadKingsDesparation.cs" />
+    <Compile Include="Items\Update2\InjectorRounds.cs" />
+    <Compile Include="Items\Update2\ShellsOfTheMountain.cs" />
+    <Compile Include="Items\Update2\KineticStrike.cs" />
+    <Compile Include="Items\Update2\NetheriteChamber.cs" />
+    <Compile Include="Items\Update2\TinyPlanetBullets.cs" />
+    <Compile Include="Items\Init Release\PortablePylon.cs" />
+    <Compile Include="Items\Init Release\NeverForgiveMe.cs" />
+    <Compile Include="Items\Init Release\UnstableTeslaCoil.cs" />
+    <Compile Include="Items\Init Release\ShellsnakeOil.cs" />
+    <Compile Include="Items\Init Release\DiasukesPolymorph.cs" />
+    <Compile Include="Items\Init Release\OffWorldMedicine.cs" />
+    <Compile Include="Items\Init Release\TableTechDevour.cs" />
+    <Compile Include="Items\Init Release\TableTechNull.cs" />
+    <Compile Include="Items\Init Release\Shellheart.cs" />
+    <Compile Include="Items\Init Release\SoulboundSkull.cs" />
+    <Compile Include="Misc Stuff\Static Storage\RandomPiecesOfStuffToInitialise.cs" />
+    <Compile Include="Shrine Stuff\ShrineCode\HellShrines\ShrineOfCurses.cs" />
+    <Compile Include="Shrine Stuff\ShrineCode\HellShrines\ShrineOfPurity.cs" />
+    <Compile Include="Shrine Stuff\ShrineCode\HellShrines\ShrineOfSomething.cs" />
+    <Compile Include="Shrine Stuff\ShrineCode\HellShrines\ShrineOfPetrification.cs" />
+    <Compile Include="Shrine Stuff\ShrineCode\HellShrines\ShrineOfDarkness.cs" />
+    <Compile Include="Items\Update2\HeresyHammer.cs" />
+    <Compile Include="Items\Test Items\RoomReader.cs" />
+    <Compile Include="Items\Update2\ScrollOfGuonification.cs" />
+    <Compile Include="Shrine Stuff\ShrineCode\QuestWanderer\QuestWanderer.cs" />
+    <Compile Include="Shrine Stuff\ShrineCode\QuestWanderer\QuestWandererInteractable.cs" />
+    <Compile Include="Items\Test Items\TestActiveItem.cs" />
+    <Compile Include="Items\Init Release\FrailtyAmmolet.cs" />
+    <Compile Include="Items\Init Release\FrailtyRounds.cs" />
+    <Compile Include="Items\Init Release\DiamondChamber.cs" />
+    <Compile Include="Items\Init Release\BrokenChamber.cs" />
+    <Compile Include="Items\Init Release\BabyGoodCandleKin.cs" />
+    <Compile Include="Items\Init Release\OscillatingBullets.cs" />
+    <Compile Include="Items\Init Release\Unstabullets.cs" />
+    <Compile Include="Items\Init Release\LongDistanceCast.cs" />
+    <Compile Include="Items\Init Release\ElectrostaticGuonStone.cs" />
+    <Compile Include="Items\Init Release\GildedPots.cs" />
+    <Compile Include="Items\Init Release\BlastShower.cs" />
+    <Compile Include="Items\Init Release\PsychicBlank.cs" />
+    <Compile Include="Items\Init Release\GunPrinter.cs" />
+    <Compile Include="Items\Init Release\AoEBullets.cs" />
+    <Compile Include="Items\Init Release\HullBreakerBullets.cs" />
+    <Compile Include="APIs\ItemAPI\CompanionBuilder.cs" />
+    <Compile Include="APIs\ItemAPI\CustomSynergies.cs" />
+    <Compile Include="APIs\ItemAPI\GunTools.cs" />
+    <Compile Include="Items\Update2\DamnedGuonStone.cs" />
+    <Compile Include="Toolboxes\BeamToolbox.cs" />
+    <Compile Include="Toolboxes\CustomClipAmmoTypeToolbox.cs" />
+    <Compile Include="Toolboxes\DungeonGenToolbox.cs" />
+    <Compile Include="Toolboxes\Extensions\ObjectMakers.cs" />
+    <Compile Include="Toolboxes\OtherTools.cs" />
+    <Compile Include="Toolboxes\ItemTools.cs" />
+    <Compile Include="Items\Init Release\EcholocationAmmolet.cs" />
+    <Compile Include="Items\Init Release\ShelltansBlessing.cs" />
+    <Compile Include="APIs\ItemAPI\FakePrefab\FakePrefab.cs" />
+    <Compile Include="APIs\ItemAPI\FakePrefab\FakePrefabHooks.cs" />
+    <Compile Include="APIs\ItemAPI\ItemBuilder.cs" />
+    <Compile Include="APIs\ItemAPI\Tools.cs" />
+    <Compile Include="Pickups\NullPickupInteractable.cs" />
+    <Compile Include="Pickups\SackPickup.cs" />
+    <Compile Include="PlanetsideModule.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="APIs\ItemAPI\ResourceExtractor.cs" />
+    <Compile Include="APIs\ItemAPI\SpriteBuilder.cs" />
+    <Compile Include="APIs\SaveAPI\AdvancedGameStats.cs" />
+    <Compile Include="APIs\SaveAPI\AdvancedGameStatsManager.cs" />
+    <Compile Include="APIs\SaveAPI\AdvancedMidGameSaveData.cs" />
+    <Compile Include="APIs\SaveAPI\BreachShopTool.cs" />
+    <Compile Include="APIs\SaveAPI\CustomDungeonPrerequisite.cs" />
+    <Compile Include="APIs\SaveAPI\CustomHuntQuest.cs" />
+    <Compile Include="APIs\SaveAPI\CustomHuntQuests.cs" />
+    <Compile Include="APIs\SaveAPI\Enums\Comparers\CustomDungeonFlagsComparer.cs" />
+    <Compile Include="APIs\SaveAPI\Enums\Comparers\CustomTrackedMaximumsComparer.cs" />
+    <Compile Include="APIs\SaveAPI\Enums\Comparers\CustomTrackedStatsComparer.cs" />
+    <Compile Include="APIs\SaveAPI\Enums\CustomCharacterSpecificGungeonFlags.cs" />
+    <Compile Include="APIs\SaveAPI\Enums\CustomDungeonFlags.cs" />
+    <Compile Include="APIs\SaveAPI\Enums\CustomTrackedMaximums.cs" />
+    <Compile Include="APIs\SaveAPI\Enums\CustomTrackedStats.cs" />
+    <Compile Include="APIs\SaveAPI\JammedEnemyState.cs" />
+    <Compile Include="APIs\SaveAPI\SaveAPIManager.cs" />
+    <Compile Include="APIs\SaveAPI\SaveTools.cs" />
+    <Compile Include="APIs\SaveAPI\SpecialAIActor.cs" />
+    <Compile Include="APIs\SaveAPI\SpecialPickupObject.cs" />
+    <Compile Include="Shrine Stuff\HitboxMonitor.cs" />
+    <Compile Include="Shrine Stuff\NPCBuilder.cs" />
+    <Compile Include="Shrine Stuff\NPCInteractable.cs" />
+    <Compile Include="Shrine Stuff\OldShrineFactory.cs" />
+    <Compile Include="Shrine Stuff\ShrineCode\BrokenChamberShrine.cs" />
+    <Compile Include="Shrine Stuff\ShrineCode\HolyChamberShrine.cs" />
+    <Compile Include="Shrine Stuff\ShrineCode\ShrineOfEvil.cs" />
+    <Compile Include="Shrine Stuff\ShrineCode\NullShrine.cs" />
+    <Compile Include="Shrine Stuff\ShrineCode\GunOrbitShrine.cs" />
+    <Compile Include="Shrine Stuff\ShrineCode\Ouroborous\OuroborousController.cs" />
+    <Compile Include="Shrine Stuff\ShrineCode\Ouroborous\OuroborousShrine.cs" />
+    <Compile Include="Shrine Stuff\ShrineFactory.cs" />
+    <Compile Include="Shrine Stuff\ShrineFakePrefab.cs" />
+    <Compile Include="Shrine Stuff\ShrineFakePrefabHooks.cs" />
+    <Compile Include="Shrine Stuff\SimpleInteractable.cs" />
+    <Compile Include="Shrine Stuff\SimpleShrine.cs" />
+    <Compile Include="Toolboxes\MathToolbox.cs" />
+    <Compile Include="Toolboxes\ProjSpawnHelper.cs" />
+    <Compile Include="Toolboxes\UIToolbox.cs" />
+    <Compile Include="Toolboxes\VFXToolbox.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\example_item_sprite.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\hullbreaker.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\shelltansblessing.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\echolcationammolet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Enemies\JammedGuardian\stevelord_attack_left_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\JammedGuardian\stevelord_attack_left_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\JammedGuardian\stevelord_attack_left_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\JammedGuardian\stevelord_attack_left_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\JammedGuardian\stevelord_attack_left_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\JammedGuardian\stevelord_attack_left_006.png" />
+    <EmbeddedResource Include="Resources\Enemies\JammedGuardian\stevelord_attack_left_007.png" />
+    <EmbeddedResource Include="Resources\Enemies\JammedGuardian\stevelord_attack_right_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\JammedGuardian\stevelord_attack_right_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\JammedGuardian\stevelord_attack_right_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\JammedGuardian\stevelord_attack_right_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\JammedGuardian\stevelord_attack_right_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\JammedGuardian\stevelord_attack_right_006.png" />
+    <EmbeddedResource Include="Resources\Enemies\JammedGuardian\stevelord_attack_right_007.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Enemies\JammedGuardian\stevelord_idle_left_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\JammedGuardian\stevelord_idle_left_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\JammedGuardian\stevelord_idle_left_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\JammedGuardian\stevelord_idle_left_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\JammedGuardian\stevelord_idle_left_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\JammedGuardian\stevelord_idle_left_006.png" />
+    <EmbeddedResource Include="Resources\Enemies\JammedGuardian\stevelord_idle_right_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\JammedGuardian\stevelord_idle_right_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\JammedGuardian\stevelord_idle_right_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\JammedGuardian\stevelord_idle_right_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\JammedGuardian\stevelord_idle_right_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\JammedGuardian\stevelord_idle_right_006.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Shrines\GunOrbitShrinel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ShrineRooms\GunOrbitShrineRoom.room" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\portablegunprinter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\gildedceramic.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Guons\ElectroGuon\electrostaticguonfloaty.png" />
+    <EmbeddedResource Include="Resources\Guons\ElectroGuon\electrostaticguonitem.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Enemies\JammedGuardian\stevelord_death_left_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\JammedGuardian\stevelord_death_left_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\JammedGuardian\stevelord_death_left_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\JammedGuardian\stevelord_death_left_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\JammedGuardian\stevelord_death_left_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\JammedGuardian\stevelord_death_left_006.png" />
+    <EmbeddedResource Include="Resources\Enemies\JammedGuardian\stevelord_death_left_007.png" />
+    <EmbeddedResource Include="Resources\Enemies\JammedGuardian\stevelord_death_left_008.png" />
+    <EmbeddedResource Include="Resources\Enemies\JammedGuardian\stevelord_death_right_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\JammedGuardian\stevelord_death_right_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\JammedGuardian\stevelord_death_right_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\JammedGuardian\stevelord_death_right_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\JammedGuardian\stevelord_death_right_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\JammedGuardian\stevelord_death_right_006.png" />
+    <EmbeddedResource Include="Resources\Enemies\JammedGuardian\stevelord_death_right_007.png" />
+    <EmbeddedResource Include="Resources\Enemies\JammedGuardian\stevelord_death_right_008.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Wailer\bullet_death_left_front_001.png" />
+    <EmbeddedResource Include="Resources\Wailer\bullet_death_left_front_002.png" />
+    <EmbeddedResource Include="Resources\Wailer\bullet_death_left_front_003.png" />
+    <EmbeddedResource Include="Resources\Wailer\bullet_death_left_front_004.png" />
+    <EmbeddedResource Include="Resources\Wailer\bullet_death_left_front_005.png" />
+    <EmbeddedResource Include="Resources\Wailer\bullet_death_right_front_001.png" />
+    <EmbeddedResource Include="Resources\Wailer\bullet_death_right_front_002.png" />
+    <EmbeddedResource Include="Resources\Wailer\bullet_death_right_front_003.png" />
+    <EmbeddedResource Include="Resources\Wailer\bullet_death_right_front_004.png" />
+    <EmbeddedResource Include="Resources\Wailer\bullet_death_right_front_005.png" />
+    <EmbeddedResource Include="Resources\Wailer\bullet_idle_back_001.png" />
+    <EmbeddedResource Include="Resources\Wailer\bullet_idle_back_002.png" />
+    <EmbeddedResource Include="Resources\Wailer\bullet_idle_left_001.png" />
+    <EmbeddedResource Include="Resources\Wailer\bullet_idle_left_002.png" />
+    <EmbeddedResource Include="Resources\Wailer\bullet_idle_right_001.png" />
+    <EmbeddedResource Include="Resources\Wailer\bullet_idle_right_002.png" />
+    <EmbeddedResource Include="Resources\Wailer\bullet_run_left_001.png" />
+    <EmbeddedResource Include="Resources\Wailer\bullet_run_left_002.png" />
+    <EmbeddedResource Include="Resources\Wailer\bullet_run_left_003.png" />
+    <EmbeddedResource Include="Resources\Wailer\bullet_run_left_004.png" />
+    <EmbeddedResource Include="Resources\Wailer\bullet_run_left_005.png" />
+    <EmbeddedResource Include="Resources\Wailer\bullet_run_left_006.png" />
+    <EmbeddedResource Include="Resources\Wailer\bullet_run_left_back_001.png" />
+    <EmbeddedResource Include="Resources\Wailer\bullet_run_left_back_002.png" />
+    <EmbeddedResource Include="Resources\Wailer\bullet_run_left_back_003.png" />
+    <EmbeddedResource Include="Resources\Wailer\bullet_run_left_back_004.png" />
+    <EmbeddedResource Include="Resources\Wailer\bullet_run_left_back_005.png" />
+    <EmbeddedResource Include="Resources\Wailer\bullet_run_left_back_006.png" />
+    <EmbeddedResource Include="Resources\Wailer\bullet_run_right_001.png" />
+    <EmbeddedResource Include="Resources\Wailer\bullet_run_right_002.png" />
+    <EmbeddedResource Include="Resources\Wailer\bullet_run_right_003.png" />
+    <EmbeddedResource Include="Resources\Wailer\bullet_run_right_004.png" />
+    <EmbeddedResource Include="Resources\Wailer\bullet_run_right_005.png" />
+    <EmbeddedResource Include="Resources\Wailer\bullet_run_right_006.png" />
+    <EmbeddedResource Include="Resources\Wailer\bullet_run_right_back_001.png" />
+    <EmbeddedResource Include="Resources\Wailer\bullet_run_right_back_002.png" />
+    <EmbeddedResource Include="Resources\Wailer\bullet_run_right_back_003.png" />
+    <EmbeddedResource Include="Resources\Wailer\bullet_run_right_back_004.png" />
+    <EmbeddedResource Include="Resources\Wailer\bullet_run_right_back_005.png" />
+    <EmbeddedResource Include="Resources\Wailer\bullet_run_right_back_006.png" />
+    <EmbeddedResource Include="Resources\Wailer\warped_scream_001.png" />
+    <EmbeddedResource Include="Resources\Wailer\warped_scream_002.png" />
+    <EmbeddedResource Include="Resources\Wailer\warped_scream_003.png" />
+    <EmbeddedResource Include="Resources\Wailer\warped_scream_004.png" />
+    <EmbeddedResource Include="Resources\Wailer\warped_scream_005.png" />
+    <EmbeddedResource Include="Resources\Wailer\warped_scream_006.png" />
+    <EmbeddedResource Include="Resources\Wailer\warped_scream_007.png" />
+    <EmbeddedResource Include="Resources\Wailer\warped_scream_008.png" />
+    <EmbeddedResource Include="Resources\Wailer\warped_scream_009.png" />
+    <EmbeddedResource Include="Resources\Wailer\warped_scream_010.png" />
+    <EmbeddedResource Include="Resources\Wailer\warped_scream_011.png" />
+    <EmbeddedResource Include="Resources\Wailer\warped_scream_012.png" />
+    <EmbeddedResource Include="Resources\Wailer\warped_scream_013.png" />
+    <EmbeddedResource Include="Resources\Wailer\warped_scream_014.png" />
+    <EmbeddedResource Include="Resources\Wailer\warped_scream_015.png" />
+    <EmbeddedResource Include="Resources\Wailer\warped_scream_016.png" />
+    <EmbeddedResource Include="Resources\Wailer\warped_scream_017.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="APIs\SaveAPI\Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\an3s\an3sbullet_die_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\an3s\an3sbullet_die_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\an3s\an3sbullet_die_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\an3s\an3sbullet_die_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\an3s\an3sbullet_die_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\an3s\an3sbullet_idle_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\an3s\an3sbullet_idle_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\an3s\an3sbullet_idle_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\an3s\an3sbullet_idle_004.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\apache\apachebullet_die_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\apache\apachebullet_die_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\apache\apachebullet_die_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\apache\apachebullet_die_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\apache\apachebullet_idle_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\apache\apachebullet_idle_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\apache\apachebullet_idle_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\apache\apachebullet_idle_004.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\blazey\blazeybullet_die_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\blazey\blazeybullet_die_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\blazey\blazeybullet_die_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\blazey\blazeybullet_die_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\blazey\blazeybullet_die_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\blazey\blazeybullet_idle_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\blazey\blazeybullet_idle_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\blazey\blazeybullet_idle_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\blazey\blazeybullet_idle_004.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\bleak\bleakbullet_die_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\bleak\bleakbullet_die_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\bleak\bleakbullet_die_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\bleak\bleakbullet_die_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\bleak\bleakbullet_die_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\bleak\bleakbullet_idle_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\bleak\bleakbullet_idle_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\bleak\bleakbullet_idle_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\bleak\bleakbullet_idle_004.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\bot\botbullet_die_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\bot\botbullet_die_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\bot\botbullet_die_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\bot\botbullet_die_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\bot\botbullet_die_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\bot\botbullet_idle_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\bot\botbullet_idle_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\bot\botbullet_idle_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\bot\botbullet_idle_004.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\bunny\bunnybullet_die_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\bunny\bunnybullet_die_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\bunny\bunnybullet_die_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\bunny\bunnybullet_die_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\bunny\bunnybullet_die_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\bunny\bunnybullet_idle_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\bunny\bunnybullet_idle_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\bunny\bunnybullet_idle_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\bunny\bunnybullet_idle_004.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\cel\celbullet_die_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\cel\celbullet_die_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\cel\celbullet_die_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\cel\celbullet_die_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\cel\celbullet_die_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\cel\celbullet_die_006.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\cel\celbullet_idle_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\cel\celbullet_idle_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\cel\celbullet_idle_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\cel\celbullet_idle_004.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\glaur\glaurbullet_die_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\glaur\glaurbullet_die_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\glaur\glaurbullet_die_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\glaur\glaurbullet_die_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\glaur\glaurbullet_die_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\glaur\glaurbullet_die_006.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\glaur\glaurbullet_idle_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\glaur\glaurbullet_idle_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\glaur\glaurbullet_idle_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\glaur\glaurbullet_idle_004.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\hunter\hunterbullet_die_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\hunter\hunterbullet_die_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\hunter\hunterbullet_die_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\hunter\hunterbullet_die_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\hunter\hunterbullet_die_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\hunter\hunterbullet_idle_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\hunter\hunterbullet_idle_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\hunter\hunterbullet_idle_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\hunter\hunterbullet_idle_004.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\king\kingbullet_die_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\king\kingbullet_die_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\king\kingbullet_die_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\king\kingbullet_die_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\king\kingbullet_die_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\king\kingbullet_die_006.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\king\kingbullet_idle_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\king\kingbullet_idle_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\king\kingbullet_idle_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\king\kingbullet_idle_004.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\kyle\kylebullet_die_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\kyle\kylebullet_die_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\kyle\kylebullet_die_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\kyle\kylebullet_die_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\kyle\kylebullet_die_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\kyle\kylebullet_idle_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\kyle\kylebullet_idle_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\kyle\kylebullet_idle_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\kyle\kylebullet_idle_004.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\neighborino\neighbullet_die_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\neighborino\neighbullet_die_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\neighborino\neighbullet_die_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\neighborino\neighbullet_die_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\neighborino\neighbullet_die_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\neighborino\neighbullet_idle_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\neighborino\neighbullet_idle_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\neighborino\neighbullet_idle_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\neighborino\neighbullet_idle_004.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\nevernamed\nevernamedbullet_die_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\nevernamed\nevernamedbullet_die_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\nevernamed\nevernamedbullet_die_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\nevernamed\nevernamedbullet_die_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\nevernamed\nevernamedbullet_die_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\nevernamed\nevernamedbullet_die_006.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\nevernamed\nevernamedbullet_idle_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\nevernamed\nevernamedbullet_idle_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\nevernamed\nevernamedbullet_idle_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\nevernamed\nevernamedbullet_idle_004.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\retrash\retrashbullet_die_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\retrash\retrashbullet_die_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\retrash\retrashbullet_die_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\retrash\retrashbullet_die_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\retrash\retrashbullet_die_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\retrash\retrashbullet_idle_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\retrash\retrashbullet_idle_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\retrash\retrashbullet_idle_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\retrash\retrashbullet_idle_004.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\skilotar\skilotarbullet_die_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\skilotar\skilotarbullet_die_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\skilotar\skilotarbullet_die_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\skilotar\skilotarbullet_die_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\skilotar\skilotarbullet_die_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\skilotar\skilotarbullet_die_006.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\skilotar\skilotarbullet_idle_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\skilotar\skilotarbullet_idle_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\skilotar\skilotarbullet_idle_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\skilotar\skilotarbullet_idle_004.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\spapi\spapibullet_die_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\spapi\spapibullet_die_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\spapi\spapibullet_die_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\spapi\spapibullet_die_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\spapi\spapibullet_die_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\spapi\spapibullet_idle_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\spapi\spapibullet_idle_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\spapi\spapibullet_idle_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\spapi\spapibullet_idle_004.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\aurabullets.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\psychicblank.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\blashshower.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\telecast.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Shrines\NullPedestal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ShrineRooms\NullShrineRoom.room" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Fodder\fodder_die_001.png" />
+    <EmbeddedResource Include="Resources\Fodder\fodder_die_002.png" />
+    <EmbeddedResource Include="Resources\Fodder\fodder_die_003.png" />
+    <EmbeddedResource Include="Resources\Fodder\fodder_die_004.png" />
+    <EmbeddedResource Include="Resources\Fodder\fodder_die_005.png" />
+    <EmbeddedResource Include="Resources\Fodder\fodder_die_006.png" />
+    <EmbeddedResource Include="Resources\Fodder\fodder_die_007.png" />
+    <EmbeddedResource Include="Resources\Fodder\fodder_die_008.png" />
+    <EmbeddedResource Include="Resources\Fodder\fodder_die_009.png" />
+    <EmbeddedResource Include="Resources\Fodder\fodder_die_010.png" />
+    <EmbeddedResource Include="Resources\Fodder\fodder_idle_001.png" />
+    <EmbeddedResource Include="Resources\Fodder\fodder_idle_002.png" />
+    <EmbeddedResource Include="Resources\Fodder\fodder_idle_003.png" />
+    <EmbeddedResource Include="Resources\Fodder\fodder_idle_004.png" />
+    <EmbeddedResource Include="Resources\Fodder\fodder_idle_005.png" />
+    <EmbeddedResource Include="Resources\Fodder\fodder_idle_006.png" />
+    <EmbeddedResource Include="Resources\Fodder\fodder_idle_007.png" />
+    <EmbeddedResource Include="Resources\Fodder\fodder_idle_008.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Enemies\RevolverSkull\revolverskull_die_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\RevolverSkull\revolverskull_idle_back_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\RevolverSkull\revolverskull_idle_back_left_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\RevolverSkull\revolverskull_idle_back_right_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\RevolverSkull\revolverskull_idle_front_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\RevolverSkull\revolverskull_idle_front_left_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\RevolverSkull\revolverskull_idle_front_right_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\RevolverSkull\revolverskull_idle_left_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\RevolverSkull\revolverskull_idle_right_001.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\unstab-ullets.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ArchJurer\archjurer_die_001.png" />
+    <EmbeddedResource Include="Resources\ArchJurer\archjurer_die_002.png" />
+    <EmbeddedResource Include="Resources\ArchJurer\archjurer_die_003.png" />
+    <EmbeddedResource Include="Resources\ArchJurer\archjurer_die_004.png" />
+    <EmbeddedResource Include="Resources\ArchJurer\archjurer_die_005.png" />
+    <EmbeddedResource Include="Resources\ArchJurer\archjurer_die_006.png" />
+    <EmbeddedResource Include="Resources\ArchJurer\archjurer_die_007.png" />
+    <EmbeddedResource Include="Resources\ArchJurer\archjurer_fire_001.png" />
+    <EmbeddedResource Include="Resources\ArchJurer\archjurer_fire_002.png" />
+    <EmbeddedResource Include="Resources\ArchJurer\archjurer_fire_003.png" />
+    <EmbeddedResource Include="Resources\ArchJurer\archjurer_fire_004.png" />
+    <EmbeddedResource Include="Resources\ArchJurer\archjurer_fire_005.png" />
+    <EmbeddedResource Include="Resources\ArchJurer\archjurer_fire_006.png" />
+    <EmbeddedResource Include="Resources\ArchJurer\archjurer_fire_007.png" />
+    <EmbeddedResource Include="Resources\ArchJurer\archjurer_idle_001.png" />
+    <EmbeddedResource Include="Resources\ArchJurer\archjurer_idle_002.png" />
+    <EmbeddedResource Include="Resources\ArchJurer\archjurer_idle_003.png" />
+    <EmbeddedResource Include="Resources\ArchJurer\archjurer_idle_004.png" />
+    <EmbeddedResource Include="Resources\ArchJurer\archjurer_idle_005.png" />
+    <EmbeddedResource Include="Resources\ArchJurer\archjurer_warpin_001.png" />
+    <EmbeddedResource Include="Resources\ArchJurer\archjurer_warpin_002.png" />
+    <EmbeddedResource Include="Resources\ArchJurer\archjurer_warpin_003.png" />
+    <EmbeddedResource Include="Resources\ArchJurer\archjurer_warpin_004.png" />
+    <EmbeddedResource Include="Resources\ArchJurer\archjurer_warpin_005.png" />
+    <EmbeddedResource Include="Resources\ArchJurer\archjurer_warpin_006.png" />
+    <EmbeddedResource Include="Resources\ArchJurer\archjurer_warpin_007.png" />
+    <EmbeddedResource Include="Resources\ArchJurer\archjurer_warpin_008.png" />
+    <EmbeddedResource Include="Resources\ArchJurer\archjurer_warpin_009.png" />
+    <EmbeddedResource Include="Resources\ArchJurer\archjurer_warpout_001.png" />
+    <EmbeddedResource Include="Resources\ArchJurer\archjurer_warpout_002.png" />
+    <EmbeddedResource Include="Resources\ArchJurer\archjurer_warpout_003.png" />
+    <EmbeddedResource Include="Resources\ArchJurer\archjurer_warpout_004.png" />
+    <EmbeddedResource Include="Resources\ArchJurer\archjurer_warpout_005.png" />
+    <EmbeddedResource Include="Resources\ArchJurer\archjurer_warpout_006.png" />
+    <EmbeddedResource Include="Resources\ArchJurer\archjurer_warpout_007.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Enemies\Cursebulon\cursebulon_die_left_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Cursebulon\cursebulon_die_left_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Cursebulon\cursebulon_die_left_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Cursebulon\cursebulon_die_left_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Cursebulon\cursebulon_die_left_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\Cursebulon\cursebulon_die_left_006.png" />
+    <EmbeddedResource Include="Resources\Enemies\Cursebulon\cursebulon_die_left_007.png" />
+    <EmbeddedResource Include="Resources\Enemies\Cursebulon\cursebulon_die_left_008.png" />
+    <EmbeddedResource Include="Resources\Enemies\Cursebulon\cursebulon_die_right_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Cursebulon\cursebulon_die_right_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Cursebulon\cursebulon_die_right_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Cursebulon\cursebulon_die_right_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Cursebulon\cursebulon_die_right_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\Cursebulon\cursebulon_die_right_006.png" />
+    <EmbeddedResource Include="Resources\Enemies\Cursebulon\cursebulon_die_right_007.png" />
+    <EmbeddedResource Include="Resources\Enemies\Cursebulon\cursebulon_die_right_008.png" />
+    <EmbeddedResource Include="Resources\Enemies\Cursebulon\cursebulon_idle_back_left_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Cursebulon\cursebulon_idle_back_left_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Cursebulon\cursebulon_idle_back_left_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Cursebulon\cursebulon_idle_back_left_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Cursebulon\cursebulon_idle_back_left_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\Cursebulon\cursebulon_idle_back_left_006.png" />
+    <EmbeddedResource Include="Resources\Enemies\Cursebulon\cursebulon_idle_back_right_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Cursebulon\cursebulon_idle_back_right_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Cursebulon\cursebulon_idle_back_right_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Cursebulon\cursebulon_idle_back_right_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Cursebulon\cursebulon_idle_back_right_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\Cursebulon\cursebulon_idle_back_right_006.png" />
+    <EmbeddedResource Include="Resources\Enemies\Cursebulon\cursebulon_idle_front_left_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Cursebulon\cursebulon_idle_front_left_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Cursebulon\cursebulon_idle_front_left_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Cursebulon\cursebulon_idle_front_left_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Cursebulon\cursebulon_idle_front_left_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\Cursebulon\cursebulon_idle_front_left_006.png" />
+    <EmbeddedResource Include="Resources\Enemies\Cursebulon\cursebulon_idle_front_right_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Cursebulon\cursebulon_idle_front_right_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Cursebulon\cursebulon_idle_front_right_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Cursebulon\cursebulon_idle_front_right_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Cursebulon\cursebulon_idle_front_right_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\Cursebulon\cursebulon_idle_front_right_006.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Shrines\ouroboroushrine.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_die_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_die_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_die_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_die_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_die_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_die_006.png" />
+    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_idle_east_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_idle_northeast_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_idle_northwest_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_idle_north_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_idle_southeast_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_idle_southwest_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_idle_south_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_idle_west_001.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Enemies\Berretina\berretina_die_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Berretina\berretina_die_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Berretina\berretina_die_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Berretina\berretina_die_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Berretina\berretina_die_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\Berretina\berretina_die_006.png" />
+    <EmbeddedResource Include="Resources\Enemies\Berretina\berretina_die_007.png" />
+    <EmbeddedResource Include="Resources\Enemies\Berretina\berretina_die_008.png" />
+    <EmbeddedResource Include="Resources\Enemies\Berretina\berretina_die_009.png" />
+    <EmbeddedResource Include="Resources\Enemies\Berretina\berretina_idle_east_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Berretina\berretina_idle_east_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Berretina\berretina_idle_east_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Berretina\berretina_idle_east_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Berretina\berretina_idle_northeast_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Berretina\berretina_idle_northeast_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Berretina\berretina_idle_northeast_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Berretina\berretina_idle_northeast_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Berretina\berretina_idle_northwest_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Berretina\berretina_idle_northwest_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Berretina\berretina_idle_northwest_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Berretina\berretina_idle_northwest_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Berretina\berretina_idle_north_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Berretina\berretina_idle_north_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Berretina\berretina_idle_north_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Berretina\berretina_idle_north_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Berretina\berretina_idle_southeast_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Berretina\berretina_idle_southeast_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Berretina\berretina_idle_southeast_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Berretina\berretina_idle_southeast_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Berretina\berretina_idle_southwest_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Berretina\berretina_idle_southwest_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Berretina\berretina_idle_southwest_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Berretina\berretina_idle_southwest_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Berretina\berretina_idle_south_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Berretina\berretina_idle_south_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Berretina\berretina_idle_south_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Berretina\berretina_idle_south_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Berretina\berretina_idle_west_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Berretina\berretina_idle_west_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Berretina\berretina_idle_west_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Berretina\berretina_idle_west_004.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ShrineRooms\HolyChamberRoom.room" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Shrines\HolyChamberShrine.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\brokenchamber.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\brokenchamberfixed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Shrines\brokenchambershrine.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ShrineRooms\BrokenChamberRoom.room" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Enemies\Deturret\deturret_idle_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Deturret\deturret_idle_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Deturret\deturret_idle_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Deturret\deturret_idle_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Deturret\deturret_idle_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\Deturret\deturret_idle_006.png" />
+    <EmbeddedResource Include="Resources\Enemies\Deturret\deturret_idle_007.png" />
+    <EmbeddedResource Include="Resources\Enemies\Deturret\deturret_idle_008.png" />
+    <EmbeddedResource Include="Resources\Enemies\Deturret\deturret_idle_009.png" />
+    <EmbeddedResource Include="Resources\Enemies\Deturret\deturret_idle_010.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\frailtyrounds.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\frailtyammolet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_death_001.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_death_002.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_death_003.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_death_004.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_death_005.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_death_006.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_death_007.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_death_008.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_death_009.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_death_010.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_death_011.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_death_012.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_death_013.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_death_014.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_death_015.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_death_016.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_death_017.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_death_018.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_death_019.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_idle_001.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_idle_002.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_idle_003.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_idle_004.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_idle_005.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_idle_006.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_intro_001.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_intro_002.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_intro_003.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_intro_004.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_intro_005.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_intro_006.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_intro_007.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_intro_008.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_intro_009.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_intro_010.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_intro_011.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_intro_012.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_intro_013.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_intro_014.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_intro_015.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_intro_016.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_intro_017.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_intro_018.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_ribopen_001.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_ribopen_002.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_ribopen_003.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_ribopen_004.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_ribopen_005.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_ribs_001.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_ribs_002.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_ribs_003.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_ribs_004.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_ribs_005.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_ribs_006.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_ribs_007.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_slam_001.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_slam_002.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_slam_003.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_slam_004.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_slam_005.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_tell1_001.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_tell1_002.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_tell1_003.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_tell1_004.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_tell1_005.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_warpin_001.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_warpin_002.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_warpin_003.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_warpin_004.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_warpin_005.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_warpin_006.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_warpin_007.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_warpin_008.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_warpin_009.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_warpin_010.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_warpin_011.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_warp_001.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_warp_002.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_warp_003.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_warp_004.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_warp_005.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_warp_006.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_warp_007.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_warp_008.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_warp_009.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Ammocom\johan.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Ammocom\fodderammonomiconentry.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Ammocom\archgunjurericon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Ammocom\cursebulonsmmonomiconportrait.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Ammocom\wailericonammo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Ammocom\glockulussheet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Ammocom\barretinaiconthing.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Ammocom\skullvenanticonaoo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Ammocom\jammedguardicon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\shellheart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Ammocom\shellraxicon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\daisukespolymorph.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\soulboundskull.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\panda\pandabullet_die_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\panda\pandabullet_die_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\panda\pandabullet_die_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\panda\pandabullet_die_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\panda\pandabullet_die_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\panda\pandabullet_die_006.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\panda\pandabullet_idle_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\panda\pandabullet_idle_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\panda\pandabullet_idle_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\panda\pandabullet_idle_004.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\wow\wowbullet_die_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\wow\wowbullet_die_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\wow\wowbullet_die_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\wow\wowbullet_die_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\wow\wowbullet_die_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\wow\wowbullet_die_006.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\wow\wowbullet_idle_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\wow\wowbullet_idle_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\wow\wowbullet_idle_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\wow\wowbullet_idle_004.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_blooptell_001.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_blooptell_002.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_blooptell_003.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_blooptell_004.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_bloop_001.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_bloop_002.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_bloop_003.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_bloop_004.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_bottleslaml_001.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_bottleslaml_002.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_bottleslaml_003.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_bottleslaml_004.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_bottleslaml_005.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_bottleslaml_006.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_bottleslaml_007.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_bottleslaml_008.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_bottleslaml_009.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_bottleslaml_010.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_bottleslaml_011.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_bottleslaml_012.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_bottleslaml_013.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_bottleslaml_014.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_bottleslaml_015.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_bottleslaml_016.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_bottleslamtell_001.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_bottleslamtell_002.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_bottleslamtell_003.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_bottleslamtell_004.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_bottleslamtell_005.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_bottleslamtell_006.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_death_001.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_death_002.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_death_003.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_death_004.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_death_005.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_death_006.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_death_007.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_death_008.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_death_009.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_death_010.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_death_011.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_idle_001.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_idle_002.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_idle_003.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_idle_004.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_idle_005.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_idle_006.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_idle_007.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_idle_008.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_idle_009.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_idle_010.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_introl_001.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_introl_002.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_introl_003.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_introl_004.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_introl_005.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_introl_006.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_introl_007.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_introl_008.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_introl_009.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_introl_010.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_introl_011.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_introl_012.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_introl_013.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_introl_014.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_introl_015.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_introl_016.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_introl_017.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_introl_018.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_introl_019.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_introl_020.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_introl_021.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_roartell_001.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_roartell_002.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_roartell_003.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_roartell_004.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_roartell_005.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_roartell_006.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_roartell_007.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_roar_001.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_roar_002.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_roar_003.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_roar_004.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_roar_005.png" />
+    <EmbeddedResource Include="Resources\BulletBanker\bulletbanker_roar_006.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Ammocom\bankericon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\spcreat\spcreatbullet_death_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\spcreat\spcreatbullet_death_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\spcreat\spcreatbullet_death_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\spcreat\spcreatbullet_death_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\spcreat\spcreatbullet_death_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\spcreat\spcreatbullet_death_006.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\spcreat\spcreatbullet_idle_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\spcreat\spcreatbullet_idle_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\spcreat\spcreatbullet_idle_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\spcreat\spcreatbullet_idle_004.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\goop_standard_base_001.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\possessed_standard_base_001.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\VFX\AllSeeingEye\gunicon.png" />
+    <EmbeddedResource Include="Resources\VFX\AllSeeingEye\itemicon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\tabletechnull.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Pickups\NullPickup.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\VFX\Resault\plus10ammo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\VFX\Resault\plus20ammo.png" />
+    <EmbeddedResource Include="Resources\VFX\Resault\plus4ammo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\VFX\Resault\plus16ammosyn.png" />
+    <EmbeddedResource Include="Resources\VFX\Resault\plus40ammosyn.png" />
+    <EmbeddedResource Include="Resources\VFX\Resault\plus80ammosyn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\offworldmedicine.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ShrineIcons\NullShrineIcon.png" />
+    <EmbeddedResource Include="Resources\ShrineIcons\NullShrineIconKing.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Companions\BabyCandle\candleman_fire_left_001.png" />
+    <EmbeddedResource Include="Resources\Companions\BabyCandle\candleman_fire_left_002.png" />
+    <EmbeddedResource Include="Resources\Companions\BabyCandle\candleman_fire_left_003.png" />
+    <EmbeddedResource Include="Resources\Companions\BabyCandle\candleman_fire_left_004.png" />
+    <EmbeddedResource Include="Resources\Companions\BabyCandle\candleman_fire_left_005.png" />
+    <EmbeddedResource Include="Resources\Companions\BabyCandle\candleman_fire_left_006.png" />
+    <EmbeddedResource Include="Resources\Companions\BabyCandle\candleman_fire_left_007.png" />
+    <EmbeddedResource Include="Resources\Companions\BabyCandle\candleman_fire_left_008.png" />
+    <EmbeddedResource Include="Resources\Companions\BabyCandle\candleman_fire_right_001.png" />
+    <EmbeddedResource Include="Resources\Companions\BabyCandle\candleman_fire_right_002.png" />
+    <EmbeddedResource Include="Resources\Companions\BabyCandle\candleman_fire_right_003.png" />
+    <EmbeddedResource Include="Resources\Companions\BabyCandle\candleman_fire_right_004.png" />
+    <EmbeddedResource Include="Resources\Companions\BabyCandle\candleman_fire_right_005.png" />
+    <EmbeddedResource Include="Resources\Companions\BabyCandle\candleman_fire_right_006.png" />
+    <EmbeddedResource Include="Resources\Companions\BabyCandle\candleman_fire_right_007.png" />
+    <EmbeddedResource Include="Resources\Companions\BabyCandle\candleman_fire_right_008.png" />
+    <EmbeddedResource Include="Resources\Companions\BabyCandle\candleman_idle_left_001.png" />
+    <EmbeddedResource Include="Resources\Companions\BabyCandle\candleman_idle_left_002.png" />
+    <EmbeddedResource Include="Resources\Companions\BabyCandle\candleman_idle_left_003.png" />
+    <EmbeddedResource Include="Resources\Companions\BabyCandle\candleman_idle_left_004.png" />
+    <EmbeddedResource Include="Resources\Companions\BabyCandle\candleman_idle_right_001.png" />
+    <EmbeddedResource Include="Resources\Companions\BabyCandle\candleman_idle_right_002.png" />
+    <EmbeddedResource Include="Resources\Companions\BabyCandle\candleman_idle_right_003.png" />
+    <EmbeddedResource Include="Resources\Companions\BabyCandle\candleman_idle_right_004.png" />
+    <EmbeddedResource Include="Resources\Companions\BabyCandle\candleman_run_left_001.png" />
+    <EmbeddedResource Include="Resources\Companions\BabyCandle\candleman_run_left_002.png" />
+    <EmbeddedResource Include="Resources\Companions\BabyCandle\candleman_run_left_003.png" />
+    <EmbeddedResource Include="Resources\Companions\BabyCandle\candleman_run_left_004.png" />
+    <EmbeddedResource Include="Resources\Companions\BabyCandle\candleman_run_left_005.png" />
+    <EmbeddedResource Include="Resources\Companions\BabyCandle\candleman_run_left_006.png" />
+    <EmbeddedResource Include="Resources\Companions\BabyCandle\candleman_run_left_007.png" />
+    <EmbeddedResource Include="Resources\Companions\BabyCandle\candleman_run_right_001.png" />
+    <EmbeddedResource Include="Resources\Companions\BabyCandle\candleman_run_right_002.png" />
+    <EmbeddedResource Include="Resources\Companions\BabyCandle\candleman_run_right_003.png" />
+    <EmbeddedResource Include="Resources\Companions\BabyCandle\candleman_run_right_004.png" />
+    <EmbeddedResource Include="Resources\Companions\BabyCandle\candleman_run_right_005.png" />
+    <EmbeddedResource Include="Resources\Companions\BabyCandle\candleman_run_right_006.png" />
+    <EmbeddedResource Include="Resources\Companions\BabyCandle\candleman_run_right_007.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\VFX\BlueFire\bluefire_001.png" />
+    <EmbeddedResource Include="Resources\VFX\BlueFire\bluefire_002.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\VFX\Debuffs\frailtyeffecticon.png" />
+    <EmbeddedResource Include="Resources\VFX\Debuffs\possesedeffecticon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Pickups\sackofstuff.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\nebula_reducednoise.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\VFX\PolymorphFail\daisukespolymorphfailvfx.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\VFX\Debuffs\brokenarmor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\gunsnakeoil.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\tabletechdevour.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\plaetunstableteslacoil.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\VFX\DeathMark\markedfordeathvfx.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\gundeathwarrant.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\deadkingsdesparation.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\VFX\FalseStrengths\falsestrengthfire.png" />
+    <EmbeddedResource Include="Resources\VFX\FalseStrengths\falsestrengthpoison.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\oscillatingbullets.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\LoaderPylon\Idle\laoderpylon_idle_001.png" />
+    <EmbeddedResource Include="Resources\LoaderPylon\Idle\laoderpylon_idle_002.png" />
+    <EmbeddedResource Include="Resources\LoaderPylon\Idle\laoderpylon_idle_003.png" />
+    <EmbeddedResource Include="Resources\LoaderPylon\Idle\laoderpylon_idle_004.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\LoaderPylon\Appear\laoderpylon_spawn_001.png" />
+    <EmbeddedResource Include="Resources\LoaderPylon\Disappear\laoderpylon_die_001.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\portablepylon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\LoaderPylon\SynergyForme\laoderpylonsynergy_idle_001.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\VFX\Rebar\plusnails.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\VFX\DeathMark\markedfordeathvfx_001.png" />
+    <EmbeddedResource Include="Resources\VFX\DeathMark\markedfordeathvfx_002.png" />
+    <EmbeddedResource Include="Resources\VFX\DeathMark\markedfordeathvfx_003.png" />
+    <EmbeddedResource Include="Resources\VFX\DeathMark\markedfordeathvfx_004.png" />
+    <EmbeddedResource Include="Resources\VFX\DeathMark\markedfordeathvfx_005.png" />
+    <EmbeddedResource Include="Resources\VFX\DeathMark\markedfordeathvfx_006.png" />
+    <EmbeddedResource Include="Resources\VFX\DeathMark\markedfordeathvfx_007.png" />
+    <EmbeddedResource Include="Resources\VFX\DeathMark\markedfordeathvfx_008.png" />
+    <EmbeddedResource Include="Resources\VFX\DeathMark\markedfordeathvfx_009.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\LoaderPylon\SynergyForme\laoderpylonsynergy_idle_002.png" />
+    <EmbeddedResource Include="Resources\LoaderPylon\SynergyForme\laoderpylonsynergy_idle_003.png" />
+    <EmbeddedResource Include="Resources\LoaderPylon\SynergyForme\laoderpylonsynergy_idle_004.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ForgiveMePleaseDolls\fmg_testsprite_001.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ForgiveMePleaseDolls\fmg_bullet_001.png" />
+    <EmbeddedResource Include="Resources\ForgiveMePleaseDolls\fmg_convict_001.png" />
+    <EmbeddedResource Include="Resources\ForgiveMePleaseDolls\fmg_gunslinger_001.png" />
+    <EmbeddedResource Include="Resources\ForgiveMePleaseDolls\fmg_hunter_001.png" />
+    <EmbeddedResource Include="Resources\ForgiveMePleaseDolls\fmg_marine_001.png" />
+    <EmbeddedResource Include="Resources\ForgiveMePleaseDolls\fmg_pilot_001.png" />
+    <EmbeddedResource Include="Resources\ForgiveMePleaseDolls\fmg_robot_001.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\forgivemeplease.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\VFX\LockedIn\lockedin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\VFX\MithrixCalldown\mithrixfalling_001.png" />
+    <EmbeddedResource Include="Resources\VFX\MithrixCalldown\mithrixland_001.png" />
+    <EmbeddedResource Include="Resources\VFX\MithrixCalldown\mithrixland_002.png" />
+    <EmbeddedResource Include="Resources\VFX\MithrixCalldown\mithrixland_003.png" />
+    <EmbeddedResource Include="Resources\VFX\MithrixCalldown\mithrixland_004.png" />
+    <EmbeddedResource Include="Resources\VFX\MithrixCalldown\mithrixland_005.png" />
+    <EmbeddedResource Include="Resources\VFX\MithrixCalldown\mithrixland_006.png" />
+    <EmbeddedResource Include="Resources\VFX\MithrixCalldown\mithrixleap_001.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Shrines\EOEShrine.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ShrineRooms\EOEShrineRoom.room" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\brokenchamberfixedtier2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Enemies\Coallet\Death\coallet_die_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Coallet\Death\coallet_die_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Coallet\Death\coallet_die_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Coallet\Death\coallet_die_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Coallet\Death\coallet_die_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\Coallet\Death\coallet_die_006.png" />
+    <EmbeddedResource Include="Resources\Enemies\Coallet\Death\coallet_die_007.png" />
+    <EmbeddedResource Include="Resources\Enemies\Coallet\Death\coallet_die_008.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Enemies\Coallet\FireWalk\coallet_firewalk_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Coallet\FireWalk\coallet_firewalk_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Coallet\FireWalk\coallet_firewalk_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Coallet\FireWalk\coallet_firewalk_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Coallet\FireWalk\coallet_firewalk_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\Coallet\FireWalk\coallet_firewalk_006.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Enemies\Coallet\Idle\coallet_idle_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Coallet\Idle\coallet_idle_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Coallet\Idle\coallet_idle_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Coallet\Idle\coallet_idle_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Coallet\Idle\coallet_idle_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\Coallet\Idle\coallet_idle_006.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Enemies\Coallet\Walk\coallet_walk_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Coallet\Walk\coallet_walk_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Coallet\Walk\coallet_walk_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Coallet\Walk\coallet_walk_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Coallet\Walk\coallet_walk_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\Coallet\Walk\coallet_walk_006.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Enemies\Grenadier\HandObject\bullet_hand_001.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Enemies\Grenadier\Idle\BackLeftIdle\bullet_idle_back_left_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Grenadier\Idle\BackLeftIdle\bullet_idle_back_left_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Grenadier\Idle\BackRightIdle\bullet_idle_back_right_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Grenadier\Idle\BackRightIdle\bullet_idle_back_right_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Grenadier\Idle\FrontLeftIdle\bullet_idle_left_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Grenadier\Idle\FrontLeftIdle\bullet_idle_left_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Grenadier\Idle\FrontRightIdle\bullet_idle_right_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Grenadier\Idle\FrontRightIdle\bullet_idle_right_002.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Enemies\Grenadier\KillDebris\glasses_shard_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Grenadier\KillDebris\glasses_shard_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Grenadier\KillDebris\glasses_shard_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Grenadier\KillDebris\glasses_shard_004.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Enemies\Grenadier\Move\BackLeftMove\bullet_run_left_back_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Grenadier\Move\BackLeftMove\bullet_run_left_back_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Grenadier\Move\BackLeftMove\bullet_run_left_back_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Grenadier\Move\BackLeftMove\bullet_run_left_back_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Grenadier\Move\BackLeftMove\bullet_run_left_back_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\Grenadier\Move\BackLeftMove\bullet_run_left_back_006.png" />
+    <EmbeddedResource Include="Resources\Enemies\Grenadier\Move\BackRightMove\bullet_run_right_back_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Grenadier\Move\BackRightMove\bullet_run_right_back_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Grenadier\Move\BackRightMove\bullet_run_right_back_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Grenadier\Move\BackRightMove\bullet_run_right_back_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Grenadier\Move\BackRightMove\bullet_run_right_back_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\Grenadier\Move\BackRightMove\bullet_run_right_back_006.png" />
+    <EmbeddedResource Include="Resources\Enemies\Grenadier\Move\FrontLeftMove\bullet_run_left_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Grenadier\Move\FrontLeftMove\bullet_run_left_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Grenadier\Move\FrontLeftMove\bullet_run_left_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Grenadier\Move\FrontLeftMove\bullet_run_left_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Grenadier\Move\FrontLeftMove\bullet_run_left_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\Grenadier\Move\FrontLeftMove\bullet_run_left_006.png" />
+    <EmbeddedResource Include="Resources\Enemies\Grenadier\Move\FrontRightMove\bullet_run_right_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Grenadier\Move\FrontRightMove\bullet_run_right_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Grenadier\Move\FrontRightMove\bullet_run_right_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Grenadier\Move\FrontRightMove\bullet_run_right_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Grenadier\Move\FrontRightMove\bullet_run_right_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\Grenadier\Move\FrontRightMove\bullet_run_right_006.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Enemies\Grenadier\Death\bullet_death_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Grenadier\Death\bullet_death_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Grenadier\Death\bullet_death_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Grenadier\Death\bullet_death_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Grenadier\Death\bullet_death_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\Grenadier\Death\bullet_death_006.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\EnemyBulletSprites\bigspore.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\EnemyBulletSprites\hammberbullet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Enemies\ProperCube\toddy_charge_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\ProperCube\toddy_charge_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\ProperCube\toddy_charge_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\ProperCube\toddy_charge_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\ProperCube\toddy_dash_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\ProperCube\toddy_die_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\ProperCube\toddy_die_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\ProperCube\toddy_die_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\ProperCube\toddy_die_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\ProperCube\toddy_die_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\ProperCube\toddy_die_006.png" />
+    <EmbeddedResource Include="Resources\Enemies\ProperCube\toddy_die_007.png" />
+    <EmbeddedResource Include="Resources\Enemies\ProperCube\toddy_idle_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\ProperCube\toddy_idle_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\ProperCube\toddy_idle_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\ProperCube\toddy_idle_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\ProperCube\toddy_idle_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\ProperCube\toddy_impact_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\ProperCube\toddy_impact_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\ProperCube\toddy_impact_003.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Ammocom\bigcubeicon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Ammocom\coalleticon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_death_001.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_death_002.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_death_003.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_death_004.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_death_005.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_death_006.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_death_007.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_death_008.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_death_009.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_death_010.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_death_011.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_death_012.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_death_013.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_idle_001.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_idle_002.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_idle_003.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_idle_004.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_idle_005.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_idle_006.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_idle_007.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_jumpland_001.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_jumpland_002.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_jumpland_003.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_jump_001.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_jump_002.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_jump_003.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_jump_004.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_jump_005.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_jump_006.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_jump_007.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_jump_008.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_jump_009.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_jump_010.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_jump_011.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_jump_012.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_moveright_001.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_moveright_002.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_moveright_003.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_moveright_004.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_moveright_005.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_moveright_006.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_moveright_007.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_moveright_008.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_moveright_009.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_move_001.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_move_002.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_move_003.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_move_004.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_move_005.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_move_006.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_move_007.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_move_008.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_move_009.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_roar_001.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_roar_002.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_roar_003.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_roar_004.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_roar_005.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_roar_006.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_roar_007.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_roar_008.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_roar_009.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_roar_010.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_roar_011.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_roar_012.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_roar_013.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_roar_014.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_roar_015.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_roar_016.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_spawn_001.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_spawn_002.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_spawn_003.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_spawn_004.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_spawn_005.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_spawn_006.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_spawn_007.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_spawn_008.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_spawn_009.png" />
+    <EmbeddedResource Include="Resources\Fungannon\Fungannon_spawn_010.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Ammocom\ammonimiconasdsadsa.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Ammocom\ammoentryshrrom.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\VFX\KineticStrike\kineticstrike.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\VFX\KineticStrike\redmarksthespot.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\kinetisstrikeitem.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\bulletofthemountain.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\VFX\CapacitorVFX\chargeupnonsyn.png" />
+    <EmbeddedResource Include="Resources\VFX\CapacitorVFX\chargeupsyn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Enemies\Shamber\shamber_death_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Shamber\shamber_death_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Shamber\shamber_death_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Shamber\shamber_death_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Shamber\shamber_death_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\Shamber\shamber_death_006.png" />
+    <EmbeddedResource Include="Resources\Enemies\Shamber\shamber_death_007.png" />
+    <EmbeddedResource Include="Resources\Enemies\Shamber\shamber_death_008.png" />
+    <EmbeddedResource Include="Resources\Enemies\Shamber\shamber_fadein_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Shamber\shamber_fadein_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Shamber\shamber_fadein_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Shamber\shamber_fadein_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Shamber\shamber_fadein_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\Shamber\shamber_fadeout_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Shamber\shamber_fadeout_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Shamber\shamber_fadeout_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Shamber\shamber_fadeout_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Shamber\shamber_fadeout_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\Shamber\shamber_fadeout_006.png" />
+    <EmbeddedResource Include="Resources\Enemies\Shamber\shamber_fadeout_007.png" />
+    <EmbeddedResource Include="Resources\Enemies\Shamber\shamber_fadeout_008.png" />
+    <EmbeddedResource Include="Resources\Enemies\Shamber\shamber_fadeout_009.png" />
+    <EmbeddedResource Include="Resources\Enemies\Shamber\shamber_idle_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Shamber\shamber_idle_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Shamber\shamber_idle_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Shamber\shamber_idle_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Shamber\shamber_idle_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\Shamber\shamber_idle_006.png" />
+    <EmbeddedResource Include="Resources\Enemies\Shamber\shamber_idle_007.png" />
+    <EmbeddedResource Include="Resources\Enemies\Shamber\shamber_idle_008.png" />
+    <EmbeddedResource Include="Resources\Enemies\Shamber\shamber_idle_009.png" />
+    <EmbeddedResource Include="Resources\Enemies\Shamber\shamber_idle_010.png" />
+    <EmbeddedResource Include="Resources\Enemies\Shamber\shamber_idle_011.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Ammocom\shamberammonomicoenrtytab.png" />
+    <EmbeddedResource Include="Resources\Ammocom\shamberammonomiconICON.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\injectorrounds.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\VFX\Debuffs\holyvfx.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\tatteredrobes.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Guons\GuonCreator\guondebug.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\tomeofguonmancy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Guons\DamnedGuon\curseguonfloaty.png" />
+    <EmbeddedResource Include="Resources\Guons\DamnedGuon\damnedstone.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Guons\DamnedGuon\curseguonfloaty_001.png" />
+    <EmbeddedResource Include="Resources\Guons\DamnedGuon\curseguonfloaty_002.png" />
+    <EmbeddedResource Include="Resources\Guons\DamnedGuon\curseguonfloaty_003.png" />
+    <EmbeddedResource Include="Resources\Guons\DamnedGuon\curseguonfloaty_004.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\JammedJarIDK\cursejar_001.png" />
+    <EmbeddedResource Include="Resources\JammedJarIDK\cursejar_002.png" />
+    <EmbeddedResource Include="Resources\JammedJarIDK\cursejar_003.png" />
+    <EmbeddedResource Include="Resources\JammedJarIDK\cursejar_004.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\plating.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ophanaim_ring.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\EnemyBulletSprites\eyeball.png" />
+    <EmbeddedResource Include="Resources\EnemyBulletSprites\eyeneedle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_charge1_001.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_charge1_002.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_charge1_003.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_charge1_004.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_death_001.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_death_002.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_death_003.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_death_004.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_death_005.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_death_006.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_death_007.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_death_008.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_death_009.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_fire1_001.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_fire1_002.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_fire1_003.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_fire1_004.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_fire1_005.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_idle_001.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_idle_002.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_idle_003.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_idle_004.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_idle_005.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_idle_006.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_idle_007.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_idle_008.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_idle_009.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_intro_001.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_intro_002.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_intro_003.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_intro_004.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_intro_005.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_intro_006.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_intro_007.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_intro_008.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_intro_009.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_intro_010.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_intro_011.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_lasercharge_001.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_lasercharge_002.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_lasercharge_003.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_lasercharge_004.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_lasercharge_005.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_lasercharge_006.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_lasercharge_007.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_lasercharge_008.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_laserfire_001.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_laserfire_002.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_laserfire_003.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_laserfire_004.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_laserfire_005.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_laserfire_006.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_laserfire_007.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_laserfire_008.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_laserfire_009.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_sunflareblast_001.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_sunflareblast_002.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_sunflareblast_003.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_sunflareblast_004.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_sunflareblast_005.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_sunflareblast_006.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_sunflareblast_007.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_sunflareblast_008.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_sunflareblast_009.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_sunflareblast_010.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_sunflareblast_011.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_sunflareblast_012.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_sunflareblast_013.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_sunflarecharge_001.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_sunflarecharge_002.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_sunflarecharge_003.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_sunflarecharge_004.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_sunflarecharge_005.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_sunflarecharge_006.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_sunflarecharge_007.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_sunflarecharge_008.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_sunflarecharge_009.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_sunflarecharge_010.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_sunflarecharge_011.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_sunflarecharge_012.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_sunflarecharge_013.png" />
+    <EmbeddedResource Include="Resources\OphanaimNew\ophanaimnew_sunflarecharge_014.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\suncolor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Ammocom\ophanaimbossiconpng.png" />
+    <EmbeddedResource Include="Resources\Ammocom\ophanaimsheetrt.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\WispInABottle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\VFX\Debuffs\heatstrokeicon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\VFX\Sun\sunflare_chargeup_1.png" />
+    <EmbeddedResource Include="Resources\VFX\Sun\sunflare_chargeup_2.png" />
+    <EmbeddedResource Include="Resources\VFX\Sun\sunflare_chargeup_3.png" />
+    <EmbeddedResource Include="Resources\VFX\Sun\sunflare_chargeup_4.png" />
+    <EmbeddedResource Include="Resources\VFX\Sun\sunflare_chargeup_5.png" />
+    <EmbeddedResource Include="Resources\VFX\Sun\sunflare_chargeup_6.png" />
+    <EmbeddedResource Include="Resources\VFX\Sun\sunflare_chargeup_7.png" />
+    <EmbeddedResource Include="Resources\VFX\Sun\sunflare_chargeup_8.png" />
+    <EmbeddedResource Include="Resources\VFX\Sun\sunflare_chargeup_9.png" />
+    <EmbeddedResource Include="Resources\VFX\Sun\sunflare_chargeup_10.png" />
+    <EmbeddedResource Include="Resources\VFX\Sun\sunflare_chargeup_11.png" />
+    <EmbeddedResource Include="Resources\VFX\Sun\sunflare_chargeup_12.png" />
+    <EmbeddedResource Include="Resources\VFX\Sun\sunflare_fire_001.png" />
+    <EmbeddedResource Include="Resources\VFX\Sun\sunflare_fire_002.png" />
+    <EmbeddedResource Include="Resources\VFX\Sun\sunflare_fire_003.png" />
+    <EmbeddedResource Include="Resources\VFX\Sun\sunflare_fire_004.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\gunwarrant.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Shrines\ShrineOfEvil.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ShrineRooms\ShrineOfEvilShrineRoomHell.room" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Enemies\Detscavator\detscavator_charge_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Detscavator\detscavator_charge_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Detscavator\detscavator_charge_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Detscavator\detscavator_charge_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Detscavator\detscavator_charge_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\Detscavator\detscavator_charge_006.png" />
+    <EmbeddedResource Include="Resources\Enemies\Detscavator\detscavator_charge_007.png" />
+    <EmbeddedResource Include="Resources\Enemies\Detscavator\detscavator_charge_008.png" />
+    <EmbeddedResource Include="Resources\Enemies\Detscavator\detscavator_charge_009.png" />
+    <EmbeddedResource Include="Resources\Enemies\Detscavator\detscavator_charge_010.png" />
+    <EmbeddedResource Include="Resources\Enemies\Detscavator\detscavator_charge_011.png" />
+    <EmbeddedResource Include="Resources\Enemies\Detscavator\detscavator_death_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Detscavator\detscavator_fire_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Detscavator\detscavator_fire_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Detscavator\detscavator_fire_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Detscavator\detscavator_fire_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Detscavator\detscavator_fire_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\Detscavator\detscavator_fire_006.png" />
+    <EmbeddedResource Include="Resources\Enemies\Detscavator\detscavator_idle-001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Detscavator\detscavator_idle-002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Detscavator\detscavator_idle-003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Detscavator\detscavator_idle-004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Detscavator\detscavator_idle-005.png" />
+    <EmbeddedResource Include="Resources\Enemies\Detscavator\detscavator_idle-006.png" />
+    <EmbeddedResource Include="Resources\Enemies\Detscavator\detscavator_idle-007.png" />
+    <EmbeddedResource Include="Resources\Enemies\Detscavator\detscavator_idle-008.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Ammocom\detscavatorivonammo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_burp_001.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_burp_002.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_burp_003.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_burp_004.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_burp_005.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_burp_006.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_burp_007.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_burp_008.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_charge1_001.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_charge1_002.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_charge1_003.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_charge1_004.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_cloakidle_001.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_cloakidle_002.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_cloakidle_003.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_cloakidle_004.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_cloakidle_005.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_cloakidle_006.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_cloakidle_007.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_cloak_001.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_cloak_002.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_cloak_003.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_cloak_004.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_cloak_005.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_cloak_006.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_cloak_007.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_death_001.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_death_002.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_death_003.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_death_004.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_death_005.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_death_006.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_death_007.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_death_008.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_death_009.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_death_010.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_death_011.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_death_012.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_death_013.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_death_014.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_death_015.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_fire1_001.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_fire1_002.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_idle_001.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_idle_002.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_idle_003.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_idle_004.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_idle_005.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_idle_006.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_idle_007.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_intro_001.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_intro_002.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_intro_003.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_intro_004.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_intro_005.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_intro_006.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_intro_007.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_intro_008.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_intro_009.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_intro_010.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_intro_011.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_intro_012.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_intro_013.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_intro_014.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_intro_015.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_intro_016.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_intro_017.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_intro_018.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_intro_019.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_intro_020.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_intro_021.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_intro_022.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_warpin_001.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_warpin_002.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_warpin_003.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_warpin_004.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_warpin_005.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_warpout_001.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_warpout_002.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_warpout_003.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_warpout_004.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_warpout_005.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_warpout_006.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_charge_001.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Ammocom\annihichamberSheet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\VFX\confusedchamber.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\VFX\ConfusedChamber\confusedchamber1.png" />
+    <EmbeddedResource Include="Resources\VFX\ConfusedChamber\confusedchamber2.png" />
+    <EmbeddedResource Include="Resources\VFX\ConfusedChamber\confusedchamber3.png" />
+    <EmbeddedResource Include="Resources\VFX\ConfusedChamber\confusedchamber4.png" />
+    <EmbeddedResource Include="Resources\VFX\ConfusedChamber\confusedchamber5.png" />
+    <EmbeddedResource Include="Resources\VFX\ConfusedChamber\confusedchamber6.png" />
+    <EmbeddedResource Include="Resources\VFX\ConfusedChamber\confusedchamber7.png" />
+    <EmbeddedResource Include="Resources\VFX\ConfusedChamber\confusedchamber8.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\VFX\ConfusedChamber\confusedchamber9.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\BossCards\annihichamber_bosscard.png" />
+    <EmbeddedResource Include="Resources\BossCards\bulletbanker_bosscard.png" />
+    <EmbeddedResource Include="Resources\BossCards\fungannon_bosscard.png" />
+    <EmbeddedResource Include="Resources\BossCards\ophanaim_bosscard.png" />
+    <EmbeddedResource Include="Resources\BossCards\shellrax_bosscard.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Guons\GunknownGuon\superguon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\energyshield.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Guons\EnergyPlatedGuon\energyshiledguon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Shrines\HellShrines\shrineofbolster.png" />
+    <EmbeddedResource Include="Resources\Shrines\HellShrines\shrineofdarkness.png" />
+    <EmbeddedResource Include="Resources\Shrines\HellShrines\shrineofressurection.png" />
+    <EmbeddedResource Include="Resources\Shrines\HellShrines\shrineofthejammed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ShrineIcons\BolsterIcon.png" />
+    <EmbeddedResource Include="Resources\ShrineIcons\DarknessIcon.png" />
+    <EmbeddedResource Include="Resources\ShrineIcons\JammedIcon.png" />
+    <EmbeddedResource Include="Resources\ShrineIcons\PetrifyIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Shrines\HellShrines\shrineofpurity.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ShrineIcons\PurityIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ending.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\bloodidol.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Guons\SoulGuon\guoner.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Shrines\HellShrines\shrinebroken.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\heresyhammer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ShrineIcons\HeresyIcons\cleanseshrineanger.png" />
+    <EmbeddedResource Include="Resources\ShrineIcons\HeresyIcons\ShelltanIcon.png" />
+    <EmbeddedResource Include="Resources\ShrineIcons\HeresyIcons\shrineChallengeIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\sirpaler.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Beams\Colossus\colossusbeam_impact_001.png" />
+    <EmbeddedResource Include="Resources\Beams\Colossus\colossusbeam_impact_002.png" />
+    <EmbeddedResource Include="Resources\Beams\Colossus\colossusbeam_impact_003.png" />
+    <EmbeddedResource Include="Resources\Beams\Colossus\colossusbeam_impact_004.png" />
+    <EmbeddedResource Include="Resources\Beams\Colossus\colossusbeam_mid_001.png" />
+    <EmbeddedResource Include="Resources\Beams\Colossus\colossusbeam_mid_002.png" />
+    <EmbeddedResource Include="Resources\Beams\Colossus\colossusbeam_mid_003.png" />
+    <EmbeddedResource Include="Resources\Beams\Colossus\colossusbeam_mid_004.png" />
+    <EmbeddedResource Include="Resources\Beams\Colossus\colossusbeam_start_001.png" />
+    <EmbeddedResource Include="Resources\Beams\Colossus\colossusbeam_start_002.png" />
+    <EmbeddedResource Include="Resources\Beams\Colossus\colossusbeam_start_003.png" />
+    <EmbeddedResource Include="Resources\Beams\Colossus\colossusbeam_start_004.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Beams\Colossus\colossusbeam_end_001.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Beams\ColossusPerfected\colossusbeam_end_001.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Beams\ColossusPerfected\colossusbeam_impact_001.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Beams\ColossusPerfected\colossusbeam_impact_002.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Beams\ColossusPerfected\colossusbeam_impact_003.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Beams\ColossusPerfected\colossusbeam_impact_004.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Beams\ColossusPerfected\colossusbeam_mid_001.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Beams\ColossusPerfected\colossusbeam_mid_002.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Beams\ColossusPerfected\colossusbeam_mid_003.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Beams\ColossusPerfected\colossusbeam_mid_004.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Beams\ColossusPerfected\colossusbeam_start_001.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Beams\ColossusPerfected\colossusbeam_start_002.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Beams\ColossusPerfected\colossusbeam_start_003.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Beams\ColossusPerfected\colossusbeam_start_004.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Guons\PickupGuons\AmmoGuon\ammoguon_001.png" />
+    <EmbeddedResource Include="Resources\Guons\PickupGuons\AmmoGuon\ammoguon_002.png" />
+    <EmbeddedResource Include="Resources\Guons\PickupGuons\AmmoGuon\ammoguon_003.png" />
+    <EmbeddedResource Include="Resources\Guons\PickupGuons\AmmoGuon\ammoguon_004.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Guons\PickupGuons\Armor\armorguon_001.png" />
+    <EmbeddedResource Include="Resources\Guons\PickupGuons\Armor\armorguon_002.png" />
+    <EmbeddedResource Include="Resources\Guons\PickupGuons\Armor\armorguon_003.png" />
+    <EmbeddedResource Include="Resources\Guons\PickupGuons\Armor\armorguon_004.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Guons\PickupGuons\HalfAmmoguon\halfammoguon_001.png" />
+    <EmbeddedResource Include="Resources\Guons\PickupGuons\HalfAmmoguon\halfammoguon_002.png" />
+    <EmbeddedResource Include="Resources\Guons\PickupGuons\HalfAmmoguon\halfammoguon_003.png" />
+    <EmbeddedResource Include="Resources\Guons\PickupGuons\HalfAmmoguon\halfammoguon_004.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Guons\PickupGuons\HalfheartGuon\halfheartguon_001.png" />
+    <EmbeddedResource Include="Resources\Guons\PickupGuons\HalfheartGuon\halfheartguon_002.png" />
+    <EmbeddedResource Include="Resources\Guons\PickupGuons\HalfheartGuon\halfheartguon_003.png" />
+    <EmbeddedResource Include="Resources\Guons\PickupGuons\HalfheartGuon\halfheartguon_004.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Guons\PickupGuons\HeartGuon\heartguon_001.png" />
+    <EmbeddedResource Include="Resources\Guons\PickupGuons\HeartGuon\heartguon_002.png" />
+    <EmbeddedResource Include="Resources\Guons\PickupGuons\HeartGuon\heartguon_003.png" />
+    <EmbeddedResource Include="Resources\Guons\PickupGuons\HeartGuon\heartguon_004.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Guons\PickupGuons\keyguon\keyguon_001.png" />
+    <EmbeddedResource Include="Resources\Guons\PickupGuons\keyguon\keyguon_002.png" />
+    <EmbeddedResource Include="Resources\Guons\PickupGuons\keyguon\keyguon_003.png" />
+    <EmbeddedResource Include="Resources\Guons\PickupGuons\keyguon\keyguon_004.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Guons\PickupGuons\BlankGuon\blankguon_001.png" />
+    <EmbeddedResource Include="Resources\Guons\PickupGuons\BlankGuon\blankguon_002.png" />
+    <EmbeddedResource Include="Resources\Guons\PickupGuons\BlankGuon\blankguon_003.png" />
+    <EmbeddedResource Include="Resources\Guons\PickupGuons\BlankGuon\blankguon_004.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\scrollofguon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Shrines\Wanderer\wanderer_idle_001.png" />
+    <EmbeddedResource Include="Resources\Shrines\Wanderer\wanderer_idle_002.png" />
+    <EmbeddedResource Include="Resources\Shrines\Wanderer\wanderer_idle_003.png" />
+    <EmbeddedResource Include="Resources\Shrines\Wanderer\wanderer_idle_004.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\planetsidemedal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Beams\LaserChainsaw\chainsaw_end_001.png" />
+    <EmbeddedResource Include="Resources\Beams\LaserChainsaw\chainsaw_end_002.png" />
+    <EmbeddedResource Include="Resources\Beams\LaserChainsaw\chainsaw_end_003.png" />
+    <EmbeddedResource Include="Resources\Beams\LaserChainsaw\chainsaw_end_004.png" />
+    <EmbeddedResource Include="Resources\Beams\LaserChainsaw\chainsaw_mid_001.png" />
+    <EmbeddedResource Include="Resources\Beams\LaserChainsaw\chainsaw_mid_002.png" />
+    <EmbeddedResource Include="Resources\Beams\LaserChainsaw\chainsaw_mid_003.png" />
+    <EmbeddedResource Include="Resources\Beams\LaserChainsaw\chainsaw_mid_004.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Enemies\ProperCube\toddy_dash_002.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\turbo\turbo_die_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\turbo\turbo_die_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\turbo\turbo_die_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\turbo\turbo_die_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\turbo\turbo_die_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\turbo\turbo_die_006.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\turbo\turbo_idle_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\turbo\turbo_idle_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\turbo\turbo_idle_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\turbo\turbo_idle_004.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Static\static1.png" />
+    <EmbeddedResource Include="Resources\Static\static2.png" />
+    <EmbeddedResource Include="Resources\Static\static3.png" />
+    <EmbeddedResource Include="Resources\Static\static4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\derpybullets.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ShrineRooms\PrayerRooms\PrayerRoomKeep.room" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\prayeramulet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources2\ParticleTextures\shamberparticles.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ShrineRooms\PrayerRooms\PrayerRoomAbbey.room" />
+    <EmbeddedResource Include="Resources\ShrineRooms\PrayerRooms\PrayerRoomForge.room" />
+    <EmbeddedResource Include="Resources\ShrineRooms\PrayerRooms\PrayerRoomHell.room" />
+    <EmbeddedResource Include="Resources\ShrineRooms\PrayerRooms\PrayerRoomHollow.room" />
+    <EmbeddedResource Include="Resources\ShrineRooms\PrayerRooms\PrayerRoomMines.room" />
+    <EmbeddedResource Include="Resources\ShrineRooms\PrayerRooms\PrayerRoomOubliette.room" />
+    <EmbeddedResource Include="Resources\ShrineRooms\PrayerRooms\PrayerRoomProper.room" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_death_016.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_death_017.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_death_018.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_death_019.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_death_020.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_death_021.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_death_022.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_death_023.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_death_024.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_death_025.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_death_026.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_death_027.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_death_028.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_death_029.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_death_030.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_death_031.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_death_032.png" />
+    <EmbeddedResource Include="Resources\AnnihiChamber\annihichamber_death_033.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources2\ParticleTextures\bloodster.png" />
+    <EmbeddedResource Include="Resources2\ParticleTextures\breakcasts.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources2\ParticleTextures\shellraxeye.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_chargeeye_001.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_chargeeye_002.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_chargeeye_003.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_chargeeye_004.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_chargeeye_005.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_chargeeye_006.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_fireeye_001.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_fireeye_002.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_fireeye_003.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\trapdefusalkit.png" />
+    <EmbeddedResource Include="Resources\VFX\CursePoof\cursepoof_001.png" />
+    <EmbeddedResource Include="Resources\VFX\CursePoof\cursepoof_002.png" />
+    <EmbeddedResource Include="Resources\VFX\CursePoof\cursepoof_003.png" />
+    <EmbeddedResource Include="Resources\VFX\CursePoof\cursepoof_004.png" />
+    <EmbeddedResource Include="Resources\VFX\CursePoof\cursepoof_005.png" />
+    <EmbeddedResource Include="Resources\vengefulshell.png" />
+    <EmbeddedResource Include="Resources\Shrines\toolatesign.png" />
+    <EmbeddedResource Include="Resources\Shrines\SWMines\RedShrine.png" />
+    <EmbeddedResource Include="Resources\Shrines\SWMines\RedShrineEmpty.png" />
+    <EmbeddedResource Include="Resources\Shrines\SWMines\BlueShrine.png" />
+    <EmbeddedResource Include="Resources\Shrines\SWMines\BlueShrineEmpty.png" />
+    <EmbeddedResource Include="Resources\Shrines\SWMines\BlueCasingShrine.png" />
+    <EmbeddedResource Include="Resources\Shrines\SWMines\BlueCasingShrineEmpty.png" />
+    <EmbeddedResource Include="Resources\VFX\KnuckleBlaster\fistbluechosen.png" />
+    <EmbeddedResource Include="Resources\VFX\KnuckleBlaster\fistboth.png" />
+    <EmbeddedResource Include="Resources\VFX\KnuckleBlaster\fistredchosen.png" />
+    <EmbeddedResource Include="Resources\VFX\KnuckleBlaster\feedbackerfist.png" />
+    <EmbeddedResource Include="Resources\VFX\KnuckleBlaster\knuckleblasterfist.png" />
+    <EmbeddedResource Include="Resources\VFX\KnuckleBlaster\feedbackerchain.png" />
+    <EmbeddedResource Include="Resources\VFX\KnuckleBlaster\feedbackerenabled.png" />
+    <EmbeddedResource Include="Resources\VFX\KnuckleBlaster\knuckleblasterenabled.png" />
+    <EmbeddedResource Include="Resources\VFX\KnuckleBlaster\panel.png" />
+    <EmbeddedResource Include="Resources\VFX\KnuckleBlaster\knuckleblasterchain.png" />
+    <EmbeddedResource Include="Resources\VFX\DivineLight\glowyorb_die_001.png" />
+    <EmbeddedResource Include="Resources\VFX\DivineLight\glowyorb_die_002.png" />
+    <EmbeddedResource Include="Resources\VFX\DivineLight\glowyorb_die_003.png" />
+    <EmbeddedResource Include="Resources\VFX\DivineLight\glowyorb_die_004.png" />
+    <EmbeddedResource Include="Resources\VFX\DivineLight\glowyorb_die_005.png" />
+    <EmbeddedResource Include="Resources\VFX\DivineLight\glowyorb_die_006.png" />
+    <EmbeddedResource Include="Resources\VFX\DivineLight\glowyorb_die_007.png" />
+    <EmbeddedResource Include="Resources\VFX\DivineLight\glowyorb_idle_001.png" />
+    <EmbeddedResource Include="Resources\VFX\DivineLight\glowyorb_idle_002.png" />
+    <EmbeddedResource Include="Resources\VFX\DivineLight\glowyorb_idle_003.png" />
+    <EmbeddedResource Include="Resources\VFX\DivineLight\glowyorb_idle_004.png" />
+    <EmbeddedResource Include="Resources\VFX\DivineLight\glowyorb_idle_005.png" />
+    <EmbeddedResource Include="Resources\VFX\DivineLight\glowyorb_idle_006.png" />
+    <EmbeddedResource Include="Resources\VFX\DivineLight\glowyorb_idle_007.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\goldenrevolver\grbullet_die_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\goldenrevolver\grbullet_die_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\goldenrevolver\grbullet_die_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\goldenrevolver\grbullet_die_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\goldenrevolver\grbullet_die_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\goldenrevolver\grbullet_idle_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\goldenrevolver\grbullet_idle_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\goldenrevolver\grbullet_idle_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\goldenrevolver\grbullet_idle_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\notsoai\aibullet_die_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\notsoai\aibullet_die_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\notsoai\aibullet_die_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\notsoai\aibullet_die_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\notsoai\aibullet_die_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\notsoai\aibullet_idle_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\notsoai\aibullet_idle_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\notsoai\aibullet_idle_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\ModderBullets\notsoai\aibullet_idle_004.png" />
+    <EmbeddedResource Include="Resources\GunClips\Colossus\colossusempty.png" />
+    <EmbeddedResource Include="Resources\GunClips\Colossus\colossusfull.png" />
+    <EmbeddedResource Include="Resources\GunClips\Gunknown\gunknownclipemptyl.png" />
+    <EmbeddedResource Include="Resources\GunClips\Gunknown\gunknownclipfull.png" />
+    <EmbeddedResource Include="Resources\GunClips\Funcannon\funcannonempty.png" />
+    <EmbeddedResource Include="Resources\GunClips\Funcannon\funcannonfull.png" />
+    <EmbeddedResource Include="Resources\GunClips\Immateria\immateriaempty.png" />
+    <EmbeddedResource Include="Resources\GunClips\Immateria\immateriafull.png" />
+    <EmbeddedResource Include="Resources\GunClips\BurningSun\burningsunempty.png" />
+    <EmbeddedResource Include="Resources\GunClips\BurningSun\burningsunfull.png" />
+    <EmbeddedResource Include="Resources\GunClips\WitherLance\lanceempty.png" />
+    <EmbeddedResource Include="Resources\GunClips\WitherLance\lancefull.png" />
+    <EmbeddedResource Include="Resources\GunClips\ShockChain\shocklaserempty.png" />
+    <EmbeddedResource Include="Resources\GunClips\ShockChain\shocklaserfull.png" />
+    <EmbeddedResource Include="Resources\GunClips\SoulLantern\soullaternempty.png" />
+    <EmbeddedResource Include="Resources\GunClips\SoulLantern\soullaternfull.png" />
+    <EmbeddedResource Include="Resources\GunClips\Capacitor\capacitirempty.png" />
+    <EmbeddedResource Include="Resources\GunClips\Capacitor\capacitirfull.png" />
+    <EmbeddedResource Include="Resources\cointosser.png" />
+    <EmbeddedResource Include="Resources\GunClips\DivineLight\divinelightempty.png" />
+    <EmbeddedResource Include="Resources\GunClips\DivineLight\divinelightfull.png" />
+    <EmbeddedResource Include="Resources\GunClips\HellLight\hellemptyl.png" />
+    <EmbeddedResource Include="Resources\GunClips\HellLight\hellfull.png" />
+    <EmbeddedResource Include="Resources\preigniter.png" />
+    <EmbeddedResource Include="Resources\Beams\TractorBeam\tractorbeam_impact_001.png" />
+    <EmbeddedResource Include="Resources\Beams\TractorBeam\tractorbeam_impact_002.png" />
+    <EmbeddedResource Include="Resources\Beams\TractorBeam\tractorbeam_impact_003.png" />
+    <EmbeddedResource Include="Resources\Beams\TractorBeam\tractorbeam_impact_004.png" />
+    <EmbeddedResource Include="Resources\Beams\TractorBeam\tractorbeam_impact_005.png" />
+    <EmbeddedResource Include="Resources\Beams\TractorBeam\tractorbeam_impact_006.png" />
+    <EmbeddedResource Include="Resources\Beams\TractorBeam\tractorbeam_mid_001.png" />
+    <EmbeddedResource Include="Resources\Beams\TractorBeam\tractorbeam_mid_002.png" />
+    <EmbeddedResource Include="Resources\Beams\TractorBeam\tractorbeam_mid_003.png" />
+    <EmbeddedResource Include="Resources\Beams\TractorBeam\tractorbeam_mid_004.png" />
+    <EmbeddedResource Include="Resources\Beams\TractorBeam\tractorbeam_mid_005.png" />
+    <EmbeddedResource Include="Resources\Beams\TractorBeam\tractorbeam_mid_006.png" />
+    <EmbeddedResource Include="Resources\Beams\TractorBeam\tractorbeam_start_001.png" />
+    <EmbeddedResource Include="Resources\Beams\TractorBeam\tractorbeam_start_002.png" />
+    <EmbeddedResource Include="Resources\Beams\TractorBeam\tractorbeam_start_003.png" />
+    <EmbeddedResource Include="Resources\Beams\TractorBeam\tractorbeam_start_004.png" />
+    <EmbeddedResource Include="Resources\Beams\TractorBeam\tractorbeam_start_005.png" />
+    <EmbeddedResource Include="Resources\Beams\TractorBeam\tractorbeam_start_006.png" />
+    <EmbeddedResource Include="Resources\GunClips\TractorBeam\tractorempty.png" />
+    <EmbeddedResource Include="Resources\GunClips\TractorBeam\tractorfull.png" />
+    <EmbeddedResource Include="Resources\Enemies\SomethingWicked\somethingwicked_idle_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\SomethingWicked\somethingwicked_idle_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\SomethingWicked\somethingwicked_idle_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\SomethingWicked\somethingwicked_idle_004.png" />
+    <EmbeddedResource Include="Resources\bluecasing.png" />
+    <EmbeddedResource Include="Resources\redcasing.png" />
+    <EmbeddedResource Include="Resources\NPCs\TimeTrader\timetrader_idle_001.png" />
+    <EmbeddedResource Include="Resources\NPCs\TimeTrader\timetrader_idle_002.png" />
+    <EmbeddedResource Include="Resources\NPCs\TimeTrader\timetrader_idle_003.png" />
+    <EmbeddedResource Include="Resources\NPCs\TimeTrader\timetrader_idle_004.png" />
+    <EmbeddedResource Include="Resources\NPCs\TimeTrader\timetrader_talk_001.png" />
+    <EmbeddedResource Include="Resources\NPCs\TimeTrader\timetrader_talk_002.png" />
+    <EmbeddedResource Include="Resources\NPCs\TimeTrader\timetrader_talk_003.png" />
+    <EmbeddedResource Include="Resources\NPCs\TimeTrader\timetrader_talk_004.png" />
+    <EmbeddedResource Include="Resources\NPCs\TimeTrader\timetradercarpet.png" />
+    <EmbeddedResource Include="Resources\Ammocom\SomethingWickedAmmonomiconSheet.png" />
+    <EmbeddedResource Include="Resources\GunClips\Lilpew\lilpew_clipempty.png" />
+    <EmbeddedResource Include="Resources\GunClips\Lilpew\lilpew_clipfull.png" />
+    <EmbeddedResource Include="Resources2\testturret\testturret_idle_001.png" />
+    <EmbeddedResource Include="Resources2\testturret\testturret_idle_002.png" />
+    <EmbeddedResource Include="Resources2\testturret\testturret_shoot_001.png" />
+    <EmbeddedResource Include="Resources2\testturret\testturret_shoot_002.png" />
+    <EmbeddedResource Include="Resources2\testturret\testturret_spawn_001.png" />
+    <EmbeddedResource Include="Resources2\testturret\testturret_spawn_002.png" />
+    <EmbeddedResource Include="Resources2\testturret\testturret_spawn_003.png" />
+    <EmbeddedResource Include="Resources2\testturret\testturret_spawn_004.png" />
+    <EmbeddedResource Include="Resources2\testturret\testturret_spawn_005.png" />
+    <EmbeddedResource Include="Resources\NPCs\TimeTrader\icon.png" />
+    <EmbeddedResource Include="Resources2\ProjectileTrails\Targeter\trageter_mid_001.png" />
+    <EmbeddedResource Include="Resources2\ProjectileTrails\Targeter\trageter_mid_002.png" />
+    <EmbeddedResource Include="Resources2\ProjectileTrails\Targeter\trageter_mid_003.png" />
+    <EmbeddedResource Include="Resources2\ProjectileTrails\Targeter\trageter_mid_004.png" />
+    <EmbeddedResource Include="Resources2\ProjectileTrails\Targeter\trageter_mid_005.png" />
+    <EmbeddedResource Include="Resources2\ProjectileTrails\Targeter\trageter_start_001.png" />
+    <EmbeddedResource Include="Resources2\ProjectileTrails\Targeter\trageter_start_002.png" />
+    <EmbeddedResource Include="Resources2\ProjectileTrails\Targeter\trageter_start_003.png" />
+    <EmbeddedResource Include="Resources2\ProjectileTrails\Targeter\trageter_start_004.png" />
+    <EmbeddedResource Include="Resources2\ProjectileTrails\Targeter\trageter_start_005.png" />
+    <EmbeddedResource Include="Resources\Bosses\Prisoner\prisonerPH1_trueidle_001.png" />
+    <EmbeddedResource Include="Resources\Bosses\Prisoner\prisonerPH1_trueidle_002.png" />
+    <EmbeddedResource Include="Resources\Bosses\Prisoner\prisonerPH1_trueidle_003.png" />
+    <EmbeddedResource Include="Resources\Bosses\Prisoner\prisonerPH1_trueidle_004.png" />
+    <EmbeddedResource Include="Resources\Bosses\Prisoner\prisonerPH1_trueidle_005.png" />
+    <EmbeddedResource Include="Resources\Bosses\Prisoner\prisonerPH1_trueidle_006.png" />
+    <EmbeddedResource Include="Resources\Bosses\Prisoner\prisonerPH1_trueidle_007.png" />
+    <EmbeddedResource Include="Resources\Bosses\Prisoner\prisonerPH1_trueidle_008.png" />
+    <EmbeddedResource Include="Resources\Bosses\Prisoner\prisonerPH1_trueidle_009.png" />
+    <EmbeddedResource Include="Resources\Bosses\Prisoner\prisonerPH1_trueidle_010.png" />
+    <EmbeddedResource Include="Resources\Bosses\Prisoner\prisonerPH1_trueidle_011.png" />
+    <EmbeddedResource Include="Resources\BossCards\prisonerbosscard.png" />
+    <EmbeddedResource Include="Resources\Bosses\Prisoner\Intro\prisonerPH1_intro_001.png" />
+    <EmbeddedResource Include="Resources\Bosses\Prisoner\Intro\prisonerPH1_intro_002.png" />
+    <EmbeddedResource Include="Resources\Bosses\Prisoner\Intro\prisonerPH1_intro_003.png" />
+    <EmbeddedResource Include="Resources\Bosses\Prisoner\Intro\prisonerPH1_intro_004.png" />
+    <EmbeddedResource Include="Resources\Bosses\Prisoner\Intro\prisonerPH1_intro_005.png" />
+    <EmbeddedResource Include="Resources\Bosses\Prisoner\Intro\prisonerPH1_intro_006.png" />
+    <EmbeddedResource Include="Resources\Bosses\Prisoner\Intro\prisonerPH1_intro_007.png" />
+    <EmbeddedResource Include="Resources\Bosses\Prisoner\Intro\prisonerPH1_intro_008.png" />
+    <EmbeddedResource Include="Resources\Bosses\Prisoner\Intro\prisonerPH1_intro_009.png" />
+    <EmbeddedResource Include="Resources\Bosses\Prisoner\Intro\prisonerPH1_intro_010.png" />
+    <EmbeddedResource Include="Resources\Bosses\Prisoner\Intro\prisonerPH1_intro_011.png" />
+    <EmbeddedResource Include="Resources\Bosses\Prisoner\Intro\prisonerPH1_intro_012.png" />
+    <EmbeddedResource Include="Resources\Bosses\Prisoner\Intro\prisonerPH1_intro_013.png" />
+    <EmbeddedResource Include="Resources\Bosses\Prisoner\Intro\prisonerPH1_intro_014.png" />
+    <EmbeddedResource Include="Resources\Bosses\Prisoner\Intro\prisonerPH1_intro_015.png" />
+    <EmbeddedResource Include="Resources\Bosses\Prisoner\Intro\prisonerPH1_intro_016.png" />
+    <EmbeddedResource Include="Resources\Bosses\Prisoner\Intro\prisonerPH1_intro_017.png" />
+    <EmbeddedResource Include="Resources\Bosses\Prisoner\Intro\prisonerPH1_intro_018.png" />
+    <EmbeddedResource Include="Resources\Bosses\Prisoner\Intro\prisonerPH1_intro_019.png" />
+    <EmbeddedResource Include="Resources\Bosses\Prisoner\Intro\prisonerPH1_intro_020.png" />
+    <EmbeddedResource Include="Resources\Bosses\Prisoner\Intro\prisonerPH1_intro_021.png" />
+    <EmbeddedResource Include="Resources\Bosses\Prisoner\Intro\prisonerPH1_intro_022.png" />
+    <EmbeddedResource Include="Resources\Bosses\Prisoner\Intro\prisonerPH1_intro_023.png" />
+    <EmbeddedResource Include="Resources\Bosses\Prisoner\Intro\prisonerPH1_intro_024.png" />
+    <EmbeddedResource Include="Resources\Bosses\Prisoner\IntroIdle\prisonerPH1_introidle_001.png" />
+    <EmbeddedResource Include="Resources\Bosses\Prisoner\IntroIdle\prisonerPH1_introidle_002.png" />
+    <EmbeddedResource Include="Resources\Bosses\Prisoner\IntroIdle\prisonerPH1_introidle_003.png" />
+    <EmbeddedResource Include="Resources\Bosses\Prisoner\chain.png" />
+    <Content Include="Resources\Shellrax\shellrax_intro_019.png" />
+    <EmbeddedResource Include="Resources\VFX\LockOnVFX\lockonvfx1.png" />
+    <EmbeddedResource Include="Resources\VFX\LockOnVFX\lockonvfx2.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_intro_020.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_intro_021.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_intro_022.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_intro_023.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_intro_024.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_intro_025.png" />
+    <EmbeddedResource Include="Resources\Shellrax\shellrax_intro_026.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources2\balls.room" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ShrineRooms\SWRooms\SomethingMines.room" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ShrineRooms\ShopRooms\TimeTraderShop.room" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ShrineRooms\ShopRooms\TimeTraderShopAbbey.room" />
+    <EmbeddedResource Include="Resources\ShrineRooms\ShopRooms\TimeTraderShopForge.room" />
+    <EmbeddedResource Include="Resources\ShrineRooms\ShopRooms\TimeTraderShopHollow.room" />
+    <EmbeddedResource Include="Resources\ShrineRooms\ShopRooms\TimeTraderShopMines.room" />
+    <EmbeddedResource Include="Resources\ShrineRooms\ShopRooms\TimeTraderShopProper.room" />
+    <EmbeddedResource Include="Resources\ShrineRooms\ShopRooms\TimeTraderShopSewer.room" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ShrineRooms\hellpain.room" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

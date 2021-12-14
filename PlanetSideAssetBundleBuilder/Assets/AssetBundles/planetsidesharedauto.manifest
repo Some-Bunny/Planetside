@@ -1,0 +1,21 @@
+ManifestFileVersion: 0
+CRC: 101613656
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: c6136102c61c8f84e56677b2d6235038
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 8e8e18cb26bfe573a307e8095079a2dc
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+Assets:
+- Assets/PlanetSideTextures/ExampleTexture.png
+- Assets/PlanetSidePrefabs/ExampleGameObject.prefab
+Dependencies: []

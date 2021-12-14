@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "d6d7a494-722e-4763-959b-c2d6b6a42b01": {
+      "ProjectGuid": "d6d7a494-722e-4763-959b-c2d6b6a42b01",
+      "DisplayName": "Planetside",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}
