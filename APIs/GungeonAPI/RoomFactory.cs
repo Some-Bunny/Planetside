@@ -25,7 +25,7 @@ namespace GungeonAPI
         public static void LoadRoomsFromRoomDirectory()
         {
             string roomDirectory = PlanetsideModule.ZipFilePath;
-            string unzippedDirectory = PlanetsideModule.FilePath;
+            string unzippedDirectory = PlanetsideModule.RoomFilePath;
 
             if (File.Exists(roomDirectory))
             {
@@ -386,12 +386,12 @@ namespace GungeonAPI
                     placeableContents.variantTiers = new List<DungeonPlaceableVariant>()
                     {
                         new DungeonPlaceableVariant()
-                            {
-                                percentChance = 1,
-                                nonDatabasePlaceable = asset,
-                                prerequisites = emptyReqs,
-                                materialRequirements= new DungeonPlaceableRoomMaterialRequirement[0]
-                            }
+                        {
+                            percentChance = 1,
+                            nonDatabasePlaceable = asset,
+                            prerequisites = emptyReqs,
+                            materialRequirements= new DungeonPlaceableRoomMaterialRequirement[0]
+                        }
                     };
 
                     room.placedObjects.Add(new PrototypePlacedObjectData()
@@ -433,12 +433,12 @@ namespace GungeonAPI
                     placeableContents.variantTiers = new List<DungeonPlaceableVariant>()
                     {
                         new DungeonPlaceableVariant()
-                            {
+                        {
                                 percentChance = 1,
                                 nonDatabasePlaceable = asset1.gameObject,
                                 prerequisites = emptyReqs,
                                 materialRequirements= new DungeonPlaceableRoomMaterialRequirement[0]
-                            }
+                        }
                     };
 
                     room.placedObjects.Add(new PrototypePlacedObjectData()
@@ -452,8 +452,22 @@ namespace GungeonAPI
                     //Tools.Print($"Added {asset.name} to room.");
                     return;
                 }
-
-                Tools.PrintError($"Unable to find asset in asset bundles: {assetPath}");
+                DungeonPlaceable placeableOne = GetDungeonPlaceableFromStoredObjects(assetPath);
+                if (placeableOne)
+                {
+                    DungeonPrerequisite[] emptyReqs = new DungeonPrerequisite[0];
+                    room.placedObjectPositions.Add(location);
+                    room.placedObjects.Add(new PrototypePlacedObjectData()
+                    {
+                        contentsBasePosition = location,
+                        fieldData = new List<PrototypePlacedObjectFieldData>(),
+                        instancePrerequisites = emptyReqs,
+                        linkedTriggerAreaIDs = new List<int>(),
+                        placeableContents = placeableOne
+                    });
+                    return;
+                }
+                Tools.PrintError($"Unable to find asset in asset bundles OR stored object list: {assetPath}");
 
             }
             catch (Exception e)
@@ -461,6 +475,8 @@ namespace GungeonAPI
                 Tools.PrintException(e);
             }
         }
+
+        
 
         public static DungeonPlaceable GetPlaceableFromBundles(string assetPath)
         {
@@ -479,6 +495,21 @@ namespace GungeonAPI
         {
             GameObject asset = null;
             foreach (var objectlist in StaticReferences.StoredRoomObjects)
+            {
+                if (assetPath == objectlist.Key)
+                {
+                    asset = objectlist.Value;
+                    if (asset)
+                        break;
+                }
+            }
+            return asset;
+        }
+
+        public static DungeonPlaceable GetDungeonPlaceableFromStoredObjects(string assetPath)
+        {
+            DungeonPlaceable asset = null;
+            foreach (var objectlist in StaticReferences.StoredDungeonPlaceables)
             {
                 if (assetPath == objectlist.Key)
                 {

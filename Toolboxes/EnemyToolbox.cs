@@ -15,6 +15,19 @@ namespace Planetside
 {
     public static class EnemyToolbox
     {
+		public static AIBeamShooter2 AddAIBeamShooter(AIActor enemy, Transform transform, string name,Projectile beamProjectile ,ProjectileModule beamModule = null ,float angle = 0)
+        {
+			AIBeamShooter2 bholsterbeam1 = enemy.gameObject.AddComponent<AIBeamShooter2>();
+			bholsterbeam1.beamTransform = transform;
+			bholsterbeam1.beamModule = beamModule;
+			bholsterbeam1.beamProjectile = beamProjectile.projectile;
+			bholsterbeam1.firingEllipseCenter = transform.position;
+			bholsterbeam1.name = name;
+			bholsterbeam1.northAngleTolerance = angle;
+			return bholsterbeam1;
+        }
+
+
         public static DirectionalAnimation AddNewDirectionAnimation(AIAnimator animator, string Prefix, string[] animationNames, DirectionalAnimation.FlipType[] flipType, DirectionalAnimation.DirectionType directionType = DirectionalAnimation.DirectionType.Single)
         {
 			DirectionalAnimation newDirectionalAnimation = new DirectionalAnimation
@@ -34,15 +47,44 @@ namespace Planetside
 			};
 			return newDirectionalAnimation;
         }
-		public static void AddSoundsToAnimationFrame(tk2dSpriteAnimator animator, string animationName, Dictionary<int, string> frameAndSoundName)//int frame, string soundName)
+		public static void AddEventTriggersToAnimation(tk2dSpriteAnimator animator, string animationName, Dictionary<int, string> frameAndEventName)//int frame, string soundName)
         {
-			foreach (var value in frameAndSoundName)
+			foreach (var value in frameAndEventName)
             {
+				var clip = animator.GetClipByName(animationName);
+				clip.frames[value.Key].eventInfo = value.Value;
+				clip.frames[value.Key].triggerEvent = true;
+			}
+		}
+		public static void AddSoundsToAnimationFrame(tk2dSpriteAnimator animator, string animationName, Dictionary<int, string> frameAndSoundName)//int frame, string soundName)
+		{
+			foreach (var value in frameAndSoundName)
+			{
 				animator.GetClipByName(animationName).frames[value.Key].eventAudio = value.Value;
 				animator.GetClipByName(animationName).frames[value.Key].triggerEvent = true;
 			}
 		}
-		public static AIActor CreateNewBulletBankerEnemy(string guid, string DisplayName,int sizeX, int sizeY, string firstIdleFrame, string[] spritePaths ,List<int> IdleFrameKeys, List<int> DeathFrameKeys, List<int> AttackFrameKeys,Script bulletScript = null, float MovementSpeed = 2.5f, float HP = 20, float IdleFPS = 5f,float MovementFPS = 10f, float DeathFPS = 8f)
+
+		public static void DestroyUnnecessaryHandObjects(Transform transform)
+        {
+			foreach (Transform obj in transform.transform)
+			{
+				if (obj.name == "BulletSkeletonHand(Clone)")
+                {
+					UnityEngine.Object.Destroy(obj.gameObject);
+                }
+			}
+		}
+
+		public static GameObject GenerateShootPoint(GameObject attacher, Vector2 attachpoint, string name = "shootPoint")
+        {
+			GameObject shootpoint = new GameObject(name);
+			shootpoint.transform.parent = attacher.transform;
+			shootpoint.transform.position = attachpoint;
+			return attacher.transform.Find(name).gameObject;
+		}
+
+		public static AIActor CreateNewBulletBankerEnemy(string guid, string DisplayName,int sizeX, int sizeY, string firstIdleFrame, string[] spritePaths ,List<int> IdleFrameKeys, List<int> DeathFrameKeys, List<int> AttackFrameKeys,Script bulletScript = null, float MovementSpeed = 2.5f, float HP = 14, float IdleFPS = 5f,float MovementFPS = 10f, float DeathFPS = 8f)
         {
 		   tk2dSpriteCollectionData collectionData = new tk2dSpriteCollectionData();
 
@@ -202,10 +244,10 @@ namespace Planetside
 			bs.OtherBehaviors = behaviorSpeculator.OtherBehaviors;
 
 
-			GameObject shootpoint = new GameObject("fuck");
+			GameObject shootpoint = new GameObject("baseShootpoint");
 			shootpoint.transform.parent = companion.transform;
 			shootpoint.transform.position = companion.sprite.WorldCenter;
-			GameObject m_CachedGunAttachPoint = companion.transform.Find("fuck").gameObject;
+			GameObject m_CachedGunAttachPoint = companion.transform.Find("baseShootpoint").gameObject;
 			bs.TargetBehaviors = new List<TargetBehaviorBase>
 			{
 				new TargetPlayerBehavior
@@ -285,8 +327,11 @@ namespace Planetside
 			}
 			private void Start()
 			{
+				base.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("465da2bb086a4a88a803f79fe3a27677").bulletBank.GetBullet("homing"));
+				
 				if (base.aiActor != null && !base.aiActor.IsBlackPhantom)
 				{
+					base.aiActor.sprite.usesOverrideMaterial = true;
 					base.aiActor.sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
 					base.aiActor.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
 					base.aiActor.sprite.renderer.material.SetFloat("_EmissivePower", 40);

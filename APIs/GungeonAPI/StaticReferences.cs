@@ -306,10 +306,10 @@ namespace GungeonAPI
             }
             GameObject ChallengeShrine = FakePrefab.Clone(asset.placedObjects[0].nonenemyBehaviour.gameObject);
             if (ChallengeShrine.GetComponentInChildren<ChallengeShrineController>() == null) { ETGModConsole.Log("HOW THE *FUCK* IS THIS NULL??"); }
-            FoolproofedChallengeShrineController newController = ChallengeShrine.GetOrAddComponent<FoolproofedChallengeShrineController>();
+            FoolproofedChallengeShrineController newController = ChallengeShrine.AddComponent<FoolproofedChallengeShrineController>();
             ChallengeShrineController baseController = ChallengeShrine.GetComponentInChildren<ChallengeShrineController>();
             newController.acceptOptionKey = baseController.acceptOptionKey;
-            newController.AlternativeOutlineTarget   = baseController.AlternativeOutlineTarget;
+            newController.AlternativeOutlineTarget = baseController.AlternativeOutlineTarget;
             newController.CustomChestTable = baseController.CustomChestTable;
             newController.declineOptionKey = baseController.declineOptionKey;
             newController.difficulty = baseController.difficulty;
@@ -324,6 +324,28 @@ namespace GungeonAPI
             if (ChallengeShrine.GetComponentInChildren<ChallengeShrineController>()) UnityEngine.Object.Destroy(ChallengeShrine.GetComponentInChildren<ChallengeShrineController>());
             StoredRoomObjects.Add("ChallengeShrine", ChallengeShrine);
 
+            
+            GameObject ChallengeShrineOne = FakePrefab.Clone(asset.placedObjects[0].nonenemyBehaviour.gameObject);
+            PrisonerShrineController PrisonerController = ChallengeShrineOne.GetOrAddComponent<PrisonerShrineController>();
+            ChallengeShrineController baseControllerAgain = ChallengeShrineOne.GetComponentInChildren<ChallengeShrineController>();
+            PlanetsideModule.Strings.Core.Set("#PRISONERSHRINEACCEPT", "Kneel.");
+            PlanetsideModule.Strings.Core.Set("#PRISONERSHRINEDECLINE", "Walk Away.");
+            PlanetsideModule.Strings.Core.Set("#PRISONERSHRINEDISPLAY", "A terrifying, ominous energy radiates from this shrine. Do you accept the ultimate challenge...?");
+            PrisonerController.AlternativeOutlineTarget = baseControllerAgain.AlternativeOutlineTarget;
+            PrisonerController.acceptOptionKey = "#PRISONERSHRINEACCEPT";
+            PrisonerController.declineOptionKey = "#PRISONERSHRINEDECLINE";
+            PrisonerController.displayTextKey = "#PRISONERSHRINEDISPLAY";
+            PrisonerController.difficulty = baseControllerAgain.difficulty;
+            PrisonerController.isPassable = baseControllerAgain.isPassable;
+            PrisonerController.onPlayerVFX = baseControllerAgain.onPlayerVFX;
+            PrisonerController.placeableHeight = baseControllerAgain.placeableHeight;
+            PrisonerController.placeableWidth = baseControllerAgain.placeableWidth;
+            PrisonerController.playerVFXOffset = baseControllerAgain.playerVFXOffset;
+            PrisonerController.talkPoint = baseControllerAgain.talkPoint;
+            if (ChallengeShrineOne.GetComponentInChildren<ChallengeShrineController>()) UnityEngine.Object.Destroy(ChallengeShrineOne.GetComponentInChildren<ChallengeShrineController>());
+            StoredRoomObjects.Add("ChallengeShrinePrisoner", ChallengeShrineOne);
+
+
             /*
             ETGModConsole.Log("Current Stored Objects:");
             foreach (string Key in StoredRoomObjects.Keys)
@@ -336,6 +358,8 @@ namespace GungeonAPI
 
 
         public static Dictionary<string, GameObject> StoredRoomObjects = new Dictionary<string, GameObject>(){};
+        public static Dictionary<string, DungeonPlaceable> StoredDungeonPlaceables = new Dictionary<string, DungeonPlaceable>() {};
+
 
         public static GenericRoomTable GetRoomTable(GlobalDungeonData.ValidTilesets tileset)
         {

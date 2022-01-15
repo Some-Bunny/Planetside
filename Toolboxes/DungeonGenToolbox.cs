@@ -93,10 +93,7 @@ namespace Planetside
 {
 
     public static class DungeonGenToolbox
-    {
-
-		
-		//======================================================================================================
+    {		
 		public class AdvancedDungeonPrerequisite : CustomDungeonPrerequisite
 		{
 			public override bool CheckConditionsFulfilled()

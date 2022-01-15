@@ -29,6 +29,7 @@ namespace Planetside
 			this.InflictsFire = false;
 			this.InflictsPoison = false;
 			this.InflictsFreeze = false;
+			this.InflictsCharm = false;
 			this.AreaIncreasesWithProjectileSizeStat = false;
 			this.DamageValuesAlsoScalesWithDamageStat = false;
 			this.HeatStrokeSynergy = false;
@@ -102,6 +103,21 @@ namespace Planetside
 								}
 							}
 						}
+
+						if (InflictsCharm == true)
+						{
+							float RNG = UnityEngine.Random.Range(0.00f, 1.00f);
+							if (RNG <= EffectProcChance)
+							{
+								BulletStatusEffectItem Freezzecomponent = PickupObjectDatabase.GetById(527).GetComponent<BulletStatusEffectItem>();
+								GameActorCharmEffect gameActorFreeze = Freezzecomponent.CharmModifierEffect;
+								bool peep = Vector2.Distance(aiactor.CenterPosition, centerPosition) < Radius * num && aiactor.healthHaver.GetMaxHealth() > 0f && aiactor != null && aiactor.specRigidbody != null && player != null;
+								if (peep)
+								{
+									aiactor.ApplyEffect(gameActorFreeze, 1f, null);
+								}
+							}
+						}
 						if (InflictsPoison == true)
 						{
 							float RNG = UnityEngine.Random.Range(0.00f, 1.00f);
@@ -162,6 +178,7 @@ namespace Planetside
 		public bool InflictsFire;
 		public bool InflictsPoison;
 		public bool InflictsFreeze;
+		public bool InflictsCharm;
 		public bool AreaIncreasesWithProjectileSizeStat;
 		public bool DamageValuesAlsoScalesWithDamageStat;
 		public bool HeatStrokeSynergy;

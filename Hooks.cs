@@ -7,6 +7,12 @@ using MonoMod.RuntimeDetour;
 using UnityEngine;
 using Dungeonator;
 using SaveAPI;
+using Gungeon;
+using ItemAPI;
+using AnimationType = ItemAPI.BossBuilder.AnimationType;
+using System.Collections;
+
+
 
 namespace Planetside
 {
@@ -46,23 +52,108 @@ namespace Planetside
                 //typeof(BehaviorSpeculator).GetMethod("Start", BindingFlags.Instance | BindingFlags.NonPublic),
                 //typeof(Hooks).GetMethod("StartHookSB", BindingFlags.Static | BindingFlags.NonPublic));
 
-                /*
-                var HookToWriteLogToTxtFile2 = new Hook(typeof(PixelCollider).GetMethods().Single(
+                
+                var HookToWriteLogToTxtFile2 = new Hook(typeof(AkSoundEngine).GetMethods().Single(
                     m =>
-                        m.Name == "Overlaps" &&
-                        m.GetParameters().Length == 1 &&
-                        m.GetParameters()[0].ParameterType == typeof(object)),
-                    typeof(Hooks).GetMethod("endme", BindingFlags.Static | BindingFlags.Public));
-                */
+                        m.Name == "PostEvent" &&
+                        m.GetParameters().Length == 2 &&
+                        m.GetParameters()[0].ParameterType == typeof(string)),
+                    typeof(Hooks).GetMethod("PostEventHook", BindingFlags.Static | BindingFlags.Public));
+
                 //Hook helpme = new Hook(typeof(ResourcefulRatMazeSystemController).GetMethod("Update", BindingFlags.Instance | BindingFlags.NonPublic), typeof(Hooks).GetMethod("endme"));
 
                 //Hook streeteor = new Hook(typeof(PlayerController).GetMethod("HandlePlayerInput", BindingFlags.NonPublic | BindingFlags.Instance), typeof(Hooks).GetMethod("Hook_PlayerController_HandlePlayerInput"));
+
+                Hook h = new Hook(
+                    typeof(Projectile).GetMethod("OnPreCollision", BindingFlags.NonPublic | BindingFlags.Instance),
+                    typeof(Hooks).GetMethod("PreCollisionHook")
+                );
+                
+                Hook h2 = new Hook(
+                    typeof(Projectile).GetMethod("HandleDamage", BindingFlags.NonPublic | BindingFlags.Instance),
+                    typeof(UndodgeableProjectile).GetMethod("HandleDamageHook", BindingFlags.NonPublic | BindingFlags.Static)
+                );
 
             }
             catch (Exception e)
             {
                 ItemAPI.Tools.PrintException(e, "FF0000");
             }
+        }
+        public static void PreCollisionHook(Action<Projectile, SpeculativeRigidbody, PixelCollider, SpeculativeRigidbody, PixelCollider> orig, Projectile self, SpeculativeRigidbody myRigidbody, PixelCollider myCollider, SpeculativeRigidbody
+            otherRigidbody, PixelCollider otherCollider)
+        {
+            if (self.GetType() == typeof(Projectile) && (self.Owner == null || !(self.Owner is PlayerController)) && self.gameObject.GetComponent<MarkForUndodgeAbleBullet>() != null)
+            {
+                if (otherRigidbody == self.Shooter && !self.allowSelfShooting)
+                {
+                    PhysicsEngine.SkipCollision = true;
+                    return;
+                }
+                if (otherRigidbody.gameActor != null && otherRigidbody.gameActor is PlayerController && (!self.collidesWithPlayer || (otherRigidbody.gameActor as PlayerController).IsGhost || (otherRigidbody.gameActor as PlayerController).IsEthereal))
+                {
+                    PhysicsEngine.SkipCollision = true;
+                    return;
+                }
+                if (otherRigidbody.aiActor)
+                {
+                    if (self.Owner is PlayerController && !otherRigidbody.aiActor.IsNormalEnemy)
+                    {
+                        PhysicsEngine.SkipCollision = true;
+                        return;
+                    }
+                    if (self.Owner is AIActor && !self.collidesWithEnemies && otherRigidbody.aiActor.IsNormalEnemy && !otherRigidbody.aiActor.HitByEnemyBullets)
+                    {
+                        PhysicsEngine.SkipCollision = true;
+                        return;
+                    }
+                }
+                if (!GameManager.PVP_ENABLED && self.Owner is PlayerController && otherRigidbody.GetComponent<PlayerController>() != null && !self.allowSelfShooting)
+                {
+                    PhysicsEngine.SkipCollision = true;
+                    return;
+                }
+                if (GameManager.Instance.InTutorial)
+                {
+                    PlayerController component = otherRigidbody.GetComponent<PlayerController>();
+                    if (component)
+                    {
+                        if (component.spriteAnimator.QueryInvulnerabilityFrame())
+                        {
+                            GameManager.BroadcastRoomTalkDoerFsmEvent("playerDodgedBullet");
+                        }
+                        else if (component.IsDodgeRolling)
+                        {
+                            GameManager.BroadcastRoomTalkDoerFsmEvent("playerAlmostDodgedBullet");
+                        }
+                        else
+                        {
+                            GameManager.BroadcastRoomTalkDoerFsmEvent("playerDidNotDodgeBullet");
+                        }
+                    }
+                }
+                if (self.collidesWithProjectiles && self.collidesOnlyWithPlayerProjectiles && otherRigidbody.projectile && !(otherRigidbody.projectile.Owner is PlayerController))
+                {
+                    PhysicsEngine.SkipCollision = true;
+                    return;
+                }
+            }
+            else
+            {
+                orig(self, myRigidbody, myCollider, otherRigidbody, otherCollider);
+            }
+        }
+
+
+
+
+        public static uint PostEventHook(Func<string, GameObject, uint> orig, string name, GameObject obj)
+        {
+            if (name != null)
+            {
+                //ETGModConsole.Log(name);
+            }
+            return orig(name, obj);
         }
 
         public static Vector2 Hook_PlayerController_HandlePlayerInput(Func<PlayerController, Vector2> orig, PlayerController self)
@@ -534,29 +625,7 @@ namespace Planetside
                                 comp.TemporarilyDisabled = true;
 
                                 bs.MovementBehaviors.Add(comp);
-
-                                /*
-                                SeekTargetBehavior seek = new SeekTargetBehavior();
-                                seek.ReturnToSpawn = false;
-                                seek.StopWhenInRange = false;
-                                seek.CustomRange = 7;
-                                seek.LineOfSight = true;
-                                seek.SpawnTetherDistance = 0;
-                                seek.PathInterval = 0.25f;
-                                seek.SpecifyRange = false;
-                                seek.MinActiveRange = 0;
-                                seek.MaxActiveRange = 0;
-
-                                bs.MovementBehaviors.Add(seek);
-                                */
-
                                 self.aiActor.CompanionOwner = player;
-
-                                //RoomHandler absoluteRoomFromPosition = GameManager.Instance.Dungeon.data.GetAbsoluteRoomFromPosition(self.specRigidbody.UnitCenter.ToIntVector2(VectorConversions.Floor));
-                                //if (absoluteRoomFromPosition != null)
-                                //{
-                                //absoluteRoomFromPosition.DeregisterEnemy(self.aiActor, true);
-                                //}
                             }
 
                         }
@@ -667,6 +736,9 @@ namespace Planetside
                 self.lootTable.onlyOneGunCanDrop = false;                
             }
 		}
+
+
+
 	}
 }
 

@@ -79,7 +79,7 @@ namespace Planetside
         private Projectile beamProjectile = EnemyDatabase.GetOrLoadByGuid("b98b10fca77d469e80fb45f3c5badec5").GetComponent<BossFinalRogueGunController>().GetComponent<BossFinalRogueLaserGun>().beamProjectile;
 
 
-        private static GameObject LaserReticle;
+        //private static GameObject LaserReticle;
         //private tk2dTiledSprite ExtantLaserReticle;
 
 

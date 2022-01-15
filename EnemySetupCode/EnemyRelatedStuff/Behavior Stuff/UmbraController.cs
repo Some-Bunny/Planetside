@@ -39,7 +39,6 @@ public class UmbraController : BraveBehaviour
 		yeah.shadowTimeDelay = 0.01f;
 		yeah.shadowLifetime = 2.5f;
 
-
 		base.aiActor.healthHaver.spawnBulletScript = true;
 		base.aiActor.healthHaver.chanceToSpawnBulletScript = 1f;
 		base.aiActor.healthHaver.bulletScriptType = HealthHaver.BulletScriptType.OnPreDeath;

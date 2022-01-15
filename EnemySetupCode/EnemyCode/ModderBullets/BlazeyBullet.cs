@@ -31,9 +31,8 @@ namespace Planetside
 				TemplatePath+"blazeybullet_die_004.png",
 				TemplatePath+"blazeybullet_die_005.png",
 			};
-			EnemyToolbox.CreateNewBulletBankerEnemy("blazey_bullet", "Blazeykat", 18, 20, TemplatePath + "blazeybullet_idle_001.png", spritePaths, new List<int> { 0, 1, 2, 3 }, new List<int> { 4, 5, 6, 7, 8 }, null, new SkellScript());
+			EnemyToolbox.CreateNewBulletBankerEnemy("blazey_bullet", "Blazeykat", 18, 20, spritePaths[0], spritePaths, new List<int> { 0, 1, 2, 3 }, new List<int> { 4, 5, 6, 7, 8 }, null, new SkellScript());
 		}
-
 		public class SkellScript : Script
 		{
 			protected override IEnumerator Top()

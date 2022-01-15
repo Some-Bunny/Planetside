@@ -29,7 +29,7 @@ namespace Planetside
 				TemplatePath+"apachebullet_die_003.png",
 				TemplatePath+"apachebullet_die_004.png",
 			};
-			EnemyToolbox.CreateNewBulletBankerEnemy("apache_bullet", "Apache Thunder", 16, 15, TemplatePath + "apachebullet_idle_001.png", spritePaths, new List<int> { 0, 1, 2, 3 }, new List<int> { 4, 5, 6, 7 }, null, new SkellScript());
+			EnemyToolbox.CreateNewBulletBankerEnemy("apache_bullet", "Apache Thunder", 16, 15, spritePaths[0], spritePaths, new List<int> { 0, 1, 2, 3 }, new List<int> { 4, 5, 6, 7 }, null, new SkellScript());
 		}
 
 		public class SkellScript : Script 

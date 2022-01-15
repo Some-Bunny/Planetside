@@ -34,7 +34,6 @@ namespace Planetside
 			item.quality = PickupObject.ItemQuality.B;
 			TrapDefusalKit.TrapDefusalKitID = item.PickupObjectId;
 			ItemIDs.AddToList(item.PickupObjectId);
-
 			new Hook(typeof(ProjectileTrapController).GetMethod("ShootProjectileInDirection", BindingFlags.Instance | BindingFlags.NonPublic), typeof(TrapDefusalKit).GetMethod("ShootProjectileInDirectionHook"));
 			new Hook(typeof(BasicTrapController).GetMethod("Update", BindingFlags.Instance | BindingFlags.Public), typeof(TrapDefusalKit).GetMethod("UpdateHook"));
 			new Hook(typeof(CartTurretController).GetMethod("Fire", BindingFlags.Instance | BindingFlags.NonPublic), typeof(TrapDefusalKit).GetMethod("FireHook"));		
@@ -48,7 +47,6 @@ namespace Planetside
 			new Hook(typeof(SpawnGoopBehavior).GetMethod("Update", BindingFlags.Instance | BindingFlags.Public), typeof(TrapDefusalKit).GetMethod("UpdateGoopHook"));
 			new Hook(typeof(HighPriestSimpleMergoBehavior).GetMethod("ShootWallBulletScript", BindingFlags.Instance | BindingFlags.NonPublic), typeof(TrapDefusalKit).GetMethod("ShootWallBulletScriptHook"));
 		}
-
 		public static void ShootWallBulletScriptHook(Action<HighPriestSimpleMergoBehavior> orig, HighPriestSimpleMergoBehavior self)
 		{
 			if (IsHoldingDefusalItem == true)
@@ -58,24 +56,15 @@ namespace Planetside
 			}
 			else { orig(self);}
 		}
-
-
 		public static BehaviorResult UpdateGoopHook(Func<SpawnGoopBehavior, BehaviorResult> orig, SpawnGoopBehavior self)
         {
 			AIActor host = ReflectionHelper.ReflectGetField<AIActor>(typeof(SpawnGoopBehavior), "m_aiActor", self);
             if (host != null && host.EnemyGuid == "6868795625bd46f3ae3e4377adce288b" && IsHoldingDefusalItem == true)
 			{
 				return BehaviorResult.Continue;
-			}
-			
+			}		
 			return orig(self);
         }
-
-		
-
-
-
-
 		public static void HandleRigidbodyCollisionHook(Action<ForgeFlamePipeController, CollisionData> orig, ForgeFlamePipeController self, CollisionData rigidbodyCollision)
 		{
 			if (IsHoldingDefusalItem == true) { return; }
@@ -97,7 +86,6 @@ namespace Planetside
 		}
 		public static void UpdateSparksHook(Action<PathingTrapController> orig, PathingTrapController self)
         {
-
 			if (IsHoldingDefusalItem == true)
 			{
 				if (self.Sparks_A != null && self.Sparks_A.gameObject.activeSelf == true){self.Sparks_A.gameObject.SetActive(false);}
@@ -218,14 +206,11 @@ namespace Planetside
 							UnityEngine.Object.Destroy(ai.gameObject);
 						}
 					}
-				}
-
-						
-					}
+				}			
+			}
 			else
 			{
 				IsHoldingDefusalItem = false;
-				//EnablDeturret();
 			}
 		}
 

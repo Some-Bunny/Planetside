@@ -219,7 +219,6 @@ namespace Planetside
             UnityEngine.Object.Destroy(sample2);
             return sample;
         }
-
         public static void DumpCollection(tk2dSpriteCollectionData collection)
         {
             string collectionName = string.IsNullOrEmpty(collection.name) ? collection.gameObject.name + "_Collection" : collection.name;

@@ -16,7 +16,7 @@ namespace Planetside
         public static readonly string ResourcesAutoprocessDirectoryName = AutoprocessDirectoryName;
 
         public static readonly string pathzip = PlanetsideModule.ZipFilePath;
-        public static readonly string pathfile = PlanetsideModule.FilePathAudio;
+        public static readonly string pathfile = PlanetsideModule.FilePathFolder;
 
 
         public static void InitAudio()

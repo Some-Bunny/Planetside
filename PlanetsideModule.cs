@@ -19,24 +19,27 @@ using SaveAPI;
 using Planetside;
 using EnemyBulletBuilder;
 using NpcApi;
+using SoundAPI;
+using BreakAbleAPI;
 
 namespace Planetside
 {
     public class PlanetsideModule : ETGModule
     {
         public static readonly string MOD_NAME = "Planetside Of Gunymede";
-        public static readonly string VERSION = "1.2.5";
+        public static readonly string VERSION = "1.3 Beta";
         public static readonly string TEXT_COLOR = "#9006FF";
 
         public static string ZipFilePath;
-        public static string FilePath;
-        public static string FilePathAudio;
+        public static string RoomFilePath;
+        public static string FilePathFolder;
 
         public static ETGModuleMetadata metadata = new ETGModuleMetadata(); 
-        public static string ZipFilePath1;
 
         public static AdvancedStringDB Strings;
         public static HellDragZoneController hellDrag;
+
+        public static AssetBundle ModAssets;
 
         public override void Start()
         {
@@ -45,27 +48,39 @@ namespace Planetside
             forgeDungeon = null;
 
             ZipFilePath = this.Metadata.Archive;
-            FilePath = this.Metadata.Directory + "/rooms";
+            RoomFilePath = this.Metadata.Directory + "/rooms";
             
-            FilePathAudio = this.Metadata.Directory;
+            FilePathFolder = this.Metadata.Directory;
 
             metadata = this.Metadata;
-            ZipFilePath1 = this.Metadata.Archive;
 
             ETGModMainBehaviour.Instance.gameObject.AddComponent<NevernamedsDarknessHandler>();
 
-            //AssetBundleLoader.LoadAssetBundleFromLiterallyAnywhere("planetsidebundle");
+            EasyGoopDefinitions.DefineDefaultGoops();
+
+            SoundManager.Init();
+            SoundManager.LoadBankFromModProject("Planetside/PlanetsideBank");
+            SoundManager.RegisterStopEvent("Stop_MUS_PrisonerTheme", StopEventType.Music);
+
+            PlanetsideModule.ModAssets = AssetBundleLoader.LoadAssetBundleFromLiterallyAnywhere("planetsidebundle");
+            foreach (string str in PlanetsideModule.ModAssets.GetAllAssetNames())
+            {
+                ETGModConsole.Log(PlanetsideModule.ModAssets.name + ": " + str, false);
+            }
+
+            PlanetsideModule.Strings = new AdvancedStringDB();
 
             ItemIDs.MakeCommand();
 
             ItemBuilder.Init();
-            StaticReferences.Init();
-            DungeonHandler.Init();
-            Hooks.Init();
 
-            EasyGoopDefinitions.DefineDefaultGoops();
-            PlanetsideModule.Strings = new AdvancedStringDB();
-            AudioResourceLoader.InitAudio();
+            StaticReferences.Init();
+            //EmberPot.Init();
+            Targets.Init();
+            DungeonHandler.Init();
+            
+            Hooks.Init();
+                        
             MultiActiveReloadManager.SetupHooks();
             Tools.Init();
             NpcTools.Init();
@@ -76,8 +91,6 @@ namespace Planetside
                 string color = DungeonHandler.debugFlow ? "00FF00" : "FF0000";
                 ETGModConsole.Log($"Planetside flow {status}", false);
             });
-            
-
             RandomPiecesOfStuffToInitialise.BuildPrefab();
             SomethingWickedEnemy.Init();
             ShrineFakePrefabHooks.Init();
@@ -211,8 +224,15 @@ namespace Planetside
             AttractorBeam.Add();
             LilPew.Add();
 
+            GunslingersRing.Init();
+            LuckyCharm.Init();
+            TrapDefusalKit.Init();
+
+            ModifierNeedle.Init();
+
+            Whistler.Add();
+
             //VengefulShell.Init();
-            //TrapDefusalKit.Init();
             //LaserWelder.Add();
             //BoscoDesignator.Add();
 
@@ -293,7 +313,7 @@ namespace Planetside
             DungeonHooks.OnPostDungeonGeneration += this.PlaceOtherHellShrines;
 
 
-            TestActiveItem.Init();
+            //TestActiveItem.Init();
             OuroborousShrine.Add();
 
             ShrineFactory.PlaceBreachShrines();
@@ -305,11 +325,6 @@ namespace Planetside
             CustomLootTableInitialiser.InitialiseCustomLootTables();
             CustomShopInitialiser.InitialiseCustomShops();
             FlowInjectionInitialiser.InitialiseFlows();
-
-
-            //TackShooter.Init();
-
-            //InfantryGrenade.Init();
 
             //AdvancedLogging.Log($"{MOD_NAME} v{VERSION} started successfully.", new Color(144, 6, 255, 255), false, true, null);
             PlanetsideModule.Log($"{MOD_NAME} v{VERSION} started successfully.", TEXT_COLOR);
@@ -329,8 +344,6 @@ namespace Planetside
                 "Ashes To Ashes, To Ashes (To Ashes)",
                 "Deadbolt Is Underrated!",
                 "You're Gonna Need A Bigger Gun",
-                "Chocolate And Mayonnaise Sandwich.",
-                "o______________________________o",
                 "Sai Sinut Nayttamaan",
                 "oh no",
                 "is that supposed to be like that???",
@@ -341,7 +354,6 @@ namespace Planetside
                 "Yo Mama!",
                 "NullReferenceException: Object Reference not set to an instance of an object.",
                 "I stole this one from Nevernamed.",
-                "25.3°N 91.7°E",
                 "poggers",
                 "Nuh uh, yr'oue.",
                 "eg",
@@ -383,7 +395,11 @@ namespace Planetside
                 "BULLET HELL IS FULL",
                 "bzaazzz",
                 "What the dog doin'",
-                "Powered by like 7 different APIs"
+                "Powered by like 7 different APIs",
+                "Rock And Stone!",
+                "By The Beard!",
+                "Powered By BreakableAPI!"
+
             };
             Random r = new Random();
             int index = r.Next(RandomFunnys.Count);
@@ -464,7 +480,7 @@ namespace Planetside
             }
         }
 
-       
+
         private void PlaceHellShrines()
         {
             bool flag = GameManager.Instance.Dungeon.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.HELLGEON;

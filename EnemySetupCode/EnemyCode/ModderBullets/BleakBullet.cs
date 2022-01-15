@@ -14,10 +14,7 @@ namespace Planetside
 {
 	public class BleakBullet : AIActor
 	{
-		public static GameObject prefab;
-		public static readonly string guid = "bleak_bullet";
-		private static tk2dSpriteCollectionData BleakBulleet;
-		public static GameObject shootpoint;
+
 		public static void Init()
 		{
 			string TemplatePath = "Planetside/Resources/Enemies/ModderBullets/bleak/";
@@ -34,7 +31,7 @@ namespace Planetside
 				TemplatePath+"bleakbullet_die_004.png",
 				TemplatePath+"bleakbullet_die_005.png",
 			};
-			EnemyToolbox.CreateNewBulletBankerEnemy("bleak_bullet", "BleakBullets", 20, 20, TemplatePath + "bleakbullet_idle_001.png", spritePaths, new List<int> { 0, 1, 2, 3 }, new List<int> { 4, 5, 6, 7, 8 }, null, new SkellScript());
+			EnemyToolbox.CreateNewBulletBankerEnemy("bleak_bullet", "BleakBullets", 20, 20, spritePaths[0], spritePaths, new List<int> { 0, 1, 2, 3 }, new List<int> { 4, 5, 6, 7, 8 }, null, new SkellScript());
 		}
 
 		public class SkellScript : Script 

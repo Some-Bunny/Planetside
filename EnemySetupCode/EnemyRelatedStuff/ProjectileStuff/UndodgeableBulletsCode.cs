@@ -1,191 +1,184 @@
-﻿using System;
+﻿
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Collections;
-using Gungeon;
-using MonoMod;
 using UnityEngine;
-using ItemAPI;
+using System.Reflection;
 
 namespace Planetside
 {
-	public class UndodgeableProjectile : Projectile
-	{
-		//	OtherTools.CopyFields<UndodgeableProjectile>(bulletObj.GetComponent<Projectile>());
 
-		protected override void OnPreCollision(SpeculativeRigidbody myRigidbody, PixelCollider myCollider, SpeculativeRigidbody otherRigidbody, PixelCollider otherCollider)
-		{
-			if (myRigidbody != null && myCollider != null && otherRigidbody != null && otherCollider != null)
+    public class MarkForUndodgeAbleBullet : MonoBehaviour
+    {
+        public MarkForUndodgeAbleBullet()
+        {
+            Proj = base.gameObject.GetComponent<Projectile>();
+        }
+        public void Start()
+        {
+            if (Proj != null)
             {
-				if (otherRigidbody == Shooter && !allowSelfShooting)
-				{
-					PhysicsEngine.SkipCollision = true;
-					return;
-				}
-				if (otherRigidbody.gameActor != null && otherRigidbody.gameActor is PlayerController && (!collidesWithPlayer || (otherRigidbody.gameActor as PlayerController).IsGhost || (otherRigidbody.gameActor as PlayerController).IsEthereal))
-				{
-					PhysicsEngine.SkipCollision = true;
-					return;
-				}
-				if (otherRigidbody.aiActor)
-				{
-					if (Owner is PlayerController && !otherRigidbody.aiActor.IsNormalEnemy)
-					{
-						PhysicsEngine.SkipCollision = true;
-						return;
-					}
-					if (Owner is AIActor && !collidesWithEnemies && otherRigidbody.aiActor.IsNormalEnemy && !otherRigidbody.aiActor.HitByEnemyBullets)
-					{
-						PhysicsEngine.SkipCollision = true;
-						return;
-					}
-				}
-				if (!GameManager.PVP_ENABLED && Owner is PlayerController && otherRigidbody.GetComponent<PlayerController>() != null && !allowSelfShooting)
-				{
-					PhysicsEngine.SkipCollision = true;
-					return;
-				}
-				if (GameManager.Instance.InTutorial)
-				{
-					PlayerController component = otherRigidbody.GetComponent<PlayerController>();
-					if (component)
-					{
-						if (component.spriteAnimator.QueryInvulnerabilityFrame())
-						{
-							GameManager.BroadcastRoomTalkDoerFsmEvent("playerDodgedBullet");
-						}
-						else if (component.IsDodgeRolling)
-						{
-							GameManager.BroadcastRoomTalkDoerFsmEvent("playerAlmostDodgedBullet");
-						}
-						else
-						{
-							GameManager.BroadcastRoomTalkDoerFsmEvent("playerDidNotDodgeBullet");
-						}
-					}
-				}
-				if (collidesWithProjectiles && collidesOnlyWithPlayerProjectiles && otherRigidbody.projectile && !(otherRigidbody.projectile.Owner is PlayerController))
-				{
-					PhysicsEngine.SkipCollision = true;
-					return;
-				}
-			}
-			
-		}
+                //Proj.renderer.enabled = true;
+                Proj.spriteAnimator.sprite.usesOverrideMaterial = true;
+                if (Proj.spriteAnimator != null)
+                {
+                    Proj.spriteAnimator.renderer.enabled = true;
+                    Proj.spriteAnimator.renderer.material.shader = PlanetsideModule.ModAssets.LoadAsset<Shader>("inverseglowshader");
+                }
+                Proj.sprite.renderer.enabled = true;
+                Proj.sprite.renderer.material.shader = PlanetsideModule.ModAssets.LoadAsset<Shader>("inverseglowshader");
+                Proj.sprite.renderer.material.SetFloat("_EmissiveColorPower", 7);
+                if (Proj.IsBlackBullet) { Proj.sprite.renderer.material.SetFloat("_BlackBullet", -1); }
+            }
+        }
+        public Projectile Proj;
+    }
+    public class UndodgeableProjectile : Projectile
+    {
+        public static BindingFlags AnyBindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static;
+        public static FieldInfo ProjectileHealthHaverHitCountInfo = typeof(Projectile).GetField("m_healthHaverHitCount", AnyBindingFlags);
+        public static FieldInfo ProjectileHasPiercedInfo = typeof(Projectile).GetField("m_hasPierced", AnyBindingFlags);
+        public static MethodInfo ProjectileHandleDelayedDamageInfo = typeof(Projectile).GetMethod("HandleDelayedDamage", AnyBindingFlags);
 
-		protected override HandleDamageResult HandleDamage(SpeculativeRigidbody rigidbody, PixelCollider hitPixelCollider, out bool killedTarget, PlayerController player, bool alreadyPlayerDelayed = false)
-		{
-			killedTarget = false;
-			if (rigidbody.ReflectProjectiles)
-			{
-				return HandleDamageResult.NO_HEALTH;
-			}
-			if (!rigidbody.healthHaver)
-			{
-				return HandleDamageResult.NO_HEALTH;
-			}
-			if (!alreadyPlayerDelayed && s_delayPlayerDamage && player)
-			{
-				return HandleDamageResult.HEALTH;
-			}
-			bool flag = !rigidbody.healthHaver.IsDead;
-			float num = ModifiedDamage;
-			if (Owner is AIActor && rigidbody && rigidbody.aiActor && (Owner as AIActor).IsNormalEnemy)
-			{
-				num = ProjectileData.FixedFallbackDamageToEnemies;
-				if (rigidbody.aiActor.HitByEnemyBullets)
-				{
-					num /= 4f;
-				}
-			}
-			int healthHaverHitCount = (int)OtherTools.ProjectileHealthHaverHitCountInfo.GetValue(this);
-			if (Owner is PlayerController && m_hasPierced && healthHaverHitCount >= 1)
-			{
-				int num2 = Mathf.Clamp(healthHaverHitCount - 1, 0, GameManager.Instance.PierceDamageScaling.Length - 1);
-				num *= GameManager.Instance.PierceDamageScaling[num2];
-			}
-			if (OnWillKillEnemy != null && num >= rigidbody.healthHaver.GetCurrentHealth())
-			{
-				OnWillKillEnemy(this, rigidbody);
-			}
-			if (rigidbody.healthHaver.IsBoss)
-			{
-				num *= BossDamageMultiplier;
-			}
-			if (BlackPhantomDamageMultiplier != 1f && rigidbody.aiActor && rigidbody.aiActor.IsBlackPhantom)
-			{
-				num *= BlackPhantomDamageMultiplier;
-			}
-			bool flag2 = false;
-			if (DelayedDamageToExploders)
-			{
-				flag2 = (rigidbody.GetComponent<ExplodeOnDeath>() && rigidbody.healthHaver.GetCurrentHealth() <= num);
-			}
-			if (!flag2)
-			{
-				HealthHaver healthHaver = rigidbody.healthHaver;
-				float damage = num;
-				Vector2 velocity = specRigidbody.Velocity;
-				string ownerName = OwnerName;
-				CoreDamageTypes coreDamageTypes = damageTypes;
-				DamageCategory damageCategory = (!IsBlackBullet) ? DamageCategory.Normal : DamageCategory.BlackBullet;
-				healthHaver.ApplyDamage(damage, velocity, ownerName, coreDamageTypes, damageCategory, true, hitPixelCollider, ignoreDamageCaps);
-				if (player && player.OnHitByProjectile != null)
-				{
-					player.OnHitByProjectile(this, player);
-				}
-			}
-			else
-			{
-				rigidbody.StartCoroutine((IEnumerator)OtherTools.ProjectileHandleDelayedDamageInfo.Invoke(this, new object[] { rigidbody, num, specRigidbody.Velocity, hitPixelCollider }));
-			}
-			if (Owner && Owner is AIActor && player)
-			{
-				(Owner as AIActor).HasDamagedPlayer = true;
-			}
-			killedTarget = (flag && rigidbody.healthHaver.IsDead);
-			if (!killedTarget && rigidbody.gameActor != null)
-			{
-				if (AppliesPoison && UnityEngine.Random.value < PoisonApplyChance)
-				{
-					rigidbody.gameActor.ApplyEffect(healthEffect, 1f, null);
-				}
-				if (AppliesSpeedModifier && UnityEngine.Random.value < SpeedApplyChance)
-				{
-					rigidbody.gameActor.ApplyEffect(speedEffect, 1f, null);
-				}
-				if (AppliesCharm && UnityEngine.Random.value < CharmApplyChance)
-				{
-					rigidbody.gameActor.ApplyEffect(charmEffect, 1f, null);
-				}
-				if (AppliesFreeze && UnityEngine.Random.value < FreezeApplyChance)
-				{
-					rigidbody.gameActor.ApplyEffect(freezeEffect, 1f, null);
-				}
-				if (AppliesCheese && UnityEngine.Random.value < CheeseApplyChance)
-				{
-					rigidbody.gameActor.ApplyEffect(cheeseEffect, 1f, null);
-				}
-				if (AppliesBleed && UnityEngine.Random.value < BleedApplyChance)
-				{
-					rigidbody.gameActor.ApplyEffect(bleedEffect, -1f, this);
-				}
-				if (AppliesFire && UnityEngine.Random.value < FireApplyChance)
-				{
-					rigidbody.gameActor.ApplyEffect(fireEffect, 1f, null);
-				}
-				if (AppliesStun && UnityEngine.Random.value < StunApplyChance && rigidbody.gameActor.behaviorSpeculator)
-				{
-					rigidbody.gameActor.behaviorSpeculator.Stun(AppliedStunDuration, true);
-				}
-				for (int i = 0; i < statusEffectsToApply.Count; i++)
-				{
-					rigidbody.gameActor.ApplyEffect(statusEffectsToApply[i], 1f, null);
-				}
-			}
-			OtherTools.ProjectileHealthHaverHitCountInfo.SetValue(this, healthHaverHitCount + 1);
-			return (!killedTarget) ? HandleDamageResult.HEALTH : HandleDamageResult.HEALTH_AND_KILLED;
-		}
-	}
+        public delegate TResult Func<T1, T2, T3, T4, T5, T6, TResult>(T1 arg1, T2 arg2, T3 arg3, out T4 arg4, T5 arg5, T6 arg6);
+        protected static HandleDamageResult HandleDamageHook(Func<Projectile, SpeculativeRigidbody, PixelCollider, bool, PlayerController, bool, HandleDamageResult> orig, Projectile self, SpeculativeRigidbody rigidbody, PixelCollider hitPixelCollider, out bool killedTarget,
+            PlayerController player, bool alreadyPlayerDelayed)
+        {
+            if (self.GetType() == typeof(Projectile) && (self.Owner == null || !(self.Owner is PlayerController)) && self.gameObject.GetComponent<MarkForUndodgeAbleBullet>() != null)
+            {
+                killedTarget = false;
+                if (rigidbody.ReflectProjectiles)
+                {
+                    return HandleDamageResult.NO_HEALTH;
+                }
+                if (!rigidbody.healthHaver)
+                {
+                    return HandleDamageResult.NO_HEALTH;
+                }
+                if (!alreadyPlayerDelayed && s_delayPlayerDamage && player)
+                {
+                    return HandleDamageResult.HEALTH;
+                }
+                bool flag = !rigidbody.healthHaver.IsDead;
+                float num = self.ModifiedDamage;
+                if (self.Owner is AIActor && rigidbody && rigidbody.aiActor && (self.Owner as AIActor).IsNormalEnemy)
+                {
+                    num = ProjectileData.FixedFallbackDamageToEnemies;
+                    if (rigidbody.aiActor.HitByEnemyBullets)
+                    {
+                        num /= 4f;
+                    }
+                }
+                int healthHaverHitCount = (int)ProjectileHealthHaverHitCountInfo.GetValue(self);
+                if (self.Owner is PlayerController && (bool)ProjectileHasPiercedInfo.GetValue(self) && healthHaverHitCount >= 1)
+                {
+                    int num2 = Mathf.Clamp(healthHaverHitCount - 1, 0, GameManager.Instance.PierceDamageScaling.Length - 1);
+                    num *= GameManager.Instance.PierceDamageScaling[num2];
+                }
+                if (self.OnWillKillEnemy != null && num >= rigidbody.healthHaver.GetCurrentHealth())
+                {
+                    self.OnWillKillEnemy(self, rigidbody);
+                }
+                if (rigidbody.healthHaver.IsBoss)
+                {
+                    num *= self.BossDamageMultiplier;
+                }
+                if (self.BlackPhantomDamageMultiplier != 1f && rigidbody.aiActor && rigidbody.aiActor.IsBlackPhantom)
+                {
+                    num *= self.BlackPhantomDamageMultiplier;
+                }
+                bool flag2 = false;
+                if (self.DelayedDamageToExploders)
+                {
+                    flag2 = (rigidbody.GetComponent<ExplodeOnDeath>() && rigidbody.healthHaver.GetCurrentHealth() <= num);
+                }
+                if (!flag2)
+                {
+                    HealthHaver healthHaver = rigidbody.healthHaver;
+                    float damage = num;
+                    Vector2 velocity = self.specRigidbody.Velocity;
+                    string ownerName = self.OwnerName;
+                    CoreDamageTypes coreDamageTypes = self.damageTypes;
+                    DamageCategory damageCategory = (!self.IsBlackBullet) ? DamageCategory.Normal : DamageCategory.BlackBullet;
+                    AkSoundEngine.PostEvent("Play_OBJ_key_impact_01", player.gameObject);
+                    GameObject vfx = UnityEngine.Object.Instantiate<GameObject>((PickupObjectDatabase.GetById(228) as Gun).DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX);
+                    tk2dBaseSprite component = vfx.GetComponent<tk2dBaseSprite>();
+                    component.PlaceAtPositionByAnchor(player.transform.position+ new Vector3(0.375f, 0.375f), tk2dBaseSprite.Anchor.MiddleCenter);
+                    component.HeightOffGround = 35f;
+                    component.UpdateZDepth();
+                    tk2dSpriteAnimator component2 = component.GetComponent<tk2dSpriteAnimator>();
+                    if (component2 != null)
+                    {
+                        component2.ignoreTimeScale = true;
+                        component2.AlwaysIgnoreTimeScale = true;
+                        component2.AnimateDuringBossIntros = true;
+                        component2.alwaysUpdateOffscreen = true;
+                        component2.playAutomatically = true;
+                    }
+                    healthHaver.ApplyDamage(damage, velocity, ownerName, coreDamageTypes, damageCategory, true, hitPixelCollider, self.ignoreDamageCaps);
+                    if (player && player.OnHitByProjectile != null)
+                    {
+                        player.OnHitByProjectile(self, player);
+                    }
+                }
+                else
+                {
+                    rigidbody.StartCoroutine((IEnumerator)ProjectileHandleDelayedDamageInfo.Invoke(self, new object[] { rigidbody, num, self.specRigidbody.Velocity, hitPixelCollider }));
+                }
+                if (self.Owner && self.Owner is AIActor && player)
+                {
+                    AkSoundEngine.PostEvent("Play_OBJ_key_impact_01", player.gameObject);
+                    (self.Owner as AIActor).HasDamagedPlayer = true;
+                }
+                killedTarget = (flag && rigidbody.healthHaver.IsDead);
+                if (!killedTarget && rigidbody.gameActor != null)
+                {
+                    if (self.AppliesPoison && UnityEngine.Random.value < self.PoisonApplyChance)
+                    {
+                        rigidbody.gameActor.ApplyEffect(self.healthEffect, 1f, null);
+                    }
+                    if (self.AppliesSpeedModifier && UnityEngine.Random.value < self.SpeedApplyChance)
+                    {
+                        rigidbody.gameActor.ApplyEffect(self.speedEffect, 1f, null);
+                    }
+                    if (self.AppliesCharm && UnityEngine.Random.value < self.CharmApplyChance)
+                    {
+                        rigidbody.gameActor.ApplyEffect(self.charmEffect, 1f, null);
+                    }
+                    if (self.AppliesFreeze && UnityEngine.Random.value < self.FreezeApplyChance)
+                    {
+                        rigidbody.gameActor.ApplyEffect(self.freezeEffect, 1f, null);
+                    }
+                    if (self.AppliesCheese && UnityEngine.Random.value < self.CheeseApplyChance)
+                    {
+                        rigidbody.gameActor.ApplyEffect(self.cheeseEffect, 1f, null);
+                    }
+                    if (self.AppliesBleed && UnityEngine.Random.value < self.BleedApplyChance)
+                    {
+                        rigidbody.gameActor.ApplyEffect(self.bleedEffect, -1f, self);
+                    }
+                    if (self.AppliesFire && UnityEngine.Random.value < self.FireApplyChance)
+                    {
+                        rigidbody.gameActor.ApplyEffect(self.fireEffect, 1f, null);
+                    }
+                    if (self && UnityEngine.Random.value < self.StunApplyChance && rigidbody.gameActor.behaviorSpeculator)
+                    {
+                        rigidbody.gameActor.behaviorSpeculator.Stun(self.AppliedStunDuration, true);
+                    }
+                    for (int i = 0; i < self.statusEffectsToApply.Count; i++)
+                    {
+                        rigidbody.gameActor.ApplyEffect(self.statusEffectsToApply[i], 1f, null);
+                    }
+                }
+                ProjectileHealthHaverHitCountInfo.SetValue(self, healthHaverHitCount + 1);
+                return (!killedTarget) ? HandleDamageResult.HEALTH : HandleDamageResult.HEALTH_AND_KILLED;
+            }
+            else
+            {
+                return orig(self, rigidbody, hitPixelCollider, out killedTarget, player, alreadyPlayerDelayed);
+            }
+        }
+    }
 }

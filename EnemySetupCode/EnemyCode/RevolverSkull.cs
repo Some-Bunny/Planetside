@@ -273,6 +273,7 @@ namespace Planetside
 					PreventFiringWhileMoving = false,
 					StayOnScreen = false,
 					AvoidTarget = true,
+					
 
 				}
 			};

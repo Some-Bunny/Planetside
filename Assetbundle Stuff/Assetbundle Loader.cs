@@ -40,13 +40,13 @@ namespace Planetside
 			}
 			else
 			{
-				bool flag7 = File.Exists(PlanetsideModule.FilePath + "/" + name);
+				bool flag7 = File.Exists(PlanetsideModule.FilePathFolder + "/" + name);
 				bool flag8 = flag7;
 				if (flag8)
 				{
 					try
 					{
-						result = AssetBundle.LoadFromFile(Path.Combine(PlanetsideModule.FilePath, name));
+						result = AssetBundle.LoadFromFile(Path.Combine(PlanetsideModule.FilePathFolder, name));
 						global::ETGModConsole.Log("Successfully loaded assetbundle!", false);
 					}
 					catch (Exception ex)

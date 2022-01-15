@@ -30,7 +30,7 @@ namespace Planetside
                     List<ProjectileModule.ChargeProjectile> list = mod.chargeProjectiles;
                     foreach (ProjectileModule.ChargeProjectile proj in list)
                     {
-                        Projectile ectile = proj.Projectile; //.gameObject.AddComponent<BSGSynergyPorj>();
+                        Projectile ectile = proj.Projectile;
                         if (ectile != null)
                         {
                             ectile.gameObject.AddComponent<BSGSynergyPorj>();
@@ -39,10 +39,8 @@ namespace Planetside
                 }
             }
 		}
-		public string SynergyNameToCheck;
 		private Gun m_gun;
 	}
-
 }
 
 
@@ -57,15 +55,10 @@ namespace Planetside
         }
         public void Start()
         {
-            this.projectile = base.GetComponent<Projectile>();
-            Projectile projectile = this.projectile;
-            PlayerController playerController = projectile.Owner as PlayerController;
-            Projectile component = base.gameObject.GetComponent<Projectile>();
-            bool flag = component != null;
-            bool flag2 = flag;
-            if (flag2)
+            this.projectile = base.GetComponent<Projectile>();      
+            if (this.projectile != null)
             {
-
+                this.projectile.AdditionalScaleMultiplier *= 0.5f;
             }
         }
 
@@ -77,7 +70,6 @@ namespace Planetside
                 PlayerController player = this.projectile.Owner as PlayerController;
                 if (player != null && player.PlayerHasActiveSynergy("Big Shocking Gun 9000"))
                 {
-
                     List<AIActor> activeEnemies = player.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
                     bool flag5 = activeEnemies != null && activeEnemies.Count >= 0;
                     if (flag5)
@@ -181,7 +173,7 @@ namespace Planetside
                         Vector2 zero = Vector2.zero;
                         if (BraveUtility.LineIntersectsAABB(p1, p2, aiactor.specRigidbody.HitboxPixelCollider.UnitBottomLeft, aiactor.specRigidbody.HitboxPixelCollider.UnitDimensions, out zero))
                         {
-                            aiactor.healthHaver.ApplyDamage(num, Vector2.zero, "Chain Lightning", CoreDamageTypes.Electric, DamageCategory.Normal, false, null, false);
+                            aiactor.healthHaver.ApplyDamage(this.projectile != null ? this.projectile.baseData.damage / 8 : num, Vector2.zero, "Chain Lightning", CoreDamageTypes.Electric, DamageCategory.Normal, false, null, false);
                             GameManager.Instance.StartCoroutine(this.HandleDamageCooldown(aiactor));
                         }
                     }

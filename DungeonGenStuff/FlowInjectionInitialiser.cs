@@ -25,18 +25,89 @@ namespace Planetside
         {
 			AssetBundle sharedAssets2 = ResourceManager.LoadAssetBundle("shared_auto_002");
 			BaseSharedInjectionData = sharedAssets2.LoadAsset<SharedInjectionData>("Base Shared Injection Data");
-
-			
-
-
-
-
-						sharedAssets2 = null;
+			sharedAssets2 = null;
 			AddVrokenChamberRoom(false);
-			//AddShellraxRoom(false);
 			AddMinesSWRoom(false);
 			InitTimeTraderRooms(false);
+			InitPrisonerRooms();
 		}
+
+		public static void InitPrisonerRooms()
+        {
+			PrototypeDungeonRoom prisonerShrineRoom = RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/PrisonerShrineRoom.room").room;
+			PrisonerShrineRoom = new ProceduralFlowModifierData()
+			{
+				annotation = "Prisoner Shrine Room",
+				DEBUG_FORCE_SPAWN = false,
+				OncePerRun = true,
+				placementRules = new List<ProceduralFlowModifierData.FlowModifierPlacementType>() {
+					ProceduralFlowModifierData.FlowModifierPlacementType.RANDOM_NODE_CHILD
+				},
+				roomTable = null,
+				exactRoom = prisonerShrineRoom,
+				IsWarpWing = false,
+				RequiresMasteryToken = false,
+				chanceToLock = 0,
+				selectionWeight = 2,
+				chanceToSpawn = 1,
+				RequiredValidPlaceable = null,
+				prerequisites = new DungeonPrerequisite[] {
+					new DungeonGenToolbox.AdvancedDungeonPrerequisite
+					{
+					   advancedAdvancedPrerequisiteType = DungeonGenToolbox.AdvancedDungeonPrerequisite.AdvancedAdvancedPrerequisiteType.UNLOCK,
+					   UnlockFlag = CustomDungeonFlags.HAS_COMPLETED_SOMETHING_WICKED,
+					   UnlockRequirement = true,
+					   requiredTileset = GlobalDungeonData.ValidTilesets.FORGEGEON,
+					   requireTileset = true
+					},
+				},
+				CanBeForcedSecret = false,
+				RandomNodeChildMinDistanceFromEntrance = 0,
+				exactSecondaryRoom = null,
+				framedCombatNodes = 0,
+
+			};
+			BaseSharedInjectionData.InjectionData.Add(PrisonerShrineRoom);
+			PrisonerShrineRoomPrefab = prisonerShrineRoom;
+
+			PrototypeDungeonRoom prisonerBossRoom = RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/PrisonerBossRoom.room").room;
+			PrisonerBossRoom = new ProceduralFlowModifierData()
+			{
+				annotation = "Prisoner Boss Room",
+				DEBUG_FORCE_SPAWN = false,
+				OncePerRun = true,
+				placementRules = new List<ProceduralFlowModifierData.FlowModifierPlacementType>() {
+					ProceduralFlowModifierData.FlowModifierPlacementType.NO_LINKS
+				},
+				roomTable = null,
+				exactRoom = prisonerBossRoom,
+				IsWarpWing = false,
+				RequiresMasteryToken = false,
+				chanceToLock = 0,
+				selectionWeight = 2,
+				chanceToSpawn = 1,
+				RequiredValidPlaceable = null,
+				prerequisites = new DungeonPrerequisite[] {
+					new DungeonGenToolbox.AdvancedDungeonPrerequisite
+					{
+					   advancedAdvancedPrerequisiteType = DungeonGenToolbox.AdvancedDungeonPrerequisite.AdvancedAdvancedPrerequisiteType.UNLOCK,
+					   UnlockFlag = CustomDungeonFlags.HAS_COMPLETED_SOMETHING_WICKED,
+					   UnlockRequirement = true,
+					   requiredTileset = GlobalDungeonData.ValidTilesets.FORGEGEON,
+					   requireTileset = true
+					},
+				},
+				CanBeForcedSecret = false,
+				RandomNodeChildMinDistanceFromEntrance = 0,
+				exactSecondaryRoom = null,
+				framedCombatNodes = 0,
+
+			};
+			BaseSharedInjectionData.InjectionData.Add(PrisonerBossRoom);
+			PrisonerBossRoomPrefab = prisonerBossRoom;
+
+		}
+		
 
 		public static void AddVrokenChamberRoom(bool refreshFlows = false)
 		{
@@ -461,6 +532,12 @@ namespace Planetside
 		public static PrototypeDungeonRoom SWMinesRoomPrefab;
 		public static ProceduralFlowModifierData SWMinesRoom;
 
+		public static PrototypeDungeonRoom PrisonerShrineRoomPrefab;
+		public static ProceduralFlowModifierData PrisonerShrineRoom;
+
+
+		public static PrototypeDungeonRoom PrisonerBossRoomPrefab;
+		public static ProceduralFlowModifierData PrisonerBossRoom;
 
 		public static PrototypeDungeonRoom TimeTraderBaseRoom;
 

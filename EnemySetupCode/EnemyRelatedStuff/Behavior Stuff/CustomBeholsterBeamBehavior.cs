@@ -13,12 +13,16 @@ public class CustomBeholsterLaserBehavior : BasicAttackBehavior
 	public override void Start()
 	{
 		base.Start();
-		this.m_aiActor.healthHaver.OnDeath += (obj) =>
+		this.m_aiActor.healthHaver.OnPreDeath += (obj) =>
 		{
 			if (this.m_laserBeam != null)
 			{
 				this.m_laserBeam.DestroyBeam();
 				this.m_laserBeam = null;
+			}
+			if (this.BulletScript != null && this.m_bulletSource && !this.m_bulletSource.IsEnded)
+			{
+				this.m_bulletSource.ForceStop();
 			}
 		};
 	}
@@ -121,10 +125,8 @@ public class CustomBeholsterLaserBehavior : BasicAttackBehavior
 		this.m_allBeamShooters = new List<AIBeamShooter2>(this.m_aiActor.GetComponents<AIBeamShooter2>());
 		if (this.beamSelection == ShootBeamBehavior.BeamSelection.All)
 		{
-			List<AIBeamShooter2> beams = new List<AIBeamShooter2>() { };
 			foreach (AIBeamShooter2 c in m_aiActor.gameObject.GetComponents(typeof(AIBeamShooter2)))
 			{
-				beams.Add(c);
 				this.m_currentBeamShooters.Add(c);
 			}
 		}
@@ -134,7 +136,10 @@ public class CustomBeholsterLaserBehavior : BasicAttackBehavior
 		}
 		else if (this.beamSelection == ShootBeamBehavior.BeamSelection.Specify)
 		{
-			this.m_currentBeamShooters.Add(this.specificBeamShooter);
+			foreach (AIBeamShooter2 c in specificBeamShooters)
+			{
+				this.m_currentBeamShooters.Add(c);
+			}
 		}
 
 		if (!string.IsNullOrEmpty(this.ChargeAnimation))
@@ -301,15 +306,17 @@ public class CustomBeholsterLaserBehavior : BasicAttackBehavior
 		this.IsfiringLaser = true;
 		this.SetLaserAngle(facingDirection);
 		this.m_aiActor.aiAnimator.LockFacingDirection = true;
-
-		AkSoundEngine.PostEvent("Play_ENM_deathray_shot_01", base.m_aiActor.gameObject);
+		if (UsesBaseSounds == true) { AkSoundEngine.PostEvent("Play_ENM_deathray_shot_01", base.m_aiActor.gameObject); }		
 		this.IsfiringLaser = true;
 		base.m_aiActor.aiAnimator.LockFacingDirection = true;
 		MonoBehaviour yes = this.m_aiActor.GetComponent<MonoBehaviour>();
+		if (!string.IsNullOrEmpty(this.FireAnimation))
+		{
+			this.m_aiAnimator.PlayUntilCancelled(this.FireAnimation, true, null, -1f, false);
+		}
 		for (int i = 0; i < this.m_currentBeamShooters.Count; i++)
 		{
 			AIBeamShooter2 aibeamShooter2 = this.m_currentBeamShooters[i];
-
 			yes.StartCoroutine(this.FireBeam(aibeamShooter2));
 		}
 
@@ -325,7 +332,6 @@ public class CustomBeholsterLaserBehavior : BasicAttackBehavior
 		if (!string.IsNullOrEmpty(this.PostFireAnimation))
 		{
 			this.m_aiAnimator.PlayUntilFinished(this.PostFireAnimation, true, null, -1f, false);
-
 		}
 		if (StopLaserFiringSound != null) {	AkSoundEngine.PostEvent(StopLaserFiringSound, base.m_aiActor.gameObject);}
 		else if (UsesBaseSounds == true) {	AkSoundEngine.PostEvent("Stop_ENM_deathray_loop_01", base.m_aiActor.gameObject);}
@@ -337,13 +343,17 @@ public class CustomBeholsterLaserBehavior : BasicAttackBehavior
 
 	protected IEnumerator FireBeam(AIBeamShooter2 aibeamShooter2)
 	{
-		GameObject beamObject = UnityEngine.Object.Instantiate<GameObject>(aibeamShooter2.beamModule.GetCurrentProjectile().gameObject);
-		if (UsesBeamProjectileWithoutModule)
+		GameObject beamObject = null;
+		if (UsesBeamProjectileWithoutModule == true)
         {
 			beamObject = UnityEngine.Object.Instantiate<GameObject>(aibeamShooter2.beamProjectile.gameObject);
 		}
+		else
+        {
+			beamObject = UnityEngine.Object.Instantiate<GameObject>(aibeamShooter2.beamModule.GetCurrentProjectile().gameObject);
+		}
+		if (beamObject == null) { ETGModConsole.Log("CANNOT FIND beamObject!"); StopFiringLaser(); yield break;}
 		BasicBeamController beamCont = beamObject.GetComponent<BasicBeamController>();
-
 		List<AIActor> activeEnemies = base.m_aiActor.ParentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
 		for (int i = 0; i < activeEnemies.Count; i++)
 		{
@@ -364,11 +374,16 @@ public class CustomBeholsterLaserBehavior : BasicAttackBehavior
 		float enemyTickCooldown = 0f;
 		beamCont.OverrideHitChecks = delegate (SpeculativeRigidbody hitRigidbody, Vector2 dirVec)
 		{
-			Projectile currentProjectile = aibeamShooter2.beamModule.GetCurrentProjectile();
+			Projectile currentProjectile = null;
 			if (UsesBeamProjectileWithoutModule)
 			{
 				currentProjectile = aibeamShooter2.beamProjectile;
 			}
+			else
+            {
+				currentProjectile = aibeamShooter2.beamModule.GetCurrentProjectile();
+			}
+
 
 			HealthHaver healthHaver = (!hitRigidbody) ? null : hitRigidbody.healthHaver;
 			if (hitRigidbody && hitRigidbody.projectile && hitRigidbody.GetComponent<BeholsterBounceRocket>())
@@ -461,6 +476,7 @@ public class CustomBeholsterLaserBehavior : BasicAttackBehavior
 				yield return null;
 				if (this.IsfiringLaser && !beamCont)
 				{
+					beamCont.CeaseAttack();
 					this.StopFiringLaser();
 					break;
 				}
@@ -472,7 +488,7 @@ public class CustomBeholsterLaserBehavior : BasicAttackBehavior
 		}
 		if (!this.IsfiringLaser && beamCont != null)
 		{
-			beamCont.DestroyBeam();
+			beamCont.CeaseAttack();
 			beamCont = null;
 		}
 		yield break;
@@ -553,7 +569,7 @@ public class CustomBeholsterLaserBehavior : BasicAttackBehavior
 	public string PostFireAnimation;
 
 	public ShootBeamBehavior.BeamSelection beamSelection;
-	public AIBeamShooter2 specificBeamShooter;
+	public List<AIBeamShooter2> specificBeamShooters;
 	private List<AIBeamShooter2> m_allBeamShooters;
 	private readonly List<AIBeamShooter2> m_currentBeamShooters = new List<AIBeamShooter2>();
 

@@ -691,7 +691,6 @@ namespace Planetside
         private IEnumerator ShrineParticlesOnDestory(Vector2 BottmLeft,Vector2 TopRight, bool PurpleRain)
         {
             Vector2 lol = TopRight.RoundToInt();
-
             float yes = lol.x.RoundToNearest(1);
             for (int j = 0; j < (300-yes)/8; j++)
             {

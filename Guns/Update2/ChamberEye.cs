@@ -45,8 +45,8 @@ namespace Planetside
 				Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(projectileModule.projectiles[0]);
 				projectile.gameObject.SetActive(false);
 				projectileModule.projectiles[0] = projectile;
-				projectile.baseData.damage = 4.5f;
-				projectile.AdditionalScaleMultiplier = 0.8f;
+				projectile.baseData.damage = 7f;
+				projectile.AdditionalScaleMultiplier = 0.9f;
 				
 				FakePrefab.MarkAsFakePrefab(projectile.gameObject);
 				UnityEngine.Object.DontDestroyOnLoad(projectile);

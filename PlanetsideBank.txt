@@ -1,0 +1,53 @@
+Event	ID	Name			Wwise Object Path	Notes
+	83107013	Play_FlashTell			\Default Work Unit\Play_FlashTell	
+	171788890	Play_RockBreaking			\Default Work Unit\Play_RockBreaking	
+	447827484	Play_PrisonerCough			\Default Work Unit\Play_PrisonerCough	
+	936425919	Play_BigSlam			\Default Work Unit\Play_BigSlam	
+	973001168	Play_ChainBreak_01			\Default Work Unit\Play_ChainBreak_01	
+	1479613161	Play_EyeRoar			\Default Work Unit\Play_EyeRoar	
+	1553844495	Stop_MUS_PrisonerTheme			\Default Work Unit\Stop_MUS_PrisonerTheme	
+	1661444356	Play_ambienthum			\Default Work Unit\Play_ambienthum	
+	1708275573	Play_Burn			\Default Work Unit\Play_Burn	
+	1844824434	Stop_ambienthum			\Default Work Unit\Stop_ambienthum	
+	1868670745	Play_MUS_PrisonerTheme			\Default Work Unit\Play_MUS_PrisonerTheme	
+	2479500174	Play_PrisonerCharge			\Default Work Unit\Play_PrisonerCharge	
+	2529669854	Stop_Whistle			\Default Work Unit\Stop_Whistle	
+	2693257580	Play_Whistle			\Default Work Unit\Play_Whistle	
+	3445738539	Play_SomethingWickedThisWayComes			\Default Work Unit\Play_SomethingWickedThisWayComes	
+	3454941287	Play_EnergySwirl			\Default Work Unit\Play_EnergySwirl	
+	3501561473	Play_PrisonerLaugh			\Default Work Unit\Play_PrisonerLaugh	
+	3527494775	Stop_Burn			\Default Work Unit\Stop_Burn	
+	3765695918	Play_Heartbeat			\Default Work Unit\Play_Heartbeat	
+	3841265863	Stop_EyeRoar			\Default Work Unit\Stop_EyeRoar	
+	3944849761	Play_perfectshot			\Default Work Unit\Play_perfectshot	
+	4084283492	Play_CoinFlip			\Default Work Unit\Play_CoinFlip	
+
+Game Parameter	ID	Name			Wwise Object Path	Notes
+	2714767868	VOL_MUS			\Default Work Unit\VOL_MUS	
+	3273357900	VOL_SFX			\Default Work Unit\VOL_SFX	
+
+Effect plug-ins	ID	Name	Type				Notes
+	701863527	Inside_My_Head	Wwise RoomVerb			
+	1863245162	Noise_Gate_Slow_Attack	Wwise Expander			
+	3036946058	Inside_Your_Head	Wwise RoomVerb			
+
+In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
+	37170147	PrisonerLaugh	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\PrisonerLaugh_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\PrisonerLaugh		16655
+	57826080	EnergySwirl	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\EnergySwirl_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\EnergySwirl		15377
+	67654682	Heartbeat	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Heartbeat_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\Heartbeat		4948
+	74550620	RockBreaking	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\RockBreaking_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\RockBreaking		18610
+	94183967	Burn	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Burn_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\Burn		36130
+	96596660	MainTheme	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\MainTheme_AD29F36A.wem		\Actor-Mixer Hierarchy\Default Work Unit\MUS_PrisonerTheme\MainTheme		2980626
+	185399095	StartSegment	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\StartSegment_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\MUS_PrisonerTheme\StartSegment		309087
+	318799545	PrisonerCough	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\PrisonerCough_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\PrisonerCough		17962
+	384112916	ChainCrack	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\Voices\English(US)\ChainCrack_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\ChainBreak\ChainCrack		17371
+	475472655	PrisonerCharge	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\PrisonerCharge_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\PrisonerCharge		28791
+	622668535	Whistle	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Whistle_AD29F36A.wem		\Actor-Mixer Hierarchy\Default Work Unit\Whistle		38291
+	723131918	ambienthum	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\ambienthum_AD29F36A.wem		\Actor-Mixer Hierarchy\Default Work Unit\ambienthum		585328
+	723448107	SomethingWickedThisWayComes	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\SomethingWickedThisWayComes_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\SomethingWickedThisWayComes		57553
+	815791638	FlashTell	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\FlashTell_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\FlashTell		8706
+	824633122	perfectshot	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\perfectshot_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\perfectshot		14789
+	924308126	EyeRoar	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\EyeRoar_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\EyeRoar		15324
+	994734446	CoinFlip	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\CoinFlip_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\CoinFlip		5962
+	1061456992	BigSlam	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\BigSlam_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\BigSlam		36129
+

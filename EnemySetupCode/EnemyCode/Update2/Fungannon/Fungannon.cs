@@ -1608,8 +1608,8 @@ namespace Planetside
 			private void FireWallBullet(float facingDir, Vector2 spawnPos, Vector2 roomCenter)
 			{
 				float angleDeg = (spawnPos - roomCenter).ToAngle();
-				int num = Mathf.RoundToInt(BraveMathCollege.ClampAngle360(angleDeg) / 45f) % 8;
-				float num2 = (float)num * 45f;
+				//int num = Mathf.RoundToInt(BraveMathCollege.ClampAngle360(angleDeg) / 45f) % 8;
+				//float num2 = (float)num * 45f;
 				base.Fire(Offset.OverridePosition(spawnPos), new Direction(facingDir, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new RainingPoot.PAin(this, (UnityEngine.Random.value > 0.33f) ? "spore2" : "spore1"));
 			}
 

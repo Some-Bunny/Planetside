@@ -22,8 +22,13 @@ namespace Planetside
 
         public static void BuildPrefab()
         {
-			
-            BuildSoulGuon();
+
+			AssetBundle bundle = ResourceManager.LoadAssetBundle("brave_resources_001");
+			LaserReticle = bundle.LoadAsset("assets/resourcesbundle/global vfx/vfx_lasersight.prefab") as GameObject;
+			bundle = null;
+
+
+			BuildSoulGuon();
 
 			BuildHeartGuon();
 			BuildHalfHeartGuon();
@@ -40,6 +45,8 @@ namespace Planetside
 			//BuildSW();
 			//BuildSpeakerObject();
 		}
+		public static GameObject LaserReticle;
+
 
 		public static void BuildTargetReticle()
 		{

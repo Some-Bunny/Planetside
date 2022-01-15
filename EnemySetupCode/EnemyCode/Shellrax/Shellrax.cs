@@ -2085,7 +2085,7 @@ namespace Planetside
 				{
 				"...to a mortal?... ugh...",
 				"No! Not again!",
-				"The creeping dark...",
+				"The creeping light...",
 				"This is not my end... I will return!",
 				"With my final breath, I curse thee!"
 				};

@@ -147,8 +147,8 @@ namespace ItemAPI
                 Tools.PrintError("No bytes found in " + file);
                 return null;
             }
-            Texture2D texture = new Texture2D(1, 1, TextureFormat.RGBA32, false);
             
+            Texture2D texture = new Texture2D(1, 1, TextureFormat.RGBA32, false);
             ImageConversion.LoadImage(texture, bytes);
             texture.filterMode = FilterMode.Point;
 
@@ -161,6 +161,8 @@ namespace ItemAPI
 
             return texture;
         }
+
+      
 
         public static Texture2D AnotherGetTextureFromResource(string resourceName)
         {

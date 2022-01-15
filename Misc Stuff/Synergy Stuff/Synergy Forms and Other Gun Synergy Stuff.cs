@@ -87,7 +87,6 @@ namespace Planetside
 			fart.SynergyNameToCheck = "Boring Eternity";
 
 			BSGSynergy afaf = (PickupObjectDatabase.GetById(21) as Gun).gameObject.AddComponent<BSGSynergy>();
-			afaf.SynergyNameToCheck = "Big Shocking Gun 9000";
 
 		}
 	}

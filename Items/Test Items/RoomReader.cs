@@ -26,6 +26,16 @@ using FullInspector.Internal;
 
 namespace Planetside
 {
+
+    public class Updater : MonoBehaviour
+    {
+        public void Update()
+        {
+           // base.gameObject.transform.Rotate(new Vector3(0f, 1f, 0f), 90f, Space.World);
+            base.gameObject.SetLayerRecursively(LayerMask.NameToLayer("Unpixelated"));
+        }
+    }
+
     public class RoomReader : PlayerItem
     {
         public static void Init()
@@ -42,15 +52,117 @@ namespace Planetside
             testActive.consumable = false;
             ItemBuilder.AddPassiveStatModifier(testActive, PlayerStats.StatType.AdditionalItemCapacity, 1f, StatModifier.ModifyMethod.ADDITIVE);
             testActive.quality = PickupObject.ItemQuality.EXCLUDED;
+            particle = AdvancedDragunPrefab.GetComponentInChildren<ParticleSystem>();
+
         }
+        private static AssetBundle bundle = ResourceManager.LoadAssetBundle("enemies_base_001");
+        private static GameObject AdvancedDragunPrefab = bundle.LoadAsset("assets/data/enemies/bosses/dragun.prefab") as GameObject;
+        private static ParticleSystem particle;
+
         public override void Pickup(PlayerController player)
         {
             base.Pickup(player);
         }
-        
+
+
+
+
+
 
         protected override void DoEffect(PlayerController user)
         {
+
+            //GameObject shader = PlanetsideModule.ModAssets.LoadAsset<GameObject>("SphereObj");
+            //UnityEngine.Object.Instantiate<GameObject>(shader, user.specRigidbody.UnitCenter, Quaternion.identity);
+            GameObject obj = PlanetsideModule.ModAssets.LoadAsset<GameObject>("sphere 1");
+            obj.SetLayerRecursively(LayerMask.NameToLayer("Unpixelated"));
+            Instantiate<GameObject>(obj, user.transform.position, Quaternion.Euler(0, 90f, 0));
+            obj.AddComponent<Updater>();
+
+
+            //obj.GetOrAddComponent<MeshFilter>().mesh = obj.GetComponent<Mesh>();
+
+
+            //obj.transform.Rotate(new Vector3(0f, 0f, 0f), 90f, Space.Self);
+
+            Gun gun = PickupObjectDatabase.GetById(483) as Gun;
+
+            foreach (Component item in gun.DefaultModule.projectiles[0].GetComponentsInChildren(typeof(Component)))
+            {
+                if (item != null)
+                {
+                    ETGModConsole.Log(item.name+"\n"+item.GetType().ToString()+"\n=========");
+                }
+            }
+
+
+            Vector2 vector = user.transform.PositionVector2();
+            ETGModConsole.Log("2");
+            Vector2 vector2 = new Vector2();
+            ETGModConsole.Log("3");
+            Func<SpeculativeRigidbody, bool> rigidbodyExcluder = (SpeculativeRigidbody otherRigidbody) => otherRigidbody.minorBreakable && !otherRigidbody.minorBreakable.stopsBullets;
+            ETGModConsole.Log("4");
+            //CollisionLayer layer2 = (!(user is PlayerController)) ? CollisionLayer.PlayerHitBox : CollisionLayer.EnemyHitBox;
+            ETGModConsole.Log("5");
+            int rayMask2 = CollisionMask.LayerToMask(CollisionLayer.HighObstacle, CollisionLayer.BulletBlocker, CollisionLayer.BulletBreakable);
+            ETGModConsole.Log("6");
+            RaycastResult raycastResult2;
+            ETGModConsole.Log("7");
+            Vector2 Point = MathToolbox.GetUnitOnCircle(user.CurrentGun.CurrentAngle, 1);
+            if (PhysicsEngine.Instance.Raycast(user.transform.PositionVector2(), Point, 1000, out raycastResult2, true, true, rayMask2, null, false, rigidbodyExcluder, null))
+            {
+                ETGModConsole.Log("7A");
+                vector2 = raycastResult2.Contact;
+            }
+            ETGModConsole.Log("8");
+            RaycastResult.Pool.Free(ref raycastResult2);
+
+
+            int num2 = Mathf.Max(Mathf.CeilToInt(Vector2.Distance(vector, vector2)), 1);
+            //ETGModConsole.Log("ahfuck before" + num2.ToString(), false);
+            //ETGModConsole.Log("ahfuck " + num2.ToString(), false);
+            for (int i = 0; i < num2; i++)
+            {
+                float t = (float)i / (float)num2;
+                Vector3 vector3 = Vector3.Lerp(vector, vector2, t);
+                GameObject silencerVFX = (GameObject)ResourceCache.Acquire("Global VFX/BlankVFX_Ghost");
+                //AkSoundEngine.PostEvent("Play_OBJ_silenceblank_small_01", base.gameObject);
+                GameObject gameObject = new GameObject("silencer");
+                SilencerInstance silencerInstance = gameObject.AddComponent<SilencerInstance>();
+                float additionalTimeAtMaxRadius = 0.25f;
+                silencerInstance.TriggerSilencer(vector3, 25f, 5f, silencerVFX, 0f, 3f, 3f, 3f, 250f, 5f, additionalTimeAtMaxRadius, user, false, false);
+                /*
+                ETGModConsole.Log("10");
+                float t = (float)i / (float)num2;
+                ETGModConsole.Log("11");
+                Vector3 vector3 = Vector3.Lerp(vector, vector2.ToCenterVector2(), t);
+                ETGModConsole.Log("12");
+                vector3 += Vector3.back;
+                ETGModConsole.Log("13");
+                float num3 = Mathf.PerlinNoise(vector3.x / 3f, vector3.y / 3f);
+                ETGModConsole.Log("14");
+                Vector3 a = Quaternion.Euler(0f, 0f, num3 * 360f) * Vector3.right;
+                ETGModConsole.Log("15");
+                Vector3 a2 = Vector3.Lerp(a, UnityEngine.Random.insideUnitSphere, UnityEngine.Random.Range(1, 3));
+                ETGModConsole.Log("15");
+                ParticleSystem.EmitParams emitParams = new ParticleSystem.EmitParams
+                {
+                    position = vector3,
+                    velocity = a2 * 2,
+                    startSize = 1,
+                    startLifetime = 0.3f,
+                    startColor = Color.blue
+                };
+                ETGModConsole.Log("16");
+
+                particle.Emit(emitParams, 1);
+                ETGModConsole.Log("17");
+                */
+            }
+
+            //AkSoundEngine.PostEvent("Stop_MUS_All", GameManager.Instance.gameObject);
+            //AkSoundEngine.PostEvent("Stop_MUS_PrisonerTheme", GameManager.Instance.gameObject);
+
 
             //AkSoundEngine.PostEvent("Play_BossTheme", user.gameObject);
 
@@ -58,7 +170,7 @@ namespace Planetside
 
 
 
-
+            /*
             Dungeon sewerDungeon = DungeonDatabase.GetOrLoadByName("Base_Forge");
 
             GameObject obj = null;
@@ -75,6 +187,7 @@ namespace Planetside
 
             obj = asset.placedObjects[0].nonenemyBehaviour.gameObject;
             ChallengeShrineController controller =  obj.GetOrAddComponent<ChallengeShrineController>();
+            */
             //controller.ConfigureOnPlacement(user.CurrentRoom);
 
             //FieldInfo m_parentRoom = controller.GetType().GetField("m_parentRoom", BindingFlags.NonPublic | BindingFlags.Instance);
@@ -117,6 +230,7 @@ namespace Planetside
                 }
             }
             */
+            /*
             if (obj != null)
              
             {
@@ -135,6 +249,7 @@ namespace Planetside
 
                 //UnityEngine.Object.Instantiate<GameObj.poect>(obj, user.specRigidbody.UnitCenter, Quaternion.identity);
             }
+            */
         }
     }
 }

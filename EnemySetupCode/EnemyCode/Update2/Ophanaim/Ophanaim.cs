@@ -732,8 +732,6 @@ namespace Planetside
 				RightEyeBottom.transform.position = new Vector2(7.0625f, 1.0625f);
 				GameObject TheRightEyeBottom = enemy.transform.Find("RightEyeBottom").gameObject;
 
-
-
 				AIBeamShooter aIBeamShooter = prefab.GetOrAddComponent<AIBeamShooter>();
 				AIActor actor = EnemyDatabase.GetOrLoadByGuid("21dd14e5ca2a4a388adab5b11b69a1e1");
 				AIBeamShooter aIBeamShooter2 = actor.GetComponent<AIBeamShooter>();
@@ -1938,11 +1936,6 @@ namespace Planetside
 							base.Position = truePosition + new Vector2(0f, Mathf.Sin((float)base.Tick / 60f / 0.75f * 3.14159274f) * 1.5f);
 							yield return base.Wait(1);
 						}
-
-						//if (Ophanaim.EyeEnemyBehavior.Phase2Check == true)
-						//{
-							//DeadlyDeadlyGoopManager.GetGoopManagerForGoopType(EasyGoopDefinitions.FireDef).TimedAddGoopCircle(base.Projectile.sprite.WorldCenter, Amount, 1f, false);
-						//}
 					}
 					base.Vanish(false);
 					yield break;
@@ -2354,7 +2347,7 @@ namespace Planetside
 						}
 						GameObject gameObject = SpawnManager.SpawnVFX(vfx.LaserShit, false);
 						tk2dSlicedSprite component2 = gameObject.GetComponent<tk2dSlicedSprite>();
-						component2.transform.position = new Vector3(this.Position.x, this.Position.y, 99999);// + BraveMathCollege.DegreesToVector(angle, 2f).ToVector3ZUp(0);
+						component2.transform.position = new Vector3(this.Position.x, this.Position.y, 99999);
 						component2.transform.localRotation = Quaternion.Euler(0f, 0f, angle);
 						component2.dimensions = new Vector2((num2) * 50f, 5f);
 						component2.UpdateZDepth();
