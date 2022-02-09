@@ -35,7 +35,7 @@ namespace Planetside
 			{
 				prefab = EnemyBuilder.BuildPrefab("Glockulus", guid, spritePaths[0], new IntVector2(0, 0), new IntVector2(8, 9), false);
 				var companion = prefab.AddComponent<EnemyBehavior>();
-				companion.aiActor.knockbackDoer.weight = 100;
+				companion.aiActor.knockbackDoer.weight = 50;
 				companion.aiActor.MovementSpeed = 0;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
 				companion.aiActor.CollisionDamage = 1f;
@@ -51,6 +51,8 @@ namespace Planetside
 				companion.aiActor.CanTargetPlayers = true;
 				companion.aiActor.HasShadow = true;
 				companion.aiActor.SetIsFlying(true, "Gamemode: Creative");
+				companion.aiActor.PathableTiles = CellTypes.PIT | CellTypes.FLOOR;
+
 				companion.aiActor.ShadowObject = EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").ShadowObject; 
 				companion.aiActor.healthHaver.SetHealthMaximum(22.5f, null, false);
 				companion.aiActor.specRigidbody.PixelColliders.Clear();
@@ -184,6 +186,9 @@ namespace Planetside
 						}
 					}
 				};
+				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awaken" }, new DirectionalAnimation.FlipType[0]);
+				companion.aiActor.AwakenAnimType = AwakenAnimationType.Awaken;
+
 				bool flag3 = GlockulusCollection == null;
 				if (flag3)
 				{
@@ -248,7 +253,10 @@ namespace Planetside
 					 13
 
 					}, "die_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
-
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, new List<int>
+					{
+					0
+					}, "awaken", tk2dSpriteAnimationClip.WrapMode.Once).fps = 1;
 
 
 				}

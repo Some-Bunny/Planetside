@@ -38,7 +38,9 @@ namespace Planetside
 				talkPointOffset = new Vector3(0, 3, 0),
 				isToggle = false,
 				isBreachShrine = false,
-				
+				shadowPath = "Planetside/Resources/Shrines/defaultShrineShadow.png",
+				ShadowOffsetX = 0f,
+				ShadowOffsetY = -0.3125f
 
 			};
 			aa.Build();
@@ -109,7 +111,6 @@ namespace Planetside
 				LootEngine.GivePrefabToPlayer(PickupObjectDatabase.GetById(67).gameObject, player);
 				ChanceToNullKing += 0.025f;
 				NoKeys = true;
-
 			}
 			player.stats.RecalculateStats(player, false, false);
 			shrine.GetComponent<CustomShrineController>().numUses++;

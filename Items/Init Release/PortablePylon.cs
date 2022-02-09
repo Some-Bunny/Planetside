@@ -76,21 +76,11 @@ namespace Planetside
         }
         protected override void DoEffect(PlayerController user)
         {
-
             Vector2 player = user.specRigidbody.UnitCenter;
             IntVector2? vector = (user as PlayerController).CurrentRoom.GetRandomAvailableCell(new IntVector2?(IntVector2.One * 2), CellTypes.FLOOR | CellTypes.PIT, false, null);
             Vector2 RandomInRoom = vector.Value.ToVector2();
             Vector2 usedvector;
-            int fuck;
-            bool flagA = user.PlayerHasActiveSynergy("Sentry Goin' Up!");
-            if (flagA)
-            {
-                fuck = 2;
-            }
-            else
-            {
-                fuck = 1;
-            }
+            int fuck = user.PlayerHasActiveSynergy("Sentry Goin' Up!") == true ? 2 : 1;
             for (int counter = 0; counter < fuck; counter++)
             {
                 if (counter == 1)
@@ -116,11 +106,6 @@ namespace Planetside
                             component2.specRigidbody.RegisterGhostCollisionException(user.specRigidbody);
                         }
                     }
-                    SpawnObjectItem componentInChildren2 = this.spawnedPlayerObject.GetComponentInChildren<SpawnObjectItem>();
-                    if (componentInChildren2)
-                    {
-                        componentInChildren2.SpawningPlayer = this.LastOwner;
-                    }
                     LoaderPylonSynergyFormeController yah = gameObject.AddComponent<LoaderPylonSynergyFormeController>();
                     if (yah != null)
                     {
@@ -139,11 +124,6 @@ namespace Planetside
                         {
                             component2.specRigidbody.RegisterGhostCollisionException(user.specRigidbody);
                         }
-                    }
-                    SpawnObjectItem componentInChildren2 = this.spawnedPlayerObject.GetComponentInChildren<SpawnObjectItem>();
-                    if (componentInChildren2)
-                    {
-                        componentInChildren2.SpawningPlayer = this.LastOwner;
                     }
                     LoaderPylonController yah = gameObject.AddComponent<LoaderPylonController>();
                     if (yah != null)

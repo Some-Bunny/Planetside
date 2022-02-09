@@ -29,7 +29,7 @@ namespace Planetside
             string shortDesc = "Comes With Auto-Hairdryer.";
             string longDesc = "Damages all enemies in a room, and applies the players effects onto enemies. A quick and easy portable shower, intended for Gungeoneers to stay somewhat clean for their eventual demise.";
             activeitem.SetupItem(shortDesc, longDesc, "psog");
-            activeitem.SetCooldownType(ItemBuilder.CooldownType.Damage, 300f);
+            activeitem.SetCooldownType(ItemBuilder.CooldownType.Damage, 250f);
             activeitem.consumable = false;
             activeitem.quality = PickupObject.ItemQuality.C;
             activeitem.AddToSubShop(ItemBuilder.ShopType.Goopton, 1f);
@@ -60,10 +60,7 @@ namespace Planetside
 
         protected override void DoEffect(PlayerController user)
         {
-            for (int i = 0; i < 2; i++)
-            {
-                SpawnManager.SpawnVFX((PickupObjectDatabase.GetById(538) as SilverBulletsPassiveItem).SynergyPowerVFX, user.sprite.WorldBottomCenter, Quaternion.identity).GetComponent<tk2dBaseSprite>().PlaceAtPositionByAnchor(user.sprite.WorldCenter.ToVector3ZisY(0f), tk2dBaseSprite.Anchor.MiddleCenter);
-            }
+            SpawnManager.SpawnVFX((PickupObjectDatabase.GetById(538) as SilverBulletsPassiveItem).SynergyPowerVFX, user.sprite.WorldBottomCenter, Quaternion.identity).GetComponent<tk2dBaseSprite>().PlaceAtPositionByAnchor(user.sprite.WorldCenter.ToVector3ZisY(0f), tk2dBaseSprite.Anchor.MiddleCenter);
             AkSoundEngine.PostEvent("Play_ENV_water_splash_01", base.gameObject);
             this.EnemyListing(user);
         }
@@ -71,18 +68,38 @@ namespace Planetside
         {
             RoomHandler absoluteRoom = base.transform.position.GetAbsoluteRoom();
             List<AIActor> activeEnemies = absoluteRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
-            bool flag = activeEnemies != null;
-            bool flag2 = flag;
-            if (flag2)
+            
+            if (activeEnemies != null)
             {
                 for (int i = 0; i < activeEnemies.Count; i++)
                 {
-                    this.AffectEnemy(activeEnemies[i], user);
+                    this.AffectEnemy(activeEnemies[i], user, user.IsOnFire, user.CurrentPoisonMeterValue > 0 ? true : false);
                 }
             }
+            user.StartCoroutine(TempImmunity(user));
+            user.CurrentStoneGunTimer = 0f;
         }
 
-        protected void AffectEnemy(AIActor target, PlayerController user)
+        private IEnumerator TempImmunity(PlayerController player)
+        {
+            DamageTypeModifier fire = GenSpecImmunity(CoreDamageTypes.Fire);
+            DamageTypeModifier poison = GenSpecImmunity(CoreDamageTypes.Poison);
+            player.healthHaver.damageTypeModifiers.AddRange(new List<DamageTypeModifier>() { fire, poison});
+            yield return new WaitForSeconds(5f);
+            player.healthHaver.damageTypeModifiers.Remove(fire);
+            player.healthHaver.damageTypeModifiers.Remove(poison);
+            yield break;
+        }
+
+        public DamageTypeModifier GenSpecImmunity(CoreDamageTypes damageType)
+        {
+            DamageTypeModifier immunity = new DamageTypeModifier();
+            immunity.damageMultiplier = 0f;
+            immunity.damageType = damageType;
+            return immunity;
+        }
+
+        protected void AffectEnemy(AIActor target, PlayerController user, bool willBurn, bool willPoison)
         {
             bool flag = target.IsNormalEnemy || (target.healthHaver.IsBoss && !target.IsHarmlessEnemy);
             bool flag2 = flag;
@@ -90,46 +107,23 @@ namespace Planetside
             {
                 if (target != null)
                 {
-                    float MaxHP;
-                    if (user.PlayerHasActiveSynergy("Watered Down"))
+                    float MaxHP = user.PlayerHasActiveSynergy("Watered Down") == true ? target.healthHaver.GetMaxHealth() / 5:0;
+                    target.healthHaver.ApplyDamage(30f + MaxHP, Vector2.zero, "Take a bath, nerd.", CoreDamageTypes.None, DamageCategory.Normal, false, null, false);
+
+                    if (willBurn)
                     {
-                        MaxHP = target.healthHaver.GetMaxHealth() / 5;
-                    }
-                    else
-                    {
-                        MaxHP = 0;
-                    }
-                    if (target.healthHaver.IsBoss)
-                    {
-                        target.healthHaver.ApplyDamage(30f, Vector2.zero, "Take a bath, nerd.", CoreDamageTypes.None, DamageCategory.Normal, false, null, false);
-                    }
-                    else
-                    {
-                        target.healthHaver.ApplyDamage(10f + MaxHP, Vector2.zero, "Take a bath, nerd.", CoreDamageTypes.None, DamageCategory.Normal, false, null, false);
-                    }
-                    if (user.IsOnFire)
-                    {
-                        this.CurrentFireMeterValue = 0f;
                         BulletStatusEffectItem Firecomponent = PickupObjectDatabase.GetById(295).GetComponent<BulletStatusEffectItem>();
                         GameActorFireEffect gameActorFire = Firecomponent.FireModifierEffect;
                         target.ApplyEffect(gameActorFire, 5f, null);
-
                     }
-                    if (user.CurrentPoisonMeterValue > 0)
+                    if (willPoison)
                     {
-                        this.CurrentPoisonMeterValue = 0f;
                         BulletStatusEffectItem PoisonComponent = PickupObjectDatabase.GetById(204).GetComponent<BulletStatusEffectItem>();
                         GameActorHealthEffect gameActorPOSON = PoisonComponent.HealthModifierEffect;
                         target.ApplyEffect(gameActorPOSON, 5f, null);
                     }
-                    if (user.CurrentStoneGunTimer > 0)
-                    {
-                        user.CurrentStoneGunTimer = 0f;
-                    }
                 }
             }
         }
-        public float CurrentFireMeterValue;
-        public float CurrentPoisonMeterValue;
     }
 }

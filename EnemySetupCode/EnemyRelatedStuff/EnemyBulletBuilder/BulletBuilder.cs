@@ -137,6 +137,39 @@ namespace EnemyBulletBuilder
 
             return bulletObject;
         }
+
+        public static GameObject CreateModifiedBulletPrefab(AIBulletBank.Entry entry, string name)
+        {
+            GameObject bulletObject = UnityEngine.Object.Instantiate(entry.BulletObject);
+
+
+            bulletObject.SetActive(false);
+            BulletBuilderFakePrefab.MarkAsFakePrefab(bulletObject);
+            BulletBuilderFakePrefab.DontDestroyOnLoad(bulletObject);
+
+            Projectile bulletProjectile = bulletObject.GetComponent<Projectile>();
+
+            bulletProjectile.BulletScriptSettings.preventPooling = true;
+
+            bulletProjectile.collidesWithEnemies = false;
+
+            SpeculativeRigidbody body = bulletProjectile.specRigidbody;
+
+
+            body.PrimaryPixelCollider.ColliderGenerationMode = PixelCollider.PixelColliderGeneration.Tk2dPolygon;
+
+          
+            AIBulletBank.Entry bulletEntry = new AIBulletBank.Entry();
+            bulletEntry.BulletObject = bulletObject;
+            bulletEntry.Name = name;
+            bulletEntry.ProjectileData = bulletProjectile.baseData;
+            VFXPool muzzleFlashEffects = new VFXPool { type = VFXPoolType.None, effects = new VFXComplex[0] };
+            bulletEntry.MuzzleFlashEffects = muzzleFlashEffects;
+            bulletEntries.Add(name, bulletEntry);
+
+            return bulletObject;
+        }
+
         public static void LerpMaterialGlow(Material targetMaterial, float startGlow, float targetGlow, float duration)
         {
             targetMaterial.SetFloat("_EmissivePower", Mathf.Lerp(startGlow, targetGlow, duration));

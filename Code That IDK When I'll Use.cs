@@ -278,3 +278,110 @@ item.CustomCost = 30;
 
 		};
 */
+
+
+
+/*
+ * Transform clockhairTransform = ((GameObject)UnityEngine.Object.Instantiate(BraveResources.Load("Clockhair", ".prefab"))).transform;
+		ClockhairController clockhair = clockhairTransform.GetComponent<ClockhairController>();
+		elapsed = 0f;
+		duration = clockhair.ClockhairInDuration;
+		Vector3 clockhairTargetPosition = this.CenterPosition;
+		Vector3 clockhairStartPosition = clockhairTargetPosition + new Vector3(-20f, 5f, 0f);
+		clockhair.renderer.enabled = false;
+		clockhair.spriteAnimator.Play("clockhair_intro");
+		clockhair.hourAnimator.Play("hour_hand_intro");
+		clockhair.minuteAnimator.Play("minute_hand_intro");
+		clockhair.secondAnimator.Play("second_hand_intro");
+		if (!isDoingPigSave && (GameManager.Instance.CurrentGameType == GameManager.GameType.SINGLE_PLAYER || GameManager.Instance.GetOtherPlayer(this).IsGhost) && this.OnRealPlayerDeath != null)
+		{
+			this.OnRealPlayerDeath(this);
+		}
+		bool hasWobbled = false;
+		while (elapsed < duration)
+		{
+			if (GameManager.INVARIANT_DELTA_TIME == 0f)
+			{
+				elapsed += 0.05f;
+			}
+			elapsed += GameManager.INVARIANT_DELTA_TIME;
+			float t2 = elapsed / duration;
+			float smoothT = Mathf.SmoothStep(0f, 1f, t2);
+			Vector3 currentPosition = Vector3.Slerp(clockhairStartPosition, clockhairTargetPosition, smoothT);
+			clockhairTransform.position = currentPosition.WithZ(0f);
+			if (t2 > 0.5f)
+			{
+				clockhair.renderer.enabled = true;
+				clockhair.spriteAnimator.UpdateAnimation(GameManager.INVARIANT_DELTA_TIME);
+			}
+			if (t2 > 0.75f)
+			{
+				clockhair.hourAnimator.GetComponent<Renderer>().enabled = true;
+				clockhair.minuteAnimator.GetComponent<Renderer>().enabled = true;
+				clockhair.secondAnimator.GetComponent<Renderer>().enabled = true;
+				clockhair.hourAnimator.UpdateAnimation(GameManager.INVARIANT_DELTA_TIME);
+				clockhair.minuteAnimator.UpdateAnimation(GameManager.INVARIANT_DELTA_TIME);
+				clockhair.secondAnimator.UpdateAnimation(GameManager.INVARIANT_DELTA_TIME);
+			}
+			if (!hasWobbled && clockhair.spriteAnimator.CurrentFrame == clockhair.spriteAnimator.CurrentClip.frames.Length - 1)
+			{
+				clockhair.spriteAnimator.Play("clockhair_wobble");
+				hasWobbled = true;
+			}
+			clockhair.sprite.UpdateZDepth();
+			this.spriteAnimator.UpdateAnimation(GameManager.INVARIANT_DELTA_TIME);
+			yield return null;
+		}
+		if (!hasWobbled)
+		{
+			clockhair.spriteAnimator.Play("clockhair_wobble");
+		}
+		clockhair.SpinToSessionStart(clockhair.ClockhairSpinDuration);
+		elapsed = 0f;
+		duration = clockhair.ClockhairSpinDuration + clockhair.ClockhairPauseBeforeShot;
+		while (elapsed < duration)
+		{
+			if (GameManager.INVARIANT_DELTA_TIME == 0f)
+			{
+				elapsed += 0.05f;
+			}
+			elapsed += GameManager.INVARIANT_DELTA_TIME;
+			clockhair.spriteAnimator.UpdateAnimation(GameManager.INVARIANT_DELTA_TIME);
+			yield return null;
+		}
+		if (isDoingPigSave)
+		{
+			elapsed = 0f;
+			duration = 2f;
+			Vector2 targetPosition = clockhairTargetPosition;
+			Vector2 startPosition = targetPosition + new Vector2(-18f, 0f);
+			Vector2 pigOffset = pigVFX.sprite.WorldCenter - pigVFX.transform.position.XY();
+			pigVFX.Play(pigMoveAnim);
+			while (elapsed < duration)
+			{
+				Vector2 lerpPosition = Vector2.Lerp(startPosition, targetPosition, elapsed / duration);
+				pigVFX.transform.position = (lerpPosition - pigOffset).ToVector3ZisY(0f);
+				pigVFX.sprite.UpdateZDepth();
+				if (duration - elapsed < 0.1f && !pigVFX.IsPlaying(pigSaveAnim))
+				{
+					pigVFX.Play(pigSaveAnim);
+				}
+				pigVFX.UpdateAnimation(GameManager.INVARIANT_DELTA_TIME);
+				if (GameManager.INVARIANT_DELTA_TIME == 0f)
+				{
+					elapsed += 0.05f;
+				}
+				elapsed += GameManager.INVARIANT_DELTA_TIME;
+				yield return null;
+			}
+		}
+		elapsed = 0f;
+		duration = 0.1f;
+		clockhairStartPosition = clockhairTransform.position;
+		clockhairTargetPosition = clockhairStartPosition + new Vector3(0f, 12f, 0f);
+		clockhair.spriteAnimator.Play("clockhair_fire");
+		clockhair.hourAnimator.GetComponent<Renderer>().enabled = false;
+		clockhair.minuteAnimator.GetComponent<Renderer>().enabled = false;
+		clockhair.secondAnimator.GetComponent<Renderer>().enabled = false;
+		this.DoVibration(Vibration.Time.Normal, Vibration.Strength.Hard);
+ */

@@ -108,10 +108,9 @@ namespace Planetside
                 string guid;
                 guid = "f38686671d524feda75261e469f30e0b";
 
-                PlayerController owner = base.Owner;
                 AIActor orLoadByGuid = EnemyDatabase.GetOrLoadByGuid(guid);
                 IntVector2? intVector = new IntVector2?(base.Owner.CurrentRoom.GetRandomVisibleClearSpot(2, 2));
-                AIActor aiactor = AIActor.Spawn(orLoadByGuid.aiActor, intVector.Value, GameManager.Instance.Dungeon.data.GetAbsoluteRoomFromPosition(intVector.Value), true, AIActor.AwakenAnimationType.Awaken, true);
+                AIActor aiactor = AIActor.Spawn(orLoadByGuid.aiActor, intVector.Value, GameManager.Instance.Dungeon.data.GetAbsoluteRoomFromPosition(intVector.Value), true, AIActor.AwakenAnimationType.Spawn, true);
                 aiactor.CanTargetEnemies = true;
                 aiactor.CanTargetPlayers = false;
                 PhysicsEngine.Instance.RegisterOverlappingGhostCollisionExceptions(aiactor.specRigidbody, null, false);

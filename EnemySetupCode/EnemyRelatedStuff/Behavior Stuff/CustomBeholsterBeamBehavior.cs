@@ -306,7 +306,9 @@ public class CustomBeholsterLaserBehavior : BasicAttackBehavior
 		this.IsfiringLaser = true;
 		this.SetLaserAngle(facingDirection);
 		this.m_aiActor.aiAnimator.LockFacingDirection = true;
-		if (UsesBaseSounds == true) { AkSoundEngine.PostEvent("Play_ENM_deathray_shot_01", base.m_aiActor.gameObject); }		
+		if (UsesBaseSounds == true) { AkSoundEngine.PostEvent("Play_ENM_deathray_shot_01", base.m_aiActor.gameObject); }
+		else if (LaserFiringSound != null) { AkSoundEngine.PostEvent(LaserFiringSound, base.m_aiActor.gameObject); }
+
 		this.IsfiringLaser = true;
 		base.m_aiActor.aiAnimator.LockFacingDirection = true;
 		MonoBehaviour yes = this.m_aiActor.GetComponent<MonoBehaviour>();
@@ -452,7 +454,7 @@ public class CustomBeholsterLaserBehavior : BasicAttackBehavior
 			//aibeamShooter2.sprite.allowDefaultLayer = false;
 
 			//aibeamShooter2.gameObject.GetComponent<tk2dBaseSprite>().SortingOrder = 10;
-			aibeamShooter2.sprite.HeightOffGround = -20;
+			//aibeamShooter2.sprite.HeightOffGround = -20;
 			//aibeamShooter2.sprite.allowDefaultLayer
 
 			//ETGModConsole.Log("Enemy:" + m_aiActor.transform.position.x.ToString() + "," + m_aiActor.transform.position.y.ToString());

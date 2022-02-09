@@ -21,9 +21,10 @@ namespace Planetside
             if (Proj != null)
             {
                 //Proj.renderer.enabled = true;
-                Proj.spriteAnimator.sprite.usesOverrideMaterial = true;
+                Proj.sprite.usesOverrideMaterial = true;
                 if (Proj.spriteAnimator != null)
                 {
+                    Proj.spriteAnimator.sprite.usesOverrideMaterial = true;
                     Proj.spriteAnimator.renderer.enabled = true;
                     Proj.spriteAnimator.renderer.material.shader = PlanetsideModule.ModAssets.LoadAsset<Shader>("inverseglowshader");
                 }

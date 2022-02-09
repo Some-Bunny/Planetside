@@ -150,7 +150,7 @@ namespace Planetside
             Vector4 distortionSettings = this.GetCenterPointInScreenUV(center, distortionIntensity, distortionRadius);
             distMaterial.SetVector("_WaveCenter", distortionSettings);
             Pixelator.Instance.RegisterAdditionalRenderPass(distMaterial);
-            float time = 30* duration;
+            float time = 20* duration;
             for (int i = 0; i < time; i++)
             {
                 if (BraveUtility.isLoadingLevel && GameManager.Instance.IsLoadingLevel)

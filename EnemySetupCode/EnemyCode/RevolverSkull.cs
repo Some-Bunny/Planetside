@@ -34,7 +34,7 @@ namespace Planetside
 			{
 				prefab = EnemyBuilder.BuildPrefab("Skullvenant", guid, spritePaths[0], new IntVector2(0, 0), new IntVector2(8, 9), false);
 				var companion = prefab.AddComponent<EnemyBehavior>();
-				companion.aiActor.knockbackDoer.weight = 800;
+				companion.aiActor.knockbackDoer.weight = 50;
 				companion.aiActor.MovementSpeed = 1.3f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
 				companion.aiActor.CollisionDamage = 1f;
@@ -50,6 +50,8 @@ namespace Planetside
 				companion.aiActor.CanTargetPlayers = true;
 				companion.aiActor.SetIsFlying(false, "Gamemode: Creative");
 				companion.aiActor.healthHaver.SetHealthMaximum(35f, null, false);
+				companion.aiActor.PathableTiles = CellTypes.PIT | CellTypes.FLOOR;
+
 				companion.aiActor.specRigidbody.PixelColliders.Clear();
 				companion.aiActor.specRigidbody.PixelColliders.Add(new PixelCollider
 				{
@@ -172,6 +174,8 @@ namespace Planetside
 						}
 					}
 				};
+				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awaken" }, new DirectionalAnimation.FlipType[0]);
+				companion.aiActor.AwakenAnimType = AwakenAnimationType.Awaken;
 				bool flag3 = SkullVenantCollection == null;
 				if (flag3)
 				{
@@ -226,7 +230,10 @@ namespace Planetside
                      8
 
 					}, "die_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 1f;
-
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, SkullVenantCollection, new List<int>
+					{
+					0
+					}, "awaken", tk2dSpriteAnimationClip.WrapMode.Once).fps = 4;
 
 
 				}

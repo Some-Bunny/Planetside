@@ -8,7 +8,7 @@ using static NpcApi.CustomShopController;
 
 namespace NpcApi
 {
-	public class CustomShopItemController : ShopItemController, IPlayerInteractable
+    public class CustomShopItemController : ShopItemController, IPlayerInteractable
 	{
 		public CustomShopItemController()
 		{
@@ -38,7 +38,7 @@ namespace NpcApi
 		public new int ModifiedPrice
 		{
 			get
-			{
+			{				
 				if (this.CurrencyType == CustomShopItemController.ShopCurrencyType.META_CURRENCY)
 				{
 					return this.CurrentPrice;
@@ -134,13 +134,13 @@ namespace NpcApi
 			{
 				this.CurrentPrice = 1;
 				if (customPrice != null)
-				{
+                {
 					this.CurrentPrice = customPrice(this.m_baseParentShop, this, this.item);
-				}
+				} 
 				else
-				{
+                {
 					ETGModConsole.Log("CustomPrice is sadly null please look into this!");
-				}
+                }
 			}
 
 			base.gameObject.AddComponent<tk2dSprite>();
@@ -241,7 +241,7 @@ namespace NpcApi
 			if (this.m_baseParentShop != null)
 			{
 
-
+				
 				if (this.CurrencyType == CustomShopItemController.ShopCurrencyType.META_CURRENCY)
 				{
 					text += "[sprite \"hbux_text_icon\"]";
@@ -280,7 +280,7 @@ namespace NpcApi
 			dfLabel componentInChildren = gameObject.GetComponentInChildren<dfLabel>();
 			componentInChildren.ColorizeSymbols = false;
 			componentInChildren.ProcessMarkup = true;
-
+			
 
 		}
 
@@ -545,7 +545,7 @@ namespace NpcApi
 					}
 				}
 				else
-				{
+                {
 					player.HandleItemPurchased(this);
 				}
 				if (!this.item.PersistsOnPurchase)

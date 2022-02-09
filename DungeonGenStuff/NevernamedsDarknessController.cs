@@ -35,14 +35,14 @@ namespace Planetside
 
         private void Update()
         {
-            if (GameManager.Instance.PrimaryPlayer == null)
+            if (GameManager.Instance.PrimaryPlayer == null && Pixelator.Instance != null)
             {
                 Pixelator.Instance.AdditionalCoreStackRenderPass = null;
             }
 
-            if (isDark && GameManager.Instance.PrimaryPlayer != null)
+            if (isDark && GameManager.Instance.PrimaryPlayer != null && Pixelator.Instance != null)
             {
-                if (Pixelator.Instance.AdditionalCoreStackRenderPass == null)
+                if (Pixelator.Instance.AdditionalCoreStackRenderPass == null && Pixelator.Instance != null)
                 {
                     m_material = new Material(DarknessEffectShader);
                     Pixelator.Instance.AdditionalCoreStackRenderPass = m_material;

@@ -43,10 +43,49 @@ namespace ItemAPI
             {
                 UnityEngine.Object.Destroy(actor.GetComponent<EncounterTrackable>());
             }
+            //new Hook(typeof(AIActor).GetMethod("OnEngaged", BindingFlags.Instance | BindingFlags.NonPublic), typeof(EnemyBuilder).GetMethod("OnEngagedHook"));
+
+            //new Hook(typeof(AIActor).GetMethod("Update", BindingFlags.Instance | BindingFlags.Public), typeof(EnemyBuilder).GetMethod("UpdateHook"));
+
+
             Hook enemyHook = new Hook(
                 typeof(EnemyDatabase).GetMethod("GetOrLoadByGuid", BindingFlags.Public | BindingFlags.Static),
                 typeof(EnemyBuilder).GetMethod("GetOrLoadByGuid")
             );
+
+            
+        }
+        public static void UpdateHook(Action<AIActor> orig, AIActor self)
+        {
+            ETGModConsole.Log("before orig:"+self.invisibleUntilAwaken.ToString(), true);
+            ETGModConsole.Log("state before orig:" + self.State.ToString(), true);
+            bool stateCheck = self.invisibleUntilAwaken;
+            orig(self);
+            if (stateCheck != self.invisibleUntilAwaken) 
+            {
+                ETGModConsole.Log("orig after:" + self.invisibleUntilAwaken.ToString() + "\n====", true);
+                ETGModConsole.Log("state after orig:" + self.State.ToString(), true);
+            }
+            ETGModConsole.Log("=========", true);
+        }
+
+        public static void OnEngagedHook(Action<AIActor, bool> orig, AIActor self, bool isRein)
+        {
+            orig(self, isRein);
+            //ETGModConsole.Log(self.ActorName + "\n" + self.State.ToString() + "\n");
+            ETGModConsole.Log(self.AwakenAnimType.ToString());
+            /*
+            if (self.specRigidbody != null)
+            {
+                foreach (PixelCollider collider in self.specRigidbody.PixelColliders)
+                {
+                    ETGModConsole.Log(collider.IsTrigger.ToString());
+                    ETGModConsole.Log(collider.CollisionLayer.ToString());
+                    ETGModConsole.Log(collider.ColliderGenerationMode.ToString());
+
+                }
+            }
+            */
         }
 
         public static AIActor GetOrLoadByGuid(Func<string, AIActor> orig, string guid)
@@ -86,7 +125,7 @@ namespace ItemAPI
             enemy.encounterTrackable.journalData.SuppressKnownState = false;
         }
 
-        public static GameObject BuildPrefab(string name, string guid, string defaultSpritePath, IntVector2 hitboxOffset, IntVector2 hitBoxSize, bool HasAiShooter, bool UsesAttackGroup = false)
+        public static GameObject BuildPrefab(string name, string guid, string defaultSpritePath, IntVector2 hitboxOffset, IntVector2 hitBoxSize, bool HasAiShooter, bool UsesAttackGroup = false, bool usesDefaultEngage = true)
         {
             if (HasAiShooter)
             {
@@ -142,10 +181,16 @@ namespace ItemAPI
             aiActor.EnemyGuid = guid;
             aiActor.CanTargetPlayers = true;
             aiActor.HasShadow = false;
-            aiActor.specRigidbody.CollideWithOthers = true;
+            aiActor.specRigidbody.CollideWithOthers = false;
             aiActor.specRigidbody.CollideWithTileMap = true;
             aiActor.specRigidbody.PixelColliders.Clear();
+            aiActor.HasBeenEngaged = false;
+            aiActor.reinforceType = AIActor.ReinforceType.FullVfx;
+            aiActor.invisibleUntilAwaken = true;
+            aiActor.AwakenAnimType = AIActor.AwakenAnimationType.Default;
+
             aiActor.specRigidbody.PixelColliders.Add(new PixelCollider
+
 
             {
                 ColliderGenerationMode = PixelCollider.PixelColliderGeneration.Manual,
@@ -183,7 +228,8 @@ namespace ItemAPI
                 ManualRightX = 0,
                 ManualRightY = 0,
             });
-            aiActor.CorpseObject = EnemyDatabase.GetOrLoadByGuid("01972dee89fc4404a5c408d50007dad5").CorpseObject;
+
+            //aiActor.CorpseObject = EnemyDatabase.GetOrLoadByGuid("01972dee89fc4404a5c408d50007dad5").CorpseObject;
             aiActor.PreventBlackPhantom = false;
             //setup behavior speculator
             var bs = prefab.GetComponent<BehaviorSpeculator>();
@@ -201,8 +247,9 @@ namespace ItemAPI
             }
             //allows enemies to be tinted
             prefab.AddComponent<Tint>();
-            prefab.AddComponent<EngageLate>();
+            //prefab.AddComponent<EngageLate>();
             prefab.AddComponent<AIBulletBank>();
+            //if (usesDefaultEngage) { prefab.AddComponent<DefaultSpawnEngage>(); }
             //Add to enemy database
             EnemyDatabaseEntry enemyDatabaseEntry = new EnemyDatabaseEntry()
             {
@@ -218,6 +265,7 @@ namespace ItemAPI
             GameObject.DontDestroyOnLoad(prefab);
             FakePrefab.MarkAsFakePrefab(prefab);
             prefab.SetActive(false);
+
 
             return prefab;
         }
@@ -484,12 +532,109 @@ namespace ItemAPI
         }
     }
 
-    public class EngageLate : BraveBehaviour
+
+    public class DefaultSpawnEngage : CustomEngageDoer
+    {
+        public void Awake()
+        {
+            this.StartIntro();
+        }
+        public void Start()
+        {
+            this.StartIntro();
+        }
+
+
+        public void Update()
+        {
+
+        }
+
+        public override void StartIntro()
+        {
+            if (this.m_isFinished)
+            {
+                return;
+            }
+            base.StartCoroutine(this.DoIntro());
+        }
+
+      
+        private IEnumerator DoIntro()
+        {
+            m_isFinished = false;
+            this.aiActor.enabled = false;
+            this.behaviorSpeculator.enabled = false;
+            this.aiActor.ToggleRenderers(false);
+            this.specRigidbody.enabled = false;
+            this.aiActor.IsGone = true;
+            this.aiActor.ToggleRenderers(false);
+            this.aiActor.State = AIActor.ActorState.Awakening;
+            if (this.aiShooter)
+            {
+                this.aiShooter.ToggleGunAndHandRenderers(false, "DefaultSpawnToggle");
+            }
+            this.aiActor.healthHaver.PreventAllDamage = true;
+            this.aiActor.enabled = true;
+            this.specRigidbody.enabled = true;
+            this.aiActor.IsGone = false;
+            this.aiActor.IgnoreForRoomClear = false;
+            this.aiActor.ToggleRenderers(true);
+            this.aiActor.renderer.enabled = false;
+            //this.aiAnimator.PlayDefaultAwakenedState();
+            this.aiActor.State = AIActor.ActorState.Awakening;
+            int playerMask = CollisionMask.LayerToMask(CollisionLayer.PlayerCollider, CollisionLayer.PlayerHitBox);
+            this.aiActor.specRigidbody.AddCollisionLayerIgnoreOverride(playerMask);
+
+            this.behaviorSpeculator.enabled = false;
+            if (this.aiShooter)
+            {
+                this.aiShooter.ToggleGunAndHandRenderers(false, "DefaultSpawnToggle");
+            }
+
+            if (this.aiShooter)
+            {
+                this.aiShooter.ToggleGunAndHandRenderers(true, "DefaultSpawnToggle");
+            }
+            yield return new WaitForSeconds(1.5f);
+            this.aiActor.healthHaver.PreventAllDamage = false;
+            this.behaviorSpeculator.enabled = true;
+            this.aiActor.renderer.enabled = true;
+            this.aiActor.specRigidbody.RemoveCollisionLayerIgnoreOverride(playerMask);
+            this.aiActor.HasBeenEngaged = true;
+            this.aiActor.State = AIActor.ActorState.Normal;
+            this.StartIntro();
+            m_isFinished = true;
+            yield break;
+        }
+        public override bool IsFinished
+        {
+            get
+            {
+                return this.m_isFinished;
+            }
+        }
+        private bool m_isFinished;
+    }
+
+
+    public class EngageLate : CustomEngageDoer
     {
         private RoomHandler m_StartRoom;
+
         private void Update()
         {
-            if (!base.aiActor.HasBeenEngaged) { CheckPlayerRoom(); }
+            if (base.aiActor.State != AIActor.ActorState.Normal)
+            {
+                base.aiActor.specRigidbody.enabled = false;
+            }
+            else if (HasEnabled != true)
+            {
+                HasEnabled = true;
+                base.aiActor.specRigidbody.enabled = true;
+            }
+
+            //if (!base.aiActor.HasBeenEngaged) { CheckPlayerRoom(); }
         }
         private void CheckPlayerRoom()
         {
@@ -508,9 +653,10 @@ namespace ItemAPI
         }
         private void Start()
         {
+            this.HasEnabled = false;
             m_StartRoom = aiActor.GetAbsoluteParentRoom();
         }
-
+        private bool HasEnabled;
 
     }
     public class Tint : BraveBehaviour

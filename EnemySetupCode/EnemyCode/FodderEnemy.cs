@@ -34,7 +34,7 @@ namespace Planetside
 			{
 				prefab = EnemyBuilder.BuildPrefab("Fodder Enemy", guid, spritePaths[0], new IntVector2(0, 0), new IntVector2(8, 9), false);
 				var companion = prefab.AddComponent<EnemyBehavior>();
-				companion.aiActor.knockbackDoer.weight = 800;
+				companion.aiActor.knockbackDoer.weight = 100000;
 				companion.aiActor.MovementSpeed = 0f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
 				companion.aiActor.CollisionDamage = 1f;
@@ -48,6 +48,8 @@ namespace Planetside
 				companion.aiActor.CollisionKnockbackStrength = 0f;
 				companion.aiActor.procedurallyOutlined = true;
 				companion.aiActor.CanTargetPlayers = true;
+				companion.aiActor.IgnoreForRoomClear = true;
+
 				companion.aiActor.healthHaver.SetHealthMaximum(2f, null, false);
 				companion.aiActor.specRigidbody.PixelColliders.Clear();
 				companion.aiActor.specRigidbody.PixelColliders.Add(new PixelCollider

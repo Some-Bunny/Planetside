@@ -36,6 +36,36 @@ namespace GungeonAPI
 			}
 		}
 
+
+
+		public class ShrineShadowHandler : MonoBehaviour
+		{
+			public ShrineShadowHandler()
+			{
+				this.shadowObject = (GameObject)UnityEngine.Object.Instantiate(ResourceCache.Acquire("DefaultShadowSprite"));
+				this.Offset = new Vector2(0, 0);
+			}
+
+			public void Start()
+			{
+				GameObject shadowObj = (GameObject)UnityEngine.Object.Instantiate(shadowObject);
+				shadowObj.transform.parent = base.gameObject.transform;
+				tk2dSprite shadowSprite = shadowObj.GetComponent<tk2dSprite>();
+				shadowSprite.renderer.enabled = true;
+				shadowSprite.HeightOffGround = base.gameObject.GetComponent<tk2dSprite>().HeightOffGround - 0.1f;
+				shadowObj.transform.position.WithZ(base.gameObject.transform.position.z + 99999f);
+				shadowObj.transform.position = base.gameObject.transform.position + Offset;
+				DepthLookupManager.ProcessRenderer(shadowObj.GetComponent<Renderer>(), DepthLookupManager.GungeonSortingLayer.BACKGROUND);
+				shadowSprite.usesOverrideMaterial = true;
+				shadowSprite.renderer.material.shader = Shader.Find("Brave/Internal/SimpleAlphaFadeUnlit");
+				shadowSprite.renderer.material.SetFloat("_Fade", 0.66f);
+			}
+
+
+			public Vector3 Offset;
+			public GameObject shadowObject;
+		}
+
 		public GameObject Build()
 		{
 			GameObject result;
@@ -167,6 +197,18 @@ namespace GungeonAPI
 				customShrineController.CanUse = this.CanUse;
 				bool flag3 = this.interactableComponent != null;
 				bool flag4 = flag3;
+
+				if (shadowPath != null)
+                {
+					GameObject shadowObject = SpriteBuilder.SpriteFromResource(shadowPath, null, false);
+					shadowObject.name = "Shadow_" + name;
+					tk2dSprite orAddComponent3 = shadowObject.GetOrAddComponent<tk2dSprite>();
+					orAddComponent3.SetSprite(orAddComponent3.spriteId);
+					FakePrefab.MarkAsFakePrefab(shadowObject);
+					ShrineShadowHandler orAddComponent4 = gameObject.gameObject.GetOrAddComponent<ShrineShadowHandler>();
+					orAddComponent4.shadowObject = orAddComponent3.gameObject;
+					orAddComponent4.Offset = new Vector3(ShadowOffsetX, ShadowOffsetY);
+				}
 				IPlayerInteractable item;
 				if (flag4)
 				{
@@ -222,8 +264,7 @@ namespace GungeonAPI
 		public float RoomWeight;
 		// Token: 0x06000018 RID: 24 RVA: 0x0000399C File Offset: 0x00001B9C
 		public static void RegisterShrineRoom(GameObject shrine, PrototypeDungeonRoom protoroom, string ID, Vector2 offset, float roomweight)
-		{
-			
+		{		
 			DungeonPrerequisite[] array = new DungeonPrerequisite[0];
 			Vector2 vector = new Vector2((float)(protoroom.Width / 2) + offset.x, (float)(protoroom.Height / 2) + offset.y);
 			protoroom.placedObjectPositions.Add(vector);
@@ -256,7 +297,18 @@ namespace GungeonAPI
 				category = protoroom.category.ToString(),
 				weight = roomweight,
 		};
-			//RoomFactory.RoomData roomData = RoomFactory.ExtractRoomDataFromResource(roomPath);
+			RoomFactory.rooms.Add(ID, roomData);
+			DungeonHandler.RegisterForShrine(roomData);
+		}
+		public static void RegisterShrineRoomNoObject(PrototypeDungeonRoom protoroom, string ID,float roomweight)
+		{
+			
+			RoomFactory.RoomData roomData = new RoomFactory.RoomData
+			{
+				room = protoroom,
+				category = protoroom.category.ToString(),
+				weight = roomweight,
+			};
 			RoomFactory.rooms.Add(ID, roomData);
 			DungeonHandler.RegisterForShrine(roomData);
 		}
@@ -307,78 +359,60 @@ namespace GungeonAPI
 			}
 		}
 
-		// Token: 0x0400001C RID: 28
 		public string name;
 
-		// Token: 0x0400001D RID: 29
 		public string modID;
 
-		// Token: 0x0400001E RID: 30
 		public string spritePath;
 
 		public string roomPath;
 
-		// Token: 0x0400001F RID: 31
 		public string text;
 
-		// Token: 0x04000020 RID: 32
 		public string acceptText;
 
-		// Token: 0x04000021 RID: 33
 		public string declineText;
 
-		// Token: 0x04000022 RID: 34
 		public Action<PlayerController, GameObject> OnAccept;
 
-		// Token: 0x04000023 RID: 35
 		public Action<PlayerController, GameObject> OnDecline;
 
-		// Token: 0x04000024 RID: 36
 		public Func<PlayerController, GameObject, bool> CanUse;
 
-		// Token: 0x04000025 RID: 37
 		public Vector3 talkPointOffset;
 
-		// Token: 0x04000026 RID: 38
 		public Vector3 offset = new Vector3(43.8f, 42.4f, 42.9f);
 
-		// Token: 0x04000027 RID: 39
 		public IntVector2 colliderOffset;
 
-		// Token: 0x04000028 RID: 40
 		public IntVector2 colliderSize;
 
-		// Token: 0x04000029 RID: 41
 		public bool isToggle;
 
-		// Token: 0x0400002A RID: 42
+		public string shadowPath;
+
+		public float ShadowOffsetX;
+
+		public float ShadowOffsetY;
+
 		public bool usesCustomColliderOffsetAndSize;
 
-		// Token: 0x0400002B RID: 43
 		public Type interactableComponent = null;
 
-		// Token: 0x0400002C RID: 44
 		public bool isBreachShrine = false;
 
-		// Token: 0x0400002D RID: 45
 		public PrototypeDungeonRoom room;
 
-		// Token: 0x0400002E RID: 46
 		public Dictionary<string, int> roomStyles;
 
-		// Token: 0x0400002F RID: 47
 		public static Dictionary<string, GameObject> builtShrines = new Dictionary<string, GameObject>();
 
-		// Token: 0x04000030 RID: 48
 		private static bool m_initialized;
 
-		// Token: 0x04000031 RID: 49
 		private static bool m_builtShrines;
 
-		// Token: 0x02000074 RID: 116
 		public class CustomShrineController : DungeonPlaceableBehaviour
 		{
-			// Token: 0x06000303 RID: 771 RVA: 0x00021FE0 File Offset: 0x000201E0
 			private void Start()
 			{
 				string text = base.name.Replace("(Clone)", "");

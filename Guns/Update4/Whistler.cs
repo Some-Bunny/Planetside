@@ -45,7 +45,7 @@ namespace Planetside
 
 			gun.DefaultModule.ammoCost = 1;
 			gun.DefaultModule.shootStyle = ProjectileModule.ShootStyle.Charged;
-			gun.reloadTime = 3.7f;
+			gun.reloadTime = 3.4f;
 			gun.DefaultModule.cooldownTime = 0.1f;
 			gun.DefaultModule.numberOfShotsInClip = 1;
 			gun.DefaultModule.angleVariance = 14f;
@@ -80,7 +80,7 @@ namespace Planetside
 			yes.dashColor = new Color(1.2f, 0f, 2f, 1f);
 
 			projectile.AdditionalScaleMultiplier *= 1;
-			projectile.baseData.damage = 1.5f;
+			projectile.baseData.damage = 3.5f;
 			projectile.baseData.speed = 30;
 			projectile.pierceMinorBreakables = true;
 			projectile.hitEffects.alwaysUseMidair = true;
@@ -144,11 +144,11 @@ namespace Planetside
 			component.sharedMaterials = sharedMaterials;
 
 			ETGMod.Databases.Items.Add(gun, null, "ANY");
-			DivineLight.DivineLightID = gun.PickupObjectId;
+			Whistler.WhistlerID = gun.PickupObjectId;
 			ItemIDs.AddToList(gun.PickupObjectId);			
 		}
 		public static Projectile DivineLightProjectile;
-		public static int DivineLightID;
+		public static int WhistlerID;
 
 	
 		protected override void Update()

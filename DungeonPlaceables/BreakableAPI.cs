@@ -468,9 +468,7 @@ namespace BreakAbleAPI
                 SurfaceDecorator decorator = table.gameObject.GetOrAddComponent<SurfaceDecorator>();
                 decorator.chanceToDecorate = chanceToDecorateTable;
                 decorator.parentSprite = table.GetComponent<tk2dSprite>();
-
             }
-
             return table;
         }
         private static GameObject GenerateTableOutlineObject(string name, string outlinePath, GameObject parent, tk2dSpriteCollectionData collection)
@@ -589,7 +587,7 @@ namespace BreakAbleAPI
         /// <param name="BlocksPaths">Will act as a blocker and will not let enemies path find through it, I think.</param>
         /// <param name="collisionLayerList">Sets the collision layer/s of the MajorBreakable. leaving this as null will set it to HighObstacle AND BulletBlocker, however basegame MajorBreakables can use different ones, and at times multiple at once.</param>
 
-        public static MajorBreakable GenerateMajorBreakable(string name, string[] idleSpritePaths, int idleAnimFPS = 2, string[] breakSpritePaths = null, int breakAnimFPS = 5, float HP = 100, string ShadowSpritePath = null, float ShadowOffsetX = 0, float ShadowOffsetY = 0, bool UsesCustomColliderValues = false, int ColliderSizeX = 16, int ColliderSizeY = 8, int ColliderOffsetX = 0, int ColliderOffsetY = 8, bool DistribleShards = true, VFXPool breakVFX = null, VFXPool damagedVFX = null, bool BlocksPaths = false, List<CollisionLayer> collisionLayerList = null)
+        public static MajorBreakable GenerateMajorBreakable(string name, string[] idleSpritePaths, int idleAnimFPS = 2, string[] breakSpritePaths = null, int breakAnimFPS = 5, float HP = 100, string ShadowSpritePath = null, float ShadowOffsetX = 0, float ShadowOffsetY = 0, bool UsesCustomColliderValues = false, int ColliderSizeX = 16, int ColliderSizeY = 8, int ColliderOffsetX = 0, int ColliderOffsetY = 8, bool DistribleShards = true, VFXPool breakVFX = null, VFXPool damagedVFX = null, bool BlocksPaths = false, List<CollisionLayer> collisionLayerList = null, Dictionary<float, string> preBreakframesAndHPPercentages = null)
         {
             Texture2D textureFromResource = ResourceExtractor.GetTextureFromResource(idleSpritePaths[0]);
             GameObject gameObject = SpriteBuilder.SpriteFromResource(idleSpritePaths[0], null, false);
@@ -611,7 +609,6 @@ namespace BreakAbleAPI
                 IntVector2 nonCustomintVector = new IntVector2(textureFromResource.width, textureFromResource.height);
                 colliderSize = new IntVector2(nonCustomintVector.x, nonCustomintVector.y);
             }
-
 
             SpeculativeRigidbody speculativeRigidbody = sprite.SetUpEmptySpeculativeRigidbody(colliderOffset, colliderSize);
             if (collisionLayerList == null)
@@ -751,6 +748,20 @@ namespace BreakAbleAPI
             if (breakVFX != null) { breakable.breakVfx = breakVFX; }
             if (damagedVFX != null) { breakable.damageVfx = damagedVFX; }
 
+            if (preBreakframesAndHPPercentages != null)
+            {
+                List<BreakFrame> breakFrameList = new List<BreakFrame>();
+                foreach (var Entry in preBreakframesAndHPPercentages)
+                {
+                    BreakFrame breakFrame = new BreakFrame();
+                    breakFrame.healthPercentage = Entry.Key;
+                    int SpriteID = SpriteBuilder.AddSpriteToCollection(Entry.Value, MajorBreakableSpriteCollection);
+                    breakFrame.sprite = MajorBreakableSpriteCollection.spriteDefinitions[SpriteID].name;
+                    breakFrameList.Add(breakFrame);
+                }
+                BreakFrame[] array = breakFrameList.ToArray();
+                breakable.prebreakFrames = array;
+            }
             breakable.distributeShards = DistribleShards;
             return breakable;
         }
@@ -953,7 +964,7 @@ namespace BreakAbleAPI
             if (BounceVFX != null) { DebrisObj.optionalBounceVFX = BounceVFX; }
             DebrisObj.sprite = tk2dsprite;
             DebrisObj.DoesGoopOnRest = DoesGoopOnRest;
-            if (GoopType != null) { DebrisObj.AssignedGoop = GoopType; }
+            if (GoopType != null) { DebrisObj.AssignedGoop = GoopType; } else if(GoopType == null && DebrisObj.DoesGoopOnRest == true) { DebrisObj.DoesGoopOnRest = false; }
             DebrisObj.GoopRadius = GoopRadius;
             if (shadowSprite != null) { DebrisObj.shadowSprite = shadowSprite; }
             DebrisObj.inertialMass = Mass;
@@ -1016,7 +1027,7 @@ namespace BreakAbleAPI
             if (BounceVFX != null) { DebrisObj.optionalBounceVFX = BounceVFX; }
             DebrisObj.sprite = sprite;
             DebrisObj.DoesGoopOnRest = DoesGoopOnRest;
-            if (GoopType != null) { DebrisObj.AssignedGoop = GoopType; }
+            if (GoopType != null) { DebrisObj.AssignedGoop = GoopType; } else if (GoopType == null && DebrisObj.DoesGoopOnRest == true) { DebrisObj.DoesGoopOnRest = false; }
             DebrisObj.GoopRadius = GoopRadius;
             if (shadowSprite != null) { DebrisObj.shadowSprite = shadowSprite; }
             DebrisObj.inertialMass = Mass;
@@ -1058,7 +1069,7 @@ namespace BreakAbleAPI
                 if (BounceVFX != null) { DebrisObj.optionalBounceVFX = BounceVFX; }
                 DebrisObj.sprite = tk2dsprite;
                 DebrisObj.DoesGoopOnRest = DoesGoopOnRest;
-                if (GoopType != null) { DebrisObj.AssignedGoop = GoopType; }
+                if (GoopType != null) { DebrisObj.AssignedGoop = GoopType; } else if (GoopType == null && DebrisObj.DoesGoopOnRest == true) { DebrisObj.DoesGoopOnRest = false; }
                 DebrisObj.GoopRadius = GoopRadius;
                 if (shadowSprite != null) { DebrisObj.shadowSprite = shadowSprite; }
                 DebrisObj.inertialMass = Mass;
@@ -1131,7 +1142,7 @@ namespace BreakAbleAPI
                     if (BounceVFX != null) { DebrisObj.optionalBounceVFX = BounceVFX; }
                     DebrisObj.sprite = sprite;
                     DebrisObj.DoesGoopOnRest = DoesGoopOnRest;
-                    if (GoopType != null) { DebrisObj.AssignedGoop = GoopType; }
+                    if (GoopType != null) { DebrisObj.AssignedGoop = GoopType; } else if (GoopType == null && DebrisObj.DoesGoopOnRest == true) { DebrisObj.DoesGoopOnRest = false; }
                     DebrisObj.GoopRadius = GoopRadius;
                     if (shadowSprite != null) { DebrisObj.shadowSprite = shadowSprite; }
                     DebrisObj.inertialMass = Mass;

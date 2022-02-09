@@ -31,7 +31,7 @@ namespace Planetside
             string shortDesc = "KA-BEWWWWMMM!";
             string longDesc = "Calls in an incredibly powerful, yet delayed kinetic strike on your cursor.\n\nHow did one of these end up inside the Gungeon? No one knows.\n\nHow does one of these even *land* inside the Gungeon? No one knows either.";
             activeitem.SetupItem(shortDesc, longDesc, "psog");
-            activeitem.SetCooldownType(ItemBuilder.CooldownType.Damage, 1500f);
+            activeitem.SetCooldownType(ItemBuilder.CooldownType.Damage, 1250f);
             activeitem.consumable = false;
             activeitem.quality = PickupObject.ItemQuality.S;
             activeitem.AddToSubShop(ItemBuilder.ShopType.Trorc, 1f);

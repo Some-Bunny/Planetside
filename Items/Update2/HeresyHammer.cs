@@ -912,7 +912,7 @@ namespace Planetside
         private PlayerController playeroue;
         private Shader m_glintShader;
     }
-
+    /*
     public class ChallengeUP : BraveBehaviour
     {
         public void Start()
@@ -938,6 +938,7 @@ namespace Planetside
         private RoomHandler Microwave;
         private PlayerController playeroue;
     }
+    */
     public class HERETIC : BraveBehaviour
     {
         public void Start()
@@ -978,17 +979,13 @@ namespace Planetside
                 {
                     if (this.playeroue != null)
                     {
-                        GameObject gameObject = new GameObject();
-                        gameObject.transform.position = playeroue.transform.position;
-                        BulletScriptSource source = gameObject.GetOrAddComponent<BulletScriptSource>();
-                        gameObject.AddComponent<BulletSourceKiller>();
-                        var bulletScriptSelected = new CustomBulletScriptSelector(typeof(AngerGodsScript));
-                        AIActor aIActor = EnemyDatabase.GetOrLoadByGuid("01972dee89fc4404a5c408d50007dad5");
-                        AIBulletBank bulletBank = aIActor.GetComponent<AIBulletBank>();
-                        bulletBank.CollidesWithEnemies = false;
-                        source.BulletManager = bulletBank;
-                        source.BulletScript = bulletScriptSelected;
-                        source.Initialize();//to fire the script once
+                        AIActor orLoadByGuid = EnemyDatabase.GetOrLoadByGuid("jammed_guardian");
+                        IntVector2 bestRewardLocation = GameManager.Instance.BestActivePlayer.CurrentRoom.GetBestRewardLocation(IntVector2.One * 3, RoomHandler.RewardLocationStyle.PlayerCenter, true);
+                        AIActor aiactor = AIActor.Spawn(orLoadByGuid.aiActor, bestRewardLocation, GameManager.Instance.BestActivePlayer.CurrentRoom, true, AIActor.AwakenAnimationType.Spawn, true);
+                        PhysicsEngine.Instance.RegisterOverlappingGhostCollisionExceptions(aiactor.specRigidbody, null, false);
+                        aiactor.gameObject.AddComponent<KillOnRoomClear>();
+                        aiactor.IgnoreForRoomClear = true;
+                        aiactor.HandleReinforcementFallIntoRoom(0f);
                     }
                     this.elapsed = 0f;
                     this.CanHeresy = false;

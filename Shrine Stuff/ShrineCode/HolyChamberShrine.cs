@@ -26,7 +26,7 @@ namespace Planetside
 
 				name = "HolyChamberShrine",
 				modID = "psog",
-				text = "The Shrine of the Holy Chamber. It's so quiet here it very feels wrong to make any noise. Seems like it's missing something...",
+				text = "The Shrine of the Holy Chamber. Seems like it's missing something...",
 				spritePath = "Planetside/Resources/Shrines/HolyChamberShrine.png",
 				room = RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/HolyChamberRoom.room").room,
 				RoomWeight = 2f,
@@ -35,12 +35,14 @@ namespace Planetside
 				OnAccept = Accept,
 				OnDecline = null,
 				CanUse = CanUse,
-				//offset = new Vector3(43.8f, 42.4f, 42.9f),
 				offset = new Vector3(-1, -1, 0),
 				talkPointOffset = new Vector3(0, 3, 0),
 				isToggle = false,
 				isBreachShrine = false,
-				
+				shadowPath = "Planetside/Resources/Shrines/defaultShrineShadow.png",
+				ShadowOffsetX = 0f,
+				ShadowOffsetY = -0.5f
+
 			};
 			iei.Build();
 		}
@@ -71,6 +73,12 @@ namespace Planetside
 
 		public static void Accept(PlayerController player, GameObject shrine)
 		{
+			AkSoundEngine.PostEvent("Play_OBJ_dice_bless_01", player.gameObject);
+
+			GameObject gameObject2 = UnityEngine.Object.Instantiate<GameObject>(StaticVFXStorage.TeleportVFX);
+			gameObject2.GetComponent<tk2dBaseSprite>().PlaceAtLocalPositionByAnchor(shrine.transform.PositionVector2() + new Vector2(0.5f, -0.5f), tk2dBaseSprite.Anchor.LowerCenter);
+			gameObject2.transform.position = gameObject2.transform.position.Quantize(0.0625f);
+			gameObject2.GetComponent<tk2dBaseSprite>().UpdateZDepth();
 
 			StatModifier item = new StatModifier
 			{
@@ -104,79 +112,73 @@ namespace Planetside
 			}
 			player.ownerlessStatModifiers.Add(item2);
 			player.ownerlessStatModifiers.Add(item);
-			string header;
-			string text;
-			HolyChamberShrine.Numero = UnityEngine.Random.Range(1, 8);
-			switch (HolyChamberShrine.Numero)
-			{
-				case 1:
-					player.gameObject.AddComponent<Greed>();
-				    header = "Greed";
-					text = "Filler.";
-					HolyChamberShrine.Notify(header, text);
-					header = "Kills Can Grant Money";
-					text = "Filler.";
-					HolyChamberShrine.Notify(header, text);
-					break;
-				case 2:
-					player.gameObject.AddComponent<BlessedShield>();
-					header = "Blessed Shield";
-					text = "Filler.";
-					HolyChamberShrine.Notify(header, text);
-					header = "Cleanses Nearby Bullets And Foes.";
-					text = "Filler.";
-					HolyChamberShrine.Notify(header, text);
-					break;
-				case 3:
-					player.gameObject.AddComponent<RepellingRolls>();
-					header = "Repelling Rolls";
-					text = "Filler.";
-					HolyChamberShrine.Notify(header, text);
-					header = "Forces Away Dangers On Rolling.";
-					text = "Filler.";
-					HolyChamberShrine.Notify(header, text);
-					break;
-				case 4:
-					player.gameObject.AddComponent<AllSeeingEye>();
-					header = "All-Seeing Eye";
-					text = "Filler.";
-					HolyChamberShrine.Notify(header, text);
-					header = "Grants Foresight.";
-					text = "Filler.";
-					HolyChamberShrine.Notify(header, text);
-					break;
-				case 5:
-					player.gameObject.AddComponent<DanageBoosterWithEnemies>();
-					header = "Enemies-To-Damage";
-					text = "Filler.";
-					HolyChamberShrine.Notify(header, text);
-					header = "More Active Enemies, More Damage.";
-					text = "Filler.";
-					HolyChamberShrine.Notify(header, text);
-					break;
-				case 6:
-					player.gameObject.AddComponent<BulletsToFire>();
-					header = "Bullets To Gunfire";
-					text = "Filler.";
-					HolyChamberShrine.Notify(header, text);
-					header = "Damage Converts Enemy Bullets.";
-					text = "Filler.";
-					HolyChamberShrine.Notify(header, text);
-					break;
-				case 7:
-					player.gameObject.AddComponent<SoulPuddle>();
-					header = "Soul Puddle";
-					text = "Filler.";
-					HolyChamberShrine.Notify(header, text);
-					header = "Kills Leave Soul Puddles.";
-					text = "Filler.";
-					HolyChamberShrine.Notify(header, text);
-					break;
 
+			List<DebrisObject> perksThatExist = new List<DebrisObject>() { };
+			List<int> IDsUsed = new List<int>()
+            {
+				Contract.ContractID,
+				Greedy.GreedyID,
+				AllStatsUp.AllStatsUpID,
+				AllSeeingEye.AllSeeingEyeID,
+				BlastProjectiles.BlastProjectilesID,
+				Glass.GlassID,
+				ChaoticShift.ChaoticShiftID,
+				PitLordsPact.PitLordsPactID,
+				UnbreakableSpirit.UnbreakableSpiritID
+			};
+			int PerksToSpawn = UnityEngine.Random.Range(2, 5);
+			for (int e = 0; e < PerksToSpawn; e++)
+            {
+				int IDtoUse = BraveUtility.RandomElement<int>(IDsUsed);
+				DebrisObject debrisSpawned = LootEngine.SpawnItem(PickupObjectDatabase.GetById(IDtoUse).gameObject, shrine.GetComponent<tk2dBaseSprite>().WorldCenter.ToVector3ZisY() + MathToolbox.GetUnitOnCircle((360 / PerksToSpawn)*e, 1.25f).ToVector3ZisY() + new Vector3(-0.5f, 0), MathToolbox.GetUnitOnCircle((360 / PerksToSpawn) * e, 5), 3).GetComponent<DebrisObject>();
+				perksThatExist.Add(debrisSpawned);
+				IDsUsed.Remove(IDtoUse);
 			}
+			if (perksThatExist.Count >= 0 || perksThatExist != null)
+            {
+				GameManager.Instance.Dungeon.StartCoroutine(ItemChoiceCoroutine(perksThatExist));
+			}
+			TextMaker text = shrine.gameObject.AddComponent<TextMaker>();
+			text.TextSize = 7;
+			text.Color = Color.cyan;
+			text.ExistTime = 2;
+			text.FadeInTime = 0.25f;
+			text.FadeOutTime = 0.5f;
+			text.Text = "Choose One.";
+			text.Opacity = 1;
+			text.anchor = dfPivotPoint.TopCenter;
+			text.offset = new Vector3(-1.5f, 4f);
+			text.GameObjectToAttachTo = shrine.gameObject;
+
 			shrine.GetComponent<CustomShrineController>().numUses++;
 			shrine.GetComponent<CustomShrineController>().GetRidOfMinimapIcon();
 			AkSoundEngine.PostEvent("Play_OBJ_shrine_accept_01", shrine);
+		}
+
+	
+
+		public static IEnumerator ItemChoiceCoroutine(List<DebrisObject> pickups)
+		{
+			for (; ; )
+			{
+				foreach (DebrisObject obj in pickups)
+                {
+					if (!obj)
+                    {
+						pickups.Remove(obj);
+						foreach (DebrisObject obj2 in pickups)
+						{
+							GameObject gameObject2 = UnityEngine.Object.Instantiate<GameObject>(StaticVFXStorage.TeleportVFX);
+							gameObject2.GetComponent<tk2dBaseSprite>().PlaceAtLocalPositionByAnchor(obj2.transform.PositionVector2() + new Vector2(0f, -0.5f), tk2dBaseSprite.Anchor.LowerCenter);
+							gameObject2.transform.position = gameObject2.transform.position.Quantize(0.0625f);
+							gameObject2.GetComponent<tk2dBaseSprite>().UpdateZDepth();
+							UnityEngine.Object.Destroy(obj2.gameObject);
+						}
+						yield break;
+					}
+				}
+				yield return null;
+			}
 		}
 
 		public static int Numero = 0;
@@ -195,224 +197,6 @@ namespace Planetside
 			471
 		};
 		//Done
-		public class AllSeeingEye : BraveBehaviour
-		{
-			public void Start()
-			{
-				PlayerController player = GameManager.Instance.PrimaryPlayer;
-				this.RevealSecretRooms();
-				GameManager.Instance.OnNewLevelFullyLoaded += this.RevealSecretRooms;
-
-
-				player.gameObject.AddComponent<AllSeeingEye.AllSeeingEyeChestBehaviour>();
-
-			}
-			public void Update()
-			{
-
-			}
-			private void RevealSecretRooms()
-			{
-				for (int i = 0; i < GameManager.Instance.Dungeon.data.rooms.Count; i++)
-				{
-					RoomHandler roomHandler = GameManager.Instance.Dungeon.data.rooms[i];
-					bool flag = roomHandler.connectedRooms.Count != 0;
-					bool flag2 = flag;
-					bool flag3 = flag2;
-					if (flag3)
-					{
-						bool flag4 = roomHandler.area.PrototypeRoomCategory == PrototypeDungeonRoom.RoomCategory.SECRET;
-						bool flag5 = flag4;
-						bool flag6 = flag5;
-						if (flag6)
-						{
-							roomHandler.RevealedOnMap = true;
-							Minimap.Instance.RevealMinimapRoom(roomHandler, true, true, roomHandler == GameManager.Instance.PrimaryPlayer.CurrentRoom);
-						}
-					}
-				}
-			}
-			private static string gunVFX = "Planetside/Resources/VFX/AllSeeingEye/gunicon.png";
-			private static string itemVFX = "Planetside/Resources/VFX/AllSeeingEye/itemicon.png";
-			private static string vfxName = "WisperVFX";
-			private static GameObject gunVFXPrefab;
-			private static GameObject itemVFXPrefab;
-			private class AllSeeingEyeChestBehaviour : BraveBehaviour
-			{
-				private void Start()
-				{
-					this.player = base.GetComponent<PlayerController>();
-
-					AllSeeingEye.gunVFXPrefab = SpriteBuilder.SpriteFromResource(AllSeeingEye.gunVFX, null, false);
-					AllSeeingEye.itemVFXPrefab = SpriteBuilder.SpriteFromResource(AllSeeingEye.itemVFX, null, false);
-					AllSeeingEye.gunVFXPrefab.name = AllSeeingEye.vfxName;
-					AllSeeingEye.itemVFXPrefab.name = AllSeeingEye.vfxName;
-					UnityEngine.Object.DontDestroyOnLoad(AllSeeingEye.gunVFXPrefab);
-					FakePrefab.MarkAsFakePrefab(AllSeeingEye.gunVFXPrefab);
-					AllSeeingEye.gunVFXPrefab.SetActive(false);
-					UnityEngine.Object.DontDestroyOnLoad(AllSeeingEye.itemVFXPrefab);
-					FakePrefab.MarkAsFakePrefab(AllSeeingEye.itemVFXPrefab);
-					AllSeeingEye.itemVFXPrefab.SetActive(false);
-				}
-
-				private void FixedUpdate()
-				{
-					bool flag = !this.player || this.player.CurrentRoom == null;
-					if (!flag)
-					{
-						IPlayerInteractable nearestInteractable = this.player.CurrentRoom.GetNearestInteractable(this.player.sprite.WorldCenter, 1f, this.player);
-						bool flag2 = nearestInteractable != null && nearestInteractable is Chest;
-						if (flag2)
-						{
-							Chest chest = nearestInteractable as Chest;
-							bool flag3 = !this.encounteredChests.Contains(chest) && !chest.transform.Find(AllSeeingEye.vfxName);
-							if (flag3)
-							{
-								this.InitializeChest(chest);
-							}
-							else
-							{
-								this.nearbyChest = chest;
-							}
-						}
-						else
-						{
-							this.nearbyChest = null;
-						}
-						this.HandleChests();
-					}
-				}
-
-				private void HandleChests()
-				{
-					foreach (Chest chest in this.encounteredChests)
-					{
-						bool flag = !chest;
-						if (!flag)
-						{
-							tk2dSprite tk2dSprite;
-							if (chest == null)
-							{
-								tk2dSprite = null;
-							}
-							else
-							{
-								Transform transform = chest.transform;
-								if (transform == null)
-								{
-									tk2dSprite = null;
-								}
-								else
-								{
-									Transform transform2 = transform.Find(AllSeeingEye.vfxName);
-									tk2dSprite = ((transform2 != null) ? transform2.GetComponent<tk2dSprite>() : null);
-								}
-							}
-							tk2dSprite tk2dSprite2 = tk2dSprite;
-							bool flag2 = !tk2dSprite2;
-							if (!flag2)
-							{
-								bool flag3 = chest != this.nearbyChest;
-								if (flag3)
-								{
-									tk2dSprite2.scale = Vector3.Lerp(tk2dSprite2.scale, Vector3.zero, 0.25f);
-								}
-								else
-								{
-									tk2dSprite2.scale = Vector3.Lerp(tk2dSprite2.scale, Vector3.one, 0.25f);
-								}
-								bool flag4 = Vector3.Distance(tk2dSprite2.scale, Vector3.zero) < 0.01f;
-								if (flag4)
-								{
-									tk2dSprite2.scale = Vector3.zero;
-								}
-								tk2dSprite2.PlaceAtPositionByAnchor(chest.sprite.WorldTopCenter + this.offset, tk2dBaseSprite.Anchor.LowerCenter);
-							}
-						}
-					}
-				}
-
-				// Token: 0x0600065C RID: 1628 RVA: 0x0003FB34 File Offset: 0x0003DD34
-				private void InitializeChest(Chest chest)
-				{
-					int guess = this.GetGuess(chest);
-					bool flag = guess == 0;
-					GameObject original;
-					if (flag)
-					{
-						original = AllSeeingEye.gunVFXPrefab;
-					}
-					else
-					{
-						original = AllSeeingEye.itemVFXPrefab;
-					}
-					tk2dSprite component = UnityEngine.Object.Instantiate<GameObject>(original, chest.transform).GetComponent<tk2dSprite>();
-					component.name = AllSeeingEye.vfxName;
-					component.PlaceAtPositionByAnchor(chest.sprite.WorldTopCenter + this.offset, tk2dBaseSprite.Anchor.LowerCenter);
-					component.scale = Vector3.zero;
-					this.nearbyChest = chest;
-					this.encounteredChests.Add(chest);
-				}
-
-				private int GetGuess(Chest chest)
-				{
-					Chest.GeneralChestType chestType = chest.ChestType;
-					bool flag = chestType == Chest.GeneralChestType.WEAPON;
-					int result;
-					if (flag)
-					{
-						result = 0;
-					}
-					else
-					{
-						bool flag2 = chestType == Chest.GeneralChestType.ITEM;
-						if (flag2)
-						{
-							result = 1;
-						}
-						else
-						{
-							List<PickupObject> list = chest.PredictContents(this.player);
-							foreach (PickupObject pickupObject in list)
-							{
-								bool flag3 = pickupObject is Gun;
-								if (flag3)
-								{
-									return 0;
-								}
-								bool flag4 = pickupObject is PlayerItem || pickupObject is PassiveItem;
-								if (flag4)
-								{
-									return 1;
-								}
-							}
-							result = UnityEngine.Random.Range(0, 2);
-						}
-					}
-					return result;
-				}
-
-				public void DestroyAllFX()
-				{
-					foreach (Chest chest in this.encounteredChests)
-					{
-						Transform transform = chest.transform.Find(AllSeeingEye.vfxName);
-						bool flag = transform;
-						if (flag)
-						{
-							UnityEngine.Object.Destroy(transform);
-						}
-					}
-					this.encounteredChests.Clear();
-				}
-				private List<Chest> encounteredChests = new List<Chest>();
-				private PlayerController player;
-				private Chest nearbyChest;
-				private Vector2 offset = new Vector2(0f, 0.25f);
-
-			}
-
-		}
 
 		//Done
 		public class Greed : BraveBehaviour

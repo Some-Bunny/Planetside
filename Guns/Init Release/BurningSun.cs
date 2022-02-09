@@ -28,29 +28,31 @@ namespace Planetside
 			//behav.preventNormalReloadAudio = true;
 			//behav.overrideNormalReloadAudio = "Play_BOSS_doormimic_appear_01";
 			GunExt.SetShortDescription(gun, "Ring Of Fire");
-			GunExt.SetLongDescription(gun, "A powerful cannon that fires miniature suns. The heat radiated from it deals great damage to foes.");
+			GunExt.SetLongDescription(gun, "Despite its looks, this portable weapon can generate, and fire miniature stars. As one would expect from firing a star, it is dangerous to anything near it.");
 			GunExt.SetupSprite(gun, null, "burningsun_idle_001", 8);
-			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 12);
-			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 4);
-			GunExt.SetAnimationFPS(gun, gun.chargeAnimation, 5);
-			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 3);
-			GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(146) as Gun, true, false);
+			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 8);
+			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 10);
+			GunExt.SetAnimationFPS(gun, gun.chargeAnimation, 10);
+			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 5);
+			GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(384) as Gun, true, false);
 			gun.DefaultModule.ammoCost = 1;
 			gun.DefaultModule.shootStyle = ProjectileModule.ShootStyle.Charged;
 			gun.DefaultModule.sequenceStyle = ProjectileModule.ProjectileSequenceStyle.Random;
-			gun.reloadTime = 2.5f;
+			gun.reloadTime = 2f;
 			gun.DefaultModule.cooldownTime = 1f;
 			gun.DefaultModule.numberOfShotsInClip = 1;
 			gun.SetBaseMaxAmmo(50);
 			gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.MEDIUM_BLASTER;
-			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_wpn_chargelaser_shot_01";
-			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].triggerEvent = true;
-			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.reloadAnimation).frames[0].eventAudio = "Play_OBJ_metalskin_end_01";
-			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.reloadAnimation).frames[0].triggerEvent = true;
+
+			EnemyToolbox.AddSoundsToAnimationFrame(gun.GetComponent<tk2dSpriteAnimator>(),gun.chargeAnimation, new Dictionary<int, string> { { 1, "Play_WPN_bountyhunterarm_charge_01" }, { 2, "Play_ENM_bigbulletboy_step_01" }, { 4, "Play_FS_bone_step_01" }, { 7, "Play_WPN_rpg_reload_01" }, { 15, "Play_OBJ_mine_beep_01" } });
+			EnemyToolbox.AddSoundsToAnimationFrame(gun.GetComponent<tk2dSpriteAnimator>(), gun.shootAnimation, new Dictionary<int, string> { { 0, "Play_wpn_chargelaser_shot_01" }, { 1, "Play_BOSS_lichB_charge_01" } });
+			EnemyToolbox.AddSoundsToAnimationFrame(gun.GetComponent<tk2dSpriteAnimator>(), gun.reloadAnimation, new Dictionary<int, string> { { 9, "Play_OBJ_lock_unlock_01" }, { 10, "Play_BOSS_lichC_zap_01" }, { 11, "Play_OBJ_metalskin_end_01" } });
+
+
 			gun.barrelOffset.transform.localPosition = new Vector3(2.0f, 0.4375f, 0f);
 			gun.carryPixelOffset += new IntVector2((int)4f, (int)0f);
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.chargeAnimation).wrapMode = tk2dSpriteAnimationClip.WrapMode.LoopSection;
-			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.chargeAnimation).loopStart = 2;
+			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.chargeAnimation).loopStart = 16;
 			gun.gunClass = GunClass.FIRE;
 
 
@@ -63,23 +65,42 @@ namespace Planetside
 			FakePrefab.MarkAsFakePrefab(projectile2.gameObject);
 			UnityEngine.Object.DontDestroyOnLoad(projectile2);
 			gun.DefaultModule.projectiles[0] = projectile2;
-			projectile2.baseData.damage = 30f;
+			projectile2.baseData.damage = 35f;
 			projectile2.baseData.speed *= 0.2f;
 			projectile2.baseData.force *= 1f;
 			projectile2.baseData.range = 100f;
 			projectile2.AdditionalScaleMultiplier *= 1.33f;
 			projectile2.transform.parent = gun.barrelOffset;
 			projectile2.HasDefaultTint = true;
+
+
+			projectile2.AnimateProjectile(new List<string> {
+				"burningsun_projectile_001",
+				"burningsun_projectile_002",
+				"burningsun_projectile_003",
+				"burningsun_projectile_004"
+			}, 5, true, new List<IntVector2> {
+				new IntVector2(14, 14), 
+                new IntVector2(14, 14),         
+                new IntVector2(14, 14), 
+                new IntVector2(14, 14),
+			}, AnimateBullet.ConstructListOfSameValues(false, 7), AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.MiddleCenter, 7), AnimateBullet.ConstructListOfSameValues(true, 7), AnimateBullet.ConstructListOfSameValues(false, 7),AnimateBullet.ConstructListOfSameValues<Vector3?>(null, 7), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 7), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 7), AnimateBullet.ConstructListOfSameValues<Projectile>(null, 7));
+
 			AoEDamageComponent Values = projectile2.gameObject.AddComponent<AoEDamageComponent>();
 			Values.DamageperDamageEvent = 1;
 			Values.Radius = 4;
 			Values.TimeBetweenDamageEvents = 0.33f;
-			Values.DealsDamage = false;
+			Values.DealsDamage = true;
+			Values.DamageperDamageEvent = 5;
+			Values.DamageValuesAlsoScalesWithDamageStat = true;
 			Values.InflictsFire = true;
 			Values.HeatStrokeSynergy = true;
 			Values.EffectProcChance = 1;
 			projectile2.gameObject.AddComponent<BurningSunProjectile>();
 
+
+
+			/*
 			OtherTools.EasyTrailComponent trail = projectile2.gameObject.AddComponent<OtherTools.EasyTrailComponent>();
 			trail.TrailPos = projectile2.transform.position;
 			trail.StartColor = Color.white;
@@ -88,11 +109,11 @@ namespace Planetside
 			trail.LifeTime = 1f;
 			trail.BaseColor = new Color(5f, 1f, 0f, 2f);
 			trail.EndColor = new Color(5f, 1f, 1f, 0f);
-
+			*/
 			ProjectileModule.ChargeProjectile item2 = new ProjectileModule.ChargeProjectile
 			{
 				Projectile = projectile2,
-				ChargeTime = 1.33f
+				ChargeTime = 2.2f
 			};
 			gun.DefaultModule.chargeProjectiles = new List<ProjectileModule.ChargeProjectile>
 			{
@@ -132,40 +153,14 @@ namespace Planetside
 				HasReloaded = false;
 				AkSoundEngine.PostEvent("Stop_WPN_All", base.gameObject);
 				base.OnReloadPressed(player, gun, bSOMETHING);
-				AkSoundEngine.PostEvent("Play_OBJ_metalskin_end_01", base.gameObject);
 			}
 		}
-
-		public Texture _gradTexture;
 
 		public override void PostProcessProjectile(Projectile projectile)
 		{
 
-			PlayerController player = projectile.Owner as PlayerController;
 
 		}
-
-		private void EndRingEffect(Projectile projectile)
-		{
-			PlayerController player = this.gun.CurrentOwner as PlayerController;
-			AssetBundle assetBundle = ResourceManager.LoadAssetBundle("shared_auto_001");
-			GoopDefinition goopDefinition = assetBundle.LoadAsset<GoopDefinition>("assets/data/goops/napalmgoopquickignite.asset");
-			DeadlyDeadlyGoopManager goopManagerForGoopType = DeadlyDeadlyGoopManager.GetGoopManagerForGoopType(goopDefinition);
-			goopManagerForGoopType.TimedAddGoopCircle(projectile.sprite.WorldCenter, 4f, 0.8f, false);
-		}
-
-		private void ShockRing(Projectile projectile)
-		{
-			PlayerController player = projectile.Owner as PlayerController;
-			this.m_radialIndicator = ((GameObject)UnityEngine.Object.Instantiate(ResourceCache.Acquire("Global VFX/HeatIndicator"), projectile.sprite.WorldCenter, Quaternion.identity, projectile.transform)).GetComponent<HeatIndicatorController>();
-			this.m_radialIndicator.CurrentColor = Color.red.WithAlpha(0f);
-			this.m_radialIndicator.IsFire = true;
-			this.m_radialIndicator.CurrentRadius = 4f;
-			
-		}
-
-        private HeatIndicatorController m_radialIndicator;
-
         protected void Update()
 		{
 			if (gun.CurrentOwner)
@@ -183,117 +178,3 @@ namespace Planetside
 		}
 	}
 }
-//this was for bug-testing leave me alone
-/*
-namespace Planetside
-{
-	class AutoShotgun : AdvancedGunBehavior
-	{
-		public static void Add()
-		{
-			Gun gun = ETGMod.Databases.Items.NewGun("Auto Shotgun", "polarity");
-			Game.Items.Rename("outdated_gun_mods:auto_shotgun", "cel:auto_shotgun");
-			gun.gameObject.AddComponent<AutoShotgun>();
-			gun.SetShortDescription("Become Decease");
-			gun.SetLongDescription("An automatic shotgun. Prefered by those who want the coverage of a shotgun paired with the speed of an assault rifle.");
-			gun.SetupSprite(null, "polarity_idle_001", 8);
-			gun.SetAnimationFPS(gun.shootAnimation, 10);
-			gun.SetAnimationFPS(gun.reloadAnimation, 5);
-			for (int i = 0; i < 4; i++)
-			{
-				GunExt.AddProjectileModuleFrom(gun, "ak-47", true, false);
-			}
-			foreach (ProjectileModule projectileModule in gun.Volley.projectiles)
-			{
-				projectileModule.shootStyle = ProjectileModule.ShootStyle.SemiAutomatic;
-				Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(projectileModule.projectiles[0]);
-				projectile.gameObject.SetActive(false);
-				FakePrefab.MarkAsFakePrefab(projectile.gameObject);
-				UnityEngine.Object.DontDestroyOnLoad(projectile);
-				projectileModule.projectiles[0] = projectile;
-				projectileModule.angleVariance = 12;
-				projectile.transform.parent = gun.barrelOffset;
-				gun.DefaultModule.projectiles[0] = projectile;
-				projectile.baseData.damage *= .72f;
-				projectile.baseData.speed *= 1f;
-				projectile.AdditionalScaleMultiplier = 3f;
-				projectileModule.numberOfShotsInClip = 8;
-				projectileModule.cooldownTime = .4f;
-				projectile.baseData.range = 35f;
-				projectileModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
-
-				bool flag = projectileModule == gun.DefaultModule;
-				if (flag)
-				{
-					projectileModule.ammoCost = 1;
-				}
-				else
-				{
-					projectileModule.ammoCost = 0;
-				}
-
-			}
-			gun.gunSwitchGroup = (PickupObjectDatabase.GetById(51) as Gun).gunSwitchGroup;
-			gun.muzzleFlashEffects = (PickupObjectDatabase.GetById(51) as Gun).muzzleFlashEffects;
-			gun.Volley.UsesShotgunStyleVelocityRandomizer = true;
-			gun.Volley.DecreaseFinalSpeedPercentMin = -10f;
-			gun.Volley.IncreaseFinalSpeedPercentMax = 10f;
-			gun.SetBaseMaxAmmo(360);
-
-			gun.quality = PickupObject.ItemQuality.C;
-			gun.encounterTrackable.EncounterGuid = "fricc u spapi imma use guids all i want >:c";
-			gun.sprite.IsPerpendicular = true;
-			gun.gunClass = GunClass.FULLAUTO;
-			gun.reloadTime = 2.2f;
-			ETGMod.Databases.Items.Add(gun, null, "ANY");
-		}
-		private bool HasReloaded;
-		protected override void Update()
-		{
-			base.Update();
-			if (gun.CurrentOwner)
-			{
-
-				if (gun.PreventNormalFireAudio)
-				{
-					this.gun.PreventNormalFireAudio = true;
-				}
-				if (!gun.IsReloading && !HasReloaded)
-				{
-					this.HasReloaded = true;
-				}
-			}
-		}
-
-		protected override void OnPickedUpByPlayer(PlayerController player)
-		{
-			base.OnPickedUpByPlayer(player);
-		}
-		protected override void OnPostDroppedByPlayer(PlayerController player)
-		{
-			base.OnPostDroppedByPlayer(player);
-		}
-
-		public override void OnReloadPressed(PlayerController player, Gun gun, bool bSOMETHING)
-		{
-			if (gun.IsReloading && this.HasReloaded)
-			{
-				HasReloaded = false;
-				AkSoundEngine.PostEvent("Stop_WPN_All", base.gameObject);
-				base.OnReloadPressed(player, gun, bSOMETHING);
-			}
-		}
-
-		public override void OnPostFired(PlayerController player, Gun gun)
-		{
-			base.OnPostFired(player, gun);
-
-		}
-
-		public AutoShotgun()
-		{
-
-		}
-	}
-}
-*/

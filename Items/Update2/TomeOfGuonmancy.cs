@@ -34,7 +34,7 @@ namespace Planetside
             string shortDesc = "Irony On Another Level";
             string longDesc = "Captures nearby bullets and turns them into defensive orbitals. Despite being long forgotten and Guonmancy virtually dying out, the tome still holds up.\n\nSome say that Guonmancy still lives on and is secretly practiced by some.";
             activeitem.SetupItem(shortDesc, longDesc, "psog");
-            activeitem.SetCooldownType(ItemBuilder.CooldownType.Damage, 300f);
+            activeitem.SetCooldownType(ItemBuilder.CooldownType.Damage, 250f);
             activeitem.consumable = false;
             activeitem.quality = PickupObject.ItemQuality.B;
             activeitem.gameObject.AddComponent<IronsideItemPool>();
@@ -101,7 +101,6 @@ namespace Planetside
         public static void BuildBasePrefab()
         {
             GameObject gameObject = SpriteBuilder.SpriteFromResource("Planetside/Resources/Guons/EnergyPlatedGuon/energyshiledguon.png");
-            //gameObject.AddComponent<tk2dSprite>(sprite);
             gameObject.name = $"Bullet orbital";
             SpeculativeRigidbody speculativeRigidbody = gameObject.GetComponent<tk2dSprite>().SetUpSpeculativeRigidbody(IntVector2.Zero, new IntVector2(12, 12));
             PlayerOrbital orbitalPrefab = gameObject.AddComponent<PlayerOrbital>();
@@ -117,7 +116,6 @@ namespace Planetside
             FakePrefab.MarkAsFakePrefab(gameObject);
             gameObject.SetActive(false);
             BaseBulletGuon = gameObject;
-            //GameObject gameobject2 = PlayerOrbitalItem.CreateOrbital(User, gameObject, false);
         }
 
         public static GameObject BaseBulletGuon;
@@ -253,7 +251,7 @@ namespace Planetside
             tk2dSprite.SetSprite(sprite.sprite.Collection, sprite.sprite.spriteId);
 
             CreatedGuonBulletsController yes = gameobject2.AddComponent<CreatedGuonBulletsController>();
-            yes.maxDuration = 10f;
+            yes.maxDuration = 15f;
             
             if (base.LastOwner.PlayerHasActiveSynergy("Chapter Of Love"))
             {

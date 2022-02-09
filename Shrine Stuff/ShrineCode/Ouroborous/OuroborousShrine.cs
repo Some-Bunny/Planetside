@@ -35,7 +35,10 @@ namespace Planetside
 				offset = new Vector3(24.6875f, 62.5f, 65.0f),
 				talkPointOffset = new Vector3(0, 0, 0),
 				isToggle = false,
-				isBreachShrine = true
+				isBreachShrine = true,
+				shadowPath = "Planetside/Resources/Shrines/ouroborousshrineShadow.png",
+				ShadowOffsetX = 0.0625f,
+				ShadowOffsetY = -0.25f
 			};
 			//register shrine
 			sf.Build();

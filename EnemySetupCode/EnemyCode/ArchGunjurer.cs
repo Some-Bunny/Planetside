@@ -34,7 +34,7 @@ namespace Planetside
 			{
 				prefab = EnemyBuilder.BuildPrefab("Arch Gunjurer", guid, spritePaths[0], new IntVector2(0, 0), new IntVector2(8, 9), false);
 				var companion = prefab.AddComponent<EnemyBehavior>();
-				companion.aiActor.knockbackDoer.weight = 800;
+				companion.aiActor.knockbackDoer.weight = 200;
 				companion.aiActor.MovementSpeed = 1.25f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
 				companion.aiActor.CollisionDamage = 1f;
@@ -52,6 +52,9 @@ namespace Planetside
 				companion.aiActor.HasShadow = true;
 				companion.aiActor.SetIsFlying(true, "Gamemode: Creative", true, true);
 				companion.aiActor.ShadowObject = EnemyDatabase.GetOrLoadByGuid("4db03291a12144d69fe940d5a01de376").ShadowObject;
+				companion.aiActor.PathableTiles = CellTypes.PIT | CellTypes.FLOOR;
+
+
 				companion.aiActor.specRigidbody.PixelColliders.Clear();
 				companion.aiActor.specRigidbody.PixelColliders.Add(new PixelCollider
 				{
@@ -185,6 +188,10 @@ namespace Planetside
 						anim = aa
 					}
 				};
+
+				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awaken" }, new DirectionalAnimation.FlipType[0]);
+				companion.aiActor.AwakenAnimType = AwakenAnimationType.Awaken;
+
 				bool flag3 = ArchGunjurerCholection == null;
 				if (flag3)
 				{
@@ -323,7 +330,20 @@ namespace Planetside
 				 34
 
 					}, "die_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 13f;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, ArchGunjurerCholection, new List<int>
+					{
 
+ 12,
+				 13,
+				 14,
+				 15,
+				 16,
+				 17,
+				 18,
+				 19,
+				 20
+
+					}, "awaken", tk2dSpriteAnimationClip.WrapMode.Once).fps = 13f;
 				}
 				var bs = prefab.GetComponent<BehaviorSpeculator>();
 				prefab.GetComponent<ObjectVisibilityManager>();
@@ -605,10 +625,6 @@ namespace Planetside
 
 			protected override IEnumerator Top()
 			{
-				//base.Projectile.sprite.usesOverrideMaterial = true;
-				//base.Projectile.sprite.renderer.material.shader = Shader.Find("Brave/Internal/SimpleAlphaFadeUnlit");
-				//base.Projectile.sprite.renderer.material.SetFloat("_Fade", 0.2f);
-
 				float speed = this.Speed;
 				yield return this.Wait(30);
 				this.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 60);

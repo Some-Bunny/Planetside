@@ -91,11 +91,15 @@ namespace ItemAPI
                     (new_o as CustomShopController).customCanBuy = (o as CustomShopController).customCanBuy;
                     (new_o as CustomShopController).customPrice = (o as CustomShopController).customPrice;
                     (new_o as CustomShopController).removeCurrency = (o as CustomShopController).removeCurrency;
-                    (new_o as GameObject).GetComponent<CustomShopController>().OnSteal = (o as GameObject).GetComponent<CustomShopController>().OnSteal;
-                    (new_o as GameObject).GetComponent<CustomShopController>().OnPurchase = (o as GameObject).GetComponent<CustomShopController>().OnPurchase;
+                    (new_o as CustomShopController).OnSteal = (o as GameObject).GetComponent<CustomShopController>().OnSteal;
+                    (new_o as CustomShopController).OnPurchase = (o as GameObject).GetComponent<CustomShopController>().OnPurchase;
                     //(new_o as CustomShopController).customCurrencyAtlas = (o as CustomShopController).customCurrencyAtlas;
                 }
+
+
             }
+
+
             return new_o;
         }
     }

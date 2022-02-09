@@ -34,16 +34,19 @@ namespace Planetside
 				declineText = "Leave.",
 				OnAccept = Accept,
 				OnDecline = null,
-
 				CanUse = CanUse,
 				offset = new Vector3(0, 0, 0),
 				talkPointOffset = new Vector3(0, 3, 0),
 				isToggle = false,
 				isBreachShrine = false,
-
+				shadowPath = "Planetside/Resources/Shrines/defaultShrineShadow.png",
+				ShadowOffsetX = 0f,
+				ShadowOffsetY = -0.5f
 			};
-			iei.Build();
+			GameObject self = iei.Build();
+			SpriteID = ItemAPI.SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Shrines/brokenchambershrinelifted.png", self.GetComponent<tk2dBaseSprite>().Collection);
 		}
+		private static int SpriteID;
 		public static bool CanUse(PlayerController player, GameObject shrine)
 		{
 			return shrine.GetComponent<CustomShrineController>().numUses == 0;
@@ -51,6 +54,8 @@ namespace Planetside
 
 		public static void Accept(PlayerController player, GameObject shrine)
 		{
+			tk2dSprite sprite = shrine.GetComponent<tk2dSprite>();
+			sprite.GetComponent<tk2dBaseSprite>().SetSprite(SpriteID);
 			AkSoundEngine.PostEvent("Play_ENM_darken_world_01", shrine);
 			LootEngine.TryGivePrefabToPlayer(ETGMod.Databases.Items["Broken Chamber"].gameObject, player, true);
 			shrine.GetComponent<CustomShrineController>().numUses++;

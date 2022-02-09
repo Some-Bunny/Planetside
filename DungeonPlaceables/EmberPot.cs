@@ -54,6 +54,8 @@ namespace Planetside
                 shardDefaultPath+"Shards/emberpot_shard6.png"
             };
             DebrisObject[] shardObjects = BreakableAPIToolbox.GenerateDebrisObjects(shardPaths, true, 1, 5, 720, 540, null, 1.5f, null, null, 0, false);
+            ShardCluster potShardCluster = BreakableAPIToolbox.GenerateShardCluster(shardObjects, 0.35f, 1.2f, 6, 9, 0.8f);
+
             string emberDefPath = "Planetside/Resources/DungeonObjects/EmberPot/Embers/";
             string[] emberSmallPaths = new string[]
             {
@@ -80,7 +82,6 @@ namespace Planetside
             DebrisObject smallEmberTwo = BreakableAPIToolbox.GenerateAnimatedDebrisObject(emberSmallPaths, 7, tk2dSpriteAnimationClip.WrapMode.Loop, true, 0.35f, 2.5f, 900, 450, null, 0.8f, null, poofVFX, 0, true, EasyGoopDefinitions.FireDef, 0.9f);
             DebrisObject tinyEmberTwo = BreakableAPIToolbox.GenerateAnimatedDebrisObject(emberTinyPaths, 6, tk2dSpriteAnimationClip.WrapMode.Loop, true, 0.4f, 2, 1300, 650, null, 0.5f, null, poofVFX, 0, true, EasyGoopDefinitions.FireDef, 0.5f);
             DebrisObject mediumEmberTwo = BreakableAPIToolbox.GenerateAnimatedDebrisObject(emberMediumPaths, 4, tk2dSpriteAnimationClip.WrapMode.Loop, true, 0.7f, 4, 1500, 600, null, 0.8f, null, poofVFX, 0, true, EasyGoopDefinitions.FireDef, 1f);
-            ShardCluster potShardCluster = BreakableAPIToolbox.GenerateShardCluster(shardObjects, 0.35f, 1.2f, 6, 9, 0.8f);
             ShardCluster emberClusterOne = BreakableAPIToolbox.GenerateShardCluster(new DebrisObject[] { smallEmber, tinyEmber, mediumEmber, smallEmberTwo, tinyEmberTwo, mediumEmberTwo }, 1f, 1.5f, 4, 7, 0.8f);
             ShardCluster emberClusterTwo = BreakableAPIToolbox.GenerateShardCluster(new DebrisObject[] { smallEmber, tinyEmber, mediumEmber, smallEmberTwo, tinyEmberTwo, mediumEmberTwo }, 1f, 2f, 4, 7, 1f);
             ShardCluster emberClusterThree = BreakableAPIToolbox.GenerateShardCluster(new DebrisObject[] { smallEmber, tinyEmber, mediumEmber, smallEmberTwo, tinyEmberTwo, mediumEmberTwo }, 1f, 2.5f, 4, 7, 1.2f);

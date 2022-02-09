@@ -19,16 +19,20 @@ namespace Planetside
 			GunExt.SetShortDescription(gun, "This was a fucking pain to make");
 			GunExt.SetLongDescription(gun, "A weapon forged by two wanderers from polar-opposite climates. It is said that they imbued part of their magic into it so one element doesn't damage the other.");
 			GunExt.SetupSprite(gun, null, "polarity1_idle_001", 8);
-			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 48);
-			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 12);
-			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 3);
+			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 160);
+			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 10);
+			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 4);
 			gun.SetBaseMaxAmmo(450);
 
 			GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(223) as Gun, true, false);
 			GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(336) as Gun, true, false);
 
-			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_WPN_yarirocketlauncher_shot_01";
+
+			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_Yari";
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].triggerEvent = true;
+
+			EnemyToolbox.AddSoundsToAnimationFrame(gun.GetComponent<tk2dSpriteAnimator>(), gun.reloadAnimation, new Dictionary<int, string> { { 0, "Play_BOSS_tank_grenade_01" }, { 6, "Play_OBJ_lock_unlock_01" }, { 13, "Play_OBJ_lock_unlock_01" } });
+
 			gun.gunSwitchGroup = (PickupObjectDatabase.GetById(16) as Gun).gunSwitchGroup;
 			gun.DefaultModule.ammoCost = 1;
 			gun.DefaultModule.shootStyle = ProjectileModule.ShootStyle.Automatic;

@@ -55,8 +55,7 @@ namespace Planetside
 						{
 							if (aiactor.behaviorSpeculator != null)
 							{
-								this.AffectEnemy(aiactor);
-
+								aiactor.ApplyEffect(DebuffLibrary.Frailty, 1f, null);
 							}
 						}
 					}
@@ -67,10 +66,6 @@ namespace Planetside
 				ETGModConsole.Log(e.Message);
 				ETGModConsole.Log(e.StackTrace);
 			}
-		}
-		private void AffectEnemy(AIActor target)
-		{
-			target.ApplyEffect(DebuffLibrary.Frailty, 1f, null);
 		}
 	}
 }

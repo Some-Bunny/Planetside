@@ -22,19 +22,20 @@ namespace Planetside
 				modID = "psog",
 				text = "A shrine dedicated to an old gunslinger, who could sling guns with such proficiency that they fired while in mid-air.",
 				spritePath = "Planetside/Resources/Shrines/GunOrbitShrinel.png",
-				room = RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/SWRooms/SomethingMines.room").room,
+				room = RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/GunOrbitShrineRoom.room").room,
 				RoomWeight = 1f,
 				acceptText = "Grant an offering to bestow similar power.",
 				declineText = "Leave",
 				OnAccept = Accept,
 				OnDecline = null,
 				CanUse = CanUse,
-				//offset = new Vector3(43.8f, 42.4f, 42.9f),
-				offset = new Vector3(-1, -1, 0),
+				offset = new Vector3(-1f, -1f, 0),
 				talkPointOffset = new Vector3(0, 3, 0),
 				isToggle = false,
 				isBreachShrine = false,
-
+				shadowPath = "Planetside/Resources/Shrines/defaultShrineShadow.png",
+				ShadowOffsetX = 0.3125f,
+				ShadowOffsetY = -0.25f
 			};
 			//register shrine
 			GunShrine = OHFUUCK.Build();

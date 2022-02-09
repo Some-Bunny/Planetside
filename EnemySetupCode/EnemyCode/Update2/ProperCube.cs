@@ -185,7 +185,8 @@ namespace Planetside
 						}
 					}
 				};
-
+				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awaken" }, new DirectionalAnimation.FlipType[0]);
+				companion.aiActor.AwakenAnimType = AwakenAnimationType.Awaken;
 				bool flag3 = ProperCubeColection == null;
 				if (flag3)
 				{
@@ -293,7 +294,12 @@ namespace Planetside
 				 19
 
 					}, "die_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 19f;
-
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, ProperCubeColection, new List<int>
+					{
+					10,
+					11,
+					12
+					}, "awaken", tk2dSpriteAnimationClip.WrapMode.Once).fps = 11f;
 				}
 				prefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("impact_right").frames[1].eventAudio = "Play_BOSS_wall_slam_01";
 				prefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("impact_right").frames[1].triggerEvent = true;

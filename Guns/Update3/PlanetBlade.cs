@@ -130,14 +130,11 @@ namespace Planetside
             sharedMaterials[sharedMaterials.Length - 1] = material;
             component.sharedMaterials = sharedMaterials;
 
-            var enemy = PickupObjectDatabase.GetById(436) as BlinkPassiveItem;
-            ScarfObject = enemy.ScarfPrefab;
 
             AssetBundle bundle = ResourceManager.LoadAssetBundle("brave_resources_001");
             LaserReticle = bundle.LoadAsset("assets/resourcesbundle/global vfx/vfx_lasersight.prefab") as GameObject;
             bundle = null;
         }
-        public static ScarfAttachmentDoer ScarfObject;
 
         private static List<GameObject> Chargerreticles = new List<GameObject>();
         private static GameObject LaserReticle;
@@ -496,9 +493,9 @@ namespace Planetside
         {
             if (base.aiActor != null)
             {
-                CustomScarfDoer scorf = UnityEngine.Object.Instantiate<GameObject>(PlanetBlade.ScarfObject.gameObject).AddComponent<CustomScarfDoer>();
+                CustomScarfDoer scorf = UnityEngine.Object.Instantiate<GameObject>(StaticVFXStorage.ScarfObject.gameObject).AddComponent<CustomScarfDoer>();
                 scorf.AttachTarget = base.aiActor;
-                scorf.ScarfMaterial = PlanetBlade.ScarfObject.ScarfMaterial;
+                scorf.ScarfMaterial = StaticVFXStorage.ScarfObject.ScarfMaterial;
                 scorf.StartWidth = 0.0625f;
                 scorf.EndWidth = 0.125f;
                 scorf.AnimationSpeed = 30f;

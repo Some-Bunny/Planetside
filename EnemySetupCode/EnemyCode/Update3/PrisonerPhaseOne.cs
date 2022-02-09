@@ -521,7 +521,7 @@ namespace Planetside
 				EnemyToolbox.GenerateShootPoint(companion.gameObject, new Vector2(0.8125f, 1.625f), "LeftHandChainPoint");
 				EnemyToolbox.GenerateShootPoint(companion.gameObject, new Vector2(3.125f, 1.625f), "RightHandChainPoint");
 				GameObject RaisedArmLaserAttachPoint = EnemyToolbox.GenerateShootPoint(companion.gameObject, new Vector2(3.5f, 3.4375f), "RaisedArmLaserAttachPoint");
-				GameObject OrbPoint = EnemyToolbox.GenerateShootPoint(companion.gameObject, new Vector2(2.25f, 1.625f), "OrbPoint");
+				GameObject OrbPoint = EnemyToolbox.GenerateShootPoint(companion.gameObject, new Vector2(1.875f, 2f), "OrbPoint");
 				GameObject RightHandChargePoint = EnemyToolbox.GenerateShootPoint(companion.gameObject, new Vector2(1.375f, 2.4375f), "RightHandChargePoint");
 
 
@@ -577,13 +577,13 @@ namespace Planetside
 					new AttackBehaviorGroup.AttackGroupItem()
 					{
 
-					Probability = 0f,
+					Probability = 1f,
 					Behavior = new CustomBeholsterLaserBehavior{
 					UsesBeamProjectileWithoutModule = true,
 					InitialCooldown = 0f,
 					firingTime = 10f,
-					Cooldown = 3,
-					AttackCooldown = 10f,
+					Cooldown = 12,
+					AttackCooldown = 2f,
 					RequiresLineOfSight = false,
 					FiresDirectlyTowardsPlayer = false,
 					UsesCustomAngle = true,
@@ -608,19 +608,20 @@ namespace Planetside
 					maxUnitForCatchUp = 2,
 					useUnitOvershoot = true,
 					minUnitForOvershoot = 1,
+
 					},
 						NickName = "Death Laser"
 					},
 					
 					new AttackBehaviorGroup.AttackGroupItem()
 					{
-						Probability = 0f,
+						Probability = 1f,
 						Behavior = new ShootBehavior{
 						ShootPoint = RaisedArmLaserAttachPoint,
 						BulletScript = new CustomBulletScriptSelector(typeof(WallSweep)),
 						LeadAmount = 0f,
 						AttackCooldown = 1f,
-						Cooldown = 3f,
+						Cooldown = 4f,
 						TellAnimation = "raisearm",
 						FireAnimation = "sweengarm",
 						PostFireAnimation = "lowerarm",
@@ -633,7 +634,7 @@ namespace Planetside
 					},
 					new AttackBehaviorGroup.AttackGroupItem()
 					{
-						Probability = 0f,
+						Probability = 1f,
 						Behavior = new ShootBehavior{
 						ShootPoint = RightHandChargePoint,
 						BulletScript = new CustomBulletScriptSelector(typeof(BasicLaserAttackTell)),
@@ -654,11 +655,11 @@ namespace Planetside
 					{
 						Probability = 1f,
 						Behavior = new ShootBehavior{
-						ShootPoint = OrbPoint,
-						BulletScript = new CustomBulletScriptSelector(typeof(Blasty)),
+						ShootPoint = RaisedArmLaserAttachPoint,
+						BulletScript = new CustomBulletScriptSelector(typeof(ChainRotators)),
 						LeadAmount = 0f,
-						AttackCooldown = 1f,
-						Cooldown = 3f,
+						AttackCooldown = 3f,
+						Cooldown = 7f,
 						TellAnimation = "raisearm",
 						FireAnimation = "sweengarm",
 						PostFireAnimation = "lowerarm",
@@ -841,9 +842,326 @@ namespace Planetside
 				}
 			}
 		}
-		
 
 
+		public class ChainRotators : Script
+        {
+			public const int NumBullets = 9;
+			public const int BaseTurnSpeed = 540;
+			public const float MaxDist = 6f;
+			public const int ExtendTime = 30;
+			public const int Lifetime = 120;
+			public const int ContractTime = 45;
+			public const int TellTime = 30;
+			public float TurnSpeed;
+			public int TicksRemaining;
+			public static string[] Transforms;
+			public float Divider;
+			public float TempaletAngle;
+
+			static ChainRotators()
+			{
+				ChainRotators.Transforms = new string[]
+				{
+				"bullet hand",
+				"bullet limb 1",
+				"bullet limb 2",
+				"bullet limb 3"
+				};
+			}
+			public override void OnForceEnded()
+			{
+				base.OnForceEnded();
+				List<List<ChainRotators.SpinBullet>> lists = new List<List<ChainRotators.SpinBullet>>
+				{
+					bullets,
+					bullets2,
+					bullets3,
+					bullets4
+				};
+				this.ClearAllLists(lists);
+			}
+			private List<ChainRotators.SpinBullet> bullets;
+			private List<ChainRotators.SpinBullet> bullets2;
+			private List<ChainRotators.SpinBullet> bullets3;
+			private List<ChainRotators.SpinBullet> bullets4;
+
+
+			private void SpawnChainsOf(List<ChainRotators.SpinBullet> ListToUse, float Angle, int Delay, bool isTemplateAngle = false)
+            {
+				base.PostWwiseEvent("Play_ChainBreak_01", null);
+				for (int i = 0; i < 60; i++)
+				{
+					float num = ((float)i + 0.5f) / 10f;
+					int num2 = Mathf.CeilToInt(Mathf.Lerp((float)(ChainRotators.Transforms.Length - 1), 0f, num));
+					ChainRotators.SpinBullet spinBullet = new ChainRotators.SpinBullet(this, num * 6f, Angle, Delay, isTemplateAngle, i % 6 == 1);
+					this.Fire(new Offset(ChainRotators.Transforms[num2]), new Speed(0f, SpeedType.Absolute), spinBullet);
+					ListToUse.Add(spinBullet);
+				}
+			}
+
+			protected override IEnumerator Top()
+			{
+				PrisonerController controller = base.BulletBank.aiActor.GetComponent<PrisonerController>();
+				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("31a3ea0c54a745e182e22ea54844a82d").bulletBank.GetBullet("sniper"));
+				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("463d16121f884984abe759de38418e48").bulletBank.GetBullet("link"));
+				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("463d16121f884984abe759de38418e48").bulletBank.GetBullet("ball"));
+				Divider = 60;
+				this.EndOnBlank = true;
+				float turnSign = (float)((BraveMathCollege.AbsAngleBetween(this.BulletBank.aiAnimator.FacingDirection, 0f) <= 90f) ? -1 : 1);
+				this.TurnSpeed = 90f * turnSign;
+				this.bullets = new List<ChainRotators.SpinBullet>(60);
+				this.bullets2 = new List<ChainRotators.SpinBullet>(60);
+				this.bullets3 = new List<ChainRotators.SpinBullet>(60);
+				this.bullets4 = new List<ChainRotators.SpinBullet>(60);
+				TempaletAngle = 90;
+				controller.MoveTowardsCenterMethod(1.5f) ;
+				base.PostWwiseEvent("Play_ENM_cannonball_eyes_01", null);
+				GameManager.Instance.StartCoroutine(SpawnReticle(0, controller, this));
+				this.SpawnChainsOf(bullets, 90, 60, true);
+				for (int i = 0; i < 60; i++)
+                {
+					TempaletAngle += (1 * turnSign);
+					yield return this.Wait(1);
+				}
+				for (int i = 0; i < 4; i++)
+                {
+					FireQuickBurst();
+					yield return this.Wait(60);
+				}
+				FireQuickBurst();
+				GameManager.Instance.StartCoroutine(SpawnReticle(180, controller, this));
+				base.PostWwiseEvent("Play_ENM_cannonball_eyes_01", null);
+				for (int i = 0; i < 60; i++)
+                {
+					float t = (float)i / (float)60;
+					this.TurnSpeed = Mathf.SmoothStep(90, 75, t) * turnSign;
+					yield return this.Wait(1);
+				}
+
+				this.SpawnChainsOf(bullets2, 180 + this.TempaletAngle, 370);
+
+				for (int i = 0; i < 4; i++)
+				{
+					FireQuickBurst();
+					yield return this.Wait(60);
+				}
+				FireQuickBurst();
+				GameManager.Instance.StartCoroutine(SpawnReticle(90, controller, this));
+				GameManager.Instance.StartCoroutine(SpawnReticle(270, controller, this));
+				base.PostWwiseEvent("Play_ENM_cannonball_eyes_01", null);
+				for (int i = 0; i < 60; i++)
+				{
+					float t = (float)i / (float)60;
+					this.TurnSpeed = Mathf.SmoothStep(75, 60, t)*turnSign;
+					yield return this.Wait(1);
+					
+				}
+				controller.extantReticles.Clear();
+				this.SpawnChainsOf(bullets3, 90 + this.TempaletAngle, 670);
+				this.SpawnChainsOf(bullets4, 270 + this.TempaletAngle, 670);
+				for (int i = 0; i < 5; i++)
+				{
+					FireQuickBurst();
+					yield return this.Wait(60);
+				}
+				FireQuickBurst();
+				for (int i = 0; i < 90; i++)
+				{
+					float t = (float)i / (float)90;
+					this.TurnSpeed = Mathf.SmoothStep(60, 0, t) * turnSign;
+					yield return this.Wait(1);
+				}
+				base.PostWwiseEvent("Play_ENM_cannonball_eyes_01", null);
+				yield return this.Wait(15);
+
+				List<List<ChainRotators.SpinBullet>> lists = new List<List<ChainRotators.SpinBullet>>
+				{
+					bullets,
+					bullets2,
+					bullets3,
+					bullets4
+				};
+				this.ClearAllLists(lists);
+				yield break;
+			}
+
+			private IEnumerator SpawnReticle(float Offset, PrisonerController controller, ChainRotators parent, bool ISDodgeAble = true)
+			{
+				GameObject reticle = SpawnManager.SpawnVFX(RandomPiecesOfStuffToInitialise.LaserReticle, false);
+				tk2dTiledSprite component2 = reticle.GetComponent<tk2dTiledSprite>();
+				component2.transform.position = new Vector3(this.Position.x, this.Position.y, 99999);
+				component2.transform.localRotation = Quaternion.Euler(0f, 0f, 90 + this.TempaletAngle);
+				component2.dimensions = new Vector2(1f, 1f);
+				component2.UpdateZDepth();
+				component2.HeightOffGround = -2;
+				Color laser = new Color(0f, 1f, 1f, 1f);
+				Color laserRed = new Color(1f, 0f, 0f, 1f);
+				component2.sprite.usesOverrideMaterial = true;
+				component2.sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
+				component2.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+				component2.sprite.renderer.material.SetFloat("_EmissivePower", 10);
+				component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f);
+				component2.sprite.renderer.material.SetColor("_OverrideColor", ISDodgeAble == false ? laser : laserRed);
+				component2.sprite.renderer.material.SetColor("_EmissiveColor", ISDodgeAble == false ? laser : laserRed);
+				controller.extantReticles.Add(reticle);
+				tk2dTiledSprite tiledsprite = reticle.GetComponent<tk2dTiledSprite>();
+				float elapsed = 0;
+				float Time = 60f;
+				while (elapsed < Time)
+				{
+					float t = (float)elapsed / (float)Time;
+					if (parent.Destroyed || parent.IsEnded)
+                    {
+						Destroy(reticle);
+						yield break;
+					}
+					if (reticle != null)
+					{
+						tiledsprite.transform.position = new Vector3(this.Position.x, this.Position.y, 0);
+
+						tiledsprite.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (250 * t));
+						tiledsprite.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f + (10 * t));
+						tiledsprite.transform.localRotation = Quaternion.Euler(0f, 0f, this.TempaletAngle + Offset);
+						tiledsprite.HeightOffGround = -2;
+						tiledsprite.renderer.gameObject.layer = 23;
+						tiledsprite.dimensions = new Vector2(1000f*t, 1f);
+						tiledsprite.UpdateZDepth();
+					}
+					elapsed++;
+					yield return this.Wait(1);
+				}
+
+				elapsed = 30;
+				Time = 0f;
+				while (elapsed > Time)
+				{
+					float t = (float)elapsed / (float)30;
+					if (parent.Destroyed || parent.IsEnded)
+					{
+						Destroy(reticle);
+						yield break;
+					}
+					if (reticle != null)
+					{
+						tiledsprite.transform.position = new Vector3(this.Position.x, this.Position.y, 0);
+
+						tiledsprite.sprite.renderer.material.SetFloat("_EmissivePower", 2500);
+						tiledsprite.sprite.renderer.material.SetFloat("_EmissiveColorPower", 10.5f);
+						tiledsprite.transform.localRotation = Quaternion.Euler(0f, 0f, this.TempaletAngle + Offset);
+						tiledsprite.HeightOffGround = -2;
+						tiledsprite.renderer.gameObject.layer = 23;
+						tiledsprite.dimensions = new Vector2(1000f * t, 1f);
+						tiledsprite.UpdateZDepth();
+					}
+					elapsed--;
+					yield return this.Wait(1);
+				}
+				Destroy(reticle);
+				yield break;
+			}
+
+			private void ClearAllLists(List<List<ChainRotators.SpinBullet>> bulletLists)
+            {
+
+				for (int e = 0; e < bulletLists.Count; e++)
+                {
+					for (int k = 0; k < bulletLists[e].Count; k++)
+					{
+						if (bulletLists[e][k] != null)
+						{
+							bulletLists[e][k].Vanish();
+						}
+					}
+					bulletLists[e] = null;
+				}			
+			}
+
+			public void FireQuickBurst()
+            {
+				base.PostWwiseEvent("Play_ENM_bulletking_skull_01", null);
+				for (int e = 0; e < 12; e++)
+				{
+					base.Fire(new Direction((30 * e), DirectionType.Aim, -1f), new Speed(1f, SpeedType.Absolute), new ChainRotators.BasicBullet());
+					base.Fire(new Direction((30 * e), DirectionType.Aim, -1f), new Speed(1.5f, SpeedType.Absolute), new ChainRotators.BasicBullet());
+					base.Fire(new Direction((30 * e), DirectionType.Aim, -1f), new Speed(2f, SpeedType.Absolute), new ChainRotators.BasicBullet());
+				}
+			}
+
+			private class SpinBullet : Bullet
+			{
+				public SpinBullet(ChainRotators parentScript, float maxDist, float angleOffset, int Delay, bool isAngleDecider =false, bool SpawnsUnDodgeablesOnDeath = false) : base("link", false, false, false)
+				{
+					this.m_parentScript = parentScript;
+					this.m_maxDist = maxDist;
+					this.m_angOffset = angleOffset;
+					this.Delay = Delay;
+					this.isDecider = isAngleDecider;
+					this.spawnsUndodgeables = SpawnsUnDodgeablesOnDeath;
+				}
+
+				protected override IEnumerator Top()
+				{
+					//this.lifeTime = 0;
+					this.ManualControl = true;
+					this.Projectile.specRigidbody.CollideWithTileMap = false;
+					this.Projectile.BulletScriptSettings.surviveRigidbodyCollisions = true;
+					float startDist = Vector2.Distance(this.Position, this.m_parentScript.Position);
+					float Lifetime = 0;
+					float Addon = this.isDecider == true ? -90 : 0;
+					this.Direction = m_angOffset + (Addon+3);
+					while (!this.m_parentScript.Destroyed && !this.m_parentScript.IsEnded)
+					{
+
+						Lifetime++;
+						if (this.m_parentScript.BulletBank.healthHaver.IsDead)
+						{
+							this.Vanish(false);
+							yield break;
+						}
+						this.Direction += this.m_parentScript.TurnSpeed / 60;
+						if(isDecider == true) { this.m_parentScript.TempaletAngle = this.Direction; }
+						float dist;
+						dist = Mathf.Lerp(startDist, this.m_maxDist, (float)(this.m_parentScript.Tick-Delay) / 120f);
+						this.Position = this.m_parentScript.Position + BraveMathCollege.DegreesToVector(this.Direction, dist);
+						yield return this.Wait(1);
+					}
+					this.Vanish(false);
+					yield break;
+				}
+				public override void OnBulletDestruction(Bullet.DestroyType destroyType, SpeculativeRigidbody hitRigidbody, bool preventSpawningProjectiles)
+				{
+					if (!preventSpawningProjectiles && spawnsUndodgeables == true)
+					{
+						base.Fire(new Direction(-90, DirectionType.Relative, -1f), new Speed(0f, SpeedType.Absolute), new ChainRotators.BasicBullet(12));
+						base.Fire(new Direction(90, DirectionType.Relative, -1f), new Speed(0f, SpeedType.Absolute), new ChainRotators.BasicBullet(12));
+					}
+				}
+
+				private ChainRotators m_parentScript;
+				private int Delay;
+
+				private bool isDecider;
+				private float m_angOffset;
+				private float m_maxDist;
+				private bool spawnsUndodgeables;
+			}
+			public class BasicBullet : Bullet
+			{
+				public BasicBullet(float SpeedIncrease = 7) : base("sniper", false, false, false)
+				{
+					this.Inc = SpeedIncrease;
+				}
+				protected override IEnumerator Top()
+				{
+					base.Projectile.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+					SpawnManager.PoolManager.Remove(base.Projectile.transform);
+					base.ChangeSpeed(new Speed(base.Speed + Inc, SpeedType.Absolute), 60);
+					yield break;
+				}
+				private float Inc;
+			}
+		}
 
 
 
@@ -974,6 +1292,8 @@ namespace Planetside
 
 				for (int l = 0; l < 4; l++)
                 {
+					PrisonerController controller = base.BulletBank.aiActor.GetComponent<PrisonerController>();
+					controller.MoveTowardsPositionMethod(1f, 7);
 					bool ISDodgeAble = true;
 					Dictionary<Vector2, string> wallcornerstrings = new Dictionary<Vector2, string>()
 					{
@@ -992,7 +1312,6 @@ namespace Planetside
                     {
 						wallcornerPositions.Remove(randomKey);
 					}
-					PrisonerController controller = base.BulletBank.aiActor.GetComponent<PrisonerController>();
 					Dictionary<GameObject, Dictionary<Vector2, Vector2>> list = new Dictionary<GameObject, Dictionary<Vector2, Vector2>>();
 					for (int i = 0; i < 2; i++)
 					{
@@ -1056,6 +1375,7 @@ namespace Planetside
 							ix = tiledsprite.transform.localRotation.eulerAngles.x + base.BulletBank.aiActor.transform.localRotation.x;
 							wai = tiledsprite.transform.localRotation.eulerAngles.y + base.BulletBank.aiActor.transform.localRotation.y;
 						}
+						tiledsprite.transform.position = new Vector3(this.Position.x, this.Position.y, 0);
 						tiledsprite.HeightOffGround = -2;
 						tiledsprite.renderer.gameObject.layer = 23;
 						tiledsprite.transform.position.WithZ(tiledsprite.transform.position.z + 99999);
@@ -1095,6 +1415,7 @@ namespace Planetside
 							ix = tiledsprite.transform.localRotation.eulerAngles.x + base.BulletBank.aiActor.transform.localRotation.x;
 							wai = tiledsprite.transform.localRotation.eulerAngles.y + base.BulletBank.aiActor.transform.localRotation.y;
 						}
+						tiledsprite.transform.position = new Vector3(this.Position.x, this.Position.y, 0);
 						tiledsprite.HeightOffGround = -2;
 						tiledsprite.renderer.gameObject.layer = 23;
 						tiledsprite.transform.position.WithZ(tiledsprite.transform.position.z + 99999);
@@ -1232,10 +1553,14 @@ namespace Planetside
 		{
 			protected override IEnumerator Top()
 			{
+				this.EndOnBlank = true;
 				if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
 				{
 					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("1bc2a07ef87741be90c37096910843ab").bulletBank.GetBullet("icicle"));
 				}
+				PrisonerController controller = base.BulletBank.aiActor.GetComponent<PrisonerController>();
+				controller.MoveTowardsCenterMethod(2f);
+
 				for (int l = 0; l < 8; l++)
 				{
 					base.PostWwiseEvent("Play_ENM_blobulord_bubble_01", null);
@@ -1394,11 +1719,40 @@ namespace Planetside
 					Instantiate((PickupObjectDatabase.GetById(145) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapVertical.effects[0].effects[0].effect, base.aiActor.transform.Find("RaisedArmLaserAttachPoint").position+ pos, Quaternion.identity);
 				}
 			}
+			public void MoveTowardsCenterMethod(float Time)
+			{
+				GameManager.Instance.StartCoroutine(this.MoveTowardsCenter(Time));
+			}
+			private IEnumerator MoveTowardsCenter(float Time)
+			{
+				ImprovedAfterImage yeah = base.aiActor.gameObject.GetComponent<ImprovedAfterImage>();
+				yeah.spawnShadows = true;
+				//IntVector2? intVector = this.GetRandomAvailableCellWithinDistance(base.aiActor.ParentRoom, 5, new IntVector2?(base.aiActor.Clearance), new CellTypes?(CellTypes.FLOOR), false, null);
+				IntVector2? intVector = base.aiActor.ParentRoom.GetCenterCell();
+				float elaWait = 0f;
+				float duraWait = Time;
+				Vector3 pos = base.aiActor.transform.position;
+				while (elaWait < duraWait)
+				{
+					float t = (float)elaWait / (float)duraWait;
+					float throne1 = Mathf.Sin(t * (Mathf.PI / 2));
+					Vector3 vector3 = Vector3.Lerp(pos, new Vector3(intVector.Value.X, intVector.Value.Y), throne1);
+					base.aiActor.transform.position = vector3;
+					elaWait += BraveTime.DeltaTime;
+					base.aiActor.specRigidbody.Reinitialize();
+					yield return null;
+				}
+				yeah.spawnShadows = false;
+
+				yield break;
+			}
 
 			public void MoveTowardsPositionMethod(float Time,float TileDistance ,float MinDistFromPlayer = 6, float MaxDistFromPlayer = 12)
             {
 				GameManager.Instance.StartCoroutine(this.MoveTowardsPosition(Time, TileDistance, MinDistFromPlayer, MaxDistFromPlayer));
             }
+
+			
 
 			private IEnumerator MoveTowardsPosition(float Time, float TileDistance, float MinDistFromPlayer = 6, float MaxDistFromPlayer = 12)
             {

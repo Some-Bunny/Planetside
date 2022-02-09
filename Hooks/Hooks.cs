@@ -11,6 +11,7 @@ using Gungeon;
 using ItemAPI;
 using AnimationType = ItemAPI.BossBuilder.AnimationType;
 using System.Collections;
+using Brave.BulletScript;
 
 
 
@@ -18,10 +19,27 @@ namespace Planetside
 {
     public static class Hooks
     {
+        public delegate T9 Func<T1, T2, T3, T4, T5, T6, T7, T8, T9>(T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8);
+
+
+        public static Mesh GetChunkMeshHook(Func<DeadlyDeadlyGoopManager ,Single, Single, Mesh> orig, DeadlyDeadlyGoopManager self, int x, int y)
+        {
+            GameObject gameObject = new GameObject(string.Format("goop_{0}_chunk_{1}_{2}", self.goopDefinition.name, x, y));
+            ETGModConsole.Log("Layer:"+gameObject.layer.ToString());
+            ETGModConsole.Log("goopDepth:" + self.goopDepth.ToString());
+            return orig(self, x, y);
+        }
+
         public static void Init()
         {
             try
             {
+                //new Hook(typeof(DeadlyDeadlyGoopManager).GetMethod("GetChunkMesh", BindingFlags.Instance | BindingFlags.NonPublic), typeof(Hooks).GetMethod("GetChunkMeshHook"));
+
+                //new Hook(typeof(Exploder).GetMethod("HandleExplosion", BindingFlags.Instance | BindingFlags.NonPublic), typeof(Hooks).GetMethod("HandleExplosionHook"));
+
+                //new Hook(typeof(BabyDragunBurst1).GetMethod("Top", BindingFlags.Instance | BindingFlags.NonPublic), typeof(Hooks).GetMethod("TopHook"));
+
 
                 Hook uhohgun = new Hook(typeof(GameManager).GetMethod("DelayedQuickRestart", BindingFlags.Instance | BindingFlags.Public), typeof(Hooks).GetMethod("OnQuickRestart1"));
 
@@ -144,21 +162,47 @@ namespace Planetside
             }
         }
 
-
-
-
-        public static uint PostEventHook(Func<string, GameObject, uint> orig, string name, GameObject obj)
+        public static IEnumerator TopHook(Func<BabyDragunBurst1, IEnumerator> orig, BabyDragunBurst1 self)
         {
+            //IEnumerator origEnum = orig(self);
+            for (int i = 0; i < 200; i++)
+            {
+                self.Fire(new Direction(UnityEngine.Random.Range(-45, 45), DirectionType.Aim, 0f), new Speed(UnityEngine.Random.Range(4f, 20f), SpeedType.Absolute), null);
+            }
+
+            yield return null;
+            /*
+            while (origEnum.MoveNext())
+            {
+                ETGModConsole.Log("get blocked");
+                object obj = origEnum.Current;
+                yield return obj;
+            }
+            */
+        }
+
+
+        public static IEnumerator HandleExplosionHook(Hooks.Func<Exploder, Vector3, ExplosionData, Vector2, Action, bool, CoreDamageTypes, bool, IEnumerator> orig, Exploder self, Vector3 position, ExplosionData data, Vector2 sourceNormal, Action onExplosionBegin, bool ignoreQueues, CoreDamageTypes damageTypes, bool ignoreDamageCaps)
+        {
+            IEnumerator origEnum = orig(self, position, data, sourceNormal, onExplosionBegin, ignoreQueues, damageTypes, ignoreDamageCaps);
+            while (origEnum.MoveNext())
+            {
+                object obj = origEnum.Current;
+                yield return obj;
+            }
+        }
+
+            public static uint PostEventHook(Func<string, GameObject, uint> orig, string name, GameObject obj)
+            {
             if (name != null)
             {
-                //ETGModConsole.Log(name);
+                //ETGModConsole.Log(name, true);
             }
             return orig(name, obj);
-        }
+            }
 
         public static Vector2 Hook_PlayerController_HandlePlayerInput(Func<PlayerController, Vector2> orig, PlayerController self)
         {
-            ETGModConsole.Log("Pepsi");
             Vector2 vec = orig(self);
             return vec;
         }

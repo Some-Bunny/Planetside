@@ -42,9 +42,6 @@ namespace Planetside
 
     public static class OtherTools
     {
-
-
-
         public static GameObject MakeLine(string spritePath, Vector2 colliderDimensions, Vector2 colliderOffsets, List<string> beamAnimationPaths = null, int beamFPS = -1)
         {
             try
@@ -711,6 +708,7 @@ namespace Planetside
                 AIBulletBank bulletBank2 = enemy.bulletBank;
                 foreach (AIBulletBank.Entry bullet in bulletBank2.Bullets)
                 {
+                    SpawnManager.PoolManager.Remove(bullet.BulletObject.transform);
                     bullet.BulletObject.GetComponent<Projectile>().BulletScriptSettings.preventPooling = true;
                 }
                 if (enemy.aiShooter != null)

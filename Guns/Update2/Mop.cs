@@ -96,7 +96,11 @@ namespace Planetside
 			gun.Volley.projectiles[2].projectiles[0] = projectile1;
 
 			projectile2.baseData.damage = 3f;
+
+
 			projectile2.gameObject.AddComponent<MopProjectile>();
+
+
 			FakePrefab.MarkAsFakePrefab(projectile2.gameObject);
 			UnityEngine.Object.DontDestroyOnLoad(projectile2);
 			bool ee = gun.Volley.projectiles[2] != gun.DefaultModule;

@@ -13,7 +13,7 @@ using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
 using System.Collections.ObjectModel;
-
+using BreakAbleAPI;
 
 using UnityEngine.Serialization;
 
@@ -29,14 +29,17 @@ namespace Planetside
 			GunExt.SetShortDescription(gun, "Climate Contrast");
 			GunExt.SetLongDescription(gun, "A weapon forged by two wanderers from polar-opposite climates. It is said that they imbued part of their magic into it so one element doesn't damage the other.");
 			GunExt.SetupSprite(gun, null, "polarity_idle_001", 8);
-			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 48);
-			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 12);
-			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 3);
+			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 160);
+			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 10);
+			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 4);
 			GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(223) as Gun, true, false);
 			gun.SetBaseMaxAmmo(450);
 			
-			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_WPN_yarirocketlauncher_shot_01";
+			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_Yari";
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].triggerEvent = true;
+
+			EnemyToolbox.AddSoundsToAnimationFrame(gun.GetComponent<tk2dSpriteAnimator>(), gun.reloadAnimation, new Dictionary<int, string> { { 0, "Play_BOSS_tank_grenade_01" }, { 6, "Play_OBJ_lock_unlock_01" }, { 13, "Play_OBJ_lock_unlock_01" } });
+
 			Gun gun2 = PickupObjectDatabase.GetById(336) as Gun;
 			Gun gun3 = PickupObjectDatabase.GetById(146) as Gun;
 			Projectile component = ((Gun)ETGMod.Databases.Items[336]).DefaultModule.projectiles[0];
@@ -45,6 +48,8 @@ namespace Planetside
 			gun.DefaultModule.usesOptionalFinalProjectile = true;
 			PolarityProjectile pol1 = replacementProjectile.gameObject.AddComponent<PolarityProjectile>();
 			pol1.IsDown = true;
+
+
 			gun.DefaultModule.numberOfFinalProjectiles = 15;
 			gun.DefaultModule.finalProjectile = replacementProjectile;
 			gun.DefaultModule.finalCustomAmmoType = gun3.DefaultModule.customAmmoType;
@@ -99,8 +104,39 @@ namespace Planetside
 			};
 			CustomSynergies.Add("Refridgeration", mandatoryConsoleIDs1, optionalConsoleIDs, true);
 			ItemIDs.AddToList(gun.PickupObjectId);
+
+			string[] clipPaths = new string[]
+			{
+				"Planetside/Resources/GunClips/Polarity/polBlueClip.png",
+				"Planetside/Resources/GunClips/Polarity/polRedClip.png",
+				"Planetside/Resources/GunClips/Polarity/polSynClip.png",
+			};
+			DebrisObject ClipBlue = BreakableAPIToolbox.GenerateDebrisObject(clipPaths[0], true, 3f, 3, 150, 60, null, 4f, null, null, 1, false);
+			DebrisObject ClipRed = BreakableAPIToolbox.GenerateDebrisObject(clipPaths[1], true, 2f, 4, 150, 60, null, 6f, null, null, 1, false);
+			
+			DebrisObject ClipBlue1 = BreakableAPIToolbox.GenerateDebrisObject(clipPaths[0], true, 3f, 3, 120, 60, null, 2f, null, null, 0, false);
+			DebrisObject ClipRed1 = BreakableAPIToolbox.GenerateDebrisObject(clipPaths[1], true, 2f, 4, 120, 60, null, 3f, null, null, 1, false);
+			
+			DebrisObject ClipBlue2 = BreakableAPIToolbox.GenerateDebrisObject(clipPaths[0], true, 3f, 3, 200, 100, null, 3f, null, null, 1, false);
+			DebrisObject ClipRed2 = BreakableAPIToolbox.GenerateDebrisObject(clipPaths[1], true, 2f, 4, 200, 100, null, 4f, null, null, 0, false);
+			
+			ShardCluster ClipsBlueCluster = BreakableAPIToolbox.GenerateShardCluster(new DebrisObject[] { ClipBlue, ClipBlue1, ClipBlue2 }, 0.5f, 2f, 1, 1, 1f);
+			ShardCluster ClipsRedCluster = BreakableAPIToolbox.GenerateShardCluster(new DebrisObject[] { ClipRed, ClipRed1, ClipRed2 }, 0.6f, 1.5f, 1, 1, 1f);
+
+			DebrisObject ClipSyn1 = BreakableAPIToolbox.GenerateDebrisObject(clipPaths[2], true, 3f, 3, 90, 50, null, 4f, null, null, 1, false);
+			DebrisObject ClipSyn2 = BreakableAPIToolbox.GenerateDebrisObject(clipPaths[2], true, 2f, 4, 180, 90, null, 6f, null, null, 1, false);
+			ShardCluster ClipsSynergyCluster1 = BreakableAPIToolbox.GenerateShardCluster(new DebrisObject[] { ClipSyn1, ClipSyn2 }, 0.45f, 1.4f, 1, 1, 1f);
+			ShardCluster ClipsSynergyCluster2 = BreakableAPIToolbox.GenerateShardCluster(new DebrisObject[] { ClipSyn1, ClipSyn2 }, 0.6f, 1.7f, 1, 1, 1f);
+
+
+			ClipCluster = new ShardCluster[] { ClipsBlueCluster, ClipsRedCluster };
+			ClipClusterSynergy = new ShardCluster[] { ClipsSynergyCluster1, ClipsSynergyCluster2 };
+
 		}
 		public static int PolarityID;
+
+		private static ShardCluster[] ClipCluster;
+		private static ShardCluster[] ClipClusterSynergy;
 
 
 		private bool HasReloaded;
@@ -113,13 +149,63 @@ namespace Planetside
 		}
 		public override void OnReloadPressed(PlayerController player, Gun gun, bool bSOMETHING)
 		{
+			if (gun.IsReloading && this.HasReloaded)
+			{
+				HasReloaded = false;
+				base.OnReloadPressed(player, gun, bSOMETHING);
+				if (GameManager.Options.DebrisQuantity == GameOptions.GenericHighMedLowOption.VERY_LOW)
+				{
+					return;
+				}
+				if (gun.sprite == null || gun.transform == null)
+				{
+					Debug.LogError("shit");
+					return;
+				}
+
+				ShardCluster[] clusterToUse = player.PlayerHasActiveSynergy("Refridgeration") == true ? ClipClusterSynergy : ClipCluster;
+
+				Vector3 position = player.primaryHand.attachPoint.PositionVector2() + MathToolbox.GetUnitOnCircle(gun.CurrentAngle + 225, 1.25f);
+				GameObject PoofVFX = GameManager.Instance.RewardManager.D_Chest.VFX_PreSpawn;
+				PoofVFX.SetActive(true);
+				GameObject poofObj = UnityEngine.Object.Instantiate<GameObject>(PoofVFX, position, Quaternion.identity);
+				poofObj.GetComponent<tk2dSpriteAnimator>().transform.localRotation = gun.transform.rotation;
+
+				if (clusterToUse != null && clusterToUse.Length > 0)
+				{
+					int num = UnityEngine.Random.Range(0, 10);
+					for (int i = 0; i < clusterToUse.Length; i++)
+					{
+						ShardCluster shardCluster = clusterToUse[i];
+						int num2 = UnityEngine.Random.Range(shardCluster.minFromCluster, shardCluster.maxFromCluster + 1);
+						int num3 = UnityEngine.Random.Range(0, shardCluster.clusterObjects.Length);
+						for (int j = 0; j < num2; j++)
+						{
+							float lowDiscrepancyRandom = BraveMathCollege.GetLowDiscrepancyRandom(num);
+							num++;
+							float z = Mathf.Lerp(180, -180, lowDiscrepancyRandom);
+							Vector3 vector = Quaternion.Euler(0f, 0f, z) * (gun.transform.PositionVector2().normalized * UnityEngine.Random.Range(-45, 45)).ToVector3ZUp(2);
+							int num4 = (num3 + j) % shardCluster.clusterObjects.Length;
+							GameObject gameObject = SpawnManager.SpawnDebris(shardCluster.clusterObjects[num4].gameObject, position, Quaternion.identity);
+							tk2dSprite component = gameObject.GetComponent<tk2dSprite>();
+							if (gun.sprite.attachParent != null && component != null)
+							{
+								component.attachParent = gun.sprite.attachParent;
+								component.HeightOffGround = gun.sprite.HeightOffGround;
+							}
+							DebrisObject component2 = gameObject.GetComponent<DebrisObject>();
+							vector = Vector3.Scale(vector, shardCluster.forceAxialMultiplier) * shardCluster.forceMultiplier;
+							component2.Trigger(vector, 1, shardCluster.rotationMultiplier);
+						}
+					}
+				}
+			}
 			this.HalfOFClip(player);
 		}
 		public class EyeProjUp : MonoBehaviour
 		{
 		}
 
-		// Token: 0x020000E6 RID: 230
 		public class EyeProjDown : MonoBehaviour
 		{
 		}
@@ -129,10 +215,7 @@ namespace Planetside
 			{
 				PlayerController player = gun.CurrentOwner as PlayerController;
 				this.HalfOFClip(player);
-				if (!gun.PreventNormalFireAudio)
-				{
-					this.gun.PreventNormalFireAudio = true;
-				}
+				this.gun.PreventNormalFireAudio = true;
 				if (!gun.IsReloading && !HasReloaded)
 				{
 					this.HasReloaded = true;
@@ -147,20 +230,10 @@ namespace Planetside
 		}
 		public void HalfOFClip(PlayerController player)
 		{
-			float clip = 0f;
-			clip = (player.stats.GetStatValue(PlayerStats.StatType.AdditionalClipCapacityMultiplier));
+			float clip = (player.stats.GetStatValue(PlayerStats.StatType.AdditionalClipCapacityMultiplier));
 			int num = (int)(30 * clip);
-			int num2 = 0;
-			
-			num2 = (int)(num /2);
-
-			foreach (ProjectileModule projectileModule in this.gun.Volley.projectiles)
-			{
-				this.gun.DefaultModule.numberOfFinalProjectiles = num2;
-			}
-
+			int num2 = (int)(num / 2); ;
+			this.gun.DefaultModule.numberOfFinalProjectiles = num2;
 		}
-
-
 	}
 }

@@ -13,21 +13,7 @@ namespace Planetside
             string resourcePath = "Planetside/Resources/Pickups/NullPickup.png";
             GameObject gameObject = new GameObject(name);
             NullPickupInteractable item = gameObject.AddComponent<NullPickupInteractable>();
-            /*SpeculativeRigidbody specRig = gameObject.AddComponent<SpeculativeRigidbody>();
-            PixelCollider collide = new PixelCollider
-            {
-                IsTrigger = true,
-                ManualWidth = 13,
-                ManualHeight = 16,
-                ColliderGenerationMode = PixelCollider.PixelColliderGeneration.Manual,
-                CollisionLayer = CollisionLayer.PlayerBlocker,
-                ManualOffsetX = 0,
-                ManualOffsetY = 0
-            };
-            specRig.PixelColliders = new List<PixelCollider>
-            {
-                collide
-            };*/
+          
             ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
             string shortDesc = "Nolla.";
             string longDesc = "Nullifies you, for an inner reward.";
@@ -54,28 +40,28 @@ namespace Planetside
             float NullPoints = 0;
             NullPoints += Money / 20 + keys / 2 + Blank / 2;
             //ETGModConsole.Log("Points Gotten: " + NullPoints.ToString(), false);
-            OtherTools.ApplyStat(player, PlayerStats.StatType.Damage, NullPoints / 35, StatModifier.ModifyMethod.ADDITIVE);
-            OtherTools.ApplyStat(player, PlayerStats.StatType.MovementSpeed, NullPoints / 5f, StatModifier.ModifyMethod.ADDITIVE);
-            OtherTools.ApplyStat(player, PlayerStats.StatType.ChargeAmountMultiplier, NullPoints / 35, StatModifier.ModifyMethod.ADDITIVE);
-            OtherTools.ApplyStat(player, PlayerStats.StatType.KnockbackMultiplier, NullPoints / 35, StatModifier.ModifyMethod.ADDITIVE);
-            OtherTools.ApplyStat(player, PlayerStats.StatType.ProjectileSpeed, NullPoints / 35, StatModifier.ModifyMethod.ADDITIVE);
-            OtherTools.ApplyStat(player, PlayerStats.StatType.AdditionalClipCapacityMultiplier, NullPoints / 35, StatModifier.ModifyMethod.ADDITIVE);
-            OtherTools.ApplyStat(player, PlayerStats.StatType.AmmoCapacityMultiplier, NullPoints / 35, StatModifier.ModifyMethod.ADDITIVE);
+            OtherTools.ApplyStat(player, PlayerStats.StatType.Damage, NullPoints / 21, StatModifier.ModifyMethod.ADDITIVE);
+            OtherTools.ApplyStat(player, PlayerStats.StatType.MovementSpeed, NullPoints / 21f, StatModifier.ModifyMethod.ADDITIVE);
+            OtherTools.ApplyStat(player, PlayerStats.StatType.ChargeAmountMultiplier, NullPoints / 21, StatModifier.ModifyMethod.ADDITIVE);
+            OtherTools.ApplyStat(player, PlayerStats.StatType.KnockbackMultiplier, NullPoints / 21, StatModifier.ModifyMethod.ADDITIVE);
+            OtherTools.ApplyStat(player, PlayerStats.StatType.ProjectileSpeed, NullPoints / 21, StatModifier.ModifyMethod.ADDITIVE);
+            OtherTools.ApplyStat(player, PlayerStats.StatType.AdditionalClipCapacityMultiplier, NullPoints / 21, StatModifier.ModifyMethod.ADDITIVE);
+            OtherTools.ApplyStat(player, PlayerStats.StatType.AmmoCapacityMultiplier, NullPoints / 21, StatModifier.ModifyMethod.ADDITIVE);
 
             Exploder.DoDistortionWave(player.sprite.WorldTopCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
             player.carriedConsumables.KeyBullets = 0;
             player.carriedConsumables.Currency = 0;
             player.Blanks = 0;
             player.BloopItemAboveHead(base.sprite, "");
-            //player.CurrentItem.CurrentDamageCooldown = Mathf.Max(player.CurrentItem.CurrentDamageCooldown - 800, 0);
-            //player.CurrentItem.CurrentRoomCooldown = Mathf.Max(player.CurrentItem.CurrentRoomCooldown - 7, 0);
             AkSoundEngine.PostEvent("Play_ENM_critter_poof_01", base.gameObject);
-            if (!GameUIRoot.Instance.BossHealthBarVisible)
-            {
-                OtherTools.Notify("Nullified:", keys.ToString()+" Keys, "+ Money.ToString() + " Casings, " + Blank.ToString() + " Blanks"  , "Planetside/Resources/Pickups/NullPickup");
-
-            }
+            OtherTools.Notify("Nullified:", keys.ToString() + CheckIfMultiple(" Key", keys) + Money.ToString() + CheckIfMultiple(" Casing", Money) + Blank.ToString() + CheckIfMultiple(" Blank", Blank), "Planetside/Resources/Pickups/NullPickup");
             UnityEngine.Object.Destroy(base.gameObject);
+        }
+
+        public string CheckIfMultiple(string PickupString, float valueOfPickup)
+        {
+            string isMult = valueOfPickup >= 1 ? "s, " : ", ";
+            return PickupString + isMult;
         }
         public float distortionMaxRadius = 30f;
         public float distortionDuration = 2f;

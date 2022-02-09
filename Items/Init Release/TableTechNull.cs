@@ -61,7 +61,6 @@ namespace Planetside
             ReadOnlyCollection<Projectile> allProjectiles = StaticReferenceManager.AllProjectiles;
             if (allProjectiles != null)
             {
-
                 for (int i = 0; i < allProjectiles.Count; i++)
                 {
                     if (allProjectiles[i].Owner != player)
@@ -71,7 +70,60 @@ namespace Planetside
                     }
                 }
             }
+
+            pickupsInRoom.Clear();
+            DebrisObject[] shitOnGround = FindObjectsOfType<DebrisObject>();
+            foreach (DebrisObject debris in shitOnGround)
+            {
+                bool isValid = DetermineIfValid(debris);
+                if (isValid && debris.transform.position.GetAbsoluteRoom() == player.CurrentRoom)
+                {
+                    pickupsInRoom.Add(debris);
+                }
+            }
+            if (pickupsInRoom.Count != 0)
+            {
+                pickupsInRoom.Shuffle();
+                DoReroll(pickupsInRoom[0]);
+            }
         }
+        private void DoReroll(DebrisObject obj)
+        {
+            Vector2 pos = obj.transform.position;
+            LootEngine.SpawnItem(PickupObjectDatabase.GetById(NullPickupInteractable.NollahID).gameObject, pos, Vector2.zero, 1f, false, true, false);
+            Destroy(obj.gameObject);
+        }
+        private bool DetermineIfValid(DebrisObject thing)
+        {
+            PickupObject itemness = thing.gameObject.GetComponent<PickupObject>();
+            if (itemness != null)
+            {
+                if (itemness.PickupObjectId == 127 || validIDs.Contains(itemness.PickupObjectId))
+                {
+                    return true;
+                }
+                else return false;
+            }
+            else return false;
+        }
+        private List<int> validIDs = new List<int>()
+        {
+            78, //Ammo
+            600, //Spread Ammo
+            565, //Glass Guon Stone
+            73, //Half Heart
+            85, //Heart
+            120, //Armor
+            224, //Blank
+            67, //Key
+        };
+        private List<DebrisObject> pickupsInRoom = new List<DebrisObject>();
+
+        //Erase a random enemy from the room
+        //Erase random bullets in the room
+        //turns a random pickup in the room into a null pickup
+        //Erases the table?
+
         public static List<string> NullShrineRoom = new List<string>()
         {
             "NullShrineRoom.room"

@@ -199,6 +199,7 @@ namespace Planetside
             {
                 ETGModConsole.Log("object is NULL (how the hell?)");
             }
+            AkSoundEngine.PostEvent("Play_Burn", player.gameObject);
             if (this.elapsed >= SpawnDuration && this.elapsed <= SpawnDuration + Duration && DurationOver != true)
             {
                 if (HasTriggeredFireAnim != true)
@@ -208,12 +209,13 @@ namespace Planetside
                     AkSoundEngine.PostEvent("Play_BOSS_doormimic_flame_01", player.gameObject);
                 }
                 this.secondaryElapsed += BraveTime.DeltaTime;
-                this.tertiaryElapsed += BraveTime.DeltaTime;
+                /*
                 if (tertiaryElapsed >= 2f)
                 {
                     tertiaryElapsed = 0;
                     AkSoundEngine.PostEvent("Play_Burn", player.gameObject);
                 }
+                */
                 if (secondaryElapsed >= 0.2f)
                 {
                     secondaryElapsed = 0;
@@ -262,7 +264,6 @@ namespace Planetside
 
         private float elapsed;
         private float secondaryElapsed;
-        private float tertiaryElapsed = 2;
     }
 }
 

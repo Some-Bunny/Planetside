@@ -38,7 +38,7 @@ namespace Planetside
 			projectile.gameObject.SetActive(false);
 			FakePrefab.MarkAsFakePrefab(projectile.gameObject);
 			UnityEngine.Object.DontDestroyOnLoad(projectile);
-			projectile.baseData.damage = 7f;
+			projectile.baseData.damage = 13f;
 			projectile.baseData.speed *= 1f;
 			projectile.AdditionalScaleMultiplier = 1f;
 			projectile.shouldRotate = true;
@@ -58,17 +58,18 @@ namespace Planetside
 
 
 			VengefulProjectile = projectile;
-			item.quality = PickupObject.ItemQuality.B;
+			item.quality = PickupObject.ItemQuality.EXCLUDED;
 			VengefulShell.VengefulShellID = item.PickupObjectId;
 			ItemIDs.AddToList(item.PickupObjectId);
 			
+			/*
 			var HookToWriteLogToTxtFile2 = new Hook(typeof(Bullet).GetMethods().Single(
 				  m =>
 					  m.Name == "Fire" &&
 					  m.GetParameters().Length == 4 &&
 					  m.GetParameters()[0].ParameterType == typeof(Offset)),
 				  typeof(VengefulShell).GetMethod("FireVengefulBullet", BindingFlags.Static | BindingFlags.Public));
-			
+			*/
 		}
 
 

@@ -148,7 +148,6 @@ namespace Planetside
 					AnimNames = new string[]
 					{
 						"wail",
-
 					},
 					Flipped = new DirectionalAnimation.FlipType[1]
 				};
@@ -172,6 +171,8 @@ namespace Planetside
 						}
 					}
 				};
+				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awaken" }, new DirectionalAnimation.FlipType[0]);
+				companion.aiActor.AwakenAnimType = AwakenAnimationType.Awaken;
 				bool flag3 = WailerCollection == null;
 				if (flag3)
 				{
@@ -301,6 +302,18 @@ namespace Planetside
 
 
 					}, "wail", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6f;
+				SpriteBuilder.AddAnimation(companion.spriteAnimator, WailerCollection, new List<int>
+				{
+
+				
+				52,
+				53,
+				54,
+				55,
+				56
+
+
+				}, "awaken", tk2dSpriteAnimationClip.WrapMode.Once).fps = 10f;
 				}
 
 				var bs = prefab.GetComponent<BehaviorSpeculator>();

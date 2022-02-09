@@ -57,6 +57,9 @@ namespace Planetside
 				enemy.aiActor.CollisionKnockbackStrength = 10f;
 				enemy.aiActor.CanTargetPlayers = true;
 				enemy.aiActor.healthHaver.SetHealthMaximum(15f, null, false);
+				enemy.aiActor.PathableTiles = CellTypes.PIT | CellTypes.FLOOR;
+				enemy.aiActor.SetIsFlying(true, "Gamemode: Creative", true, true);
+
 				enemy.aiActor.ShadowObject = EnemyDatabase.GetOrLoadByGuid("4db03291a12144d69fe940d5a01de376").ShadowObject;
 				enemy.aiActor.HasShadow = true;
 
@@ -150,6 +153,8 @@ namespace Planetside
 						anim = aa
 					}
 				};
+				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awaken" }, new DirectionalAnimation.FlipType[0]);
+				enemy.aiActor.AwakenAnimType = AwakenAnimationType.Awaken;
 				bool flag3 = ShamberCollection == null;
 				if (flag3)
 				{
@@ -235,10 +240,6 @@ namespace Planetside
 				 23,
 				 24,
 
-
-
-
-
 					}, "waprin", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
 					SpriteBuilder.AddAnimation(enemy.spriteAnimator, ShamberCollection, new List<int>
 					{
@@ -289,7 +290,16 @@ namespace Planetside
 				 32
 
 					}, "die_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
+					SpriteBuilder.AddAnimation(enemy.spriteAnimator, ShamberCollection, new List<int>
+					{
 
+				 20,
+				 21,
+				 22,
+				 23,
+				 24,
+
+					}, "awaken", tk2dSpriteAnimationClip.WrapMode.Once).fps = 11f;
 				}
 
 				var intro = prefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("waprin");

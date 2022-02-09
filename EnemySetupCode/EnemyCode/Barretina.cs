@@ -54,6 +54,7 @@ namespace Planetside
 				companion.aiActor.SetIsFlying(true, "Gamemode: Creative");
 				companion.aiActor.ShadowObject = EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").ShadowObject; 
 				companion.aiActor.healthHaver.SetHealthMaximum(40f, null, false);
+				companion.aiActor.PathableTiles = CellTypes.PIT | CellTypes.FLOOR;
 
 				companion.aiActor.gameObject.AddComponent<ImprovedAfterImage>().dashColor = Color.grey;
 				companion.aiActor.gameObject.AddComponent<ImprovedAfterImage>().spawnShadows = true;
@@ -183,6 +184,8 @@ namespace Planetside
 						}
 					}
 				};
+				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awaken" }, new DirectionalAnimation.FlipType[0]);
+				companion.aiActor.AwakenAnimType = AwakenAnimationType.Awaken;
 				bool flag3 = BarretinaCollection == null;
 				if (flag3)
 				{
@@ -280,7 +283,13 @@ namespace Planetside
 
 					}, "die_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 11f;
 
-
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, BarretinaCollection, new List<int>
+					{
+					0,
+					1,
+					2,
+					3
+					}, "awaken", tk2dSpriteAnimationClip.WrapMode.Once).fps = 10;
 
 				}
 				var bs = prefab.GetComponent<BehaviorSpeculator>();

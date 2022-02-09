@@ -6,6 +6,9 @@ using UnityEngine;
 using Dungeonator;
 using ItemAPI;
 using Planetside;
+using System.Reflection;
+using MonoMod.RuntimeDetour;
+
 
 namespace GungeonAPI
 {
@@ -190,8 +193,12 @@ namespace GungeonAPI
             //    Tools.LogPropertiesAndFields(data, data.annotation);
             //}
 
+
+
             Tools.Print("Static references initialized.");
         }
+       
+
 
         public static void InitStaticRoomObjects()
         {
@@ -346,13 +353,7 @@ namespace GungeonAPI
             StoredRoomObjects.Add("ChallengeShrinePrisoner", ChallengeShrineOne);
 
 
-            /*
-            ETGModConsole.Log("Current Stored Objects:");
-            foreach (string Key in StoredRoomObjects.Keys)
-            {
-                ETGModConsole.Log(Key);
-            }
-            */
+            
         }
 
 

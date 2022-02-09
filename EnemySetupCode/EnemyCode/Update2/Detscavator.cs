@@ -199,6 +199,8 @@ namespace Planetside
 						anim = aaaaaaaaaaa
 					}
 				};
+				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awaken" }, new DirectionalAnimation.FlipType[0]);
+				companion.aiActor.AwakenAnimType = AwakenAnimationType.Awaken;
 				bool flag3 = DescavatorCollection == null;
 				if (flag3)
 				{
@@ -315,16 +317,19 @@ namespace Planetside
 				23,
 				24
 					}, "finishlaser_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
-
+				SpriteBuilder.AddAnimation(companion.spriteAnimator, DescavatorCollection, new List<int>
+				{
+				20,
+				21,
+				22,
+				23,
+				24
+				}, "awaken", tk2dSpriteAnimationClip.WrapMode.Once).fps = 12f;
 				}
+				
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.GetComponent<tk2dSpriteAnimator>(), "charge", new Dictionary<int, string> { {3, "Play_ENM_hammer_target_01" }, { 5, "Play_ENM_hammer_target_01" } , { 7, "Play_ENM_hammer_target_01" } });
 
-				var clip = companion.aiActor.GetComponent<tk2dSpriteAnimator>().GetClipByName("charge");
-				clip.frames[3].eventInfo = "warn";
-				clip.frames[3].triggerEvent = true;
-				clip.frames[5].eventInfo = "warn";
-				clip.frames[5].triggerEvent = true; 
-				clip.frames[7].eventInfo = "warn";
-				clip.frames[7].triggerEvent = true;
+
 				var bs = prefab.GetComponent<BehaviorSpeculator>();
 				prefab.GetComponent<ObjectVisibilityManager>();
 				BehaviorSpeculator behaviorSpeculator = EnemyDatabase.GetOrLoadByGuid("43426a2e39584871b287ac31df04b544").behaviorSpeculator;
@@ -377,14 +382,12 @@ namespace Planetside
 					firingTime = 3f,
 					AttackCooldown = 3.5f,
 					RequiresLineOfSight = true,
-					//beamSelection = ShootBeamBehavior.BeamSelection.All,
-					//FiresDirectlyTowardsPlayer = true,
 					UsesCustomAngle = true,
 					
 					chargeTime = 1,
-					//UsesBaseSounds = false,
-					LaserFiringSound = "Play_ENM_deathray_shot_01",
-					StopLaserFiringSound = "Stop_ENM_deathray_loop_01",
+					UsesBaseSounds = false,
+					LaserFiringSound = "Play_BigBeam",
+					StopLaserFiringSound = "Stop_BigBeam",
 					ChargeAnimation = "charge",
 					FireAnimation = "shootlaser",
 					PostFireAnimation = "finishlaser",
@@ -530,7 +533,7 @@ namespace Planetside
 			private void Start()
 			{
 				this.aiActor.knockbackDoer.SetImmobile(true, "nope.");
-				base.aiActor.spriteAnimator.AnimationEventTriggered += this.AnimationEventTriggered;
+				//base.aiActor.spriteAnimator.AnimationEventTriggered += this.AnimationEventTriggered;
 				if (!base.aiActor.IsBlackPhantom)
 				{
 					Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);

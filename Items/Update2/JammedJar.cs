@@ -40,11 +40,11 @@ namespace Planetside
             JammedJar.spriteIDs[0] = SpriteBuilder.AddSpriteToCollection(JammedJar.spritePaths[3], activeitem.sprite.Collection);
             activeitem.AddToSubShop(ItemBuilder.ShopType.Cursula, 1f);
 
-            InjectorRounds.InjectorRoundsID = activeitem.PickupObjectId;
+            JammedJar.JammedJarID = activeitem.PickupObjectId;
             ItemIDs.AddToList(activeitem.PickupObjectId);
 
         }
-        public static int InjectorRoundsID;
+        public static int JammedJarID;
         public override void Pickup(PlayerController player)
         {
             base.Pickup(player);

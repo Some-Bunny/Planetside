@@ -71,20 +71,42 @@ namespace Planetside
 
         protected override void DoEffect(PlayerController user)
         {
+            BossManager manager = GameManager.Instance.BossManager;
 
+            foreach (BossFloorEntry cum in manager.BossFloorData)
+            {
+                foreach (IndividualBossFloorEntry fycjyou in cum.Bosses)
+                {
+                    ETGModConsole.Log(fycjyou.TargetRoomTable.name);
+                }
+            }
+            /*
+            AIActor orLoadByGuid = EnemyDatabase.GetOrLoadByGuid("jammed_guardian");
+            IntVector2? intVector = new IntVector2?(user.CurrentRoom.GetRandomVisibleClearSpot(2, 2));
+            AIActor aiactor = AIActor.Spawn(orLoadByGuid.aiActor, intVector.Value, GameManager.Instance.Dungeon.data.GetAbsoluteRoomFromPosition(intVector.Value), true, AIActor.AwakenAnimationType.Spawn, true);
+            aiactor.CanTargetEnemies = true;
+            aiactor.CanTargetPlayers = false;
+            PhysicsEngine.Instance.RegisterOverlappingGhostCollisionExceptions(aiactor.specRigidbody, null, false);
+            aiactor.gameObject.AddComponent<KillOnRoomClear>();
+            aiactor.IgnoreForRoomClear = true;
+            aiactor.IsHarmlessEnemy = true;
+            aiactor.HandleReinforcementFallIntoRoom(0f);
+            */
             //GameObject shader = PlanetsideModule.ModAssets.LoadAsset<GameObject>("SphereObj");
             //UnityEngine.Object.Instantiate<GameObject>(shader, user.specRigidbody.UnitCenter, Quaternion.identity);
+            /*
             GameObject obj = PlanetsideModule.ModAssets.LoadAsset<GameObject>("sphere 1");
             obj.SetLayerRecursively(LayerMask.NameToLayer("Unpixelated"));
             Instantiate<GameObject>(obj, user.transform.position, Quaternion.Euler(0, 90f, 0));
             obj.AddComponent<Updater>();
-
+            */
 
             //obj.GetOrAddComponent<MeshFilter>().mesh = obj.GetComponent<Mesh>();
 
 
             //obj.transform.Rotate(new Vector3(0f, 0f, 0f), 90f, Space.Self);
 
+            /*
             Gun gun = PickupObjectDatabase.GetById(483) as Gun;
 
             foreach (Component item in gun.DefaultModule.projectiles[0].GetComponentsInChildren(typeof(Component)))
@@ -94,8 +116,9 @@ namespace Planetside
                     ETGModConsole.Log(item.name+"\n"+item.GetType().ToString()+"\n=========");
                 }
             }
+            */
 
-
+            /*
             Vector2 vector = user.transform.PositionVector2();
             ETGModConsole.Log("2");
             Vector2 vector2 = new Vector2();
@@ -116,21 +139,21 @@ namespace Planetside
             }
             ETGModConsole.Log("8");
             RaycastResult.Pool.Free(ref raycastResult2);
+            */
 
-
-            int num2 = Mathf.Max(Mathf.CeilToInt(Vector2.Distance(vector, vector2)), 1);
+            //int num2 = Mathf.Max(Mathf.CeilToInt(Vector2.Distance(vector, vector2)), 1);
             //ETGModConsole.Log("ahfuck before" + num2.ToString(), false);
             //ETGModConsole.Log("ahfuck " + num2.ToString(), false);
-            for (int i = 0; i < num2; i++)
+            //for (int i = 0; i < num2; i++)
             {
-                float t = (float)i / (float)num2;
-                Vector3 vector3 = Vector3.Lerp(vector, vector2, t);
-                GameObject silencerVFX = (GameObject)ResourceCache.Acquire("Global VFX/BlankVFX_Ghost");
+                //float t = (float)i / (float)num2;
+                //Vector3 vector3 = Vector3.Lerp(vector, vector2, t);
+                //GameObject silencerVFX = (GameObject)ResourceCache.Acquire("Global VFX/BlankVFX_Ghost");
                 //AkSoundEngine.PostEvent("Play_OBJ_silenceblank_small_01", base.gameObject);
-                GameObject gameObject = new GameObject("silencer");
-                SilencerInstance silencerInstance = gameObject.AddComponent<SilencerInstance>();
-                float additionalTimeAtMaxRadius = 0.25f;
-                silencerInstance.TriggerSilencer(vector3, 25f, 5f, silencerVFX, 0f, 3f, 3f, 3f, 250f, 5f, additionalTimeAtMaxRadius, user, false, false);
+                //GameObject gameObject = new GameObject("silencer");
+                //SilencerInstance silencerInstance = gameObject.AddComponent<SilencerInstance>();
+                //float additionalTimeAtMaxRadius = 0.25f;
+                //silencerInstance.TriggerSilencer(vector3, 25f, 5f, silencerVFX, 0f, 3f, 3f, 3f, 250f, 5f, additionalTimeAtMaxRadius, user, false, false);
                 /*
                 ETGModConsole.Log("10");
                 float t = (float)i / (float)num2;

@@ -84,7 +84,7 @@ namespace Planetside
 
             tk2dSprite.SetSprite(ForgiveMePlease.spriteIds[5]); //Bullet
             tk2dSprite.SetSprite(ForgiveMePlease.spriteIds[6]); //Robot
-            tk2dSprite.SetSprite(ForgiveMePlease.spriteIds[7]); //Gunsliger
+           // tk2dSprite.SetSprite(ForgiveMePlease.spriteIds[7]); //Gunsliger
 
             FakePrefab.MarkAsFakePrefab(gameObject2);
             UnityEngine.Object.DontDestroyOnLoad(gameObject2);
@@ -103,59 +103,45 @@ namespace Planetside
 
         protected override void DoEffect(PlayerController user)
         {
-            base.StartCoroutine(this.HandlePlaceDoll(user.CurrentRoom, user));
-
-            
+            user.StartCoroutine(this.HandlePlaceDoll(user));
         }
-        private IEnumerator HandlePlaceDoll(RoomHandler room, PlayerController player)
+
+        private Dictionary<PlayableCharacters, int> CHracatersToSpriteID = new Dictionary<PlayableCharacters, int>()
+        {
+            {PlayableCharacters.Convict, 0},
+            {PlayableCharacters.Guide, 1},
+            {PlayableCharacters.Soldier, 2},
+            {PlayableCharacters.Pilot, 3},
+            {PlayableCharacters.Bullet, 4},
+            {PlayableCharacters.Robot, 5},
+            {PlayableCharacters.Gunslinger, 6},
+            {PlayableCharacters.Eevee, 100},
+        };
+
+
+        private IEnumerator HandlePlaceDoll(PlayerController player)
         {
 
             //This is Hunter levels of weird code
             //BUT it works, so take that i guess...
-            bool isHuman;
+            bool isHuman = false;
             LootEngine.DoDefaultItemPoof(player.sprite.WorldCenter, false, true);
-            GameObject fuck;
-            fuck = UnityEngine.Object.Instantiate<GameObject>(ForgiveMePlease.FMGPrefab, player.CenterPosition, Quaternion.identity);
+            GameObject fuck= UnityEngine.Object.Instantiate<GameObject>(ForgiveMePlease.FMGPrefab, player.CenterPosition, Quaternion.identity);
             fuck.GetComponent<tk2dBaseSprite>().PlaceAtLocalPositionByAnchor(player.sprite.WorldBottomCenter + new Vector2(0f, 00f), tk2dBaseSprite.Anchor.LowerCenter);
             tk2dSprite ahfuck = fuck.GetComponent<tk2dSprite>();
-            if (this.LastOwner.characterIdentity == PlayableCharacters.Convict)
+            int charSpriteID = 0;
+            CHracatersToSpriteID.TryGetValue(player.characterIdentity, out charSpriteID);
+
+            if (charSpriteID != 100) 
             {
-                fuck.GetComponent<tk2dBaseSprite>().SetSprite(ForgiveMePlease.spriteIds[1]);
-                isHuman = true;
+                fuck.GetComponent<tk2dBaseSprite>().SetSprite(ForgiveMePlease.spriteIds[charSpriteID]);
+                if (player.characterIdentity == PlayableCharacters.Bullet | player.characterIdentity == PlayableCharacters.Robot)
+                { isHuman = false;}
+                else{ isHuman = true;}
             }
-            else if (this.LastOwner.characterIdentity == PlayableCharacters.Guide)
+            else
             {
-                fuck.GetComponent<tk2dBaseSprite>().SetSprite(ForgiveMePlease.spriteIds[2]);
-                isHuman = true;
-            }
-            else if (this.LastOwner.characterIdentity == PlayableCharacters.Soldier)
-            {
-                fuck.GetComponent<tk2dBaseSprite>().SetSprite(ForgiveMePlease.spriteIds[3]);
-                isHuman = true;
-            }
-            else if (this.LastOwner.characterIdentity == PlayableCharacters.Pilot)
-            {
-                fuck.GetComponent<tk2dBaseSprite>().SetSprite(ForgiveMePlease.spriteIds[4]);
-                isHuman = true;
-            }
-            else if (this.LastOwner.characterIdentity == PlayableCharacters.Bullet)
-            {
-                fuck.GetComponent<tk2dBaseSprite>().SetSprite(ForgiveMePlease.spriteIds[5]);
-                isHuman = false;
-            }
-            else if (this.LastOwner.characterIdentity == PlayableCharacters.Robot)
-            {
-                fuck.GetComponent<tk2dBaseSprite>().SetSprite(ForgiveMePlease.spriteIds[6]);
-                isHuman = false;
-            }
-            else if (this.LastOwner.characterIdentity == PlayableCharacters.Gunslinger)
-            {
-                fuck.GetComponent<tk2dBaseSprite>().SetSprite(ForgiveMePlease.spriteIds[7]);
-                isHuman = true;
-            }
-            else if (this.LastOwner.characterIdentity == PlayableCharacters.Eevee)
-            {
-                int SpriteID = UnityEngine.Random.Range(1, 8);
+                int SpriteID = UnityEngine.Random.Range(0, 7);
                 fuck.GetComponent<tk2dBaseSprite>().SetSprite(ForgiveMePlease.spriteIds[SpriteID]);
                 ahfuck.sprite.usesOverrideMaterial = true;
                 var texture = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\nebula_reducednoise.png");
@@ -163,45 +149,20 @@ namespace Planetside
                 ahfuck.sprite.renderer.material.SetTexture("_EeveeTex", texture);
                 ahfuck.sprite.renderer.material.DisableKeyword("BRIGHTNESS_CLAMP_ON");
                 ahfuck.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_OFF");
-                if (SpriteID == 5 | SpriteID == 6)
-                {
-                    isHuman = false;
-                }
-                else
-                {
-                    isHuman = true;
-                }
-            }
-            else
-            {
-                int SpriteID = UnityEngine.Random.Range(1, 8);
-                fuck.GetComponent<tk2dBaseSprite>().SetSprite(ForgiveMePlease.spriteIds[SpriteID]);
-                if (SpriteID == 5 | SpriteID == 6)
-                {
-                    isHuman = false;
-                }
-                else
-                {
-                    isHuman = true;
-                }
+                if (SpriteID == 4 | SpriteID == 5)
+                { isHuman = false; }
+                else { isHuman = true; }
             }
             string EnemyToUse;
-            if (isHuman)
-            {
-                EnemyToUse = "blobulin";
-            }
-            else
-            {
-                EnemyToUse = "mouser";
-            }
-
+            if (isHuman==true)
+            { EnemyToUse = "blobulin"; }
+            else {EnemyToUse = "mouser"; }
             SpriteOutlineManager.AddOutlineToSprite(ahfuck.sprite, Color.black);
-
             string enemyGuid = EnemyGuidDatabase.Entries[EnemyToUse];
             AIActor orLoadByGuid = EnemyDatabase.GetOrLoadByGuid(enemyGuid);
-            
 
             AIActor aiactor = AIActor.Spawn(orLoadByGuid.aiActor, ahfuck.sprite.WorldBottomCenter, GameManager.Instance.Dungeon.data.GetAbsoluteRoomFromPosition(ahfuck.sprite.WorldBottomCenter.ToIntVector2()), true, AIActor.AwakenAnimationType.Default, true);
+
             aiactor.behaviorSpeculator.MovementBehaviors = EnemyDatabase.GetOrLoadByGuid("b08ec82bef6940328c7ecd9ffc6bd16c").behaviorSpeculator.MovementBehaviors;
             aiactor.behaviorSpeculator.TargetBehaviors = EnemyDatabase.GetOrLoadByGuid("b08ec82bef6940328c7ecd9ffc6bd16c").behaviorSpeculator.TargetBehaviors;
             aiactor.behaviorSpeculator.OtherBehaviors = EnemyDatabase.GetOrLoadByGuid("b08ec82bef6940328c7ecd9ffc6bd16c").behaviorSpeculator.OtherBehaviors;
@@ -209,7 +170,7 @@ namespace Planetside
             aiactor.healthHaver.ForceSetCurrentHealth(100f);
             aiactor.healthHaver.SetHealthMaximum(100f, null, false);
             aiactor.sprite.renderer.enabled = false;
-            //aiactor.aiShooter.ToggleGunAndHandRenderers(false, "its a doll");
+
             aiactor.procedurallyOutlined = false;
             aiactor.CorpseObject = null;
             aiactor.ToggleShadowVisiblity(false);
@@ -226,31 +187,32 @@ namespace Planetside
             aiactor.IsHarmlessEnemy = true;
             aiactor.IgnoreForRoomClear = true;
             aiactor.PreventAutoKillOnBossDeath = true;
-
-            aiactor.ManualKnockbackHandling = true; //dunno if this is useful
-            aiactor.knockbackDoer.SetImmobile(true, "j"); // from the TetherBehavior to prevent the companion from being pushed by explosions
+            aiactor.ManualKnockbackHandling = true; 
+            aiactor.knockbackDoer.SetImmobile(true, "j"); 
             aiactor.PreventFallingInPitsEver = true;
+
 
             aiactor.specRigidbody.AddCollisionLayerIgnoreOverride(CollisionMask.LayerToMask(CollisionLayer.EnemyHitBox, CollisionLayer.EnemyCollider, CollisionLayer.PlayerHitBox,
                 CollisionLayer.Projectile, CollisionLayer.PlayerCollider, CollisionLayer.PlayerBlocker, CollisionLayer.BeamBlocker));
-
             aiactor.specRigidbody.AddCollisionLayerIgnoreOverride(CollisionMask.LayerToMask(CollisionLayer.BulletBlocker, CollisionLayer.BulletBreakable, CollisionLayer.Trap));
+
+
             for (int i = 0; i < 8; i++)
             {
                 if (player != null)
                 {
-                    Action<float, bool, HealthHaver> aaa = player.OnAnyEnemyReceivedDamage;
-                    for (int e = 0; e < 4; e++)
+                    Action<Single, bool, HealthHaver> aaa = player.OnAnyEnemyReceivedDamage;
+                    if (aaa != null)
                     {
-                        aaa.Invoke(1f, false, aiactor.healthHaver);
-                    }
-                    aaa.Invoke(10f, true, aiactor.healthHaver);
+                        for (int e = 0; e < 4; e++)
+                        {aaa.Invoke(1f, false, aiactor.healthHaver);}
+                        aaa.Invoke(10f, true, aiactor.healthHaver);
+                    }         
+                    yield return new WaitForSeconds(1f);
                 }
                 LootEngine.DoDefaultPurplePoof(ahfuck.sprite.WorldCenter, false);
-                AkSoundEngine.PostEvent("Play_PET_junk_splat_01", base.gameObject);
-                yield return new WaitForSeconds(1f);
+                AkSoundEngine.PostEvent("Play_PET_junk_splat_01", player.gameObject);
             }
-            yield return new WaitForSeconds(0.75f);
             LootEngine.DoDefaultPurplePoof(ahfuck.sprite.WorldCenter, false);
             float currentHealth = player.healthHaver.GetCurrentHealth();
             bool nextShotKills = player.healthHaver.NextShotKills;

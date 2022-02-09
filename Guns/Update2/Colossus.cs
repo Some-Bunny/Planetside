@@ -111,7 +111,7 @@ namespace Planetside
                 projectile.gameObject.SetActive(false);
                 FakePrefab.MarkAsFakePrefab(projectile.gameObject);
                 UnityEngine.Object.DontDestroyOnLoad(projectile);
-                projectile.baseData.damage = 120f;
+                projectile.baseData.damage = 150f;
                 projectile.baseData.force *= 1f;
                 projectile.baseData.range *= 5;
                 projectile.baseData.speed *= 5f;
@@ -124,7 +124,7 @@ namespace Planetside
                 beamComp.boneType = BasicBeamController.BeamBoneType.Projectile;
 
                 beamComp.startAudioEvent = "Play_ENM_deathray_shot_01";
-                beamComp.projectile.baseData.damage = 70;
+                beamComp.projectile.baseData.damage = 80;
                 beamComp.endAudioEvent = "Stop_ENM_deathray_loop_01";
                 beamComp.penetration = 1;
                 beamComp.reflections = 0;
@@ -156,6 +156,34 @@ namespace Planetside
                 material.SetTexture("_MainTex", sharedMaterials[0].GetTexture("_MainTex"));
                 sharedMaterials[sharedMaterials.Length - 1] = material;
                 component.sharedMaterials = sharedMaterials;
+
+                Gun CopyProjectileFrom = PickupObjectDatabase.GetById(56) as Gun;
+                Projectile perfProjectile = UnityEngine.Object.Instantiate<Projectile>(CopyProjectileFrom.DefaultModule.projectiles[0]);
+                perfProjectile.gameObject.SetActive(false);
+                FakePrefab.MarkAsFakePrefab(perfProjectile.gameObject);
+                UnityEngine.Object.DontDestroyOnLoad(perfProjectile);
+                perfProjectile.baseData.damage = 22f;
+                perfProjectile.baseData.speed = 1f;
+                perfProjectile.AdditionalScaleMultiplier *= 1f;
+                perfProjectile.shouldRotate = true;
+                perfProjectile.pierceMinorBreakables = true;
+                perfProjectile.gameObject.AddComponent<PerfectedProjectileComponent>();
+                perfProjectile.AnimateProjectile(new List<string> {
+                "perfectedProj_001",
+                "perfectedProj_002",
+                "perfectedProj_003",
+                "perfectedProj_004",
+            }, 13, true, new List<IntVector2> {
+                new IntVector2(11, 11),
+                new IntVector2(11, 11),
+                new IntVector2(11, 11),
+                new IntVector2(11, 11)
+            }, AnimateBullet.ConstructListOfSameValues(false, 7), AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.MiddleCenter, 7), AnimateBullet.ConstructListOfSameValues(true, 7), AnimateBullet.ConstructListOfSameValues(false, 7),
+                AnimateBullet.ConstructListOfSameValues<Vector3?>(null, 7), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 7), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 7), AnimateBullet.ConstructListOfSameValues<Projectile>(null, 7));
+                //perfProjectile.SetProjectileSpriteRight("perfectedProj_001", 11, 11, false, tk2dBaseSprite.Anchor.MiddleCenter, 11, 11);
+                perfProjectile.hitEffects.alwaysUseMidair = true;
+                perfProjectile.hitEffects.overrideMidairDeathVFX = (PickupObjectDatabase.GetById(228) as Gun).DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX;
+                PerfectedProjectile = perfProjectile;
             }
 
             //GUN STATS
@@ -163,8 +191,8 @@ namespace Planetside
             gun.reloadTime = 1.3f;
             gun.muzzleFlashEffects.type = VFXPoolType.None;
             gun.barrelOffset.transform.localPosition = new Vector3(1.625f, 0.5625f, 0f);
-            gun.SetBaseMaxAmmo(300);
-            gun.ammo = 300;
+            gun.SetBaseMaxAmmo(360);
+            gun.ammo = 360;
             gun.PreventNormalFireAudio = true;
             gun.gunClass = GunClass.BEAM;
 
@@ -174,11 +202,10 @@ namespace Planetside
             gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).wrapMode = tk2dSpriteAnimationClip.WrapMode.LoopSection;
             gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).loopStart = 1;
 
-            gun.quality = PickupObject.ItemQuality.B; //D
+
+
+            gun.quality = PickupObject.ItemQuality.B; 
             ETGMod.Databases.Items.Add(gun, null, "ANY");
-            Colossus.ColossusID = gun.PickupObjectId;
-
-
             List<string> mandatoryConsoleIDs = new List<string>
             {
                 "psog:colossus",
@@ -190,11 +217,18 @@ namespace Planetside
                 "heart_bottle"
             };
             CustomSynergies.Add("Perfected", mandatoryConsoleIDs, optionalConsoleIDs, true);
-
-
+            Colossus.ColossusID = gun.PickupObjectId;
             ItemIDs.AddToList(gun.PickupObjectId);
+
+            AdvancedTransformGunSynergyProcessor colos = (PickupObjectDatabase.GetById(gun.PickupObjectId) as Gun).gameObject.AddComponent<AdvancedTransformGunSynergyProcessor>();
+            colos.NonSynergyGunId = gun.PickupObjectId;
+            colos.SynergyGunId = PerfectedColossus.PerfectedColossusID;
+            colos.SynergyToCheck = "Perfected";
+
         }
         public static int ColossusID;
+        public static Projectile PerfectedProjectile;
+
 
         public override void OnReloadPressed(PlayerController player, Gun gun, bool bSOMETHING)
         {
@@ -204,10 +238,60 @@ namespace Planetside
                 HasReloaded = false;
                 AkSoundEngine.PostEvent("Play_ENM_statue_stomp_01", player.gameObject);
                 base.OnReloadPressed(player, gun, bSOMETHING);
-
+                if (player.PlayerHasActiveSynergy("Perfected") && gun.ClipShotsRemaining <= gun.ClipCapacity/2)
+                {
+                    player.StartCoroutine(SpawnPerfectedShots(player));
+                }
             }
-            
         }
+
+        public IEnumerator SpawnPerfectedShots(PlayerController player)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                AkSoundEngine.PostEvent("Play_WPN_chargelaser_shot_01", player.gameObject);
+                float finaldir = ProjSpawnHelper.GetAccuracyAngled(player.CurrentGun.CurrentAngle, 0, player);
+                if (i == 0)
+                {
+                    Vector2 Point1 = MathToolbox.GetUnitOnCircle(90, 1f);
+                    GameObject spawnedBulletOBJ = SpawnManager.SpawnProjectile(PerfectedProjectile.gameObject, player.sprite.WorldCenter + Point1, Quaternion.Euler(0f, 0f, finaldir), true);
+                    Projectile component = spawnedBulletOBJ.GetComponent<Projectile>();
+                    if (component != null)
+                    {
+                        component.Owner = player;
+                        component.Shooter = player.specRigidbody;
+                    }
+                    GameObject vfx = UnityEngine.Object.Instantiate<GameObject>((PickupObjectDatabase.GetById(228) as Gun).DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX);
+                    tk2dBaseSprite ballib = vfx.GetComponent<tk2dBaseSprite>();
+                    ballib.PlaceAtPositionByAnchor(Point1, tk2dBaseSprite.Anchor.MiddleCenter);
+                    ballib.HeightOffGround = 35f;
+                    ballib.UpdateZDepth();
+                }
+                else
+                {
+                    for (int e = -1; e < 1; e++)
+                    {
+                        float Maff = e == -1 ? -45 : 45;
+                        Vector2 Point1 = MathToolbox.GetUnitOnCircle((Maff * i) + 90, 1f);
+                        GameObject spawnedBulletOBJ = SpawnManager.SpawnProjectile(PerfectedProjectile.gameObject, player.sprite.WorldCenter + Point1, Quaternion.Euler(0f, 0f, finaldir), true);
+                        Projectile component = spawnedBulletOBJ.GetComponent<Projectile>();
+                        if (component != null)
+                        {
+                            component.Owner = player;
+                            component.Shooter = player.specRigidbody;
+                        }
+                        GameObject vfx = UnityEngine.Object.Instantiate<GameObject>((PickupObjectDatabase.GetById(228) as Gun).DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX);
+                        tk2dBaseSprite ballib = vfx.GetComponent<tk2dBaseSprite>();
+                        ballib.PlaceAtPositionByAnchor(Point1, tk2dBaseSprite.Anchor.MiddleCenter);
+                        ballib.HeightOffGround = 35f;
+                        ballib.UpdateZDepth();
+                    }
+                }
+                yield return new WaitForSeconds(0.15f);
+            }
+            yield break;
+        }
+
         public override void OnPostFired(PlayerController player, Gun gun)
         {
             gun.PreventNormalFireAudio = true;

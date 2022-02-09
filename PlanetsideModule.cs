@@ -48,42 +48,61 @@ namespace Planetside
             forgeDungeon = null;
 
             ZipFilePath = this.Metadata.Archive;
-            RoomFilePath = this.Metadata.Directory + "/rooms";
-            
+            RoomFilePath = this.Metadata.Directory + "/rooms";   
             FilePathFolder = this.Metadata.Directory;
-
             metadata = this.Metadata;
-
+            //Initialise World-Stuff here
             ETGModMainBehaviour.Instance.gameObject.AddComponent<NevernamedsDarknessHandler>();
 
-            EasyGoopDefinitions.DefineDefaultGoops();
-
-            SoundManager.Init();
-            SoundManager.LoadBankFromModProject("Planetside/PlanetsideBank");
-            SoundManager.RegisterStopEvent("Stop_MUS_PrisonerTheme", StopEventType.Music);
-
+            //Asset bundle stuff
             PlanetsideModule.ModAssets = AssetBundleLoader.LoadAssetBundleFromLiterallyAnywhere("planetsidebundle");
             foreach (string str in PlanetsideModule.ModAssets.GetAllAssetNames())
             {
                 ETGModConsole.Log(PlanetsideModule.ModAssets.name + ": " + str, false);
             }
 
+            //Initialise Statically Stored Stuff Here
+            StaticVFXStorage.Init();
+            EasyGoopDefinitions.DefineDefaultGoops();
+            RandomPiecesOfStuffToInitialise.BuildPrefab();
             PlanetsideModule.Strings = new AdvancedStringDB();
-
             ItemIDs.MakeCommand();
+            StaticReferences.Init(); //<- Used in GungeonAPI, IMPORTANT to initialise it before DungeonHandler
+            //Targets.Init();
+            HolyChamberStatue.Init();
 
-            ItemBuilder.Init();
-
-            StaticReferences.Init();
-            //EmberPot.Init();
-            Targets.Init();
-            DungeonHandler.Init();
-            
-            Hooks.Init();
-                        
-            MultiActiveReloadManager.SetupHooks();
+            //initialise Tools classes here
             Tools.Init();
             NpcTools.Init();
+
+
+            //Hook stuff here
+            PickupHooks.Init();
+            ExplosionHooks.Init();
+            Hooks.Init();
+            MultiActiveReloadManager.SetupHooks();
+            FakePrefabHooks.Init();
+
+            //Initialise API stuff here
+            BulletBuilder.Init();
+            SoundManager.Init();
+            SoundManager.LoadBankFromModProject("Planetside/PlanetsideBank");
+            SoundManager.RegisterStopEvent("Stop_MUS_PrisonerTheme", StopEventType.Music);
+            ItemBuilder.Init();
+
+            //Shrine Initialisation
+            ShrineFactory.Init();
+            OldShrineFactory.Init();
+            ShrineFakePrefabHooks.Init();
+            GunOrbitShrine.Add();
+            NullShrine.Add();
+            HolyChamberShrine.Add();
+            TooLate.Add();
+
+
+            EnemyBuilder.Init();
+            BossBuilder.Init();
+            CustomClipAmmoTypeToolbox.Init();
             ETGModConsole.Commands.AddUnit("planetsideflow", (args) =>
             {
                 DungeonHandler.debugFlow = !DungeonHandler.debugFlow;
@@ -91,21 +110,13 @@ namespace Planetside
                 string color = DungeonHandler.debugFlow ? "00FF00" : "FF0000";
                 ETGModConsole.Log($"Planetside flow {status}", false);
             });
-            RandomPiecesOfStuffToInitialise.BuildPrefab();
+
+
+
+
             SomethingWickedEnemy.Init();
-            ShrineFakePrefabHooks.Init();
-            ShrineFactory.Init();
-            OldShrineFactory.Init();
-            EnemyBuilder.Init();
-            BossBuilder.Init();
-            FakePrefabHooks.Init();
-            CustomClipAmmoTypeToolbox.Init();
+           
 
-
-            GunOrbitShrine.Add();
-            NullShrine.Add();
-            HolyChamberShrine.Add();
-            TooLate.Add();
 
             Unstabullets.Init();
             HullBreakerBullets.Init();
@@ -206,8 +217,8 @@ namespace Planetside
             BloodIdol.Init();
             Riftaker.Add();
             HeresyHammer.Init();
-            Colossus.Add();
             PerfectedColossus.Add();
+            Colossus.Add();
             ResourceGuonMaker.Init();     
             ChargerGun.Add();
             //FIX THIS SWORD TO NOT CAUSE MASSIVE EXCEPTIONS WITH EXPAND ON LOAD
@@ -227,10 +238,24 @@ namespace Planetside
             GunslingersRing.Init();
             LuckyCharm.Init();
             TrapDefusalKit.Init();
+            TableTechTelefrag.Init();
+            AlchemicalVial.Init();
 
             ModifierNeedle.Init();
 
             Whistler.Add();
+            ThunderShot.Add();
+
+            //Perks
+            AllStatsUp.Init();
+            Greedy.Init();
+            AllSeeingEye.Init();
+            BlastProjectiles.Init();
+            Glass.Init();
+            Contract.Init();
+            ChaoticShift.Init();
+            PitLordsPact.Init();
+            UnbreakableSpirit.Init();
 
             //VengefulShell.Init();
             //LaserWelder.Add();
@@ -322,9 +347,21 @@ namespace Planetside
             Thing.Init();
             RedThing.Init();
 
+            FlowInjectionInitialiser.InitialiseFlows();
             CustomLootTableInitialiser.InitialiseCustomLootTables();
             CustomShopInitialiser.InitialiseCustomShops();
-            FlowInjectionInitialiser.InitialiseFlows();
+
+            //RoomTableTools.GenerateWeightedRoom(RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/ShrineOfEvilShrineRoomHell.room").room)
+            //GenericRoomTable table = RoomTableTools.CreateRoomTable();
+            //WeightedRoom roomer =  RoomTableTools.GenerateWeightedRoom(RoomFactory.BuildFromResource("Planetside/Resources2/smileBossRoom.room").room);
+
+            //table.includedRooms.Add(roomer);
+
+            //new Hook(typeof(GameManager).GetProperty("BossManager", BindingFlags.Instance | BindingFlags.Public).GetGetMethod(), typeof(PlanetsideModule).GetMethod("BossManagerHook"));
+
+            //RoomTableTools.AddBossTableToManager(RoomTableTools.GenerateIndividualBossFloorEntry(table, null, "FUCK"));
+            DungeonHandler.Init();
+
 
             //AdvancedLogging.Log($"{MOD_NAME} v{VERSION} started successfully.", new Color(144, 6, 255, 255), false, true, null);
             PlanetsideModule.Log($"{MOD_NAME} v{VERSION} started successfully.", TEXT_COLOR);
@@ -425,6 +462,7 @@ namespace Planetside
             OtherTools.PrintNoID("Unlock List:\n" + a + b + c + d + e + f + g +h+i+j+k+l, color1);
             OtherTools.Init();
 
+
             /*
             ETGModConsole.Commands.GetGroup("psog").AddUnit("dumpPlayerSprites", delegate (string[] args)
             {
@@ -432,7 +470,38 @@ namespace Planetside
             });
             */
         }
+        public static BossManager BossManagerHook(Func<GameManager, BossManager> orig, GameManager self)
+        {
+            var manager = orig(self);
 
+            foreach (BossFloorEntry cum in manager.BossFloorData)
+            {
+
+                if (cum.AssociatedTilesets == GlobalDungeonData.ValidTilesets.CASTLEGEON)
+                {
+                    GenericRoomTable table = RoomTableTools.CreateRoomTable();
+                    WeightedRoom roomer = RoomTableTools.GenerateWeightedRoom(RoomFactory.BuildFromResource("Planetside/Resources2/smileBossRoom.room").room, 1);
+
+
+
+                    table.includedRoomTables = new List<GenericRoomTable>();
+                    table.includedRooms.Add(roomer);
+                    table.name = "greg";
+
+                    IndividualBossFloorEntry ent = RoomTableTools.GenerateIndividualBossFloorEntry(table, null, "FUCK");
+                    ent.BossWeight = 1;
+                    ent.GlobalBossPrerequisites = new DungeonPrerequisite[0];
+                    cum.Bosses.Add(ent);
+                }
+                foreach (IndividualBossFloorEntry fycjyou in cum.Bosses)
+                {
+                    ETGModConsole.Log(fycjyou.TargetRoomTable.name);
+                }
+            }
+
+            //manager.whatever code you need;
+            return manager;
+        }
 
         public static void Log(string text, string color= "#9006FF")
         {
@@ -442,7 +511,6 @@ namespace Planetside
         public static void RunStartHook(Action<PlayerController, float> orig, PlayerController self, float invisibleDelay)
         {
             orig(self, invisibleDelay);
-            self.gameObject.GetOrAddComponent<AngryGodsManager>();
             float Loop = SaveAPIManager.GetPlayerStatValue(CustomTrackedStats.TIMES_LOOPED);
             bool LoopOn = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.LOOPING_ON);
             if (LoopOn == true)
@@ -463,8 +531,6 @@ namespace Planetside
                 }
                 else
                 {
-                    //UIToolbox.TextBox(Color.red, "Ouroborous Level: " + Loop.ToString(), self.gameObject, dfPivotPoint.TopCenter, new Vector3(0.625f, 1.5f), 3, 0.5f, 0.75f, 1.25f, 1);
-
                     TextMaker text = self.gameObject.AddComponent<TextMaker>();
                     text.TextSize = 5;
                     text.Color = Color.red;
@@ -843,7 +909,6 @@ namespace Planetside
                 for (int i = 0; i < 15; i++)
                 {
                     SpawnManager.SpawnVFX((PickupObjectDatabase.GetById(538) as SilverBulletsPassiveItem).SynergyPowerVFX, self.sprite.WorldCenter.ToVector3ZisY(0f) + new Vector3(UnityEngine.Random.Range(-0.5f, 0.5f), UnityEngine.Random.Range(-0.5f, 0.5f), 100), Quaternion.identity).GetComponent<tk2dBaseSprite>().PlaceAtPositionByAnchor(base.sprite.WorldCenter.ToVector3ZisY(0f), tk2dBaseSprite.Anchor.MiddleCenter);
-                    //SpawnManager.SpawnVFX((PickupObjectDatabase.GetById(565) as PlayerOrbitalItem).BreakVFX, self.sprite.WorldCenter.ToVector3ZisY(0f) + new Vector3(UnityEngine.Random.Range(-0.5f, 0.5f), UnityEngine.Random.Range(-0.5f, 0.5f),100 ), Quaternion.identity);
                 }
                 material.shader = Shader.Find("Brave/PlayerShader");
                 UnityEngine.Object.Destroy(portal.gameObject);

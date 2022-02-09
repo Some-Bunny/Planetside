@@ -19,7 +19,7 @@ namespace ItemAPI
             ETGModMainBehaviour.Instance.gameObject.AddComponent<AddMissingAmmoTypes>();
         }
         public static List<GameUIAmmoType> addedAmmoTypes = new List<GameUIAmmoType>();
-        public static string AddCustomAmmoType(string name, string ammoTypeSpritePath, string ammoBackgroundSpritePath)
+        public static string AddCustomAmmoType(string name, string ammoTypeSpritePath, string ammoBackgroundSpritePath, GameUIAmmoType.AmmoType ammoType = GameUIAmmoType.AmmoType.CUSTOM)
         {
             Texture2D fgTexture = ResourceExtractor.GetTextureFromResource(ammoTypeSpritePath + ".png");
             Texture2D bgTexture = ResourceExtractor.GetTextureFromResource(ammoBackgroundSpritePath + ".png");
@@ -39,8 +39,9 @@ namespace ItemAPI
             {
                 ammoBarBG = bgSprite,
                 ammoBarFG = fgSprite,
-                ammoType = GameUIAmmoType.AmmoType.CUSTOM,
+                ammoType = ammoType,
                 customAmmoType = name
+                
             };
             CustomClipAmmoTypeToolbox.addedAmmoTypes.Add(uiammotype);
             foreach (GameUIAmmoController uiammocontroller in GameUIRoot.Instance.ammoControllers)

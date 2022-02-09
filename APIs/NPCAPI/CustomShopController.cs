@@ -107,6 +107,8 @@ namespace NpcApi
 			}
 			if (actualPurchase)
 			{
+				
+
 				if (giveStatsOnPurchase)
 				{
 					foreach (var stat in statsToGive)
@@ -123,6 +125,20 @@ namespace NpcApi
 						fsmObject.Value = item;
 					}
 					this.shopkeepFSM.SendEvent("succeedPurchase");
+					bool hasDanceAnim = false;
+					List<AIAnimator.NamedDirectionalAnimation> lista = this.shopkeepFSM.gameObject.GetComponent<AIAnimator>().OtherAnimations;
+					for (int k = 0; k < lista.Count; k++)
+                    {
+						if (lista[k].anim.Prefix == "dance") { hasDanceAnim = true; }
+                    }
+					if (this.shopkeepFSM.gameObject.GetComponent<AIAnimator>() != null && hasDanceAnim == true)
+					{
+						this.shopkeepFSM.gameObject.GetComponent<AIAnimator>().PlayUntilFinished("dance");
+					}
+					if (this.shopkeepFSM.gameObject.GetComponentInChildren<AIAnimator>() != null && hasDanceAnim == true)
+					{
+						this.shopkeepFSM.gameObject.GetComponentInChildren<AIAnimator>().PlayUntilFinished("dance");
+					}
 				}
 			}
 			if (!item.item.PersistsOnPurchase)

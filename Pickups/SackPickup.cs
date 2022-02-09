@@ -32,14 +32,14 @@ namespace Planetside
 			string shortDesc = "Goodie Bag";
 			string longDesc = "A pre-packed sack filled with pickups. I wonder what's inside?";
 			pickup.SetupItem(shortDesc, longDesc, "psog");
-			pickup.quality = PickupObject.ItemQuality.EXCLUDED;
+			pickup.quality = PickupObject.ItemQuality.COMMON;
 			LeSackPickup.SaccID = pickup.PickupObjectId;
-			pickup.CustomCost = 30;
+			pickup.CustomCost = 35;
 			pickup.UsesCustomCost = true;
 
 			WeightedGameObject weightedObject = new WeightedGameObject();
 			weightedObject.SetGameObject(gameObject);
-			weightedObject.weight = 2.5f;
+			weightedObject.weight = 0.33f;
 			weightedObject.rawGameObject = gameObject;
 			weightedObject.pickupId = pickup.PickupObjectId;
 			weightedObject.forceDuplicatesPossible = true;
@@ -51,10 +51,7 @@ namespace Planetside
 		}
 
 		public override void Pickup(PlayerController player)
-		{
-
-
-			
+		{			
 			this.random = UnityEngine.Random.Range(0.0f, 1.0f);
 			if (random < 0.7 && random > 0)
 			{
@@ -145,7 +142,6 @@ namespace Planetside
 		public static List<int> MoneyPool = new List<int>
 		{
 			68, //1 casing
-
 		};
 
 		public static List<int> Lootdrops = new List<int>

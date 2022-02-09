@@ -37,37 +37,29 @@ namespace Planetside
 			GameObject deathmark = ItemBuilder.AddSpriteToObject("deathmark_vfx", "Planetside/Resources/VFX/DeathMark/markedfordeathvfx_001", null);
 			FakePrefab.MarkAsFakePrefab(deathmark);
 			UnityEngine.Object.DontDestroyOnLoad(deathmark);
-			tk2dSpriteAnimator animator = deathmark.AddComponent<tk2dSpriteAnimator>();
-			tk2dSpriteAnimationClip animationClip = new tk2dSpriteAnimationClip();
-			animationClip.fps = 11;
-			animationClip.wrapMode = tk2dSpriteAnimationClip.WrapMode.Loop;
-			animationClip.name = "start";
+			tk2dSpriteAnimator animator = deathmark.GetOrAddComponent<tk2dSpriteAnimator>();
+			tk2dSpriteAnimation animation = deathmark.AddComponent<tk2dSpriteAnimation>();
 
-			GameObject spriteObject = new GameObject("spriteObject");
-			ItemBuilder.AddSpriteToObject("spriteObject", $"Planetside/Resources/VFX/DeathMark/markedfordeathvfx_001", spriteObject);
-			tk2dSpriteAnimationFrame starterFrame = new tk2dSpriteAnimationFrame();
-			starterFrame.spriteId = spriteObject.GetComponent<tk2dSprite>().spriteId;
-			starterFrame.spriteCollection = spriteObject.GetComponent<tk2dSprite>().Collection;
-			tk2dSpriteAnimationFrame[] frameArray = new tk2dSpriteAnimationFrame[]
+			tk2dSpriteCollectionData DeathMarkcollection = SpriteBuilder.ConstructCollection(deathmark, ("DeathMark_Collection"));
+
+			tk2dSpriteAnimationClip idleClip = new tk2dSpriteAnimationClip() { name = "start", frames = new tk2dSpriteAnimationFrame[0], fps = 11 };
+			List<tk2dSpriteAnimationFrame> frames = new List<tk2dSpriteAnimationFrame>();
+			
+			for (int i = 1; i < 10; i++)
 			{
-				starterFrame
-			};
-			animationClip.frames = frameArray;
-			for (int i = 2; i < 9; i++)
-			{
-				GameObject spriteForObject = new GameObject("spriteForObject");
-				ItemBuilder.AddSpriteToObject("spriteForObject", $"Planetside/Resources/VFX/DeathMark/markedfordeathvfx_00{i}", spriteForObject);
-				tk2dSpriteAnimationFrame frame = new tk2dSpriteAnimationFrame();
-				frame.spriteId = spriteForObject.GetComponent<tk2dBaseSprite>().spriteId;
-				frame.spriteCollection = spriteForObject.GetComponent<tk2dBaseSprite>().Collection;
-				animationClip.frames = animationClip.frames.Concat(new tk2dSpriteAnimationFrame[] { frame }).ToArray();
+				tk2dSpriteCollectionData collection = DeathMarkcollection;
+				int frameSpriteId = SpriteBuilder.AddSpriteToCollection($"Planetside/Resources/VFX/DeathMark/markedfordeathvfx_00{i}", collection);
+				tk2dSpriteDefinition frameDef = collection.spriteDefinitions[frameSpriteId];
+				frameDef.ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.LowerLeft);
+				frames.Add(new tk2dSpriteAnimationFrame { spriteId = frameSpriteId, spriteCollection = collection });
 			}
-			animator.Library = animator.gameObject.AddComponent<tk2dSpriteAnimation>();
-			animator.Library.clips = new tk2dSpriteAnimationClip[] { animationClip };
+			idleClip.frames = frames.ToArray();
+			idleClip.wrapMode = tk2dSpriteAnimationClip.WrapMode.Loop;
+			animator.Library = animation;
+			animator.Library.clips = new tk2dSpriteAnimationClip[] { idleClip };
 			animator.DefaultClipId = animator.GetClipIdByName("start");
 			animator.playAutomatically = true;
-
-
+			
 			DeathMarkPrefab = deathmark;
 			DeathWarrant.DeathWarrantID = item.PickupObjectId;
 			ItemIDs.AddToList(item.PickupObjectId);
@@ -78,13 +70,10 @@ namespace Planetside
 
 		private void MarkForDeath()
 		{
-
-
 			List<AIActor> activeEnemies = base.Owner.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
 			bool flag = activeEnemies != null;
 			if (flag)
 			{
-				RoomHandler absoluteRoom = base.transform.position.GetAbsoluteRoom();
 				AIActor randomActiveEnemy;
 				randomActiveEnemy = base.Owner.CurrentRoom.GetRandomActiveEnemy(true);
 				GameObject lightning = randomActiveEnemy.PlayEffectOnActor(DeathMarkPrefab, new Vector3(0f, -1f, 0f));
@@ -95,10 +84,10 @@ namespace Planetside
 
 				lightning.GetComponent<tk2dBaseSprite>().PlaceAtPositionByAnchor(randomActiveEnemy.sprite.WorldTopCenter, tk2dBaseSprite.Anchor.LowerCenter);
 				lightning.transform.position.WithZ(transform.position.z + 2);
-				lightning.GetComponent<tk2dSpriteAnimator>().Play();
 
-				this.Trailer.spawnShadows = true;
-				randomActiveEnemy.gameObject.AddComponent(this.Trailer);
+				ImprovedAfterImage image = randomActiveEnemy.gameObject.AddComponent<ImprovedAfterImage>();
+				image.dashColor = Color.red;
+				image.spawnShadows = true;
 				if (randomActiveEnemy.healthHaver.IsBoss)
                 {
 					randomActiveEnemy.healthHaver.AllDamageMultiplier += .25f;
@@ -109,11 +98,6 @@ namespace Planetside
 				}
 			}
 		}
-		private readonly ImprovedAfterImage Trailer = new ImprovedAfterImage
-		{
-			dashColor = Color.red,
-			spawnShadows = true
-		};
 		public override DebrisObject Drop(PlayerController player)
 		{
             player.OnEnteredCombat = (Action)Delegate.Remove(player.OnEnteredCombat, new Action(this.MarkForDeath));

@@ -14,10 +14,8 @@ namespace Planetside
 {
     public class FlowInjectionInitialiser : FlowDatabase
     {
-		public static PrototypeDungeonRoom BrokenChamberRoomPrefab;
 		public static SharedInjectionData ForgeData;
 		public static SharedInjectionData BaseSharedInjectionData;
-		public static ProceduralFlowModifierData BrokenChamberRoom;
 
 		public static SharedInjectionData GungeonInjectionData;
 
@@ -29,7 +27,100 @@ namespace Planetside
 			AddVrokenChamberRoom(false);
 			AddMinesSWRoom(false);
 			InitTimeTraderRooms(false);
-			InitPrisonerRooms();
+			InitHolyChamberShrineRooms(false);
+
+			//InitPrisonerRooms();
+		}
+
+		public static void InitHolyChamberShrineRooms(bool refreshFlows = false)
+		{
+			
+			PrototypeDungeonRoom BrokenChamberRoomVar = RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/HolyChamberRoom.room").room;
+
+
+			Vector2 offset = new Vector2(0, 0);
+			Vector2 vector = new Vector2((float)(BrokenChamberRoomVar.Width / 2) + offset.x, (float)(BrokenChamberRoomVar.Height / 2) + offset.y);
+
+			BrokenChamberRoomVar.placedObjectPositions.Add(vector);
+			DungeonPrerequisite[] array = new DungeonPrerequisite[0];
+
+
+			GameObject original;
+			OldShrineFactory.builtShrines.TryGetValue("psog:holychambershrine", out original);
+
+			BrokenChamberRoomVar.placedObjects.Add(new PrototypePlacedObjectData
+			{
+
+				contentsBasePosition = vector,
+				fieldData = new List<PrototypePlacedObjectFieldData>(),
+				instancePrerequisites = array,
+				linkedTriggerAreaIDs = new List<int>(),
+				placeableContents = new DungeonPlaceable
+				{
+					width = 2,
+					height = 2,
+					respectsEncounterableDifferentiator = true,
+					variantTiers = new List<DungeonPlaceableVariant>
+					{
+						new DungeonPlaceableVariant
+						{
+							percentChance = 1f,
+							nonDatabasePlaceable = original,
+							prerequisites = array,
+							materialRequirements = new DungeonPlaceableRoomMaterialRequirement[0]
+						}
+					}
+				}
+			});
+
+			HolyChamberRoom = new ProceduralFlowModifierData()
+			{
+				annotation = "HolyChamebrShrineRoom",
+				DEBUG_FORCE_SPAWN = false,
+				OncePerRun = true,
+				placementRules = new List<ProceduralFlowModifierData.FlowModifierPlacementType>() {
+					ProceduralFlowModifierData.FlowModifierPlacementType.END_OF_CHAIN
+				},
+				roomTable = null,
+				exactRoom = BrokenChamberRoomVar,
+				IsWarpWing = false,
+				RequiresMasteryToken = false,
+				chanceToLock = 0,
+				selectionWeight = 2,
+				chanceToSpawn = 2,
+				RequiredValidPlaceable = null,
+				prerequisites = new DungeonPrerequisite[] {
+					new DungeonPrerequisite
+					{
+						prerequisiteOperation = DungeonPrerequisite.PrerequisiteOperation.EQUAL_TO,
+						prerequisiteType = DungeonPrerequisite.PrerequisiteType.TILESET,
+						requiredTileset = GlobalDungeonData.ValidTilesets.CATHEDRALGEON,
+						requireTileset = true,
+						comparisonValue = 1f,
+						encounteredObjectGuid = string.Empty,
+						maxToCheck = TrackedMaximums.MOST_KEYS_HELD,
+						requireDemoMode = false,
+						requireCharacter = false,
+						requiredCharacter = PlayableCharacters.Pilot,
+						requireFlag = false,
+						useSessionStatValue = false,
+						encounteredRoom = null,
+						requiredNumberOfEncounters = -1,
+						saveFlagToCheck = GungeonFlags.TUTORIAL_COMPLETED,
+						statToCheck = TrackedStats.GUNBERS_MUNCHED,
+
+
+					}
+
+				},
+				CanBeForcedSecret = false,
+				RandomNodeChildMinDistanceFromEntrance = 0,
+				exactSecondaryRoom = null,
+				framedCombatNodes = 0,
+
+			};
+			HolyChamberRoomPrefab = BrokenChamberRoomVar;
+			BaseSharedInjectionData.InjectionData.Add(HolyChamberRoom);
 		}
 
 		public static void InitPrisonerRooms()
@@ -541,5 +632,11 @@ namespace Planetside
 
 		public static PrototypeDungeonRoom TimeTraderBaseRoom;
 
+
+		public static PrototypeDungeonRoom BrokenChamberRoomPrefab;
+		public static ProceduralFlowModifierData BrokenChamberRoom;
+
+		public static PrototypeDungeonRoom HolyChamberRoomPrefab;
+		public static ProceduralFlowModifierData HolyChamberRoom;
 	}
 }

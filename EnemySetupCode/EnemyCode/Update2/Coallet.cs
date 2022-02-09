@@ -112,7 +112,8 @@ namespace Planetside
 						}
 					}
 				};
-
+				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awaken" }, new DirectionalAnimation.FlipType[0]);
+				enemy.aiActor.AwakenAnimType = AwakenAnimationType.Awaken;
 				bool flag3 = CoalletCollection == null;
 				if (flag3)
 				{
@@ -218,6 +219,17 @@ namespace Planetside
 				 25
 
 					}, "die_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
+					SpriteBuilder.AddAnimation(enemy.spriteAnimator, CoalletCollection, new List<int>
+					{
+
+					0,
+					1,
+					2,
+					3,
+					4,
+					5
+
+					}, "awaken", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 9f;
 
 				}
 

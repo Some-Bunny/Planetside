@@ -105,13 +105,8 @@ namespace Planetside
 		{
 			AIActor aiactor = null;
 			nearestDistance = float.MaxValue;
-			bool flag = activeEnemies == null;
-			bool flag2 = flag;
-			bool flag3 = flag2;
-			bool flag4 = flag3;
-			bool flag5 = flag4;
 			AIActor result;
-			if (flag5)
+			if (activeEnemies == null)
 			{
 				result = null;
 			}

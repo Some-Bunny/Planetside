@@ -37,17 +37,18 @@ namespace Planetside
 				AnimNames = animationNames,
 				Flipped = flipType
 			};
-			animator.OtherAnimations = new List<AIAnimator.NamedDirectionalAnimation>
+			AIAnimator.NamedDirectionalAnimation greg = new AIAnimator.NamedDirectionalAnimation
 			{
-				new AIAnimator.NamedDirectionalAnimation
-				{
-					name = Prefix,
-					anim = newDirectionalAnimation
-				}
+				name = Prefix,
+				anim = newDirectionalAnimation
 			};
+
+			if (animator.OtherAnimations == null){
+				animator.OtherAnimations = new List<AIAnimator.NamedDirectionalAnimation>{greg};}
+			else{animator.OtherAnimations.Add(greg);}
 			return newDirectionalAnimation;
         }
-		public static void AddEventTriggersToAnimation(tk2dSpriteAnimator animator, string animationName, Dictionary<int, string> frameAndEventName)//int frame, string soundName)
+		public static void AddEventTriggersToAnimation(tk2dSpriteAnimator animator, string animationName, Dictionary<int, string> frameAndEventName)
         {
 			foreach (var value in frameAndEventName)
             {

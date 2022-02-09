@@ -72,7 +72,7 @@ namespace NpcApi
             string runBasedMultilineStopperStringKey, string purchaseItemStringKey, string purchaseItemFailedStringKey, string introStringKey, string attackedStringKey, Vector3 talkPointOffset, Vector3 npcPosition, Vector3[] itemPositions = null, float costModifier = 1, bool giveStatsOnPurchase = false,
             StatModifier[] statsToGiveOnPurchase = null, Func<CustomShopController, PlayerController, int, bool> CustomCanBuy = null, Func<CustomShopController, PlayerController, int, int> CustomRemoveCurrency = null, Func<CustomShopController, CustomShopItemController, PickupObject, int> CustomPrice = null,
             Func<PlayerController, PickupObject, int, bool> OnPurchase = null, Func<PlayerController, PickupObject, int, bool> OnSteal = null, string currencyIconPath = "", string currencyName = "", bool canBeRobbed = true, bool hasCarpet = false, string carpetSpritePath = "", bool hasMinimapIcon = false,
-            string minimapIconSpritePath = "", bool addToMainNpcPool = false, float percentChanceForMainPool = 0.1f, DungeonPrerequisite[] prerequisites = null)
+            string minimapIconSpritePath = "", bool addToMainNpcPool = false, float percentChanceForMainPool = 0.1f, DungeonPrerequisite[] prerequisites = null, List<string> purchaseSpritePaths = null)
         {
 
             try
@@ -123,8 +123,10 @@ namespace NpcApi
 
                 tk2dSpriteAnimator spriteAnimator = npcObj.AddComponent<tk2dSpriteAnimator>();
 
-                SpriteBuilder.AddAnimation(spriteAnimator, collection, idleIdsList, name + "_idle", tk2dSpriteAnimationClip.WrapMode.Loop, idleFps);
-                SpriteBuilder.AddAnimation(spriteAnimator, collection, talkIdsList, name + "_talk", tk2dSpriteAnimationClip.WrapMode.Loop, talkFps);
+                SpriteBuilder.AddAnimation(spriteAnimator, collection, idleIdsList, "idle", tk2dSpriteAnimationClip.WrapMode.Loop, idleFps);
+                SpriteBuilder.AddAnimation(spriteAnimator, collection, talkIdsList, "talk", tk2dSpriteAnimationClip.WrapMode.Loop, talkFps);
+
+               
 
                 SpeculativeRigidbody rigidbody = GenerateOrAddToRigidBody(npcObj, CollisionLayer.BulletBlocker, PixelCollider.PixelColliderGeneration.Manual, true, true, true, false, false, false, false, true, new IntVector2(20, 18), new IntVector2(5, 0));
 
@@ -172,7 +174,7 @@ namespace NpcApi
                 aIAnimator.IdleAnimation = new DirectionalAnimation
                 {
                     Type = DirectionalAnimation.DirectionType.Single,
-                    Prefix = name + "_idle",
+                    Prefix = "idle",
                     AnimNames = new string[]
                     {
                         ""
@@ -187,7 +189,7 @@ namespace NpcApi
                 aIAnimator.TalkAnimation = new DirectionalAnimation
                 {
                     Type = DirectionalAnimation.DirectionType.Single,
-                    Prefix = name + "_talk",
+                    Prefix = "talk",
                     AnimNames = new string[]
                     {
                         ""
@@ -198,6 +200,33 @@ namespace NpcApi
                     }
                 };
 
+                if (purchaseSpritePaths != null)
+                {
+                    var danceIdsList = new List<int>();
+                    foreach (string sprite in purchaseSpritePaths)
+                    {
+                        danceIdsList.Add(SpriteBuilder.AddSpriteToCollection(sprite, collection));
+                    }
+                    SpriteBuilder.AddAnimation(spriteAnimator, collection, danceIdsList, "dance", tk2dSpriteAnimationClip.WrapMode.Once, talkFps);
+
+                    DirectionalAnimation aa = new DirectionalAnimation
+                    {
+                        Type = DirectionalAnimation.DirectionType.Single,
+                        Prefix = "dance",
+                        AnimNames = new string[1],
+                        Flipped = new DirectionalAnimation.FlipType[1]
+                    };
+                    aIAnimator.OtherAnimations = new List<AIAnimator.NamedDirectionalAnimation>
+                    {
+                    new AIAnimator.NamedDirectionalAnimation
+                    {
+                        name = "dance",
+                        anim = aa
+                    }
+                    };
+
+
+                }
                 var basenpc = ResourceManager.LoadAssetBundle("shared_auto_001").LoadAsset<GameObject>("Merchant_Key").transform.Find("NPC_Key").gameObject;
 
                 PlayMakerFSM iHaveNoFuckingClueWhatThisIs = npcObj.AddComponent<PlayMakerFSM>();

@@ -66,12 +66,6 @@ namespace Planetside
 			eaejhaek.SynergyGunId = HellLight.HellLightID;
 			eaejhaek.SynergyToCheck = "BLASPHEMY AGAINST THE SPIRIT";
 			
-
-			AdvancedTransformGunSynergyProcessor colos = (PickupObjectDatabase.GetById(Colossus.ColossusID) as Gun).gameObject.AddComponent<AdvancedTransformGunSynergyProcessor>();
-			colos.NonSynergyGunId = Colossus.ColossusID;
-			colos.SynergyGunId = PerfectedColossus.PerfectedColossusID;
-			colos.SynergyToCheck = "Perfected";
-
 			AdvancedTransformGunSynergyProcessor foosh = (PickupObjectDatabase.GetById(404) as Gun).gameObject.AddComponent<AdvancedTransformGunSynergyProcessor>();
 			foosh.NonSynergyGunId = 404;
 			foosh.SynergyGunId = SirenSynergyForme.smileid;
