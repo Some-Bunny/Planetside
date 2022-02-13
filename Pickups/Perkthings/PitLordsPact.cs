@@ -377,16 +377,13 @@ namespace Planetside
                 object obj = origEnum.Current;
                 yield return obj;
             }
-            ETGModConsole.Log("1");
             PlayerController[] players = GameManager.Instance.AllPlayers;
             for (int i = 0; i < players.Length; i++)
             {
-                ETGModConsole.Log("2");
                 PlayerController player = players[i];
                 PitLordsPactController pact = player.GetComponent<PitLordsPactController>();
                 if (pact != null)
                 {
-                    ETGModConsole.Log("3");
                     GameObject gameObject = SpawnManager.SpawnVFX(StaticVFXStorage.JammedDeathVFX, self.transform.position, Quaternion.identity, false);
                     AkSoundEngine.PostEvent("Play_WPN_Life_Orb_Blast_01", player.gameObject);
                     if (gameObject && gameObject.GetComponent<tk2dSprite>())

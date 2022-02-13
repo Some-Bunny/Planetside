@@ -73,6 +73,11 @@ namespace Planetside
 			projectile2.HasDefaultTint = true;
 			projectile2.angularVelocity = 0f;
 			projectile2.OverrideTrailPoint = new Vector2(0, 0);
+
+			//projectile2.SetProjectileSpriteRight("rebar_projectile_001", 31, 2, false, tk2dBaseSprite.Anchor.MiddleCenter, 31, 2);
+
+			//projectile2.gameObject.AddComponent<StickyProjectile>();
+
 			ProjectileModule.ChargeProjectile item2 = new ProjectileModule.ChargeProjectile
 			{
 				Projectile = projectile2,

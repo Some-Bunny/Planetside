@@ -304,20 +304,34 @@ namespace Planetside
             clip.frames = frames.ToArray();
             beamAnimation.clips = beamAnimation.clips.Concat(new tk2dSpriteAnimationClip[] { clip }).ToArray();
         }
-        public static BeamController FreeFireBeamFromAnywhere(Projectile projectileToSpawn, PlayerController owner, GameObject otherShooter, Vector2 fixedPosition, bool usesFixedPosition, float targetAngle, float duration, bool skipChargeTime = false)
+        public static BeamController FreeFireBeamFromAnywhere(Projectile projectileToSpawn, PlayerController owner, GameObject otherShooter, Vector2 fixedPosition, bool usesFixedPosition, float targetAngle, float duration, bool skipChargeTime = false, bool CanRotate = false, float RotationSpeedperSecond = 60, bool DoPostProcess = false)
         {
             Vector2 sourcePos = Vector2.zero;
             SpeculativeRigidbody rigidBod = null;
-            if (usesFixedPosition) sourcePos = fixedPosition;
+            if (usesFixedPosition) { sourcePos = fixedPosition; }
             else
             {
                 if (otherShooter.GetComponent<SpeculativeRigidbody>()) rigidBod = otherShooter.GetComponent<SpeculativeRigidbody>();
                 else if (otherShooter.GetComponentInChildren<SpeculativeRigidbody>()) rigidBod = otherShooter.GetComponentInChildren<SpeculativeRigidbody>();
 
-                if (rigidBod) sourcePos = rigidBod.UnitCenter;
+                if (rigidBod) { sourcePos = rigidBod.UnitCenter; }
+                
+
+                if (otherShooter == null) { ETGModConsole.Log("projectileToSpawn.gameObject is NULL"); }
+                if (rigidBod == null) { ETGModConsole.Log("rigidBod is NULL"); }
+
             }
+
+            if (otherShooter.gameObject != null && sourcePos == Vector2.zero)
+            {
+                sourcePos = otherShooter.transform.PositionVector2();
+            }
+
             if (sourcePos != Vector2.zero)
             {
+
+                BasicBeamController basicBeam = projectileToSpawn.gameObject.GetComponent<BasicBeamController>();
+                if (basicBeam) { basicBeam.SkipPostProcessing = DoPostProcess; }
 
                 GameObject gameObject = SpawnManager.SpawnProjectile(projectileToSpawn.gameObject, sourcePos, Quaternion.identity, true);
                 Projectile component = gameObject.GetComponent<Projectile>();
@@ -334,30 +348,40 @@ namespace Planetside
                 Vector3 vector = BraveMathCollege.DegreesToVector(targetAngle, 1f);
                 component2.Direction = vector;
                 component2.Origin = sourcePos;
-                GameManager.Instance.Dungeon.StartCoroutine(BeamToolbox.HandleFreeFiringBeam(component2, rigidBod, fixedPosition, usesFixedPosition, targetAngle, duration));
+                component.StartCoroutine(BeamToolbox.HandleFreeFiringBeam(component2, rigidBod, fixedPosition, usesFixedPosition, targetAngle, duration, CanRotate, RotationSpeedperSecond));
+
+              
+
+
                 return component2;
             }
             else
             {
+
                 ETGModConsole.Log("ERROR IN BEAM FREEFIRE CODE. SOURCEPOS WAS NULL, EITHER DUE TO INVALID FIXEDPOS OR SOURCE GAMEOBJECT.");
                 return null;
             }
         }
-        private static IEnumerator HandleFreeFiringBeam(BeamController beam, SpeculativeRigidbody otherShooter, Vector2 fixedPosition, bool usesFixedPosition, float targetAngle, float duration)
+        private static IEnumerator HandleFreeFiringBeam(BeamController beam, SpeculativeRigidbody otherShooter, Vector2 fixedPosition, bool usesFixedPosition, float targetAngle, float duration, bool CanRotate = false, float RotationSpeedPerSecond = 60)
         {
             float elapsed = 0f;
             yield return null;
             while (elapsed < duration)
             {
                 Vector2 sourcePos;
-                if (otherShooter == null) { break; }
+                if (otherShooter == null) {  break; }
+                if (beam == null) { break; }
                 if (usesFixedPosition) sourcePos = fixedPosition;
                 else sourcePos = otherShooter.UnitCenter;
 
                 elapsed += BraveTime.DeltaTime;
                 if (sourcePos != null)
                 {
-
+                    if (CanRotate == true)
+                    {
+                        Vector3 vector = BraveMathCollege.DegreesToVector(beam.Direction.ToAngle() + RotationSpeedPerSecond * BraveTime.DeltaTime, 1f);
+                        beam.Direction = vector; 
+                    }
                     beam.Origin = sourcePos;
                     beam.LateUpdatePosition(sourcePos);
 
@@ -367,6 +391,75 @@ namespace Planetside
                 yield return null;
             }
             beam.CeaseAttack();
+
+            yield break;
+        }
+
+
+
+        public static BeamController FreeFireBeamFromPosition(Projectile projectileToSpawn, PlayerController owner, Vector2 fixedPosition, float targetAngle, float duration, bool skipChargeTime = false, bool CanRotate = false, float RotationSpeedperSecond = 60, bool DoPostProcess = false)
+        {
+            if (fixedPosition != Vector2.zero)
+            {
+                BasicBeamController basicBeam = projectileToSpawn.gameObject.GetComponent<BasicBeamController>();
+                if (basicBeam) { basicBeam.SkipPostProcessing = DoPostProcess; }
+
+
+                GameObject gameObject = SpawnManager.SpawnProjectile(projectileToSpawn.gameObject, fixedPosition, Quaternion.identity, true);
+                Projectile component = gameObject.GetComponent<Projectile>();
+                component.Owner = owner;
+                BeamController component2 = gameObject.GetComponent<BeamController>();
+                if (skipChargeTime)
+                {
+                    component2.chargeDelay = 0f;
+                    component2.usesChargeDelay = false;
+                }
+                component2.Owner = owner;
+                component2.HitsPlayers = false;
+                component2.HitsEnemies = true;
+                Vector3 vector = BraveMathCollege.DegreesToVector(targetAngle, 1f);
+                component2.Direction = vector;
+                component2.Origin = fixedPosition;
+                GameManager.Instance.Dungeon.StartCoroutine(BeamToolbox.HandleFreeFiringBeamFromPosition(component2, fixedPosition, targetAngle, duration, CanRotate, RotationSpeedperSecond));
+                return component2;
+            }
+            else
+            {
+
+                ETGModConsole.Log("ERROR IN BEAM FREEFIRE CODE. SOURCEPOS WAS NULL, EITHER DUE TO INVALID FIXEDPOS OR SOURCE GAMEOBJECT.");
+                return null;
+            }
+        }
+
+        private static IEnumerator HandleFreeFiringBeamFromPosition(BeamController beam, Vector2 fixedPosition, float targetAngle, float duration, bool CanRotate = false, float RotationSpeedPerSecond = 60)
+        {
+            float elapsed = 0f;
+            yield return null;
+            while (elapsed < duration)
+            {
+                Vector2 sourcePos;
+                if (beam == null) { break; }
+                sourcePos = fixedPosition;
+                elapsed += BraveTime.DeltaTime;
+                if (sourcePos != null)
+                {
+                    if (CanRotate == true)
+                    {
+                        Vector3 vector = BraveMathCollege.DegreesToVector(beam.Direction.ToAngle() + RotationSpeedPerSecond * BraveTime.DeltaTime, 1f);
+                        beam.Direction = vector;
+                    }
+                    beam.Origin = sourcePos;
+                    beam.LateUpdatePosition(sourcePos);
+
+
+                }
+                else { ETGModConsole.Log("SOURCEPOS WAS NULL IN BEAM FIRING HANDLER"); }
+                yield return null;
+            }
+            if (beam != null)
+            {
+                beam.CeaseAttack();
+            }
             yield break;
         }
     }

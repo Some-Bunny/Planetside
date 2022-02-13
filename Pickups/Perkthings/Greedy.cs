@@ -6,6 +6,134 @@ using System.Collections;
 
 namespace Planetside
 {
+
+    class GreedController : MonoBehaviour
+    {
+        public GreedController()
+        {
+            this.LifeTime = 2.5f;
+            this.StatIncrease = 1.10f;
+            this.hasBeenPickedup = false;
+        }
+        public void Start() 
+        { 
+            this.hasBeenPickedup = true; 
+            if(player)
+            {
+                player.OnKilledEnemyContext += this.OnKilledEnemy;
+            }
+        }
+        public void OnKilledEnemy(PlayerController source, HealthHaver enemy)
+        {
+            if (enemy.aiActor != null && enemy.aiActor.IsHarmlessEnemy == false)
+            {
+                GameObject gameObject = SpawnManager.SpawnDebris(PickupObjectDatabase.GetById(68).gameObject, enemy.aiActor.transform.position, Quaternion.identity);
+                CurrencyPickup component = gameObject.GetComponent<CurrencyPickup>();
+                component.PreventPickup = true;
+                PickupMover component2 = gameObject.GetComponent<PickupMover>();
+                if (component2)
+                {
+                    component2.enabled = false;
+                }
+                DebrisObject orAddComponent = gameObject.GetOrAddComponent<DebrisObject>();
+                DebrisObject debrisObject = orAddComponent;
+                debrisObject.OnGrounded = (Action<DebrisObject>)Delegate.Combine(debrisObject.OnGrounded, new Action<DebrisObject>(delegate (DebrisObject sourceDebris)
+                {
+                    sourceDebris.GetComponent<CurrencyPickup>().PreventPickup = false;
+                    sourceDebris.OnGrounded = null;
+                    component.specRigidbody.OnTriggerCollision = (SpeculativeRigidbody.OnTriggerDelegate)Delegate.Combine(component.specRigidbody.OnTriggerCollision, new SpeculativeRigidbody.OnTriggerDelegate(delegate (SpeculativeRigidbody otherRigidbody, SpeculativeRigidbody rigidBody, CollisionData collisionData)
+                    {
+                        PlayerController player = otherRigidbody.GetComponent<PlayerController>();
+                        if (player != null)
+                        {
+                            ExplosionData boomboom = StaticExplosionDatas.genericSmallExplosion;
+                            boomboom.damageToPlayer = 0;
+                            boomboom.preventPlayerForce = true;
+                            boomboom.ignoreList.Add(player.specRigidbody);
+                            Exploder.Explode(player.sprite.WorldCenter, boomboom, player.transform.PositionVector2());
+                            player.StartCoroutine(GrantTemporaryBoost(player, this.StatIncrease));
+                        }
+                    }));
+                }));
+                orAddComponent.shouldUseSRBMotion = true;
+                orAddComponent.angularVelocity = 0f;
+                orAddComponent.Priority = EphemeralObject.EphemeralPriority.Critical;
+                orAddComponent.Trigger(new Vector3(0, 0), 0.05f, 1f);
+                orAddComponent.canRotate = false;
+                GameManager.Instance.Dungeon.StartCoroutine(HandleManualCoinSpawnLifespan(component, this.LifeTime));
+            }
+        }
+
+
+
+        private static IEnumerator GrantTemporaryBoost(PlayerController user, float StatIncreaseValue)
+        {
+            StatModifier speed = new StatModifier
+            {
+                statToBoost = PlayerStats.StatType.MovementSpeed,
+                amount = StatIncreaseValue,
+                modifyType = StatModifier.ModifyMethod.MULTIPLICATIVE
+            };
+            StatModifier damage = new StatModifier
+            {
+                statToBoost = PlayerStats.StatType.Damage,
+                amount = StatIncreaseValue,
+                modifyType = StatModifier.ModifyMethod.MULTIPLICATIVE
+            };
+            user.ownerlessStatModifiers.Add(speed);
+            user.ownerlessStatModifiers.Add(damage);
+            user.stats.RecalculateStats(user, true, true);
+            float elapsed = 0f;
+            while (elapsed < 5)
+            {
+                elapsed += BraveTime.DeltaTime;
+                yield return null;
+            }
+            user.ownerlessStatModifiers.Remove(speed);
+            user.ownerlessStatModifiers.Remove(damage);
+            user.stats.RecalculateStats(user, true, true);
+            yield break;
+        }
+
+
+        private static IEnumerator HandleManualCoinSpawnLifespan(CurrencyPickup coins, float lifeTime)
+        {
+            float elapsed = 0f;
+            while (elapsed < lifeTime * 0.75f)
+            {
+                elapsed += BraveTime.DeltaTime;
+                yield return null;
+            }
+            float flickerTimer = 0f;
+            while (elapsed < lifeTime)
+            {
+                elapsed += BraveTime.DeltaTime;
+                flickerTimer += BraveTime.DeltaTime;
+                if (coins != null && coins.renderer)
+                {
+                    bool enabled = flickerTimer % 0.2f > 0.15f;
+                    coins.renderer.enabled = enabled;
+                }
+                else if (coins == null)
+                {
+                    yield break;
+                }
+                yield return null;
+            }
+            UnityEngine.Object.Destroy(coins.gameObject);
+            yield break;
+        }
+        public void IncrementStack()
+        {
+            this.StatIncrease += 0.10f;
+            this.LifeTime += 0.5f;
+        }
+
+        private float LifeTime;
+        private float StatIncrease;
+        public bool hasBeenPickedup;
+        public PlayerController player;
+    }
     class Greedy : PickupObject, IPlayerInteractable
     {
         public static void Init()
@@ -45,11 +173,21 @@ namespace Planetside
             if (cont != null) { cont.DoBigBurst(player); }
             AkSoundEngine.PostEvent("Play_OBJ_dice_bless_01", player.gameObject);
 
-            player.OnKilledEnemyContext += this.OnKilledEnemy;
+            //player.OnKilledEnemyContext += this.OnKilledEnemy;
 
+            GreedController greed = player.gameObject.GetOrAddComponent<GreedController>();
+            greed.player = player;
+            if (greed.hasBeenPickedup == true)
+            { greed.IncrementStack(); }
+            Exploder.DoDistortionWave(player.sprite.WorldTopCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
+            player.BloopItemAboveHead(base.sprite, "");
+            string BlurbText = greed.hasBeenPickedup == true ? "Greed Is Even Better." : "Greed Is Good.";
+            OtherTools.Notify("Greedy", BlurbText, "Planetside/Resources/PerkThings/glass", UINotificationController.NotificationColor.GOLD);
+            /*
             Exploder.DoDistortionWave(player.sprite.WorldTopCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
             player.BloopItemAboveHead(base.sprite, "");
             OtherTools.Notify("Greedy", "Greed Is Good.", "Planetside/Resources/PerkThings/Greedy", UINotificationController.NotificationColor.GOLD);
+            */
             UnityEngine.Object.Destroy(base.gameObject);
         }
         public void OnKilledEnemy(PlayerController source, HealthHaver enemy)

@@ -26,11 +26,10 @@ namespace Planetside
             GameObject obj = new GameObject(itemName);
             AlchemicalVial activeitem = obj.AddComponent<AlchemicalVial>();
             ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
-            string shortDesc = "Completely Stabile";
-            string longDesc = "Transmutes all of your projectiles, reload on a full clip to change ttransmutation.\n\nDespite what the label says, this is actually a bottle of lead paint. Don't drink it...";
+            string shortDesc = "Completely Stable";
+            string longDesc = "Transmutes all of your projectiles, reload on a full clip to change transmutation.\n\nDespite what the label says, this is actually a bottle of lead paint. Don't drink it...";
             activeitem.SetupItem(shortDesc, longDesc, "psog");
-            activeitem.SetCooldownType(ItemBuilder.CooldownType.Timed, 5f);
-            activeitem.consumable = false;
+            activeitem.SetCooldownType(ItemBuilder.CooldownType.Timed, 10f);
             activeitem.quality = PickupObject.ItemQuality.D;
             activeitem.AddToSubShop(ItemBuilder.ShopType.Goopton, 1f);
             AlchemicalVial.AlchemicalVialID = activeitem.PickupObjectId;
@@ -55,28 +54,66 @@ namespace Planetside
             List<string> optionalConsoleIDs = new List<string>
             {
                 "elimentaler",
-                "partially_eaten_cheese"
+                "partially_eaten_cheese",
+                "rat_boots"
             };
-            CustomSynergies.Add("cheemsburbger", mandatoryConsoleIDs, optionalConsoleIDs, true);
+            CustomSynergies.Add("You Can Liquidate That???", mandatoryConsoleIDs, optionalConsoleIDs, true);
             List<string> optionalConsoleIDs2 = new List<string>
             {
                 "psog:wither_lance",
                 "psog:frailty_ammolet",
                 "psog:frailty_rounds",
-
             };
-            CustomSynergies.Add("frail", mandatoryConsoleIDs, optionalConsoleIDs2, true);
+            CustomSynergies.Add("Epic ____ Moments No.17", mandatoryConsoleIDs, optionalConsoleIDs2, true);
+            List<string> optionalConsoleIDs3 = new List<string>
+            {
+                "plunger",
+                "antibody",
+                "monster_blood",
+                "weird_egg",
+                "psog:injector_rounds"
+            };
+            CustomSynergies.Add("You Killed Us All!", mandatoryConsoleIDs, optionalConsoleIDs3, true);
+            activeitem.CanSwitch = true;
         }
+
+        public IEnumerator Cooldown()
+        {
+            CanSwitch = false;
+            yield return new WaitForSeconds(0.33f);
+            CanSwitch = true;
+            yield break;
+        }
+        private bool CanSwitch;
+        private static Dictionary<string, GoopDefinition> GoopKeys = new Dictionary<string, GoopDefinition>()
+        {
+            {"fire",  EasyGoopDefinitions.FireDef},
+            {"poison",  EasyGoopDefinitions.PoisonDef},
+            {"frail",  DebuffLibrary.FrailPuddle},
+            {"cheese",  EasyGoopDefinitions.CheeseDef},
+            {"nAn",  EasyGoopDefinitions.WaterGoop},
+
+        };
+        private Dictionary<string, Color> ColorKeys = new Dictionary<string, Color>()
+        {
+            {"fire", Color.red},
+            {"poison", Color.green},
+            {"frail", Color.magenta},
+            {"cheese", Color.yellow},
+            {"nAn", Color.white},
+        };
         public static int AlchemicalVialID;
         public override void Pickup(PlayerController player)
         {
+            CanSwitch = true;
             base.Pickup(player);
             player.OnReloadPressed += reloadPressed;
         }
         public void reloadPressed(PlayerController player, Gun gun)
         {
-            if (gun.ClipShotsRemaining == gun.ClipCapacity)
+            if (gun.ClipShotsRemaining == gun.ClipCapacity && CanSwitch != false)
             {
+                AkSoundEngine.PostEvent("Play_ENM_wizardred_appear_01", player.gameObject);
                 CurrentCount++;
                 if (CurrentCount == ActiveIDS.Count+1) { CurrentCount = 1; }
                 int yes;
@@ -84,34 +121,36 @@ namespace Planetside
                 AlchemicalVial.spriteIDs.TryGetValue(c, out yes);
                 base.sprite.SetSprite(yes);
                 player.BloopItemAboveHead(base.sprite);
+                player.StartCoroutine(Cooldown());
             }
         }
         public override void Update()
         {
+            base.Update();
             if (base.LastOwner)
             {
-                if (base.LastOwner.PlayerHasActiveSynergy("cheemsburbger") && !ActiveIDS.Contains("cheese"))
+                if (base.LastOwner.PlayerHasActiveSynergy("You Can Liquidate That???") && !ActiveIDS.Contains("cheese"))
                 {ActiveIDS.Add("cheese");}
-                else if (!base.LastOwner.PlayerHasActiveSynergy("cheemsburbger") && ActiveIDS.Contains("cheese"))
+                else if (!base.LastOwner.PlayerHasActiveSynergy("You Can Liquidate That???") && ActiveIDS.Contains("cheese"))
                 { ActiveIDS.Remove("cheese"); }
-                if (base.LastOwner.PlayerHasActiveSynergy("frail") && !ActiveIDS.Contains("frail"))
+                if (base.LastOwner.PlayerHasActiveSynergy("Epic ____ Moments No.17") && !ActiveIDS.Contains("frail"))
                 { ActiveIDS.Add("frail");}
-                else if (!base.LastOwner.PlayerHasActiveSynergy("frail") && ActiveIDS.Contains("frail"))
+                else if (!base.LastOwner.PlayerHasActiveSynergy("Epic ____ Moments No.17") && ActiveIDS.Contains("frail"))
                 {ActiveIDS.Remove("frail");}
-
                 if (CurrentCount == ActiveIDS.Count + 1) 
                 {
-                    CurrentCount=1;
+                    AkSoundEngine.PostEvent("Play_ENM_wizardred_appear_01", base.LastOwner.gameObject);
+                    CurrentCount = 1;
                     int yes;
                     AlchemicalVial.spriteIDs.TryGetValue(AlchemicalVial.ActiveIDS[CurrentCount-1], out yes);
                     base.sprite.SetSprite(yes);
                     base.LastOwner.BloopItemAboveHead(base.sprite);
-                }
-              
+                }              
             }
         }
         protected override void OnPreDrop(PlayerController player)
         {
+            CanSwitch = true;
             player.OnReloadPressed -= reloadPressed;
             base.OnPreDrop(player);
         }
@@ -119,6 +158,7 @@ namespace Planetside
         protected override void OnDestroy()
         {
             base.OnDestroy();
+            CanSwitch = true;
             if (base.LastOwner != null)
             {
                 base.LastOwner.OnReloadPressed -= reloadPressed;
@@ -126,7 +166,16 @@ namespace Planetside
         }
         protected override void DoEffect(PlayerController user)
         {
-            AkSoundEngine.PostEvent("Play_OBJ_bottle_cork_01", base.gameObject);
+            base.DoEffect(user);
+            GameObject gameObject2 = SpawnManager.SpawnVFX(StaticVFXStorage.JammedDeathVFX, user.transform.position, Quaternion.identity, false);
+            if (gameObject2 && gameObject2.GetComponent<tk2dSprite>())
+            {
+                tk2dSprite component2 = gameObject2.GetComponent<tk2dSprite>();
+                component2.scale *= 0.5f;
+                component2.HeightOffGround = 5f;
+                component2.UpdateZDepth();
+            }
+            AkSoundEngine.PostEvent("Play_OBJ_bottle_cork_01", user.gameObject);
             for (int i = 0; i < StaticReferenceManager.AllProjectiles.Count; i++)
             {
                 Projectile proj = StaticReferenceManager.AllProjectiles[i];
@@ -134,12 +183,32 @@ namespace Planetside
                 bool isBem = proj.GetComponent<BasicBeamController>() != null;
                 if (isBem != true && proj.Owner != null && proj.Owner == player && proj != null)
                 {
-                    DeadlyDeadlyGoopManager.GetGoopManagerForGoopType(EasyGoopDefinitions.FireDef).TimedAddGoopCircle(proj.transform.PositionVector2(), 2f, 0.33f, false);
-
+                    GoopDefinition goop = null;
+                    AlchemicalVial.GoopKeys.TryGetValue(AlchemicalVial.ActiveIDS[CurrentCount - 1], out goop);
+                    DeadlyDeadlyGoopManager.GetGoopManagerForGoopType(goop != null ? goop: EasyGoopDefinitions.FireDef).TimedAddGoopCircle(proj.transform.PositionVector2(), user.PlayerHasActiveSynergy("You Killed Us All!") == true ? 4 : 2, 0.33f, false);
+                    GameObject PoofVFX = (GameObject)UnityEngine.Object.Instantiate(StaticVFXStorage.BlueSynergyPoofVFX, proj.transform.position, Quaternion.identity);
+                    tk2dBaseSprite PoofVFXSprite = PoofVFX.GetComponent<tk2dBaseSprite>();
+                    PoofVFXSprite.PlaceAtPositionByAnchor(proj.transform.position, tk2dBaseSprite.Anchor.MiddleCenter);
+                    PoofVFXSprite.HeightOffGround = 35f;
+                    PoofVFXSprite.UpdateZDepth();
+                    tk2dSpriteAnimator component2 = PoofVFXSprite.GetComponent<tk2dSpriteAnimator>();
+                    if (component2 != null)
+                    {
+                        Color color = new Color();
+                        ColorKeys.TryGetValue(AlchemicalVial.ActiveIDS[CurrentCount - 1] != null ? AlchemicalVial.ActiveIDS[CurrentCount - 1] : "nAn", out color);
+                        PoofVFXSprite.scale *= 0.66f;
+                        component2.playAutomatically = true;
+                        component2.sprite.usesOverrideMaterial = true;
+                        component2.sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
+                        component2.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+                        component2.sprite.renderer.material.SetFloat("_EmissivePower", 1);
+                        component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.1f);
+                        component2.sprite.renderer.material.SetColor("_OverrideColor", color);
+                        component2.sprite.renderer.material.SetColor("_EmissiveColor", color);
+                    }
                     proj.DieInAir();
                 }
             }
-                
         }
         private static Dictionary<string, int> spriteIDs = new Dictionary<string, int>();
         private static List<string> ActiveIDS = new List<string>();
@@ -152,7 +221,6 @@ namespace Planetside
             "Planetside/Resources/precursor3.png",
             "Planetside/Resources/precursor4.png",
             "Planetside/Resources/precursor5.png"
-
         };
     }
 }

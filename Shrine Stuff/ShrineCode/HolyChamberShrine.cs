@@ -124,7 +124,8 @@ namespace Planetside
 				Glass.GlassID,
 				ChaoticShift.ChaoticShiftID,
 				PitLordsPact.PitLordsPactID,
-				UnbreakableSpirit.UnbreakableSpiritID
+				UnbreakableSpirit.UnbreakableSpiritID,
+				Gunslinger.GunslingerID
 			};
 			int PerksToSpawn = UnityEngine.Random.Range(2, 5);
 			for (int e = 0; e < PerksToSpawn; e++)

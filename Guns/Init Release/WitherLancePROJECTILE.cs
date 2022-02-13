@@ -26,13 +26,8 @@ namespace Planetside
         public void Start()
         {
             this.projectile = base.GetComponent<Projectile>();
-            Projectile projectile = this.projectile;
-            PlayerController playerController = projectile.Owner as PlayerController;
-            Projectile component = base.gameObject.GetComponent<Projectile>();
-            bool flag = component != null;
-            bool flag2 = flag;
-            if (flag2)
-            {
+            if (this.projectile)
+			{
                 projectile.OnHitEnemy = (Action<Projectile, SpeculativeRigidbody, bool>)Delegate.Combine(projectile.OnHitEnemy, new Action<Projectile, SpeculativeRigidbody, bool>(this.HandleHit));
 
             }
@@ -41,10 +36,8 @@ namespace Planetside
 		{
 			PlayerController player = projectile.Owner as PlayerController;
 
-			float scalar = 0f;
-			float scalarboss = 0f;
-			scalar = (player.stats.GetStatValue(PlayerStats.StatType.Damage) / 8);
-			scalarboss = (player.stats.GetStatValue(PlayerStats.StatType.Damage) / 40);
+			float scalar = (player.stats.GetStatValue(PlayerStats.StatType.Damage) / 8);
+			float scalarboss = (player.stats.GetStatValue(PlayerStats.StatType.Damage) / 40);
 			if (arg2.aiActor != null && arg2.aiActor.IsBlackPhantom)
 			{
 				scalar *= 2;
@@ -64,7 +57,6 @@ namespace Planetside
 
 			}
 		}
-
 		private Projectile projectile;
 	}
 }

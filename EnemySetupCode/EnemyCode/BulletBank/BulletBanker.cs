@@ -539,6 +539,7 @@ namespace Planetside
 
 					MultipleFireEvents = true,
 					Uninterruptible = false,
+					MaxEnemiesInRoom = 4,
 						},
 						NickName = "Bottle"
 
@@ -596,6 +597,7 @@ namespace Planetside
 					warpDashAnimLength = true,
 					hideShadow = true,
 					fireAtDashStart = true,
+					MaxEnemiesInRoom = 4,
 					bulletScript = new CustomBulletScriptSelector(typeof(SpawnDash)),
 					},
 					NickName = "Dash"

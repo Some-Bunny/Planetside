@@ -128,10 +128,10 @@ namespace Planetside
                 ReadOnlyCollection<Projectile> allProjectiles = StaticReferenceManager.AllProjectiles;
                 if (allProjectiles != null)
                 {
-                    foreach (Projectile proj in allProjectiles)
+                    for (int i = 0; i < allProjectiles.Count; i++)
                     {
-                        bool ae = Vector2.Distance(proj.sprite.WorldCenter, user.sprite.WorldCenter) < 3.25f && proj != null && proj.specRigidbody != null && user != null && proj.Owner != user;
-                        if (ae)
+                        Projectile proj = allProjectiles[i];
+                        if (Vector2.Distance(proj.sprite.WorldCenter, user.sprite.WorldCenter) < 3.25f && proj != null && proj.specRigidbody != null && user != null && proj.Owner != user)
                         {
                             return true;
                         }

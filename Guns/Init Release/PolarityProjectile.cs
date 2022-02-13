@@ -31,8 +31,6 @@ namespace Planetside
             this.projectile = base.GetComponent<Projectile>();
 
 			Projectile projectile = this.projectile;
-			//Gun pol = projectile.PossibleSourceGun as Gun;
-			//Polarity polar = pol.GetComponent<Polarity>();
 			PlayerController playerController = projectile.Owner as PlayerController;
             Projectile component = base.gameObject.GetComponent<Projectile>();
             bool flag = component != null;
@@ -52,7 +50,6 @@ namespace Planetside
 							helixWavelength = 8f,
 							ForceInvert = false
 						};
-						projectile.gameObject.AddComponent<Polarity.EyeProjUp>();
 					}
 					bool flag7 = IsDown == true;
 					if (flag7)
@@ -63,7 +60,6 @@ namespace Planetside
 							helixWavelength = 8f,
 							ForceInvert = true
 						};
-						projectile.gameObject.AddComponent<Polarity.EyeProjDown>();
 					}
 				}
 			}

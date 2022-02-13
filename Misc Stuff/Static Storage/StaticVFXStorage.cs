@@ -40,6 +40,8 @@ namespace Planetside
 
             EnemySpawnVFX = (GameObject)ResourceCache.Acquire("Global VFX/VFX_SpawnEnemy_Reticle");
             ShootGroundVFX = (GameObject)ResourceCache.Acquire("Global VFX/VFX_Bullet_Spawn");
+            BlueSynergyPoofVFX = (GameObject)ResourceCache.Acquire("Global VFX/VFX_Synergy_Poof_001");
+
 
         }
         public static ScarfAttachmentDoer ScarfObject;
@@ -48,6 +50,7 @@ namespace Planetside
         public static GameObject TeleportVFX;
         public static GameObject EnemySpawnVFX;
         public static GameObject ShootGroundVFX;
+        public static GameObject BlueSynergyPoofVFX;
 
 
         public static ParticleSystem PerkParticleSystem;

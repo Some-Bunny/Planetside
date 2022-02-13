@@ -1353,6 +1353,7 @@ namespace Planetside
             {
 				Vector2 TopRight = base.BulletBank.aiActor.GetAbsoluteParentRoom().area.UnitTopRight;
 				Vector2 BottomLeft = base.BulletBank.aiActor.GetAbsoluteParentRoom().area.UnitBottomLeft;
+				/*
 				Dictionary<Vector2, Vector2> wallcornerPositions = new Dictionary<Vector2, Vector2>()
 				{
 					{new Vector2(BottomLeft.x, TopRight.y), TopRight },//Bottom wall
@@ -1360,6 +1361,7 @@ namespace Planetside
 					{BottomLeft, new Vector2(BottomLeft.x, TopRight.y) },//Left wall
 					{TopRight, new Vector2(TopRight.x, BottomLeft.y) },//Right wall
 				};
+				*/
 				float elapsed = 0;
 				float Time = 0.66f;
 				while (elapsed < Time)

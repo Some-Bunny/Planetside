@@ -1045,7 +1045,7 @@ namespace Planetside
 				bholsterbeam1.beamProjectile = beholsterbeam.projectile;
 				bholsterbeam1.firingEllipseCenter = LaserOne.transform.position;
 				bholsterbeam1.name = "240";
-				bholsterbeam1.northAngleTolerance = 0;
+				bholsterbeam1.northAngleTolerance = 60;
 				
 
 				AIBeamShooter2 bholsterbeam2 = companion.gameObject.AddComponent<AIBeamShooter2>();
@@ -1054,7 +1054,7 @@ namespace Planetside
 				bholsterbeam2.beamProjectile = beholsterbeam.projectile;
 				bholsterbeam2.firingEllipseCenter = LaserTwo.transform.position;
 				bholsterbeam2.name = "300";
-				bholsterbeam2.northAngleTolerance = 0;
+				bholsterbeam2.northAngleTolerance = 300;
 
 				AIBeamShooter2 bholsterbeam3 = companion.gameObject.AddComponent<AIBeamShooter2>();
 				bholsterbeam3.beamTransform = LaserThree.transform;
@@ -1062,7 +1062,7 @@ namespace Planetside
 				bholsterbeam3.beamProjectile = beholsterbeam.projectile;
 				bholsterbeam3.firingEllipseCenter = LaserThree.transform.position;
 				bholsterbeam3.name = "0";
-				bholsterbeam3.northAngleTolerance = 0;
+				bholsterbeam3.northAngleTolerance = 60;
 
 				AIBeamShooter2 bholsterbeam4 = companion.gameObject.AddComponent<AIBeamShooter2>();
 				bholsterbeam4.beamTransform = LaserFour.transform;
@@ -1070,7 +1070,7 @@ namespace Planetside
 				bholsterbeam4.beamProjectile = beholsterbeam.projectile;
 				bholsterbeam4.firingEllipseCenter = LaserFour.transform.position;
 				bholsterbeam4.name = "180";
-				bholsterbeam4.northAngleTolerance = 0;
+				bholsterbeam4.northAngleTolerance = 300;
 
 				AIBeamShooter2 bholsterbeam5 = companion.gameObject.AddComponent<AIBeamShooter2>();
 				bholsterbeam5.beamTransform = LaserFive.transform;
@@ -1078,7 +1078,7 @@ namespace Planetside
 				bholsterbeam5.beamProjectile = beholsterbeam.projectile;
 				bholsterbeam5.firingEllipseCenter = LaserFive.transform.position;
 				bholsterbeam5.name = "60";
-				bholsterbeam5.northAngleTolerance = 0;
+				bholsterbeam5.northAngleTolerance = 60;
 
 				AIBeamShooter2 bholsterbeam6 = companion.gameObject.AddComponent<AIBeamShooter2>();
 				bholsterbeam6.beamTransform = LaserSix.transform;
@@ -1086,7 +1086,7 @@ namespace Planetside
 				bholsterbeam6.beamProjectile = beholsterbeam.projectile;
 				bholsterbeam6.firingEllipseCenter = LaserSix.transform.position;
 				bholsterbeam6.name = "120";
-				bholsterbeam6.northAngleTolerance = 0;
+				bholsterbeam6.northAngleTolerance = 300;
 
 
 				bs.TargetBehaviors = new List<TargetBehaviorBase>
@@ -1176,8 +1176,8 @@ namespace Planetside
 					RequiresLineOfSight = false,
 					//beamSelection = ShootBeamBehavior.BeamSelection.All,
 					FiresDirectlyTowardsPlayer = true,
-					UsesCustomAngle = false,
-
+					UsesCustomAngle = true,
+					CustomAngleValue = 0,
 					chargeTime = 1.5f,
 					UsesBaseSounds = true,
 					//LaserFiringSound = "Play_ENM_deathray_shot_01",
@@ -1201,7 +1201,7 @@ namespace Planetside
 					turnRateAcceleration = 1.8f,
 					useDegreeCatchUp = companion.transform,
 					minDegreesForCatchUp = 1.8f,
-					degreeCatchUpSpeed = 180,
+					degreeCatchUpSpeed = 60,
 					useUnitCatchUp = true,
 					minUnitForCatchUp = 2,
 					maxUnitForCatchUp = 2,
@@ -1329,7 +1329,7 @@ namespace Planetside
 					Behavior = new ChargeBehavior{
 						InitialCooldown = 1,
 						chargeAcceleration = -1,
-						chargeSpeed = 25,
+						chargeSpeed = 20,
 						maxChargeDistance = -1,
 						bulletScript = new CustomBulletScriptSelector(typeof(FakeOutCharge)),
 						ShootPoint = Centre,
@@ -1356,13 +1356,13 @@ namespace Planetside
 					Behavior = new DashBehavior{
 					//dashAnim = "wail",
 					ShootPoint = Centre,
-					dashDistance = 5f,
-					dashTime = 0.166f,
+					dashDistance = 7f,
+					dashTime = 0.5f,
 					doubleDashChance = 0,
 					enableShadowTrail = false,
 					Cooldown = 2f,
 					AttackCooldown = 0.5f,
-					dashDirection = DashBehavior.DashDirection.Random,
+					dashDirection = DashBehavior.DashDirection.PerpendicularToTarget,
 					warpDashAnimLength = true,
 					hideShadow = true,
 					fireAtDashStart = true,
@@ -2306,10 +2306,10 @@ namespace Planetside
 				int i = 0;
 				for (; ; )
 				{
-					if (i % 5 == 1)
+					if (i % 6 == 1)
 					{
-						Vector2 Point1 = MathToolbox.GetUnitOnCircle(fard+90, 1.7f);
-						Vector2 Point2 = MathToolbox.GetUnitOnCircle(fard-90, 1.7f);
+						Vector2 Point1 = MathToolbox.GetUnitOnCircle(fard+90, 1.4f);
+						Vector2 Point2 = MathToolbox.GetUnitOnCircle(fard-90, 1.4f);
 
 						base.Fire(new Offset(Point1), new Direction(fard + 90, DirectionType.Absolute, -1f), new Speed(0, SpeedType.Absolute), new ChargeAttack1Attack.TootthBullet());
 						base.Fire(new Offset(Point2), new Direction(fard - 90, DirectionType.Absolute, -1f), new Speed(0, SpeedType.Absolute), new ChargeAttack1Attack.TootthBullet());
@@ -2515,9 +2515,9 @@ namespace Planetside
 				}
 				protected override IEnumerator Top()
                 {
-					yield return base.Wait(10);
+					yield return base.Wait(14);
 					base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 0);
-					yield return base.Wait(UnityEngine.Random.Range(30, 75));
+					yield return base.Wait(UnityEngine.Random.Range(30, 180));
 					base.PostWwiseEvent("Play_BOSS_doormimic_blast_01", null);
 					float rand = UnityEngine.Random.Range(-180, 180);
 					for (int i = 0; i < 6; i++)
@@ -2535,7 +2535,7 @@ namespace Planetside
 				}
 				protected override IEnumerator Top()
 				{
-					base.ChangeSpeed(new Speed(14f, SpeedType.Absolute), 60);
+					base.ChangeSpeed(new Speed(14f, SpeedType.Absolute), 120);
 					yield break;
 				}
 			}
@@ -2572,7 +2572,7 @@ namespace Planetside
 				}
 				protected override IEnumerator Top()
 				{
-					base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 60);
+					base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 90);
 					yield return base.Wait(150);
 					base.Vanish(false);
 				}
@@ -2614,7 +2614,7 @@ namespace Planetside
 				}
 				protected override IEnumerator Top()
 				{
-					base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 60);
+					base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 0);
 					yield return base.Wait(150);
 					base.Vanish(false);
 				}

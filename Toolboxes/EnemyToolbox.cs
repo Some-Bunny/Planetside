@@ -13,8 +13,27 @@ using Brave.BulletScript;
 
 namespace Planetside
 {
-    public static class EnemyToolbox
+
+	
+	internal static class EnemyToolbox
     {
+		public static void ApplyGlitter(this AIActor target)
+		{
+			int count = target.healthHaver.bodySprites.Count;
+			List<tk2dBaseSprite> bodySprites = target.healthHaver.bodySprites;
+			for (int i = 0; i < count; i++)
+			{
+				bodySprites[i].usesOverrideMaterial = true;
+				MeshRenderer component = target.healthHaver.bodySprites[i].GetComponent<MeshRenderer>();
+				Material[] sharedMaterials = component.sharedMaterials;
+				Array.Resize<Material>(ref sharedMaterials, sharedMaterials.Length + 1);
+				Material material = UnityEngine.Object.Instantiate<Material>(target.renderer.material);
+				material.SetTexture("_MainTex", sharedMaterials[0].GetTexture("_MainTex"));
+				sharedMaterials[sharedMaterials.Length - 1] = material;
+				component.sharedMaterials = sharedMaterials;
+				sharedMaterials[sharedMaterials.Length - 1].shader = ShaderCache.Acquire("Brave/Internal/GlitterPassAdditive");
+			}
+		}
 		public static AIBeamShooter2 AddAIBeamShooter(AIActor enemy, Transform transform, string name,Projectile beamProjectile ,ProjectileModule beamModule = null ,float angle = 0)
         {
 			AIBeamShooter2 bholsterbeam1 = enemy.gameObject.AddComponent<AIBeamShooter2>();

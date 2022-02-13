@@ -240,6 +240,8 @@ namespace Planetside
             TrapDefusalKit.Init();
             TableTechTelefrag.Init();
             AlchemicalVial.Init();
+            SpinningDeath.Init();
+            ConnoisseursRobes.Init();
 
             ModifierNeedle.Init();
 
@@ -256,6 +258,7 @@ namespace Planetside
             ChaoticShift.Init();
             PitLordsPact.Init();
             UnbreakableSpirit.Init();
+            Gunslinger.Init();
 
             //VengefulShell.Init();
             //LaserWelder.Add();

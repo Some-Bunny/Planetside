@@ -196,24 +196,25 @@ namespace Planetside
             bool ee = activeEnemies1 != null;
             if (ee)
             {
-                RoomHandler absoluteRoom1 = base.transform.position.GetAbsoluteRoom();
-                AIActor randomActiveEnemy1;
-                randomActiveEnemy1 = player.CurrentRoom.GetRandomActiveEnemy(true);
+                AIActor randomActiveEnemy1 = player.CurrentRoom.GetRandomActiveEnemy(true);
                 Vector2 targetPoint = randomActiveEnemy1.sprite.WorldBottomCenter;
                 {
-
-                    GameObject fuck;
-                    fuck = UnityEngine.Object.Instantiate<GameObject>(DeadKingsDesparation.CalldownPrefab, targetPoint, Quaternion.identity);
+                    GameObject fuck = UnityEngine.Object.Instantiate<GameObject>(DeadKingsDesparation.CalldownPrefab, targetPoint, Quaternion.identity);
                     fuck.GetComponent<tk2dBaseSprite>().PlaceAtLocalPositionByAnchor(targetPoint + new Vector2(0f, 30f), tk2dBaseSprite.Anchor.LowerCenter);
 
                     AkSoundEngine.PostEvent("Play_BOSS_doormimic_land_01", base.gameObject);
                     fuck.GetComponent<tk2dBaseSprite>().SetSprite(DeadKingsDesparation.spriteIds1[0]);
-                  
-                    for (int i = 0; i < 60; i++)
+
+
+                    float Time = 0.7f;
+                    float elapsed = 0;
+                    while (elapsed < Time)
                     {
-                        fuck.GetComponent<tk2dBaseSprite>().PlaceAtPositionByAnchor(fuck.GetComponent<tk2dBaseSprite>().WorldBottomCenter + new Vector2(0f, -(0.5f)), tk2dBaseSprite.Anchor.LowerCenter);
-                        yield return new WaitForSeconds(0.015f);
+                        float t = (float)elapsed / (float)Time;
+                        Vector3 pos = Vector3.Lerp(targetPoint + new Vector2(0f, 30f), targetPoint, t);
+                        fuck.GetComponent<tk2dBaseSprite>().PlaceAtPositionByAnchor(pos, tk2dBaseSprite.Anchor.LowerCenter);
                     }
+
                     {
                         AkSoundEngine.PostEvent("Play_ENM_rock_blast_01", base.gameObject);
                         Exploder.DoDistortionWave(targetPoint, 6f, 0.6f, 0.2f, 0.1f);
@@ -231,11 +232,15 @@ namespace Planetside
                         Exploder.DoDistortionWave(targetPoint, 6f, 0.6f, 0.2f, 0.1f);
                         AkSoundEngine.PostEvent("Play_BOSS_doormimic_land_01", base.gameObject);
                         fuck.GetComponent<tk2dBaseSprite>().SetSprite(DeadKingsDesparation.spriteIds1[7]);
-                        for (int i = 0; i < 90; i++)
+
+                        Time = 0.8f;
+                        elapsed = 0;
+                        while (elapsed < Time)
                         {
-                            fuck.GetComponent<tk2dBaseSprite>().PlaceAtPositionByAnchor(fuck.GetComponent<tk2dBaseSprite>().WorldBottomCenter + new Vector2(0f, +(0.75f)), tk2dBaseSprite.Anchor.LowerCenter);
-                            yield return new WaitForSeconds(0.01f);
-                        }
+                            float t = (float)elapsed / (float)Time;
+                            Vector3 pos = Vector3.Lerp(targetPoint, targetPoint + new Vector2(0f, 50f), t);
+                            fuck.GetComponent<tk2dBaseSprite>().PlaceAtPositionByAnchor(pos, tk2dBaseSprite.Anchor.LowerCenter);
+                        }             
                     }
                     UnityEngine.Object.Destroy(fuck);
                 }
@@ -259,14 +264,11 @@ namespace Planetside
         }
         public void AIActorMods(AIActor target)
         {
-            bool shouldSlowThisRoom = this.TrinketingAndBaubling;
-            if (shouldSlowThisRoom)
+            if (this.TrinketingAndBaubling)
             {
                 bool flag = target && target.aiActor && target.aiActor.EnemyGuid != null && base.LastOwner != null;
                 if (flag)
-                {
-                    this.AffectEnemy(target, base.LastOwner);
-                }
+                {this.AffectEnemy(target, base.LastOwner); }
             }
         }
 

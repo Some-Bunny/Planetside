@@ -150,10 +150,7 @@ namespace Planetside
 				ReadOnlyCollection<Projectile> allProjectiles = StaticReferenceManager.AllProjectiles;
 				if (allProjectiles != null)
 				{
-					foreach (Projectile proj in allProjectiles)
-					{
-						GameManager.Instance.Dungeon.StartCoroutine(this.HandleBulletDeletionFrames(player.sprite.WorldCenter, 1.7f, 0.4f));
-					}
+					GameManager.Instance.Dungeon.StartCoroutine(this.HandleBulletDeletionFrames(player.sprite.WorldCenter, 1.7f, 0.4f));
 				}
 			}
 		}

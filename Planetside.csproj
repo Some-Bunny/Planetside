@@ -101,6 +101,10 @@
     <Compile Include="APIs\SoundAPI\StopEventType.cs" />
     <Compile Include="APIs\SoundAPI\SwitchedEvent.cs" />
     <Compile Include="Assetbundle Stuff\Assetbundle Loader.cs" />
+    <Compile Include="Components\Item Components\CustomHoveringGunController.cs" />
+    <Compile Include="Components\Projectile Components\MirrorProjectileController.cs" />
+    <Compile Include="Components\Projectile Components\RecursionPreventer.cs" />
+    <Compile Include="Components\Projectile Components\StickyProjectileModifier.cs" />
     <Compile Include="DungeonPlaceables\BreakableAPI.cs" />
     <Compile Include="DungeonPlaceables\HolyChamberStatue.cs" />
     <Compile Include="DungeonPlaceables\Targets.cs" />
@@ -116,6 +120,8 @@
     <Compile Include="Guns\Update4\Whistler.cs" />
     <Compile Include="Hooks\PickupHooks.cs" />
     <Compile Include="Hooks\ExplosionHooks.cs" />
+    <Compile Include="Items\Update4\ConnoisseursRobes.cs" />
+    <Compile Include="Items\Update4\SpinningDeath.cs" />
     <Compile Include="Items\Update4\AlchemicalVial.cs" />
     <Compile Include="Items\Update4\TableTechTelefrag.cs" />
     <Compile Include="Items\Update4\GunslingersRing.cs" />
@@ -123,6 +129,7 @@
     <Compile Include="Items\Update4\Modifiers\ModifierNeedle.cs" />
     <Compile Include="Misc Stuff\Static Storage\StaticVFXStorage.cs" />
     <Compile Include="Pickups\Perkthings\AllSeeingEye.cs" />
+    <Compile Include="Pickups\Perkthings\Gunslinger.cs" />
     <Compile Include="Pickups\Perkthings\UnbreakableSpirit.cs" />
     <Compile Include="Pickups\Perkthings\PitLordsPact.cs" />
     <Compile Include="Pickups\Perkthings\ChaoticShift.cs" />
@@ -2316,6 +2323,14 @@
     <EmbeddedResource Include="Resources\Shellrax\shellrax_fireeye_003.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\VFX\DeathMark\markedfordeathvfx_search_001.png" />
+    <EmbeddedResource Include="Resources\VFX\DeathMark\markedfordeathvfx_search_002.png" />
+    <EmbeddedResource Include="Resources\VFX\DeathMark\markedfordeathvfx_search_003.png" />
+    <EmbeddedResource Include="Resources\VFX\DeathMark\markedfordeathvfx_search_004.png" />
+    <EmbeddedResource Include="Resources\VFX\DeathMark\markedfordeathvfx_search_005.png" />
+    <EmbeddedResource Include="Resources\VFX\DeathMark\markedfordeathvfx_search_006.png" />
+    <EmbeddedResource Include="Resources\VFX\DeathMark\markedfordeathvfx_search_007.png" />
+    <EmbeddedResource Include="Resources\spinningDeath.png" />
     <EmbeddedResource Include="Resources\tabletechtelefrag.png" />
     <EmbeddedResource Include="Resources\VFX\ShelltansBlessing\blessing_001.png" />
     <EmbeddedResource Include="Resources\VFX\ShelltansBlessing\blessing_002.png" />
@@ -2765,6 +2780,13 @@
     <EmbeddedResource Include="Resources\precursor3.png" />
     <EmbeddedResource Include="Resources\precursor4.png" />
     <EmbeddedResource Include="Resources\precursor5.png" />
+    <EmbeddedResource Include="Resources\PerkThings\somethingtoDoWithThrownGuns.png" />
+    <EmbeddedResource Include="Resources\Beams\SpinningDeath\spinningDeath_end_001.png" />
+    <EmbeddedResource Include="Resources\Beams\SpinningDeath\spinningDeath_impact_001.png" />
+    <EmbeddedResource Include="Resources\Beams\SpinningDeath\spinningDeath_impact_002.png" />
+    <EmbeddedResource Include="Resources\Beams\SpinningDeath\spinningDeath_impact_003.png" />
+    <EmbeddedResource Include="Resources\Beams\SpinningDeath\spinningDeath_mid_001.png" />
+    <EmbeddedResource Include="Resources\connosouiersRobes.png" />
     <Content Include="Resources\Shellrax\shellrax_intro_019.png" />
     <EmbeddedResource Include="Resources\VFX\LockOnVFX\lockonvfx1.png" />
     <EmbeddedResource Include="Resources\VFX\LockOnVFX\lockonvfx2.png" />

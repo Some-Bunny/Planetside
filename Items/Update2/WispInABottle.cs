@@ -186,6 +186,7 @@ namespace Planetside
             material.SetFloat("_EmissiveColorPower", 5f);
             material.SetFloat("_EmissivePower", 37.5f);
             self.sprite.renderer.material = material;
+            AkSoundEngine.PostEvent("Play_Burn", player.gameObject);
 
         }
         public void Update()
@@ -199,7 +200,6 @@ namespace Planetside
             {
                 ETGModConsole.Log("object is NULL (how the hell?)");
             }
-            AkSoundEngine.PostEvent("Play_Burn", player.gameObject);
             if (this.elapsed >= SpawnDuration && this.elapsed <= SpawnDuration + Duration && DurationOver != true)
             {
                 if (HasTriggeredFireAnim != true)
@@ -209,13 +209,7 @@ namespace Planetside
                     AkSoundEngine.PostEvent("Play_BOSS_doormimic_flame_01", player.gameObject);
                 }
                 this.secondaryElapsed += BraveTime.DeltaTime;
-                /*
-                if (tertiaryElapsed >= 2f)
-                {
-                    tertiaryElapsed = 0;
-                    AkSoundEngine.PostEvent("Play_Burn", player.gameObject);
-                }
-                */
+               
                 if (secondaryElapsed >= 0.2f)
                 {
                     secondaryElapsed = 0;
@@ -224,8 +218,9 @@ namespace Planetside
                     Vector2 centerPosition = player.sprite.WorldCenter;
                     if (activeEnemies != null)
                     {
-                        foreach (AIActor aiactor in activeEnemies)
+                        for (int i = 0; i < activeEnemies.Count; i++)
                         {
+                            AIActor aiactor = activeEnemies[i];
                             bool ae = Vector2.Distance(aiactor.CenterPosition, centerPosition) < 20 && aiactor.healthHaver.GetMaxHealth() > 0f && aiactor != null && aiactor.specRigidbody != null && player != null;
                             if (ae)
                             {
@@ -243,13 +238,14 @@ namespace Planetside
             if (this.elapsed >= Duration + SpawnDuration && DurationOver != true)
             {
                 DurationOver = true;
+                AkSoundEngine.PostEvent("Stop_Burn", player.gameObject);
                 AkSoundEngine.PostEvent("Play_BOSS_lichB_charge_01", player.gameObject);
                 self.GetComponent<tk2dSpriteAnimator>().PlayAndDestroyObject("despawn");
             }
         }
         public void OnDestroy()
         {
-
+            AkSoundEngine.PostEvent("Stop_Burn", player.gameObject);
         }
 
         public tk2dBaseSprite self;

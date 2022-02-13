@@ -28,17 +28,11 @@ namespace Planetside
 		{
 			this.projectile = base.GetComponent<Projectile>();
 			this.player = (this.projectile.Owner as PlayerController);
-
-			Projectile projectile = this.projectile;
-			PlayerController playerController = projectile.Owner as PlayerController;
-			Projectile component = base.gameObject.GetComponent<Projectile>();
-			bool flag = component != null;
-			bool flag2 = flag;
-			if (flag2)
+			if (this.projectile != null)
 			{
 				var texture = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\nebula_reducednoise.png");
 
-				Material material = component.sprite.renderer.material;
+				Material material = this.projectile.sprite.renderer.material;
 				material.shader = Shader.Find("Brave/PlayerShaderEevee");
 
 				material.SetTexture("_EeveeTex", texture);
@@ -48,16 +42,14 @@ namespace Planetside
 
 				material.DisableKeyword("BRIGHTNESS_CLAMP_ON");
 				material.EnableKeyword("BRIGHTNESS_CLAMP_OFF");
-				GameManager.Instance.StartCoroutine(this.EndTime(component));
-				component.StartCoroutine(this.Speed(component));
+				GameManager.Instance.StartCoroutine(this.EndTime(this.projectile));
+				this.projectile.StartCoroutine(this.Speed(this.projectile));
 
 			}
 		}
 		public IEnumerator Speed(Projectile projectile)
 		{
-			bool flag = projectile != null;
-			bool flag3 = flag;
-			if (flag3)
+			if (projectile != null)
 			{
 				float speed = projectile.baseData.speed / 15;
 				for (int i = 0; i < 15; i++)
@@ -87,8 +79,6 @@ namespace Planetside
                     {
 						if (aiactor != null)
                         {
-							//Vector2 a = aiactor.transform.position - position.transform.position;
-							//aiactor.knockbackDoer.ApplyKnockback(-a, 1.25f * (Vector2.Distance(position.transform.position, aiactor.transform.position) + 0.001f), false);
 							bool ae = Vector2.Distance(aiactor.CenterPosition, centerPosition) < 4.5f && aiactor.healthHaver.GetMaxHealth() > 0f && aiactor != null && aiactor.specRigidbody != null && player != null;
 							if (ae)
 							{

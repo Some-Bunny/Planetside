@@ -422,28 +422,28 @@ public class CustomBeholsterLaserBehavior : BasicAttackBehavior
 		{
 			enemyTickCooldown = Mathf.Max(enemyTickCooldown - BraveTime.DeltaTime, 0f);
 			bool flag4 = this.UsesCustomAngle == true && this.FiresDirectlyTowardsPlayer == true;
-			float clampedAngle;
+			float clampedAngle = aibeamShooter2.northAngleTolerance;
 			if (flag4)
 			{
-				clampedAngle = BraveMathCollege.ClampAngle360((aibeamShooter2.northAngleTolerance + this.m_aiActor.aiAnimator.FacingDirection) + AlaserAngle);
+				clampedAngle += BraveMathCollege.ClampAngle360((aibeamShooter2.northAngleTolerance + this.m_aiActor.aiAnimator.FacingDirection) + AlaserAngle);
 			}
 			else
 			{
 				bool usesCustomAngle = this.UsesCustomAngle;
 				if (usesCustomAngle == true)
 				{
-					clampedAngle = BraveMathCollege.ClampAngle360((aibeamShooter2.northAngleTolerance) + AlaserAngle);
+					clampedAngle += BraveMathCollege.ClampAngle360((aibeamShooter2.northAngleTolerance) + AlaserAngle);
 				}
 				else
 				{
 					bool firesDirectlyTowardsPlayer = this.FiresDirectlyTowardsPlayer;
 					if (firesDirectlyTowardsPlayer)
 					{
-						clampedAngle = BraveMathCollege.ClampAngle360((this.m_aiActor.aiAnimator.FacingDirection) + AlaserAngle);
+						clampedAngle += BraveMathCollege.ClampAngle360((this.m_aiActor.aiAnimator.FacingDirection) + AlaserAngle);
 					}
 					else
 					{
-						clampedAngle = BraveMathCollege.ClampAngle360(this.LaserAngle);
+						clampedAngle += BraveMathCollege.ClampAngle360(this.LaserAngle);
 					}
 				}
 			}
