@@ -379,7 +379,8 @@ namespace Planetside
                 {
                     case GunClass.SHITTY:
                         MirrorProjectileModifier mirror = obj.gameObject.GetOrAddComponent<MirrorProjectileModifier>();
-                        mirror.MirrorRadius = 2f;
+                        mirror.MirrorRadius = 1f;
+                        mirror.m_projectile = obj;
                         break;
 
                     case GunClass.SHOTGUN:
@@ -448,13 +449,12 @@ namespace Planetside
                             hover.ConsumesTargetGunAmmo = false;
                             hover.ChanceToConsumeTargetGunAmmo = 0f;
                             hover.Position = CustomHoveringGunController.HoverPosition.CIRCULATE;
-                            hover.Aim = CustomHoveringGunController.AimType.PLAYER_AIM;
+                            hover.Aim = CustomHoveringGunController.AimType.NEAREST_ENEMY;
                             hover.Trigger = CustomHoveringGunController.FireType.ON_COOLDOWN;
                             hover.CooldownTime = 0.66f;
                             hover.ShootDuration = 0.33f;
                             hover.OnlyOnEmptyReload = false;
                             hover.Initialize(gunComp, player);
-                            hover.DamageMultiplier = 0.4f;
 
                         }
                         break;
@@ -499,7 +499,6 @@ namespace Planetside
                         hover1.ShootDuration = 0.1f;
                         hover1.OnlyOnEmptyReload = false;
                         hover1.Initialize(gunComp, player);
-                        hover1.DamageMultiplier = 0.4f;
                         break;
                     case GunClass.EXPLOSIVE:
                         ExploCont cont1 = obj.gameObject.GetOrAddComponent<ExploCont>();
@@ -778,10 +777,6 @@ namespace Planetside
         {
             if (m_hasBeenPickedUp)
                 return;
-            if (!player.CurrentItem)
-            {
-                return;
-            }
             m_hasBeenPickedUp = true;
             PerkParticleSystemController cont = base.GetComponent<PerkParticleSystemController>();
             if (cont != null) { cont.DoBigBurst(player); }

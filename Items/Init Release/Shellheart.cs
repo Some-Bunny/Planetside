@@ -31,8 +31,7 @@ namespace Planetside
 			counterChamber.quality = PickupObject.ItemQuality.B;
 			counterChamber.SetupUnlockOnCustomFlag(CustomDungeonFlags.SHELLRAX_DEFEATED, true);
 			counterChamber.AddToSubShop(ItemBuilder.ShopType.Cursula, 1f);
-
-
+			counterChamber.ArmorToGainOnInitialPickup = 1;
 			Shellheart.ShellHeartID = counterChamber.PickupObjectId;
 			ItemIDs.AddToList(counterChamber.PickupObjectId);
 

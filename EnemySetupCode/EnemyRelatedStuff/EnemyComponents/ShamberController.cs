@@ -30,11 +30,16 @@ public class ShamberController : BraveBehaviour
 
 
 		var pso = new GameObject("shamebr fart");
-		pso.transform.position = base.aiActor.CenterPosition + new Vector2(0, -0.5f);
+		pso.transform.position = base.aiActor.sprite.WorldCenter + new Vector2(0, -0.25f);
 		pso.transform.localRotation = Quaternion.Euler(0f, 0f, 0);
 		pso.transform.parent = base.aiActor.gameObject.transform;
-		
 
+		var partObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("ShamberParticles")); ;//this is the name of the object which by default will be "Particle System"
+		partObj.transform.position = pso.transform.position;
+		partObj.transform.parent = pso.transform;
+
+		particle = partObj.GetComponent<ParticleSystem>();
+		/*
 		ParticleSystem yes = pso.gameObject.AddComponent<ParticleSystem>();
 		//yes.CopyFrom<ParticleSystem>(particle);
 		yes.Play();
@@ -111,7 +116,7 @@ public class ShamberController : BraveBehaviour
 		material.SetFloat("_EmissiveColorPower", 5f);
 		material.SetFloat("_EmissivePower", 25f);
 		particleRenderer.material = material;
-
+		*/
 		base.sprite.renderer.material = mat;
 		CanSucc = true;
 		base.healthHaver.OnPreDeath += this.OnPreDeath;

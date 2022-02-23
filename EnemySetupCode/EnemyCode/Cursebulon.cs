@@ -141,12 +141,15 @@ namespace Planetside
 				};
 
 				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "pitfall", new string[] { "pitfall" }, new DirectionalAnimation.FlipType[0], DirectionalAnimation.DirectionType.Single);
+				
+				
+				
 				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awaken" }, new DirectionalAnimation.FlipType[0]);
 				companion.aiActor.AwakenAnimType = AwakenAnimationType.Awaken;
 				bool flag3 = CurseblobCollection == null;
 				if (flag3)
 				{
-					CurseblobCollection = SpriteBuilder.ConstructCollection(prefab, "FodderBoi_Collection");
+					CurseblobCollection = SpriteBuilder.ConstructCollection(prefab, "Curseblob_Collection");
 					UnityEngine.Object.DontDestroyOnLoad(CurseblobCollection);
 					for (int i = 0; i < spritePaths.Length; i++)
 					{
@@ -372,35 +375,35 @@ namespace Planetside
 		private static string[] spritePaths = new string[]
 		{
 
+			//idle_back_left
 			"Planetside/Resources/Enemies/Cursebulon/cursebulon_idle_back_left_001.png",//0
 			"Planetside/Resources/Enemies/Cursebulon/cursebulon_idle_back_left_002.png",
 			"Planetside/Resources/Enemies/Cursebulon/cursebulon_idle_back_left_003.png",
 			"Planetside/Resources/Enemies/Cursebulon/cursebulon_idle_back_left_004.png",
 			"Planetside/Resources/Enemies/Cursebulon/cursebulon_idle_back_left_005.png",
 			"Planetside/Resources/Enemies/Cursebulon/cursebulon_idle_back_left_006.png",//5
-
+			//idle_back_right
 			"Planetside/Resources/Enemies/Cursebulon/cursebulon_idle_back_right_001.png",//6
 			"Planetside/Resources/Enemies/Cursebulon/cursebulon_idle_back_right_002.png",
 			"Planetside/Resources/Enemies/Cursebulon/cursebulon_idle_back_right_003.png",
 			"Planetside/Resources/Enemies/Cursebulon/cursebulon_idle_back_right_004.png",
 			"Planetside/Resources/Enemies/Cursebulon/cursebulon_idle_back_right_005.png",
 			"Planetside/Resources/Enemies/Cursebulon/cursebulon_idle_back_right_006.png",//11
-
+			//idle_front_left
 			"Planetside/Resources/Enemies/Cursebulon/cursebulon_idle_front_left_001.png",//12
 			"Planetside/Resources/Enemies/Cursebulon/cursebulon_idle_front_left_002.png",
 			"Planetside/Resources/Enemies/Cursebulon/cursebulon_idle_front_left_003.png",
 			"Planetside/Resources/Enemies/Cursebulon/cursebulon_idle_front_left_004.png",
 			"Planetside/Resources/Enemies/Cursebulon/cursebulon_idle_front_left_005.png",
 			"Planetside/Resources/Enemies/Cursebulon/cursebulon_idle_front_left_006.png",//17
-
+			//idle_front_right
 			"Planetside/Resources/Enemies/Cursebulon/cursebulon_idle_front_right_001.png",//18
 			"Planetside/Resources/Enemies/Cursebulon/cursebulon_idle_front_right_002.png",
 			"Planetside/Resources/Enemies/Cursebulon/cursebulon_idle_front_right_003.png",
 			"Planetside/Resources/Enemies/Cursebulon/cursebulon_idle_front_right_004.png",
 			"Planetside/Resources/Enemies/Cursebulon/cursebulon_idle_front_right_005.png",
 			"Planetside/Resources/Enemies/Cursebulon/cursebulon_idle_front_right_006.png",//23
-
-			//death
+			//death_left
 			"Planetside/Resources/Enemies/Cursebulon/cursebulon_die_left_001.png",//24
 			"Planetside/Resources/Enemies/Cursebulon/cursebulon_die_left_002.png",
 			"Planetside/Resources/Enemies/Cursebulon/cursebulon_die_left_003.png",
@@ -409,7 +412,7 @@ namespace Planetside
 			"Planetside/Resources/Enemies/Cursebulon/cursebulon_die_left_006.png",
 			"Planetside/Resources/Enemies/Cursebulon/cursebulon_die_left_007.png",
 			"Planetside/Resources/Enemies/Cursebulon/cursebulon_die_left_008.png",//31
-
+			//death_right
 			"Planetside/Resources/Enemies/Cursebulon/cursebulon_die_right_001.png",//32
 			"Planetside/Resources/Enemies/Cursebulon/cursebulon_die_right_002.png",
 			"Planetside/Resources/Enemies/Cursebulon/cursebulon_die_right_003.png",
@@ -418,7 +421,7 @@ namespace Planetside
 			"Planetside/Resources/Enemies/Cursebulon/cursebulon_die_right_006.png",
 			"Planetside/Resources/Enemies/Cursebulon/cursebulon_die_right_007.png",
 			"Planetside/Resources/Enemies/Cursebulon/cursebulon_die_right_008.png",//39
-
+			//pitfall
 			"Planetside/Resources/Enemies/Cursebulon/cursebulon_pitfall_001.png",//40
 			"Planetside/Resources/Enemies/Cursebulon/cursebulon_pitfall_002.png",
 			"Planetside/Resources/Enemies/Cursebulon/cursebulon_pitfall_003.png",

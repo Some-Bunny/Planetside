@@ -54,7 +54,15 @@ namespace Planetside
             testActive.quality = PickupObject.ItemQuality.EXCLUDED;
             particle = AdvancedDragunPrefab.GetComponentInChildren<ParticleSystem>();
 
+
+            RoomReader.ball = SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Resault/plus16ammosyn", null, false);
+            UnityEngine.Object.DontDestroyOnLoad(RoomReader.ball);
+            FakePrefab.MarkAsFakePrefab(RoomReader.ball);
+            RoomReader.ball.SetActive(false);
         }
+
+        private static GameObject ball;
+
         private static AssetBundle bundle = ResourceManager.LoadAssetBundle("enemies_base_001");
         private static GameObject AdvancedDragunPrefab = bundle.LoadAsset("assets/data/enemies/bosses/dragun.prefab") as GameObject;
         private static ParticleSystem particle;
@@ -71,6 +79,22 @@ namespace Planetside
 
         protected override void DoEffect(PlayerController user)
         {
+
+            //var partObj2 = UnityEngine.Object.Instantiate(ball); ;//this is the name of the object which by default will be "Particle System"
+
+            var partObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("Portal")); ;//this is the name of the object which by default will be "Particle System"
+            MeshRenderer rend = partObj.GetComponent<MeshRenderer>();
+            
+            rend.allowOcclusionWhenDynamic = true;
+
+            partObj.transform.position = user.transform.position;
+
+            partObj.transform.localScale = Vector3.one;
+            partObj.name = "yes";
+            partObj.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
+            TrespassPortalController romas= partObj.AddComponent<TrespassPortalController>();
+            romas.m_room = user.CurrentRoom;
+            /*
             BossManager manager = GameManager.Instance.BossManager;
 
             foreach (BossFloorEntry cum in manager.BossFloorData)
@@ -80,6 +104,7 @@ namespace Planetside
                     ETGModConsole.Log(fycjyou.TargetRoomTable.name);
                 }
             }
+            */
             /*
             AIActor orLoadByGuid = EnemyDatabase.GetOrLoadByGuid("jammed_guardian");
             IntVector2? intVector = new IntVector2?(user.CurrentRoom.GetRandomVisibleClearSpot(2, 2));

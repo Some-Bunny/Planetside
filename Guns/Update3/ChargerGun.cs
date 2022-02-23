@@ -86,6 +86,8 @@ namespace Planetside
 			}
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.chargeAnimation).wrapMode = tk2dSpriteAnimationClip.WrapMode.LoopSection;
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.chargeAnimation).loopStart = 5;
+
+
 			gun.gunSwitchGroup = "Railgun";
 			gun.gunClass = GunClass.CHARGE;
 

@@ -46,8 +46,19 @@ namespace Planetside
 			return bholsterbeam1;
         }
 
+		public static AIBeamShooter AddAIBeamShooter1(AIActor enemy, Transform transform, string name, Projectile beamProjectile, ProjectileModule beamModule = null, float angle = 0)
+		{
+			AIBeamShooter bholsterbeam1 = enemy.gameObject.AddComponent<AIBeamShooter>();
+			bholsterbeam1.beamTransform = transform;
+			bholsterbeam1.beamModule = beamModule;
+			bholsterbeam1.beamProjectile = beamProjectile.projectile;
+			bholsterbeam1.firingEllipseCenter = transform.position;
+			bholsterbeam1.name = name;
+			bholsterbeam1.northAngleTolerance = angle;
+			return bholsterbeam1;
+		}
 
-        public static DirectionalAnimation AddNewDirectionAnimation(AIAnimator animator, string Prefix, string[] animationNames, DirectionalAnimation.FlipType[] flipType, DirectionalAnimation.DirectionType directionType = DirectionalAnimation.DirectionType.Single)
+		public static DirectionalAnimation AddNewDirectionAnimation(AIAnimator animator, string Prefix, string[] animationNames, DirectionalAnimation.FlipType[] flipType, DirectionalAnimation.DirectionType directionType = DirectionalAnimation.DirectionType.Single)
         {
 			DirectionalAnimation newDirectionalAnimation = new DirectionalAnimation
 			{
@@ -67,6 +78,8 @@ namespace Planetside
 			else{animator.OtherAnimations.Add(greg);}
 			return newDirectionalAnimation;
         }
+
+
 		public static void AddEventTriggersToAnimation(tk2dSpriteAnimator animator, string animationName, Dictionary<int, string> frameAndEventName)
         {
 			foreach (var value in frameAndEventName)

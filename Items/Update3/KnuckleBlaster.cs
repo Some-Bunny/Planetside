@@ -412,7 +412,6 @@ namespace Planetside
                     if (base.gameObject != null)
                     {
                         AkSoundEngine.PostEvent("Play_ENM_cannonball_blast_01", base.gameObject);
-
                         Exploder.DoRadialPush(base.gameObject.transform.PositionVector2(), 150 * knockback, 2.5f * range);
                         Exploder.DoRadialKnockback(base.gameObject.transform.PositionVector2(), 150 * knockback, 2.5f * range);
                         Exploder.DoRadialMinorBreakableBreak(base.gameObject.transform.PositionVector2(), 2.5f * range);

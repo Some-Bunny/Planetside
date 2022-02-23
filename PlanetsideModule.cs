@@ -70,6 +70,7 @@ namespace Planetside
             StaticReferences.Init(); //<- Used in GungeonAPI, IMPORTANT to initialise it before DungeonHandler
             //Targets.Init();
             HolyChamberStatue.Init();
+            TrespassLight.Init();
 
             //initialise Tools classes here
             Tools.Init();
@@ -100,6 +101,7 @@ namespace Planetside
             TooLate.Add();
 
 
+
             EnemyBuilder.Init();
             BossBuilder.Init();
             CustomClipAmmoTypeToolbox.Init();
@@ -115,7 +117,6 @@ namespace Planetside
 
 
             SomethingWickedEnemy.Init();
-           
 
 
             Unstabullets.Init();
@@ -192,6 +193,8 @@ namespace Planetside
             HolyBlessingEffect.Init();
             HeatStrokeEffect.Init();
 
+            DebuffLibrary.Init();
+
             LeSackPickup.Init();
             NullPickupInteractable.Init();
 
@@ -242,6 +245,8 @@ namespace Planetside
             AlchemicalVial.Init();
             SpinningDeath.Init();
             ConnoisseursRobes.Init();
+            LostVoidPotential.Init();
+            TrespassStone.Init();
 
             ModifierNeedle.Init();
 
@@ -350,9 +355,11 @@ namespace Planetside
             Thing.Init();
             RedThing.Init();
 
-            FlowInjectionInitialiser.InitialiseFlows();
             CustomLootTableInitialiser.InitialiseCustomLootTables();
             CustomShopInitialiser.InitialiseCustomShops();
+
+
+            FlowInjectionInitialiser.InitialiseFlows();
 
             //RoomTableTools.GenerateWeightedRoom(RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/ShrineOfEvilShrineRoomHell.room").room)
             //GenericRoomTable table = RoomTableTools.CreateRoomTable();

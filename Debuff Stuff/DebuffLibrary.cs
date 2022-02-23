@@ -6,6 +6,14 @@ namespace Planetside
 {
 	public static class DebuffLibrary
 	{
+		public static void Init()
+        {
+			InitPossessedGoop();
+			InitCursebulonGoop();
+			InitFrailPuddle();
+		}
+
+
 		public static FrailtyHealthEffect Frailty = new FrailtyHealthEffect
 		{
 			DamagePerSecondToEnemies = 0f,
@@ -74,56 +82,63 @@ namespace Planetside
 			AffectsEnemies = false,
 			resistanceType = EffectResistanceType.None,
 			duration = 0.1f,
-
 		};
 
 
+		public static void InitPossessedGoop()
+        {
+			GoopDefinition possesedPuddle = ScriptableObject.CreateInstance<GoopDefinition>();
+			possesedPuddle.name = "Possessive Goop";
+			possesedPuddle.CanBeIgnited = false;
+			possesedPuddle.damagesEnemies = false;
+			possesedPuddle.damagesPlayers = false;
+			possesedPuddle.baseColor32 = new Color32(49, 100, 100, byte.MaxValue);
+			possesedPuddle.goopTexture = ResourceExtractor.GetTextureFromResource("Planetside/Resources/possessed_standard_base_001.png");
+			possesedPuddle.AppliesDamageOverTime = true;
+			possesedPuddle.HealthModifierEffect = DebuffLibrary.Possessed;
+			PossesedPuddle = possesedPuddle;
+		}
+		public static GoopDefinition PossesedPuddle;
 
-		public static GoopDefinition PossesedPuddle = new GoopDefinition
+
+		public static void InitCursebulonGoop()
 		{
-			name = "Possessive Goop",
-			CanBeIgnited = false,
-			damagesEnemies = false,
-			damagesPlayers = false,
-			baseColor32 = new Color32(49, 100, 100, byte.MaxValue),
-			goopTexture = ResourceExtractor.GetTextureFromResource("Planetside/Resources/possessed_standard_base_001.png"),
-			AppliesDamageOverTime = true,
-			HealthModifierEffect = DebuffLibrary.Possessed
+			GoopDefinition cursebulonGoop = ScriptableObject.CreateInstance<GoopDefinition>();
+			cursebulonGoop.name = "Cursebulon Goop";
+			cursebulonGoop.CanBeIgnited = false;
+			cursebulonGoop.damagesEnemies = false;
+			cursebulonGoop.damagesPlayers = false;
+			cursebulonGoop.baseColor32 = new Color32(105, 0, 105, byte.MaxValue);
+			cursebulonGoop.goopTexture = ResourceExtractor.GetTextureFromResource("Planetside/Resources/goop_standard_base_001.png");
+			cursebulonGoop.AppliesDamageOverTime = false;
+			cursebulonGoop.lifespan = 13;
+			cursebulonGoop.usesAmbientGoopFX = true;
+			cursebulonGoop.ambientGoopFX = ObjectMakers.MakeObjectIntoVFX(RandomPiecesOfStuffToInitialise.cursepoofvfx);
+			cursebulonGoop.ambientGoopFXChance = 0.0005f;
+			cursebulonGoop.AppliesSpeedModifier = true;
+			cursebulonGoop.AppliesSpeedModifierContinuously = true;
+			cursebulonGoop.SpeedModifierEffect = CurseSpeedGoop;
+			CursebulonGoop = cursebulonGoop;
+		}
+		public static GoopDefinition CursebulonGoop;
 
-		};
 
-		public static GoopDefinition CursebulonGoop = new GoopDefinition
+		public static void InitFrailPuddle()
 		{
-			name = "Cursebulon Goop",
-			CanBeIgnited = false,
-			damagesEnemies = false,
-			damagesPlayers = false,
-			baseColor32 = new Color32(105, 0, 105, byte.MaxValue),
-			goopTexture = ResourceExtractor.GetTextureFromResource("Planetside/Resources/goop_standard_base_001.png"),
-			AppliesDamageOverTime = false,
-			lifespan = 13,
-			usesAmbientGoopFX = true,
-			ambientGoopFX = ObjectMakers.MakeObjectIntoVFX(RandomPiecesOfStuffToInitialise.cursepoofvfx),
-			ambientGoopFXChance = 0.0005f,
-			AppliesSpeedModifier = true,
-			AppliesSpeedModifierContinuously = true,
-			SpeedModifierEffect = CurseSpeedGoop,
+			GoopDefinition frailPuddle = ScriptableObject.CreateInstance<GoopDefinition>();
+			frailPuddle.name = "Frail Goop";
+			frailPuddle.CanBeIgnited = false;
+			frailPuddle.damagesEnemies = false;
+			frailPuddle.damagesPlayers = false;
+			frailPuddle.baseColor32 = new Color32(170, 0, 170, byte.MaxValue);
+			frailPuddle.goopTexture = ResourceExtractor.GetTextureFromResource("Planetside/Resources/goop_standard_base_001.png");
+			frailPuddle.AppliesDamageOverTime = true;
+			frailPuddle.HealthModifierEffect = DebuffLibrary.Frailty;
+			FrailPuddle = frailPuddle;
+		}
 
-		};
+		public static GoopDefinition FrailPuddle;
 
-
-		public static GoopDefinition FrailPuddle = new GoopDefinition
-		{
-			name = "Frail Goop",
-			CanBeIgnited = false,
-			damagesEnemies = false,
-			damagesPlayers = false,
-			baseColor32 = new Color32(170, 0, 170, byte.MaxValue),
-			goopTexture = ResourceExtractor.GetTextureFromResource("Planetside/Resources/goop_standard_base_001.png"),
-			AppliesDamageOverTime = true,
-			HealthModifierEffect = DebuffLibrary.Frailty
-
-		};
 
 		public static GoopDefinition HolyPuddle = new GoopDefinition
 		{

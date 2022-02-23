@@ -13,36 +13,41 @@ namespace Planetside
 	// Token: 0x0200037A RID: 890
 	public class MirrorProjectileModifier : MonoBehaviour
 	{
-		// Token: 0x06001204 RID: 4612 RVA: 0x000DA333 File Offset: 0x000D8533
 		public MirrorProjectileModifier()
 		{
 			this.MirrorRadius = 3f;
 		}
 
 		// Token: 0x06001205 RID: 4613 RVA: 0x000DA348 File Offset: 0x000D8548
-		private void Awake()
+		private void Start()
 		{
-			this.m_projectile = base.GetComponent<Projectile>();
-			this.m_projectile.AdjustPlayerProjectileTint(Color.white, 2, 0f);
-			this.m_projectile.collidesWithProjectiles = true;
-			SpeculativeRigidbody specRigidbody = this.m_projectile.specRigidbody;
-			specRigidbody.OnPreRigidbodyCollision = (SpeculativeRigidbody.OnPreRigidbodyCollisionDelegate)Delegate.Combine(specRigidbody.OnPreRigidbodyCollision, new SpeculativeRigidbody.OnPreRigidbodyCollisionDelegate(this.HandlePreCollision));
+			//this.m_projectile = base.GetComponent<Projectile>();
+			//this.m_projectile.AdjustPlayerProjectileTint(Color.white, 2, 0f);
+			//this.m_projectile.collidesWithProjectiles = true;
+			///SpeculativeRigidbody specRigidbody = this.m_projectile.specRigidbody;
+			//specRigidbody.OnPreRigidbodyCollision = (SpeculativeRigidbody.OnPreRigidbodyCollisionDelegate)Delegate.Combine(specRigidbody.OnPreRigidbodyCollision, new SpeculativeRigidbody.OnPreRigidbodyCollisionDelegate(this.HandlePreCollision));
 		}
 
 		// Token: 0x06001206 RID: 4614 RVA: 0x000DA3B4 File Offset: 0x000D85B4
 		private void Update()
 		{
-			Vector2 b = this.m_projectile.transform.position.XY();
-			for (int i = 0; i < StaticReferenceManager.AllProjectiles.Count; i++)
-			{
-				Projectile projectile = StaticReferenceManager.AllProjectiles[i];
-				bool flag = projectile && projectile.Owner is AIActor;
-				if (flag)
-				{
-					float sqrMagnitude = (projectile.transform.position.XY() - b).sqrMagnitude;
-					bool flag2 = sqrMagnitude < this.MirrorRadius;
-					if (flag2)
+
+
+			for (int l = 0; l < StaticReferenceManager.AllProjectiles.Count; l++)
+            {
+				Projectile proj = StaticReferenceManager.AllProjectiles[l];
+				if (proj != null)
+                {
+					AIActor enemy = proj.Owner as AIActor;
+					bool isBem = proj.GetComponent<BasicBeamController>() != null;
+					if (isBem != true)
 					{
+						bool ae = Vector2.Distance(proj.sprite ? proj.sprite.WorldCenter : proj.transform.PositionVector2(), base.gameObject.transform.PositionVector2()) < 1.66f && proj.Owner != null && proj.Owner == enemy && proj.gameObject.GetComponent<MarkedProjectile>() == null;
+						if (ae)
+						{
+							AkSoundEngine.PostEvent("Play_OBJ_metalskin_deflect_01", proj.gameObject);
+							FistComponent.FistReflectBullet(proj, this.m_projectile.Owner.gameActor, proj.baseData.speed *= 2, proj.Direction.ToAngle() + 180, 1f, proj.IsBlackBullet ? 14  : 7 , 0f);
+						}
 					}
 				}
 			}
@@ -57,7 +62,6 @@ namespace Planetside
 				bool flag2 = otherRigidbody.projectile.Owner is AIActor;
 				if (flag2)
 				{
-					myRigidbody.projectile.DieInAir(false, true, true, false);
 					FistComponent.FistReflectBullet(otherRigidbody.projectile, myRigidbody.projectile.Owner, otherRigidbody.projectile.Direction.ToAngle()+180, 10f, 1f, 1f, 0f);
 				}
 				PhysicsEngine.SkipCollision = true;
@@ -127,6 +131,6 @@ namespace Planetside
 		public float MirrorRadius;
 
 		// Token: 0x04000B1E RID: 2846
-		private Projectile m_projectile;
+		public Projectile m_projectile;
 	}
 }

@@ -1209,13 +1209,13 @@ namespace BreakAbleAPI
         public static DungeonPlaceable GenerateDungeonPlaceable(Dictionary<GameObject, float> gameObjects, int placeableWidth = 1, int placeableLength = 1, DungeonPrerequisite[] dungeonPrerequisites = null)
         {
             if (dungeonPrerequisites == null) {dungeonPrerequisites = new DungeonPrerequisite[0];}
-            DungeonPlaceable placeableContents = new DungeonPlaceable
+            DungeonPlaceable placeableContents = ScriptableObject.CreateInstance<DungeonPlaceable>();
             {
-                width = placeableWidth,
-                height = placeableLength,
-                respectsEncounterableDifferentiator = true,
-                variantTiers = new List<DungeonPlaceableVariant>()
-            };
+                placeableContents.width = placeableWidth;
+                placeableContents.height = placeableLength;
+                placeableContents.respectsEncounterableDifferentiator = true;
+                placeableContents.variantTiers = new List<DungeonPlaceableVariant>();
+            }
             foreach (var Entry in gameObjects)
             {
                 DungeonPlaceableVariant variant = new DungeonPlaceableVariant();

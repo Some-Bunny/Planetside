@@ -33,10 +33,30 @@ namespace Planetside
             FakePrefab.MarkAsFakePrefab(PerfpartObj);
             PerfectedParticleSystem = PerfpartObj.GetComponent<ParticleSystem>();
             FakePrefab.MarkAsFakePrefab(PerfectedParticleSystem.gameObject);
+
+
             var mainperf = PerkParticleSystem.main;
             mainperf.stopAction = ParticleSystemStopAction.None;
             mainperf.maxParticles = 2000;
             mainperf.duration = 1200;
+
+
+            var ceramicObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("CeramicParticles"));
+            FakePrefab.MarkAsFakePrefab(ceramicObj);
+            CeramicParticleSystem = ceramicObj.GetComponent<ParticleSystem>();
+            FakePrefab.MarkAsFakePrefab(CeramicParticleSystem.gameObject);
+
+            var bloodSplatterObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("BloodSplatter"));
+            FakePrefab.MarkAsFakePrefab(bloodSplatterObj);
+            BloodSplatterParticleSystem = bloodSplatterObj.GetComponent<ParticleSystem>();
+            FakePrefab.MarkAsFakePrefab(BloodSplatterParticleSystem.gameObject);
+
+            var shamberParticlesObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("ShamberParticles"));
+            ShamberParticleSystemGameObject = shamberParticlesObj;
+            FakePrefab.MarkAsFakePrefab(shamberParticlesObj);
+            ShamberParticleSystem = shamberParticlesObj.GetComponent<ParticleSystem>();
+            FakePrefab.MarkAsFakePrefab(ShamberParticleSystem.gameObject);
+
 
             EnemySpawnVFX = (GameObject)ResourceCache.Acquire("Global VFX/VFX_SpawnEnemy_Reticle");
             ShootGroundVFX = (GameObject)ResourceCache.Acquire("Global VFX/VFX_Bullet_Spawn");
@@ -57,6 +77,13 @@ namespace Planetside
         public static ParticleSystem PerfectedParticleSystem;
 
         public static GameObject PerkParticleObject;
+
+        public static ParticleSystem CeramicParticleSystem;
+        public static ParticleSystem BloodSplatterParticleSystem;
+        public static ParticleSystem ShamberParticleSystem;
+        public static GameObject ShamberParticleSystemGameObject;
+
+
         public static GameObject JammedDeathVFX;
 
     }

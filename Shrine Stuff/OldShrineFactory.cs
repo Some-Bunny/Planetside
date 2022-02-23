@@ -268,7 +268,34 @@ namespace GungeonAPI
 			DungeonPrerequisite[] array = new DungeonPrerequisite[0];
 			Vector2 vector = new Vector2((float)(protoroom.Width / 2) + offset.x, (float)(protoroom.Height / 2) + offset.y);
 			protoroom.placedObjectPositions.Add(vector);
+
+			DungeonPlaceable placeableContents = ScriptableObject.CreateInstance<DungeonPlaceable>();
+			placeableContents.width = 2;
+			placeableContents.height = 2;
+			placeableContents.respectsEncounterableDifferentiator = true;
+			placeableContents.variantTiers = new List<DungeonPlaceableVariant>
+			{
+				new DungeonPlaceableVariant
+				{
+					percentChance = 1f,
+					nonDatabasePlaceable = shrine,
+					prerequisites = array,
+					materialRequirements = new DungeonPlaceableRoomMaterialRequirement[0]
+				}
+			};
+
 			protoroom.placedObjects.Add(new PrototypePlacedObjectData
+			{
+
+				contentsBasePosition = vector,
+				fieldData = new List<PrototypePlacedObjectFieldData>(),
+				instancePrerequisites = array,
+				linkedTriggerAreaIDs = new List<int>(),
+				placeableContents = placeableContents
+
+			});
+
+			/*protoroom.placedObjects.Add(new PrototypePlacedObjectData
 			{
 				contentsBasePosition = vector,
 				fieldData = new List<PrototypePlacedObjectFieldData>(),
@@ -291,6 +318,8 @@ namespace GungeonAPI
 					}
 				}
 			});
+
+			*/
 			RoomFactory.RoomData roomData = new RoomFactory.RoomData
 			{
 				room = protoroom,

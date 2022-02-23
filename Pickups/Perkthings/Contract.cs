@@ -31,6 +31,11 @@ namespace Planetside
             }
         }
 
+        public void OnDestroy()
+        {
+            GameManager.Instance.OnNewLevelFullyLoaded -= this.OnNewFloorLoaded;
+        }
+
         private void SpawnTheBoys()
         {
             RoomHandler absoluteRoom = base.transform.position.GetAbsoluteRoom();
@@ -200,10 +205,6 @@ namespace Planetside
         {
             if (m_hasBeenPickedUp)
                 return;
-            if (!player.CurrentItem)
-            {
-                return;
-            }
             m_hasBeenPickedUp = true;
             AkSoundEngine.PostEvent("Play_OBJ_dice_bless_01", player.gameObject);
 

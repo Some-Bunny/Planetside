@@ -406,7 +406,7 @@ namespace Planetside
 					maxUnitForCatchUp = 2,
 					useUnitOvershoot = true,
 					minUnitForOvershoot = 1,
-					
+					firingType = CustomBeholsterLaserBehavior.FiringType.TOWARDS_PLAYER_AND_NORTHANGLEVARIANCE,
 					unitOvershootTime = 0.25f,
 					unitOvershootSpeed = 3,
 					//ShootPoint = m_CachedGunAttachPoint.transform,

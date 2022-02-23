@@ -123,7 +123,7 @@ namespace Planetside
             ETGMod.Databases.Strings.Core.Set("#TIMETRADER_RUNBASEDMULTILINE_ATTACKED", "Ya' bullets are in the wrong timeline pal!");
 
 
-            ItsDaFuckinShopApi.SetUpShop(
+            GameObject timedShop = ItsDaFuckinShopApi.SetUpShop(
                   "timedshop"
                 , "psog"
                 , new List<string> { baseFilepath + "_idle_001.png", baseFilepath + "_idle_002.png", baseFilepath + "_idle_003.png", baseFilepath + "_idle_004.png" }
@@ -159,6 +159,7 @@ namespace Planetside
                 , false
                 , 0.1f
                 , null);
+            StaticReferences.StoredRoomObjects.Add("timedShop", timedShop);
 
 
 

@@ -79,10 +79,7 @@ namespace Planetside
         {
             if (m_hasBeenPickedUp)
                 return;
-            if (!player.CurrentItem)
-            {
-                return;
-            }
+
             m_hasBeenPickedUp = true;
             AkSoundEngine.PostEvent("Play_OBJ_dice_bless_01", player.gameObject);
             PerkParticleSystemController cont = base.GetComponent<PerkParticleSystemController>();

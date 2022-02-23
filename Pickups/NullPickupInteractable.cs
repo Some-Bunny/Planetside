@@ -29,10 +29,6 @@ namespace Planetside
         {
             if (m_hasBeenPickedUp)
                 return;
-            if (!player.CurrentItem)
-            {
-                return;
-            }
             m_hasBeenPickedUp = true;
             float keys = player.carriedConsumables.KeyBullets;
             float Money = player.carriedConsumables.Currency;

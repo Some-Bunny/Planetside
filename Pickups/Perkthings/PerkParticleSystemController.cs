@@ -45,6 +45,7 @@ namespace Planetside
 
         public void DoBigBurst(PlayerController player)
         {
+            /*
             Vector3 vector = player.sprite.WorldBottomLeft.ToVector3ZisY(0);
             Vector3 vector2 = player.sprite.WorldTopRight.ToVector3ZisY(0);
             Vector3 position = new Vector3(UnityEngine.Random.Range(vector.x, vector2.x), UnityEngine.Random.Range(vector.y, vector2.y), UnityEngine.Random.Range(vector.z, vector2.z));
@@ -66,6 +67,7 @@ namespace Planetside
                 emitParams.randomSeed = (uint)UnityEngine.Random.Range(1, 1000);
                 particleSystem.Emit(emitParams, 1);
             }
+            */
         }  
     }
 }

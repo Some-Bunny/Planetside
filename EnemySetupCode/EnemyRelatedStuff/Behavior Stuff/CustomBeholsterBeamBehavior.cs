@@ -422,7 +422,22 @@ public class CustomBeholsterLaserBehavior : BasicAttackBehavior
 		{
 			enemyTickCooldown = Mathf.Max(enemyTickCooldown - BraveTime.DeltaTime, 0f);
 			bool flag4 = this.UsesCustomAngle == true && this.FiresDirectlyTowardsPlayer == true;
-			float clampedAngle = aibeamShooter2.northAngleTolerance;
+			float clampedAngle = this.m_aiActor.aiAnimator.FacingDirection;
+			if (firingType == FiringType.TOWARDS_PLAYER)
+            {
+				clampedAngle = this.m_aiActor.aiAnimator.FacingDirection + AlaserAngle;
+			}
+			else if (firingType == FiringType.TOWARDS_PLAYER_AND_NORTHANGLEVARIANCE)
+			{
+				clampedAngle = BraveMathCollege.ClampAngle360(this.m_aiActor.aiAnimator.FacingDirection + aibeamShooter2.northAngleTolerance) + AlaserAngle;
+			}
+			else if (firingType == FiringType.ONLY_NORTHANGLEVARIANCE)
+			{
+				clampedAngle = BraveMathCollege.ClampAngle360(aibeamShooter2.northAngleTolerance) + AlaserAngle;
+			}
+			//SetLaserAngle(clampedAngle);
+
+			/*
 			if (flag4)
 			{
 				clampedAngle += BraveMathCollege.ClampAngle360((aibeamShooter2.northAngleTolerance + this.m_aiActor.aiAnimator.FacingDirection) + AlaserAngle);
@@ -447,6 +462,7 @@ public class CustomBeholsterLaserBehavior : BasicAttackBehavior
 					}
 				}
 			}
+			*/
 			Vector3 dirVec2 = new Vector3(Mathf.Cos(clampedAngle * 0.0174532924f), Mathf.Sin(clampedAngle * 0.0174532924f), 0f) * 10f;
 			Vector2 startingPoint = aibeamShooter2.beamTransform.position;
 			//aibeamShooter2.gameObject.layer = 30;
@@ -500,6 +516,7 @@ public class CustomBeholsterLaserBehavior : BasicAttackBehavior
 
 
 	public CustomBeholsterLaserBehavior.TrackingType trackingType;
+	public CustomBeholsterLaserBehavior.FiringType firingType;
 
 	public float initialAimOffset;
 
@@ -555,6 +572,14 @@ public class CustomBeholsterLaserBehavior : BasicAttackBehavior
 		Charging,
 		Firing
 	}
+	public enum FiringType
+    {
+		TOWARDS_PLAYER,
+		TOWARDS_PLAYER_AND_NORTHANGLEVARIANCE,
+		ONLY_NORTHANGLEVARIANCE
+	}
+
+
 
 	public enum TrackingType
 	{

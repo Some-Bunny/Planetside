@@ -37,11 +37,7 @@ namespace Planetside
         {
             if (m_hasBeenPickedUp)
                 return;
-            if (!player.CurrentItem)
-            {
-                return;
-            }
-
+         
 			PerkParticleSystemController cont = base.GetComponent<PerkParticleSystemController>();
 			if (cont != null) { cont.DoBigBurst(player); }
 

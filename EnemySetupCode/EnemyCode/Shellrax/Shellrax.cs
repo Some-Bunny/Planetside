@@ -155,10 +155,9 @@ namespace Planetside
 				{
 					Type = DirectionalAnimation.DirectionType.TwoWayHorizontal,
 					AnimNames = new string[]
-	{
+					{
 						"attackandclose",
-
-	},
+					},
 					Flipped = new DirectionalAnimation.FlipType[2]
 				};
 				aiAnimator.OtherAnimations = new List<AIAnimator.NamedDirectionalAnimation>
@@ -189,8 +188,6 @@ namespace Planetside
 						anim = anim3
 					}
 				};
-
-
 				DirectionalAnimation Hurray = new DirectionalAnimation
 				{
 					Type = DirectionalAnimation.DirectionType.Single,
@@ -206,7 +203,6 @@ namespace Planetside
 						anim = Hurray
 					}
 				};
-
 				DirectionalAnimation TelepertOut = new DirectionalAnimation
 				{
 					Type = DirectionalAnimation.DirectionType.Single,
@@ -1901,7 +1897,29 @@ namespace Planetside
 			if (thing == null)
 			{
 				ETGModConsole.Log("why?");
+				return null;
 			}
+			thing.gameObject.layer = 23;
+			tk2dSprite spriter = thing.GetComponent<tk2dSprite>();//.renderer.enabled = false;
+			spriter.sprite.HeightOffGround = 100;
+			spriter.sprite.renderer.sortingLayerName = "Foregound";
+			spriter.renderer.enabled = false;
+
+			var partObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("ShellraxEye")); ;//this is the name of the object which by default will be "Particle System"
+			partObj.transform.position = thing.transform.position;
+			partObj.transform.parent = thing.transform;
+
+			ParticleSystem system = partObj.GetComponent<ParticleSystem>();
+			var particleRenderer = system.gameObject.GetComponent<ParticleSystemRenderer>();
+
+			particleRenderer.sortingLayerName = "Foregound";
+			particleRenderer.maskInteraction = SpriteMaskInteraction.None;
+			particleRenderer.enabled = true;
+			particleRenderer.gameObject.layer = 23;
+
+			return system;
+
+			/*
 			thing.gameObject.layer = 23;
 			tk2dSprite spriter = thing.GetComponent<tk2dSprite>();//.renderer.enabled = false;
 			spriter.sprite.HeightOffGround = -100;
@@ -1984,11 +2002,10 @@ namespace Planetside
 			material.SetFloat("_EmissivePower", 25f);
 			particleRenderer.material = material;
 
-			particleRenderer.sortingLayerName = "Foregound";
-			particleRenderer.maskInteraction = SpriteMaskInteraction.None;
-			particleRenderer.enabled = true;
-			yes.gameObject.layer = 23;
-			return yes;
+			*/
+
+
+			//return yes;
         }
 
 
@@ -1997,11 +2014,7 @@ namespace Planetside
 			
 			if (clip.GetFrame(frameIdx).eventInfo == "enableparticles")
 			{
-				if (EyeParticle == null)
-                {
-					EyeParticle = MakeEyePartcile();
-                }
-				else if (EyeParticle != null)
+				if (EyeParticle != null)
                 {
 					EyeParticle.Play();
 				}
@@ -2052,6 +2065,11 @@ namespace Planetside
 
 		private void Start()
 		{
+
+			if (EyeParticle == null)
+			{
+				EyeParticle = MakeEyePartcile();
+			}
 			IsActuallyDead = false;
 			isTelerting = false;
 			base.healthHaver.minimumHealth = 1;

@@ -29,13 +29,13 @@ namespace Planetside
 			InitTimeTraderRooms(false);
 			InitHolyChamberShrineRooms(false);
 
-			//InitPrisonerRooms();
+			InitPrisonerRooms();
 		}
 
 		public static void InitHolyChamberShrineRooms(bool refreshFlows = false)
 		{
 			
-			PrototypeDungeonRoom BrokenChamberRoomVar = RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/HolyChamberRoom.room").room;
+			PrototypeDungeonRoom BrokenChamberRoomVar = RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/HolyChamberRoomAbbey.room").room;
 
 
 			Vector2 offset = new Vector2(0, 0);
@@ -48,6 +48,21 @@ namespace Planetside
 			GameObject original;
 			OldShrineFactory.builtShrines.TryGetValue("psog:holychambershrine", out original);
 
+			DungeonPlaceable placeableContents = ScriptableObject.CreateInstance<DungeonPlaceable>();
+			placeableContents.width = 2;
+			placeableContents.height = 2;
+			placeableContents.respectsEncounterableDifferentiator = true;
+			placeableContents.variantTiers = new List<DungeonPlaceableVariant>
+			{
+				new DungeonPlaceableVariant
+				{
+					percentChance = 1f,
+					nonDatabasePlaceable = original,
+					prerequisites = array,
+					materialRequirements = new DungeonPlaceableRoomMaterialRequirement[0]
+				}
+			};
+
 			BrokenChamberRoomVar.placedObjects.Add(new PrototypePlacedObjectData
 			{
 
@@ -55,22 +70,8 @@ namespace Planetside
 				fieldData = new List<PrototypePlacedObjectFieldData>(),
 				instancePrerequisites = array,
 				linkedTriggerAreaIDs = new List<int>(),
-				placeableContents = new DungeonPlaceable
-				{
-					width = 2,
-					height = 2,
-					respectsEncounterableDifferentiator = true,
-					variantTiers = new List<DungeonPlaceableVariant>
-					{
-						new DungeonPlaceableVariant
-						{
-							percentChance = 1f,
-							nonDatabasePlaceable = original,
-							prerequisites = array,
-							materialRequirements = new DungeonPlaceableRoomMaterialRequirement[0]
-						}
-					}
-				}
+				placeableContents = placeableContents
+						
 			});
 
 			HolyChamberRoom = new ProceduralFlowModifierData()
@@ -108,16 +109,12 @@ namespace Planetside
 						requiredNumberOfEncounters = -1,
 						saveFlagToCheck = GungeonFlags.TUTORIAL_COMPLETED,
 						statToCheck = TrackedStats.GUNBERS_MUNCHED,
-
-
 					}
-
 				},
 				CanBeForcedSecret = false,
 				RandomNodeChildMinDistanceFromEntrance = 0,
 				exactSecondaryRoom = null,
 				framedCombatNodes = 0,
-
 			};
 			HolyChamberRoomPrefab = BrokenChamberRoomVar;
 			BaseSharedInjectionData.InjectionData.Add(HolyChamberRoom);
@@ -372,6 +369,21 @@ namespace Planetside
 
 			GameObject original;
 			OldShrineFactory.builtShrines.TryGetValue("psog:bluecasingshrine", out original);
+			DungeonPlaceable placeableContents = ScriptableObject.CreateInstance<DungeonPlaceable>();
+			placeableContents.width = 2;
+			placeableContents.height = 2;
+			placeableContents.respectsEncounterableDifferentiator = true;
+			placeableContents.variantTiers = new List<DungeonPlaceableVariant>
+			{
+				new DungeonPlaceableVariant
+				{
+					percentChance = 1f,
+					nonDatabasePlaceable = original,
+					prerequisites = array,
+					materialRequirements = new DungeonPlaceableRoomMaterialRequirement[0]
+				}
+			};
+
 			SWRoom.placedObjects.Add(new PrototypePlacedObjectData
 			{
 
@@ -379,24 +391,10 @@ namespace Planetside
 				fieldData = new List<PrototypePlacedObjectFieldData>(),
 				instancePrerequisites = array,
 				linkedTriggerAreaIDs = new List<int>(),
-				placeableContents = new DungeonPlaceable
-				{
-					width = 2,
-					height = 2,
-					respectsEncounterableDifferentiator = true,
-					variantTiers = new List<DungeonPlaceableVariant>
-					{
-						new DungeonPlaceableVariant
-						{
-							percentChance = 1f,
-							nonDatabasePlaceable = original,
-							prerequisites = array,
-							materialRequirements = new DungeonPlaceableRoomMaterialRequirement[0]
-						}
-					}
-				}
+				placeableContents = placeableContents
+
 			});
-			
+
 			SWMinesRoom = new ProceduralFlowModifierData()
 			{
 				annotation = "SW Mines",
@@ -446,7 +444,7 @@ namespace Planetside
 			{
 				GenerateNewProcDataForTimeTrader(RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/ShopRooms/TimeTraderShopProper.room").room, GlobalDungeonData.ValidTilesets.GUNGEON, 240),
 				GenerateNewProcDataForTimeTrader(RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/ShopRooms/TimeTraderShopMines.room").room, GlobalDungeonData.ValidTilesets.MINEGEON, 510),
-				GenerateNewProcDataForTimeTraderTooLate(RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/ShopRooms/TimeTraderShopMines.room").room, GlobalDungeonData.ValidTilesets.MINEGEON, 510),
+				GenerateNewProcDataForTimeTraderTooLate(RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/ShopRooms/TimeTraderShopMinesEmpty.room").room, GlobalDungeonData.ValidTilesets.MINEGEON, 510),
 				GenerateNewProcDataForTimeTrader(RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/ShopRooms/TimeTraderShopHollow.room").room, GlobalDungeonData.ValidTilesets.CATACOMBGEON, 840),
 				GenerateNewProcDataForTimeTrader(RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/ShopRooms/TimeTraderShopForge.room").room, GlobalDungeonData.ValidTilesets.FORGEGEON, 1230),
 				GenerateNewProcDataForTimeTrader(RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/ShopRooms/TimeTraderShopSewer.room").room, GlobalDungeonData.ValidTilesets.SEWERGEON, 270),
@@ -473,35 +471,7 @@ namespace Planetside
 			Vector2 vector = new Vector2((float)(RequiredRoom.Width / 2) + offset.x, (float)(RequiredRoom.Height / 2) + offset.y);
 
 			RequiredRoom.placedObjectPositions.Add(vector);
-			DungeonPrerequisite[] array = new DungeonPrerequisite[0];
-
-			GameObject original;
-			NpcApi.ItsDaFuckinShopApi.builtShops.TryGetValue("psog:timedshop", out original);
-			RequiredRoom.placedObjects.Add(new PrototypePlacedObjectData
-			{
-
-				contentsBasePosition = vector,
-				fieldData = new List<PrototypePlacedObjectFieldData>(),
-				instancePrerequisites = array,
-				linkedTriggerAreaIDs = new List<int>(),
-				placeableContents = new DungeonPlaceable
-				{
-					width = 2,
-					height = 2,
-					respectsEncounterableDifferentiator = true,
-					variantTiers = new List<DungeonPlaceableVariant>
-					{
-						new DungeonPlaceableVariant
-						{
-							percentChance = 1f,
-							nonDatabasePlaceable = original,
-							prerequisites = array,
-							materialRequirements = new DungeonPlaceableRoomMaterialRequirement[0]
-						}
-					}
-				}
-			});
-
+			
 			ProceduralFlowModifierData SpecProcData = new ProceduralFlowModifierData()
 			{
 				annotation = name,
@@ -552,6 +522,21 @@ namespace Planetside
 
 			GameObject original;
 			OldShrineFactory.builtShrines.TryGetValue("psog:toolate", out original);
+			DungeonPlaceable placeableContents = ScriptableObject.CreateInstance<DungeonPlaceable>();
+			placeableContents.width = 2;
+			placeableContents.height = 2;
+			placeableContents.respectsEncounterableDifferentiator = true;
+			placeableContents.variantTiers = new List<DungeonPlaceableVariant>
+			{
+				new DungeonPlaceableVariant
+				{
+					percentChance = 1f,
+					nonDatabasePlaceable = original,
+					prerequisites = array,
+					materialRequirements = new DungeonPlaceableRoomMaterialRequirement[0]
+				}
+			};
+
 			RequiredRoom.placedObjects.Add(new PrototypePlacedObjectData
 			{
 
@@ -559,22 +544,8 @@ namespace Planetside
 				fieldData = new List<PrototypePlacedObjectFieldData>(),
 				instancePrerequisites = array,
 				linkedTriggerAreaIDs = new List<int>(),
-				placeableContents = new DungeonPlaceable
-				{
-					width = 2,
-					height = 2,
-					respectsEncounterableDifferentiator = true,
-					variantTiers = new List<DungeonPlaceableVariant>
-					{
-						new DungeonPlaceableVariant
-						{
-							percentChance = 1f,
-							nonDatabasePlaceable = original,
-							prerequisites = array,
-							materialRequirements = new DungeonPlaceableRoomMaterialRequirement[0]
-						}
-					}
-				}
+				placeableContents = placeableContents
+
 			});
 
 			ProceduralFlowModifierData SpecProcData = new ProceduralFlowModifierData()

@@ -148,7 +148,7 @@ namespace Planetside
 			CustomHoveringGunController.HoverPosition position = this.Position;
 			if (position == CustomHoveringGunController.HoverPosition.OVERHEAD)
 			{
-				this.m_parentTransform.position = (this.m_owner.CenterPosition + new Vector2(0f, 1.5f)).ToVector3ZisY(0f);
+				this.m_parentTransform.position = (attachObject != null ? attachObject.transform.PositionVector2() + new Vector2(0, Radius): this.m_owner.CenterPosition + new Vector2(0, Radius)).ToVector3ZisY(0f);
 				base.sprite.HeightOffGround = 2f;
 				base.sprite.UpdateZDepth();
 			}
