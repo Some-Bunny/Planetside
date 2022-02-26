@@ -52,6 +52,7 @@ namespace Planetside
             FilePathFolder = this.Metadata.Directory;
             metadata = this.Metadata;
             //Initialise World-Stuff here
+            StaticInformation.Init();
             ETGModMainBehaviour.Instance.gameObject.AddComponent<NevernamedsDarknessHandler>();
 
             //Asset bundle stuff
@@ -253,6 +254,11 @@ namespace Planetside
             Whistler.Add();
             ThunderShot.Add();
 
+            //Forgotten Rounds
+            ForgottenRoundOubliette.Init();
+            ForgottenRoundAbbey.Init();
+            ForgottenRoundRNG.Init();
+
             //Perks
             AllStatsUp.Init();
             Greedy.Init();
@@ -371,7 +377,7 @@ namespace Planetside
 
             //RoomTableTools.AddBossTableToManager(RoomTableTools.GenerateIndividualBossFloorEntry(table, null, "FUCK"));
             DungeonHandler.Init();
-
+            MasteryReplacementOub.InitDungeonHook();
 
             //AdvancedLogging.Log($"{MOD_NAME} v{VERSION} started successfully.", new Color(144, 6, 255, 255), false, true, null);
             PlanetsideModule.Log($"{MOD_NAME} v{VERSION} started successfully.", TEXT_COLOR);
@@ -855,15 +861,16 @@ namespace Planetside
                 CollisionLayer.Projectile, CollisionLayer.PlayerCollider, CollisionLayer.PlayerBlocker, CollisionLayer.BeamBlocker));
 
                 Vector2 vector = new Vector2(base.specRigidbody.UnitCenter.x, base.specRigidbody.UnitCenter.y);
-                Vector3 vector2 = new Vector3(vector.x, vector.y, 0f);
-                PurityShrineController component = base.gameObject.GetComponent<PurityShrineController>();
-                PurityShrineController.HoleObject = PickupObjectDatabase.GetById(155).GetComponent<SpawnObjectPlayerItem>();
-
-                component.synergyobject = PurityShrineController.HoleObject.objectToSpawn;
-                BlackHoleDoer component2 = this.synergyobject.GetComponent<BlackHoleDoer>();
-                this.gameObject1 = UnityEngine.Object.Instantiate<GameObject>(component2.HellSynergyVFX, new Vector3(base.transform.position.x + 1f, base.transform.position.y, base.transform.position.z + 5f), Quaternion.Euler(0f, 0f, 0f));
-                MeshRenderer component3 = this.gameObject1.GetComponent<MeshRenderer>();
-                base.StartCoroutine(this.HoldPortalOpen(component3, vector, this.gameObject1));
+                //Vector3 vector2 = new Vector3(vector.x, vector.y, 0f);
+                //PurityShrineController component = base.gameObject.GetComponent<PurityShrineController>();
+                //SpawnObjectPlayerItem HoleObject = PickupObjectDatabase.GetById(155).GetComponent<SpawnObjectPlayerItem>();
+                //component.synergyobject = PurityShrineController.HoleObject.objectToSpawn;
+                //BlackHoleDoer component2 = PurityShrineController.HoleObject.objectToSpawn.GetComponent<BlackHoleDoer>();
+                GameObject gameObject1 = UnityEngine.Object.Instantiate<GameObject>(PickupObjectDatabase.GetById(155).GetComponent<SpawnObjectPlayerItem>().objectToSpawn.GetComponent<BlackHoleDoer>().HellSynergyVFX, new Vector3(base.transform.position.x + 1f, base.transform.position.y, base.transform.position.z + 5f), Quaternion.Euler(0f, 0f, 0f));
+               
+                
+                MeshRenderer component3 = gameObject1.GetComponent<MeshRenderer>();
+                base.StartCoroutine(this.HoldPortalOpen(component3, vector, gameObject1));
 
 
                 var texture = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\nebula_reducednoise.png");
@@ -899,14 +906,12 @@ namespace Planetside
                 material.SetFloat("_OilGoop", 1f);
                 material.SetFloat("_OpaquenessMultiply", 0.5f);
                 material.SetTexture("_WorldTex", texture);
-
-                //0.25 is the size of portal, so noteice it for the Mathf.Lerp and here. maybe put it into a variable?
                 portal.material.SetFloat("_UVDistCutoff", 0.30f);
-                yield return new WaitForSeconds(1);//time it waits  before it starts closing
+                yield return new WaitForSeconds(1);
                 float elapsed = 0f;
-                float duration = 2;//time it takes it to close
+                float duration = 2;
                 float t = 0f;
-                while (elapsed < duration)//idk dodgeroll black magic
+                while (elapsed < duration)
                 {
                     material.SetFloat("_OilGoop", 1 - (elapsed/5));
                     material.SetFloat("_OpaquenessMultiply", 0.5f + (elapsed/10));
@@ -939,9 +944,9 @@ namespace Planetside
                 }
             }
             MeshRenderer hole;
-            private GameObject synergyobject;
-            private static SpawnObjectPlayerItem HoleObject;
-            private GameObject gameObject1;
+            //private GameObject synergyobject;
+            //private static SpawnObjectPlayerItem HoleObject;
+            //private GameObject gameObject1;
             bool Trigger;
             GameObject obj;
             PlayerController player;
@@ -988,9 +993,6 @@ namespace Planetside
                     {
                         ETGModConsole.Log("Failure in modifying shrines (1)");
                     }
-
-                   
-
                 }
             }
             public static bool CanUse(PlayerController player, GameObject shrine)
@@ -1002,101 +1004,6 @@ namespace Planetside
             bool Trigger;
             GameObject obj;
             PlayerController player;
-        }
-        public class AngryGodsManager : BraveBehaviour
-        {
-            public void Start()
-            {
-                PlayerController player = GameManager.Instance.PrimaryPlayer;
-                player.OnUsedBlank += this.HandleTriedAttack;
-                GameManager.Instance.OnNewLevelFullyLoaded += this.OnNewFloor;
-            }
-            private void OnNewFloor()
-            {
-                this.SummonedOnFloor = 0f;
-            }
-
-            protected override void OnDestroy()
-            {
-                this.SummonedOnFloor = 0f;
-                base.OnDestroy();
-            }
-            private void HandleTriedAttack(PlayerController obj, int what)
-            {
-                if ((CheckforSpeciRoom.Contains(obj.CurrentRoom.GetRoomName())))
-                {
-                    bool TryForGuard = this.SummonedOnFloor == 0;
-                    if (TryForGuard)
-                    {
-                        if (obj.GetComponent<HERETIC>() != null)
-                        {
-                            AkSoundEngine.PostEvent("Play_BOSS_lichB_grab_01", base.gameObject);
-                            GameObject hand = UnityEngine.Object.Instantiate<GameObject>(PlanetsideModule.hellDrag.HellDragVFX);
-                            tk2dBaseSprite component1 = hand.GetComponent<tk2dBaseSprite>();
-                            component1.usesOverrideMaterial = true;
-                            component1.PlaceAtLocalPositionByAnchor(obj.specRigidbody.UnitCenter, tk2dBaseSprite.Anchor.LowerCenter);
-                            component1.renderer.material.shader = ShaderCache.Acquire("Brave/Effects/StencilMasked");
-                            Pixelator.Instance.FadeToBlack(0.5f, false, 0f);
-                            base.StartCoroutine(this.HandleGrabbyGrab(obj));
-
-                            this.SummonedOnFloor += 1f;
-                        }
-                        else
-                        {
-                            string header = "DEFILER!";
-                            string text = "The Gods Have Been Angered.";
-                            if (GameManager.Instance.PrimaryPlayer.HasPickupID(ETGMod.Databases.Items["Diamond Chamber"].PickupObjectId) || ((GameManager.Instance.PrimaryPlayer.HasPickupID(ETGMod.Databases.Items["Netherite Chamber"].PickupObjectId))))
-                            {
-                                //this.SummonedOnFloor += 1f;
-                                header = "YOU ARE FORGIVEN.";
-                                text = "FOR NOW.";
-                            }
-                            else
-                            {
-                                AkSoundEngine.PostEvent("Play_BOSS_lichB_intro_01", base.gameObject);
-                                GameObject gameObject = new GameObject();
-                                gameObject.transform.position = obj.transform.position;
-                                BulletScriptSource source = gameObject.GetOrAddComponent<BulletScriptSource>();
-                                gameObject.AddComponent<BulletSourceKiller>();
-                                var bulletScriptSelected = new CustomBulletScriptSelector(typeof(AngerGodsScript));
-                                AIActor aIActor = EnemyDatabase.GetOrLoadByGuid("01972dee89fc4404a5c408d50007dad5");
-                                AIBulletBank bulletBank = aIActor.GetComponent<AIBulletBank>();
-                                bulletBank.CollidesWithEnemies = false;
-                                source.BulletManager = bulletBank;
-                                source.BulletScript = bulletScriptSelected;
-                                source.Initialize();//to fire the script once
-                            }
-                            this.SummonedOnFloor += 1f;
-                            AngryGodsManager.Notify(header, text);
-                        }
-                        
-                    }
-                }
-            }
-            private IEnumerator HandleGrabbyGrab(PlayerController grabbedPlayer)
-            {
-
-                Pixelator.Instance.FadeToBlack(0.5f, false, 0f);
-                {
-                    GameManager.Instance.LoadCustomLevel("tt_bullethell");
-                }
-                yield break;
-            }
-
-            private static void Notify(string header, string text)
-            {
-                tk2dSpriteCollectionData encounterIconCollection = AmmonomiconController.Instance.EncounterIconCollection;
-                int spriteIdByName = encounterIconCollection.GetSpriteIdByName("Planetside/Resources/shelltansblessing.png");
-                GameUIRoot.Instance.notificationController.DoCustomNotification(header, text, null, spriteIdByName, UINotificationController.NotificationColor.SILVER, false, true);
-            }
-            private float SummonedOnFloor = 0;
-            public float NearRadius = 5f;
-            public float FarRadius = 9f;
-            public static List<string> CheckforSpeciRoom = new List<string>()
-            {
-            "HolyChamberRoom.room"
-            };
-
         }
 
         public override void Exit() { }
@@ -1121,104 +1028,6 @@ namespace Planetside
     }
 }
 
-public class AngerGodsScript : Script
-{
-    protected override IEnumerator Top()
-    {
-        PlayerController player = (GameManager.Instance.PrimaryPlayer);
-        RoomHandler currentRoom = player.CurrentRoom;
-        AssetBundle assetBundle = ResourceManager.LoadAssetBundle("shared_auto_002");
-        this.Mines_Cave_In = assetBundle.LoadAsset<GameObject>("Mines_Cave_In");
-        GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(Mines_Cave_In, player.sprite.WorldCenter, Quaternion.identity);
-        HangingObjectController RockSlideController = gameObject.GetComponent<HangingObjectController>();
-        RockSlideController.triggerObjectPrefab = null;
-        GameObject[] additionalDestroyObjects = new GameObject[]
-        {
-                RockSlideController.additionalDestroyObjects[1]
-        };
-        RockSlideController.additionalDestroyObjects = additionalDestroyObjects;
-        UnityEngine.Object.Destroy(gameObject.transform.Find("Sign").gameObject);
-        RockSlideController.ConfigureOnPlacement(currentRoom);
-        yield return Wait(60);
-        IntVector2? vector = player.CurrentRoom.GetRandomAvailableCell(new IntVector2?(IntVector2.One * 2), CellTypes.FLOOR | CellTypes.PIT, false, null);
-        Vector2 vector2 = player.sprite.WorldCenter + new Vector2(UnityEngine.Random.Range(-2, 2), UnityEngine.Random.Range(-2, 2));
-        base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("4d164ba3f62648809a4a82c90fc22cae").bulletBank.GetBullet("big_one"));
-        base.Fire(Offset.OverridePosition(vector2 + new Vector2(0f, 30f)), new Direction(-90f, DirectionType.Absolute, -1f), new Speed(30f, SpeedType.Absolute), new AngerGodsScript.BigBullet());
-
-        yield break;
-    }
-    private GameObject Mines_Cave_In;
-    private class BigBullet : Bullet
-    {
-        public BigBullet() : base("big_one", false, false, false)
-        {
-        }
-
-        public override void Initialize()
-        {
-            this.Projectile.spriteAnimator.StopAndResetFrameToDefault();
-            base.Initialize();
-        }
-
-        protected override IEnumerator Top()
-        {
-            base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("1bc2a07ef87741be90c37096910843ab").bulletBank.GetBullet("reversible"));
-            this.Projectile.specRigidbody.CollideWithTileMap = false;
-            this.Projectile.specRigidbody.CollideWithOthers = false;
-            yield return base.Wait(60);
-            base.PostWwiseEvent("Play_ENM_bulletking_slam_01", null);
-            this.Speed = 0f;
-            this.Projectile.spriteAnimator.Play();
-            base.Vanish(true);
-            yield break;
-        }
-
-        public override void OnBulletDestruction(Bullet.DestroyType destroyType, SpeculativeRigidbody hitRigidbody, bool preventSpawningProjectiles)
-        {
-            if (!preventSpawningProjectiles)
-            {
-                base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("1bc2a07ef87741be90c37096910843ab").bulletBank.GetBullet("reversible"));
-                var list = new List<string> 
-                {
-				"jammed_guardian"
-                };
-                string guid = BraveUtility.RandomElement<string>(list);
-                var Enemy = EnemyDatabase.GetOrLoadByGuid(guid);
-
-                AIActor.Spawn(Enemy.aiActor, this.Projectile.sprite.WorldCenter, GameManager.Instance.PrimaryPlayer.CurrentRoom, true, AIActor.AwakenAnimationType.Default, true);
-                if ((GameManager.Instance.PrimaryPlayer.HasPickupID(DiamondChamber.DiamondChamberID)))
-                {
-                    Enemy.aiActor.IsHarmlessEnemy = true;
-                    Enemy.aiActor.CanTargetPlayers = false;
-                    Enemy.aiActor.CanTargetEnemies = true;
-                }
-                float num = base.RandomAngle();
-                float Amount = 12;
-                float Angle = 360 / Amount;
-                for (int i = 0; i < Amount; i++)
-                {
-                    base.Fire(new Direction(num + Angle * (float)i + 10, DirectionType.Absolute, -1f), new Speed(5f, SpeedType.Absolute), new BurstBullet());
-                }
-                base.PostWwiseEvent("Play_ENM_bulletking_slam_01", null);
-                return;
-            }
-        }
-        public class BurstBullet : Bullet
-        {
-            public BurstBullet() : base("reversible", false, false, false)
-            {
-            }
-            protected override IEnumerator Top()
-            {
-                base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 60);
-                yield return base.Wait(60);
-                base.Vanish(false);
-                yield break;
-            }
-        }
-
-    }
-}
 
 
 

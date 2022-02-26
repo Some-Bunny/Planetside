@@ -85,7 +85,7 @@ namespace Planetside
             , true
             , "Planetside/Resources/NPCs/TableDude/talbertIcon.png"
             , true
-            , 0.2f
+            , 0.33f
             , null
             , DancePaths);
            

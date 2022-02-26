@@ -122,6 +122,7 @@ namespace Planetside
 		   tk2dSpriteCollectionData collectionData = new tk2dSpriteCollectionData();
 
 			GameObject prefab = EnemyBuilder.BuildPrefab(guid, guid, firstIdleFrame, new IntVector2(0, 0), new IntVector2(8, 9), false);
+			StaticInformation.ModderBulletGUIDs.Add(guid);
 			var companion = prefab.AddComponent<BulletEnemyBehavior>();
 			companion.aiActor.knockbackDoer.weight = 800;
 			companion.aiActor.MovementSpeed = MovementSpeed;

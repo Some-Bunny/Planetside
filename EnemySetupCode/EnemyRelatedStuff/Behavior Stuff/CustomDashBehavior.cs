@@ -43,34 +43,34 @@ public class CustomDashBehavior : BasicAttackBehavior
 
 	public override BehaviorResult Update()
 	{
-		if (base.m_aiActor!=null)
-        {
-			BehaviorResult behaviorResult = base.Update();
-			if (behaviorResult != BehaviorResult.Continue)
-			{
-				return behaviorResult;
-			}
-			if (!this.IsReady())
-			{
-				return BehaviorResult.Continue;
-			}
-			if (!this.m_aiActor.TargetRigidbody)
-			{
-				return BehaviorResult.Continue;
-			}
-			this.m_dashDirection = this.GetDashDirection();
-			if (!string.IsNullOrEmpty(this.chargeAnim))
-			{
-				SetState(CustomDashBehavior.DashState.Charge);
-			}
-			else
-			{
-				SetState(CustomDashBehavior.DashState.Dash);
-			}
-
-			this.m_updateEveryFrame = true;
-			return BehaviorResult.RunContinuous;
+		if (this.m_shadowSprite == null)
+		{
+			this.m_shadowSprite = this.m_aiActor.ShadowObject.GetComponent<tk2dBaseSprite>();
 		}
+		BehaviorResult behaviorResult = base.Update();
+		if (behaviorResult != BehaviorResult.Continue)
+		{
+			return behaviorResult;
+		}
+		if (!this.IsReady())
+		{
+			return BehaviorResult.Continue;
+		}
+		if (!this.m_aiActor.TargetRigidbody)
+		{
+			return BehaviorResult.Continue;
+		}
+		this.m_dashDirection = this.GetDashDirection();
+		if (!string.IsNullOrEmpty(this.chargeAnim))
+		{
+			SetState(CustomDashBehavior.DashState.Charge);
+		}
+		else
+		{
+			SetState(CustomDashBehavior.DashState.Dash);
+		}
+
+		this.m_updateEveryFrame = true;
 		return BehaviorResult.RunContinuous;
 	}
 
@@ -78,7 +78,7 @@ public class CustomDashBehavior : BasicAttackBehavior
 	{
 		if (this.State == CustomDashBehavior.DashState.Dash)
 		{
-			float d = (this.dashDistance/ dashTime) / (dashTime/m_dashTimer);
+			float d = (this.dashDistance / dashTime) / (dashTime / m_dashTimer);
 			this.m_aiActor.BehaviorVelocity = d * this.m_dashDirection;
 		}
 
@@ -116,7 +116,7 @@ public class CustomDashBehavior : BasicAttackBehavior
 			return ContinuousBehaviorResult.Continue;
 		}
 		else if (this.State == CustomDashBehavior.DashState.Finished)
-        {
+		{
 			return ContinuousBehaviorResult.Finished;
 		}
 		return ContinuousBehaviorResult.Continue;
@@ -146,7 +146,7 @@ public class CustomDashBehavior : BasicAttackBehavior
 			DashesPerformed = 0;
 		}
 		else if (DashesPerformed <= AmountOfDashes && DashesPerformed != AmountOfDashes)
-        {
+		{
 			this.LastDashWasLast = false;
 		}
 		if (!this.LastDashWasLast)
@@ -268,6 +268,7 @@ public class CustomDashBehavior : BasicAttackBehavior
 		return array;
 	}
 
+	// Token: 0x060046F3 RID: 18163 RVA: 0x00169864 File Offset: 0x00167A64
 	private Vector2 GetDashDirection()
 	{
 		float[] directions = this.GetDirections();
@@ -378,7 +379,7 @@ public class CustomDashBehavior : BasicAttackBehavior
 	}
 
 	private void SetState(CustomDashBehavior.DashState State)
-    {
+	{
 		if (this.m_state != State)
 		{
 			this.EndState(this.m_state);
@@ -431,6 +432,10 @@ public class CustomDashBehavior : BasicAttackBehavior
 				GameManager.Instance.Dungeon.dungeonDustups.InstantiateDodgeDustup(this.m_dashDirection, this.m_aiActor.specRigidbody.UnitBottomCenter);
 				this.m_cachedGrounded = true;
 			}
+			if (this.hideShadow && this.m_shadowSprite)
+			{
+				this.m_shadowSprite.renderer.enabled = false;
+			}
 			if (this.hideGun && this.m_aiShooter)
 			{
 				this.m_aiShooter.ToggleGunAndHandRenderers(false, "DashBehavior");
@@ -472,6 +477,10 @@ public class CustomDashBehavior : BasicAttackBehavior
 			{
 				this.m_aiActor.DoDustUps = this.m_cachedDoDustups;
 			}
+			if (this.hideShadow && this.m_shadowSprite)
+			{
+				this.m_shadowSprite.renderer.enabled = true;
+			}
 			if (this.hideGun && this.m_aiShooter)
 			{
 				this.m_aiShooter.ToggleGunAndHandRenderers(true, "DashBehavior");
@@ -509,62 +518,90 @@ public class CustomDashBehavior : BasicAttackBehavior
 
 	public float AmountOfDashes;
 
+	// Token: 0x040039B3 RID: 14771
 	public bool avoidTarget;
 
+	// Token: 0x040039B4 RID: 14772
 	[InspectorCategory("Attack")]
 	public GameObject ShootPoint;
 
+	// Token: 0x040039B5 RID: 14773
 	[InspectorCategory("Attack")]
 	public BulletScriptSelector bulletScript;
 
+	// Token: 0x040039B6 RID: 14774
 	[InspectorCategory("Attack")]
 	public bool fireAtDashStart;
 
+	// Token: 0x040039B7 RID: 14775
 	[InspectorCategory("Attack")]
 	public bool stopOnCollision;
 
+	// Token: 0x040039B8 RID: 14776
 	[InspectorCategory("Visuals")]
 	public string chargeAnim;
 
+	// Token: 0x040039B9 RID: 14777
 	[InspectorCategory("Visuals")]
 	public string dashAnim;
 
+	// Token: 0x040039BA RID: 14778
 	[InspectorCategory("Visuals")]
 	public bool doDodgeDustUp;
 
+	// Token: 0x040039BB RID: 14779
 	[InspectorCategory("Visuals")]
 	public bool warpDashAnimLength;
 
+	// Token: 0x040039BC RID: 14780
 	[InspectorCategory("Visuals")]
 	public bool hideShadow;
 
+	// Token: 0x040039BD RID: 14781
 	[InspectorCategory("Visuals")]
 	public bool hideGun;
 
+	// Token: 0x040039BE RID: 14782
 	[InspectorCategory("Visuals")]
 	public bool toggleTrailRenderer;
 
+	// Token: 0x040039BF RID: 14783
 	[InspectorCategory("Visuals")]
 	public bool enableShadowTrail;
 
+	// Token: 0x040039C0 RID: 14784
+	private tk2dBaseSprite m_shadowSprite;
+
+	// Token: 0x040039C1 RID: 14785
 	private TrailRenderer m_trailRenderer;
 
+	// Token: 0x040039C2 RID: 14786
 	private AfterImageTrailController m_shadowTrail;
 
+	// Token: 0x040039C3 RID: 14787
 	private BulletScriptSource m_bulletSource;
 
+	// Token: 0x040039C4 RID: 14788
 	private bool m_cachedDoDustups;
 
+	// Token: 0x040039C5 RID: 14789
 	private bool m_cachedGrounded;
 
+	// Token: 0x040039C6 RID: 14790
 	private Vector2 m_dashDirection;
 
+	// Token: 0x040039C7 RID: 14791
 	private float m_dashTimer;
 
+	// Token: 0x040039C8 RID: 14792
 	private bool m_shouldFire;
 
+	// Token: 0x040039C9 RID: 14793
+
+	// Token: 0x040039CA RID: 14794
 	private CustomDashBehavior.DashState m_state;
 
+	// Token: 0x02000D1F RID: 3359
 	public enum DashDirection
 	{
 		PerpendicularToTarget = 10,
@@ -572,11 +609,17 @@ public class CustomDashBehavior : BasicAttackBehavior
 		TowardTarget = 25,
 		Random = 30
 	}
+
+	// Token: 0x02000D20 RID: 3360
 	private enum DashState
 	{
+		// Token: 0x040039D1 RID: 14801
 		Idle,
+		// Token: 0x040039D2 RID: 14802
 		Charge,
+		// Token: 0x040039D3 RID: 14803
 		Dash,
+
 		Finished
 	}
 }

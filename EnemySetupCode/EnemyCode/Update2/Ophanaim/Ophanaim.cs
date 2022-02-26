@@ -68,6 +68,7 @@ namespace Planetside
 				enemy.aiActor.specRigidbody.CollideWithTileMap = true;
 				enemy.aiActor.PreventFallingInPitsEver = false;
 				enemy.aiActor.healthHaver.ForceSetCurrentHealth(1450f);
+				enemy.aiActor.SetIsFlying(true, "Gamemode: Creative", true, true);
 				enemy.aiActor.CollisionKnockbackStrength = 10f;
 				enemy.aiActor.CanTargetPlayers = true;
 				enemy.aiActor.healthHaver.SetHealthMaximum(1450f, null, false);

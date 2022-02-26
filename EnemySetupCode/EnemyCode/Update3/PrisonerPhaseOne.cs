@@ -577,7 +577,7 @@ namespace Planetside
 					new AttackBehaviorGroup.AttackGroupItem()
 					{
 
-					Probability = 0f,
+					Probability = 1f,
 					Behavior = new CustomBeholsterLaserBehavior{
 					UsesBeamProjectileWithoutModule = true,
 					InitialCooldown = 0f,
@@ -616,16 +616,16 @@ namespace Planetside
 					
 					new AttackBehaviorGroup.AttackGroupItem()
 					{
-						Probability = 0f,
+						Probability = 0.6f,
 						Behavior = new ShootBehavior{
 						ShootPoint = RaisedArmLaserAttachPoint,
 						BulletScript = new CustomBulletScriptSelector(typeof(WallSweep)),
 						LeadAmount = 0f,
 						AttackCooldown = 1f,
 						Cooldown = 4f,
-					ChargeAnimation = "chargelaser",
-					FireAnimation = "firelaser",
-					PostFireAnimation = "postlaser",
+						ChargeAnimation = "raisearm",
+						FireAnimation = "sweengarm",
+						PostFireAnimation = "lowerarm",
 						RequiresLineOfSight = true,
 						MultipleFireEvents = true,
 						Uninterruptible = false,
@@ -633,9 +633,30 @@ namespace Planetside
 						NickName = "Bloop"
 
 					},
+					/*
 					new AttackBehaviorGroup.AttackGroupItem()
 					{
-						Probability = 1f,
+						Probability = 11f,
+						Behavior = new ShootBehavior{
+						ShootPoint = RaisedArmLaserAttachPoint,
+						BulletScript = new CustomBulletScriptSelector(typeof(BasicBlastsToDodgeThrough)),
+						LeadAmount = 0f,
+						AttackCooldown = 1f,
+						Cooldown = 4f,
+						TellAnimation = "chargelaser",
+						FireAnimation = "firelaser",
+						PostFireAnimation = "postlaser",
+						RequiresLineOfSight = true,
+						MultipleFireEvents = true,
+						Uninterruptible = false,
+						},
+						NickName = "aaaaa"
+
+					},
+					*/
+					new AttackBehaviorGroup.AttackGroupItem()
+					{
+						Probability = 0.9f,
 						Behavior = new ShootBehavior{
 						ShootPoint = RaisedArmLaserAttachPoint,
 						BulletScript = new CustomBulletScriptSelector(typeof(SweepJukeAttack)),
@@ -654,7 +675,7 @@ namespace Planetside
 					},
 					new AttackBehaviorGroup.AttackGroupItem()
 					{
-						Probability = 0f,
+						Probability = 1f,
 						Behavior = new ShootBehavior{
 						ShootPoint = RightHandChargePoint,
 						BulletScript = new CustomBulletScriptSelector(typeof(BasicLaserAttackTell)),
@@ -673,7 +694,7 @@ namespace Planetside
 					},
 					new AttackBehaviorGroup.AttackGroupItem()
 					{
-						Probability = 0f,
+						Probability = 0.8f,
 						Behavior = new ShootBehavior{
 						ShootPoint = RaisedArmLaserAttachPoint,
 						BulletScript = new CustomBulletScriptSelector(typeof(ChainRotators)),
@@ -1743,8 +1764,8 @@ namespace Planetside
                 {
 					yield return this.Wait(30);
 					base.PostWwiseEvent("Play_BOSS_omegaBeam_charge_01");
-					base.BulletBank.aiActor.StartCoroutine(SwipeLaser(CentreAngle - 180, -174, this, 1.5f - (0.5f * e)));
-					base.BulletBank.aiActor.StartCoroutine(SwipeLaser(CentreAngle - 180, 174, this, 1.5f - (0.5f * e)));
+					base.BulletBank.aiActor.StartCoroutine(SwipeLaser(CentreAngle - 180, -168, this, 1.5f - (0.5f * e)));
+					base.BulletBank.aiActor.StartCoroutine(SwipeLaser(CentreAngle - 180, 168, this, 1.5f - (0.5f * e)));
 				}
 				for (int e = 0; e < 8; e++)
                 {
@@ -1859,7 +1880,6 @@ namespace Planetside
 				}
 				elapsed = 0;
 				Time = 0.75f;
-				//base.PostWwiseEvent("Play_FlashTell");
 				while (elapsed < Time)
 				{
 
@@ -1876,16 +1896,15 @@ namespace Planetside
 				base.BulletBank.aiActor.GetComponent<PrisonerController>().extantReticles.Clear();
 				base.PostWwiseEvent("Play_ENM_bulletking_skull_01", null);
 
-				for (int e = 0; e < 40; e++)
+				for (int e = 0; e < 15; e++)
                 {
-					float Range = UnityEngine.Random.Range(15, 22);
-					for (int i = 0; i < Range; i++)
+					for (int i = 0; i < 36; i++)
 					{
-						float t = (float)i / (float)Range;
-						base.Fire(new Direction(Mathf.Lerp(StartAngle, StartAngle + AddOrSubtract, t), DirectionType.Absolute, -1f), new Speed(30f, SpeedType.Absolute), new SweepJukeAttack.BasicBullet());
+						float t = (float)i / (float)36;
+						base.Fire(new Direction(Mathf.Lerp(StartAngle, StartAngle + AddOrSubtract, t), DirectionType.Absolute, -1f), new Speed(UnityEngine.Random.Range(28, 32), SpeedType.Absolute), new SweepJukeAttack.BasicBullet());
 					}
 					base.PostWwiseEvent("Play_BOSS_doormimic_zap_01");
-					yield return new WaitForSeconds(0.125f);
+					yield return new WaitForSeconds(0.33f);
 				}
 				yield break;
 			}
@@ -1993,6 +2012,89 @@ namespace Planetside
 					yield break;
 				}
 				private float Inc;
+			}
+		}
+
+
+		public class BasicBlastsToDodgeThrough : Script
+		{
+			protected override IEnumerator Top()
+			{
+				PrisonerController controller = base.BulletBank.aiActor.GetComponent<PrisonerController>();
+				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("41ee1c8538e8474a82a74c4aff99c712").bulletBank.GetBullet("big"));
+				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("31a3ea0c54a745e182e22ea54844a82d").bulletBank.GetBullet("sniper"));
+				for (int i = 0; i < 5; i++)
+				{
+					for (int e = 0; e < 90; e++)
+                    {
+						Vector2 vector2 = this.BulletManager.PlayerPosition();
+						Vector2 predictedPosition = BraveMathCollege.GetPredictedPosition(vector2, this.BulletManager.PlayerVelocity(), this.Position, 7f); float CentreAngle = (predictedPosition - this.Position).ToAngle();
+						float t = (float)e / (float)90;
+						bool shouldBeRollable = e >= -1 && e <= 5 || e >= 85 && e <= 90;
+
+						if (shouldBeRollable == true) { base.Fire(new Direction(CentreAngle + (4 * e), DirectionType.Absolute, -1f), new Speed(11.5f, SpeedType.Absolute), new WallBulletDodge("sniper")); }
+						else { base.Fire(new Direction(CentreAngle + (4 * e), DirectionType.Absolute, -1f), new Speed(11.5f, SpeedType.Absolute), new WallBulletNoDodge("sniper")); }
+						
+					}
+					controller.MoveTowardsPositionMethod(0.5f, 2);
+					yield return this.Wait(60);
+				}
+				
+				yield break;
+			}
+
+			public class WallBulletNoDodge : Bullet
+			{
+				public WallBulletNoDodge(string BulletType) : base(BulletType, false, false, false)
+				{
+				}
+				protected override IEnumerator Top()
+				{
+					base.Projectile.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+					SpawnManager.PoolManager.Remove(base.Projectile.transform);
+					base.ChangeSpeed(new Speed(8f, SpeedType.Absolute), 30);
+
+					yield break;
+				}
+			}
+			public class WallBulletDodge : Bullet
+			{
+				public WallBulletDodge(string BulletType) : base(BulletType, false, false, false)
+				{
+				}
+				protected override IEnumerator Top()
+				{
+					base.ChangeSpeed(new Speed(8f, SpeedType.Absolute), 30);
+					//base.Projectile.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+					//SpawnManager.PoolManager.Remove(base.Projectile.transform);
+					yield break;
+				}
+			}
+			public class BasicBullet : Bullet
+			{
+				public BasicBullet() : base("sniper", false, false, false)
+				{
+
+				}
+				protected override IEnumerator Top()
+				{
+					base.ChangeSpeed(new Speed(base.Speed + 11, SpeedType.Absolute), 60);
+					yield break;
+				}
+			}
+			public class MegaBullet : Bullet
+			{
+				public MegaBullet() : base("big", false, false, false)
+				{
+
+				}
+				protected override IEnumerator Top()
+				{
+					base.Projectile.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+					SpawnManager.PoolManager.Remove(base.Projectile.transform);
+					base.ChangeSpeed(new Speed(30f, SpeedType.Absolute), 150);
+					yield break;
+				}
 			}
 		}
 

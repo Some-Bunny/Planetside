@@ -16,7 +16,6 @@ namespace Planetside
     {
 		public static SharedInjectionData ForgeData;
 		public static SharedInjectionData BaseSharedInjectionData;
-
 		public static SharedInjectionData GungeonInjectionData;
 
 		public static void InitialiseFlows()
@@ -28,7 +27,6 @@ namespace Planetside
 			AddMinesSWRoom(false);
 			InitTimeTraderRooms(false);
 			InitHolyChamberShrineRooms(false);
-
 			InitPrisonerRooms();
 		}
 
@@ -62,18 +60,14 @@ namespace Planetside
 					materialRequirements = new DungeonPlaceableRoomMaterialRequirement[0]
 				}
 			};
-
 			BrokenChamberRoomVar.placedObjects.Add(new PrototypePlacedObjectData
 			{
-
 				contentsBasePosition = vector,
 				fieldData = new List<PrototypePlacedObjectFieldData>(),
 				instancePrerequisites = array,
 				linkedTriggerAreaIDs = new List<int>(),
-				placeableContents = placeableContents
-						
+				placeableContents = placeableContents			
 			});
-
 			HolyChamberRoom = new ProceduralFlowModifierData()
 			{
 				annotation = "HolyChamebrShrineRoom",

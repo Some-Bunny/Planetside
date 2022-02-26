@@ -23,6 +23,10 @@ namespace Planetside
             GameManager.Instance.StartCoroutine(LerpToSize(Vector3.zero, Vector3.one * 2f, 0.2f));
             base.Invoke("ReregisterInteractable", 0.5f);
             Exploder.DoDistortionWave(base.gameObject.transform.PositionVector2(), 1, 0.2f, 3, 0.4f);
+            var partObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("PortalClose"));
+            partObj.transform.position = gameObject.transform.position;
+            partObj.transform.parent = gameObject.transform;
+            Destroy(partObj, 1);
         }
 
 

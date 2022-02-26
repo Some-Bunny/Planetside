@@ -121,8 +121,10 @@
     <Compile Include="Guns\Update4\ThunderShotProjectile.cs" />
     <Compile Include="Guns\Update4\WhistlerProjectile.cs" />
     <Compile Include="Guns\Update4\Whistler.cs" />
+    <Compile Include="Hooks\DungeonHooks.cs" />
     <Compile Include="Hooks\PickupHooks.cs" />
     <Compile Include="Hooks\ExplosionHooks.cs" />
+    <Compile Include="Items\Update4\ForgottenRoundOubleiite.cs" />
     <Compile Include="Items\Update4\LostVoidPotential.cs" />
     <Compile Include="Items\Update4\TrespassStone.cs" />
     <Compile Include="Items\Update4\ConnoisseursRobes.cs" />
@@ -132,6 +134,7 @@
     <Compile Include="Items\Update4\GunslingersRing.cs" />
     <Compile Include="Items\Update4\LuckyCharm.cs" />
     <Compile Include="Items\Update4\Modifiers\ModifierNeedle.cs" />
+    <Compile Include="Misc Stuff\Static Storage\StaticInformation.cs" />
     <Compile Include="Misc Stuff\Static Storage\StaticVFXStorage.cs" />
     <Compile Include="Pickups\Perkthings\AllSeeingEye.cs" />
     <Compile Include="Pickups\Perkthings\Gunslinger.cs" />
@@ -2801,6 +2804,9 @@
     <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassLight\trespassPillar6.png" />
     <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassLight\trespassPillar7.png" />
     <EmbeddedResource Include="Resources\LostVoidPotential.png" />
+    <EmbeddedResource Include="Resources\forgottenroundabbey.png" />
+    <EmbeddedResource Include="Resources\forgottenroundrng.png" />
+    <EmbeddedResource Include="Resources\forgottenroundsewer.png" />
     <Content Include="Resources\Shellrax\shellrax_intro_019.png" />
     <EmbeddedResource Include="Resources\VFX\LockOnVFX\lockonvfx1.png" />
     <EmbeddedResource Include="Resources\VFX\LockOnVFX\lockonvfx2.png" />

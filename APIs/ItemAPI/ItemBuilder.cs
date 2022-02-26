@@ -81,17 +81,16 @@ namespace ItemAPI
         /// Finishes the item setup, adds it to the item databases, adds an encounter trackable 
         /// blah, blah, blah
         /// </summary>
-        public static void SetupItem(this PickupObject item, string shortDesc, string longDesc, string idPool = "customItems")
+        public static void SetupItem(this PickupObject item, string shortDesc, string longDesc, string idPool = "customItems", string encounterName = null)
         {
             try
             {
-                item.encounterTrackable = null;
-
+                item.encounterTrackable = null;   
                 ETGMod.Databases.Items.SetupItem(item, item.name);
                 SpriteBuilder.AddToAmmonomicon(item.sprite.GetCurrentSpriteDef());
                 item.encounterTrackable.journalData.AmmonomiconSprite = item.sprite.GetCurrentSpriteDef().name;
 
-                item.SetName(item.name);
+                item.SetName(encounterName != null ? encounterName : item.name);
                 item.SetShortDescription(shortDesc);
                 item.SetLongDescription(longDesc);
 

@@ -10,6 +10,13 @@ using System.Linq;
 
 public class CustomBeholsterLaserBehavior : BasicAttackBehavior
 {
+
+	public CustomBeholsterLaserBehavior()
+    {
+		RampHeight = 5;
+		LocksFacingDirection = true;
+	}
+
 	public override void Start()
 	{
 		base.Start();
@@ -288,7 +295,7 @@ public class CustomBeholsterLaserBehavior : BasicAttackBehavior
 
 	public void PrechargeFiringLaser()
 	{
-		this.m_aiActor.aiAnimator.LockFacingDirection = true;
+		if (LocksFacingDirection == true) { base.m_aiActor.aiAnimator.LockFacingDirection = true; }
 		if (EnemyChargeSound != null) { AkSoundEngine.PostEvent(EnemyChargeSound, base.m_aiActor.gameObject); }
 		else if (UsesBaseSounds == true) { AkSoundEngine.PostEvent("Play_ENM_beholster_charging_01", base.m_aiActor.gameObject); }
 	}
@@ -302,26 +309,22 @@ public class CustomBeholsterLaserBehavior : BasicAttackBehavior
 
 	public void StartFiringTheLaser()
 	{
-		float facingDirection = this.m_aiActor.aiAnimator.FacingDirection;
-		this.IsfiringLaser = true;
-		this.SetLaserAngle(facingDirection);
-		this.m_aiActor.aiAnimator.LockFacingDirection = true;
 		if (UsesBaseSounds == true) { AkSoundEngine.PostEvent("Play_ENM_deathray_shot_01", base.m_aiActor.gameObject); }
 		else if (LaserFiringSound != null) { AkSoundEngine.PostEvent(LaserFiringSound, base.m_aiActor.gameObject); }
-
-		this.IsfiringLaser = true;
-		base.m_aiActor.aiAnimator.LockFacingDirection = true;
 		MonoBehaviour yes = this.m_aiActor.GetComponent<MonoBehaviour>();
 		if (!string.IsNullOrEmpty(this.FireAnimation))
 		{
 			this.m_aiAnimator.PlayUntilCancelled(this.FireAnimation, true, null, -1f, false);
 		}
+		float facingDirection = this.m_aiActor.aiAnimator.FacingDirection;
+		if (LocksFacingDirection == true) { base.m_aiActor.aiAnimator.LockFacingDirection = true; }
+		this.SetLaserAngle(facingDirection);
+		this.IsfiringLaser = true;
 		for (int i = 0; i < this.m_currentBeamShooters.Count; i++)
 		{
 			AIBeamShooter2 aibeamShooter2 = this.m_currentBeamShooters[i];
 			yes.StartCoroutine(this.FireBeam(aibeamShooter2));
 		}
-
 	}
 
 
@@ -378,15 +381,9 @@ public class CustomBeholsterLaserBehavior : BasicAttackBehavior
 		{
 			Projectile currentProjectile = null;
 			if (UsesBeamProjectileWithoutModule)
-			{
-				currentProjectile = aibeamShooter2.beamProjectile;
-			}
+			{currentProjectile = aibeamShooter2.beamProjectile;}
 			else
-            {
-				currentProjectile = aibeamShooter2.beamModule.GetCurrentProjectile();
-			}
-
-
+            {currentProjectile = aibeamShooter2.beamModule.GetCurrentProjectile();}
 			HealthHaver healthHaver = (!hitRigidbody) ? null : hitRigidbody.healthHaver;
 			if (hitRigidbody && hitRigidbody.projectile && hitRigidbody.GetComponent<BeholsterBounceRocket>())
 			{
@@ -421,20 +418,29 @@ public class CustomBeholsterLaserBehavior : BasicAttackBehavior
 		while (beamCont != null && this.IsfiringLaser)
 		{
 			enemyTickCooldown = Mathf.Max(enemyTickCooldown - BraveTime.DeltaTime, 0f);
-			bool flag4 = this.UsesCustomAngle == true && this.FiresDirectlyTowardsPlayer == true;
 			float clampedAngle = this.m_aiActor.aiAnimator.FacingDirection;
 			if (firingType == FiringType.TOWARDS_PLAYER)
             {
-				clampedAngle = this.m_aiActor.aiAnimator.FacingDirection + AlaserAngle;
+				clampedAngle = AlaserAngle;
 			}
 			else if (firingType == FiringType.TOWARDS_PLAYER_AND_NORTHANGLEVARIANCE)
 			{
-				clampedAngle = BraveMathCollege.ClampAngle360(this.m_aiActor.aiAnimator.FacingDirection + aibeamShooter2.northAngleTolerance) + AlaserAngle;
+				clampedAngle = BraveMathCollege.ClampAngle360(aibeamShooter2.northAngleTolerance) + AlaserAngle;
 			}
 			else if (firingType == FiringType.ONLY_NORTHANGLEVARIANCE)
 			{
 				clampedAngle = BraveMathCollege.ClampAngle360(aibeamShooter2.northAngleTolerance) + AlaserAngle;
 			}
+			else if (firingType == FiringType.FACINGDIRECTION_AND_CLAMPED_ANGLE)
+			{
+				clampedAngle += BraveMathCollege.ClampAngle360(aibeamShooter2.northAngleTolerance);
+			}
+
+			//bool facingNorth = BraveMathCollege.ClampAngle180(beamCont.Direction.ToAngle()) > 0f;
+			beamCont.RampHeightOffset = RampHeight;
+
+
+
 			//SetLaserAngle(clampedAngle);
 
 			/*
@@ -549,6 +555,7 @@ public class CustomBeholsterLaserBehavior : BasicAttackBehavior
 	private CustomBeholsterLaserBehavior.State m_state;
 
 	private float m_timer;
+	public bool LocksFacingDirection;
 
 	private Vector2 m_targetPosition;
 
@@ -576,7 +583,8 @@ public class CustomBeholsterLaserBehavior : BasicAttackBehavior
     {
 		TOWARDS_PLAYER,
 		TOWARDS_PLAYER_AND_NORTHANGLEVARIANCE,
-		ONLY_NORTHANGLEVARIANCE
+		ONLY_NORTHANGLEVARIANCE,
+		FACINGDIRECTION_AND_CLAMPED_ANGLE
 	}
 
 
@@ -589,7 +597,7 @@ public class CustomBeholsterLaserBehavior : BasicAttackBehavior
 	//=====
 	public bool FiresDirectlyTowardsPlayer;
 	public bool UsesCustomAngle;
-	public float CustomAngleValue;
+	public float RampHeight;
 	//=====
 	public string ChargeAnimation;
 	public string FireAnimation;

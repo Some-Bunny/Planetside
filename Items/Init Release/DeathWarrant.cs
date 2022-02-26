@@ -42,16 +42,78 @@ namespace Planetside
         {
 			if (player)
             {
-				AIActor randomActiveEnemy = player.CurrentRoom.GetRandomActiveEnemy(false);
-				if (randomActiveEnemy == null)
+				List<AIActor> randomActiveEnemy = player.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.RoomClear);
+				if (randomActiveEnemy == null || randomActiveEnemy.Count == 0)
                 {
 					Destroy(base.gameObject, 0.25f);
 					return;
                 }
-				else
-                {GameManager.Instance.StartCoroutine(LerpToEnemy(base.transform.position, randomActiveEnemy));}
+				else if (RemoveInvalidEnemies(randomActiveEnemy) != null || RemoveInvalidEnemies(randomActiveEnemy).Count > 0)
+                {GameManager.Instance.StartCoroutine(LerpToEnemy(base.transform.position, randomActiveEnemy[UnityEngine.Random.Range(0, randomActiveEnemy.Count)]));}
 			}
         }
+
+		private List<AIActor> RemoveInvalidEnemies(List<AIActor> aIList)
+        {
+			for (int i = 0; i < aIList.Count; i++)
+			{
+				AIActor aI = aIList[i];
+				{
+					if (aI.IgnoreForRoomClear == true) { aIList.Remove(aI); }
+					if (aI.gameObject.GetComponent<MirrorImageController>() != null) { aIList.Remove(aI); }
+					if (aI.gameObject.GetComponent<DisplacedImageController>() != null) { aIList.Remove(aI); }
+					if (bannedEnemies.Contains(aI.EnemyGuid)) { aIList.Remove(aI); }
+					if (StaticInformation.ModderBulletGUIDs.Contains(aI.EnemyGuid)) { aIList.Remove(aI); }
+				}
+			}
+			return aIList;
+        }
+
+
+		public static List<string> bannedEnemies = new List<string>()
+		{
+			EnemyGuidDatabase.Entries["key_bullet_kin"],
+			EnemyGuidDatabase.Entries["chance_bullet_kin"],
+			EnemyGuidDatabase.Entries["gummy_spent"],
+			EnemyGuidDatabase.Entries["gunreaper"],
+			EnemyGuidDatabase.Entries["lead_cube"],
+			EnemyGuidDatabase.Entries["brown_chest_mimic"],
+			EnemyGuidDatabase.Entries["blue_chest_mimic"],
+			EnemyGuidDatabase.Entries["green_chest_mimic"],
+			EnemyGuidDatabase.Entries["red_chest_mimic"],
+			EnemyGuidDatabase.Entries["black_chest_mimic"],
+			EnemyGuidDatabase.Entries["rat_chest_mimic"],
+			EnemyGuidDatabase.Entries["pedestal_mimic"],
+			EnemyGuidDatabase.Entries["wall_mimic"],
+			EnemyGuidDatabase.Entries["mine_flayers_bell"],
+
+			EnemyGuidDatabase.Entries["bullet_kings_toadie"],
+			EnemyGuidDatabase.Entries["bullet_kings_toadie_revenge"],
+			EnemyGuidDatabase.Entries["old_kings_toadie"],
+			EnemyGuidDatabase.Entries["fusebot"],
+			EnemyGuidDatabase.Entries["draguns_knife"],
+			"deturretleft_enemy",
+			"deturret_enemy",
+			"fodder_enemy",
+			"shamber_psog",
+			
+		};
+
+		public static List<string> targetableButWontIncreaseKillCount = new List<string>()
+		{
+			EnemyGuidDatabase.Entries["blobulin"],
+			EnemyGuidDatabase.Entries["blobuloid"],
+			EnemyGuidDatabase.Entries["spent"],
+			EnemyGuidDatabase.Entries["poisbulin"],
+			EnemyGuidDatabase.Entries["grenade_kin"],
+			EnemyGuidDatabase.Entries["dynamite_kin"],
+			EnemyGuidDatabase.Entries["bombshee"],
+			EnemyGuidDatabase.Entries["m80_kin"],
+			EnemyGuidDatabase.Entries["summoned_treadnaughts_bullet_kin"],
+			EnemyGuidDatabase.Entries["mouser"],
+		};
+
+
 
 		private IEnumerator LerpToEnemy(Vector3 oldPos, AIActor newTarget)
         {
@@ -60,6 +122,13 @@ namespace Planetside
 			float elapsed = 0f;
 			float duration = 0.5f;
 			AkSoundEngine.PostEvent("Play_BOSS_dragun_throw_01", player.gameObject);
+
+			Vector3 a = Vector3.zero;
+			if (newTarget != null)
+            {
+				a = (newTarget.specRigidbody.HitboxPixelCollider == null) ? newTarget.sprite.WorldCenter.ToVector3ZUp(0f) : newTarget.specRigidbody.HitboxPixelCollider.UnitCenter.ToVector3ZUp(0f);
+			}
+
 			while (elapsed < duration)
 			{
 				if (base.gameObject == null) {break;}
@@ -67,14 +136,14 @@ namespace Planetside
 
 				elapsed += BraveTime.DeltaTime;
 				float t = elapsed / duration * (elapsed / duration);
-				base.gameObject.transform.position = Vector3.Lerp(oldPos, newTarget.specRigidbody.UnitTopCenter.ToVector3ZisY() + new Vector3(0, 1.25f), t);
+				base.gameObject.transform.position = Vector3.Lerp(oldPos, a + new Vector3(-0.375f, 1.25f), t);
 				yield return null;
 			}
 			if (newTarget != null)
             {
 				State = States.LOCKED_ON;
 				newTarget.healthHaver.OnPreDeath += OnPreDeath;
-				newTarget.healthHaver.AllDamageMultiplier *= 1.15f;
+				newTarget.healthHaver.AllDamageMultiplier *= 1.2f;
 				Target = newTarget;
 
 				GameObject gameObject = SpawnManager.SpawnVFX(StaticVFXStorage.JammedDeathVFX, base.gameObject.transform.position, Quaternion.identity, false);
@@ -100,9 +169,12 @@ namespace Planetside
 
         private void OnPreDeath(Vector2 obj)
         {
-			Kills++;
-			Target = null;
-			base.Invoke("MoveToDifferentTarget", 0.5f);
+			if (this != null)
+            {
+				if (Target != null && !targetableButWontIncreaseKillCount.Contains(Target.EnemyGuid)) { Kills++; }
+				Target = null;
+				base.Invoke("MoveToDifferentTarget", 0.25f);
+			}
 		}
 
         private void Update()
@@ -112,16 +184,16 @@ namespace Planetside
 				AIActor randomActiveEnemy = player.CurrentRoom.GetRandomActiveEnemy(false);
 				if (randomActiveEnemy == null)
 				{
-					Destroy(base.gameObject, 0.25f);
+					Destroy(base.gameObject, 0.5f);
 					return;
 				}
 			}
-
-
 			tk2dSpriteAnimator animator = base.gameObject.GetComponent<tk2dSpriteAnimator>();
 			if (Target != null)
             {
-				base.gameObject.transform.position = Target.specRigidbody.UnitTopCenter.ToVector3ZisY() + new Vector3(0, 1.25f);
+
+				Vector3 a = Target.specRigidbody.HitboxPixelCollider == null ? Target.sprite.WorldCenter.ToVector3ZUp(0f) : Target.specRigidbody.HitboxPixelCollider.UnitCenter.ToVector3ZUp(0f);
+				base.gameObject.transform.position = a + new Vector3(-0.375f, 1.25f);
 				Material outlineMaterial1 = SpriteOutlineManager.GetOutlineMaterial(Target.sprite);
 				if (!Target.healthHaver.IsDead && outlineMaterial1 != null)
 				{
@@ -139,9 +211,9 @@ namespace Planetside
 
 		private GenericLootTable GetRewardValue()
 		{
-			if (Kills >= 11)
+			if (Kills >= 14)
             {return DeathWarrant.largeKillsTable;}
-			else if (Kills >= 5)
+			else if (Kills >= 7)
 			{return DeathWarrant.mediumKillsTable;}
 			else if (Kills >= 2)
 			{return DeathWarrant.smallKillsTable;}
@@ -166,6 +238,8 @@ namespace Planetside
 				component.HeightOffGround = 5f;
 				component.UpdateZDepth();
 			}
+			if (Target != null)
+            {Target.healthHaver.OnPreDeath -= OnPreDeath;}
 		}
 		private AIActor Target;
 		private int Kills;
