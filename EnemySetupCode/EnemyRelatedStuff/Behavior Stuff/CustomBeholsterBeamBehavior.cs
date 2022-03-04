@@ -500,6 +500,12 @@ public class CustomBeholsterLaserBehavior : BasicAttackBehavior
 				yield return null;
 				if (this.IsfiringLaser && !beamCont)
 				{
+					//beamCont.CeaseAttack();
+					this.StopFiringLaser();
+					break;
+				}
+				else if (!this.IsfiringLaser && beamCont)
+                {
 					beamCont.CeaseAttack();
 					this.StopFiringLaser();
 					break;

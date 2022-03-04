@@ -177,8 +177,8 @@ namespace NpcApi
 
 		protected override void DoSetup()
 		{
-
 			base.m_shopItems = new List<GameObject>();
+
 			List<int> list = new List<int>();
 			Func<GameObject, float, float> weightModifier = null;
 			if (SecretHandshakeItem.NumActive > 0)
@@ -208,6 +208,9 @@ namespace NpcApi
 					this.m_shopItems.Add(gameObject5);
 				}
 			}
+
+			if (base.m_room == null) { GameManager.Instance.Dungeon.data.GetAbsoluteRoomFromPosition(new IntVector2((int)base.gameObject.transform.position.x, (int)base.gameObject.transform.position.y)); }
+
 			m_itemControllers = new List<ShopItemController>();
 			for (int m = 0; m < base.spawnPositions.Length; m++)
 			{
@@ -228,7 +231,6 @@ namespace NpcApi
 						}
 						CustomShopItemController shopItemController = gameObject6.AddComponent<CustomShopItemController>();
 
-
 						this.AssignItemFacing(transform, shopItemController);
 						if (!base.m_room.IsRegistered(shopItemController))
 						{
@@ -236,7 +238,6 @@ namespace NpcApi
 						}
 
 						shopItemController.CurrencyType = currencyType;
-
 
 						shopItemController.customCanBuy += CustomCanBuyMethod;
 						shopItemController.customPrice += CustomPriceMethod;

@@ -138,14 +138,14 @@ namespace Planetside
             new Hook(typeof(PlayerController).GetMethod("Fall", BindingFlags.Instance | BindingFlags.NonPublic), typeof(PitLordsPact).GetMethod("FallHookPlayer"));
 
             GenericLootTable pitLordsPactPickupTable = LootTableTools.CreateLootTable();
-            pitLordsPactPickupTable.AddItemsToPool(new Dictionary<int, float>() { { 70, 1f }, { 73, 0.7f }, { 120, 0.6f }, { 85, 0.6f }, { 565, 0.5f }, { 224, 0.5f }, { 65, 0.33f }, { LeSackPickup.SaccID, 0.02f }, { NullPickupInteractable.NollahID, 0.02f }, });
+            pitLordsPactPickupTable.AddItemsToPool(new Dictionary<int, float>() { { 70, 1f }, { 73, 0.7f }, { 120, 0.6f }, { 85, 0.6f }, { 565, 0.5f }, { 224, 0.5f }, { 67, 0.33f }, { LeSackPickup.SaccID, 0.02f }, { NullPickupInteractable.NollahID, 0.02f }, });
             PitLordsPactTable = pitLordsPactPickupTable;
 
             GenericLootTable pitLordsPactPickupTableNoHP = LootTableTools.CreateLootTable();
-            pitLordsPactPickupTableNoHP.AddItemsToPool(new Dictionary<int, float>() { { 70, 1f },{ 565, 0.5f }, { 224, 0.5f }, { 65, 0.33f }, { LeSackPickup.SaccID, 0.02f }, { NullPickupInteractable.NollahID, 0.02f }, });
+            pitLordsPactPickupTableNoHP.AddItemsToPool(new Dictionary<int, float>() { { 70, 1f },{ 565, 0.5f }, { 224, 0.5f }, { 67, 0.33f }, { LeSackPickup.SaccID, 0.02f }, { NullPickupInteractable.NollahID, 0.02f }, });
             PitLordsPactTableNoHP = pitLordsPactPickupTableNoHP;
         }
-        private static GenericLootTable PitLordsPactTable;
+        public static GenericLootTable PitLordsPactTable;
         private static GenericLootTable PitLordsPactTableNoHP;
 
         public static int PitLordsPactID;

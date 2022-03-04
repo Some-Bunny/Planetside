@@ -38,8 +38,8 @@ namespace Planetside
             if (GameManager.Instance.PrimaryPlayer == null && Pixelator.Instance != null)
             {
                 Pixelator.Instance.AdditionalCoreStackRenderPass = null;
+                isDark = false;
             }
-
             if (isDark && GameManager.Instance.PrimaryPlayer != null && Pixelator.Instance != null)
             {
                 if (Pixelator.Instance.AdditionalCoreStackRenderPass == null && Pixelator.Instance != null)

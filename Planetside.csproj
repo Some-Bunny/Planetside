@@ -126,6 +126,7 @@
     <Compile Include="Hooks\ExplosionHooks.cs" />
     <Compile Include="Items\Update4\ForgottenRoundOubleiite.cs" />
     <Compile Include="Items\Update4\LostVoidPotential.cs" />
+    <Compile Include="Items\Update4\ShopInABox.cs" />
     <Compile Include="Items\Update4\TrespassStone.cs" />
     <Compile Include="Items\Update4\ConnoisseursRobes.cs" />
     <Compile Include="Items\Update4\SpinningDeath.cs" />
@@ -147,6 +148,7 @@
     <Compile Include="Pickups\Perkthings\Greedy.cs" />
     <Compile Include="Pickups\Perkthings\AllStatsUp.cs" />
     <Compile Include="Pickups\Perkthings\PerkParticleSystemController.cs" />
+    <Compile Include="DungeonPlaceables\PrisonerShrineControllerp.cs" />
     <Compile Include="Toolboxes\EnemyToolbox.cs" />
     <Compile Include="Toolboxes\SpapisSuperCoolAdvancedCodeToolbox.cs" />
     <Compile Include="Unsorted Garbage\KnuckleBackerUIController.cs" />
@@ -653,6 +655,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="APIs\SaveAPI\Properties\" />
+    <Folder Include="NewFolder1\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Enemies\ModderBullets\an3s\an3sbullet_die_001.png" />
@@ -2807,6 +2810,17 @@
     <EmbeddedResource Include="Resources\forgottenroundabbey.png" />
     <EmbeddedResource Include="Resources\forgottenroundrng.png" />
     <EmbeddedResource Include="Resources\forgottenroundsewer.png" />
+    <EmbeddedResource Include="Resources\keepersBox2.png" />
+    <EmbeddedResource Include="Resources\NPCs\Gregthly\gregthly.png" />
+    <EmbeddedResource Include="Resources\NPCs\Gregthly\gregthlycarpet.png" />
+    <EmbeddedResource Include="Resources\NPCs\Gregthly\gregthly1.png" />
+    <EmbeddedResource Include="Resources\NPCs\Gregthly\gregthly2.png" />
+    <EmbeddedResource Include="Resources\NPCs\Gregthly\gregthly3.png" />
+    <EmbeddedResource Include="Resources\NPCs\Gregthly\gregthly4.png" />
+    <EmbeddedResource Include="Resources\NPCs\Gregthly\gregthlysqueeze_001.png" />
+    <EmbeddedResource Include="Resources\NPCs\Gregthly\gregthlysqueeze_002.png" />
+    <EmbeddedResource Include="Resources\NPCs\Gregthly\gregthlysqueeze_003.png" />
+    <EmbeddedResource Include="Resources\NPCs\Gregthly\gregthlysqueeze_004.png" />
     <Content Include="Resources\Shellrax\shellrax_intro_019.png" />
     <EmbeddedResource Include="Resources\VFX\LockOnVFX\lockonvfx1.png" />
     <EmbeddedResource Include="Resources\VFX\LockOnVFX\lockonvfx2.png" />

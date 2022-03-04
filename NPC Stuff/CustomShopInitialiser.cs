@@ -14,6 +14,7 @@ namespace Planetside
         {
             InitialiseTimeTrader();
             InitialiseTablert();
+            Gregthly();
         }
 
         public static void InitialiseTablert()
@@ -69,7 +70,7 @@ namespace Planetside
             , new Vector3(1.375f, 1f)
             , new Vector3(1.25f, 2.4375f, 5.9375f)
             , new Vector3[] { new Vector3(0.5f, 1.25f, 1), new Vector3(2f, 1.1f, 1), new Vector3(3.5f, 1.5625f, 1),  }
-            , 0.8f
+            , 0.66f
             , false
             , null
             , null
@@ -85,7 +86,7 @@ namespace Planetside
             , true
             , "Planetside/Resources/NPCs/TableDude/talbertIcon.png"
             , true
-            , 0.33f
+            , 0.25f
             , null
             , DancePaths);
            
@@ -104,8 +105,96 @@ namespace Planetside
             ItsDaFuckinShopApi.GenerateOrAddToRigidBody(talbertObj.GetComponentInChildren<tk2dSpriteAnimator>().gameObject, CollisionLayer.LowObstacle, PixelCollider.PixelColliderGeneration.Manual, true, true, true, false, false, false, false, true, new IntVector2(32, 18), new IntVector2(5, -2));
             StaticReferences.StoredRoomObjects.Add("talber", talbertObj);
         }
+        public static void Gregthly()
+        {
+            string baseFilepath = "Planetside/Resources/NPCs/Gregthly/gregthly";
 
-     
+            ETGMod.Databases.Strings.Core.AddComplex("#GREGTHLY_RUNBASEDMULTILINE_GENERIC", "...");
+            ETGMod.Databases.Strings.Core.AddComplex("#GREGTHLY_RUNBASEDMULTILINE_GENERIC", "...");
+            ETGMod.Databases.Strings.Core.AddComplex("#GREGTHLY_RUNBASEDMULTILINE_GENERIC", "...");
+            ETGMod.Databases.Strings.Core.AddComplex("#GREGTHLY_RUNBASEDMULTILINE_GENERIC", "...");
+
+            ETGMod.Databases.Strings.Core.Set("#GREGTHLY_RUNBASEDMULTILINE_STOPPER", ". . .");
+            ETGMod.Databases.Strings.Core.Set("#GREGTHLY_RUNBASEDMULTILINE_PURCHASE", "!!!");
+            ETGMod.Databases.Strings.Core.Set("#GREGTHLY_RUNBASEDMULTILINE_FAILPURCHASE", ".....");
+            ETGMod.Databases.Strings.Core.Set("#GREGTHLY_RUNBASEDMULTILINE_INTRO", "...");
+            ETGMod.Databases.Strings.Core.Set("#GREGTHLY_RUNBASEDMULTILINE_ATTACKED", "???");
+
+
+            GameObject timedShop = ItsDaFuckinShopApi.SetUpShop(
+                  "gregthly"
+                , "psog"
+                , new List<string> { baseFilepath + "1.png", baseFilepath + "2.png", baseFilepath + "3.png", baseFilepath + "4.png" }
+                , 4
+                , new List<string> { baseFilepath + "1.png", baseFilepath + "2.png", baseFilepath + "3.png", baseFilepath + "4.png" }
+                , 6
+                , ShopInABox.shopInABoxPickupTable
+                , CustomShopItemController.ShopCurrencyType.COINS
+                , "#GREGTHLY_RUNBASEDMULTILINE_GENERIC"
+                , "#GREGTHLY_RUNBASEDMULTILINE_STOPPER"
+                , "#GREGTHLY_RUNBASEDMULTILINE_PURCHASE"
+                , "#GREGTHLY_RUNBASEDMULTILINE_FAILPURCHASE"
+                , "#GREGTHLY_RUNBASEDMULTILINE_INTRO"
+                , "#GREGTHLY_RUNBASEDMULTILINE_ATTACKED"
+                , new Vector3(1.25f, 2f)
+                , new Vector3(0.375f, 1.375f, 5.9375f)
+                , new Vector3[] { new Vector3(0.75f, 0.875f, 1) }
+                , 0.8f
+                , false
+                , null
+                , null
+                , null
+                , null
+                , null
+                , null
+                , null
+                , ""
+                , true
+                , true
+                , baseFilepath + "carpet.png"
+                , true
+                , null
+                , false
+                , 0.1f
+                , null
+                , new List<string> { baseFilepath + "squeeze_001.png", baseFilepath + "squeeze_002.png", baseFilepath + "squeeze_003.png", baseFilepath + "squeeze_004.png" });
+            EnemyToolbox.AddSoundsToAnimationFrame(timedShop.GetComponentInChildren<tk2dSpriteAnimator>(), "dance", new Dictionary<int, string>() { { 1, "Play_WPN_teddy_impact_03" } });
+
+            StaticReferences.StoredRoomObjects.Add("gregthlyShop", timedShop);
+
+
+            /*
+            string baseFilepath = "Planetside/Resources/NPCs/TimeTrader/timetrader";
+            ETGMod.Databases.Strings.Core.Set("#TIMETRADER_RUNBASEDMULTILINE_GENERIC", "Been a while since I seen ya!");
+            ETGMod.Databases.Strings.Core.Set("#TIMETRADER_RUNBASEDMULTILINE_STOPPER", "Ya' Don't got much time, ya' know that?");
+            ETGMod.Databases.Strings.Core.Set("#TIMETRADER_RUNBASEDMULTILINE_PURCHASE", "That'll save ya' some time!");
+            ETGMod.Databases.Strings.Core.Set("#TIMETRADER_RUNBASEDMULTILINE_FAILPURCHASE", "Maybe some other time, pal.");
+            ETGMod.Databases.Strings.Core.Set("#TIMETRADER_RUNBASEDMULTILINE_INTRO", "Just on time, pal!");
+            ETGMod.Databases.Strings.Core.Set("#TIMETRADER_RUNBASEDMULTILINE_ATTACKED", "Ya' bullets are in the wrong timeline pal!");
+            ItsDaFuckinOldShopApi.SetUpShop(
+                "timedshop",
+                "psog",
+                new List<string> { baseFilepath+"_idle_001.png", baseFilepath + "_idle_002.png", baseFilepath + "_idle_003.png", baseFilepath + "_idle_004.png" },
+                4,
+                new List<string> { baseFilepath + "_talk_001.png", baseFilepath + "_talk_002.png", baseFilepath + "_talk_003.png", baseFilepath + "_talk_004.png" },
+                6,
+                CustomLootTableInitialiser.TimeShopKeeperTable,
+                BaseShopController.AdditionalShopType.TRUCK,
+                "#TIMETRADER_RUNBASEDMULTILINE_GENERIC",
+                "#TIMETRADER_RUNBASEDMULTILINE_STOPPER",
+                "#TIMETRADER_RUNBASEDMULTILINE_PURCHASE",
+                "#TIMETRADER_RUNBASEDMULTILINE_FAILPURCHASE",
+                "#TIMETRADER_RUNBASEDMULTILINE_INTRO",
+                "#TIMETRADER_RUNBASEDMULTILINE_ATTACKED",
+                true,
+                baseFilepath+"carpet.png",
+                0.45f,
+                -0.3125f,
+                3.25f);
+            */
+        }
+
+
 
         public static void InitialiseTimeTrader()
         {

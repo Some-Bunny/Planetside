@@ -33,6 +33,17 @@ namespace Planetside
             FieldInfo field = classType.GetField(fieldName, BindingFlags.Public | BindingFlags.NonPublic | ((o != null) ? BindingFlags.Instance : BindingFlags.Static));
             return (T)field.GetValue(o);
         }
+        public static T InvokeMethod<T>(Type type, string methodName, object typeInstance = null, object[] methodParams = null)
+        {
+            BindingFlags bindingAttr = BindingFlags.Public | BindingFlags.NonPublic | ((typeInstance == null) ? BindingFlags.Static : BindingFlags.Instance);
+            return (T)((object)type.GetMethod(methodName, bindingAttr).Invoke(typeInstance, methodParams));
+        }
+
+        public static void InvokeMethod(Type type, string methodName, object typeInstance = null, object[] methodParams = null)
+        {
+            BindingFlags bindingAttr = BindingFlags.Public | BindingFlags.NonPublic | ((typeInstance == null) ? BindingFlags.Static : BindingFlags.Instance);
+            type.GetMethod(methodName, bindingAttr).Invoke(typeInstance, methodParams);
+        }
     }
 }
 

@@ -248,6 +248,7 @@ namespace Planetside
             ConnoisseursRobes.Init();
             LostVoidPotential.Init();
             TrespassStone.Init();
+            ShopInABox.Init();
 
             ModifierNeedle.Init();
 

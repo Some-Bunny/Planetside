@@ -72,7 +72,7 @@ namespace NpcApi
             string runBasedMultilineStopperStringKey, string purchaseItemStringKey, string purchaseItemFailedStringKey, string introStringKey, string attackedStringKey, Vector3 talkPointOffset, Vector3 npcPosition, Vector3[] itemPositions = null, float costModifier = 1, bool giveStatsOnPurchase = false,
             StatModifier[] statsToGiveOnPurchase = null, Func<CustomShopController, PlayerController, int, bool> CustomCanBuy = null, Func<CustomShopController, PlayerController, int, int> CustomRemoveCurrency = null, Func<CustomShopController, CustomShopItemController, PickupObject, int> CustomPrice = null,
             Func<PlayerController, PickupObject, int, bool> OnPurchase = null, Func<PlayerController, PickupObject, int, bool> OnSteal = null, string currencyIconPath = "", string currencyName = "", bool canBeRobbed = true, bool hasCarpet = false, string carpetSpritePath = "", bool hasMinimapIcon = false,
-            string minimapIconSpritePath = "", bool addToMainNpcPool = false, float percentChanceForMainPool = 0.1f, DungeonPrerequisite[] prerequisites = null, List<string> purchaseSpritePaths = null)
+            string minimapIconSpritePath = "", bool addToMainNpcPool = false, float percentChanceForMainPool = 0.1f, DungeonPrerequisite[] prerequisites = null, List<string> purchaseSpritePaths = null, float fortunesFavorRadius = 2)
         {
 
             try
@@ -160,9 +160,9 @@ namespace NpcApi
 
                 UltraFortunesFavor dreamLuck = npcObj.AddComponent<UltraFortunesFavor>();
 
-                dreamLuck.goopRadius = 2;
-                dreamLuck.beamRadius = 2;
-                dreamLuck.bulletRadius = 2;
+                dreamLuck.goopRadius = fortunesFavorRadius;
+                dreamLuck.beamRadius = fortunesFavorRadius;
+                dreamLuck.bulletRadius = fortunesFavorRadius;
                 dreamLuck.bulletSpeedModifier = 0.8f;
 
                 dreamLuck.vfxOffset = 0.625f;

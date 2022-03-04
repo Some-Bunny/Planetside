@@ -633,13 +633,13 @@ namespace Planetside
 						NickName = "Bloop"
 
 					},
-					/*
+					
 					new AttackBehaviorGroup.AttackGroupItem()
 					{
 						Probability = 11f,
 						Behavior = new ShootBehavior{
 						ShootPoint = RaisedArmLaserAttachPoint,
-						BulletScript = new CustomBulletScriptSelector(typeof(BasicBlastsToDodgeThrough)),
+						BulletScript = new CustomBulletScriptSelector(typeof(LaserCross)),
 						LeadAmount = 0f,
 						AttackCooldown = 1f,
 						Cooldown = 4f,
@@ -653,7 +653,7 @@ namespace Planetside
 						NickName = "aaaaa"
 
 					},
-					*/
+					
 					new AttackBehaviorGroup.AttackGroupItem()
 					{
 						Probability = 0.9f,
@@ -1758,8 +1758,8 @@ namespace Planetside
 				Vector2 predictedPosition = BraveMathCollege.GetPredictedPosition(vector2, this.BulletManager.PlayerVelocity(), this.Position, 18f);
 				float CentreAngle = (predictedPosition - this.Position).ToAngle();
 				base.PostWwiseEvent("Play_BOSS_omegaBeam_charge_01");
-				base.BulletBank.aiActor.StartCoroutine(FlashReticles(CentreAngle - 180, 174, this));
-				base.BulletBank.aiActor.StartCoroutine(FlashReticles(CentreAngle - 180, -174, this));
+				base.BulletBank.aiActor.StartCoroutine(FlashReticles(CentreAngle - 180, 168, this));
+				base.BulletBank.aiActor.StartCoroutine(FlashReticles(CentreAngle - 180, -168, this));
 				for (int e = 0; e < 4; e++)
                 {
 					yield return this.Wait(30);
@@ -2016,30 +2016,121 @@ namespace Planetside
 		}
 
 
-		public class BasicBlastsToDodgeThrough : Script
+		public class LaserCross : Script
 		{
 			protected override IEnumerator Top()
 			{
 				PrisonerController controller = base.BulletBank.aiActor.GetComponent<PrisonerController>();
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("41ee1c8538e8474a82a74c4aff99c712").bulletBank.GetBullet("big"));
-				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("31a3ea0c54a745e182e22ea54844a82d").bulletBank.GetBullet("sniper"));
-				for (int i = 0; i < 5; i++)
+				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("31a3ea0c54a745e182e22ea54844a82d").bulletBank.GetBullet("sniper"));		
+				for (int e = 0; e < GameManager.Instance.AllPlayers.Length; e++)
+                {
+					for (int i = 0; i < 4; i++)
+					{
+						base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(GameManager.Instance.AllPlayers[e].transform.PositionVector2(), 90 * i, this));
+					}
+				}
+
+					
+				yield return this.Wait(60);
+
+
+				/*
+				for (int i = 0; i < 1; i++)
 				{
+					controller.MoveTowardsPositionMethod(2f, 7);
+
 					for (int e = 0; e < 90; e++)
-                    {
-						Vector2 vector2 = this.BulletManager.PlayerPosition();
+					{
 						Vector2 predictedPosition = BraveMathCollege.GetPredictedPosition(vector2, this.BulletManager.PlayerVelocity(), this.Position, 7f); float CentreAngle = (predictedPosition - this.Position).ToAngle();
 						float t = (float)e / (float)90;
 						bool shouldBeRollable = e >= -1 && e <= 5 || e >= 85 && e <= 90;
 
 						if (shouldBeRollable == true) { base.Fire(new Direction(CentreAngle + (4 * e), DirectionType.Absolute, -1f), new Speed(11.5f, SpeedType.Absolute), new WallBulletDodge("sniper")); }
 						else { base.Fire(new Direction(CentreAngle + (4 * e), DirectionType.Absolute, -1f), new Speed(11.5f, SpeedType.Absolute), new WallBulletNoDodge("sniper")); }
-						
+
 					}
-					controller.MoveTowardsPositionMethod(0.5f, 2);
+
 					yield return this.Wait(60);
 				}
-				
+				*/
+
+				yield break;
+			}
+
+
+			private IEnumerator QuickscopeNoob(Vector2 startPos,float aimDir,  LaserCross parent)
+			{
+
+				GameObject gameObject = SpawnManager.SpawnVFX(RandomPiecesOfStuffToInitialise.LaserReticle, false);
+
+				tk2dTiledSprite component2 = gameObject.GetComponent<tk2dTiledSprite>();
+				component2.transform.position = new Vector3(startPos.x, startPos.y, 99999);
+				component2.transform.localRotation = Quaternion.Euler(0f, 0f, aimDir);
+				component2.dimensions = new Vector2(1000f, 1f);
+				component2.UpdateZDepth();
+				component2.HeightOffGround = -2;
+				Color laser = new Color(0f, 1f, 1f, 1f);
+				component2.sprite.usesOverrideMaterial = true;
+				component2.sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
+				component2.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+				component2.sprite.renderer.material.SetFloat("_EmissivePower", 10);
+				component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f);
+				component2.sprite.renderer.material.SetColor("_OverrideColor", laser);
+				component2.sprite.renderer.material.SetColor("_EmissiveColor", laser);
+				float elapsed = 0;
+				float Time = 0.25f;
+				while (elapsed < Time)
+				{
+					float t = (float)elapsed / (float)Time;
+
+					if (parent.IsEnded || parent.Destroyed)
+					{
+						Destroy(component2.gameObject);
+						yield break;
+					}
+					if (component2 != null)
+					{
+						component2.transform.position = new Vector3(startPos.x, startPos.y, 0);
+
+						component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (25 * t));
+						component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (10 * t));
+						component2.transform.localRotation = Quaternion.Euler(0f, 0f, aimDir);
+						component2.HeightOffGround = -2;
+						component2.renderer.gameObject.layer = 23;
+						component2.dimensions = new Vector2(1000f, 1f);
+						component2.UpdateZDepth();
+					}
+					elapsed += BraveTime.DeltaTime;
+					yield return null;
+				}
+				elapsed = 0;
+				Time = 0.25f;
+				base.PostWwiseEvent("Play_FlashTell");
+				while (elapsed < Time)
+				{
+					if (parent.IsEnded || parent.Destroyed)
+					{
+						Destroy(component2.gameObject);
+						yield break;
+					}
+					float t = (float)elapsed / (float)Time;
+					if (component2 != null)
+					{
+						component2.transform.position = new Vector3(startPos.x, startPos.y, 0);
+						component2.dimensions = new Vector2(1000f, 1f);
+						component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (60 * t));
+						component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (20 * t));
+						component2.HeightOffGround = -2;
+						component2.renderer.gameObject.layer = 23;
+						component2.UpdateZDepth();
+					}
+					elapsed += BraveTime.DeltaTime;
+					yield return null;
+				}
+				Destroy(component2.gameObject);
+				base.PostWwiseEvent("Play_ENM_bulletking_skull_01", null);
+				base.Fire(Offset.OverridePosition(startPos), new Direction(aimDir, DirectionType.Absolute, -1f), new Speed(32.5f, SpeedType.Absolute), new WallBulletNoDodge("sniper"));
 				yield break;
 			}
 
