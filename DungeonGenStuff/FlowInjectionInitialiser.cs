@@ -27,7 +27,7 @@ namespace Planetside
 			AddMinesSWRoom(false);
 			InitTimeTraderRooms(false);
 			InitHolyChamberShrineRooms(false);
-			InitPrisonerRooms();
+			//InitPrisonerRooms();
 		}
 
 		public static void InitHolyChamberShrineRooms(bool refreshFlows = false)

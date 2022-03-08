@@ -81,6 +81,8 @@ namespace ItemAPI
             return AddSpriteToCollection(definition, collection);
         }
 
+      
+
         /// <summary>
         /// Adds a sprite from a definition to a collection
         /// </summary>

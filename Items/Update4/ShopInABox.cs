@@ -40,6 +40,12 @@ namespace Planetside
 
             shopInABoxPickupTable = LootTableTools.CreateLootTable();
             shopInABoxPickupTable.AddItemsToPool(new Dictionary<int, float>() { { 73, 0.7f }, { 78, 0.66f }, { 600, 0.5f }, { 77, 0.2f }, { 120, 0.6f }, { 85, 0.6f }, { 565, 0.5f }, { 224, 0.7f }, { 67, 0.5f }, { LeSackPickup.SaccID, 0.33f }, });
+            List<string> mandatoryConsoleIDs = new List<string>
+            {
+                "psog:shop-in-a-box",
+                "ring_of_miserly_protection"
+            };
+            CustomSynergies.Add("Make Your Choice.", mandatoryConsoleIDs, null, true);
 
         }
         public static GenericLootTable shopInABoxPickupTable;
@@ -66,10 +72,39 @@ namespace Planetside
 
             GameObject obj = new GameObject();
             StaticReferences.StoredRoomObjects.TryGetValue("gregthlyShop", out obj);
-            if (UnityEngine.Random.value < 0.3f)
-            {obj.GetComponent<CustomShopController>().shopItems = UnityEngine.Random.value > 0.5f ? GameManager.Instance.RewardManager.GunsLootTable : GameManager.Instance.RewardManager.ItemsLootTable;}
             LootEngine.DoDefaultItemPoof(user.transform.PositionVector2() + new Vector2(0.25f, 0.25f));
-            DungeonPlaceableUtility.InstantiateDungeonPlaceable(obj, user.CurrentRoom, new IntVector2((int)user.transform.position.x, (int)user.transform.position.y) - user.CurrentRoom.area.basePosition, false);
+            GameObject shopObj = DungeonPlaceableUtility.InstantiateDungeonPlaceable(obj, user.CurrentRoom, new IntVector2((int)user.transform.position.x, (int)user.transform.position.y) - user.CurrentRoom.area.basePosition, false);
+            CustomShopController shopCont = shopObj.GetComponent<CustomShopController>();
+            if (shopCont != null)
+            {
+                if (UnityEngine.Random.value < 0.3f)
+                { shopCont.shopItems = UnityEngine.Random.value > 0.5f ? GameManager.Instance.RewardManager.GunsLootTable : GameManager.Instance.RewardManager.ItemsLootTable; }
+                if (user.PlayerHasActiveSynergy("Make Your Choice."))
+                {
+                    List<Vector2> itemPositions = new List<Vector2>()
+                    {
+                         shopObj.transform.PositionVector2() + new Vector2(0.75f, 0.875f),
+                         shopObj.transform.PositionVector2() +  new Vector2(-0.5f, 0.375f),
+                         shopObj.transform.PositionVector2() +   new Vector2(2f, 0.375f)
+                    };
+                    var posList = new List<Transform>();
+                    for (int i = 0; i < itemPositions.Count; i++)
+                    {
+                        var ItemPoint = new GameObject("ItemPoint" + i);
+                        ItemPoint.transform.position = itemPositions[i];
+                        FakePrefab.MarkAsFakePrefab(ItemPoint);
+                        UnityEngine.Object.DontDestroyOnLoad(ItemPoint);
+                        ItemPoint.SetActive(true);
+                        posList.Add(ItemPoint.transform);
+                    }
+                    shopCont.spawnPositions = posList.ToArray();
+
+                    foreach (var pos in shopCont.spawnPositions)
+                    {
+                        pos.parent = shopObj.gameObject.transform;
+                    }
+                }
+            }
         }
     }
 }

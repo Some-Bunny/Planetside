@@ -53,6 +53,8 @@ namespace Planetside
 			projectile.AdditionalScaleMultiplier *= 1f;
 			projectile.shouldRotate = true;
 			projectile.pierceMinorBreakables = true;
+			projectile.objectImpactEventName = (PickupObjectDatabase.GetById(13) as Gun).DefaultModule.projectiles[0].objectImpactEventName;
+			projectile.enemyImpactEventName = (PickupObjectDatabase.GetById(13) as Gun).DefaultModule.projectiles[0].enemyImpactEventName;
 			projectile.gameObject.AddComponent<OscillatorProjectile>();
 			projectile.AnimateProjectile(new List<string> {
 				"oscillato_projectile_001",

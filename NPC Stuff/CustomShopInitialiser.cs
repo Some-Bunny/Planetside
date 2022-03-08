@@ -160,6 +160,8 @@ namespace Planetside
                 , new List<string> { baseFilepath + "squeeze_001.png", baseFilepath + "squeeze_002.png", baseFilepath + "squeeze_003.png", baseFilepath + "squeeze_004.png" });
             EnemyToolbox.AddSoundsToAnimationFrame(timedShop.GetComponentInChildren<tk2dSpriteAnimator>(), "dance", new Dictionary<int, string>() { { 1, "Play_WPN_teddy_impact_03" } });
 
+
+            //gregthyShop = timedShop;
             StaticReferences.StoredRoomObjects.Add("gregthlyShop", timedShop);
 
 
@@ -193,9 +195,6 @@ namespace Planetside
                 3.25f);
             */
         }
-
-
-
         public static void InitialiseTimeTrader()
         {
             string baseFilepath = "Planetside/Resources/NPCs/TimeTrader/timetrader";

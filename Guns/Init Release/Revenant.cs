@@ -57,6 +57,15 @@ namespace Planetside
 			projectile.gameObject.AddComponent<MaintainDamageOnPierce>();
 			gun.gunClass = GunClass.NONE;
 
+			gun.gameObject.transform.Find("Casing").transform.position = new Vector3(0.375f, 1f);
+			gun.shellCasing = BreakAbleAPI.BreakableAPIToolbox.GenerateDebrisObject("Planetside/Resources/GunObjects/Casings/revenantcasing.png", true, 0.333f, 2, 1080, 360, null, 1.2f).gameObject;
+			gun.shellsToLaunchOnFire = 0;
+			gun.shellsToLaunchOnReload = 5;
+			gun.reloadShellLaunchFrame = 6;
+
+			gun.reloadClipLaunchFrame = 0;
+			gun.clipsToLaunchOnReload = 0;
+
 			PierceProjModifier spook = projectile.gameObject.AddComponent<PierceProjModifier>();
 			spook.penetration = 3;
 			spook.penetratesBreakables = true;
@@ -75,6 +84,8 @@ namespace Planetside
 				"vertebraek47"
 			};
 			CustomSynergies.Add("Boring Eternity", mandatoryConsoleIDs, optionalConsoleIDs, true);
+
+
 
 			ItemIDs.AddToList(gun.PickupObjectId);
 		}

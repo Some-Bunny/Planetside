@@ -65,6 +65,9 @@ namespace Planetside
 				projectile.gameObject.AddComponent<ChargerGunProjectile>();
 				projectile.SetProjectileSpriteRight("chargergun_projectile_001", 7, 3, false, tk2dBaseSprite.Anchor.MiddleCenter, 7, 3);
 
+				projectile.objectImpactEventName = (PickupObjectDatabase.GetById(384) as Gun).DefaultModule.projectiles[0].objectImpactEventName;
+				projectile.enemyImpactEventName = (PickupObjectDatabase.GetById(384) as Gun).DefaultModule.projectiles[0].enemyImpactEventName;
+
 				FakePrefab.MarkAsFakePrefab(projectile.gameObject);
 				UnityEngine.Object.DontDestroyOnLoad(projectile);
 				gun.DefaultModule.projectiles[0] = projectile;
@@ -99,7 +102,6 @@ namespace Planetside
 			gun.quality = PickupObject.ItemQuality.A;
 			gun.encounterTrackable.EncounterGuid = "It's just a protractor gun";
 			ETGMod.Databases.Items.Add(gun, null, "ANY");
-
 
 			gun.sprite.usesOverrideMaterial = true;
 

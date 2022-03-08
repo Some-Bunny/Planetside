@@ -64,24 +64,27 @@ namespace Planetside
             };
 
 
-            Dictionary<string, BreakableAPIToolbox.BreakDirection> CUNT = new Dictionary<string, BreakableAPIToolbox.BreakDirection>()
-            {
-                {defaultPath+"megatable_northflipbreak_001.png", BreakableAPIToolbox.BreakDirection.NORTH },
-                {defaultPath+"megatable_southflipbreak_001.png", BreakableAPIToolbox.BreakDirection.SOUTH },
+          
 
-            };
-            Dictionary<float, Dictionary<string, BreakableAPIToolbox.BreakDirection>> aWon = new Dictionary<float, Dictionary<string, BreakableAPIToolbox.BreakDirection>>()
+            Dictionary<float, string> north = new Dictionary<float, string>()
             {
-                {25, CUNT}
+                {25, defaultPath+"megatable_flipbreak_001_north.png"}
             };
+            Dictionary<float, string> south = new Dictionary<float, string>()
+            {
+                {25, defaultPath+"megatable_flipbreak_001_south.png"}
+            };
+
 
             Dictionary<float,string> aTwo = new Dictionary<float, string>()
             {
                 {25, defaultPath+"megatable_idlebreak_001.png"}
             };
-            FlippableCover breakable = BreakableAPIToolbox.GenerateTable("Mega_Table", new string[] { defaultPath + "megatable_idle_001.png" }, outlinePaths, northFlipPaths, southFlipPaths, null, null, northBreakPaths, southBreakPaths, null, null, unflippedBreakPaths, 1, 10, 7, 7, true, 64, 30, 0, 8, 64, 5, 64, 5, FlippableCover.FlipStyle.ONLY_FLIPS_UP_DOWN, 300, null, aWon, aTwo, true, true, 1);
-            StaticReferences.StoredRoomObjects.Add("test", breakable.gameObject);
+            FlippableCover breakable = BreakableAPIToolbox.GenerateTable("Mega_Table", new string[] { defaultPath + "megatable_idle_001.png" }, outlinePaths, northFlipPaths, southFlipPaths, null, null, northBreakPaths, southBreakPaths, null, null, unflippedBreakPaths, 1, 10, 7, 7, true, 64, 30, 0, 8, 64, 5, 64, 5, FlippableCover.FlipStyle.ONLY_FLIPS_UP_DOWN, 300, null, north, south, null, null, aTwo, true, true, 1);
+            
 
         }
+
+        
     }
 }

@@ -1554,7 +1554,6 @@ namespace Planetside
 				miniBossIntroDoer.cameraMoveSpeed = 14;
 				miniBossIntroDoer.specifyIntroAiAnimator = null;
 				miniBossIntroDoer.BossMusicEvent = "Play_MUS_Boss_Theme_Lich";
-				//miniBossIntroDoer.BossMusicEvent = "Play_MUS_Lich_Double_01";
 				miniBossIntroDoer.PreventBossMusic = false;
 				miniBossIntroDoer.InvisibleBeforeIntroAnim = true;
 				miniBossIntroDoer.preIntroAnim = string.Empty;

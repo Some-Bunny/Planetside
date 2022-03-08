@@ -583,7 +583,7 @@ namespace Planetside
 					InitialCooldown = 0f,
 					firingTime = 10f,
 					Cooldown = 12,
-					AttackCooldown = 2f,
+					AttackCooldown = 1.33f,
 					RequiresLineOfSight = false,
 					FiresDirectlyTowardsPlayer = false,
 					UsesCustomAngle = true,
@@ -621,7 +621,7 @@ namespace Planetside
 						ShootPoint = RaisedArmLaserAttachPoint,
 						BulletScript = new CustomBulletScriptSelector(typeof(WallSweep)),
 						LeadAmount = 0f,
-						AttackCooldown = 1f,
+						AttackCooldown = 0.35f,
 						Cooldown = 4f,
 						ChargeAnimation = "raisearm",
 						FireAnimation = "sweengarm",
@@ -636,12 +636,12 @@ namespace Planetside
 					
 					new AttackBehaviorGroup.AttackGroupItem()
 					{
-						Probability = 11f,
+						Probability = 2f,
 						Behavior = new ShootBehavior{
 						ShootPoint = RaisedArmLaserAttachPoint,
 						BulletScript = new CustomBulletScriptSelector(typeof(LaserCross)),
 						LeadAmount = 0f,
-						AttackCooldown = 1f,
+						AttackCooldown = 0f,
 						Cooldown = 4f,
 						TellAnimation = "chargelaser",
 						FireAnimation = "firelaser",
@@ -661,8 +661,8 @@ namespace Planetside
 						ShootPoint = RaisedArmLaserAttachPoint,
 						BulletScript = new CustomBulletScriptSelector(typeof(SweepJukeAttack)),
 						LeadAmount = 0f,
-						AttackCooldown = 1f,
-						Cooldown = 4f,
+						AttackCooldown = 0f,
+						Cooldown = 12f,
 						TellAnimation = "raisearm",
 						FireAnimation = "sweengarm",
 						PostFireAnimation = "lowerarm",
@@ -675,13 +675,13 @@ namespace Planetside
 					},
 					new AttackBehaviorGroup.AttackGroupItem()
 					{
-						Probability = 1f,
+						Probability = 1.2f,
 						Behavior = new ShootBehavior{
 						ShootPoint = RightHandChargePoint,
 						BulletScript = new CustomBulletScriptSelector(typeof(BasicLaserAttackTell)),
 						LeadAmount = 0f,
-						AttackCooldown = 1f,
-						Cooldown = 1f,
+						AttackCooldown = 0f,
+						Cooldown = 2f,
 						TellAnimation = "swipehandback",
 						FireAnimation = "swipehandcharge",
 						PostFireAnimation = "swipehandmoveback",
@@ -699,7 +699,7 @@ namespace Planetside
 						ShootPoint = RaisedArmLaserAttachPoint,
 						BulletScript = new CustomBulletScriptSelector(typeof(ChainRotators)),
 						LeadAmount = 0f,
-						AttackCooldown = 3f,
+						AttackCooldown = 1f,
 						Cooldown = 7f,
 						TellAnimation = "raisearm",
 						FireAnimation = "sweengarm",
@@ -811,13 +811,11 @@ namespace Planetside
 				}
 				miniBossIntroDoer.SkipFinalizeAnimation = true;
 				miniBossIntroDoer.RegenerateCache();
-
 				//==================
 				//Important for not breaking basegame stuff!
 				StaticReferenceManager.AllHealthHavers.Remove(companion.aiActor.healthHaver);
 				//==================
 			}
-
 		}
 
 		public class Blasty : Script
@@ -2022,44 +2020,37 @@ namespace Planetside
 			{
 				PrisonerController controller = base.BulletBank.aiActor.GetComponent<PrisonerController>();
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("41ee1c8538e8474a82a74c4aff99c712").bulletBank.GetBullet("big"));
-				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("31a3ea0c54a745e182e22ea54844a82d").bulletBank.GetBullet("sniper"));		
+				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("31a3ea0c54a745e182e22ea54844a82d").bulletBank.GetBullet("sniper"));
+				controller.MoveTowardsPositionMethod(3f, 7);
 				for (int e = 0; e < GameManager.Instance.AllPlayers.Length; e++)
                 {
-					for (int i = 0; i < 4; i++)
-					{
-						base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(GameManager.Instance.AllPlayers[e].transform.PositionVector2(), 90 * i, this));
+					float Dir = UnityEngine.Random.value > 0.5f ? 0 : 45f;
+					for (int i = 0; i < 8; i++)
+					{			
+						base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(GameManager.Instance.AllPlayers[e].transform.PositionVector2(), (45 * i) + Dir, this));
 					}
+				}		
+				yield return this.Wait(75);
+				for (int q = 0; q < 4; q++)
+                {
+					for (int e = 0; e < GameManager.Instance.AllPlayers.Length; e++)
+					{
+						float Dir = UnityEngine.Random.Range(-180, 180);
+						float helpme = UnityEngine.Random.Range(180, -180);
+						for (int i = 0; i < 6; i++)
+						{
+							base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(GameManager.Instance.AllPlayers[e].transform.PositionVector2() + MathToolbox.GetUnitOnCircle(helpme, 5), (60 * i) + Dir, this));
+						}
+					}
+					yield return this.Wait(20);
 				}
-
-					
+				controller.MoveTowardsPositionMethod(1f, 5);
 				yield return this.Wait(60);
-
-
-				/*
-				for (int i = 0; i < 1; i++)
-				{
-					controller.MoveTowardsPositionMethod(2f, 7);
-
-					for (int e = 0; e < 90; e++)
-					{
-						Vector2 predictedPosition = BraveMathCollege.GetPredictedPosition(vector2, this.BulletManager.PlayerVelocity(), this.Position, 7f); float CentreAngle = (predictedPosition - this.Position).ToAngle();
-						float t = (float)e / (float)90;
-						bool shouldBeRollable = e >= -1 && e <= 5 || e >= 85 && e <= 90;
-
-						if (shouldBeRollable == true) { base.Fire(new Direction(CentreAngle + (4 * e), DirectionType.Absolute, -1f), new Speed(11.5f, SpeedType.Absolute), new WallBulletDodge("sniper")); }
-						else { base.Fire(new Direction(CentreAngle + (4 * e), DirectionType.Absolute, -1f), new Speed(11.5f, SpeedType.Absolute), new WallBulletNoDodge("sniper")); }
-
-					}
-
-					yield return this.Wait(60);
-				}
-				*/
-
 				yield break;
 			}
 
 
-			private IEnumerator QuickscopeNoob(Vector2 startPos,float aimDir,  LaserCross parent)
+			private IEnumerator QuickscopeNoob(Vector2 startPos,float aimDir,  LaserCross parent, float chargeTime = 0.5f)
 			{
 
 				GameObject gameObject = SpawnManager.SpawnVFX(RandomPiecesOfStuffToInitialise.LaserReticle, false);
@@ -2079,7 +2070,7 @@ namespace Planetside
 				component2.sprite.renderer.material.SetColor("_OverrideColor", laser);
 				component2.sprite.renderer.material.SetColor("_EmissiveColor", laser);
 				float elapsed = 0;
-				float Time = 0.25f;
+				float Time = chargeTime;
 				while (elapsed < Time)
 				{
 					float t = (float)elapsed / (float)Time;
@@ -2130,7 +2121,11 @@ namespace Planetside
 				}
 				Destroy(component2.gameObject);
 				base.PostWwiseEvent("Play_ENM_bulletking_skull_01", null);
-				base.Fire(Offset.OverridePosition(startPos), new Direction(aimDir, DirectionType.Absolute, -1f), new Speed(32.5f, SpeedType.Absolute), new WallBulletNoDodge("sniper"));
+				for (int i = 0; i < 10; i++)
+                {
+					base.Fire(Offset.OverridePosition(startPos), new Direction(aimDir, DirectionType.Absolute, -1f), new Speed(20f, SpeedType.Absolute), new WallBulletNoDodge("sniper"));
+					yield return new WaitForSeconds(0.025f);
+				}
 				yield break;
 			}
 
@@ -2143,7 +2138,7 @@ namespace Planetside
 				{
 					base.Projectile.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
 					SpawnManager.PoolManager.Remove(base.Projectile.transform);
-					base.ChangeSpeed(new Speed(8f, SpeedType.Absolute), 30);
+					//base.ChangeSpeed(new Speed(8f, SpeedType.Absolute), 30);
 
 					yield break;
 				}

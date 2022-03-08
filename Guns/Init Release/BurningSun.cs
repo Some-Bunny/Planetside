@@ -73,6 +73,8 @@ namespace Planetside
 			projectile2.transform.parent = gun.barrelOffset;
 			projectile2.HasDefaultTint = true;
 
+			projectile2.objectImpactEventName = (PickupObjectDatabase.GetById(336) as Gun).DefaultModule.projectiles[0].objectImpactEventName;
+			projectile2.enemyImpactEventName = (PickupObjectDatabase.GetById(336) as Gun).DefaultModule.projectiles[0].enemyImpactEventName;
 
 			projectile2.AnimateProjectile(new List<string> {
 				"burningsun_projectile_001",

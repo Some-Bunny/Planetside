@@ -63,6 +63,17 @@ namespace Planetside
             projectile.gameObject.GetOrAddComponent<ThunderShotProjectile>();
             gun.DefaultModule.angleVariance = 9f;
 
+            gun.gameObject.transform.Find("Casing").transform.position = new Vector3(1.1875f, 0.4375f);
+            gun.shellsToLaunchOnFire = 0;
+            gun.shellsToLaunchOnReload = 0;
+            gun.reloadShellLaunchFrame = 0;
+            gun.shellCasingOnFireFrameDelay = 0;
+
+
+            gun.gameObject.transform.Find("Clip").transform.position = new Vector3(1.1875f, 0.4375f);
+            gun.clipObject = BreakAbleAPI.BreakableAPIToolbox.GenerateDebrisObject("Planetside/Resources/GunObjects/Clips/bulldogclip.png").gameObject;
+            gun.reloadClipLaunchFrame = 4;
+            gun.clipsToLaunchOnReload = 1;
 
             gun.quality = PickupObject.ItemQuality.C;
             ETGMod.Databases.Items.Add(gun, null, "ANY");

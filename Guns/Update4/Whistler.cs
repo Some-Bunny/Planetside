@@ -87,6 +87,9 @@ namespace Planetside
 			projectile.hitEffects.overrideMidairDeathVFX = (PickupObjectDatabase.GetById(334) as Gun).DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX;
 			projectile.baseData.range = 1000000;
 
+			projectile.objectImpactEventName = (PickupObjectDatabase.GetById(198) as Gun).DefaultModule.projectiles[0].objectImpactEventName;
+			projectile.enemyImpactEventName = (PickupObjectDatabase.GetById(198) as Gun).DefaultModule.projectiles[0].enemyImpactEventName;
+
 			PierceProjModifier spook = projectile.gameObject.GetOrAddComponent<PierceProjModifier>();
 			spook.penetration = 10000;
 			spook.penetratesBreakables = true;

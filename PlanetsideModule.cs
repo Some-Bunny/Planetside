@@ -77,6 +77,7 @@ namespace Planetside
             Tools.Init();
             NpcTools.Init();
 
+            MegaTable.Init();
 
             //Hook stuff here
             PickupHooks.Init();
@@ -254,7 +255,9 @@ namespace Planetside
 
             Whistler.Add();
             ThunderShot.Add();
-
+            HexaPulseCannon.Add();
+            PulseCannon.Add();
+            ParticleCollapser.Add();
             //Forgotten Rounds
             ForgottenRoundOubliette.Init();
             ForgottenRoundAbbey.Init();
@@ -282,6 +285,7 @@ namespace Planetside
             Shamber.Init();
             ProperCube.Init();
             Detscavator.Init();
+
 
             DeTurretRight.Init();
             DeTurretLeft.Init();
@@ -408,9 +412,7 @@ namespace Planetside
                 "Yo Mama!",
                 "NullReferenceException: Object Reference not set to an instance of an object.",
                 "I stole this one from Nevernamed.",
-                "poggers",
                 "Nuh uh, yr'oue.",
-                "eg",
                 "._.",
                 "mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm",
                 "Warning! Level 5 Quarantine In Action! Do Not Land!",
@@ -452,8 +454,8 @@ namespace Planetside
                 "Powered by like 7 different APIs",
                 "Rock And Stone!",
                 "By The Beard!",
-                "Powered By BreakableAPI!"
-
+                "Powered By BreakableAPI!",
+                "I removed Clone from the item pool, thank me later."
             };
             Random r = new Random();
             int index = r.Next(RandomFunnys.Count);

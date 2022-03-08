@@ -80,6 +80,12 @@ namespace Planetside
 			RevenantSynergyPlus fart = (PickupObjectDatabase.GetById(Revenant.RevenantID) as Gun).gameObject.AddComponent<RevenantSynergyPlus>();
 			fart.SynergyNameToCheck = "Boring Eternity";
 
+
+			AdvancedTransformGunSynergyProcessor hexaSyn = (PickupObjectDatabase.GetById(PulseCannon.PulseCannonID) as Gun).gameObject.AddComponent<AdvancedTransformGunSynergyProcessor>();
+			hexaSyn.NonSynergyGunId = PulseCannon.PulseCannonID;
+			hexaSyn.SynergyGunId = HexaPulseCannon.HexaPluseID;
+			hexaSyn.SynergyToCheck = "Hexadecimally!";
+
 			BSGSynergy afaf = (PickupObjectDatabase.GetById(21) as Gun).gameObject.AddComponent<BSGSynergy>();
 
 		}

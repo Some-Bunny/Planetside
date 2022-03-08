@@ -41,7 +41,6 @@ namespace BreakAbleAPI
             shadowSprite.renderer.material.SetFloat("_Fade", 0.66f);
         }
 
-
         public Vector3 Offset;
         public GameObject shadowObject;
     }
@@ -286,10 +285,20 @@ namespace BreakAbleAPI
         /// <param name="flipStyle">The directions in which your table is able to be flipped.</param>
         /// <param name="TableHP">The amount of HP your table has. Breaks when its HP reaches 0.</param>
         /// <param name="ShadowSpritePath">currently does nothing. leave it as null.</param>
-        /// <param name="breakAnimPercentages_AND_SpritePathsandBreakDirections">Switches the tables flipped sprite to one given when its at a certain percentage of HP. The percentage should be a value like 50 if you want it to switch at 50% HP. The string you have to give is a SPRITE PATH to the sprite you want it to switch to, and the ENUM you set to a direction is to set what DIRECTION that sprite is for./param>
+        /// <param name="breakAnimPercentages_AND_SpritePathsandBreakDirectionsNorth">(NOTE: SPRITE NAME MUST INCLUDE LOWERCASE NORTH) Switches the tables flipped sprite to one given when its at a certain percentage of HP. The percentage should be a value like 50 if you want it to switch at 50% HP. The string you have to give is a SPRITE PATH to the sprite you want it to switch to, and the ENUM you set to a direction is to set what DIRECTION that sprite is for./param>
+        /// <param name="breakAnimPercentages_AND_SpritePathsandBreakDirectionsSouth">(NOTE: SPRITE NAME MUST INCLUDE LOWERCASE SOUTH) Switches the tables flipped sprite to one given when its at a certain percentage of HP. The percentage should be a value like 50 if you want it to switch at 50% HP. The string you have to give is a SPRITE PATH to the sprite you want it to switch to, and the ENUM you set to a direction is to set what DIRECTION that sprite is for./param>
+        /// <param name="breakAnimPercentages_AND_SpritePathsandBreakDirectionsEast">(NOTE: SPRITE NAME MUST INCLUDE LOWERCASE EAST) Switches the tables flipped sprite to one given when its at a certain percentage of HP. The percentage should be a value like 50 if you want it to switch at 50% HP. The string you have to give is a SPRITE PATH to the sprite you want it to switch to, and the ENUM you set to a direction is to set what DIRECTION that sprite is for./param>
+        /// <param name="breakAnimPercentages_AND_SpritePathsandBreakDirectionsWest">(NOTE: SPRITE NAME MUST INCLUDE LOWERCASE WEST) Switches the tables flipped sprite to one given when its at a certain percentage of HP. The percentage should be a value like 50 if you want it to switch at 50% HP. The string you have to give is a SPRITE PATH to the sprite you want it to switch to, and the ENUM you set to a direction is to set what DIRECTION that sprite is for./param>
+
         /// <param name="unflippedBreakAnimPercentagesAndSpritePaths">Switches the tables idle sprite to one given when its at a certain percentage of HP. The percentage should be a value like 50 if you want it to switch at 50% HP. The string you have to give is a SPRITE PATH to the sprite you want it to switch to./param>
 
-        public static FlippableCover GenerateTable(string name, string[] idleSpritePaths, string[] outlinePaths, string[] northFlipPaths, string[] southFlipPaths, string[] eastFlipPaths, string[] westFlipPaths, string[] northBreakPaths, string[] southBreakPaths, string[] eastBreakPaths, string[] westBreakPaths, string[] unflippedBreakPaths, int IdleFPS = 4, int FlipFPS = 6, int BreakFPS = 7, int UnflippedBreakFPS = 5, bool UsesCustomColliderValues = false, int ColliderSizeX = 16, int ColliderSizeY = 8, int ColliderOffsetX = 0, int ColliderOffsetY = 8, int FlippedColliderSizeX_Horizontal = 20, int FlippedColliderSizeY_Horizontal = 2, int FlippedColliderSizeX_Vertical= 4, int FlippedColliderSizeY_Vertical = 8, FlippableCover.FlipStyle flipStyle = FlippableCover.FlipStyle.ANY, float TableHP = 90, string ShadowSpritePath = null,  Dictionary<float, Dictionary<string, BreakDirection>> breakAnimPercentages_AND_SpritePathsandBreakDirections = null, Dictionary<float, string> unflippedBreakAnimPercentagesAndSpritePaths = null, bool IsSlideable = true, bool hasDecorations = true, float chanceToDecorateTable = 1)
+        public static FlippableCover GenerateTable(string name, string[] idleSpritePaths, string[] outlinePaths, string[] northFlipPaths, string[] southFlipPaths, string[] eastFlipPaths, string[] westFlipPaths, string[] northBreakPaths, string[] southBreakPaths, string[] eastBreakPaths, string[] westBreakPaths, string[] unflippedBreakPaths, int IdleFPS = 4, int FlipFPS = 6, int BreakFPS = 7, int UnflippedBreakFPS = 5, bool UsesCustomColliderValues = false, int ColliderSizeX = 16, int ColliderSizeY = 8, int ColliderOffsetX = 0, int ColliderOffsetY = 8, int FlippedColliderSizeX_Horizontal = 20, int FlippedColliderSizeY_Horizontal = 2, int FlippedColliderSizeX_Vertical= 4, int FlippedColliderSizeY_Vertical = 8, FlippableCover.FlipStyle flipStyle = FlippableCover.FlipStyle.ANY, float TableHP = 90, string ShadowSpritePath = null,  
+            Dictionary<float, string> breakAnimPercentages_AND_SpritePathsandBreakDirectionsNorth = null,
+            Dictionary<float, string> breakAnimPercentages_AND_SpritePathsandBreakDirectionsSouth = null,
+            Dictionary<float, string> breakAnimPercentages_AND_SpritePathsandBreakDirectionsEast = null,
+            Dictionary<float, string> breakAnimPercentages_AND_SpritePathsandBreakDirectionsWest = null,
+            Dictionary<float, string> unflippedBreakAnimPercentagesAndSpritePaths = null, bool IsSlideable = true, bool hasDecorations = true, float chanceToDecorateTable = 1)
+        
         {
             Texture2D textureFromResource = ResourceExtractor.GetTextureFromResource(idleSpritePaths[0]);
             GameObject gameObject = SpriteBuilder.SpriteFromResource(idleSpritePaths[0], null, false);
@@ -426,27 +435,110 @@ namespace BreakAbleAPI
             animator.transform.parent = table.transform;
             table.majorBreakable.destroyedOnBreak = false;
 
-            
+            if (breakAnimPercentages_AND_SpritePathsandBreakDirectionsNorth != null || breakAnimPercentages_AND_SpritePathsandBreakDirectionsSouth != null|| breakAnimPercentages_AND_SpritePathsandBreakDirectionsEast != null || breakAnimPercentages_AND_SpritePathsandBreakDirectionsWest != null)
+            {
+                List<BreakFrame> breakFrameList = new List<BreakFrame>();
+                if (breakAnimPercentages_AND_SpritePathsandBreakDirectionsNorth != null)
+                {
+                    foreach (var Entry in breakAnimPercentages_AND_SpritePathsandBreakDirectionsNorth)
+                    {
+                        BreakFrame breakFrame = new BreakFrame();
+                        breakFrame.healthPercentage = Entry.Key;
+                        int SpriteID = SpriteBuilder.AddSpriteToCollection(Entry.Value, TableCollection);
+                        string ConvertedName = TableCollection.spriteDefinitions[SpriteID].name;
+                        ETGModConsole.Log(TableCollection.spriteDefinitions[SpriteID].name);
+                        if (ConvertedName.ToLower().Contains("north"))
+                        {
+                            ConvertedName = ReturnString(ConvertedName, "north");
+                        }
+                        breakFrame.sprite = ConvertedName;
+                        breakFrameList.Add(breakFrame);
+                    }
+                }
+                   
+
+                if (breakAnimPercentages_AND_SpritePathsandBreakDirectionsSouth != null)
+                {
+                    foreach (var Entry in breakAnimPercentages_AND_SpritePathsandBreakDirectionsSouth)
+                    {
+                        BreakFrame breakFrame = new BreakFrame();
+                        breakFrame.healthPercentage = Entry.Key;
+                        int SpriteID = SpriteBuilder.AddSpriteToCollection(Entry.Value, TableCollection);
+                        string ConvertedName = TableCollection.spriteDefinitions[SpriteID].name;
+                        ETGModConsole.Log(TableCollection.spriteDefinitions[SpriteID].name);
+                        if (ConvertedName.ToLower().Contains("south"))
+                        {
+                            ConvertedName = ReturnString(ConvertedName, "south");
+                        }
+                        breakFrame.sprite = ConvertedName;
+                        breakFrameList.Add(breakFrame);
+                    }
+                }
+                    
+                if (breakAnimPercentages_AND_SpritePathsandBreakDirectionsEast != null)
+                {
+                    foreach (var Entry in breakAnimPercentages_AND_SpritePathsandBreakDirectionsEast)
+                    {
+                        BreakFrame breakFrame = new BreakFrame();
+                        breakFrame.healthPercentage = Entry.Key;
+                        int SpriteID = SpriteBuilder.AddSpriteToCollection(Entry.Value, TableCollection);
+                        string ConvertedName = TableCollection.spriteDefinitions[SpriteID].name;
+                        if (ConvertedName.ToLower().Contains("east"))
+                        {
+                            ConvertedName = ReturnString(ConvertedName, "east");
+                        }
+                        ETGModConsole.Log(ConvertedName);
+                        breakFrame.sprite = ConvertedName;
+                        breakFrameList.Add(breakFrame);
+                    }
+                }
+               
+                if (breakAnimPercentages_AND_SpritePathsandBreakDirectionsWest != null)
+                {
+                    foreach (var Entry in breakAnimPercentages_AND_SpritePathsandBreakDirectionsWest)
+                    {
+                        BreakFrame breakFrame = new BreakFrame();
+                        breakFrame.healthPercentage = Entry.Key;
+                        int SpriteID = SpriteBuilder.AddSpriteToCollection(Entry.Value, TableCollection);
+                        string ConvertedName = TableCollection.spriteDefinitions[SpriteID].name;
+                        if (ConvertedName.ToLower().Contains("west"))
+                        {
+                            ConvertedName = ReturnString(ConvertedName, "west");
+                        }
+                        ETGModConsole.Log(ConvertedName);
+                        breakFrame.sprite = ConvertedName;
+                        breakFrameList.Add(breakFrame);
+                    }
+                }
+                   
+                BreakFrame[] array = breakFrameList.ToArray();
+                table.prebreakFrames = array;
+            }
+
+
+            /*
             if (breakAnimPercentages_AND_SpritePathsandBreakDirections != null)
             {
                 List<BreakFrame> breakFrameList = new List<BreakFrame>();
                 foreach (var Entry in breakAnimPercentages_AND_SpritePathsandBreakDirections)
                 {
-                    BreakFrame breakFrame = new BreakFrame();
-                    breakFrame.healthPercentage = Entry.Key;
                     Dictionary<string, BreakDirection> dict = Entry.Value;
                     foreach (var EntryLayer2 in dict)
                     {
+                        BreakFrame breakFrame = new BreakFrame();
+                        breakFrame.healthPercentage = Entry.Key;
                         int SpriteID = SpriteBuilder.AddSpriteToCollection(EntryLayer2.Key, TableCollection);
                         tk2dSpriteDefinition def = TableCollection.spriteDefinitions[SpriteID];
-                        def.name = def.name + "_" + EntryLayer2.Value.ToString();
-                        breakFrame.sprite = TableCollection.spriteDefinitions[SpriteID].name;
+                        breakFrame.sprite = def.name;
                         breakFrameList.Add(breakFrame);
                     }
                 }
-                BreakFrame[] array = breakFrameList.ToArray();
+                BreakFrame[] array = breakFrameList.ToArray(); //This part heres fucky
                 table.prebreakFrames = array;
+               
+
             }
+            */
             if (unflippedBreakAnimPercentagesAndSpritePaths != null)
             {
                 List<BreakFrame> breakFrameList = new List<BreakFrame>();
@@ -470,6 +562,11 @@ namespace BreakAbleAPI
                 decorator.parentSprite = table.GetComponent<tk2dSprite>();
             }
             return table;
+        }
+
+        private static string ReturnString(string str, string oldChar)
+        {
+            return str.Replace(oldChar, "{0}");
         }
         private static GameObject GenerateTableOutlineObject(string name, string outlinePath, GameObject parent, tk2dSpriteCollectionData collection)
         {
@@ -927,10 +1024,260 @@ namespace BreakAbleAPI
             if (DestroyVFX != null) { breakable.AdditionalVFXObject = DestroyVFX; }
             return breakable;
         }
-        public static void OnBroken()
-        {
 
+        /// <summary>
+        /// Generates, and returns a WaftingDebrisObject that you can add to a ShardCluster, which in turn can be used by your breakable  
+        /// </summary>
+        /// <param name="waftDuration">Takes a random value between the X and Y value given and uses that as a value for how long it wafts *every* waft.</param>
+        /// <param name="waftDistance">Takes a random value between the X and Y value given and uses that as a value for the distance it wafts.</param>
+        /// <param name="initialBurstDuration">Takes the X & Y value given as a potential peak height.</param>
+        /// 
+        /// <param name="debrisObjectsCanRotate">Enables/Disables whether your shards can rotate in-flight.</param>
+        /// <param name="LifeSpanMin">The minimum flight-time of your shards.</param>
+        /// <param name="LifeSpanMax">The maximum flight-time of your shards.</param>
+        /// <param name="AngularVelocity">How much your shards will rotate in-flight.</param>
+        /// <param name="AngularVelocityVariance">Adds/removes some angular velocity to your shards when created. For example, having 40 AngularVelocity and an AngularVelocityVariance of 12 will set the AngularVelocity of your shards from anywhere between 28 and 52.</param>
+        /// <param name="shadowSprite">The sprite of the shadow your DebrisObject will use. Leave this as null to not have a shadow.</param>
+        /// <param name="Mass">Default of 1. The amount of additional weight applied to your DebrisObject</param>
+        /// <param name="AudioEventName">The sound that will play when the shards contact the ground.</param>
+        /// <param name="BounceVFX">The VFX that plays when your shards bounce.</param>
+        /// <param name="DebrisBounceCount">The amount of times your shards will bounce.</param>
+        /// <param name="DoesGoopOnRest">If true, will spawn goop on itself when it is in a resting state.</param>
+        /// <param name="GoopType">The goop it will spawn if DoesGoopOnRest is true.</param>
+        /// <param name="GoopRadius">The radius of the spawned goop.</param>
+
+        public static WaftingDebrisObject GenerateWaftingDebrisObject(string shardSpritePath, Vector2 waftDuration, Vector2 waftDistance, Vector2 initialBurstDuration, bool debrisObjectsCanRotate = true, float LifeSpanMin = 0.33f, float LifeSpanMax = 2f, float AngularVelocity = 540, float AngularVelocityVariance = 180f, tk2dSprite shadowSprite = null, float Mass = 1, string AudioEventName = null, GameObject BounceVFX = null, int DebrisBounceCount = 0, bool DoesGoopOnRest = false, GoopDefinition GoopType = null, float GoopRadius = 1f)
+        {
+            GameObject debrisObject = SpriteBuilder.SpriteFromResource(shardSpritePath, null, false);
+            FakePrefab.MarkAsFakePrefab(debrisObject);
+            tk2dSprite tk2dsprite = debrisObject.GetComponent<tk2dSprite>();
+            WaftingDebrisObject DebrisObj = debrisObject.AddComponent<WaftingDebrisObject>();
+            DebrisObj.canRotate = debrisObjectsCanRotate;
+            DebrisObj.lifespanMin = LifeSpanMin;
+            DebrisObj.lifespanMax = LifeSpanMax;
+            DebrisObj.bounceCount = DebrisBounceCount;
+            DebrisObj.angularVelocity = AngularVelocity;
+            DebrisObj.angularVelocityVariance = AngularVelocityVariance;
+            if (AudioEventName != null) { DebrisObj.audioEventName = AudioEventName; }
+            if (BounceVFX != null) { DebrisObj.optionalBounceVFX = BounceVFX; }
+            DebrisObj.sprite = tk2dsprite;
+            DebrisObj.DoesGoopOnRest = DoesGoopOnRest;
+            if (GoopType != null) { DebrisObj.AssignedGoop = GoopType; } else if (GoopType == null && DebrisObj.DoesGoopOnRest == true) { DebrisObj.DoesGoopOnRest = false; }
+            DebrisObj.GoopRadius = GoopRadius;
+            if (shadowSprite != null) { DebrisObj.shadowSprite = shadowSprite; }
+            DebrisObj.inertialMass = Mass;
+
+            DebrisObj.waftDuration = waftDuration;
+            DebrisObj.waftDistance = waftDistance;
+            DebrisObj.initialBurstDuration = initialBurstDuration;
+            return DebrisObj;
         }
+
+        /// <summary>
+        /// Generates, and returns an animated WaftingDebrisObject that you can add to a ShardCluster, which in turn can be used by your breakable  
+        /// </summary>
+        /// <param name="waftDuration">Takes a random value between the X and Y value given and uses that as a value for how long it wafts *every* waft.</param>
+        /// <param name="waftDistance">Takes a random value between the X and Y value given and uses that as a value for the distance it wafts.</param>
+        /// <param name="initialBurstDuration">Takes the X & Y value given as a potential peak height.</param>
+        /// <param name="FPS">The FPS of your DebrisObject.</param>
+        /// <param name="wrapMode">The wrap mode of the animated DebrisObject.</param>
+        /// <param name="debrisObjectsCanRotate">Enables/Disables whether your shards can rotate in-flight.</param>
+        /// <param name="LifeSpanMin">The minimum flight-time of your shards.</param>
+        /// <param name="LifeSpanMax">The maximum flight-time of your shards.</param>
+        /// <param name="AngularVelocity">How much your shards will rotate in-flight.</param>
+        /// <param name="AngularVelocityVariance">Adds/removes some angular velocity to your shards when created. For example, having 40 AngularVelocity and an AngularVelocityVariance of 12 will set the AngularVelocity of your shards from anywhere between 28 and 52.</param>
+        /// <param name="shadowSprite">The sprite of the shadow your DebrisObject will use. Leave this as null to not have a shadow.</param>
+        /// <param name="Mass">Default of 1. The amount of additional weight applied to your DebrisObject</param>
+        /// <param name="AudioEventName">The sound that will play when the shards hit the ground.</param>
+        /// <param name="BounceVFX">The VFX that plays when your shards bounce.</param>
+        /// <param name="DebrisBounceCount">The amount of times your shards will bounce.</param>
+        /// <param name="DoesGoopOnRest">If true, will spawn goop on itself when it is in a resting state.</param>
+        /// <param name="GoopType">The goop it will spawn if DoesGoopOnRest is true.</param>
+        /// <param name="GoopRadius">The radius of the spawned goop.</param>
+
+        public static WaftingDebrisObject GenerateAnimatedWaftingDebrisObject(string[] shardSpritePaths, Vector2 waftDuration, Vector2 waftDistance, Vector2 initialBurstDuration, int FPS = 12, tk2dSpriteAnimationClip.WrapMode wrapMode = tk2dSpriteAnimationClip.WrapMode.Loop, bool debrisObjectsCanRotate = true, float LifeSpanMin = 0.33f, float LifeSpanMax = 2f, float AngularVelocity = 540, float AngularVelocityVariance = 180f, tk2dSprite shadowSprite = null, float Mass = 1, string AudioEventName = null, GameObject BounceVFX = null, int DebrisBounceCount = 0, bool DoesGoopOnRest = false, GoopDefinition GoopType = null, float GoopRadius = 1f)
+        {
+            GameObject debrisObject = SpriteBuilder.SpriteFromResource(shardSpritePaths[0], null, false);
+            FakePrefab.MarkAsFakePrefab(debrisObject);
+            WaftingDebrisObject DebrisObj = debrisObject.AddComponent<WaftingDebrisObject>();
+
+            tk2dSpriteCollectionData VFXSpriteCollection = SpriteBuilder.ConstructCollection(debrisObject, (shardSpritePaths[0] + "_Collection"));
+            int spriteID = SpriteBuilder.AddSpriteToCollection(shardSpritePaths[0], VFXSpriteCollection);
+            tk2dSprite sprite = debrisObject.GetOrAddComponent<tk2dSprite>();
+            sprite.SetSprite(VFXSpriteCollection, spriteID);
+
+            tk2dSpriteAnimator animator = debrisObject.GetOrAddComponent<tk2dSpriteAnimator>();
+            tk2dSpriteAnimation animation = debrisObject.AddComponent<tk2dSpriteAnimation>();
+            animation.clips = new tk2dSpriteAnimationClip[0];
+            animator.Library = animation;
+            tk2dSpriteAnimationClip idleClip = new tk2dSpriteAnimationClip() { name = "idle", frames = new tk2dSpriteAnimationFrame[0], fps = FPS };
+            List<tk2dSpriteAnimationFrame> frames = new List<tk2dSpriteAnimationFrame>();
+            for (int i = 0; i < shardSpritePaths.Length; i++)
+            {
+                tk2dSpriteCollectionData collection = VFXSpriteCollection;
+                int frameSpriteId = SpriteBuilder.AddSpriteToCollection(shardSpritePaths[i], collection);
+                tk2dSpriteDefinition frameDef = collection.spriteDefinitions[frameSpriteId];
+                frames.Add(new tk2dSpriteAnimationFrame { spriteId = frameSpriteId, spriteCollection = collection });
+            }
+            idleClip.frames = frames.ToArray();
+            idleClip.wrapMode = wrapMode;
+            animator.Library.clips = animation.clips.Concat(new tk2dSpriteAnimationClip[] { idleClip }).ToArray();
+            animator.DefaultClipId = animator.GetClipIdByName("idle");
+            DebrisObj.waftAnimationName = "idle";
+            DebrisObj.canRotate = debrisObjectsCanRotate;
+            DebrisObj.lifespanMin = LifeSpanMin;
+            DebrisObj.lifespanMax = LifeSpanMax;
+            DebrisObj.bounceCount = DebrisBounceCount;
+            DebrisObj.angularVelocity = AngularVelocity;
+            DebrisObj.angularVelocityVariance = AngularVelocityVariance;
+            if (AudioEventName != null) { DebrisObj.audioEventName = AudioEventName; }
+            if (BounceVFX != null) { DebrisObj.optionalBounceVFX = BounceVFX; }
+            DebrisObj.sprite = sprite;
+            DebrisObj.DoesGoopOnRest = DoesGoopOnRest;
+            if (GoopType != null) { DebrisObj.AssignedGoop = GoopType; } else if (GoopType == null && DebrisObj.DoesGoopOnRest == true) { DebrisObj.DoesGoopOnRest = false; }
+            DebrisObj.GoopRadius = GoopRadius;
+            if (shadowSprite != null) { DebrisObj.shadowSprite = shadowSprite; }
+            DebrisObj.inertialMass = Mass;
+
+            DebrisObj.waftDuration = waftDuration;
+            DebrisObj.waftDistance = waftDistance;
+            DebrisObj.initialBurstDuration = initialBurstDuration;
+
+            return DebrisObj;
+        }
+
+
+        /// <summary>
+        /// Generates, and returns an array of WaftingDebrisObjects that you can add to a ShardCluster, which in turn can be used by your breakable. note that each Debris Object generated here will all use the same values you gave it
+        /// </summary>
+        /// <param name="waftDuration">Takes a random value between the X and Y value given and uses that as a value for how long it wafts *every* waft.</param>
+        /// <param name="waftDistance">Takes a random value between the X and Y value given and uses that as a value for the distance it wafts.</param>
+        /// <param name="initialBurstDuration">Takes the X & Y value given as a potential peak height.</param>
+        /// <param name="debrisObjectsCanRotate">Enables/Disables whether your shards can rotate in-flight.</param>
+        /// <param name="LifeSpanMin">The minimum flight-time of your shards.</param>
+        /// <param name="LifeSpanMax">The maximum flight-time of your shards.</param>
+        /// <param name="AngularVelocity">How much your shards will rotate in-flight.</param>
+        /// <param name="AngularVelocityVariance">Adds/removes some angular velocity to your shards when created. For example, having 40 AngularVelocity and an AngularVelocityVariance of 12 will set the AngularVelocity of your shards from anywhere between 28 and 52.</param>
+        /// <param name="shadowSprite">The sprite of the shadow your DebrisObject will use. Leave this as null to not have a shadow.</param>
+        /// <param name="Mass">Default of 1. The amount of additional weight applied to your DebrisObject</param>
+        /// <param name="AudioEventName">The sound that will play when the shards hit the ground.</param>
+        /// <param name="BounceVFX">The VFX that plays when your shards bounce.</param>
+        /// <param name="DebrisBounceCount">The amount of times your shards will bounce.</param>
+        /// <param name="DoesGoopOnRest">If true, will spawn goop on itself when it is in a resting state.</param>
+        /// <param name="GoopType">The goop it will spawn if DoesGoopOnRest is true.</param>
+        /// <param name="GoopRadius">The radius of the spawned goop.</param>
+        public static WaftingDebrisObject[] GenerateWaftingDebrisObjects(string[] shardSpritePaths, Vector2 waftDuration, Vector2 waftDistance, Vector2 initialBurstDuration, bool debrisObjectsCanRotate = true, float LifeSpanMin = 0.33f, float LifeSpanMax = 2f, float AngularVelocity = 540, float AngularVelocityVariance = 180f, tk2dSprite shadowSprite = null, float Mass = 1, string AudioEventName = null, GameObject BounceVFX = null, int DebrisBounceCount = 0, bool DoesGoopOnRest = false, GoopDefinition GoopType = null, float GoopRadius = 1f)
+        {
+            List<WaftingDebrisObject> DebrisObjectList = new List<WaftingDebrisObject>();
+            for (int i = 0; i < shardSpritePaths.Length; i++)
+            {
+                GameObject debrisObject = SpriteBuilder.SpriteFromResource(shardSpritePaths[i], null, false);
+                FakePrefab.MarkAsFakePrefab(debrisObject);
+                tk2dSprite tk2dsprite = debrisObject.GetComponent<tk2dSprite>();
+                WaftingDebrisObject DebrisObj = debrisObject.AddComponent<WaftingDebrisObject>();
+                DebrisObj.canRotate = debrisObjectsCanRotate;
+                DebrisObj.lifespanMin = LifeSpanMin;
+                DebrisObj.lifespanMax = LifeSpanMax;
+                DebrisObj.bounceCount = DebrisBounceCount;
+                DebrisObj.angularVelocity = AngularVelocity;
+                DebrisObj.angularVelocityVariance = AngularVelocityVariance;
+                if (AudioEventName != null) { DebrisObj.audioEventName = AudioEventName; }
+                if (BounceVFX != null) { DebrisObj.optionalBounceVFX = BounceVFX; }
+                DebrisObj.sprite = tk2dsprite;
+                DebrisObj.DoesGoopOnRest = DoesGoopOnRest;
+                if (GoopType != null) { DebrisObj.AssignedGoop = GoopType; } else if (GoopType == null && DebrisObj.DoesGoopOnRest == true) { DebrisObj.DoesGoopOnRest = false; }
+                DebrisObj.GoopRadius = GoopRadius;
+                if (shadowSprite != null) { DebrisObj.shadowSprite = shadowSprite; }
+                DebrisObj.inertialMass = Mass;
+                DebrisObj.waftDuration = waftDuration;
+                DebrisObj.waftDistance = waftDistance;
+                DebrisObj.initialBurstDuration = initialBurstDuration;
+                DebrisObjectList.Add(DebrisObj);
+            }
+            WaftingDebrisObject[] DebrisArray = DebrisObjectList.ToArray();
+            return DebrisArray;
+        }
+
+
+
+        /// <summary>
+        /// Generates, and returns an array of animated WaftingDebrisObjects that you can add to a ShardCluster, which in turn can be used by your breakable. note that each Debris Object generated here will all use the same values you gave it
+        /// </summary>
+        /// <param name="FPS">The FPS of your DebrisObject.</param>
+        /// <param name="wrapMode">The wrap mode of the animated DebrisObject.</param>
+        /// <param name="debrisObjectsCanRotate">Enables/Disables whether your shards can rotate in-flight.</param>
+        /// <param name="LifeSpanMin">The minimum flight-time of your shards.</param>
+        /// <param name="LifeSpanMax">The maximum flight-time of your shards.</param>
+        /// <param name="AngularVelocity">How much your shards will rotate in-flight.</param>
+        /// <param name="AngularVelocityVariance">Adds/removes some angular velocity to your shards when created. For example, having 40 AngularVelocity and an AngularVelocityVariance of 12 will set the AngularVelocity of your shards from anywhere between 28 and 52.</param>
+        /// <param name="shadowSprite">The sprite of the shadow your DebrisObject will use. Leave this as null to not have a shadow.</param>
+        /// <param name="Mass">Default of 1. The amount of additional weight applied to your DebrisObject</param>
+        /// <param name="AudioEventName">The sound that will play when the shards hit the ground.</param>
+        /// <param name="BounceVFX">The VFX that plays when your shards bounce.</param>
+        /// <param name="DebrisBounceCount">The amount of times your shards will bounce.</param>
+        /// <param name="DoesGoopOnRest">If true, will spawn goop on itself when it is in a resting state.</param>
+        /// <param name="GoopType">The goop it will spawn if DoesGoopOnRest is true.</param>
+        /// <param name="GoopRadius">The radius of the spawned goop.</param>
+
+        public static WaftingDebrisObject[] GenerateAnimatedWaftingDebrisObjects(List<string[]> shardSpritePathsList, Vector2 waftDuration, Vector2 waftDistance, Vector2 initialBurstDuration, int FPS = 12, tk2dSpriteAnimationClip.WrapMode wrapMode = tk2dSpriteAnimationClip.WrapMode.Loop, bool debrisObjectsCanRotate = true, tk2dSprite shadowSprite = null, float Mass = 1, float LifeSpanMin = 0.33f, float LifeSpanMax = 2f, float AngularVelocity = 540, float AngularVelocityVariance = 180f, string AudioEventName = null, GameObject BounceVFX = null, int DebrisBounceCount = 0, bool DoesGoopOnRest = false, GoopDefinition GoopType = null, float GoopRadius = 1f)
+        {
+            List<WaftingDebrisObject> DebrisObjectList = new List<WaftingDebrisObject>();
+            for (int i = 0; i < shardSpritePathsList.Count; i++)
+            {
+                string[] paths = shardSpritePathsList[i];
+                for (int e = 0; e < paths.Length; e++)
+                {
+                    GameObject debrisObject = SpriteBuilder.SpriteFromResource(paths[0], null, false);
+                    FakePrefab.MarkAsFakePrefab(debrisObject);
+                    WaftingDebrisObject DebrisObj = debrisObject.AddComponent<WaftingDebrisObject>();
+                    tk2dSpriteCollectionData VFXSpriteCollection = SpriteBuilder.ConstructCollection(debrisObject, (paths[0] + "_Collection"));
+                    int spriteID = SpriteBuilder.AddSpriteToCollection(paths[0], VFXSpriteCollection);
+                    tk2dSprite sprite = debrisObject.GetOrAddComponent<tk2dSprite>();
+                    sprite.SetSprite(VFXSpriteCollection, spriteID);
+
+                    tk2dSpriteAnimator animator = debrisObject.GetOrAddComponent<tk2dSpriteAnimator>();
+                    tk2dSpriteAnimation animation = debrisObject.AddComponent<tk2dSpriteAnimation>();
+                    animation.clips = new tk2dSpriteAnimationClip[0];
+                    animator.Library = animation;
+                    tk2dSpriteAnimationClip idleClip = new tk2dSpriteAnimationClip() { name = "idle", frames = new tk2dSpriteAnimationFrame[0], fps = FPS };
+                    List<tk2dSpriteAnimationFrame> frames = new List<tk2dSpriteAnimationFrame>();
+                    for (int q = 0; q < paths.Length; q++)
+                    {
+                        tk2dSpriteCollectionData collection = VFXSpriteCollection;
+                        int frameSpriteId = SpriteBuilder.AddSpriteToCollection(paths[q], collection);
+                        tk2dSpriteDefinition frameDef = collection.spriteDefinitions[frameSpriteId];
+                        frames.Add(new tk2dSpriteAnimationFrame { spriteId = frameSpriteId, spriteCollection = collection });
+                    }
+                    idleClip.frames = frames.ToArray();
+                    idleClip.wrapMode = wrapMode;
+                    animator.Library.clips = animation.clips.Concat(new tk2dSpriteAnimationClip[] { idleClip }).ToArray();
+                    animator.DefaultClipId = animator.GetClipIdByName("idle");
+                    DebrisObj.waftAnimationName = "idle";
+                    DebrisObj.canRotate = debrisObjectsCanRotate;
+                    DebrisObj.lifespanMin = LifeSpanMin;
+                    DebrisObj.lifespanMax = LifeSpanMax;
+                    DebrisObj.bounceCount = DebrisBounceCount;
+                    DebrisObj.angularVelocity = AngularVelocity;
+                    DebrisObj.angularVelocityVariance = AngularVelocityVariance;
+                    if (AudioEventName != null) { DebrisObj.audioEventName = AudioEventName; }
+                    if (BounceVFX != null) { DebrisObj.optionalBounceVFX = BounceVFX; }
+                    DebrisObj.sprite = sprite;
+                    DebrisObj.DoesGoopOnRest = DoesGoopOnRest;
+                    if (GoopType != null) { DebrisObj.AssignedGoop = GoopType; } else if (GoopType == null && DebrisObj.DoesGoopOnRest == true) { DebrisObj.DoesGoopOnRest = false; }
+                    DebrisObj.GoopRadius = GoopRadius;
+                    if (shadowSprite != null) { DebrisObj.shadowSprite = shadowSprite; }
+                    DebrisObj.inertialMass = Mass;
+                    DebrisObj.waftDuration = waftDuration;
+                    DebrisObj.waftDistance = waftDistance;
+                    DebrisObj.initialBurstDuration = initialBurstDuration;
+                    DebrisObjectList.Add(DebrisObj);
+                }
+            }
+            WaftingDebrisObject[] DebrisArray = DebrisObjectList.ToArray();
+            return DebrisArray;
+        }
+
+
         /// <summary>
         /// Generates, and returns a DebrisObject that you can add to a ShardCluster, which in turn can be used by your breakable  
         /// </summary>
@@ -1351,9 +1698,6 @@ namespace BreakAbleAPI
             */
 
 
-            breakable.OnBreak += OnBroken; //Code that runs when the breakable is broken. If doesnt have any arguments so im not sure how useful it can be
-
-
             // everything beloew here is for adding particle effects to your breakable when it breaks, tinker with your own caution!
             //note that you dont necessarily need a custom particle system for it to work
             /*
@@ -1432,64 +1776,76 @@ namespace BreakAbleAPI
 
         }
 
-        public static void ExampleTableSetup()
+
+        //An example of how to set uo most of the table stuff you can use
+        public static void ExampleTestTable()
         {
-            string defaultPath = "Planetside/Resources/DungeonObjects/testTable/";
-            string[] idlePaths = new string[]
+            string defaultPath = "Planetside/Resources/DungeonObjects/megaTable/";
+            string[] outlinePaths = new string[]
             {
-                defaultPath+"derptable_001.png",
-                defaultPath+"derptable_002.png",
-                defaultPath+"derptable_003.png",
+                defaultPath+"megatable_outlineNorth_001.png",
+                defaultPath+"megatable_outlineEast_001.png",
+                defaultPath+"megatable_outlineWest_001.png",
+                defaultPath+"megatable_outlineSouth_001.png"
             };
-            string[] flipLeftPaths = new string[]
+            string[] northFlipPaths = new string[]
             {
-                defaultPath+"derptable_flip_001.png",
-                defaultPath+"derptable_flip_002.png",
+                defaultPath+"megatable_northflip_001.png",
+                defaultPath+"megatable_northflip_002.png",
+                defaultPath+"megatable_northflip_003.png",
+                defaultPath+"megatable_northflip_004.png",
+                defaultPath+"megatable_northflip_005.png",
+                defaultPath+"megatable_northflip_006.png",
             };
-            string[] flipRightPaths = new string[]
+            string[] southFlipPaths = new string[]
             {
-                defaultPath+"derptable_flip_right_001.png",
-                defaultPath+"derptable_flip_right_002.png",
+                defaultPath+"megatable_southflip_001.png",
+                defaultPath+"megatable_southflip_002.png",
+                defaultPath+"megatable_southflip_003.png",
+                defaultPath+"megatable_southflip_004.png",
+                defaultPath+"megatable_southflip_005.png",
+                defaultPath+"megatable_southflip_006.png",
             };
-            string[] flipUpPaths = new string[]
+            string[] northBreakPaths = new string[]
             {
-                defaultPath+"derptable_flip_up_001.png",
-                defaultPath+"derptable_flip_up_002.png",
+                defaultPath+"megatable_northflipbreakdown_001.png",
+                defaultPath+"megatable_northflipbreakdown_002.png",
+                defaultPath+"megatable_northflipbreakdown_001.png",
             };
-            string[] flipDownPaths = new string[]
+            string[] southBreakPaths = new string[]
             {
-                defaultPath+"derptable_flip_down_001.png",
-                defaultPath+"derptable_flip_down_002.png",
+                defaultPath+"megatable_southflipbreakdown_001.png",
+                defaultPath+"megatable_southflipbreakdown_002.png",
+                defaultPath+"megatable_southflipbreakdown_003.png",
             };
-            string[] breakLeftPaths = new string[]
-{
-                defaultPath+"derptable_break_left_001.png",
-                defaultPath+"derptable_break_left_002.png",
-};
-            string[] breakRightPaths = new string[]
+            string[] unflippedBreakPaths = new string[]
             {
-                defaultPath+"derptable_break_right_001.png",
-                defaultPath+"derptable_break_right_002.png",
-            };
-            string[] breakUpPaths = new string[]
-            {
-                defaultPath+"derptable_break_up_001.png",
-                defaultPath+"derptable_break_up_002.png",
-            };
-            string[] breakDownPaths = new string[]
-            {
-                defaultPath+"derptable_break_down_001.png",
-                defaultPath+"derptable_break_down_002.png",
-            };
-            string[] breakUnflippedPaths = new string[]
-            {
-                defaultPath+"derptable_breakunflipped_001.png",
-                defaultPath+"derptable_breakunflipped_002.png",
-                defaultPath+"derptable_breakunflipped_003.png",
+                defaultPath+"megatable_idlebreakdown_001.png",
+                defaultPath+"megatable_idlebreakdown_002.png",
+                defaultPath+"megatable_idlebreakdown_003.png",
             };
 
-            FlippableCover flippableCover = GenerateTable("testTable", idlePaths, new string[] { "Planetside/Resources/outlineNorth.png", "Planetside/Resources/outlineEast.png", "Planetside/Resources/outlineWest.png", "Planetside/Resources/outlineSouth.png" }, flipUpPaths, flipDownPaths, flipLeftPaths, flipRightPaths, breakUpPaths, breakDownPaths, breakLeftPaths, breakRightPaths, breakUnflippedPaths, 3, 3, 3, 3, true, 20, 11, 0, 5, 20, 2, 4, 8, FlippableCover.FlipStyle.ANY , 90, "Planetside/Resources/cointosser.png", null, new Dictionary<float, string>() { {50, "Planetside/Resources/cointosser.png" } });
 
-        }  
+
+
+            Dictionary<float, string> north = new Dictionary<float, string>()
+            {
+                {25, defaultPath+"megatable_flipbreak_001_north.png"}
+            };
+            Dictionary<float, string> south = new Dictionary<float, string>()
+            {
+                {25, defaultPath+"megatable_flipbreak_001_south.png"}
+            };
+
+
+            Dictionary<float, string> aTwo = new Dictionary<float, string>()
+            {
+                {25, defaultPath+"megatable_idlebreak_001.png"}
+            };
+            FlippableCover breakable = BreakableAPIToolbox.GenerateTable("Mega_Table", new string[] { defaultPath + "megatable_idle_001.png" }, outlinePaths, northFlipPaths, southFlipPaths, null, null, northBreakPaths, southBreakPaths, null, null, unflippedBreakPaths, 1, 10, 7, 7, true, 64, 30, 0, 8, 64, 5, 64, 5, FlippableCover.FlipStyle.ONLY_FLIPS_UP_DOWN, 300, null, north, south, null, null, aTwo, true, true, 1);
+
+
+        }
+
     }
 }

@@ -117,8 +117,13 @@
     <Compile Include="EnemySetupCode\EnemyCode\Update3\PrisonerPhaseOneIntroController.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\Update3\PrisonerPhaseOne.cs" />
     <Compile Include="Guns\Update2\PerfectedProjectileComponent.cs" />
+    <Compile Include="Guns\Update4\HexaPulseCannon.cs" />
+    <Compile Include="Guns\Update4\PulseCannon.cs" />
     <Compile Include="Guns\Update4\ThunderShot.cs" />
+    <Compile Include="Guns\Update4\ParticleCollapserLargeProjectile.cs" />
+    <Compile Include="Guns\Update4\ParticleCollapserSmallProjectile.cs" />
     <Compile Include="Guns\Update4\ThunderShotProjectile.cs" />
+    <Compile Include="Guns\Update4\ParticleCollapser.cs" />
     <Compile Include="Guns\Update4\WhistlerProjectile.cs" />
     <Compile Include="Guns\Update4\Whistler.cs" />
     <Compile Include="Hooks\DungeonHooks.cs" />
@@ -655,7 +660,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="APIs\SaveAPI\Properties\" />
-    <Folder Include="NewFolder1\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Enemies\ModderBullets\an3s\an3sbullet_die_001.png" />
@@ -2269,12 +2273,6 @@
     <EmbeddedResource Include="Resources\Enemies\ModderBullets\turbo\turbo_idle_004.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Static\static1.png" />
-    <EmbeddedResource Include="Resources\Static\static2.png" />
-    <EmbeddedResource Include="Resources\Static\static3.png" />
-    <EmbeddedResource Include="Resources\Static\static4.png" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Resources\derpybullets.png" />
   </ItemGroup>
   <ItemGroup>
@@ -2628,7 +2626,7 @@
     <EmbeddedResource Include="Resources\DungeonObjects\megaTable\megatable_northflipbreakdown_001.png" />
     <EmbeddedResource Include="Resources\DungeonObjects\megaTable\megatable_northflipbreakdown_002.png" />
     <EmbeddedResource Include="Resources\DungeonObjects\megaTable\megatable_northflipbreakdown_003.png" />
-    <EmbeddedResource Include="Resources\DungeonObjects\megaTable\megatable_northflipbreak_001.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\megaTable\megatable_flipbreak_001_north.png" />
     <EmbeddedResource Include="Resources\DungeonObjects\megaTable\megatable_northflip_001.png" />
     <EmbeddedResource Include="Resources\DungeonObjects\megaTable\megatable_northflip_002.png" />
     <EmbeddedResource Include="Resources\DungeonObjects\megaTable\megatable_northflip_003.png" />
@@ -2642,7 +2640,7 @@
     <EmbeddedResource Include="Resources\DungeonObjects\megaTable\megatable_southflipbreakdown_001.png" />
     <EmbeddedResource Include="Resources\DungeonObjects\megaTable\megatable_southflipbreakdown_002.png" />
     <EmbeddedResource Include="Resources\DungeonObjects\megaTable\megatable_southflipbreakdown_003.png" />
-    <EmbeddedResource Include="Resources\DungeonObjects\megaTable\megatable_southflipbreak_001.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\megaTable\megatable_flipbreak_001_south.png" />
     <EmbeddedResource Include="Resources\DungeonObjects\megaTable\megatable_southflip_001.png" />
     <EmbeddedResource Include="Resources\DungeonObjects\megaTable\megatable_southflip_002.png" />
     <EmbeddedResource Include="Resources\DungeonObjects\megaTable\megatable_southflip_003.png" />
@@ -2821,6 +2819,14 @@
     <EmbeddedResource Include="Resources\NPCs\Gregthly\gregthlysqueeze_002.png" />
     <EmbeddedResource Include="Resources\NPCs\Gregthly\gregthlysqueeze_003.png" />
     <EmbeddedResource Include="Resources\NPCs\Gregthly\gregthlysqueeze_004.png" />
+    <EmbeddedResource Include="Resources\GunClips\PulseCannon\pulseclipEmpty.png" />
+    <EmbeddedResource Include="Resources\GunClips\PulseCannon\pulseclipFull.png" />
+    <EmbeddedResource Include="Resources\GunClips\Pulse\pulseclipEmpty.png" />
+    <EmbeddedResource Include="Resources\GunClips\Pulse\pulseclipFull.png" />
+    <EmbeddedResource Include="Resources\GunObjects\Clips\collasperClip.png" />
+    <EmbeddedResource Include="Resources\GunObjects\Casings\collapsercasing.png" />
+    <EmbeddedResource Include="Resources\GunObjects\Casings\revenantcasing.png" />
+    <EmbeddedResource Include="Resources\GunObjects\Clips\bulldogclip.png" />
     <Content Include="Resources\Shellrax\shellrax_intro_019.png" />
     <EmbeddedResource Include="Resources\VFX\LockOnVFX\lockonvfx1.png" />
     <EmbeddedResource Include="Resources\VFX\LockOnVFX\lockonvfx2.png" />

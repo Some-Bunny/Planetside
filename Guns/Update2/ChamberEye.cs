@@ -57,6 +57,8 @@ namespace Planetside
 					projectileModule.ammoCost = 0;
 				}
 				projectile.transform.parent = gun.barrelOffset;
+				projectile.objectImpactEventName = (PickupObjectDatabase.GetById(13) as Gun).DefaultModule.projectiles[0].objectImpactEventName;
+				projectile.enemyImpactEventName = (PickupObjectDatabase.GetById(13) as Gun).DefaultModule.projectiles[0].enemyImpactEventName;
 				projectile.gameObject.AddComponent<ChamberEyeProjectile>();
 				projectile.AnimateProjectile(new List<string> {
 				"eyespear_projectile_001",
