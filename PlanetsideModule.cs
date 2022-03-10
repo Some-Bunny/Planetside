@@ -70,14 +70,14 @@ namespace Planetside
             ItemIDs.MakeCommand();
             StaticReferences.Init(); //<- Used in GungeonAPI, IMPORTANT to initialise it before DungeonHandler
             //Targets.Init();
-            HolyChamberStatue.Init();
-            TrespassLight.Init();
+            InitNewPlaceables.InitPlaceables();
+
 
             //initialise Tools classes here
             Tools.Init();
             NpcTools.Init();
 
-            MegaTable.Init();
+            //MegaTable.Init();
 
             //Hook stuff here
             PickupHooks.Init();
@@ -91,6 +91,7 @@ namespace Planetside
             SoundManager.Init();
             SoundManager.LoadBankFromModProject("Planetside/PlanetsideBank");
             SoundManager.RegisterStopEvent("Stop_MUS_PrisonerTheme", StopEventType.Music);
+
             ItemBuilder.Init();
 
             //Shrine Initialisation

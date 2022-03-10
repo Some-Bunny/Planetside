@@ -496,6 +496,11 @@ public class CustomBeholsterLaserBehavior : BasicAttackBehavior
 			}
 			else
 			{
+				if (base.m_aiActor == null&& beamCont != null)
+                {
+					beamCont.CeaseAttack();
+					break;
+				}
 				beamCont.LateUpdatePosition(startingPoint);
 				yield return null;
 				if (this.IsfiringLaser && !beamCont)

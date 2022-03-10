@@ -109,10 +109,12 @@
     <Compile Include="DungeonGenStuff\ExpandTK2DDungeonAssembler.cs" />
     <Compile Include="DungeonPlaceables\BreakableAPI.cs" />
     <Compile Include="DungeonPlaceables\HolyChamberStatue.cs" />
+    <Compile Include="DungeonPlaceables\InitNewPlaceables.cs" />
     <Compile Include="DungeonPlaceables\Targets.cs" />
     <Compile Include="DungeonPlaceables\MegaTable.cs" />
     <Compile Include="DungeonPlaceables\EmberPot.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassLight.cs" />
+    <Compile Include="DungeonPlaceables\TrespassPortalBack.cs" />
     <Compile Include="EnemySetupCode\EnemyAPI %28The one that modifies behaviors%29\OverrideBehavior.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\Update3\PrisonerPhaseOneIntroController.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\Update3\PrisonerPhaseOne.cs" />
@@ -153,7 +155,7 @@
     <Compile Include="Pickups\Perkthings\Greedy.cs" />
     <Compile Include="Pickups\Perkthings\AllStatsUp.cs" />
     <Compile Include="Pickups\Perkthings\PerkParticleSystemController.cs" />
-    <Compile Include="DungeonPlaceables\PrisonerShrineControllerp.cs" />
+    <Compile Include="DungeonPlaceables\PrisonerShrineController.cs" />
     <Compile Include="Toolboxes\EnemyToolbox.cs" />
     <Compile Include="Toolboxes\SpapisSuperCoolAdvancedCodeToolbox.cs" />
     <Compile Include="Unsorted Garbage\KnuckleBackerUIController.cs" />

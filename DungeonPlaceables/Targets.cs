@@ -54,29 +54,28 @@ namespace Planetside
             };
 
             string shadowPath = defaultPath+ "TargetShadow.png";
-            GameObject poof = null;//(GameObject)(ResourceCache.Acquire("Global VFX/VFX_Item_Spawn_Poof"));
-            MinorBreakable targetOne = BreakableAPIToolbox.GenerateMinorBreakable("Target_One", idlePaths1, 1, breakPaths1, 10, "Play_obj_box_break_01", shadowPath, 0, -0.125f, true, 14, 14, 1, 0, poof);
+            MinorBreakable targetOne = BreakableAPIToolbox.GenerateMinorBreakable("Target_One", idlePaths1, 1, breakPaths1, 10, "Play_obj_box_break_01", shadowPath, 0, -0.125f, true, 14, 14, 1, 0);
             targetOne.stopsBullets = true;
             targetOne.OnlyPlayerProjectilesCanBreak = true;
             targetOne.OnlyBreaksOnScreen = false;
             targetOne.resistsExplosions = false;
             targetOne.canSpawnFairy = false;
             targetOne.breakStyle = MinorBreakable.BreakStyle.CONE;
-            MinorBreakable targetTwo = BreakableAPIToolbox.GenerateMinorBreakable("Target_two", idlePaths2, 1, breakPaths2, 10, "Play_obj_box_break_01", shadowPath, 0, -0.125f, true, 14, 14, 1, 0, poof);
+            MinorBreakable targetTwo = BreakableAPIToolbox.GenerateMinorBreakable("Target_two", idlePaths2, 1, breakPaths2, 10, "Play_obj_box_break_01", shadowPath, 0, -0.125f, true, 14, 14, 1, 0);
             targetTwo.stopsBullets = true;
             targetTwo.OnlyPlayerProjectilesCanBreak = true;
             targetTwo.OnlyBreaksOnScreen = false;
             targetTwo.resistsExplosions = false;
             targetTwo.canSpawnFairy = false;
             targetTwo.breakStyle = MinorBreakable.BreakStyle.CONE;
-            MinorBreakable targetThree = BreakableAPIToolbox.GenerateMinorBreakable("Target_three", idlePaths3, 1, breakPaths3, 10, "Play_obj_box_break_01", shadowPath, 0, -0.125f, true, 14, 14, 1, 0, poof);
+            MinorBreakable targetThree = BreakableAPIToolbox.GenerateMinorBreakable("Target_three", idlePaths3, 1, breakPaths3, 10, "Play_obj_box_break_01", shadowPath, 0, -0.125f, true, 14, 14, 1, 0);
             targetThree.stopsBullets = true;
             targetThree.OnlyPlayerProjectilesCanBreak = true;
             targetThree.OnlyBreaksOnScreen = false;
             targetThree.resistsExplosions = false;
             targetThree.canSpawnFairy = false;
             targetThree.breakStyle = MinorBreakable.BreakStyle.CONE;
-            MinorBreakable targetFour = BreakableAPIToolbox.GenerateMinorBreakable("Target_four", idlePaths4, 1, breakPaths4, 10, "Play_obj_box_break_01", shadowPath, 0, -0.125f, true, 14, 14, 1, 0, poof);
+            MinorBreakable targetFour = BreakableAPIToolbox.GenerateMinorBreakable("Target_four", idlePaths4, 1, breakPaths4, 10, "Play_obj_box_break_01", shadowPath, 0, -0.125f, true, 14, 14, 1, 0);
             targetFour.stopsBullets = true;
             targetFour.OnlyPlayerProjectilesCanBreak = true;
             targetFour.OnlyBreaksOnScreen = false;
@@ -139,11 +138,6 @@ namespace Planetside
             targetThree.shardClusters = new ShardCluster[] { paperCluster, woodClusterSmall, woodClusterMedium };
             targetFour.shardClusters = new ShardCluster[] { paperCluster, woodClusterSmall, woodClusterMedium };
 
-            //breakable.OnBreak += OnBroken; //Code that runs when the breakable is broken. If doesnt have any arguments so im not sure how useful it can be
-
-
-
-
 
             Dictionary<GameObject, float> dict = new Dictionary<GameObject, float>()
             {
@@ -154,9 +148,7 @@ namespace Planetside
             };
 
             DungeonPlaceable placeable = BreakableAPIToolbox.GenerateDungeonPlaceable(dict);
-            StaticReferences.StoredDungeonPlaceables.Add("test", placeable);
-
-            //StaticReferences.StoredRoomObjects.Add("test", breakable.gameObject);
+            StaticReferences.StoredDungeonPlaceables.Add("targetPlaceable", placeable);
         }
     }
 }

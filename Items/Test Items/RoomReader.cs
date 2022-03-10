@@ -79,9 +79,59 @@ namespace Planetside
 
         protected override void DoEffect(PlayerController user)
         {
+            RoomHandler roome =  user.CurrentRoom;
+            //RuntimePrototypeRoomData hjg =  roome.area.runtimePrototypeData;
+            //PrototypeDungeonRoom eee = roome.area.prototypeRoom;
 
+            //Play_MUS_Ending_Pilot_01
+            //AkSoundEngine.PostEvent("Stop_MUS_Ending_Pilot", GameManager.Instance.gameObject);
+
+            /*
+            PrototypeDungeonRoom eee = LoadHelper.LoadAssetFromAnywhere<PrototypeDungeonRoom>("assets/data/rooms/npc rooms/npc_synergrace_room.asset");
+            ETGModConsole.Log("START============");
+            if (eee != null)
+            {
+                if (eee.CustomMusicEvent != null)
+                {
+                    ETGModConsole.Log("CustomMusicEvent:");
+                    ETGModConsole.Log(eee.CustomMusicEvent);
+                }
+                if (eee.CustomMusicSwitch != null)
+                {
+                    ETGModConsole.Log("CustomMusicSwitch:");
+                    ETGModConsole.Log(eee.CustomMusicSwitch);
+                }
+
+            }
+            if (eee != null)
+            {
+                if (eee.OverrideMusicState != null)
+                {
+                    ETGModConsole.Log("OverrideMusicState:");
+                    ETGModConsole.Log(eee.OverrideMusicState.ToString());
+                }
+                if (eee.UseCustomMusic != null)
+                {
+                    ETGModConsole.Log("UseCustomMusic:");
+                    ETGModConsole.Log(eee.UseCustomMusic.ToString());
+                }
+                if (eee.UseCustomMusicState != null)
+                {
+                    ETGModConsole.Log("UseCustomMusicState:");
+                    ETGModConsole.Log(eee.UseCustomMusicState.ToString());
+                }
+                if (eee.UseCustomMusicSwitch != null)
+                {
+                    ETGModConsole.Log("UseCustomMusicSwitch:");
+                    ETGModConsole.Log(eee.UseCustomMusicSwitch.ToString());
+                }
+            }
+            
+            ETGModConsole.Log("END============");
+            */
             //var partObj2 = UnityEngine.Object.Instantiate(ball); ;//this is the name of the object which by default will be "Particle System"
 
+            /*
             var partObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("Portal")); ;//this is the name of the object which by default will be "Particle System"
             MeshRenderer rend = partObj.GetComponent<MeshRenderer>();
             
@@ -94,6 +144,7 @@ namespace Planetside
             partObj.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
             TrespassPortalController romas= partObj.AddComponent<TrespassPortalController>();
             romas.m_room = user.CurrentRoom;
+            */
             /*
             BossManager manager = GameManager.Instance.BossManager;
 

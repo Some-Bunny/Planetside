@@ -348,7 +348,6 @@ namespace Planetside
 				BeholsterController beholsterbeam = actor.GetComponent<BeholsterController>();
 				bholsterbeam1.beamTransform = m_CachedGunAttachPoint.transform;
 				bholsterbeam1.beamModule = beholsterbeam.beamModule;
-				//bholsterbeam1.beamProjectile = beholsterbeam.beamModule.GetCurrentProjectile();
 				bholsterbeam1.beamProjectile = beholsterbeam.projectile;
 				bholsterbeam1.firingEllipseCenter = m_CachedGunAttachPoint.transform.position;
 				bholsterbeam1.name = "Detscavator Beamafadesfdf";
@@ -357,11 +356,11 @@ namespace Planetside
 				AIBeamShooter2 bholsterbeam2 = companion.gameObject.AddComponent<AIBeamShooter2>();
 				bholsterbeam2.beamTransform = m_CachedGunAttachPoint.transform;
 				bholsterbeam2.beamModule = beholsterbeam.beamModule;
-				//bholsterbeam1.beamProjectile = beholsterbeam.beamModule.GetCurrentProjectile();
 				bholsterbeam2.beamProjectile = beholsterbeam.projectile;
 				bholsterbeam2.firingEllipseCenter = m_CachedGunAttachPoint.transform.position;
 				bholsterbeam2.name = "Detscavator afaus";
 				bholsterbeam2.northAngleTolerance = -8;
+
 				bs.TargetBehaviors = new List<TargetBehaviorBase>
 				{
 				new TargetPlayerBehavior

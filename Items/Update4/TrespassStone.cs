@@ -50,6 +50,15 @@ namespace Planetside
                 weightRoom.room.usesCustomAmbientLight = true;
                 weightRoom.room.overriddenTilesets = GlobalDungeonData.ValidTilesets.FORGEGEON;
                 weightRoom.room.drawPrecludedCeilingTiles = true;
+
+                weightRoom.room.UseCustomMusic = true;
+                weightRoom.room.UseCustomMusicState = false;
+                weightRoom.room.UseCustomMusicSwitch = true;
+
+                //weightRoom.room.OverrideMusicState = DungeonFloorMusicController.DungeonMusicState.FLOOR_INTRO;
+
+                weightRoom.room.CustomMusicSwitch = "Play_MUS_Ending_Pilot_01";
+                weightRoom.room.CustomMusicEvent = "Play_MUS_Dungeon_State_NPC";
             }
             
             trespassTable = table;
@@ -65,7 +74,7 @@ namespace Planetside
 
         protected override void DoEffect(PlayerController user)
         {
-            var partObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("Portal"));
+            GameObject partObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("Portal"));
             MeshRenderer rend = partObj.GetComponent<MeshRenderer>();
             rend.allowOcclusionWhenDynamic = true;
             partObj.transform.position = user.transform.position;
