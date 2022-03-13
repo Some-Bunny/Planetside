@@ -1,7 +1,11 @@
-﻿using System;
+﻿using Dungeonator;
+using ItemAPI;
+using System;
+using UnityEngine;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Collections;
+using MonoMod.RuntimeDetour;
+using System.Reflection;
 
 namespace Planetside
 {
@@ -37,8 +41,8 @@ namespace Planetside
 
             TalbertKeeperTable.AddItemsToPool(new Dictionary<int, float> { { 294, 0.6f }, { 293, 0.2f }, { 664, 0.2f } });
         }
-        
-        public static GenericLootTable TalbertKeeperTable;
+
+		public static GenericLootTable TalbertKeeperTable;
         public static GenericLootTable TimeShopKeeperTable;
     }
 }

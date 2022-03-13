@@ -40,7 +40,7 @@ namespace Planetside
 
 			gun.DefaultModule.ammoCost = 1;
 			gun.DefaultModule.shootStyle = ProjectileModule.ShootStyle.Automatic;
-			gun.reloadTime = 3.4f;
+			gun.reloadTime = 2.6f;
 			gun.DefaultModule.cooldownTime = 0.075f;
 			gun.DefaultModule.numberOfShotsInClip = 21;
 			gun.DefaultModule.angleVariance = 14f;

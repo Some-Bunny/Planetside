@@ -295,7 +295,7 @@ namespace Planetside
 			AssetBundle shared_auto_001 = ResourceManager.LoadAssetBundle("shared_auto_001");
 			GameObject iconPrefab =(shared_auto_001.LoadAsset("assets/data/prefabs/room icons/minimap_boss_icon.prefab") as GameObject);
 			shared_auto_001 = null;
-			Dungeon hellDungeon = DungeonDatabase.GetOrLoadByName("base_bullethell");
+			//Dungeon hellDungeon = DungeonDatabase.GetOrLoadByName("base_bullethell");
 			ShellraxRoomPrefab = RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/hellpain.room").room;
 			ShellraxRoomPrefab.associatedMinimapIcon = iconPrefab;
 			ShellraxRoom = new ProceduralFlowModifierData()

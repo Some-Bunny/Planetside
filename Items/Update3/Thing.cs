@@ -242,9 +242,9 @@ namespace Planetside
                             roomHandler.DeregisterInteractable(touchy);
                             touchy.enabled = false;
                             Minimap minimap = Minimap.Instance;
-                            Dictionary<RoomHandler, GameObject> rTTIM = ReflectionHelper.ReflectGetField<Dictionary<RoomHandler, GameObject>>(typeof(Minimap), "roomToTeleportIconMap", minimap);
+                            Dictionary<RoomHandler, GameObject> rTTIM = PlanetsideReflectionHelper.ReflectGetField<Dictionary<RoomHandler, GameObject>>(typeof(Minimap), "roomToTeleportIconMap", minimap);
                             rTTIM.Clear();
-                            Dictionary<RoomHandler, GameObject> rTIM = ReflectionHelper.ReflectGetField<Dictionary<RoomHandler, GameObject>>(typeof(Minimap), "roomToIconsMap", minimap);
+                            Dictionary<RoomHandler, GameObject> rTIM = PlanetsideReflectionHelper.ReflectGetField<Dictionary<RoomHandler, GameObject>>(typeof(Minimap), "roomToIconsMap", minimap);
                             rTIM.Clear();
                             minimap.roomsContainingTeleporters.Remove(roomHandler);
                             Minimap.Instance.DeregisterRoomIcon(roomHandler, touchy.gameObject);
@@ -256,7 +256,7 @@ namespace Planetside
                         {
                             foreach (BaseShopController shope in componentsInChildren)
                             {
-                                List<ShopItemController> shopitem = ReflectionHelper.ReflectGetField<List<ShopItemController>>(typeof(BaseShopController), "m_itemControllers", shope);
+                                List<ShopItemController> shopitem = PlanetsideReflectionHelper.ReflectGetField<List<ShopItemController>>(typeof(BaseShopController), "m_itemControllers", shope);
                                 for (int i = 0; i < shopitem.Count; i++)
                                 {
                                     if (shopitem[i])

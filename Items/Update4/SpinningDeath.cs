@@ -57,7 +57,7 @@ namespace Planetside
 
 		private void DoTick()
 		{
-			LinkedList<BasicBeamController.BeamBone> linkedList = ReflectionHelper.ReflectGetField<LinkedList<BasicBeamController.BeamBone>>(typeof(BasicBeamController), "m_bones", this.basicBeamController);
+			LinkedList<BasicBeamController.BeamBone> linkedList = PlanetsideReflectionHelper.ReflectGetField<LinkedList<BasicBeamController.BeamBone>>(typeof(BasicBeamController), "m_bones", this.basicBeamController);
 			for (int k = 0; k < linkedList.Count; k++)
             {
 				if (UnityEngine.Random.value > 0.33f)
@@ -245,7 +245,7 @@ namespace Planetside
 				AkSoundEngine.PostEvent("Play_EnergySwirl", beam.gameObject);
 				bool Flipped = UnityEngine.Random.value > 0.5f ? true : false;
 				BasicBeamController basicBeam = beam.GetComponent<BasicBeamController>();
-				LinkedList<BasicBeamController.BeamBone> linkedList = ReflectionHelper.ReflectGetField<LinkedList<BasicBeamController.BeamBone>>(typeof(BasicBeamController), "m_bones", basicBeam);
+				LinkedList<BasicBeamController.BeamBone> linkedList = PlanetsideReflectionHelper.ReflectGetField<LinkedList<BasicBeamController.BeamBone>>(typeof(BasicBeamController), "m_bones", basicBeam);
 				LinkedListNode<BasicBeamController.BeamBone> last = linkedList.Last;
 				Vector2 bonePosition = basicBeam.GetBonePosition(last.Value);
 

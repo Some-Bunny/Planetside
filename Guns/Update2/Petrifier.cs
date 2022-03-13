@@ -73,6 +73,7 @@ namespace Planetside
 			gun.quality = PickupObject.ItemQuality.B;
 			gun.encounterTrackable.EncounterGuid = "Fear.";
 			ETGMod.Databases.Items.Add(gun, null, "ANY");
+			SynergyAPI.SynergyBuilder.AddItemToSynergy(gun, CustomSynergyType.IRONSHOT);
 
 			Petrifier.PetrifierID = gun.PickupObjectId;
 			ItemIDs.AddToList(gun.PickupObjectId);

@@ -138,7 +138,7 @@ namespace Planetside
     {
         public static void Init()
         {
-            string name = "Greedy Perk";
+            string name = "Greed";
             string resourcePath = "Planetside/Resources/PerkThings/Greedy.png";
             GameObject gameObject = new GameObject(name);
             Greedy item = gameObject.AddComponent<Greedy>();
@@ -158,8 +158,11 @@ namespace Planetside
         public static int GreedyID;
         private static Color OutlineColor;
 
-
-
+        public new bool PrerequisitesMet()
+        {
+            EncounterTrackable component = base.GetComponent<EncounterTrackable>();
+            return component == null || component.PrerequisitesMet();
+        }
         public override void Pickup(PlayerController player)
         {
             if (m_hasBeenPickedUp)

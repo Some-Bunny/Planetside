@@ -28,7 +28,7 @@ namespace Planetside
     {
         public static void Init()
         {
-            string name = "Explosive Birth Perk";
+            string name = "Explosive Birth";
             string resourcePath = "Planetside/Resources/PerkThings/projectileboom.png";
             GameObject gameObject = new GameObject(name);
             BlastProjectiles item = gameObject.AddComponent<BlastProjectiles>();
@@ -73,7 +73,11 @@ namespace Planetside
         public static int BlastProjectilesID;
         private static Color OutlineColor;
         public static Projectile VengefulProjectile;
-
+        public new bool PrerequisitesMet()
+        {
+            EncounterTrackable component = base.GetComponent<EncounterTrackable>();
+            return component == null || component.PrerequisitesMet();
+        }
 
         public override void Pickup(PlayerController player)
         {

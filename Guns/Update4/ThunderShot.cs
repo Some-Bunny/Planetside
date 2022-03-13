@@ -77,6 +77,7 @@ namespace Planetside
 
             gun.quality = PickupObject.ItemQuality.C;
             ETGMod.Databases.Items.Add(gun, null, "ANY");
+            SynergyAPI.SynergyBuilder.AddItemToSynergy(gun, CustomSynergyType.DODGELOAD);
 
             List<string> AAA = new List<string>
             {

@@ -3,11 +3,17 @@ using System.Collections.Generic;
 using Dungeonator;
 using HutongGames.PlayMaker;
 using UnityEngine;
-
+using Planetside;
 namespace NpcApi
 {
 	public class CustomShopController : BaseShopController
 	{
+		public CustomShopController()
+        {
+			poolType = PoolType.DEFAULT;
+		}
+
+
 		/*[Serializable]
 		public delegate bool CustomCanBuy(CustomShopController shop, PlayerController player, int cost);
 		[Serializable]
@@ -37,6 +43,14 @@ namespace NpcApi
 		public bool canBeRobbed;
 		public StatModifier[] statsToGive;
 		public DungeonPrerequisite[] prerequisites = new DungeonPrerequisite[0];
+
+		public PoolType poolType;
+		public enum PoolType
+        {
+			DEFAULT,
+			DUPES,
+			DUPES_AND_NOEXCLUSION
+        };
 
 		//public List<CustomShopItemController> m_customShopItemControllers;
 		//public List<ShopItemController> m_shopItemControllers;
@@ -204,8 +218,26 @@ namespace NpcApi
 				}
 				else
 				{
-					GameObject gameObject5 = this.shopItems.SubshopSelectByWeightWithoutDuplicatesFullPrereqs(this.m_shopItems, weightModifier, 1, GameManager.Instance.IsSeeded);
-					this.m_shopItems.Add(gameObject5);
+					GameObject gameObject5 = new GameObject();
+					switch (this.poolType)
+					{
+						case PoolType.DEFAULT:
+							gameObject5 = this.shopItems.SubshopSelectByWeightWithoutDuplicatesFullPrereqs(this.m_shopItems, weightModifier, 1, GameManager.Instance.IsSeeded);
+							this.m_shopItems.Add(gameObject5);
+							break;
+						case PoolType.DUPES:
+							gameObject5 = this.shopItems.SelectByWeight(GameManager.Instance.IsSeeded);
+							this.m_shopItems.Add(gameObject5);
+							break;
+						case PoolType.DUPES_AND_NOEXCLUSION:
+							gameObject5 = this.shopItems.SelectByWeightNoExclusions(GameManager.Instance.IsSeeded);
+							this.m_shopItems.Add(gameObject5);
+							break;
+						default:
+							gameObject5 = this.shopItems.SubshopSelectByWeightWithoutDuplicatesFullPrereqs(this.m_shopItems, weightModifier, 1, GameManager.Instance.IsSeeded);
+							this.m_shopItems.Add(gameObject5);
+							break;
+					}
 				}
 			}
 
@@ -281,8 +313,26 @@ namespace NpcApi
 							if (!flag3 && ((!isSeeded) ? UnityEngine.Random.value : BraveRandom.GenerationRandomValue()) < replaceFirstRewardWithPickup)
 							{
 								flag3 = true;
-								GameObject item2 = base.shopItems.SelectByWeightWithoutDuplicatesFullPrereqs(base.m_shopItems, weightModifier, GameManager.Instance.IsSeeded);
-								base.m_shopItems.Add(item2);
+								GameObject gameObject5 = new GameObject();
+								switch (this.poolType)
+								{
+									case PoolType.DEFAULT:
+										gameObject5 = this.shopItems.SubshopSelectByWeightWithoutDuplicatesFullPrereqs(this.m_shopItems, weightModifier, 1, GameManager.Instance.IsSeeded);
+										this.m_shopItems.Add(gameObject5);
+										break;
+									case PoolType.DUPES:
+										gameObject5 = this.shopItems.SelectByWeight(GameManager.Instance.IsSeeded);
+										this.m_shopItems.Add(gameObject5);
+										break;
+									case PoolType.DUPES_AND_NOEXCLUSION:
+										gameObject5 = this.shopItems.SelectByWeightNoExclusions(GameManager.Instance.IsSeeded);
+										this.m_shopItems.Add(gameObject5);
+										break;
+									default:
+										gameObject5 = this.shopItems.SubshopSelectByWeightWithoutDuplicatesFullPrereqs(this.m_shopItems, weightModifier, 1, GameManager.Instance.IsSeeded);
+										this.m_shopItems.Add(gameObject5);
+										break;
+								}
 							}
 							else if (!GameStatsManager.Instance.IsRainbowRun)
 							{

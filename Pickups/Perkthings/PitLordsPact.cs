@@ -116,7 +116,7 @@ namespace Planetside
         {
 
 
-            string name = "Pit Lords Pact Perk";
+            string name = "Pit Lords Pact";
             string resourcePath = "Planetside/Resources/PerkThings/pitLordsPact.png";
             GameObject gameObject = new GameObject(name);
             PitLordsPact item = gameObject.AddComponent<PitLordsPact>();
@@ -150,7 +150,11 @@ namespace Planetside
 
         public static int PitLordsPactID;
         private static Color OutlineColor;
-
+        public new bool PrerequisitesMet()
+        {
+            EncounterTrackable component = base.GetComponent<EncounterTrackable>();
+            return component == null || component.PrerequisitesMet();
+        }
         public static void FallHookPlayer(Action<PlayerController> orig, PlayerController self)
         {
             orig(self);

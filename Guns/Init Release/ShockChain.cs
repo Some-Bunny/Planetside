@@ -103,6 +103,7 @@ namespace Planetside
 
 			gun.encounterTrackable.EncounterGuid = "):";
 			ETGMod.Databases.Items.Add(gun, null, "ANY");
+
 			gun.barrelOffset.transform.localPosition = new Vector3(1.25f, 0.3125f, 0f);
 			gun.carryPixelOffset = new IntVector2((int)4f, (int)-0.5f);
 			Gun gun4 = PickupObjectDatabase.GetById(13) as Gun;

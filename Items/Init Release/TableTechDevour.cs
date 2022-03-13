@@ -55,6 +55,7 @@ namespace Planetside
             CustomSynergies.Add("Blood For Wood", mandatoryConsoleIDs, optionalConsoleIDs2, true);
             TableTechDevour.TableTechDevourID = minigunrounds.PickupObjectId;
             ItemIDs.AddToList(minigunrounds.PickupObjectId);
+            SynergyAPI.SynergyBuilder.AddItemToSynergy(minigunrounds, CustomSynergyType.PAPERWORK);
 
             minigunrounds.AddToSubShop(ItemBuilder.ShopType.Goopton, 1f);
 

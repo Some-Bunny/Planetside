@@ -34,6 +34,7 @@ namespace Planetside
 			BabyGoodCandleKin.BuildPrefab();
 			BabyGoodCandleKin.BabyGoodCandleKinID = item.PickupObjectId;
 			ItemIDs.AddToList(item.PickupObjectId);
+			SynergyAPI.SynergyBuilder.AddItemToSynergy(item, CustomSynergyType.TEA_FOR_TWO);
 
 		}
 		public static int BabyGoodCandleKinID;

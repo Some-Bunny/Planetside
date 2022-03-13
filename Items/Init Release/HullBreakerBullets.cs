@@ -44,6 +44,9 @@ namespace Planetside
 				"h4mmer"
 			};
 			CustomSynergies.Add("Shattering Justice", mandatoryConsoleIDs, optionalConsoleIDs, true);
+			SynergyAPI.SynergyBuilder.AddItemToSynergy(item, CustomSynergyType.MASSIVE_EFFECT);
+			SynergyAPI.SynergyBuilder.AddItemToSynergy(item, CustomSynergyType.MISSILE_BOW);
+
 			item.AddToSubShop(ItemBuilder.ShopType.Trorc, 1f);
 
 			HullBreakerBullets.HullBreakerBulletsID = item.PickupObjectId;

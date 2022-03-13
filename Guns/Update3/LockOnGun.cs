@@ -124,6 +124,7 @@ namespace Planetside
 			material.SetTexture("_MainTex", sharedMaterials[0].GetTexture("_MainTex"));
 			sharedMaterials[sharedMaterials.Length - 1] = material;
 			component.sharedMaterials = sharedMaterials;
+			SynergyAPI.SynergyBuilder.AddItemToSynergy(gun, CustomSynergyType.HOMING_BOMBS);
 
 			List<string> AAA = new List<string>
 			{

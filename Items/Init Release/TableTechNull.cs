@@ -34,6 +34,8 @@ namespace Planetside
 
             minigunrounds.SetupItem(shortDesc, longDesc, "psog");
             minigunrounds.quality = PickupObject.ItemQuality.C;
+            SynergyAPI.SynergyBuilder.AddItemToSynergy(minigunrounds, CustomSynergyType.PAPERWORK);
+
             TableTechNullReferenceException.TableTechNullID = minigunrounds.PickupObjectId;
             ItemIDs.AddToList(minigunrounds.PickupObjectId);
 

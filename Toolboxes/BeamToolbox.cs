@@ -92,7 +92,7 @@ namespace Planetside
         public static bool PosIsNearAnyBoneOnBeam(this BasicBeamController beam, Vector2 positionToCheck, float distance)
         {
             LinkedList<BasicBeamController.BeamBone> bones;
-            bones = ReflectionHelper.ReflectGetField<LinkedList<BasicBeamController.BeamBone>>(typeof(BasicBeamController), "m_bones", beam);
+            bones = PlanetsideReflectionHelper.ReflectGetField<LinkedList<BasicBeamController.BeamBone>>(typeof(BasicBeamController), "m_bones", beam);
             foreach (BasicBeamController.BeamBone bone in bones)
             {
                 Vector2 bonepos = beam.GetBonePosition(bone);
@@ -110,7 +110,7 @@ namespace Planetside
             else
             {
                 LinkedList<BasicBeamController.BeamBone> bones;
-                bones = ReflectionHelper.ReflectGetField<LinkedList<BasicBeamController.BeamBone>>(typeof(BasicBeamController), "m_bones", beam);
+                bones = PlanetsideReflectionHelper.ReflectGetField<LinkedList<BasicBeamController.BeamBone>>(typeof(BasicBeamController), "m_bones", beam);
                 return bones.Count();
             }
         }
@@ -123,7 +123,7 @@ namespace Planetside
             else
             {
                 LinkedList<BasicBeamController.BeamBone> bones;
-                bones = ReflectionHelper.ReflectGetField<LinkedList<BasicBeamController.BeamBone>>(typeof(BasicBeamController), "m_bones", beam);
+                bones = PlanetsideReflectionHelper.ReflectGetField<LinkedList<BasicBeamController.BeamBone>>(typeof(BasicBeamController), "m_bones", beam);
                 LinkedListNode<BasicBeamController.BeamBone> linkedListNode = bones.Last;
                 return linkedListNode.Value.RotationAngle;
             }
@@ -132,7 +132,7 @@ namespace Planetside
         public static BasicBeamController.BeamBone GetIndexedBone(this BasicBeamController beam, int boneIndex)
         {
             LinkedList<BasicBeamController.BeamBone> bones;
-            bones = ReflectionHelper.ReflectGetField<LinkedList<BasicBeamController.BeamBone>>(typeof(BasicBeamController), "m_bones", beam);
+            bones = PlanetsideReflectionHelper.ReflectGetField<LinkedList<BasicBeamController.BeamBone>>(typeof(BasicBeamController), "m_bones", beam);
             if (bones == null) return null;
             if (bones.ElementAt(boneIndex) == null) { Debug.LogError("Attempted to fetch a beam bone at an invalid index"); return null; }
             return bones.ElementAt(boneIndex);
@@ -140,7 +140,7 @@ namespace Planetside
         public static Vector2 GetIndexedBonePosition(this BasicBeamController beam, int boneIndex)
         {
             LinkedList<BasicBeamController.BeamBone> bones;
-            bones = ReflectionHelper.ReflectGetField<LinkedList<BasicBeamController.BeamBone>>(typeof(BasicBeamController), "m_bones", beam);
+            bones = PlanetsideReflectionHelper.ReflectGetField<LinkedList<BasicBeamController.BeamBone>>(typeof(BasicBeamController), "m_bones", beam);
 
             if (bones.ElementAt(boneIndex) == null) { Debug.LogError("Attempted to fetch the position of a beam bone at an invalid index"); return Vector2.zero; }
             if (!beam.UsesBones)

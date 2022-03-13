@@ -202,7 +202,7 @@ namespace Planetside
     {
         public static void Init()
         {
-            string name = "Chaotic Shift Perk";
+            string name = "Chaotic Shift";
             string resourcePath = "Planetside/Resources/PerkThings/chaoticShift.png";
             GameObject gameObject = new GameObject(name);
             ChaoticShift item = gameObject.AddComponent<ChaoticShift>();
@@ -222,7 +222,11 @@ namespace Planetside
         public static int ChaoticShiftID;
         private static Color OutlineColor;
 
-
+        public new bool PrerequisitesMet()
+        {
+            EncounterTrackable component = base.GetComponent<EncounterTrackable>();
+            return component == null || component.PrerequisitesMet();
+        }
         public override void Pickup(PlayerController player)
         {
             if (m_hasBeenPickedUp)

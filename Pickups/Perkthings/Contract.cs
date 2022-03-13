@@ -83,7 +83,7 @@ namespace Planetside
     {
         public static void Init()
         {
-            string name = "Contract Perk";
+            string name = "Contractual Obligation";
             string resourcePath = "Planetside/Resources/PerkThings/contract.png";
             GameObject gameObject = new GameObject(name);
             Contract item = gameObject.AddComponent<Contract>();
@@ -200,7 +200,11 @@ namespace Planetside
         private static Color OutlineColor;
 
         public static AIActor Contractor;
-
+        public new bool PrerequisitesMet()
+        {
+            EncounterTrackable component = base.GetComponent<EncounterTrackable>();
+            return component == null || component.PrerequisitesMet();
+        }
         public override void Pickup(PlayerController player)
         {
             if (m_hasBeenPickedUp)

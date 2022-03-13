@@ -68,7 +68,7 @@ namespace Planetside
                         Transform transform4 = gameObject8.transform;
 
                         GameObject transObj = new GameObject();
-                        transObj.transform.position = ReflectionHelper.ReflectGetField<Transform[]>(typeof(BaseShopController), "spawnPositionsGroup2", self).Last().position + new Vector3(0, -3.125f);
+                        transObj.transform.position = PlanetsideReflectionHelper.ReflectGetField<Transform[]>(typeof(BaseShopController), "spawnPositionsGroup2", self).Last().position + new Vector3(0, -3.125f);
                         transform4.position = transObj.transform.position;
                         transform4.parent = transObj.transform;
 
@@ -84,9 +84,9 @@ namespace Planetside
                         newCost *= num4;
                         shopItemController2.OverridePrice = (int)(newCost *= 0.5f);
 
-                        ReflectionHelper.InvokeMethod(typeof(BaseShopController), "AssignItemFacing", self, new object[] { ReflectionHelper.ReflectGetField<Transform[]>(typeof(BaseShopController), "spawnPositionsGroup2", self).Last(), shopItemController2 });
+                        PlanetsideReflectionHelper.InvokeMethod(typeof(BaseShopController), "AssignItemFacing", self, new object[] { PlanetsideReflectionHelper.ReflectGetField<Transform[]>(typeof(BaseShopController), "spawnPositionsGroup2", self).Last(), shopItemController2 });
 
-                        RoomHandler theRoom = ReflectionHelper.ReflectGetField<RoomHandler>(typeof(BaseShopController), "m_room", self);
+                        RoomHandler theRoom = PlanetsideReflectionHelper.ReflectGetField<RoomHandler>(typeof(BaseShopController), "m_room", self);
                         if (!theRoom.IsRegistered(shopItemController2))
                         {
                             theRoom.RegisterInteractable(shopItemController2);
@@ -123,7 +123,7 @@ namespace Planetside
                         Transform transform4 = gameObject8.transform;
 
                         GameObject transObj = new GameObject();
-                        transObj.transform.position = ReflectionHelper.ReflectGetField<Transform[]>(typeof(BaseShopController), "spawnPositionsGroup2", self).Last().position + new Vector3(-3f, 2.25f);
+                        transObj.transform.position = PlanetsideReflectionHelper.ReflectGetField<Transform[]>(typeof(BaseShopController), "spawnPositionsGroup2", self).Last().position + new Vector3(-3f, 2.25f);
                         transform4.position = transObj.transform.position;
                         transform4.parent = transObj.transform;
 
@@ -139,9 +139,9 @@ namespace Planetside
                         newCost *= num4;
                         shopItemController2.OverridePrice = (int)(newCost *= 0.5f);
 
-                        ReflectionHelper.InvokeMethod(typeof(BaseShopController), "AssignItemFacing", self, new object[] { ReflectionHelper.ReflectGetField<Transform[]>(typeof(BaseShopController), "spawnPositionsGroup2", self).Last(), shopItemController2 });
+                        PlanetsideReflectionHelper.InvokeMethod(typeof(BaseShopController), "AssignItemFacing", self, new object[] { PlanetsideReflectionHelper.ReflectGetField<Transform[]>(typeof(BaseShopController), "spawnPositionsGroup2", self).Last(), shopItemController2 });
 
-                        RoomHandler theRoom = ReflectionHelper.ReflectGetField<RoomHandler>(typeof(BaseShopController), "m_room", self);
+                        RoomHandler theRoom = PlanetsideReflectionHelper.ReflectGetField<RoomHandler>(typeof(BaseShopController), "m_room", self);
                         if (!theRoom.IsRegistered(shopItemController2))
                         {
                             theRoom.RegisterInteractable(shopItemController2);

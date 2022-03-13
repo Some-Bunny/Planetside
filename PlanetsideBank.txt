@@ -6,6 +6,7 @@ Event	ID	Name			Wwise Object Path	Notes
 	936425919	Play_BigSlam			\Default Work Unit\Play_BigSlam	
 	973001168	Play_ChainBreak_01			\Default Work Unit\Play_ChainBreak_01	
 	1029240027	Play_Yari			\Default Work Unit\Play_Yari	
+	1129740972	Play_PortalOpen			\Default Work Unit\Play_PortalOpen	
 	1479613161	Play_EyeRoar			\Default Work Unit\Play_EyeRoar	
 	1553844495	Stop_MUS_PrisonerTheme			\Default Work Unit\Stop_MUS_PrisonerTheme	
 	1661444356	Play_ambienthum			\Default Work Unit\Play_ambienthum	
@@ -57,6 +58,7 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	726523095	Bigbeam_Loop	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Bigbeam_Loop_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\BigBeam\Bigbeam_Loop		71543
 	815791638	FlashTell	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\FlashTell_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\FlashTell		8706
 	824633122	perfectshot	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\perfectshot_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\perfectshot		14789
+	879238780	PortalOpen	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\PortalOpen_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\PortalOpen		16162
 	924308126	EyeRoar	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\EyeRoar_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\EyeRoar		15324
 	946132887	Yari2	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Yari2_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\Yari\Yari2		11138
 	994734446	CoinFlip	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\CoinFlip_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\CoinFlip		5962

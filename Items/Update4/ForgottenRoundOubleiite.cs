@@ -4,7 +4,7 @@ using System.Linq;
 using Dungeonator;
 using ItemAPI;
 using UnityEngine;
-
+using SynergyAPI;
 namespace Planetside
 {
 	public class ForgottenRoundOubliette : BasicStatPickup
@@ -22,7 +22,9 @@ namespace Planetside
 			warVase.quality = PickupObject.ItemQuality.SPECIAL;
 			warVase.IsMasteryToken = true;
 			warVase.ForcedPositionInAmmonomicon = 4;
-			ItemBuilder.AddPassiveStatModifier(warVase, PlayerStats.StatType.Damage, 0.1f, StatModifier.ModifyMethod.ADDITIVE);
+			warVase.AddAsChamberGunMastery("PlanetsideOfGunymede", 4);
+			SynergyAPI.SynergyBuilder.AddItemToSynergy(warVase, CustomSynergyType.MASTERS_CHAMBERS);
+			ItemBuilder.AddPassiveStatModifier(warVase, PlayerStats.StatType.Damage, 0.125f, StatModifier.ModifyMethod.ADDITIVE);
 			ForgottenRoundOubliette.ForgottenRoundOublietteID = warVase.PickupObjectId;
 		}
 		public static int ForgottenRoundOublietteID;
@@ -50,7 +52,10 @@ namespace Planetside
 			warVase.quality = PickupObject.ItemQuality.SPECIAL;
 			warVase.IsMasteryToken = true;
 			warVase.ForcedPositionInAmmonomicon = 4;
-			ItemBuilder.AddPassiveStatModifier(warVase, PlayerStats.StatType.Damage, 0.1f, StatModifier.ModifyMethod.ADDITIVE);
+			warVase.AddAsChamberGunMastery("PlanetsideOfGunymede", 8);
+			SynergyAPI.SynergyBuilder.AddItemToSynergy(warVase, CustomSynergyType.MASTERS_CHAMBERS);
+
+			ItemBuilder.AddPassiveStatModifier(warVase, PlayerStats.StatType.Damage, 0.125f, StatModifier.ModifyMethod.ADDITIVE);
 			ForgottenRoundAbbey.ForgottenRoundAbbeyID = warVase.PickupObjectId;
 		}
 		public static int ForgottenRoundAbbeyID;
@@ -78,7 +83,10 @@ namespace Planetside
 			warVase.quality = PickupObject.ItemQuality.SPECIAL;
 			warVase.IsMasteryToken = true;
 			warVase.ForcedPositionInAmmonomicon = 4;
-			ItemBuilder.AddPassiveStatModifier(warVase, PlayerStats.StatType.Damage, 0.1f, StatModifier.ModifyMethod.ADDITIVE);
+			warVase.AddAsChamberGunMastery("PlanetsideOfGunymede", 2048);
+			SynergyAPI.SynergyBuilder.AddItemToSynergy(warVase, CustomSynergyType.MASTERS_CHAMBERS);
+
+			ItemBuilder.AddPassiveStatModifier(warVase, PlayerStats.StatType.Damage, 0.125f, StatModifier.ModifyMethod.ADDITIVE);
 			ForgottenRoundRNG.ForgottenRoundRNGID = warVase.PickupObjectId;
 		}
 		public static int ForgottenRoundRNGID;

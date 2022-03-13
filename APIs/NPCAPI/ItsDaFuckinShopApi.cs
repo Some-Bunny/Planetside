@@ -71,8 +71,8 @@ namespace NpcApi
         public static GameObject SetUpShop(string name, string prefix, List<string> idleSpritePaths, int idleFps, List<string> talkSpritePaths, int talkFps, GenericLootTable lootTable, CustomShopItemController.ShopCurrencyType currency, string runBasedMultilineGenericStringKey,
             string runBasedMultilineStopperStringKey, string purchaseItemStringKey, string purchaseItemFailedStringKey, string introStringKey, string attackedStringKey, Vector3 talkPointOffset, Vector3 npcPosition, Vector3[] itemPositions = null, float costModifier = 1, bool giveStatsOnPurchase = false,
             StatModifier[] statsToGiveOnPurchase = null, Func<CustomShopController, PlayerController, int, bool> CustomCanBuy = null, Func<CustomShopController, PlayerController, int, int> CustomRemoveCurrency = null, Func<CustomShopController, CustomShopItemController, PickupObject, int> CustomPrice = null,
-            Func<PlayerController, PickupObject, int, bool> OnPurchase = null, Func<PlayerController, PickupObject, int, bool> OnSteal = null, string currencyIconPath = "", string currencyName = "", bool canBeRobbed = true, bool hasCarpet = false, string carpetSpritePath = "", bool hasMinimapIcon = false,
-            string minimapIconSpritePath = "", bool addToMainNpcPool = false, float percentChanceForMainPool = 0.1f, DungeonPrerequisite[] prerequisites = null, List<string> purchaseSpritePaths = null, float fortunesFavorRadius = 2)
+            Func<PlayerController, PickupObject, int, bool> OnPurchase = null, Func<PlayerController, PickupObject, int, bool> OnSteal = null, string currencyIconPath = "", string currencyName = "", bool canBeRobbed = true, bool hasCarpet = false, string carpetSpritePath = "", float CarpetXOffset = 0, float CarpetYOffset = 0, bool hasMinimapIcon = false,
+            string minimapIconSpritePath = "", bool addToMainNpcPool = false, float percentChanceForMainPool = 0.1f, DungeonPrerequisite[] prerequisites = null, List<string> purchaseSpritePaths = null, float fortunesFavorRadius = 2, PoolType poolType = PoolType.DEFAULT)
         {
 
             try
@@ -317,6 +317,7 @@ namespace NpcApi
                 shopObj.FoyerMetaShopForcedTiers = false;
                 shopObj.IsBeetleMerchant = false;
                 shopObj.ExampleBlueprintPrefab = null;
+                shopObj.poolType = poolType;
                 shopObj.shopItems = lootTable;
                 shopObj.spawnPositions = posList.ToArray();//{ ItemPoint1.transform, ItemPoint2.transform, ItemPoint3.transform };
 
@@ -397,7 +398,7 @@ namespace NpcApi
                     UnityEngine.Object.DontDestroyOnLoad(carpetObj);
                     carpetObj.SetActive(true);
 
-                    carpetObj.transform.position = new Vector3(0, 0, 1.7f);
+                    carpetObj.transform.position = new Vector3(CarpetXOffset, CarpetYOffset, 1.7f);
                     carpetObj.transform.parent = shopObj.gameObject.transform;
                     carpetObj.layer = 20;
                 }

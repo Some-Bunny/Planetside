@@ -120,7 +120,7 @@ namespace Planetside
     {
         public static void Init()
         {
-            string name = "Unbreakable Spirit Perk";
+            string name = "Unbreakable Spirit";
             string resourcePath = "Planetside/Resources/PerkThings/unbreakablespirit.png";
             GameObject gameObject = new GameObject(name);
             UnbreakableSpirit item = gameObject.AddComponent<UnbreakableSpirit>();
@@ -140,7 +140,7 @@ namespace Planetside
         public static int UnbreakableSpiritID;
         private static Color OutlineColor;
 
-
+    
         public override void Pickup(PlayerController player)
         {
             if (m_hasBeenPickedUp)

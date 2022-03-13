@@ -55,7 +55,6 @@ namespace Planetside
         }
         public int objIDToSpawn;
     }
-
     class ShotgunController : MonoBehaviour
     {
         public void Start()
@@ -111,8 +110,6 @@ namespace Planetside
         public Projectile proj;
         public PlayerController player;
     }
-
-
     class ChargeGunController : MonoBehaviour
     {
 
@@ -158,8 +155,6 @@ namespace Planetside
         public DebrisObject self;
         public PlayerController player;
     }
-
-
     class  CharmController : MonoBehaviour
     {
         public void Start()
@@ -192,9 +187,6 @@ namespace Planetside
         public Projectile proj;
         public PlayerController player;
     }
-
-
-
     class FullAutoController : MonoBehaviour
     {
         public void Start()
@@ -324,7 +316,6 @@ namespace Planetside
         public PlayerController player;
 
     }
-
     class GunslingerController : MonoBehaviour
     {
         public GunslingerController()
@@ -752,7 +743,7 @@ namespace Planetside
     {
         public static void Init()
         {
-            string name = "Gunslinger Perk";
+            string name = "Gunslinger";
             string resourcePath = "Planetside/Resources/PerkThings/somethingtoDoWithThrownGuns.png";
             GameObject gameObject = new GameObject(name);
             Gunslinger item = gameObject.AddComponent<Gunslinger>();
@@ -772,7 +763,11 @@ namespace Planetside
         public static int GunslingerID;
         private static Color OutlineColor;
 
-
+        public new bool PrerequisitesMet()
+        {
+            EncounterTrackable component = base.GetComponent<EncounterTrackable>();
+            return component == null || component.PrerequisitesMet();
+        }
         public override void Pickup(PlayerController player)
         {
             if (m_hasBeenPickedUp)

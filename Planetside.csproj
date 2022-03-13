@@ -37,7 +37,7 @@
     </Reference>
     <Reference Include="Assembly-CSharp.Base.mm, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\CustomItems\CustomItems\bin\Debug\Assembly-CSharp.Base.mm.dll</HintPath>
+      <HintPath>.\Assembly-CSharp.Base.mm.dll</HintPath>
     </Reference>
     <Reference Include="Ionic.Zip">
       <HintPath>.\Ionic.Zip.dll</HintPath>
@@ -93,6 +93,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="APIs\ChamberGunAPI.cs" />
     <Compile Include="APIs\LootTableAPI\CustomLootTableInitialiser.cs" />
     <Compile Include="APIs\RoomTableAPI\RoomTableTools.cs" />
     <Compile Include="APIs\LootTableAPI\LootTableTools.cs" />
@@ -100,19 +101,32 @@
     <Compile Include="APIs\SoundAPI\SoundManager.cs" />
     <Compile Include="APIs\SoundAPI\StopEventType.cs" />
     <Compile Include="APIs\SoundAPI\SwitchedEvent.cs" />
+    <Compile Include="APIs\SynergyAPI\AdvancedCompanionSynergyProcessor.cs" />
+    <Compile Include="APIs\SynergyAPI\AdvancedDualWieldSynergyProcessor.cs" />
+    <Compile Include="APIs\SynergyAPI\AdvancedGunFormeData.cs" />
+    <Compile Include="APIs\SynergyAPI\AdvancedGunFormeSynergyProcessor.cs" />
+    <Compile Include="APIs\SynergyAPI\AdvancedHoveringGunSynergyProcessor.cs" />
+    <Compile Include="APIs\SynergyAPI\AdvancedInfiniteAmmoSynergyProcessor.cs" />
+    <Compile Include="APIs\SynergyAPI\AdvancedStringDB.cs" />
+    <Compile Include="APIs\SynergyAPI\AdvancedStringDBTable.cs" />
+    <Compile Include="APIs\SynergyAPI\AdvancedTransformGunSynergyProcessor.cs" />
+    <Compile Include="APIs\SynergyAPI\SynergyBuilder.cs" />
     <Compile Include="Assetbundle Stuff\Assetbundle Loader.cs" />
     <Compile Include="Components\Item Components\CustomHoveringGunController.cs" />
     <Compile Include="Components\Other Components\TrespassPortalController.cs" />
     <Compile Include="Components\Projectile Components\MirrorProjectileController.cs" />
     <Compile Include="Components\Projectile Components\RecursionPreventer.cs" />
     <Compile Include="Components\Projectile Components\StickyProjectileModifier.cs" />
+    <Compile Include="Controllers\MasteryTraderSpawnController.cs" />
     <Compile Include="DungeonGenStuff\ExpandTK2DDungeonAssembler.cs" />
     <Compile Include="DungeonPlaceables\BreakableAPI.cs" />
+    <Compile Include="DungeonPlaceables\TrespassObjects\TrespassPots.cs" />
     <Compile Include="DungeonPlaceables\HolyChamberStatue.cs" />
     <Compile Include="DungeonPlaceables\InitNewPlaceables.cs" />
     <Compile Include="DungeonPlaceables\Targets.cs" />
     <Compile Include="DungeonPlaceables\MegaTable.cs" />
     <Compile Include="DungeonPlaceables\EmberPot.cs" />
+    <Compile Include="DungeonPlaceables\TrespassObjects\TrespassLightBig.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassLight.cs" />
     <Compile Include="DungeonPlaceables\TrespassPortalBack.cs" />
     <Compile Include="EnemySetupCode\EnemyAPI %28The one that modifies behaviors%29\OverrideBehavior.cs" />
@@ -144,6 +158,7 @@
     <Compile Include="Items\Update4\Modifiers\ModifierNeedle.cs" />
     <Compile Include="Misc Stuff\Static Storage\StaticInformation.cs" />
     <Compile Include="Misc Stuff\Static Storage\StaticVFXStorage.cs" />
+    <Compile Include="Pickups\PerkPickupClass.cs" />
     <Compile Include="Pickups\Perkthings\AllSeeingEye.cs" />
     <Compile Include="Pickups\Perkthings\Gunslinger.cs" />
     <Compile Include="Pickups\Perkthings\UnbreakableSpirit.cs" />
@@ -206,7 +221,7 @@
     <Compile Include="Items\Update3\DerpyBullets.cs" />
     <Compile Include="Misc Stuff\Static Storage\CrossModShopComponents.cs" />
     <Compile Include="Misc Stuff\Item And Gun Addons\LabelablePlayeItem.cs" />
-    <Compile Include="DungeonGenStuff\NevernamedsDarknessController.cs" />
+    <Compile Include="Controllers\NevernamedsDarknessController.cs" />
     <Compile Include="Misc Stuff\Static Storage\StaticExplosions.cs" />
     <Compile Include="Misc Stuff\Item And Gun Addons\SlashBehavior.cs" />
     <Compile Include="Misc Stuff\Synergy Stuff\BSGSynergy.cs" />
@@ -2829,6 +2844,42 @@
     <EmbeddedResource Include="Resources\GunObjects\Casings\collapsercasing.png" />
     <EmbeddedResource Include="Resources\GunObjects\Casings\revenantcasing.png" />
     <EmbeddedResource Include="Resources\GunObjects\Clips\bulldogclip.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassBigLight\tresspasslightBig_001.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassBigLight\tresspasslightBig_002.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassBigLight\tresspasslightBig_003.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassBigLight\tresspasslightBig_004.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassBigLight\tresspasslightBig_005.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassBigLight\tresspasslightBig_006.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassBigLight\tresspasslightBig_007.png" />
+    <EmbeddedResource Include="Resources\NPCs\CustomCurrencyIcons\masterRoundCurrencyIcon.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassPots\Shards\shard1.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassPots\Shards\shard2.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassPots\Shards\shard3.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassPots\Shards\shard4.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassPots\Shards\shard5.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassPots\Shards\shard6.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassPots\Shards\shard7.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassPots\Shards\shard8.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassPots\Shards\shard9.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassPots\trespasspot1_break.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassPots\trespasspot1_idle.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassPots\trespasspot2_break.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassPots\trespasspot2_idle.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassPots\trespasspot3_break.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassPots\trespasspot3_idle.png" />
+    <EmbeddedResource Include="Resources\NPCs\Gort\gort_idle_001.png" />
+    <EmbeddedResource Include="Resources\NPCs\Gort\gort_idle_002.png" />
+    <EmbeddedResource Include="Resources\NPCs\Gort\gort_idle_003.png" />
+    <EmbeddedResource Include="Resources\NPCs\Gort\gort_idle_004.png" />
+    <EmbeddedResource Include="Resources\NPCs\Gort\gort_idle_005.png" />
+    <EmbeddedResource Include="Resources\NPCs\Gort\gort_idle_006.png" />
+    <EmbeddedResource Include="Resources\NPCs\Gort\gort_idle_007.png" />
+    <EmbeddedResource Include="Resources\NPCs\Gort\gort_idle_008.png" />
+    <EmbeddedResource Include="Resources\NPCs\Gort\gort_idle_009.png" />
+    <EmbeddedResource Include="Resources\NPCs\Gort\gort_idle_010.png" />
+    <EmbeddedResource Include="Resources\NPCs\Gort\gort_idle_011.png" />
+    <EmbeddedResource Include="Resources\NPCs\Gort\gort_idle_012.png" />
+    <EmbeddedResource Include="Resources\NPCs\Gort\pebbles.png" />
     <Content Include="Resources\Shellrax\shellrax_intro_019.png" />
     <EmbeddedResource Include="Resources\VFX\LockOnVFX\lockonvfx1.png" />
     <EmbeddedResource Include="Resources\VFX\LockOnVFX\lockonvfx2.png" />
@@ -2881,6 +2932,10 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\TrespassRooms\trespassRoom2.room" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\TrespassRooms\trespassRoom3.room" />
+    <EmbeddedResource Include="Resources\TrespassRooms\trespassRoom4.room" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -87,7 +87,7 @@ namespace Planetside
     {
         public static void Init()
         {
-            string name = "Glass Perk";
+            string name = "Glass";
             string resourcePath = "Planetside/Resources/PerkThings/glass.png";
             GameObject gameObject = new GameObject(name);
             Glass item = gameObject.AddComponent<Glass>();
@@ -108,7 +108,11 @@ namespace Planetside
 
         private static Color OutlineColor;
 
-
+        public new bool PrerequisitesMet()
+        {
+            EncounterTrackable component = base.GetComponent<EncounterTrackable>();
+            return component == null || component.PrerequisitesMet();
+        }
 
         public override void Pickup(PlayerController player)
         {

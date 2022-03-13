@@ -130,6 +130,8 @@ namespace Planetside
             WispInABottle.SunPrefab = gameobject2;
 
             testActive.AddToSubShop(ItemBuilder.ShopType.Goopton, 1f);
+            SynergyAPI.SynergyBuilder.AddItemToSynergy(testActive, CustomSynergyType.FLAIR_GUN);
+            SynergyAPI.SynergyBuilder.AddItemToSynergy(testActive, CustomSynergyType.SUNLIGHT_SOUL);
 
             WispInABottle.WispInABottleID = testActive.PickupObjectId;
             ItemIDs.AddToList(testActive.PickupObjectId);

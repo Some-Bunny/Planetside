@@ -41,9 +41,15 @@ namespace Planetside
 
             GenericRoomTable table = RoomTableTools.CreateRoomTable();
             WeightedRoom roomer =  RoomTableTools.GenerateWeightedRoom(RoomFactory.BuildFromResource("Planetside/Resources/TrespassRooms/trespassRoom1.room").room);
-            WeightedRoom roomer2 = RoomTableTools.GenerateWeightedRoom(RoomFactory.BuildFromResource("Planetside/Resources/TrespassRooms/trespassRoom2.room").room);         
+            WeightedRoom roomer2 = RoomTableTools.GenerateWeightedRoom(RoomFactory.BuildFromResource("Planetside/Resources/TrespassRooms/trespassRoom2.room").room);
+            WeightedRoom roomer3 = RoomTableTools.GenerateWeightedRoom(RoomFactory.BuildFromResource("Planetside/Resources/TrespassRooms/trespassRoom3.room").room);
+            WeightedRoom roomer4 = RoomTableTools.GenerateWeightedRoom(RoomFactory.BuildFromResource("Planetside/Resources/TrespassRooms/trespassRoom4.room").room);
+
+
             table.includedRooms.Add(roomer);
             table.includedRooms.Add(roomer2);
+            table.includedRooms.Add(roomer3);
+            table.includedRooms.Add(roomer4);
             foreach (WeightedRoom weightRoom in table.includedRooms.elements)
             {
                 weightRoom.room.customAmbientLight = new Color(0, 0.3f, 0.9f);

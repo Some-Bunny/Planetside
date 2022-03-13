@@ -81,7 +81,9 @@ namespace Planetside
 
 		private void Start()
 		{
-			GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(DungeonDatabase.GetOrLoadByName("finalscenario_guide").PatternSettings.flows[0].AllNodes[0].overrideExactRoom.placedObjects[0].nonenemyBehaviour.gameObject.transform.Find("Rain").gameObject);
+			var hunterPast = DungeonDatabase.GetOrLoadByName("finalscenario_guide");
+			GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(hunterPast.PatternSettings.flows[0].AllNodes[0].overrideExactRoom.placedObjects[0].nonenemyBehaviour.gameObject.transform.Find("Rain").gameObject);
+			hunterPast = null;
 			gameObject.name = "PlanetsideRain";
 			this.m_StormController = gameObject.GetComponent<ThunderstormController>();
 			ParticleSystem component = this.m_StormController.RainSystemTransform.GetComponent<ParticleSystem>();

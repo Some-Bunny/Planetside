@@ -101,6 +101,7 @@ namespace Planetside
 			FakePrefab.MarkAsFakePrefab(RebarPuncher.PlusNailsPrefab);
 			RebarPuncher.PlusNailsPrefab.SetActive(false);
 			gun.AddToSubShop(ItemBuilder.ShopType.Trorc	, 1f);
+			SynergyAPI.SynergyBuilder.AddItemToSynergy(gun, CustomSynergyType.THORNPRICK);
 
 			ItemIDs.AddToList(gun.PickupObjectId);
 		}

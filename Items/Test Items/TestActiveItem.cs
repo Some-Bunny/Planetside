@@ -187,7 +187,7 @@ namespace Planetside
 
 
             
-            Dungeon forgeDungeon = DungeonDatabase.GetOrLoadByName("Base_Forge");
+            var forgeDungeon = DungeonDatabase.GetOrLoadByName("Base_Forge");
             string RoomString = "boss foyer (final)";
             foreach (DungeonFlow flows in forgeDungeon.PatternSettings.flows)
             {
@@ -294,7 +294,7 @@ namespace Planetside
                     }
                 }
             }
-            
+            forgeDungeon = null;
 
 
             //ETGModConsole.Log(BraveTime.DeltaTime.ToString());

@@ -44,6 +44,8 @@ namespace Planetside
                 "chest_teleporter"
             };
             CustomSynergies.Add("Collapsing Potential Vectors", mandatoryConsoleIDs, optionalConsoleIDs2, true);
+            SynergyAPI.SynergyBuilder.AddItemToSynergy(minigunrounds, CustomSynergyType.PAPERWORK);
+
             new Hook(typeof(TeleporterPrototypeItem).GetMethod("TelefragRandomEnemy", BindingFlags.Instance | BindingFlags.NonPublic), typeof(TableTechTelefrag).GetMethod("TelefragRandomEnemyHook"));
             new Hook(typeof(TeleporterPrototypeItem).GetMethod("TelefragRoom", BindingFlags.Instance | BindingFlags.NonPublic), typeof(TableTechTelefrag).GetMethod("TelefragRoomHook"));
             GenericLootTable Telefragtable = LootTableTools.CreateLootTable();

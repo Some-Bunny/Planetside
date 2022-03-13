@@ -9,7 +9,7 @@ namespace Planetside
     {
         public static void Init()
         {
-            string name = "All Stats Up Perk";
+            string name = "All Stats Up";
             string resourcePath = "Planetside/Resources/PerkThings/lazyAllstatsUp.png";
             GameObject gameObject = new GameObject(name);
             AllStatsUp item = gameObject.AddComponent<AllStatsUp>();
@@ -29,7 +29,11 @@ namespace Planetside
         public static int AllStatsUpID;
         private static Color OutlineColor;
 
-
+        public new bool PrerequisitesMet()
+        {
+            EncounterTrackable component = base.GetComponent<EncounterTrackable>();
+            return component == null || component.PrerequisitesMet();
+        }
         public override void Pickup(PlayerController player)
         {
             if (m_hasBeenPickedUp)

@@ -74,6 +74,8 @@ namespace Planetside
                 "psog:injector_rounds"
             };
             CustomSynergies.Add("You Killed Us All!", mandatoryConsoleIDs, optionalConsoleIDs3, true);
+            SynergyAPI.SynergyBuilder.AddItemToSynergy(activeitem, CustomSynergyType.GUON_UPGRADE_CLEAR);
+
             activeitem.CanSwitch = true;
         }
 

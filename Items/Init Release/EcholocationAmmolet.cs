@@ -33,6 +33,8 @@ namespace Planetside
             EcholocationAmmolet.EcholocationAmmoletID = item.PickupObjectId;
 
             item.AddToSubShop(ItemBuilder.ShopType.OldRed, 1f);
+            SynergyAPI.SynergyBuilder.AddItemToSynergy(item, CustomSynergyType.MINOR_BLANKABLES);
+            SynergyAPI.SynergyBuilder.AddItemToSynergy(item, CustomSynergyType.RELODESTAR);
 
             EcholocationAmmolet.EcholocationAmmoletID = item.PickupObjectId;
             ItemIDs.AddToList(item.PickupObjectId);

@@ -19,7 +19,7 @@ namespace Planetside
 			string shortDesc = "A Moment, Forgotten";
 			string longDesc = "A shard of dimmed energy from a collapsed portal.\n\nMaybe it still has some value.";
 			ItemBuilder.SetupItem(warVase, shortDesc, longDesc, "psog");
-			warVase.quality = PickupObject.ItemQuality.SPECIAL;
+			warVase.quality = PickupObject.ItemQuality.EXCLUDED;
 			warVase.IgnoredByRat = true;
 			warVase.RespawnsIfPitfall = true;
 			warVase.UsesCustomCost = true;

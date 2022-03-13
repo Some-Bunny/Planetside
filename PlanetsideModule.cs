@@ -54,12 +54,15 @@ namespace Planetside
             //Initialise World-Stuff here
             StaticInformation.Init();
             ETGModMainBehaviour.Instance.gameObject.AddComponent<NevernamedsDarknessHandler>();
+            ETGModMainBehaviour.Instance.gameObject.AddComponent<MasteryTraderSpawnController>();
+
+            ChamberGunAPI.Init("PlanetsideOfGunymede");
 
             //Asset bundle stuff
             PlanetsideModule.ModAssets = AssetBundleLoader.LoadAssetBundleFromLiterallyAnywhere("planetsidebundle");
             foreach (string str in PlanetsideModule.ModAssets.GetAllAssetNames())
             {
-                ETGModConsole.Log(PlanetsideModule.ModAssets.name + ": " + str, false);
+                //ETGModConsole.Log(PlanetsideModule.ModAssets.name + ": " + str, false);
             }
 
             //Initialise Statically Stored Stuff Here
@@ -249,7 +252,6 @@ namespace Planetside
             SpinningDeath.Init();
             ConnoisseursRobes.Init();
             LostVoidPotential.Init();
-            TrespassStone.Init();
             ShopInABox.Init();
 
             ModifierNeedle.Init();
@@ -369,6 +371,7 @@ namespace Planetside
 
             CustomLootTableInitialiser.InitialiseCustomLootTables();
             CustomShopInitialiser.InitialiseCustomShops();
+            TrespassStone.Init();
 
 
             FlowInjectionInitialiser.InitialiseFlows();
@@ -386,6 +389,8 @@ namespace Planetside
             MasteryReplacementOub.InitDungeonHook();
 
             //AdvancedLogging.Log($"{MOD_NAME} v{VERSION} started successfully.", new Color(144, 6, 255, 255), false, true, null);
+
+
             PlanetsideModule.Log($"{MOD_NAME} v{VERSION} started successfully.", TEXT_COLOR);
             List<string> RandomFunnys = new List<string>
             {
@@ -456,7 +461,8 @@ namespace Planetside
                 "Rock And Stone!",
                 "By The Beard!",
                 "Powered By BreakableAPI!",
-                "I removed Clone from the item pool, thank me later."
+                "I removed Clone from the item pool, thank me later.",
+                "Powered By SynergyAPI!"
             };
             Random r = new Random();
             int index = r.Next(RandomFunnys.Count);

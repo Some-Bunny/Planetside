@@ -60,6 +60,7 @@ namespace Planetside
             UnityEngine.Object.DontDestroyOnLoad(gameObject2);
             KineticStrike.StrikePrefab = gameObject2;
             activeitem.AddToSubShop(ItemBuilder.ShopType.Trorc, 1f);
+            SynergyAPI.SynergyBuilder.AddItemToSynergy(activeitem, CustomSynergyType.MISSILE_BOW);
 
             KineticStrike.KineticBombardmentID = activeitem.PickupObjectId;
             ItemIDs.AddToList(activeitem.PickupObjectId);

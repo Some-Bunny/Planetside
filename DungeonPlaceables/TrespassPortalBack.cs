@@ -35,7 +35,6 @@ namespace Planetside
     {
         public void Start()
         {
-            //ETGModConsole.Log("CREATED");
             base.gameObject.SetActive(true);
             m_room = GameManager.Instance.Dungeon.data.GetAbsoluteRoomFromPosition(new IntVector2((int)base.gameObject.transform.position.x, (int)base.gameObject.transform.position.y));
             GameManager.Instance.StartCoroutine(LerpToSize(Vector3.zero, Vector3.one * 2f, 0.2f));
@@ -72,10 +71,10 @@ namespace Planetside
         }
         public void Interact(PlayerController interactor)
         {
-            AkSoundEngine.PostEvent("Play_ENM_critter_poof_01", interactor.gameObject);
             base.Invoke("DeregisterInteractable", 0f);
             if (ReturnPosition != null)
             {
+                AkSoundEngine.PostEvent("Play_ENM_beholster_teleport_01", interactor.gameObject);
                 GameManager.Instance.StartCoroutine(TransportToRoom());
                 
             }
@@ -85,6 +84,9 @@ namespace Planetside
                 var partObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("PortalClose"));
                 partObj.transform.position = gameObject.transform.position;
                 partObj.transform.parent = gameObject.transform;
+                ParticleSystem particleSystem = partObj.GetComponent<ParticleSystem>();
+                var shap = particleSystem.shape;
+                shap.meshRenderer.gameObject.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
                 Destroy(partObj, 1);
                 DebrisObject debrisSpawned = LootEngine.SpawnItem(PickupObjectDatabase.GetById(LostVoidPotential.LostVoidPotentialID).gameObject, gameObject.transform.position, Vector2.zero, 0).GetComponent<DebrisObject>();
                 Destroy(gameObject);
@@ -97,6 +99,9 @@ namespace Planetside
             Pixelator.Instance.FadeToColor(0.7f, Color.black, false, 0f);
             float elaWait = 0f;
             float duraWait = 0.7f;
+            GameUIRoot.Instance.HideCoreUI("Trespassing");
+            GameUIRoot.Instance.ForceHideGunPanel = true;
+            GameUIRoot.Instance.ForceHideItemPanel = true;
             for (int j = 0; j < GameManager.Instance.AllPlayers.Length; j++)
             {
                 if (GameManager.Instance.AllPlayers[j])
@@ -126,7 +131,10 @@ namespace Planetside
 
                 }
             }
-            Minimap.Instance.TemporarilyPreventMinimap = true;
+            GameUIRoot.Instance.ForceHideGunPanel = false;
+            GameUIRoot.Instance.ForceHideItemPanel = false;
+            GameUIRoot.Instance.ShowCoreUI("Trespassing");
+            Minimap.Instance.TemporarilyPreventMinimap = false;
 
             yield break;
         }

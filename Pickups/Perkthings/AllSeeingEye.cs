@@ -12,7 +12,7 @@ namespace Planetside
     {
         public static void Init()
         {
-            string name = "All-Seeing Eye Perk";
+            string name = "All-Seeing Eye";
             string resourcePath = "Planetside/Resources/PerkThings/allSeeingEye.png";
             GameObject gameObject = new GameObject(name);
             AllSeeingEye item = gameObject.AddComponent<AllSeeingEye>();
@@ -22,7 +22,7 @@ namespace Planetside
             string longDesc = "yep.";
             item.SetupItem(shortDesc, longDesc, "psog");
 			AllSeeingEye.AllSeeingEyeID = item.PickupObjectId;
-            item.quality = PickupObject.ItemQuality.EXCLUDED;
+			item.quality = PickupObject.ItemQuality.EXCLUDED;
 			PerkParticleSystemController particles = gameObject.AddComponent<PerkParticleSystemController>();
 			particles.ParticleSystemColor = new Color(230, 230, 250);
 			particles.ParticleSystemColor2 = new Color(255, 53, 184);
@@ -32,6 +32,11 @@ namespace Planetside
 		public static int AllSeeingEyeID;
 		private static Color OutlineColor;
 
+		public new bool PrerequisitesMet()
+        {
+			EncounterTrackable component = base.GetComponent<EncounterTrackable>();
+			return component == null || component.PrerequisitesMet();
+		}
 
 		public override void Pickup(PlayerController player)
         {

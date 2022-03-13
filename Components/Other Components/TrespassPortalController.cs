@@ -20,14 +20,16 @@ namespace Planetside
     {
         public void Start()
         {
+            AkSoundEngine.PostEvent("Play_PortalOpen", base.gameObject);
             GameManager.Instance.StartCoroutine(LerpToSize(Vector3.zero, Vector3.one * 2f, 1f));
             base.Invoke("ReregisterInteractable", 1f);
-            Exploder.DoDistortionWave(base.gameObject.transform.PositionVector2(), 1, 0.2f, 3, 0.4f);
+            Exploder.DoDistortionWave(base.gameObject.transform.PositionVector2(), 1.5f, 0.25f, 50, 5f);
             var partObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("PortalClose"));
             partObj.transform.position = gameObject.transform.position;
-            partObj.transform.parent = gameObject.transform;
-            partObj.transform.localScale *= 0.33f;
-            Destroy(partObj, 1);
+            //partObj.transform.parent = gameObject.transform;
+            partObj.transform.localScale *= 6f;
+            ParticleSystem particleSystem = partObj.GetComponent<ParticleSystem>();
+            Destroy(partObj, 3.4f);
         }
 
 
@@ -53,8 +55,9 @@ namespace Planetside
         {
             var partObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("PortalClose"));
             partObj.transform.position = gameObject.transform.position;
-            partObj.transform.parent = gameObject.transform;
-            Destroy(partObj, 1);
+            //partObj.transform.parent = gameObject.transform;
+            Destroy(partObj, 3.4f);
+            partObj.transform.localScale *= 5f;
             base.Invoke("DeregisterInteractable", 0f);
             GameManager.Instance.StartCoroutine(LerpToSize(Vector3.one * 2, Vector3.zero, 0.9f));
             base.StartCoroutine(LerpShaderValue(0.1f, 0.00f, 0.8f, "_OutlineWidth"));
@@ -71,37 +74,47 @@ namespace Planetside
         }
         public void Interact(PlayerController interactor)
         {
-            AkSoundEngine.PostEvent("Play_ENM_critter_poof_01", interactor.gameObject);
             base.Invoke("DeregisterInteractable", 0f);
-            Dungeon d = GameManager.Instance.Dungeon;
             WeightedRoom newRoom = TrespassStone.trespassTable.SelectByWeight();
-            Dungeon floor = DungeonDatabase.GetOrLoadByName("Base_Forge");
-            RoomHandler room = DungeonGenToolbox.AddCustomRuntimeRoomWithTileSet(floor, newRoom.room, false, false, false, null, DungeonData.LightGenerationStyle.STANDARD, false, true, 0);
-            floor = null;
-            if (room != null)
+            var floor = DungeonDatabase.GetOrLoadByName("Base_Forge");
+            int num = 5;
+            RoomHandler room;
+            do
             {
-                GameManager.Instance.StartCoroutine(this.TransportToRoom(interactor, room));
+                room = DungeonGenToolbox.AddCustomRuntimeRoomWithTileSet(floor, newRoom.room, false, false, false, null, DungeonData.LightGenerationStyle.STANDARD, false, false, 0);
+                num--;
             }
-            else
+            while (num > 0 && room == null);
+            bool flag = num == 0;
+            if (flag)
             {
-               
-                //room.RegisterInteractable
+                AkSoundEngine.PostEvent("Play_PortalOpen", base.gameObject);
                 GameManager.Instance.StartCoroutine(LerpToSize(Vector3.one * 2, Vector3.zero, 0.33f));
                 var partObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("PortalClose"));
                 partObj.transform.position = gameObject.transform.position;
-                partObj.transform.parent = gameObject.transform;
-                Destroy(partObj, 1);
+                partObj.transform.localScale *= 7f;
+                Destroy(partObj, 3.4f);
                 DebrisObject debrisSpawned = LootEngine.SpawnItem(PickupObjectDatabase.GetById(LostVoidPotential.LostVoidPotentialID).gameObject, gameObject.transform.position, Vector2.zero, 0).GetComponent<DebrisObject>();
                 Destroy(gameObject);
             }
+            else
+            {
+
+                AkSoundEngine.PostEvent("Stop_MUS_All", GameManager.Instance.gameObject);
+                AkSoundEngine.PostEvent("Play_ENM_beholster_teleport_01", interactor.gameObject);
+                GameManager.Instance.StartCoroutine(this.TransportToRoom(interactor, room));
+            }
+            floor = null;
         }
 
         private IEnumerator TransportToRoom(PlayerController player, RoomHandler room)
         {
+            GameUIRoot.Instance.ForceHideGunPanel = true;
+            GameUIRoot.Instance.ForceHideItemPanel = true;
             Pixelator.Instance.FadeToColor(1f, Color.black, false, 0f);
             float elaWait = 0f;
             float duraWait = 1f;
-            //Pixelator.Instance.FadeToColor(1f, Color.black, true, 1f);
+            GameUIRoot.Instance.HideCoreUI("Trespassing");
             for (int j = 0; j < GameManager.Instance.AllPlayers.Length; j++)
             {
                 if (GameManager.Instance.AllPlayers[j])
@@ -116,7 +129,7 @@ namespace Planetside
             }
             Pixelator.Instance.FadeToColor(1f, Color.black, true, 0f);
             Vector2 newPlayerPosition = room.area.Center;
-            List<IPlayerInteractable> interactables = ReflectionHelper.ReflectGetField<List<IPlayerInteractable>>(typeof(RoomHandler), "interactableObjects", room);
+            List<IPlayerInteractable> interactables = PlanetsideReflectionHelper.ReflectGetField<List<IPlayerInteractable>>(typeof(RoomHandler), "interactableObjects", room);
             foreach (BraveBehaviour obj in interactables)
             {
                 TrespassReturnPortalController controller = obj.gameObject.GetComponent<TrespassReturnPortalController>();
@@ -140,6 +153,9 @@ namespace Planetside
 
                 }
             }
+            GameUIRoot.Instance.ForceHideGunPanel = false;
+            GameUIRoot.Instance.ForceHideItemPanel = false;
+            GameUIRoot.Instance.ShowCoreUI("Trespassing");
             //Pixelator.Instance.FadeToColor(1f, Color.black, false, 0f);
 
             Minimap.Instance.TemporarilyPreventMinimap = true;

@@ -63,9 +63,10 @@ namespace Planetside
 			Gun gun4 = PickupObjectDatabase.GetById(83) as Gun;
 			gun.muzzleFlashEffects = gun4.muzzleFlashEffects;
 
-
 			gun.encounterTrackable.EncounterGuid = "OM NOMNOMNOMNONMNONMONMNONMNONMONMNONMNO";
 			ETGMod.Databases.Items.Add(gun, null, "ANY");
+			SynergyAPI.SynergyBuilder.AddItemToSynergy(gun, CustomSynergyType.CONTRAIL);
+
 			gun.barrelOffset.transform.localPosition = new Vector3(1f, 0.5f, 0f);
 			gun.SetupUnlockOnCustomFlag(CustomDungeonFlags.BEAT_LOOP_1, true);
 

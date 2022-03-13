@@ -15,6 +15,7 @@ namespace Planetside
             InitialiseTimeTrader();
             InitialiseTablert();
             Gregthly();
+            InitMasteryTrader();
         }
 
         public static void InitialiseTablert()
@@ -83,6 +84,8 @@ namespace Planetside
             , true
             , true
             , baseFilepath + "talbertcarpet.png"
+            ,0
+            ,0
             , true
             , "Planetside/Resources/NPCs/TableDude/talbertIcon.png"
             , true
@@ -152,6 +155,8 @@ namespace Planetside
                 , true
                 , true
                 , baseFilepath + "carpet.png"
+                , 0
+                , 0
                 , true
                 , null
                 , false
@@ -195,6 +200,135 @@ namespace Planetside
                 3.25f);
             */
         }
+        public static void InitMasteryTrader()
+        {
+            string baseFilepath = "Planetside/Resources/NPCs/Gort/gort_idle_";
+            string currencyPath = "Planetside/Resources/NPCs/CustomCurrencyIcons/";
+
+            ETGMod.Databases.Strings.Core.AddComplex("MASTERYTRADER_RUNBASEDMULTILINE_GENERIC", "It's been... so long...");
+            ETGMod.Databases.Strings.Core.AddComplex("#MASTERYTRADER_RUNBASEDMULTILINE_GENERIC", "...");
+            ETGMod.Databases.Strings.Core.AddComplex("#MASTERYTRADER_RUNBASEDMULTILINE_GENERIC", "...");
+            ETGMod.Databases.Strings.Core.AddComplex("#MASTERYTRADER_RUNBASEDMULTILINE_GENERIC", "...");
+
+            ETGMod.Databases.Strings.Core.AddComplex("#MASTERYTRADER_RUNBASEDMULTILINE_STOPPER", "Leave me... be...");
+            ETGMod.Databases.Strings.Core.AddComplex("#MASTERYTRADER_RUNBASEDMULTILINE_STOPPER", "You can't... free me... regardless...");
+            ETGMod.Databases.Strings.Core.AddComplex("#MASTERYTRADER_RUNBASEDMULTILINE_STOPPER", "Let me... rest...");
+
+
+            ETGMod.Databases.Strings.Core.AddComplex("#MASTERYTRADER_RUNBASEDMULTILINE_PURCHASE", "This should... aid you...");
+            ETGMod.Databases.Strings.Core.AddComplex("#MASTERYTRADER_RUNBASEDMULTILINE_PURCHASE", "Good choice...");
+            ETGMod.Databases.Strings.Core.AddComplex("#MASTERYTRADER_RUNBASEDMULTILINE_PURCHASE", "Good... form...");
+
+
+            ETGMod.Databases.Strings.Core.AddComplex("#MASTERYTRADER_RUNBASEDMULTILINE_FAILPURCHASE", "Not enough... potential...");
+            ETGMod.Databases.Strings.Core.AddComplex("#MASTERYTRADER_RUNBASEDMULTILINE_FAILPURCHASE", "Return more... proven...");
+            ETGMod.Databases.Strings.Core.AddComplex("#MASTERYTRADER_RUNBASEDMULTILINE_FAILPURCHASE", "Bring more... vitality...");
+
+            ETGMod.Databases.Strings.Core.AddComplex("#MASTERYTRADER_RUNBASEDMULTILINE_INTRO", "Kaliber have merc- Nevermind...");
+            ETGMod.Databases.Strings.Core.AddComplex("#MASTERYTRADER_RUNBASEDMULTILINE_INTRO", "How did you... get here..?");
+            ETGMod.Databases.Strings.Core.AddComplex("#MASTERYTRADER_RUNBASEDMULTILINE_INTRO", "Will you... free me..?");
+
+            ETGMod.Databases.Strings.Core.AddComplex("#MASTERYTRADER_RUNBASEDMULTILINE_ATTACKED", "How could... you..?");
+            ETGMod.Databases.Strings.Core.AddComplex("#MASTERYTRADER_RUNBASEDMULTILINE_ATTACKED", "No mercy... in you...");
+            ETGMod.Databases.Strings.Core.AddComplex("#MASTERYTRADER_RUNBASEDMULTILINE_ATTACKED", "Why..?");
+
+
+
+            GenericLootTable MasteryTable = LootTableTools.CreateLootTable();
+            MasteryTable.AddItemsToPool(new Dictionary<int, float> { {AllSeeingEye.AllSeeingEyeID, 1}, { AllStatsUp.AllStatsUpID, 1 }, { BlastProjectiles.BlastProjectilesID, 1 }, { ChaoticShift.ChaoticShiftID, 1 }, { Contract.ContractID, 1 }, { Glass.GlassID, 1 }, { Greedy.GreedyID, 1 }, { Gunslinger.GunslingerID, 1 }, { PitLordsPact.PitLordsPactID, 1 }, { UnbreakableSpirit.UnbreakableSpiritID, 1 }, });
+            GameObject masteryShop = ItsDaFuckinShopApi.SetUpShop(
+                  "masteryRewardTrader"
+                , "psog"
+                , new List<string> { baseFilepath + "001.png", baseFilepath + "002.png", baseFilepath + "003.png", baseFilepath + "004.png", baseFilepath + "005.png", baseFilepath + "006.png", baseFilepath + "007.png", baseFilepath + "008.png", baseFilepath + "009.png", baseFilepath + "010.png", baseFilepath + "011.png", baseFilepath + "012.png", }
+                , 7
+                , new List<string> { baseFilepath + "001.png", baseFilepath + "002.png", baseFilepath + "003.png", baseFilepath + "004.png", baseFilepath + "005.png", baseFilepath + "006.png", baseFilepath + "007.png", baseFilepath + "008.png", baseFilepath + "009.png", baseFilepath + "010.png", baseFilepath + "011.png", baseFilepath + "012.png", }
+                , 8
+                , MasteryTable
+                , CustomShopItemController.ShopCurrencyType.CUSTOM
+                , "#MASTERYTRADER_RUNBASEDMULTILINE_GENERIC"
+                , "#MASTERYTRADER_RUNBASEDMULTILINE_STOPPER"
+                , "#MASTERYTRADER_RUNBASEDMULTILINE_PURCHASE"
+                , "#MASTERYTRADER_RUNBASEDMULTILINE_FAILPURCHASE"
+                , "#MASTERYTRADER_RUNBASEDMULTILINE_INTRO"
+                , "#MASTERYTRADER_RUNBASEDMULTILINE_ATTACKED"
+                , new Vector3(1.25f, 3.75f)
+                , new Vector3(0f, 0f, 5.9375f)
+                , new Vector3[] { new Vector3(0.5f, -1f, 1), new Vector3(2.25f, -1.5f, 1), new Vector3(4f, -1f, 1) }
+                , 1f
+                , false
+                , null
+                , MasterTraderCustomCanBuy //CustomCanBuy
+                , MasterTraderRemoveCurrency //CustomRemoveCurrency
+                , MasterTraderCustomPrice //Customprice
+                , null //OnPurchase
+                , null //OnSteal
+                , currencyPath + "masterRoundCurrencyIcon.png" //CurrencyIconPath
+                , "masteryrewards"//Currencyname
+                , false //CanBeRobbed
+                , true //HasCarpet
+                , "Planetside/Resources/NPCs/Gort/pebbles.png" //caprte path
+                ,0
+                ,-3
+                , false //has minimapicon
+                , null //minimapiconspritepath
+                , false //addtoNPCPool
+                , 0 //chancetobeinmainnpcPoool
+                , null //dungeonprereqwuisite
+                , null
+                ,2
+                , CustomShopController.PoolType.DUPES_AND_NOEXCLUSION); //purchasespritepaths
+                         //EnemyToolbox.AddSoundsToAnimationFrame(timedShop.GetComponentInChildren<tk2dSpriteAnimator>(), "dance", new Dictionary<int, string>() { { 1, "Play_WPN_teddy_impact_03" } });
+                         //gregthyShop = timedShop;
+            masteryShop.GetComponentInChildren<tk2dBaseSprite>().usesOverrideMaterial = true;
+            Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+            mat.mainTexture = masteryShop.GetComponentInChildren<tk2dBaseSprite>().sprite.renderer.material.mainTexture;
+            mat.SetColor("_EmissiveColor", new Color32(0, 255, 255, 255));
+            mat.SetFloat("_EmissiveColorPower", 3f);
+            mat.SetFloat("_EmissivePower", 80);
+            masteryShop.GetComponentInChildren<tk2dBaseSprite>().sprite.renderer.material = mat;
+
+            StaticReferences.StoredRoomObjects.Add("masteryRewardTrader", masteryShop);
+        }
+
+        public static int MasterTraderCustomPrice(CustomShopController shop, CustomShopItemController itemCont, PickupObject item)
+        {
+            return 1;
+
+        }
+        public static int MasterTraderRemoveCurrency(CustomShopController shop, PlayerController player, int cost)
+        {
+            List<BasicStatPickup> rounds = new List<BasicStatPickup>();
+            foreach (PassiveItem item in player.passiveItems)
+            {
+                if (item is BasicStatPickup mastery)
+                {
+                    if (mastery.IsMasteryToken == true)
+                    {
+                        rounds.Add(mastery);
+                    }
+                }
+            }
+            rounds.Shuffle();
+            player.RemovePassiveItem(rounds[0].PickupObjectId);
+
+            return 1;
+        }
+        public static bool MasterTraderCustomCanBuy(CustomShopController shop, PlayerController player, int cost)
+        {
+            bool HasMastery = false;
+            foreach (PassiveItem item in player.passiveItems)
+            {
+                if (item is BasicStatPickup mastery)
+                {
+                    if (mastery.IsMasteryToken == true)
+                    {
+                        HasMastery = true;
+                    }
+                }
+            }
+            return HasMastery;
+        }
+
         public static void InitialiseTimeTrader()
         {
             string baseFilepath = "Planetside/Resources/NPCs/TimeTrader/timetrader";
@@ -242,6 +376,8 @@ namespace Planetside
                 , true
                 , true
                 , baseFilepath + "carpet.png"
+                , 0
+                , 0
                 , true
                 , "Planetside/Resources/NPCs/TimeTrader/icon.png"
                 , false

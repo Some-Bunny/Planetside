@@ -53,6 +53,7 @@ namespace Planetside
                 "shock_rifle",
                 "shock_rounds"
             };
+            SynergyAPI.SynergyBuilder.AddItemToSynergy(item, CustomSynergyType.BATTERY_POWERED);
             CustomSynergies.Add("Shocker", mandatoryConsoleIDs, optionalConsoleIsDs, true);
             ElectrostaticGuonStone.ElectrostaticGuonStoneID = item.PickupObjectId;
             ItemIDs.AddToList(item.PickupObjectId);

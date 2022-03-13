@@ -56,6 +56,8 @@ namespace Planetside
                 "gungeon_blueprint"
             };
             CustomSynergies.Add("Sentry Goin' Up!", mandatoryConsoleIDs, optionalConsoleID1s, true);
+            SynergyAPI.SynergyBuilder.AddItemToSynergy(activeitem, CustomSynergyType.BATTERY_POWERED);
+
             activeitem.AddToSubShop(ItemBuilder.ShopType.Trorc, 1f);
 
             PortablePylon.PortablePylonID = activeitem.PickupObjectId;

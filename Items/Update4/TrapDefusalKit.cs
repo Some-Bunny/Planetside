@@ -58,7 +58,7 @@ namespace Planetside
 		}
 		public static BehaviorResult UpdateGoopHook(Func<SpawnGoopBehavior, BehaviorResult> orig, SpawnGoopBehavior self)
         {
-			AIActor host = ReflectionHelper.ReflectGetField<AIActor>(typeof(SpawnGoopBehavior), "m_aiActor", self);
+			AIActor host = PlanetsideReflectionHelper.ReflectGetField<AIActor>(typeof(SpawnGoopBehavior), "m_aiActor", self);
             if (host != null && host.EnemyGuid == "6868795625bd46f3ae3e4377adce288b" && IsHoldingDefusalItem == true)
 			{
 				return BehaviorResult.Continue;

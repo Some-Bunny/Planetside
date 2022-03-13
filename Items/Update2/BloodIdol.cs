@@ -39,6 +39,8 @@ namespace Planetside
             activeitem.AddToSubShop(ItemBuilder.ShopType.Cursula, 1f);
             activeitem.gameObject.AddComponent<RustyItemPool>();
             BloodIdol.BloodIdolID = activeitem.PickupObjectId;
+            SynergyAPI.SynergyBuilder.AddItemToSynergy(activeitem, CustomSynergyType.BLOOD_LOCKET);
+
             ItemIDs.AddToList(activeitem.PickupObjectId);
         }
         public static int BloodIdolID;

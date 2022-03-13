@@ -10,6 +10,8 @@ namespace Planetside
         public static void InitPlaceables()
         {
             TrespassLight.Init();
+            TrespassLightBig.Init();
+            TrespassPot.Init();
             Targets.Init();
             HolyChamberStatue.Init();
             TrespassPortalBack.Init();

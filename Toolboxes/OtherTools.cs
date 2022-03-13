@@ -25,7 +25,7 @@ using MonoMod.RuntimeDetour;
 
 namespace Planetside
 {
-    static class ReflectionHelper
+    static class PlanetsideReflectionHelper
     {
         public static T GetTypedValue<T>(this FieldInfo This, object instance) { return (T)This.GetValue(instance); }
         public static T ReflectGetField<T>(Type classType, string fieldName, object o = null)

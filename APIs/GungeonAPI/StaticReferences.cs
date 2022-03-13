@@ -214,7 +214,7 @@ namespace GungeonAPI
             StoredRoomObjects.Add("FiveCasingPlaceable", FiveCasingPlaceable);
             StoredRoomObjects.Add("FiftyCasingPlaceable", FiftyCasingPlaceable);
 
-            Dungeon rngDungeon = DungeonDatabase.GetOrLoadByName("base_nakatomi");
+            var rngDungeon = DungeonDatabase.GetOrLoadByName("base_nakatomi");
             if (rngDungeon)
             {
                 if (rngDungeon.PatternSettings.flows[0].name == "FS4_Nakatomi_Flow")
@@ -234,7 +234,7 @@ namespace GungeonAPI
             }
             rngDungeon = null;
 
-            Dungeon forgeDungeon = DungeonDatabase.GetOrLoadByName("Base_Forge");
+            var forgeDungeon = DungeonDatabase.GetOrLoadByName("Base_Forge");
             foreach (WeightedRoom wRoom in forgeDungeon.PatternSettings.flows[0].fallbackRoomTable.includedRooms.elements)
             {
                 if (wRoom.room != null && !string.IsNullOrEmpty(wRoom.room.name))
@@ -291,7 +291,7 @@ namespace GungeonAPI
             }
             forgeDungeon = null;
 
-            Dungeon sewerDungeon = DungeonDatabase.GetOrLoadByName("Base_Sewer");
+            var sewerDungeon = DungeonDatabase.GetOrLoadByName("Base_Sewer");
             foreach (WeightedRoom wRoom in sewerDungeon.PatternSettings.flows[0].fallbackRoomTable.includedRooms.elements)
             {
                 if (wRoom.room != null && !string.IsNullOrEmpty(wRoom.room.name))
