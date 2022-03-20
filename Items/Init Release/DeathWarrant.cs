@@ -35,7 +35,7 @@ namespace Planetside
 				component.HeightOffGround = 5f;
 				component.UpdateZDepth();
 			}
-			base.Invoke("MoveToDifferentTarget", 0.5f);
+			base.Invoke("MoveToDifferentTarget", 0.25f);
 		}
 
 		private void MoveToDifferentTarget()
@@ -173,7 +173,7 @@ namespace Planetside
             {
 				if (Target != null && !targetableButWontIncreaseKillCount.Contains(Target.EnemyGuid)) { Kills++; }
 				Target = null;
-				base.Invoke("MoveToDifferentTarget", 0.25f);
+				base.Invoke("MoveToDifferentTarget", 0.125f);
 			}
 		}
 
@@ -186,6 +186,10 @@ namespace Planetside
 				{
 					Destroy(base.gameObject, 0.5f);
 					return;
+				}
+				else if (Target == null)
+                {
+					base.Invoke("MoveToDifferentTarget", 0f);
 				}
 			}
 			tk2dSpriteAnimator animator = base.gameObject.GetComponent<tk2dSpriteAnimator>();

@@ -181,7 +181,7 @@ namespace Planetside
             Exploder.DoDistortionWave(player.sprite.WorldTopCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
             player.BloopItemAboveHead(base.sprite, "");
             string BlurbText = greed.hasBeenPickedup == true ? "Greed Is Even Better." : "Greed Is Good.";
-            OtherTools.Notify("Greedy", BlurbText, "Planetside/Resources/PerkThings/glass", UINotificationController.NotificationColor.GOLD);
+            OtherTools.Notify("Greedy", BlurbText, "Planetside/Resources/PerkThings/Greedy", UINotificationController.NotificationColor.GOLD);
             /*
             Exploder.DoDistortionWave(player.sprite.WorldTopCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
             player.BloopItemAboveHead(base.sprite, "");
@@ -243,14 +243,14 @@ namespace Planetside
             StatModifier damage = new StatModifier
             {
                 statToBoost = PlayerStats.StatType.Damage,
-                amount = 1.15f,
+                amount = 1.20f,
                 modifyType = StatModifier.ModifyMethod.MULTIPLICATIVE
             };
             user.ownerlessStatModifiers.Add(speed);
             user.ownerlessStatModifiers.Add(damage);
             user.stats.RecalculateStats(user, true, true);
             float elapsed = 0f;
-            while (elapsed < 5)
+            while (elapsed < 10)
             {
                 elapsed += BraveTime.DeltaTime;
                 yield return null;

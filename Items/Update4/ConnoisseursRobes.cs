@@ -36,6 +36,8 @@ namespace Planetside
 
 			ConnoisseursRobes.ConnoisseursRobesID = item.PickupObjectId;
 			ItemIDs.AddToList(item.PickupObjectId);
+			item.SetupUnlockOnCustomStat(CustomTrackedStats.JAMMED_ARCHGUNJURERS_KILLED, 14, DungeonPrerequisite.PrerequisiteOperation.GREATER_THAN);
+
 
 		}
 		public static int ConnoisseursRobesID;

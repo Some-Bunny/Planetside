@@ -30,7 +30,6 @@ namespace Planetside
 			bool flag = clip.GetFrame(frameIdx).eventInfo == "deathOno" && base.healthHaver != null;
 			if (flag)
 			{
-				ETGModConsole.Log("FRame Tripped");
 				//base.StartCoroutine(this.OnDeathExplosionsCR());
 			}
 		}

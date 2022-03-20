@@ -104,13 +104,13 @@ public class CustomSpinBulletsBehavior : BehaviorBase
 			Projectile projectile = this.m_projectiles[k].projectile;
 			if (projectile)
 			{
+				projectile.ResetDistance();
 				Vector2 bulletPosition = this.GetBulletPosition(angle, this.m_projectiles[k].distFromCenter);
 				projectile.specRigidbody.Velocity = (bulletPosition - (Vector2)projectile.transform.position) / BraveTime.DeltaTime;
 				if (projectile.shouldRotate)                          //NO IDEA WHY CHANGING THIS TO SPRITE.WORLDCENTER FIXES ERROR. SCARES ME
 				{													  //I fixed it. Freedom.
 					projectile.transform.rotation = Quaternion.Euler(0f, 0f, 180f + (Quaternion.Euler(0f, 0f, 90f) * (this.ShootPoint.transform.position.XY() - bulletPosition)).XY().ToAngle());
 				}
-				projectile.ResetDistance();
 			}
 			else if (this.m_regenTimer <= 0f)
 			{
@@ -216,9 +216,7 @@ public class CustomSpinBulletsBehavior : BehaviorBase
 	private class ProjectileContainer
 	{
 		public Projectile projectile;
-
 		public float angle;
-
 		public float distFromCenter;
 	}
 }

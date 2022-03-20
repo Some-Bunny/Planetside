@@ -25,7 +25,7 @@ namespace Planetside
 			sharedAssets2 = null;
 			AddVrokenChamberRoom(false);
 			AddMinesSWRoom(false);
-			InitTimeTraderRooms(false);
+			//InitTimeTraderRooms(false);
 			InitHolyChamberShrineRooms(false);
 			//InitPrisonerRooms();
 		}

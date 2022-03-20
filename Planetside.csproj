@@ -118,6 +118,10 @@
     <Compile Include="Components\Projectile Components\RecursionPreventer.cs" />
     <Compile Include="Components\Projectile Components\StickyProjectileModifier.cs" />
     <Compile Include="Controllers\MasteryTraderSpawnController.cs" />
+    <Compile Include="Controllers\SomethingWickedEventManager.cs" />
+    <Compile Include="Controllers\OuroborosController.cs" />
+    <Compile Include="Controllers\SpecificUnlockController.cs" />
+    <Compile Include="Controllers\TimeTraderSpawnController.cs" />
     <Compile Include="DungeonGenStuff\ExpandTK2DDungeonAssembler.cs" />
     <Compile Include="DungeonPlaceables\BreakableAPI.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassPots.cs" />
@@ -147,6 +151,7 @@
     <Compile Include="Hooks\ExplosionHooks.cs" />
     <Compile Include="Items\Update4\ForgottenRoundOubleiite.cs" />
     <Compile Include="Items\Update4\LostVoidPotential.cs" />
+    <Compile Include="Items\Update4\StableVector.cs" />
     <Compile Include="Items\Update4\ShopInABox.cs" />
     <Compile Include="Items\Update4\TrespassStone.cs" />
     <Compile Include="Items\Update4\ConnoisseursRobes.cs" />
@@ -677,6 +682,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="APIs\SaveAPI\Properties\" />
+    <Folder Include="Resources\VFX\EliteCrowns\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Enemies\ModderBullets\an3s\an3sbullet_die_001.png" />
@@ -2349,6 +2355,7 @@
     <EmbeddedResource Include="Resources\Shellrax\shellrax_fireeye_003.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\stableVector.png" />
     <EmbeddedResource Include="Resources\trespassStone.png" />
     <EmbeddedResource Include="Resources\VFX\DeathMark\markedfordeathvfx_search_001.png" />
     <EmbeddedResource Include="Resources\VFX\DeathMark\markedfordeathvfx_search_002.png" />

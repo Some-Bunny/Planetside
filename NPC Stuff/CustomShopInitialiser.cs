@@ -89,7 +89,7 @@ namespace Planetside
             , true
             , "Planetside/Resources/NPCs/TableDude/talbertIcon.png"
             , true
-            , 0.25f
+            , 0.15f
             , null
             , DancePaths);
            
@@ -139,7 +139,7 @@ namespace Planetside
                 , "#GREGTHLY_RUNBASEDMULTILINE_FAILPURCHASE"
                 , "#GREGTHLY_RUNBASEDMULTILINE_INTRO"
                 , "#GREGTHLY_RUNBASEDMULTILINE_ATTACKED"
-                , new Vector3(1.25f, 2f)
+                , new Vector3(0.25f, 1f)
                 , new Vector3(0.375f, 1.375f, 5.9375f)
                 , new Vector3[] { new Vector3(0.75f, 0.875f, 1) }
                 , 0.8f
@@ -336,13 +336,28 @@ namespace Planetside
             ETGMod.Databases.Strings.Core.AddComplex("#TIMETRADER_RUNBASEDMULTILINE_GENERIC", "Been a while since I seen ya!");
             ETGMod.Databases.Strings.Core.AddComplex("#TIMETRADER_RUNBASEDMULTILINE_GENERIC", "Tell that blue haired gun-toter to stop trespassing where they shouldn't if you meet 'em, will ya?");
             ETGMod.Databases.Strings.Core.AddComplex("#TIMETRADER_RUNBASEDMULTILINE_GENERIC", "I swear I've seen that big rusty casing guy back home...");
-            ETGMod.Databases.Strings.Core.AddComplex("#TIMETRADER_RUNBASEDMULTILINE_GENERIC", "The universe is nice, isn't it? Ya got my boss to thanl for that!");
+            ETGMod.Databases.Strings.Core.AddComplex("#TIMETRADER_RUNBASEDMULTILINE_GENERIC", "The universe is nice, isn't it? Ya got my boss to thank for that!");
 
-            ETGMod.Databases.Strings.Core.Set("#TIMETRADER_RUNBASEDMULTILINE_STOPPER", "Ya' don't got much time, ya' know that?");
-            ETGMod.Databases.Strings.Core.Set("#TIMETRADER_RUNBASEDMULTILINE_PURCHASE", "That'll save ya' some time!");
-            ETGMod.Databases.Strings.Core.Set("#TIMETRADER_RUNBASEDMULTILINE_FAILPURCHASE", "Maybe some other time, pal.");
-            ETGMod.Databases.Strings.Core.Set("#TIMETRADER_RUNBASEDMULTILINE_INTRO", "Just on time, pal!");
-            ETGMod.Databases.Strings.Core.Set("#TIMETRADER_RUNBASEDMULTILINE_ATTACKED", "Ya' bullets are in the wrong timeline pal!");
+            ETGMod.Databases.Strings.Core.AddComplex("#TIMETRADER_RUNBASEDMULTILINE_STOPPER", "Ya' don't got much time, ya' know that?");
+            ETGMod.Databases.Strings.Core.AddComplex("#TIMETRADER_RUNBASEDMULTILINE_STOPPER", "Universe ain't got much time ya know?");
+
+            ETGMod.Databases.Strings.Core.AddComplex("#TIMETRADER_RUNBASEDMULTILINE_PURCHASE", "That'll save ya' some time!");
+            ETGMod.Databases.Strings.Core.AddComplex("#TIMETRADER_RUNBASEDMULTILINE_PURCHASE", "That one will sure speed ya up!");
+            ETGMod.Databases.Strings.Core.AddComplex("#TIMETRADER_RUNBASEDMULTILINE_PURCHASE", "Many thanks!");
+
+
+            ETGMod.Databases.Strings.Core.AddComplex("#TIMETRADER_RUNBASEDMULTILINE_FAILPURCHASE", "Maybe some other time, pal.");
+            ETGMod.Databases.Strings.Core.AddComplex("#TIMETRADER_RUNBASEDMULTILINE_FAILPURCHASE", "Sorry, not this time.");
+
+
+            ETGMod.Databases.Strings.Core.AddComplex("#TIMETRADER_RUNBASEDMULTILINE_INTRO", "Just on time, pal!");
+            ETGMod.Databases.Strings.Core.AddComplex("#TIMETRADER_RUNBASEDMULTILINE_INTRO", "Real speedy one ya are!");
+            ETGMod.Databases.Strings.Core.AddComplex("#TIMETRADER_RUNBASEDMULTILINE_INTRO", "Long time no see pal!");
+
+            ETGMod.Databases.Strings.Core.AddComplex("#TIMETRADER_RUNBASEDMULTILINE_ATTACKED", "Ya' bullets are in the wrong timeline pal!");
+            ETGMod.Databases.Strings.Core.AddComplex("#TIMETRADER_RUNBASEDMULTILINE_ATTACKED", "That won't work like last time!");
+            ETGMod.Databases.Strings.Core.AddComplex("#TIMETRADER_RUNBASEDMULTILINE_ATTACKED", "Whadd'ya expect to change from last time?");
+
 
 
             GameObject timedShop = ItsDaFuckinShopApi.SetUpShop(

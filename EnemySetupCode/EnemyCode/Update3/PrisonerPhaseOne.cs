@@ -567,7 +567,6 @@ namespace Planetside
 					SearchInterval = 0.25f,
 					PauseOnTargetSwitch = false,
 					PauseTime = 0.25f
-
 				},
 			};
 

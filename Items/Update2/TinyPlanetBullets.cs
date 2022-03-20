@@ -40,7 +40,6 @@ namespace Planetside
 
 			TinyPlanetBullets.CorruptBulletsID = item.PickupObjectId;
 			ItemIDs.AddToList(item.PickupObjectId);
-
 		}
 		public static int CorruptBulletsID;
 		private void PostProcessProjectile(Projectile sourceProjectile, float effectChanceScalar)

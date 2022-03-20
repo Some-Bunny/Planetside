@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
-
+using Dungeonator;
 namespace GungeonAPI
 {
-	// Token: 0x02000010 RID: 16
 	public class SimpleShrine : SimpleInteractable, IPlayerInteractable
 	{
-		// Token: 0x06000070 RID: 112 RVA: 0x000065CF File Offset: 0x000047CF
 		private void Start()
-		{
+		{	
 			SpriteOutlineManager.AddOutlineToSprite(base.sprite, Color.black, 1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
 			this.talkPoint = base.transform.Find("talkpoint");
 			this.m_isToggled = false;
@@ -27,7 +25,6 @@ namespace GungeonAPI
 			}
 		}
 
-		// Token: 0x06000072 RID: 114 RVA: 0x00006671 File Offset: 0x00004871
 		private IEnumerator HandleConversation(PlayerController interactor)
 		{
 			TextBoxManager.ShowStoneTablet(this.talkPoint.position, this.talkPoint, -1f, this.text, true, false);

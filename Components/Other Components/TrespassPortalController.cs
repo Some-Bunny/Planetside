@@ -13,6 +13,7 @@ using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
 using System.Collections.ObjectModel;
+using SaveAPI;
 
 namespace Planetside
 {
@@ -100,6 +101,7 @@ namespace Planetside
             else
             {
 
+                AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.TRESPASS_INTO_OTHER_PLACE, true);
                 AkSoundEngine.PostEvent("Stop_MUS_All", GameManager.Instance.gameObject);
                 AkSoundEngine.PostEvent("Play_ENM_beholster_teleport_01", interactor.gameObject);
                 GameManager.Instance.StartCoroutine(this.TransportToRoom(interactor, room));

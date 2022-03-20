@@ -758,10 +758,6 @@ namespace Planetside
             {
                 return false;
             }
-            if (!debris.name.Contains("shell", true))
-            {
-                return false;
-            }
             Vector2 a = debris.sprite.WorldCenter - SuccSpace;
             float num = Vector2.SqrMagnitude(a);
             if (num > this.m_radiusSquared)

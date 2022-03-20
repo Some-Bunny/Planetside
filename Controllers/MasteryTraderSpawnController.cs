@@ -16,25 +16,39 @@ namespace Planetside
     {
         public void Start()
         {
-            HasOpenedPortalOnFloor = false;
 
-            new Hook(
-            typeof(RoomHandler).GetMethod("HandleBossClearReward", BindingFlags.Instance | BindingFlags.NonPublic),
-            typeof(MasteryTraderSpawnController).GetMethod("HandleBossClearRewardHook", BindingFlags.Static | BindingFlags.Public));
+            Debug.Log("Starting MasteryTraderSpawnController setup...");
+            try
+            {
+                HasOpenedPortalOnFloor = false;
 
-            new Hook(
-            typeof(PlayerController).GetMethod("StartDodgeRoll", BindingFlags.Instance | BindingFlags.NonPublic),
-            typeof(MasteryTraderSpawnController).GetMethod("StartDodgeRollHook", BindingFlags.Static | BindingFlags.Public));
+                new Hook(
+                typeof(RoomHandler).GetMethod("HandleBossClearReward", BindingFlags.Instance | BindingFlags.NonPublic),
+                typeof(MasteryTraderSpawnController).GetMethod("HandleBossClearRewardHook", BindingFlags.Static | BindingFlags.Public));
 
-            new Hook(
-            typeof(PlayerController).GetMethod("BlinkToPoint", BindingFlags.Instance | BindingFlags.Public),
-            typeof(MasteryTraderSpawnController).GetMethod("BlinkToPointHook", BindingFlags.Static | BindingFlags.Public));
+                new Hook(
+                typeof(PlayerController).GetMethod("StartDodgeRoll", BindingFlags.Instance | BindingFlags.NonPublic),
+                typeof(MasteryTraderSpawnController).GetMethod("StartDodgeRollHook", BindingFlags.Static | BindingFlags.Public));
 
-            new Hook(
-            typeof(PlayerController).GetMethod("Damaged", BindingFlags.Instance | BindingFlags.NonPublic),
-            typeof(MasteryTraderSpawnController).GetMethod("DamagedHook", BindingFlags.Static | BindingFlags.Public));
+                new Hook(
+                typeof(PlayerController).GetMethod("BlinkToPoint", BindingFlags.Instance | BindingFlags.Public),
+                typeof(MasteryTraderSpawnController).GetMethod("BlinkToPointHook", BindingFlags.Static | BindingFlags.Public));
 
-            DungeonHooks.OnPostDungeonGeneration += this.ClearFloorSpecificData;
+                new Hook(
+                typeof(PlayerController).GetMethod("Damaged", BindingFlags.Instance | BindingFlags.NonPublic),
+                typeof(MasteryTraderSpawnController).GetMethod("DamagedHook", BindingFlags.Static | BindingFlags.Public));
+
+                DungeonHooks.OnPostDungeonGeneration += this.ClearFloorSpecificData;
+                Debug.Log("Finished MasteryTraderSpawnController setup without failure!");
+
+            }
+            catch (Exception e)
+            {
+                Debug.Log("Unable to finish MasteryTraderSpawnController setup!");
+                Debug.Log(e);
+            }
+
+           
         }
 
         public static bool StartDodgeRollHook(Func<PlayerController, Vector2, bool> orig, PlayerController self, Vector2 direction)
@@ -133,6 +147,16 @@ namespace Planetside
 
         public static bool HasOpenedPortalOnFloor;
 
+
+        public static bool PlayerHasAnchor()
+        {
+            foreach (PlayerController player in GameManager.Instance.AllPlayers)
+            {
+                if (player.HasPickupID(StableVector.AnchorID)) { return true; }
+            }
+            return false;
+        }
+
         public static void HandleBossClearRewardHook(Action<RoomHandler> orig, RoomHandler self)
         {
             orig(self);
@@ -168,7 +192,9 @@ namespace Planetside
                     float Chance = Mathf.Min(1, RolledIn / RoomCount);
                     float ChanceMult = HurtIn / RoomCount;
                     float checc = Mathf.Min(1, ChanceMult * Chance);
-                    if (checc == 1)
+
+
+                    if (checc == 1 | PlayerHasAnchor() == true)
                     {
                         Debug.Log("Opnening Guaranteed Portal!");
                         RoomHandler currentRoom = self;
@@ -197,7 +223,7 @@ namespace Planetside
 
                         Debug.Log("Post Calculation Dodgeroll chance: " + Chance);
 
-                        ChanceMult = ChanceMult * (ChanceMult * 1.10f);
+                        ChanceMult = ChanceMult * (ChanceMult * 1.075f);
                         Debug.Log("No Damage Chance: " + ChanceMult.ToString());
 
                         float Total = ChanceMult * Chance;

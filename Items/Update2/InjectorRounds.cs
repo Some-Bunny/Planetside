@@ -44,6 +44,8 @@ namespace Planetside
 				"antibody"
 			};
 			CustomSynergies.Add("Thats How I Lost My Medical License", mandatoryConsoleIDs, optionalConsoleIDs, true);
+			item.SetupUnlockOnFlag(GungeonFlags.BOSSKILLED_BLOBULORD, true);
+
 
 			InjectorRounds.InjectorRoundsID = item.PickupObjectId;
 			ItemIDs.AddToList(item.PickupObjectId);

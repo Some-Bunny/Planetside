@@ -28,7 +28,7 @@ namespace Planetside
 				text = "A shrine of nothings. You feel like somethings missing, or maybe its intentional...",
 				spritePath = "Planetside/Resources/Shrines/NullPedestal.png",
 				room = RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/NullShrineRoom.room").room,
-				RoomWeight = 1f,
+				RoomWeight = 1.5f,
 				acceptText = "Bestow your nothings.",
 				declineText = "Leave",
 				OnAccept = Accept,

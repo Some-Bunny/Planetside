@@ -90,7 +90,7 @@ namespace Planetside
                     hover1.ShootDuration = 0.2f;
                     hover1.OnlyOnEmptyReload = false;
                     hover1.Initialize(gunComp, player);
-                    hover1.DamageMultiplier = 0.8f;
+                    //hover1.DamageMultiplier = 0.8f;
                     hover1.RotationSpeed = 120;
                     SpawnDebrisObject sDo = gameObject1.AddComponent<SpawnDebrisObject>();
                     sDo.objIDToSpawn = gunComp.PickupObjectId;

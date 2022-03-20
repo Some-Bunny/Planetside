@@ -57,12 +57,17 @@ namespace Planetside
             ShamberParticleSystem = shamberParticlesObj.GetComponent<ParticleSystem>();
             FakePrefab.MarkAsFakePrefab(ShamberParticleSystem.gameObject);
 
+            var EliteVariantEnemyParticlesObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("EliteVariantEnemy"));
+            EliteParticleSystemGameObject = EliteVariantEnemyParticlesObj;
+            FakePrefab.MarkAsFakePrefab(EliteVariantEnemyParticlesObj);
+            EliteParticleSystem = EliteVariantEnemyParticlesObj.GetComponent<ParticleSystem>();
+            FakePrefab.MarkAsFakePrefab(EliteParticleSystem.gameObject);
 
             EnemySpawnVFX = (GameObject)ResourceCache.Acquire("Global VFX/VFX_SpawnEnemy_Reticle");
             ShootGroundVFX = (GameObject)ResourceCache.Acquire("Global VFX/VFX_Bullet_Spawn");
             BlueSynergyPoofVFX = (GameObject)ResourceCache.Acquire("Global VFX/VFX_Synergy_Poof_001");
 
-
+            HealingSparklesVFX = (GameObject)ResourceCache.Acquire("Global VFX/VFX_Healing_Sparkles_001");
         }
         public static ScarfAttachmentDoer ScarfObject;
         public static GameObject RadialRing;
@@ -71,7 +76,7 @@ namespace Planetside
         public static GameObject EnemySpawnVFX;
         public static GameObject ShootGroundVFX;
         public static GameObject BlueSynergyPoofVFX;
-
+        public static GameObject HealingSparklesVFX;
 
         public static ParticleSystem PerkParticleSystem;
         public static ParticleSystem PerfectedParticleSystem;
@@ -81,7 +86,10 @@ namespace Planetside
         public static ParticleSystem CeramicParticleSystem;
         public static ParticleSystem BloodSplatterParticleSystem;
         public static ParticleSystem ShamberParticleSystem;
+        public static ParticleSystem EliteParticleSystem;
+
         public static GameObject ShamberParticleSystemGameObject;
+        public static GameObject EliteParticleSystemGameObject;
 
 
         public static GameObject JammedDeathVFX;

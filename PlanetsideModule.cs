@@ -53,8 +53,6 @@ namespace Planetside
             metadata = this.Metadata;
             //Initialise World-Stuff here
             StaticInformation.Init();
-            ETGModMainBehaviour.Instance.gameObject.AddComponent<NevernamedsDarknessHandler>();
-            ETGModMainBehaviour.Instance.gameObject.AddComponent<MasteryTraderSpawnController>();
 
             ChamberGunAPI.Init("PlanetsideOfGunymede");
 
@@ -253,6 +251,7 @@ namespace Planetside
             ConnoisseursRobes.Init();
             LostVoidPotential.Init();
             ShopInABox.Init();
+            StableVector.Init();
 
             ModifierNeedle.Init();
 
@@ -376,6 +375,15 @@ namespace Planetside
 
             FlowInjectionInitialiser.InitialiseFlows();
 
+            ETGModMainBehaviour.Instance.gameObject.AddComponent<NevernamedsDarknessHandler>();
+            ETGModMainBehaviour.Instance.gameObject.AddComponent<MasteryTraderSpawnController>();
+            ETGModMainBehaviour.Instance.gameObject.AddComponent<SomethingWickedEventManager>();
+            ETGModMainBehaviour.Instance.gameObject.AddComponent<TimeTraderSpawnController>();
+            ETGModMainBehaviour.Instance.gameObject.AddComponent<SpecificUnlockController>();
+            ETGModMainBehaviour.Instance.gameObject.AddComponent<OuroborosController>();
+
+            
+
             //RoomTableTools.GenerateWeightedRoom(RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/ShrineOfEvilShrineRoomHell.room").room)
             //GenericRoomTable table = RoomTableTools.CreateRoomTable();
             //WeightedRoom roomer =  RoomTableTools.GenerateWeightedRoom(RoomFactory.BuildFromResource("Planetside/Resources2/smileBossRoom.room").room);
@@ -483,9 +491,14 @@ namespace Planetside
             string j = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.DEFEAT_ANNIHICHAMBER) ? " Done!\n" : " -Defeat A Ravenous, Violent Chamber.\n";
             string k = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.DECURSE_HELL_SHRINE_UNLOCK) ? " Done!\n" : " -Remove Each Hell-Bound Curse At Least Once.\n";
             string l = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.HAS_COMPLETED_SOMETHING_WICKED) ? " Done!\n" : " -Survive An Encounter With Something Wicked.\n";
+            string m = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.TRESPASS_INTO_OTHER_PLACE) ? " Done!\n" : " -Trespass Into Somewhere Else.\n";
+
+            string n = AdvancedGameStatsManager.Instance.GetPlayerStatValue(CustomTrackedStats.UMBRAL_ENEMIES_KILLED) >= 4? " Done!\n" : " -Slay 5 Umbral Enemies.\n";
+            string o = AdvancedGameStatsManager.Instance.GetPlayerStatValue(CustomTrackedStats.JAMMED_ARCHGUNJURERS_KILLED) >= 14 ? " Done!\n" : " -Defeat 15 Jammed Arch Gunjurers.\n";
+
 
             string color1 = "9006FF";
-            OtherTools.PrintNoID("Unlock List:\n" + a + b + c + d + e + f + g +h+i+j+k+l, color1);
+            OtherTools.PrintNoID("Unlock List:\n" + a + b + c + d + e + f + g +h+i+j+k+l+m+n+o, color1);
             OtherTools.Init();
 
 

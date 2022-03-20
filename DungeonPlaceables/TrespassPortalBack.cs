@@ -72,25 +72,8 @@ namespace Planetside
         public void Interact(PlayerController interactor)
         {
             base.Invoke("DeregisterInteractable", 0f);
-            if (ReturnPosition != null)
-            {
-                AkSoundEngine.PostEvent("Play_ENM_beholster_teleport_01", interactor.gameObject);
-                GameManager.Instance.StartCoroutine(TransportToRoom());
-                
-            }
-            else
-            {
-                GameManager.Instance.StartCoroutine(LerpToSize(gameObject.transform.localScale, Vector3.zero, 0.33f));
-                var partObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("PortalClose"));
-                partObj.transform.position = gameObject.transform.position;
-                partObj.transform.parent = gameObject.transform;
-                ParticleSystem particleSystem = partObj.GetComponent<ParticleSystem>();
-                var shap = particleSystem.shape;
-                shap.meshRenderer.gameObject.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
-                Destroy(partObj, 1);
-                DebrisObject debrisSpawned = LootEngine.SpawnItem(PickupObjectDatabase.GetById(LostVoidPotential.LostVoidPotentialID).gameObject, gameObject.transform.position, Vector2.zero, 0).GetComponent<DebrisObject>();
-                Destroy(gameObject);
-            }
+            AkSoundEngine.PostEvent("Play_ENM_beholster_teleport_01", interactor.gameObject);
+            GameManager.Instance.StartCoroutine(TransportToRoom());
         }
 
 
@@ -122,6 +105,7 @@ namespace Planetside
             AkSoundEngine.PostEvent(this.m_cachedMusicEventCore, GameManager.Instance.gameObject);
             if (PortalToDestroy != null) { PortalToDestroy.GetComponent<TrespassPortalController>().Invoke("YoureFreakingDead", 0); }
 
+            if (ReturnPosition == null | ReturnPosition == new Vector2(0,0)) { Debug.Log("FAILSAFE TRIGGERED FOR RETURN PORTAL"); ReturnPosition = GameManager.Instance.Dungeon.data.Exit.area.Center - new Vector2(0 ,-2); }
             for (int j = 0; j < GameManager.Instance.AllPlayers.Length; j++)
             {
                 if (GameManager.Instance.AllPlayers[j])

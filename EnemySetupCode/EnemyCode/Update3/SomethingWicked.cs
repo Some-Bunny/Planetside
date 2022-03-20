@@ -370,15 +370,14 @@ namespace Planetside
 
 		private void Start()
 		{
-			MaxSpeed = 11;
-			HasTPed = false;
-			CanBeDMG = true;
-			RanDir = 0;
-			AkSoundEngine.PostEvent("Play_ambienthum", base.gameObject);
+			currentState = States.NONE;
+
+			base.gameObject.GetComponent<tk2dSpriteAnimator>().Play("idle");
 			Rigidbody = base.gameObject.GetComponent<SpeculativeRigidbody>();
 			Rigidbody.OnPreRigidbodyCollision += DoCollision;
-			base.gameObject.GetComponent<tk2dSpriteAnimator>().Play("idle");
-			this.m_currentTargetPlayer = GameManager.Instance.GetRandomActivePlayer();
+			base.StartCoroutine(LerpGlowToValue(0, 0, 0.1f));
+			this.PlayerToTrack = GameManager.Instance.GetRandomActivePlayer();
+			glowMaterial = base.gameObject.GetComponent<tk2dBaseSprite>().sprite.renderer.material;
 
 		}
 		bool HasPickedUpRedCasing;
@@ -387,14 +386,11 @@ namespace Planetside
 
 		private void Update()
 		{
-			Glow();
-
-			HasRedCasing = m_currentTargetPlayer.HasPickupID(RedThing.RedCasingID) ? true : false;
+			HasRedCasing = PlayerToTrack.HasPickupID(RedThing.RedCasingID) ? true : false;
 			if (HasPickedUpRedCasing != true && HasRedCasing == true)
             {
 				HasPickedUpRedCasing = true;
 			}
-
 			if (GameManager.Instance.CurrentLevelOverrideState == GameManager.LevelOverrideState.END_TIMES || GameManager.Instance.CurrentLevelOverrideState == GameManager.LevelOverrideState.CHARACTER_PAST || GameManager.Instance.CurrentLevelOverrideState == GameManager.LevelOverrideState.FOYER)
 			{
 				return;
@@ -408,102 +404,226 @@ namespace Planetside
 				base.gameObject.SetActive(false);
 				return;
 			}
-			DoMotion();
+			if (currentState == States.NONE)
+            { StartLurk(); }
+			if (currentState == States.WATCH)
+			{Watch();}
+			if (currentState == States.HUNT)
+			{ Hunt(); }
+		}
 
-			foreach (Projectile proj in StaticReferenceManager.AllProjectiles)
+		private void StartLurk()
+        {
+			currentState = States.LURK;
+			Dungeon currentFloor = GameManager.Instance.Dungeon;
+			do
 			{
-				PlayerController player = proj.Owner as PlayerController;
-				bool isBem = proj.GetComponent<BasicBeamController>() != null;
-				if (isBem == true && Planetside.BeamToolbox.PosIsNearAnyBoneOnBeam(proj.GetComponent<BasicBeamController>(), base.gameObject.GetComponent<tk2dBaseSprite>().sprite.WorldCenter, 6f) && proj.Owner != null && proj.Owner == player)
-				{
-					AkSoundEngine.PostEvent("Play_CHR_shadow_curse_01", base.gameObject);
-					MaxSpeed += 1.5f;
-					GameManager.Instance.StartCoroutine(this.TPCooldown());
-					GameManager.Instance.StartCoroutine(this.DMGCooldown());
-					RanDir = UnityEngine.Random.Range(-180, 180);
-				}
-				else 
-				
-				if (Vector2.Distance(proj.sprite.WorldCenter, base.gameObject.GetComponent<tk2dBaseSprite>().sprite.WorldCenter) < 6 && proj.Owner != null && proj.Owner == player && HasTPed != true && CanBeDMG == true)
-				{
-					AkSoundEngine.PostEvent("Play_CHR_shadow_curse_01", base.gameObject);
-					MaxSpeed += 1.5f;
-					GameManager.Instance.StartCoroutine(this.TPCooldown());
-					GameManager.Instance.StartCoroutine(this.DMGCooldown());
-					RanDir = UnityEngine.Random.Range(-180, 180);
+				RoomHandler roomSelected = GameManager.Instance.Dungeon.data.rooms[UnityEngine.Random.Range(0, GameManager.Instance.Dungeon.data.rooms.Count)];
+				IntVector2? positionSelected = roomSelected.GetRandomAvailableCell();
+				if (roomSelected != null)
+                {
+					foreach (PlayerController player in GameManager.Instance.AllPlayers)
+					{
+						if (player.CurrentRoom != null && player.CurrentRoom != roomSelected && Vector2.Distance(positionSelected.Value.ToCenterVector2(), player.transform.position) > 35 && Vector2.Distance(positionSelected.Value.ToCenterVector2(), player.transform.position) < 50)
+						{
+							PlayerToTrack = player;
+							base.gameObject.transform.position = positionSelected.Value.ToVector3();
+							currentState = States.WATCH;
+							base.StartCoroutine(LerpGlowToValue(0, 70, 0.1f));
+							AkSoundEngine.PostEvent("Play_ambienthum", base.gameObject);
+						}
+					}
 				}
 			}
-		}
-		private IEnumerator TPCooldown()
-		{
-			ImprovedAfterImage img = base.gameObject.GetComponent<ImprovedAfterImage>();
-			img.enabled = false;
-			base.gameObject.GetComponent<tk2dBaseSprite>().renderer.enabled = false;
-			HasTPed = true;
-			float Wait = HasPickedUpRedCasing ? 0.5f : 0.75f;
-			float Divide = HasPickedUpRedCasing ? 26.66f : 20;
-			yield return new WaitForSeconds((MaxSpeed / Divide) + Wait);
-			img.enabled = true;
-			base.gameObject.GetComponent<tk2dBaseSprite>().renderer.enabled = true;
-			HasTPed = false;
+			while (currentState == States.LURK);
+			bool flag = currentState == States.WATCH;
+			if (flag)
+			{
 
-			yield break;
-		}
-		private IEnumerator DMGCooldown()
-        {
-			CanBeDMG = false;
-			float Mult = HasPickedUpRedCasing == true ? 2 : 1.4f;
-			yield return new WaitForSeconds((MaxSpeed * Mult));
-			CanBeDMG = true;
-			yield break;
-		}
+			}
+        }
 
-		private void OnDestroy()
+		private void Watch()
         {
-			AkSoundEngine.PostEvent("Stop_ambienthum", base.gameObject);
-
-		}
-		void Glow()
-        {
-			if (m_currentTargetPlayer && CanBeDMG == true)
+			if (Vector2.Distance(base.transform.position, PlayerToTrack.transform.position) < 14)
             {
-				base.gameObject.GetComponent<tk2dBaseSprite>().sprite.renderer.material.SetFloat("_EmissivePower", 75);
+				currentState = States.PRE_HUNT;
+				base.StartCoroutine(LerpGlowToValue(glowMaterial.GetFloat("_EmissivePower"), 70, 1f));
+				base.StartCoroutine(StartHunt(UnityEngine.Random.Range(1, 4)));
+
+			}
+            else
+            {
+				if (this.PlayerToTrack.healthHaver.IsDead || this.PlayerToTrack.IsGhost)
+				{
+					this.PlayerToTrack = GameManager.Instance.GetRandomActivePlayer();
+				}
+				float Multiplier = HasPickedUpRedCasing ? 1.33f : 1;
+				Vector2 centerPosition = this.PlayerToTrack.CenterPosition;
+				Vector2 vector = centerPosition - Rigidbody.UnitCenter;
+				float magnitude = vector.magnitude;
+				float d = Mathf.Lerp(2f * Multiplier, 9, (magnitude - (9 * Multiplier)) / (40 - 5));
+				Rigidbody.Velocity = vector.normalized * d;
+				StoredVelocity = Rigidbody.Velocity;
+			}
+		}
+
+
+
+		private IEnumerator StartHunt(float WaitTime)
+		{
+			//AkSoundEngine.PostEvent("Play_OBJ_lock_pick_01", base.gameObject);
+
+
+			Vector2 savedVelocity = Rigidbody.Velocity;
+			float ela = 0f;
+			while (ela < WaitTime)
+			{
+				float t = ela / (WaitTime / 2);
+				if (Rigidbody != null) { Rigidbody.Velocity = Vector2.Lerp(savedVelocity, Vector2.zero, t); }
+				ela += BraveTime.DeltaTime;
+				yield return null;
+			}
+			currentState = States.HUNT;
+			yield break;
+		}
+		private void Hunt()
+		{
+			if (Vector2.Distance(base.transform.position, PlayerToTrack.transform.position) < 7)
+			{
+				currentState = States.CHARGE;
+				base.StartCoroutine(DoCharge());
 			}
 			else
             {
-				base.gameObject.GetComponent<tk2dBaseSprite>().sprite.renderer.material.SetFloat("_EmissivePower", 0);
-			}
+				if (this.PlayerToTrack.healthHaver.IsDead || this.PlayerToTrack.IsGhost)
+				{
+					this.PlayerToTrack = GameManager.Instance.GetRandomActivePlayer();
+				}
+				float Multiplier = HasPickedUpRedCasing ? 1.33f : 1;
+				Vector2 centerPosition = this.PlayerToTrack.CenterPosition;
+				Vector2 vector = centerPosition - Rigidbody.UnitCenter;
+				float magnitude = vector.magnitude;
+				float d = Mathf.Lerp(5f * Multiplier, 12, (magnitude - (12 * Multiplier)) / (40 - 5));
+				Rigidbody.Velocity = vector.normalized * d;
+				StoredVelocity = Rigidbody.Velocity;
+			}		
 		}
-		private float RanDir;
-		private bool HasTPed;
-		private bool CanBeDMG;
+
+		public void ReinitializeProeprly()
+        {
+			base.gameObject.GetComponent<tk2dBaseSprite>().sprite.renderer.enabled = true;
+			currentState = States.NONE;
+        }
+
+
+		private IEnumerator DoCharge()
+		{
+			AkSoundEngine.PostEvent("Play_ENM_beholster_teleport_01", base.gameObject);
+			Vector2 savedVelocity = Rigidbody.Velocity;
+			Vector2 vector = this.PlayerToTrack.CenterPosition - Rigidbody.UnitCenter;
+			Vector2 velocityToUse = vector.normalized * 12;
+			float ela = 0f;
+			base.StartCoroutine(LerpGlowToValue(0, 5000, 0.5f));
+			while (ela < 1f)
+			{
+				float t = ela / 0.8f;
+				if (Rigidbody != null) { Rigidbody.Velocity = Vector2.Lerp(savedVelocity, Vector2.zero, t); }
+				ela += BraveTime.DeltaTime;
+				yield return null;
+			}
+			ela = 0f;
+			while (ela < 0.25f)
+			{
+				float t = ela / 0.25f;
+				if (Rigidbody != null) { Rigidbody.Velocity = Vector2.Lerp(Vector2.zero, velocityToUse * 9, t); }
+				ela += BraveTime.DeltaTime;
+				yield return null;
+			}
+			ela = 0f;
+			while (ela < 2f)
+			{
+				ela += BraveTime.DeltaTime;
+				yield return null;
+			}
+			base.StartCoroutine(LerpGlowToValue(glowMaterial.GetFloat("_EmissivePower"), 0, 0.5f));
+			Rigidbody.Velocity = Vector2.zero;
+			currentState = States.WAIT;
+			AkSoundEngine.PostEvent("Stop_ambienthum", base.gameObject);
+			base.gameObject.GetComponent<tk2dBaseSprite>().sprite.renderer.enabled = false;
+			base.Invoke("ReinitializeProeprly", UnityEngine.Random.Range(4, HasRedCasing == true? 11 : 30));
+			yield break;
+		}
+
+	
+
+
+
+
+		private void OnDestroy()
+        {AkSoundEngine.PostEvent("Stop_ambienthum", base.gameObject);}
+
+		private IEnumerator LerpGlowToValue(float PreviousValue, float NewValue, float Time = 0.25f)
+		{
+			float ela = 0f;
+			float dura = Time;
+			while (ela < dura)
+			{
+				float t = ela / dura;
+				if (base.gameObject != null && glowMaterial != null)
+                {
+					glowMaterial.SetFloat("_EmissivePower", Mathf.Lerp(PreviousValue, NewValue, t));
+				}
+				ela += BraveTime.DeltaTime;
+				yield return null;
+			}
+			yield break;
+		}
+
+		
+
+		public enum States
+        {
+			NONE,
+			LURK,
+			WATCH,
+			PRE_HUNT,
+			HUNT,
+			CHARGE,
+			WAIT
+        };
+
+		public States currentState;
 
 		private void DoMotion()
 		{
+			/*
 			Rigidbody.Velocity = Vector2.zero;
 			if (base.gameObject.GetComponent<tk2dSpriteAnimator>().IsPlaying("start"))
 			{
 				return;
 			}
-			if (this.m_currentTargetPlayer.healthHaver.IsDead || this.m_currentTargetPlayer.IsGhost)
+			if (this.PlayerToTrack.healthHaver.IsDead || this.PlayerToTrack.IsGhost)
 			{
-				this.m_currentTargetPlayer = GameManager.Instance.GetRandomActivePlayer();
+				this.PlayerToTrack = GameManager.Instance.GetRandomActivePlayer();
 			}
 
 			float Multiplier = HasPickedUpRedCasing ? 1.2f : 1;
-			Vector2 centerPosition = HasTPed ? Rigidbody.UnitCenter + MathToolbox.GetUnitOnCircle(RanDir, 9) :this.m_currentTargetPlayer.CenterPosition;	
+			Vector2 centerPosition = HasTPed ? Rigidbody.UnitCenter + MathToolbox.GetUnitOnCircle(RanDir, 9) :this.PlayerToTrack.CenterPosition;	
 			Vector2 vector =  centerPosition - Rigidbody.UnitCenter;
 			float magnitude =vector.magnitude;
 			float d = Mathf.Lerp(4.2f* Multiplier, MaxSpeed, (magnitude - (MaxSpeed*Multiplier)) / (40 - 5));
 			Rigidbody.Velocity = !HasTPed ? vector.normalized * d : vector.normalized * (d*40);
 			StoredVelocity = Rigidbody.Velocity;
+			*/
 		}
 
 		Vector2 StoredVelocity;
 		private void DoCollision(SpeculativeRigidbody myRigidbody, PixelCollider myPixelCollider, SpeculativeRigidbody otherRigidbody, PixelCollider otherPixelCollider)
 		{
 			PhysicsEngine.SkipCollision = true;
-			if (otherRigidbody.gameObject.GetComponent<PlayerController>() && HasTPed != true)
+			bool isAgressive = currentState == States.CHARGE | currentState == States.HUNT;
+			if (otherRigidbody.gameObject.GetComponent<PlayerController>() && isAgressive == true)
 			{
 				if (otherRigidbody.gameObject.GetComponent<PlayerController>().characterIdentity == PlayableCharacters.Robot)
                 {
@@ -518,9 +638,10 @@ namespace Planetside
 				}
 			}
 		}
-		private float MaxSpeed;
+		//private float MaxSpeed;
 		public static GameObject SomethingWickedObject = new GameObject();
 		private SpeculativeRigidbody Rigidbody;
-		private PlayerController m_currentTargetPlayer;
+		private PlayerController PlayerToTrack;
+		private Material glowMaterial;
 	}
 }

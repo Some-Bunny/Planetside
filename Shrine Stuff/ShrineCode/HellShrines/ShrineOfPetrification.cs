@@ -62,17 +62,15 @@ namespace Planetside
 			AkSoundEngine.PostEvent("Play_ENM_darken_world_01", shrine);
 			shrine.GetComponent<CustomShrineController>().numUses++;
 			PetrifyTime dark = player.gameObject.AddComponent<PetrifyTime>();
-			dark.playeroue = player;
+			dark.player = player;
 		}
 		public class PetrifyTime : BraveBehaviour
 		{
 			public PetrifyTime()
-            {
-				this.playeroue = base.GetComponent<PlayerController>();
-			}
+            {this.player = GameManager.Instance.PrimaryPlayer;}
 			public void Start()
 			{
-				playeroue.OnRoomClearEvent += this.RoomCleared;
+				player.OnRoomClearEvent += this.RoomCleared;
 				ETGMod.AIActor.OnPreStart = (Action<AIActor>)Delegate.Combine(ETGMod.AIActor.OnPreStart, new Action<AIActor>(this.AIActorMods));
 			}
 
@@ -82,30 +80,26 @@ namespace Planetside
 			}
 			protected override void OnDestroy()
 			{
-				if (playeroue != null)
-				{
-					playeroue.OnRoomClearEvent -= this.RoomCleared;
-				}
+				if (player != null)
+				{player.OnRoomClearEvent -= this.RoomCleared;}
 				ETGMod.AIActor.OnPreStart = (Action<AIActor>)Delegate.Remove(ETGMod.AIActor.OnPreStart, new Action<AIActor>(this.AIActorMods));
 				base.OnDestroy();
 			}
 			public void AIActorMods(AIActor target)
 			{
 				if (target != null && !OtherTools.BossBlackList.Contains(target.aiActor.EnemyGuid) && !target.healthHaver.IsBoss)
-				{
-					target.gameObject.AddComponent<PetrifyThing>();
-				}
+				{target.gameObject.AddComponent<PetrifyThing>();}
 			}
 			private void RoomCleared(PlayerController obj)
 			{
-				if (UnityEngine.Random.value <= 0.03f)
+				if (UnityEngine.Random.value <= 0.04f)
 				{
-					IntVector2 bestRewardLocation = playeroue.CurrentRoom.GetBestRewardLocation(IntVector2.One * 3, RoomHandler.RewardLocationStyle.PlayerCenter, true);
+					IntVector2 bestRewardLocation = player.CurrentRoom.GetBestRewardLocation(IntVector2.One * 3, RoomHandler.RewardLocationStyle.PlayerCenter, true);
 					Chest chest2 = GameManager.Instance.RewardManager.SpawnRewardChestAt(bestRewardLocation, -1f, PickupObject.ItemQuality.EXCLUDED);
 					chest2.RegisterChestOnMinimap(chest2.GetAbsoluteParentRoom());
 				}
 			}
-			public PlayerController playeroue;
+			public PlayerController player;
 		}
 	}
 }

@@ -499,11 +499,11 @@ namespace Planetside
 					if (advancedAdvancedPrerequisiteType == AdvancedAdvancedPrerequisiteType.PASSIVE_ITEM_FLAG)
 					{
 						if (PassiveItem.IsFlagSetAtAll(requiredPassiveFlag) == true)
-                        {
+						{
 							return true;
 						}
 						else
-                        {
+						{
 							return false;
 						}
 					}
@@ -530,8 +530,32 @@ namespace Planetside
 						}
 					}
 					if (advancedAdvancedPrerequisiteType == AdvancedAdvancedPrerequisiteType.SPEEDRUN_TIMER_AFTER)
-                    {
+					{
 						if (GameStatsManager.Instance.GetSessionStatValue(TrackedStats.TIME_PLAYED) >= AfterTimeInSeconds)
+						{
+							return true;
+						}
+						else
+						{
+							return false;
+						}
+
+
+					}
+					if (advancedAdvancedPrerequisiteType == AdvancedAdvancedPrerequisiteType.SPEEDRUNSHOP)
+					{
+						if (TimeTraderSpawnController.ShopAllowedToSpawn == true)
+						{
+							return true;
+						}
+						else
+						{
+							return false;
+						}
+					}
+					if (advancedAdvancedPrerequisiteType == AdvancedAdvancedPrerequisiteType.SPEEDRUNSHOPDISALLOWED)
+					{
+						if (TimeTraderSpawnController.ShopAllowedToSpawn == false)
 						{
 							return true;
 						}
@@ -541,6 +565,7 @@ namespace Planetside
 						}
 					}
 				}
+
 				else
 				{
 					return base.CheckConditionsFulfilled();
@@ -561,7 +586,9 @@ namespace Planetside
 				PASSIVE_ITEM_FLAG,
 				SPEEDRUN_TIMER_BEFORE,
 				SPEEDRUN_TIMER_AFTER,
-				UNLOCK
+				UNLOCK,
+				SPEEDRUNSHOP,
+				SPEEDRUNSHOPDISALLOWED
 			}
 		}
 

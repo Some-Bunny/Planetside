@@ -48,7 +48,7 @@ namespace Planetside
 						{
 							laser2.LifeTime = base.aiActor != null ? ((base.aiActor.healthHaver.GetMaxHealth()/75)* Time) +1: Time;
 							float ZoneSize = (base.aiActor.healthHaver.GetMaxHealth() / 50)+0.33f;
-							GameManager.Instance.Dungeon.StartCoroutine(this.IncraeseInSize(laser2.CircleSprite, ZoneSize >= 2 ? 2 : ZoneSize));
+							GameManager.Instance.Dungeon.StartCoroutine(this.IncreaseInSize(laser2.CircleSprite, ZoneSize >= 2 ? 2 : ZoneSize));
 							SpeculativeRigidbody body = laser2.GetComponentInChildren<SpeculativeRigidbody>();
 							if (body) 
 							{
@@ -66,7 +66,7 @@ namespace Planetside
 				}
 			}
 		}
-		private IEnumerator IncraeseInSize(tk2dSprite CircleSprite, float SizeMultiplier=1)
+		private IEnumerator IncreaseInSize(tk2dSprite CircleSprite, float SizeMultiplier=1)
 		{
 			float elapsed = 0f;
 			float duration = 0.75f;

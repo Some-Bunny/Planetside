@@ -131,9 +131,9 @@ namespace Planetside
 				AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.DEFEAT_ANNIHICHAMBER, true);
 				AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.DECURSE_HELL_SHRINE_UNLOCK, true);
 				AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.HAS_COMPLETED_SOMETHING_WICKED, true);
-
-
-
+				AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.TRESPASS_INTO_OTHER_PLACE, true);
+				AdvancedGameStatsManager.Instance.SetStat(CustomTrackedStats.UMBRAL_ENEMIES_KILLED, 10);
+				AdvancedGameStatsManager.Instance.SetStat(CustomTrackedStats.JAMMED_ARCHGUNJURERS_KILLED, 20);
 			});
 			global::ETGModConsole.Commands.GetGroup("psog").AddUnit("lock_all", delegate (string[] args)
 			{
@@ -150,6 +150,10 @@ namespace Planetside
 				AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.DEFEAT_ANNIHICHAMBER, false);
 				AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.DECURSE_HELL_SHRINE_UNLOCK, false);
 				AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.HAS_COMPLETED_SOMETHING_WICKED, false);
+				AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.TRESPASS_INTO_OTHER_PLACE, false);
+				AdvancedGameStatsManager.Instance.SetStat(CustomTrackedStats.UMBRAL_ENEMIES_KILLED, 0);
+				AdvancedGameStatsManager.Instance.SetStat(CustomTrackedStats.JAMMED_ARCHGUNJURERS_KILLED, 0);
+
 
 
 				AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.DEJAM, false);
@@ -158,8 +162,6 @@ namespace Planetside
 				AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.DEBOLSTER, false);
 
 			});
-			ETGMod.AIActor.OnPostStart = (Action<AIActor>)Delegate.Combine(ETGMod.AIActor.OnPostStart, new Action<AIActor>(LoopScale));
-			ETGMod.AIActor.OnPostStart = (Action<AIActor>)Delegate.Combine(ETGMod.AIActor.OnPostStart, new Action<AIActor>(AssignUnlocks));
 
 			ETGModConsole.Commands.GetGroup("psog").AddUnit("reset_loop", delegate (string[] args)
 			{
@@ -194,8 +196,11 @@ namespace Planetside
 				string j = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.DEFEAT_ANNIHICHAMBER) ? " Done!\n" : " -Defeat A Ravenous, Violent Chamber.\n";
 				string k = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.DECURSE_HELL_SHRINE_UNLOCK) ? " Done!\n" : " -Remove Each Hell-Bound Curse At Least Once.\n";
 				string l = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.HAS_COMPLETED_SOMETHING_WICKED) ? " Done!\n" : " -Survive An Encounter With Something Wicked.\n";
+				string m = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.TRESPASS_INTO_OTHER_PLACE) ? " Done!\n" : " -Trespass Into Somewhere Else.\n";
+				string n = AdvancedGameStatsManager.Instance.GetPlayerStatValue(CustomTrackedStats.UMBRAL_ENEMIES_KILLED) >= 4 ? " Done!\n" : " -Slay 5 Umbral Enemies.\n";
+				string o = AdvancedGameStatsManager.Instance.GetPlayerStatValue(CustomTrackedStats.JAMMED_ARCHGUNJURERS_KILLED) >= 14 ? " Done!\n" : " -Defeat 15 Jammed Arch Gunjurers.\n";
 				string color1 = "9006FF";
-				OtherTools.PrintNoID("Unlock List:\n" + a + b + c + d + e + f + g + h+i+j+k+l, color1);
+				OtherTools.PrintNoID("Unlock List:\n" + a + b + c + d + e + f + g + h+i+j+k+l+m+n+0, color1);
 			});
 
 			ETGModConsole.Commands.GetGroup("psog").AddUnit("help", delegate (string[] args)
@@ -222,7 +227,6 @@ namespace Planetside
 				if (!disabled)
 				{
 					ETGModConsole.Log("Ui is disabled");
-					//GameUIRoot.Instance.SetAmmoCountColor(Color.red, GameManager.Instance.PrimaryPlayer);
 					GameUIRoot.Instance.HideCoreUI("disabled");
 					GameUIRoot.Instance.ForceHideGunPanel = true;
 					GameUIRoot.Instance.ForceHideItemPanel = true;
@@ -242,49 +246,7 @@ namespace Planetside
 		private void AssignUnlocks(AIActor target)
 		{
 			//Lich Kill unlocks
-			if (target.EnemyGuid == "7c5d5f09911e49b78ae644d2b50ff3bf")
-			{
-				target.healthHaver.OnDeath += (obj) =>
-				{
-					bool LoopOn = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.LOOPING_ON);
-
-					if (LoopOn == true)
-					{
-						float Loop = SaveAPIManager.GetPlayerStatValue(CustomTrackedStats.TIMES_LOOPED);
-						if (Loop == 0 || Loop <= 0)
-						{
-							AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.BEAT_LOOP_1, true);
-							SaveAPIManager.SetStat(CustomTrackedStats.TIMES_LOOPED, 1);
-						}
-						else
-						{
-							if (Loop == 1)
-                            {
-								AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.BEAT_LOOP_1, true);
-							}
-							SaveAPIManager.RegisterStatChange(CustomTrackedStats.TIMES_LOOPED, 1);
-						}
-					}
-					//Beat Lich With Broken Chamber
-					if ((GameManager.Instance.PrimaryPlayer.HasPickupID(ETGMod.Databases.Items["Broken Chamber"].PickupObjectId)))
-					{
-						AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.BROKEN_CHAMBER_RUN_COMPLETED, true);
-					}
-				};
-			}
-			//Dragun Kill Unlocks
-			if (target.EnemyGuid == "465da2bb086a4a88a803f79fe3a27677")
-			{
-				target.healthHaver.OnDeath += (obj) =>
-				{
-					float num = 0f;
-					num = (GameManager.Instance.PrimaryPlayer.stats.GetStatValue(PlayerStats.StatType.Curse));
-					if (num == 15 || num >= 14)
-					{
-						AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.HIGHER_CURSE_DRAGUN_KILLED, true);
-					}
-				};
-			}
+			
 		}
 		public float AddedMasterRoundChance;
 		public Color magenta = Color.magenta;
@@ -315,18 +277,7 @@ namespace Planetside
             {
 				float Loop = SaveAPIManager.GetPlayerStatValue(CustomTrackedStats.TIMES_LOOPED);
 				float DownScaler = Loop / 50f;
-				//float InitialScale = 0.4f;
-
-				/*
-				if (LoopingOn == true)
-                {
-					Projectile.BaseEnemyBulletSpeedMultiplier = 1.1f + ((Loop / 10f));
-				}
-				else
-                {
-					Projectile.BaseEnemyBulletSpeedMultiplier = 1;
-				}
-				*/
+				
 				if (Loop == 50 || Loop >= 50)
                 {
 					target.MovementSpeed *= 3f + ((Loop / 33f)) - DownScaler;
@@ -419,27 +370,7 @@ namespace Planetside
             }
 		}
 
-		public static void MimicGunScaler(Action<Gun> orig, Gun spawnedGun)
-		{
-			bool LoopOn = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.LOOPING_ON);
-			if (LoopOn == true)
-            {
-				float Loop = SaveAPIManager.GetPlayerStatValue(CustomTrackedStats.TIMES_LOOPED);
-				spawnedGun.gameObject.SetActive(true);
-				if (GameStatsManager.Instance.GetFlag(GungeonFlags.ITEMSPECIFIC_HAS_BEEN_PEDESTAL_MIMICKED) && GameManager.Instance.CurrentLevelOverrideState == GameManager.LevelOverrideState.NONE && UnityEngine.Random.value < 0.001f+(Loop/250))
-				{
-					spawnedGun.gameObject.AddComponent<MimicGunMimicModifier>();
-				}
-			}
-			else
-            {
-				spawnedGun.gameObject.SetActive(true);
-				if (GameStatsManager.Instance.GetFlag(GungeonFlags.ITEMSPECIFIC_HAS_BEEN_PEDESTAL_MIMICKED) && GameManager.Instance.CurrentLevelOverrideState == GameManager.LevelOverrideState.NONE && UnityEngine.Random.value < 0.001)
-				{
-					spawnedGun.gameObject.AddComponent<MimicGunMimicModifier>();
-				}
-			}
-		}
+		
 
 		public static void DoFairy(Action<MinorBreakable> orig, MinorBreakable self)
 		{

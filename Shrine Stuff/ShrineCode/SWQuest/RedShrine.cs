@@ -78,11 +78,17 @@ namespace Planetside
 			tk2dSprite sprite = shrine.GetComponent<tk2dSprite>();
 			sprite.GetComponent<tk2dBaseSprite>().SetSprite(SpriteID);
 			LootEngine.DoDefaultPurplePoof(sprite.WorldCenter);
-			foreach(GameObject obj in Thing.ExtantShrines)
-            {
-				UnityEngine.GameObject.Destroy(obj);
+			AkSoundEngine.PostEvent("Play_UI_secret_reveal_01", shrine.gameObject);
+
+			RoomHandler roomHandlerexit = GameManager.Instance.Dungeon.data.Exit;
+			List<IPlayerInteractable> interactables = PlanetsideReflectionHelper.ReflectGetField<List<IPlayerInteractable>>(typeof(RoomHandler), "interactableObjects", roomHandlerexit);
+			foreach (IPlayerInteractable obj in interactables)
+			{
+				if (obj is SimpleShrine interaactableObj)
+                {
+					if (interaactableObj.gameObject.name.ToLower().Contains("blueshrine")) { UnityEngine.Object.Destroy(interaactableObj.gameObject); }
+				}
 			}
-			Thing.ExtantShrines.Clear();
 		}
 	}
 }

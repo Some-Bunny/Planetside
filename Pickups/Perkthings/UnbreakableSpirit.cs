@@ -31,7 +31,6 @@ namespace Planetside
             if (AmountOfRespawns !=0 && AmountOfRespawns >= 0)
             {
                 AmountOfRespawns--;
-                //player.healthHaver.OnPreDeath -= SaveLife;
                 if (player.ForceZeroHealthState == true)
                 { player.healthHaver.Armor = 2; }
                 else { player.healthHaver.FullHeal(); }
@@ -64,8 +63,6 @@ namespace Planetside
                 boomboom.doExplosionRing = false;
                 Exploder.Explode(player.sprite.WorldCenter, boomboom, player.transform.PositionVector2());
             }
-
-
         }
 
         private IEnumerator HandleShield(PlayerController user)
@@ -120,7 +117,7 @@ namespace Planetside
     {
         public static void Init()
         {
-            string name = "Unbreakable Spirit";
+            string name = " Unbreakable Spirit";
             string resourcePath = "Planetside/Resources/PerkThings/unbreakablespirit.png";
             GameObject gameObject = new GameObject(name);
             UnbreakableSpirit item = gameObject.AddComponent<UnbreakableSpirit>();

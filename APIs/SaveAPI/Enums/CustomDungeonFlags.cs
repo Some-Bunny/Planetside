@@ -42,7 +42,10 @@ namespace SaveAPI
         DEBOLSTER,
         DEDARKEN,
 
-            //Wanderer Flags
+        TRESPASS_INTO_OTHER_PLACE,
+
+
+        //Wanderer Flags
         HAS_EVER_TALKED,
         HAS_FIRED_GTEE,
         HAS_COMMITED_HERESY,
@@ -51,6 +54,6 @@ namespace SaveAPI
         PLATE_DIAMOND_CHAMBER,
         HASDONEEVRYTHING,
 
-        HAS_COMPLETED_SOMETHING_WICKED
+        HAS_COMPLETED_SOMETHING_WICKED,
     }
 }

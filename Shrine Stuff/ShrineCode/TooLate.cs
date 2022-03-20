@@ -35,9 +35,10 @@ namespace Planetside
 
 				CanUse = CanUse,
 				offset = new Vector3(0, 0, 0),
-				talkPointOffset = new Vector3(0, 3, 0),
+				talkPointOffset = new Vector3(0, 0, 0),
 				isToggle = false,
 				isBreachShrine = false,
+				
 
 			};
 			iei.Build();

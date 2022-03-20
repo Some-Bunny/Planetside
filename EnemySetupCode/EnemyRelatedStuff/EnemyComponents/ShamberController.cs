@@ -39,84 +39,7 @@ public class ShamberController : BraveBehaviour
 		partObj.transform.parent = pso.transform;
 
 		particle = partObj.GetComponent<ParticleSystem>();
-		/*
-		ParticleSystem yes = pso.gameObject.AddComponent<ParticleSystem>();
-		//yes.CopyFrom<ParticleSystem>(particle);
-		yes.Play();
-		yes.name = "Shamber Particles";
-		yes.transform.position = base.aiActor.sprite.WorldCenter;
 
-		particle = yes;
-
-		var main = yes.main;
-		main.maxParticles = 10000;
-		main.playOnAwake = false;
-		main.duration = 1;
-		main.loop = true;
-		main.startLifetime = new ParticleSystem.MinMaxCurve(0.33f, 1.2f);
-		main.startSpeed = new ParticleSystem.MinMaxCurve(1f, 4f);
-		main.startSize = new ParticleSystem.MinMaxCurve(0.1f, 0.3f);
-		main.startColor = new ParticleSystem.MinMaxGradient(new Color32(255, 255, 255, 255), new Color32(255, 255, 255, 255));
-		main.simulationSpace = ParticleSystemSimulationSpace.World;
-		main.startRotation = new ParticleSystem.MinMaxCurve(-45, 45);
-		main.randomizeRotationDirection = 2;
-		main.gravityModifier = -1.2f;
-		
-
-		var emm = yes.emission;
-		emm.rateOverTime = 28;
-
-		var colorOverLifetime =  yes.colorOverLifetime;
-		colorOverLifetime.enabled = true;
-		var brightness = UnityEngine.Random.Range(0.2f, 1);
-		var gradient = new Gradient();
-		gradient.SetKeys(new[] { new GradientColorKey(Color.white, 0f), new GradientColorKey(Color.white, 0.9f) }, new[] { new GradientAlphaKey(1f, 0f), new GradientAlphaKey(1f, 1f) });
-		colorOverLifetime.color = new ParticleSystem.MinMaxGradient(gradient);
-
-		var vOL = yes.velocityOverLifetime;
-		vOL.enabled = true;
-		vOL.speedModifier = new ParticleSystem.MinMaxCurve(1f, new AnimationCurve(new Keyframe(0f, 1f), new Keyframe(1f, 0f)));
-
-		var sc = yes.shape;
-		sc.shapeType = ParticleSystemShapeType.Circle;
-		sc.radius = 0.1f;
-
-		var tsa = yes.textureSheetAnimation;
-		tsa.animation = ParticleSystemAnimationType.SingleRow;
-		tsa.numTilesX = 5;
-		tsa.numTilesY = 1;
-		tsa.enabled = true;
-		tsa.cycleCount = 1;
-		tsa.frameOverTimeMultiplier = 1.3f;
-
-		var vel = yes.inheritVelocity;
-
-		vel.mode = ParticleSystemInheritVelocityMode.Initial;
-		vel.curveMultiplier = 0.9f;
-
-		var sizeOverLifetime = yes.sizeOverLifetime;
-		sizeOverLifetime.enabled = true;
-		sizeOverLifetime.size = new ParticleSystem.MinMaxCurve(1f, new AnimationCurve(new Keyframe(0.4f, 1f), new Keyframe(1f, 0f)));
-
-
-		var sbs =  yes.sizeBySpeed;
-		sbs.separateAxes = false;
-		sbs.sizeMultiplier = 0.9f;
-		sbs.size = new ParticleSystem.MinMaxCurve(1, 0);
-
-		var particleRenderer = yes.gameObject.GetComponent<ParticleSystemRenderer>();
-		//particleRenderer.material = new Material(Shader.Find("Sprites/Default"));
-		particleRenderer.material.mainTexture = Shamber.ShamberParticleTexture;
-
-		Material sharedMaterial = particleRenderer.sharedMaterial;
-		//particleRenderer.usesOverrideMaterial = true;
-		Material material = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
-		material.SetTexture("_MainTex", sharedMaterial.GetTexture("_MainTex"));
-		material.SetColor("_EmissiveColor", new Color32(255, 255, 255, 255));
-		material.SetFloat("_EmissiveColorPower", 5f);
-		material.SetFloat("_EmissivePower", 25f);
-		particleRenderer.material = material;
-		*/
 		base.sprite.renderer.material = mat;
 		CanSucc = true;
 		base.healthHaver.OnPreDeath += this.OnPreDeath;
@@ -158,12 +81,12 @@ public class ShamberController : BraveBehaviour
 		if (CanSucc == true)
         {
 			ReadOnlyCollection<Projectile> allProjectiles = StaticReferenceManager.AllProjectiles;
-			if (allProjectiles != null)
+			if (allProjectiles != null && allProjectiles.Count >= 0 && base.gameObject != null)
 			{
-				foreach (Projectile proj in allProjectiles)
-				{
-					bool ae = Vector2.Distance(proj.sprite.WorldCenter, base.sprite.WorldCenter) < 3f && proj != null && proj.specRigidbody != null;
-					if (ae)
+				for (int i = 0; i < allProjectiles.Count; i++)
+                {
+					Projectile  proj = allProjectiles[i];
+					if (Vector2.Distance(proj.sprite.WorldCenter, base.sprite.WorldCenter) < 3f && proj != null && proj.specRigidbody != null)
 					{
 						GameManager.Instance.Dungeon.StartCoroutine(this.HandleBulletSuck(proj));
 					}
@@ -176,7 +99,7 @@ public class ShamberController : BraveBehaviour
 	{
 		if(BulletsEaten <= 299)
         {
-			this.BulletsEaten += 1;
+			this.BulletsEaten++;
 		}
 		
 		Transform copySprite = this.CreateEmptySprite(target);
@@ -235,21 +158,6 @@ public class ShamberController : BraveBehaviour
 		for (int j = 0; j < BulletsEaten; j++)
 		{
 			SpawnManager.SpawnBulletScript(base.aiActor.gameActor, new CustomBulletScriptSelector(typeof(BLLLARGH)));
-			/*
-			GameObject gameObject = new GameObject();
-			gameObject.transform.position = base.sprite.WorldCenter;
-			BulletScriptSource source = gameObject.GetOrAddComponent<BulletScriptSource>();
-			gameObject.AddComponent<BulletSourceKiller>();
-			var bulletScriptSelected = new CustomBulletScriptSelector(typeof(BLLLARGH));
-			AIActor aIActor = EnemyDatabase.GetOrLoadByGuid("01972dee89fc4404a5c408d50007dad5");
-			AIBulletBank bulletBank = aIActor.GetComponent<AIBulletBank>();
-			bulletBank = OtherTools.CopyAIBulletBank(aIActor.bulletBank);//to prevent our gun from affecting the bulletbank of the enemy
-			bulletBank.CollidesWithEnemies = false;
-			source.BulletManager = bulletBank;
-			source.BulletScript = bulletScriptSelected;
-			source.Initialize();//to fire the script once
-			*/
-			//Destroy(gameObject);
 		}
 
 	}

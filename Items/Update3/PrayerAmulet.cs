@@ -37,6 +37,7 @@ namespace Planetside
             PrayerHell = RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/PrayerRooms/PrayerRoomHell.room").room;
             PrayerSewer = RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/PrayerRooms/PrayerRoomOubliette.room").room;
             PrayerAbbey = RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/PrayerRooms/PrayerRoomAbbey.room").room;
+            warVase.SetupUnlockOnCustomStat(CustomTrackedStats.UMBRAL_ENEMIES_KILLED, 4, DungeonPrerequisite.PrerequisiteOperation.GREATER_THAN);
 
             PrayerAmulet.InitRooms();
 

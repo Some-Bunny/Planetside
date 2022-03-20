@@ -30,6 +30,11 @@ namespace Planetside
         public static T GetTypedValue<T>(this FieldInfo This, object instance) { return (T)This.GetValue(instance); }
         public static T ReflectGetField<T>(Type classType, string fieldName, object o = null)
         {
+            if (classType == null) { ETGModConsole.Log("classType IS NULL"); }
+            if (classType.GetField(fieldName, BindingFlags.Public | BindingFlags.NonPublic | ((o != null) ? BindingFlags.Instance : BindingFlags.Static)) == null) { ETGModConsole.Log("field IS NULL"); }
+            if (o == null) { ETGModConsole.Log("object IS NULL"); }
+
+
             FieldInfo field = classType.GetField(fieldName, BindingFlags.Public | BindingFlags.NonPublic | ((o != null) ? BindingFlags.Instance : BindingFlags.Static));
             return (T)field.GetValue(o);
         }

@@ -90,7 +90,7 @@ namespace Planetside
 					component.Owner = player;
 					component.Shooter = player.specRigidbody;
 					component.baseData.speed = 100f;
-					component.baseData.damage = 10f * DmG;
+					component.baseData.damage = 20f * DmG;
 				}
 				AkSoundEngine.PostEvent("Play_BOSS_doormimic_blast_01", actor.gameObject);
 				LootEngine.DoDefaultItemPoof(actor.sprite.WorldCenter, false, true);
@@ -133,7 +133,7 @@ namespace Planetside
 						bool flag16 = flag15;
 						if (flag16)
 						{
-							component3.baseData.damage = 20f * DmG;
+							component3.baseData.damage = 30f * DmG;
 							component3.Owner = player;
 							component3.baseData.range = 1000f;
 							component3.pierceMinorBreakables = true;
@@ -208,7 +208,7 @@ namespace Planetside
 				component.Owner = player;
 				component.Shooter = player.specRigidbody;
 				component.baseData.speed = 100f;
-				component.baseData.damage = 40f* DmG;
+				component.baseData.damage = 60f* DmG;
 			}
 			yield break;
 		}

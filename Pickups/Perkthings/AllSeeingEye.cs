@@ -32,11 +32,7 @@ namespace Planetside
 		public static int AllSeeingEyeID;
 		private static Color OutlineColor;
 
-		public new bool PrerequisitesMet()
-        {
-			EncounterTrackable component = base.GetComponent<EncounterTrackable>();
-			return component == null || component.PrerequisitesMet();
-		}
+	
 
 		public override void Pickup(PlayerController player)
         {
@@ -48,7 +44,7 @@ namespace Planetside
 
             m_hasBeenPickedUp = true;
 			AkSoundEngine.PostEvent("Play_OBJ_dice_bless_01", player.gameObject);
-			player.gameObject.AddComponent<AllSeeingEye>();
+			player.gameObject.AddComponent<AllSeeingEyeController>();
 
             Exploder.DoDistortionWave(player.sprite.WorldTopCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
             player.BloopItemAboveHead(base.sprite, "");
@@ -150,7 +146,7 @@ namespace Planetside
 }
 
 
-public class AllSeeingEye : BraveBehaviour
+public class AllSeeingEyeController : BraveBehaviour
 {
 	public void Start()
 	{
@@ -159,7 +155,7 @@ public class AllSeeingEye : BraveBehaviour
 		GameManager.Instance.OnNewLevelFullyLoaded += this.RevealSecretRooms;
 
 
-		player.gameObject.AddComponent<AllSeeingEye.AllSeeingEyeChestBehaviour>();
+		player.gameObject.AddComponent<AllSeeingEyeController.AllSeeingEyeChestBehaviour>();
 
 	}
 	public void Update()
@@ -198,16 +194,16 @@ public class AllSeeingEye : BraveBehaviour
 		{
 			this.player = base.GetComponent<PlayerController>();
 
-			AllSeeingEye.gunVFXPrefab = SpriteBuilder.SpriteFromResource(AllSeeingEye.gunVFX, null, false);
-			AllSeeingEye.itemVFXPrefab = SpriteBuilder.SpriteFromResource(AllSeeingEye.itemVFX, null, false);
-			AllSeeingEye.gunVFXPrefab.name = AllSeeingEye.vfxName;
-			AllSeeingEye.itemVFXPrefab.name = AllSeeingEye.vfxName;
-			UnityEngine.Object.DontDestroyOnLoad(AllSeeingEye.gunVFXPrefab);
-			FakePrefab.MarkAsFakePrefab(AllSeeingEye.gunVFXPrefab);
-			AllSeeingEye.gunVFXPrefab.SetActive(false);
-			UnityEngine.Object.DontDestroyOnLoad(AllSeeingEye.itemVFXPrefab);
-			FakePrefab.MarkAsFakePrefab(AllSeeingEye.itemVFXPrefab);
-			AllSeeingEye.itemVFXPrefab.SetActive(false);
+			AllSeeingEyeController.gunVFXPrefab = SpriteBuilder.SpriteFromResource(AllSeeingEyeController.gunVFX, null, false);
+			AllSeeingEyeController.itemVFXPrefab = SpriteBuilder.SpriteFromResource(AllSeeingEyeController.itemVFX, null, false);
+			AllSeeingEyeController.gunVFXPrefab.name = AllSeeingEyeController.vfxName;
+			AllSeeingEyeController.itemVFXPrefab.name = AllSeeingEyeController.vfxName;
+			UnityEngine.Object.DontDestroyOnLoad(AllSeeingEyeController.gunVFXPrefab);
+			FakePrefab.MarkAsFakePrefab(AllSeeingEyeController.gunVFXPrefab);
+			AllSeeingEyeController.gunVFXPrefab.SetActive(false);
+			UnityEngine.Object.DontDestroyOnLoad(AllSeeingEyeController.itemVFXPrefab);
+			FakePrefab.MarkAsFakePrefab(AllSeeingEyeController.itemVFXPrefab);
+			AllSeeingEyeController.itemVFXPrefab.SetActive(false);
 		}
 
 		private void FixedUpdate()
@@ -220,7 +216,7 @@ public class AllSeeingEye : BraveBehaviour
 				if (flag2)
 				{
 					Chest chest = nearestInteractable as Chest;
-					bool flag3 = !this.encounteredChests.Contains(chest) && !chest.transform.Find(AllSeeingEye.vfxName);
+					bool flag3 = !this.encounteredChests.Contains(chest) && !chest.transform.Find(AllSeeingEyeController.vfxName);
 					if (flag3)
 					{
 						this.InitializeChest(chest);
@@ -259,7 +255,7 @@ public class AllSeeingEye : BraveBehaviour
 						}
 						else
 						{
-							Transform transform2 = transform.Find(AllSeeingEye.vfxName);
+							Transform transform2 = transform.Find(AllSeeingEyeController.vfxName);
 							tk2dSprite = ((transform2 != null) ? transform2.GetComponent<tk2dSprite>() : null);
 						}
 					}
@@ -295,14 +291,14 @@ public class AllSeeingEye : BraveBehaviour
 			GameObject original;
 			if (flag)
 			{
-				original = AllSeeingEye.gunVFXPrefab;
+				original = AllSeeingEyeController.gunVFXPrefab;
 			}
 			else
 			{
-				original = AllSeeingEye.itemVFXPrefab;
+				original = AllSeeingEyeController.itemVFXPrefab;
 			}
 			tk2dSprite component = UnityEngine.Object.Instantiate<GameObject>(original, chest.transform).GetComponent<tk2dSprite>();
-			component.name = AllSeeingEye.vfxName;
+			component.name = AllSeeingEyeController.vfxName;
 			component.PlaceAtPositionByAnchor(chest.sprite.WorldTopCenter + this.offset, tk2dBaseSprite.Anchor.LowerCenter);
 			component.scale = Vector3.zero;
 			this.nearbyChest = chest;
@@ -351,7 +347,7 @@ public class AllSeeingEye : BraveBehaviour
 		{
 			foreach (Chest chest in this.encounteredChests)
 			{
-				Transform transform = chest.transform.Find(AllSeeingEye.vfxName);
+				Transform transform = chest.transform.Find(AllSeeingEyeController.vfxName);
 				bool flag = transform;
 				if (flag)
 				{

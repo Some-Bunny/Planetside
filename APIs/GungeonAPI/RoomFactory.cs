@@ -679,6 +679,90 @@ namespace GungeonAPI
             Tools.Print("Data to JSON: " + JsonUtility.ToJson(rd));
         }
 
+        public static void AddInjection(PrototypeDungeonRoom protoroom, string injectionAnnotation, List<ProceduralFlowModifierData.FlowModifierPlacementType> placementRules, float chanceToLock, List<DungeonPrerequisite> prerequisites,
+           string injectorName, GameObject addSingularPlaceable = null, float XFromCenter = 0, float YFromCenter = 0)
+        {
+            if (addSingularPlaceable != null)
+            {
+                Vector2 offset = new Vector2(-0.75f, -0.75f);
+                Vector2 vector = new Vector2((float)(protoroom.Width / 2) + offset.x, (float)(protoroom.Height / 2) + offset.y);
+
+                protoroom.placedObjectPositions.Add(vector);
+                DungeonPrerequisite[] array = new DungeonPrerequisite[0];
+
+                GameObject original = addSingularPlaceable;
+                DungeonPlaceable placeableContents = ScriptableObject.CreateInstance<DungeonPlaceable>();
+                placeableContents.width = 2;
+                placeableContents.height = 2;
+                placeableContents.respectsEncounterableDifferentiator = true;
+                placeableContents.variantTiers = new List<DungeonPlaceableVariant>
+            {
+                new DungeonPlaceableVariant
+                {
+                    percentChance = 1f,
+                    nonDatabasePlaceable = original,
+                    prerequisites = array,
+                    materialRequirements = new DungeonPlaceableRoomMaterialRequirement[0]
+                }
+            };
+
+                protoroom.placedObjects.Add(new PrototypePlacedObjectData
+                {
+
+                    contentsBasePosition = vector,
+                    fieldData = new List<PrototypePlacedObjectFieldData>(),
+                    instancePrerequisites = array,
+                    linkedTriggerAreaIDs = new List<int>(),
+                    placeableContents = placeableContents
+
+                });
+            }
+            
+
+
+            ProceduralFlowModifierData injection = new ProceduralFlowModifierData()
+            {
+                annotation = injectionAnnotation,
+                DEBUG_FORCE_SPAWN = false,
+                OncePerRun = false,
+                placementRules = new List<ProceduralFlowModifierData.FlowModifierPlacementType>(placementRules),
+                roomTable = null,
+                exactRoom = protoroom,
+                IsWarpWing = false,
+                RequiresMasteryToken = false,
+                chanceToLock = chanceToLock,
+                selectionWeight = 1,
+                chanceToSpawn = 1,
+                RequiredValidPlaceable = null,
+                prerequisites = prerequisites.ToArray(),
+                CanBeForcedSecret = true,
+                RandomNodeChildMinDistanceFromEntrance = 0,
+                exactSecondaryRoom = null,
+                framedCombatNodes = 0,
+            };
+            SharedInjectionData injector = ScriptableObject.CreateInstance<SharedInjectionData>();
+            injector.UseInvalidWeightAsNoInjection = true;
+            injector.PreventInjectionOfFailedPrerequisites = false;
+            injector.IsNPCCell = false;
+            injector.IgnoreUnmetPrerequisiteEntries = false;
+            injector.OnlyOne = false;
+            injector.ChanceToSpawnOne = 0.5f;
+            injector.AttachedInjectionData = new List<SharedInjectionData>();
+            injector.InjectionData = new List<ProceduralFlowModifierData>
+            {
+                injection
+            };
+            injector.name = injectorName;
+            SharedInjectionData baseInjection = LoadHelper.LoadAssetFromAnywhere<SharedInjectionData>("Base Shared Injection Data");
+            if (baseInjection.AttachedInjectionData == null)
+            {
+                baseInjection.AttachedInjectionData = new List<SharedInjectionData>();
+            }
+            baseInjection.AttachedInjectionData.Add(injector);
+            BaseInjection = baseInjection;
+        }
+        private static SharedInjectionData BaseInjection;
+
         public static void StraightLine()
         {
             try

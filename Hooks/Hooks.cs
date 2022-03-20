@@ -46,10 +46,10 @@ namespace Planetside
 
                 Hook breachshrinereloadhook = new Hook(typeof(Foyer).GetMethod("Awake", BindingFlags.Instance | BindingFlags.NonPublic), typeof(PlanetsideModule).GetMethod("ReloadBreachShrinesPSOG"));
 
-                Hook OuroborousTrappedChests = new Hook(typeof(Chest).GetMethod("Open", BindingFlags.Instance | BindingFlags.NonPublic), typeof(Ouroborous).GetMethod("TrappedChest"));
-                Hook OuroborousMimicGunScaler = new Hook(typeof(LootEngine).GetMethod("PostprocessGunSpawn", BindingFlags.Static | BindingFlags.NonPublic), typeof(Ouroborous).GetMethod("MimicGunScaler"));
-                Hook OuroborousGunfairyScaler = new Hook(typeof(MinorBreakable).GetMethod("OnBreakAnimationComplete", BindingFlags.Instance | BindingFlags.NonPublic), typeof(Ouroborous).GetMethod("DoFairy"));
-                Hook AngerTheGods = new Hook(typeof(PlayerController).GetMethod("DoSpinfallSpawn", BindingFlags.Instance | BindingFlags.Public), typeof(PlanetsideModule).GetMethod("RunStartHook"));
+                //Hook OuroborousTrappedChests = new Hook(typeof(Chest).GetMethod("Open", BindingFlags.Instance | BindingFlags.NonPublic), typeof(Ouroborous).GetMethod("TrappedChest"));
+                //Hook OuroborousMimicGunScaler = new Hook(typeof(LootEngine).GetMethod("PostprocessGunSpawn", BindingFlags.Static | BindingFlags.NonPublic), typeof(Ouroborous).GetMethod("MimicGunScaler"));
+                //Hook OuroborousGunfairyScaler = new Hook(typeof(MinorBreakable).GetMethod("OnBreakAnimationComplete", BindingFlags.Instance | BindingFlags.NonPublic), typeof(Ouroborous).GetMethod("DoFairy"));
+                //Hook AngerTheGods = new Hook(typeof(PlayerController).GetMethod("DoSpinfallSpawn", BindingFlags.Instance | BindingFlags.Public), typeof(PlanetsideModule).GetMethod("RunStartHook"));
 
                 Hook GalaxyChestReward = new Hook(typeof(RoomHandler).GetMethod("HandleRoomClearReward", BindingFlags.Instance | BindingFlags.Public), typeof(Hooks).GetMethod("GalaxyChestReward"));
 
@@ -64,7 +64,7 @@ namespace Planetside
                 //Hook customEnemyChangesHook = new Hook(typeof(AIActor).GetMethod("Awake", BindingFlags.Instance | BindingFlags.Public),typeof(Hooks).GetMethod("HandleCustomEnemyChanges"));
                 Hook Reard = new Hook(typeof(RoomHandler).GetMethod("HandleRoomClearReward", BindingFlags.Instance | BindingFlags.Public), typeof(Hooks).GetMethod("OuroborousRoomDrop"));
                 
-                Hook TabelFlip = new Hook(typeof(FlippableCover).GetMethod("Interact", BindingFlags.Instance | BindingFlags.Public), typeof(Hooks).GetMethod("TableFlipOuroborous"));
+                //Hook TabelFlip = new Hook(typeof(FlippableCover).GetMethod("Interact", BindingFlags.Instance | BindingFlags.Public), typeof(Hooks).GetMethod("TableFlipOuroborous"));
 
                 //var StartHook = new Hook(
                 //typeof(BehaviorSpeculator).GetMethod("Start", BindingFlags.Instance | BindingFlags.NonPublic),
@@ -214,7 +214,7 @@ namespace Planetside
             List<RoomHandler> uses = (List<RoomHandler>)_property.GetValue(self);
             foreach(RoomHandler handler in uses)
             {
-                ETGModConsole.Log(handler.GetRoomName().ToString());
+                //ETGModConsole.Log(handler.GetRoomName().ToString());
             }
         }
 

@@ -33,7 +33,9 @@ Game Parameter	ID	Name			Wwise Object Path	Notes
 
 Effect plug-ins	ID	Name	Type				Notes
 	701863527	Inside_My_Head	Wwise RoomVerb			
+	1431265797	Monsterize	Wwise Pitch Shifter			
 	1863245162	Noise_Gate_Slow_Attack	Wwise Expander			
+	2080872166	Brick_Wall_Minus_6dB_Peak_Fast_Release	Wwise Peak Limiter			
 	3036946058	Inside_Your_Head	Wwise RoomVerb			
 
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size

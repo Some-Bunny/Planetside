@@ -176,7 +176,7 @@ namespace Planetside
 			if (base.Owner != null)
 			{
 				List<AIActor> activeEnemies = base.Owner.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
-				bool flag5 = activeEnemies != null && activeEnemies.Count >= 0;
+				bool flag5 = activeEnemies != null && activeEnemies.Count > 0;
 				if (flag5)
 				{
 					foreach (AIActor enemy in activeEnemies)

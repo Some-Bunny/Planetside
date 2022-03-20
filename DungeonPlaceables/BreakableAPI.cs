@@ -1642,6 +1642,7 @@ namespace BreakAbleAPI
             kickable.goopFrequency = 0.05f; //the time between spawning goop when it is rolling.
             kickable.goopRadius = 1;//the radius of the goop that spawns.
             kickable.goopType = null;//the goop that spawns.
+
         }
 
         //Everything below here is an example of how you would generate your own Minorbreakable

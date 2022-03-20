@@ -49,7 +49,6 @@ namespace Planetside
             OtherTools.ApplyStat(player, PlayerStats.StatType.Coolness, 1f, StatModifier.ModifyMethod.ADDITIVE);
             OtherTools.ApplyStat(player, PlayerStats.StatType.DamageToBosses, 1.15f, StatModifier.ModifyMethod.MULTIPLICATIVE);
             OtherTools.ApplyStat(player, PlayerStats.StatType.RateOfFire, 1.15f, StatModifier.ModifyMethod.MULTIPLICATIVE);
-            OtherTools.ApplyStat(player, PlayerStats.StatType.Health, 1f, StatModifier.ModifyMethod.ADDITIVE);
             Exploder.DoDistortionWave(player.sprite.WorldTopCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
             player.BloopItemAboveHead(base.sprite, "");
 
