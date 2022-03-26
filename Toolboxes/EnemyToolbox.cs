@@ -109,6 +109,17 @@ namespace Planetside
 			}
 		}
 
+		public static void AddShadowToAIActor(AIActor actor,GameObject shadowObject ,Vector2 attachpoint, string name = "shadowPosition")
+        {
+			actor.HasShadow = true;
+			actor.ShadowPrefab = shadowObject;
+			GameObject shadowPoint = new GameObject(name);
+			shadowPoint.transform.parent = actor.gameObject.transform;
+			shadowPoint.transform.position = attachpoint;
+			actor.ShadowParent = shadowPoint.transform;
+		}
+
+
 		public static GameObject GenerateShootPoint(GameObject attacher, Vector2 attachpoint, string name = "shootPoint")
         {
 			GameObject shootpoint = new GameObject(name);

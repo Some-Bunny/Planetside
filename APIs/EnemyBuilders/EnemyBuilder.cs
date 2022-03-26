@@ -55,38 +55,7 @@ namespace ItemAPI
 
             
         }
-        public static void UpdateHook(Action<AIActor> orig, AIActor self)
-        {
-            ETGModConsole.Log("before orig:"+self.invisibleUntilAwaken.ToString(), true);
-            ETGModConsole.Log("state before orig:" + self.State.ToString(), true);
-            bool stateCheck = self.invisibleUntilAwaken;
-            orig(self);
-            if (stateCheck != self.invisibleUntilAwaken) 
-            {
-                ETGModConsole.Log("orig after:" + self.invisibleUntilAwaken.ToString() + "\n====", true);
-                ETGModConsole.Log("state after orig:" + self.State.ToString(), true);
-            }
-            ETGModConsole.Log("=========", true);
-        }
-
-        public static void OnEngagedHook(Action<AIActor, bool> orig, AIActor self, bool isRein)
-        {
-            orig(self, isRein);
-            //ETGModConsole.Log(self.ActorName + "\n" + self.State.ToString() + "\n");
-            ETGModConsole.Log(self.AwakenAnimType.ToString());
-            /*
-            if (self.specRigidbody != null)
-            {
-                foreach (PixelCollider collider in self.specRigidbody.PixelColliders)
-                {
-                    ETGModConsole.Log(collider.IsTrigger.ToString());
-                    ETGModConsole.Log(collider.CollisionLayer.ToString());
-                    ETGModConsole.Log(collider.ColliderGenerationMode.ToString());
-
-                }
-            }
-            */
-        }
+       
 
         public static AIActor GetOrLoadByGuid(Func<string, AIActor> orig, string guid)
         {

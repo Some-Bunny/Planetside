@@ -1313,7 +1313,7 @@ namespace Planetside
 						float math = isDodgeAble == true ? 350 : 35;
 						tiledsprite.transform.position = new Vector3(this.Position.x, this.Position.y, 0);
 						tiledsprite.dimensions = new Vector2(1000f, 1f);
-						tiledsprite.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (350 * t));
+						tiledsprite.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (math * t));
 						tiledsprite.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f + (20 * t));
 						tiledsprite.HeightOffGround = -2;
 						tiledsprite.renderer.gameObject.layer = 23;
@@ -2137,7 +2137,6 @@ namespace Planetside
 				{
 					base.Projectile.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
 					SpawnManager.PoolManager.Remove(base.Projectile.transform);
-					//base.ChangeSpeed(new Speed(8f, SpeedType.Absolute), 30);
 
 					yield break;
 				}

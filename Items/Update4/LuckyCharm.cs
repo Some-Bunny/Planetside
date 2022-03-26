@@ -172,8 +172,8 @@ namespace Planetside
 
 		protected override void Update()
         {
-			base.Owner.Update();
-			if (base.Owner != null)
+			base.Update();
+			if (base.Owner != null && base.Owner.CurrentRoom != null)
 			{
 				List<AIActor> activeEnemies = base.Owner.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
 				bool flag5 = activeEnemies != null && activeEnemies.Count > 0;

@@ -232,8 +232,13 @@ namespace Planetside
 
         public override void OnReloadPressed(PlayerController player, Gun gun, bool bSOMETHING)
         {
+            if (gun.IsFiring == true)
+            {
+                gun.CeaseAttack(false);
+            }
             if (gun.IsReloading && this.HasReloaded)
             {
+                gun.CeaseAttack(false, null);
                 AkSoundEngine.PostEvent("Stop_WPN_All", base.gameObject);
                 HasReloaded = false;
                 AkSoundEngine.PostEvent("Play_ENM_statue_stomp_01", player.gameObject);

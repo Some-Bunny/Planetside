@@ -25,6 +25,7 @@ namespace Planetside
 			warVase.UsesCustomCost = true;
 			warVase.CustomCost = 40;
 			LostVoidPotential.LostVoidPotentialID = warVase.PickupObjectId;
+			EncounterDatabase.GetEntry(warVase.encounterTrackable.EncounterGuid).usesPurpleNotifications = true;
 		}
 		public static int LostVoidPotentialID;
 

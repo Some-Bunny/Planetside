@@ -85,7 +85,7 @@ namespace Planetside
                 BasicBeamController beamComp = projectile.GenerateBeamPrefab(
                     "Planetside/Resources/Beams/TractorBeam/tractorbeam_mid_001",
                     new Vector2(10, 10),
-                    new Vector2(0, 2),
+                    new Vector2(0, 0),
                     BeamAnimPaths,
                     48,
                     //Beam Impact
@@ -164,8 +164,13 @@ namespace Planetside
 
         public override void OnReloadPressed(PlayerController player, Gun gun, bool bSOMETHING)
         {
+            if (gun.IsFiring == true)
+            {
+                gun.CeaseAttack(false);
+            }
             if (gun.IsReloading && this.HasReloaded)
             {
+                gun.CeaseAttack(false, null);
                 gun.PreventNormalFireAudio = true;
                 AkSoundEngine.PostEvent("Stop_WPN_All", base.gameObject);
                 HasReloaded = false;

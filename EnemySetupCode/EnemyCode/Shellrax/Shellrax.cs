@@ -51,7 +51,6 @@ namespace Planetside
 				companion.aiActor.MovementSpeed = 0f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
 				companion.aiActor.CollisionDamage = 1f;
-				companion.aiActor.HasShadow = false;
 				companion.aiActor.IgnoreForRoomClear = false;
 				companion.aiActor.aiAnimator.HitReactChance = 0.05f;
 				companion.aiActor.specRigidbody.CollideWithOthers = true;
@@ -73,10 +72,8 @@ namespace Planetside
 				//companion.aiActor.ActorName = "#SHELLRAX";
 				//companion.aiActor.name = "#SHELLRAX";
 				fuckyouprefab.name = companion.aiActor.OverrideDisplayName;
-				
-				companion.aiActor.ShadowObject = EnemyDatabase.GetOrLoadByGuid("4db03291a12144d69fe940d5a01de376").ShadowObject;
-				companion.aiActor.HasShadow = true;
 
+				EnemyToolbox.AddShadowToAIActor(companion.aiActor, StaticEnemyShadows.largeShadow, new Vector2(1.625f, 0.25f), "shadowPos");
 
 
 				companion.aiActor.specRigidbody.PixelColliders.Clear();

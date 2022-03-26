@@ -43,6 +43,12 @@ namespace Planetside
 			LockOnGun1.PartnerGunID = LockOnGun.LockOnGunID;
 			LockOnGun1.SynergyNameToCheck = "Double Trouble!";
 
+			AdvancedDualWieldSynergyProcessor IndustrialAccident = (PickupObjectDatabase.GetById(RebarPuncher.RebarerID) as Gun).gameObject.AddComponent<AdvancedDualWieldSynergyProcessor>();
+			IndustrialAccident.PartnerGunID = MeasuringTape.MeasuringTapeID;
+			IndustrialAccident.SynergyNameToCheck = "Workplace Accident";
+			AdvancedDualWieldSynergyProcessor IndustrialAccidentOne = (PickupObjectDatabase.GetById(MeasuringTape.MeasuringTapeID) as Gun).gameObject.AddComponent<AdvancedDualWieldSynergyProcessor>();
+			IndustrialAccidentOne.PartnerGunID = RebarPuncher.RebarerID;
+			IndustrialAccidentOne.SynergyNameToCheck = "Workplace Accident";
 
 
 			AdvancedTransformGunSynergyProcessor advancedTransformGunSynergyProcessor = (PickupObjectDatabase.GetById(Polarity.PolarityID) as Gun).gameObject.AddComponent<AdvancedTransformGunSynergyProcessor>();

@@ -41,10 +41,32 @@ namespace Planetside
 					specialEliteTypes.Add(item.GetType());
 				}
 
+				var BossEliteTypes = Assembly.GetExecutingAssembly().GetTypes().Where(type => !type.IsAbstract && type.IsSubclassOf(typeof(BossEliteType)));
+				foreach (var bossEliteType in BossEliteTypes)
+				{
+					var item = (BossEliteType)System.Activator.CreateInstance(bossEliteType);
+					bossEliteTypes.Add(item.GetType());
+				}
 				AIBulletBank.Entry entryCopy = new AIBulletBank.Entry();
 				entryCopy = EnemyDatabase.GetOrLoadByGuid("465da2bb086a4a88a803f79fe3a27677").bulletBank.GetBullet("homing");
+
+				RobotechProjectile projectile = UnityEngine.Object.Instantiate<GameObject>(entryCopy.BulletObject).GetComponent<RobotechProjectile>();
+				projectile.gameObject.SetActive(false);
+				FakePrefab.MarkAsFakePrefab(projectile.gameObject);
+				UnityEngine.Object.DontDestroyOnLoad(projectile);
+				projectile.projectileHitHealth = 1;
+
 				entryCopy.Name = "homingOuroboros";
 				entryCopy.MuzzleFlashEffects = new VFXPool { type = VFXPoolType.None, effects = new VFXComplex[0] };
+				entryCopy.BulletObject = projectile.gameObject;
+
+
+
+				AIBulletBank.Entry sewwpCopy = new AIBulletBank.Entry();
+				sewwpCopy = EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("sweep");
+				sewwpCopy.Name = "sweepOuroboros";
+
+				BulletList.Add(sewwpCopy);
 				BulletList.Add(entryCopy);
 				BulletList.Add(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("homingPop"));
 
@@ -79,8 +101,6 @@ namespace Planetside
 					   m.GetParameters().Length == 2 &&
 					   m.GetParameters()[1].ParameterType == typeof(ShopController)),
 				   typeof(OuroborosController).GetMethod("InitializeHook", BindingFlags.Static | BindingFlags.Public));
-
-
 				Debug.Log("Finished OuroborosController setup without failure!");
 			}
 			catch (Exception e)
@@ -92,6 +112,9 @@ namespace Planetside
 
 		private static List<Type> basicEliteTypes = new List<Type>();
 		private static List<Type> specialEliteTypes = new List<Type>();
+		private static List<Type> bossEliteTypes = new List<Type>();
+
+
 
 		public static Dictionary<string, GameObject> eliteCrownKeys = new Dictionary<string, GameObject>();
 
@@ -127,7 +150,7 @@ namespace Planetside
 						bool Check = self.CanGainAmmo == true || self.InfiniteAmmo == false;
 						if (self.HasBeenPickedUp == false && Check == true)
 						{
-							float H = self.AdjustedMaxAmmo * ChanceAccordingToGivenValues(0, 0.75f, 25);
+							float H = self.GetBaseMaxAmmo() * ChanceAccordingToGivenValues(0, 0.875f, 25);
 							self.LoseAmmo((int)H);
 						}
 					}
@@ -246,7 +269,8 @@ namespace Planetside
 					if (UnityEngine.Random.value <= ChanceAccordingToGivenValues(0.05f, 0.75f, 50))
 					{
 						bool BossCheck = self.aiActor.healthHaver.IsBoss | self.aiActor.healthHaver.IsSubboss;
-						if (UnityEngine.Random.value <= ChanceAccordingToGivenValues(0.01f, 0.1f, 1) && BossCheck == false)//if (UnityEngine.Random.value <= ChanceAccordingToGivenValues(0.03f, 0.1f, 50))
+						float specialChance = ChanceAccordingToGivenValues(0.01f, 1f, 1);
+						if (UnityEngine.Random.value <= specialChance && BossCheck == false)//if (UnityEngine.Random.value <= ChanceAccordingToGivenValues(0.03f, 0.1f, 50))
 						{
 							var SpecialElite = specialEliteTypes[UnityEngine.Random.Range(0, specialEliteTypes.Count)];
 							if (SpecialElite.Name.ToString().ToLower().Contains("replicator"))
@@ -473,12 +497,146 @@ namespace Planetside
         {
             
         }
-
     }
 }
 
 namespace Planetside
 {
+	public class StoneEyesElite : BasicEliteType
+	{
+		public override float HealthMultiplier => 1.3f;
+		public override float CooldownMultiplier => 0.9f;
+		public override float MovementSpeedMultiplier => 1.3f;
+		public override Color EliteOutlineColor => Color.blue;
+		public override Color EliteParticleColor => Color.blue;
+		public override Color SecondaryEliteParticleColor => Color.blue;
+		public override List<string> EnemyBlackList => new List<string>() { };
+		public override List<ActorEffectResistance> DebuffImmunities => new List<ActorEffectResistance> { new ActorEffectResistance() { resistAmount = 1, resistType = EffectResistanceType.Freeze } };
+		public override void Start()
+		{
+			Timer = 2f;
+			base.Start();
+		}
+		public override void OnPreDeath(Vector2 obj)
+		{
+
+		}
+
+		public override void OnDamaged(float resultValue, float maxValue, CoreDamageTypes damageTypes, DamageCategory damageCategory, Vector2 damageDirection)
+		{
+			if (Timer == 0 | Timer <= 0)
+			{
+				Timer = 5f;
+				if (base.aiActor != null)
+				{
+					GameManager.Instance.StartCoroutine(this.LaunchWave(base.aiActor.CenterPosition));
+				}
+			}
+		}
+		private IEnumerator LaunchWave(Vector2 startPoint, float Time = 2.5f)
+		{
+			float m_prevWaveDist = 0f;
+			float distortionMaxRadius = 20f;
+			float distortionDuration = 1.5f;
+			float distortionIntensity = 0.5f;
+			float distortionThickness = 0.04f;
+			GameObject instanceVFX = SpawnManager.SpawnVFX(StaticVFXStorage.GorgunEyesVFX, startPoint.ToVector3ZUp(0f) + new Vector3(-3.1875f, -3f, 0f), Quaternion.identity);
+			tk2dSprite instanceSprite = instanceVFX.GetComponent<tk2dSprite>();
+			float elapsedTime = 0f;
+			while (instanceVFX && instanceVFX.activeSelf)
+			{
+				elapsedTime += BraveTime.DeltaTime;
+				if (instanceSprite)
+				{
+					instanceSprite.PlaceAtPositionByAnchor(startPoint, tk2dBaseSprite.Anchor.MiddleCenter);
+				}
+				if (elapsedTime > 0.75f)
+				{
+					AkSoundEngine.PostEvent("Play_ENM_gorgun_gaze_01", instanceVFX.gameObject);
+					elapsedTime -= 1000f;
+				}
+				yield return null;
+			}
+			Exploder.DoDistortionWave(startPoint, distortionIntensity, distortionThickness, distortionMaxRadius, distortionDuration);
+			float waveRemaining = distortionDuration - BraveTime.DeltaTime;
+			while (waveRemaining > 0f)
+			{
+				waveRemaining -= BraveTime.DeltaTime;
+				float waveDist = BraveMathCollege.LinearToSmoothStepInterpolate(0f, distortionMaxRadius, 1f - waveRemaining / distortionDuration);
+				for (int i = 0; i < GameManager.Instance.AllPlayers.Length; i++)
+				{
+					PlayerController playerController = GameManager.Instance.AllPlayers[i];
+					if (!playerController.healthHaver.IsDead)
+					{
+						if (!playerController.spriteAnimator.QueryInvulnerabilityFrame() && playerController.healthHaver.IsVulnerable)
+						{
+							Vector2 unitCenter = playerController.specRigidbody.GetUnitCenter(ColliderType.HitBox);
+							float num = Vector2.Distance(unitCenter, startPoint);
+							if (num >= m_prevWaveDist - 0.25f && num <= waveDist + 0.25f)
+							{
+								float b = (unitCenter - startPoint).ToAngle();
+								if (BraveMathCollege.AbsAngleBetween(playerController.FacingDirection, b) >= 60f)
+								{
+									playerController.CurrentStoneGunTimer += Time;
+								}
+							}
+						}
+					}
+				}
+				m_prevWaveDist = waveDist;
+				yield return null;
+			}
+			yield break;
+		}
+		public override void Update()
+		{
+			base.Update();
+			if (base.aiActor)
+			{
+				if (Timer >= 0) { Timer -= BraveTime.DeltaTime; }
+			}
+		}
+
+		private void HealthHaver_OnPreDeath(Vector2 obj)
+		{
+		}
+
+		private float Timer;
+	}
+	public class FrenzyElite : BasicEliteType
+	{
+		public override float HealthMultiplier => 0.5f;
+		public override float CooldownMultiplier => 0.33f;
+		public override float MovementSpeedMultiplier => 1.55f;
+		public override Color EliteOutlineColor => Color.yellow;
+		public override Color EliteParticleColor => Color.yellow;
+		public override Color SecondaryEliteParticleColor => Color.yellow;
+		public override List<string> EnemyBlackList => new List<string>() { };
+		public override List<ActorEffectResistance> DebuffImmunities => new List<ActorEffectResistance> { new ActorEffectResistance() { resistAmount = 1, resistType = EffectResistanceType.Freeze } };
+		public override void Start()
+		{
+			base.Start();
+		}
+		public override void OnPreDeath(Vector2 obj)
+		{
+
+		}
+
+		public override void OnDamaged(float resultValue, float maxValue, CoreDamageTypes damageTypes, DamageCategory damageCategory, Vector2 damageDirection)
+		{
+
+
+		}
+		public override void Update()
+		{
+			base.Update();
+
+		}
+
+		private void HealthHaver_OnPreDeath(Vector2 obj)
+		{
+		}
+	}
 	public class HealingElite : BasicEliteType
 	{
 		public override float HealthMultiplier => 1.33f;
@@ -490,8 +648,6 @@ namespace Planetside
 		public override List<string> EnemyBlackList => new List<string>()
 		{
 		};
-
-
 		public override List<ActorEffectResistance> DebuffImmunities => new List<ActorEffectResistance> {
 			new ActorEffectResistance() { resistAmount = 1, resistType = EffectResistanceType.None },
 		};
@@ -524,8 +680,8 @@ namespace Planetside
 			{
 				if (radialIndicator.gameObject == null) { break; }
 				elapsed += BraveTime.DeltaTime;
-				float t = elapsed / 2f;
-				radialIndicator.CurrentRadius = Mathf.Lerp(0, 5, t);
+				float t = elapsed;
+				radialIndicator.CurrentRadius = Mathf.Lerp(0, 7, t);
 				yield return null;
 			}
 			AkSoundEngine.PostEvent("Play_OBJ_dice_bless_01", radialIndicator.gameObject);
@@ -539,7 +695,7 @@ namespace Planetside
 				radialIndicator.CurrentRadius = Mathf.Lerp(5, 0, t);
 				for (int i = 0; i < 2; i++)
 				{
-					float Dist = Mathf.Lerp(0.1f, 5, t);
+					float Dist = Mathf.Lerp(0.1f, 7, t);
 					Vector2 Point = MathToolbox.GetUnitOnCircle(UnityEngine.Random.Range(-180, 180), Dist);
 					GameObject obj = UnityEngine.Object.Instantiate<GameObject>(StaticVFXStorage.HealingSparklesVFX, centre + Point, Quaternion.identity);
 					obj.transform.localScale *= 1.2f;
@@ -604,7 +760,6 @@ namespace Planetside
 					Timer = 5f;
 					if (base.aiActor != null)
 					{
-						AkSoundEngine.PostEvent("Play_BOSS_wall_slam_01", base.gameObject);
 						GameObject dragunBoulder = EnemyDatabase.GetOrLoadByGuid("05b8afe0b6cc4fffa9dc6036fa24c8ec").GetComponent<DraGunController>().skyBoulder;
 						foreach (Component item in dragunBoulder.GetComponentsInChildren(typeof(Component)))
 						{
@@ -735,7 +890,7 @@ namespace Planetside
 		}
 		public class SkellBullet : Bullet
 		{
-			public SkellBullet() : base("sweep", false, false, false)
+			public SkellBullet() : base("sweepOuroboros", false, false, false)
 			{
 
 			}
@@ -929,7 +1084,7 @@ namespace Planetside
 		public override List<ActorEffectResistance> DebuffImmunities => new List<ActorEffectResistance> { new ActorEffectResistance() { resistAmount = 1, resistType = EffectResistanceType.Freeze } };
 		public override void Start()
 		{
-			Timer = 4f;
+			Timer = 2.5f;
 			base.Start();
 		}
 		public override void OnPreDeath(Vector2 obj)
@@ -940,7 +1095,7 @@ namespace Planetside
 		{
 			if (Timer == 0 | Timer <= 0)
 			{
-				Timer = 4f;
+				Timer = 2.5f;
 				if (base.aiActor != null && base.aiActor.GetAbsoluteParentRoom() != null)
 				{
 					UnityEngine.Object.Instantiate<GameObject>(PickupObjectDatabase.GetById(449).GetComponent<TeleporterPrototypeItem>().TelefragVFXPrefab, base.aiActor.sprite.WorldCenter, Quaternion.identity);
@@ -1122,6 +1277,87 @@ namespace Planetside
 		}
 	}
 }
+
+
+namespace Planetside
+{
+	public abstract class BossEliteType : BraveBehaviour
+	{
+		public abstract float MovementSpeedMultiplier { get; }
+		public abstract float CooldownMultiplier { get; }
+		public abstract float HealthMultiplier { get; }
+		public abstract List<ActorEffectResistance> DebuffImmunities { get; }
+		public abstract Color EliteOutlineColor { get; }
+		private ParticleSystem ParticleSystem;
+		public abstract Color EliteParticleColor { get; }
+		public abstract Color SecondaryEliteParticleColor { get; }
+		public abstract List<string> EnemyBlackList { get; }
+
+		public virtual void Start()
+		{
+			if (!EnemyBlackList.Contains(base.aiActor.EnemyGuid) && EnemyBlackList != null)
+			{
+				ParticleSystem = StaticVFXStorage.EliteParticleSystem.GetComponent<ParticleSystem>();
+				if (base.aiActor != null)
+				{
+					base.aiActor.MovementSpeed *= MovementSpeedMultiplier;
+					base.aiActor.behaviorSpeculator.CooldownScale *= CooldownMultiplier;
+					base.aiActor.healthHaver.SetHealthMaximum(base.aiActor.healthHaver.GetCurrentHealth() * HealthMultiplier);
+					if (DebuffImmunities != null)
+					{
+						if (base.aiActor.EffectResistances == null)
+						{
+							base.aiActor.EffectResistances = new ActorEffectResistance[0];
+						}
+						base.aiActor.EffectResistances = DebuffImmunities.ToArray();
+					}
+				}
+				base.aiActor.healthHaver.OnPreDeath += OnPreDeath;
+				base.aiActor.healthHaver.OnDamaged += OnDamaged;
+			}
+			else
+			{ Destroy(this); }
+		}
+		public virtual void OnDamaged(float resultValue, float maxValue, CoreDamageTypes damageTypes, DamageCategory damageCategory, Vector2 damageDirection) { }
+		public virtual void OnPreDeath(Vector2 obj) { }
+		public virtual void Update()
+		{
+			if (!EnemyBlackList.Contains(base.aiActor.EnemyGuid) && EnemyBlackList != null)
+			{
+				Material outlineMaterial1 = SpriteOutlineManager.GetOutlineMaterial(base.aiActor.sprite);
+				if (base.aiActor.healthHaver != null && base.aiActor != null)
+				{
+					if (!base.aiActor.healthHaver.IsDead && outlineMaterial1 != null)
+					{
+						outlineMaterial1.SetColor("_OverrideColor", EliteOutlineColor);
+					}
+				}
+				if (base.aiActor.sprite && !GameManager.Instance.IsPaused && (UnityEngine.Random.value > 0.5f))
+				{
+					Vector3 vector = sprite.WorldBottomLeft.ToVector3ZisY(0);
+					Vector3 vector2 = sprite.WorldTopRight.ToVector3ZisY(0);
+					Vector3 position = new Vector3(UnityEngine.Random.Range(vector.x, vector2.x), UnityEngine.Random.Range(vector.y, vector2.y), UnityEngine.Random.Range(vector.z, vector2.z));
+					ParticleSystem particleSystem = ParticleSystem;
+					var trails = particleSystem.trails;
+					trails.worldSpace = false;
+					var main = particleSystem.main;
+					main.startColor = new ParticleSystem.MinMaxGradient(EliteParticleColor != null ? EliteParticleColor : Color.white, SecondaryEliteParticleColor != null ? SecondaryEliteParticleColor : Color.white);
+					ParticleSystem.EmitParams emitParams = new ParticleSystem.EmitParams
+					{
+						position = position,
+						randomSeed = (uint)UnityEngine.Random.Range(1, 1000)
+					};
+					var emission = particleSystem.emission;
+					emission.enabled = false;
+					particleSystem.gameObject.SetActive(true);
+					particleSystem.Emit(emitParams, 1);
+				}
+			}
+
+		}
+	}
+}
+
 
 
 public class SpinBulletsController: BraveBehaviour
@@ -1336,114 +1572,4 @@ public class SpinBulletsController: BraveBehaviour
 		public float angle;
 		public float distFromCenter;
 	}
-}
-
-
-
-public class DraGunBoulderAttchedEffectController : BraveBehaviour
-{
-	public DraGunBoulderAttchedEffectController()
-	{
-		this.LifeTime = 1f;
-		this.m_cursedPlayers = new List<PlayerController>();
-		this.Scale = 1;
-	}
-
-	public void Start()
-	{
-		SpeculativeRigidbody specRigidbody = base.specRigidbody;
-		specRigidbody.OnEnterTrigger = (SpeculativeRigidbody.OnTriggerDelegate)Delegate.Combine(specRigidbody.OnEnterTrigger, new SpeculativeRigidbody.OnTriggerDelegate(this.HandleTriggerEntered));
-		SpeculativeRigidbody specRigidbody2 = base.specRigidbody;
-		specRigidbody2.OnExitTrigger = (SpeculativeRigidbody.OnTriggerExitDelegate)Delegate.Combine(specRigidbody2.OnExitTrigger, new SpeculativeRigidbody.OnTriggerExitDelegate(this.HandleTriggerExited));
-		List<PixelCollider> colliders = specRigidbody2.PixelColliders.ToList();
-		foreach (PixelCollider collider in colliders)
-		{
-			collider.ManualOffsetX = (int)(collider.ManualOffsetX * Scale);
-			collider.ManualOffsetY = (int)(collider.ManualOffsetY * Scale);
-			collider.ManualDiameter = (int)(collider.ManualDiameter * Scale);
-			collider.ManualHeight = (int)(collider.ManualHeight * Scale);
-			
-		}
-		if (this.CircleSprite)
-		{
-			tk2dSpriteDefinition currentSpriteDef = this.CircleSprite.GetCurrentSpriteDef();
-			Vector2 vector = new Vector2(float.MaxValue, float.MaxValue);
-			Vector2 vector2 = new Vector2(float.MinValue, float.MinValue);
-			for (int i = 0; i < currentSpriteDef.uvs.Length; i++)
-			{
-				vector = Vector2.Min(vector, currentSpriteDef.uvs[i]);
-				vector2 = Vector2.Max(vector2, currentSpriteDef.uvs[i]);
-			}
-			Vector2 vector3 = (vector + vector2) / 2f;
-			this.CircleSprite.renderer.material.SetVector("_WorldCenter", new Vector4(vector3.x, vector3.y, vector3.x - vector.x, vector3.y - vector.y));
-		}
-	}
-
-	private void Update()
-	{
-		for (int i = 0; i < this.m_cursedPlayers.Count; i++)
-		{
-			this.DoCurse(this.m_cursedPlayers[i]);
-		}
-	}
-
-	protected override void OnDestroy()
-    {
-		GameManager.Instance.StartCoroutine(HandleBreakCR());
-		base.OnDestroy();
-    }
-
-	private IEnumerator HandleBreakCR()
-	{
-		float elapsed = 0f;
-		float duration = 0.75f;
-		while (elapsed < duration)
-		{
-			elapsed += BraveTime.DeltaTime;
-			float t = Mathf.SmoothStep(0f, 1f, elapsed / duration);
-			if (this.CircleSprite)
-			{
-				this.CircleSprite.scale = Vector3.Lerp(Vector3.one, Vector3.zero, t);
-			}
-			yield return null;
-		}
-		UnityEngine.Object.Destroy(this.gameObject);
-		yield break;
-	}
-
-	private void DoCurse(PlayerController targetPlayer)
-	{
-		if (targetPlayer.IsGhost)
-		{
-			return;
-		}
-		targetPlayer.CurrentStoneGunTimer = Mathf.Max(targetPlayer.CurrentStoneGunTimer, 0.2f);
-	}
-
-	private void HandleTriggerExited(SpeculativeRigidbody exitRigidbody, SpeculativeRigidbody sourceSpecRigidbody)
-	{
-		if (exitRigidbody && exitRigidbody.gameActor && exitRigidbody.gameActor is PlayerController && this.m_cursedPlayers.Contains(exitRigidbody.gameActor as PlayerController))
-		{
-			this.m_cursedPlayers.Remove(exitRigidbody.gameActor as PlayerController);
-		}
-	}
-
-	private void HandleTriggerEntered(SpeculativeRigidbody enteredRigidbody, SpeculativeRigidbody sourceSpecRigidbody, CollisionData collisionData)
-	{
-		if (GameManager.Instance.Dungeon.data.GetAbsoluteRoomFromPosition(base.specRigidbody.UnitCenter.ToIntVector2(VectorConversions.Round)) != GameManager.Instance.Dungeon.data.GetAbsoluteRoomFromPosition(enteredRigidbody.UnitCenter.ToIntVector2(VectorConversions.Round)))
-		{
-			return;
-		}
-		if (enteredRigidbody.gameActor != null && enteredRigidbody.gameActor is PlayerController)
-		{
-			this.m_cursedPlayers.Add(enteredRigidbody.gameActor as PlayerController);
-		}
-	}
-
-	public float LifeTime;
-
-	public tk2dSprite CircleSprite;
-
-	public float Scale;
-	private List<PlayerController> m_cursedPlayers;
 }

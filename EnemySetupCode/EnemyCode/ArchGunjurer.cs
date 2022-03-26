@@ -49,9 +49,8 @@ namespace Planetside
 				companion.aiActor.procedurallyOutlined = true;
 				companion.aiActor.CanTargetPlayers = true;
 				companion.aiActor.healthHaver.SetHealthMaximum(60f, null, false);
-				companion.aiActor.HasShadow = true;
+				EnemyToolbox.AddShadowToAIActor(companion.aiActor, StaticEnemyShadows.largeShadow, new Vector2(0.875f, 0.25f), "shadowPos");
 				companion.aiActor.SetIsFlying(true, "Gamemode: Creative", true, true);
-				companion.aiActor.ShadowObject = EnemyDatabase.GetOrLoadByGuid("4db03291a12144d69fe940d5a01de376").ShadowObject;
 				companion.aiActor.PathableTiles = CellTypes.PIT | CellTypes.FLOOR;
 
 

@@ -260,6 +260,8 @@ namespace Planetside
             HexaPulseCannon.Add();
             PulseCannon.Add();
             ParticleCollapser.Add();
+            HeatSink.Add();
+            MeasuringTape.Add();
             //Forgotten Rounds
             ForgottenRoundOubliette.Init();
             ForgottenRoundAbbey.Init();
@@ -288,6 +290,7 @@ namespace Planetside
             ProperCube.Init();
             Detscavator.Init();
 
+            Creationist.Init();
 
             DeTurretRight.Init();
             DeTurretLeft.Init();

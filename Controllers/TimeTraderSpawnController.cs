@@ -70,8 +70,11 @@ namespace Planetside
         private void ResetFloorSpecificData()
         {
             ShopAllowedToSpawn = false;
-            TimeToBeat = GameStatsManager.Instance.GetSessionStatValue(TrackedStats.TIME_PLAYED) + 210;
-            Debug.Log("Player must beat boss under time time: " +TimeToBeat + " for shop to spawn!");
+            if (GameStatsManager.Instance.IsInSession == true)
+            {
+                TimeToBeat = GameStatsManager.Instance.GetSessionStatValue(TrackedStats.TIME_PLAYED) + 210;
+                Debug.Log("Player must beat boss under time time: " + TimeToBeat + " for shop to spawn!");
+            }
         }
         public static void HandleBossClearRewardHook(Action<RoomHandler> orig, RoomHandler self)
         {

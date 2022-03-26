@@ -17,6 +17,10 @@ using SaveAPI;
 
 namespace Planetside
 {
+
+	/// <summary>
+	/// TO DO
+	/// </summary>
 	public class ArmWarmer : GunBehaviour
 	{
 		public static void Add()

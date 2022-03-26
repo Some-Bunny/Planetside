@@ -14,27 +14,27 @@ namespace Planetside
     {
         public MarkForUndodgeAbleBullet()
         {
-            Proj = base.gameObject.GetComponent<Projectile>();
+            //Proj = base.gameObject.GetComponent<Projectile>();
         }
         public void Start()
         {
-            if (Proj != null)
+            if (base.gameObject.GetComponent<Projectile>() != null)
             {
                 //Proj.renderer.enabled = true;
-                Proj.sprite.usesOverrideMaterial = true;
-                if (Proj.spriteAnimator != null)
+                base.gameObject.GetComponent<Projectile>().sprite.usesOverrideMaterial = true;
+                if (base.gameObject.GetComponent<Projectile>().spriteAnimator != null)
                 {
-                    Proj.spriteAnimator.sprite.usesOverrideMaterial = true;
-                    Proj.spriteAnimator.renderer.enabled = true;
-                    Proj.spriteAnimator.renderer.material.shader = PlanetsideModule.ModAssets.LoadAsset<Shader>("inverseglowshader");
+                    base.gameObject.GetComponent<Projectile>().spriteAnimator.sprite.usesOverrideMaterial = true;
+                    base.gameObject.GetComponent<Projectile>().spriteAnimator.renderer.enabled = true;
+                    base.gameObject.GetComponent<Projectile>().spriteAnimator.renderer.material.shader = PlanetsideModule.ModAssets.LoadAsset<Shader>("inverseglowshader");
                 }
-                Proj.sprite.renderer.enabled = true;
-                Proj.sprite.renderer.material.shader = PlanetsideModule.ModAssets.LoadAsset<Shader>("inverseglowshader");
-                Proj.sprite.renderer.material.SetFloat("_EmissiveColorPower", 7);
-                if (Proj.IsBlackBullet) { Proj.sprite.renderer.material.SetFloat("_BlackBullet", -1); }
+                base.gameObject.GetComponent<Projectile>().sprite.renderer.enabled = true;
+                base.gameObject.GetComponent<Projectile>().sprite.renderer.material.shader = PlanetsideModule.ModAssets.LoadAsset<Shader>("inverseglowshader");
+                base.gameObject.GetComponent<Projectile>().sprite.renderer.material.SetFloat("_EmissiveColorPower", 7);
+                if (base.gameObject.GetComponent<Projectile>().IsBlackBullet) { base.gameObject.GetComponent<Projectile>().sprite.renderer.material.SetFloat("_BlackBullet", -1); }
             }
         }
-        public Projectile Proj;
+        //public Projectile Proj;
     }
     public class UndodgeableProjectile : Projectile
     {

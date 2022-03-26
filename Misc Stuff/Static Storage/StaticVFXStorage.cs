@@ -63,12 +63,25 @@ namespace Planetside
             EliteParticleSystem = EliteVariantEnemyParticlesObj.GetComponent<ParticleSystem>();
             FakePrefab.MarkAsFakePrefab(EliteParticleSystem.gameObject);
 
+
+            var portalParticleObject = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("PortalClose"));
+            PortalParticleSystemGameObject = portalParticleObject;
+            FakePrefab.MarkAsFakePrefab(portalParticleObject);
+            PortalParticleSystem = portalParticleObject.GetComponent<ParticleSystem>();
+            FakePrefab.MarkAsFakePrefab(PortalParticleSystem.gameObject);
+
             EnemySpawnVFX = (GameObject)ResourceCache.Acquire("Global VFX/VFX_SpawnEnemy_Reticle");
             ShootGroundVFX = (GameObject)ResourceCache.Acquire("Global VFX/VFX_Bullet_Spawn");
             BlueSynergyPoofVFX = (GameObject)ResourceCache.Acquire("Global VFX/VFX_Synergy_Poof_001");
 
             HealingSparklesVFX = (GameObject)ResourceCache.Acquire("Global VFX/VFX_Healing_Sparkles_001");
+
+            GameObject ChallengeManagerReference = LoadHelper.LoadAssetFromAnywhere<GameObject>("_ChallengeManager");
+            GorgunEyesVFX = (ChallengeManagerReference.GetComponent<ChallengeManager>().PossibleChallenges[20].challenge as FloorShockwaveChallengeModifier).EyesVFX;
         }
+
+        public static GameObject GorgunEyesVFX;
+
         public static ScarfAttachmentDoer ScarfObject;
         public static GameObject RadialRing;
         public static GameObject TeleportDistortVFX;
@@ -80,6 +93,9 @@ namespace Planetside
 
         public static ParticleSystem PerkParticleSystem;
         public static ParticleSystem PerfectedParticleSystem;
+        public static ParticleSystem PortalParticleSystem;
+
+
 
         public static GameObject PerkParticleObject;
 
@@ -90,9 +106,11 @@ namespace Planetside
 
         public static GameObject ShamberParticleSystemGameObject;
         public static GameObject EliteParticleSystemGameObject;
+        public static GameObject PortalParticleSystemGameObject;
 
 
         public static GameObject JammedDeathVFX;
+        
 
     }
 }

@@ -26,6 +26,7 @@ namespace Planetside
 			SynergyAPI.SynergyBuilder.AddItemToSynergy(warVase, CustomSynergyType.MASTERS_CHAMBERS);
 			ItemBuilder.AddPassiveStatModifier(warVase, PlayerStats.StatType.Damage, 0.125f, StatModifier.ModifyMethod.ADDITIVE);
 			ForgottenRoundOubliette.ForgottenRoundOublietteID = warVase.PickupObjectId;
+			EncounterDatabase.GetEntry(warVase.encounterTrackable.EncounterGuid).usesPurpleNotifications = true;
 		}
 		public static int ForgottenRoundOublietteID;
 
@@ -57,6 +58,7 @@ namespace Planetside
 
 			ItemBuilder.AddPassiveStatModifier(warVase, PlayerStats.StatType.Damage, 0.125f, StatModifier.ModifyMethod.ADDITIVE);
 			ForgottenRoundAbbey.ForgottenRoundAbbeyID = warVase.PickupObjectId;
+			EncounterDatabase.GetEntry(warVase.encounterTrackable.EncounterGuid).usesPurpleNotifications = true;
 		}
 		public static int ForgottenRoundAbbeyID;
 
@@ -88,6 +90,7 @@ namespace Planetside
 
 			ItemBuilder.AddPassiveStatModifier(warVase, PlayerStats.StatType.Damage, 0.125f, StatModifier.ModifyMethod.ADDITIVE);
 			ForgottenRoundRNG.ForgottenRoundRNGID = warVase.PickupObjectId;
+			EncounterDatabase.GetEntry(warVase.encounterTrackable.EncounterGuid).usesPurpleNotifications = true;
 		}
 		public static int ForgottenRoundRNGID;
 

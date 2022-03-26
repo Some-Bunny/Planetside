@@ -33,14 +33,12 @@ namespace Planetside
 			bool flag2 = flag;
 			if (!flag2)
 			{
-
 				prefab = EnemyBuilder.BuildPrefab("Barretina", guid, spritePaths[0], new IntVector2(0, 0), new IntVector2(8, 9), false);
 				var companion = prefab.AddComponent<EnemyBehavior>();
 				companion.aiActor.knockbackDoer.weight = 200;
 				companion.aiActor.MovementSpeed = 0.75f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
 				companion.aiActor.CollisionDamage = 1f;
-				companion.aiActor.HasShadow = false;
 				companion.aiActor.IgnoreForRoomClear = false;
 				companion.aiActor.aiAnimator.HitReactChance = 0f;
 				companion.aiActor.specRigidbody.CollideWithOthers = true;
@@ -50,9 +48,9 @@ namespace Planetside
 				companion.aiActor.CollisionKnockbackStrength = 0f;
 				companion.aiActor.procedurallyOutlined = true;
 				companion.aiActor.CanTargetPlayers = true;
-				companion.aiActor.HasShadow = true;
 				companion.aiActor.SetIsFlying(true, "Gamemode: Creative");
-				companion.aiActor.ShadowObject = EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").ShadowObject; 
+				EnemyToolbox.AddShadowToAIActor(companion.aiActor, StaticEnemyShadows.largeShadow, new Vector2(0.625f, 0.25f), "shadowPos");
+
 				companion.aiActor.healthHaver.SetHealthMaximum(40f, null, false);
 				companion.aiActor.PathableTiles = CellTypes.PIT | CellTypes.FLOOR;
 

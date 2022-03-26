@@ -38,6 +38,8 @@ namespace Planetside
 		{
 			Fungannon.BuildPrefab();
 		}
+
+
 		public static void BuildPrefab()
 		{
 			bool flag = prefab != null || EnemyBuilder.Dictionary.ContainsKey(guid);
@@ -55,7 +57,6 @@ namespace Planetside
 				enemy.aiActor.MovementSpeed = 1.75f;
 				enemy.aiActor.healthHaver.PreventAllDamage = false;
 				enemy.aiActor.CollisionDamage = 1f;
-				enemy.aiActor.HasShadow = false;
 				enemy.aiActor.IgnoreForRoomClear = false;
 				enemy.aiActor.aiAnimator.HitReactChance = 0f;
 				enemy.aiActor.specRigidbody.CollideWithOthers = true;
@@ -65,6 +66,8 @@ namespace Planetside
 				enemy.aiActor.CollisionKnockbackStrength = 10f;
 				enemy.aiActor.CanTargetPlayers = true;
 				enemy.aiActor.healthHaver.SetHealthMaximum(1075f, null, false);
+
+				EnemyToolbox.AddShadowToAIActor(enemy.aiActor, StaticEnemyShadows.massiveShadow, new Vector2(2.875f, 0.25f), "shadowPos");
 
 				aiAnimator.IdleAnimation = new DirectionalAnimation
 				{
