@@ -58,11 +58,13 @@ namespace Planetside
 			SimpleShrine simple = shrine.gameObject.GetComponent<SimpleShrine>();
 			simple.text = "The spirits that have once inhabited the shrine have departed.";
 			LootEngine.DoDefaultPurplePoof(player.specRigidbody.UnitBottomCenter, false);
-			OtherTools.Notify("You Obtained The", "Curse Of Petrification.", "Planetside/Resources/ShrineIcons/PetrifyIcon");
-			AkSoundEngine.PostEvent("Play_ENM_darken_world_01", shrine);
+			CursesController.EnablePetrification();
+
+			//OtherTools.Notify("You Obtained The", "Curse Of Petrification.", "Planetside/Resources/ShrineIcons/PetrifyIcon");
+			//AkSoundEngine.PostEvent("Play_ENM_darken_world_01", shrine);
 			shrine.GetComponent<CustomShrineController>().numUses++;
-			PetrifyTime dark = player.gameObject.AddComponent<PetrifyTime>();
-			dark.player = player;
+			//PetrifyTime dark = player.gameObject.AddComponent<PetrifyTime>();
+			//dark.player = player;
 		}
 		public class PetrifyTime : BraveBehaviour
 		{

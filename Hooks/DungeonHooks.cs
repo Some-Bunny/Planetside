@@ -9,8 +9,6 @@ namespace Planetside
 { 
     public class MasteryReplacementOub : DungeonDatabase
     {
-
-        // Execute this method from Start() or Init() of mod's main CS file.
         public static void InitDungeonHook()
         {
 

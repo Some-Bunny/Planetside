@@ -34,52 +34,27 @@ namespace Planetside
             item.quality = PickupObject.ItemQuality.EXCLUDED;
             item.CanBeDropped = false;
             BlueCasingID = item.PickupObjectId;
+            EncounterDatabase.GetEntry(item.encounterTrackable.EncounterGuid).usesPurpleNotifications = true;
+
 
         }
         public static int BlueCasingID;
-
-
         public override DebrisObject Drop(PlayerController player)
 		{
-        //    GungeonAPI.DungeonHooks.OnPostDungeonGeneration -= this.PlaceColoredShrines;
-            //GameManager.Instance.OnNewLevelFullyLoaded -= this.EnableSW;
             DebrisObject result = base.Drop(player);
 			return result;
 		}
 		public override void Pickup(PlayerController player)
 		{
             SomethingWickedEventManager.currentSWState = SomethingWickedEventManager.States.ALLOWED;
-            //SomethingWickedEventManager.ShouldDoSomethingWickedEvent = false;
-            //GameManager.Instance.OnNewLevelFullyLoaded += this.EnableSW;
             base.Pickup(player);
 		}
-        private void EnableSW()
-        {
-            //GameManager.Instance.OnNewLevelFullyLoaded -= this.EnableSW;
-            //TheMeagaSomethingWickedEnabler dark = base.Owner.gameObject.AddComponent<TheMeagaSomethingWickedEnabler>();
-            //dark.player = base.Owner;
-        }
-        private void DisableSW()
-        {
-            /*
-            GameManager.Instance.OnNewLevelFullyLoaded -= this.DisableSW;
-            if (base.Owner.gameObject.GetComponent<TheMeagaSomethingWickedEnabler>() && base.Owner != null)
-            {
-                TheMeagaSomethingWickedEnabler SW = base.Owner.gameObject.GetComponent<TheMeagaSomethingWickedEnabler>();
-                Destroy(SW);
-                Pixelator.Instance.AdditionalCoreStackRenderPass = null;
-            }
-            */
-        }
+      
         protected override void OnDestroy()
 		{
             base.OnDestroy();
-		}
-
-        //public static List<GameObject> ExtantShrines = new List<GameObject>();
-        
+		}        
     }
-
 }
 
 namespace Planetside
@@ -101,11 +76,9 @@ namespace Planetside
             item.quality = PickupObject.ItemQuality.EXCLUDED;
             item.CanBeDropped = false;
             RedCasingID = item.PickupObjectId;
-
+            EncounterDatabase.GetEntry(item.encounterTrackable.EncounterGuid).usesPurpleNotifications = true;
         }
         public static int RedCasingID;
-
-
         public override DebrisObject Drop(PlayerController player)
         {
             DebrisObject result = base.Drop(player);
@@ -115,11 +88,8 @@ namespace Planetside
         {
             base.Pickup(player);
         }
-        
-
         protected override void OnDestroy()
         {
-            //SomethingWickedEventManager.ShouldDoSomethingWickedEvent = false;
             base.OnDestroy();
         }
     }

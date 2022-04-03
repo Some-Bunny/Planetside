@@ -98,7 +98,6 @@ namespace Planetside
             {orig(self, room);}
         }
 
-
         public override void Pickup(PlayerController player)
         {
             player.OnTableFlipped = (Action<FlippableCover>)Delegate.Combine(player.OnTableFlipped, new Action<FlippableCover>(this.HandleFlip));
@@ -135,10 +134,6 @@ namespace Planetside
                     { GameManager.Instance.StartCoroutine(DimensionShiftTable(table, enemyChosen)); }
                 }
             }
-
-           
-            
-
         }
        private IEnumerator DimensionShiftTable(FlippableCover table, AIActor enemyToFuckingObliterate)
        {
@@ -188,9 +183,8 @@ namespace Planetside
                             PickupObject pickupObject = LootEngine.GetItemOfTypeAndQuality<PickupObject>(PickupObject.ItemQuality.COMMON, TableTechTelefrag.TelefragTable, false);
                             LootEngine.SpawnItem(pickupObject.gameObject, enemyToFuckingObliterate.transform.position, Vector2.up, 0f, true, false, false);
                         }
-                        enemyToFuckingObliterate.healthHaver.ApplyDamage(1000, Vector2.zero, "Tabled", CoreDamageTypes.Electric, DamageCategory.Normal, false, null, false);
-                        UnityEngine.Object.Instantiate<GameObject>(PickupObjectDatabase.GetById(449).GetComponent<TeleporterPrototypeItem>().TelefragVFXPrefab, table.sprite.WorldCenter, Quaternion.identity);
-                        
+                        enemyToFuckingObliterate.healthHaver.ApplyDamage(10000, Vector2.zero, "Tabled", CoreDamageTypes.Electric, DamageCategory.Normal, false, null, false);
+                        UnityEngine.Object.Instantiate<GameObject>(PickupObjectDatabase.GetById(449).GetComponent<TeleporterPrototypeItem>().TelefragVFXPrefab, table.sprite.WorldCenter, Quaternion.identity);       
                     }
                     else
                     {
@@ -202,8 +196,6 @@ namespace Planetside
            
             yield break;
        }
-
-
         protected override void OnDestroy()
         {
             if (base.Owner != null)

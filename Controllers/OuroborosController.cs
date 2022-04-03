@@ -47,23 +47,19 @@ namespace Planetside
 					var item = (BossEliteType)System.Activator.CreateInstance(bossEliteType);
 					bossEliteTypes.Add(item.GetType());
 				}
-				AIBulletBank.Entry entryCopy = new AIBulletBank.Entry();
-				entryCopy = EnemyDatabase.GetOrLoadByGuid("465da2bb086a4a88a803f79fe3a27677").bulletBank.GetBullet("homing");
-
+				AIBulletBank.Entry entryCopy = StaticUndodgeableBulletEntries.CopyFields<AIBulletBank.Entry>(EnemyDatabase.GetOrLoadByGuid("465da2bb086a4a88a803f79fe3a27677").bulletBank.GetBullet("homing"));
 				RobotechProjectile projectile = UnityEngine.Object.Instantiate<GameObject>(entryCopy.BulletObject).GetComponent<RobotechProjectile>();
 				projectile.gameObject.SetActive(false);
 				FakePrefab.MarkAsFakePrefab(projectile.gameObject);
 				UnityEngine.Object.DontDestroyOnLoad(projectile);
 				projectile.projectileHitHealth = 1;
-
 				entryCopy.Name = "homingOuroboros";
 				entryCopy.MuzzleFlashEffects = new VFXPool { type = VFXPoolType.None, effects = new VFXComplex[0] };
 				entryCopy.BulletObject = projectile.gameObject;
 
 
 
-				AIBulletBank.Entry sewwpCopy = new AIBulletBank.Entry();
-				sewwpCopy = EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("sweep");
+				AIBulletBank.Entry sewwpCopy = StaticUndodgeableBulletEntries.CopyFields<AIBulletBank.Entry>(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("sweep"));
 				sewwpCopy.Name = "sweepOuroboros";
 
 				BulletList.Add(sewwpCopy);
@@ -196,12 +192,12 @@ namespace Planetside
 		public static void StartHookAIActor(Action<AIActor> orig, AIActor self)
         {
             orig(self);
-            if (OuroborosMode() == true)
+            if (OuroborosMode() == true && self != null && EnemyISFUCKINGKILLPILLARFUCKYOUFUCKYOU(self) == false)
             {
-				self.MovementSpeed *= ChanceAccordingToGivenValues(1f, 2f, 250);
-				self.behaviorSpeculator.CooldownScale *= ChanceAccordingToGivenValues(1f, 0.4f, 250);
-				self.healthHaver.SetHealthMaximum(self.healthHaver.GetCurrentHealth() * ChanceAccordingToGivenValues(1f, 1.3f, 250));
-				if (self != null && self.aiActor != null && EnemyIsValid(self.aiActor) == true && !bannedEnemiesForOrbitingSkulls.Contains(self.aiActor.EnemyGuid) && UnityEngine.Random.value <= ChanceAccordingToGivenValues(0.0015f, 0.5f, 75))
+				if (!enemiesNotAffectedByBehaviorSpecMultiplier.Contains(self.EnemyGuid)) { self.MovementSpeed *= ChanceAccordingToGivenValues(1f, 2f, 250); }
+				if (!enemiesNotAffectedByBehaviorSpecMultiplier.Contains(self.EnemyGuid) && self.behaviorSpeculator != null) { self.behaviorSpeculator.CooldownScale *= ChanceAccordingToGivenValues(1f, 0.4f, 250); }
+				if (!enemiesNotAffectedByBehaviorSpecMultiplier.Contains(self.EnemyGuid)) { self.healthHaver.SetHealthMaximum(self.healthHaver.GetCurrentHealth() * ChanceAccordingToGivenValues(1f, 1.3f, 250)); }
+				if (self != null && self.aiActor != null && EnemyIsValid(self.aiActor) == true && !bannedEnemiesForOrbitingSkulls.Contains(self.aiActor.EnemyGuid) && UnityEngine.Random.value <= ChanceAccordingToGivenValues(0.0015f, 0.5f, 75) && !enemiesNotAffectedByBehaviorSpecMultiplier.Contains(self.EnemyGuid))
 				{
 					GameObject transPos = self.aiActor.transform.Find("SkullAttackPointOuroboros").gameObject;
 					if (transPos != null)
@@ -221,6 +217,12 @@ namespace Planetside
 				}
 			}
         }
+		public static List<string> enemiesNotAffectedByBehaviorSpecMultiplier => new List<string>()
+		{
+			"3f11bbbc439c4086a180eb0fb9990cb4"
+		};
+
+
 
 		public static float ChanceAccordingToGivenValues(float minimumChance, float maximumChance, float LoopToCapAt)
         {
@@ -231,6 +233,7 @@ namespace Planetside
         private static List<AIBulletBank.Entry> BulletList = new List<AIBulletBank.Entry>();
         public static void StartHookBehaviorSpeculator(Action<BehaviorSpeculator> orig, BehaviorSpeculator self)
 		{
+			orig(self);
 			if (OuroborosMode() == true)
             {
                 if (self != null && self.aiActor != null && EnemyIsValid(self.aiActor) == true)
@@ -261,8 +264,6 @@ namespace Planetside
                     {
 						self.OtherBehaviors = new List<BehaviorBase>();
                     }
-					
-
 				}
 				if (!EliteBlackListDefault.Contains(self.aiActor.EnemyGuid) && EnemyIsValid(self.aiActor) == true)
                 {
@@ -273,30 +274,7 @@ namespace Planetside
 						if (UnityEngine.Random.value <= specialChance && BossCheck == false)//if (UnityEngine.Random.value <= ChanceAccordingToGivenValues(0.03f, 0.1f, 50))
 						{
 							var SpecialElite = specialEliteTypes[UnityEngine.Random.Range(0, specialEliteTypes.Count)];
-							if (SpecialElite.Name.ToString().ToLower().Contains("replicator"))
-							{
-								if (!EnemyBlackListForReplicatorEliteFuckFuckFuckFuck.Contains(self.aiActor.EnemyGuid))
-								{
-									self.AttackBehaviors.Add(new MirrorImageBehavior
-									{
-										AttackCooldown = 1,
-										NumImages = 2,
-										MaxImages = 2,
-										MirrorHealth = Mathf.Max(12, self.aiActor.healthHaver.GetMaxHealth() / 100),
-										SpawnDelay = 0.5f,
-										SplitDelay = 1,
-										SplitDistance = 1.25f,
-										AnimRequiresTransparency = true,
-										Cooldown = 8,
-										Anim = null,
-										MirroredAnims = new string[0],
-										GroupName = "SpecialEliteReplicate"
-									});
-									self.aiActor.gameObject.AddComponent(SpecialElite);
-								}
-							}
-							else
-                            {self.aiActor.gameObject.AddComponent(SpecialElite);}
+							self.aiActor.gameObject.AddComponent(SpecialElite);
 						}
 						else
 						{
@@ -305,7 +283,12 @@ namespace Planetside
 					}
 				}		
 			}
-			orig(self);
+		}
+
+		private static bool EnemyISFUCKINGKILLPILLARFUCKYOUFUCKYOU(AIActor aI)
+        {
+			if (aI.gameObject.GetComponent<BossStatueController>() != null || aI.gameObject.GetComponentInChildren<BossStatueController>() != null) { return true; }
+			return false;
 		}
 
 		private static bool EnemyIsValid(AIActor aI)
@@ -316,7 +299,9 @@ namespace Planetside
 			if (aI.CompanionOwner != null) { return false;}
 			if (aI.gameObject.GetComponent<CompanionController>() != null) { return false; }
 			if (StaticInformation.ModderBulletGUIDs.Contains(aI.EnemyGuid)) { return false; }
-			return true;
+			if (aI.EnemyGuid == "3f11bbbc439c4086a180eb0fb9990cb4") { return false; }
+			if (aI.gameObject.GetComponent<BossStatueController>() != null || aI.gameObject.GetComponentInChildren<BossStatueController>() != null) { return false; }
+				return true;
 		}
 		public static List<string> EnemyBlackListForReplicatorEliteFuckFuckFuckFuck => new List<string>()
 		{

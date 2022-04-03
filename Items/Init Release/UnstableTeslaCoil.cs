@@ -8,6 +8,7 @@ using System.Collections;
 using SaveAPI;
 using Brave.BulletScript;
 using Gungeon;
+using GungeonAPI;
 
 namespace Planetside
 {
@@ -18,12 +19,12 @@ namespace Planetside
             string name = "Volatile Tesla-Pack";
             string resourcePath = "Planetside/Resources/plaetunstableteslacoil.png";
             GameObject gameObject = new GameObject(name);
-            UnstableTeslaCoil warVase = gameObject.AddComponent<UnstableTeslaCoil>();
+            UnstableTeslaCoil item = gameObject.AddComponent<UnstableTeslaCoil>();
             ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
             string shortDesc = "Hair-Raising Experience";
             string longDesc = "A very volatile tesla-pack that's been hidden away in a chest to prevent harm. The arcs connect to nearby things and can erupt powerfully enough to confuse enemies.";
-            ItemBuilder.SetupItem(warVase, shortDesc, longDesc, "psog");
-            warVase.quality = PickupObject.ItemQuality.B;
+            ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
+            item.quality = PickupObject.ItemQuality.B;
             List<string> mandatoryConsoleIDs = new List<string>
             {
                 "psog:volatile_tesla-pack",
@@ -37,12 +38,9 @@ namespace Planetside
                 "platinum_bullets"
             };
             CustomSynergies.Add("Heavy Metals", mandatoryConsoleIDs, optionalConsoleIDs, true);
-
             LinkVFXPrefab = FakePrefab.Clone(Game.Items["shock_rounds"].GetComponent<ComplexProjectileModifier>().ChainLightningVFX);
-
-
-            UnstableTeslaCoil.VolatileTeslaPackID = warVase.PickupObjectId;
-            ItemIDs.AddToList(warVase.PickupObjectId);
+            UnstableTeslaCoil.VolatileTeslaPackID = item.PickupObjectId;
+            ItemIDs.AddToList(item.PickupObjectId);
 
         }
         public static int VolatileTeslaPackID;
@@ -50,14 +48,21 @@ namespace Planetside
         public override void Pickup(PlayerController player)
         {
             base.Pickup(player);
+            DungeonHooks.OnPostDungeonGeneration += this.ResetFloorSpecificData;
         }
 
         public override DebrisObject Drop(PlayerController player)
         {
+            enemyList.Clear();
+            DungeonHooks.OnPostDungeonGeneration -= this.ResetFloorSpecificData;
             DebrisObject result = base.Drop(player);
             return result;
         }
 
+        private void ResetFloorSpecificData()
+        {
+            enemyList.Clear();
+        }
         private static Dictionary<AIActor, GameObject> Shit = new Dictionary<AIActor, GameObject>();
         protected override void Update()
 		{
@@ -92,31 +97,42 @@ namespace Planetside
                     {
                         foreach (AIActor ai in activeEnemies)
                         {
-                            bool flag8 = ai && ai != null && Vector2.Distance(ai.CenterPosition, base.Owner.sprite.WorldCenter) < 4.5f;
-                            if (flag8)
+                            if (ActorIsActive(ai) == true)
                             {
-                                if (!Shit.ContainsKey(ai))
+                                bool flag8 = ai && ai != null && Vector2.Distance(ai.CenterPosition, base.Owner.sprite.WorldCenter) < 4.5f;
+                                if (flag8)
                                 {
-                                    GameObject obj = SpawnManager.SpawnVFX(LinkVFXPrefab, false).GetComponent<tk2dTiledSprite>().gameObject;
-                                    Shit.Add(ai, obj); 
+                                    if (!Shit.ContainsKey(ai))
+                                    {
+                                        GameObject obj = SpawnManager.SpawnVFX(LinkVFXPrefab, false).GetComponent<tk2dTiledSprite>().gameObject;
+                                        Shit.Add(ai, obj);
+                                    }
                                 }
-                            }
-                            bool fuckoff = ai && ai != null && Vector2.Distance(ai.CenterPosition, base.Owner.sprite.WorldCenter) > 4.5f;
-                            if (fuckoff)
-                            {
-                                if (Shit.ContainsKey(ai))
+                                bool fuckoff = ai && ai != null && Vector2.Distance(ai.CenterPosition, base.Owner.sprite.WorldCenter) > 4.5f;
+                                if (fuckoff)
                                 {
-                                    GameObject obj;
-                                    Shit.TryGetValue(ai, out obj);
-                                    SpawnManager.Despawn(obj);
-                                    Shit.Remove(ai);
+                                    if (Shit.ContainsKey(ai))
+                                    {
+                                        GameObject obj;
+                                        Shit.TryGetValue(ai, out obj);
+                                        SpawnManager.Despawn(obj);
+                                        Shit.Remove(ai);
+                                    }
                                 }
-                            }
+                            }             
                         }     
                     }
                 }                
             }
         }
+
+        public bool ActorIsActive(AIActor enemy)
+        {
+            if (enemy.State == AIActor.ActorState.Normal) { return true; }
+            return false;
+        }
+
+
 
         private void UpdateLink(PlayerController target, tk2dTiledSprite m_extantLink, AIActor actor)
         {
@@ -136,7 +152,7 @@ namespace Planetside
         {
             PlayerController player = (GameManager.Instance.PrimaryPlayer);
             float dmg = player != null? (player.stats.GetStatValue(PlayerStats.StatType.Damage)):1;
-            float num = 4f* dmg;
+            float num = 4.5f* dmg;
             for (int i = 0; i < StaticReferenceManager.AllEnemies.Count; i++)
             {
                 AIActor aiactor = StaticReferenceManager.AllEnemies[i];
@@ -147,8 +163,9 @@ namespace Planetside
                         Vector2 zero = Vector2.zero;
                         if (BraveUtility.LineIntersectsAABB(p1, p2, aiactor.specRigidbody.HitboxPixelCollider.UnitBottomLeft, aiactor.specRigidbody.HitboxPixelCollider.UnitDimensions, out zero))
                         {
-                            if (num >= aiactor.healthHaver.GetCurrentHealth() || num == aiactor.healthHaver.GetCurrentHealth())
+                            if (num >= aiactor.healthHaver.GetCurrentHealth() && !enemyList.Contains(aiactor) || num == aiactor.healthHaver.GetCurrentHealth() && !enemyList.Contains(aiactor))
                             {
+                                enemyList.Add(aiactor);
                                 float StunRadius = 2.5f;
                                 bool flagA = base.Owner.PlayerHasActiveSynergy("Heavy Metals");
                                 if (flagA)
@@ -160,8 +177,7 @@ namespace Planetside
                                 player.CurrentRoom.ApplyActionToNearbyEnemies(bector2, StunRadius, new Action<AIActor, float>(this.ProcessEnemy));
                                 aiactor.healthHaver.ApplyDamage(death, Vector2.zero, "Chain Lightning", CoreDamageTypes.Electric, DamageCategory.Normal, false, null, false);
                                 GameManager.Instance.StartCoroutine(this.HandleDamageCooldown(aiactor));
-                                Exploder.DoDistortionWave(bector2, 10f, 0.2f, 3, 0.066f);
-
+                                Exploder.DoDistortionWave(bector2, 10f, 0.033f, StunRadius, 0.2f);
 
                             }
                             else
@@ -174,6 +190,8 @@ namespace Planetside
                 }
             }
         }
+
+        private static List<AIActor> enemyList = new List<AIActor>();
 
         private void ProcessEnemy(AIActor target, float distance)
         {

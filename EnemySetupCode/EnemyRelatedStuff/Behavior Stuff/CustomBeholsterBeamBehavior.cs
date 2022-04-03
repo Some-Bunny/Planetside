@@ -277,6 +277,10 @@ public class CustomBeholsterLaserBehavior : BasicAttackBehavior
 	public override void EndContinuousUpdate()
 	{
 		base.EndContinuousUpdate();
+		if (m_bulletSource != null  && !this.m_bulletSource.IsEnded)
+        {
+			this.m_bulletSource.ForceStop();
+		}
 		if (!string.IsNullOrEmpty(this.FireAnimation))
 		{
 			this.m_aiAnimator.EndAnimationIf(this.FireAnimation);

@@ -26,6 +26,7 @@ namespace Planetside
 		public	void Start()
         {
 			Kills = 0;
+			State = States.NONE;
 			GameObject gameObject = SpawnManager.SpawnVFX(StaticVFXStorage.JammedDeathVFX, base.gameObject.transform.position, Quaternion.identity, false);
 			AkSoundEngine.PostEvent("Play_WPN_Life_Orb_Blast_01", player.gameObject);
 			if (gameObject && gameObject.GetComponent<tk2dSprite>())
@@ -43,14 +44,27 @@ namespace Planetside
 			if (player)
             {
 				List<AIActor> randomActiveEnemy = player.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.RoomClear);
-				if (randomActiveEnemy == null || randomActiveEnemy.Count == 0)
+                if (randomActiveEnemy == null || randomActiveEnemy.Count == 0)
                 {
-					Destroy(base.gameObject, 0.25f);
-					return;
+                    Destroy(base.gameObject, 0.25f);
+                    return;
                 }
-				else if (RemoveInvalidEnemies(randomActiveEnemy) != null || RemoveInvalidEnemies(randomActiveEnemy).Count > 0)
-                {GameManager.Instance.StartCoroutine(LerpToEnemy(base.transform.position, randomActiveEnemy[UnityEngine.Random.Range(0, randomActiveEnemy.Count)]));}
+                else if (RemoveInvalidEnemies(randomActiveEnemy) != null || RemoveInvalidEnemies(randomActiveEnemy).Count > 0)
+                { 
+					if (State == States.NONE)
+                    {
+						GameManager.Instance.StartCoroutine(LerpToEnemy(base.transform.position, randomActiveEnemy[UnityEngine.Random.Range(0, randomActiveEnemy.Count)]));
+					}
+				}
+                else
+                {
+					State = States.NONE;
+				}
 			}
+            else
+            {
+				Destroy(base.gameObject, 0);
+            }
         }
 
 		private List<AIActor> RemoveInvalidEnemies(List<AIActor> aIList)
@@ -117,10 +131,16 @@ namespace Planetside
 
 		private IEnumerator LerpToEnemy(Vector3 oldPos, AIActor newTarget)
         {
-			yield return new WaitForSeconds(0.25f);
 			State = States.MOVING_TOWARDS_ENEMY;
 			float elapsed = 0f;
-			float duration = 0.5f;
+			float duration = 0.25f;
+			while (elapsed < duration)
+			{
+				if (base.gameObject == null) { break; }
+				if (newTarget == null) { base.Invoke("MoveToDifferentTarget", 0f); break; }
+				elapsed += BraveTime.DeltaTime;
+				yield return null;
+			}
 			AkSoundEngine.PostEvent("Play_BOSS_dragun_throw_01", player.gameObject);
 
 			Vector3 a = Vector3.zero;
@@ -128,11 +148,12 @@ namespace Planetside
             {
 				a = (newTarget.specRigidbody.HitboxPixelCollider == null) ? newTarget.sprite.WorldCenter.ToVector3ZUp(0f) : newTarget.specRigidbody.HitboxPixelCollider.UnitCenter.ToVector3ZUp(0f);
 			}
-
+			elapsed = 0f;
+			duration = 0.5f;
 			while (elapsed < duration)
 			{
 				if (base.gameObject == null) {break;}
-				if (newTarget == null) { base.Invoke("MoveToDifferentTarget", 0.5f); break; }
+				if (newTarget == null) { base.Invoke("MoveToDifferentTarget", 0f); break; }
 
 				elapsed += BraveTime.DeltaTime;
 				float t = elapsed / duration * (elapsed / duration);
@@ -164,6 +185,11 @@ namespace Planetside
 					}
 				}
 			}
+			else
+            {
+				State = States.NONE;
+				yield break;
+			}
 			yield break;
         }
 
@@ -171,9 +197,10 @@ namespace Planetside
         {
 			if (this != null)
             {
+				State = States.NONE;
 				if (Target != null && !targetableButWontIncreaseKillCount.Contains(Target.EnemyGuid)) { Kills++; }
 				Target = null;
-				base.Invoke("MoveToDifferentTarget", 0.125f);
+				base.Invoke("MoveToDifferentTarget", 0f);
 			}
 		}
 
@@ -187,7 +214,7 @@ namespace Planetside
 					Destroy(base.gameObject, 0.5f);
 					return;
 				}
-				else if (Target == null)
+				else if (Target == null && State == States.NONE)
                 {
 					base.Invoke("MoveToDifferentTarget", 0f);
 				}
@@ -254,7 +281,8 @@ namespace Planetside
 		private enum States
 		{
 			MOVING_TOWARDS_ENEMY,
-			LOCKED_ON
+			LOCKED_ON,
+			NONE
 		};
     }
 

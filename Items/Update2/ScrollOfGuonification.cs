@@ -290,7 +290,7 @@ namespace Planetside
 							pick.player = user;
 							if (user.PlayerHasActiveSynergy("More To Hearts"))
 							{
-								pick.HitsBeforeDeath = 54;
+								pick.HitsBeforeDeath = 60;
 							}
 							else
 							{
@@ -310,7 +310,7 @@ namespace Planetside
 								pick.player = user;
 								if (user.PlayerHasActiveSynergy("More To Hearts"))
 								{
-									pick.HitsBeforeDeath = 108;
+									pick.HitsBeforeDeath = 120;
 								}
 								else
 								{
@@ -331,7 +331,7 @@ namespace Planetside
 									pick.player = user;
 									if (user.PlayerHasActiveSynergy("More To Armor"))
 									{
-										pick.HitsBeforeDeath = 180;
+										pick.HitsBeforeDeath = 200;
 									}
 									else
 									{
@@ -357,7 +357,7 @@ namespace Planetside
 
 								if (user.PlayerHasActiveSynergy("More To Ammo"))
 								{
-									pick.HitsBeforeDeath = 90;
+									pick.HitsBeforeDeath = 100;
 								}
 								else
 								{
@@ -375,7 +375,7 @@ namespace Planetside
 								pick.IsHalfAmmo = true;
 								if (user.PlayerHasActiveSynergy("More To Ammo"))
 								{
-									pick.HitsBeforeDeath = 90;
+									pick.HitsBeforeDeath = 100;
 								}
 								else
 								{
@@ -397,7 +397,7 @@ namespace Planetside
 								pick.IsKey = true;
 								if (user.PlayerHasActiveSynergy("More To Keys"))
 								{
-									pick.HitsBeforeDeath = 144;
+									pick.HitsBeforeDeath = 160;
 								}
 								else
 								{
@@ -417,7 +417,7 @@ namespace Planetside
 									pick.IsBlank = true;
 									if (user.PlayerHasActiveSynergy("More To Blanks"))
 									{
-										pick.HitsBeforeDeath = 120;
+										pick.HitsBeforeDeath = 133;
 									}
 									else
 									{
@@ -445,10 +445,7 @@ namespace Planetside
 					t = Mathf.Clamp01(elapsed / 1.25f);
 					portal.material.SetFloat("_UVDistCutoff", Mathf.Lerp(0.0f + elapsed * 1.3f, 0f, t));
 					float Rad = portal.material.GetFloat("_UVDistCutoff");
-
 					float num = (player.stats.GetStatValue(PlayerStats.StatType.Damage));
-
-
 					List<AIActor> activeEnemies = player.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
 					Vector2 centerPosition = pos;
 					if (activeEnemies != null)

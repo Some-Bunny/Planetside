@@ -78,7 +78,11 @@ namespace Planetside
 
             GameObject ChallengeManagerReference = LoadHelper.LoadAssetFromAnywhere<GameObject>("_ChallengeManager");
             GorgunEyesVFX = (ChallengeManagerReference.GetComponent<ChallengeManager>().PossibleChallenges[20].challenge as FloorShockwaveChallengeModifier).EyesVFX;
+            GunFullyChargedVFX = BraveResources.Load<GameObject>("Global VFX/VFX_DBZ_Charge", ".prefab");
+
+
         }
+        public static GameObject GunFullyChargedVFX;
 
         public static GameObject GorgunEyesVFX;
 

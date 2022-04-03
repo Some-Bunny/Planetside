@@ -46,8 +46,10 @@ namespace Planetside
 					{
 						if (item2 is DraGunBoulderController laser2)
 						{
-							laser2.LifeTime = base.aiActor != null ? ((base.aiActor.healthHaver.GetMaxHealth()/75)* Time) +1: Time;
-							float ZoneSize = (base.aiActor.healthHaver.GetMaxHealth() / 50)+0.33f;
+							float MaxHP = base.aiActor.healthHaver.GetMaxHealth();
+							if (base.aiActor.IsBlackPhantom == true) { MaxHP /= 3; }
+							laser2.LifeTime = base.aiActor != null ? ((MaxHP / 75f)* Time) +1: Time;
+							float ZoneSize = (MaxHP / 50)+0.25f;
 							GameManager.Instance.Dungeon.StartCoroutine(this.IncreaseInSize(laser2.CircleSprite, ZoneSize >= 2 ? 2 : ZoneSize));
 							SpeculativeRigidbody body = laser2.GetComponentInChildren<SpeculativeRigidbody>();
 							if (body) 

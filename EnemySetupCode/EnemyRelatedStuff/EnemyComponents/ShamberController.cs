@@ -29,7 +29,7 @@ public class ShamberController : BraveBehaviour
 		mat.SetFloat("_EmissiveColorPower", 2f);
 
 
-		var pso = new GameObject("shamebr fart");
+		var pso = new GameObject("shamber particle");
 		pso.transform.position = base.aiActor.sprite.WorldCenter + new Vector2(0, -0.25f);
 		pso.transform.localRotation = Quaternion.Euler(0f, 0f, 0);
 		pso.transform.parent = base.aiActor.gameObject.transform;
@@ -41,7 +41,7 @@ public class ShamberController : BraveBehaviour
 		particle = partObj.GetComponent<ParticleSystem>();
 
 		base.sprite.renderer.material = mat;
-		CanSucc = true;
+		//CanSucc = true;
 		base.healthHaver.OnPreDeath += this.OnPreDeath;
 	}
 
@@ -76,9 +76,16 @@ public class ShamberController : BraveBehaviour
 		base.OnDestroy();
 	}
 
+	public bool CanSuckBullets()
+    {
+		if (base.aiActor.isActiveAndEnabled == true && base.aiActor.HasDonePlayerEnterCheck == true && base.aiActor.healthHaver.IsDead == false && base.aiActor.HasBeenAwoken == true) { return true; }
+		return false;
+    }
+
+
 	protected void Update()
 	{
-		if (CanSucc == true)
+		if (CanSuckBullets() == true)
         {
 			ReadOnlyCollection<Projectile> allProjectiles = StaticReferenceManager.AllProjectiles;
 			if (allProjectiles != null && allProjectiles.Count >= 0 && base.gameObject != null)
@@ -97,10 +104,8 @@ public class ShamberController : BraveBehaviour
 	public List<Projectile> activeBullets;
 	private IEnumerator HandleBulletSuck(Projectile target)
 	{
-		if(BulletsEaten <= 299)
-        {
-			this.BulletsEaten++;
-		}
+		if (BulletsEaten <= 249)
+        {this.BulletsEaten++;}
 		
 		Transform copySprite = this.CreateEmptySprite(target);
 		Destroy(target.gameObject);
@@ -143,14 +148,10 @@ public class ShamberController : BraveBehaviour
 
 		return gameObject2.transform;
 	}
-	private void OnDamaged(float resultValue, float maxValue, CoreDamageTypes damageTypes, DamageCategory damageCategory, Vector2 damageDirection)
-	{
-		
-	}
 
 	private void OnPreDeath(Vector2 obj)
 	{
-		CanSucc = false;
+		//CanSucc = false;
 		if (particle != null)
 		{
 			particle.Stop();
@@ -161,7 +162,7 @@ public class ShamberController : BraveBehaviour
 		}
 
 	}
-	private bool CanSucc;
+	//private bool CanSucc;
 	public int BulletsEaten;
 	protected void OnProjCreated(Projectile projectile)
 	{

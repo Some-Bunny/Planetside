@@ -47,17 +47,9 @@ namespace Planetside
 		public static string spriteDefinition1 = "Planetside/Resources/ShrineIcons/PurityIcon";
 		public static bool CanUse(PlayerController player, GameObject shrine)
 		{
-
-			if( player.gameObject.GetComponent<ShrineOfDarkness.DarknessTime>() != null || player.gameObject.GetComponent<ShrineOfCurses.JamTime>() != null || player.gameObject.GetComponent<ShrineOfPetrification.PetrifyTime>() != null || player.gameObject.GetComponent<ShrineOfSomething.SomethingTime>() != null)
+			if( CursesController.CheckIfAnyCurseActive() == true && !player.IsInCombat)//player.gameObject.GetComponent<ShrineOfDarkness.DarknessTime>() != null || player.gameObject.GetComponent<ShrineOfCurses.JamTime>() != null || player.gameObject.GetComponent<ShrineOfPetrification.PetrifyTime>() != null || player.gameObject.GetComponent<ShrineOfSomething.SomethingTime>() != null)
             {
-				if (!player.IsInCombat)
-                {
-					return shrine.GetComponent<CustomShrineController>().numUses <= 0;
-				}
-				else
-                {
-					return false;
-				}
+				return shrine.GetComponent<CustomShrineController>().numUses <= 0;
 			}
 			else
             {
@@ -75,19 +67,19 @@ namespace Planetside
 				SpawnManager.SpawnVFX((PickupObjectDatabase.GetById(538) as SilverBulletsPassiveItem).SynergyPowerVFX, player.sprite.WorldCenter.ToVector3ZisY(0f) + new Vector3(UnityEngine.Random.Range(-0.25f, 0.25f), UnityEngine.Random.Range(-0.25f, 0.25f), 100), Quaternion.identity).GetComponent<tk2dBaseSprite>().PlaceAtPositionByAnchor(player.sprite.WorldCenter.ToVector3ZisY(0f), tk2dBaseSprite.Anchor.MiddleCenter);
 			}
 			List<string> list = new List<string> { };
-			if (player.gameActor.GetComponent<ShrineOfDarkness.DarknessTime>() != null)
+			if (CursesController.DarknessCurseState == CursesController.DarknessCurseStates.ENABLED)
             {
 				list.Add("Darkness");
             }
-			if (player.gameActor.GetComponent<ShrineOfCurses.JamTime>() != null)
+			if (CursesController.JamnationCurseState == CursesController.JamnationCurseStates.ENABLED)
 			{
 				list.Add("Jam");
 			}
-			if (player.gameActor.GetComponent<ShrineOfPetrification.PetrifyTime>() != null)
+			if (CursesController.PetrifyCurseState == CursesController.PetrifyCurseStates.ENABLED)
 			{
 				list.Add("Petrify");
 			}
-			if (player.gameActor.GetComponent<ShrineOfSomething.SomethingTime>() != null)
+			if (CursesController.BolsterCurseState == CursesController.BolsterCurseStates.ENABLED)
 			{
 				list.Add("Bolster");
 			}
@@ -97,34 +89,41 @@ namespace Planetside
 				if (ChosenCurse == "Darkness")
 				{
 					OtherTools.Notify("Curse Of Darkness chosen", "Prove you're worthy.", "Planetside/Resources/ShrineIcons/PurityIcon");
-					ShrineOfDarkness.DarknessTime comp = player.GetComponent<ShrineOfDarkness.DarknessTime>();
-					comp.RemoveSelf();
-					UltraDarkness darkness = player.gameObject.AddComponent<UltraDarkness>();
-					darkness.playeroue = player;
+					CursesController.DarknessCurseState = CursesController.DarknessCurseStates.UPGRADED_AND_ONEROOMLEFT;
+					//ShrineOfDarkness.DarknessTime comp = player.GetComponent<ShrineOfDarkness.DarknessTime>();
+					//comp.RemoveSelf();
+					//UltraDarkness darkness = player.gameObject.AddComponent<UltraDarkness>();
+					//darkness.playeroue = player;
 				}
 				if (ChosenCurse == "Jam")
 				{
 					OtherTools.Notify("Curse Of Jamnation chosen", "Prove you're worthy.", "Planetside/Resources/ShrineIcons/PurityIcon");
-					ShrineOfCurses.JamTime comp = player.GetComponent<ShrineOfCurses.JamTime>();
-					comp.RemoveSelf();
-					UltraJammed jammed = player.gameObject.AddComponent<UltraJammed>();
-					jammed.playeroue = player;
+					CursesController.JamnationCurseState = CursesController.JamnationCurseStates.UPGRADED_AND_ONEROOMLEFT;
+
+					//ShrineOfCurses.JamTime comp = player.GetComponent<ShrineOfCurses.JamTime>();
+					//comp.RemoveSelf();
+					//UltraJammed jammed = player.gameObject.AddComponent<UltraJammed>();
+					//jammed.playeroue = player;
 				}
 				if (ChosenCurse == "Petrify")
 				{
 					OtherTools.Notify("Curse Of Petrification chosen", "Prove you're worthy.", "Planetside/Resources/ShrineIcons/PurityIcon");
-					ShrineOfPetrification.PetrifyTime comp = player.GetComponent<ShrineOfPetrification.PetrifyTime>();
-					comp.RemoveSelf();
-					UltraPetrify petrify = player.gameObject.AddComponent<UltraPetrify>();
-					petrify.playeroue = player;
+					CursesController.PetrifyCurseState = CursesController.PetrifyCurseStates.UPGRADED_AND_ONEROOMLEFT;
+
+					//ShrineOfPetrification.PetrifyTime comp = player.GetComponent<ShrineOfPetrification.PetrifyTime>();
+					//comp.RemoveSelf();
+					//UltraPetrify petrify = player.gameObject.AddComponent<UltraPetrify>();
+					//petrify.playeroue = player;
 				}
 				if (ChosenCurse == "Bolster")
 				{
 					OtherTools.Notify("Curse Of Bolstering chosen", "Prove you're worthy.", "Planetside/Resources/ShrineIcons/PurityIcon");
-					ShrineOfSomething.SomethingTime comp = player.GetComponent<ShrineOfSomething.SomethingTime>();
-					comp.RemoveSelf();
-					UltraBolster bolster = player.gameObject.AddComponent<UltraBolster>();
-					bolster.playeroue = player;
+					CursesController.BolsterCurseState = CursesController.BolsterCurseStates.UPGRADED_AND_ONEROOMLEFT;
+
+					//ShrineOfSomething.SomethingTime comp = player.GetComponent<ShrineOfSomething.SomethingTime>();
+					//comp.RemoveSelf();
+					//UltraBolster bolster = player.gameObject.AddComponent<UltraBolster>();
+					//bolster.playeroue = player;
 				}
 			}
 			shrine.GetComponent<CustomShrineController>().numUses++;

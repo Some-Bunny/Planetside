@@ -50,13 +50,9 @@ namespace Planetside
 		{
 			base.Pickup(player);
 		}
-
 		protected override void OnDestroy()
 		{
-			if (base.Owner != null)
-            {
-				base.OnDestroy();
-			}
+			base.OnDestroy();
 		}
 	}
 }

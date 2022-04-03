@@ -56,11 +56,14 @@ namespace Planetside
 			SimpleShrine simple = shrine.gameObject.GetComponent<SimpleShrine>();
 			simple.text = "The spirits that have once inhabited the shrine have departed.";
 			LootEngine.DoDefaultPurplePoof(player.specRigidbody.UnitBottomCenter, false);
-			OtherTools.Notify("You Obtained The", "Curse Of Jamnation.", "Planetside/Resources/ShrineIcons/JammedIcon");
-			AkSoundEngine.PostEvent("Play_ENM_darken_world_01", shrine);
+			CursesController.EnableJamnation();
+
+
+			//OtherTools.Notify("You Obtained The", "Curse Of Jamnation.", "Planetside/Resources/ShrineIcons/JammedIcon");
+			//AkSoundEngine.PostEvent("Play_ENM_darken_world_01", shrine);
 			shrine.GetComponent<CustomShrineController>().numUses++;
-			JamTime dark = player.gameObject.AddComponent<JamTime>();
-			dark.playeroue = player;
+			//JamTime dark = player.gameObject.AddComponent<JamTime>();
+			//dark.playeroue = player;
 		}
 		public class JamTime : BraveBehaviour
 		{

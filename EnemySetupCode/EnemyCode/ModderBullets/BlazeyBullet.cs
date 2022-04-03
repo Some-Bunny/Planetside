@@ -38,10 +38,8 @@ namespace Planetside
 			protected override IEnumerator Top()
 			{
 				AkSoundEngine.PostEvent("Play_WPN_stickycrossbow_shot_01", this.BulletBank.aiActor.gameObject);
-				if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
-				{
-					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("sweep"));
-				}
+				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("sweep"));
+
 				for (int i = 0; i <= 18; i++)
 				{
 					this.Fire(new Direction(i * 20, DirectionType.Aim, -1f), new Speed(7f+(i/2), SpeedType.Absolute), new SkellBullet());

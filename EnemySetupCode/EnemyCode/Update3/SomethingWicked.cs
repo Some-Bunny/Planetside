@@ -536,7 +536,7 @@ namespace Planetside
 			while (ela < 0.25f)
 			{
 				float t = ela / 0.25f;
-				if (Rigidbody != null) { Rigidbody.Velocity = Vector2.Lerp(Vector2.zero, velocityToUse * 9, t); }
+				if (Rigidbody != null) { Rigidbody.Velocity = Vector2.Lerp(Vector2.zero, velocityToUse * 6, t); }
 				ela += BraveTime.DeltaTime;
 				yield return null;
 			}

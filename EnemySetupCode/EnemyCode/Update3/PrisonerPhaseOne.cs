@@ -1590,7 +1590,7 @@ namespace Planetside
 								tk2dBaseSprite component = vfx.GetComponent<tk2dBaseSprite>();
 								component.PlaceAtPositionByAnchor(SpawnPos, tk2dBaseSprite.Anchor.MiddleCenter);
 								component.HeightOffGround = 35f;
-								component.transform.rotation = Quaternion.Euler(0f, 0f, facingDir);
+								component.transform.rotation = Quaternion.Euler(0f, 0f, facingDir+90);
 								component.UpdateZDepth();
 								tk2dSpriteAnimator component2 = component.GetComponent<tk2dSpriteAnimator>();
 								if (component2 != null)
@@ -2053,7 +2053,6 @@ namespace Planetside
 			{
 
 				GameObject gameObject = SpawnManager.SpawnVFX(RandomPiecesOfStuffToInitialise.LaserReticle, false);
-
 				tk2dTiledSprite component2 = gameObject.GetComponent<tk2dTiledSprite>();
 				component2.transform.position = new Vector3(startPos.x, startPos.y, 99999);
 				component2.transform.localRotation = Quaternion.Euler(0f, 0f, aimDir);

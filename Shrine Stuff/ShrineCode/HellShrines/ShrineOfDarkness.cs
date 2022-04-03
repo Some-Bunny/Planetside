@@ -57,11 +57,13 @@ namespace Planetside
 			SimpleShrine simple = shrine.gameObject.GetComponent<SimpleShrine>();
 			simple.text = "The spirits that have once inhabited the shrine have departed.";
 			LootEngine.DoDefaultPurplePoof(player.specRigidbody.UnitBottomCenter, false);
-			OtherTools.Notify("You Obtained The", "Curse Of Darkness.", "Planetside/Resources/ShrineIcons/DarknessIcon");
-			AkSoundEngine.PostEvent("Play_ENM_darken_world_01", shrine);
+			CursesController.EnableDarkness();
+
+			//OtherTools.Notify("You Obtained The", "Curse Of Darkness.", "Planetside/Resources/ShrineIcons/DarknessIcon");
+			//AkSoundEngine.PostEvent("Play_ENM_darken_world_01", shrine);
 			shrine.GetComponent<CustomShrineController>().numUses++;
-			DarknessTime dark = player.gameObject.AddComponent<DarknessTime>();
-			dark.playeroue = player;
+			//DarknessTime dark = player.gameObject.AddComponent<DarknessTime>();
+			//dark.playeroue = player;
 		}
 		public class DarknessTime : BraveBehaviour
 		{

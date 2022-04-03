@@ -70,15 +70,12 @@ namespace Planetside
             PlanetsideModule.Strings = new AdvancedStringDB();
             ItemIDs.MakeCommand();
             StaticReferences.Init(); //<- Used in GungeonAPI, IMPORTANT to initialise it before DungeonHandler
-            //Targets.Init();
             InitNewPlaceables.InitPlaceables();
 
 
             //initialise Tools classes here
             Tools.Init();
             NpcTools.Init();
-
-            //MegaTable.Init();
 
             //Hook stuff here
             PickupHooks.Init();
@@ -201,6 +198,7 @@ namespace Planetside
 
             LeSackPickup.Init();
             NullPickupInteractable.Init();
+            RepairNode.Init();
 
             //=================      
             KineticStrike.Init();
@@ -303,6 +301,7 @@ namespace Planetside
             JammedGuard.Init();
             AnnihiChamber.Init();
             PrisonerPhaseOne.Init();
+            RobotShopkeeperBoss.Init();
 
             An3sBullet.Init();
             HunterBullet.Init();
@@ -384,18 +383,9 @@ namespace Planetside
             ETGModMainBehaviour.Instance.gameObject.AddComponent<TimeTraderSpawnController>();
             ETGModMainBehaviour.Instance.gameObject.AddComponent<SpecificUnlockController>();
             ETGModMainBehaviour.Instance.gameObject.AddComponent<OuroborosController>();
+            ETGModMainBehaviour.Instance.gameObject.AddComponent<CursesController>();
+            PlanetsideQOL.Init();
 
-            
-
-            //RoomTableTools.GenerateWeightedRoom(RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/ShrineOfEvilShrineRoomHell.room").room)
-            //GenericRoomTable table = RoomTableTools.CreateRoomTable();
-            //WeightedRoom roomer =  RoomTableTools.GenerateWeightedRoom(RoomFactory.BuildFromResource("Planetside/Resources2/smileBossRoom.room").room);
-
-            //table.includedRooms.Add(roomer);
-
-            //new Hook(typeof(GameManager).GetProperty("BossManager", BindingFlags.Instance | BindingFlags.Public).GetGetMethod(), typeof(PlanetsideModule).GetMethod("BossManagerHook"));
-
-            //RoomTableTools.AddBossTableToManager(RoomTableTools.GenerateIndividualBossFloorEntry(table, null, "FUCK"));
             DungeonHandler.Init();
             MasteryReplacementOub.InitDungeonHook();
 

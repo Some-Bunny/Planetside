@@ -179,9 +179,8 @@ namespace Planetside
         private IEnumerator DoStrike(RoomHandler room, PlayerController player)
         {
             HasTriggeredCrossHair = false;
-            GameObject fuck;
             Vector2 LOL = aimpoint+ new Vector2(-0.125f ,1.25f);
-            fuck = UnityEngine.Object.Instantiate<GameObject>(KineticStrike.StrikePrefab, LOL, Quaternion.identity);
+            GameObject fuck = UnityEngine.Object.Instantiate<GameObject>(KineticStrike.StrikePrefab, LOL, Quaternion.identity);
             fuck.GetComponent<tk2dBaseSprite>().PlaceAtLocalPositionByAnchor(LOL, tk2dBaseSprite.Anchor.LowerCenter);
             tk2dSprite ahfuck = fuck.GetComponent<tk2dSprite>();
             fuck.GetComponent<tk2dBaseSprite>().SetSprite(KineticStrike.spriteIds[0]);
@@ -230,15 +229,13 @@ namespace Planetside
             }
 
             Destroy(fuck);
-            GameObject fuck1;
-            fuck1 = UnityEngine.Object.Instantiate<GameObject>(KineticStrike.StrikePrefab, LOL, Quaternion.identity);
+            GameObject fuck1 = UnityEngine.Object.Instantiate<GameObject>(KineticStrike.StrikePrefab, LOL, Quaternion.identity);
             fuck1.GetComponent<tk2dBaseSprite>().PlaceAtLocalPositionByAnchor(LOL, tk2dBaseSprite.Anchor.LowerCenter);
             tk2dSprite troll = fuck1.GetComponent<tk2dSprite>();
             fuck1.GetComponent<tk2dBaseSprite>().SetSprite(KineticStrike.spriteIds[0]);
             
-            StarNuke = EnemyDatabase.GetOrLoadByGuid("b98b10fca77d469e80fb45f3c5badec5").GetComponent<BossFinalRogueDeathController>().DeathStarExplosionVFX;
-            GameObject epicwin = UnityEngine.Object.Instantiate<GameObject>(StarNuke);
-
+            //StarNuke = EnemyDatabase.GetOrLoadByGuid("b98b10fca77d469e80fb45f3c5badec5").GetComponent<BossFinalRogueDeathController>().DeathStarExplosionVFX;
+            GameObject epicwin = UnityEngine.Object.Instantiate<GameObject>(EnemyDatabase.GetOrLoadByGuid("b98b10fca77d469e80fb45f3c5badec5").GetComponent<BossFinalRogueDeathController>().DeathStarExplosionVFX);
             epicwin.GetComponent<tk2dBaseSprite>().PlaceAtLocalPositionByAnchor(LOL, tk2dBaseSprite.Anchor.LowerCenter);
             epicwin.transform.position = LOL.Quantize(0.0625f);
             epicwin.GetComponent<tk2dBaseSprite>().UpdateZDepth();
@@ -270,7 +267,7 @@ namespace Planetside
         }
         public void Boom(Vector3 position)
         {
-            ExplosionData defaultSmallExplosionData = GameManager.Instance.Dungeon.sharedSettingsPrefab.DefaultSmallExplosionData;
+            ExplosionData defaultSmallExplosionData = StaticExplosionDatas.genericSmallExplosion;
             this.KineticBomb.effect = defaultSmallExplosionData.effect;
             this.KineticBomb.ignoreList = defaultSmallExplosionData.ignoreList;
             this.KineticBomb.ss = defaultSmallExplosionData.ss;

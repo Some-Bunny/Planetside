@@ -55,7 +55,6 @@ namespace Planetside
 				AIActor orLoadByGuid = EnemyDatabase.GetOrLoadByGuid("4d37ce3d666b4ddda8039929225b7ede");
 				ExplodeOnDeath explodeOnDeath = companion.gameObject.AddComponent<ExplodeOnDeath>();
 				ExplosionData explosionData = orLoadByGuid.GetComponent<ExplodeOnDeath>().explosionData;
-				explosionData.damageToPlayer = 0f;
 				explodeOnDeath.explosionData = explosionData;
 
 				companion.aiActor.specRigidbody.PixelColliders.Add(new PixelCollider

@@ -44,7 +44,6 @@ namespace Planetside
     {
         public static void Init()
         {
-            //undodgeableSniper = new AIBulletBank.Entry();
             undodgeableSniper = StaticUndodgeableBulletEntries.CopyFields<AIBulletBank.Entry>(EnemyDatabase.GetOrLoadByGuid("31a3ea0c54a745e182e22ea54844a82d").bulletBank.GetBullet("sniper"));
             undodgeableSniper.Name = "sniperUndodgeable";
             Projectile projectile = UnityEngine.Object.Instantiate<GameObject>(undodgeableSniper.BulletObject).GetComponent<Projectile>();

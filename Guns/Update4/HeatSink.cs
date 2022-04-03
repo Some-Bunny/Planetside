@@ -103,7 +103,7 @@ namespace Planetside
                 UnityEngine.Object.DontDestroyOnLoad(projectile);
                 projectile.baseData.damage = 7f;
                 projectile.baseData.force *= 0f;
-                projectile.baseData.range = 7;
+                projectile.baseData.range = 6;
                 projectile.baseData.speed *= 0.3f;
                 projectile.specRigidbody.CollideWithOthers = false;
                 HeatSinkController controller = projectile.gameObject.AddComponent<HeatSinkController>();
@@ -153,7 +153,7 @@ namespace Planetside
 
             //GUN STATS
             gun.doesScreenShake = false;
-            gun.reloadTime = 1.3f;
+            gun.reloadTime = 1.5f;
             gun.muzzleFlashEffects.type = VFXPoolType.None;
             gun.barrelOffset.transform.localPosition = new Vector3(1.5f, 0.625f, 0f);
             gun.SetBaseMaxAmmo(500);
@@ -202,7 +202,7 @@ namespace Planetside
         public HeatSinkController()
         {
             this.canHarmOwner = false;
-            this.explosionData = GameManager.Instance.Dungeon.sharedSettingsPrefab.DefaultSmallExplosionData;
+            this.explosionData = StaticExplosionDatas.genericSmallExplosion;
             this.tickDelay = 0.05f;
             this.ignoreQueues = true;
             this.maxRadius = 5;
@@ -257,7 +257,7 @@ namespace Planetside
                 }
             }
             float Mult = owner != null ? owner.stats.GetStatValue(PlayerStats.StatType.Damage) : 1;
-            this.explosionData.damage = (20 * radiusValue) * Mult;
+            this.explosionData.damage = (26 * radiusValue) * Mult;
             this.explosionData.damageRadius = radiusValue;
             Exploder.Explode(pos, this.explosionData, Vector2.zero, null, this.ignoreQueues, CoreDamageTypes.None, false);
 
@@ -276,7 +276,6 @@ namespace Planetside
             blankObj.transform.localScale = Vector3.one * (radialIndicator.CurrentRadius / 4);
             Exploder.DoDistortionWave(pos, 10f, 0.4f, radialIndicator.CurrentRadius, 0.066f);
             Destroy(radialIndicator.gameObject);
-
         }
         public void OnDestroy()
         {
