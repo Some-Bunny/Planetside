@@ -377,6 +377,7 @@ namespace Planetside
 
             FlowInjectionInitialiser.InitialiseFlows();
 
+            ETGModMainBehaviour.Instance.gameObject.AddComponent<HMPrimeSpawnController>();
             ETGModMainBehaviour.Instance.gameObject.AddComponent<NevernamedsDarknessHandler>();
             ETGModMainBehaviour.Instance.gameObject.AddComponent<MasteryTraderSpawnController>();
             ETGModMainBehaviour.Instance.gameObject.AddComponent<SomethingWickedEventManager>();

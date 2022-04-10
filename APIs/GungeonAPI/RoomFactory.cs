@@ -680,7 +680,7 @@ namespace GungeonAPI
         }
 
         public static void AddInjection(PrototypeDungeonRoom protoroom, string injectionAnnotation, List<ProceduralFlowModifierData.FlowModifierPlacementType> placementRules, float chanceToLock, List<DungeonPrerequisite> prerequisites,
-           string injectorName, GameObject addSingularPlaceable = null, float XFromCenter = 0, float YFromCenter = 0)
+           string injectorName, float selectionWeight = 1, float chanceToSpawn = 1, GameObject addSingularPlaceable = null, float XFromCenter = 0, float YFromCenter = 0)
         {
             if (addSingularPlaceable != null)
             {
@@ -731,8 +731,8 @@ namespace GungeonAPI
                 IsWarpWing = false,
                 RequiresMasteryToken = false,
                 chanceToLock = chanceToLock,
-                selectionWeight = 1,
-                chanceToSpawn = 1,
+                selectionWeight = selectionWeight,
+                chanceToSpawn = chanceToSpawn,
                 RequiredValidPlaceable = null,
                 prerequisites = prerequisites.ToArray(),
                 CanBeForcedSecret = true,

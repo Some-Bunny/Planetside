@@ -44,6 +44,7 @@ namespace SaveAPI
 
         TRESPASS_INTO_OTHER_PLACE,
 
+        HM_PRIME_ROOM,
 
         //Wanderer Flags
         HAS_EVER_TALKED,

@@ -352,6 +352,8 @@ namespace Planetside
 				bholsterbeam1.name = "Detscavator Beamafadesfdf";
 				bholsterbeam1.northAngleTolerance = 8;
 
+
+
 				AIBeamShooter2 bholsterbeam2 = companion.gameObject.AddComponent<AIBeamShooter2>();
 				bholsterbeam2.beamTransform = m_CachedGunAttachPoint.transform;
 				bholsterbeam2.beamModule = beholsterbeam.beamModule;

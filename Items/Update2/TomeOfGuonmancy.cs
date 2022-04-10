@@ -158,8 +158,8 @@ namespace Planetside
                     AkSoundEngine.PostEvent("Play_ENM_wizardred_appear_01", base.gameObject);
                     if (base.LastOwner.PlayerHasActiveSynergy("Chapter Of Restoration"))
                     {
-                        this.random = UnityEngine.Random.Range(0.0f, 1.0f);
-                        if (random <= 0.07f)
+                        //this.random = UnityEngine.Random.Range(0.0f, 1.0f);
+                        if (UnityEngine.Random.Range(0.0f, 1.0f) < 0.07f)
                         {
                             PlayableCharacters characterIdentity = user.characterIdentity;
                             bool flag = characterIdentity != PlayableCharacters.Robot;
@@ -181,8 +181,8 @@ namespace Planetside
                     }
                     if (base.LastOwner.PlayerHasActiveSynergy("Chapter Of Glass"))
                     {
-                        this.random = UnityEngine.Random.Range(0.0f, 1.0f);
-                        if (random <= 0.1f)
+                        //this.random = UnityEngine.Random.Range(0.0f, 1.0f);
+                        if (UnityEngine.Random.Range(0.0f, 1.0f) < 0.1f)
                         {
                             LootEngine.GivePrefabToPlayer(PickupObjectDatabase.GetById(565).gameObject, user);
                         }
@@ -219,11 +219,7 @@ namespace Planetside
                 yield return null;
             }
             yield break;
-
         }
-
-
-
         private IEnumerator HandleBulletSuck(Projectile target)
         {
             GameObject gameObject = new GameObject("suck image");

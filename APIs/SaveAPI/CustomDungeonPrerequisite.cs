@@ -23,7 +23,7 @@ namespace SaveAPI
             }
             else if (this.advancedPrerequisiteType == AdvancedPrerequisiteType.CUSTOM_STAT_COMPARISION)
             {
-                float playerStatValue = AdvancedGameStatsManager.Instance.GetPlayerStatValue(this.customStatToCheck);
+                float playerStatValue = useSessionStatValue == true ? AdvancedGameStatsManager.Instance.GetSessionStatValue(this.customStatToCheck) :  AdvancedGameStatsManager.Instance.GetPlayerStatValue(this.customStatToCheck);
                 switch (this.prerequisiteOperation)
                 {
                     case PrerequisiteOperation.LESS_THAN:

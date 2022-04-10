@@ -37,7 +37,7 @@ namespace Planetside
                 {
                     new DungeonGenToolbox.AdvancedDungeonPrerequisite
                     {
-                    advancedAdvancedPrerequisiteType = DungeonGenToolbox.AdvancedDungeonPrerequisite.AdvancedAdvancedPrerequisiteType.SPEEDRUNSHOP,
+                        advancedAdvancedPrerequisiteType = DungeonGenToolbox.AdvancedDungeonPrerequisite.AdvancedAdvancedPrerequisiteType.SPEEDRUNSHOP,
                     }
                 };
                 RoomFactory.AddInjection(RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/ShopRooms/TimeTraderShop.room").room, "Time Trader Special Shop", flowModifierPlacementTypes, 0, dungeonPrerequisites, "Time Trader Special Shop");
@@ -53,7 +53,7 @@ namespace Planetside
                 GameObject TooLate;
                 OldShrineFactory.builtShrines.TryGetValue("psog:toolate", out TooLate);
 
-                RoomFactory.AddInjection(RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/ShopRooms/TimeTraderShopMinesEmpty.room").room, "Too Late For Special Shop", flowModifierPlacementTypes, 0, dungeonPrerequisitesOther, "Too Late For Special Shop", TooLate, -0.75f, -0.75f);
+                RoomFactory.AddInjection(RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/ShopRooms/TimeTraderShopMinesEmpty.room").room, "Too Late For Special Shop", flowModifierPlacementTypes, 0, dungeonPrerequisitesOther, "Too Late For Special Shop", 1, 1,TooLate, -0.75f, -0.75f);
                 DungeonHooks.OnPostDungeonGeneration += this.ResetFloorSpecificData;
                 Debug.Log("Finished TimeTraderSpawnController setup without failure!");
 

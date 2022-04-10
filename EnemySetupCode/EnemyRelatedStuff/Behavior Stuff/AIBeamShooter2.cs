@@ -243,7 +243,7 @@ public class AIBeamShooter2 : BraveBehaviour
 
 	private float m_laserAngle;
 
-	private BasicBeamController m_laserBeam;
+	public BasicBeamController m_laserBeam;
 
 	private BodyPartController m_bodyPart;
 

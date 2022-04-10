@@ -108,7 +108,7 @@ namespace Planetside
             ContractEnemy.SetActive(false);
             AIActor aiactor = ContractEnemy.GetComponent<AIActor>();
             aiactor.procedurallyOutlined = true;
-            aiactor.aiAnimator.facingType = AIAnimator.FacingType.Default; ;
+            aiactor.aiAnimator.facingType = AIAnimator.FacingType.Default;
             aiactor.AssignedCurrencyToDrop = 0;
             aiactor.AdditionalSafeItemDrops = new System.Collections.Generic.List<PickupObject>() { };
             aiactor.AdditionalSimpleItemDrops = new System.Collections.Generic.List<PickupObject>() { };
@@ -194,7 +194,6 @@ namespace Planetside
             bs.MovementBehaviors.Add(seek);
 
             Contractor = aiactor;
-
         }
         public static int ContractID;
         private static Color OutlineColor;

@@ -78,13 +78,37 @@ namespace Planetside
 
             GameObject ChallengeManagerReference = LoadHelper.LoadAssetFromAnywhere<GameObject>("_ChallengeManager");
             GorgunEyesVFX = (ChallengeManagerReference.GetComponent<ChallengeManager>().PossibleChallenges[20].challenge as FloorShockwaveChallengeModifier).EyesVFX;
+
+            EnemyElectricLinkVFX = (ChallengeManagerReference.GetComponent<ChallengeManager>().PossibleChallenges[18].challenge as CircleBurstChallengeModifier).ChainLightningVFX;
+            EnemyZappyTellVFX = (ChallengeManagerReference.GetComponent<ChallengeManager>().PossibleChallenges[18].challenge as CircleBurstChallengeModifier).tellVFX;
+
+            GameObject dragunBoulder = EnemyDatabase.GetOrLoadByGuid("05b8afe0b6cc4fffa9dc6036fa24c8ec").GetComponent<DraGunController>().skyBoulder;
+            foreach (Component item in dragunBoulder.GetComponentsInChildren(typeof(Component)))
+            {
+                if (item is SkyRocket laser)
+                {
+                    DragunBoulderLandVFX = laser.ExplosionData.effect;       
+                }
+            }
+
+            BeholsterController behCont = EnemyDatabase.GetOrLoadByGuid("4b992de5b4274168a8878ef9bf7ea36b").GetComponent<BeholsterController>();
+            BeholsterChargeUpVFX = behCont.chargeUpVfx;
+            BeholsterChargeDownVFX = behCont.chargeDownVfx;
+
             GunFullyChargedVFX = BraveResources.Load<GameObject>("Global VFX/VFX_DBZ_Charge", ".prefab");
-
-
         }
+        public static VFXPool BeholsterChargeUpVFX;
+        public static VFXPool BeholsterChargeDownVFX;
+
+
+        public static GameObject DragunBoulderLandVFX;
+
         public static GameObject GunFullyChargedVFX;
 
         public static GameObject GorgunEyesVFX;
+        public static GameObject EnemyElectricLinkVFX;
+        public static GameObject EnemyZappyTellVFX;
+
 
         public static ScarfAttachmentDoer ScarfObject;
         public static GameObject RadialRing;

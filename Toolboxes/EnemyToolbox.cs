@@ -34,7 +34,7 @@ namespace Planetside
 				sharedMaterials[sharedMaterials.Length - 1].shader = ShaderCache.Acquire("Brave/Internal/GlitterPassAdditive");
 			}
 		}
-		public static AIBeamShooter2 AddAIBeamShooter(AIActor enemy, Transform transform, string name,Projectile beamProjectile ,ProjectileModule beamModule = null ,float angle = 0)
+		public static AIBeamShooter2 AddAIBeamShooter(AIActor enemy, Transform transform, string name,Projectile beamProjectile, ProjectileModule beamModule = null ,float angle = 0)
         {
 			AIBeamShooter2 bholsterbeam1 = enemy.gameObject.AddComponent<AIBeamShooter2>();
 			bholsterbeam1.beamTransform = transform;

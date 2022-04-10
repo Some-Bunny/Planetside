@@ -13,6 +13,7 @@ namespace SaveAPI
         BLODD_IDOL_KILLS,
 
         JAMMED_ARCHGUNJURERS_KILLED,
-        UMBRAL_ENEMIES_KILLED
+        UMBRAL_ENEMIES_KILLED,
+        HMPRIME_KILLS
     }
 }

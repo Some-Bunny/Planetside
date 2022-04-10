@@ -48,7 +48,6 @@ namespace Planetside
 			this.specRigidbody.enabled = true;
 			this.aiActor.IgnoreForRoomClear = true;
 			this.AllowedToDoIntro = true;
-
 			this.AmountOfPurchases = 0;
 			this.aiActor.aiAnimator.OverrideIdleAnimation = "broken";
 			//this.aiActor.aiAnimator.OverrideMoveAnimation = "broken";
@@ -61,12 +60,10 @@ namespace Planetside
             {
 				Minimap.Instance.TemporarilyPreventMinimap = true;
 				GameManager.Instance.StartCoroutine(SpawnRing(this.aiActor.sprite.WorldCenter));
-				RoomHandler currentRoom = this.aiActor.GetAbsoluteParentRoom();
-				currentRoom.SealRoom();
 			}
 			AmountOfPurchases++;
         }
-		public float AmountOfPurchases;
+		public int AmountOfPurchases;
 		public void DoStartIntro()
 		{
 			base.StartCoroutine(this.DoIntro());
@@ -110,7 +107,35 @@ namespace Planetside
 
 		private IEnumerator DestroyRing()
 		{
-			float elapsed = 0f;
+			RoomHandler currentRoom = GameManager.Instance.BestActivePlayer.CurrentRoom;
+			currentRoom.SealRoom();
+			currentRoom.CompletelyPreventLeaving = true;
+			Dictionary<RuntimeRoomExitData, RuntimeExitDefinition> defs = currentRoom.exitDefinitionsByExit;
+			SecretRoomManager[] array = UnityEngine.Object.FindObjectsOfType<SecretRoomManager>();
+			SecretRoomManager yes;
+			SecretRoomDoorBeer doors;
+
+			foreach (var arraydef in array)
+            {
+				if (arraydef.room == currentRoom)
+                {
+					yes = arraydef;
+					doors = arraydef.doorObjects[0];
+					foreach (var def in defs)
+					{
+						def.Value.GenerateSecretRoomBlocker(GameManager.Instance.Dungeon.data, yes, doors, doors.transform);
+					}
+				}
+            }
+
+			DungeonDoorSubsidiaryBlocker[] blockers = UnityEngine.Object.FindObjectsOfType<DungeonDoorSubsidiaryBlocker>();
+			foreach (var blocker in blockers)
+            {
+				blocker.Seal();
+			}
+
+
+				float elapsed = 0f;
 			float duration = 2f;
 			float RingSize = ringObject.CurrentRadius;
 			while (elapsed < duration)
@@ -159,6 +184,7 @@ namespace Planetside
 			this.aiActor.IgnoreForRoomClear = true;
 			this.aiActor.ToggleRenderers(false);
 
+			this.aiActor.healthHaver.bossHealthBar = HealthHaver.BossBarType.MainBar;
 			this.aiActor.healthHaver.PreventAllDamage = true;
 			this.aiActor.enabled = true;
 			this.aiActor.specRigidbody.enabled = true;
@@ -194,7 +220,6 @@ namespace Planetside
 		private IEnumerator DestroyRemaningItems()
         {
 
-			this.aiActor.healthHaver.bossHealthBar = HealthHaver.BossBarType.MainBar;
 			if (shopToSellOut != null)
 			{
 				FieldInfo _itemControllers = typeof(BaseShopController).GetField("m_itemControllers", BindingFlags.NonPublic | BindingFlags.Instance);
@@ -211,7 +236,6 @@ namespace Planetside
 			}
 			yield break;
         }
-
 
 		private IEnumerator DoIntro()
 		{
@@ -262,11 +286,7 @@ namespace Planetside
 		public static GameObject robotShopkeeperprefab;
 		public static readonly string guid = "RobotShopkeeperBoss";
 		private static tk2dSpriteCollectionData RobotShopkeeperCollection;
-		public static GameObject shootpoint;
-		public static GameObject shootpoint1;
 		private static Texture2D BossCardTexture = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside/Resources/BossCards/hmprime_bosscard.png");
-		public static string TargetVFX;
-		public static Texture _gradTexture;
 
 		public static void Init()
 		{
@@ -281,17 +301,17 @@ namespace Planetside
 			if (!flag2)
 			{
 				robotShopkeeperprefab = BossBuilder.BuildPrefab("RobotShopkeeperBoss", guid, spritePaths[0], new IntVector2(0, 0), new IntVector2(8, 9), false, true);
-				var companion = robotShopkeeperprefab.AddComponent<EnemyBehavior>();
+				var companion = robotShopkeeperprefab.AddComponent<HMPrimeController>();
 				companion.aiActor.knockbackDoer.weight = 10000;
 				companion.aiActor.MovementSpeed = 1.8f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
-				companion.aiActor.CollisionDamage = 1f;
+				companion.aiActor.CollisionDamage = 0f;
 				companion.aiActor.aiAnimator.HitReactChance = 0.05f;
 				companion.aiActor.specRigidbody.CollideWithOthers = true;
 				companion.aiActor.specRigidbody.CollideWithTileMap = true;
 				companion.aiActor.PreventFallingInPitsEver = true;
-				companion.aiActor.healthHaver.ForceSetCurrentHealth(370f);
-				companion.aiActor.healthHaver.SetHealthMaximum(370f);
+				companion.aiActor.healthHaver.ForceSetCurrentHealth(800f);
+				companion.aiActor.healthHaver.SetHealthMaximum(800f);
 				companion.aiActor.CollisionKnockbackStrength = 2f;
 				companion.aiActor.CanTargetPlayers = true;
 				companion.aiActor.procedurallyOutlined = true;
@@ -347,7 +367,7 @@ namespace Planetside
 
 
 				});
-				companion.aiActor.CorpseObject = EnemyDatabase.GetOrLoadByGuid("01972dee89fc4404a5c408d50007dad5").CorpseObject;
+				//companion.aiActor.CorpseObject = EnemyDatabase.GetOrLoadByGuid("01972dee89fc4404a5c408d50007dad5").CorpseObject;
 				companion.aiActor.PreventBlackPhantom = false;
 				AIAnimator aiAnimator = companion.aiAnimator;
 				aiAnimator.IdleAnimation = new DirectionalAnimation
@@ -355,7 +375,7 @@ namespace Planetside
 					Type = DirectionalAnimation.DirectionType.FourWay,
 					Prefix = "active",
 					AnimNames = new string[]
-                    {
+					{
 						"active_top_right",
 						"active_bottom_right",
 						"active_bottom_left",
@@ -369,7 +389,7 @@ namespace Planetside
 					Type = DirectionalAnimation.DirectionType.FourWay,
 					Flipped = new DirectionalAnimation.FlipType[4],
 					AnimNames = new string[]
-                    {
+					{
 						"move_top_right",
 						"move_bottom_right",
 						"move_bottom_left",
@@ -381,8 +401,54 @@ namespace Planetside
 				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "intro", new string[1], new DirectionalAnimation.FlipType[1]);
 				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "broken", new string[] { "broken_right", "broken_left" }, new DirectionalAnimation.FlipType[2], DirectionalAnimation.DirectionType.TwoWayHorizontal);
 				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "move", new string[1], new DirectionalAnimation.FlipType[1]);
-				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "death", new string[1], new DirectionalAnimation.FlipType[1]);
+				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "death", new string[] { "death_right", "death_left" }, new DirectionalAnimation.FlipType[2], DirectionalAnimation.DirectionType.TwoWayHorizontal);
+				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "deathproper", new string[] { "death"}, new DirectionalAnimation.FlipType[2], DirectionalAnimation.DirectionType.TwoWayHorizontal);
 
+				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "primelaser", new string[1], new DirectionalAnimation.FlipType[1]);
+
+				/*
+					 * laserSpeenDown
+					 * laserSpeenDownRight
+					 * laserSpeenRight
+					 * laserSpeenUpRight
+					 * laserSpeenUp
+					 * laserSpeenUpLeft
+					 * laserSpeenLeft
+					 * laserSpeenDownLeft
+					*/
+				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "laserSpeen", new string[]{ 
+				"laserSpeenRight", 
+				"laserSpeenDownRight", 
+				"laserSpeenDown",
+				"laserSpeenDownLeft", 
+				"laserSpeenLeft", 
+				"laserSpeenUpLeft",
+				"laserSpeenUp",
+				"laserSpeenUpRight",
+				}, new DirectionalAnimation.FlipType[8], DirectionalAnimation.DirectionType.EightWay);
+				
+				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "cooldownlaser", new string[1], new DirectionalAnimation.FlipType[1]);
+
+
+				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "ubercharge", new string[1], new DirectionalAnimation.FlipType[1]);
+				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "overcharged", new string[1], new DirectionalAnimation.FlipType[1]);
+				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "chargeball", new string[] { "chargeball_up_right", "chargeball_down_right", "chargeball_down_left", "chargeball_up_left" }, new DirectionalAnimation.FlipType[4], DirectionalAnimation.DirectionType.FourWay);
+				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "fireball", new string[] { "fireball_up_right", "fireball_down_right", "fireball_down_left", "fireball_up_left" }, new DirectionalAnimation.FlipType[4], DirectionalAnimation.DirectionType.FourWay);
+
+				var enemy = EnemyDatabase.GetOrLoadByGuid("b98b10fca77d469e80fb45f3c5badec5");
+				Projectile beam = null;
+				foreach (Component item in enemy.GetComponentsInChildren(typeof(Component)))
+				{
+					if (item is BossFinalRogueLaserGun laser)
+					{
+						if (laser.beamProjectile)
+						{
+							beam = laser.beamProjectile;
+							break;
+						}
+					}
+				}
+				
 
 				companion.aiActor.AwakenAnimType = AwakenAnimationType.Awaken;
 				companion.aiActor.gameObject.AddComponent<RobotShopkeeperEngageDoer>();
@@ -409,7 +475,7 @@ namespace Planetside
 					7,
 					8,
 					9
-					}, "broken_left", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 4f;
+					}, "broken_left", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 2.8f;
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
 					{
 
@@ -423,7 +489,7 @@ namespace Planetside
 					7,
 					8,
 					9
-					}, "broken_right", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 4f;
+					}, "broken_right", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 2.8f;
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
 					{
 
@@ -437,7 +503,7 @@ namespace Planetside
 					7,
 					8,
 					9
-					}, "broken", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 4f;
+					}, "broken", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 2.8f;
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
 					{
 
@@ -453,7 +519,6 @@ namespace Planetside
 					71,
 					72,
 					}, "active_bottom_right", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 8f;
-
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
 					{
 					73,
@@ -468,14 +533,13 @@ namespace Planetside
 					79,
 					80,
 					}, "active_top_right", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 8f;
-
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
 					{
 					81,
 					81,
 					81,
 					82,
-					83,				
+					83,
 					84,
 					84,
 					84,
@@ -501,7 +565,7 @@ namespace Planetside
 					93,
 					93,
 					94,
-					95,									
+					95,
 					96,
 					96,
 					96,
@@ -521,15 +585,392 @@ namespace Planetside
 					104,
 					104
 					}, "move_top_right", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 5f;
-
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
 					{
+					196,
+					197,
+					196,
+					197,
+					196,
+					197,
+					196,
+					197,
+					196,
+					197,
+					198,
+					199,
+					200,
+					201,
+					202,
+					203,
+					204,
+					205,
+					}, "death_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5f;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					{
+					196,//0
+					197,
+					196,
+					197,
+					196,
+					197,
+					196,
+					197,
+					196,
+					197,//9
 
-					61,
-					62,
-					63,
-					64,//79
-					}, "death", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 8f;
+					198,
+					199,
+					200,
+					201,
+					202,
+					203,//15
+					204,
+					205,
+					}, "death_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5f;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					{
+					206,//0
+					207,
+					208,
+					207,
+					208,
+					207,
+					208,
+					207,
+					208,
+					207,
+					208,
+					207,
+					208,
+					207,
+					208,//14
+
+					209,//15
+					210,
+					211,
+					212,//18
+
+					213,//19
+					213,//20
+
+					214,//21
+					214,//22
+
+					215,//23
+					215,//24
+					
+					216,//25
+					216,	
+					217,//27
+
+					218,//28
+					218,//29
+
+					219,//30
+					219,
+					220,
+					220,
+					221,
+					221,
+					221,
+					222,
+					222,
+					223,
+					223,
+					223,
+					224,
+					224,
+					225,//44
+					225,
+					225,
+					225,
+					}, "death", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					{
+					160,//0
+					161,//1
+					162,
+					162,//2
+					163,
+					163,//3
+					164,
+					164,
+					164,//4
+					165,
+					165,//5
+					165,
+					165,
+					165,
+
+					166,//6
+					166,
+
+					167,//7
+					167,
+
+					168,//8
+					169,//9
+					170,
+					
+					171,
+					172,
+					171,
+					172,
+					171,
+					172,
+					171,
+					172,
+					171,
+					172,
+					171,
+					172,
+
+					173,
+					173,
+					174
+					}, "primelaser", tk2dSpriteAnimationClip.WrapMode.Once).fps = 14f;			
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					{
+					175,
+					}, "laserSpeenDown", tk2dSpriteAnimationClip.WrapMode.Once).fps = 2f;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					{
+					176,
+					}, "laserSpeenDownRight", tk2dSpriteAnimationClip.WrapMode.Once).fps = 2f;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					{
+					177,
+					}, "laserSpeenRight", tk2dSpriteAnimationClip.WrapMode.Once).fps = 2f;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					{
+					178,
+					}, "laserSpeenUpRight", tk2dSpriteAnimationClip.WrapMode.Once).fps = 2f;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					{
+					179,
+					}, "laserSpeenUp", tk2dSpriteAnimationClip.WrapMode.Once).fps = 2f;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					{
+					180,
+					}, "laserSpeenUpLeft", tk2dSpriteAnimationClip.WrapMode.Once).fps = 2f;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					{
+					181,
+					}, "laserSpeenLeft", tk2dSpriteAnimationClip.WrapMode.Once).fps = 2f;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					{
+					182,
+					}, "laserSpeenDownLeft", tk2dSpriteAnimationClip.WrapMode.Once).fps = 2f;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					{
+					179,
+					179,
+					179,
+					180,
+					180,
+					181,
+					181,
+					181,
+					182,
+					182,
+					182,
+					175,
+					175,
+					175,
+					175,
+					175,
+
+					183,//16
+					183,
+					183,
+					184,
+					184,
+					185,
+					185,
+					185,
+					185,
+					185,
+					185,
+					185,
+					186,
+					187,//29
+					188,
+					189,
+					189,
+					189,
+					190,
+					191,
+					192,
+					193,
+					194,
+					195
+					}, "cooldownlaser", tk2dSpriteAnimationClip.WrapMode.Once).fps = 12f;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					{
+					128,
+					129,
+					130,
+					131,
+					132,
+					133,
+					133,
+					134,
+					134,
+					134,
+					135,
+					135
+					}, "chargeball_down_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 8f;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					{
+					135,
+					134,
+					133,
+					132,
+					130,
+					128
+					}, "fireball_down_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 8f;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					{
+					136,
+					137,
+					138,
+					139,
+					140,
+					141,
+					141,
+					142,
+					142,
+					142,
+					143,
+					143
+					}, "chargeball_down_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 8f;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					{
+					143,
+					142,
+					141,
+					140,
+					138,
+					136
+					}, "fireball_down_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 8f;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					{
+					144,
+					145,
+					146,
+					147,
+					148,
+					149,
+					149,
+					150,
+					150,
+					150,
+					151,
+					151
+					}, "chargeball_up_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 8f;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					{
+					151,
+					150,
+					149,
+					148,
+					146,
+					144
+					}, "fireball_up_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 8f;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					{
+					152,
+					153,
+					154,
+					155,
+					156,
+					157,
+					157,
+					158,
+					158,
+					158,
+					159,
+					159
+					}, "chargeball_up_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 8f;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					{
+					159,
+					158,
+					157,
+					156,
+					154,
+					152
+					}, "fireball_up_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 8f;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					{
+					105,//0
+					105,
+					105,
+					106,
+					106,
+					106,
+					107,
+					107,
+					107,
+					108,
+					108,
+					108,
+					109,
+					109,
+					109,//14
+
+					110,//15
+					111,
+					110,
+					111,
+					110,
+					111,
+					110,
+					111,//22
+					}, "ubercharge", tk2dSpriteAnimationClip.WrapMode.Once).fps = 10f;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					{
+					112,//0
+					113,
+					114,
+					115,
+					116,
+					117,
+					118,
+					119,//7
+					120,
+					120,
+					120,
+					120,
+					120,
+					120,
+					120,
+					120,
+					120,//16
+
+					120,//17
+					121,
+					120,
+					121,
+					120,
+					121,
+					120,
+					121,
+					120,
+					121,
+					120,
+					121,
+					120,
+					121,//30
+
+					122,//31
+					123,
+					124,
+					125,
+					126,
+					127//36
+					}, "overcharged", tk2dSpriteAnimationClip.WrapMode.Once).fps = 11f;
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
 					{
 
@@ -543,7 +984,7 @@ namespace Planetside
 					7,
 					8,
 					9
-					}, "talk", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 4f;
+					}, "talk", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 2.8f;
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
 					{
 					10,//0
@@ -643,17 +1084,214 @@ namespace Planetside
 
 				}
 
-				EnemyToolbox.AddSoundsToAnimationFrame(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "intro", new Dictionary<int, string> { 
+				EnemyToolbox.AddSoundsToAnimationFrame(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "death", new Dictionary<int, string> {
+					{ 2, "Play_ENM_hammer_target_01" },
+					{ 4, "Play_ENM_hammer_target_01" },
+					{ 6, "Play_ENM_hammer_target_01" },
+					{ 8, "Play_ENM_hammer_target_01" },
+					{ 10, "Play_ENM_hammer_target_01" },
+					{ 12, "Play_ENM_hammer_target_01" },
+					{ 14, "Play_ENM_hammer_target_01" },
+
+					{ 16, "Play_BOSS_omegaBeam_charge_01" },
+
+					{ 20, "Play_BOSS_RatMech_Barrel_01" },
+					{ 24, "Play_BOSS_RatMech_Barrel_01" },
+
+					{ 30, "Play_WPN_bsg_charge_01" },
+
+					{ 38, "Play_ENM_statue_charge_01" },
+					{ 43, "Play_OBJ_nuke_blast_01" },
+					{ 44, "Play_BOSS_RatMech_Stomp_01" },
+				});
+				EnemyToolbox.AddEventTriggersToAnimation(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "death", new Dictionary<int, string> {
+					{ 10, "CryingAboutIt" },
+					{ 42, "KaBoom" },
+					{ 43, "Lights" },
+				});
+				EnemyToolbox.AddSoundsToAnimationFrame(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "death_left", new Dictionary<int, string> {
+					{ 0, "Play_ENM_hammer_target_01" },
+					{ 2, "Play_ENM_hammer_target_01" },
+					{ 4, "Play_ENM_hammer_target_01" },
+					{ 6, "Play_ENM_hammer_target_01" },
+					{ 8, "Play_ENM_hammer_target_01" },
+					{ 10, "Play_BOSS_RatMech_Squat_01" },
+					{ 15, "Play_BOSS_doormimic_land_01" },
+				});
+				EnemyToolbox.AddSoundsToAnimationFrame(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "death_right", new Dictionary<int, string> {
+					{ 0, "Play_ENM_hammer_target_01" },
+					{ 2, "Play_ENM_hammer_target_01" },
+					{ 4, "Play_ENM_hammer_target_01" },
+					{ 6, "Play_ENM_hammer_target_01" },
+					{ 8, "Play_ENM_hammer_target_01" },
+					{ 10, "Play_BOSS_RatMech_Squat_01" },
+					{ 15, "Play_BOSS_doormimic_land_01" },
+				});
+				EnemyToolbox.AddEventTriggersToAnimation(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "death_left", new Dictionary<int, string> {
+					{ 0, "SetToNotDieKinda" },
+					{ 1, "Wimper" },
+					{ 15, "Fartd" },
+
+				});
+				EnemyToolbox.AddEventTriggersToAnimation(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "death_right", new Dictionary<int, string> {
+					{ 0, "SetToNotDieKinda" },
+					{ 1, "Wimper" },
+					{ 15, "Fartd" },
+				});
+				EnemyToolbox.AddEventTriggersToAnimation(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "cooldownlaser", new Dictionary<int, string> {
+					{ 16, "ReleaseSparks" },
+					{ 17, "ReleaseSparks" },
+					{ 18, "ReleaseSparks" },
+					{ 19, "ReleaseSparks" },
+					{ 20, "ReleaseSparks" },
+					{ 21, "ReleaseSparks" },
+					{ 22, "ReleaseSparks" },
+					{ 23, "ReleaseSparks" },
+					{ 24, "ReleaseSparks" },
+					{ 25, "ReleaseSparks" },
+					{ 26, "ReleaseSparks" },
+					{ 27, "ReleaseSparks" },
+					{ 28, "ReleaseSparks" },
+					{ 29, "ReleaseSparks" },
+				});
+
+				EnemyToolbox.AddSoundsToAnimationFrame(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "cooldownlaser", new Dictionary<int, string> {
+					{ 1, "Play_BOSS_omegaBeam_fade_01" },
+					{ 17, "Play_BOSS_RatMech_Squat_01" },
+					{ 30, "Play_BOSS_RatMech_Target_01" },
+					{ 33, "Play_BOSS_RatMech_Barrel_01" },
+
+				});
+
+				EnemyToolbox.AddSoundsToAnimationFrame(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "primelaser", new Dictionary<int, string> {
+					{ 2, "Play_BOSS_RatMech_Squat_01" },
+					{ 5, "Play_BOSS_RatMech_Lights_01" },
+					{ 22, "Play_ENM_hammer_target_01" },
+					{ 24, "Play_ENM_hammer_target_01" },
+					{ 26, "Play_ENM_hammer_target_01" },
+					{ 28, "Play_ENM_hammer_target_01" },
+					{ 30, "Play_ENM_hammer_target_01" },
+					{ 32, "Play_ENM_hammer_target_01" },
+					{ 34, "Play_ENM_hammer_target_01" },
+					{ 29, "Play_BOSS_omegaBeam_charge_01" },
+				});
+
+				EnemyToolbox.AddEventTriggersToAnimation(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "primelaser", new Dictionary<int, string> {
+					{ 0, "Stop" },
+					{ 30, "PrimeLasers" },
+				});
+
+				//"fireball_up_right", "fireball_down_right", "fireball_down_left", "fireball_up_left"
+				EnemyToolbox.AddSoundsToAnimationFrame(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "talk", new Dictionary<int, string> {
+					{ 1, "Play_DistressSiren" },
+				});
+				EnemyToolbox.AddSoundsToAnimationFrame(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "broken", new Dictionary<int, string> {
+					{ 1, "Play_DistressSiren" },
+				});
+				EnemyToolbox.AddSoundsToAnimationFrame(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "broken_left", new Dictionary<int, string> {
+					{ 1, "Play_DistressSiren" },
+				});
+				EnemyToolbox.AddSoundsToAnimationFrame(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "broken_right", new Dictionary<int, string> {
+					{ 1, "Play_DistressSiren" },
+				});
+				EnemyToolbox.AddSoundsToAnimationFrame(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "fireball_up_right", new Dictionary<int, string> {
+					{ 1, "Play_BOSS_RatMech_Squat_01" },
+					{ 3, "Play_WPN_planetgun_reload_01" },
+				});
+
+				EnemyToolbox.AddSoundsToAnimationFrame(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "fireball_down_right", new Dictionary<int, string> {
+					{ 1, "Play_BOSS_RatMech_Squat_01" },
+					{ 3, "Play_WPN_planetgun_reload_01" },
+				});
+				EnemyToolbox.AddSoundsToAnimationFrame(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "fireball_down_left", new Dictionary<int, string> {
+					{ 1, "Play_BOSS_RatMech_Squat_01" },
+					{ 3, "Play_WPN_planetgun_reload_01" },
+				});
+
+				EnemyToolbox.AddSoundsToAnimationFrame(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "fireball_up_left", new Dictionary<int, string> {
+					{ 1, "Play_BOSS_RatMech_Squat_01" },
+					{ 3, "Play_WPN_planetgun_reload_01" },
+				});
+				EnemyToolbox.AddEventTriggersToAnimation(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "chargeball_up_right", new Dictionary<int, string> {
+					{ 0, "Stop" },
+					{ 7, "CreateChargeEffect(UR)" },
+				});
+				EnemyToolbox.AddSoundsToAnimationFrame(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "chargeball_up_right", new Dictionary<int, string> {
+					{ 0, "Play_BOSS_RatMech_Eye_01" },
+					{ 1, "Play_BOSS_RatMech_Squat_01" },
+					{ 7, "Play_BOSS_RatMech_Shutter_01" },
+					{ 11, "Play_BOSS_RatMech_Hop_01" },
+				});
+				EnemyToolbox.AddEventTriggersToAnimation(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "chargeball_down_left", new Dictionary<int, string> {
+					{ 0, "Stop" },
+					{ 7, "CreateChargeEffect(DL)" },
+				});
+				EnemyToolbox.AddSoundsToAnimationFrame(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "chargeball_down_left", new Dictionary<int, string> {
+					{ 0, "Play_BOSS_RatMech_Eye_01" },
+					{ 1, "Play_BOSS_RatMech_Squat_01" },
+					{ 7, "Play_BOSS_RatMech_Shutter_01" },
+					{ 11, "Play_BOSS_RatMech_Hop_01" },
+				});
+				EnemyToolbox.AddEventTriggersToAnimation(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "chargeball_up_left", new Dictionary<int, string> {
+					{ 0, "Stop" },
+					{ 7, "CreateChargeEffect(UL)" },
+				});
+				EnemyToolbox.AddSoundsToAnimationFrame(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "chargeball_up_left", new Dictionary<int, string> {
+					{ 0, "Play_BOSS_RatMech_Eye_01" },
+					{ 1, "Play_BOSS_RatMech_Squat_01" },
+					{ 7, "Play_BOSS_RatMech_Shutter_01" },
+					{ 11, "Play_BOSS_RatMech_Hop_01" },
+				});
+				EnemyToolbox.AddEventTriggersToAnimation(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "chargeball_down_right", new Dictionary<int, string> {
+					{ 0, "Stop" },
+					{ 7, "CreateChargeEffect(DR)" },
+				});
+				EnemyToolbox.AddSoundsToAnimationFrame(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "chargeball_down_right", new Dictionary<int, string> {
+					{ 0, "Play_BOSS_RatMech_Eye_01" },
+					{ 1, "Play_BOSS_RatMech_Squat_01" },
+					{ 7, "Play_BOSS_RatMech_Shutter_01" },
+					{ 11, "Play_BOSS_RatMech_Hop_01" },
+				});
+
+				EnemyToolbox.AddEventTriggersToAnimation(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "ubercharge", new Dictionary<int, string> {
+					{ 0, "Stop" },
+					{ 22, "BAM" },
+				});
+				EnemyToolbox.AddEventTriggersToAnimation(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "overcharged", new Dictionary<int, string> {
+					{ 0, "Stop" },
+					{ 1, "ReleaseSparks" },
+					{ 2, "ReleaseSparks" },
+					{ 3, "ReleaseSparks" },
+					{ 4, "ReleaseSparks" },
+					{ 5, "ReleaseSparks" },
+					{ 6, "ReleaseSparks" },
+					{ 7, "ReleaseSparks" },
+					{ 8, "ReleaseSparks" },
+				});
+				EnemyToolbox.AddSoundsToAnimationFrame(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "ubercharge", new Dictionary<int, string> {
+					{ 0, "Play_BOSS_RatMech_Target_01" },
+					{ 2, "Play_BOSS_RatMech_Barrel_01" },
+					{ 5, "Play_BOSS_RatMech_Barrel_01" },
+					{ 8, "Play_BOSS_RatMech_Barrel_01" },
+					{ 11, "Play_BOSS_RatMech_Barrel_01" },
+					{ 17, "Play_BOSS_RatMech_Shutter_01" }
+				});
+				EnemyToolbox.AddSoundsToAnimationFrame(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "overcharged", new Dictionary<int, string> {
+					{ 0, "Play_BOSS_RatMech_Stomp_01" },
+					{ 17, "Play_BOSS_RatMech_Target_01" },
+					{ 32, "Play_BOSS_RatMech_Squat_01" },
+				});
+				EnemyToolbox.AddSoundsToAnimationFrame(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "intro", new Dictionary<int, string> {
 					{ 1, "Play_BOSS_RatMech_Target_01" },
-					{ 20, "Play_BOSS_RatMech_Bomb_01" }, 
-					{ 22, "Play_BOSS_RatMech_Squat_01" }, 
+					{ 20, "Play_BOSS_RatMech_Bomb_01" },
+					{ 22, "Play_BOSS_RatMech_Squat_01" },
 					{ 33, "Play_BOSS_RatMech_Barrel_01" } ,
 					{ 43, "Play_BOSS_RatMech_Barrel_01" } ,
 					{ 45, "Play_BOSS_RatMech_Stand_01" } ,
 					{ 57, "Play_BOSS_RatMech_Eye_01" } ,
 					{ 62, "Play_BOSS_RatMech_Target_01" } ,
 				});
-				EnemyToolbox.AddEventTriggersToAnimation(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "intro", new Dictionary<int, string> { 
+				EnemyToolbox.AddEventTriggersToAnimation(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "intro", new Dictionary<int, string> {
 					{ 1, "IntroSpeak1" },
 					{ 22, "IntroSpeak2" },
 					{ 57, "IntroSpeak3" },
@@ -663,7 +1301,6 @@ namespace Planetside
 					{ 51, "DoublePoof" },
 					{ 39, "GunPositionPoofs" },
 				});
-
 				EnemyToolbox.AddEventTriggersToAnimation(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "move_bottom_left", new Dictionary<int, string> {
 					{ 0, "StopVFX(RBDL)" },
 					{ 1, "Stop" },
@@ -740,13 +1377,6 @@ namespace Planetside
 					{ 2, "Play_CHR_robot_roll_01" },
 					{ 7, "Play_CHR_robot_roll_01" },
 				});
-				/*
-				 * move_bottom_left
-				 * move_bottom_right
-				 * move_top_left
-				 * move_top_right
-				*/
-
 
 
 				var bs = robotShopkeeperprefab.GetComponent<BehaviorSpeculator>();
@@ -765,6 +1395,32 @@ namespace Planetside
 
 				EnemyToolbox.GenerateShootPoint(companion.gameObject, new Vector2(0.8125f, 2.125f), "LeftGun_Up(Right)");
 				EnemyToolbox.GenerateShootPoint(companion.gameObject, new Vector2(2.5625f, 1.8125f), "RightGun_Up(Right)");
+
+				GameObject center = EnemyToolbox.GenerateShootPoint(companion.gameObject, new Vector2(1.5f, 1.25f), "AbsoluteCenter");
+				GameObject Lasercenter = EnemyToolbox.GenerateShootPoint(companion.gameObject, new Vector2(1.5f, 1.625f), "BeamAbsoluteCenter");
+
+				BeholsterController behCont = EnemyDatabase.GetOrLoadByGuid("4b992de5b4274168a8878ef9bf7ea36b").GetComponent<BeholsterController>();
+
+
+				AIBeamShooter2 bholsterbeam1 = companion.gameObject.AddComponent<AIBeamShooter2>();
+				bholsterbeam1.beamTransform = Lasercenter.transform;
+				bholsterbeam1.beamModule = behCont.beamModule;
+				bholsterbeam1.beamProjectile = behCont.projectile;
+				bholsterbeam1.firingEllipseCenter = Lasercenter.transform.position;
+				bholsterbeam1.name = "LeftBeam";
+				bholsterbeam1.northAngleTolerance = 180;
+				bholsterbeam1.firingEllipseA = 1;
+				bholsterbeam1.firingEllipseB = 1;
+
+				AIBeamShooter2 bholsterbeam2 = companion.gameObject.AddComponent<AIBeamShooter2>();
+				bholsterbeam2.beamTransform = Lasercenter.transform;
+				bholsterbeam2.beamModule = behCont.beamModule;
+				bholsterbeam2.beamProjectile = behCont.projectile;
+				bholsterbeam2.firingEllipseCenter = Lasercenter.transform.position;
+				bholsterbeam2.name = "RightBeam";
+				bholsterbeam2.northAngleTolerance = 0;
+				bholsterbeam2.firingEllipseA = 1;
+				bholsterbeam2.firingEllipseB = 1;
 
 				bs.TargetBehaviors = new List<TargetBehaviorBase>
 				{
@@ -793,12 +1449,75 @@ namespace Planetside
 					MaxActiveRange = 0
 				}
 				};
-			
-
 
 				bs.AttackBehaviorGroup.AttackBehaviors = new List<AttackBehaviorGroup.AttackGroupItem>
 				{
-					
+
+					new AttackBehaviorGroup.AttackGroupItem()
+					{
+					Probability = 0f,
+					Behavior =new CustomBeholsterLaserBehavior() {
+					InitialCooldown = 6f,
+					firingTime = 14f,
+					AttackCooldown = 4f,
+					RequiresLineOfSight = false,
+					UsesCustomAngle = true,
+					RampHeight = 14,
+					LockInPlaceWhileAttacking = false,
+					firingType = CustomBeholsterLaserBehavior.FiringType.ONLY_NORTHANGLEVARIANCE,
+					chargeTime = 3f,
+					UsesBaseSounds = false,
+					LaserFiringSound = "Play_ENM_deathray_shot_01",
+					StopLaserFiringSound = "Stop_ENM_deathray_loop_01",
+					ChargeAnimation = "primelaser",
+					FireAnimation = "laserSpeen",
+					PostFireAnimation = "cooldownlaser",
+					beamSelection = ShootBeamBehavior.BeamSelection.All,
+					trackingType = CustomBeholsterLaserBehavior.TrackingType.ConstantTurn,
+					LocksFacingDirection = false,
+					unitCatchUpSpeed = 2,
+					maxTurnRate = 72,
+					turnRateAcceleration = 2,
+					useDegreeCatchUp = companion.transform,
+					minDegreesForCatchUp = 4,
+					degreeCatchUpSpeed = 4,
+					useUnitCatchUp = true,
+					minUnitForCatchUp = 1.5f,
+					maxUnitForCatchUp = 1.5f,
+					useUnitOvershoot = true,
+					minUnitForOvershoot = 1,
+					BulletScript = new CustomBulletScriptSelector(typeof(AdditionalLinesOfBullets)),
+					unitOvershootTime = 0f,
+					unitOvershootSpeed = 2,
+					ShootPoint = Lasercenter.transform,
+					DoesSpeedLerp = true,
+					InitialStartingSpeed = 0,
+					TimeToReachFullSpeed = 1,
+					TimeToStayAtZeroSpeedAt = 1,
+					FacesLaserAngle = true,
+					Cooldown = 15,
+				},
+				NickName = "BigLaser"
+				},
+
+					new AttackBehaviorGroup.AttackGroupItem()
+					{
+
+					Probability = 04f,
+					Behavior = new ShootBehavior{
+					ShootPoint = fuck,
+					BulletScript = new CustomBulletScriptSelector(typeof(RobotShopkeeperBoss.CleanSweeps)),
+					LeadAmount = 0f,
+					AttackCooldown = 1f,
+					Cooldown = 5f,
+					RequiresLineOfSight = true,
+					MultipleFireEvents = true,
+					Uninterruptible = true,
+					MaxEnemiesInRoom = 4,
+						},
+						NickName = "aaaaa"
+
+					},
 					new AttackBehaviorGroup.AttackGroupItem()
 					{
 
@@ -807,21 +1526,81 @@ namespace Planetside
 					ShootPoint = fuck,
 					BulletScript = new CustomBulletScriptSelector(typeof(RobotShopkeeperBoss.ShootGun)),
 					LeadAmount = 0f,
-					AttackCooldown = 1f,
+					AttackCooldown = 0.5f,
 					Cooldown = 2f,
-					//TellAnimation = "bottletell",
+					//TellAnimation = "chargeball",
 					//FireAnimation = "bottle",
 					RequiresLineOfSight = true,
 
 					MultipleFireEvents = true,
-					Uninterruptible = false,
+					Uninterruptible = true,
 					MaxEnemiesInRoom = 4,
 						},
 						NickName = "Bottle"
 
 					},
-					
+					new AttackBehaviorGroup.AttackGroupItem()
+					{
 
+					Probability = 5f,
+					Behavior = new ShootBehavior{
+					ShootPoint = center,
+					BulletScript = new CustomBulletScriptSelector(typeof(RobotShopkeeperBoss.BigBomb)),
+					LeadAmount = 0f,
+					AttackCooldown = 0.33f,
+					Cooldown = 12f,
+					RequiresLineOfSight = true,
+					InitialCooldown = 8,
+					MultipleFireEvents = true,
+					Uninterruptible = true,
+					TellAnimation = "chargeball",
+					FireAnimation = "fireball",
+					MaxEnemiesInRoom = 4,
+						},
+						NickName = "LargeBomb"
+
+					},
+					new AttackBehaviorGroup.AttackGroupItem()
+					{
+
+					Probability = 1f,
+					Behavior = new ShootBehavior{
+					ShootPoint = fuck,
+					BulletScript = new CustomBulletScriptSelector(typeof(RobotShopkeeperBoss.EatMissiles)),
+					LeadAmount = 0f,
+					AttackCooldown = 1f,
+					Cooldown = 2f,
+					RequiresLineOfSight = true,
+
+					MultipleFireEvents = false,
+					Uninterruptible = true,
+					MaxEnemiesInRoom = 4,
+
+						},
+						NickName = "ROKCTE"
+
+					},
+						new AttackBehaviorGroup.AttackGroupItem()
+					{
+
+					Probability = 5f,
+					Behavior = new ShootBehavior{
+					ShootPoint = center,
+					BulletScript = new CustomBulletScriptSelector(typeof(RobotShopkeeperBoss.Taser)),
+					LeadAmount = 0f,
+					AttackCooldown = 1f,
+					Cooldown = 10f,
+					TellAnimation = "ubercharge",
+					FireAnimation = "overcharged",
+					RequiresLineOfSight = true,
+					MultipleFireEvents = true,
+					Uninterruptible = true,
+					MaxEnemiesInRoom = 4,
+						StopDuring = ShootBehavior.StopType.Attack
+
+						},
+						NickName = "Taser"
+					},
 				};
 
 
@@ -833,13 +1612,13 @@ namespace Planetside
 				bs.OverrideStartingFacingDirection = behaviorSpeculator.OverrideStartingFacingDirection;
 				bs.StartingFacingDirection = behaviorSpeculator.StartingFacingDirection;
 				bs.SkipTimingDifferentiator = behaviorSpeculator.SkipTimingDifferentiator;
-				Game.Enemies.Add("psog:robotshopkeeper", companion.aiActor);
+				Game.Enemies.Add("psog:hm_prime", companion.aiActor);
 
 
 				var shared_auto_001 = ResourceManager.LoadAssetBundle("shared_auto_001");
 				var shared_auto_002 = ResourceManager.LoadAssetBundle("shared_auto_002");
 				var SpeechPoint = new GameObject("SpeechPoint");
-				SpeechPoint.transform.position = new Vector3(2,2);
+				SpeechPoint.transform.position = new Vector3(2, 2);
 
 
 
@@ -897,7 +1676,12 @@ namespace Planetside
 
 				AIAnimator aIAnimator = companion.aiAnimator;
 				aIAnimator.spriteAnimator = companion.spriteAnimator;
-				
+
+				ETGMod.Databases.Strings.Core.AddComplex("#ROBOTSHOPKEEPER_CRYABOUTIT", "---WARNING: FUEL CELLS CRITICAL---\n---DETONATION IMMINENT---");
+
+				ETGMod.Databases.Strings.Core.AddComplex("#ROBOTSHOPKEEPER_WAWA1", "---WARNING: SEVERE DAMAGE SUSTAINED---\n---ENTERING EMERGENCY POWER MODE---");
+
+
 
 				ETGMod.Databases.Strings.Core.Set("#ROBOTSHOPKEEPER_RUNBASEDMULTILINE_GENERIC", "DETECTING HUMANOID LIFE-FORM : REQUESTING REPAIR");
 				ETGMod.Databases.Strings.Core.Set("#ROBOTSHOPKEEPER_RUNBASEDMULTILINE_STOPPER", "REQUESTING REPAIR : REQUESTING REPAIR");
@@ -913,11 +1697,16 @@ namespace Planetside
 				ETGMod.Databases.Strings.Core.AddComplex("#ROBOTSHOPKEEPER_ENGAGED_1", "---REBOOTING TARGETING CORE---");
 				ETGMod.Databases.Strings.Core.AddComplex("#ROBOTSHOPKEEPER_ENGAGED_1", "---REBOOTING SYSTEMS---");
 
-				ETGMod.Databases.Strings.Core.AddComplex("#ROBOTSHOPKEEPER_ENGAGED_2", "---ALL SYSTEMS NOMINAL---");
-				ETGMod.Databases.Strings.Core.AddComplex("#ROBOTSHOPKEEPER_ENGAGED_2", "---PROCEEDING NEXT STAGE OF REBOOT---");
+				ETGMod.Databases.Strings.Core.AddComplex("#ROBOTSHOPKEEPER_ENGAGED_2", "---MOST SYSTEMS NOMINAL---");
 
-				ETGMod.Databases.Strings.Core.AddComplex("#ROBOTSHOPKEEPER_ENGAGED_3", "---P.R.I.M.E WEAPONS ONLINE---");
-				ETGMod.Databases.Strings.Core.AddComplex("#ROBOTSHOPKEEPER_ENGAGED_3", "---ALL WEAPONS ARMED---");
+				ETGMod.Databases.Strings.Core.AddComplex("#ROBOTSHOPKEEPER_ENGAGED_3", "---83% OF WEAPON SYSTEMS ONLINE---");
+				ETGMod.Databases.Strings.Core.AddComplex("#ROBOTSHOPKEEPER_ENGAGED_3", "---83% OF WEAPONS ARMED---");
+
+				ETGMod.Databases.Strings.Core.AddComplex("#ROBOTSHOPKEEPER_ENGAGED_FULLREPAIR_2", "---ALL SYSTEMS NOMINAL---");
+
+				ETGMod.Databases.Strings.Core.AddComplex("#ROBOTSHOPKEEPER_FULLREPAIR_ENGAGED_3", "---P.R.I.M.E WEAPONS ONLINE---");
+				ETGMod.Databases.Strings.Core.AddComplex("#ROBOTSHOPKEEPER_FULLREPAIR_ENGAGED_3", "---ALL WEAPONS ARMED---");
+
 
 				ETGMod.Databases.Strings.Core.AddComplex("#ROBOTSHOPKEEPER_ENGAGED_4", "---DISABLING SAFETIES---");
 				ETGMod.Databases.Strings.Core.AddComplex("#ROBOTSHOPKEEPER_ENGAGED_4", "---TARGET LOCKED---");
@@ -1037,6 +1826,9 @@ namespace Planetside
 
 				shopObj.cat = null;
 
+				shopObj.OptionalMinimapIcon = SpriteBuilder.SpriteFromResource("Planetside/Resources/Bosses/HMPrime/roomIcon.png");
+				UnityEngine.Object.DontDestroyOnLoad(shopObj.OptionalMinimapIcon);
+				FakePrefab.MarkAsFakePrefab(shopObj.OptionalMinimapIcon);
 				/*
 				if (hasMinimapIcon)
 				{
@@ -1082,21 +1874,21 @@ namespace Planetside
 
 
 
-				SpriteBuilder.AddSpriteToCollection("Planetside/Resources/BulletBanker/bulletbanker_idle_001", SpriteBuilder.ammonomiconCollection);
+				SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Ammocom/hmprimeAmmoIcon", SpriteBuilder.ammonomiconCollection);
 				if (companion.GetComponent<EncounterTrackable>() != null)
 				{
 					UnityEngine.Object.Destroy(companion.GetComponent<EncounterTrackable>());
 				}
 				companion.encounterTrackable = companion.gameObject.AddComponent<EncounterTrackable>();
 				companion.encounterTrackable.journalData = new JournalEntry();
-				companion.encounterTrackable.EncounterGuid = "psog:robotshopkeeper";
+				companion.encounterTrackable.EncounterGuid = "psog:hm_prime";
 				companion.encounterTrackable.prerequisites = new DungeonPrerequisite[0];
 				companion.encounterTrackable.journalData.SuppressKnownState = false;
 				companion.encounterTrackable.journalData.IsEnemy = true;
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
-				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/BulletBanker/bulletbanker_idle_001";
-				companion.encounterTrackable.journalData.enemyPortraitSprite = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\bankericon.png");
+				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Ammocom/hmprimeAmmoIcon";
+				companion.encounterTrackable.journalData.enemyPortraitSprite = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\hmprimesheet.png");
 				PlanetsideModule.Strings.Enemies.Set("#HMPRIME_NAME", "H.M Prime");
 				PlanetsideModule.Strings.Enemies.Set("#HMPRIME_SD", "Battle Tower");
 				PlanetsideModule.Strings.Enemies.Set("#HMPRIME_LD", "Built by the Hegemony Of Man in preparation for the invasion of the Gungeon, they hoped that this one-core war machince could push back against the forces of the Gungeon.\n\nWhile it mostly failed, it gained the respect of the Gundead with its massive firepower, and left it in the confines of the Gungeon, albeit slightly re-programmed and disassembled.\n\nAny Gungeoneer who finds the machine in low power mode is heavily advised NOT to approach it.");
@@ -1104,10 +1896,10 @@ namespace Planetside
 				companion.encounterTrackable.journalData.PrimaryDisplayName = "#HMPRIME_NAME";
 				companion.encounterTrackable.journalData.NotificationPanelDescription = "#HMPRIME_SD";
 				companion.encounterTrackable.journalData.AmmonomiconFullEntry = "#HMPRIME_LD";
-				EnemyBuilder.AddEnemyToDatabase(companion.gameObject, "psog:robotshopkeeper");
-				EnemyDatabase.GetEntry("psog:robotshopkeeper").ForcedPositionInAmmonomicon = 201;
-				EnemyDatabase.GetEntry("psog:robotshopkeeper").isInBossTab = true;
-				EnemyDatabase.GetEntry("psog:robotshopkeeper").isNormalEnemy = true;
+				EnemyBuilder.AddEnemyToDatabase(companion.gameObject, "psog:hm_prime");
+				EnemyDatabase.GetEntry("psog:hm_prime").ForcedPositionInAmmonomicon = 201;
+				EnemyDatabase.GetEntry("psog:hm_prime").isInBossTab = true;
+				EnemyDatabase.GetEntry("psog:hm_prime").isNormalEnemy = true;
 
 				GenericIntroDoer miniBossIntroDoer = robotShopkeeperprefab.AddComponent<GenericIntroDoer>();
 				robotShopkeeperprefab.AddComponent<HMPrimeIntroController>();
@@ -1168,43 +1960,80 @@ namespace Planetside
 		public static bool RobotShopkeeperCustomCanBuy(CustomShopController shop, PlayerController player, int cost)
 		{
 			int total = (int)GameStatsManager.Instance.GetPlayerStatValue(TrackedStats.META_CURRENCY);
-			if (total > 24) { return true; }
+			if (total > 14) { return true; }
 			return false;
 		}
 		public static int RobotShopkeeperCustomPrice(CustomShopController shop, CustomShopItemController itemCont, PickupObject item)
 		{
-			return 25;
+			return 15;
 		}
 		public static int RobotShopkeeperRemoveCurrency(CustomShopController shop, PlayerController user, int cost)
 		{
-			int MetaCost = -1;
+			int MetaCost = -15;
 			GameStatsManager.Instance.RegisterStatChange(TrackedStats.META_CURRENCY, MetaCost);
 			shop.gameObject.GetComponentInChildren<RobotShopkeeperEngageDoer>().shopToSellOut = shop;
 			shop.gameObject.GetComponentInChildren<RobotShopkeeperEngageDoer>().Invoke("IncrenemtScaling", 0);
-
 			return 1;
 		}
 
-
-		public class ShootGun : Script
-		{
+		public class CleanSweeps : Script
+        {
 			protected override IEnumerator Top()
-			{
+            {
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("ffca09398635467da3b1f4a54bcfda80").bulletBank.GetBullet("directedfire"));
+				int amount = base.BulletBank.aiActor.GetComponent<RobotShopkeeperEngageDoer>().AmountOfPurchases;
 
-				float amount = base.BulletBank.aiActor.GetComponent<RobotShopkeeperEngageDoer>().AmountOfPurchases;
-				amount = amount * 6;
-				for (int q = 0; q < 24 + amount; q++)
-				{
-					base.PostWwiseEvent("Play_ITM_Macho_Brace_Active_01", null);
-					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(true, base.AimDirection ,this));
-					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(false, base.AimDirection, this));
-					yield return this.Wait(3);
+				for (int e = (-2 - amount); e < (3+amount); e++)
+                {
+					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(true, base.AimDirection, (7+amount)*e, this, 0.75f));
+					yield return this.Wait(1);
 				}
-				yield return this.Wait(120);
+				yield return this.Wait(30);
+				for (int e = (-2 - amount); e < (3 + amount); e++)
+				{
+					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(false, base.AimDirection, (7 + amount) * e, this, 0.75f));
+					yield return this.Wait(1);
+				}
+				yield return this.Wait(45);
+				if (amount > 3)
+                {
+					this.StartTask(this.ChargeMinigunsLeft());
+					yield return this.Wait(20);
+					this.StartTask(this.ChargeMinigunsRight());
+					yield return this.Wait(90);
+				}
+				yield return this.Wait(45);
 				yield break;
 			}
-			private IEnumerator QuickscopeNoob(bool isLeft, float aimDir, ShootGun parent, float chargeTime = 0.5f)
+
+			private IEnumerator ChargeMinigunsLeft()
+			{
+				int amount = base.BulletBank.aiActor.GetComponent<RobotShopkeeperEngageDoer>().AmountOfPurchases;
+				amount = amount * 2;
+				for (int e = (-1 - amount); e < (2 + amount); e++)
+				{
+					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(true, base.AimDirection, (5 + amount) * e, this, 0.75f));
+					yield return this.Wait(2.5f);
+				}
+				yield return this.Wait(90);
+				yield break;
+            }
+			private IEnumerator ChargeMinigunsRight()
+			{
+				int amount = base.BulletBank.aiActor.GetComponent<RobotShopkeeperEngageDoer>().AmountOfPurchases;
+				amount = amount * 2;
+				for (int e = (2 + amount); e > (-1 - amount); e--)
+				{
+					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(false, base.AimDirection, (5 + amount) * e, this, 0.75f));
+					yield return this.Wait(2.5f);
+				}
+				yield return this.Wait(90);
+				yield break;
+			}
+
+			public class BasicBullet : Bullet
+			{ public BasicBullet() : base("directedfire", false, false, false) { } }
+			private IEnumerator QuickscopeNoob(bool isLeft, float aimDir, float offset ,CleanSweeps parent, float chargeTime = 0.5f)
 			{
 				Vector2 positionLeft = base.BulletBank.aiActor.transform.Find("LeftGun_Down(Left)").transform.PositionVector2();
 				Vector2 positionRight = base.BulletBank.aiActor.transform.Find("RightGun_Down(Right)").transform.PositionVector2();
@@ -1213,8 +2042,7 @@ namespace Planetside
 				Vector2 sre = isLeft == true ? positionLeft : positionRight;
 
 				component2.transform.position = new Vector3(sre.x, sre.y, 99999);
-				component2.transform.localRotation = Quaternion.Euler(0f, 0f, aimDir);
-				component2.dimensions = new Vector2(1000f, 1f);
+				component2.transform.localRotation = Quaternion.Euler(0f, 0f, aimDir + offset);
 				component2.UpdateZDepth();
 				component2.HeightOffGround = -2;
 				Color laser = new Color(1f, 0f, 0f, 1f);
@@ -1239,19 +2067,18 @@ namespace Planetside
 					if (component2 != null)
 					{
 						component2.transform.position = isLeft == true ? base.BulletBank.aiActor.transform.Find("LeftGun_Down(Left)").transform.PositionVector2() : base.BulletBank.aiActor.transform.Find("RightGun_Down(Right)").transform.PositionVector2();
-
-						component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (100 * t));
-						component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (10 * t));
-						component2.transform.localRotation = Quaternion.Euler(0f, 0f, base.AimDirection);
+						component2.dimensions = new Vector2(Mathf.Lerp(0, 1000, t), 1f);
+						component2.sprite.renderer.material.SetFloat("_EmissivePower", 50);
+						component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 20);
+						component2.transform.localRotation = Quaternion.Euler(0f, 0f, aimDir + offset);
 						component2.HeightOffGround = -2;
 						component2.renderer.gameObject.layer = 23;
-						component2.dimensions = new Vector2(1000f, 1f);
 						component2.UpdateZDepth();
 					}
 					elapsed += BraveTime.DeltaTime;
 					yield return null;
 				}
-				float die = base.AimDirection;
+				float die = aimDir + offset;
 				elapsed = 0;
 				Time = 0.25f;
 				while (elapsed < Time)
@@ -1261,16 +2088,703 @@ namespace Planetside
 						Destroy(component2.gameObject);
 						yield break;
 					}
-					float t = (float)elapsed / (float)Time;
 					if (component2 != null)
 					{
 						component2.transform.position = isLeft == true ? base.BulletBank.aiActor.transform.Find("LeftGun_Down(Left)").transform.PositionVector2() : base.BulletBank.aiActor.transform.Find("RightGun_Down(Right)").transform.PositionVector2();
 						component2.dimensions = new Vector2(1000f, 1f);
-						component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (100 * t));
-						component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (10 * t));
+						component2.sprite.renderer.material.SetFloat("_EmissivePower", 50);
+						component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 20);
 						component2.HeightOffGround = -2;
 						component2.renderer.gameObject.layer = 23;
 						component2.UpdateZDepth();
+						bool enabled = elapsed % 0.05f > 0.025f;
+						component2.renderer.enabled = enabled;
+					}
+					elapsed += BraveTime.DeltaTime;
+					yield return null;
+				}
+				Destroy(component2.gameObject);
+				base.PostWwiseEvent("Play_CombineShot", null);
+				base.Fire(Offset.OverridePosition(isLeft == true ? base.BulletBank.aiActor.transform.Find("LeftGun_Down(Left)").transform.PositionVector2() : base.BulletBank.aiActor.transform.Find("RightGun_Down(Right)").transform.PositionVector2()), new Direction(die, DirectionType.Absolute, -1f), new Speed(30f, SpeedType.Absolute), new BasicBullet());
+				yield break;
+			}
+		}
+
+		public class BigBomb : Script
+        {
+			protected override IEnumerator Top()
+			{
+				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("fa76c8cfdf1c4a88b55173666b4bc7fb").bulletBank.GetBullet("hugeBullet"));
+				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("poundLarge"));
+				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("poundSmall"));
+
+				int amount = base.BulletBank.aiActor.GetComponent<RobotShopkeeperEngageDoer>().AmountOfPurchases;
+				base.BulletBank.aiActor.GetComponent<HMPrimeController>().StartDisableAttackFor("Taser", 8.5f, 5);
+				base.Fire(new Direction(0f, DirectionType.Aim, -1f), new Speed(4, SpeedType.Absolute), new BigBomb.BigBob(amount));
+
+				yield return this.Wait(30);
+				yield break;
+			}
+			public class BigBob : Bullet
+			{
+				public BigBob(float pursh) : base("hugeBullet", false, false, false)
+				{
+					PurchaseAmount = pursh;
+				}
+				protected override IEnumerator Top()
+				{
+					if (PurchaseAmount > 3)
+                    {
+						this.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 120);
+						Vector2 predictedPosition = BraveMathCollege.GetPredictedPosition(this.BulletManager.PlayerPosition(), this.BulletManager.PlayerVelocity(), this.Projectile.transform.position, 1000);
+						float CentreAngle = (predictedPosition - this.Position).ToAngle();
+						for (int i = 0; i < 6; i++)
+                        {
+							this.StartTask(this.QuickscopeNoobProfessional(CentreAngle + (60 * i), this, 7, false));
+						}
+						yield return this.Wait(300);
+						predictedPosition = BraveMathCollege.GetPredictedPosition(this.BulletManager.PlayerPosition(), this.BulletManager.PlayerVelocity(), this.Projectile.transform.position, 1000);
+						CentreAngle = (predictedPosition - this.Position).ToAngle();
+						for (int i = 0; i < 6; i++)
+						{
+							
+							this.StartTask(this.QuickscopeNoobProfessional(CentreAngle + (60 * i), this, 7, true));
+						}
+					}
+					else
+                    {
+						this.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 180);
+						for (int i = 0; i < 8; i++)
+						{
+							this.StartTask(this.QuickscopeNoob(45 * i, this, 6));
+						}
+					}
+					yield return this.Wait(60);
+					yield break;
+				}
+
+				private IEnumerator QuickscopeNoobProfessional(float aimDir, BigBob parent,float chargeTime = 0.5f, bool CanBurst = false)
+				{
+					GameObject gameObject = SpawnManager.SpawnVFX(RandomPiecesOfStuffToInitialise.LaserReticle, false);
+					tk2dTiledSprite component2 = gameObject.GetComponent<tk2dTiledSprite>();
+
+					component2.transform.position = new Vector3(base.Projectile.transform.position.x, base.Projectile.transform.position.y, 99999);
+					component2.transform.localRotation = Quaternion.Euler(0f, 0f, aimDir);
+					component2.UpdateZDepth();
+					component2.HeightOffGround = -2;
+					Color laser = new Color(1f, 0f, 0f, 1f);
+					component2.sprite.usesOverrideMaterial = true;
+					component2.sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
+					component2.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+					component2.sprite.renderer.material.SetFloat("_EmissivePower", 10);
+					component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f);
+					component2.sprite.renderer.material.SetColor("_OverrideColor", laser);
+					component2.sprite.renderer.material.SetColor("_EmissiveColor", laser);
+					component2.gameObject.transform.parent = parent.Projectile.gameObject.transform;
+					float elapsed = 0;
+					float Time = chargeTime;
+					while (elapsed < Time)
+					{
+						float t = (float)elapsed / (float)Time;
+
+						if (parent.Projectile == null)
+						{
+							Destroy(component2.gameObject);
+							yield break;
+						}
+						if (component2 != null)
+						{
+							component2.transform.position = new Vector3(base.Projectile.transform.position.x, base.Projectile.transform.position.y, 99999);
+							component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (100 * t));
+							component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (10 * t));
+							component2.transform.localRotation = Quaternion.Euler(0f, 0f, aimDir);
+							component2.HeightOffGround = -2;
+							component2.renderer.gameObject.layer = 23;
+							component2.dimensions = new Vector2(Mathf.Lerp(0, 1000, t), 1f);
+							component2.UpdateZDepth();
+						}
+						if (elapsed > (Time - 1))
+						{
+							bool enabled = elapsed % 0.2f > 0.1f;
+							component2.renderer.enabled = enabled;
+							yield return null;
+						}
+						elapsed += BraveTime.DeltaTime;
+						yield return null;
+					}
+					Destroy(component2.gameObject);
+					base.PostWwiseEvent("Play_BOSS_RatMech_Stomp_01", null);
+					for (int i = 0; i < 12; i++)
+					{
+						base.Fire(new Direction(aimDir + UnityEngine.Random.Range(-1, 1), DirectionType.Absolute, -1f), new Speed(UnityEngine.Random.Range(22, 26), SpeedType.Absolute), new BasicBullet(i, UnityEngine.Random.value < 0.33f ? "poundSmall" : "poundLarge"));
+					}
+					for (int e = -6; e < 7; e++)
+					{
+						base.Fire(new Direction(aimDir + (5f * e), DirectionType.Absolute, -1f), new Speed(10 - (float)Mathf.Abs(e) * 0.33f, SpeedType.Absolute), new Shrapnel());
+					}
+					Exploder.DoDistortionWave(base.Position, 0.1f, 0.075f, 30, 1.33f);
+					GameObject vfx = UnityEngine.Object.Instantiate<GameObject>(StaticVFXStorage.DragunBoulderLandVFX, this.Projectile.transform.position, Quaternion.identity);
+					tk2dBaseSprite component = vfx.GetComponent<tk2dBaseSprite>();
+					component.PlaceAtPositionByAnchor(this.Projectile.transform.position, tk2dBaseSprite.Anchor.MiddleCenter);
+					component.HeightOffGround = 35f;
+					if (CanBurst == true)
+					{
+						if (parent != null)
+						{
+							parent.Vanish(false);
+						}
+					}
+					yield break;
+				}
+				private IEnumerator QuickscopeNoob(float aimDir, BigBob parent, float chargeTime = 0.5f)
+				{
+					GameObject gameObject = SpawnManager.SpawnVFX(RandomPiecesOfStuffToInitialise.LaserReticle, false);
+					tk2dTiledSprite component2 = gameObject.GetComponent<tk2dTiledSprite>();
+
+					component2.transform.position = new Vector3(base.Projectile.transform.position.x, base.Projectile.transform.position.y, 99999);
+					component2.transform.localRotation = Quaternion.Euler(0f, 0f, aimDir);
+					component2.UpdateZDepth();
+					component2.HeightOffGround = -2;
+					Color laser = new Color(1f, 0f, 0f, 1f);
+					component2.sprite.usesOverrideMaterial = true;
+					component2.sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
+					component2.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+					component2.sprite.renderer.material.SetFloat("_EmissivePower", 10);
+					component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f);
+					component2.sprite.renderer.material.SetColor("_OverrideColor", laser);
+					component2.sprite.renderer.material.SetColor("_EmissiveColor", laser);
+					component2.gameObject.transform.parent = parent.Projectile.gameObject.transform;
+					float elapsed = 0;
+					float Time = chargeTime;
+					while (elapsed < Time)
+					{
+						float t = (float)elapsed / (float)Time;
+
+						if (parent.Projectile == null)
+						{
+							Destroy(component2.gameObject);
+							yield break;
+						}
+						if (component2 != null)
+						{
+							component2.transform.position = new Vector3(base.Projectile.transform.position.x, base.Projectile.transform.position.y, 99999);
+							component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (100 * t));
+							component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (10 * t));
+							component2.transform.localRotation = Quaternion.Euler(0f, 0f, aimDir);
+							component2.HeightOffGround = -2;
+							component2.renderer.gameObject.layer = 23;
+							component2.dimensions = new Vector2(Mathf.Lerp(0, 1000, t), 1f);
+							component2.UpdateZDepth();
+						}
+						if (elapsed > Time*0.8f)
+						{
+							bool enabled = elapsed % 0.2f > 0.1f;
+							component2.renderer.enabled = enabled;
+							yield return null;
+						}
+						elapsed += BraveTime.DeltaTime;
+						yield return null;
+					}
+					Destroy(component2.gameObject);
+					base.PostWwiseEvent("Play_BOSS_RatMech_Stomp_01", null);
+					for (int i = 0; i < 12; i++)
+                    {
+						base.Fire(new Direction(aimDir + UnityEngine.Random.Range(-1, 1), DirectionType.Absolute, -1f), new Speed(UnityEngine.Random.Range(22, 26), SpeedType.Absolute), new BasicBullet(i, UnityEngine.Random.value < 0.33f ? "poundSmall" : "poundLarge"));
+					}
+					for (int e = -4; e < 5; e++)
+					{
+						base.Fire(new Direction(aimDir + (5f*e), DirectionType.Absolute, -1f), new Speed(10 - (float)Mathf.Abs(e) * 0.2f, SpeedType.Absolute), new Shrapnel());
+						base.Fire(new Direction(aimDir + (5f * e), DirectionType.Absolute, -1f), new Speed(10 + (float)Mathf.Abs(e) * 0.2f, SpeedType.Absolute), new Shrapnel());
+
+					}
+					Exploder.DoDistortionWave(base.Position, 0.1f, 0.075f, 30, 1.33f);
+					GameObject vfx = UnityEngine.Object.Instantiate<GameObject>(StaticVFXStorage.DragunBoulderLandVFX, this.Projectile.transform.position, Quaternion.identity);
+					tk2dBaseSprite component = vfx.GetComponent<tk2dBaseSprite>();
+					component.PlaceAtPositionByAnchor(this.Projectile.transform.position, tk2dBaseSprite.Anchor.MiddleCenter);
+					component.HeightOffGround = 35f;
+					if (parent != null)
+                    {
+						parent.Vanish(false);
+                    }
+					yield break;
+				}
+				public class Shrapnel : Bullet
+                {
+					public Shrapnel() : base("poundSmall", false, false, false)
+					{ }
+				}
+				public class BasicBullet : Bullet
+				{
+					public BasicBullet(float dela, string bulletType) : base(bulletType, false, false, false)
+					{
+						delay = dela;
+					}
+					protected override IEnumerator Top()
+					{
+						this.ManualControl = true;
+						yield return this.Wait(delay);
+						this.ManualControl = false;
+
+						yield break;
+					}
+					private float delay;
+				}
+				private float PurchaseAmount;
+			}
+		}
+
+		public class AdditionalLinesOfBullets : Script
+        {
+			public class Shrapnel : Bullet
+			{
+				public Shrapnel(AdditionalLinesOfBullets parent) : base("poundSmall", false, false, false)
+				{ father = parent; }
+				protected override IEnumerator Top()
+				{
+					
+					while (base.Projectile != null)
+                    {
+						if (father.IsEnded || father.Destroyed)
+                        {
+							base.Vanish(false);
+                        }
+						yield return this.Wait(1);
+					}
+					yield break;
+				}
+				private AdditionalLinesOfBullets father;
+			}
+			
+			protected override IEnumerator Top()
+			{
+				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("amuletRing"));
+				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("poundSmall"));
+				yield return this.Wait(122);
+				AIBeamShooter2[] beams = this.BulletBank.aiActor.GetComponents<AIBeamShooter2>();
+				for (int e = 0; e < 4; e++)
+				{
+					if (beams == null || beams.Length == 0)
+					{
+						break;
+					}
+					this.PostWwiseEvent("Play_BOSS_doormimic_land_01", null);
+					foreach (AIBeamShooter2 beam in beams)
+					{
+						if (beam && beam.LaserBeam)
+						{
+							Vector2 overridePosition = beam.LaserBeam.Origin + beam.LaserBeam.Direction.normalized * beam.MaxBeamLength;
+							Vector2 vector = beam.LaserBeam.Origin;
+							Vector2 vector2 = new Vector2();
+							Func<SpeculativeRigidbody, bool> rigidbodyExcluder = (SpeculativeRigidbody otherRigidbody) => otherRigidbody.minorBreakable && !otherRigidbody.minorBreakable.stopsBullets;
+							int rayMask2 = CollisionMask.LayerToMask(CollisionLayer.HighObstacle, CollisionLayer.BulletBlocker, CollisionLayer.BulletBreakable, CollisionLayer.EnemyHitBox, CollisionLayer.PlayerHitBox);
+							RaycastResult raycastResult2;
+							Vector2 Point = MathToolbox.GetUnitOnCircle(beam.LaserBeam.Direction.ToAngle(), 1);
+							if (PhysicsEngine.Instance.Raycast(beam.LaserBeam.Origin, Point, 1000, out raycastResult2, true, false, rayMask2, null, false, rigidbodyExcluder, base.BulletBank.aiActor.specRigidbody))
+							{
+								vector2 = raycastResult2.Contact;
+							}
+							RaycastResult.Pool.Free(ref raycastResult2);
+							int num2 = Mathf.Max(Mathf.CeilToInt(Vector2.Distance(vector, vector2)), 1);
+							for (int i = 0; i < num2; i++)
+							{
+								float t = (float)i / (float)num2;
+								Vector3 vector3 = Vector3.Lerp(vector, vector2, t);
+								this.Fire(Offset.OverridePosition(vector3), new Direction(beam.LaserBeam.Direction.ToAngle(), DirectionType.Absolute, -1f), new Speed(0), new AdditionalLinesOfBullets.Shrapnel(this));
+							}
+						}
+					}
+					yield return this.Wait(37.5f);
+				}
+				for (int e = 0; e < 10; e++)
+                {
+					this.PostWwiseEvent("Play_BOSS_lichC_zap_01", null);
+					for (int i = 0; i < 20; i++)
+					{
+						this.Fire(new Direction((18 * i) + 9, DirectionType.Aim, -1f), new Speed(8), new Taser.BasicBullet());
+					}
+					yield return this.Wait(60);
+				}
+				yield break;
+			}
+		}
+
+		public class Taser : Script
+        {
+			protected override IEnumerator Top()
+			{
+				//Taser.LargeBomb
+
+				base.BulletBank.aiActor.GetComponent<HMPrimeController>().StartDisableAttackFor("LargeBomb", 10f, 5);
+				this.m_clms = new List<ChainLightningModifier>();
+				this.m_clms2 = new List<ChainLightningModifier>();
+				this.m_firstCLM = null;
+				this.m_lastCLM = null;
+				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("amuletRing"));
+				int amount = base.BulletBank.aiActor.GetComponent<RobotShopkeeperEngageDoer>().AmountOfPurchases;
+				for (int i = 0; i < 20; i++)
+				{
+					this.Fire(new Direction(18*i, DirectionType.Absolute, -1f), new Speed(7 + (amount*0.33f)), new Taser.LingeringBullet(this));
+				}
+				for (int i = 0; i < 20; i++)
+                {
+					this.Fire(new Direction(18 * i, DirectionType.Absolute, -1f), new Speed(7 + amount), new Taser.BasicBullet());
+					this.Fire(new Direction((18 * i)+9, DirectionType.Absolute, -1f), new Speed(6 + amount), new Taser.BasicBullet());
+				}
+				this.m_firstCLM.ForcedLinkProjectile = this.m_lastCLM.projectile;
+				this.m_lastCLM.BackLinkProjectile = this.m_firstCLM.projectile;
+				yield return this.Wait(30);
+				if (amount > 3)
+                {
+					this.m_firstCLM = null;
+					this.m_lastCLM = null;
+					for (int i = 0; i < 20; i++)
+					{
+						this.Fire(new Direction(18 * i, DirectionType.Absolute, -1f), new Speed(4 + (amount * 0.33f)), new Taser.LingeringBullet(this, false));
+					}
+					this.m_firstCLM.ForcedLinkProjectile = this.m_lastCLM.projectile;
+					this.m_lastCLM.BackLinkProjectile = this.m_firstCLM.projectile;
+				}	
+				yield break;
+			}
+			private ChainLightningModifier m_firstCLM;
+			private ChainLightningModifier m_lastCLM;
+			private List<ChainLightningModifier> m_clms;
+			private List<ChainLightningModifier> m_clms2;
+
+			public class BasicBullet : Bullet
+			{
+				public BasicBullet() : base("amuletRing", false, false, false)
+				{
+				}
+			}
+			public class LingeringBullet : Bullet
+			{
+				public LingeringBullet(Taser parent, bool Primary = true) : base("amuletRing", false, false, false)
+				{
+					father = parent;
+					IsPrimary = Primary;
+				}
+                public override void Initialize()
+                {
+                    base.Initialize();
+					ChainLightningModifier orAddComponent = this.Projectile.gameObject.GetOrAddComponent<ChainLightningModifier>();
+					orAddComponent.DamagesPlayers = true;
+					orAddComponent.DamagesEnemies = false;
+					orAddComponent.RequiresSameProjectileClass = true;
+					orAddComponent.LinkVFXPrefab = StaticVFXStorage.EnemyElectricLinkVFX;
+					orAddComponent.damageTypes = CoreDamageTypes.Electric;
+					orAddComponent.maximumLinkDistance = 100f;
+					orAddComponent.damagePerHit = 0.5f;
+					orAddComponent.damageCooldown = 1f;
+					orAddComponent.UsesDispersalParticles = false;
+					orAddComponent.UseForcedLinkProjectile = true;
+					if (father.m_lastCLM != null)
+					{
+						orAddComponent.ForcedLinkProjectile = father.m_lastCLM.projectile;
+						father.m_lastCLM.BackLinkProjectile = orAddComponent.projectile;
+					}
+					if (father.m_firstCLM == null)
+					{
+						father.m_firstCLM = orAddComponent;
+					}
+					father.m_lastCLM = orAddComponent;
+					if (IsPrimary == true) { father.m_clms.Add(orAddComponent); }
+                    else { father.m_clms2.Add(orAddComponent); }
+                }
+
+                public override void OnBulletDestruction(DestroyType destroyType, SpeculativeRigidbody hitRigidbody, bool preventSpawningProjectiles)
+                {
+					ChainLightningModifier comp = this.Projectile.gameObject.GetOrAddComponent<ChainLightningModifier>();
+					comp.UseForcedLinkProjectile = false;
+					comp.ForcedLinkProjectile = null;
+					Destroy(comp);
+					base.OnBulletDestruction(destroyType, hitRigidbody, preventSpawningProjectiles);
+				}
+
+                protected override IEnumerator Top()
+				{
+					base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 120);
+					yield return this.Wait(870);
+					GameObject instanceVFX = SpawnManager.SpawnVFX(StaticVFXStorage.EnemyZappyTellVFX, base.Projectile.transform.position, Quaternion.identity);
+					tk2dBaseSprite instanceSprite = instanceVFX.GetComponent<tk2dBaseSprite>();
+					instanceSprite.PlaceAtPositionByAnchor(base.Projectile.transform.position, tk2dBaseSprite.Anchor.MiddleCenter);
+
+					yield return this.Wait(30);
+
+					if (IsPrimary == true)
+                    {
+						for (int i = father.m_clms.Count - 1; i >= 0; i--)
+						{
+							ChainLightningModifier chainLightningModifier = father.m_clms[i];
+							if (chainLightningModifier)
+							{
+								chainLightningModifier.ForcedLinkProjectile = null;
+								if (chainLightningModifier.projectile)
+								{
+									chainLightningModifier.projectile.ForceDestruction();
+								}
+							}
+						}
+					}
+					else
+                    {
+						for (int i = father.m_clms2.Count - 1; i >= 0; i--)
+						{
+							ChainLightningModifier chainLightningModifier = father.m_clms2[i];
+							if (chainLightningModifier)
+							{
+								chainLightningModifier.ForcedLinkProjectile = null;
+								if (chainLightningModifier.projectile)
+								{
+									chainLightningModifier.projectile.ForceDestruction();
+								}
+							}
+						}
+					}
+				
+					if (IsPrimary == true) { father.m_clms.Clear(); }
+					else { father.m_clms2.Clear(); }
+					base.Vanish(false);
+					yield break;
+				}
+				private bool IsPrimary;
+				private Taser father;
+			}
+		}
+
+		public class EatMissiles : Script
+        {
+			protected override IEnumerator Top()
+			{
+				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("4d164ba3f62648809a4a82c90fc22cae").bulletBank.GetBullet("missile"));
+				Vector2 positionLeft = base.BulletBank.aiActor.transform.Find("LeftGun_Down(Left)").transform.PositionVector2();
+				Vector2 positionRight = base.BulletBank.aiActor.transform.Find("RightGun_Down(Right)").transform.PositionVector2();
+				int amount = base.BulletBank.aiActor.GetComponent<RobotShopkeeperEngageDoer>().AmountOfPurchases;
+				for (int i = 0; i < 4; i++)
+				{
+					this.Fire(Offset.OverridePosition(positionLeft), new Direction(UnityEngine.Random.Range(-10, 10), DirectionType.Absolute, -1f), new EatMissiles.HomingBullet(3, 20 - (amount * 2)));
+					yield return this.Wait(24 - (amount*2));
+					this.Fire(Offset.OverridePosition(positionRight), new Direction(UnityEngine.Random.Range(-10, 10), DirectionType.Aim, -1f), new EatMissiles.HomingBullet(3, 20 - (amount*2)));
+					yield return this.Wait(24 - (amount*2));
+				}
+				if (amount > 3)
+				{
+					for (int i = 0; i < 2; i++)
+					{
+						this.Fire(Offset.OverridePosition(positionLeft), new Direction(UnityEngine.Random.Range(-30, 30), DirectionType.Absolute, -1f), new EatMissiles.HomingBullet(3, 20 - (amount * 2), 3, 22));
+						this.Fire(Offset.OverridePosition(positionRight), new Direction(UnityEngine.Random.Range(-30, 30), DirectionType.Aim, -1f), new EatMissiles.HomingBullet(3, 20 - (amount * 2), 3, 22));
+						yield return this.Wait(20);
+					}
+				}
+				yield break;
+			}
+			public class LingeringBullet : Bullet
+			{
+				public LingeringBullet() : base("quickHoming", false, false, false)
+				{
+
+				}
+				protected override IEnumerator Top()
+				{
+					yield return this.Wait(300);
+					base.Vanish(false);
+					yield break;
+				}
+			}
+			private class HomingBullet : Bullet
+			{
+				public HomingBullet(int fireDelay = 0, int delay = 20, float StartSpeed = 6, float ChargeSpeed = 22) : base("missile", false, false, false)
+				{
+					this.m_fireDelay = fireDelay;
+					this.projectileSpawnDelay = delay;
+					this.ChargeUpSpeed = ChargeSpeed;
+					this.startSpeed = StartSpeed;
+				}
+
+				public override void Initialize()
+				{
+					this.Projectile.spriteAnimator.StopAndResetFrameToDefault();
+					BraveUtility.EnableEmission(this.Projectile.ParticleTrail, false);
+					base.Initialize();
+				}
+
+				
+
+				protected override IEnumerator Top()
+				{
+					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("quickHoming"));
+
+					if (this.m_fireDelay > 0)
+					{
+						yield return this.Wait(this.m_fireDelay);
+					}
+					this.Speed = startSpeed;
+					this.Projectile.spriteAnimator.Play();
+					BraveUtility.EnableEmission(this.Projectile.ParticleTrail, true);
+					this.PostWwiseEvent("Play_BOSS_RatMech_Missile_01", null);
+					this.PostWwiseEvent("Play_WPN_YariRocketLauncher_Shot_01", null);
+					yield return this.Wait(60);
+					float adsghj = UnityEngine.Random.Range(30, 120);
+					for (int i = 0; i < adsghj; i++)
+					{
+						
+						float t = i / adsghj;
+						this.Speed = Mathf.Lerp(7, 0, t * 2);
+						float aim = this.GetAimDirection(1f, 16f);
+						float delta = BraveMathCollege.ClampAngle180(aim - this.Direction);
+						if (Mathf.Abs(delta) > 360f)
+						{
+							yield break;
+						}
+						this.Direction += Mathf.MoveTowards(0f, delta, 5f);
+						yield return this.Wait(1);
+					}
+					this.PostWwiseEvent("Play_BOSS_RatMech_Whistle_01", null);
+					float ela = 0;
+					while (ela < 60)
+                    {
+						ela++;
+						float T = ela / 60;
+						this.Speed = Mathf.Lerp(0, ChargeUpSpeed, T);
+						yield return this.Wait(1);
+					}
+				
+					//yield break;
+				}
+			 
+
+				public override void OnBulletDestruction(Bullet.DestroyType destroyType, SpeculativeRigidbody hitRigidbody, bool preventSpawningProjectiles)
+				{
+					if (preventSpawningProjectiles)
+					{
+						return;
+					}
+					base.PostWwiseEvent("Play_WPN_smallrocket_impact_01", null);
+				}
+				private float startSpeed;
+				private float ChargeUpSpeed	;
+
+				private int m_fireDelay;
+				private int projectileSpawnDelay;
+
+			}
+		}
+		public class ShootGun : Script
+		{
+			protected override IEnumerator Top()
+			{
+				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("ffca09398635467da3b1f4a54bcfda80").bulletBank.GetBullet("directedfire"));
+
+				float amount = base.BulletBank.aiActor.GetComponent<RobotShopkeeperEngageDoer>().AmountOfPurchases;
+
+				if (amount > 3)
+                {
+					for (int e = 0; e < 5; e++)
+                    {
+						for (int q = 0; q < 4; q++)
+						{
+							base.PostWwiseEvent("Play_ITM_Macho_Brace_Fade_01", null);
+							base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(true, base.AimDirection, this, 0.75f ,60 - (q * 6)));
+							base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(false, base.AimDirection, this, 0.75f,60 - (q * 6)));
+							yield return this.Wait(9);
+						}
+						yield return this.Wait(12);
+						for (int q = 0; q < 2; q++)
+						{
+							base.PostWwiseEvent("Play_ITM_Macho_Brace_Fade_01", null);
+							base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(true, base.AimDirection, this, 0.5f, 32));
+							base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(false, base.AimDirection, this, 0.5f, 32));
+							yield return this.Wait(2.5f);
+						}
+					}
+
+						
+				}
+				else
+                {
+					for (int q = 0; q < 24 + amount; q++)
+					{
+						base.PostWwiseEvent("Play_ITM_Macho_Brace_Fade_01", null);
+						base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(true, base.AimDirection, this, 0.75f, 60 - (amount * 5f)));
+						base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(false, base.AimDirection, this, 0.75f,60 - (amount * 5f)));
+						yield return this.Wait(5);
+					}
+				}
+			
+				yield return this.Wait(120);
+				yield break;
+			}
+			private IEnumerator QuickscopeNoob(bool isLeft, float aimDir, ShootGun parent, float chargeTime = 0.5f, float AimAccuracy = 60)
+			{
+				Vector2 positionLeft = base.BulletBank.aiActor.transform.Find("LeftGun_Down(Left)").transform.PositionVector2();
+				Vector2 positionRight = base.BulletBank.aiActor.transform.Find("RightGun_Down(Right)").transform.PositionVector2();
+				GameObject gameObject = SpawnManager.SpawnVFX(RandomPiecesOfStuffToInitialise.LaserReticle, false);
+				tk2dTiledSprite component2 = gameObject.GetComponent<tk2dTiledSprite>();
+				Vector2 sre = isLeft == true ? positionLeft : positionRight;
+
+				component2.transform.position = new Vector3(sre.x, sre.y, 99999);
+				component2.transform.localRotation = Quaternion.Euler(0f, 0f, aimDir);
+				component2.UpdateZDepth();
+				component2.HeightOffGround = -2;
+				Color laser = new Color(1f, 0f, 0f, 1f);
+				component2.sprite.usesOverrideMaterial = true;
+				component2.sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
+				component2.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+				component2.sprite.renderer.material.SetFloat("_EmissivePower", 10);
+				component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f);
+				component2.sprite.renderer.material.SetColor("_OverrideColor", laser);
+				component2.sprite.renderer.material.SetColor("_EmissiveColor", laser);
+				float elapsed = 0;
+				float Time = chargeTime;
+				while (elapsed < Time)
+				{
+					float t = (float)elapsed / (float)Time;
+
+					if (parent.IsEnded|| parent.Destroyed)
+					{
+						Destroy(component2.gameObject);
+						yield break;
+					}
+					if (component2 != null)
+					{
+						component2.transform.position = isLeft == true ? base.BulletBank.aiActor.transform.Find("LeftGun_Down(Left)").transform.PositionVector2() : base.BulletBank.aiActor.transform.Find("RightGun_Down(Right)").transform.PositionVector2();
+						Vector2 predictedPosition = BraveMathCollege.GetPredictedPosition(this.BulletManager.PlayerPosition(), this.BulletManager.PlayerVelocity(), sre, AimAccuracy);
+						component2.dimensions = new Vector2(Mathf.Lerp(0, 1000, t), 1f);
+						float CentreAngle = (predictedPosition - this.Position).ToAngle();
+						component2.sprite.renderer.material.SetFloat("_EmissivePower", 50);
+						component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 20);
+						component2.transform.localRotation = Quaternion.Euler(0f, 0f, CentreAngle);
+						component2.HeightOffGround = -2;
+						component2.renderer.gameObject.layer = 23;
+						component2.UpdateZDepth();
+					}
+					elapsed += BraveTime.DeltaTime;
+					yield return null;
+				}
+				Vector2 predictedPositionOme = BraveMathCollege.GetPredictedPosition(this.BulletManager.PlayerPosition(), this.BulletManager.PlayerVelocity(), this.Position, AimAccuracy);
+
+				float shitfart = (predictedPositionOme - this.Position).ToAngle();
+				float die = shitfart;
+				elapsed = 0;
+				Time = 0.25f;
+				while (elapsed < Time)
+				{
+					if (parent.IsEnded || parent.Destroyed)
+					{
+						Destroy(component2.gameObject);
+						yield break;
+					}
+					if (component2 != null)
+					{
+						component2.transform.position = isLeft == true ? base.BulletBank.aiActor.transform.Find("LeftGun_Down(Left)").transform.PositionVector2() : base.BulletBank.aiActor.transform.Find("RightGun_Down(Right)").transform.PositionVector2();
+						component2.dimensions = new Vector2(1000f, 1f);
+						component2.sprite.renderer.material.SetFloat("_EmissivePower", 50);
+						component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 20);
+						component2.HeightOffGround = -2;
+						component2.renderer.gameObject.layer = 23;
+						component2.UpdateZDepth();
+						bool enabled = elapsed % 0.05f > 0.025f;
+						component2.renderer.enabled = enabled;
 					}
 					elapsed += BraveTime.DeltaTime;
 					yield return null;
@@ -1281,21 +2795,11 @@ namespace Planetside
 				yield break;
 			}
 			public class BasicBullet : Bullet
-			{
-				public BasicBullet() : base("directedfire", false, false, false)
-				{
-
-				}
-				protected override IEnumerator Top()
-				{
-					yield break;
-				}
-			}
-
+			{public BasicBullet() : base("directedfire", false, false, false){}		}
 		}
 
 
-		public class EnemyBehavior : BraveBehaviour
+		public class HMPrimeController : BraveBehaviour
 		{
 			public void LerpMaterialGlow(Material targetMaterial, float startGlow, float targetGlow, float duration)
 			{
@@ -1319,6 +2823,48 @@ namespace Planetside
 
 			private void AnimationEventTriggered(tk2dSpriteAnimator animator, tk2dSpriteAnimationClip clip, int frameIdx)
 			{
+
+				if (clip.GetFrame(frameIdx).eventInfo.Contains("CreateChargeEffect"))
+                {
+					Vector2 position = ReturnChargeVFXPos(clip.GetFrame(frameIdx).eventInfo);
+					VFXPool pool = clip.GetFrame(frameIdx).eventInfo.Contains("U") == true ? StaticVFXStorage.BeholsterChargeUpVFX : StaticVFXStorage.BeholsterChargeDownVFX;
+					pool.SpawnAtPosition(base.aiActor.transform.position + position.ToVector3ZisY());
+				}
+				//deathkinda
+				if (clip.GetFrame(frameIdx).eventInfo.Contains("SetToNotDieKinda"))
+                {
+					base.aiActor.healthHaver.persistsOnDeath = true;
+					base.aiActor.healthHaver.PreventAllDamage = true;
+				}
+
+				if (clip.GetFrame(frameIdx).eventInfo.Contains("PrimeLasers"))
+                {
+					for (int i = 0; i < 2; i++)
+					{
+						Vector2 OFsset = new Vector2(-1.5f, -0.25f);
+						if (i == 0)
+						{
+							OFsset = new Vector2(1.5f, -0.25f);
+						}
+						StaticVFXStorage.BeholsterChargeUpVFX.SpawnAtPosition(base.aiActor.sprite.WorldCenter + OFsset);
+					}
+				}
+					//BAM
+				if (clip.GetFrame(frameIdx).eventInfo.Contains("BAM"))
+				{
+					GameObject silencerVFX = (GameObject)ResourceCache.Acquire("Global VFX/BlankVFX_Ghost");
+					tk2dSpriteAnimator objanimator = silencerVFX.GetComponentInChildren<tk2dSpriteAnimator>();
+					objanimator.ignoreTimeScale = true;
+					objanimator.AlwaysIgnoreTimeScale = true;
+					objanimator.AnimateDuringBossIntros = true;
+					objanimator.alwaysUpdateOffscreen = true;
+					objanimator.playAutomatically = true;
+					ParticleSystem objparticles = silencerVFX.GetComponentInChildren<ParticleSystem>();
+					var main = objparticles.main;
+					main.useUnscaledTime = true;
+					GameObject vfx = GameObject.Instantiate(silencerVFX.gameObject, base.aiActor.sprite.WorldCenter, Quaternion.identity);
+					Destroy(vfx, 2);
+				}
 				if (clip.GetFrame(frameIdx).eventInfo.Contains("StaticBlast"))
                 {
 					for (int i = 0; i < 5; i++)
@@ -1400,7 +2946,34 @@ namespace Planetside
 							component2.sprite.renderer.material.SetColor("_EmissiveColor", Color.gray);
 						}
 					}
-					
+				}
+				//Fartd
+				if (clip.GetFrame(frameIdx).eventInfo.Contains("Fartd"))
+				{
+					Exploder.DoRadialMinorBreakableBreak(base.gameObject.transform.PositionVector2(), 5);
+					GameObject PoofVFX = GameManager.Instance.RewardManager.D_Chest.VFX_PreSpawn;
+					PoofVFX.SetActive(true);
+					GameObject obj = UnityEngine.Object.Instantiate<GameObject>(PoofVFX, base.aiActor.sprite.WorldBottomCenter - new Vector2(1.5f, 1), Quaternion.identity);
+					Destroy(obj, 2);
+				}
+				if (clip.GetFrame(frameIdx).eventInfo.Contains("Wimper"))
+				{
+					ShowBoxInternal(base.aiActor.GetComponent<TalkDoerLite>().transform.position + new Vector3(3, 3), base.aiActor.transform, 2f, ETGMod.Databases.Strings.Core.Get("#ROBOTSHOPKEEPER_WAWA1"), "TextBox", 0.5f, "golem", false, TextBoxManager.BoxSlideOrientation.NO_ADJUSTMENT, false, false);
+				}
+				if (clip.GetFrame(frameIdx).eventInfo.Contains("CryingAboutIt"))
+                {
+					ShowBoxInternal(base.aiActor.GetComponent<TalkDoerLite>().transform.position + new Vector3(3, 3), base.aiActor.transform, 2, ETGMod.Databases.Strings.Core.Get("#ROBOTSHOPKEEPER_CRYABOUTIT"), "TextBox", 0.5f, "golem", false, TextBoxManager.BoxSlideOrientation.NO_ADJUSTMENT, false, false);
+				}
+
+				if (clip.GetFrame(frameIdx).eventInfo.Contains("Lights"))
+                {
+					Pixelator.Instance.FadeToColor(1f, Color.white, true, 1f);
+				}
+				if (clip.GetFrame(frameIdx).eventInfo.Contains("KaBoom"))
+				{
+					GameObject epicwin = UnityEngine.Object.Instantiate<GameObject>(EnemyDatabase.GetOrLoadByGuid("b98b10fca77d469e80fb45f3c5badec5").GetComponent<BossFinalRogueDeathController>().DeathStarExplosionVFX);
+					epicwin.GetComponent<tk2dBaseSprite>().PlaceAtLocalPositionByAnchor(base.aiActor.sprite.WorldCenter, tk2dBaseSprite.Anchor.LowerCenter);
+					Destroy(epicwin, 10);
 				}
 				if (clip.GetFrame(frameIdx).eventInfo.Contains("IntroSpeak"))
 				{
@@ -1409,9 +2982,15 @@ namespace Planetside
 					if (clip.GetFrame(frameIdx).eventInfo.Contains("1"))
                     {TextToUse = "#ROBOTSHOPKEEPER_ENGAGED_1"; time = 1; }
 					if (clip.GetFrame(frameIdx).eventInfo.Contains("2"))
-					{TextToUse = "#ROBOTSHOPKEEPER_ENGAGED_2"; time = 1.5f; }
+					{
+						TextToUse = base.aiActor.GetComponent<RobotShopkeeperEngageDoer>().AmountOfPurchases > 3 ? "#ROBOTSHOPKEEPER_ENGAGED_FULLREPAIR_2" : "#ROBOTSHOPKEEPER_ENGAGED_2";
+						time = 1.5f; 
+					}
 					if (clip.GetFrame(frameIdx).eventInfo.Contains("3"))
-					{TextToUse = "#ROBOTSHOPKEEPER_ENGAGED_3"; time = 1; }
+					{
+						TextToUse = base.aiActor.GetComponent<RobotShopkeeperEngageDoer>().AmountOfPurchases > 3 ? "#ROBOTSHOPKEEPER_FULLREPAIR_ENGAGED_3" : "#ROBOTSHOPKEEPER_ENGAGED_3";
+						time = 1; 
+					}
 					if (clip.GetFrame(frameIdx).eventInfo.Contains("4"))
 					{TextToUse = "#ROBOTSHOPKEEPER_ENGAGED_4"; time = 1.25f; }					
 					ShowBoxInternal(base.aiActor.GetComponent<TalkDoerLite>().transform.position + new Vector3(3,3), base.aiActor.transform, time, ETGMod.Databases.Strings.Core.Get(TextToUse), "TextBox", 0.5f,"golem", false, TextBoxManager.BoxSlideOrientation.NO_ADJUSTMENT, false, false);
@@ -1424,22 +3003,43 @@ namespace Planetside
                 {
 					base.aiActor.MovementSpeed = 0f;
 				}
+				if (clip.GetFrame(frameIdx).eventInfo.Contains("ReleaseSparks"))
+                {
+					GameObject breakVFX = UnityEngine.Object.Instantiate<GameObject>((PickupObjectDatabase.GetById(156) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapVertical.effects[0].effects[0].effect, base.aiActor.sprite.WorldCenter + new Vector2(UnityEngine.Random.Range(1.25f, -1.25f), UnityEngine.Random.Range(0.625f, -0.625f)), Quaternion.identity);
+					tk2dBaseSprite component = breakVFX.GetComponent<tk2dBaseSprite>();
+					component.PlaceAtPositionByAnchor(base.aiActor.sprite.WorldCenter + new Vector2(UnityEngine.Random.Range(1.25f, -1.25f), UnityEngine.Random.Range(0.625f, -1.25f)), tk2dBaseSprite.Anchor.MiddleCenter);
+					component.HeightOffGround = 35f;
+					component.UpdateZDepth();
+					tk2dSpriteAnimator component2 = component.GetComponent<tk2dSpriteAnimator>();
+					if (component2 != null)
+					{
+						component2.ignoreTimeScale = true;
+						component2.AlwaysIgnoreTimeScale = true;
+						component2.AnimateDuringBossIntros = true;
+						component2.alwaysUpdateOffscreen = true;
+						component2.playAutomatically = true;
+					}
+				}
+
 				if (clip.GetFrame(frameIdx).eventInfo.Contains("StopVFX"))
 				{
 					base.aiActor.MovementSpeed = 0f;
-					ETGModConsole.Log(clip.GetFrame(frameIdx).eventInfo);
 					Dictionary<Vector2, Vector2> positions = ReturnVFXPos(clip.GetFrame(frameIdx).eventInfo);
 					if (positions != null)
 					{
 						foreach (var KeysAndValues in positions)
 						{
                             {
-
 								GameObject gameObject = SpawnManager.SpawnVFX(BraveResources.Load<GameObject>("Global VFX/VFX_DBZ_Charge", ".prefab"), false);
 								gameObject.transform.position = base.aiActor.transform.position + KeysAndValues.Key.ToVector3ZisY();
 								tk2dSpriteAnimator component2 = gameObject.GetComponent<tk2dSpriteAnimator>();
 								if (component2 != null)
 								{
+									foreach (var value in component2.GetClipById(component2.DefaultClipId).frames)
+									{
+										value.triggerEvent = false;
+									}
+
 									component2.ignoreTimeScale = true;
 									component2.AlwaysIgnoreTimeScale = true;
 									component2.AnimateDuringBossIntros = true;
@@ -1453,6 +3053,10 @@ namespace Planetside
 								tk2dSpriteAnimator component2 = gameObject.GetComponent<tk2dSpriteAnimator>();
 								if (component2 != null)
 								{
+									foreach (var value in component2.GetClipById(component2.DefaultClipId).frames)
+									{
+										value.triggerEvent = false;
+									}
 									component2.ignoreTimeScale = true;
 									component2.AlwaysIgnoreTimeScale = true;
 									component2.AnimateDuringBossIntros = true;
@@ -1465,6 +3069,49 @@ namespace Planetside
 					}
 				}
 			}
+			public void StartDisableAttackFor(string attackNickName, float Time = 7, float resetWeightTo = 5)
+            {
+				base.aiActor.StartCoroutine(this.DisableAttackFor(attackNickName, Time, resetWeightTo));
+            }
+
+			public IEnumerator DisableAttackFor(string attackNickName, float Time = 7, float resetWeightTo = 5)
+			{
+				AttackBehaviorGroup.AttackGroupItem yes= new AttackBehaviorGroup.AttackGroupItem();
+				for (int j = 0; j < base.aiActor.behaviorSpeculator.AttackBehaviors.Count; j++)
+				{
+					if (base.behaviorSpeculator.AttackBehaviors[j] is AttackBehaviorGroup && base.behaviorSpeculator.AttackBehaviors[j] != null)
+					{
+						for (int i = 0; i < (base.behaviorSpeculator.AttackBehaviors[j] as AttackBehaviorGroup).AttackBehaviors.Count; i++)
+						{
+							AttackBehaviorGroup.AttackGroupItem attackGroupItem = (base.behaviorSpeculator.AttackBehaviors[j] as AttackBehaviorGroup).AttackBehaviors[i];
+							if ((base.behaviorSpeculator.AttackBehaviors[j] as AttackBehaviorGroup) != null && attackGroupItem.NickName == attackNickName)
+							{
+								attackGroupItem.Probability = 0f;
+								yes = attackGroupItem;
+							}
+						}
+					}
+				}
+				float elapsed = 0;
+				while (elapsed < Time)
+				{
+					if (base.aiActor == null || base.aiActor.healthHaver.IsDead) { yield break; }
+					elapsed += BraveTime.DeltaTime;
+					yield return null;
+				}
+				if (yes != null) { yes.Probability = resetWeightTo; }
+				yield break;
+			}
+			private static Vector2 ReturnChargeVFXPos(string Key)
+            {
+				Vector2 vector2 = new Vector2(0, 0);
+				if (Key.Contains("(DL)")) { vector2 = new Vector2(1.375f, 1.4375f);}
+				if (Key.Contains("(DR)")) { vector2 = new Vector2(1.6875f, 1.4375f);}
+				if (Key.Contains("(UL)")) { vector2 = new Vector2(1.4375f, 1.875f);}
+				if (Key.Contains("(UR)")) { vector2 = new Vector2(1.5625f, 1.875f);}
+				return vector2;
+			}
+
 
 			private static Dictionary<Vector2, Vector2> ReturnVFXPos(string Key)
             {
@@ -1847,24 +3494,34 @@ namespace Planetside
 				};
 				base.healthHaver.healthHaver.OnDeath += (obj) =>
 				{
-					float itemsToSpawn = UnityEngine.Random.Range(2, 6);
-					float spewItemDir = 360 / itemsToSpawn;
-					AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.BULLETBANK_DEFEATED, true);//Done
-					for (int i = 0; i < itemsToSpawn; i++)
+
+					SaveAPIManager.RegisterStatChange(CustomTrackedStats.HMPRIME_KILLS, 1);
+										
+					DungeonDoorSubsidiaryBlocker[] blockers = UnityEngine.Object.FindObjectsOfType<DungeonDoorSubsidiaryBlocker>();
+					foreach (var blocker in blockers)
 					{
-						int id = BraveUtility.RandomElement<int>(Shellrax.Lootdrops);
-						LootEngine.SpawnItem(PickupObjectDatabase.GetById(id).gameObject, base.aiActor.sprite.WorldCenter, new Vector2(spewItemDir * itemsToSpawn, spewItemDir * itemsToSpawn), 2.2f, false, true, false);
+						blocker.Unseal();
 					}
-
-
-					float value = UnityEngine.Random.Range(0.00f, 1.00f);
-					if (value <= 0.4f)
+					int pruch = base.aiActor.GetComponent<RobotShopkeeperEngageDoer>().AmountOfPurchases;
+					int amountOfitemsToSpawn = UnityEngine.Random.Range(3+ (int)(pruch*1.5f), 6 + pruch);
+					//AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.BULLETBANK_DEFEATED, true);//Done
+					for (int i = 0; i < amountOfitemsToSpawn; i++)
+					{
+						int id = BraveUtility.RandomElement<int>(RobotShopkeeperBoss.Lootdrops);
+						LootEngine.SpawnItem(PickupObjectDatabase.GetById(id).gameObject, base.aiActor.sprite.WorldCenter, MathToolbox.GetUnitOnCircle((360 / amountOfitemsToSpawn) * i, 1), 3f, false, true, false);
+					}
+					if (pruch > 3)
+                    {
+						Chest chest2 = GameManager.Instance.RewardManager.SpawnTotallyRandomChest(GameManager.Instance.PrimaryPlayer.CurrentRoom.GetRandomVisibleClearSpot(1, 1));
+						chest2.IsLocked = false;
+						chest2.RegisterChestOnMinimap(chest2.GetAbsoluteParentRoom());
+					}
+					if (UnityEngine.Random.value <= (Mathf.Min(0.4f*pruch, 1)))
 					{
 						Chest chest2 = GameManager.Instance.RewardManager.SpawnTotallyRandomChest(GameManager.Instance.PrimaryPlayer.CurrentRoom.GetRandomVisibleClearSpot(1, 1));
 						chest2.IsLocked = false;
 						chest2.RegisterChestOnMinimap(chest2.GetAbsoluteParentRoom());
 					}
-
 				}; ;
 				this.aiActor.knockbackDoer.SetImmobile(true, "nope.");
 			}
@@ -2005,6 +3662,137 @@ namespace Planetside
 			"Planetside/Resources/Bosses/HMPrime/Walk/hmprime_walk_right_up5.png",
 			"Planetside/Resources/Bosses/HMPrime/Walk/hmprime_walk_right_up6.png",//104
 
+			"Planetside/Resources/Bosses/HMPrime/OverCharge/hmprime_uberhcharge_001.png",//105
+			"Planetside/Resources/Bosses/HMPrime/OverCharge/hmprime_uberhcharge_002.png",
+			"Planetside/Resources/Bosses/HMPrime/OverCharge/hmprime_uberhcharge_003.png",
+			"Planetside/Resources/Bosses/HMPrime/OverCharge/hmprime_uberhcharge_004.png",
+			"Planetside/Resources/Bosses/HMPrime/OverCharge/hmprime_uberhcharge_005.png",
+			"Planetside/Resources/Bosses/HMPrime/OverCharge/hmprime_uberhcharge_006.png",
+			"Planetside/Resources/Bosses/HMPrime/OverCharge/hmprime_uberhcharge_007.png",//111
+
+			"Planetside/Resources/Bosses/HMPrime/OverCharge/hmprime_overcharged_001.png",//112
+			"Planetside/Resources/Bosses/HMPrime/OverCharge/hmprime_overcharged_002.png",
+			"Planetside/Resources/Bosses/HMPrime/OverCharge/hmprime_overcharged_003.png",
+			"Planetside/Resources/Bosses/HMPrime/OverCharge/hmprime_overcharged_004.png",
+			"Planetside/Resources/Bosses/HMPrime/OverCharge/hmprime_overcharged_005.png",
+			"Planetside/Resources/Bosses/HMPrime/OverCharge/hmprime_overcharged_006.png",
+			"Planetside/Resources/Bosses/HMPrime/OverCharge/hmprime_overcharged_007.png",
+			"Planetside/Resources/Bosses/HMPrime/OverCharge/hmprime_overcharged_008.png",
+			"Planetside/Resources/Bosses/HMPrime/OverCharge/hmprime_overcharged_009.png",
+			"Planetside/Resources/Bosses/HMPrime/OverCharge/hmprime_overcharged_010.png",
+			"Planetside/Resources/Bosses/HMPrime/OverCharge/hmprime_overcharged_011.png",
+			"Planetside/Resources/Bosses/HMPrime/OverCharge/hmprime_overcharged_012.png",
+			"Planetside/Resources/Bosses/HMPrime/OverCharge/hmprime_overcharged_013.png",
+			"Planetside/Resources/Bosses/HMPrime/OverCharge/hmprime_overcharged_014.png",
+			"Planetside/Resources/Bosses/HMPrime/OverCharge/hmprime_overcharged_015.png",
+			"Planetside/Resources/Bosses/HMPrime/OverCharge/hmprime_overcharged_016.png",//127
+
+			"Planetside/Resources/Bosses/HMPrime/FireBall/hmprime_chargeball_left_down1.png",//128
+			"Planetside/Resources/Bosses/HMPrime/FireBall/hmprime_chargeball_left_down2.png",
+			"Planetside/Resources/Bosses/HMPrime/FireBall/hmprime_chargeball_left_down3.png",
+			"Planetside/Resources/Bosses/HMPrime/FireBall/hmprime_chargeball_left_down4.png",
+			"Planetside/Resources/Bosses/HMPrime/FireBall/hmprime_chargeball_left_down5.png",
+			"Planetside/Resources/Bosses/HMPrime/FireBall/hmprime_chargeball_left_down6.png",
+			"Planetside/Resources/Bosses/HMPrime/FireBall/hmprime_chargeball_left_down7.png",
+			"Planetside/Resources/Bosses/HMPrime/FireBall/hmprime_chargeball_left_down8.png",//135
+
+			"Planetside/Resources/Bosses/HMPrime/FireBall/hmprime_chargeball_right_down1.png",//136
+			"Planetside/Resources/Bosses/HMPrime/FireBall/hmprime_chargeball_right_down2.png",
+			"Planetside/Resources/Bosses/HMPrime/FireBall/hmprime_chargeball_right_down3.png",
+			"Planetside/Resources/Bosses/HMPrime/FireBall/hmprime_chargeball_right_down4.png",
+			"Planetside/Resources/Bosses/HMPrime/FireBall/hmprime_chargeball_right_down5.png",
+			"Planetside/Resources/Bosses/HMPrime/FireBall/hmprime_chargeball_right_down6.png",
+			"Planetside/Resources/Bosses/HMPrime/FireBall/hmprime_chargeball_right_down7.png",
+			"Planetside/Resources/Bosses/HMPrime/FireBall/hmprime_chargeball_right_down8.png",//143
+
+			"Planetside/Resources/Bosses/HMPrime/FireBall/hmprime_chargeball_up_left1.png",//144
+			"Planetside/Resources/Bosses/HMPrime/FireBall/hmprime_chargeball_up_left2.png",
+			"Planetside/Resources/Bosses/HMPrime/FireBall/hmprime_chargeball_up_left3.png",
+			"Planetside/Resources/Bosses/HMPrime/FireBall/hmprime_chargeball_up_left4.png",
+			"Planetside/Resources/Bosses/HMPrime/FireBall/hmprime_chargeball_up_left5.png",
+			"Planetside/Resources/Bosses/HMPrime/FireBall/hmprime_chargeball_up_left6.png",
+			"Planetside/Resources/Bosses/HMPrime/FireBall/hmprime_chargeball_up_left7.png",
+			"Planetside/Resources/Bosses/HMPrime/FireBall/hmprime_chargeball_up_left8.png",//151
+
+			"Planetside/Resources/Bosses/HMPrime/FireBall/hmprime_chargeball_up_right1.png",//152
+			"Planetside/Resources/Bosses/HMPrime/FireBall/hmprime_chargeball_up_right2.png",
+			"Planetside/Resources/Bosses/HMPrime/FireBall/hmprime_chargeball_up_right3.png",
+			"Planetside/Resources/Bosses/HMPrime/FireBall/hmprime_chargeball_up_right4.png",
+			"Planetside/Resources/Bosses/HMPrime/FireBall/hmprime_chargeball_up_right5.png",
+			"Planetside/Resources/Bosses/HMPrime/FireBall/hmprime_chargeball_up_right6.png",
+			"Planetside/Resources/Bosses/HMPrime/FireBall/hmprime_chargeball_up_right7.png",
+			"Planetside/Resources/Bosses/HMPrime/FireBall/hmprime_chargeball_up_right8.png",//159
+
+			"Planetside/Resources/Bosses/HMPrime/FireGigabeam/hmprime_chargeuplaser_001.png",//160
+			"Planetside/Resources/Bosses/HMPrime/FireGigabeam/hmprime_chargeuplaser_002.png",
+			"Planetside/Resources/Bosses/HMPrime/FireGigabeam/hmprime_chargeuplaser_003.png",
+			"Planetside/Resources/Bosses/HMPrime/FireGigabeam/hmprime_chargeuplaser_004.png",
+			"Planetside/Resources/Bosses/HMPrime/FireGigabeam/hmprime_chargeuplaser_005.png",
+			"Planetside/Resources/Bosses/HMPrime/FireGigabeam/hmprime_chargeuplaser_006.png",
+			"Planetside/Resources/Bosses/HMPrime/FireGigabeam/hmprime_chargeuplaser_007.png",
+			"Planetside/Resources/Bosses/HMPrime/FireGigabeam/hmprime_chargeuplaser_008.png",
+			"Planetside/Resources/Bosses/HMPrime/FireGigabeam/hmprime_chargeuplaser_009.png",
+			"Planetside/Resources/Bosses/HMPrime/FireGigabeam/hmprime_chargeuplaser_010.png",
+			"Planetside/Resources/Bosses/HMPrime/FireGigabeam/hmprime_chargeuplaser_011.png",
+			"Planetside/Resources/Bosses/HMPrime/FireGigabeam/hmprime_chargeuplaser_012.png",
+			"Planetside/Resources/Bosses/HMPrime/FireGigabeam/hmprime_chargeuplaser_013.png",
+			"Planetside/Resources/Bosses/HMPrime/FireGigabeam/hmprime_chargeuplaser_014.png",
+			"Planetside/Resources/Bosses/HMPrime/FireGigabeam/hmprime_chargeuplaser_015.png",//174
+
+			"Planetside/Resources/Bosses/HMPrime/FireGigabeam/hmprime_firelaser_001.png",//175
+			"Planetside/Resources/Bosses/HMPrime/FireGigabeam/hmprime_firelaser_002.png",
+			"Planetside/Resources/Bosses/HMPrime/FireGigabeam/hmprime_firelaser_003.png",
+			"Planetside/Resources/Bosses/HMPrime/FireGigabeam/hmprime_firelaser_004.png",
+			"Planetside/Resources/Bosses/HMPrime/FireGigabeam/hmprime_firelaser_005.png",
+			"Planetside/Resources/Bosses/HMPrime/FireGigabeam/hmprime_firelaser_006.png",
+			"Planetside/Resources/Bosses/HMPrime/FireGigabeam/hmprime_firelaser_007.png",
+			"Planetside/Resources/Bosses/HMPrime/FireGigabeam/hmprime_firelaser_008.png",//182
+
+			"Planetside/Resources/Bosses/HMPrime/FireGigabeam/hmprime_chargedownlaser_001.png",//183
+			"Planetside/Resources/Bosses/HMPrime/FireGigabeam/hmprime_chargedownlaser_002.png",
+			"Planetside/Resources/Bosses/HMPrime/FireGigabeam/hmprime_chargedownlaser_003.png",
+			"Planetside/Resources/Bosses/HMPrime/FireGigabeam/hmprime_chargedownlaser_004.png",
+			"Planetside/Resources/Bosses/HMPrime/FireGigabeam/hmprime_chargedownlaser_005.png",
+			"Planetside/Resources/Bosses/HMPrime/FireGigabeam/hmprime_chargedownlaser_006.png",
+			"Planetside/Resources/Bosses/HMPrime/FireGigabeam/hmprime_chargedownlaser_007.png",
+			"Planetside/Resources/Bosses/HMPrime/FireGigabeam/hmprime_chargedownlaser_008.png",
+			"Planetside/Resources/Bosses/HMPrime/FireGigabeam/hmprime_chargedownlaser_009.png",
+			"Planetside/Resources/Bosses/HMPrime/FireGigabeam/hmprime_chargedownlaser_010.png",
+			"Planetside/Resources/Bosses/HMPrime/FireGigabeam/hmprime_chargedownlaser_011.png",
+			"Planetside/Resources/Bosses/HMPrime/FireGigabeam/hmprime_chargedownlaser_012.png",
+			"Planetside/Resources/Bosses/HMPrime/FireGigabeam/hmprime_chargedownlaser_013.png",//195
+
+			"Planetside/Resources/Bosses/HMPrime/Death/hmprime_kindadeath1.png",//196
+			"Planetside/Resources/Bosses/HMPrime/Death/hmprime_kindadeath2.png",
+			"Planetside/Resources/Bosses/HMPrime/Death/hmprime_kindadeath3.png",
+			"Planetside/Resources/Bosses/HMPrime/Death/hmprime_kindadeath4.png",
+			"Planetside/Resources/Bosses/HMPrime/Death/hmprime_kindadeath5.png",
+			"Planetside/Resources/Bosses/HMPrime/Death/hmprime_kindadeath6.png",
+			"Planetside/Resources/Bosses/HMPrime/Death/hmprime_kindadeath7.png",
+			"Planetside/Resources/Bosses/HMPrime/Death/hmprime_kindadeath8.png",
+			"Planetside/Resources/Bosses/HMPrime/Death/hmprime_kindadeath9.png",
+			"Planetside/Resources/Bosses/HMPrime/Death/hmprime_kindadeath10.png",//205
+
+			"Planetside/Resources/Bosses/HMPrime/Death/hmprime_truedeath_001.png",//206
+			"Planetside/Resources/Bosses/HMPrime/Death/hmprime_truedeath_002.png",
+			"Planetside/Resources/Bosses/HMPrime/Death/hmprime_truedeath_003.png",
+			"Planetside/Resources/Bosses/HMPrime/Death/hmprime_truedeath_004.png",
+			"Planetside/Resources/Bosses/HMPrime/Death/hmprime_truedeath_005.png",
+			"Planetside/Resources/Bosses/HMPrime/Death/hmprime_truedeath_006.png",
+			"Planetside/Resources/Bosses/HMPrime/Death/hmprime_truedeath_007.png",
+			"Planetside/Resources/Bosses/HMPrime/Death/hmprime_truedeath_008.png",
+			"Planetside/Resources/Bosses/HMPrime/Death/hmprime_truedeath_009.png",
+			"Planetside/Resources/Bosses/HMPrime/Death/hmprime_truedeath_010.png",
+			"Planetside/Resources/Bosses/HMPrime/Death/hmprime_truedeath_011.png",
+			"Planetside/Resources/Bosses/HMPrime/Death/hmprime_truedeath_012.png",
+			"Planetside/Resources/Bosses/HMPrime/Death/hmprime_truedeath_013.png",
+			"Planetside/Resources/Bosses/HMPrime/Death/hmprime_truedeath_014.png",
+			"Planetside/Resources/Bosses/HMPrime/Death/hmprime_truedeath_015.png",
+			"Planetside/Resources/Bosses/HMPrime/Death/hmprime_truedeath_016.png",
+			"Planetside/Resources/Bosses/HMPrime/Death/hmprime_truedeath_017.png",
+			"Planetside/Resources/Bosses/HMPrime/Death/hmprime_truedeath_018.png",
+			"Planetside/Resources/Bosses/HMPrime/Death/hmprime_truedeath_019.png",
+			"Planetside/Resources/Bosses/HMPrime/Death/hmprime_truedeath_020.png",//225
 		};
 	}
 }
