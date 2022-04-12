@@ -44,7 +44,7 @@ namespace Planetside
             activeitem.consumable = false;
             activeitem.quality = PickupObject.ItemQuality.B;
             activeitem.SetupUnlockOnCustomFlag(CustomDungeonFlags.DECURSE_HELL_SHRINE_UNLOCK, true);
-            ItemBuilder.AddPassiveStatModifier(activeitem, PlayerStats.StatType.Curse, 0.5f, StatModifier.ModifyMethod.ADDITIVE);
+            ItemBuilder.AddPassiveStatModifier(activeitem, PlayerStats.StatType.Curse, 1f, StatModifier.ModifyMethod.ADDITIVE);
             ItemBuilder.AddPassiveStatModifier(activeitem, PlayerStats.StatType.AdditionalItemCapacity, 1f, StatModifier.ModifyMethod.ADDITIVE);
             ItemBuilder.AddPassiveStatModifier(activeitem, PlayerStats.StatType.RateOfFire, 1.20f, StatModifier.ModifyMethod.MULTIPLICATIVE);
 
@@ -94,13 +94,13 @@ namespace Planetside
         {
             try
             {
-                IPlayerInteractable nearestInteractable = user.CurrentRoom.GetNearestInteractable(user.sprite.WorldCenter, 2.4f, user);
+                IPlayerInteractable nearestInteractable = user.CurrentRoom.GetNearestInteractable(user.sprite.WorldCenter, 2.5f, user);
                 bool flag2 = nearestInteractable != null && nearestInteractable is SimpleShrine;
                 if (flag2)
                 {
                     SimpleShrine simp = nearestInteractable as SimpleShrine;
                     Func<PlayerController, GameObject, bool> aaa = simp.CanUse;
-                    if (aaa.Invoke(user, simp.gameObject) == true)
+                    if (aaa.Invoke(user, simp.gameObject) == true | simp.name == "psog:shrineofpurity(Clone)")
                     {
                         return true;
                     }
@@ -209,7 +209,7 @@ namespace Planetside
                 if (death.name == "psog:shrineofdarkness(Clone)" | death.name == "psog:shrineofcurses(Clone)" | death.name == "psog:shrineofpetrification(Clone)" | death.name == "psog:shrineofsomething(Clone)")
                 {
                     PurpleParticles = true;
-                    if (UnityEngine.Random.value <= 0.08f)
+                    if (UnityEngine.Random.value <= 0.2f)
                     {
                         int id = BraveUtility.RandomElement<int>(this.CursedID);
                         LootEngine.SpawnItem(PickupObjectDatabase.GetById(id).gameObject, death.sprite.WorldCenter, new Vector2(0f, 0f), 0f, false, true, false);
@@ -224,7 +224,7 @@ namespace Planetside
                 {
                     if (UnityEngine.Random.value <= 0.125f)
                     {
-                        OtherTools.ApplyStat(user, PlayerStats.StatType.DamageToBosses, 0.85f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+                        OtherTools.ApplyStat(user, PlayerStats.StatType.DamageToBosses, 0.95f, StatModifier.ModifyMethod.MULTIPLICATIVE);
                         OtherTools.ApplyStat(user, PlayerStats.StatType.RateOfFire, 1.1f, StatModifier.ModifyMethod.MULTIPLICATIVE);
                         for (int i = 0; i < 4; i++)
                         {
@@ -324,8 +324,8 @@ namespace Planetside
                 if (UnityEngine.Random.value <= 0.5f)
                 {
                     OtherTools.Notify("The Spirits", "Hold Back", "Planetside/Resources/ShrineIcons/HeresyIcons/shrineChallengeIcon");
-                    OtherTools.ApplyStat(user, PlayerStats.StatType.Damage, 1.4f, StatModifier.ModifyMethod.MULTIPLICATIVE);
-                    OtherTools.ApplyStat(user, PlayerStats.StatType.Coolness, 3f, StatModifier.ModifyMethod.ADDITIVE);
+                    OtherTools.ApplyStat(user, PlayerStats.StatType.Damage, 1.25f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+                    OtherTools.ApplyStat(user, PlayerStats.StatType.Coolness, 2f, StatModifier.ModifyMethod.ADDITIVE);
                     user.stats.AddFloorMagnificence(1);
                 }
                 else

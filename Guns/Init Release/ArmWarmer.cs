@@ -15,12 +15,88 @@ using MonoMod;
 using System.Collections.ObjectModel;
 using SaveAPI;
 
+
+namespace Planetside
+{
+	public class StickyArmWarmerProjectile : MonoBehaviour
+	{ 
+		public void Start()
+        {
+			currentObject = this.GetComponent<Projectile>();
+			if (currentObject) 
+			{
+				currentObject.OnHitEnemy += HandleHit;
+			}
+		}
+		private void HandleHit(Projectile projectile, SpeculativeRigidbody otherBody, bool fatal)
+		{
+			if (otherBody.aiActor != null && !otherBody.healthHaver.IsDead && otherBody.aiActor.behaviorSpeculator && !otherBody.aiActor.IsHarmlessEnemy)
+			{
+				if (base.GetComponent<PierceProjModifier>() != null)
+                {
+					if (base.GetComponent<PierceProjModifier>().penetration == 0)
+                    {TransformToSticky(projectile, otherBody);}
+				}
+				else
+                {TransformToSticky(projectile, otherBody);}
+			}
+		}
+
+		private void TransformToSticky(Projectile projectile, SpeculativeRigidbody otherBody)
+        {
+			projectile.DestroyMode = Projectile.ProjectileDestroyMode.DestroyComponent;
+			objectToLookOutFor = projectile.gameObject;
+			objectToLookOutFor.transform.parent = otherBody.transform;
+			player = projectile.Owner as PlayerController;
+			GameManager.Instance.StartCoroutine(this.EnlargeTumors());
+		}
+		private void OnPlayerReloaded(PlayerController arg1, Gun arg2, bool actual)
+		{
+			GameManager.Instance.StartCoroutine(this.EnlargeTumors());
+		}
+
+		private IEnumerator EnlargeTumors()
+		{
+			if (objectToLookOutFor == null) { yield break; }
+			Vector3 currentscale = objectToLookOutFor.transform.localScale;
+			float elapsed = 0f;
+			float duration = 2.5f;
+			AkSoundEngine.PostEvent("Play_ENM_blobulord_charge_01", base.gameObject);
+			while (elapsed < duration)
+			{
+				if (objectToLookOutFor.gameObject == null) { break; }
+				elapsed += BraveTime.DeltaTime;
+				float t = elapsed / duration;
+				float throne1 = Mathf.Sin(t * (Mathf.PI / 2));
+				objectToLookOutFor.transform.localScale = Vector3.Lerp(currentscale, currentscale * 2f, throne1);
+				yield return null;
+			}
+			ExplosionData data = StaticExplosionDatas.genericSmallExplosion;
+			data.effect = (PickupObjectDatabase.GetById(368) as Gun).DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX;
+			data.damage = 5.5f * (player != null ? player.stats.GetStatValue(PlayerStats.StatType.Damage) : 1);
+			data.damageRadius = 3;
+			data.doScreenShake = false;
+			data.playDefaultSFX = false;
+			data.force = 1;
+			Exploder.Explode(objectToLookOutFor.transform.position, data, objectToLookOutFor.transform.position);
+			AkSoundEngine.PostEvent("Play_BOSS_blobulord_burst_01", base.gameObject);
+			Destroy(objectToLookOutFor);
+			yield break;
+		}
+		public PlayerController player;
+		public Projectile currentObject;
+		public GameObject objectToLookOutFor;
+		public Material materialToCopy;
+		public tk2dSprite objectSprite;
+		public AIActor parent;
+		public Gun ToCheckReloadFor;
+	}
+}
+
+
 namespace Planetside
 {
 
-	/// <summary>
-	/// TO DO
-	/// </summary>
 	public class ArmWarmer : GunBehaviour
 	{
 		public static void Add()
@@ -28,42 +104,60 @@ namespace Planetside
 			Gun gun = ETGMod.Databases.Items.NewGun("Arm Warmer", "heartthing");
 			Game.Items.Rename("outdated_gun_mods:arm_warmer", "psog:arm_warmer");
 			gun.gameObject.AddComponent<ArmWarmer>();
-			GunExt.SetShortDescription(gun, "Mmmm Tasty..");
-			GunExt.SetLongDescription(gun, "A large, amalgam of living organs.\n\nIt hungers for enemy bullets...");
+			GunExt.SetShortDescription(gun, "Mmmm, Tasty...");
+			GunExt.SetLongDescription(gun, "A large, amalgam of living flesh.\n\nIt seems to replicate very, *very* quickly...");
 			GunExt.SetupSprite(gun, null, "heartthing_idle_001", 11);
 			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 25);
 			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 10);
 			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 5);
 			GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(83) as Gun, true, false);
-			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_PET_wolf_bite_01";
-			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].triggerEvent = true;
-			gun.gunSwitchGroup = (PickupObjectDatabase.GetById(336) as Gun).gunSwitchGroup;
 			gun.DefaultModule.ammoCost = 1;
-			gun.DefaultModule.shootStyle = ProjectileModule.ShootStyle.Automatic;
+			gun.DefaultModule.shootStyle = ProjectileModule.ShootStyle.Burst;
 			gun.DefaultModule.sequenceStyle = ProjectileModule.ProjectileSequenceStyle.Random;
 			gun.reloadTime = 2f;
-			gun.DefaultModule.cooldownTime = .3f;
-			gun.DefaultModule.numberOfShotsInClip = -1;
-			gun.SetBaseMaxAmmo(1);
+			gun.DefaultModule.cooldownTime = .5f;
+			gun.DefaultModule.numberOfShotsInClip = 111;
+			gun.SetBaseMaxAmmo(333);
 			gun.quality = PickupObject.ItemQuality.D;
-			gun.DefaultModule.angleVariance = 0f;
-			gun.DefaultModule.burstShotCount = 1;
-			gun.CanReloadNoMatterAmmo = true;
-			gun.Volley.projectiles[0].ammoCost = 0;
-			gun.InfiniteAmmo = true;
+			gun.DefaultModule.angleVariance = 18f;
+			gun.DefaultModule.burstShotCount = 3;
+			gun.DefaultModule.burstCooldownTime = 0.05f;
+			gun.Volley.projectiles[0].ammoCost = 1;
+			gun.InfiniteAmmo = false;
 			gun.gunClass = GunClass.SILLY;
-			Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(gun.DefaultModule.projectiles[0]);
+			Gun goreThing = PickupObjectDatabase.GetById(43) as Gun;
+			Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(goreThing.DefaultModule.projectiles[0]);
 			projectile.gameObject.SetActive(false);
 			FakePrefab.MarkAsFakePrefab(projectile.gameObject);
 			UnityEngine.Object.DontDestroyOnLoad(projectile);
-			gun.DefaultModule.projectiles[0] = projectile;
-			projectile.baseData.damage = 0f;
-			projectile.baseData.speed *= 1f;
-			projectile.AdditionalScaleMultiplier = 0.5f;
+			projectile.baseData.damage = 1f;
+			projectile.baseData.speed *= 0.7f;
+			projectile.AdditionalScaleMultiplier = 1f;
 			projectile.shouldRotate = true;
 			projectile.pierceMinorBreakables = true;
-			projectile.sprite.renderer.enabled = false;
-			projectile.baseData.range = 1f;
+			projectile.baseData.range = 1000f;
+			BounceProjModifier bouncy = projectile.gameObject.AddComponent<BounceProjModifier>();
+			bouncy.numberOfBounces = 1;
+			projectile.AnimateProjectile(new List<string> {
+				"meatorb_001",
+				"meatorb_002",
+				"meatorb_003",
+				"meatorb_004",
+				"meatorb_005",
+			}, 2, true, new List<IntVector2> {
+				new IntVector2(8, 8),
+				new IntVector2(8, 8),
+				new IntVector2(8, 8),
+				new IntVector2(8, 8),
+				new IntVector2(8, 8),
+			}, AnimateBullet.ConstructListOfSameValues(false, 8), AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.MiddleCenter, 8), AnimateBullet.ConstructListOfSameValues(true, 8), AnimateBullet.ConstructListOfSameValues(false, 8), AnimateBullet.ConstructListOfSameValues<Vector3?>(null, 8), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 8), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 8), AnimateBullet.ConstructListOfSameValues<Projectile>(null, 8));
+			projectile.hitEffects.alwaysUseMidair = true;
+			projectile.hitEffects.overrideMidairDeathVFX = (PickupObjectDatabase.GetById(368) as Gun).DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX;
+			projectile.gameObject.AddComponent<StickyArmWarmerProjectile>();
+			projectile.objectImpactEventName = (PickupObjectDatabase.GetById(404) as Gun).DefaultModule.projectiles[0].objectImpactEventName;
+			projectile.enemyImpactEventName = (PickupObjectDatabase.GetById(404) as Gun).DefaultModule.projectiles[0].enemyImpactEventName;
+			gun.DefaultModule.projectiles[0] = projectile;
+
 			Gun gun4 = PickupObjectDatabase.GetById(83) as Gun;
 			gun.muzzleFlashEffects = gun4.muzzleFlashEffects;
 
@@ -76,6 +170,11 @@ namespace Planetside
 
 			gun.AddToSubShop(ItemBuilder.ShopType.Goopton, 1f);
 
+			gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
+			gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("ArmWarmer", "Planetside/Resources/GunClips/ArmWarmer/flesfull", "Planetside/Resources/GunClips/ArmWarmer/flesempty");
+
+			gun.gunSwitchGroup = (PickupObjectDatabase.GetById(404) as Gun).gunSwitchGroup;
+
 			ArmWarmer.ArmWarmerID = gun.PickupObjectId;
 			ItemIDs.AddToList(gun.PickupObjectId);
 		}
@@ -87,16 +186,6 @@ namespace Planetside
 			if (gun.IsReloading && this.HasReloaded)
             {
 				AkSoundEngine.PostEvent("Play_BOSS_doormimic_vomit_01", base.gameObject);
-				int clipshotsremainingLast = gun.ClipShotsRemaining;
-				gun.ClipShotsRemaining = gun.DefaultModule.numberOfShotsInClip - 1;
-				gun.Reload();
-				gun.ClipShotsRemaining = clipshotsremainingLast;
-				if (EatenBullets >= 0)
-				{
-					float damage = EatenBullets;
-					SpawnProjectile(damage);
-					EatenBullets = 0;
-				}
 				this.HasReloaded = false;
 			}
 		}
@@ -145,19 +234,7 @@ namespace Planetside
 
 		public override void PostProcessProjectile(Projectile projectile)
 		{
-			AkSoundEngine.PostEvent("Play_PET_wolf_bite_01", base.gameObject);
-			projectile.baseData.range = 1f;
-			PlayerController player = this.gun.CurrentOwner as PlayerController;
-			Vector2 centerPosition = projectile.sprite.WorldCenter;
-			bool flag3 = player.CurrentRoom != null;
-			if (flag3)
-			{
-				ReadOnlyCollection<Projectile> allProjectiles = StaticReferenceManager.AllProjectiles;
-				if (allProjectiles != null)
-				{
-					GameManager.Instance.Dungeon.StartCoroutine(this.HandleBulletDeletionFrames(player.sprite.WorldCenter, 1.7f, 0.4f));
-				}
-			}
+
 		}
 		private IEnumerator HandleBulletDeletionFrames(Vector3 centerPosition, float bulletDeletionSqrRadius, float duration)
 		{

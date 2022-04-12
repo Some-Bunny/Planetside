@@ -8,19 +8,9 @@ namespace Planetside
 {
     class FuckYoGunsUp : MonoBehaviour
     {
-        public FuckYoGunsUp()
-        {
-        }
+        public FuckYoGunsUp() { }
         public void Start(){
-            /*
-            if (self != null && Hasinited == false){
-                ETGModConsole.Log("help");
-                Hasinited = true;
-                BannedIDs.Add(self.PickupObjectId);
-                AddModule();
-
-            }
-            */
+            BannedIDs.Add(self.PickupObjectId);
         }
 
         public void AddModule()
@@ -33,6 +23,8 @@ namespace Planetside
             self.RawSourceVolley = projectileVolleyData;
             self.SetBaseMaxAmmo(self.GetBaseMaxAmmo() + randomGun.GetBaseMaxAmmo());
             self.GainAmmo(randomGun.CurrentAmmo);
+            self.OnPrePlayerChange();
+            player.inventory.ChangeGun(0, false, false);
         }
         private List<int> BannedIDs = new List<int>();
         protected static void ReconfigureVolley(ProjectileVolleyData newVolley)
@@ -181,9 +173,7 @@ namespace Planetside
                             guns.player = player;
                             guns.AddModule();
                         }
-                    }
-                    
-                  
+                    }           
                 }
                
             }

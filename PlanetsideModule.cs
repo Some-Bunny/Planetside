@@ -264,6 +264,7 @@ namespace Planetside
             ForgottenRoundOubliette.Init();
             ForgottenRoundAbbey.Init();
             ForgottenRoundRNG.Init();
+            SporeBullets.Init();
 
             //Perks
             AllStatsUp.Init();

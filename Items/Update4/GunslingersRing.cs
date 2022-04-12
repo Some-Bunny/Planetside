@@ -200,6 +200,7 @@ namespace Planetside
 						component2.sprite.renderer.material.SetColor("_OverrideColor", color);
 						component2.sprite.renderer.material.SetColor("_EmissiveColor", color);
 					}
+					Destroy(gameObject, 1.5f);
 				}
 				if (gunClassDebuffs.ContainsKey(newGun.gunClass))
                 {

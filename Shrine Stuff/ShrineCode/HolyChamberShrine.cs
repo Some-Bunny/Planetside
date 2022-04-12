@@ -48,27 +48,18 @@ namespace Planetside
 		}
 		public static bool CanUse(PlayerController player, GameObject shrine)
 		{
-			int armorInt = Convert.ToInt32(player.healthHaver.Armor);
-			if (player.name == "PlayerShade(Clone)")
+			bool HasMastery = false;
+			foreach (PassiveItem item in player.passiveItems)
 			{
-				return true;
-			}
-			else
-            {
-				if (player.characterIdentity == PlayableCharacters.Robot)
+				if (item is BasicStatPickup mastery)
 				{
-					return shrine.GetComponent<CustomShrineController>().numUses == 0 && armorInt > 2;
-				}
-				else if (player.characterIdentity != PlayableCharacters.Robot)
-				{
-					return shrine.GetComponent<CustomShrineController>().numUses == 0 && player.stats.GetStatValue(PlayerStats.StatType.Health) > 1;
-				}
-				else
-				{
-					return false;
+					if (mastery.IsMasteryToken == true)
+					{
+						HasMastery = true;
+					}
 				}
 			}
-			
+			return HasMastery;
 		}
 
 		public static void Accept(PlayerController player, GameObject shrine)
@@ -80,38 +71,20 @@ namespace Planetside
 			gameObject2.transform.position = gameObject2.transform.position.Quantize(0.0625f);
 			gameObject2.GetComponent<tk2dBaseSprite>().UpdateZDepth();
 
-			StatModifier item = new StatModifier
+
+			List<BasicStatPickup> rounds = new List<BasicStatPickup>();
+			foreach (PassiveItem item in player.passiveItems)
 			{
-				statToBoost = PlayerStats.StatType.Health,
-				amount = -1,
-				modifyType = StatModifier.ModifyMethod.ADDITIVE
-			};
-			StatModifier item2 = new StatModifier
-			{
-				statToBoost = PlayerStats.StatType.AmmoCapacityMultiplier,
-				amount = 0.8f,
-				modifyType = StatModifier.ModifyMethod.MULTIPLICATIVE
-			};
-			if (player.name != "PlayerShade(Clone)")
-            {
-				if (player.characterIdentity == PlayableCharacters.Robot)
+				if (item is BasicStatPickup mastery)
 				{
-					player.healthHaver.Armor -= 2;
+					if (mastery.IsMasteryToken == true)
+					{
+						rounds.Add(mastery);
+					}
 				}
 			}
-			if (player.name == "PlayerShade(Clone)")
-			{
-				StatModifier money = new StatModifier
-				{
-					statToBoost = PlayerStats.StatType.MoneyMultiplierFromEnemies,
-					amount = 0.8f,
-					modifyType = StatModifier.ModifyMethod.MULTIPLICATIVE
-				};
-				player.ownerlessStatModifiers.Add(money);
-
-			}
-			player.ownerlessStatModifiers.Add(item2);
-			player.ownerlessStatModifiers.Add(item);
+			rounds.Shuffle();
+			player.RemovePassiveItem(rounds[0].PickupObjectId);
 
 			List<DebrisObject> perksThatExist = new List<DebrisObject>() { };
 			List<int> IDsUsed = new List<int>()

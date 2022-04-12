@@ -23,7 +23,6 @@ namespace Planetside
     {
         public void Start()
         {
-
             Debug.Log("Starting HMPrimeSpawnController setup...");
             try
             {              
@@ -47,9 +46,7 @@ namespace Planetside
                 RoomFactory.AddInjection(RoomFactory.BuildFromResource("Planetside/Resources/OtherSpecialRooms/hmprimeoublietteroom.room").room, "HM Prime Boss Room", flowModifierPlacementTypes, 0, dungeonPrerequisites, "HM Prime Boss Room", 1f, 0.225f);
                 RoomFactory.AddInjection(RoomFactory.BuildFromResource("Planetside/Resources/OtherSpecialRooms/hmprimeabbeyroom.room").room, "HM Prime Boss Room", flowModifierPlacementTypes, 0, dungeonPrerequisites, "HM Prime Boss Room", 1f, 0.225f);
 
-
                 Debug.Log("Finished HMPrimeSpawnController setup without failure!");
-
             }
             catch (Exception e)
             {

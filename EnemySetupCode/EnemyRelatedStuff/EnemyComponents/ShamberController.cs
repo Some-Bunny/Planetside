@@ -93,7 +93,10 @@ public class ShamberController : BraveBehaviour
 				for (int i = 0; i < allProjectiles.Count; i++)
                 {
 					Projectile  proj = allProjectiles[i];
-					if (Vector2.Distance(proj.sprite.WorldCenter, base.sprite.WorldCenter) < 3f && proj != null && proj.specRigidbody != null)
+					BeamController beamController = proj.GetComponent<BeamController>();
+					BasicBeamController basicBeamController = proj.GetComponent<BasicBeamController>();
+					bool isNotBeam = basicBeamController == null || beamController == null;
+					if (Vector2.Distance(proj.sprite.WorldCenter, base.sprite.WorldCenter) < 3f && proj != null && proj.specRigidbody != null && isNotBeam == true)
 					{
 						GameManager.Instance.Dungeon.StartCoroutine(this.HandleBulletSuck(proj));
 					}
@@ -101,7 +104,9 @@ public class ShamberController : BraveBehaviour
 			}
 		}
 	}
-	public List<Projectile> activeBullets;
+
+
+	//public List<Projectile> activeBullets;
 	private IEnumerator HandleBulletSuck(Projectile target)
 	{
 		if (BulletsEaten <= 249)
@@ -151,7 +156,6 @@ public class ShamberController : BraveBehaviour
 
 	private void OnPreDeath(Vector2 obj)
 	{
-		//CanSucc = false;
 		if (particle != null)
 		{
 			particle.Stop();

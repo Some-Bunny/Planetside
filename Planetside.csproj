@@ -157,6 +157,7 @@
     <Compile Include="Hooks\DungeonHooks.cs" />
     <Compile Include="Hooks\PickupHooks.cs" />
     <Compile Include="Hooks\ExplosionHooks.cs" />
+    <Compile Include="Items\Update4\SporeBullets.cs" />
     <Compile Include="Items\Update4\ForgottenRounds.cs" />
     <Compile Include="Items\Update4\LostVoidPotential.cs" />
     <Compile Include="Items\Update4\StableVector.cs" />
@@ -2364,6 +2365,7 @@
     <EmbeddedResource Include="Resources\Shellrax\shellrax_fireeye_003.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\sporebullets.png" />
     <EmbeddedResource Include="Resources\stableVector.png" />
     <EmbeddedResource Include="Resources\trespassStone.png" />
     <EmbeddedResource Include="Resources\VFX\DeathMark\markedfordeathvfx_search_001.png" />
@@ -3201,6 +3203,8 @@
     <EmbeddedResource Include="Resources\Ammocom\hmprimeAmmoIcon.png" />
     <EmbeddedResource Include="Resources\Ammocom\hmprimesheet.png" />
     <EmbeddedResource Include="Resources\Bosses\HMPrime\roomIcon.png" />
+    <EmbeddedResource Include="Resources\GunClips\ArmWarmer\flesempty.png" />
+    <EmbeddedResource Include="Resources\GunClips\ArmWarmer\flesfull.png" />
     <Content Include="Resources\Shellrax\shellrax_intro_019.png" />
     <EmbeddedResource Include="Resources\VFX\LockOnVFX\lockonvfx1.png" />
     <EmbeddedResource Include="Resources\VFX\LockOnVFX\lockonvfx2.png" />

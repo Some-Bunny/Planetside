@@ -56,8 +56,6 @@ namespace Planetside
                 "Planetside/Resources/Beams/HeatSink/heatsinkbeam_mid_010",
                 "Planetside/Resources/Beams/HeatSink/heatsinkbeam_mid_011",
                 "Planetside/Resources/Beams/HeatSink/heatsinkbeam_mid_012",
-
-
             };                
             List<string> ImpactAnimPaths = new List<string>()
             {
@@ -201,7 +199,6 @@ namespace Planetside
     {
         public HeatSinkController()
         {
-            this.canHarmOwner = false;
             this.explosionData = StaticExplosionDatas.genericSmallExplosion;
             this.tickDelay = 0.05f;
             this.ignoreQueues = true;
@@ -218,7 +215,6 @@ namespace Planetside
             radiusValue = radialIndicator.CurrentRadius;
             this.timer = this.tickDelay;
             this.projectile = base.GetComponent<Projectile>();
-            this.beamController = base.GetComponent<BeamController>();
             this.basicBeamController = base.GetComponent<BasicBeamController>();
             bool flag = this.projectile.Owner is PlayerController;
             if (flag)
@@ -243,17 +239,13 @@ namespace Planetside
 
         private void Explode(Vector2 pos)
         {
-            bool flag = !this.canHarmOwner && this.owner != null;
-            if (flag)
+            for (int i = 0; i < GameManager.Instance.AllPlayers.Length; i++)
             {
-                for (int i = 0; i < GameManager.Instance.AllPlayers.Length; i++)
+                PlayerController playerController = GameManager.Instance.AllPlayers[i];
+                bool flag2 = playerController && playerController.specRigidbody;
+                if (flag2)
                 {
-                    PlayerController playerController = GameManager.Instance.AllPlayers[i];
-                    bool flag2 = playerController && playerController.specRigidbody;
-                    if (flag2)
-                    {
-                        this.explosionData.ignoreList.Add(playerController.specRigidbody);
-                    }
+                    this.explosionData.ignoreList.Add(playerController.specRigidbody);
                 }
             }
             float Mult = owner != null ? owner.stats.GetStatValue(PlayerStats.StatType.Damage) : 1;
@@ -273,6 +265,7 @@ namespace Planetside
             main.useUnscaledTime = true;
             AkSoundEngine.PostEvent("Play_BOSS_RatMech_Bomb_01", radialIndicator.gameObject);
             GameObject blankObj = GameObject.Instantiate(silencerVFX.gameObject, pos, Quaternion.identity);
+            Destroy(blankObj, 2.5f);
             blankObj.transform.localScale = Vector3.one * (radialIndicator.CurrentRadius / 4);
             Exploder.DoDistortionWave(pos, 10f, 0.4f, radialIndicator.CurrentRadius, 0.066f);
             Destroy(radialIndicator.gameObject);
@@ -283,7 +276,6 @@ namespace Planetside
         }
 
         private Vector2 StoredBlastPosition;
-        //private float currentRadius;
         private HeatIndicatorController radialIndicator;
 
         public float maxRadius;
@@ -293,29 +285,13 @@ namespace Planetside
         public bool ignoreQueues;
 
         public float radiusIncreasePerSecond;
-
-        // Token: 0x040002B0 RID: 688
         public float tickDelay;
-
-        // Token: 0x040002B1 RID: 689
         public ExplosionData explosionData;
-
-        // Token: 0x040002B2 RID: 690
-        public bool canHarmOwner;
-
-        // Token: 0x040002B3 RID: 691
         private float timer;
 
-        // Token: 0x040002B4 RID: 692
         private Projectile projectile;
 
-        // Token: 0x040002B5 RID: 693
         private BasicBeamController basicBeamController;
-
-        // Token: 0x040002B6 RID: 694
-        private BeamController beamController;
-
-        // Token: 0x040002B7 RID: 695
         private PlayerController owner;
     }
 }
