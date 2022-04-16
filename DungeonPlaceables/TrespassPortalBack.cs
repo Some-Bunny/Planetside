@@ -18,7 +18,7 @@ using GungeonAPI;
 namespace Planetside
 {
     public class TrespassPortalBack
-    {
+    {       
         public static void Init()
         {
             var partObj = PlanetsideModule.ModAssets.LoadAsset<GameObject>("Portal");
@@ -31,8 +31,15 @@ namespace Planetside
             StaticReferences.StoredRoomObjects.Add("returnPortal", portal);
         }
     }
+
     public class TrespassReturnPortalController : BraveBehaviour, IPlayerInteractable
     {
+        public TrespassReturnPortalController()
+        {
+            this.WillForceTriggerReinforcements = false;
+        }
+
+        public bool WillForceTriggerReinforcements;
         public void Start()
         {
             base.gameObject.SetActive(true);
@@ -43,8 +50,29 @@ namespace Planetside
             base.transform.position += new Vector3(1, 1);
         }
 
+        public void DoCheckCloseIfEnemies()
+        {
+            if (m_room != null)
+            {
+                if (m_room.GetEnemiesInReinforcementLayer(0) != 0 || m_room.HasActiveEnemies(RoomHandler.ActiveEnemyType.RoomClear) == true)
+                {
+                    if (WillForceTriggerReinforcements == true) { this.m_room.TriggerNextReinforcementLayer(); }
+                    base.Invoke("DeregisterInteractable", 0f);
+                    base.StartCoroutine(LerpShaderValue(0.1f, 0.00f, 2f, "_OutlineWidth"));
+                    base.StartCoroutine(LerpShaderValue(45f, 0f, 2f, "_OutlinePower"));
+                    GameManager.Instance.StartCoroutine(LerpToSize(Vector3.one * 2, Vector3.zero, 2f));
+                    m_room.OnEnemiesCleared += OnEnemiesCleared;
+                }
+            }
+        }
+        public void OnEnemiesCleared()
+        {
+            base.Invoke("ReregisterInteractable", 1f);
+            base.StartCoroutine(LerpShaderValue(0f, 0.1f, 1f, "_OutlineWidth"));
+            base.StartCoroutine(LerpShaderValue(0f,45f, 1f, "_OutlinePower"));
+            GameManager.Instance.StartCoroutine(LerpToSize(Vector3.zero, Vector3.one * 2, 1f));
 
-
+        }
 
         public RoomHandler m_room;
         public float GetDistanceToPoint(Vector2 point)

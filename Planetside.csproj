@@ -127,6 +127,9 @@
     <Compile Include="Controllers\TimeTraderSpawnController.cs" />
     <Compile Include="DungeonGenStuff\ExpandTK2DDungeonAssembler.cs" />
     <Compile Include="DungeonPlaceables\BreakableAPI.cs" />
+    <Compile Include="DungeonPlaceables\BoxOfGrenades.cs" />
+    <Compile Include="DungeonPlaceables\TrespassObjects\TrespassFadingBlocker.cs" />
+    <Compile Include="DungeonPlaceables\TrespassObjects\TutorialNotes.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassPots.cs" />
     <Compile Include="DungeonPlaceables\HolyChamberStatue.cs" />
     <Compile Include="DungeonPlaceables\InitNewPlaceables.cs" />
@@ -137,7 +140,10 @@
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassLight.cs" />
     <Compile Include="DungeonPlaceables\TrespassPortalBack.cs" />
     <Compile Include="EnemySetupCode\EnemyAPI %28The one that modifies behaviors%29\OverrideBehavior.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\Update3\Enemies\Observant.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\Update3\Enemies\FixerUpper.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\Update3\Bosses\HMPrime\HMPrimeIntroDoer.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\Update3\Bosses\HMPrime\FriendlyHMPrime.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\Update3\Bosses\HMPrime\RobotShopkeeperBoss.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\Update3\Enemies\Creationist.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\Update3\PrisonerPhaseOneIntroController.cs" />
@@ -157,6 +163,7 @@
     <Compile Include="Hooks\DungeonHooks.cs" />
     <Compile Include="Hooks\PickupHooks.cs" />
     <Compile Include="Hooks\ExplosionHooks.cs" />
+    <Compile Include="Items\Update4\OrbitalInsertion.cs" />
     <Compile Include="Items\Update4\SporeBullets.cs" />
     <Compile Include="Items\Update4\ForgottenRounds.cs" />
     <Compile Include="Items\Update4\LostVoidPotential.cs" />
@@ -2365,6 +2372,7 @@
     <EmbeddedResource Include="Resources\Shellrax\shellrax_fireeye_003.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\voidTex.png" />
     <EmbeddedResource Include="Resources\sporebullets.png" />
     <EmbeddedResource Include="Resources\stableVector.png" />
     <EmbeddedResource Include="Resources\trespassStone.png" />
@@ -3205,6 +3213,98 @@
     <EmbeddedResource Include="Resources\Bosses\HMPrime\roomIcon.png" />
     <EmbeddedResource Include="Resources\GunClips\ArmWarmer\flesempty.png" />
     <EmbeddedResource Include="Resources\GunClips\ArmWarmer\flesfull.png" />
+    <EmbeddedResource Include="Resources2\ServontTest\servont_die_001.png" />
+    <EmbeddedResource Include="Resources2\ServontTest\servont_idle_001.png" />
+    <EmbeddedResource Include="Resources2\ServontTest\servont_idle_002.png" />
+    <EmbeddedResource Include="Resources2\ServontTest\servont_idle_003.png" />
+    <EmbeddedResource Include="Resources2\ServontTest\servont_idle_004.png" />
+    <EmbeddedResource Include="Resources2\ServontTest\servont_idle_005.png" />
+    <EmbeddedResource Include="Resources2\ServontTest\servont_idle_006.png" />
+    <EmbeddedResource Include="Resources\orbitalinsertion.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassFadingBlocker\trespassblocker_destroy_001.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassFadingBlocker\trespassblocker_destroy_002.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassFadingBlocker\trespassblocker_destroy_003.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassFadingBlocker\trespassblocker_destroy_004.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassFadingBlocker\trespassblocker_destroy_005.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassFadingBlocker\trespassblocker_destroy_006.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassFadingBlocker\trespassblocker_destroy_007.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassFadingBlocker\trespassblocker_destroy_008.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassFadingBlocker\trespassblocker_destroy_009.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassFadingBlocker\trespassblocker_destroy_010.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassFadingBlocker\trespassblocker_idle_001.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassFadingBlocker\trespassblocker_idle_002.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassFadingBlocker\trespassblocker_idle_003.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassFadingBlocker\trespassblocker_idle_004.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassFadingBlocker\trespassblocker_idle_005.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TutorialNote\tatterednote.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\GrenadeBox\grenadebox.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\GrenadeBox\WoodShards\shard1.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\GrenadeBox\WoodShards\shard10.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\GrenadeBox\WoodShards\shard11.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\GrenadeBox\WoodShards\shard12.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\GrenadeBox\WoodShards\shard13.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\GrenadeBox\WoodShards\shard14.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\GrenadeBox\WoodShards\shard2.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\GrenadeBox\WoodShards\shard3.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\GrenadeBox\WoodShards\shard4.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\GrenadeBox\WoodShards\shard5.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\GrenadeBox\WoodShards\shard6.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\GrenadeBox\WoodShards\shard7.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\GrenadeBox\WoodShards\shard8.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\GrenadeBox\WoodShards\shard9.png" />
+    <EmbeddedResource Include="Resources\Enemies\Creationist\creationist_awaken_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Creationist\creationist_awaken_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Creationist\creationist_awaken_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Creationist\creationist_awaken_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Creationist\creationist_awaken_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\Creationist\creationist_awaken_006.png" />
+    <EmbeddedResource Include="Resources\Enemies\Creationist\creationist_awaken_007.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\GrenadeBox\grenadeboxshadow.png" />
+    <EmbeddedResource Include="Resources\Enemies\Observant\observant_awaken_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Observant\observant_awaken_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Observant\observant_awaken_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Observant\observant_awaken_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Observant\observant_awaken_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\Observant\observant_awaken_006.png" />
+    <EmbeddedResource Include="Resources\Enemies\Observant\observant_awaken_007.png" />
+    <EmbeddedResource Include="Resources\Enemies\Observant\observant_awaken_008.png" />
+    <EmbeddedResource Include="Resources\Enemies\Observant\observant_awaken_009.png" />
+    <EmbeddedResource Include="Resources\Enemies\Observant\observant_awaken_010.png" />
+    <EmbeddedResource Include="Resources\Enemies\Observant\observant_awaken_011.png" />
+    <EmbeddedResource Include="Resources\Enemies\Observant\observant_awaken_012.png" />
+    <EmbeddedResource Include="Resources\Enemies\Observant\observant_charge_left_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Observant\observant_charge_left_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Observant\observant_charge_left_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Observant\observant_charge_left_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Observant\observant_charge_right_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Observant\observant_charge_right_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Observant\observant_charge_right_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Observant\observant_charge_right_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Observant\observant_death_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Observant\observant_death_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Observant\observant_death_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Observant\observant_death_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Observant\observant_death_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\Observant\observant_death_006.png" />
+    <EmbeddedResource Include="Resources\Enemies\Observant\observant_death_007.png" />
+    <EmbeddedResource Include="Resources\Enemies\Observant\observant_death_008.png" />
+    <EmbeddedResource Include="Resources\Enemies\Observant\observant_fire_left_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Observant\observant_fire_left_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Observant\observant_fire_left_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Observant\observant_fire_left_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Observant\observant_fire_right_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Observant\observant_fire_right_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Observant\observant_fire_right_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Observant\observant_fire_right_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Observant\observant_idle_left_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Observant\observant_idle_left_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Observant\observant_idle_left_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Observant\observant_idle_left_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Observant\observant_idle_right_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Observant\observant_idle_right_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Observant\observant_idle_right_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Observant\observant_idle_right_004.png" />
+    <EmbeddedResource Include="Resources\Ammocom\observantsheetTrespass.png" />
     <Content Include="Resources\Shellrax\shellrax_intro_019.png" />
     <EmbeddedResource Include="Resources\VFX\LockOnVFX\lockonvfx1.png" />
     <EmbeddedResource Include="Resources\VFX\LockOnVFX\lockonvfx2.png" />
@@ -3269,6 +3369,19 @@
     <EmbeddedResource Include="Resources\OtherSpecialRooms\hmprimeminesroom.room" />
     <EmbeddedResource Include="Resources\OtherSpecialRooms\hmprimeoublietteroom.room" />
     <EmbeddedResource Include="Resources\OtherSpecialRooms\hmprimeproperroom.room" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\TrespassRooms\tete.room" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\TrespassRooms\tutorialblueroom.room" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\TrespassRooms\TrespassDeeperRooms\trespassHarderRoom1.room" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\TrespassRooms\TrespassDeeperRooms\trespassHarderRoom2.room" />
+    <EmbeddedResource Include="Resources\TrespassRooms\TrespassDeeperRooms\trespassHarderRoom3.room" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

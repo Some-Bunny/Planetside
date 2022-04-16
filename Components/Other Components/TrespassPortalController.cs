@@ -76,7 +76,7 @@ namespace Planetside
         public void Interact(PlayerController interactor)
         {
             base.Invoke("DeregisterInteractable", 0f);
-            WeightedRoom newRoom = TrespassStone.trespassTable.SelectByWeight();
+            WeightedRoom newRoom =  AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.HAS_TREADED_DEEPER) ? TrespassStone.trespassDeeperTable.SelectByWeight() : TrespassStone.trespassTable.SelectByWeight();
             var floor = DungeonDatabase.GetOrLoadByName("Base_Forge");
             int num = 5;
             RoomHandler room;
@@ -104,6 +104,8 @@ namespace Planetside
                 AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.TRESPASS_INTO_OTHER_PLACE, true);
                 AkSoundEngine.PostEvent("Stop_MUS_All", GameManager.Instance.gameObject);
                 AkSoundEngine.PostEvent("Play_ENM_beholster_teleport_01", interactor.gameObject);
+                room.TriggerReinforcementLayersOnEvent(RoomEventTriggerCondition.SHRINE_WAVE_C, false);
+
                 GameManager.Instance.StartCoroutine(this.TransportToRoom(interactor, room));
             }
             floor = null;
@@ -142,6 +144,8 @@ namespace Planetside
                         newPlayerPosition = obj.transform.position;
                         controller.ReturnPosition = base.gameObject.transform.position;
                         controller.PortalToDestroy = base.gameObject;
+                        controller.Invoke("DoCheckCloseIfEnemies", 0.5f);
+                        controller.WillForceTriggerReinforcements = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.HAS_TREADED_DEEPER);
                     }
                 }
             }
@@ -168,11 +172,17 @@ namespace Planetside
 
         private void ReregisterInteractable()
         {
-            this.m_room.RegisterInteractable(this);
+            if (!m_room.IsRegistered(this))
+            {
+                this.m_room.RegisterInteractable(this);
+            }
         }
         private void DeregisterInteractable()
         {
-            this.m_room.DeregisterInteractable(this);
+            if (m_room.IsRegistered(this))
+            {
+                this.m_room.DeregisterInteractable(this);
+            }
         }
         public float GetOverrideMaxDistance()
         {
@@ -182,6 +192,15 @@ namespace Planetside
         {
             shouldBeFlipped = false;
             return string.Empty;
+        }
+
+        protected override void OnDestroy()
+        {
+            if (m_room.IsRegistered(this))
+            {
+                this.m_room.DeregisterInteractable(this);
+            }
+            base.OnDestroy();
         }
 
         private IEnumerator LerpShaderValue(float prevSize, float afterSize, float duration, string KeyWord)

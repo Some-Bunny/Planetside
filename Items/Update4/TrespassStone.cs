@@ -44,12 +44,14 @@ namespace Planetside
             WeightedRoom roomer2 = RoomTableTools.GenerateWeightedRoom(RoomFactory.BuildFromResource("Planetside/Resources/TrespassRooms/trespassRoom2.room").room);
             WeightedRoom roomer3 = RoomTableTools.GenerateWeightedRoom(RoomFactory.BuildFromResource("Planetside/Resources/TrespassRooms/trespassRoom3.room").room);
             WeightedRoom roomer4 = RoomTableTools.GenerateWeightedRoom(RoomFactory.BuildFromResource("Planetside/Resources/TrespassRooms/trespassRoom4.room").room);
-
+            WeightedRoom roomer5 = RoomTableTools.GenerateWeightedRoom(RoomFactory.BuildFromResource("Planetside/Resources/TrespassRooms/tutorialblueroom.room").room, 2);
 
             table.includedRooms.Add(roomer);
             table.includedRooms.Add(roomer2);
             table.includedRooms.Add(roomer3);
             table.includedRooms.Add(roomer4);
+            table.includedRooms.Add(roomer5);
+
             foreach (WeightedRoom weightRoom in table.includedRooms.elements)
             {
                 weightRoom.room.customAmbientLight = new Color(0, 0.3f, 0.9f);
@@ -61,16 +63,40 @@ namespace Planetside
                 weightRoom.room.UseCustomMusicState = false;
                 weightRoom.room.UseCustomMusicSwitch = true;
 
-                //weightRoom.room.OverrideMusicState = DungeonFloorMusicController.DungeonMusicState.FLOOR_INTRO;
-
                 weightRoom.room.CustomMusicSwitch = "Play_MUS_Ending_Pilot_01";
                 weightRoom.room.CustomMusicEvent = "Play_MUS_Dungeon_State_NPC";
             }
             
+
+
+
             trespassTable = table;
+
+            GenericRoomTable tableDeeper = RoomTableTools.CreateRoomTable();
+            tableDeeper.includedRooms.Add(RoomTableTools.GenerateWeightedRoom(RoomFactory.BuildFromResource("Planetside/Resources/TrespassRooms/TrespassDeeperRooms/trespassHarderRoom1.room").room));
+            tableDeeper.includedRooms.Add(RoomTableTools.GenerateWeightedRoom(RoomFactory.BuildFromResource("Planetside/Resources/TrespassRooms/TrespassDeeperRooms/trespassHarderRoom2.room").room));
+            tableDeeper.includedRooms.Add(RoomTableTools.GenerateWeightedRoom(RoomFactory.BuildFromResource("Planetside/Resources/TrespassRooms/TrespassDeeperRooms/trespassHarderRoom3.room").room, 0.8f));
+
+            foreach (WeightedRoom weightRoom in tableDeeper.includedRooms.elements)
+            {
+                weightRoom.room.customAmbientLight = new Color(0, 0.3f, 0.9f);
+                weightRoom.room.usesCustomAmbientLight = true;
+                weightRoom.room.overriddenTilesets = GlobalDungeonData.ValidTilesets.FORGEGEON;
+                weightRoom.room.drawPrecludedCeilingTiles = true;
+
+                weightRoom.room.UseCustomMusic = true;
+                weightRoom.room.UseCustomMusicState = false;
+                weightRoom.room.UseCustomMusicSwitch = true;
+
+                weightRoom.room.CustomMusicSwitch = "Play_MUS_Ending_Pilot_01";
+                weightRoom.room.CustomMusicEvent = "Play_MUS_Dungeon_State_NPC";
+            }
+            trespassDeeperTable = tableDeeper;
         }
 
         public static GenericRoomTable trespassTable;
+        public static GenericRoomTable trespassDeeperTable;
+
         public static int TrespassStoneID;
         public override void Pickup(PlayerController player)
         {

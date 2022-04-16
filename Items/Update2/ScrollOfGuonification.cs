@@ -229,8 +229,7 @@ namespace Planetside
 						MeshRenderer component3 = onj.GetComponent<MeshRenderer>();
 						base.StartCoroutine(this.HoldPortalOpen(component3, pick.transform.position, user));
 						UnityEngine.Object.Destroy(pick.gameObject);
-						var texture = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\nebula_reducednoise.png");
-						component3.material.SetTexture("_PortalTex", texture);
+						component3.material.SetTexture("_PortalTex", StaticTextures.NebulaTexture);
 						hole = component3;
 					}
 				}

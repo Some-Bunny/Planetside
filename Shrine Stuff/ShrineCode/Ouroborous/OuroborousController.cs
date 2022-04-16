@@ -134,7 +134,14 @@ namespace Planetside
 				AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.TRESPASS_INTO_OTHER_PLACE, true);
 				AdvancedGameStatsManager.Instance.SetStat(CustomTrackedStats.UMBRAL_ENEMIES_KILLED, 10);
 				AdvancedGameStatsManager.Instance.SetStat(CustomTrackedStats.JAMMED_ARCHGUNJURERS_KILLED, 20);
+				AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.HM_PRIME_DEFEATED_T4, true);
 			});
+			global::ETGModConsole.Commands.GetGroup("psog").AddUnit("surface", delegate (string[] args)
+			{
+				ETGModConsole.Log("<size=100><color=#ff0000ff>*Resurfacing...*</color></size>", false);
+				AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.HAS_TREADED_DEEPER, false);
+			});
+
 			global::ETGModConsole.Commands.GetGroup("psog").AddUnit("lock_all", delegate (string[] args)
 			{
 				ETGModConsole.Log("<size=100><color=#ff0000ff>Refitting the locks... don't hit them that hard next time, okay?</color></size>", false);
@@ -151,6 +158,7 @@ namespace Planetside
 				AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.DECURSE_HELL_SHRINE_UNLOCK, false);
 				AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.HAS_COMPLETED_SOMETHING_WICKED, false);
 				AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.TRESPASS_INTO_OTHER_PLACE, false);
+				AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.HM_PRIME_DEFEATED_T4, false);
 				AdvancedGameStatsManager.Instance.SetStat(CustomTrackedStats.UMBRAL_ENEMIES_KILLED, 0);
 				AdvancedGameStatsManager.Instance.SetStat(CustomTrackedStats.JAMMED_ARCHGUNJURERS_KILLED, 0);
 
@@ -199,8 +207,10 @@ namespace Planetside
 				string m = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.TRESPASS_INTO_OTHER_PLACE) ? " Done!\n" : " -Trespass Into Somewhere Else.\n";
 				string n = AdvancedGameStatsManager.Instance.GetPlayerStatValue(CustomTrackedStats.UMBRAL_ENEMIES_KILLED) >= 4 ? " Done!\n" : " -Slay 5 Umbral Enemies.\n";
 				string o = AdvancedGameStatsManager.Instance.GetPlayerStatValue(CustomTrackedStats.JAMMED_ARCHGUNJURERS_KILLED) >= 14 ? " Done!\n" : " -Defeat 15 Jammed Arch Gunjurers.\n";
+				string p = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.HM_PRIME_DEFEATED_T4) ? " Done!\n" : " -Perform the Highest Level Maintenance On The Damaged Robot.\n";
+
 				string color1 = "9006FF";
-				OtherTools.PrintNoID("Unlock List:\n" + a + b + c + d + e + f + g + h+i+j+k+l+m+n+0, color1);
+				OtherTools.PrintNoID("Unlock List:\n" + a + b + c + d + e + f + g + h+i+j+k+l+m+n+o+p, color1);
 			});
 
 			ETGModConsole.Commands.GetGroup("psog").AddUnit("help", delegate (string[] args)

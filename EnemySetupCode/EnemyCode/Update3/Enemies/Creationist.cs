@@ -20,6 +20,117 @@ namespace Planetside
 		public static GameObject prefab;
 		public static readonly string guid = "creationist";
 		private static tk2dSpriteCollectionData CreationistCollection;
+
+		public class TrespassEnemyEngageDoer : CustomEngageDoer
+		{
+
+			public void Update()
+			{
+
+			}
+
+			public override void StartIntro()
+			{
+				if (this.m_isFinished)
+				{
+					return;
+				}
+				base.StartCoroutine(this.DoIntro());
+			}
+
+			private IEnumerator PortalDoer(MeshRenderer portal, float duration = 6, bool DestroyWhenDone = false)
+			{
+				float elapsed = 0f;
+				while (elapsed < duration)
+				{
+					elapsed += BraveTime.DeltaTime;
+					float t = elapsed / duration;
+					if (portal.gameObject == null) { yield break; }
+					float throne1 = Mathf.Sin(t * (Mathf.PI));
+					portal.material.SetFloat("_UVDistCutoff", Mathf.Lerp(0, 0.3f, throne1));
+					portal.material.SetFloat("_HoleEdgeDepth", Mathf.Lerp(12, 2, throne1));
+					yield return null;
+				}
+
+				if (DestroyWhenDone == true)
+				{
+					Destroy(portal.gameObject);
+				}
+				yield break;
+			}
+
+			private IEnumerator DoIntro()
+			{
+				m_isFinished = true;
+				this.aiActor.enabled = false;
+				this.behaviorSpeculator.enabled = false;
+				this.aiActor.ToggleRenderers(false);
+				this.specRigidbody.enabled = false;
+				this.aiActor.IgnoreForRoomClear = true;
+				this.aiActor.IsGone = true;
+				if (this.aiShooter)
+				{
+					this.aiShooter.ToggleGunAndHandRenderers(false, "GuardIsSpawning");
+				}
+				this.aiActor.ToggleRenderers(true);
+				this.aiActor.healthHaver.PreventAllDamage = true;
+				this.aiActor.enabled = true;
+				this.specRigidbody.enabled = true;
+				this.aiActor.IsGone = false;
+				this.aiActor.IgnoreForRoomClear = false;
+				this.aiAnimator.PlayDefaultAwakenedState();
+				this.aiActor.State = AIActor.ActorState.Awakening;
+				int playerMask = CollisionMask.LayerToMask(CollisionLayer.PlayerCollider, CollisionLayer.PlayerHitBox);
+				this.aiActor.specRigidbody.AddCollisionLayerIgnoreOverride(playerMask);
+
+				if (HasSpawnedPortal != true)
+				{
+					GameObject portalObj = UnityEngine.Object.Instantiate<GameObject>(PickupObjectDatabase.GetById(155).GetComponent<SpawnObjectPlayerItem>().objectToSpawn.GetComponent<BlackHoleDoer>().HellSynergyVFX, this.aiActor.sprite.WorldBottomCenter, Quaternion.Euler(0f, 0f, 0f));
+					portalObj.layer = this.aiActor.gameObject.layer + (int)GameManager.Instance.MainCameraController.CurrentZOffset;
+					portalObj.gameObject.SetLayerRecursively(LayerMask.NameToLayer("BG_Critical"));
+					MeshRenderer mesh = portalObj.GetComponent<MeshRenderer>();
+					mesh.material.SetTexture("_PortalTex", StaticTextures.NebulaTexture);
+					GameManager.Instance.StartCoroutine(PortalDoer(mesh, 3, true));
+					HasSpawnedPortal = true;
+				}
+
+
+				while (this.aiAnimator.IsPlaying("awaken"))
+				{
+					this.behaviorSpeculator.enabled = false;
+					if (this.aiShooter)
+					{
+						this.aiShooter.ToggleGunAndHandRenderers(false, "GuardIsSpawning");
+					}
+					yield return null;
+				}
+				if (this.aiShooter)
+				{
+					this.aiShooter.ToggleGunAndHandRenderers(true, "GuardIsSpawning");
+				}
+				yield return new WaitForSeconds(0.25f);
+				this.aiActor.healthHaver.PreventAllDamage = false;
+				this.behaviorSpeculator.enabled = true;
+				this.aiActor.specRigidbody.RemoveCollisionLayerIgnoreOverride(playerMask);
+				this.aiActor.HasBeenEngaged = true;
+				this.aiActor.State = AIActor.ActorState.Normal;
+				this.StartIntro();
+				m_isFinished = true;
+				yield break;
+			}
+			public override bool IsFinished
+			{
+				get
+				{
+					return this.m_isFinished;
+				}
+			}
+
+
+			private bool HasSpawnedPortal;
+			private bool m_isFinished;
+		}
+
 		public static void Init()
 		{
 			Creationist.BuildPrefab();
@@ -39,7 +150,7 @@ namespace Planetside
 				companion.aiActor.healthHaver.PreventAllDamage = false;
 				companion.aiActor.CollisionDamage = 1f;
 				companion.aiActor.HasShadow = false;
-				companion.aiActor.IgnoreForRoomClear = true;
+				companion.aiActor.IgnoreForRoomClear = false;
 				companion.aiActor.aiAnimator.HitReactChance = 0f;
 				companion.aiActor.specRigidbody.CollideWithOthers = true;
 				companion.aiActor.specRigidbody.CollideWithTileMap = true;
@@ -48,7 +159,6 @@ namespace Planetside
 				companion.aiActor.CollisionKnockbackStrength = 0f;
 				companion.aiActor.procedurallyOutlined = true;
 				companion.aiActor.CanTargetPlayers = true;
-				companion.aiActor.IgnoreForRoomClear = true;
 
 				EnemyToolbox.AddShadowToAIActor(companion.aiActor, StaticEnemyShadows.defaultShadow, new Vector2(0.625f, 0.25f), "shadowPos");
 
@@ -115,14 +225,17 @@ namespace Planetside
 					Flipped = new DirectionalAnimation.FlipType[2]
 				};
 
-				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awaken" }, new DirectionalAnimation.FlipType[0], DirectionalAnimation.DirectionType.Single);
 				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "death", new string[] { "death" }, new DirectionalAnimation.FlipType[0], DirectionalAnimation.DirectionType.Single);
 				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "attack", new string[] { "attack" }, new DirectionalAnimation.FlipType[0], DirectionalAnimation.DirectionType.Single);
 				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "chargeattack", new string[0], new DirectionalAnimation.FlipType[0], DirectionalAnimation.DirectionType.Single);
 				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "chargespecialattack", new string[0], new DirectionalAnimation.FlipType[0], DirectionalAnimation.DirectionType.Single);
 				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "attackspec", new string[0], new DirectionalAnimation.FlipType[0], DirectionalAnimation.DirectionType.Single);
+				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awaken" }, new DirectionalAnimation.FlipType[1], DirectionalAnimation.DirectionType.Single);
 
 				companion.aiActor.AwakenAnimType = AwakenAnimationType.Awaken;
+				companion.aiActor.reinforceType = ReinforceType.SkipVfx;
+				TrespassEnemyEngageDoer trespassEngager = companion.aiActor.gameObject.AddComponent<TrespassEnemyEngageDoer>();
+
 
 				bool flag3 = CreationistCollection == null;
 				if (flag3)
@@ -133,17 +246,6 @@ namespace Planetside
 					{
 						SpriteBuilder.AddSpriteToCollection(spritePaths[i], CreationistCollection);
 					}
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, CreationistCollection, new List<int>
-					{
-					25,
-					26,
-					27,
-					28,
-					29,
-					30,
-					31,
-					32
-					}, "awaken", tk2dSpriteAnimationClip.WrapMode.Once).fps = 12f;
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, CreationistCollection, new List<int>
 					{
 					0,
@@ -246,6 +348,21 @@ namespace Planetside
 					40,
 					41
 					}, "death", tk2dSpriteAnimationClip.WrapMode.Once).fps = 13f;
+
+
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, CreationistCollection, new List<int>
+					{
+					42,
+					43,
+					44,
+					45,
+					46,
+					47,
+					48
+					}, "awaken", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
+
+					
+
 				}
 
 				EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "attack", new Dictionary<int, string> { { 0, "Blast" } });
@@ -478,6 +595,15 @@ namespace Planetside
 			"Planetside/Resources/Enemies/Creationist/creationist_death_007.png",
 			"Planetside/Resources/Enemies/Creationist/creationist_death_008.png",
 			"Planetside/Resources/Enemies/Creationist/creationist_death_009.png",//41
+
+			"Planetside/Resources/Enemies/Creationist/creationist_awaken_001.png",//42
+			"Planetside/Resources/Enemies/Creationist/creationist_awaken_002.png",
+			"Planetside/Resources/Enemies/Creationist/creationist_awaken_003.png",
+			"Planetside/Resources/Enemies/Creationist/creationist_awaken_004.png",
+			"Planetside/Resources/Enemies/Creationist/creationist_awaken_005.png",
+			"Planetside/Resources/Enemies/Creationist/creationist_awaken_006.png",
+			"Planetside/Resources/Enemies/Creationist/creationist_awaken_007.png",//48
+
 		};
 
 		public class EnemyBehavior : BraveBehaviour

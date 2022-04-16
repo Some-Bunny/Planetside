@@ -49,7 +49,7 @@ namespace Planetside
 				companion.aiActor.procedurallyOutlined = true;
 				companion.aiActor.CanTargetPlayers = true;
 				companion.aiActor.SetIsFlying(true, "Gamemode: Creative");
-				EnemyToolbox.AddShadowToAIActor(companion.aiActor, StaticEnemyShadows.largeShadow, new Vector2(0.625f, 0.25f), "shadowPos");
+				EnemyToolbox.AddShadowToAIActor(companion.aiActor, StaticEnemyShadows.largeShadow, new Vector2(1f, 0.25f), "shadowPos");
 
 				companion.aiActor.healthHaver.SetHealthMaximum(40f, null, false);
 				companion.aiActor.PathableTiles = CellTypes.PIT | CellTypes.FLOOR;

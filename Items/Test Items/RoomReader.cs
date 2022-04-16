@@ -80,6 +80,16 @@ namespace Planetside
         protected override void DoEffect(PlayerController user)
         {
             RoomHandler roome =  user.CurrentRoom;
+
+            AIActor orLoadByGuid = EnemyDatabase.GetOrLoadByGuid("RobotShopkeeperBoss_friendly");
+            IntVector2? intVector = new IntVector2?(user.CurrentRoom.GetRandomVisibleClearSpot(2, 2));
+            AIActor aiactor = AIActor.Spawn(orLoadByGuid.aiActor, intVector.Value, GameManager.Instance.Dungeon.data.GetAbsoluteRoomFromPosition(intVector.Value), true, AIActor.AwakenAnimationType.Spawn, true);
+            aiactor.HandleReinforcementFallIntoRoom(0f);
+            CompanionController comp = aiactor.gameActor.GetComponent<CompanionController>();
+            comp.Initialize(user);
+
+            aiactor.CompanionOwner = user;
+            aiactor.specRigidbody.Reinitialize();
             //RuntimePrototypeRoomData hjg =  roome.area.runtimePrototypeData;
             //PrototypeDungeonRoom eee = roome.area.prototypeRoom;
 

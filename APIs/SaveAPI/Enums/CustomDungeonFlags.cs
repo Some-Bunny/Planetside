@@ -43,8 +43,10 @@ namespace SaveAPI
         DEDARKEN,
 
         TRESPASS_INTO_OTHER_PLACE,
+        HAS_TREADED_DEEPER,
 
-        HM_PRIME_ROOM,
+
+        HM_PRIME_DEFEATED_T4,
 
         //Wanderer Flags
         HAS_EVER_TALKED,

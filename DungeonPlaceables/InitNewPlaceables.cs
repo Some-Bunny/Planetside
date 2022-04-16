@@ -15,6 +15,9 @@ namespace Planetside
             Targets.Init();
             HolyChamberStatue.Init();
             TrespassPortalBack.Init();
+            TrespassFadingBlocker.Init();
+            TutorialNotes.Init();
+            BoxOfGrenades.Init();
         }
     }
 }

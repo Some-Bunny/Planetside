@@ -14,6 +14,7 @@ namespace Planetside
         {
             StaticUndodgeableBulletEntries.Init();
             StaticEnemyShadows.Init();
+            StaticTextures.Init();
             ModderBulletGUIDs = new List<string>();
         }
         public static List<string> ModderBulletGUIDs;
@@ -40,6 +41,18 @@ namespace Planetside
         public static GameObject defaultShadow;
 
     }
+    public class StaticTextures
+    {
+        public static void Init()
+        {
+            NebulaTexture = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\nebula_reducednoise.png");
+            VoidTexture = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\voidTex.png");
+
+        }
+        public static Texture VoidTexture;
+        public static Texture NebulaTexture;
+    }
+
     public class StaticUndodgeableBulletEntries
     {
         public static void Init()
@@ -65,6 +78,17 @@ namespace Planetside
             UnityEngine.Object.DontDestroyOnLoad(projectileOne);
             undodgeableBigVar.BulletObject = projectileOne.gameObject;
             undodgeableBig = undodgeableBigVar;
+
+
+            AIBulletBank.Entry undodgeableSmallSporeVar = StaticUndodgeableBulletEntries.CopyFields<AIBulletBank.Entry>(EnemyDatabase.GetOrLoadByGuid("f905765488874846b7ff257ff81d6d0c").bulletBank.GetBullet("spore2"));
+            undodgeableSmallSporeVar.Name = "undodgeableSpore";
+            Projectile projectileSpore = UnityEngine.Object.Instantiate<GameObject>(undodgeableSmallSporeVar.BulletObject).GetComponent<Projectile>();
+            projectileSpore.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+            projectileSpore.gameObject.SetActive(false);
+            FakePrefab.MarkAsFakePrefab(projectileSpore.gameObject);
+            UnityEngine.Object.DontDestroyOnLoad(projectileSpore);
+            undodgeableSmallSporeVar.BulletObject = projectileSpore.gameObject;
+            undodgeableSmallSpore = undodgeableSmallSporeVar;
         }
 
         public static AIBulletBank.Entry CopyFields<T>(AIBulletBank.Entry sample2) where T : AIBulletBank.Entry
@@ -103,10 +127,8 @@ namespace Planetside
             return sample;
         }
 
-
-
         public static AIBulletBank.Entry undodgeableSniper;
         public static AIBulletBank.Entry undodgeableBig;
-
+        public static AIBulletBank.Entry undodgeableSmallSpore;
     }
 }

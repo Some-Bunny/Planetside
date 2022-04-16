@@ -265,6 +265,7 @@ namespace Planetside
             ForgottenRoundAbbey.Init();
             ForgottenRoundRNG.Init();
             SporeBullets.Init();
+            OrbitalInsertion.Init();
 
             //Perks
             AllStatsUp.Init();
@@ -290,6 +291,7 @@ namespace Planetside
             Detscavator.Init();
 
             Creationist.Init();
+            Observant.Init();
 
             DeTurretRight.Init();
             DeTurretLeft.Init();
@@ -303,6 +305,8 @@ namespace Planetside
             AnnihiChamber.Init();
             PrisonerPhaseOne.Init();
             RobotShopkeeperBoss.Init();
+            FriendlyHMPrime.Init();
+            //Servont.Init();
 
             An3sBullet.Init();
             HunterBullet.Init();
@@ -490,10 +494,11 @@ namespace Planetside
 
             string n = AdvancedGameStatsManager.Instance.GetPlayerStatValue(CustomTrackedStats.UMBRAL_ENEMIES_KILLED) >= 4? " Done!\n" : " -Slay 5 Umbral Enemies.\n";
             string o = AdvancedGameStatsManager.Instance.GetPlayerStatValue(CustomTrackedStats.JAMMED_ARCHGUNJURERS_KILLED) >= 14 ? " Done!\n" : " -Defeat 15 Jammed Arch Gunjurers.\n";
+            string p = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.HM_PRIME_DEFEATED_T4) ? " Done!\n" : " -Perform the Highest Level Maintenance On The Damaged Robot.\n";
 
 
             string color1 = "9006FF";
-            OtherTools.PrintNoID("Unlock List:\n" + a + b + c + d + e + f + g +h+i+j+k+l+m+n+o, color1);
+            OtherTools.PrintNoID("Unlock List:\n" + a + b + c + d + e + f + g +h+i+j+k+l+m+n+o+p, color1);
             OtherTools.Init();
 
 

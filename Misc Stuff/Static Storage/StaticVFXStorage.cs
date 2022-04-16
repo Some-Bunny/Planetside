@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using ItemAPI;
+using Gungeon;
 
 namespace Planetside
 {
@@ -96,6 +97,9 @@ namespace Planetside
             BeholsterChargeDownVFX = behCont.chargeDownVfx;
 
             GunFullyChargedVFX = BraveResources.Load<GameObject>("Global VFX/VFX_DBZ_Charge", ".prefab");
+
+            FriendlyElectricLinkVFX = FakePrefab.Clone(Game.Items["shock_rounds"].GetComponent<ComplexProjectileModifier>().ChainLightningVFX);
+
         }
         public static VFXPool BeholsterChargeUpVFX;
         public static VFXPool BeholsterChargeDownVFX;
@@ -108,6 +112,7 @@ namespace Planetside
         public static GameObject GorgunEyesVFX;
         public static GameObject EnemyElectricLinkVFX;
         public static GameObject EnemyZappyTellVFX;
+        public static GameObject FriendlyElectricLinkVFX;
 
 
         public static ScarfAttachmentDoer ScarfObject;

@@ -3496,7 +3496,7 @@ namespace Planetside
 				{
 
 					SaveAPIManager.RegisterStatChange(CustomTrackedStats.HMPRIME_KILLS, 1);
-										
+					
 					DungeonDoorSubsidiaryBlocker[] blockers = UnityEngine.Object.FindObjectsOfType<DungeonDoorSubsidiaryBlocker>();
 					foreach (var blocker in blockers)
 					{
@@ -3512,6 +3512,7 @@ namespace Planetside
 					}
 					if (pruch > 3)
                     {
+						AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.HM_PRIME_DEFEATED_T4, true);//Done
 						Chest chest2 = GameManager.Instance.RewardManager.SpawnTotallyRandomChest(GameManager.Instance.PrimaryPlayer.CurrentRoom.GetRandomVisibleClearSpot(1, 1));
 						chest2.IsLocked = false;
 						chest2.RegisterChestOnMinimap(chest2.GetAbsoluteParentRoom());

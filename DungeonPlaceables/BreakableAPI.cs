@@ -662,6 +662,34 @@ namespace BreakAbleAPI
         };
 
         /// <summary>
+        /// Generates, and returns a NoteDoer using a MajorBreakable. This is as much customization as you'll probably get for now.
+        /// </summary>
+        /// <param name="majorBreakable">Your smajorbreakable that you're turning into a Note.</param>
+        /// <param name="textboxSpawnPoint">The trnasform position from where the textbox will spawn.</param>
+        /// <param name="stringKey">What your note says.</param>
+        /// <param name="DestroyedAfterRead">If true, destroys the note after being read.</param>
+        /// <param name="noteBackgroundType">The background your note will have.</param>
+        public static NoteDoer GenerateNoteDoer(MajorBreakable majorBreakable, Transform textboxSpawnPoint, string stringKey, bool DestroyedAfterRead = false, NoteDoer.NoteBackgroundType noteBackgroundType = NoteDoer.NoteBackgroundType.NOTE)
+        {
+            NoteDoer note = majorBreakable.gameObject.AddComponent<NoteDoer>();
+            note.textboxSpawnPoint = textboxSpawnPoint;
+            note.DestroyedOnFinish = DestroyedAfterRead;
+            note.stringKey = stringKey;
+            note.noteBackgroundType = noteBackgroundType;
+            return note;
+        }
+        /// <summary>
+        /// Generates, and returns a GameObject that can be used as a transform position.
+        /// </summary>
+        public static GameObject GenerateTransformObject(GameObject attacher, Vector2 attachpoint, string name = "shootPoint")
+        {
+            GameObject shootpoint = new GameObject(name);
+            shootpoint.transform.parent = attacher.transform;
+            shootpoint.transform.position = attachpoint;
+            return attacher.transform.Find(name).gameObject;
+        }
+
+        /// <summary>
         /// Generates, and returns a MajorBreakable. This is for generating a basic one, it returns it so you can additionally modify it without cluttering up the setup method too much.
         /// </summary>
         /// <param name="name">The name of your breakable. Not very useful, but I figured it would be important to set it.</param>

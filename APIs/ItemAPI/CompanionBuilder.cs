@@ -58,7 +58,7 @@ namespace ItemAPI
             return orig(guid);
         }
 
-        public static GameObject BuildPrefab(string name, string guid, string defaultSpritePath, IntVector2 hitboxOffset, IntVector2 hitBoxSize)
+        public static GameObject BuildPrefab(string name, string guid, string defaultSpritePath, IntVector2 hitboxOffset, IntVector2 hitBoxSize, bool usesAttackbehaviorGroup = false)
         {
             if (CompanionBuilder.companionDictionary.ContainsKey(guid))
             {
@@ -93,6 +93,7 @@ namespace ItemAPI
 
             bs.MovementBehaviors = new List<MovementBehaviorBase>();
             bs.AttackBehaviors = new List<AttackBehaviorBase>();
+
             bs.TargetBehaviors = new List<TargetBehaviorBase>();
             bs.OverrideBehaviors = new List<OverrideBehaviorBase>();
             bs.OtherBehaviors = new List<BehaviorBase>();

@@ -747,6 +747,7 @@ namespace Planetside
                 {
                     if (enemy.aiActor != null)
                     {
+                        SpawnManager.PoolManager.Remove(proj.transform);
                         proj.baseData.damage = baseBulletDamage;
                         if (enemyOwner != null)
                         {
