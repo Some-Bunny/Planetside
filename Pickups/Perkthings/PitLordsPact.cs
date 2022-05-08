@@ -13,15 +13,15 @@ namespace Planetside
     {
         public PitLordsPactController()
         {
-            this.EnemySacrificeDamage = 40;
+            this.EnemySacrificeDamage = 30;
             this.EnemyAbovePitDamage = 10;
-            this.EnemySacrificedBonus = 5;
+            this.EnemySacrificedBonus = 4;
 
             this.ItemSacrificablePerFloor = 1;
 
-            this.TablesSarificeBonusMin = 2;
-            this.TablesSarificeBonusMax = 6;
-            this.TablesSarificeChance = 0.20f;
+            this.TablesSarificeBonusMin = 3;
+            this.TablesSarificeBonusMax = 7;
+            this.TablesSarificeChance = 0.2f;
 
             this.SelfSacrificeWithPitLordAmuletCap = 3;
 
@@ -37,7 +37,7 @@ namespace Planetside
             {
                 OtherTools.ApplyStat(player, PlayerStats.StatType.Damage, 0.85f, StatModifier.ModifyMethod.MULTIPLICATIVE);
                 OtherTools.ApplyStat(player, PlayerStats.StatType.DamageToBosses, 0.9f, StatModifier.ModifyMethod.MULTIPLICATIVE);
-                OtherTools.ApplyStat(player, PlayerStats.StatType.KnockbackMultiplier, 1.5f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+                OtherTools.ApplyStat(player, PlayerStats.StatType.KnockbackMultiplier, 1.66f, StatModifier.ModifyMethod.MULTIPLICATIVE);
             }
         }
         public void Update()
@@ -74,9 +74,9 @@ namespace Planetside
         }
         public void IncrementStack()
         {
-            this.EnemySacrificeDamage += 40;
+            this.EnemySacrificeDamage += 30;
             this.EnemyAbovePitDamage += 10;
-            this.EnemySacrificedBonus += 3;
+            this.EnemySacrificedBonus += 2;
 
             this.ItemSacrificablePerFloor++;
 
@@ -178,8 +178,8 @@ namespace Planetside
                 }
                 ExplosionData boomboom = StaticExplosionDatas.genericSmallExplosion;
                 boomboom.damageToPlayer = 0;
-                boomboom.damageRadius = 12f;
-                boomboom.damage = pact.EnemySacrificeDamage * 5;
+                boomboom.damageRadius = 8f;
+                boomboom.damage = pact.EnemySacrificeDamage * 3;
                 boomboom.preventPlayerForce = true;
                 boomboom.ignoreList.Add(self.specRigidbody);
                 boomboom.playDefaultSFX = false;
@@ -333,8 +333,6 @@ namespace Planetside
                     PitLordsPactController pact = player.GetComponent<PitLordsPactController>();
                     if (pact != null)
                     {
-
-
                         GameObject gameObject = SpawnManager.SpawnVFX(StaticVFXStorage.JammedDeathVFX, self.transform.position, Quaternion.identity, false);
                         AkSoundEngine.PostEvent("Play_WPN_Life_Orb_Blast_01", player.gameObject);
                         if (gameObject && gameObject.GetComponent<tk2dSprite>())
@@ -347,14 +345,14 @@ namespace Planetside
                         }
                         ExplosionData boomboom = StaticExplosionDatas.genericSmallExplosion;
                         boomboom.damageToPlayer = 0;
-                        boomboom.damageRadius = 10f;
+                        boomboom.damageRadius = 8f;
                         boomboom.damage = pact.EnemySacrificeDamage;
                         boomboom.preventPlayerForce = true;
                         boomboom.ignoreList.Add(player.specRigidbody);
                         boomboom.playDefaultSFX = false;
                         boomboom.doExplosionRing = false;
                         Exploder.Explode(self.sprite.WorldCenter, boomboom, self.transform.PositionVector2());
-                        if (UnityEngine.Random.value < self.healthHaver.GetMaxHealth() / 150)
+                        if (UnityEngine.Random.value < self.healthHaver.GetMaxHealth() / 200)
                         {
                             PickupObject pickupObject = LootEngine.GetItemOfTypeAndQuality<PickupObject>(PickupObject.ItemQuality.COMMON, PitLordsPact.PitLordsPactTable, false);
                             DebrisObject debrisObject = LootEngine.SpawnItem(pickupObject.gameObject, player.transform.position, Vector2.up, 0f, true, false, false);

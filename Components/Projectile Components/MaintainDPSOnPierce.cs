@@ -25,6 +25,7 @@ namespace Planetside
 		public MaintainDamageOnPierce()
 		{
 			this.damageMultOnPierce = 1f;
+			this.AmountOfPiercesBeforeFalloff = -1f;
 		}
 
 		public void Start()
@@ -39,10 +40,15 @@ namespace Planetside
 		}
 		private void HandlePierce(SpeculativeRigidbody myRigidbody, PixelCollider myPixelCollider, SpeculativeRigidbody otherRigidbody, PixelCollider otherPixelCollider)
 		{
-			FieldInfo field = typeof(Projectile).GetField("m_hasPierced", BindingFlags.Instance | BindingFlags.NonPublic);
-			field.SetValue(myRigidbody.projectile, false);
-			myRigidbody.projectile.baseData.damage *= this.damageMultOnPierce;
+			if (AmountOfPiercesBeforeFalloff != 0)
+            {
+				AmountOfPiercesBeforeFalloff--;
+				FieldInfo field = typeof(Projectile).GetField("m_hasPierced", BindingFlags.Instance | BindingFlags.NonPublic);
+				field.SetValue(myRigidbody.projectile, false);
+				myRigidbody.projectile.baseData.damage *= this.damageMultOnPierce;
+			}
 		}
+		public float AmountOfPiercesBeforeFalloff;
 		public float damageMultOnPierce;
 		private Projectile m_projectile;
 	}

@@ -1535,7 +1535,6 @@ namespace Planetside
 			{
 				this.delay = delay;
 			}
-
 			protected override IEnumerator Top()
 			{
 				base.ManualControl = true;
@@ -1571,7 +1570,7 @@ namespace Planetside
 				{
 					base.PostWwiseEvent("Play_ENM_kali_shockwave_01", null);
 					this.Direction = base.AimDirection;
-					float basevalue = 28 - i;
+					float basevalue = Mathf.Lerp(14, 28, base.BulletBank.aiActor.healthHaver.GetCurrentHealthPercentage());
 					if (i > 18)
 					{
 						basevalue = 10;

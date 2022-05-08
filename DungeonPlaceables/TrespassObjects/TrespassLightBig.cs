@@ -37,6 +37,26 @@ namespace Planetside
             }
         }
     }
+
+    public class TresspassUnlitShaderController : MonoBehaviour
+    {
+        public void Start()
+        {
+            if (base.gameObject != null)
+            {
+                tk2dBaseSprite sprite = base.gameObject.GetComponent<tk2dBaseSprite>();
+                Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+                sprite.usesOverrideMaterial = true;
+                mat.mainTexture = sprite.renderer.material.mainTexture;
+                mat.SetColor("_EmissiveColor", new Color32(0, 255, 255, 255));
+                mat.SetFloat("_EmissiveColorPower", 0f);
+                mat.SetFloat("_EmissivePower", 0f);
+                sprite.renderer.material = mat;
+
+            }
+        }
+    }
+
     public class TrespassLightBig
     {
         public static void Init()

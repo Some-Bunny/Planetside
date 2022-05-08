@@ -21,7 +21,6 @@ namespace Planetside
     {
         public void Start()
         {
-
             Debug.Log("Starting TimeTraderSpawnController setup...");
             try
             {
@@ -72,7 +71,7 @@ namespace Planetside
             ShopAllowedToSpawn = false;
             if (GameStatsManager.Instance.IsInSession == true)
             {
-                TimeToBeat = GameStatsManager.Instance.GetSessionStatValue(TrackedStats.TIME_PLAYED) + 210;
+                TimeToBeat = GameStatsManager.Instance.GetSessionStatValue(TrackedStats.TIME_PLAYED) + 195;
                 Debug.Log("Player must beat boss under time time: " + TimeToBeat + " for shop to spawn!");
             }
         }

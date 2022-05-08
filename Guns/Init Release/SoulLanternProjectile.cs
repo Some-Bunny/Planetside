@@ -35,7 +35,7 @@ namespace Planetside
             {
 				projectile.statusEffectsToApply = new List<GameActorEffect> { DebuffLibrary.Possessed };
 				projectile.OnHitEnemy = (Action<Projectile, SpeculativeRigidbody, bool>)Delegate.Combine(projectile.OnHitEnemy, new Action<Projectile, SpeculativeRigidbody, bool>(this.HandleHit));
-                base.StartCoroutine(this.Speed(projectile));
+                //base.StartCoroutine(this.Speed(projectile));
 
             }
         }

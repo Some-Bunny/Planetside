@@ -10,6 +10,7 @@ Event	ID	Name			Wwise Object Path	Notes
 	1357217975	Play_Squeal			\Default Work Unit\Play_Squeal	
 	1479613161	Play_EyeRoar			\Default Work Unit\Play_EyeRoar	
 	1553844495	Stop_MUS_PrisonerTheme			\Default Work Unit\Stop_MUS_PrisonerTheme	
+	1648309904	Play_Railgun			\Default Work Unit\Play_Railgun	
 	1661444356	Play_ambienthum			\Default Work Unit\Play_ambienthum	
 	1708275573	Play_Burn			\Default Work Unit\Play_Burn	
 	1844824434	Stop_ambienthum			\Default Work Unit\Stop_ambienthum	
@@ -58,6 +59,7 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	318799545	PrisonerCough	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\PrisonerCough_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\PrisonerCough		17962
 	384112916	ChainCrack	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\Voices\English(US)\ChainCrack_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\ChainBreak\ChainCrack		17371
 	385222674	DistressSiren	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\DistressSiren_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\DistressSiren		27348
+	391233250	Railgun	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Railgun_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\Railgun		29738
 	413340843	Bleep	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Bleep_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\Bleep		6915
 	438416493	Bigbeam_Start	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Bigbeam_Start_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\BigBeam\Bigbeam_Start		27588
 	452294370	Yari1	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Yari1_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\Yari\Yari1		11820

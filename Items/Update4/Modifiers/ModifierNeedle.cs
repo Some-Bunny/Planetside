@@ -30,7 +30,7 @@ namespace Planetside
     {
         public static void Init()
         {
-            string itemName = "Modifier 'NEEDLE'";
+            string itemName = "Modifier NEEDLE";
             string resourceName = "Planetside/Resources/Modifiers/modifierNeedle.png";
             GameObject obj = new GameObject(itemName);
             ModifierNeedle activeitem = obj.AddComponent<ModifierNeedle>();

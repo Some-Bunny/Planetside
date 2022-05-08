@@ -187,19 +187,7 @@ namespace Planetside
 		}
 		protected override void OnPickup(PlayerController player)
 		{
-			IsBlob = false;
-			IsCharm = false;
-			IsCheese = false;
-			Isfire = false;
-			IsgreenFire = false;
-			IsOil = false;
-			IsPoison = false;
-			IsWater = false;
-			IsWeb = false;
-			IsBlood = false;
-			IsPoop = false;
-			IsPossessive = false;
-			IsFrail = false;
+			
 			base.OnPickup(player);
 		}
 
@@ -217,120 +205,97 @@ namespace Planetside
 				HasReloaded = false;
 				base.OnReloadPressed(player, gun, bSOMETHING);
 			}
-			this.goop = player.CurrentGoop;
-			IsBlob = false;
-			IsCharm = false;
-			IsCheese = false;
-			Isfire = false;
-			IsgreenFire = false;
-			IsOil = false;
-			IsPoison = false;
-			IsWater = false;
-			IsWeb = false;
-			IsPossessive = false;
-			IsPoop = false;
-			IsFrail = false;
-			IsBlood = false;
-
-			if (this.goop != null)
-            {
+			GoopDefinition currentGoop = player.CurrentGoop;
+			string Val = "Unknown";
+			if (currentGoop != null && currentGoop.name != null)
+			{
+				string Name = currentGoop.name;
+				DebuffKeys.TryGetValue(Name.ToLower(), out Val);
+				if (!DebuffKeys.ContainsValue(Val))
+				{
+					Debug.Log("Unrecognized Goop, attempting to breakdown");
+					CurrentGoopKey = currentGoop;
+					CurrentGoopStringKey = "Unknown";
+				}
+				else
+                {
+					CurrentGoopStringKey = Val;
+				}
 				gun.GainAmmo(Mathf.Max(0, gun.ClipCapacity - gun.ClipShotsRemaining));
-				bool fire = this.goop == EasyGoopDefinitions.FireDef | this.goop == EasyGoopDefinitions.FireDef2 | this.goop.name == "HelicopterNapalmGoop" | this.goop.name == "Napalm Goop" | this.goop.name == "NapalmGoopShortLife" | this.goop.name == "BulletKingWineGoop" | this.goop.name == "DevilGoop" | this.goop.name == "FlameLineGoop" | this.goop.name == "DemonWallGoop" | this.goop.name == "DemonWallGoop"; 
-				if (fire)
-				{
-					Isfire = true;
-				}
-				bool greenfire = this.goop == EasyGoopDefinitions.GreenFireDef | this.goop.name == "GreenNapalmGoopThatWorks";
-				if (greenfire)
-				{
-					IsgreenFire = true;
-				}
-				bool blob = this.goop == EasyGoopDefinitions.BlobulonGoopDef | this.goop.name == "BlobulordGoop";
-				if (blob)
-				{
-					IsBlob = true;
-				}
-				bool OIL = this.goop == EasyGoopDefinitions.OilDef | this.goop.name == "Oil Goop";
-				if (OIL)
-				{
-					IsOil = true;
-				}
-				bool cheese = this.goop == EasyGoopDefinitions.CheeseDef;
-				if (cheese)
-				{
-					IsCheese = true;
-				}
-				bool water = this.goop == EasyGoopDefinitions.WaterGoop | this.goop.name == "MimicSpitGoop";
-				if (water)
-				{
-					IsWater = true;
-				}
-				bool charm = this.goop == EasyGoopDefinitions.CharmGoopDef;	
-				if (charm)
-				{
-					IsCharm = true;
-				}
-				bool posion = this.goop == EasyGoopDefinitions.PoisonDef | this.goop.name == "ResourcefulRatPoisonGoop" | this.goop.name == "MeduziPoisonGoop";
-				if (posion)
-				{
-					IsPoison = true;
-				}
-				bool web = this.goop == EasyGoopDefinitions.WebGoop;
-				if (web)
-				{
-					IsWeb = true;
-				}
-				bool blood = this.goop.name == "PermanentBloodGoop" | this.goop.name == "BloodGoop" | this.goop.name == "BloodbulonGoop";
-				if (blood)
-				{
-					IsBlood = true;
-				}
-				bool poop = this.goop.name == "PoopulonGoop";
-				if (poop)
-				{
-					IsPoop = true;
-				}
-				bool possession = this.goop == DebuffLibrary.PossesedPuddle;
-				if (possession)
-				{
-
-					IsPossessive = true;
-				}
-				bool frail = this.goop == DebuffLibrary.FrailPuddle;
-				if (frail)
-				{
-					IsFrail = true;
-				}
 			}
-			
-			/*
-			ETGModConsole.Log("================================================");
-			ETGModConsole.Log("Blob:" + IsBlob.ToString());
-			ETGModConsole.Log("Charm:" + IsCharm.ToString());
-			ETGModConsole.Log("Cheese:" + IsCheese.ToString());
-			ETGModConsole.Log("Fire:" + Isfire.ToString());
-			ETGModConsole.Log("Green Fire:" + IsgreenFire.ToString());
-			ETGModConsole.Log("Oil:" + IsOil.ToString());
-			ETGModConsole.Log("Poison:" + IsPoison.ToString());
-			ETGModConsole.Log("Water:" + IsWater.ToString());
-			ETGModConsole.Log("Web:" + IsWeb.ToString());
-			ETGModConsole.Log("================================================");
-			*/
+			else
+            {
+				CurrentGoopStringKey = "none";
+			}
 			DeadlyDeadlyGoopManager.DelayedClearGoopsInRadius(player.CenterPosition, 2f);
 		}
-		public static bool Isfire;
-		public static bool IsOil;
-		public static bool IsPoison;
-		public static bool IsWeb;
-		public static bool IsWater;
-		public static bool IsCharm;
-		public static bool IsgreenFire;
-		public static bool IsCheese;
-		public static bool IsBlob;
-		public static bool IsBlood;
-		public static bool IsPoop;
-		public static bool IsPossessive;
-		public static bool IsFrail;
-		GoopDefinition goop;
+
+
+
+		public string CurrentGoopStringKey;
+		public GoopDefinition CurrentGoopKey;
+
+
+		public static Dictionary<string, string> DebuffKeys = new Dictionary<string, string>()
+		{
+			//Fire Goops
+			{EasyGoopDefinitions.FireDef2.name.ToLower(), "fire" },
+			{EasyGoopDefinitions.FireDef.name.ToLower(), "fire" },
+			{"helicopternapalmgoop", "fire" },
+			{"napalm goop", "fire" },
+			{"napalmgoopshortlife", "fire" },
+			{"bulletkingwinegoop", "fire" },
+			{"devilgoop", "fire" },
+			{"flamelinegoop", "fire" },
+			{"demonwallgoop", "fire" },
+
+			//Green Fire Goops
+			//{EasyGoopDefinitions.GreenFireDef.name.ToLower(), "hellfire" },
+			{"greennapalmgoopthatworks", "hellfire" },
+
+			//Blob Goops 
+			{EasyGoopDefinitions.BlobulonGoopDef.name.ToLower(), "blob" },
+			{"blobulordgoop", "blob" },
+
+			//Oil Goops 
+			{EasyGoopDefinitions.OilDef.name, "oil" },
+			//{"oil goop", "oil" },
+
+			//Cheese Goops 
+			{EasyGoopDefinitions.CheeseDef.name, "cheese" },
+
+			//Water Goops 
+			{EasyGoopDefinitions.WaterGoop.name.ToLower(), "water" },
+			{"mimicspitgoop", "water" },
+
+			//Charm Goops 
+			{EasyGoopDefinitions.CharmGoopDef.name.ToLower(), "charm" },
+
+			//Poison Goops 
+			{EasyGoopDefinitions.PoisonDef.name.ToLower(), "poison" },
+			{"resourcefulratpoisongoop", "poison" },
+			{"meduzipoisongoop", "poison" },
+
+			//Web Goops
+			{EasyGoopDefinitions.WebGoop.name.ToLower(), "web" },
+
+			//Blood Goops 
+			{"permanentbloodgoop", "blood" },
+			{"bloodgoop", "blood" },
+			{"bloodbulongoop", "blood" },
+
+			//Poop Goops
+			{"poopulongoop", "poop" },
+
+			//Possessed Goops
+			{DebuffLibrary.PossesedPuddle.name.ToLower(), "possessed" },
+
+			//Frailty Goops
+			{DebuffLibrary.FrailPuddle.name.ToLower(), "frailty" },
+
+			
+			//Taarnish Goops
+			{DebuffLibrary.TarnishedGoop.name.ToLower(), "tarnish" },
+		};
 	}
 }

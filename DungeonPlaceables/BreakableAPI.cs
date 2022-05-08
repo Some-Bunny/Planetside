@@ -50,6 +50,11 @@ namespace BreakAbleAPI
 
     public static class BreakableAPIToolbox
     {
+
+        public static Shader worldShader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTiltedCutoutFastPixelShadow");
+
+
+
         /// <summary>
         /// Generates, and returns a KickableObject. This is for generating a basic one, it returns it so you can additionally modify it without cluttering up the setup method too much. Reminder, KickableObjects have a MinorBreakable component that you could modify as well!
         /// </summary>
@@ -85,7 +90,7 @@ namespace BreakAbleAPI
         /// <param name="rollingSpeed">The speed at which your kickable moves.</param>
         /// <param name="collisionLayerList">Sets the collision layer/s of the MajorBreakable. leaving this as null will set it to HighObstacle AND BulletBlocker, however basegame MajorBreakables can use different ones, and at times multiple at once.</param>
 
-        public static KickableObject GenerateKickableObject(string name, string[] idleSpritePaths, string[] rollNorthPaths, string[] rollSouthPaths, string[] rollEastPaths, string[] rollWestPaths, string[] impactNorthPaths, string[] impactSouthPaths, string[] impactEastPaths, string[] impactWestPaths,string[] impactNotRollingPaths, string[]RolledIntoBreakPaths, int idleAnimFPS = 4,int rollAnimFPS = 5, int breakAnimFPS = 4, int breakNotRollingFPS = 4, int breakRolledIntoFPS = 4,bool UsesCustomColliderValues = false, int ColliderSizeX = 16, int ColliderSizeY = 8, int ColliderOffsetX = 0, int ColliderOffsetY = 8, bool HasAdditionalCollisions = true, bool AdditionalCollisionsUseColliderSizes = true, int AdiitionalColliderSizeX = 8, int AdiitionalColliderSizeY = 8, int AdiitionalColliderOffsetX = 0, int AdiitionalColliderOffsetY = 0, string breakAudioEvent = "Play_OBJ_barrel_break_01", float rollingSpeed = 3, List<CollisionLayer> collisionLayerList = null)
+        public static KickableObject GenerateKickableObject(string name, string[] idleSpritePaths, string[] rollNorthPaths, string[] rollSouthPaths, string[] rollEastPaths, string[] rollWestPaths, string[] impactNorthPaths, string[] impactSouthPaths, string[] impactEastPaths, string[] impactWestPaths,string[] impactNotRollingPaths, string[]RolledIntoBreakPaths, int idleAnimFPS = 4,int rollAnimFPS = 5, int breakAnimFPS = 4, int breakNotRollingFPS = 4, int breakRolledIntoFPS = 4,bool UsesCustomColliderValues = false, int ColliderSizeX = 16, int ColliderSizeY = 8, int ColliderOffsetX = 0, int ColliderOffsetY = 8, bool HasAdditionalCollisions = true, bool AdditionalCollisionsUseColliderSizes = true, int AdiitionalColliderSizeX = 8, int AdiitionalColliderSizeY = 8, int AdiitionalColliderOffsetX = 0, int AdiitionalColliderOffsetY = 0, string breakAudioEvent = "Play_OBJ_barrel_break_01", float rollingSpeed = 3, List<CollisionLayer> collisionLayerList = null, bool usesWorldShader = true)
         {
             Texture2D textureFromResource = ResourceExtractor.GetTextureFromResource(idleSpritePaths[0]);
             GameObject gameObject = SpriteBuilder.SpriteFromResource(idleSpritePaths[0], null, false);
@@ -106,6 +111,7 @@ namespace BreakAbleAPI
             IntVector2 intVectorAdditional = new IntVector2(AdiitionalColliderSizeX, AdiitionalColliderSizeY);
             IntVector2 AdditionalcolliderSize = new IntVector2(intVectorAdditional.x, intVectorAdditional.y);
             IntVector2 AdditionalcolliderOffset = new IntVector2(AdiitionalColliderOffsetX, AdiitionalColliderOffsetY);
+
 
             if (UsesCustomColliderValues == false)
             {
@@ -233,6 +239,13 @@ namespace BreakAbleAPI
 
             kickable.AllowTopWallTraversal = true; 
             kickable.rollSpeed = rollingSpeed;
+
+            if (usesWorldShader == true)
+            {
+                kickable.sprite.renderer.material.shader = worldShader;
+                kickable.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+
+            }
             return kickable; 
         }
         public static tk2dSpriteAnimationClip AddAnimation(tk2dSpriteAnimator animator, tk2dSpriteCollectionData Tablecollection, string[] spritePaths, string clipName, int FPS, tk2dSpriteAnimationClip.WrapMode wrapMode)
@@ -712,7 +725,7 @@ namespace BreakAbleAPI
         /// <param name="BlocksPaths">Will act as a blocker and will not let enemies path find through it, I think.</param>
         /// <param name="collisionLayerList">Sets the collision layer/s of the MajorBreakable. leaving this as null will set it to HighObstacle AND BulletBlocker, however basegame MajorBreakables can use different ones, and at times multiple at once.</param>
 
-        public static MajorBreakable GenerateMajorBreakable(string name, string[] idleSpritePaths, int idleAnimFPS = 2, string[] breakSpritePaths = null, int breakAnimFPS = 5, float HP = 100, string ShadowSpritePath = null, float ShadowOffsetX = 0, float ShadowOffsetY = 0, bool UsesCustomColliderValues = false, int ColliderSizeX = 16, int ColliderSizeY = 8, int ColliderOffsetX = 0, int ColliderOffsetY = 8, bool DistribleShards = true, VFXPool breakVFX = null, VFXPool damagedVFX = null, bool BlocksPaths = false, List<CollisionLayer> collisionLayerList = null, Dictionary<float, string> preBreakframesAndHPPercentages = null)
+        public static MajorBreakable GenerateMajorBreakable(string name, string[] idleSpritePaths, int idleAnimFPS = 2, string[] breakSpritePaths = null, int breakAnimFPS = 5, float HP = 100, string ShadowSpritePath = null, float ShadowOffsetX = 0, float ShadowOffsetY = 0, bool UsesCustomColliderValues = false, int ColliderSizeX = 16, int ColliderSizeY = 8, int ColliderOffsetX = 0, int ColliderOffsetY = 8, bool DistribleShards = true, VFXPool breakVFX = null, VFXPool damagedVFX = null, bool BlocksPaths = false, List<CollisionLayer> collisionLayerList = null, Dictionary<float, string> preBreakframesAndHPPercentages = null, bool usesWorldShader = true)
         {
             Texture2D textureFromResource = ResourceExtractor.GetTextureFromResource(idleSpritePaths[0]);
             GameObject gameObject = SpriteBuilder.SpriteFromResource(idleSpritePaths[0], null, false);
@@ -888,6 +901,13 @@ namespace BreakAbleAPI
                 breakable.prebreakFrames = array;
             }
             breakable.distributeShards = DistribleShards;
+
+            if (usesWorldShader == true)
+            {
+                breakable.sprite.renderer.material.shader = worldShader;
+                breakable.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+
+            }
             return breakable;
         }
         /// <summary>
@@ -910,7 +930,7 @@ namespace BreakAbleAPI
         /// <param name="DestroyVFX">The VFX that plays when your breakable is destroyed.</param>
         /// <param name="collisionLayerList">Sets the collision layer/s of the MinorBreakable. leaving this as null will set it to HighObstacle, however basegame MinorBreakables can use different ones, and at times multiple at once.</param>
 
-        public static MinorBreakable GenerateMinorBreakable(string name, string[] idleSpritePaths, int idleAnimFPS = 1, string[] breakSpritePaths = null, int breakAnimFPS = 5, string breakAudioEvent = "Play_OBJ_pot_shatter_01", string ShadowSpritePath = null, float ShadowOffsetX = 0, float ShadowOffsetY = -1, bool UsesCustomColliderValues = false, int ColliderSizeX = 16, int ColliderSizeY = 8, int ColliderOffsetX = 0, int ColliderOffsetY = 8, GameObject DestroyVFX = null, List<CollisionLayer> collisionLayerList = null)     
+        public static MinorBreakable GenerateMinorBreakable(string name, string[] idleSpritePaths, int idleAnimFPS = 1, string[] breakSpritePaths = null, int breakAnimFPS = 5, string breakAudioEvent = "Play_OBJ_pot_shatter_01", string ShadowSpritePath = null, float ShadowOffsetX = 0, float ShadowOffsetY = -1, bool UsesCustomColliderValues = false, int ColliderSizeX = 16, int ColliderSizeY = 8, int ColliderOffsetX = 0, int ColliderOffsetY = 8, GameObject DestroyVFX = null, List<CollisionLayer> collisionLayerList = null, bool usesWorldShader = true)     
         {
             Texture2D textureFromResource = ResourceExtractor.GetTextureFromResource(idleSpritePaths[0]);
             GameObject gameObject = SpriteBuilder.SpriteFromResource(idleSpritePaths[0], null, false);
@@ -1049,6 +1069,12 @@ namespace BreakAbleAPI
                 orAddComponent4.Offset = new Vector3(ShadowOffsetX, ShadowOffsetY);
             }
 
+            if (usesWorldShader == true)
+            {
+                breakable.sprite.renderer.material.shader = worldShader;
+                breakable.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+            }
+
             if (DestroyVFX != null) { breakable.AdditionalVFXObject = DestroyVFX; }
             return breakable;
         }
@@ -1074,7 +1100,7 @@ namespace BreakAbleAPI
         /// <param name="GoopType">The goop it will spawn if DoesGoopOnRest is true.</param>
         /// <param name="GoopRadius">The radius of the spawned goop.</param>
 
-        public static WaftingDebrisObject GenerateWaftingDebrisObject(string shardSpritePath, Vector2 waftDuration, Vector2 waftDistance, Vector2 initialBurstDuration, bool debrisObjectsCanRotate = true, float LifeSpanMin = 0.33f, float LifeSpanMax = 2f, float AngularVelocity = 540, float AngularVelocityVariance = 180f, tk2dSprite shadowSprite = null, float Mass = 1, string AudioEventName = null, GameObject BounceVFX = null, int DebrisBounceCount = 0, bool DoesGoopOnRest = false, GoopDefinition GoopType = null, float GoopRadius = 1f)
+        public static WaftingDebrisObject GenerateWaftingDebrisObject(string shardSpritePath, Vector2 waftDuration, Vector2 waftDistance, Vector2 initialBurstDuration, bool debrisObjectsCanRotate = true, float LifeSpanMin = 0.33f, float LifeSpanMax = 2f, float AngularVelocity = 540, float AngularVelocityVariance = 180f, tk2dSprite shadowSprite = null, float Mass = 1, string AudioEventName = null, GameObject BounceVFX = null, int DebrisBounceCount = 0, bool DoesGoopOnRest = false, GoopDefinition GoopType = null, float GoopRadius = 1f, bool usesWorldShader = true)
         {
             GameObject debrisObject = SpriteBuilder.SpriteFromResource(shardSpritePath, null, false);
             FakePrefab.MarkAsFakePrefab(debrisObject);
@@ -1098,6 +1124,10 @@ namespace BreakAbleAPI
             DebrisObj.waftDuration = waftDuration;
             DebrisObj.waftDistance = waftDistance;
             DebrisObj.initialBurstDuration = initialBurstDuration;
+
+            if (usesWorldShader == true){DebrisObj.sprite.renderer.material.shader = worldShader;
+                DebrisObj.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+            }
             return DebrisObj;
         }
 
@@ -1123,7 +1153,7 @@ namespace BreakAbleAPI
         /// <param name="GoopType">The goop it will spawn if DoesGoopOnRest is true.</param>
         /// <param name="GoopRadius">The radius of the spawned goop.</param>
 
-        public static WaftingDebrisObject GenerateAnimatedWaftingDebrisObject(string[] shardSpritePaths, Vector2 waftDuration, Vector2 waftDistance, Vector2 initialBurstDuration, int FPS = 12, tk2dSpriteAnimationClip.WrapMode wrapMode = tk2dSpriteAnimationClip.WrapMode.Loop, bool debrisObjectsCanRotate = true, float LifeSpanMin = 0.33f, float LifeSpanMax = 2f, float AngularVelocity = 540, float AngularVelocityVariance = 180f, tk2dSprite shadowSprite = null, float Mass = 1, string AudioEventName = null, GameObject BounceVFX = null, int DebrisBounceCount = 0, bool DoesGoopOnRest = false, GoopDefinition GoopType = null, float GoopRadius = 1f)
+        public static WaftingDebrisObject GenerateAnimatedWaftingDebrisObject(string[] shardSpritePaths, Vector2 waftDuration, Vector2 waftDistance, Vector2 initialBurstDuration, int FPS = 12, tk2dSpriteAnimationClip.WrapMode wrapMode = tk2dSpriteAnimationClip.WrapMode.Loop, bool debrisObjectsCanRotate = true, float LifeSpanMin = 0.33f, float LifeSpanMax = 2f, float AngularVelocity = 540, float AngularVelocityVariance = 180f, tk2dSprite shadowSprite = null, float Mass = 1, string AudioEventName = null, GameObject BounceVFX = null, int DebrisBounceCount = 0, bool DoesGoopOnRest = false, GoopDefinition GoopType = null, float GoopRadius = 1f, bool usesWorldShader = true)
         {
             GameObject debrisObject = SpriteBuilder.SpriteFromResource(shardSpritePaths[0], null, false);
             FakePrefab.MarkAsFakePrefab(debrisObject);
@@ -1170,7 +1200,11 @@ namespace BreakAbleAPI
             DebrisObj.waftDuration = waftDuration;
             DebrisObj.waftDistance = waftDistance;
             DebrisObj.initialBurstDuration = initialBurstDuration;
-
+            if (usesWorldShader == true)
+            {
+                DebrisObj.sprite.renderer.material.shader = worldShader;
+                DebrisObj.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+            }
             return DebrisObj;
         }
 
@@ -1194,7 +1228,7 @@ namespace BreakAbleAPI
         /// <param name="DoesGoopOnRest">If true, will spawn goop on itself when it is in a resting state.</param>
         /// <param name="GoopType">The goop it will spawn if DoesGoopOnRest is true.</param>
         /// <param name="GoopRadius">The radius of the spawned goop.</param>
-        public static WaftingDebrisObject[] GenerateWaftingDebrisObjects(string[] shardSpritePaths, Vector2 waftDuration, Vector2 waftDistance, Vector2 initialBurstDuration, bool debrisObjectsCanRotate = true, float LifeSpanMin = 0.33f, float LifeSpanMax = 2f, float AngularVelocity = 540, float AngularVelocityVariance = 180f, tk2dSprite shadowSprite = null, float Mass = 1, string AudioEventName = null, GameObject BounceVFX = null, int DebrisBounceCount = 0, bool DoesGoopOnRest = false, GoopDefinition GoopType = null, float GoopRadius = 1f)
+        public static WaftingDebrisObject[] GenerateWaftingDebrisObjects(string[] shardSpritePaths, Vector2 waftDuration, Vector2 waftDistance, Vector2 initialBurstDuration, bool debrisObjectsCanRotate = true, float LifeSpanMin = 0.33f, float LifeSpanMax = 2f, float AngularVelocity = 540, float AngularVelocityVariance = 180f, tk2dSprite shadowSprite = null, float Mass = 1, string AudioEventName = null, GameObject BounceVFX = null, int DebrisBounceCount = 0, bool DoesGoopOnRest = false, GoopDefinition GoopType = null, float GoopRadius = 1f, bool usesWorldShader = true)
         {
             List<WaftingDebrisObject> DebrisObjectList = new List<WaftingDebrisObject>();
             for (int i = 0; i < shardSpritePaths.Length; i++)
@@ -1220,6 +1254,11 @@ namespace BreakAbleAPI
                 DebrisObj.waftDuration = waftDuration;
                 DebrisObj.waftDistance = waftDistance;
                 DebrisObj.initialBurstDuration = initialBurstDuration;
+                if (usesWorldShader == true)
+                {
+                    DebrisObj.sprite.renderer.material.shader = worldShader;
+                    DebrisObj.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+                }
                 DebrisObjectList.Add(DebrisObj);
             }
             WaftingDebrisObject[] DebrisArray = DebrisObjectList.ToArray();
@@ -1247,7 +1286,7 @@ namespace BreakAbleAPI
         /// <param name="GoopType">The goop it will spawn if DoesGoopOnRest is true.</param>
         /// <param name="GoopRadius">The radius of the spawned goop.</param>
 
-        public static WaftingDebrisObject[] GenerateAnimatedWaftingDebrisObjects(List<string[]> shardSpritePathsList, Vector2 waftDuration, Vector2 waftDistance, Vector2 initialBurstDuration, int FPS = 12, tk2dSpriteAnimationClip.WrapMode wrapMode = tk2dSpriteAnimationClip.WrapMode.Loop, bool debrisObjectsCanRotate = true, tk2dSprite shadowSprite = null, float Mass = 1, float LifeSpanMin = 0.33f, float LifeSpanMax = 2f, float AngularVelocity = 540, float AngularVelocityVariance = 180f, string AudioEventName = null, GameObject BounceVFX = null, int DebrisBounceCount = 0, bool DoesGoopOnRest = false, GoopDefinition GoopType = null, float GoopRadius = 1f)
+        public static WaftingDebrisObject[] GenerateAnimatedWaftingDebrisObjects(List<string[]> shardSpritePathsList, Vector2 waftDuration, Vector2 waftDistance, Vector2 initialBurstDuration, int FPS = 12, tk2dSpriteAnimationClip.WrapMode wrapMode = tk2dSpriteAnimationClip.WrapMode.Loop, bool debrisObjectsCanRotate = true, tk2dSprite shadowSprite = null, float Mass = 1, float LifeSpanMin = 0.33f, float LifeSpanMax = 2f, float AngularVelocity = 540, float AngularVelocityVariance = 180f, string AudioEventName = null, GameObject BounceVFX = null, int DebrisBounceCount = 0, bool DoesGoopOnRest = false, GoopDefinition GoopType = null, float GoopRadius = 1f, bool usesWorldShader = true)
         {
             List<WaftingDebrisObject> DebrisObjectList = new List<WaftingDebrisObject>();
             for (int i = 0; i < shardSpritePathsList.Count; i++)
@@ -1298,6 +1337,11 @@ namespace BreakAbleAPI
                     DebrisObj.waftDuration = waftDuration;
                     DebrisObj.waftDistance = waftDistance;
                     DebrisObj.initialBurstDuration = initialBurstDuration;
+                    if (usesWorldShader == true)
+                    {
+                        DebrisObj.sprite.renderer.material.shader = worldShader;
+                        DebrisObj.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+                    }
                     DebrisObjectList.Add(DebrisObj);
                 }
             }
@@ -1323,7 +1367,7 @@ namespace BreakAbleAPI
         /// <param name="GoopType">The goop it will spawn if DoesGoopOnRest is true.</param>
         /// <param name="GoopRadius">The radius of the spawned goop.</param>
 
-        public static DebrisObject GenerateDebrisObject(string shardSpritePath, bool debrisObjectsCanRotate = true, float LifeSpanMin = 0.33f, float LifeSpanMax = 2f, float AngularVelocity = 540, float AngularVelocityVariance = 180f, tk2dSprite shadowSprite = null, float Mass = 1, string AudioEventName = null, GameObject BounceVFX = null, int DebrisBounceCount = 0, bool DoesGoopOnRest = false, GoopDefinition GoopType = null, float GoopRadius = 1f)
+        public static DebrisObject GenerateDebrisObject(string shardSpritePath, bool debrisObjectsCanRotate = true, float LifeSpanMin = 0.33f, float LifeSpanMax = 2f, float AngularVelocity = 540, float AngularVelocityVariance = 180f, tk2dSprite shadowSprite = null, float Mass = 1, string AudioEventName = null, GameObject BounceVFX = null, int DebrisBounceCount = 0, bool DoesGoopOnRest = false, GoopDefinition GoopType = null, float GoopRadius = 1f, bool usesWorldShader = true)
         {
             GameObject debrisObject = SpriteBuilder.SpriteFromResource(shardSpritePath, null, false);
             FakePrefab.MarkAsFakePrefab(debrisObject);
@@ -1343,6 +1387,11 @@ namespace BreakAbleAPI
             DebrisObj.GoopRadius = GoopRadius;
             if (shadowSprite != null) { DebrisObj.shadowSprite = shadowSprite; }
             DebrisObj.inertialMass = Mass;
+            if (usesWorldShader == true)
+            {
+                DebrisObj.sprite.renderer.material.shader = worldShader;
+                DebrisObj.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+            }
             return DebrisObj;
         }
         /// <summary>
@@ -1363,7 +1412,7 @@ namespace BreakAbleAPI
         /// <param name="DoesGoopOnRest">If true, will spawn goop on itself when it is in a resting state.</param>
         /// <param name="GoopType">The goop it will spawn if DoesGoopOnRest is true.</param>
         /// <param name="GoopRadius">The radius of the spawned goop.</param>
-        public static DebrisObject GenerateAnimatedDebrisObject(string[] shardSpritePaths, int FPS = 12, tk2dSpriteAnimationClip.WrapMode wrapMode = tk2dSpriteAnimationClip.WrapMode.Loop, bool debrisObjectsCanRotate = true, float LifeSpanMin = 0.33f, float LifeSpanMax = 2f, float AngularVelocity = 540, float AngularVelocityVariance = 180f, tk2dSprite shadowSprite = null, float Mass = 1, string AudioEventName = null, GameObject BounceVFX = null, int DebrisBounceCount = 0, bool DoesGoopOnRest = false, GoopDefinition GoopType = null, float GoopRadius = 1f)
+        public static DebrisObject GenerateAnimatedDebrisObject(string[] shardSpritePaths, int FPS = 12, tk2dSpriteAnimationClip.WrapMode wrapMode = tk2dSpriteAnimationClip.WrapMode.Loop, bool debrisObjectsCanRotate = true, float LifeSpanMin = 0.33f, float LifeSpanMax = 2f, float AngularVelocity = 540, float AngularVelocityVariance = 180f, tk2dSprite shadowSprite = null, float Mass = 1, string AudioEventName = null, GameObject BounceVFX = null, int DebrisBounceCount = 0, bool DoesGoopOnRest = false, GoopDefinition GoopType = null, float GoopRadius = 1f, bool usesWorldShader = true)
         {
             GameObject debrisObject = SpriteBuilder.SpriteFromResource(shardSpritePaths[0], null, false);
             FakePrefab.MarkAsFakePrefab(debrisObject);
@@ -1406,7 +1455,11 @@ namespace BreakAbleAPI
             DebrisObj.GoopRadius = GoopRadius;
             if (shadowSprite != null) { DebrisObj.shadowSprite = shadowSprite; }
             DebrisObj.inertialMass = Mass;
-
+            if (usesWorldShader == true)
+            {
+                DebrisObj.sprite.renderer.material.shader = worldShader;
+                DebrisObj.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+            }
             return DebrisObj;
         }
         /// <summary>
@@ -1425,7 +1478,7 @@ namespace BreakAbleAPI
         /// <param name="DoesGoopOnRest">If true, will spawn goop on itself when it is in a resting state.</param>
         /// <param name="GoopType">The goop it will spawn if DoesGoopOnRest is true.</param>
         /// <param name="GoopRadius">The radius of the spawned goop.</param>
-        public static DebrisObject[] GenerateDebrisObjects(string[] shardSpritePaths, bool debrisObjectsCanRotate = true, float LifeSpanMin = 0.33f, float LifeSpanMax = 2f, float AngularVelocity = 540, float AngularVelocityVariance = 180f, tk2dSprite shadowSprite = null, float Mass = 1, string AudioEventName = null, GameObject BounceVFX = null, int DebrisBounceCount = 0, bool DoesGoopOnRest = false, GoopDefinition GoopType = null, float GoopRadius = 1f)
+        public static DebrisObject[] GenerateDebrisObjects(string[] shardSpritePaths, bool debrisObjectsCanRotate = true, float LifeSpanMin = 0.33f, float LifeSpanMax = 2f, float AngularVelocity = 540, float AngularVelocityVariance = 180f, tk2dSprite shadowSprite = null, float Mass = 1, string AudioEventName = null, GameObject BounceVFX = null, int DebrisBounceCount = 0, bool DoesGoopOnRest = false, GoopDefinition GoopType = null, float GoopRadius = 1f, bool usesWorldShader = true)
         {
             List<DebrisObject> DebrisObjectList = new List<DebrisObject>();
             for (int i = 0; i < shardSpritePaths.Length; i++)
@@ -1448,6 +1501,11 @@ namespace BreakAbleAPI
                 DebrisObj.GoopRadius = GoopRadius;
                 if (shadowSprite != null) { DebrisObj.shadowSprite = shadowSprite; }
                 DebrisObj.inertialMass = Mass;
+                if (usesWorldShader == true)
+                {
+                    DebrisObj.sprite.renderer.material.shader = worldShader;
+                    DebrisObj.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+                }
                 DebrisObjectList.Add(DebrisObj);
             }
             DebrisObject[] DebrisArray = DebrisObjectList.ToArray();
@@ -1473,7 +1531,7 @@ namespace BreakAbleAPI
         /// <param name="GoopType">The goop it will spawn if DoesGoopOnRest is true.</param>
         /// <param name="GoopRadius">The radius of the spawned goop.</param>
 
-        public static DebrisObject[] GenerateAnimatedDebrisObjects(List<string[]> shardSpritePathsList, int FPS = 12, tk2dSpriteAnimationClip.WrapMode wrapMode = tk2dSpriteAnimationClip.WrapMode.Loop, bool debrisObjectsCanRotate = true, tk2dSprite shadowSprite = null, float Mass = 1, float LifeSpanMin = 0.33f, float LifeSpanMax = 2f, float AngularVelocity = 540, float AngularVelocityVariance = 180f, string AudioEventName = null, GameObject BounceVFX = null, int DebrisBounceCount = 0, bool DoesGoopOnRest = false, GoopDefinition GoopType = null, float GoopRadius = 1f)
+        public static DebrisObject[] GenerateAnimatedDebrisObjects(List<string[]> shardSpritePathsList, int FPS = 12, tk2dSpriteAnimationClip.WrapMode wrapMode = tk2dSpriteAnimationClip.WrapMode.Loop, bool debrisObjectsCanRotate = true, tk2dSprite shadowSprite = null, float Mass = 1, float LifeSpanMin = 0.33f, float LifeSpanMax = 2f, float AngularVelocity = 540, float AngularVelocityVariance = 180f, string AudioEventName = null, GameObject BounceVFX = null, int DebrisBounceCount = 0, bool DoesGoopOnRest = false, GoopDefinition GoopType = null, float GoopRadius = 1f, bool usesWorldShader = true)
         {
             List<DebrisObject> DebrisObjectList = new List<DebrisObject>();
             for (int i = 0; i < shardSpritePathsList.Count; i++)
@@ -1521,6 +1579,11 @@ namespace BreakAbleAPI
                     DebrisObj.GoopRadius = GoopRadius;
                     if (shadowSprite != null) { DebrisObj.shadowSprite = shadowSprite; }
                     DebrisObj.inertialMass = Mass;
+                    if (usesWorldShader == true)
+                    {
+                        DebrisObj.sprite.renderer.material.shader = worldShader;
+                        DebrisObj.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+                    }
                     DebrisObjectList.Add(DebrisObj);
                 }
             }

@@ -91,6 +91,7 @@ namespace Planetside
 		{
 			AkSoundEngine.PostEvent("Play_OBJ_key_impact_01", player.gameObject);
 			AkSoundEngine.PostEvent("Stop_MUS_All", player.gameObject);
+			/*
 			yield return new WaitForSeconds(3);
 			Vector2 lol = shrineSprite.WorldTopRight + new Vector2(0.25f, 3).RoundToInt();
 			float yes = lol.x.RoundToNearest(1);
@@ -112,6 +113,7 @@ namespace Planetside
 				AkSoundEngine.PostEvent("Play_RockBreaking", player.gameObject);
 				yield return new WaitForSeconds(0.2f);
 			}
+			*/
 			GameObject epicwin = UnityEngine.Object.Instantiate<GameObject>(EnemyDatabase.GetOrLoadByGuid("b98b10fca77d469e80fb45f3c5badec5").GetComponent<BossFinalRogueDeathController>().DeathStarExplosionVFX);
 			epicwin.GetComponent<tk2dBaseSprite>().PlaceAtLocalPositionByAnchor(shrineSprite.WorldCenter, tk2dBaseSprite.Anchor.LowerCenter);
 			epicwin.transform.position = shrineSprite.WorldCenter.Quantize(0.0625f);

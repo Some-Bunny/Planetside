@@ -18,6 +18,7 @@ namespace Planetside
             TrespassFadingBlocker.Init();
             TutorialNotes.Init();
             BoxOfGrenades.Init();
+            TrespassContainer.Init();
         }
     }
 }

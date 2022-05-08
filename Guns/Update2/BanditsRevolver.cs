@@ -27,7 +27,7 @@ namespace Planetside
 			Game.Items.Rename("outdated_gun_mods:bandits_revolver", "psog:bandits_revolver");
 			gun.gameObject.AddComponent<BanditsRevolver>();
 			GunExt.SetShortDescription(gun, "Lights Out");
-			GunExt.SetLongDescription(gun, "The thrill of landing the perfect shot is seeked out by many a Gunslinger, with some devoting their lives to landing their swan song shot. Don't waste your chance when your high-noon comes.");
+			GunExt.SetLongDescription(gun, "The thrill of landing the perfect shot is seeked out by many a Gunslinger, with some devoting their lives to landing their swan song shot.\n\nDon't waste your chance when your high-noon comes.");
 			GunExt.SetupSprite(gun, null, "banditsrevolver_idle_001", 8);
 			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 24);
 			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 12);

@@ -62,7 +62,7 @@ namespace Planetside
                 //Hook OuroborousReducedInvulnFrames = new Hook(typeof(HealthHaver).GetMethod("TriggerInvulnerabilityPeriod", BindingFlags.Instance | BindingFlags.Public), typeof(Ouroborous).GetMethod("ReducedIFrames"));
                 //Hook customEnemyChangesHook = new Hook(typeof(AIActor).GetMethod("Update", BindingFlags.Instance | BindingFlags.Public),typeof(Hooks).GetMethod("HandleCustomEnemyChanges"));
                 //Hook customEnemyChangesHook = new Hook(typeof(AIActor).GetMethod("Awake", BindingFlags.Instance | BindingFlags.Public),typeof(Hooks).GetMethod("HandleCustomEnemyChanges"));
-                Hook Reard = new Hook(typeof(RoomHandler).GetMethod("HandleRoomClearReward", BindingFlags.Instance | BindingFlags.Public), typeof(Hooks).GetMethod("OuroborousRoomDrop"));
+               // Hook Reard = new Hook(typeof(RoomHandler).GetMethod("HandleRoomClearReward", BindingFlags.Instance | BindingFlags.Public), typeof(Hooks).GetMethod("OuroborousRoomDrop"));
                 
                 //Hook TabelFlip = new Hook(typeof(FlippableCover).GetMethod("Interact", BindingFlags.Instance | BindingFlags.Public), typeof(Hooks).GetMethod("TableFlipOuroborous"));
 
@@ -70,13 +70,14 @@ namespace Planetside
                 //typeof(BehaviorSpeculator).GetMethod("Start", BindingFlags.Instance | BindingFlags.NonPublic),
                 //typeof(Hooks).GetMethod("StartHookSB", BindingFlags.Static | BindingFlags.NonPublic));
 
-                
+                /*
                 var HookToWriteLogToTxtFile2 = new Hook(typeof(AkSoundEngine).GetMethods().Single(
                     m =>
                         m.Name == "PostEvent" &&
                         m.GetParameters().Length == 2 &&
                         m.GetParameters()[0].ParameterType == typeof(string)),
                     typeof(Hooks).GetMethod("PostEventHook", BindingFlags.Static | BindingFlags.Public));
+                */
 
                 //Hook helpme = new Hook(typeof(ResourcefulRatMazeSystemController).GetMethod("Update", BindingFlags.Instance | BindingFlags.NonPublic), typeof(Hooks).GetMethod("endme"));
 
@@ -92,12 +93,42 @@ namespace Planetside
                     typeof(UndodgeableProjectile).GetMethod("HandleDamageHook", BindingFlags.NonPublic | BindingFlags.Static)
                 );
 
+                
             }
             catch (Exception e)
             {
                 ItemAPI.Tools.PrintException(e, "FF0000");
             }
         }
+
+
+        public static IEnumerator StartHookMinorBreakable(Func<MinorBreakable, IEnumerator> orig, MinorBreakable self)
+        {
+            Material mat = self.sprite.renderer.material;
+            Shader shader = self.sprite.renderer.material.shader;
+
+            if (mat != null) { ETGModConsole.Log("Material: " + mat.ToString()); }
+            if (shader != null) { ETGModConsole.Log("Shader: " + shader.ToString()); }
+            IEnumerator origEnum = orig(self);
+            while (origEnum.MoveNext())
+            {
+                object obj = origEnum.Current;
+                yield return obj;
+            }
+        }
+        /*
+        public static void StartHookMinorBreakable(Action<MinorBreakable> orig, MinorBreakable self)
+        {
+            Material mat = self.sprite.renderer.material;
+            Shader shader = self.sprite.renderer.material.shader;
+
+            if (mat != null) { ETGModConsole.Log("Material: " + mat.ToString()); }
+            if (shader != null) { ETGModConsole.Log("Shader: "+shader.ToString()); }
+
+            orig(self);
+        }
+        */
+
         public static void PreCollisionHook(Action<Projectile, SpeculativeRigidbody, PixelCollider, SpeculativeRigidbody, PixelCollider> orig, Projectile self, SpeculativeRigidbody myRigidbody, PixelCollider myCollider, SpeculativeRigidbody
             otherRigidbody, PixelCollider otherCollider)
         {
@@ -547,22 +578,7 @@ namespace Planetside
             bool LoopOn = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.LOOPING_ON);
             if (LoopOn == true)
             {
-                int num3 = UnityEngine.Random.Range(0, 15 - (int)Loop);
-                bool ItsATrap = num3 == 1;
-                if (ItsATrap)
-                {
-                    GameObject gameObject = new GameObject();
-                    gameObject.transform.position = self.transform.position + new Vector3(0, -1f, 0f);
-                    BulletScriptSource source = gameObject.GetOrAddComponent<BulletScriptSource>();
-                    gameObject.AddComponent<BulletSourceKiller>();
-                    var bulletScriptSelected = new CustomBulletScriptSelector(typeof(GrenadeYahyeet));
-                    AIActor aIActor = EnemyDatabase.GetOrLoadByGuid("01972dee89fc4404a5c408d50007dad5");
-                    AIBulletBank bulletBank = aIActor.GetComponent<AIBulletBank>();
-                    bulletBank.CollidesWithEnemies = true;
-                    source.BulletManager = bulletBank;
-                    source.BulletScript = bulletScriptSelected;
-                    source.Initialize();//to fire the script once
-                }
+               
             }
         }
 

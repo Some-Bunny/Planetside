@@ -45,6 +45,7 @@ namespace SaveAPI
         TRESPASS_INTO_OTHER_PLACE,
         HAS_TREADED_DEEPER,
 
+        HM_PRIME_DEFEATED,
 
         HM_PRIME_DEFEATED_T4,
 

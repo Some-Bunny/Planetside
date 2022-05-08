@@ -32,6 +32,7 @@ namespace Planetside
             gun.SetAnimationFPS(gun.reloadAnimation, 8);
             gun.SetAnimationFPS(gun.idleAnimation, 1);
 
+
             for (int e = 0; e < 4; e++)
             {
                 gun.AddProjectileModuleFrom(PickupObjectDatabase.GetById(181) as Gun, true, false);
@@ -108,6 +109,7 @@ namespace Planetside
             };
             CustomSynergies.Add("Hexadecimally!", mandatoryConsoleIDs1, optionalConsoleIDs, true);
             PulseCannonID = gun.PickupObjectId;
+            ItemIDs.AddToList(gun.PickupObjectId);
         }
         public static int PulseCannonID;
 

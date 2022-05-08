@@ -339,10 +339,20 @@ namespace Planetside
 		// Token: 0x06000177 RID: 375 RVA: 0x00013598 File Offset: 0x00011798
 		public static tk2dSpriteDefinition CopyDefinitionFrom(this tk2dSpriteDefinition other)
 		{
-			return new tk2dSpriteDefinition
+			tk2dSpriteDefinition tk2dSpriteDefinition = new tk2dSpriteDefinition
 			{
-				boundsDataCenter = other.boundsDataCenter,
-				boundsDataExtents = other.boundsDataExtents,
+				boundsDataCenter = new Vector3
+				{
+					x = other.boundsDataCenter.x,
+					y = other.boundsDataCenter.y,
+					z = other.boundsDataCenter.z
+				},
+				boundsDataExtents = new Vector3
+				{
+					x = other.boundsDataExtents.x,
+					y = other.boundsDataExtents.y,
+					z = other.boundsDataExtents.z
+				},
 				colliderConvex = other.colliderConvex,
 				colliderSmoothSphereCollisions = other.colliderSmoothSphereCollisions,
 				colliderType = other.colliderType,
@@ -359,20 +369,75 @@ namespace Planetside
 				name = other.name,
 				normals = other.normals,
 				physicsEngine = other.physicsEngine,
-				position0 = other.position0,
-				position1 = other.position1,
-				position2 = other.position2,
-				position3 = other.position3,
+				position0 = new Vector3
+				{
+					x = other.position0.x,
+					y = other.position0.y,
+					z = other.position0.z
+				},
+				position1 = new Vector3
+				{
+					x = other.position1.x,
+					y = other.position1.y,
+					z = other.position1.z
+				},
+				position2 = new Vector3
+				{
+					x = other.position2.x,
+					y = other.position2.y,
+					z = other.position2.z
+				},
+				position3 = new Vector3
+				{
+					x = other.position3.x,
+					y = other.position3.y,
+					z = other.position3.z
+				},
 				regionH = other.regionH,
 				regionW = other.regionW,
 				regionX = other.regionX,
 				regionY = other.regionY,
 				tangents = other.tangents,
-				texelSize = other.texelSize,
-				untrimmedBoundsDataCenter = other.untrimmedBoundsDataCenter,
-				untrimmedBoundsDataExtents = other.untrimmedBoundsDataExtents,
-				uvs = other.uvs
+				texelSize = new Vector2
+				{
+					x = other.texelSize.x,
+					y = other.texelSize.y
+				},
+				untrimmedBoundsDataCenter = new Vector3
+				{
+					x = other.untrimmedBoundsDataCenter.x,
+					y = other.untrimmedBoundsDataCenter.y,
+					z = other.untrimmedBoundsDataCenter.z
+				},
+				untrimmedBoundsDataExtents = new Vector3
+				{
+					x = other.untrimmedBoundsDataExtents.x,
+					y = other.untrimmedBoundsDataExtents.y,
+					z = other.untrimmedBoundsDataExtents.z
+				}
 			};
+			List<Vector2> list = new List<Vector2>();
+			foreach (Vector2 vector in other.uvs)
+			{
+				list.Add(new Vector2
+				{
+					x = vector.x,
+					y = vector.y
+				});
+			}
+			tk2dSpriteDefinition.uvs = list.ToArray();
+			List<Vector3> list2 = new List<Vector3>();
+			foreach (Vector3 vector2 in other.colliderVertices)
+			{
+				list2.Add(new Vector3
+				{
+					x = vector2.x,
+					y = vector2.y,
+					z = vector2.z
+				});
+			}
+			tk2dSpriteDefinition.colliderVertices = list2.ToArray();
+			return tk2dSpriteDefinition;
 		}
 
 		// Token: 0x06000178 RID: 376 RVA: 0x00013730 File Offset: 0x00011930

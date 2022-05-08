@@ -115,27 +115,23 @@ namespace Planetside
         }
         public static HashSet<IntVector2> CorrectForDoubledSecretRoomnessHook(Func<RoomHandler, DungeonData, HashSet<IntVector2>> orig, RoomHandler room, DungeonData data)
         {
-            ETGModConsole.Log("pray");
+            //ETGModConsole.Log("pray");
             return orig(room, data);
         }
 
 
         public static void TriggerCountdownTimerHook(Action<Chest> orig, Chest self)
         {
-            if (QOLConfig.SynergyChestDeWicking == true)
+            if (QOLConfig.SynergyChestDeWicking == true && self.lootTable.CompletesSynergy)
             {
                 float num = 0.02f;
                 num += (float)PlayerStats.GetTotalCurse() * 0.05f;
                 num += (float)PlayerStats.GetTotalCoolness() * -0.025f;
                 num = Mathf.Max(0.01f, Mathf.Clamp01(num));
-                if (self.lootTable != null && self.lootTable.CompletesSynergy && (UnityEngine.Random.value < num))
+                if (self.lootTable != null && (UnityEngine.Random.value < num))
                 {
                     orig(self);
-                }
-                else
-                {
-                    orig(self);
-                }
+                }        
             }
             else
             {

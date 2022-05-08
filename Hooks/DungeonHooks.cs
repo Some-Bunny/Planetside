@@ -11,11 +11,12 @@ namespace Planetside
     {
         public static void InitDungeonHook()
         {
-
+            
             Hook GetOrLoadByNameHook = new Hook(
                 typeof(DungeonDatabase).GetMethod("GetOrLoadByName", BindingFlags.Static | BindingFlags.Public),
                 typeof(MasteryReplacementOub).GetMethod("GetOrLoadByNameHook", BindingFlags.Static | BindingFlags.Public)
             );
+            
 
         }
         public static Dungeon GetOrLoadByNameHook(Func<string, Dungeon> orig, string name)

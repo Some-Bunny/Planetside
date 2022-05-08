@@ -77,12 +77,12 @@ namespace Planetside
         {
             base.Invoke("DeregisterInteractable", 0f);
             WeightedRoom newRoom =  AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.HAS_TREADED_DEEPER) ? TrespassStone.trespassDeeperTable.SelectByWeight() : TrespassStone.trespassTable.SelectByWeight();
-            var floor = DungeonDatabase.GetOrLoadByName("Base_Forge");
+            var floor = DungeonDatabase.GetOrLoadByName("Base_Abyss");
             int num = 5;
             RoomHandler room;
             do
             {
-                room = DungeonGenToolbox.AddCustomRuntimeRoomWithTileSet(floor, newRoom.room, false, false, false, null, DungeonData.LightGenerationStyle.STANDARD, false, false, 0);
+                room = DungeonGenToolbox.AddCustomRuntimeRoomWithTileSet(floor, newRoom.room, false, false, false, null, DungeonData.LightGenerationStyle.STANDARD, false, false, 1, false);
                 num--;
             }
             while (num > 0 && room == null);

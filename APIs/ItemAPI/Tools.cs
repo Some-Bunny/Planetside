@@ -111,16 +111,16 @@ namespace ItemAPI
             File.WriteAllBytes(Path.Combine(ETGMod.ResourcesDirectory, texture.name + ".png"), ((Texture2D)texture).EncodeToPNG());
         }
 
-        public static void LogPropertiesAndFields<T>(this T obj, string header = "")
+        public static void LogPropertiesAndFields<T>(this T obj, string header = "", bool debug = false)
         {
 
-            ETGModConsole.Log(header);
-            ETGModConsole.Log("=======================");
-            if (obj == null) { ETGModConsole.Log("LogPropertiesAndFields: Null object"); return; }
+            ETGModConsole.Log(header, debug);
+            ETGModConsole.Log("=======================", debug);
+            if (obj == null) { ETGModConsole.Log("LogPropertiesAndFields: Null object", debug); return; }
             Type type = obj.GetType();
-            ETGModConsole.Log($"Type: {type}");
+            ETGModConsole.Log($"Type: {type}", debug);
             PropertyInfo[] pinfos = type.GetProperties();
-            ETGModConsole.Log($"{typeof(T)} Properties: ");
+            ETGModConsole.Log($"{typeof(T)} Properties: ", debug);
             foreach (var pinfo in pinfos)
             {
                 try
@@ -137,15 +137,15 @@ namespace ItemAPI
                             valueString += "\n\t\t" + subval.ToString();
                         }
                     }
-                    ETGModConsole.Log($"\t{pinfo.Name}: {valueString}");
+                    ETGModConsole.Log($"\t{pinfo.Name}: {valueString}", debug);
                 }
                 catch { }
             }
-            ETGModConsole.Log($"{typeof(T)} Fields: ");
+            ETGModConsole.Log($"{typeof(T)} Fields: ", debug);
             FieldInfo[] finfos = type.GetFields();
             foreach (var finfo in finfos)
             {
-                ETGModConsole.Log($"\t{finfo.Name}: {finfo.GetValue(obj)}");
+                ETGModConsole.Log($"\t{finfo.Name}: {finfo.GetValue(obj)}", debug);
             }
         }
     }

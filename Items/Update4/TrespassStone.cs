@@ -79,8 +79,8 @@ namespace Planetside
 
             foreach (WeightedRoom weightRoom in tableDeeper.includedRooms.elements)
             {
-                weightRoom.room.customAmbientLight = new Color(0, 0.3f, 0.9f);
-                weightRoom.room.usesCustomAmbientLight = true;
+                //weightRoom.room.customAmbientLight = new Color(0, 0.3f, 0.9f);
+                //weightRoom.room.usesCustomAmbientLight = true;
                 weightRoom.room.overriddenTilesets = GlobalDungeonData.ValidTilesets.FORGEGEON;
                 weightRoom.room.drawPrecludedCeilingTiles = true;
 

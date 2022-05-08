@@ -38,37 +38,21 @@ namespace Planetside
 		public override void ApplyTint(GameActor actor)
         {
 			actor.RegisterOverrideColor(TintColorFrailty, vfxNamefrailty);
-			for (int k = 0; k < 1; k++)
-            {
-				GameObject original;
-				original = FrailtyHealthEffect.frailtyVFXObject;
-				tk2dSprite component = GameObject.Instantiate(original, actor.specRigidbody.UnitTopCenter, Quaternion.identity, actor.transform).GetComponent<tk2dSprite>();
-				component.transform.position.WithZ(component.transform.position.z + 99999);
-				component.GetComponent<tk2dBaseSprite>().PlaceAtPositionByAnchor(actor.CenterPosition, tk2dBaseSprite.Anchor.MiddleCenter);
-				actor.sprite.AttachRenderer(component.GetComponent<tk2dBaseSprite>());
-				component.name = FrailtyHealthEffect.vfxNamefrailty;
-				component.PlaceAtPositionByAnchor(actor.sprite.WorldTopCenter, tk2dBaseSprite.Anchor.LowerCenter);
-				component.scale = Vector3.one;
-			}
+
 		}
         public override void EffectTick(GameActor actor, RuntimeGameActorEffectData effectData)
-		{
-			
-			if (this.AffectsEnemies && actor is AIActor && !actor.healthHaver.IsBoss)
+		{			
+			if (this.AffectsEnemies && actor is AIActor && !actor.healthHaver.IsBoss && actor.healthHaver.minimumHealth > actor.healthHaver.GetMaxHealth() * 1 - (0.80f * BraveTime.DeltaTime))
 			{
-				actor.healthHaver.SetHealthMaximum(actor.healthHaver.GetMaxHealth() * 1 - (0.80f*BraveTime.DeltaTime));
+				actor.healthHaver.SetHealthMaximum(actor.healthHaver.GetMaxHealth() * 1 - (0.80f*BraveTime.DeltaTime));			
 			}
 			if (this.AffectsEnemies && actor is AIActor && actor.healthHaver.IsBoss)
 			{
-				actor.healthHaver.ApplyDamage(18f * BraveTime.DeltaTime, Vector2.zero, "oooo spoooooky", CoreDamageTypes.Void, DamageCategory.Normal, false, null, false);
+				actor.healthHaver.ApplyDamage(32f * BraveTime.DeltaTime, Vector2.zero, "oooo spoooooky", CoreDamageTypes.Void, DamageCategory.Normal, false, null, false);
 			}
 		}
-
 		public override void OnEffectRemoved(GameActor actor, RuntimeGameActorEffectData effectData)
 		{
-			var hand = actor.transform.Find("FrailtyVFX").gameObject;
-			UnityEngine.Object.Destroy(hand);
-
 			actor.DeregisterOverrideColor(vfxNamefrailty);			
 			base.OnEffectRemoved(actor, effectData);
 			actor.healthHaver.OnPreDeath -= effectData.OnActorPreDeath;

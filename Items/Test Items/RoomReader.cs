@@ -80,7 +80,14 @@ namespace Planetside
         protected override void DoEffect(PlayerController user)
         {
             RoomHandler roome =  user.CurrentRoom;
+            ETGModConsole.Log(user.CurrentRoom.GetRoomName());
+            ETGModConsole.Log("room visual subtype int: " + roome.RoomVisualSubtype.ToString());
+            Dungeon currentFloor = GameManager.Instance.Dungeon;
+            DungeonMaterial mat = currentFloor.roomMaterialDefinitions[roome.RoomVisualSubtype];
+            ItemAPI.Tools.LogPropertiesAndFields(mat.roomFloorBorderGrid, "tile", true);
+            //mat.roomFloorBorderGrid
 
+            /*
             AIActor orLoadByGuid = EnemyDatabase.GetOrLoadByGuid("RobotShopkeeperBoss_friendly");
             IntVector2? intVector = new IntVector2?(user.CurrentRoom.GetRandomVisibleClearSpot(2, 2));
             AIActor aiactor = AIActor.Spawn(orLoadByGuid.aiActor, intVector.Value, GameManager.Instance.Dungeon.data.GetAbsoluteRoomFromPosition(intVector.Value), true, AIActor.AwakenAnimationType.Spawn, true);
@@ -90,6 +97,7 @@ namespace Planetside
 
             aiactor.CompanionOwner = user;
             aiactor.specRigidbody.Reinitialize();
+            */
             //RuntimePrototypeRoomData hjg =  roome.area.runtimePrototypeData;
             //PrototypeDungeonRoom eee = roome.area.prototypeRoom;
 
@@ -275,7 +283,7 @@ namespace Planetside
 
             //AkSoundEngine.PostEvent("Play_BossTheme", user.gameObject);
 
-            ETGModConsole.Log(user.CurrentRoom.GetRoomName());
+
 
 
 

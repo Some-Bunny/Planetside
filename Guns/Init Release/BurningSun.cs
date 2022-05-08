@@ -121,6 +121,8 @@ namespace Planetside
 			{
 				item2
 			};
+
+			gun.muzzleFlashEffects = (PickupObjectDatabase.GetById(370) as Gun).muzzleFlashEffects;
 			gun.quality = PickupObject.ItemQuality.A;
 			ETGMod.Databases.Items.Add(gun, null, "ANY");
 			List<string> mandatoryConsoleIDs = new List<string>
@@ -134,6 +136,8 @@ namespace Planetside
 				"old_knights_flask",
 				"gun_soul"
 			};
+
+
 			CustomSynergies.Add("Praise The Gun!", mandatoryConsoleIDs, optionalConsoleIDs, true);
 			BurningSun.BurningSunId = gun.PickupObjectId;
 			ItemIDs.AddToList(gun.PickupObjectId);

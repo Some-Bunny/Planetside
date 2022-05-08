@@ -34,7 +34,10 @@ namespace Planetside
         }
         public void OnEnemiesCleared()
         {
-            self.StartCoroutine(DestroyBlocker());
+            if (self != null)
+            {
+                self.StartCoroutine(DestroyBlocker());
+            }
         }
         public IEnumerator DestroyBlocker()
         {  

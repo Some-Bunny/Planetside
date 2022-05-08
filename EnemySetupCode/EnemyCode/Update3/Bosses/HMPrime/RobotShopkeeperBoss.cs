@@ -310,8 +310,8 @@ namespace Planetside
 				companion.aiActor.specRigidbody.CollideWithOthers = true;
 				companion.aiActor.specRigidbody.CollideWithTileMap = true;
 				companion.aiActor.PreventFallingInPitsEver = true;
-				companion.aiActor.healthHaver.ForceSetCurrentHealth(800f);
-				companion.aiActor.healthHaver.SetHealthMaximum(800f);
+				companion.aiActor.healthHaver.ForceSetCurrentHealth(975f);
+				companion.aiActor.healthHaver.SetHealthMaximum(975f);
 				companion.aiActor.CollisionKnockbackStrength = 2f;
 				companion.aiActor.CanTargetPlayers = true;
 				companion.aiActor.procedurallyOutlined = true;
@@ -3504,7 +3504,7 @@ namespace Planetside
 					}
 					int pruch = base.aiActor.GetComponent<RobotShopkeeperEngageDoer>().AmountOfPurchases;
 					int amountOfitemsToSpawn = UnityEngine.Random.Range(3+ (int)(pruch*1.5f), 6 + pruch);
-					//AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.BULLETBANK_DEFEATED, true);//Done
+					AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.HM_PRIME_DEFEATED, true);//Done
 					for (int i = 0; i < amountOfitemsToSpawn; i++)
 					{
 						int id = BraveUtility.RandomElement<int>(RobotShopkeeperBoss.Lootdrops);

@@ -11,7 +11,27 @@ namespace Planetside
 			InitPossessedGoop();
 			InitCursebulonGoop();
 			InitFrailPuddle();
+			InitTarnishedGoop();
+
 		}
+
+
+		public static TarnishEffect Corrosion = new TarnishEffect
+		{
+			DamagePerSecondToEnemies = 0f,
+			effectIdentifier = "Tarnish",
+			AffectsEnemies = true,
+			resistanceType = EffectResistanceType.None,
+			duration = 15f,
+			//TintColor = new Color(0.2f, 3f, 0.05f),
+			AppliesTint = true,
+			AppliesDeathTint = true,
+			PlaysVFXOnActor = false,
+			OverheadVFX = TarnishEffect.TarnishVFXObject,
+			AffectsPlayers = false,
+			stackMode = GameActorEffect.EffectStackingMode.Refresh
+
+		};
 
 
 		public static FrailtyHealthEffect Frailty = new FrailtyHealthEffect
@@ -20,12 +40,12 @@ namespace Planetside
 			effectIdentifier = "Frailty",
 			AffectsEnemies = true,
 			resistanceType = EffectResistanceType.Poison,
-			duration = 5f,
+			duration = 8f,
 			TintColor = new Color(3f, 3f, 3f),
 			AppliesTint = true,
 			AppliesDeathTint = true,
-			PlaysVFXOnActor = true
-
+			//PlaysVFXOnActor = true
+			OverheadVFX = FrailtyHealthEffect.frailtyVFXObject
 		};
 		public static PossessedEffect Possessed = new PossessedEffect
 		{
@@ -37,6 +57,8 @@ namespace Planetside
 			TintColor = new Color(3f, 2f, 0f),
 			AppliesTint = true,
 			AppliesDeathTint = false,
+			OverheadVFX = PossessedEffect.posessedVFXObject
+
 
 		};
 		public static HeatStrokeEffect HeatStroke = new HeatStrokeEffect
@@ -100,6 +122,22 @@ namespace Planetside
 		}
 		public static GoopDefinition PossesedPuddle;
 
+		public static void InitTarnishedGoop()
+		{
+			GoopDefinition GoopDef = ScriptableObject.CreateInstance<GoopDefinition>();
+			GoopDef.name = "Tarished Goop";
+			GoopDef.CanBeIgnited = false;
+			GoopDef.damagesEnemies = false;
+			GoopDef.damagesPlayers = false;
+			GoopDef.lifespan = 6f;
+			GoopDef.baseColor32 = new Color32(156, 155, 0, byte.MaxValue);
+			GoopDef.goopTexture = ResourceExtractor.GetTextureFromResource("Planetside/Resources/possessed_standard_base_001.png");
+			GoopDef.AppliesDamageOverTime = true;
+			GoopDef.HealthModifierEffect = DebuffLibrary.Corrosion;
+			TarnishedGoop = GoopDef;
+		}
+		public static GoopDefinition TarnishedGoop;
+
 
 		public static void InitCursebulonGoop()
 		{
@@ -111,7 +149,7 @@ namespace Planetside
 			cursebulonGoop.baseColor32 = new Color32(105, 0, 105, byte.MaxValue);
 			cursebulonGoop.goopTexture = ResourceExtractor.GetTextureFromResource("Planetside/Resources/goop_standard_base_001.png");
 			cursebulonGoop.AppliesDamageOverTime = false;
-			cursebulonGoop.lifespan = 13;
+			cursebulonGoop.lifespan = 11.5f;
 			cursebulonGoop.usesAmbientGoopFX = true;
 			cursebulonGoop.ambientGoopFX = ObjectMakers.MakeObjectIntoVFX(RandomPiecesOfStuffToInitialise.cursepoofvfx);
 			cursebulonGoop.ambientGoopFXChance = 0.0005f;

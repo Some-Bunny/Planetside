@@ -17,13 +17,14 @@ namespace SaveAPI
         /// <returns><see langword="true"/> if all conditions are fulfilled</returns>
         public virtual new bool CheckConditionsFulfilled()
         {
+
             if (this.advancedPrerequisiteType == AdvancedPrerequisiteType.CUSTOM_FLAG)
             {
                 return AdvancedGameStatsManager.Instance.GetFlag(this.customFlagToCheck) == this.requireCustomFlag;
             }
             else if (this.advancedPrerequisiteType == AdvancedPrerequisiteType.CUSTOM_STAT_COMPARISION)
             {
-                float playerStatValue = useSessionStatValue == true ? AdvancedGameStatsManager.Instance.GetSessionStatValue(this.customStatToCheck) :  AdvancedGameStatsManager.Instance.GetPlayerStatValue(this.customStatToCheck);
+                float playerStatValue = useSessionStatValue == true && (AdvancedGameStatsManager.Instance.IsInSession) == true ? AdvancedGameStatsManager.Instance.GetSessionStatValue(this.customStatToCheck) :  AdvancedGameStatsManager.Instance.GetPlayerStatValue(this.customStatToCheck);
                 switch (this.prerequisiteOperation)
                 {
                     case PrerequisiteOperation.LESS_THAN:

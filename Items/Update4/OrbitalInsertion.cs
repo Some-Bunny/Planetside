@@ -102,7 +102,7 @@ namespace Planetside
 					Playsound = true;
 					AkSoundEngine.PostEvent("Play_BOSS_RatMech_Whistle_01", player.gameObject);
 					AIActor orLoadByGuid = EnemyDatabase.GetOrLoadByGuid("RobotShopkeeperBoss_friendly");
-					AIActor aiactor = AIActor.Spawn(orLoadByGuid.aiActor, position, room, true, AIActor.AwakenAnimationType.Awaken, true);
+					AIActor aiactor = AIActor.Spawn(orLoadByGuid.aiActor, position- new IntVector2(1, 0), room, true, AIActor.AwakenAnimationType.Awaken, true);
 					aiactor.HandleReinforcementFallIntoRoom(-1f);
 					CompanionController comp = aiactor.gameActor.GetComponent<CompanionController>();
 					comp.Initialize(player);
@@ -167,9 +167,9 @@ namespace Planetside
 				float t = (float)elapsed / (float)Tim;
 				if (component2 != null)
 				{
-
+					aimDir++;
 					component2.dimensions = new Vector2(1000f, 1f);
-					component2.transform.position = Vector2.Lerp(savedPos, startPosition, t);
+					component2.transform.position = Vector2.Lerp(startPosition + MathToolbox.GetUnitOnCircle(aimDir, 4), startPosition + MathToolbox.GetUnitOnCircle(aimDir, 0), t);
 					component2.sprite.renderer.material.SetFloat("_EmissivePower", 50 * (t*10));
 					component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 20 * (5*t));
 					component2.HeightOffGround = -2;

@@ -33,6 +33,11 @@ namespace Planetside
                 defaultPath+"Shards/shard9.png",
             };
             DebrisObject[] shardObjects = BreakableAPIToolbox.GenerateDebrisObjects(shardPaths, true, 1, 5, 720, 540, null, 0.6f, null, null, 0, false);
+            for (int e = 0; e < shardObjects.Length; e++)
+            {
+                shardObjects[e].gameObject.AddComponent<TresspassUnlitShaderController>();
+            }
+
             ShardCluster potShardCluster = BreakableAPIToolbox.GenerateShardCluster(shardObjects, 0.7f, 1.2f, 6, 9, 0.6f);
             string shadowPath = "Planetside/Resources/DungeonObjects/EmberPot/emberpotshadow.png";
             MinorBreakable breakable = BreakableAPIToolbox.GenerateMinorBreakable("TrespassPot1", new string[] {defaultPath+ "trespasspot1_idle.png" }, 2, new string[] { defaultPath + "trespasspot1_break.png" }, 10, "Play_OBJ_pot_shatter_01", shadowPath, 0, -0.125f, true, 13, 14, 1, 1);
@@ -45,7 +50,8 @@ namespace Planetside
             breakable.dropCoins = false;
             breakable.goopsOnBreak = false;
             breakable.breakStyle = MinorBreakable.BreakStyle.BURST;
-          
+            breakable.gameObject.AddComponent<TresspassUnlitShaderController>();
+
             ShardCluster[] array = new ShardCluster[] { potShardCluster };
             breakable.shardClusters = array;
             breakable.amountToRain = 30;
@@ -82,6 +88,7 @@ namespace Planetside
             breakable2.hasParticulates = true;
             breakable2.MaxParticlesOnBurst = 10;
             breakable2.MinParticlesOnBurst = 4;
+            breakable2.gameObject.AddComponent<TresspassUnlitShaderController>();
 
 
             MinorBreakable breakable3 = BreakableAPIToolbox.GenerateMinorBreakable("TrespassPot3", new string[] { defaultPath + "trespasspot3_idle.png" }, 2, new string[] { defaultPath + "trespasspot3_break.png" }, 10, "Play_OBJ_pot_shatter_01", shadowPath, 0, -0.125f, true, 13, 14, 1, 1);
@@ -106,6 +113,7 @@ namespace Planetside
             breakable3.hasParticulates = true;
             breakable3.MaxParticlesOnBurst = 10;
             breakable3.MinParticlesOnBurst = 4;
+            breakable3.gameObject.AddComponent<TresspassUnlitShaderController>();
 
             Dictionary<GameObject, float> dict = new Dictionary<GameObject, float>()
             {

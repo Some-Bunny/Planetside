@@ -50,7 +50,13 @@ namespace Planetside
 			InjectorRounds.InjectorRoundsID = item.PickupObjectId;
 			ItemIDs.AddToList(item.PickupObjectId);
 
+			templateDef = ScriptableObject.CreateInstance<GoopDefinition>();
+			templateDef.baseColor32 = new Color32(120, 30, 10, 255);
+			templateDef.goopTexture = ResourceExtractor.GetTextureFromResource("Planetside/Resources/goop_standard_base_001.png");
+			templateDef.lifespan = 7;
 		}
+
+		public static GoopDefinition templateDef;
 		public static int InjectorRoundsID;
 		private void PostProcessProjectile(Projectile sourceProjectile, float effectChanceScalar)
 		{

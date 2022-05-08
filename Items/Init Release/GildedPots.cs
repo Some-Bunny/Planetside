@@ -4,6 +4,8 @@ using System.Linq;
 using Dungeonator;
 using ItemAPI;
 using UnityEngine;
+using System.Reflection;
+using MonoMod.RuntimeDetour;
 
 namespace Planetside
 {
@@ -34,10 +36,38 @@ namespace Planetside
 			GildedPots.GildedPotsID = warVase.PickupObjectId;
 			ItemIDs.AddToList(warVase.PickupObjectId);
 			warVase.gameObject.AddComponent<RustyItemPool>();
-
+			new Hook(typeof(MinorBreakable).GetMethod("OnBreakAnimationComplete", BindingFlags.Instance | BindingFlags.NonPublic), typeof(GildedPots).GetMethod("CoinChance"));
 		}
 		public static int GildedPotsID;
 
+
+
+		public static void CoinChance(Action<MinorBreakable> orig, MinorBreakable self)
+		{
+			orig(self);
+			if (self != null)
+			{
+				for (int i = 0; i < GameManager.Instance.AllPlayers.Length; i++)
+				{
+					PlayerController player = GameManager.Instance.AllPlayers[i];
+					if (player.HasPickupID(GildedPots.GildedPotsID) && player != null && self != null)
+					{
+						float coinchance = 0.04f;
+						bool flagA = player.PlayerHasActiveSynergy("Expert Demolitionist");
+						if (flagA)
+						{
+							coinchance *= 2;
+						}
+						float num = UnityEngine.Random.Range(0f, 1f);
+						bool flag2 = (double)num < coinchance;
+						if (flag2)
+						{
+							LootEngine.SpawnItem(PickupObjectDatabase.GetById(68).gameObject, self.transform.PositionVector2(), Vector2.zero, 1f, false, false, false);
+						}
+					}
+				}
+			}
+		}
 		public override void Pickup(PlayerController player)
 		{
 			//player.ReceivesTouchDamage = false;

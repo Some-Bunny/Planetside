@@ -10,7 +10,7 @@ namespace Planetside
         public BlastProjectilesCheck()
         {
             this.Cap = 12;
-            this.MinToSpawn = 1;
+            this.MinToSpawn = 2;
             this.hasBeenPickedup = false;
         }
         public void Start() {this.hasBeenPickedup=true;}

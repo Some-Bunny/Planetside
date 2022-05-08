@@ -53,6 +53,9 @@ namespace Planetside
                 defaultPath+"Idle/Target4_idle.png",
             };
 
+
+
+
             string shadowPath = defaultPath+ "TargetShadow.png";
             MinorBreakable targetOne = BreakableAPIToolbox.GenerateMinorBreakable("Target_One", idlePaths1, 1, breakPaths1, 10, "Play_obj_box_break_01", shadowPath, 0, -0.125f, true, 14, 14, 1, 0);
             targetOne.stopsBullets = true;
@@ -61,6 +64,7 @@ namespace Planetside
             targetOne.resistsExplosions = false;
             targetOne.canSpawnFairy = false;
             targetOne.breakStyle = MinorBreakable.BreakStyle.CONE;
+            
             MinorBreakable targetTwo = BreakableAPIToolbox.GenerateMinorBreakable("Target_two", idlePaths2, 1, breakPaths2, 10, "Play_obj_box_break_01", shadowPath, 0, -0.125f, true, 14, 14, 1, 0);
             targetTwo.stopsBullets = true;
             targetTwo.OnlyPlayerProjectilesCanBreak = true;

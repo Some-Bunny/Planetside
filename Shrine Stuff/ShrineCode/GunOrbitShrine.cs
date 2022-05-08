@@ -23,7 +23,7 @@ namespace Planetside
 				text = "A shrine dedicated to an old gunslinger, who could sling guns with such proficiency that they fired while in mid-air.",
 				spritePath = "Planetside/Resources/Shrines/GunOrbitShrinel.png",
 				room = RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/GunOrbitShrineRoom.room").room,
-				RoomWeight = 1.5f,
+				RoomWeight = 2f,
 				acceptText = "Grant an offering to bestow similar power.",
 				declineText = "Leave",
 				OnAccept = Accept,

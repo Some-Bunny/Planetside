@@ -54,6 +54,7 @@ namespace Planetside
 			{
 				fuckyouprefab = BossBuilder.BuildPrefab("Prisoner Phase One", guid, spritePaths[0], new IntVector2(15, 4), new IntVector2(34, 51), false, true);
 				var companion = fuckyouprefab.AddComponent<PrisonerController>();
+				fuckyouprefab.AddComponent<PrisonerFirstSubPhaseController>();
 				companion.aiActor.knockbackDoer.weight = 200;
 				companion.aiActor.MovementSpeed = 3.2f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
@@ -138,11 +139,12 @@ namespace Planetside
 				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "raisearm", new string[1], new DirectionalAnimation.FlipType[1]);
 				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "sweengarm", new string[1], new DirectionalAnimation.FlipType[1]);
 				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "lowerarm", new string[1], new DirectionalAnimation.FlipType[1]);
+				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "subphaseoneanimation", new string[1], new DirectionalAnimation.FlipType[1]);
 
 				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "swipehandback", new string[1], new DirectionalAnimation.FlipType[1]);
 				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "swipehandcharge", new string[1], new DirectionalAnimation.FlipType[1]);
 				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "swipehandmoveback", new string[1], new DirectionalAnimation.FlipType[1]);
-
+				//subphaseoneanimation
 				//sweengarm
 
 				bool flag3 = PrisonerPhaseOneSpriteCollection == null;
@@ -292,8 +294,46 @@ namespace Planetside
 					35,
 					36,
 					37,
-
 					}, "intro", tk2dSpriteAnimationClip.WrapMode.Once).fps = 8f;
+
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, PrisonerPhaseOneSpriteCollection, new List<int>
+					{
+					30,
+					30,
+					30,
+					31,
+					31,
+					32,
+					32,
+					33,
+					34,
+
+					35,//
+					36,
+					37,
+					35,//
+					36,
+					37,
+					35,//
+					36,
+					37,
+					35,//
+					36,
+					37,
+					35,//
+					36,
+					37,
+					35,//
+					36,
+					37,
+					35,//
+					36,
+					37,
+					35,//
+					36,
+					37,
+					}, "subphaseoneanimation", tk2dSpriteAnimationClip.WrapMode.Once).fps = 8f;
+
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, PrisonerPhaseOneSpriteCollection, new List<int>
 					{
 					38,
@@ -377,6 +417,11 @@ namespace Planetside
 					EnemyToolbox.AddSoundsToAnimationFrame(fuckyouprefab.GetComponent<tk2dSpriteAnimator>(), "intro", new Dictionary<int, string> { { 49, "Play_OBJ_lock_pick_01" }, { 63, "Play_OBJ_lock_pick_01" } });
 					EnemyToolbox.AddEventTriggersToAnimation(fuckyouprefab.GetComponent<tk2dSpriteAnimator>(), "intro", new Dictionary<int, string> { { 49, "LeftHandBreakFree" }, { 63, "RightHandBreakFree" }, { 54, "LeftHandCastMagic" }, { 87, "PrisonerLaugh" }, { 90, "PrisonerLaugh" }, { 93, "PrisonerLaugh" }, { 96, "PrisonerLaugh" } });
 					
+
+					EnemyToolbox.AddSoundsToAnimationFrame(fuckyouprefab.GetComponent<tk2dSpriteAnimator>(), "subphaseoneanimation", new Dictionary<int, string> { { 0, "Play_PrisonerCough" }, { 9, "Play_PrisonerLaugh" } });
+					EnemyToolbox.AddEventTriggersToAnimation(fuckyouprefab.GetComponent<tk2dSpriteAnimator>(), "subphaseoneanimation", new Dictionary<int, string> { { 9, "PrisonerLaugh" }, { 12, "PrisonerLaugh" }, { 15, "PrisonerLaugh" }, { 18, "PrisonerLaugh" }, { 21, "PrisonerLaugh" }, { 24, "PrisonerLaugh" }, { 27, "PrisonerLaugh" }, { 30, "PrisonerLaugh" } });
+
+
 					EnemyToolbox.AddEventTriggersToAnimation(fuckyouprefab.GetComponent<tk2dSpriteAnimator>(), "firelaser", new Dictionary<int, string> { { 1, "FancyMagics" } });
 					EnemyToolbox.AddEventTriggersToAnimation(fuckyouprefab.GetComponent<tk2dSpriteAnimator>(), "chargelaser", new Dictionary<int, string> { { 1, "Charge" } });
 
@@ -386,107 +431,7 @@ namespace Planetside
 
 
 
-					/*
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, TheBulletBankClooection, new List<int>
-					{
-					10,
-					11,
-					12,
-					13
-
-					}, "blooptell", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, TheBulletBankClooection, new List<int>
-					{
-
-					14,
-					15,
-					16,
-					17,
-					14,
-					15,
-					16,
-					17,
-					14,
-					15,
-					16,
-					17,
-					13,
-					12,
-					11
-
-					}, "bloop", tk2dSpriteAnimationClip.WrapMode.Once).fps = 3.5f;
-
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, TheBulletBankClooection, new List<int>
-					{
-					18,
-					19,
-					20,
-					21,
-					22,
-					23
-
-					}, "bottletell", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, TheBulletBankClooection, new List<int>
-					{
-
-					24,
-					25,
-					26,
-					27,
-					28,
-					29,
-					30,
-					31,
-					32,
-					33,
-					34,
-					35,
-					36,
-					37,
-					38,
-					39
-
-					
-
-					}, "bottle", tk2dSpriteAnimationClip.WrapMode.Once).fps = 11f;
-
-
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, TheBulletBankClooection, new List<int>
-					{
-				40,
-				41,
-				42,
-				43,
-				44,
-				45,
-				46
-					}, "roartell", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, TheBulletBankClooection, new List<int>
-					{
-				47,
-				48,
-				49,
-				50,
-				51,
-				52,
-				48,
-				49,
-				50,
-				51,
-				52,
-				46,
-				45,
-				44,
-				43,
-				42,
-				41
-
-					}, "roar", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-
-					*/
+				
 
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, PrisonerPhaseOneSpriteCollection, new List<int>
 					{
@@ -610,7 +555,7 @@ namespace Planetside
 					firingType = CustomBeholsterLaserBehavior.FiringType.ONLY_NORTHANGLEVARIANCE,
 
 					},
-						NickName = "Death Laser"
+						NickName = "SimpleBlastsOne"
 					},
 					
 					new AttackBehaviorGroup.AttackGroupItem()
@@ -629,7 +574,7 @@ namespace Planetside
 						MultipleFireEvents = true,
 						Uninterruptible = false,
 						},
-						NickName = "Bloop"
+						NickName = "WallSweepOne"
 
 					},
 					
@@ -649,7 +594,7 @@ namespace Planetside
 						MultipleFireEvents = true,
 						Uninterruptible = false,
 						},
-						NickName = "aaaaa"
+						NickName = "LaserCrossOne"
 
 					},
 					
@@ -669,7 +614,7 @@ namespace Planetside
 						MultipleFireEvents = true,
 						Uninterruptible = false,
 						},
-						NickName = "Bloop"
+						NickName = "BloopOne"
 
 					},
 					new AttackBehaviorGroup.AttackGroupItem()
@@ -688,7 +633,7 @@ namespace Planetside
 						MultipleFireEvents = true,
 						Uninterruptible = false,
 						},
-						NickName = "BasicLaserAttackTell"
+						NickName = "BasicLaserAttackTellOne"
 
 					},
 					new AttackBehaviorGroup.AttackGroupItem()
@@ -707,9 +652,150 @@ namespace Planetside
 						MultipleFireEvents = true,
 						Uninterruptible = false,
 						},
-						NickName = "ChaosBlasts"
+						NickName = "ChainRotatorsOne"
 
 					},
+					///===============================================================
+					///
+
+					new AttackBehaviorGroup.AttackGroupItem()
+					{
+
+					Probability = 0f,
+					Behavior = new CustomBeholsterLaserBehavior{
+					UsesBeamProjectileWithoutModule = true,
+					InitialCooldown = 0f,
+					firingTime = 10f,
+					Cooldown = 12,
+					AttackCooldown = 1.33f,
+					RequiresLineOfSight = false,
+					FiresDirectlyTowardsPlayer = false,
+					UsesCustomAngle = true,
+					chargeTime = 1f,
+					UsesBaseSounds = false,
+					ChargeAnimation = "chargelaser",
+					FireAnimation = "firelaser",
+					PostFireAnimation = "postlaser",
+					beamSelection = ShootBeamBehavior.BeamSelection.Specify,
+					specificBeamShooters = new List<AIBeamShooter2>(){A,B,C},
+					trackingType = CustomBeholsterLaserBehavior.TrackingType.ConstantTurn,
+					BulletScript = new CustomBulletScriptSelector(typeof(PrisonerSubPhase2Attacks.SimpleBlaststwo)),
+					ShootPoint = OrbPoint.transform,
+					unitCatchUpSpeed = 24f,
+					maxTurnRate = 24f,
+					turnRateAcceleration = 24f,
+					useDegreeCatchUp = true,
+					minDegreesForCatchUp = 2.4f,
+					degreeCatchUpSpeed = 120,
+					useUnitCatchUp = true,
+					minUnitForCatchUp = 2,
+					maxUnitForCatchUp = 2,
+					useUnitOvershoot = true,
+					minUnitForOvershoot = 1,
+					firingType = CustomBeholsterLaserBehavior.FiringType.ONLY_NORTHANGLEVARIANCE,
+
+					},
+						NickName = "SimpleBlastsTwo"
+					},
+
+					new AttackBehaviorGroup.AttackGroupItem()
+					{
+						Probability = 0f,
+						Behavior = new ShootBehavior{
+						ShootPoint = RaisedArmLaserAttachPoint,
+						BulletScript = new CustomBulletScriptSelector(typeof(PrisonerSubPhase2Attacks.WallSweepTwo)),
+						LeadAmount = 0f,
+						AttackCooldown = 0.35f,
+						Cooldown = 4f,
+						ChargeAnimation = "raisearm",
+						FireAnimation = "sweengarm",
+						PostFireAnimation = "lowerarm",
+						RequiresLineOfSight = true,
+						MultipleFireEvents = true,
+						Uninterruptible = false,
+						},
+						NickName = "WallSweepTwo"
+
+					},
+
+					new AttackBehaviorGroup.AttackGroupItem()
+					{
+						Probability = 2f,
+						Behavior = new ShootBehavior{
+						ShootPoint = RaisedArmLaserAttachPoint,
+						BulletScript = new CustomBulletScriptSelector(typeof(PrisonerSubPhase2Attacks.LaserCrossTwo)),
+						LeadAmount = 0f,
+						AttackCooldown = 0f,
+						Cooldown = 4f,
+						TellAnimation = "chargelaser",
+						FireAnimation = "firelaser",
+						PostFireAnimation = "postlaser",
+						RequiresLineOfSight = true,
+						MultipleFireEvents = true,
+						Uninterruptible = false,
+						},
+						NickName = "LaserCrossTwo"
+
+					},
+
+					new AttackBehaviorGroup.AttackGroupItem()
+					{
+						Probability = 0f,
+						Behavior = new ShootBehavior{
+						ShootPoint = RaisedArmLaserAttachPoint,
+						BulletScript = new CustomBulletScriptSelector(typeof(PrisonerSubPhase2Attacks.SweepJukeAttackTwo)),
+						LeadAmount = 0f,
+						AttackCooldown = 0f,
+						Cooldown = 12f,
+						TellAnimation = "raisearm",
+						FireAnimation = "sweengarm",
+						PostFireAnimation = "lowerarm",
+						RequiresLineOfSight = true,
+						MultipleFireEvents = true,
+						Uninterruptible = false,
+						},
+						NickName = "SweepJukeAttackTwo"
+
+					},
+					new AttackBehaviorGroup.AttackGroupItem()
+					{
+						Probability = 0f,
+						Behavior = new ShootBehavior{
+						ShootPoint = RightHandChargePoint,
+						BulletScript = new CustomBulletScriptSelector(typeof(PrisonerSubPhase2Attacks.BasicLaserAttackTellTwo)),
+						LeadAmount = 0f,
+						AttackCooldown = 0f,
+						Cooldown = 2f,
+						TellAnimation = "swipehandback",
+						FireAnimation = "swipehandcharge",
+						PostFireAnimation = "swipehandmoveback",
+						RequiresLineOfSight = true,
+						MultipleFireEvents = true,
+						Uninterruptible = false,
+						},
+						NickName = "BasicLaserAttackTellTwo"
+
+					},
+					new AttackBehaviorGroup.AttackGroupItem()
+					{
+						Probability = 0f,
+						Behavior = new ShootBehavior{
+						ShootPoint = RaisedArmLaserAttachPoint,
+						BulletScript = new CustomBulletScriptSelector(typeof(PrisonerSubPhase2Attacks.ChainRotatorsTwo)),
+						LeadAmount = 0f,
+						AttackCooldown = 1f,
+						Cooldown = 7f,
+						TellAnimation = "raisearm",
+						FireAnimation = "sweengarm",
+						PostFireAnimation = "lowerarm",
+						RequiresLineOfSight = true,
+						MultipleFireEvents = true,
+						Uninterruptible = false,
+						},
+						NickName = "ChainRotatorsTwo"
+
+					},
+					///=====================================
 				};
 				
 
@@ -816,7 +902,7 @@ namespace Planetside
 				//==================
 			}
 		}
-
+		/*
 		public class Blasty : Script
 		{
 			protected override IEnumerator Top()
@@ -880,7 +966,7 @@ namespace Planetside
 				}
 			}
 		}
-
+		*/
 		public class ChainRotators : Script
         {
 			public const int NumBullets = 9;
@@ -914,7 +1000,13 @@ namespace Planetside
 					bullets,
 					bullets2,
 					bullets3,
-					bullets4
+					bullets4,
+					//bullets5,
+					//bullets6,
+					//bullets7,
+					//bullets8,
+					//FUCK
+					
 				};
 				this.ClearAllLists(lists);
 			}
@@ -922,7 +1014,13 @@ namespace Planetside
 			private List<ChainRotators.SpinBullet> bullets2;
 			private List<ChainRotators.SpinBullet> bullets3;
 			private List<ChainRotators.SpinBullet> bullets4;
-
+			/*
+			private List<ChainRotators.SpinBullet> bullets5;
+			private List<ChainRotators.SpinBullet> bullets6;
+			private List<ChainRotators.SpinBullet> bullets7;
+			private List<ChainRotators.SpinBullet> bullets8;
+			private List<ChainRotators.SpinBullet> FUCK;
+			*/
 
 			private void SpawnChainsOf(List<ChainRotators.SpinBullet> ListToUse, float Angle, int Delay, bool isTemplateAngle = false)
             {
@@ -946,23 +1044,24 @@ namespace Planetside
 				Divider = 60;
 				this.EndOnBlank = true;
 				float turnSign = (float)((BraveMathCollege.AbsAngleBetween(this.BulletBank.aiAnimator.FacingDirection, 0f) <= 90f) ? -1 : 1);
+
 				this.TurnSpeed = 84f * turnSign;
 				this.bullets = new List<ChainRotators.SpinBullet>(60);
 				this.bullets2 = new List<ChainRotators.SpinBullet>(60);
 				this.bullets3 = new List<ChainRotators.SpinBullet>(60);
 				this.bullets4 = new List<ChainRotators.SpinBullet>(60);
 				TempaletAngle = 90;
-				controller.MoveTowardsCenterMethod(1.5f) ;
+				controller.MoveTowardsCenterMethod(1.5f);
 				base.PostWwiseEvent("Play_ENM_cannonball_eyes_01", null);
 				GameManager.Instance.StartCoroutine(SpawnReticle(0, controller, this));
 				this.SpawnChainsOf(bullets, 90, 60, true);
 				for (int i = 0; i < 60; i++)
-                {
+				{
 					TempaletAngle += (1 * turnSign);
 					yield return this.Wait(1);
 				}
 				for (int i = 0; i < 3; i++)
-                {
+				{
 					FireQuickBurst();
 					yield return this.Wait(60);
 				}
@@ -970,7 +1069,7 @@ namespace Planetside
 				GameManager.Instance.StartCoroutine(SpawnReticle(180, controller, this));
 				base.PostWwiseEvent("Play_ENM_cannonball_eyes_01", null);
 				for (int i = 0; i < 60; i++)
-                {
+				{
 					float t = (float)i / (float)60;
 					this.TurnSpeed = Mathf.SmoothStep(84, 72, t) * turnSign;
 					yield return this.Wait(1);
@@ -990,9 +1089,9 @@ namespace Planetside
 				for (int i = 0; i < 60; i++)
 				{
 					float t = (float)i / (float)60;
-					this.TurnSpeed = Mathf.SmoothStep(72, 60, t)*turnSign;
+					this.TurnSpeed = Mathf.SmoothStep(72, 60, t) * turnSign;
 					yield return this.Wait(1);
-					
+
 				}
 				controller.extantReticles.Clear();
 				this.SpawnChainsOf(bullets3, 90 + this.TempaletAngle, 550);
@@ -1020,6 +1119,8 @@ namespace Planetside
 					bullets4
 				};
 				this.ClearAllLists(lists);
+
+
 				yield break;
 			}
 
@@ -1100,18 +1201,21 @@ namespace Planetside
 
 			private void ClearAllLists(List<List<ChainRotators.SpinBullet>> bulletLists)
             {
-
-				for (int e = 0; e < bulletLists.Count; e++)
+				if (bulletLists != null)
                 {
-					for (int k = 0; k < bulletLists[e].Count; k++)
+					for (int e = 0; e < bulletLists.Count; e++)
 					{
-						if (bulletLists[e][k] != null)
+						for (int k = 0; k < bulletLists[e].Count; k++)
 						{
-							bulletLists[e][k].Vanish();
+							if (bulletLists[e][k] != null)
+							{
+								bulletLists[e][k].Vanish();
+							}
 						}
+						bulletLists[e] = null;
 					}
-					bulletLists[e] = null;
-				}			
+				}
+				
 			}
 
 			public void FireQuickBurst()
@@ -1199,7 +1303,6 @@ namespace Planetside
 				private float Inc;
 			}
 		}
-
 		public class BasicLaserAttackTell : Script
         {
 			protected override IEnumerator Top()
@@ -1211,8 +1314,9 @@ namespace Planetside
 				controller.MoveTowardsPositionMethod(0.5f, 7);
 				for (int i = -3; i < 4; i++)
 				{
-					float Angle = base.AimDirection + (20 * i);
-					float Offset = (20 * i);
+					float OffsetPhase = 20;
+					float Angle = base.AimDirection + (OffsetPhase * i);
+					float Offset = (OffsetPhase * i);
 					GameObject gameObject = SpawnManager.SpawnVFX(RandomPiecesOfStuffToInitialise.LaserReticle, false);
 
 					tk2dTiledSprite component2 = gameObject.GetComponent<tk2dTiledSprite>();
@@ -1230,7 +1334,7 @@ namespace Planetside
 					component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f);
 					component2.sprite.renderer.material.SetColor("_OverrideColor", ISDodgeAble == false ? laser : laserRed);
 					component2.sprite.renderer.material.SetColor("_EmissiveColor", ISDodgeAble == false ? laser : laserRed);
-					GameManager.Instance.StartCoroutine(FlashReticles(component2, ISDodgeAble, Angle, Offset, this, "directedfire"));
+					GameManager.Instance.StartCoroutine(FlashReticles(component2, ISDodgeAble, Angle, Offset, this, ISDodgeAble == false ? "sniper" : "directedfire"));
 					controller.extantReticles.Add(gameObject);
 
 				}
@@ -1260,6 +1364,8 @@ namespace Planetside
 					GameManager.Instance.StartCoroutine(FlashReticles(component2, ISDodgeAble, Angle, Offset, this, "sniper"));
 					controller.extantReticles.Add(gameObject);
 				}
+
+
 				yield return this.Wait(60);
 				yield break;
 			}
@@ -1368,7 +1474,6 @@ namespace Planetside
 				private float ang;
 			}
 		}
-
 		public class WallSweep : Script
 		{
 			protected override IEnumerator Top()
@@ -1627,15 +1732,7 @@ namespace Planetside
 					int travelTime = UnityEngine.Random.Range(90, 360);
 					this.Projectile.IgnoreTileCollisionsFor(180f);
 					this.Projectile.specRigidbody.AddCollisionLayerIgnoreOverride(CollisionMask.LayerToMask(CollisionLayer.HighObstacle, CollisionLayer.LowObstacle));
-					if (UnityEngine.Random.value <= 0.5f)
-                    {
-						base.ChangeSpeed(new Speed(2f, SpeedType.Absolute), UnityEngine.Random.Range(15, 120));
-					}
-					else
-                    {
-						base.ChangeSpeed(new Speed(3f, SpeedType.Absolute), UnityEngine.Random.Range(75, 300));
-					}
-
+					base.ChangeSpeed(new Speed(3f, SpeedType.Absolute), UnityEngine.Random.Range(75, 300));
 					yield return base.Wait(travelTime);
 					base.Vanish(false);
 					yield break;
@@ -1650,10 +1747,8 @@ namespace Planetside
 			protected override IEnumerator Top()
 			{
 				this.EndOnBlank = true;
-				if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
-				{
-					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("1bc2a07ef87741be90c37096910843ab").bulletBank.GetBullet("icicle"));
-				}
+				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("1bc2a07ef87741be90c37096910843ab").bulletBank.GetBullet("icicle"));
+
 				PrisonerController controller = base.BulletBank.aiActor.GetComponent<PrisonerController>();
 				controller.MoveTowardsCenterMethod(2f);
 				yield return this.Wait(100f);
@@ -1741,12 +1836,11 @@ namespace Planetside
 
 			}
 		}
-
 		public class SweepJukeAttack : Script
 		{
 			protected override IEnumerator Top()
 			{
-				this.EndOnBlank = true;
+				this.EndOnBlank = false;
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("31a3ea0c54a745e182e22ea54844a82d").bulletBank.GetBullet("sniper"));
 
 				PrisonerController controller = base.BulletBank.aiActor.GetComponent<PrisonerController>();
@@ -2011,8 +2105,6 @@ namespace Planetside
 				private float Inc;
 			}
 		}
-
-
 		public class LaserCross : Script
 		{
 			protected override IEnumerator Top()
@@ -2023,7 +2115,7 @@ namespace Planetside
 				controller.MoveTowardsPositionMethod(3f, 7);
 				for (int e = 0; e < GameManager.Instance.AllPlayers.Length; e++)
                 {
-					float Dir = UnityEngine.Random.value > 0.5f ? 0 : 45f;
+					float Dir = UnityEngine.Random.value > 0.5f ? 0 : 22.5f;
 					for (int i = 0; i < 8; i++)
 					{			
 						base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(GameManager.Instance.AllPlayers[e].transform.PositionVector2(), (45 * i) + Dir, this));
@@ -2187,10 +2279,18 @@ namespace Planetside
 			public List<GameObject> extantReticles = new List<GameObject>();
 			private RoomHandler m_StartRoom;
 
+
+			public SubPhases CurrentSubPhase;
+			public enum SubPhases
+            {
+				PHASE_1,
+				PHASE_2,
+				PHASE_3
+			};
+
 			public void Update()
 			{
 				m_StartRoom = aiActor.GetAbsoluteParentRoom();
-
 			}
 			private void CheckPlayerRoom()
 			{
@@ -2218,6 +2318,9 @@ namespace Planetside
 				base.aiActor.spriteAnimator.AnimationEventTriggered += this.AnimationEventTriggered;
 				//Important for not breaking basegame stuff!
 				StaticReferenceManager.AllHealthHavers.Remove(base.aiActor.healthHaver);
+				CurrentSubPhase = SubPhases.PHASE_1;
+
+
 				base.aiActor.healthHaver.OnPreDeath += (obj) =>
 				{
 
@@ -2286,9 +2389,6 @@ namespace Planetside
             {
 				GameManager.Instance.StartCoroutine(this.MoveTowardsPosition(Time, TileDistance, MinDistFromPlayer, MaxDistFromPlayer));
             }
-
-			
-
 			private IEnumerator MoveTowardsPosition(float Time, float TileDistance, float MinDistFromPlayer = 6, float MaxDistFromPlayer = 12)
             {
 				ImprovedAfterImage yeah = base.aiActor.gameObject.GetComponent<ImprovedAfterImage>();
@@ -2311,9 +2411,6 @@ namespace Planetside
 
 				yield break;
             }
-
-
-
 			public IntVector2? GetRandomAvailableCellWithinDistance(RoomHandler room, float Distance, IntVector2? footprint = null, CellTypes? passableCellTypes = null, bool canPassOccupied = true, CellValidator cellValidator = null)
 			{
 				if (footprint == null)

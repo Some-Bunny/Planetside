@@ -95,7 +95,6 @@ namespace Planetside
 			gun.finalMuzzleFlashEffects = (PickupObjectDatabase.GetById(334) as Gun).muzzleFlashEffects;
 			gun.DefaultModule.usesOptionalFinalProjectile = true;
 
-
 			Projectile CollapseProjectile = UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(86) as Gun).DefaultModule.projectiles[0]); 
 			CollapseProjectile.gameObject.SetActive(false);
 			FakePrefab.MarkAsFakePrefab(CollapseProjectile.gameObject);
@@ -161,7 +160,21 @@ namespace Planetside
 			gun.clipObject = BreakAbleAPI.BreakableAPIToolbox.GenerateDebrisObject("Planetside/Resources/GunObjects/Clips/collasperClip.png").gameObject;
 			gun.reloadClipLaunchFrame = 1;
 			gun.clipsToLaunchOnReload = 1;
-			
+
+
+			GameObject lightObj = new GameObject("LightObj");
+			FakePrefab.MarkAsFakePrefab(lightObj);
+			lightObj.transform.parent = gun.transform;
+			Light glow = lightObj.AddComponent<Light>();
+			glow.color = new Color(2550, 0, 1550);
+			glow.range = 2;
+			glow.type = LightType.Area;
+			glow.colorTemperature = 0.1f;
+			glow.intensity = 10;
+			gun.baseLightIntensity = 100;
+			gun.light = glow;
+			gun.muzzleFlashEffects = (PickupObjectDatabase.GetById(338) as Gun).muzzleFlashEffects;
+
 			ETGMod.Databases.Items.Add(gun, null, "ANY");
 			ParticleCollapser.ParticleCollapserID = gun.PickupObjectId;
 			ItemIDs.AddToList(gun.PickupObjectId);			

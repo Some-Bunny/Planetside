@@ -22,14 +22,14 @@ namespace Planetside
             UnityEngine.Object.DontDestroyOnLoad(instantiatedTarget);
             return instantiatedTarget;
         }
-        public static void AddTrailToProjectile(this Projectile target, string spritePath, Vector2 colliderDimensions, Vector2 colliderOffsets, List<string> animPaths = null, int animFPS = -1, List<string> startAnimPaths = null, int startAnimFPS = -1, float timeTillAnimStart = -1, float cascadeTimer = -1, float softMaxLength = -1, bool destroyOnEmpty = false)
+        public static TrailController AddTrailToProjectile(this Projectile target, string spritePath, Vector2 colliderDimensions, Vector2 colliderOffsets, List<string> animPaths = null, int animFPS = -1, List<string> startAnimPaths = null, int startAnimFPS = -1, float timeTillAnimStart = -1, float cascadeTimer = -1, float softMaxLength = -1, bool destroyOnEmpty = false)
         {
             try
             {
                 GameObject newTrailObject = new GameObject();
                 newTrailObject.InstantiateAndFakeprefab();
                 newTrailObject.transform.parent = target.transform;
-
+                newTrailObject.name = "trailObject";
                 float convertedColliderX = colliderDimensions.x / 16f;
                 float convertedColliderY = colliderDimensions.y / 16f;
                 float convertedOffsetX = colliderOffsets.x / 16f;
@@ -82,10 +82,12 @@ namespace Planetside
                 if (cascadeTimer > 0) { trail.usesCascadeTimer = true; trail.cascadeTimer = cascadeTimer; }
                 if (timeTillAnimStart > 0) { trail.usesGlobalTimer = true; trail.globalTimer = timeTillAnimStart; }
                 trail.destroyOnEmpty = destroyOnEmpty;
+                return trail;
             }
             catch (Exception e)
             {
                 ETGModConsole.Log(e.ToString());
+                return null;
             }
         }
 

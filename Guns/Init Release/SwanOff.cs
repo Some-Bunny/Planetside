@@ -61,6 +61,7 @@ namespace Planetside
 			gun.reloadTime = 2.3f;
 			gun.SetBaseMaxAmmo(240);
 			gun.muzzleFlashEffects = (PickupObjectDatabase.GetById(404) as Gun).muzzleFlashEffects;
+			gun.muzzleFlashEffects = new VFXPool { type = VFXPoolType.None, effects = new VFXComplex[0] };
 
 			gun.gunClass = GunClass.SILLY;
 

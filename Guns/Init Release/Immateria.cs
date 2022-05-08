@@ -153,6 +153,19 @@ namespace Planetside
 				item4
 			};
 			gun.quality = PickupObject.ItemQuality.S;
+			GameObject lightObj = new GameObject("LightObj");
+			FakePrefab.MarkAsFakePrefab(lightObj);
+			lightObj.transform.parent = gun.transform;
+			Light glow = lightObj.AddComponent<Light>();
+			glow.color = Color.cyan;
+			glow.range = 2;
+			glow.type = LightType.Area;
+			glow.colorTemperature = 0.1f;
+			glow.intensity = 10;
+			gun.baseLightIntensity = 100;
+			gun.light = glow;
+			gun.muzzleFlashEffects = (PickupObjectDatabase.GetById(228) as Gun).muzzleFlashEffects;
+
 			ETGMod.Databases.Items.Add(gun, null, "ANY");
 			Immateria.ImmateriaID = gun.PickupObjectId;
 			ItemIDs.AddToList(gun.PickupObjectId);

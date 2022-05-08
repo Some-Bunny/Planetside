@@ -11,6 +11,9 @@ using UnityEngine;
 using SaveAPI;
 using Brave.BulletScript;
 
+/*
+
+
 namespace Planetside
 {
 
@@ -29,7 +32,7 @@ namespace Planetside
 		{
 			try
 			{
-				this.CreateOrLoadConfiguration();
+				//this.CreateOrLoadConfiguration();
 			}
 			catch (Exception e)
 			{
@@ -327,6 +330,7 @@ namespace Planetside
 			ETGModConsole.Log(Hatred);
         }
 
+		
 		public static void TrappedChest(Action<Chest, PlayerController> orig, Chest self, PlayerController player)
 		{
 			orig(self, player);
@@ -379,9 +383,9 @@ namespace Planetside
 				}
             }
 		}
-
 		
-
+		
+		
 		public static void DoFairy(Action<MinorBreakable> orig, MinorBreakable self)
 		{
 			orig(self);
@@ -457,6 +461,8 @@ namespace Planetside
 				}
 			}		
 		}
+		
+
 		public void DoPoisonGoop(Vector2 v)
 		{
 			float Loop = SaveAPIManager.GetPlayerStatValue(CustomTrackedStats.TIMES_LOOPED);
@@ -489,6 +495,7 @@ namespace Planetside
 		public static float InitialScaling = 0.4f;
 	}
 }
+
 
 public class GrenadeYahyeet : Script
 {
@@ -528,3 +535,5 @@ public class ExplosiveDeath : Script
 	}
 
 }
+
+*/

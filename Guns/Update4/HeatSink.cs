@@ -159,6 +159,7 @@ namespace Planetside
             gun.PreventNormalFireAudio = true;
             gun.gunClass = GunClass.BEAM;
 
+
             gun.gunSwitchGroup = (PickupObjectDatabase.GetById(597) as Gun).gunSwitchGroup;
 
             gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
@@ -251,6 +252,7 @@ namespace Planetside
             float Mult = owner != null ? owner.stats.GetStatValue(PlayerStats.StatType.Damage) : 1;
             this.explosionData.damage = (26 * radiusValue) * Mult;
             this.explosionData.damageRadius = radiusValue;
+            this.explosionData.useDefaultExplosion = true;
             Exploder.Explode(pos, this.explosionData, Vector2.zero, null, this.ignoreQueues, CoreDamageTypes.None, false);
 
             GameObject silencerVFX = (GameObject)ResourceCache.Acquire("Global VFX/BlankVFX_Ghost");
@@ -263,9 +265,9 @@ namespace Planetside
             ParticleSystem objparticles = silencerVFX.GetComponentInChildren<ParticleSystem>();
             var main = objparticles.main;
             main.useUnscaledTime = true;
-            AkSoundEngine.PostEvent("Play_BOSS_RatMech_Bomb_01", radialIndicator.gameObject);
             GameObject blankObj = GameObject.Instantiate(silencerVFX.gameObject, pos, Quaternion.identity);
-            Destroy(blankObj, 2.5f);
+            AkSoundEngine.PostEvent("Play_BOSS_RatMech_Bomb_01", silencerVFX.gameObject);
+            Destroy(blankObj, 2f);
             blankObj.transform.localScale = Vector3.one * (radialIndicator.CurrentRadius / 4);
             Exploder.DoDistortionWave(pos, 10f, 0.4f, radialIndicator.CurrentRadius, 0.066f);
             Destroy(radialIndicator.gameObject);

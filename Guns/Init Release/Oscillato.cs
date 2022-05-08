@@ -90,6 +90,19 @@ namespace Planetside
 				"psog:oscillating_bullets",
 			};
 			CustomSynergies.Add("Reverberation", AAA, null, true);
+			GameObject lightObj = new GameObject("LightObj");
+			FakePrefab.MarkAsFakePrefab(lightObj);
+			lightObj.transform.parent = gun.transform;
+			Light glow = lightObj.AddComponent<Light>();
+			glow.color = Color.cyan;
+			glow.range = 2;
+			glow.type = LightType.Area;
+			glow.colorTemperature = 0.1f;
+			glow.intensity = 10;
+			gun.baseLightIntensity = 100;
+			gun.light = glow;
+			gun.muzzleFlashEffects = (PickupObjectDatabase.GetById(199) as Gun).muzzleFlashEffects;
+
 			Oscillato.AAID = gun.PickupObjectId;
 			ItemIDs.AddToList(gun.PickupObjectId);
 		}

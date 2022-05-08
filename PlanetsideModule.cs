@@ -40,6 +40,7 @@ namespace Planetside
         public static HellDragZoneController hellDrag;
 
         public static AssetBundle ModAssets;
+        public static AssetBundle TilesetAssets;
 
         public override void Start()
         {
@@ -62,12 +63,18 @@ namespace Planetside
             {
                 //ETGModConsole.Log(PlanetsideModule.ModAssets.name + ": " + str, false);
             }
-
+            AssetBundle tilesets = AssetBundleLoader.LoadAssetBundleFromLiterallyAnywhere("planetsidetilesets");
+            if (tilesets != null) { TilesetAssets = tilesets; }
+            foreach (string str in PlanetsideModule.TilesetAssets.GetAllAssetNames())
+            {
+                //ETGModConsole.Log(PlanetsideModule.TilesetAssets.name + ": " + str, false);
+            }
             //Initialise Statically Stored Stuff Here
             StaticVFXStorage.Init();
             EasyGoopDefinitions.DefineDefaultGoops();
             RandomPiecesOfStuffToInitialise.BuildPrefab();
             PlanetsideModule.Strings = new AdvancedStringDB();
+            PlanetsideCommands.Init();
             ItemIDs.MakeCommand();
             StaticReferences.Init(); //<- Used in GungeonAPI, IMPORTANT to initialise it before DungeonHandler
             InitNewPlaceables.InitPlaceables();
@@ -193,6 +200,7 @@ namespace Planetside
             PossessedEffect.Init();
             HolyBlessingEffect.Init();
             HeatStrokeEffect.Init();
+            TarnishEffect.Init();
 
             DebuffLibrary.Init();
 
@@ -266,6 +274,10 @@ namespace Planetside
             ForgottenRoundRNG.Init();
             SporeBullets.Init();
             OrbitalInsertion.Init();
+            Autocannon.Add();
+            TarnishedRounds.Init();
+            TarnishedAmmolet.Init();
+            PunctureWound.Add();
 
             //Perks
             AllStatsUp.Init();
@@ -390,10 +402,29 @@ namespace Planetside
             ETGModMainBehaviour.Instance.gameObject.AddComponent<SpecificUnlockController>();
             ETGModMainBehaviour.Instance.gameObject.AddComponent<OuroborosController>();
             ETGModMainBehaviour.Instance.gameObject.AddComponent<CursesController>();
+            ETGModMainBehaviour.Instance.gameObject.AddComponent<ContainmentBreachController>();
+
             PlanetsideQOL.Init();
+            PlanetsideBalanceChanges.Init();
 
             DungeonHandler.Init();
             MasteryReplacementOub.InitDungeonHook();
+
+            ModPrefabs.InitCustomPrefabs();
+            ModRoomPrefabs.InitCustomRooms();
+            AbyssDungeonFlows.InitDungeonFlows();
+            AbyssDungeon.InitCustomDungeon();
+            new Hook(
+                     typeof(GameManager).GetMethod("Awake", BindingFlags.NonPublic | BindingFlags.Instance),
+                     typeof(PlanetsideModule).GetMethod("GameManager_Awake", BindingFlags.NonPublic | BindingFlags.Instance),
+                     typeof(GameManager)
+                 );
+
+            ETGModConsole.Commands.AddGroup("psog_floor", args =>
+            {
+            });
+            ETGModConsole.Commands.GetGroup("psog_floor").AddUnit("load", this.LoadFloor);
+
 
             //AdvancedLogging.Log($"{MOD_NAME} v{VERSION} started successfully.", new Color(144, 6, 255, 255), false, true, null);
 
@@ -494,11 +525,13 @@ namespace Planetside
 
             string n = AdvancedGameStatsManager.Instance.GetPlayerStatValue(CustomTrackedStats.UMBRAL_ENEMIES_KILLED) >= 4? " Done!\n" : " -Slay 5 Umbral Enemies.\n";
             string o = AdvancedGameStatsManager.Instance.GetPlayerStatValue(CustomTrackedStats.JAMMED_ARCHGUNJURERS_KILLED) >= 14 ? " Done!\n" : " -Defeat 15 Jammed Arch Gunjurers.\n";
-            string p = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.HM_PRIME_DEFEATED_T4) ? " Done!\n" : " -Perform the Highest Level Maintenance On The Damaged Robot.\n";
+            string p = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.HM_PRIME_DEFEATED) ? " Done!\n" : " -Perform Maintenance On The Damaged Robot.\n";
+
+            string q = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.HM_PRIME_DEFEATED_T4) ? " Done!\n" : " -Perform the Highest Level Maintenance On The Damaged Robot.\n";
 
 
             string color1 = "9006FF";
-            OtherTools.PrintNoID("Unlock List:\n" + a + b + c + d + e + f + g +h+i+j+k+l+m+n+o+p, color1);
+            OtherTools.PrintNoID("Unlock List:\n" + a + b + c + d + e + f + g +h+i+j+k+l+m+n+o+p+q, color1);
             OtherTools.Init();
 
 
@@ -509,6 +542,19 @@ namespace Planetside
             });
             */
         }
+
+        private void LoadFloor(string[] obj)
+        {
+            GameManager.Instance.LoadCustomLevel(AbyssDungeon.AbyssDefinition.dungeonSceneName);
+        }
+        private void GameManager_Awake(Action<GameManager> orig, GameManager self)
+        {
+            orig(self);
+            AbyssDungeon.InitCustomDungeon();
+        }
+
+
+
         public static BossManager BossManagerHook(Func<GameManager, BossManager> orig, GameManager self)
         {
             var manager = orig(self);

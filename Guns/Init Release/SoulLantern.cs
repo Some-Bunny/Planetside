@@ -58,6 +58,8 @@ namespace Planetside
 			gun.DefaultModule.projectiles[0] = projectile;
 			projectile.baseData.damage = 4f;
 			projectile.baseData.speed = 1f;
+			projectile.baseData.UsesCustomAccelerationCurve = true;
+			projectile.baseData.AccelerationCurve = AnimationCurve.Linear(0, 1, 2, 18);
 			projectile.sprite.renderer.enabled = false;
 			projectile.AdditionalScaleMultiplier *= 0.5f;
 			projectile.shouldRotate = true;
@@ -106,6 +108,19 @@ namespace Planetside
 			gun.PreventNormalFireAudio = true;
 			gun.SetupUnlockOnCustomFlag(CustomDungeonFlags.BULLETBANK_DEFEATED, true);
 			gun.barrelOffset.transform.localPosition -= new Vector3(0.25f, 0, 0f);
+
+			GameObject lightObj = new GameObject("LightObj");
+			FakePrefab.MarkAsFakePrefab(lightObj);
+			lightObj.transform.parent = gun.transform;
+			Light glow = lightObj.AddComponent<Light>();
+			glow.color = Color.yellow;
+			glow.range = 2;
+			glow.type = LightType.Area;
+			glow.colorTemperature = 0.1f;
+			glow.intensity = 10;
+			gun.baseLightIntensity = 100;
+			gun.light = glow;
+			gun.muzzleFlashEffects = new VFXPool { type = VFXPoolType.None, effects = new VFXComplex[0] };
 
 
 			SoulLantern.SoulLanternID = gun.PickupObjectId;

@@ -129,6 +129,7 @@ namespace Planetside
 			{
 				component.SpawnedFromOtherPlayerProjectile = true;
 				PlayerController playerController = this.m_projectile.Owner as PlayerController;
+				component.gameObject.AddComponent<RecursionPreventer>();
 				component.baseData.damage *= playerController.stats.GetStatValue(PlayerStats.StatType.Damage);
 				component.baseData.speed *= .300f;
 				playerController.DoPostProcessProjectile(component);

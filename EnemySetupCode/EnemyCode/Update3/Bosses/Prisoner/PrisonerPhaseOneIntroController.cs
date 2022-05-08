@@ -5,14 +5,10 @@ using System.Text;
 using System.Collections;
 using UnityEngine;
 
+using Dungeonator;
+
 namespace Planetside
 {
-
-	using System;
-	using System.Collections.Generic;
-	using Dungeonator;
-	using UnityEngine;
-
 	// Token: 0x02000FBB RID: 4027
 	[RequireComponent(typeof(GenericIntroDoer))]
 	public class PrisonerPhaseOneIntroController : SpecificIntroDoer
@@ -286,6 +282,8 @@ namespace Planetside
             {
                 Prisoner.aiAnimator.PlayUntilCancelled("idle", false, null, -1f, false);
                 Prisoner.behaviorSpeculator.enabled = true;
+                PrisonerPhaseOne.PrisonerController controller = Prisoner.GetComponent<PrisonerPhaseOne.PrisonerController>();
+                controller.CurrentSubPhase = PrisonerPhaseOne.PrisonerController.SubPhases.PHASE_1;
             }
             foreach (var chain in activeChainsandPos)
             {

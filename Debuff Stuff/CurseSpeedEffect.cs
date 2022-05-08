@@ -43,7 +43,6 @@ namespace Planetside
 				}
 			}
 		}
-
 		public override void OnEffectRemoved(GameActor actor, RuntimeGameActorEffectData effectData)
 		{
 			PlayerController playerController = actor as PlayerController;

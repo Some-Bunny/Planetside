@@ -20,6 +20,21 @@ namespace Planetside
         public static void Init()
         {
             new Hook(typeof(HealthPickup).GetMethod("PrePickupLogic", BindingFlags.Instance | BindingFlags.NonPublic), typeof(PickupHooks).GetMethod("PrePickuphookLogic"));
+
+            new Hook(typeof(AmmoPickup).GetMethod("Interact", BindingFlags.Instance | BindingFlags.Public), typeof(PickupHooks).GetMethod("AmmoInteractHook"));
+        }
+
+        public static void AmmoInteractHook(Action<AmmoPickup, PlayerController> orig, AmmoPickup self, PlayerController interactor)
+        {
+            if (!self)
+            {
+                return;
+            }
+            if (interactor != null && interactor.CurrentGun != null && interactor.CurrentGun.CanGainAmmo == false)
+            {
+                return;
+            }
+            orig(self, interactor);
         }
         public static void PrePickuphookLogic(Action<HealthPickup, SpeculativeRigidbody, SpeculativeRigidbody> orig, HealthPickup self, SpeculativeRigidbody player, SpeculativeRigidbody selfBody)
         {
