@@ -56,11 +56,14 @@ namespace Planetside
 				companion.aiActor.ShadowObject = EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").ShadowObject; 
 				companion.aiActor.healthHaver.SetHealthMaximum(22.5f, null, false);
 				companion.aiActor.specRigidbody.PixelColliders.Clear();
+				
+				ImprovedAfterImage image = companion.aiActor.gameObject.AddComponent<ImprovedAfterImage>();
+				image.dashColor = new Color(1, 0.85f, 0.7f);
+				image.spawnShadows = true;
 
-				companion.aiActor.gameObject.AddComponent<ImprovedAfterImage>().dashColor = Color.grey;
-				companion.aiActor.gameObject.AddComponent<ImprovedAfterImage>().spawnShadows = true;
-
-				companion.aiActor.gameObject.AddComponent<AfterImageTrailController>().spawnShadows = false;
+				//255, 210, 178, 255)
+				AfterImageTrailController im = companion.aiActor.gameObject.AddComponent<AfterImageTrailController>();
+				im.spawnShadows = false;
 				companion.aiActor.gameObject.AddComponent<tk2dSpriteAttachPoint>();
 				companion.aiActor.gameObject.AddComponent<ObjectVisibilityManager>();
 				companion.aiActor.specRigidbody.PixelColliders.Add(new PixelCollider
@@ -110,83 +113,48 @@ namespace Planetside
 				AIAnimator aiAnimator = companion.aiAnimator;
 				aiAnimator.IdleAnimation = new DirectionalAnimation
 				{
-					Type = DirectionalAnimation.DirectionType.EightWayOrdinal,
-					Flipped = new DirectionalAnimation.FlipType[8],
+					Type = DirectionalAnimation.DirectionType.SixWay,
+					Flipped = new DirectionalAnimation.FlipType[6],
 					AnimNames = new string[]
 					{
-						"idle_north",
-					   "idle_north_east",
-						"idle_east",
-					   "idle_south_east",
-					   "idle_south",
-						"idle_south_west",
-					   "idle_west",
-						"idle_north_west",
-
+						"idle_back",
+						"idle_back_right",
+						"idle_front_right",
+						"idle_front",
+						"idle_front_left",
+						"idle_back_left"
 
 					}
 				};
 				aiAnimator.MoveAnimation = new DirectionalAnimation
 				{
-					Type = DirectionalAnimation.DirectionType.EightWayOrdinal,
-					Flipped = new DirectionalAnimation.FlipType[8],
+					Type = DirectionalAnimation.DirectionType.SixWay,
+					Flipped = new DirectionalAnimation.FlipType[6],
 					AnimNames = new string[]
 					{
-						"idle_north",
-					   "idle_north_east",
-						"idle_east",
-					   "idle_south_east",
-					   "idle_south",
-						"idle_south_west",
-					   "idle_west",
-						"idle_north_west",
+						"idle_back",
+						"idle_back_right",
+						"idle_front_right",
+						"idle_front",
+						"idle_front_left",
+						"idle_back_left"
+
 					}
 				};
-				aiAnimator.OtherAnimations = new List<AIAnimator.NamedDirectionalAnimation>
-				{
-					new AIAnimator.NamedDirectionalAnimation
-					{
-					name = "die",
-					anim = new DirectionalAnimation
-						{
-							Type = DirectionalAnimation.DirectionType.TwoWayHorizontal,
-							Flipped = new DirectionalAnimation.FlipType[2],
-							AnimNames = new string[]
-							{
 
-					   "die_right",
-						   "die_left"
+				
 
-							}
+				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "attack", new string[] { "charge_back",
+						"charge_back_right",
+						"charge_front_right",
+						"charge_front",
+						"charge_front_left",
+						"charge_back_left"}, new DirectionalAnimation.FlipType[6], DirectionalAnimation.DirectionType.SixWay);
 
-						}
-					}
-				};
-				aiAnimator.OtherAnimations = new List<AIAnimator.NamedDirectionalAnimation>
-				{
-					new AIAnimator.NamedDirectionalAnimation
-					{
-					name = "attack",
-					anim = new DirectionalAnimation
-						{
-							Type = DirectionalAnimation.DirectionType.EightWayOrdinal,
-							Flipped = new DirectionalAnimation.FlipType[8],
-							AnimNames = new string[]
-							{
-						"idle_north",
-					   "idle_north_east",
-						"idle_east",
-					   "idle_south_east",
-					   "idle_south",
-						"idle_south_west",
-					   "idle_west",
-						"idle_north_west",
-							}
-
-						}
-					}
-				};
 				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awaken" }, new DirectionalAnimation.FlipType[0]);
+				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "death", new string[] { "death" }, new DirectionalAnimation.FlipType[0]);
+
+
 				companion.aiActor.AwakenAnimType = AwakenAnimationType.Awaken;
 
 				bool flag3 = GlockulusCollection == null;
@@ -200,59 +168,117 @@ namespace Planetside
 					}
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, new List<int>
 					{
-		            0
-					}, "idle_north", tk2dSpriteAnimationClip.WrapMode.Once).fps = 1;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, new List<int>
-					{
-					2
-					}, "idle_north_east", tk2dSpriteAnimationClip.WrapMode.Once).fps = 1;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, new List<int>
-					{
-					1
-					}, "idle_north_west", tk2dSpriteAnimationClip.WrapMode.Once).fps = 1;
+		            0,
+					1,
+					2,
+					3
+					}, "idle_front", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
 
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, new List<int>
 					{
-		            3
-					}, "idle_south", tk2dSpriteAnimationClip.WrapMode.Once).fps = 1;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, new List<int>
-					{
-		            5
-					}, "idle_south_east", tk2dSpriteAnimationClip.WrapMode.Once).fps = 1;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, new List<int>
-					{
-		            4
-					}, "idle_south_west", tk2dSpriteAnimationClip.WrapMode.Once).fps = 1;
-
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, new List<int>
-					{
+					4,
+					5,
+					6,
 					7
-					}, "idle_east", tk2dSpriteAnimationClip.WrapMode.Once).fps = 1;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, new List<int>
-					{
-		            6
-					}, "idle_west", tk2dSpriteAnimationClip.WrapMode.Once).fps = 1;
+					}, "idle_front_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
 
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, new List<int>
 					{
-		             8,
-					 9,
-					 10,
-					 11,
-					 12,
-					 13
+					8,
+					9,
+					10,
+					11
+					}, "idle_front_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
 
-					}, "die_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, new List<int>
 					{
-					 8,
-					 9,
-					 10,
-					 11,
-					 12,
-					 13
+					12,
+					13,
+					14,
+					15
+					}, "idle_back", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
 
-					}, "die_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, new List<int>
+					{
+					16,
+					17,
+					18,
+					19
+					}, "idle_back_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
+
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, new List<int>
+					{
+					20,
+					21,
+					22,
+					23
+					}, "idle_back_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
+
+
+					//=====================
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, new List<int>
+					{
+					0,
+					1,
+					2,
+					3
+					}, "charge_front", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
+
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, new List<int>
+					{
+					4,
+					5,
+					6,
+					7
+					}, "charge_front_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
+
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, new List<int>
+					{
+					8,
+					9,
+					10,
+					11
+					}, "charge_front_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
+
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, new List<int>
+					{
+					12,
+					13,
+					14,
+					15
+					}, "charge_back", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
+
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, new List<int>
+					{
+					16,
+					17,
+					18,
+					19
+					}, "charge_back_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
+
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, new List<int>
+					{
+					20,
+					21,
+					22,
+					23
+					}, "charge_back_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
+
+					//=====================
+
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, new List<int>
+					{
+					 24,
+					 25,
+					 26,
+					 27,
+					 28,
+					 29,
+					 30,
+					 31,
+					 32
+
+					}, "death", tk2dSpriteAnimationClip.WrapMode.Once).fps = 13f;
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, new List<int>
 					{
 					0
@@ -290,7 +316,7 @@ namespace Planetside
 					AttackCooldown = 0f,
 					Cooldown = 2f,
 					InitialCooldown = 0.5f,
-					//TellAnimation = "attack",
+					TellAnimation = "attack",
 					//FireAnimation = "tell",
 					RequiresLineOfSight = true,
 					MultipleFireEvents = true,
@@ -307,7 +333,7 @@ namespace Planetside
 					dashDistance = 7f,
 					dashTime = 0.33f,
 					AmountOfDashes = 1,
-					enableShadowTrail = true,
+					enableShadowTrail = false,
 					Cooldown = 1,
 					dashDirection = DashBehavior.DashDirection.Random,
 					warpDashAnimLength = true,
@@ -315,6 +341,7 @@ namespace Planetside
 					fireAtDashStart = true,
 					InitialCooldown = 1f,
 					AttackCooldown = 3,
+
 					bulletScript = new CustomBulletScriptSelector(typeof(DashAttack)),
 					//BulletScript = new CustomBulletScriptSelector(typeof(Wail)),
 					//LeadAmount = 0f,
@@ -359,7 +386,7 @@ namespace Planetside
 				bs.SkipTimingDifferentiator = behaviorSpeculator.SkipTimingDifferentiator;
 				Game.Enemies.Add("psog:glockulus", companion.aiActor);
 
-				SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Enemies/Glockulus/glockulus_idle_south_001", SpriteBuilder.ammonomiconCollection);
+				SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Enemies/Glockulus/glockulus_idle_front1", SpriteBuilder.ammonomiconCollection);
 				if (companion.GetComponent<EncounterTrackable>() != null)
 				{
 					UnityEngine.Object.Destroy(companion.GetComponent<EncounterTrackable>());
@@ -372,7 +399,7 @@ namespace Planetside
 				companion.encounterTrackable.journalData.IsEnemy = true;
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
-				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Enemies/Glockulus/glockulus_idle_south_001";
+				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Enemies/Glockulus/glockulus_idle_front1";
 				companion.encounterTrackable.journalData.enemyPortraitSprite = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\glockulussheet.png");
 				PlanetsideModule.Strings.Enemies.Set("#THE_GLOCKULUS", "Glockulus");
 				PlanetsideModule.Strings.Enemies.Set("#THE_GLOCKULUS_SHORTDESC", "Eye Spy");
@@ -391,25 +418,46 @@ namespace Planetside
 
 		private static string[] spritePaths = new string[]
 		{
-
-			"Planetside/Resources/Enemies/Glockulus/glockulus_idle_north_001.png",
-			"Planetside/Resources/Enemies/Glockulus/glockulus_idle_northeast_001.png",
-			"Planetside/Resources/Enemies/Glockulus/glockulus_idle_northwest_001.png",
-			"Planetside/Resources/Enemies/Glockulus/glockulus_idle_south_001.png",
-			"Planetside/Resources/Enemies/Glockulus/glockulus_idle_southwest_001.png",
-			"Planetside/Resources/Enemies/Glockulus/glockulus_idle_southeast_001.png",
-			"Planetside/Resources/Enemies/Glockulus/glockulus_idle_west_001.png",
-			"Planetside/Resources/Enemies/Glockulus/glockulus_idle_east_001.png",
-
-			//death
+			//Front
+			"Planetside/Resources/Enemies/Glockulus/glockulus_idle_front1.png",
+			"Planetside/Resources/Enemies/Glockulus/glockulus_idle_front2.png",
+			"Planetside/Resources/Enemies/Glockulus/glockulus_idle_front3.png",
+			"Planetside/Resources/Enemies/Glockulus/glockulus_idle_front4.png",
+			//Front left
+			"Planetside/Resources/Enemies/Glockulus/glockulus_idle_front_left1.png",
+			"Planetside/Resources/Enemies/Glockulus/glockulus_idle_front_left2.png",
+			"Planetside/Resources/Enemies/Glockulus/glockulus_idle_front_left3.png",
+			"Planetside/Resources/Enemies/Glockulus/glockulus_idle_front_left4.png",
+			//Front right
+			"Planetside/Resources/Enemies/Glockulus/glockulus_idle_front_right1.png",
+			"Planetside/Resources/Enemies/Glockulus/glockulus_idle_front_right2.png",
+			"Planetside/Resources/Enemies/Glockulus/glockulus_idle_front_right3.png",
+			"Planetside/Resources/Enemies/Glockulus/glockulus_idle_front_right4.png",
+			//Back
+			"Planetside/Resources/Enemies/Glockulus/glockulus_idle_back1.png",
+			"Planetside/Resources/Enemies/Glockulus/glockulus_idle_back2.png",
+			"Planetside/Resources/Enemies/Glockulus/glockulus_idle_back3.png",
+			"Planetside/Resources/Enemies/Glockulus/glockulus_idle_back4.png",
+			//Back left
+			"Planetside/Resources/Enemies/Glockulus/glockulus_idle_back_left1.png",
+			"Planetside/Resources/Enemies/Glockulus/glockulus_idle_back_left2.png",
+			"Planetside/Resources/Enemies/Glockulus/glockulus_idle_back_left3.png",
+			"Planetside/Resources/Enemies/Glockulus/glockulus_idle_back_left4.png",
+			//back right
+			"Planetside/Resources/Enemies/Glockulus/glockulus_idle_back_right1.png",
+			"Planetside/Resources/Enemies/Glockulus/glockulus_idle_back_right2.png",
+			"Planetside/Resources/Enemies/Glockulus/glockulus_idle_back_right3.png",
+			"Planetside/Resources/Enemies/Glockulus/glockulus_idle_back_right4.png",
+			//Death
 			"Planetside/Resources/Enemies/Glockulus/glockulus_die_001.png",
 			"Planetside/Resources/Enemies/Glockulus/glockulus_die_002.png",
 			"Planetside/Resources/Enemies/Glockulus/glockulus_die_003.png",
 			"Planetside/Resources/Enemies/Glockulus/glockulus_die_004.png",
 			"Planetside/Resources/Enemies/Glockulus/glockulus_die_005.png",
 			"Planetside/Resources/Enemies/Glockulus/glockulus_die_006.png",
-
-
+			"Planetside/Resources/Enemies/Glockulus/glockulus_die_007.png",
+			"Planetside/Resources/Enemies/Glockulus/glockulus_die_008.png",
+			"Planetside/Resources/Enemies/Glockulus/glockulus_die_009.png",
 
 		};
 
@@ -451,6 +499,20 @@ namespace Planetside
 				base.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("465da2bb086a4a88a803f79fe3a27677").bulletBank.bulletBank.GetBullet("homing"));
 				base.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("796a7ed4ad804984859088fc91672c7f").bulletBank.bulletBank.GetBullet("default"));
 				base.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("sweep"));
+
+				if (!base.aiActor.IsBlackPhantom)
+				{
+					Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+					mat.mainTexture = base.aiActor.sprite.renderer.material.mainTexture;
+					mat.SetColor("_EmissiveColor", new Color32(255, 210, 178, 255));
+					mat.SetFloat("_EmissiveColorPower", 1.55f);
+					mat.SetFloat("_EmissivePower", 100);
+					mat.SetFloat("_EmissiveThresholdSensitivity", 0.05f);
+
+					aiActor.sprite.renderer.material = mat;
+
+				}
+
 
 				m_StartRoom = aiActor.GetAbsoluteParentRoom();
 				base.aiActor.healthHaver.OnPreDeath += (obj) =>

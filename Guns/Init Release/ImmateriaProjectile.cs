@@ -30,7 +30,7 @@ namespace Planetside
 			this.player = (this.projectile.Owner as PlayerController);
 			if (this.projectile != null)
 			{
-				var texture = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\nebula_reducednoise.png");
+				var texture = StaticTextures.NebulaTexture;
 
 				Material material = this.projectile.sprite.renderer.material;
 				material.shader = Shader.Find("Brave/PlayerShaderEevee");

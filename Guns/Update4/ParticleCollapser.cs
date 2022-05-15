@@ -174,6 +174,7 @@ namespace Planetside
 			gun.baseLightIntensity = 100;
 			gun.light = glow;
 			gun.muzzleFlashEffects = (PickupObjectDatabase.GetById(338) as Gun).muzzleFlashEffects;
+			gun.gunClass = GunClass.SILLY;
 
 			ETGMod.Databases.Items.Add(gun, null, "ANY");
 			ParticleCollapser.ParticleCollapserID = gun.PickupObjectId;
@@ -181,7 +182,6 @@ namespace Planetside
 		}
 		public static int ParticleCollapserID;
 
-	
 		protected override void Update()
 		{
 			base.Update();

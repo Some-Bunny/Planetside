@@ -40,8 +40,11 @@ namespace Planetside
 
 			EnemyToolbox.AddSoundsToAnimationFrame(gun.GetComponent<tk2dSpriteAnimator>(), gun.reloadAnimation, new Dictionary<int, string> { { 0, "Play_BOSS_tank_grenade_01" }, { 6, "Play_OBJ_lock_unlock_01" }, { 13, "Play_OBJ_lock_unlock_01" } });
 
-			Gun gun2 = PickupObjectDatabase.GetById(336) as Gun;
-			Gun gun3 = PickupObjectDatabase.GetById(146) as Gun;
+			Gun gun2 = PickupObjectDatabase.GetById(402) as Gun;
+			Gun gun3 = PickupObjectDatabase.GetById(336) as Gun;
+			gun.DefaultModule.customAmmoType = gun2.DefaultModule.customAmmoType;
+			gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
+
 			Projectile component = ((Gun)ETGMod.Databases.Items[336]).DefaultModule.projectiles[0];
 			gun.gunSwitchGroup = (PickupObjectDatabase.GetById(16) as Gun).gunSwitchGroup;
 			Projectile replacementProjectile = component.projectile;
@@ -53,7 +56,7 @@ namespace Planetside
 			gun.DefaultModule.numberOfFinalProjectiles = 15;
 			gun.DefaultModule.finalProjectile = replacementProjectile;
 			gun.DefaultModule.finalCustomAmmoType = gun3.DefaultModule.customAmmoType;
-			gun.DefaultModule.finalAmmoType = gun3.DefaultModule.ammoType;
+			gun.DefaultModule.finalAmmoType = GameUIAmmoType.AmmoType.CUSTOM;
 			gun.DefaultModule.ammoCost = 1;
 			gun.DefaultModule.shootStyle = ProjectileModule.ShootStyle.Automatic;
 			gun.damageModifier = 1;

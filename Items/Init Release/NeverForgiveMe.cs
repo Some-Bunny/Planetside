@@ -145,7 +145,7 @@ namespace Planetside
                 int SpriteID = UnityEngine.Random.Range(0, 7);
                 fuck.GetComponent<tk2dBaseSprite>().SetSprite(ForgiveMePlease.spriteIds[SpriteID]);
                 ahfuck.sprite.usesOverrideMaterial = true;
-                var texture = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\nebula_reducednoise.png");
+                var texture = StaticTextures.NebulaTexture;
                 ahfuck.sprite.renderer.material.shader = Shader.Find("Brave/PlayerShaderEevee");
                 ahfuck.sprite.renderer.material.SetTexture("_EeveeTex", texture);
                 ahfuck.sprite.renderer.material.DisableKeyword("BRIGHTNESS_CLAMP_ON");

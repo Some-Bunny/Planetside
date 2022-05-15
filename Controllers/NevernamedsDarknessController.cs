@@ -23,7 +23,6 @@ namespace Planetside
                 GameObject ChallengeManagerReference = LoadHelper.LoadAssetFromAnywhere<GameObject>("_ChallengeManager");
                 DarknessEffectShader = (ChallengeManagerReference.GetComponent<ChallengeManager>().PossibleChallenges[5].challenge as DarknessChallengeModifier).DarknessEffectShader;
                 Debug.Log("Finished NevernamedsDarknessHandler setup without failure!");
-
             }
             catch (Exception e)
             {

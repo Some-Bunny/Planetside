@@ -718,8 +718,6 @@ namespace GungeonAPI
                 });
             }
             
-
-
             ProceduralFlowModifierData injection = new ProceduralFlowModifierData()
             {
                 annotation = injectionAnnotation,

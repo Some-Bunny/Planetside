@@ -105,6 +105,7 @@ namespace Planetside
             ItemIDs.AddToList(gun.PickupObjectId);
             ThunderShot.fleeData = new FleePlayerData();
             ThunderShot.fleeData.StartDistance = 100f;
+            gun.gunClass = GunClass.EXPLOSIVE;
 
         }
         public static int ThunderShotID;

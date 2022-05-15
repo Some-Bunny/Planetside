@@ -500,7 +500,9 @@ namespace Planetside
                 "By The Beard!",
                 "Powered By BreakableAPI!",
                 "I removed Clone from the item pool, thank me later.",
-                "Powered By SynergyAPI!"
+                "Powered By SynergyAPI!",
+                "Amogus!",
+                "DM me images of pigeons you find on the street."
             };
             Random r = new Random();
             int index = r.Next(RandomFunnys.Count);
@@ -942,7 +944,7 @@ namespace Planetside
                 base.StartCoroutine(this.HoldPortalOpen(component3, vector, gameObject1));
 
 
-                var texture = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\nebula_reducednoise.png");
+                var texture = StaticTextures.NebulaTexture;
                 component3.material.SetTexture("_PortalTex", texture);
                 hole = component3;
 
@@ -969,7 +971,7 @@ namespace Planetside
             private IEnumerator ClosePortal(MeshRenderer portal, tk2dSprite self) // this be closing coroutine
             {
                 AkSoundEngine.PostEvent("Play_BOSS_spacebaby_charge_01", self.gameObject);
-                var texture = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\nebula_reducednoise.png");
+                var texture = StaticTextures.NebulaTexture;
                 Material material = self.sprite.renderer.material;
                 material.shader = Shader.Find("Brave/GoopShader");
                 material.SetFloat("_OilGoop", 1f);

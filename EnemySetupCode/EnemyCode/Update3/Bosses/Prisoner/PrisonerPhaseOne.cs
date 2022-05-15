@@ -55,6 +55,8 @@ namespace Planetside
 				fuckyouprefab = BossBuilder.BuildPrefab("Prisoner Phase One", guid, spritePaths[0], new IntVector2(15, 4), new IntVector2(34, 51), false, true);
 				var companion = fuckyouprefab.AddComponent<PrisonerController>();
 				fuckyouprefab.AddComponent<PrisonerFirstSubPhaseController>();
+				fuckyouprefab.AddComponent<PrisonerSecondSubPhaseController>();
+
 				companion.aiActor.knockbackDoer.weight = 200;
 				companion.aiActor.MovementSpeed = 3.2f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
@@ -665,7 +667,7 @@ namespace Planetside
 					Behavior = new CustomBeholsterLaserBehavior{
 					UsesBeamProjectileWithoutModule = true,
 					InitialCooldown = 0f,
-					firingTime = 10f,
+					firingTime = 12f,
 					Cooldown = 12,
 					AttackCooldown = 1.33f,
 					RequiresLineOfSight = false,
@@ -685,14 +687,15 @@ namespace Planetside
 					maxTurnRate = 24f,
 					turnRateAcceleration = 24f,
 					useDegreeCatchUp = true,
-					minDegreesForCatchUp = 2.4f,
-					degreeCatchUpSpeed = 120,
+					minDegreesForCatchUp = 2f,
+					degreeCatchUpSpeed = 144,
 					useUnitCatchUp = true,
 					minUnitForCatchUp = 2,
 					maxUnitForCatchUp = 2,
 					useUnitOvershoot = true,
 					minUnitForOvershoot = 1,
 					firingType = CustomBeholsterLaserBehavior.FiringType.ONLY_NORTHANGLEVARIANCE,
+
 
 					},
 						NickName = "SimpleBlastsTwo"
@@ -720,7 +723,7 @@ namespace Planetside
 
 					new AttackBehaviorGroup.AttackGroupItem()
 					{
-						Probability = 2f,
+						Probability = 0f,
 						Behavior = new ShootBehavior{
 						ShootPoint = RaisedArmLaserAttachPoint,
 						BulletScript = new CustomBulletScriptSelector(typeof(PrisonerSubPhase2Attacks.LaserCrossTwo)),
@@ -2111,7 +2114,7 @@ namespace Planetside
 			{
 				PrisonerController controller = base.BulletBank.aiActor.GetComponent<PrisonerController>();
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("41ee1c8538e8474a82a74c4aff99c712").bulletBank.GetBullet("big"));
-				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("31a3ea0c54a745e182e22ea54844a82d").bulletBank.GetBullet("sniper"));
+				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSniper);
 				controller.MoveTowardsPositionMethod(3f, 7);
 				for (int e = 0; e < GameManager.Instance.AllPlayers.Length; e++)
                 {
@@ -2213,7 +2216,7 @@ namespace Planetside
 				base.PostWwiseEvent("Play_ENM_bulletking_skull_01", null);
 				for (int i = 0; i < 10; i++)
                 {
-					base.Fire(Offset.OverridePosition(startPos), new Direction(aimDir, DirectionType.Absolute, -1f), new Speed(20f, SpeedType.Absolute), new WallBulletNoDodge("sniper"));
+					base.Fire(Offset.OverridePosition(startPos), new Direction(aimDir, DirectionType.Absolute, -1f), new Speed(20f, SpeedType.Absolute), new WallBulletNoDodge("sniperUndodgeable"));
 					yield return new WaitForSeconds(0.025f);
 				}
 				yield break;
@@ -2226,9 +2229,7 @@ namespace Planetside
 				}
 				protected override IEnumerator Top()
 				{
-					base.Projectile.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
-					SpawnManager.PoolManager.Remove(base.Projectile.transform);
-
+					this.Projectile.IgnoreTileCollisionsFor(300f);
 					yield break;
 				}
 			}

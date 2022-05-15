@@ -42,6 +42,9 @@ namespace Planetside
 			gun.DefaultModule.burstShotCount = 4;
 			gun.DefaultModule.burstCooldownTime = 0.025f;
 			gun.gunClass = GunClass.FULLAUTO;
+			Gun gun2 = PickupObjectDatabase.GetById(156) as Gun;
+			gun.DefaultModule.customAmmoType = gun2.DefaultModule.customAmmoType;
+			gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
 
 			Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(gun.DefaultModule.projectiles[0]);
 			projectile.gameObject.SetActive(false);

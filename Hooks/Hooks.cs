@@ -715,7 +715,7 @@ namespace Planetside
                 Chest chest2 = Chest.Spawn(rainbow_Chest, player.CurrentRoom.GetRandomVisibleClearSpot(1, 1));
                 chest2.sprite.usesOverrideMaterial = true;
 
-                var texture = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\nebula_reducednoise.png");
+                var texture = StaticTextures.NebulaTexture;
                 chest2.sprite.renderer.material.shader = Shader.Find("Brave/PlayerShaderEevee");
                 chest2.sprite.renderer.material.SetTexture("_EeveeTex", texture);
 
@@ -764,7 +764,7 @@ namespace Planetside
 
 
                 self.IsLocked= false;
-                var texture = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\nebula_reducednoise.png");
+                var texture = StaticTextures.NebulaTexture;
 
                 self.sprite.renderer.material.shader = Shader.Find("Brave/PlayerShaderEevee");
                 self.sprite.renderer.material.SetTexture("_EeveeTex", texture);

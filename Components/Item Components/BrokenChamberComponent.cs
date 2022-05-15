@@ -38,56 +38,45 @@ namespace Planetside
 		private void Awake()
 		{
 			this.m_player = base.GetComponent<PlayerController>();
-			this.speculativeRigidBoy = base.GetComponent<SpeculativeRigidbody>();
 		}
 
 		private void Update()
 		{
-
 			Dungeon dung = GameManager.Instance.Dungeon;
-			if (this.m_player != null)// && PastNames.Contains(SceneManager.GetActiveScene().name)) //SceneManager.GetActiveScene().name.Contains())// && validTilesets == GlobalDungeonData.ValidTilesets.A)
+			bool eiie = this.m_player == null;
+			if (eiie)
+			{
+				this.m_player = GameManager.Instance.PrimaryPlayer;
+			}
+			if (this.m_player != null)
 			{
 				if (dung.LevelOverrideType == GameManager.LevelOverrideState.CHARACTER_PAST)
                 {
 					if (m_player.GetComponent<BrokenChamberComponent>() != null)
                     {
-						BrokenChamberComponent cham = m_player.GetComponent<BrokenChamberComponent>();
-						Destroy(cham);
+						Destroy(this);
 					}
 				}
-			}
-			bool flag2 = this.speculativeRigidBoy == null;
-			if (flag2)
-			{
-				this.speculativeRigidBoy = base.GetComponent<SpeculativeRigidbody>();
-			}
-			bool eiie = this.m_player == null;
-			if (eiie)
-			{
-				this.m_player = base.GetComponent<PlayerController>();
-			}
-			if (!GameManager.Instance.IsPaused | !GameManager.Instance.IsLoadingLevel)
-            {
-				this.elapsed += BraveTime.DeltaTime;
-			}
-			bool flag3 = this.elapsed > TimeBetweenRockFalls;
-			if (flag3)
-			{
-				if (this.m_player != null && GameManager.Instance.IsLoadingLevel == false)// && GameManager.Instance.Lev)
-                {					
-					AkSoundEngine.PostEvent("Play_BOSS_wall_slam_01", base.gameObject);
-					GameObject dragunBoulder = EnemyDatabase.GetOrLoadByGuid("05b8afe0b6cc4fffa9dc6036fa24c8ec").GetComponent<DraGunController>().skyBoulder;
-					GameObject dragunRocket = EnemyDatabase.GetOrLoadByGuid("05b8afe0b6cc4fffa9dc6036fa24c8ec").GetComponent<DraGunController>().skyRocket;
-					IntVector2? vector = (m_player as PlayerController).CurrentRoom.GetRandomAvailableCell(new IntVector2?(IntVector2.One * 2), CellTypes.FLOOR | CellTypes.PIT, false, null);
-					Vector2 vector2 = vector.Value.ToVector2();
-					this.FireRocket(dragunBoulder, m_player.sprite.WorldCenter);
-					this.FireRocket(dragunBoulder, vector2);
+				
+				if (!GameManager.Instance.IsPaused | !GameManager.Instance.IsLoadingLevel)
+				{
+					this.elapsed += BraveTime.DeltaTime;
 				}
-				else
-                {
+				bool flag3 = this.elapsed > TimeBetweenRockFalls;
+				if (flag3)
+				{
 					this.elapsed = 0f;
+					if (this.m_player != null && GameManager.Instance.IsLoadingLevel == false)// && GameManager.Instance.Lev)
+					{
+						AkSoundEngine.PostEvent("Play_BOSS_wall_slam_01", base.gameObject);
+						GameObject dragunBoulder = EnemyDatabase.GetOrLoadByGuid("05b8afe0b6cc4fffa9dc6036fa24c8ec").GetComponent<DraGunController>().skyBoulder;
+						//GameObject dragunRocket = EnemyDatabase.GetOrLoadByGuid("05b8afe0b6cc4fffa9dc6036fa24c8ec").GetComponent<DraGunController>().skyRocket;
+						IntVector2? vector = (m_player as PlayerController).CurrentRoom.GetRandomAvailableCell(new IntVector2?(IntVector2.One * 2), CellTypes.FLOOR | CellTypes.PIT, false, null);
+						Vector2 vector2 = vector.Value.ToVector2();
+						this.FireRocket(dragunBoulder, m_player.sprite.WorldCenter);
+						this.FireRocket(dragunBoulder, vector2);
+					}
 				}
-				this.elapsed = 0f;
 			}
 		}
 		private void FireRocket(GameObject skyRocket, Vector2 target)
@@ -99,7 +88,6 @@ namespace Planetside
 			component.transform.position = component.transform.position.WithY(component.transform.position.y - componentInChildren.transform.localPosition.y);
 			component.ExplosionData.ignoreList.Add(player.specRigidbody);
 		}
-		private SpeculativeRigidbody speculativeRigidBoy;
 		private PlayerController m_player;
 
 		public float TimeBetweenRockFalls;

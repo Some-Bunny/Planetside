@@ -51,7 +51,7 @@ namespace Planetside
                 portalObj.layer = projectile.Owner.gameObject.layer + (int)GameManager.Instance.MainCameraController.CurrentZOffset;
                 portalObj.gameObject.SetLayerRecursively(LayerMask.NameToLayer("BG_Critical"));
                 MeshRenderer mesh = portalObj.GetComponent<MeshRenderer>();
-                var texture = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\nebula_reducednoise.png");
+                var texture = StaticTextures.NebulaTexture;
                 mesh.material.SetTexture("_PortalTex", texture);
                 mesh.material.SetFloat("_UVDistCutoff", 0f);
                 WhyYouGottaMakeThingsSoComplicated why = portalObj.AddComponent<WhyYouGottaMakeThingsSoComplicated>();
@@ -89,6 +89,8 @@ namespace Planetside
             {
                 elapsed += BraveTime.DeltaTime;
                 float t = Mathf.Sin(elapsed*0.67f);
+                if (portal == null) { yield break; }
+                if (portal.gameObject == null) { yield break; }
                 portal.material.SetFloat("_UVDistCutoff", Mathf.Lerp(elapsed/2f, 0, t));
                 portal.material.SetFloat("_HoleEdgeDepth", Mathf.Lerp(12, 2, t));
                         

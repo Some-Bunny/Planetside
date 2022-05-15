@@ -1061,14 +1061,7 @@ namespace Planetside
 					62,
 					63,
 					64,
-					61,
-					62,
-					63,
-					64,
-					61,
-					62,
-					63,
-					64,//79
+					
 					}, "awaken", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7.5f;
 
 				}

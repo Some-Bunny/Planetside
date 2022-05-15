@@ -131,7 +131,11 @@ namespace Planetside
                 if (self.lootTable != null && (UnityEngine.Random.value < num))
                 {
                     orig(self);
-                }        
+                }  
+                else
+                {
+                    AkSoundEngine.PostEvent("stop_obj_fuse_loop_01", self.gameObject);
+                }
             }
             else
             {

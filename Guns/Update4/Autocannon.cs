@@ -13,11 +13,8 @@ using SaveAPI;
 
 namespace Planetside
 {
-
-
     public class Autocannon : AdvancedGunBehavior
     {
-
         public static void Add()
         {
             Gun gun = ETGMod.Databases.Items.NewGun("H.M Auto-Cannon", "autocannon");
@@ -108,6 +105,8 @@ namespace Planetside
             gun.clipObject = BreakAbleAPI.BreakableAPIToolbox.GenerateDebrisObject("Planetside/Resources/GunObjects/Clips/bigassmag.png", true, 1, 3, 60, 20, null, 2, "Play_ITM_Crisis_Stone_Impact_02", null, 1).gameObject;
             gun.reloadClipLaunchFrame = 9;
             gun.clipsToLaunchOnReload = 1;
+
+            gun.gunClass = GunClass.FULLAUTO;
 
             gun.quality = PickupObject.ItemQuality.B;
             ETGMod.Databases.Items.Add(gun, null, "ANY");

@@ -44,7 +44,7 @@ namespace BreakAbleAPI
         public Vector3 Offset;
         public GameObject shadowObject;
     }
-  
+
 
 
 
@@ -52,6 +52,54 @@ namespace BreakAbleAPI
     {
 
         public static Shader worldShader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTiltedCutoutFastPixelShadow");
+
+        /// <summary>
+        /// Generates, and returns a GameObject with a sprite / animated sprite.
+        /// </summary>
+        public static GameObject GenerateDecalObject(string name, string[] SpritePaths, int AnimFPS = 5)
+        {
+            GameObject gameObject = SpriteBuilder.SpriteFromResource(SpritePaths[0], null, false);
+            FakePrefab.MarkAsFakePrefab(gameObject);
+            gameObject.name = name;
+            gameObject.layer = 20;
+
+            tk2dSpriteCollectionData SpriteObjectSpriteCollection = SpriteBuilder.ConstructCollection(gameObject, (name + "_Collection"));
+            int spriteID = SpriteBuilder.AddSpriteToCollection(SpritePaths[0], SpriteObjectSpriteCollection);
+            tk2dSprite sprite = gameObject.GetOrAddComponent<tk2dSprite>();
+            sprite.SetSprite(SpriteObjectSpriteCollection, spriteID);
+
+            tk2dSpriteAnimator animator = gameObject.GetOrAddComponent<tk2dSpriteAnimator>();
+            tk2dSpriteAnimation animation = gameObject.AddComponent<tk2dSpriteAnimation>();
+            animation.clips = new tk2dSpriteAnimationClip[0];
+            animator.Library = animation;
+
+            List<tk2dSpriteAnimationClip> clips = new List<tk2dSpriteAnimationClip>();
+            if (SpritePaths.Length >= 1)
+            {
+                tk2dSpriteAnimationClip idleClip = new tk2dSpriteAnimationClip() { name = "idle", frames = new tk2dSpriteAnimationFrame[0], fps = AnimFPS };
+                List<tk2dSpriteAnimationFrame> frames = new List<tk2dSpriteAnimationFrame>();
+                for (int i = 0; i < SpritePaths.Length; i++)
+                {
+                    tk2dSpriteCollectionData collection = SpriteObjectSpriteCollection;
+                    int frameSpriteId = SpriteBuilder.AddSpriteToCollection(SpritePaths[i], collection);
+                    tk2dSpriteDefinition frameDef = collection.spriteDefinitions[frameSpriteId];
+                    frames.Add(new tk2dSpriteAnimationFrame { spriteId = frameSpriteId, spriteCollection = collection });
+                    frameDef.ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.LowerLeft);
+                }
+                idleClip.frames = frames.ToArray();
+                idleClip.wrapMode = tk2dSpriteAnimationClip.WrapMode.Loop;
+                animator.Library.clips = animation.clips.Concat(new tk2dSpriteAnimationClip[] { idleClip }).ToArray();
+                animator.playAutomatically = true;
+                animator.DefaultClipId = animator.GetClipIdByName("idle");
+                clips.Add(idleClip);
+                tk2dSpriteAnimationClip[] array = clips.ToArray();
+                animator.Library.clips = array;
+                animator.playAutomatically = true;
+                animator.DefaultClipId = animator.GetClipIdByName("idle");
+            }
+            return gameObject;
+        }
+    
 
 
 

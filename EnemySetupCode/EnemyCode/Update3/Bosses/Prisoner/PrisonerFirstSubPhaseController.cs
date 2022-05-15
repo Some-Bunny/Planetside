@@ -25,6 +25,12 @@ namespace Planetside
                 }
             }
         }   
+
+        public bool IsSubPhaseEnded()
+        {
+            return SubPhaseEnded;
+        }
+
         public void Update()
         {
             if (Actor.healthHaver.GetCurrentHealth() == Actor.healthHaver.minimumHealth && SubPhaseActivated != true)
@@ -84,7 +90,7 @@ namespace Planetside
                 yield return null;
             }
             */
-            SubPhaseEnded = true;
+            Actor.healthHaver.minimumHealth = Actor.healthHaver.GetMaxHealth() * 0.33f;
             GameManager.Instance.BestActivePlayer.CurrentRoom.EndTerrifyingDarkRoom(2.5f);
             ImprovedAfterImage yeah = Actor.gameObject.GetComponent<ImprovedAfterImage>();
             yeah.spawnShadows = false;
@@ -105,7 +111,7 @@ namespace Planetside
                 Actor.renderer.enabled = true;
                 yield return null;
             }
-
+            SubPhaseEnded = true;
             if (WasJammed == true)
             {
                 GameObject gameObject = SpawnManager.SpawnVFX(StaticVFXStorage.JammedDeathVFX, Actor.sprite.WorldBottomLeft, Quaternion.identity, false);
@@ -124,7 +130,6 @@ namespace Planetside
             Controller.CurrentSubPhase = PrisonerPhaseOne.PrisonerController.SubPhases.PHASE_2;
             Actor.behaviorSpeculator.enabled = true;
             Actor.specRigidbody.enabled = true;
-            Actor.healthHaver.minimumHealth = Actor.healthHaver.GetMaxHealth() * 0.33f;
 
             yield break;
         }
@@ -140,10 +145,23 @@ namespace Planetside
                 }
                 if (attackGroup != null && attackGroupItem.NickName.Contains("Two"))
                 {
-                    attackGroupItem.Probability = 1f;
+                    float val = 1;
+                    AttackNamesAndProbabilities.TryGetValue(attackGroupItem.NickName, out val);
+                    attackGroupItem.Probability = val;
                 }
             }
         }
+
+        private static Dictionary<string, float> AttackNamesAndProbabilities = new Dictionary<string, float>()
+        {
+            {"SimpleBlastsTwo", 0.8f },
+            {"WallSweepTwo", 1f },
+            {"LaserCrossTwo", 2 },
+            {"SweepJukeAttackTwo", 0.9f },
+            {"BasicLaserAttackTellTwo", 1.2f },
+            {"ChainRotatorsTwo", 0.8f },
+        };
+
 
         public bool WasJammed;
         public AIActor Actor;

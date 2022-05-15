@@ -56,7 +56,7 @@ namespace GungeonAPI
 				base.StartCoroutine(this.HoldPortalOpen(component3, base.gameObject.transform.position, this.gameObject1));
 
 
-				var texture = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\nebula_reducednoise.png");
+				var texture = StaticTextures.NebulaTexture;
 				component3.material.SetTexture("_PortalTex", texture);
 				if (SaveAPIManager.GetFlag(CustomDungeonFlags.HASDONEEVRYTHING))
 				{

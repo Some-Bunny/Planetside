@@ -19,6 +19,7 @@ namespace Planetside
             TutorialNotes.Init();
             BoxOfGrenades.Init();
             TrespassContainer.Init();
+            TrespassDecals.Init();
         }
     }
 }

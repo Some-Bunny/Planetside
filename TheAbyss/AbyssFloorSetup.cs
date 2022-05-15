@@ -671,30 +671,44 @@ namespace Planetside
                 ceilingBorderGrid.topRightIndices = new TileIndexList { indices = new List<int> { 62 }, indexWeights = new List<float> { 1f } };
 
 
-                ceilingBorderGrid.leftIndices = new TileIndexList { indices = new List<int> { 38 }, indexWeights = new List<float> { 1f } };
+                ceilingBorderGrid.leftIndices = new TileIndexList { indices = new List<int> { 38, 40 }, indexWeights = new List<float> { 1f, 0.9f } };
                 
                 //ceilingBorderGrid.centerIndices = new TileIndexList { indices = new List<int> { 96 }, indexWeights = new List<float> { 1f } };
                 //new TileIndexList { indices = new List<int> { 96, 97, 98, 99 }, indexWeights = new List<float> { 1f, 0.06f, 0.06f, 0.06f } };
 
-                ceilingBorderGrid.rightIndices = new TileIndexList { indices = new List<int> { 39 }, indexWeights = new List<float> { 1f } };
+                ceilingBorderGrid.rightIndices = new TileIndexList { indices = new List<int> { 39, 41 }, indexWeights = new List<float> { 1f, 0.9f } };
 
 
                 ceilingBorderGrid.bottomLeftIndices = new TileIndexList { indices = new List<int> { 66 }, indexWeights = new List<float> { 1f } };
                 ceilingBorderGrid.bottomIndices = new TileIndexList { indices = new List<int> { 67 }, indexWeights = new List<float> { 1f } };
                 ceilingBorderGrid.bottomRightIndices = new TileIndexList { indices = new List<int> { 68 }, indexWeights = new List<float> { 1f } };
-                ceilingBorderGrid.horizontalIndices = new TileIndexList { indices = new List<int> { 69 }, indexWeights = new List<float> { 1f } };
-                ceilingBorderGrid.verticalIndices = new TileIndexList { indices = new List<int> { 70 }, indexWeights = new List<float> { 1f } };
-                ceilingBorderGrid.topCapIndices = new TileIndexList { indices = new List<int> { 71 }, indexWeights = new List<float> { 1f } };
 
+                ceilingBorderGrid.verticalIndices = new TileIndexList { indices = new List<int> { 105 }, indexWeights = new List<float> { 1f } };
+                ceilingBorderGrid.horizontalIndices = new TileIndexList { indices = new List<int> { 106 }, indexWeights = new List<float> { 1f } };
 
-                ceilingBorderGrid.leftCapIndices = new TileIndexList { indices = new List<int> { 58 }, indexWeights = new List<float> { 1f } };
-                ceilingBorderGrid.rightCapIndices = new TileIndexList { indices = new List<int> { 59 }, indexWeights = new List<float> { 1f } };
+                //Caps
+                ceilingBorderGrid.topCapIndices = new TileIndexList { indices = new List<int> { 103 }, indexWeights = new List<float> { 1f } };
+                ceilingBorderGrid.leftCapIndices = new TileIndexList { indices = new List<int> { 101 }, indexWeights = new List<float> { 1f } };
+                ceilingBorderGrid.rightCapIndices = new TileIndexList { indices = new List<int> { 102 }, indexWeights = new List<float> { 1f } };
+                ceilingBorderGrid.bottomCapIndices = new TileIndexList { indices = new List<int> { 104 }, indexWeights = new List<float> { 1f } };
+
+                //
+
+                //========================================
+                //Nubs
                 ceilingBorderGrid.doubleNubsRight = new TileIndexList { indices = new List<int> { 80 }, indexWeights = new List<float> { 1f } };
                 ceilingBorderGrid.doubleNubsLeft = new TileIndexList { indices = new List<int> { 81 }, indexWeights = new List<float> { 1f } };
+                ceilingBorderGrid.doubleNubsTop = new TileIndexList { indices = new List<int> { 82 }, indexWeights = new List<float> { 1f } };
+                ceilingBorderGrid.doubleNubsBottom = new TileIndexList { indices = new List<int> { 83 }, indexWeights = new List<float> { 1f } };
 
+                ceilingBorderGrid.quadNubs = new TileIndexList { indices = new List<int> { 84 }, indexWeights = new List<float> { 1f } };
+                ///Corner Nubs
+                ceilingBorderGrid.topRightWithNub = new TileIndexList { indices = new List<int> { 108 }, indexWeights = new List<float> { 1f } };
+                ceilingBorderGrid.topLeftWithNub = new TileIndexList { indices = new List<int> { 107 }, indexWeights = new List<float> { 1f } };
+                ceilingBorderGrid.bottomRightWithNub = new TileIndexList { indices = new List<int> { 109 }, indexWeights = new List<float> { 1f } };
+                ceilingBorderGrid.bottomLeftWithNub = new TileIndexList { indices = new List<int> { 110 }, indexWeights = new List<float> { 1f } };
+                //========================================
 
-
-                ceilingBorderGrid.bottomCapIndices = new TileIndexList { indices = new List<int> { 73 }, indexWeights = new List<float> { 1f } };
                 ceilingBorderGrid.allSidesIndices = new TileIndexList { indices = new List<int> { 75 }, indexWeights = new List<float> { 1f } };
                 ceilingBorderGrid.topLeftNubIndices = new TileIndexList { indices = new List<int> { 76 }, indexWeights = new List<float> { 1f } };
                 ceilingBorderGrid.topRightNubIndices = new TileIndexList { indices = new List<int> { 77 }, indexWeights = new List<float> { 1f } };
@@ -714,18 +728,13 @@ namespace Planetside
                 ceilingBorderGrid.borderLeftNubBothIndices = new TileIndexList { indices = new List<int> { 89 }, indexWeights = new List<float> { 1f } };
                 ceilingBorderGrid.diagonalNubsTopLeftBottomRight = new TileIndexList { indices = new List<int> { 90 }, indexWeights = new List<float> { 1f } };
                 ceilingBorderGrid.diagonalNubsTopRightBottomLeft = new TileIndexList { indices = new List<int> { 91 }, indexWeights = new List<float> { 1f } };
-                ceilingBorderGrid.doubleNubsTop = new TileIndexList { indices = new List<int> { 92 }, indexWeights = new List<float> { 1f } };
-                ceilingBorderGrid.doubleNubsBottom = new TileIndexList { indices = new List<int> { 94 }, indexWeights = new List<float> { 1f } };
-                ceilingBorderGrid.quadNubs = new TileIndexList { indices = new List<int> { 100 }, indexWeights = new List<float> { 1f } };
-                ceilingBorderGrid.topRightWithNub = new TileIndexList { indices = new List<int> { 100 }, indexWeights = new List<float> { 1f } };
-                ceilingBorderGrid.topLeftWithNub = new TileIndexList { indices = new List<int> { 100 }, indexWeights = new List<float> { 1f } };
-                ceilingBorderGrid.bottomRightWithNub = new TileIndexList { indices = new List<int> { 100 }, indexWeights = new List<float> { 1f } };
-                ceilingBorderGrid.bottomLeftWithNub = new TileIndexList { indices = new List<int> { 50 }, indexWeights = new List<float> { 1f } };
+
+              
                 ceilingBorderGrid.CheckerboardDimension = 1;
 
-                ceilingBorderGrid.CeilingBorderUsesDistancedCenters = true;
+                //ceilingBorderGrid.CeilingBorderUsesDistancedCenters = true;
+                //ceilingBorderGrid.centerIndices = new TileIndexList { indices = new List<int> { 100, 101, 102, 103 }, indexWeights = new List<float> { 1f, 0.05f, 0.05f, 0.01f} };
                 ceilingBorderGrid.centerIndices = new TileIndexList { indices = new List<int> { 100 }, indexWeights = new List<float> { 1f } };
-
                 //ceilingBorderGrid.CeilingBorderUsesDistancedCenters = true;
                 //ceilingBorderGrid.internalBottomCenterIndices = new TileIndexList { indices = new List<int> { 100 }, indexWeights = new List<float> { 1f } }; ;
                 //ceilingBorderGrid.internalBottomLeftCenterIndices = new TileIndexList { indices = new List<int> { 100 }, indexWeights = new List<float> { 1f } }; ;

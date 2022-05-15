@@ -256,7 +256,7 @@ namespace Planetside
             }
 			
 		}
-		public static void SetupTilesetSpriteDefForceCollision(this tk2dSpriteDefinition def, CollisionLayer collisionLayer)
+		public static void SetupTilesetSpriteDefForceCollision(this tk2dSpriteDefinition def, Vector3[] vector3s, tk2dSpriteDefinition.ColliderType type = tk2dSpriteDefinition.ColliderType.None, CollisionLayer collisionLayer = CollisionLayer.HighObstacle)
 		{
 			try
 			{
@@ -271,19 +271,17 @@ namespace Planetside
 				def.position3 = new Vector3(1f, 1f, 0f);
 				def.regionH = 16;
 				def.regionW = 16;
-				def.colliderType = tk2dSpriteDefinition.ColliderType.Box;
+				def.colliderType = type;
 				def.collisionLayer = collisionLayer;
-				def.colliderVertices = new Vector3[]
-				{
-					new Vector3(0f, 1f, -1f),
-					new Vector3(0f, 1f, 1f),
-					new Vector3(0f, 0f, -1f),
-					new Vector3(0f, 0f, 1f),
-					new Vector3(1f, 0f, -1f),
-					new Vector3(1f, 0f, 1f),
-					new Vector3(1f, 1f, -1f),
-					new Vector3(1f, 1f, 1f)
-				};
+				if (vector3s == null)
+                {
+					def.colliderVertices = new Vector3[0];
+				}
+				else
+                {
+					def.colliderVertices = vector3s;
+				}
+			
 			}
 			catch (Exception e)
 			{
@@ -1174,6 +1172,45 @@ namespace Planetside
 			//var dungeon = DungeonDatabase.GetOrLoadByName("base_castle");
 			var orLoadByName = DungeonDatabase.GetOrLoadByName("Finalscenario_Soldier");
 
+			/*
+			var AbbeyDungeon = DungeonDatabase.GetOrLoadByName("base_bullethell");
+			var collection = AbbeyDungeon.tileIndices.dungeonCollection;
+			//			collection.spriteDefinitions
+			for (int e = 0; e < collection.spriteDefinitions.Length; e++)
+            {
+				ETGModConsole.Log("============", true);
+				tk2dSpriteDefinition dev = collection.spriteDefinitions[e];
+				ETGModConsole.Log("Position In List: " + e.ToString(), true);
+				if (dev != null)
+                {
+					if (dev.colliderType != null)
+					{
+						ETGModConsole.Log("Collider Type: "+dev.colliderType.ToString(), true);
+					}
+					if (dev.collisionLayer != null)
+					{
+						ETGModConsole.Log("Collider Type: " + dev.collisionLayer.ToString(), true);
+					}
+					if (dev.colliderVertices != null)
+					{
+						ETGModConsole.Log("Collider Vertices Start: ", true);
+						for (int n = 0; n < dev.colliderVertices.Length; n++)
+                        {
+							Vector3 vec3 = dev.colliderVertices[n];
+							if (vec3 != null)
+                            {
+								ETGModConsole.Log("Vector3: "+ vec3.ToString() +"     in position: "+n.ToString(), true);
+
+							}
+
+						}
+						ETGModConsole.Log("Collider Vertices End: ", true);
+					}
+				}
+				ETGModConsole.Log("============", true);
+			}
+			AbbeyDungeon = null;
+			*/
 
 			GameObject gameObject = FakePrefab.Clone(orLoadByName.tileIndices.dungeonCollection.gameObject);
 			gameObject.name = "AbyssCollection";
@@ -1215,27 +1252,14 @@ namespace Planetside
 					};
 					ETGModConsole.Log("tex done", false);
 
-
 					List<int> walls = new List<int>()
 					{
-						1,
-						2,
-						3,
-						36,
-						36,
-						37,
+						
+						
 						38,
 						39,
-						46,
-						47,
-						48,
-						49,
-						50,
-						53,
-						54,
-						55,
-						56,
-						57,
+						
+						
 						58,
 						59,
 						60,
@@ -1264,7 +1288,7 @@ namespace Planetside
 						56,
 						57,
 					};
-				
+
 					//bottom walls
 					/*
 					 * 61,
@@ -1273,34 +1297,102 @@ namespace Planetside
 					*/
 
 
+
 					foreach (tk2dSpriteDefinition tk2dSpriteDefinition2 in array3)
 					{
 						bool wall = walls.Contains((int.Parse(tk2dSpriteDefinition2.name))); //|| (int.Parse(tk2dSpriteDefinition2.name) >= 44 && int.Parse(tk2dSpriteDefinition2.name) <= 50) || (int.Parse(tk2dSpriteDefinition2.name) >= 44 && int.Parse(tk2dSpriteDefinition2.name) <= 50);
 						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[int.Parse(tk2dSpriteDefinition2.name)].uvs = tk2dSpriteDefinition2.uvs.ToArray<Vector2>();
-
-
 						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[int.Parse(tk2dSpriteDefinition2.name)].SetupTilesetSpriteDef(wall, topWalls.Contains(int.Parse(tk2dSpriteDefinition2.name)));
 					}
-					ModPrefabs.AbyssTilesetCollection.spriteDefinitions[38].SetupTilesetSpriteDefForceCollision(CollisionLayer.HighObstacle);
-					ModPrefabs.AbyssTilesetCollection.spriteDefinitions[39].SetupTilesetSpriteDefForceCollision(CollisionLayer.HighObstacle);
+				
+					//ModPrefabs.AbyssTilesetCollection.spriteDefinitions[38].SetupTilesetSpriteDefForceCollision(CollisionLayer.HighObstacle);
+					//ModPrefabs.AbyssTilesetCollection.spriteDefinitions[39].SetupTilesetSpriteDefForceCollision(CollisionLayer.HighObstacle);
 
 
 					tk2dSpriteDefinition[] spriteDefinitions = ModPrefabs.AbyssTilesetCollection.spriteDefinitions;
 					ModPrefabs.AbyssTilesetCollection.spriteDefinitions = new tk2dSpriteDefinition[704];
-					
+
 					foreach (tk2dSpriteDefinition tk2dSpriteDefinition3 in spriteDefinitions)
 					{
 						tk2dSpriteDefinition3.name = tk2dSpriteDefinition3.name.Replace("Final_Scenario_Tileset_Pilot/", "");
 						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[int.Parse(tk2dSpriteDefinition3.name)] = tk2dSpriteDefinition3;
 						tk2dSpriteDefinition3.name = "ENV_Beyond/" + tk2dSpriteDefinition3.name;
 					}
-					
+					/*
+					foreach (tk2dSpriteDefinition tk2dSpriteDefinition3 in spriteDefinitions)
+					{
+						tk2dSpriteDefinition3.SetupTilesetSpriteDefForceCollision(null);
+					}
+					*/
+
 					ETGModConsole.Log("reorder done", false);
 					for (int m = 0; m < 704; m++)
 					{
 						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[m].material = ModPrefabs.AbyssTilesetCollection.materials[0];
 						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[m].materialId = 0;
 					}
+					
+
+
+					//Top Wall Colliders
+					ModPrefabs.AbyssTilesetCollection.spriteDefinitions[37].SetupTilesetSpriteDefForceCollision(new Vector3[] { new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, 0.5f, 0.1f) }, tk2dSpriteDefinition.ColliderType.Box);
+					ModPrefabs.AbyssTilesetCollection.spriteDefinitions[46].SetupTilesetSpriteDefForceCollision(new Vector3[] { new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, 0.5f, 0.1f) }, tk2dSpriteDefinition.ColliderType.Box);
+					ModPrefabs.AbyssTilesetCollection.spriteDefinitions[47].SetupTilesetSpriteDefForceCollision(new Vector3[] { new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, 0.5f, 0.1f) }, tk2dSpriteDefinition.ColliderType.Box);
+					ModPrefabs.AbyssTilesetCollection.spriteDefinitions[48].SetupTilesetSpriteDefForceCollision(new Vector3[] { new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, 0.5f, 0.1f) }, tk2dSpriteDefinition.ColliderType.Box);
+					ModPrefabs.AbyssTilesetCollection.spriteDefinitions[49].SetupTilesetSpriteDefForceCollision(new Vector3[] { new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, 0.5f, 0.1f) }, tk2dSpriteDefinition.ColliderType.Box);
+					ModPrefabs.AbyssTilesetCollection.spriteDefinitions[50].SetupTilesetSpriteDefForceCollision(new Vector3[] { new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, 0.5f, 0.1f) }, tk2dSpriteDefinition.ColliderType.Box);
+					//
+					//Bottom Wall Colliders
+					ModPrefabs.AbyssTilesetCollection.spriteDefinitions[1].SetupTilesetSpriteDefForceCollision(new Vector3[] { new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, 0.5f, 0.1f) }, tk2dSpriteDefinition.ColliderType.Box, CollisionLayer.LowObstacle);
+					ModPrefabs.AbyssTilesetCollection.spriteDefinitions[2].SetupTilesetSpriteDefForceCollision(new Vector3[] { new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, 0.5f, 0.1f) }, tk2dSpriteDefinition.ColliderType.Box, CollisionLayer.LowObstacle);
+					ModPrefabs.AbyssTilesetCollection.spriteDefinitions[3].SetupTilesetSpriteDefForceCollision(new Vector3[] { new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, 0.5f, 0.1f) }, tk2dSpriteDefinition.ColliderType.Box, CollisionLayer.LowObstacle);
+					ModPrefabs.AbyssTilesetCollection.spriteDefinitions[35].SetupTilesetSpriteDefForceCollision(new Vector3[] { new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, 0.5f, 0.1f) }, tk2dSpriteDefinition.ColliderType.Box, CollisionLayer.LowObstacle);
+					ModPrefabs.AbyssTilesetCollection.spriteDefinitions[36].SetupTilesetSpriteDefForceCollision(new Vector3[] { new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, 0.5f, 0.1f) }, tk2dSpriteDefinition.ColliderType.Box, CollisionLayer.LowObstacle);
+					ModPrefabs.AbyssTilesetCollection.spriteDefinitions[53].SetupTilesetSpriteDefForceCollision(new Vector3[] { new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, 0.5f, 0.1f) }, tk2dSpriteDefinition.ColliderType.Box, CollisionLayer.LowObstacle);
+					ModPrefabs.AbyssTilesetCollection.spriteDefinitions[54].SetupTilesetSpriteDefForceCollision(new Vector3[] { new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, 0.5f, 0.1f) }, tk2dSpriteDefinition.ColliderType.Box, CollisionLayer.LowObstacle);
+					ModPrefabs.AbyssTilesetCollection.spriteDefinitions[55].SetupTilesetSpriteDefForceCollision(new Vector3[] { new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, 0.5f, 0.1f) }, tk2dSpriteDefinition.ColliderType.Box, CollisionLayer.LowObstacle);
+					ModPrefabs.AbyssTilesetCollection.spriteDefinitions[56].SetupTilesetSpriteDefForceCollision(new Vector3[] { new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, 0.5f, 0.1f) }, tk2dSpriteDefinition.ColliderType.Box, CollisionLayer.LowObstacle);
+					ModPrefabs.AbyssTilesetCollection.spriteDefinitions[57].SetupTilesetSpriteDefForceCollision(new Vector3[] { new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, 0.5f, 0.1f) }, tk2dSpriteDefinition.ColliderType.Box, CollisionLayer.LowObstacle);
+
+					//Additional Shit
+					ModPrefabs.AbyssTilesetCollection.spriteDefinitions[38].SetupTilesetSpriteDefForceCollision(new Vector3[] { new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, 0.5f, 0.1f) }, tk2dSpriteDefinition.ColliderType.Box);
+					ModPrefabs.AbyssTilesetCollection.spriteDefinitions[39].SetupTilesetSpriteDefForceCollision(new Vector3[] { new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, 0.5f, 0.1f) }, tk2dSpriteDefinition.ColliderType.Box);
+					ModPrefabs.AbyssTilesetCollection.spriteDefinitions[40].SetupTilesetSpriteDefForceCollision(new Vector3[] { new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, 0.5f, 0.1f) }, tk2dSpriteDefinition.ColliderType.Box);
+					ModPrefabs.AbyssTilesetCollection.spriteDefinitions[41].SetupTilesetSpriteDefForceCollision(new Vector3[] { new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, 0.5f, 0.1f) }, tk2dSpriteDefinition.ColliderType.Box);
+
+					ModPrefabs.AbyssTilesetCollection.spriteDefinitions[58].SetupTilesetSpriteDefForceCollision(new Vector3[] { new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, 0.5f, 0.1f) }, tk2dSpriteDefinition.ColliderType.Box);
+					ModPrefabs.AbyssTilesetCollection.spriteDefinitions[59].SetupTilesetSpriteDefForceCollision(new Vector3[] { new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, 0.5f, 0.1f) }, tk2dSpriteDefinition.ColliderType.Box);
+
+
+					ModPrefabs.AbyssTilesetCollection.spriteDefinitions[60].SetupTilesetSpriteDefForceCollision(new Vector3[] { new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, 0.5f, 0.1f) }, tk2dSpriteDefinition.ColliderType.Box);
+					ModPrefabs.AbyssTilesetCollection.spriteDefinitions[61].SetupTilesetSpriteDefForceCollision(new Vector3[] { new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, 0.5f, 0.1f) }, tk2dSpriteDefinition.ColliderType.Box);
+					ModPrefabs.AbyssTilesetCollection.spriteDefinitions[62].SetupTilesetSpriteDefForceCollision(new Vector3[] { new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, 0.5f, 0.1f) }, tk2dSpriteDefinition.ColliderType.Box);
+
+					ModPrefabs.AbyssTilesetCollection.spriteDefinitions[66].SetupTilesetSpriteDefForceCollision(new Vector3[] { new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, 0.5f, 0.1f) }, tk2dSpriteDefinition.ColliderType.Box);
+					ModPrefabs.AbyssTilesetCollection.spriteDefinitions[67].SetupTilesetSpriteDefForceCollision(new Vector3[] { new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, 0.5f, 0.1f) }, tk2dSpriteDefinition.ColliderType.Box);
+					ModPrefabs.AbyssTilesetCollection.spriteDefinitions[68].SetupTilesetSpriteDefForceCollision(new Vector3[] { new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, 0.5f, 0.1f) }, tk2dSpriteDefinition.ColliderType.Box);
+
+					ModPrefabs.AbyssTilesetCollection.spriteDefinitions[100].SetupTilesetSpriteDefForceCollision(new Vector3[] { new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, 0.5f, 0.1f) }, tk2dSpriteDefinition.ColliderType.Box, CollisionLayer.HighObstacle);
+					ModPrefabs.AbyssTilesetCollection.spriteDefinitions[101].SetupTilesetSpriteDefForceCollision(new Vector3[] { new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, 0.5f, 0.1f) }, tk2dSpriteDefinition.ColliderType.Box, CollisionLayer.HighObstacle);
+					ModPrefabs.AbyssTilesetCollection.spriteDefinitions[102].SetupTilesetSpriteDefForceCollision(new Vector3[] { new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, 0.5f, 0.1f) }, tk2dSpriteDefinition.ColliderType.Box, CollisionLayer.HighObstacle);
+					ModPrefabs.AbyssTilesetCollection.spriteDefinitions[103].SetupTilesetSpriteDefForceCollision(new Vector3[] { new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, 0.5f, 0.1f) }, tk2dSpriteDefinition.ColliderType.Box, CollisionLayer.HighObstacle);
+					ModPrefabs.AbyssTilesetCollection.spriteDefinitions[104].SetupTilesetSpriteDefForceCollision(new Vector3[] { new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, 0.5f, 0.1f) }, tk2dSpriteDefinition.ColliderType.Box, CollisionLayer.HighObstacle);
+					ModPrefabs.AbyssTilesetCollection.spriteDefinitions[105].SetupTilesetSpriteDefForceCollision(new Vector3[] { new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, 0.5f, 0.1f) }, tk2dSpriteDefinition.ColliderType.Box, CollisionLayer.HighObstacle);
+					ModPrefabs.AbyssTilesetCollection.spriteDefinitions[106].SetupTilesetSpriteDefForceCollision(new Vector3[] { new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, 0.5f, 0.1f) }, tk2dSpriteDefinition.ColliderType.Box, CollisionLayer.HighObstacle);
+					ModPrefabs.AbyssTilesetCollection.spriteDefinitions[107].SetupTilesetSpriteDefForceCollision(new Vector3[] { new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, 0.5f, 0.1f) }, tk2dSpriteDefinition.ColliderType.Box, CollisionLayer.HighObstacle);
+					ModPrefabs.AbyssTilesetCollection.spriteDefinitions[108].SetupTilesetSpriteDefForceCollision(new Vector3[] { new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, 0.5f, 0.1f) }, tk2dSpriteDefinition.ColliderType.Box, CollisionLayer.HighObstacle);
+					ModPrefabs.AbyssTilesetCollection.spriteDefinitions[109].SetupTilesetSpriteDefForceCollision(new Vector3[] { new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, 0.5f, 0.1f) }, tk2dSpriteDefinition.ColliderType.Box, CollisionLayer.HighObstacle);
+					ModPrefabs.AbyssTilesetCollection.spriteDefinitions[110].SetupTilesetSpriteDefForceCollision(new Vector3[] { new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, 0.5f, 0.1f) }, tk2dSpriteDefinition.ColliderType.Box, CollisionLayer.HighObstacle);
+
+					ModPrefabs.AbyssTilesetCollection.spriteDefinitions[80].SetupTilesetSpriteDefForceCollision(new Vector3[] { new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, 0.5f, 0.1f) }, tk2dSpriteDefinition.ColliderType.Box);
+					ModPrefabs.AbyssTilesetCollection.spriteDefinitions[81].SetupTilesetSpriteDefForceCollision(new Vector3[] { new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, 0.5f, 0.1f) }, tk2dSpriteDefinition.ColliderType.Box);
+					ModPrefabs.AbyssTilesetCollection.spriteDefinitions[82].SetupTilesetSpriteDefForceCollision(new Vector3[] { new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, 0.5f, 0.1f) }, tk2dSpriteDefinition.ColliderType.Box);
+					ModPrefabs.AbyssTilesetCollection.spriteDefinitions[83].SetupTilesetSpriteDefForceCollision(new Vector3[] { new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, 0.5f, 0.1f) }, tk2dSpriteDefinition.ColliderType.Box);
+
+					ModPrefabs.AbyssTilesetCollection.spriteDefinitions[76].SetupTilesetSpriteDefForceCollision(new Vector3[] { new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, 0.5f, 0.1f) }, tk2dSpriteDefinition.ColliderType.Box);
+					ModPrefabs.AbyssTilesetCollection.spriteDefinitions[77].SetupTilesetSpriteDefForceCollision(new Vector3[] { new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, 0.5f, 0.1f) }, tk2dSpriteDefinition.ColliderType.Box);
+					ModPrefabs.AbyssTilesetCollection.spriteDefinitions[78].SetupTilesetSpriteDefForceCollision(new Vector3[] { new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, 0.5f, 0.1f) }, tk2dSpriteDefinition.ColliderType.Box);
+					ModPrefabs.AbyssTilesetCollection.spriteDefinitions[79].SetupTilesetSpriteDefForceCollision(new Vector3[] { new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, 0.5f, 0.1f) }, tk2dSpriteDefinition.ColliderType.Box);
 
 
 					for (int me = 1; me < ModPrefabs.AbyssTilesetCollection.Count; me++)
@@ -1326,6 +1418,9 @@ namespace Planetside
 					ModPrefabs.AbyssTilesetCollection.SetMaterial(98, 0);
 					ModPrefabs.AbyssTilesetCollection.SetMaterial(99, 0);
 					ModPrefabs.AbyssTilesetCollection.SetMaterial(100, 2);
+					//ModPrefabs.AbyssTilesetCollection.SetMaterial(101, 2);
+					//ModPrefabs.AbyssTilesetCollection.SetMaterial(102, 2);
+					//ModPrefabs.AbyssTilesetCollection.SetMaterial(103, 2);
 
 					//ModPrefabs.AbyssTilesetCollection.SetMaterial(10, 1);
 					/*
@@ -1429,8 +1524,8 @@ namespace Planetside
 
 
 						//ModPrefabs.AbyssTilesetCollection.spriteDefinitions[58].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.PATTERN_TILE, 1f, 1, 0, -1, false, true);
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[59].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.DOOR_FEET_EW, 1f, 1, 0, -1, false, true);
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[60].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.DOOR_FEET_NS, 1f, 1, 0, -1, false, true);
+						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[44].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.DOOR_FEET_EW, 1f, 1, 0, -1, false, true);
+						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[45].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.DOOR_FEET_NS, 1f, 1, 0, -1, false, true);
 						
 						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[21].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FLOOR_TILE, 1f, 1, 0, -1, false, true);
 						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[22].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FLOOR_TILE, 1f, 1, 0, -1, false, true);

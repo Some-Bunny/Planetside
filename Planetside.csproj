@@ -135,6 +135,7 @@
     <Compile Include="DungeonPlaceables\BoxOfGrenades.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassContainer.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassFadingBlocker.cs" />
+    <Compile Include="DungeonPlaceables\TrespassObjects\TrespassDecals.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TutorialNotes.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassPots.cs" />
     <Compile Include="DungeonPlaceables\HolyChamberStatue.cs" />
@@ -146,6 +147,7 @@
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassLight.cs" />
     <Compile Include="DungeonPlaceables\TrespassPortalBack.cs" />
     <Compile Include="EnemySetupCode\EnemyAPI %28The one that modifies behaviors%29\OverrideBehavior.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\Update3\Bosses\Prisoner\PrisonerSecondSubPhaseController.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\Update3\Bosses\Prisoner\PrisonerSubPhase2Attacks.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\Update3\Enemies\Observant.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\Update3\Enemies\FixerUpper.cs" />
@@ -1032,22 +1034,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Shrines\ouroboroushrine.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_die_001.png" />
-    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_die_002.png" />
-    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_die_003.png" />
-    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_die_004.png" />
-    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_die_005.png" />
-    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_die_006.png" />
-    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_idle_east_001.png" />
-    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_idle_northeast_001.png" />
-    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_idle_northwest_001.png" />
-    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_idle_north_001.png" />
-    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_idle_southeast_001.png" />
-    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_idle_southwest_001.png" />
-    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_idle_south_001.png" />
-    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_idle_west_001.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Enemies\Berretina\berretina_die_001.png" />
@@ -3362,6 +3348,44 @@
     <EmbeddedResource Include="Resources\GunObjects\Clips\glassVialClip.png" />
     <EmbeddedResource Include="Resources\GunClips\PunctureWound\punctureEmpty.png" />
     <EmbeddedResource Include="Resources\GunClips\PunctureWound\punctureFull.png" />
+    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_die_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_die_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_die_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_die_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_die_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_die_006.png" />
+    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_die_007.png" />
+    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_die_008.png" />
+    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_die_009.png" />
+    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_idle_back1.png" />
+    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_idle_back2.png" />
+    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_idle_back3.png" />
+    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_idle_back4.png" />
+    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_idle_back_left1.png" />
+    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_idle_back_left2.png" />
+    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_idle_back_left3.png" />
+    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_idle_back_left4.png" />
+    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_idle_back_right1.png" />
+    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_idle_back_right2.png" />
+    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_idle_back_right3.png" />
+    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_idle_back_right4.png" />
+    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_idle_front.png" />
+    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_idle_front1.png" />
+    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_idle_front2.png" />
+    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_idle_front3.png" />
+    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_idle_front4.png" />
+    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_idle_front_left1.png" />
+    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_idle_front_left2.png" />
+    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_idle_front_left3.png" />
+    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_idle_front_left4.png" />
+    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_idle_front_right1.png" />
+    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_idle_front_right2.png" />
+    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_idle_front_right3.png" />
+    <EmbeddedResource Include="Resources\Enemies\Glockulus\glockulus_idle_front_right4.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassDecals\TwoByTwo\decalOne1.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassDecals\TwoByTwo\decalOne2.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassDecals\TwoByTwo\decalOne3.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassDecals\TwoByTwo\decalOne4.png" />
     <Content Include="Resources\Shellrax\shellrax_intro_019.png" />
     <EmbeddedResource Include="Resources\VFX\LockOnVFX\lockonvfx1.png" />
     <EmbeddedResource Include="Resources\VFX\LockOnVFX\lockonvfx2.png" />
