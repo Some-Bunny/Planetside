@@ -30,8 +30,11 @@ namespace Planetside
 			string longDesc = "A little living candle. It's warmth is given to it by an old friend of it.";
 			ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
 			item.quality = PickupObject.ItemQuality.B;
-			item.CompanionGuid = BabyGoodCandleKin.guid;
 			BabyGoodCandleKin.BuildPrefab();
+
+			item.CompanionGuid = BabyGoodCandleKin.guid;//new List<string>() { BabyGoodCandleKin.guid, BabyGoodCandleKin.guid };
+			//item.CompanionComponentsToTransfer = new List<Component> { new PetInteractable(), new PetInteractable() };
+
 			BabyGoodCandleKin.BabyGoodCandleKinID = item.PickupObjectId;
 			ItemIDs.AddToList(item.PickupObjectId);
 			SynergyAPI.SynergyBuilder.AddItemToSynergy(item, CustomSynergyType.TEA_FOR_TWO);
@@ -46,6 +49,7 @@ namespace Planetside
 			if (!flag2)
 			{
 				prefab = CompanionBuilder.BuildPrefab("Baby Candle Kin", guid, spritePaths[0], new IntVector2(0, 0), new IntVector2(8, 9));
+				prefab.AddComponent<PetInteractableTransferrable>();
 				var companion = prefab.AddComponent<BabyCandleBehavior>();
 				companion.aiActor.MovementSpeed = 2f;
 				companion.aiActor.healthHaver.PreventAllDamage = true;
@@ -188,6 +192,8 @@ namespace Planetside
 
 
 
+
+
 		private static string[] spritePaths = new string[]
 		{
 			
@@ -245,7 +251,63 @@ namespace Planetside
 		"Planetside/Resources/Companions/BabyCandle/candleman_run_right_007",
 
 
-				};
+		};
+
+		public class PetInteractableTransferrable : BraveBehaviour , IPlayerInteractable
+        {
+
+			public void Start()
+            {
+				AmountOfTimesPet = 0;
+				GameManager.Instance.Dungeon.data.GetAbsoluteRoomFromPosition(base.transform.position.IntXY(VectorConversions.Round)).RegisterInteractable(this);
+			}
+
+			public void OnEnteredRange(PlayerController interactor)
+			{
+				SpriteOutlineManager.AddOutlineToSprite(base.sprite, Color.white, 1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
+				base.sprite.UpdateZDepth();
+			}
+
+			public void OnExitRange(PlayerController interactor)
+			{
+				SpriteOutlineManager.AddOutlineToSprite(base.sprite, Color.black, 1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
+			}
+
+			public string GetAnimationState(PlayerController interactor, out bool shouldBeFlipped)
+			{
+				shouldBeFlipped = false;
+				return string.Empty;
+			}
+
+			public float GetDistanceToPoint(Vector2 point)
+			{
+				bool flag = base.sprite == null;
+				bool flag2 = flag;
+				bool flag3 = flag2;
+				float result;
+				if (flag3)
+				{
+					result = 100f;
+				}
+				else
+				{
+					Vector3 v = BraveMathCollege.ClosestPointOnRectangle(point, base.specRigidbody.UnitBottomLeft, base.specRigidbody.UnitDimensions);
+					result = Vector2.Distance(point, v) / 1.5f;
+				}
+				return result;
+			}
+			public float GetOverrideMaxDistance()
+			{
+				return -1f;
+			}
+			public void Interact(PlayerController interactor)
+			{
+				AmountOfTimesPet++;
+				ETGModConsole.Log("this companion has been interacted with " + AmountOfTimesPet.ToString() + " times");
+			}
+
+			public int AmountOfTimesPet;
+		}
 
 		public class BabyCandleBehavior : CompanionController
 		{

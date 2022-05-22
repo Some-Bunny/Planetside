@@ -465,8 +465,7 @@ namespace Planetside
 						}
 					}
 				}
-				elapsed += BraveTime.DeltaTime;
-				
+				elapsed += BraveTime.DeltaTime;			
 				yield return null;
 			}
 			if (portal != null)

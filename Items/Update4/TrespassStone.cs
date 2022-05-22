@@ -76,6 +76,8 @@ namespace Planetside
             tableDeeper.includedRooms.Add(RoomTableTools.GenerateWeightedRoom(RoomFactory.BuildFromResource("Planetside/Resources/TrespassRooms/TrespassDeeperRooms/trespassHarderRoom1.room").room));
             tableDeeper.includedRooms.Add(RoomTableTools.GenerateWeightedRoom(RoomFactory.BuildFromResource("Planetside/Resources/TrespassRooms/TrespassDeeperRooms/trespassHarderRoom2.room").room));
             tableDeeper.includedRooms.Add(RoomTableTools.GenerateWeightedRoom(RoomFactory.BuildFromResource("Planetside/Resources/TrespassRooms/TrespassDeeperRooms/trespassHarderRoom3.room").room, 0.8f));
+            tableDeeper.includedRooms.Add(RoomTableTools.GenerateWeightedRoom(RoomFactory.BuildFromResource("Planetside/Resources/TrespassRooms/TrespassDeeperRooms/trespassharderroom4.room").room, 1.1f));
+            tableDeeper.includedRooms.Add(RoomTableTools.GenerateWeightedRoom(RoomFactory.BuildFromResource("Planetside/Resources/TrespassRooms/TrespassDeeperRooms/trespassharderroom5.room").room, 1.1f));
 
             foreach (WeightedRoom weightRoom in tableDeeper.includedRooms.elements)
             {

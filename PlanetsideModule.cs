@@ -278,6 +278,7 @@ namespace Planetside
             TarnishedRounds.Init();
             TarnishedAmmolet.Init();
             PunctureWound.Add();
+            GunClassToken.Init();
 
             //Perks
             AllStatsUp.Init();
@@ -304,6 +305,7 @@ namespace Planetside
 
             Creationist.Init();
             Observant.Init();
+            Stagnant.Init();
 
             DeTurretRight.Init();
             DeTurretLeft.Init();
@@ -390,7 +392,7 @@ namespace Planetside
             CustomLootTableInitialiser.InitialiseCustomLootTables();
             CustomShopInitialiser.InitialiseCustomShops();
             TrespassStone.Init();
-
+            //AGM.Register();
 
             FlowInjectionInitialiser.InitialiseFlows();
 

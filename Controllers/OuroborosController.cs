@@ -1344,217 +1344,229 @@ namespace Planetside
 }
 
 
-
-public class SpinBulletsController: BraveBehaviour
+namespace Planetside
 {
-	public void Start()
+	public class SpinBulletsController : BraveBehaviour
 	{
-        base.aiActor.healthHaver.OnPreDeath += HealthHaver_OnPreDeath;
-		m_regenTimer = RegenTimer;
-		this.m_bulletBank = this.aiActor.gameObject.GetComponent<AIBulletBank>();
-		float num = float.MaxValue;
-		if (this.aiActor && this.aiActor.TargetRigidbody)
+		public void Start()
 		{
-			num = (this.aiActor.TargetRigidbody.GetUnitCenter(ColliderType.HitBox) - this.aiActor.specRigidbody.GetUnitCenter(ColliderType.HitBox)).magnitude;
-		}
-		for (int i = 0; i < this.NumBullets; i++)
-		{
-			float num2 = Mathf.Lerp(this.BulletMinRadius, this.BulletMaxRadius, (float)i / ((float)this.NumBullets - 1f));
-			if (num2 * 2f > num)
+			base.aiActor.healthHaver.OnPreDeath += HealthHaver_OnPreDeath;
+			m_regenTimer = RegenTimer;
+			this.m_bulletBank = this.aiActor.gameObject.GetComponent<AIBulletBank>();
+			float num = float.MaxValue;
+			if (this.aiActor && this.aiActor.TargetRigidbody)
 			{
-				for (int e = 0; e < AmountOFLines; e++)
-
-				{
-					this.m_projectiles.Add(new SpinBulletsController.ProjectileContainer
-					{
-						projectile = null,
-						angle = (360f / AmountOFLines) * e,
-						distFromCenter = num2
-					});
-				}
+				num = (this.aiActor.TargetRigidbody.GetUnitCenter(ColliderType.HitBox) - this.aiActor.specRigidbody.GetUnitCenter(ColliderType.HitBox)).magnitude;
 			}
-			else
+			for (int i = 0; i < this.NumBullets; i++)
 			{
-				for (int e = 0; e < AmountOFLines; e++)
+				float num2 = Mathf.Lerp(this.BulletMinRadius, this.BulletMaxRadius, (float)i / ((float)this.NumBullets - 1f));
+				if (num2 * 2f > num)
 				{
-					GameObject gameObject = this.m_bulletBank.CreateProjectileFromBank(this.GetBulletPosition(0f, num2), (360f / AmountOFLines) * e, this.OverrideBulletName, null, false, true, false);
-					Projectile component = gameObject.GetComponent<Projectile>();
-					component.specRigidbody.Velocity = Vector2.zero;
-					component.ManualControl = true;
-					if (this.BulletsIgnoreTiles)
+					for (int e = 0; e < AmountOFLines; e++)
+
 					{
-						component.specRigidbody.CollideWithTileMap = false;
-					}
-					this.m_projectiles.Add(new SpinBulletsController.ProjectileContainer
-					{
-						projectile = component,
-						angle = (360f / AmountOFLines) * e,
-						distFromCenter = num2
-					});
-				}
-			}
-		}
-	}
-
-    private void HealthHaver_OnPreDeath(Vector2 obj)
-    {
-		IsEnabled = false;
-		this.DestroyProjectiles();
-	}
-
-    public void Upkeep()
-	{
-		//base.DecrementTimer(ref this.m_regenTimer, false);
-	}
-
-	public void Update()
-	{
-			
-		RunContinuousUpdate();
-
-	}
-
-	public void RunContinuousUpdate()
-	{
-		m_regenTimer -= BraveTime.DeltaTime;
-		IsEnabled = true;
-		if (this.aiActor)
-		{
-			bool flag = this.aiActor.CanTargetEnemies && !this.aiActor.CanTargetPlayers;
-			if (this.m_cachedCharm != flag)
-			{
-				for (int i = 0; i < this.m_projectiles.Count; i++)
-				{
-					if (this.m_projectiles[i] != null && this.m_projectiles[i].projectile && this.m_projectiles[i].projectile.gameObject.activeSelf)
-					{
-						this.m_projectiles[i].projectile.DieInAir(false, false, true, false);
-						this.m_projectiles[i].projectile = null;
+						this.m_projectiles.Add(new SpinBulletsController.ProjectileContainer
+						{
+							projectile = null,
+							angle = (360f / AmountOFLines) * e,
+							distFromCenter = num2
+						});
 					}
 				}
-				this.m_cachedCharm = flag;
-			}
-		}
-		for (int j = 0; j < this.m_projectiles.Count; j++)
-		{
-			if (!this.m_projectiles[j].projectile || !this.m_projectiles[j].projectile.gameObject.activeSelf)
-			{
-				this.m_projectiles[j].projectile = null;
-			}
-		}
-		for (int k = 0; k < this.m_projectiles.Count; k++)
-		{
-			float angle = this.m_projectiles[k].angle + BraveTime.DeltaTime * (float)this.BulletCircleSpeed;
-			this.m_projectiles[k].angle = angle;
-			Projectile projectile = this.m_projectiles[k].projectile;
-			if (projectile)
-			{				
-
-				
-				Vector2 bulletPosition = this.GetBulletPosition(angle, this.m_projectiles[k].distFromCenter);
-				projectile.specRigidbody.Velocity = (bulletPosition - (Vector2)projectile.transform.position) / BraveTime.DeltaTime;
-				if (projectile.shouldRotate)                          
-				{                                                     
-					projectile.transform.rotation = Quaternion.Euler(0f, 0f, 180f + (Quaternion.Euler(0f, 0f, 90f) * (this.ShootPoint.transform.position.XY() - bulletPosition)).XY().ToAngle());
-				}
-				
-				projectile.ResetDistance();
-			}
-			else if (this.m_regenTimer <= 0f)
-			{
-				Vector2 bulletPosition2 = this.GetBulletPosition(this.m_projectiles[k].angle, this.m_projectiles[k].distFromCenter);
-				if (GameManager.Instance.Dungeon.CellExists(bulletPosition2) && !GameManager.Instance.Dungeon.data.isWall((int)bulletPosition2.x, (int)bulletPosition2.y))
+				else
 				{
-					GameObject gameObject = this.m_bulletBank.CreateProjectileFromBank(bulletPosition2, 0f, this.OverrideBulletName, null, false, true, false);
-					projectile = gameObject.GetComponent<Projectile>();
-					projectile.specRigidbody.Velocity = Vector2.zero;
-					projectile.ManualControl = true;
-					if (this.BulletsIgnoreTiles)
+					for (int e = 0; e < AmountOFLines; e++)
 					{
-						projectile.specRigidbody.CollideWithTileMap = false;
+						GameObject gameObject = this.m_bulletBank.CreateProjectileFromBank(this.GetBulletPosition(0f, num2), (360f / AmountOFLines) * e, this.OverrideBulletName, null, false, true, false);
+						Projectile component = gameObject.GetComponent<Projectile>();
+						component.specRigidbody.Velocity = Vector2.zero;
+						component.ManualControl = true;
+						if (this.BulletsIgnoreTiles)
+						{
+							component.specRigidbody.CollideWithTileMap = false;
+						}
+						this.m_projectiles.Add(new SpinBulletsController.ProjectileContainer
+						{
+							projectile = component,
+							angle = (360f / AmountOFLines) * e,
+							distFromCenter = num2
+						});
 					}
-					this.m_projectiles[k].projectile = projectile;
-					this.m_regenTimer = this.RegenTimer;
 				}
 			}
 		}
-		for (int l = 0; l < this.m_projectiles.Count; l++)
+
+		private void HealthHaver_OnPreDeath(Vector2 obj)
 		{
-			if (this.m_projectiles[l] != null && this.m_projectiles[l].projectile)
+			IsEnabled = false;
+			this.DestroyProjectiles();
+		}
+
+		public void Upkeep()
+		{
+			//base.DecrementTimer(ref this.m_regenTimer, false);
+		}
+
+		public void Update()
+		{
+
+			RunContinuousUpdate();
+
+		}
+
+		public void RunContinuousUpdate()
+		{
+			m_regenTimer -= BraveTime.DeltaTime;
+			IsEnabled = true;
+			if (this.aiActor)
 			{
-				bool flag2 = this.aiActor && this.aiActor.CanTargetEnemies;
-				this.m_projectiles[l].projectile.collidesWithEnemies = (this.m_projectiles[l].projectile.collidesWithEnemies || flag2);
+				bool flag = this.aiActor.CanTargetEnemies && !this.aiActor.CanTargetPlayers;
+				if (this.m_cachedCharm != flag)
+				{
+					for (int i = 0; i < this.m_projectiles.Count; i++)
+					{
+						if (this.m_projectiles[i] != null && this.m_projectiles[i].projectile && this.m_projectiles[i].projectile.gameObject.activeSelf)
+						{
+							this.m_projectiles[i].projectile.DieInAir(false, false, true, false);
+							this.m_projectiles[i].projectile = null;
+						}
+					}
+					this.m_cachedCharm = flag;
+				}
 			}
+			for (int j = 0; j < this.m_projectiles.Count; j++)
+			{
+				if (!this.m_projectiles[j].projectile || !this.m_projectiles[j].projectile.gameObject.activeSelf)
+				{
+					this.m_projectiles[j].projectile = null;
+				}
+			}
+			for (int k = 0; k < this.m_projectiles.Count; k++)
+			{
+				float angle = this.m_projectiles[k].angle + BraveTime.DeltaTime * (float)this.BulletCircleSpeed;
+				this.m_projectiles[k].angle = angle;
+				Projectile projectile = this.m_projectiles[k].projectile;
+				if (projectile)
+				{
+
+
+					Vector2 bulletPosition = this.GetBulletPosition(angle, this.m_projectiles[k].distFromCenter);
+					projectile.specRigidbody.Velocity = (bulletPosition - (Vector2)projectile.transform.position) / BraveTime.DeltaTime;
+					if (projectile.shouldRotate)
+					{
+						projectile.transform.rotation = Quaternion.Euler(0f, 0f, 180f + (Quaternion.Euler(0f, 0f, 90f) * (this.ShootPoint.transform.position.XY() - bulletPosition)).XY().ToAngle());
+					}
+
+					projectile.ResetDistance();
+				}
+				else if (this.m_regenTimer <= 0f)
+				{
+					Vector2 bulletPosition2 = this.GetBulletPosition(this.m_projectiles[k].angle, this.m_projectiles[k].distFromCenter);
+					if (GameManager.Instance.Dungeon.CellExists(bulletPosition2) && !GameManager.Instance.Dungeon.data.isWall((int)bulletPosition2.x, (int)bulletPosition2.y))
+					{
+						GameObject gameObject = this.m_bulletBank.CreateProjectileFromBank(bulletPosition2, 0f, this.OverrideBulletName, null, false, true, false);
+						projectile = gameObject.GetComponent<Projectile>();
+						projectile.specRigidbody.Velocity = Vector2.zero;
+						projectile.ManualControl = true;
+						if (this.BulletsIgnoreTiles)
+						{
+							projectile.specRigidbody.CollideWithTileMap = false;
+							projectile.specRigidbody.AddCollisionLayerOverride(CollisionMask.LayerToMask(CollisionLayer.EnemyBlocker));
+							projectile.specRigidbody.AddCollisionLayerOverride(CollisionMask.LayerToMask(CollisionLayer.HighObstacle));
+							projectile.specRigidbody.AddCollisionLayerOverride(CollisionMask.LayerToMask(CollisionLayer.LowObstacle));
+							projectile.specRigidbody.AddCollisionLayerOverride(CollisionMask.LayerToMask(CollisionLayer.BeamBlocker));
+							projectile.specRigidbody.AddCollisionLayerOverride(CollisionMask.LayerToMask(CollisionLayer.BulletBreakable));
+							projectile.specRigidbody.AddCollisionLayerOverride(CollisionMask.LayerToMask(CollisionLayer.TileBlocker));
+							projectile.specRigidbody.AddCollisionLayerOverride(CollisionMask.LayerToMask(CollisionLayer.BulletBlocker));
+							projectile.specRigidbody.AddCollisionLayerOverride(CollisionMask.LayerToMask(CollisionLayer.EnemyBulletBlocker));
+
+						}
+						this.m_projectiles[k].projectile = projectile;
+						this.m_regenTimer = this.RegenTimer;
+					}
+				}
+			}
+			for (int l = 0; l < this.m_projectiles.Count; l++)
+			{
+				if (this.m_projectiles[l] != null && this.m_projectiles[l].projectile)
+				{
+					bool flag2 = this.aiActor && this.aiActor.CanTargetEnemies;
+					this.m_projectiles[l].projectile.collidesWithEnemies = (this.m_projectiles[l].projectile.collidesWithEnemies || flag2);
+				}
+			}
+		}
+
+		public void EndContinuousUpdate()
+		{
+			IsEnabled = false;
+			this.DestroyProjectiles();
+		}
+
+		public void StartContinuousUpdate()
+		{
+			//this.m_updateEveryFrame = true;
+		}
+
+
+		protected override void OnDestroy()
+		{
+			base.OnDestroy();
+			IsEnabled = false;
+		}
+
+		private Vector2 GetBulletPosition(float angle, float distFromCenter)
+		{
+			return this.ShootPoint.transform.position.XY() + BraveMathCollege.DegreesToVector(angle, distFromCenter);
+		}
+
+		public void DestroyProjectiles()
+		{
+			for (int i = 0; i < this.m_projectiles.Count; i++)
+			{
+				Projectile projectile = this.m_projectiles[i].projectile;
+				if (projectile != null)
+				{
+					projectile.DieInAir(false, true, true, false);
+				}
+			}
+			this.m_projectiles.Clear();
+		}
+
+		public bool IsEnabled;
+
+		public string OverrideBulletName;
+
+		public GameObject ShootPoint;
+
+		public int NumBullets;
+
+		public float BulletMinRadius;
+
+		public float BulletMaxRadius;
+
+		public int BulletCircleSpeed;
+
+		public bool BulletsIgnoreTiles;
+
+		public float RegenTimer;
+
+		public float AmountOFLines;
+
+		private readonly List<SpinBulletsController.ProjectileContainer> m_projectiles = new List<SpinBulletsController.ProjectileContainer>();
+
+		private AIBulletBank m_bulletBank;
+
+		private bool m_cachedCharm;
+
+		private float m_regenTimer;
+
+		private class ProjectileContainer
+		{
+			public Projectile projectile;
+			public float angle;
+			public float distFromCenter;
 		}
 	}
 
-	public void EndContinuousUpdate()
-	{
-		IsEnabled = false;
-		this.DestroyProjectiles();
-	}
-
-	public void StartContinuousUpdate()
-	{
-		//this.m_updateEveryFrame = true;
-	}
-
-	
-	protected override void OnDestroy()
-	{
-		base.OnDestroy();
-		IsEnabled = false;
-	}
-
-	private Vector2 GetBulletPosition(float angle, float distFromCenter)
-	{
-		return this.ShootPoint.transform.position.XY() + BraveMathCollege.DegreesToVector(angle, distFromCenter);
-	}
-
-	public void DestroyProjectiles()
-	{
-		for (int i = 0; i < this.m_projectiles.Count; i++)
-		{
-			Projectile projectile = this.m_projectiles[i].projectile;
-			if (projectile != null)
-			{
-				projectile.DieInAir(false, true, true, false);
-			}
-		}
-		this.m_projectiles.Clear();
-	}
-
-	public bool IsEnabled;
-
-	public string OverrideBulletName;
-
-	public GameObject ShootPoint;
-
-	public int NumBullets;
-
-	public float BulletMinRadius;
-
-	public float BulletMaxRadius;
-
-	public int BulletCircleSpeed;
-
-	public bool BulletsIgnoreTiles;
-
-	public float RegenTimer;
-
-	public float AmountOFLines;
-
-	private readonly List<SpinBulletsController.ProjectileContainer> m_projectiles = new List<SpinBulletsController.ProjectileContainer>();
-
-	private AIBulletBank m_bulletBank;
-
-	private bool m_cachedCharm;
-
-	private float m_regenTimer;
-
-	private class ProjectileContainer
-	{
-		public Projectile projectile;
-		public float angle;
-		public float distFromCenter;
-	}
 }

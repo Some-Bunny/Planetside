@@ -113,7 +113,7 @@ namespace Planetside
                 {
                     float random = UnityEngine.Random.Range(0.00f, 1.00f);
                     float anotherGoddamnCluculation = player.CurrentGun.InfiniteAmmo == false ? player.CurrentGun.AdjustedMaxAmmo / 1000 : 0;
-                    if (player.CurrentGun.InfiniteAmmo ==false)
+                    if (player.CurrentGun.InfiniteAmmo == false)
                     {
                         float Value = 0.05f + anotherGoddamnCluculation;
                         if (Value >= 1) { Value = 1; }

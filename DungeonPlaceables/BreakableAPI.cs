@@ -53,9 +53,367 @@ namespace BreakAbleAPI
 
         public static Shader worldShader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTiltedCutoutFastPixelShadow");
 
-        /// <summary>
-        /// Generates, and returns a GameObject with a sprite / animated sprite.
-        /// </summary>
+        public static DungeonDoorSubsidiaryBlocker GenerateDungeonDoorSubsidiaryBlocker(string name, string[] idleSpritePaths, string[] sealSpritePaths, string[] unsealSpritePaths, bool isNorthSouthDoor, string[] playerNearSealedDoorAnimPaths = null, int idleAnimFPS = 5, int sealAnimFPS = 5, int unsealAnimFPS = 5, int playerNearSealedDoorAnimFPS = 5, string[] chainIdleSpritePaths = null, string[] chainSealSpritePaths = null, string[] chainUnsealSpritePaths = null, string[] chainPlayerNearChainPaths = null )
+        {
+
+            GameObject gameObject = SpriteBuilder.SpriteFromResource(idleSpritePaths[0], null, false);
+            FakePrefab.MarkAsFakePrefab(gameObject);
+            gameObject.name = name;
+
+            tk2dSpriteCollectionData SpriteObjectSpriteCollection = SpriteBuilder.ConstructCollection(gameObject, (name + "_Collection"));
+            int spriteID = SpriteBuilder.AddSpriteToCollection(idleSpritePaths[0], SpriteObjectSpriteCollection);
+            tk2dSprite sprite = gameObject.GetOrAddComponent<tk2dSprite>();
+            sprite.SetSprite(SpriteObjectSpriteCollection, spriteID);
+
+
+            tk2dSpriteAnimator animator = gameObject.GetOrAddComponent<tk2dSpriteAnimator>();
+            tk2dSpriteAnimation animation = gameObject.AddComponent<tk2dSpriteAnimation>();
+            DungeonDoorSubsidiaryBlocker dungeonDoorSubsidiaryBlocker = gameObject.GetOrAddComponent<DungeonDoorSubsidiaryBlocker>();
+
+            animation.clips = new tk2dSpriteAnimationClip[0];
+            animator.Library = animation;
+
+            SpeculativeRigidbody speculativeRigidbody = sprite.SetUpEmptySpeculativeRigidbody(new IntVector2(0,0), new IntVector2(isNorthSouthDoor == true ? 32 : 16, isNorthSouthDoor == true ? 16 : 32));
+            speculativeRigidbody.PixelColliders.Add(new PixelCollider
+            {
+                ColliderGenerationMode = PixelCollider.PixelColliderGeneration.Manual,
+                CollisionLayer = CollisionLayer.HighObstacle,
+                IsTrigger = false,
+                BagleUseFirstFrameOnly = false,
+                SpecifyBagelFrame = string.Empty,
+                BagelColliderNumber = 0,
+                ManualOffsetX = 0,
+                ManualOffsetY = 0,
+                ManualWidth = 12,
+                ManualHeight = 12,
+                ManualDiameter = 0,
+                ManualLeftX = 0,
+                ManualLeftY = 0,
+                ManualRightX = 0,
+                ManualRightY = 0,
+            });
+
+            List<tk2dSpriteAnimationClip> clips = new List<tk2dSpriteAnimationClip>();
+
+       
+            if (idleSpritePaths.Length >= 1)
+            {
+                tk2dSpriteAnimationClip idleClip = new tk2dSpriteAnimationClip() { name = "idle", frames = new tk2dSpriteAnimationFrame[0], fps = idleAnimFPS };
+                List<tk2dSpriteAnimationFrame> frames = new List<tk2dSpriteAnimationFrame>();
+                for (int i = 0; i < idleSpritePaths.Length; i++)
+                {
+                    tk2dSpriteCollectionData collection = SpriteObjectSpriteCollection;
+                    int frameSpriteId = SpriteBuilder.AddSpriteToCollection(idleSpritePaths[i], collection);
+                    tk2dSpriteDefinition frameDef = collection.spriteDefinitions[frameSpriteId];
+                    frames.Add(new tk2dSpriteAnimationFrame { spriteId = frameSpriteId, spriteCollection = collection });
+                    frameDef.ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.LowerLeft);
+                }
+                idleClip.frames = frames.ToArray();
+                idleClip.wrapMode = tk2dSpriteAnimationClip.WrapMode.Loop;
+                animator.Library.clips = animation.clips.Concat(new tk2dSpriteAnimationClip[] { idleClip }).ToArray();
+                animator.playAutomatically = true;
+                animator.DefaultClipId = animator.GetClipIdByName("idle");
+                clips.Add(idleClip);
+                
+                tk2dSpriteAnimationClip[] array = clips.ToArray();
+                animator.Library.clips = array;
+                animator.playAutomatically = true;
+                animator.DefaultClipId = animator.GetClipIdByName("idle");
+                
+            }
+            
+            if (sealSpritePaths.Length >= 1)
+            {
+                tk2dSpriteAnimationClip sealClip = new tk2dSpriteAnimationClip() { name = "seal", frames = new tk2dSpriteAnimationFrame[0], fps = sealAnimFPS };
+                List<tk2dSpriteAnimationFrame> sealFrames = new List<tk2dSpriteAnimationFrame>();
+                for (int i = 0; i < sealSpritePaths.Length; i++)
+                {
+                    tk2dSpriteCollectionData collection = SpriteObjectSpriteCollection;
+                    int frameSpriteId = SpriteBuilder.AddSpriteToCollection(sealSpritePaths[i], collection);
+                    tk2dSpriteDefinition frameDef = collection.spriteDefinitions[frameSpriteId];
+                    sealFrames.Add(new tk2dSpriteAnimationFrame { spriteId = frameSpriteId, spriteCollection = collection });
+                    frameDef.ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.LowerLeft);
+                }
+                sealClip.frames = sealFrames.ToArray();
+                sealClip.wrapMode = tk2dSpriteAnimationClip.WrapMode.Once;
+                animator.Library.clips = animation.clips.Concat(new tk2dSpriteAnimationClip[] { sealClip }).ToArray();
+                clips.Add(sealClip);
+                dungeonDoorSubsidiaryBlocker.sealAnimationName = "seal";
+            }
+
+            if (unsealSpritePaths.Length >= 1)
+            {
+                tk2dSpriteAnimationClip unsealClip = new tk2dSpriteAnimationClip() { name = "unseal", frames = new tk2dSpriteAnimationFrame[0], fps = unsealAnimFPS };
+                List<tk2dSpriteAnimationFrame> unsealFrames = new List<tk2dSpriteAnimationFrame>();
+                for (int i = 0; i < unsealSpritePaths.Length; i++)
+                {
+                    tk2dSpriteCollectionData collection = SpriteObjectSpriteCollection;
+                    int frameSpriteId = SpriteBuilder.AddSpriteToCollection(unsealSpritePaths[i], collection);
+                    tk2dSpriteDefinition frameDef = collection.spriteDefinitions[frameSpriteId];
+                    unsealFrames.Add(new tk2dSpriteAnimationFrame { spriteId = frameSpriteId, spriteCollection = collection });
+                    frameDef.ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.LowerLeft);
+                }
+                unsealClip.frames = unsealFrames.ToArray();
+                unsealClip.wrapMode = tk2dSpriteAnimationClip.WrapMode.Once;
+                animator.Library.clips = animation.clips.Concat(new tk2dSpriteAnimationClip[] { unsealClip }).ToArray();
+                clips.Add(unsealClip);
+                dungeonDoorSubsidiaryBlocker.unsealAnimationName = "unseal";
+            }
+
+            if (playerNearSealedDoorAnimPaths.Length >= 1 && playerNearSealedDoorAnimPaths != null)
+            {
+                tk2dSpriteAnimationClip playernearblockerClip = new tk2dSpriteAnimationClip() { name = "playernearblocker", frames = new tk2dSpriteAnimationFrame[0], fps = playerNearSealedDoorAnimFPS };
+                List<tk2dSpriteAnimationFrame> playernearblockerFrames = new List<tk2dSpriteAnimationFrame>();
+                for (int i = 0; i < playerNearSealedDoorAnimPaths.Length; i++)
+                {
+                    tk2dSpriteCollectionData collection = SpriteObjectSpriteCollection;
+                    int frameSpriteId = SpriteBuilder.AddSpriteToCollection(playerNearSealedDoorAnimPaths[i], collection);
+                    tk2dSpriteDefinition frameDef = collection.spriteDefinitions[frameSpriteId];
+                    playernearblockerFrames.Add(new tk2dSpriteAnimationFrame { spriteId = frameSpriteId, spriteCollection = collection });
+                    frameDef.ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.LowerLeft);
+                }
+                playernearblockerClip.frames = playernearblockerFrames.ToArray();
+                playernearblockerClip.wrapMode = tk2dSpriteAnimationClip.WrapMode.Loop;
+                animator.Library.clips = animation.clips.Concat(new tk2dSpriteAnimationClip[] { playernearblockerClip }).ToArray();
+                clips.Add(playernearblockerClip);
+                dungeonDoorSubsidiaryBlocker.playerNearSealedAnimationName = "playernearblocker";
+            }
+            dungeonDoorSubsidiaryBlocker.northSouth = isNorthSouthDoor;
+            dungeonDoorSubsidiaryBlocker.unsealDistanceMaximum = -1;
+
+            if (chainIdleSpritePaths != null && chainPlayerNearChainPaths != null && chainSealSpritePaths != null && chainUnsealSpritePaths != null)
+            {
+                tk2dSpriteAnimator ChainObjectAnimator = GenerateChainObject("chain_" + name, gameObject, SpriteObjectSpriteCollection, dungeonDoorSubsidiaryBlocker, chainIdleSpritePaths, chainSealSpritePaths, chainUnsealSpritePaths, chainPlayerNearChainPaths);
+                dungeonDoorSubsidiaryBlocker.chainAnimator = ChainObjectAnimator;
+            }
+
+            return dungeonDoorSubsidiaryBlocker;
+        }
+
+        private static tk2dSpriteAnimator GenerateChainObject(string name, GameObject parent, tk2dSpriteCollectionData parentCollection,DungeonDoorSubsidiaryBlocker dungeonDoorSubsidiaryBlocker ,string[] idleSpritePaths, string[] sealSpritePaths, string[] unsealSpritePaths, string[] playerNearSealedDoorAnimPaths = null, int idleAnimFPS = 5, int sealAnimFPS = 5, int unsealAnimFPS = 5, int playerNearSealedDoorAnimFPS = 5)
+        {
+            GameObject gameObject = SpriteBuilder.SpriteFromResource(idleSpritePaths[0], null, false);
+            FakePrefab.MarkAsFakePrefab(gameObject);
+            gameObject.name = name + "Chain";
+       
+
+            tk2dSpriteCollectionData SpriteObjectSpriteCollection = parentCollection;
+            int spriteID = SpriteBuilder.AddSpriteToCollection(idleSpritePaths[0], SpriteObjectSpriteCollection);
+            tk2dSprite sprite = gameObject.GetOrAddComponent<tk2dSprite>();
+            sprite.SetSprite(SpriteObjectSpriteCollection, spriteID);
+
+
+            tk2dSpriteAnimator animator = gameObject.GetOrAddComponent<tk2dSpriteAnimator>();
+            tk2dSpriteAnimation animation = gameObject.AddComponent<tk2dSpriteAnimation>();
+
+            animation.clips = new tk2dSpriteAnimationClip[0];
+            animator.Library = animation;
+
+        
+            List<tk2dSpriteAnimationClip> clips = new List<tk2dSpriteAnimationClip>();
+
+
+            if (idleSpritePaths.Length >= 1)
+            {
+                tk2dSpriteAnimationClip idleClip = new tk2dSpriteAnimationClip() { name = "idle", frames = new tk2dSpriteAnimationFrame[0], fps = idleAnimFPS };
+                List<tk2dSpriteAnimationFrame> frames = new List<tk2dSpriteAnimationFrame>();
+                for (int i = 0; i < idleSpritePaths.Length; i++)
+                {
+                    tk2dSpriteCollectionData collection = SpriteObjectSpriteCollection;
+                    int frameSpriteId = SpriteBuilder.AddSpriteToCollection(idleSpritePaths[i], collection);
+                    tk2dSpriteDefinition frameDef = collection.spriteDefinitions[frameSpriteId];
+                    frames.Add(new tk2dSpriteAnimationFrame { spriteId = frameSpriteId, spriteCollection = collection });
+                    frameDef.ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.LowerLeft);
+                }
+                idleClip.frames = frames.ToArray();
+                idleClip.wrapMode = tk2dSpriteAnimationClip.WrapMode.Loop;
+                animator.Library.clips = animation.clips.Concat(new tk2dSpriteAnimationClip[] { idleClip }).ToArray();
+                animator.playAutomatically = true;
+                animator.DefaultClipId = animator.GetClipIdByName("idle");
+                clips.Add(idleClip);
+
+                tk2dSpriteAnimationClip[] array = clips.ToArray();
+                animator.Library.clips = array;
+                animator.playAutomatically = true;
+                animator.DefaultClipId = animator.GetClipIdByName("idle");
+
+            }
+
+
+            if (sealSpritePaths.Length >= 1)
+            {
+                tk2dSpriteAnimationClip sealClip = new tk2dSpriteAnimationClip() { name = "chainseal", frames = new tk2dSpriteAnimationFrame[0], fps = sealAnimFPS };
+                List<tk2dSpriteAnimationFrame> sealFrames = new List<tk2dSpriteAnimationFrame>();
+                for (int i = 0; i < sealSpritePaths.Length; i++)
+                {
+                    tk2dSpriteCollectionData collection = SpriteObjectSpriteCollection;
+                    int frameSpriteId = SpriteBuilder.AddSpriteToCollection(sealSpritePaths[i], collection);
+                    tk2dSpriteDefinition frameDef = collection.spriteDefinitions[frameSpriteId];
+                    sealFrames.Add(new tk2dSpriteAnimationFrame { spriteId = frameSpriteId, spriteCollection = collection });
+                    frameDef.ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.LowerLeft);
+                }
+                sealClip.frames = sealFrames.ToArray();
+                sealClip.wrapMode = tk2dSpriteAnimationClip.WrapMode.Once;
+                animator.Library.clips = animation.clips.Concat(new tk2dSpriteAnimationClip[] { sealClip }).ToArray();
+                clips.Add(sealClip);
+                dungeonDoorSubsidiaryBlocker.sealChainAnimationName = "chainseal";
+            }
+
+            if (unsealSpritePaths.Length >= 1)
+            {
+                tk2dSpriteAnimationClip unsealClip = new tk2dSpriteAnimationClip() { name = "chainunseal", frames = new tk2dSpriteAnimationFrame[0], fps = unsealAnimFPS };
+                List<tk2dSpriteAnimationFrame> unsealFrames = new List<tk2dSpriteAnimationFrame>();
+                for (int i = 0; i < unsealSpritePaths.Length; i++)
+                {
+                    tk2dSpriteCollectionData collection = SpriteObjectSpriteCollection;
+                    int frameSpriteId = SpriteBuilder.AddSpriteToCollection(unsealSpritePaths[i], collection);
+                    tk2dSpriteDefinition frameDef = collection.spriteDefinitions[frameSpriteId];
+                    unsealFrames.Add(new tk2dSpriteAnimationFrame { spriteId = frameSpriteId, spriteCollection = collection });
+                    frameDef.ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.LowerLeft);
+                }
+                unsealClip.frames = unsealFrames.ToArray();
+                unsealClip.wrapMode = tk2dSpriteAnimationClip.WrapMode.Once;
+                animator.Library.clips = animation.clips.Concat(new tk2dSpriteAnimationClip[] { unsealClip }).ToArray();
+                clips.Add(unsealClip);
+                dungeonDoorSubsidiaryBlocker.unsealChainAnimationName = "chainunseal";
+            }
+
+            if (playerNearSealedDoorAnimPaths.Length >= 1 && playerNearSealedDoorAnimPaths != null)
+            {
+                tk2dSpriteAnimationClip playernearblockerClip = new tk2dSpriteAnimationClip() { name = "chainplayernearblocker", frames = new tk2dSpriteAnimationFrame[0], fps = playerNearSealedDoorAnimFPS };
+                List<tk2dSpriteAnimationFrame> playernearblockerFrames = new List<tk2dSpriteAnimationFrame>();
+                for (int i = 0; i < playerNearSealedDoorAnimPaths.Length; i++)
+                {
+                    tk2dSpriteCollectionData collection = SpriteObjectSpriteCollection;
+                    int frameSpriteId = SpriteBuilder.AddSpriteToCollection(playerNearSealedDoorAnimPaths[i], collection);
+                    tk2dSpriteDefinition frameDef = collection.spriteDefinitions[frameSpriteId];
+                    playernearblockerFrames.Add(new tk2dSpriteAnimationFrame { spriteId = frameSpriteId, spriteCollection = collection });
+                    frameDef.ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.LowerLeft);
+                }
+                playernearblockerClip.frames = playernearblockerFrames.ToArray();
+                playernearblockerClip.wrapMode = tk2dSpriteAnimationClip.WrapMode.Loop;
+                animator.Library.clips = animation.clips.Concat(new tk2dSpriteAnimationClip[] { playernearblockerClip }).ToArray();
+                clips.Add(playernearblockerClip);
+                dungeonDoorSubsidiaryBlocker.playerNearChainAnimationName = "chainplayernearblocker";
+            }
+            gameObject.transform.parent = parent.transform;
+            return animator;
+        }
+
+        public static DungeonDoorController GenerateDungeonDoorController(string name, DungeonDoorController.DoorModule[] doorModules, DungeonDoorController.DungeonDoorMode dungeonDoorMode, bool IsNorthSouthDoor, bool hasSubsidiaryDoors, bool hidesSealAnimators, DungeonDoorSubsidiaryBlocker blocker = null, bool isLocked = false)
+        {
+            DungeonDoorController controller = new DungeonDoorController();
+            controller.name = name;
+            controller.doorModules = doorModules;
+            controller.messageToDisplay = "what";
+            controller.northSouth = IsNorthSouthDoor;
+            controller.SupportsSubsidiaryDoors = hasSubsidiaryDoors;
+            controller.hideSealAnimators = hidesSealAnimators;
+            
+
+            controller.isLocked = isLocked;
+
+            if (blocker != null)
+            {
+                controller.sealAnimators = new tk2dSpriteAnimator[] { blocker.sealAnimator };
+                controller.sealAnimationName = blocker.sealAnimationName;
+                controller.unsealAnimationName = blocker.sealAnimationName;
+                controller.sealAnimationName = blocker.sealAnimationName;
+
+            }
+
+            //controller.exitDefinition
+            //controller.messageTransformPoint = GenerateTransformObject().transform;
+            return controller;
+        }
+
+
+
+
+        public static DungeonDoorController.DoorModule GenerateDoorModule(string name, string[] idleSpritePaths, string[] closeAnimPaths, string[] openAimPaths, int AnimFPS = 5)
+        {
+            GameObject gameObject = SpriteBuilder.SpriteFromResource(idleSpritePaths[0], null, false);
+            FakePrefab.MarkAsFakePrefab(gameObject);
+            gameObject.name = name;
+
+            tk2dSpriteCollectionData SpriteObjectSpriteCollection = SpriteBuilder.ConstructCollection(gameObject, (name + "_Collection"));
+            int spriteID = SpriteBuilder.AddSpriteToCollection(idleSpritePaths[0], SpriteObjectSpriteCollection);
+            tk2dSprite sprite = gameObject.GetOrAddComponent<tk2dSprite>();
+            sprite.SetSprite(SpriteObjectSpriteCollection, spriteID);
+
+
+            tk2dSpriteAnimator animator = gameObject.GetOrAddComponent<tk2dSpriteAnimator>();
+            tk2dSpriteAnimation animation = gameObject.AddComponent<tk2dSpriteAnimation>();
+            animation.clips = new tk2dSpriteAnimationClip[0];
+            animator.Library = animation;
+
+            List<tk2dSpriteAnimationClip> clips = new List<tk2dSpriteAnimationClip>();
+            if (idleSpritePaths.Length > 0)
+            {
+                tk2dSpriteAnimationClip idleClip = new tk2dSpriteAnimationClip() { name = "idle", frames = new tk2dSpriteAnimationFrame[0], fps = AnimFPS };
+                List<tk2dSpriteAnimationFrame> frames = new List<tk2dSpriteAnimationFrame>();
+                for (int i = 0; i < idleSpritePaths.Length; i++)
+                {
+                    tk2dSpriteCollectionData collection = SpriteObjectSpriteCollection;
+                    int frameSpriteId = SpriteBuilder.AddSpriteToCollection(idleSpritePaths[i], collection);
+                    tk2dSpriteDefinition frameDef = collection.spriteDefinitions[frameSpriteId];
+                    frames.Add(new tk2dSpriteAnimationFrame { spriteId = frameSpriteId, spriteCollection = collection });
+                    frameDef.ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.LowerLeft);
+                }
+                idleClip.frames = frames.ToArray();
+                idleClip.wrapMode = tk2dSpriteAnimationClip.WrapMode.Loop;
+                animator.Library.clips = animation.clips.Concat(new tk2dSpriteAnimationClip[] { idleClip }).ToArray();
+                animator.playAutomatically = true;
+                animator.DefaultClipId = animator.GetClipIdByName("idle");
+                clips.Add(idleClip);
+                tk2dSpriteAnimationClip[] array = clips.ToArray();
+                animator.Library.clips = array;
+                animator.playAutomatically = true;
+                animator.DefaultClipId = animator.GetClipIdByName("idle");
+            }
+            if (closeAnimPaths.Length > 0)
+            {
+                clips.Add(AddAnimation("close", animator, animation, 5, closeAnimPaths, SpriteObjectSpriteCollection, tk2dSpriteAnimationClip.WrapMode.Once));
+                tk2dSpriteAnimationClip[] array = clips.ToArray();
+                animator.Library.clips = array;
+            }
+            if (closeAnimPaths.Length > 0)
+            {
+                clips.Add(AddAnimation("open", animator, animation, 5, openAimPaths, SpriteObjectSpriteCollection, tk2dSpriteAnimationClip.WrapMode.Once));
+                tk2dSpriteAnimationClip[] array = clips.ToArray();
+                animator.Library.clips = array;
+            }
+
+
+            DungeonDoorController.DoorModule mod = new DungeonDoorController.DoorModule();
+            mod.animator = animator;
+            mod.closedDepth = -1; //idk what this is for
+            mod.closeAnimationName = "close";
+            mod.openAnimationName = "open";
+            
+            gameObject.AddComponent(mod.GetType());
+            return mod;
+        }
+        
+        public static tk2dSpriteAnimationClip AddAnimation(string clipName,tk2dSpriteAnimator animator, tk2dSpriteAnimation animation, int FPS, string[] SpritePaths, tk2dSpriteCollectionData SpriteObjectSpriteCollection, tk2dSpriteAnimationClip.WrapMode wrapMode)
+        {
+            tk2dSpriteAnimationClip clip = new tk2dSpriteAnimationClip() { name = clipName, frames = new tk2dSpriteAnimationFrame[0], fps = FPS };
+            List<tk2dSpriteAnimationFrame> frames = new List<tk2dSpriteAnimationFrame>();
+            for (int i = 0; i < SpritePaths.Length; i++)
+            {
+                tk2dSpriteCollectionData collection = SpriteObjectSpriteCollection;
+                int frameSpriteId = SpriteBuilder.AddSpriteToCollection(SpritePaths[i], collection);
+                tk2dSpriteDefinition frameDef = collection.spriteDefinitions[frameSpriteId];
+                frames.Add(new tk2dSpriteAnimationFrame { spriteId = frameSpriteId, spriteCollection = collection });
+                frameDef.ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.LowerLeft);
+            }
+            clip.frames = frames.ToArray();
+            clip.wrapMode = wrapMode;
+            animator.Library.clips = animation.clips.Concat(new tk2dSpriteAnimationClip[] { clip }).ToArray();
+            return clip;
+        }
+
+
         public static GameObject GenerateDecalObject(string name, string[] SpritePaths, int AnimFPS = 5)
         {
             GameObject gameObject = SpriteBuilder.SpriteFromResource(SpritePaths[0], null, false);

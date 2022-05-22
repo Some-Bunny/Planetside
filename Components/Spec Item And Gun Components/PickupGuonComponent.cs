@@ -56,7 +56,7 @@ namespace Planetside
             {
 				LootEngine.DoDefaultItemPoof(actor.transform.position, false, false);
 			}
-			PickupGuonComponent.guonHook = new Hook(typeof(PlayerOrbital).GetMethod("Initialize"), typeof(PickupGuonComponent).GetMethod("GuonInit"));
+			//PickupGuonComponent.guonHook = new Hook(typeof(PlayerOrbital).GetMethod("Initialize"), typeof(PickupGuonComponent).GetMethod("GuonInit"));
 			PlayerController playerboi = GameManager.Instance.PrimaryPlayer;
 			if (this.actor == null)
             {
@@ -184,14 +184,7 @@ namespace Planetside
 
 		public void Update()
 		{
-			if (this.actor == null)
-			{
-				this.actor = base.GetComponent<PlayerOrbital>();
-			}
-			if (this.player == null)
-			{
-				this.player = base.GetComponent<PlayerController>();
-			}
+		
 		}
 
 		public void OnDestroy()

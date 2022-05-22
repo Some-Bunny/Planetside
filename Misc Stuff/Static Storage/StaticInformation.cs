@@ -107,7 +107,57 @@ namespace Planetside
                 undodgeableDefaultVar.BulletObject = projectile.gameObject;
                 undodgeableDefault = undodgeableDefaultVar;
             }
-           
+            {
+                AIBulletBank.Entry undodgeableQuickHomingVar = StaticUndodgeableBulletEntries.CopyFields<AIBulletBank.Entry>(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("quickHoming"));
+                undodgeableQuickHomingVar.Name = "UndodgeablequickHoming";
+                Projectile projectile = UnityEngine.Object.Instantiate<GameObject>(undodgeableQuickHomingVar.BulletObject).GetComponent<Projectile>();
+                projectile.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                projectile.gameObject.SetActive(false);
+                FakePrefab.MarkAsFakePrefab(projectile.gameObject);
+                UnityEngine.Object.DontDestroyOnLoad(projectile);
+                undodgeableQuickHomingVar.BulletObject = projectile.gameObject;
+                undodgeableQuickHoming = undodgeableQuickHomingVar;
+                undodgeableQuickHoming.AudioEvent = null;
+            }
+            {
+                AIBulletBank.Entry undodgeableIcicleVar = StaticUndodgeableBulletEntries.CopyFields<AIBulletBank.Entry>(EnemyDatabase.GetOrLoadByGuid("1bc2a07ef87741be90c37096910843ab").bulletBank.GetBullet("icicle"));
+                undodgeableIcicleVar.Name = "UndodgeableIcicle";
+                Projectile projectile = UnityEngine.Object.Instantiate<GameObject>(undodgeableIcicleVar.BulletObject).GetComponent<Projectile>();
+                projectile.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                projectile.gameObject.SetActive(false);
+                FakePrefab.MarkAsFakePrefab(projectile.gameObject);
+                UnityEngine.Object.DontDestroyOnLoad(projectile);
+                undodgeableIcicleVar.BulletObject = projectile.gameObject;
+                undodgeableIcicle = undodgeableIcicleVar;
+                undodgeableIcicle.AudioEvent = null;
+            }
+            {
+                AIBulletBank.Entry undodgeableChainLinkVar = StaticUndodgeableBulletEntries.CopyFields<AIBulletBank.Entry>(EnemyDatabase.GetOrLoadByGuid("463d16121f884984abe759de38418e48").bulletBank.GetBullet("link"));
+                undodgeableChainLinkVar.Name = "UndodgeableLink";
+                Projectile projectile = UnityEngine.Object.Instantiate<GameObject>(undodgeableChainLinkVar.BulletObject).GetComponent<Projectile>();
+                projectile.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                projectile.gameObject.SetActive(false);
+                FakePrefab.MarkAsFakePrefab(projectile.gameObject);
+                UnityEngine.Object.DontDestroyOnLoad(projectile);
+                undodgeableChainLinkVar.BulletObject = projectile.gameObject;
+                undodgeableChainLink = undodgeableChainLinkVar;
+                undodgeableChainLink.AudioEvent = null;
+            }
+            {
+                AIBulletBank.Entry undodgeableSkullvar = StaticUndodgeableBulletEntries.CopyFields<AIBulletBank.Entry>(EnemyDatabase.GetOrLoadByGuid("465da2bb086a4a88a803f79fe3a27677").bulletBank.GetBullet("homing"));
+                undodgeableSkullvar.Name = "UndodgeableSkull";
+                Projectile projectile = UnityEngine.Object.Instantiate<GameObject>(undodgeableSkullvar.BulletObject).GetComponent<Projectile>();
+                projectile.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                projectile.gameObject.SetActive(false);
+                FakePrefab.MarkAsFakePrefab(projectile.gameObject);
+                UnityEngine.Object.DontDestroyOnLoad(projectile);
+                undodgeableSkullvar.BulletObject = projectile.gameObject;
+                undodgeableSkull = undodgeableSkullvar;
+                undodgeableSkull.AudioEvent = null;
+                undodgeableSkull.MuzzleFlashEffects = new VFXPool { type = VFXPoolType.None, effects = new VFXComplex[0] };
+
+            }
+            //EnemyDatabase.GetOrLoadByGuid("465da2bb086a4a88a803f79fe3a27677").bulletBank.GetBullet("homing")
         }
 
         public static AIBulletBank.Entry CopyFields<T>(AIBulletBank.Entry sample2) where T : AIBulletBank.Entry
@@ -150,5 +200,10 @@ namespace Planetside
         public static AIBulletBank.Entry undodgeableBig;
         public static AIBulletBank.Entry undodgeableSmallSpore;
         public static AIBulletBank.Entry undodgeableDefault;
+        public static AIBulletBank.Entry undodgeableQuickHoming;
+        public static AIBulletBank.Entry undodgeableIcicle;
+        public static AIBulletBank.Entry undodgeableChainLink;
+        public static AIBulletBank.Entry undodgeableSkull;
+
     }
 }

@@ -148,7 +148,9 @@
     <Compile Include="DungeonPlaceables\TrespassPortalBack.cs" />
     <Compile Include="EnemySetupCode\EnemyAPI %28The one that modifies behaviors%29\OverrideBehavior.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\Update3\Bosses\Prisoner\PrisonerSecondSubPhaseController.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\Update3\Bosses\Prisoner\PrisonerSubPhase3Attacks.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\Update3\Bosses\Prisoner\PrisonerSubPhase2Attacks.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\Update3\Enemies\Stagnant.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\Update3\Enemies\Observant.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\Update3\Enemies\FixerUpper.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\Update3\Bosses\HMPrime\HMPrimeIntroDoer.cs" />
@@ -177,6 +179,8 @@
     <Compile Include="Hooks\DungeonHooks.cs" />
     <Compile Include="Hooks\PickupHooks.cs" />
     <Compile Include="Hooks\ExplosionHooks.cs" />
+    <Compile Include="Items\ItemClasses\MultiCompanionItem.cs" />
+    <Compile Include="Items\Update4\GunClassToken.cs" />
     <Compile Include="Items\Update4\TarnishedAmmolet.cs" />
     <Compile Include="Items\Update4\TarnishedRounds.cs" />
     <Compile Include="Items\Update4\OrbitalInsertion.cs" />
@@ -3386,6 +3390,51 @@
     <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassDecals\TwoByTwo\decalOne2.png" />
     <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassDecals\TwoByTwo\decalOne3.png" />
     <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassDecals\TwoByTwo\decalOne4.png" />
+    <EmbeddedResource Include="Resources\Enemies\Stagnant\lilthing_awaken_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Stagnant\lilthing_awaken_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Stagnant\lilthing_awaken_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Stagnant\lilthing_awaken_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Stagnant\lilthing_awaken_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\Stagnant\lilthing_awaken_006.png" />
+    <EmbeddedResource Include="Resources\Enemies\Stagnant\lilthing_awaken_007.png" />
+    <EmbeddedResource Include="Resources\Enemies\Stagnant\lilthing_awaken_008.png" />
+    <EmbeddedResource Include="Resources\Enemies\Stagnant\lilthing_awaken_009.png" />
+    <EmbeddedResource Include="Resources\Enemies\Stagnant\lilthing_awaken_010.png" />
+    <EmbeddedResource Include="Resources\Enemies\Stagnant\lilthing_awaken_011.png" />
+    <EmbeddedResource Include="Resources\Enemies\Stagnant\lilthing_awaken_012.png" />
+    <EmbeddedResource Include="Resources\Enemies\Stagnant\lilthing_awaken_013.png" />
+    <EmbeddedResource Include="Resources\Enemies\Stagnant\lilthing_awaken_014.png" />
+    <EmbeddedResource Include="Resources\Enemies\Stagnant\lilthing_awaken_015.png" />
+    <EmbeddedResource Include="Resources\Enemies\Stagnant\lilthing_charge_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Stagnant\lilthing_charge_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Stagnant\lilthing_charge_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Stagnant\lilthing_charge_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Stagnant\lilthing_charge_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\Stagnant\lilthing_charge_006.png" />
+    <EmbeddedResource Include="Resources\Enemies\Stagnant\lilthing_charge_007.png" />
+    <EmbeddedResource Include="Resources\Enemies\Stagnant\lilthing_charge_008.png" />
+    <EmbeddedResource Include="Resources\Enemies\Stagnant\lilthing_charge_009.png" />
+    <EmbeddedResource Include="Resources\Enemies\Stagnant\lilthing_die_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Stagnant\lilthing_die_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Stagnant\lilthing_die_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Stagnant\lilthing_die_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Stagnant\lilthing_die_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\Stagnant\lilthing_die_006.png" />
+    <EmbeddedResource Include="Resources\Enemies\Stagnant\lilthing_die_007.png" />
+    <EmbeddedResource Include="Resources\Enemies\Stagnant\lilthing_idle_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Stagnant\lilthing_idle_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Stagnant\lilthing_idle_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Stagnant\lilthing_idle_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Stagnant\lilthing_idle_left_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Stagnant\lilthing_idle_left_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Stagnant\lilthing_idle_left_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Stagnant\lilthing_idle_left_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Stagnant\lilthing_idle_right_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Stagnant\lilthing_idle_right_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Stagnant\lilthing_idle_right_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Stagnant\lilthing_idle_right_004.png" />
+    <EmbeddedResource Include="Resources\Ammocom\stagnantTrespass.png" />
+    <EmbeddedResource Include="Resources\favouritism.png" />
     <Content Include="Resources\Shellrax\shellrax_intro_019.png" />
     <EmbeddedResource Include="Resources\VFX\LockOnVFX\lockonvfx1.png" />
     <EmbeddedResource Include="Resources\VFX\LockOnVFX\lockonvfx2.png" />
@@ -3475,6 +3524,10 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\AbyssTestHubRoom.room" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\TrespassRooms\TrespassDeeperRooms\trespassharderroom4.room" />
+    <EmbeddedResource Include="Resources\TrespassRooms\TrespassDeeperRooms\trespassharderroom5.room" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

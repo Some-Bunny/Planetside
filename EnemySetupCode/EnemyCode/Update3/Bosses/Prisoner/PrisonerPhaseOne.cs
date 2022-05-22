@@ -472,7 +472,6 @@ namespace Planetside
 				GameObject RightHandChargePoint = EnemyToolbox.GenerateShootPoint(companion.gameObject, new Vector2(1.375f, 2.4375f), "RightHandChargePoint");
 
 
-
 				Projectile beam = null;
 				var enemy = EnemyDatabase.GetOrLoadByGuid("b98b10fca77d469e80fb45f3c5badec5");
 				foreach (Component item in enemy.GetComponentsInChildren(typeof(Component)))
@@ -796,6 +795,148 @@ namespace Planetside
 						Uninterruptible = false,
 						},
 						NickName = "ChainRotatorsTwo"
+
+					},
+					///=====================================
+					///
+
+
+					new AttackBehaviorGroup.AttackGroupItem()
+					{
+
+					Probability = 0f,
+					Behavior = new CustomBeholsterLaserBehavior{
+					UsesBeamProjectileWithoutModule = true,
+					InitialCooldown = 0f,
+					firingTime = 12f,
+					Cooldown = 12,
+					AttackCooldown = 1.33f,
+					RequiresLineOfSight = false,
+					FiresDirectlyTowardsPlayer = false,
+					UsesCustomAngle = true,
+					chargeTime = 1f,
+					UsesBaseSounds = false,
+					ChargeAnimation = "chargelaser",
+					FireAnimation = "firelaser",
+					PostFireAnimation = "postlaser",
+					beamSelection = ShootBeamBehavior.BeamSelection.Specify,
+					specificBeamShooters = new List<AIBeamShooter2>(){A,B,C},
+					trackingType = CustomBeholsterLaserBehavior.TrackingType.ConstantTurn,
+					BulletScript = new CustomBulletScriptSelector(typeof(PrisonerSubPhase3Attacks.SimpleBlastsThree)),
+					ShootPoint = OrbPoint.transform,
+					unitCatchUpSpeed = 24f,
+					maxTurnRate = 24f,
+					turnRateAcceleration = 24f,
+					useDegreeCatchUp = true,
+					minDegreesForCatchUp = 2f,
+					degreeCatchUpSpeed = 144,
+					useUnitCatchUp = true,
+					minUnitForCatchUp = 2,
+					maxUnitForCatchUp = 2,
+					useUnitOvershoot = true,
+					minUnitForOvershoot = 1,
+					firingType = CustomBeholsterLaserBehavior.FiringType.ONLY_NORTHANGLEVARIANCE,
+
+
+					},
+						NickName = "SimpleBlastsThree"
+					},
+
+					new AttackBehaviorGroup.AttackGroupItem()
+					{
+						Probability = 0f,
+						Behavior = new ShootBehavior{
+						ShootPoint = RaisedArmLaserAttachPoint,
+						BulletScript = new CustomBulletScriptSelector(typeof(PrisonerSubPhase3Attacks.WallSweepThree)),
+						LeadAmount = 0f,
+						AttackCooldown = 0.35f,
+						Cooldown = 4f,
+						ChargeAnimation = "raisearm",
+						FireAnimation = "sweengarm",
+						PostFireAnimation = "lowerarm",
+						RequiresLineOfSight = true,
+						MultipleFireEvents = true,
+						Uninterruptible = false,
+						},
+						NickName = "WallSweepThree"
+
+					},
+
+					new AttackBehaviorGroup.AttackGroupItem()
+					{
+						Probability = 0f,
+						Behavior = new ShootBehavior{
+						ShootPoint = RaisedArmLaserAttachPoint,
+						BulletScript = new CustomBulletScriptSelector(typeof(PrisonerSubPhase3Attacks.LaserCrossThree)),
+						LeadAmount = 0f,
+						AttackCooldown = 0f,
+						Cooldown = 4f,
+						TellAnimation = "chargelaser",
+						FireAnimation = "firelaser",
+						PostFireAnimation = "postlaser",
+						RequiresLineOfSight = true,
+						MultipleFireEvents = true,
+						Uninterruptible = false,
+						},
+						NickName = "LaserCrossThree"
+
+					},
+
+					new AttackBehaviorGroup.AttackGroupItem()
+					{
+						Probability = 0f,
+						Behavior = new ShootBehavior{
+						ShootPoint = RaisedArmLaserAttachPoint,
+						BulletScript = new CustomBulletScriptSelector(typeof(PrisonerSubPhase3Attacks.SweepJukeAttackThree)),
+						LeadAmount = 0f,
+						AttackCooldown = 0f,
+						Cooldown = 12f,
+						TellAnimation = "raisearm",
+						FireAnimation = "sweengarm",
+						PostFireAnimation = "lowerarm",
+						RequiresLineOfSight = true,
+						MultipleFireEvents = true,
+						Uninterruptible = false,
+						},
+						NickName = "SweepJukeAttackThree"
+
+					},
+					new AttackBehaviorGroup.AttackGroupItem()
+					{
+						Probability = 0f,
+						Behavior = new ShootBehavior{
+						ShootPoint = RightHandChargePoint,
+						BulletScript = new CustomBulletScriptSelector(typeof(PrisonerSubPhase3Attacks.BasicLaserAttackTellThree)),
+						LeadAmount = 0f,
+						AttackCooldown = 0f,
+						Cooldown = 2f,
+						TellAnimation = "swipehandback",
+						FireAnimation = "swipehandcharge",
+						PostFireAnimation = "swipehandmoveback",
+						RequiresLineOfSight = true,
+						MultipleFireEvents = true,
+						Uninterruptible = false,
+						},
+						NickName = "BasicLaserAttackTellThree"
+
+					},
+					new AttackBehaviorGroup.AttackGroupItem()
+					{
+						Probability = 0f,
+						Behavior = new ShootBehavior{
+						ShootPoint = RaisedArmLaserAttachPoint,
+						BulletScript = new CustomBulletScriptSelector(typeof(PrisonerSubPhase3Attacks.ChainRotatorsThree)),
+						LeadAmount = 0f,
+						AttackCooldown = 1f,
+						Cooldown = 7f,
+						TellAnimation = "raisearm",
+						FireAnimation = "sweengarm",
+						PostFireAnimation = "lowerarm",
+						RequiresLineOfSight = true,
+						MultipleFireEvents = true,
+						Uninterruptible = false,
+						},
+						NickName = "ChainRotatorsThree"
 
 					},
 					///=====================================
@@ -1838,6 +1979,7 @@ namespace Planetside
 				bool isDodgeable;
 
 			}
+
 		}
 		public class SweepJukeAttack : Script
 		{

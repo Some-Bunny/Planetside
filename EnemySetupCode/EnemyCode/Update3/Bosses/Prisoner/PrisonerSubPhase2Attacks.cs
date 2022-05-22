@@ -949,7 +949,7 @@ namespace Planetside
 		{
 			protected override IEnumerator Top()
 			{
-				this.EndOnBlank = false;
+				this.EndOnBlank = true;
 				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSniper);
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("31a3ea0c54a745e182e22ea54844a82d").bulletBank.GetBullet("sniper"));
 
@@ -968,7 +968,7 @@ namespace Planetside
 					base.BulletBank.aiActor.StartCoroutine(SwipeLaser(CentreAngle - 180, -168, this, 1.5f - (0.5f * e)));
 					base.BulletBank.aiActor.StartCoroutine(SwipeLaser(CentreAngle - 180, 168, this, 1.5f - (0.5f * e)));
 				}
-				for (int e = 0; e < 12; e++)
+				for (int e = 0; e < 11; e++)
 				{
 					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(CentreAngle, this, 0.625f));
 					yield return this.Wait(45);
@@ -999,7 +999,7 @@ namespace Planetside
 				yes1.spawnShadows = true;
 				yes1.shadowLifetime = 0.2f;
 				yes1.shadowTimeDelay = 0.005f;
-				yes1.dashColor = new Color(0f, 1f, 1f, 1f);
+				yes1.dashColor = new Color(1f, 0f, 0f, 1f);
 				float elapsed = 0;
 				while (elapsed < Time)
 				{
@@ -1052,7 +1052,7 @@ namespace Planetside
 				yes1.spawnShadows = true;
 				yes1.shadowLifetime = 0.2f;
 				yes1.shadowTimeDelay = 0.005f;
-				yes1.dashColor = new Color(0f, 1f, 1f, 1f);
+				yes1.dashColor = new Color(1f, 0f, 0f, 1f);
 
 				float elapsed = 0;
 				float Time = 1.25f;

@@ -27,6 +27,14 @@ namespace Planetside
 {
     static class PlanetsideReflectionHelper
     {
+
+        public static void ReflectionShallowCopyFields<T>(T target, T source, BindingFlags flags)
+        {
+            foreach (FieldInfo fieldInfo in typeof(T).GetFields(flags))
+            {
+                fieldInfo.SetValue(target, fieldInfo.GetValue(source));
+            }
+        }
         public static IList CreateDynamicList(Type type)
         {
             bool flag = type == null;

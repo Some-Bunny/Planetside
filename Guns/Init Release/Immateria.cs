@@ -47,6 +47,7 @@ namespace Planetside
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.reloadAnimation).frames[0].eventAudio = "Play_WPN_blackhole_impact_01";
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.reloadAnimation).frames[0].triggerEvent = true;
 
+
 			gun.barrelOffset.transform.localPosition = new Vector3(2.0f, 0.4375f, 0f);
 			gun.carryPixelOffset += new IntVector2((int)4f, (int)0f);
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.chargeAnimation).wrapMode = tk2dSpriteAnimationClip.WrapMode.LoopSection;
