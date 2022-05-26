@@ -33,7 +33,7 @@ namespace Planetside
 			gun.DefaultModule.ammoCost = 1;
 			gun.DefaultModule.shootStyle = ProjectileModule.ShootStyle.Burst;
 			gun.DefaultModule.sequenceStyle = ProjectileModule.ProjectileSequenceStyle.Random;
-			gun.reloadTime = 2.9f;
+			gun.reloadTime = 2.8f;
 			gun.DefaultModule.cooldownTime = .25f;
 			gun.DefaultModule.numberOfShotsInClip = 60;
 			gun.SetBaseMaxAmmo(300);
@@ -42,16 +42,18 @@ namespace Planetside
 			gun.DefaultModule.burstShotCount = 4;
 			gun.DefaultModule.burstCooldownTime = 0.025f;
 			gun.gunClass = GunClass.FULLAUTO;
+
+
 			Gun gun2 = PickupObjectDatabase.GetById(156) as Gun;
+			gun.DefaultModule.ammoType = gun2.DefaultModule.ammoType;
 			gun.DefaultModule.customAmmoType = gun2.DefaultModule.customAmmoType;
-			gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
 
 			Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(gun.DefaultModule.projectiles[0]);
 			projectile.gameObject.SetActive(false);
 			FakePrefab.MarkAsFakePrefab(projectile.gameObject);
 			UnityEngine.Object.DontDestroyOnLoad(projectile);
 			gun.DefaultModule.projectiles[0] = projectile;
-			projectile.baseData.damage = 4f;
+			projectile.baseData.damage = 4.5f;
 			projectile.baseData.speed *= 0.7f;
 			projectile.AdditionalScaleMultiplier *= 1f;
 			projectile.shouldRotate = true;
@@ -84,7 +86,6 @@ namespace Planetside
 			spook.penetration = 1;
 			projectile.OverrideMotionModule = new OscillatingeMotionModule();
 			spook.penetratesBreakables = true;
-			//projectile.baseData.range = 5.8f;
 			gun.encounterTrackable.EncounterGuid = "https://www.youtube.com/watch?v=P5ChKb_9JoY";
 			ETGMod.Databases.Items.Add(gun, null, "ANY");
 			List<string> AAA = new List<string>

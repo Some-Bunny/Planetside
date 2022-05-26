@@ -25,13 +25,23 @@ namespace Planetside
             gun.SetBaseMaxAmmo(250);
             gun.DefaultModule.ammoCost = 1;
 
-            //gun.gunSwitchGroup = (PickupObjectDatabase.GetById(577) as Gun).gunSwitchGroup;
             gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_WPN_dl45heavylaser_shot_01";
             gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].triggerEvent = true;
             gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.reloadAnimation).frames[0].eventAudio = "Play_WPN_dl45heavylaser_reload";
             gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.reloadAnimation).frames[0].triggerEvent = true;
-            Projectile component = ((Gun)ETGMod.Databases.Items[377]).DefaultModule.projectiles[0];
-            Projectile replacementProjectile = component.projectile;
+
+
+            Projectile spear = UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(377) as Gun).DefaultModule.projectiles[0]);
+            spear.gameObject.SetActive(false);
+            FakePrefab.MarkAsFakePrefab(spear.gameObject);
+            UnityEngine.Object.DontDestroyOnLoad(spear);
+            spear.baseData.damage = 8;
+            spear.baseData.speed *= 3f;
+            spear.baseData.force = 0f;
+            spear.baseData.range = 8;
+
+
+            Projectile replacementProjectile = spear.projectile;
             gun.DefaultModule.usesOptionalFinalProjectile = true;
             gun.DefaultModule.numberOfFinalProjectiles = 0;
             gun.DefaultModule.finalProjectile = replacementProjectile;
@@ -41,7 +51,7 @@ namespace Planetside
             gun.DefaultModule.shootStyle = ProjectileModule.ShootStyle.Automatic;
             gun.DefaultModule.sequenceStyle = ProjectileModule.ProjectileSequenceStyle.Random;
             gun.reloadTime = 1.6f;
-            gun.DefaultModule.cooldownTime = 0.33f;
+            gun.DefaultModule.cooldownTime = 0.25f;
             //gun.gunClass = GunClass.SHITTY;
             gun.DefaultModule.numberOfShotsInClip = 10;
             gun.quality = PickupObject.ItemQuality.C;
@@ -49,8 +59,7 @@ namespace Planetside
             gun.muzzleFlashEffects = gun2.muzzleFlashEffects;
             gun.gunClass = GunClass.PISTOL;
 
-            //gun.gunSwitchGroup = gun2.gunSwitchGroup;
-            //gun.gunHandedness = GunHandedness.TwoHanded;
+
             gun.barrelOffset.transform.localPosition = new Vector3(0.75f, .3125f, 0f);
             gun.DefaultModule.angleVariance = 4f;
             gun.encounterTrackable.EncounterGuid = "MUL-T GANG";
@@ -60,23 +69,26 @@ namespace Planetside
             FakePrefab.MarkAsFakePrefab(projectile.gameObject);
             UnityEngine.Object.DontDestroyOnLoad(projectile);
             gun.DefaultModule.projectiles[0] = projectile;
-            projectile.baseData.damage = 6f;
-            projectile.baseData.speed *= 1f;
-            projectile.baseData.force *= 1f;
+            projectile.baseData.damage = 14f;
+            projectile.baseData.speed *= 1.5f;
+            projectile.baseData.force *= 4f;
             projectile.baseData.range *= 4;
             projectile.HasDefaultTint = true;
-            //Gun FUUUU = PickupObjectDatabase.GetById(577) as Gun;
-            //gun.gunSwitchGroup = FUUUU.gunSwitchGroup;
+
             ETGMod.Databases.Items.Add(gun, null, "ANY");
             projectile.transform.parent = gun.barrelOffset;
             behav.activeReloadEnabled = true;
+            behav.canAttemptActiveReload = true;
+
+
             behav.reloads = new List<MultiActiveReloadData>
             {
-                new MultiActiveReloadData(0.625f, 40, 60, 0, 5 * 5, false, true, new ActiveReloadData
+                new MultiActiveReloadData(0.375f, 40, 60, 32, 20, true, false, new ActiveReloadData
                 {
                     damageMultiply = 2f,
 
                 }, true, "SwitchClip"),
+
             };
             HardlightNailgun.HardAsNailsID = gun.PickupObjectId;
             ItemIDs.AddToList(gun.PickupObjectId);
@@ -135,7 +147,6 @@ namespace Planetside
         public override void OnPostFired(PlayerController player, Gun flakcannon)
         {
             gun.PreventNormalFireAudio = true;
-            //AkSoundEngine.PostEvent("Play_wpn_chargelaser_shot_01", gameObject);
         }
         private void NoClip(PlayerController player)
         {

@@ -43,8 +43,12 @@ namespace Planetside
 			gun.DefaultModule.cooldownTime = 0.5f;
 			gun.DefaultModule.numberOfShotsInClip = 1;
 			gun.SetBaseMaxAmmo(40);
-			gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.NAIL;
+
 			gun.DefaultModule.angleVariance = 0f;
+
+
+			gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
+			gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Rebar", "Planetside/Resources/GunClips/RebarPuncher/rebarfull", "Planetside/Resources/GunClips/RebarPuncher/rebarempty");
 
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_WPN_seriouscannon_shot_01";
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].triggerEvent = true;

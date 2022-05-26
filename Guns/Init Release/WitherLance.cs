@@ -30,7 +30,7 @@ namespace Planetside
 			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 15);
 			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 10);
 			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 4);
-			GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(32) as Gun, true, false);
+			GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(56) as Gun, true, false);
 			gun.gunSwitchGroup = (PickupObjectDatabase.GetById(52) as Gun).gunSwitchGroup;
 			gun.DefaultModule.ammoCost = 1;
 			gun.DefaultModule.shootStyle = ProjectileModule.ShootStyle.Automatic;
@@ -47,14 +47,30 @@ namespace Planetside
 			FakePrefab.MarkAsFakePrefab(projectile.gameObject);
 			UnityEngine.Object.DontDestroyOnLoad(projectile);
 			gun.DefaultModule.projectiles[0] = projectile;
-			projectile.baseData.damage = 0.1f;
-			projectile.baseData.speed *= 1f;
-			projectile.AdditionalScaleMultiplier *= 1.1f;
+			projectile.baseData.damage = 2f;
+			projectile.baseData.speed *= 1.66f;
+			projectile.AdditionalScaleMultiplier *= 0.8f;
 			projectile.shouldRotate = true;
 			projectile.pierceMinorBreakables = true;
-			projectile.DefaultTintColor = new Color(1f, 1f, 1f).WithAlpha(3f);
 			projectile.HasDefaultTint = true;
-			projectile.gameObject.AddComponent<WitherLancePROJECTILE>();
+			projectile.gameObject.AddComponent<WitherLanceProjectile>();
+			projectile.SetProjectileSpriteRight("witherlanceProjectile", 22, 10, false, tk2dBaseSprite.Anchor.MiddleCenter, 22, 10);
+
+			projectile.objectImpactEventName = (PickupObjectDatabase.GetById(47) as Gun).DefaultModule.projectiles[0].objectImpactEventName;
+			projectile.enemyImpactEventName = (PickupObjectDatabase.GetById(47) as Gun).DefaultModule.projectiles[0].enemyImpactEventName;
+
+			projectile.hitEffects.tileMapHorizontal = ObjectMakers.MakeObjectIntoVFX((PickupObjectDatabase.GetById(169) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapHorizontal.effects.First().effects.First().effect);
+			projectile.hitEffects.tileMapVertical = ObjectMakers.MakeObjectIntoVFX((PickupObjectDatabase.GetById(169) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapHorizontal.effects.First().effects.First().effect);
+			projectile.hitEffects.enemy = ObjectMakers.MakeObjectIntoVFX((PickupObjectDatabase.GetById(169) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapHorizontal.effects.First().effects.First().effect);
+			projectile.hitEffects.deathAny = ObjectMakers.MakeObjectIntoVFX((PickupObjectDatabase.GetById(169) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapHorizontal.effects.First().effects.First().effect);
+
+			ImprovedAfterImage yes = projectile.gameObject.AddComponent<ImprovedAfterImage>();
+			yes.spawnShadows = true;
+			yes.shadowLifetime = 0.33f;
+			yes.shadowTimeDelay = 0.01f;
+			yes.dashColor = new Color(0f, 0f, 0, 0.05f);
+			yes.name = "Gun Trail";
+
 			gun.gunClass = GunClass.RIFLE;
 
 			gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;

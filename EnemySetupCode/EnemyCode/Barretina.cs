@@ -54,13 +54,16 @@ namespace Planetside
 				companion.aiActor.healthHaver.SetHealthMaximum(40f, null, false);
 				companion.aiActor.PathableTiles = CellTypes.PIT | CellTypes.FLOOR;
 
-				companion.aiActor.gameObject.AddComponent<ImprovedAfterImage>().dashColor = Color.grey;
-				companion.aiActor.gameObject.AddComponent<ImprovedAfterImage>().spawnShadows = true;
+				ImprovedAfterImage image = companion.aiActor.gameObject.AddComponent<ImprovedAfterImage>();
+				image.dashColor = new Color(1, 0.85f, 0.7f);
+				image.spawnShadows = true;
 
-				companion.aiActor.specRigidbody.PixelColliders.Clear();
-				companion.aiActor.gameObject.AddComponent<AfterImageTrailController>().spawnShadows = false;
+				//255, 210, 178, 255)
+				AfterImageTrailController im = companion.aiActor.gameObject.AddComponent<AfterImageTrailController>();
+				im.spawnShadows = false;
 				companion.aiActor.gameObject.AddComponent<tk2dSpriteAttachPoint>();
 				companion.aiActor.gameObject.AddComponent<ObjectVisibilityManager>();
+
 				companion.aiActor.specRigidbody.PixelColliders.Add(new PixelCollider
 				{
 					ColliderGenerationMode = PixelCollider.PixelColliderGeneration.Manual,
@@ -106,82 +109,28 @@ namespace Planetside
 				AIAnimator aiAnimator = companion.aiAnimator;
 				aiAnimator.IdleAnimation = new DirectionalAnimation
 				{
-					Type = DirectionalAnimation.DirectionType.EightWayOrdinal,
-					Flipped = new DirectionalAnimation.FlipType[8],
+					Type = DirectionalAnimation.DirectionType.SixWay,
+					Flipped = new DirectionalAnimation.FlipType[6],
 					AnimNames = new string[]
 					{
-						"idle_north",
-					   "idle_north_east",
-						"idle_east",
-					   "idle_south_east",
-					   "idle_south",
-						"idle_south_west",
-					   "idle_west",
-						"idle_north_west",
-
+						"idle_back",
+						"idle_back_right",
+						"idle_front_right",
+						"idle_front",
+						"idle_front_left",
+						"idle_back_left"
 
 					}
 				};
-				aiAnimator.MoveAnimation = new DirectionalAnimation
-				{
-					Type = DirectionalAnimation.DirectionType.EightWayOrdinal,
-					Flipped = new DirectionalAnimation.FlipType[8],
-					AnimNames = new string[]
-					{
-						"idle_north",
-					   "idle_north_east",
-						"idle_east",
-					   "idle_south_east",
-					   "idle_south",
-						"idle_south_west",
-					   "idle_west",
-						"idle_north_west",
-					}
-				};
-				aiAnimator.OtherAnimations = new List<AIAnimator.NamedDirectionalAnimation>
-				{
-					new AIAnimator.NamedDirectionalAnimation
-					{
-					name = "die",
-					anim = new DirectionalAnimation
-						{
-							Type = DirectionalAnimation.DirectionType.TwoWayHorizontal,
-							Flipped = new DirectionalAnimation.FlipType[2],
-							AnimNames = new string[]
-							{
 
-					   "die_right",
-						   "die_left"
+				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "death", new string[] { "death" }, new DirectionalAnimation.FlipType[0]);
+				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "attack", new string[] {  "idle_back",
+						"idle_back_right",
+						"idle_front_right",
+						"idle_front",
+						"idle_front_left",
+						"idle_back_left" }, new DirectionalAnimation.FlipType[6], DirectionalAnimation.DirectionType.SixWay);
 
-							}
-
-						}
-					}
-				};
-				aiAnimator.OtherAnimations = new List<AIAnimator.NamedDirectionalAnimation>
-				{
-					new AIAnimator.NamedDirectionalAnimation
-					{
-					name = "attack",
-					anim = new DirectionalAnimation
-						{
-							Type = DirectionalAnimation.DirectionType.EightWayOrdinal,
-							Flipped = new DirectionalAnimation.FlipType[8],
-							AnimNames = new string[]
-							{
-						"idle_north",
-					   "idle_north_east",
-						"idle_east",
-					   "idle_south_east",
-					   "idle_south",
-						"idle_south_west",
-					   "idle_west",
-						"idle_north_west",
-							}
-
-						}
-					}
-				};
 				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awaken" }, new DirectionalAnimation.FlipType[0]);
 				companion.aiActor.AwakenAnimType = AwakenAnimationType.Awaken;
 				bool flag3 = BarretinaCollection == null;
@@ -198,96 +147,101 @@ namespace Planetside
 		            0,
 					1,
 					2,
-					3
-					}, "idle_north", tk2dSpriteAnimationClip.WrapMode.Once).fps = 3;
+					3,
+					4,
+					5,
+					6,
+					7
+					}, "idle_front", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6;
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, BarretinaCollection, new List<int>
 					{
 					8,
 					9,
 					10,
-					11
-					}, "idle_north_east", tk2dSpriteAnimationClip.WrapMode.Once).fps = 3;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, BarretinaCollection, new List<int>
-					{
-					4,
-					5,
-					6,
-					7
-
-					}, "idle_north_west", tk2dSpriteAnimationClip.WrapMode.Once).fps = 3;
-
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, BarretinaCollection, new List<int>
-					{
-		            12,
+					11,
+					12,
 					13,
 					14,
 					15
-
-					}, "idle_south", tk2dSpriteAnimationClip.WrapMode.Once).fps = 3;
+					}, "idle_front_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6;
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, BarretinaCollection, new List<int>
 					{
-		            20,
+					16,
+					17,
+					18,
+					19,
+					20,
 					21,
 					22,
 					23
-					}, "idle_south_east", tk2dSpriteAnimationClip.WrapMode.Once).fps = 3;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, BarretinaCollection, new List<int>
-					{
-		            16,
-					17,
-					18,
-					19
-					}, "idle_south_west", tk2dSpriteAnimationClip.WrapMode.Once).fps = 3;
+					}, "idle_front_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6;
 
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, BarretinaCollection, new List<int>
 					{
-					28,
-					29,
-					30,
-					31
-					}, "idle_east", tk2dSpriteAnimationClip.WrapMode.Once).fps = 3;
+		           24,
+				   25,
+				   26,
+				   27,
+				   28,
+				   29,
+				   30,
+				   31
+
+					}, "idle_back", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6;
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, BarretinaCollection, new List<int>
 					{
-		            24,
-					25,
-					26,
-					27
-					}, "idle_west", tk2dSpriteAnimationClip.WrapMode.Once).fps = 3;
+		            32,
+					33,
+					34,
+					35,
+					36,
+					37,
+					38,
+					39
+					}, "idle_back_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, BarretinaCollection, new List<int>
+					{
+		            40,
+					41,
+					42,
+					43,
+					44,
+					45,
+					46,
+					47
+					}, "idle_front_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6;
+
 
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, BarretinaCollection, new List<int>
 					{
-		             32,
-					 33,
-					 34,
-					 35,
-					 36,
-					 37,
-					 38,
-					 39,
-					 40
+					 48,
+					 49,
+					 50,
+					 51,
+					 52,
+					 53,
+					 54,
+					 55,
+					 56,
+					 57,
+					 58,
+					 59,
+					 60,
+					 61
 
-					}, "die_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 11f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, BarretinaCollection, new List<int>
-					{
-					 32,
-					 33,
-					 34,
-					 35,
-					 36,
-					 37,
-					 38,
-					 39,
-					 40
-
-					}, "die_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 11f;
+					}, "death", tk2dSpriteAnimationClip.WrapMode.Once).fps = 11f;
 
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, BarretinaCollection, new List<int>
 					{
 					0,
 					1,
 					2,
-					3
-					}, "awaken", tk2dSpriteAnimationClip.WrapMode.Once).fps = 10;
+					3,
+					4,
+					5,
+					6,
+					7
+					}, "awaken", tk2dSpriteAnimationClip.WrapMode.Once).fps = 19;
 
 				}
 				var bs = prefab.GetComponent<BehaviorSpeculator>();
@@ -328,12 +282,12 @@ namespace Planetside
 				new CustomDashBehavior()
 				{
 					ShootPoint = m_CachedGunAttachPoint,
-					dashDistance = 7f,
-					dashTime = 0.5f,
+					dashDistance = 8f,
+					dashTime = 0.75f,
 					AmountOfDashes = 2,
 					enableShadowTrail = false,
-					Cooldown = 2f,
-					dashDirection = DashBehavior.DashDirection.Random,
+					Cooldown = 3f,
+					dashDirection = DashBehavior.DashDirection.PerpendicularToTarget,
 					warpDashAnimLength = true,
 					hideShadow = true,
 					fireAtDashStart = true,
@@ -403,47 +357,60 @@ namespace Planetside
 		private static string[] spritePaths = new string[]
 		{
 
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_north_001.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_north_002.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_north_003.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_north_004.png",
-
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_northeast_001.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_northwest_002.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_northwest_003.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_northwest_004.png",
-
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_northeast_001.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_northeast_002.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_northeast_003.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_northeast_004.png",
-
 			"Planetside/Resources/Enemies/Berretina/berretina_idle_south_001.png",
 			"Planetside/Resources/Enemies/Berretina/berretina_idle_south_002.png",
 			"Planetside/Resources/Enemies/Berretina/berretina_idle_south_003.png",
 			"Planetside/Resources/Enemies/Berretina/berretina_idle_south_004.png",
+			"Planetside/Resources/Enemies/Berretina/berretina_idle_south_005.png",
+			"Planetside/Resources/Enemies/Berretina/berretina_idle_south_006.png",
+			"Planetside/Resources/Enemies/Berretina/berretina_idle_south_007.png",
+			"Planetside/Resources/Enemies/Berretina/berretina_idle_south_008.png",
 
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_southwest_001.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_southwest_002.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_southwest_003.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_southwest_004.png",
+			"Planetside/Resources/Enemies/Berretina/berretina_idle_southleft_001.png",
+			"Planetside/Resources/Enemies/Berretina/berretina_idle_southleft_002.png",
+			"Planetside/Resources/Enemies/Berretina/berretina_idle_southleft_003.png",
+			"Planetside/Resources/Enemies/Berretina/berretina_idle_southleft_004.png",
+			"Planetside/Resources/Enemies/Berretina/berretina_idle_southleft_005.png",
+			"Planetside/Resources/Enemies/Berretina/berretina_idle_southleft_006.png",
+			"Planetside/Resources/Enemies/Berretina/berretina_idle_southleft_007.png",
+			"Planetside/Resources/Enemies/Berretina/berretina_idle_southleft_008.png",
 
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_southeast_001.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_southeast_002.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_southeast_003.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_southeast_004.png",
+			"Planetside/Resources/Enemies/Berretina/berretina_idle_southright_001.png",
+			"Planetside/Resources/Enemies/Berretina/berretina_idle_southright_002.png",
+			"Planetside/Resources/Enemies/Berretina/berretina_idle_southright_003.png",
+			"Planetside/Resources/Enemies/Berretina/berretina_idle_southright_004.png",
+			"Planetside/Resources/Enemies/Berretina/berretina_idle_southright_005.png",
+			"Planetside/Resources/Enemies/Berretina/berretina_idle_southright_006.png",
+			"Planetside/Resources/Enemies/Berretina/berretina_idle_southright_007.png",
+			"Planetside/Resources/Enemies/Berretina/berretina_idle_southright_008.png",
 
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_west_001.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_west_002.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_west_003.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_west_004.png",
+			"Planetside/Resources/Enemies/Berretina/berretina_idle_north_001.png",
+			"Planetside/Resources/Enemies/Berretina/berretina_idle_north_002.png",
+			"Planetside/Resources/Enemies/Berretina/berretina_idle_north_003.png",
+			"Planetside/Resources/Enemies/Berretina/berretina_idle_north_004.png",
+			"Planetside/Resources/Enemies/Berretina/berretina_idle_north_005.png",
+			"Planetside/Resources/Enemies/Berretina/berretina_idle_north_006.png",
+			"Planetside/Resources/Enemies/Berretina/berretina_idle_north_007.png",
+			"Planetside/Resources/Enemies/Berretina/berretina_idle_north_008.png",
 
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_east_001.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_east_002.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_east_003.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_east_004.png",
+			"Planetside/Resources/Enemies/Berretina/berretina_idle_northleft_001.png",
+			"Planetside/Resources/Enemies/Berretina/berretina_idle_northleft_002.png",
+			"Planetside/Resources/Enemies/Berretina/berretina_idle_northleft_003.png",
+			"Planetside/Resources/Enemies/Berretina/berretina_idle_northleft_004.png",
+			"Planetside/Resources/Enemies/Berretina/berretina_idle_northleft_005.png",
+			"Planetside/Resources/Enemies/Berretina/berretina_idle_northleft_006.png",
+			"Planetside/Resources/Enemies/Berretina/berretina_idle_northleft_007.png",
+			"Planetside/Resources/Enemies/Berretina/berretina_idle_northleft_008.png",
 
-			//death
+			"Planetside/Resources/Enemies/Berretina/berretina_idle_northright_001.png",
+			"Planetside/Resources/Enemies/Berretina/berretina_idle_northright_002.png",
+			"Planetside/Resources/Enemies/Berretina/berretina_idle_northright_003.png",
+			"Planetside/Resources/Enemies/Berretina/berretina_idle_northright_004.png",
+			"Planetside/Resources/Enemies/Berretina/berretina_idle_northright_005.png",
+			"Planetside/Resources/Enemies/Berretina/berretina_idle_northright_006.png",
+			"Planetside/Resources/Enemies/Berretina/berretina_idle_northright_007.png",
+			"Planetside/Resources/Enemies/Berretina/berretina_idle_northright_008.png",
+
 			"Planetside/Resources/Enemies/Berretina/berretina_die_001.png",
 			"Planetside/Resources/Enemies/Berretina/berretina_die_002.png",
 			"Planetside/Resources/Enemies/Berretina/berretina_die_003.png",
@@ -453,6 +420,12 @@ namespace Planetside
 			"Planetside/Resources/Enemies/Berretina/berretina_die_007.png",
 			"Planetside/Resources/Enemies/Berretina/berretina_die_008.png",
 			"Planetside/Resources/Enemies/Berretina/berretina_die_009.png",
+			"Planetside/Resources/Enemies/Berretina/berretina_die_010.png",
+			"Planetside/Resources/Enemies/Berretina/berretina_die_011.png",
+			"Planetside/Resources/Enemies/Berretina/berretina_die_012.png",
+			"Planetside/Resources/Enemies/Berretina/berretina_die_013.png",
+			"Planetside/Resources/Enemies/Berretina/berretina_die_014.png",
+
 
 		};
 
@@ -498,6 +471,18 @@ namespace Planetside
 				{ 
 				  AkSoundEngine.PostEvent("Play_ENM_Tarnisher_Bite_01", base.aiActor.gameObject);
 				};
+				if (!base.aiActor.IsBlackPhantom)
+				{
+					Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+					mat.mainTexture = base.aiActor.sprite.renderer.material.mainTexture;
+					mat.SetColor("_EmissiveColor", new Color32(255, 210, 178, 255));
+					mat.SetFloat("_EmissiveColorPower", 1.55f);
+					mat.SetFloat("_EmissivePower", 100);
+					mat.SetFloat("_EmissiveThresholdSensitivity", 0.05f);
+
+					aiActor.sprite.renderer.material = mat;
+
+				}
 			}
 
 		}

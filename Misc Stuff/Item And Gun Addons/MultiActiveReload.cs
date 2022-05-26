@@ -70,7 +70,9 @@ namespace Planetside
                     dfSprite sprite = UnityEngine.Object.Instantiate(self.activeReloadSprite);
                     self.activeReloadSprite.Parent.AddControl(sprite);
                     sprite.enabled = true;
+
                     float width = self.progressSlider.Width;
+
                     float maxValue = self.progressSlider.MaxValue;
                     float num = data.startValue / maxValue * width;
                     float num2 = data.endValue / maxValue * width;
@@ -78,7 +80,12 @@ namespace Planetside
                     float width2 = (float)pixelWidth * Pixelator.Instance.CurrentTileScale;
                     sprite.RelativePosition = self.activeReloadSprite.RelativePosition;
                     sprite.RelativePosition = GameUIUtility.QuantizeUIPosition(sprite.RelativePosition.WithX(x));
-                    sprite.Width = width2;
+                    sprite.RelativePosition += new Vector3(0, 0, 10);
+                    sprite.Width = width2 * 2;
+                    sprite.Height = width2 * 10;
+
+
+
                     sprite.IsVisible = true;
                     dfSprite celebrationSprite = UnityEngine.Object.Instantiate(self.celebrationSprite);
                     self.activeReloadSprite.Parent.AddControl(celebrationSprite);
@@ -214,7 +221,7 @@ namespace Planetside
                         }
                         if (reload == null || !reload.canAttemptActiveReloadAfterwards)
                         {
-                            ETGModConsole.Log("yes");
+                            //ETGModConsole.Log("yes");
                             controller.canAttemptActiveReload = false;
                             Action<PlayerController, Gun, bool> act = (Action<PlayerController, Gun, bool>)info2.CreateDelegate<Action<PlayerController, Gun, bool>>();
                             self.OnReloadPressed -= act;

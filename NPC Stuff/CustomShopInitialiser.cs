@@ -123,7 +123,6 @@ namespace Planetside
             ETGMod.Databases.Strings.Core.Set("#GREGTHLY_RUNBASEDMULTILINE_INTRO", "...");
             ETGMod.Databases.Strings.Core.Set("#GREGTHLY_RUNBASEDMULTILINE_ATTACKED", "???");
 
-
             GameObject timedShop = ItsDaFuckinShopApi.SetUpShop(
                   "gregthly"
                 , "psog"
@@ -214,11 +213,9 @@ namespace Planetside
             ETGMod.Databases.Strings.Core.AddComplex("#MASTERYTRADER_RUNBASEDMULTILINE_STOPPER", "You can't... free me... regardless...");
             ETGMod.Databases.Strings.Core.AddComplex("#MASTERYTRADER_RUNBASEDMULTILINE_STOPPER", "Let me... rest...");
 
-
             ETGMod.Databases.Strings.Core.AddComplex("#MASTERYTRADER_RUNBASEDMULTILINE_PURCHASE", "This should... aid you...");
             ETGMod.Databases.Strings.Core.AddComplex("#MASTERYTRADER_RUNBASEDMULTILINE_PURCHASE", "Good choice...");
             ETGMod.Databases.Strings.Core.AddComplex("#MASTERYTRADER_RUNBASEDMULTILINE_PURCHASE", "Good... form...");
-
 
             ETGMod.Databases.Strings.Core.AddComplex("#MASTERYTRADER_RUNBASEDMULTILINE_FAILPURCHASE", "Not enough... potential...");
             ETGMod.Databases.Strings.Core.AddComplex("#MASTERYTRADER_RUNBASEDMULTILINE_FAILPURCHASE", "Return more... proven...");
@@ -231,8 +228,6 @@ namespace Planetside
             ETGMod.Databases.Strings.Core.AddComplex("#MASTERYTRADER_RUNBASEDMULTILINE_ATTACKED", "How could... you..?");
             ETGMod.Databases.Strings.Core.AddComplex("#MASTERYTRADER_RUNBASEDMULTILINE_ATTACKED", "No mercy... in you...");
             ETGMod.Databases.Strings.Core.AddComplex("#MASTERYTRADER_RUNBASEDMULTILINE_ATTACKED", "Why..?");
-
-
 
             GenericLootTable MasteryTable = LootTableTools.CreateLootTable();
             MasteryTable.AddItemsToPool(new Dictionary<int, float> { {AllSeeingEye.AllSeeingEyeID, 1}, { AllStatsUp.AllStatsUpID, 1 }, { BlastProjectiles.BlastProjectilesID, 1 }, { ChaoticShift.ChaoticShiftID, 1 }, { Contract.ContractID, 1 }, { Glass.GlassID, 1 }, { Greedy.GreedyID, 1 }, { Gunslinger.GunslingerID, 1 }, { PitLordsPact.PitLordsPactID, 1 }, { UnbreakableSpirit.UnbreakableSpiritID, 1 }, });
@@ -276,9 +271,7 @@ namespace Planetside
                 , null //dungeonprereqwuisite
                 , null
                 ,2
-                , CustomShopController.PoolType.DUPES_AND_NOEXCLUSION); //purchasespritepaths
-                         //EnemyToolbox.AddSoundsToAnimationFrame(timedShop.GetComponentInChildren<tk2dSpriteAnimator>(), "dance", new Dictionary<int, string>() { { 1, "Play_WPN_teddy_impact_03" } });
-                         //gregthyShop = timedShop;
+                , CustomShopController.PoolType.DUPES_AND_NOEXCLUSION);
             masteryShop.GetComponentInChildren<tk2dBaseSprite>().usesOverrideMaterial = true;
             Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
             mat.mainTexture = masteryShop.GetComponentInChildren<tk2dBaseSprite>().sprite.renderer.material.mainTexture;

@@ -21,7 +21,7 @@ namespace Planetside
 			GunExt.SetShortDescription(gun, "Proc Coefficient: 0.2");
 			GunExt.SetLongDescription(gun, "A reformed taser weapon that fires electric arcs in a wide area. Gungeonologists speculate whether the similarities between this weapon and an existing weapon are intentional, or just coincidence.");
 			GunExt.SetupSprite(gun, null, "shocklaser_idle_001", 8);
-			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 24);
+			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 48);
 			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 9);
 			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 2);
 			gun.SetBaseMaxAmmo(150);
@@ -104,7 +104,7 @@ namespace Planetside
 			gun.encounterTrackable.EncounterGuid = "):";
 			ETGMod.Databases.Items.Add(gun, null, "ANY");
 
-			gun.barrelOffset.transform.localPosition = new Vector3(1.25f, 0.3125f, 0f);
+			gun.barrelOffset.transform.localPosition = new Vector3(2.5f, 0.375f, 0f);
 			gun.carryPixelOffset = new IntVector2((int)4f, (int)-0.5f);
 			Gun gun4 = PickupObjectDatabase.GetById(13) as Gun;
 			gun.muzzleFlashEffects = gun4.muzzleFlashEffects;

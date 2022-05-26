@@ -79,9 +79,7 @@ namespace Planetside
         private IEnumerator HandleGrabbyGrab(PlayerController grabbedPlayer)
         {
             Pixelator.Instance.FadeToBlack(0.5f, false, 0f);
-            {
-                GameManager.Instance.LoadCustomLevel("tt_bullethell");
-            }
+            GameManager.Instance.LoadCustomLevel("tt_bullethell");
             yield break;
         }
         private static void Notify(string header, string text)
@@ -137,17 +135,17 @@ namespace Planetside
             };
             Dictionary<float, string> prebreaks = new Dictionary<float, string>()
             {
-                {90, defaultPath+"kalipedestal_prebreak1.png"},
-                {50, defaultPath+"kalipedestal_prebreak2.png"},
-                {20, defaultPath+"kalipedestal_prebreak3.png"},
+                {99, defaultPath+"kalipedestal_prebreak1.png"},
+                {60, defaultPath+"kalipedestal_prebreak2.png"},
+                {25, defaultPath+"kalipedestal_prebreak3.png"},
             };
-            MajorBreakable statue = BreakableAPIToolbox.GenerateMajorBreakable("holy_statue", idlePaths, 1, null, 1, 150, defaultPath+ "kalipedestalshadow.png", 0f ,-0.1875f, true, 32, 32, 0 ,-4, true, null, null, true, null, prebreaks);
+            MajorBreakable statue = BreakableAPIToolbox.GenerateMajorBreakable("holy_statue", idlePaths, 1, null, 1, 75, defaultPath+ "kalipedestalshadow.png", 0f ,-0.1875f, true, 32, 32, 0 ,-4, true, null, null, true, null, prebreaks);
             statue.InvulnerableToEnemyBullets = true;
 
-            statue.minShardPercentSpeed = 0.5f; //The minimum multiplier for the shards speed
-            statue.maxShardPercentSpeed = 1.4f;  //The maximum multiplier for the shards speed
+            statue.minShardPercentSpeed = 0.5f; 
+            statue.maxShardPercentSpeed = 1.4f; 
 
-            statue.destroyedOnBreak = true; //Destroys the object *completely* when its HP reaches 0. having this false will keep the object but remove its collision when its HP reaches 0
+            statue.destroyedOnBreak = true; 
             statue.handlesOwnPrebreakFrames = true;
 
 
@@ -209,10 +207,6 @@ namespace Planetside
 
             DungeonPlaceable placeable = BreakableAPIToolbox.GenerateDungeonPlaceable(dict);
             StaticReferences.StoredDungeonPlaceables.Add("holychamberstatue", placeable);
-            //DungeonPlaceable placeable = BreakableAPIToolbox.GenerateDungeonPlaceable(dict);
-            //StaticReferences.StoredDungeonPlaceables.Add("test", placeable);
-
-            //StaticReferences.StoredRoomObjects.Add("test", breakable.gameObject);
         }
     }
 }

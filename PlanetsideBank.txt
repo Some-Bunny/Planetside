@@ -15,6 +15,7 @@ Event	ID	Name			Wwise Object Path	Notes
 	1708275573	Play_Burn			\Default Work Unit\Play_Burn	
 	1844824434	Stop_ambienthum			\Default Work Unit\Stop_ambienthum	
 	1868670745	Play_MUS_PrisonerTheme			\Default Work Unit\Play_MUS_PrisonerTheme	
+	1948120780	Play_PortalCall			\Default Work Unit\Play_PortalCall	
 	2188643253	Play_MetalStep			\Default Work Unit\Play_MetalStep	
 	2479500174	Play_PrisonerCharge			\Default Work Unit\Play_PrisonerCharge	
 	2529669854	Stop_Whistle			\Default Work Unit\Stop_Whistle	
@@ -61,6 +62,7 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	385222674	DistressSiren	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\DistressSiren_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\DistressSiren		27348
 	391233250	Railgun	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Railgun_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\Railgun		29738
 	413340843	Bleep	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Bleep_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\Bleep		6915
+	423828789	PortalCall	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\PortalCall_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\PortalCall		9931
 	438416493	Bigbeam_Start	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Bigbeam_Start_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\BigBeam\Bigbeam_Start		27588
 	452294370	Yari1	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Yari1_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\Yari\Yari1		11820
 	475472655	PrisonerCharge	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\PrisonerCharge_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\PrisonerCharge		28791

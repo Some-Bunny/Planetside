@@ -39,21 +39,7 @@ namespace Planetside
 
             }
         }
-		public IEnumerator Speed(Projectile projectile)
-		{
-			bool flag = projectile != null;
-			bool flag3 = flag;
-			if (flag3)
-			{
-				for (int i = 0; i < 15; i++)
-				{
-					projectile.baseData.speed += 1f;
-					projectile.UpdateSpeed();
-					yield return new WaitForSeconds(0.1f);
-				}
-			}
-			yield break;
-		}
+		
 		private void HandleHit(Projectile projectile, SpeculativeRigidbody arg2, bool arg3)
 		{
 			bool flag = arg2.aiActor != null && !arg2.healthHaver.IsDead && arg2.aiActor.behaviorSpeculator && !arg2.aiActor.IsHarmlessEnemy && arg2.aiActor != null;

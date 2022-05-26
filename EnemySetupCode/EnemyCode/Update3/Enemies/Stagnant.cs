@@ -295,7 +295,7 @@ namespace Planetside
 
 
 
-				SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Enemies/Stagnant/lilthing_die_001.png", SpriteBuilder.ammonomiconCollection);
+				SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Enemies/Stagnant/lilthing_die_001", SpriteBuilder.ammonomiconCollection);
 				if (companion.GetComponent<EncounterTrackable>() != null)
 				{
 					UnityEngine.Object.Destroy(companion.GetComponent<EncounterTrackable>());
@@ -308,7 +308,7 @@ namespace Planetside
 				companion.encounterTrackable.journalData.IsEnemy = true;
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
-				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Enemies/Stagnant/lilthing_die_001.png";
+				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Enemies/Stagnant/lilthing_die_001";
 				companion.encounterTrackable.journalData.enemyPortraitSprite = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\stagnantTrespass.png");
 				PlanetsideModule.Strings.Enemies.Set("#STAGNANT", "Stagnant");
 				PlanetsideModule.Strings.Enemies.Set("#STAGNANT_SHORTDESC", "Regressive Defensive");

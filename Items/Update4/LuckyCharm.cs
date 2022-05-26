@@ -102,7 +102,13 @@ namespace Planetside
 			CustomFloorRewardData.A_Item_Chest_Chance = 0.2f;
 			CustomFloorRewardData.S_Item_Chest_Chance = 0.2f;
 
+			List<string> mandatoryConsoleIDs = new List<string>
+			{
+				"psog:lucky_charm",
+				"seven_leaf_clover"
 
+			};		
+			CustomSynergies.Add("1 in 177 Billion", mandatoryConsoleIDs, null, true);
 		}
 
 		public static FloorRewardData CustomFloorRewardData;
@@ -119,10 +125,12 @@ namespace Planetside
 		{
 			if (IsLucky == true)
             {
+				bool isFav = PlayerHasFavouritism();
+
 				float num = 0f;
-				float num2 = 0.35f;
-				float num3 = 0.65f;
-				float num4 = 0.9f;
+				float num2 = isFav == false ? 0.35f : 0.15f;
+				float num3 = isFav == false ? 0.65f : 0.5f;
+				float num4 = isFav == false ? 0.9f : 0.8f;
 				float value = UnityEngine.Random.value;
 				PickupObject.ItemQuality result = PickupObject.ItemQuality.D;
 				if (value > num && value <= num2)
@@ -145,13 +153,25 @@ namespace Planetside
 			}
 			return orig(self);
 		}
+
+		public static bool PlayerHasFavouritism()
+		{
+			foreach (PlayerController player in GameManager.Instance.AllPlayers)
+			{
+				if (player.PlayerHasActiveSynergy("1 in 177 Billion")) { return true; }
+			}
+			return false;
+		}
+
 		public static PickupObject.ItemQuality DreamLuckGun(Func<FloorRewardData, System.Random, PickupObject.ItemQuality> orig, FloorRewardData self, System.Random safeRandom)
 		{
 			if (IsLucky == true)
             {
 				float num = self.SumBossGunChances();
 				float fran = ((safeRandom == null) ? UnityEngine.Random.value : ((float)safeRandom.NextDouble())) * num;
-				PickupObject.ItemQuality targetQualityFromChances = self.GetTargetQualityFromChances(fran, 0, 0.35f, 0.3f, 0.25f, 0.1f, false);
+
+				bool isFav = PlayerHasFavouritism();
+				PickupObject.ItemQuality targetQualityFromChances = isFav == false ? self.GetTargetQualityFromChances(fran, 0, 0.35f, 0.3f, 0.25f, 0.1f, false) : self.GetTargetQualityFromChances(fran, 0, 0.15f, 0.35f, 0.3f, 0.2f, false);
 				Debug.Log(targetQualityFromChances + " <= boss quality");
 				return targetQualityFromChances;
 			}
@@ -161,13 +181,16 @@ namespace Planetside
 		{
 			if (IsLucky == true)
 			{
+				bool isFav = PlayerHasFavouritism();
 				float num = self.SumShopChances();
 				float fran = ((!useSeedRandom) ? UnityEngine.Random.value : BraveRandom.GenerationRandomValue()) * num;
-				return self.GetTargetQualityFromChances(fran, 0, 0.35f, 0.3f, 0.25f, 0.1f, false);
+				return isFav == false ? self.GetTargetQualityFromChances(fran, 0, 0.35f, 0.3f, 0.25f, 0.1f, false) : self.GetTargetQualityFromChances(fran, 0, 0.15f, 0.35f, 0.3f, 0.2f, false);
 			}
 			return orig(self, useSeedRandom);
 		}
 		public static bool IsLucky;
+
+
 
 
 		protected override void Update()
@@ -176,8 +199,7 @@ namespace Planetside
 			if (base.Owner != null && base.Owner.CurrentRoom != null)
 			{
 				List<AIActor> activeEnemies = base.Owner.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
-				bool flag5 = activeEnemies != null && activeEnemies.Count > 0;
-				if (flag5)
+				if (activeEnemies != null && activeEnemies.Count > 0)
 				{
 					foreach (AIActor enemy in activeEnemies)
                     {

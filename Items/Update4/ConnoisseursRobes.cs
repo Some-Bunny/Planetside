@@ -51,7 +51,6 @@ namespace Planetside
 				try
 				{
 					Gun gun = sourceProjectile.PossibleSourceGun ?? Owner.CurrentGun ?? PickupObjectDatabase.GetById(684) as Gun;
-					//Gun gun = sourceProjectile.PossibleSourceGun != null ? sourceProjectile.PossibleSourceGun : base.Owner != null ? base.Owner.CurrentGun != null ? base.Owner.CurrentGun : PickupObjectDatabase.GetById(604) as Gun : PickupObjectDatabase.GetById(604) as Gun;
 					sourceProjectile.baseData.speed *= 0.15f;
 					sourceProjectile.UpdateSpeed();
 					GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(ResourceCache.Acquire("Global Prefabs/HoveringGun") as GameObject, base.Owner.CenterPosition.ToVector3ZisY(0f), Quaternion.identity);

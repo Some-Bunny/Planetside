@@ -6,6 +6,7 @@ using System.Collections;
 using UnityEngine;
 using Brave.BulletScript;
 using Dungeonator;
+using System.Reflection;
 
 namespace Planetside
 {
@@ -13,6 +14,8 @@ namespace Planetside
     {
         public void Start()
         {
+            HoleTriggered = false;
+            HasTriggeredLastStand = false;
             KillRing = false;
             SubPhaseEnded = false;
             SubPhaseActivated = false;
@@ -34,8 +37,232 @@ namespace Planetside
                 Actor.behaviorSpeculator.InterruptAndDisable();
                 Actor.StartCoroutine(DoTransition());
             }
-       
+            if (Actor.healthHaver.GetCurrentHealth() == 1 && SubPhaseEnded == true && FirstSubPhaseController.IsSubPhaseEnded() == true && HasTriggeredLastStand == false)
+            {
+                HasTriggeredLastStand = true;
+                StartDeathSequence();
+            }
         }
+
+        public bool HasTriggeredLastStand;
+
+        public void StartDeathSequence()
+        {
+            KillRing = true;
+            Pixelator.Instance.FadeToColor(1f, Color.cyan, true, 0.5f);
+            AkSoundEngine.PostEvent("Stop_MUS_All", base.gameObject);
+            AkSoundEngine.PostEvent("Play_BOSS_DragunGold_Crackle_01", Actor.gameObject);
+            AkSoundEngine.PostEvent("Play_PrisonerCharge", Actor.gameObject);
+            Actor.specRigidbody.enabled = false;
+            StaticReferenceManager.DestroyAllEnemyProjectiles();
+            Actor.behaviorSpeculator.InterruptAndDisable();
+            GameUIBossHealthController gameUIBossHealthController = GameUIRoot.Instance.bossController;
+            gameUIBossHealthController.DisableBossHealth();
+            GameManager.Instance.StartCoroutine(StartDeathSequenceCoroutine());
+        }
+
+
+
+        //i hate this, i hate this, i hate this, i hate this, i hate this, i hate this, i hate this, i hate this, i hate this, i hate this, i hate this, i hate this, i hate this, i hate this, i hate this, i hate this, i hate this, 
+        private IEnumerator StartDeathSequenceCoroutine()
+        {
+            Vector2 positionToGoOffOf = Actor.sprite.WorldCenter;
+            float elaWait = 0f;
+            while (elaWait < 1f)
+            {
+                elaWait += BraveTime.DeltaTime;
+                yield return null;
+            }
+            Controller.MoveTowardsCenterMethod(3f);
+            AkSoundEngine.PostEvent("Play_PrisonerCough", base.gameObject);
+            while (elaWait < 3f)
+            {
+                elaWait += BraveTime.DeltaTime;
+                yield return null;
+            }
+            Actor.aiAnimator.PlayUntilFinished("chargelaser", true, null, -1f, false);
+            elaWait = 0f;
+            while (elaWait < 0.5f)
+            {
+                elaWait += BraveTime.DeltaTime;
+                yield return null;
+            }
+            Actor.aiAnimator.PlayUntilFinished("firelaser", true, null, -1f, false);
+
+            GameObject portalObject = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("Portal"));
+            portalObject.transform.position = Actor.sprite.WorldCenter;
+            portalObject.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
+            AkSoundEngine.PostEvent("Play_PortalOpen", portalObject.gameObject);
+
+            GameManager.Instance.StartCoroutine(DoInversePulse(portalObject));
+            elaWait = 0f;
+
+            while (elaWait < 15f)
+            {
+                float t = (float)elaWait / (float)15;
+                float t1 = Mathf.Sin(t * (Mathf.PI / 2));
+                float r = (float)elaWait / (float)5;
+                float r1 = Mathf.Sin(t * (Mathf.PI / 2));
+                if (r1 > 1) { r1 = 1; }
+
+                if (CheckIfPlayerInVoidHole(Mathf.Lerp(1, 12, t1), base.aiActor.sprite.WorldCenter))
+                {
+                    DoHoleFall(portalObject);
+                    yield break;
+                }
+              
+                DoSmallPush(t1*5.33f, base.aiActor.sprite.WorldCenter);
+                portalObject.transform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one * 22.5f, t1);
+                portalObject.GetComponent<MeshRenderer>().material.SetFloat("_OutlineWidth", Mathf.Lerp(0, 0.025f, r1));
+                portalObject.GetComponent<MeshRenderer>().material.SetFloat("_OutlinePower", Mathf.Lerp(0, 100, r1));
+                elaWait += BraveTime.DeltaTime;
+                yield return null;
+            }
+            Actor.renderer.enabled = false;
+            Actor.SetOutlines(false);
+
+            elaWait = 0f;
+            while (elaWait < 5f)
+            {
+                
+                if (CheckIfPlayerInVoidHole(12, base.aiActor.sprite.WorldCenter))
+                {
+                    DoHoleFall(portalObject);
+                    yield break;
+                }
+                DoSmallPush(80, base.aiActor.sprite.WorldCenter);
+                elaWait += BraveTime.DeltaTime;
+            }
+            Actor.healthHaver.minimumHealth = 0;
+            Actor.healthHaver.ApplyDamage(1000, GameManager.Instance.BestActivePlayer.sprite.WorldCenter, "nerd", CoreDamageTypes.None, DamageCategory.Normal, false, null, false);
+            foreach (PlayerController player in GameManager.Instance.AllPlayers)
+            {
+                player.specRigidbody.Velocity = Vector2.zero;
+            }
+            AkSoundEngine.PostEvent("Play_BOSS_DragunGold_Crackle_01", portalObject.gameObject);
+            GameManager.Instance.StartCoroutine(fuck.DoReverseDistortionWaveLocal(positionToGoOffOf, 2, 0.5f, 50f, 2f));
+
+            bool hkjbsa = false;
+            elaWait = 0f;
+            while (elaWait < 2f)
+            {
+                float t = (float)elaWait / (float)2;
+                float t1 = Mathf.Sin(t * (Mathf.PI / 2));
+                portalObject.transform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one * 22.5f, 1-t1);
+                portalObject.GetComponent<MeshRenderer>().material.SetFloat("_OutlineWidth", Mathf.Lerp(0, 0.025f, 1-t1));
+                portalObject.GetComponent<MeshRenderer>().material.SetFloat("_OutlinePower", Mathf.Lerp(0, 100, 1-t1));
+                if (hkjbsa == false && elaWait > 1.8f)
+                {
+                    hkjbsa = true;
+                    var partObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("PortalClose"));
+
+                    AkSoundEngine.PostEvent("Play_PortalOpen", partObj.gameObject);
+                    AkSoundEngine.PostEvent("Play_BOSS_spacebaby_explode_01", partObj.gameObject);
+                    Exploder.DoDistortionWave(positionToGoOffOf, 5, 3, 100, 5);
+                    partObj.transform.position = positionToGoOffOf;
+                    partObj.transform.localScale *= 7f;
+                    Destroy(partObj, 3.4f);
+                    Pixelator.Instance.FadeToColor(1f, Color.cyan, true, 1f);
+                }
+                elaWait += BraveTime.DeltaTime;
+                yield return null;
+            }
+            Destroy(portalObject);    
+            yield break;
+        }
+
+        public bool HoleTriggered;
+
+        public IEnumerator DoInversePulse(GameObject portal)
+        {
+            float elaWait = 0f;
+            float power = 0.25f;
+            float delay = 1;
+            for (int j = 0; j < 22; j++)
+            {
+                if (HoleTriggered == true) { yield break; }
+                elaWait = 0f;
+                while (elaWait < delay)
+                {
+                    elaWait += BraveTime.DeltaTime;
+                    yield return null;
+                }
+                GameManager.Instance.StartCoroutine(fuck.DoReverseDistortionWaveLocal(portal.transform.position, power, 0.2f, 40f, delay / 2));
+                AkSoundEngine.PostEvent("Play_PortalCall", portal.gameObject);
+                if (delay > 0.5f) { delay -= 0.05f; }
+                power += 0.0625f;
+            }
+            yield break;
+        }
+
+
+        public void DoHoleFall(GameObject portal)
+        {
+            StaticReferenceManager.DestroyAllEnemyProjectiles();
+            Minimap.Instance.ToggleMinimap(false, false);
+            GameManager.IsBossIntro = true;
+         
+            GameManager.Instance.PreventPausing = true;
+            GameUIRoot.Instance.HideCoreUI(string.Empty);
+            GameUIRoot.Instance.ToggleLowerPanels(false, false, string.Empty);
+               
+            CameraController m_camera = GameManager.Instance.MainCameraController;
+            m_camera.StopTrackingPlayer();
+            m_camera.SetManualControl(true, false);
+            m_camera.OverridePosition = m_camera.transform.position;
+            Minimap.Instance.TemporarilyPreventMinimap = true;
+
+
+            GameManager.Instance.StartCoroutine(DoPortalExpand(portal));
+            HoleTriggered = true;
+
+        }
+
+        public IEnumerator DoPortalExpand(GameObject portal)
+        {
+            AkSoundEngine.PostEvent("Play_CHR_forever_fall_01", portal.gameObject);
+            Vector3 scale = portal.transform.localScale;
+            float elaWait = 0f;
+            elaWait = 0f;
+            while (elaWait < 1.33f)
+            {
+                float t = elaWait * 0.8f;
+                portal.transform.localScale = Vector3.Lerp(scale, Vector3.one * 100f, t);
+                elaWait += BraveTime.DeltaTime;
+                yield return null;
+            }
+            AkSoundEngine.PostEvent("Play_PrisonerLaugh", portal.gameObject);
+            elaWait = 0f;
+            Pixelator.Instance.FadeToBlack(2f, false, 0f);
+            while (elaWait < 2.5f)
+            {         
+                elaWait += BraveTime.DeltaTime;
+                yield return null;
+            }
+            GameManager.Instance.LoadCustomLevel("tt_abyss");
+
+            yield break;
+        }
+
+        public void DoSmallPush(float PushPower, Vector2 centerPosition)
+        {
+            foreach (PlayerController player in GameManager.Instance.AllPlayers)
+            {
+                Vector2 pushPos = centerPosition - player.sprite.WorldCenter;
+                player.specRigidbody.Velocity += BraveMathCollege.DegreesToVector(pushPos.ToAngle()).normalized * PushPower;
+            }
+        }
+
+        public bool CheckIfPlayerInVoidHole(float radius, Vector2 centerPosition)
+        {
+            foreach (PlayerController player in GameManager.Instance.AllPlayers)
+            {
+                if (Vector2.Distance(player.transform.position, centerPosition) < radius) { return true; }
+            }
+            return false;
+        }
+
+
         private IEnumerator DoTransition()
         {
             Exploder.DoDistortionWave(Actor.sprite.WorldCenter, 4, 0.2f, 50, 3f);
@@ -64,7 +291,6 @@ namespace Planetside
                 Destroy(gameObject, 2);
             }
             elaWait = 0f;
-
             /*
              GameManager.Instance.BestActivePlayer.CurrentRoom.BecomeTerrifyingDarkRoom(5f, 0.5f, 0.1f, "Play_ENM_darken_world_01");
              while (elaWait < 3f)
@@ -128,6 +354,9 @@ namespace Planetside
           
             yield break;
         }
+
+
+
 
 
         private void ProcessAttackGroup(AttackBehaviorGroup attackGroup)
@@ -195,7 +424,10 @@ namespace Planetside
                     yield return base.Wait(1);
                 }
             }
-            public class TargetBullet : Bullet
+
+           
+        
+        public class TargetBullet : Bullet
             {
                 public TargetBullet(A parent, AIActor targetDummy, float radiusCap) : base("undodgeableDefault", false, false, false)
                 {
@@ -222,7 +454,7 @@ namespace Planetside
                     {
 
                         if (radius > radCap) { radius -= BraveTime.DeltaTime; }
-                        angle += 1f;
+                        angle += 0.5f;
                         this.Position = this.dummy.sprite.WorldCenter + BraveMathCollege.DegreesToVector(angle, radius);
                         yield return this.Wait(1);
                     }
@@ -362,15 +594,14 @@ namespace Planetside
                     {
                         this.parent = parent;
                     }
-
                     protected override IEnumerator Top()
                     {
                         WeightedIntCollection attackWeights = new WeightedIntCollection();
                         attackWeights.elements = new WeightedInt[]
                         {
-                    new WeightedInt(){additionalPrerequisites = new DungeonPrerequisite[0], annotation = "Attack1", value = 1, weight = 1},
-                    new WeightedInt(){additionalPrerequisites = new DungeonPrerequisite[0], annotation = "Attack2", value = 2, weight = 0.9f},
-                    new WeightedInt(){additionalPrerequisites = new DungeonPrerequisite[0], annotation = "Attack3", value = 3, weight = 0.5f},
+                            new WeightedInt(){additionalPrerequisites = new DungeonPrerequisite[0], annotation = "Attack1", value = 1, weight = 1},
+                            new WeightedInt(){additionalPrerequisites = new DungeonPrerequisite[0], annotation = "Attack2", value = 2, weight = 0.9f},
+                            new WeightedInt(){additionalPrerequisites = new DungeonPrerequisite[0], annotation = "Attack3", value = 3, weight = 0.5f},
                             //new WeightedInt(){additionalPrerequisites = new DungeonPrerequisite[0], annotation = "Attack4", value = 4, weight = 0.8f},
                         };
 
@@ -382,7 +613,7 @@ namespace Planetside
                         this.Projectile.ForcePlayerBlankable = true;
                         this.Projectile.IgnoreTileCollisionsFor(6000f);
                         yield return this.Wait(60f);
-                        int time = 180;
+                        int time = 120;
                         int i = 0;
                         for (; ; )
                         {
@@ -392,8 +623,6 @@ namespace Planetside
                             }
                             if (i % time == 0 && parent.Center == false)
                             {
-                                if (time > 91) { time -= 10; }
-                                if (time < 90) { time = 90; }
                                 switch (attackWeights.SelectByWeight(new System.Random(UnityEngine.Random.Range(1, 100))))
                                 {
                                     case 1:

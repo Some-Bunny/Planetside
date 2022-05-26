@@ -252,7 +252,7 @@ namespace Planetside
             float Mult = owner != null ? owner.stats.GetStatValue(PlayerStats.StatType.Damage) : 1;
             this.explosionData.damage = (26 * radiusValue) * Mult;
             this.explosionData.damageRadius = radiusValue;
-            this.explosionData.useDefaultExplosion = true;
+            this.explosionData.useDefaultExplosion = false;
             Exploder.Explode(pos, this.explosionData, Vector2.zero, null, this.ignoreQueues, CoreDamageTypes.None, false);
 
             GameObject silencerVFX = (GameObject)ResourceCache.Acquire("Global VFX/BlankVFX_Ghost");

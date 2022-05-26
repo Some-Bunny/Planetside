@@ -390,10 +390,13 @@ namespace Planetside
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("ffca09398635467da3b1f4a54bcfda80").bulletBank.GetBullet("directedfire"));
 				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSniper);
 				PrisonerPhaseOne.PrisonerController controller = base.BulletBank.aiActor.GetComponent<PrisonerPhaseOne.PrisonerController>();
-				controller.MoveTowardsPositionMethod(2f, 5);
-				for (int i = -5; i < 5; i++)
+				if (Vector2.Distance(base.BulletBank.aiActor.transform.position, ((Vector2)base.BulletBank.aiActor.ParentRoom.GetCenterCell())) < 8)
+                {
+					controller.MoveTowardsPositionMethod(2f, 3);
+				}
+				for (int i = -3; i < 4; i++)
 				{
-					float OffsetPhase = 12;		
+					float OffsetPhase = 24;		
 					ISDodgeAble = false;
 
 					float Angle = base.AimDirection + (OffsetPhase * i);
@@ -422,7 +425,7 @@ namespace Planetside
 				yield return this.Wait(60);
 				for (int e = 0; e < 5; e++)
 				{
-					float m = UnityEngine.Random.Range(15, 45);
+					float m = UnityEngine.Random.Range(20, 45);
 					for (int i = -2; i < 3; i++)
 					{
 						ISDodgeAble = false;
@@ -559,7 +562,10 @@ namespace Planetside
 					{TopRight, new Vector2(TopRight.x, BottomLeft.y) },//Right wall
 				};
 				PrisonerPhaseOne.PrisonerController controller = base.BulletBank.aiActor.GetComponent<PrisonerPhaseOne.PrisonerController>();
-				controller.MoveTowardsPositionMethod(4f, 4);
+				if (Vector2.Distance(base.BulletBank.aiActor.transform.position, ((Vector2)base.BulletBank.aiActor.ParentRoom.GetCenterCell())) < 8)
+                {
+					controller.MoveTowardsPositionMethod(4f, 4);
+				}
 				for (int l = 0; l < 5; l++)
 				{
 					//controller.MoveTowardsPositionMethod(2f, 3);
@@ -920,7 +926,11 @@ namespace Planetside
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("31a3ea0c54a745e182e22ea54844a82d").bulletBank.GetBullet("sniper"));
 
 				PrisonerPhaseOne.PrisonerController controller = base.BulletBank.aiActor.GetComponent<PrisonerPhaseOne.PrisonerController>();
-				controller.MoveTowardsPositionMethod(3f, 5);
+				if (Vector2.Distance(base.BulletBank.aiActor.transform.position, ((Vector2)base.BulletBank.aiActor.ParentRoom.GetCenterCell())) < 8)
+				{
+					controller.MoveTowardsPositionMethod(3f, 5);
+				}
+
 				Vector2 vector2 = this.BulletManager.PlayerPosition();
 				Vector2 predictedPosition = BraveMathCollege.GetPredictedPosition(vector2, this.BulletManager.PlayerVelocity(), this.Position, 18f);
 				float CentreAngle = (predictedPosition - this.Position).ToAngle();
@@ -934,11 +944,11 @@ namespace Planetside
 					base.BulletBank.aiActor.StartCoroutine(SwipeLaser(CentreAngle - 180, -160, this, 1.5f - (0.5f * e)));
 					base.BulletBank.aiActor.StartCoroutine(SwipeLaser(CentreAngle - 180, 160, this, 1.5f - (0.5f * e)));
 				}
-				for (int e = 0; e < 8; e++)
+				for (int e = 0; e < 12; e++)
 				{
-					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(CentreAngle, this, 0.75f, 30));
+					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(CentreAngle, this, 0.75f, 50));
 
-					yield return this.Wait(60);
+					yield return this.Wait(40);
 				}
 				yield return this.Wait(30);
 				yield break;
@@ -1207,8 +1217,10 @@ namespace Planetside
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("31a3ea0c54a745e182e22ea54844a82d").bulletBank.GetBullet("sniper"));
 				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSniper);
 
-
-				controller.MoveTowardsPositionMethod(3f, 3);
+				if (Vector2.Distance(base.BulletBank.aiActor.transform.position, ((Vector2)base.BulletBank.aiActor.ParentRoom.GetCenterCell())) < 8)
+                {
+					controller.MoveTowardsPositionMethod(3f, 3);
+				}
 				for (int e = 0; e < GameManager.Instance.AllPlayers.Length; e++)
 				{
 					float u = UnityEngine.Random.Range(30, 120);
@@ -1217,7 +1229,7 @@ namespace Planetside
 					for (int i = 0; i < 12; i++)
 					{
 						bool K = true;
-						base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(GameManager.Instance.AllPlayers[e].transform.PositionVector2(), (30 * i) + Dir, this, M, K == false ? "sniper" : "sniperUndodgeable", K == false ? true : false, 0.75f, 13, K == false ? 1 : 5));
+						base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(GameManager.Instance.AllPlayers[e].transform.PositionVector2(), (30 * i) + Dir, this, M, K == false ? "sniper" : "sniperUndodgeable", K == false ? true : false, 0.75f, 18, K == false ? 1 : 5));
 					}
 					yield return this.Wait(60);
 				}
@@ -1233,7 +1245,7 @@ namespace Planetside
 						for (int i = 0; i < 6; i++)
 						{
 							bool K = true;
-							base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(GameManager.Instance.AllPlayers[e].transform.PositionVector2() + MathToolbox.GetUnitOnCircle(helpme, 8), (6 * i) + Dir, this, M, K == false ? "sniper" : "sniperUndodgeable", K == false ? true : false, 0.75f, 13, K == false ? 1 : 5));
+							base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(GameManager.Instance.AllPlayers[e].transform.PositionVector2() + MathToolbox.GetUnitOnCircle(helpme, 8), (60 * i) + Dir, this, M, K == false ? "sniper" : "sniperUndodgeable", K == false ? true : false, 0.75f, 18, K == false ? 1 : 5));
 						}
 						yield return this.Wait(45);
 					}
@@ -1248,7 +1260,7 @@ namespace Planetside
 					for (int i = 0; i < 12; i++)
 					{
 						bool K = true;
-						base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(GameManager.Instance.AllPlayers[e].transform.PositionVector2(), (30 * i) + Dir, this, M, K == false ? "sniper" : "sniperUndodgeable", K == false ? true : false, 0.75f, 13, K == false ? 1 : 5));
+						base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(GameManager.Instance.AllPlayers[e].transform.PositionVector2(), (30 * i) + Dir, this, M, K == false ? "sniper" : "sniperUndodgeable", K == false ? true : false, 0.75f, 18, K == false ? 1 : 5));
 					}
 					yield return this.Wait(90);
 				}

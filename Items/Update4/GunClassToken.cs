@@ -42,7 +42,7 @@ namespace Planetside
 		public static float GetModifierForClassHook(Func<LootDataGlobalSettings, GunClass, float> orig, LootDataGlobalSettings self, GunClass gunClass)
         {
 			float f = orig(self,gunClass);
-			if (PlayerHasFavouritism() == true) { f = 2.5f; }
+			if (PlayerHasFavouritism() == true) { f = 3.5f; }
 			return f;
         }
 

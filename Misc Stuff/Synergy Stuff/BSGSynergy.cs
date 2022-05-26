@@ -55,8 +55,9 @@ namespace Planetside
         }
         public void Start()
         {
-            this.projectile = base.GetComponent<Projectile>();      
-            if (this.projectile != null)
+            this.projectile = base.GetComponent<Projectile>();
+            PlayerController player = this.projectile.Owner as PlayerController;
+            if (this.projectile != null && player.PlayerHasActiveSynergy("Big Shocking Gun 9000"))
             {
                 this.projectile.AdditionalScaleMultiplier *= 0.5f;
             }

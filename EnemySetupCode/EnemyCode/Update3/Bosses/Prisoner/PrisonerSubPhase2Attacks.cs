@@ -1238,9 +1238,7 @@ namespace Planetside
 			{
 				PrisonerPhaseOne.PrisonerController controller = base.BulletBank.aiActor.GetComponent<PrisonerPhaseOne.PrisonerController>();
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("41ee1c8538e8474a82a74c4aff99c712").bulletBank.GetBullet("big"));
-				//base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("31a3ea0c54a745e182e22ea54844a82d").bulletBank.GetBullet("sniper"));
 				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSniper);
-
 
 				controller.MoveTowardsPositionMethod(3f, 7);
 				for (int e = 0; e < GameManager.Instance.AllPlayers.Length; e++)
@@ -1375,8 +1373,6 @@ namespace Planetside
 				protected override IEnumerator Top()
 				{
 					base.ChangeSpeed(new Speed(8f, SpeedType.Absolute), 30);
-					//base.Projectile.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
-					//SpawnManager.PoolManager.Remove(base.Projectile.transform);
 					yield break;
 				}
 			}

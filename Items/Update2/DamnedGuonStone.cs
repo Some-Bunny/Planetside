@@ -26,7 +26,6 @@ namespace Planetside
 			woodGuonStone.Identifier = IounStoneOrbitalItem.IounStoneIdentifier.GENERIC;
 			woodGuonStone.CanBeDropped = false;
 			woodGuonStone.AddPassiveStatModifier(PlayerStats.StatType.Curse, 1f, StatModifier.ModifyMethod.ADDITIVE);
-
 		}
 
 		public static void BuildPrefab()

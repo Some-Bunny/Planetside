@@ -33,6 +33,9 @@ namespace Planetside
             }
             DungeonPlaceable placeable = BreakableAPIToolbox.GenerateDungeonPlaceable(decal2x2List);
             StaticReferences.StoredDungeonPlaceables.Add("trespassRandom2x2Decal", placeable);
+
+            GameObject megaDecal = BreakableAPIToolbox.GenerateDecalObject("trespass_decal", new string[] { "Planetside/Resources/DungeonObjects/TrespassObjects/TrespassDecals/Mega/hehehehaha.png" });
+            StaticReferences.StoredRoomObjects.Add("megaDecal", megaDecal);
         }
     }
 }

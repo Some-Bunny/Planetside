@@ -18,9 +18,9 @@ using UnityEngine.Serialization;
 
 namespace Planetside
 {
-	internal class WitherLancePROJECTILE : MonoBehaviour
+	internal class WitherLanceProjectile : MonoBehaviour
 	{
-		public WitherLancePROJECTILE()
+		public WitherLanceProjectile()
 		{
 		}
         public void Start()
@@ -36,24 +36,39 @@ namespace Planetside
 		{
 			PlayerController player = projectile.Owner as PlayerController;
 
-			float scalar = (player.stats.GetStatValue(PlayerStats.StatType.Damage) / 8);
-			float scalarboss = (player.stats.GetStatValue(PlayerStats.StatType.Damage) / 40);
+			float scalar = (player.stats.GetStatValue(PlayerStats.StatType.Damage) / 3);
+			float scalarboss = (player.stats.GetStatValue(PlayerStats.StatType.Damage) / 25);
+
+
 			if (arg2.aiActor != null && arg2.aiActor.IsBlackPhantom)
 			{
 				scalar *= 2;
 				scalarboss *= 2;
-
 			}
 			bool flag = arg2.aiActor != null && !arg2.healthHaver.IsBoss && !arg2.healthHaver.IsDead && arg2.aiActor.behaviorSpeculator && !arg2.aiActor.IsHarmlessEnemy && arg2.aiActor != null;
 			if (flag)
 			{
-				arg2.healthHaver.SetHealthMaximum(arg2.healthHaver.GetMaxHealth() * (1 - scalar));
+				if ((arg2.healthHaver.minimumHealth > arg2.healthHaver.GetMaxHealth() - scalar))
+                {
+					arg2.healthHaver.SetHealthMaximum(arg2.healthHaver.GetMaxHealth() * (1 - scalar));
 
+				}
+				else
+                {
+					projectile.baseData.damage *= 3.5f;
+				}
 			}
 			bool e = arg2.aiActor != null && arg2.healthHaver.IsBoss && !arg2.healthHaver.IsDead && arg2.aiActor.behaviorSpeculator && !arg2.aiActor.IsHarmlessEnemy && arg2.aiActor != null;
 			if (e)
 			{
-				arg2.healthHaver.SetHealthMaximum(arg2.healthHaver.GetMaxHealth() * (1 - scalarboss));
+				if ((arg2.healthHaver.minimumHealth > arg2.healthHaver.GetMaxHealth() - scalarboss))
+                {
+					arg2.healthHaver.SetHealthMaximum(arg2.healthHaver.GetMaxHealth() * (1 - scalarboss));
+				}
+				else
+                {
+					projectile.baseData.damage *= 3.5f;
+                }
 
 			}
 		}

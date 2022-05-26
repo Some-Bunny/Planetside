@@ -96,6 +96,8 @@ namespace Planetside
 		private PlayerController owner;
 	}
 
+
+	
 	public class SpinningDeath : PassiveItem
     {
         public static void Init()
@@ -125,7 +127,6 @@ namespace Planetside
 			};
 			List<string> EndAnimPaths = new List<string>()
 			{"Planetside/Resources/Beams/SpinningDeath/spinningDeath_end_001",
-
 			};
 
 			List<string> ImpactAnimPaths = new List<string>()
@@ -160,8 +161,8 @@ namespace Planetside
                 new Vector2(0, 0)
                 );
             projectile.gameObject.SetActive(false);
-			projectile.baseData.damage = 30;
-			projectile.baseData.range = 2;
+			projectile.baseData.damage = 26;
+			projectile.baseData.range = 2.25f;
 			projectile.baseData.speed = 10;
 			projectile.baseData.force = 0;
 
@@ -187,10 +188,23 @@ namespace Planetside
 			emiss.EmissiveColorPower = 10f;
 			emiss.EmissivePower = 100f;
 			
-			
-
 			SpinningDeathBeam = projectile;
+
+			List<string> mandatoryConsoleIDs = new List<string>
+			{
+				"psog:spinning_death",
+			};
+			List<string> optionalConsoleIDs = new List<string>
+			{
+				"directional_pad"
+			};
+			CustomSynergies.Add("D-rectional", mandatoryConsoleIDs, optionalConsoleIDs, true);
+
+
+		
 		}
+
+
 		public static Projectile SpinningDeathBeam; 
 		public static int SpinningDeathID;
 		private void PostProcessProjectile(Projectile sourceProjectile, float effectChanceScalar)
@@ -198,7 +212,8 @@ namespace Planetside
 			float procChance = 0.25f;
 			procChance *= effectChanceScalar;
 			SpinningDeathController cont = sourceProjectile.gameObject.GetComponent<SpinningDeathController>();
-			if (UnityEngine.Random.value <= procChance && cont == null)
+			bool SynergyCheck = Owner.CurrentGun != PickupObjectDatabase.GetById(514) as Gun && Owner.PlayerHasActiveSynergy("D-rectional");
+			if (UnityEngine.Random.value <= procChance && cont == null && SynergyCheck == false)
 			{
 				try
 				{
@@ -211,15 +226,33 @@ namespace Planetside
 					spook.penetratesBreakables = true;
 
 
-					bool Flipped = UnityEngine.Random.value > 0.5f ? true : false;
-					for (int i = 0; i < 2; i++)
-					{
-						BeamController beamController3 = BeamToolbox.FreeFireBeamFromAnywhere(SpinningDeathBeam, base.Owner, sourceProjectile.gameObject, sourceProjectile.gameObject.transform.PositionVector2(), false, 180f * i, 100f, true, true, Flipped ? -720 : 720);
-						Projectile component3 = beamController3.GetComponent<Projectile>();
-						float Dmg = sourceProjectile.baseData.damage *= base.Owner != null ? base.Owner.stats.GetStatValue(PlayerStats.StatType.Damage) : 1;
-						component3.baseData.damage = Dmg * 4f;
-						component3.AdditionalScaleMultiplier *= 0.66f;
+					if (Owner.PlayerHasActiveSynergy("D-rectional"))
+                    {
+						bool Flipped = UnityEngine.Random.value > 0.5f ? true : false;
+						float FlippedORama = UnityEngine.Random.value > 0.5f ? 45 : 0;
+						for (int i = 0; i < 4; i++)
+						{
+							BeamController beamController3 = BeamToolbox.FreeFireBeamFromAnywhere(SpinningDeath.SpinningDeathBeam, Owner, projectile.gameObject, projectile.gameObject.transform.PositionVector2(), false, (90f * i) + FlippedORama, 30f, true, true, Flipped ? 360 : -360);
+							Projectile component3 = beamController3.GetComponent<Projectile>();
+							float Dmg = projectile.baseData.damage *= Owner != null ? Owner.stats.GetStatValue(PlayerStats.StatType.Damage) : 1;
+							component3.baseData.damage = Dmg * 3f;
+							component3.AdditionalScaleMultiplier *= 0.66f;
+						}
 					}
+					else
+                    {
+						bool Flipped = UnityEngine.Random.value > 0.5f ? true : false;
+						for (int i = 0; i < 2; i++)
+						{
+							BeamController beamController3 = BeamToolbox.FreeFireBeamFromAnywhere(SpinningDeathBeam, base.Owner, sourceProjectile.gameObject, sourceProjectile.gameObject.transform.PositionVector2(), false, 180f * i, 30f, true, true, Flipped ? -720 : 720);
+							Projectile component3 = beamController3.GetComponent<Projectile>();
+							float Dmg = sourceProjectile.baseData.damage *= base.Owner != null ? base.Owner.stats.GetStatValue(PlayerStats.StatType.Damage) : 1;
+							component3.baseData.damage = Dmg * 4.5f;
+							component3.AdditionalScaleMultiplier *= 0.66f;
+						}
+					}
+
+				
 
 				}
 				catch (Exception ex)
@@ -227,6 +260,7 @@ namespace Planetside
 					ETGModConsole.Log(ex.Message, false);
 				}
 			}
+		
 		}
 
 		private void PostProcessBeamTick(BeamController beam, SpeculativeRigidbody hitRigidBody, float tickrate)

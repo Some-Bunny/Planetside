@@ -102,6 +102,7 @@ namespace Planetside
                     this.ProcessAttackGroup(base.behaviorSpeculator.AttackBehaviors[j] as AttackBehaviorGroup);
                 }
             }
+            SubPhaseEnded = true;
             elaWait = 0f;
             while (elaWait < 3f)
             {
@@ -111,7 +112,6 @@ namespace Planetside
                 Actor.renderer.enabled = true;
                 yield return null;
             }
-            SubPhaseEnded = true;
             if (WasJammed == true)
             {
                 GameObject gameObject = SpawnManager.SpawnVFX(StaticVFXStorage.JammedDeathVFX, Actor.sprite.WorldBottomLeft, Quaternion.identity, false);
@@ -219,7 +219,7 @@ namespace Planetside
                     if (i % 80 == 1)
                     {
                         bool LeftOrRight = (UnityEngine.Random.value > 0.5f) ? false : true;
-                        float RNGSPIN = LeftOrRight == true ? 10 : -10;
+                        float RNGSPIN = LeftOrRight == true ? 8 : -8;
                         float OffsetF = UnityEngine.Random.Range(0, 30);
                         for (int e = 0; e < 12; e++)
                         {

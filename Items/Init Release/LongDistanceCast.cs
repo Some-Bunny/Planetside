@@ -61,7 +61,6 @@ namespace Planetside
 									if (flag8)
 									{
 										Vector2 unitCenter3 = nearestEnemy.specRigidbody.HitboxPixelCollider.UnitCenter;
-										//sourceProjectile.transform.position = unitCenter3;
 										this.DoBurst1(sourceProjectile, owner, unitCenter3, null);
 									}
 								}
@@ -69,8 +68,6 @@ namespace Planetside
 						}
 					}
 				}
-
-
 			}
 			catch (Exception ex)
 			{

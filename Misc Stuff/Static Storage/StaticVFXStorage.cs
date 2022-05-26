@@ -100,7 +100,45 @@ namespace Planetside
 
             FriendlyElectricLinkVFX = FakePrefab.Clone(Game.Items["shock_rounds"].GetComponent<ComplexProjectileModifier>().ChainLightningVFX);
 
+
+            AIAnimator aiAnimator = EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").aiAnimator;
+            List<AIAnimator.NamedVFXPool> namedVFX = aiAnimator.OtherVFX;
+            foreach (AIAnimator.NamedVFXPool pool in namedVFX)
+            {
+                if (pool.name == "mergo")
+                {
+                    foreach (VFXComplex vFXComplex in pool.vfxPool.effects)
+                    {
+                        foreach (VFXObject vFXObject in vFXComplex.effects)
+                        {
+                            VFXObject myVFX = StaticVFXStorage.CopyFields<VFXObject>(vFXObject);
+                            HighPriestClapVFX = new VFXPool();
+                            HighPriestClapVFX.type = VFXPoolType.Single;
+                            HighPriestClapVFX.effects = new VFXComplex[] {new VFXComplex() {effects = new VFXObject[] { myVFX } } };
+                        }
+                    }
+                }
+            }
         }
+
+        public static VFXObject CopyFields<T>(VFXObject sample2) where T : VFXObject
+        {
+            VFXObject sample = new VFXObject();
+            sample.alignment = sample2.alignment;
+            sample.attached = sample2.attached;
+            sample.destructible = sample2.destructible;
+            sample.effect = sample2.effect;
+            sample.orphaned = sample2.orphaned;
+            sample.persistsOnDeath = sample2.persistsOnDeath;
+            sample.usesZHeight = sample2.usesZHeight;
+            return sample;
+        }
+
+
+
+        public static VFXPool HighPriestClapVFX;
+
+
         public static VFXPool BeholsterChargeUpVFX;
         public static VFXPool BeholsterChargeDownVFX;
 

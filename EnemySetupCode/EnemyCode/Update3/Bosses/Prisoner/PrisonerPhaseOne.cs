@@ -66,8 +66,8 @@ namespace Planetside
 				companion.aiActor.specRigidbody.CollideWithOthers = true;
 				companion.aiActor.specRigidbody.CollideWithTileMap = true;
 				companion.aiActor.PreventFallingInPitsEver = true;
-				companion.aiActor.healthHaver.ForceSetCurrentHealth(1400f);
-				companion.aiActor.healthHaver.SetHealthMaximum(1400f);
+				companion.aiActor.healthHaver.ForceSetCurrentHealth(1700f);
+				companion.aiActor.healthHaver.SetHealthMaximum(1700f);
 				companion.aiActor.CollisionKnockbackStrength = 2f;
 				companion.aiActor.CanTargetPlayers = true;
 				companion.aiActor.procedurallyOutlined = true;
@@ -121,7 +121,7 @@ namespace Planetside
 
 
 				});
-				companion.aiActor.CorpseObject = EnemyDatabase.GetOrLoadByGuid("01972dee89fc4404a5c408d50007dad5").CorpseObject;
+				//companion.aiActor.CorpseObject = EnemyDatabase.GetOrLoadByGuid("01972dee89fc4404a5c408d50007dad5").CorpseObject;
 				companion.aiActor.PreventBlackPhantom = false;
 				AIAnimator aiAnimator = companion.aiAnimator;
 				aiAnimator.IdleAnimation = new DirectionalAnimation

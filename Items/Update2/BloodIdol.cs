@@ -14,6 +14,7 @@ using MonoMod.RuntimeDetour;
 using MonoMod;
 using SaveAPI;
 
+
 namespace Planetside
 {
     public class BloodIdol  : PlayerItem
@@ -29,8 +30,8 @@ namespace Planetside
             string shortDesc = "The Work Never Stops";
             string longDesc = "An 1dol dedicated to Kaliber, demanding the blood of slain Gundead.\n\nThough you may not complete her quest in this lifetime, she is faithful and will keep watch for many lifetimes.";
             activeitem.SetupItem(shortDesc, longDesc, "psog");
-            activeitem.SetCooldownType(ItemBuilder.CooldownType.Timed, 1f);
-            activeitem.consumable = true;
+            activeitem.SetCooldownType(ItemBuilder.CooldownType.Timed, 5f);
+            activeitem.consumable = false;
             activeitem.quality = PickupObject.ItemQuality.D;
             ItemBuilder.AddPassiveStatModifier(activeitem, PlayerStats.StatType.Damage, 0.95f, StatModifier.ModifyMethod.MULTIPLICATIVE);
             ItemBuilder.AddPassiveStatModifier(activeitem, PlayerStats.StatType.MovementSpeed, 0.95f, StatModifier.ModifyMethod.MULTIPLICATIVE);
@@ -46,18 +47,10 @@ namespace Planetside
         public static int BloodIdolID;
         public override bool CanBeUsed(PlayerController user)
         {
-            return BllodCanBeUsed == true;
+            return SaveAPIManager.GetPlayerStatValue(CustomTrackedStats.BLODD_IDOL_KILLS) >= 249;
         }
         public override void Pickup(PlayerController player)
         {
-            if (SaveAPIManager.GetPlayerStatValue(CustomTrackedStats.BLODD_IDOL_KILLS) >= 249)
-            {
-                BllodCanBeUsed = true;
-            }
-            else
-            {
-                BllodCanBeUsed = false;
-            }
             player.OnAnyEnemyReceivedDamage = (Action<float, bool, HealthHaver>)Delegate.Combine(player.OnAnyEnemyReceivedDamage, new Action<float, bool, HealthHaver>(this.OnEnemyDamaged));
             base.Pickup(player);
         }
@@ -67,7 +60,7 @@ namespace Planetside
         }
         private void OnEnemyDamaged(float damage, bool fatal, HealthHaver enemy)
         {
-           if (enemy != null&&fatal == true)
+           if (enemy != null && fatal == true)
            {
                 SaveAPIManager.RegisterStatChange(CustomTrackedStats.BLODD_IDOL_KILLS, 1);
                 //ETGModConsole.Log("Current Kills: " + SaveAPIManager.GetPlayerStatValue(CustomTrackedStats.BLODD_IDOL_KILLS).ToString());
@@ -75,14 +68,6 @@ namespace Planetside
         }
         public override void Update()
         {
-            if (SaveAPIManager.GetPlayerStatValue(CustomTrackedStats.BLODD_IDOL_KILLS) >= 249)
-            {
-                BllodCanBeUsed = true;
-            }
-            else
-            {
-                BllodCanBeUsed = false;
-            }
             base.Update();
         }
         public bool BllodCanBeUsed;
@@ -96,15 +81,43 @@ namespace Planetside
         }
         protected override void DoEffect(PlayerController user)
         {
-            user.OnAnyEnemyReceivedDamage = (Action<float, bool, HealthHaver>)Delegate.Remove(user.OnAnyEnemyReceivedDamage, new Action<float, bool, HealthHaver>(this.OnEnemyDamaged));
-            IntVector2 bestRewardLocation = user.CurrentRoom.GetBestRewardLocation(IntVector2.One * 3, RoomHandler.RewardLocationStyle.PlayerCenter, true);
-            Chest chest2 = GameManager.Instance.RewardManager.SpawnRewardChestAt(bestRewardLocation, -1f, PickupObject.ItemQuality.EXCLUDED);
-            chest2.RegisterChestOnMinimap(chest2.GetAbsoluteParentRoom());
-            chest2.IsLocked = false;
-            //float Loop = SaveAPIManager.GetPlayerStatValue(CustomTrackedStats.BLODD_IDOL_KILLS);
             SaveAPIManager.RegisterStatChange(CustomTrackedStats.BLODD_IDOL_KILLS, -250);
-            //ETGModConsole.Log("Current Kills: " + SaveAPIManager.GetPlayerStatValue(CustomTrackedStats.BLODD_IDOL_KILLS).ToString());
+            GameManager.Instance.StartCoroutine(DoWackyStuff(user));           
+        }
+        private IEnumerator DoWackyStuff(PlayerController user)
+        {
+            Vector2 pos = user.sprite.WorldCenter;
+            StaticVFXStorage.HighPriestClapVFX.SpawnAtPosition(pos);
+            yield return new WaitForSeconds(1f);
+            PickupObject pickupObject = LootEngine.GetItemOfTypeAndQuality<PickupObject>(ReturnRandomQuality(), UnityEngine.Random.value > 0.5f ? GameManager.Instance.RewardManager.GunsLootTable : GameManager.Instance.RewardManager.ItemsLootTable, false);
+            LootEngine.SpawnItem(pickupObject.gameObject, pos - new Vector2(0.5f, 0.5f), Vector2.up, 0f, true, false, false);
+            yield break;
+        }
 
+        public ItemQuality ReturnRandomQuality()
+        {
+            int i = UnityEngine.Random.Range(1, 9);
+            switch (i)
+            {
+                case 1:
+                    return PickupObject.ItemQuality.D;
+                case 2:
+                    return PickupObject.ItemQuality.D;
+                case 3:
+                    return PickupObject.ItemQuality.D;
+                case 4:
+                    return PickupObject.ItemQuality.C;
+                case 5:
+                    return PickupObject.ItemQuality.C;
+                case 6:
+                    return PickupObject.ItemQuality.B;
+                case 7:
+                    return PickupObject.ItemQuality.A;
+                case 8:
+                    return PickupObject.ItemQuality.S;
+                default:
+                    return PickupObject.ItemQuality.D;
+            }
         }
 
     }
