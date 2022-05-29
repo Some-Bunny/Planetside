@@ -92,18 +92,15 @@ namespace Planetside
 					Values.AreaIncreasesWithProjectileSizeStat = true;
 					Values.DamageValuesAlsoScalesWithDamageStat = true;
 					Values.EffectProcChance = 0.05f;
-					bool flagA = player.PlayerHasActiveSynergy("Khh..k k k k");
-					if (flagA)
+					if (player.PlayerHasActiveSynergy("Khh..k k k k"))
 					{
 						Values.InflictsPoison = true;
 					}
-					bool flagB = player.PlayerHasActiveSynergy("Handle The Heat");
-					if (flagB)
+					if (player.PlayerHasActiveSynergy("Handle The Heat"))
 					{
 						Values.InflictsFire = true;
 					}
-					bool flagC = player.PlayerHasActiveSynergy("Below Zero");
-					if (flagC)
+					if (player.PlayerHasActiveSynergy("Below Zero"))
 					{
 						Values.InflictsFreeze = true;
 					}
@@ -124,9 +121,8 @@ namespace Planetside
 			PlayerController player = projectile.Owner as PlayerController;
 			float num = 0f;
 			num = (player.stats.GetStatValue(PlayerStats.StatType.PlayerBulletScale));
-			this.m_radialIndicator = ((GameObject)UnityEngine.Object.Instantiate(ResourceCache.Acquire("Global VFX/HeatIndicator"), projectile.sprite.WorldCenter, Quaternion.identity, projectile.transform)).GetComponent<HeatIndicatorController>();
-			this.m_radialIndicator.CurrentColor = Color.white.WithAlpha(5f);
-			this.m_radialIndicator.IsFire = false;
+			this.m_radialIndicator = ((GameObject)UnityEngine.Object.Instantiate(StaticVFXStorage.RadialRing, projectile.sprite.WorldCenter, Quaternion.identity, projectile.transform)).GetComponent<HeatIndicatorController>();
+			this.m_radialIndicator.CurrentColor = Color.white.WithAlpha(4f);
 			this.m_radialIndicator.CurrentRadius = 1.75f* num;
 
 		}

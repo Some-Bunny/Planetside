@@ -248,6 +248,8 @@ namespace Planetside
             AttractorBeam.Add();
             LilPew.Add();
 
+            TarnishedRounds.Init();
+            TarnishedAmmolet.Init();
             GunslingersRing.Init();
             LuckyCharm.Init();
             TrapDefusalKit.Init();
@@ -275,8 +277,6 @@ namespace Planetside
             SporeBullets.Init();
             OrbitalInsertion.Init();
             Autocannon.Add();
-            TarnishedRounds.Init();
-            TarnishedAmmolet.Init();
             PunctureWound.Add();
             GunClassToken.Init();
 
@@ -306,6 +306,7 @@ namespace Planetside
             Creationist.Init();
             Observant.Init();
             Stagnant.Init();
+            Inquisitor.Init();
 
             DeTurretRight.Init();
             DeTurretLeft.Init();

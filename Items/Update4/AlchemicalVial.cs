@@ -42,6 +42,8 @@ namespace Planetside
 
             AlchemicalVial.spriteIDs.Add("frail", SpriteBuilder.AddSpriteToCollection(AlchemicalVial.spritePaths[3], activeitem.sprite.Collection));
             AlchemicalVial.spriteIDs.Add("cheese", SpriteBuilder.AddSpriteToCollection(AlchemicalVial.spritePaths[4], activeitem.sprite.Collection));
+            AlchemicalVial.spriteIDs.Add("tarnish", SpriteBuilder.AddSpriteToCollection(AlchemicalVial.spritePaths[5], activeitem.sprite.Collection));
+
 
             AlchemicalVial.ActiveIDS.Add("fire");
             AlchemicalVial.ActiveIDS.Add("poison");
@@ -74,6 +76,13 @@ namespace Planetside
                 "psog:injector_rounds"
             };
             CustomSynergies.Add("You Killed Us All!", mandatoryConsoleIDs, optionalConsoleIDs3, true);
+            List<string> optionalConsoleIDs4 = new List<string>
+            {
+                "psog:tarnished_rounds",
+                "psog:tarnished_ammolet",
+            };
+            CustomSynergies.Add("Rust Bucket", mandatoryConsoleIDs, optionalConsoleIDs4, true);
+
             SynergyAPI.SynergyBuilder.AddItemToSynergy(activeitem, CustomSynergyType.GUON_UPGRADE_CLEAR);
 
             activeitem.CanSwitch = true;
@@ -94,6 +103,7 @@ namespace Planetside
             {"frail",  DebuffLibrary.FrailPuddle},
             {"cheese",  EasyGoopDefinitions.CheeseDef},
             {"nAn",  EasyGoopDefinitions.WaterGoop},
+            {"tarnish",  DebuffLibrary.TarnishedGoop},
 
         };
         private Dictionary<string, Color> ColorKeys = new Dictionary<string, Color>()
@@ -103,7 +113,17 @@ namespace Planetside
             {"frail", Color.magenta},
             {"cheese", Color.yellow},
             {"nAn", Color.white},
+            {"tarnish", Color.green},
         };
+
+        private Dictionary<string, string> SynergyKeys = new Dictionary<string, string>()
+        {
+            {"You Can Liquidate That???", "cheese"},
+            {"Epic ____ Moments No.17", "frail"},
+            {"Rust Bucket", "tarnish"},
+
+        };
+
         public static int AlchemicalVialID;
         public override void Pickup(PlayerController player)
         {
@@ -131,14 +151,15 @@ namespace Planetside
             base.Update();
             if (base.LastOwner)
             {
-                if (base.LastOwner.PlayerHasActiveSynergy("You Can Liquidate That???") && !ActiveIDS.Contains("cheese"))
-                {ActiveIDS.Add("cheese");}
-                else if (!base.LastOwner.PlayerHasActiveSynergy("You Can Liquidate That???") && ActiveIDS.Contains("cheese"))
-                { ActiveIDS.Remove("cheese"); }
-                if (base.LastOwner.PlayerHasActiveSynergy("Epic ____ Moments No.17") && !ActiveIDS.Contains("frail"))
-                { ActiveIDS.Add("frail");}
-                else if (!base.LastOwner.PlayerHasActiveSynergy("Epic ____ Moments No.17") && ActiveIDS.Contains("frail"))
-                {ActiveIDS.Remove("frail");}
+                foreach (var Entry in SynergyKeys)
+                {
+                    string synergy = Entry.Key;
+                    string stringKey = Entry.Value;
+                    if (base.LastOwner.PlayerHasActiveSynergy(synergy) && !ActiveIDS.Contains(stringKey))
+                    { ActiveIDS.Add(stringKey); }
+                    else if (!base.LastOwner.PlayerHasActiveSynergy(synergy) && ActiveIDS.Contains(stringKey))
+                    { ActiveIDS.Remove(stringKey); }
+                }
                 if (CurrentCount == ActiveIDS.Count + 1) 
                 {
                     AkSoundEngine.PostEvent("Play_ENM_wizardred_appear_01", base.LastOwner.gameObject);
@@ -222,7 +243,8 @@ namespace Planetside
             "Planetside/Resources/precursor2.png",
             "Planetside/Resources/precursor3.png",
             "Planetside/Resources/precursor4.png",
-            "Planetside/Resources/precursor5.png"
+            "Planetside/Resources/precursor5.png",
+            "Planetside/Resources/precursor6.png"
         };
     }
 }

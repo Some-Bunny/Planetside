@@ -51,7 +51,6 @@ namespace Planetside
 		{
 			if (IsHoldingDefusalItem == true)
 			{
-				//ETGModConsole.Log("PREVENTED HIGH PRIEST WALL BULLETS");
 				return;
 			}
 			else { orig(self);}

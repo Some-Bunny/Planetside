@@ -39,6 +39,9 @@ namespace Planetside
 			new Hook(typeof(LootDataGlobalSettings).GetMethod("GetModifierForClass", BindingFlags.Instance | BindingFlags.Public), typeof(GunClassToken).GetMethod("GetModifierForClassHook", BindingFlags.Static | BindingFlags.Public));
 		}
 
+		public static int GunClassTokenID;
+
+
 		public static float GetModifierForClassHook(Func<LootDataGlobalSettings, GunClass, float> orig, LootDataGlobalSettings self, GunClass gunClass)
         {
 			float f = orig(self,gunClass);
@@ -55,7 +58,6 @@ namespace Planetside
 			return false;
 		}
 
-		public static int GunClassTokenID;
 
 		public override DebrisObject Drop(PlayerController player)
 		{

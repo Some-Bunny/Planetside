@@ -102,8 +102,7 @@ namespace Planetside
         public static int TrespassStoneID;
         public override void Pickup(PlayerController player)
         {
-            base.Pickup(player);
-           
+            base.Pickup(player);   
         }
 
         protected override void DoEffect(PlayerController user)

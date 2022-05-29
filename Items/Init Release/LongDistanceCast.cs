@@ -108,13 +108,8 @@ namespace Planetside
 		{
 			AIActor aiactor = null;
 			nearestDistance = range;
-			bool flag = activeEnemies == null;
-			bool flag2 = flag;
-			bool flag3 = flag2;
-			bool flag4 = flag3;
-			bool flag5 = flag4;
 			AIActor result;
-			if (flag5)
+			if (activeEnemies == null || activeEnemies.Count == 0)
 			{
 				result = null;
 			}
@@ -123,18 +118,12 @@ namespace Planetside
 				for (int i = 0; i < activeEnemies.Count; i++)
 				{
 					AIActor aiactor2 = activeEnemies[i];
-					bool flag6 = !aiactor2.healthHaver.IsDead && aiactor2.healthHaver.IsVulnerable;
-					bool flag7 = flag6;
-					if (flag7)
+					if (!aiactor2.healthHaver.IsDead && aiactor2.healthHaver.IsVulnerable)
 					{
-						bool flag8 = filter == null || !filter.Contains(aiactor2.EnemyGuid);
-						bool flag9 = flag8;
-						if (flag9)
+						if (filter == null || !filter.Contains(aiactor2.EnemyGuid))
 						{
 							float num = Vector2.Distance(position, aiactor2.CenterPosition);
-							bool flag10 = num < nearestDistance;
-							bool flag11 = flag10;
-							if (flag11)
+							if (num < nearestDistance)
 							{
 								nearestDistance = num;
 								aiactor = aiactor2;

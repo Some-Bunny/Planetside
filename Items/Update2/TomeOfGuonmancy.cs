@@ -121,7 +121,6 @@ namespace Planetside
         public static GameObject BaseBulletGuon;
         public override bool CanBeUsed(PlayerController user)
         {
-
             bool flag3 = user.CurrentRoom != null;
             if (flag3)
             {

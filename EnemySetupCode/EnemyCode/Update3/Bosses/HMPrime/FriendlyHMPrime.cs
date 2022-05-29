@@ -220,8 +220,7 @@ namespace Planetside
 		{
 			FriendlyHMPrime.BuildPrefab();
 
-			AIBulletBank.Entry MinigunEntry = StaticUndodgeableBulletEntries.CopyFields<AIBulletBank.Entry>(EnemyDatabase.GetOrLoadByGuid("ffca09398635467da3b1f4a54bcfda80").bulletBank.GetBullet("directedfire"));
-			
+			AIBulletBank.Entry MinigunEntry = StaticUndodgeableBulletEntries.CopyFields<AIBulletBank.Entry>(EnemyDatabase.GetOrLoadByGuid("ffca09398635467da3b1f4a54bcfda80").bulletBank.GetBullet("directedfire"));	
 			Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(519) as Gun).DefaultModule.projectiles[0]));
 			projectile.gameObject.SetActive(false);
 			FakePrefab.MarkAsFakePrefab(projectile.gameObject);
@@ -233,6 +232,19 @@ namespace Planetside
 			MinigunEntry.BulletObject = projectile.gameObject;
 
 			minigunEntry = MinigunEntry;
+
+			AIBulletBank.Entry MinigunEntryStronger = StaticUndodgeableBulletEntries.CopyFields<AIBulletBank.Entry>(EnemyDatabase.GetOrLoadByGuid("ffca09398635467da3b1f4a54bcfda80").bulletBank.GetBullet("directedfire"));
+			Projectile projectileTwo = UnityEngine.Object.Instantiate<Projectile>(UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(519) as Gun).DefaultModule.projectiles[0]));
+			projectileTwo.gameObject.SetActive(false);
+			FakePrefab.MarkAsFakePrefab(projectileTwo.gameObject);
+			UnityEngine.Object.DontDestroyOnLoad(projectileTwo);
+			projectile.baseData.damage = 12;
+
+			MinigunEntryStronger.Name = "minigunTwo";
+			MinigunEntryStronger.MuzzleFlashEffects = new VFXPool { type = VFXPoolType.None, effects = new VFXComplex[0] };
+			MinigunEntryStronger.BulletObject = projectileTwo.gameObject;
+
+			minigunEntryTwo = MinigunEntryStronger;
 
 
 			AIBulletBank.Entry MissileEntry = StaticUndodgeableBulletEntries.CopyFields<AIBulletBank.Entry>(EnemyDatabase.GetOrLoadByGuid("ffca09398635467da3b1f4a54bcfda80").bulletBank.GetBullet("directedfire"));
@@ -249,6 +261,7 @@ namespace Planetside
 
 			MissileEntry.Name = "missile";
 			MissileEntry.MuzzleFlashEffects = new VFXPool { type = VFXPoolType.None, effects = new VFXComplex[0] };
+			MissileEntry.AudioEvent = null;
 
 			MissileEntry.BulletObject = missileProjectile.gameObject;
 			missileEntry = MissileEntry;
@@ -266,10 +279,11 @@ namespace Planetside
 			TaserEntry.Name = "taser";
 			TaserEntry.MuzzleFlashEffects = new VFXPool { type = VFXPoolType.None, effects = new VFXComplex[0] };
 			TaserEntry.BulletObject = electricProjectile.gameObject;
+			TaserEntry.AudioEvent = null;
 
 			taserEntry = TaserEntry;
 		}
-
+		private static AIBulletBank.Entry minigunEntryTwo;
 		private static AIBulletBank.Entry minigunEntry;
 		private static AIBulletBank.Entry missileEntry;
 		private static AIBulletBank.Entry taserEntry;
@@ -305,6 +319,7 @@ namespace Planetside
 				companion.aiActor.gameObject.AddComponent<tk2dSpriteAttachPoint>();
 				companion.aiActor.gameObject.AddComponent<ObjectVisibilityManager>();
 				companion.aiActor.HasShadow = true;
+				companion.aiActor.ToggleRenderers(false);
 
 				EnemyToolbox.AddShadowToAIActor(companion.aiActor, StaticEnemyShadows.largeShadow, new Vector2(1.5f, 0.25f), "shadowPos");
 
@@ -1615,7 +1630,7 @@ namespace Planetside
         {
 			protected override IEnumerator Top()
             {
-				base.BulletBank.Bullets.Add(minigunEntry);
+				base.BulletBank.Bullets.Add(minigunEntryTwo);
 				for (int e = (-3); e < (4); e++)
                 {
 					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(true, base.AimDirection, (8)*e, this, 0.75f));
@@ -1658,7 +1673,7 @@ namespace Planetside
 			}
 
 			public class BasicBullet : Bullet
-			{ public BasicBullet() : base(minigunEntry.Name, false, false, false) { } }
+			{ public BasicBullet() : base(minigunEntryTwo.Name, false, false, false) { } }
 			private IEnumerator QuickscopeNoob(bool isLeft, float aimDir, float offset ,CleanSweeps parent, float chargeTime = 0.5f)
 			{
 				Vector2 positionLeft = base.BulletBank.aiActor.transform.Find("LeftGun_Down(Left)").transform.PositionVector2();
@@ -1989,8 +2004,6 @@ namespace Planetside
 			protected override IEnumerator Top()
 			{
 				base.BulletBank.Bullets.Add(minigunEntry);
-
-
 			
                 {
 					for (int q = 0; q < 24; q++)

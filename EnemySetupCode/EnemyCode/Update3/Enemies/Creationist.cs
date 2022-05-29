@@ -23,6 +23,12 @@ namespace Planetside
 
 		public class TrespassEnemyEngageDoer : CustomEngageDoer
 		{
+			public TrespassEnemyEngageDoer()
+            {
+				this.PortalLifeTime = 3;
+				this.PortalSize = 0.3f;
+			}
+
 
 			public void Update()
 			{
@@ -38,16 +44,16 @@ namespace Planetside
 				base.StartCoroutine(this.DoIntro());
 			}
 
-			private IEnumerator PortalDoer(MeshRenderer portal, float duration = 6, bool DestroyWhenDone = false)
+			private IEnumerator PortalDoer(MeshRenderer portal, bool DestroyWhenDone = false)
 			{
 				float elapsed = 0f;
-				while (elapsed < duration)
+				while (elapsed < PortalLifeTime)
 				{
 					elapsed += BraveTime.DeltaTime;
-					float t = elapsed / duration;
+					float t = elapsed / PortalLifeTime;
 					if (portal.gameObject == null) { yield break; }
 					float throne1 = Mathf.Sin(t * (Mathf.PI));
-					portal.material.SetFloat("_UVDistCutoff", Mathf.Lerp(0, 0.3f, throne1));
+					portal.material.SetFloat("_UVDistCutoff", Mathf.Lerp(0, PortalSize, throne1));
 					portal.material.SetFloat("_HoleEdgeDepth", Mathf.Lerp(12, 2, throne1));
 					yield return null;
 				}
@@ -90,7 +96,7 @@ namespace Planetside
 					portalObj.gameObject.SetLayerRecursively(LayerMask.NameToLayer("BG_Critical"));
 					MeshRenderer mesh = portalObj.GetComponent<MeshRenderer>();
 					mesh.material.SetTexture("_PortalTex", StaticTextures.NebulaTexture);
-					GameManager.Instance.StartCoroutine(PortalDoer(mesh, 3, true));
+					GameManager.Instance.StartCoroutine(PortalDoer(mesh, true));
 					HasSpawnedPortal = true;
 				}
 
@@ -126,6 +132,8 @@ namespace Planetside
 				}
 			}
 
+			public float PortalLifeTime;
+			public float PortalSize;
 
 			private bool HasSpawnedPortal;
 			private bool m_isFinished;

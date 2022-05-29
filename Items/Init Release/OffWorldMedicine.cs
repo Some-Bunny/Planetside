@@ -51,13 +51,7 @@ namespace Planetside
             AkSoundEngine.PostEvent("Play_OBJ_dice_bless_01", base.gameObject);
             user.PlayEffectOnActor(ResourceCache.Acquire("Global VFX/VFX_Healing_Sparkles_001") as GameObject, Vector3.zero, true, false, false);
             user.healthHaver.FullHeal();
-            int SpiceToDown = user.spiceCount;
-            user.spiceCount = -SpiceToDown;
-            ChangeSpiceWeight();
-        }
-        public static float ChangeSpiceWeight()
-        {
-            return 0f;
+            user.spiceCount = 0;
         }
     }
 }
