@@ -31,6 +31,7 @@ namespace Planetside
 		{
 			BrokenChamberComponent Values = player.gameObject.AddComponent<BrokenChamberComponent>();
 			Values.TimeBetweenRockFalls = 7.5f;
+			Values.player = player;
 			base.CanBeDropped = false;
 			base.Pickup(player);
 		}

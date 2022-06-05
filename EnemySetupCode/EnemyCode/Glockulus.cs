@@ -36,7 +36,7 @@ namespace Planetside
 				prefab = EnemyBuilder.BuildPrefab("Glockulus", guid, spritePaths[0], new IntVector2(0, 0), new IntVector2(8, 9), false);
 				var companion = prefab.AddComponent<EnemyBehavior>();
 				companion.aiActor.knockbackDoer.weight = 50;
-				companion.aiActor.MovementSpeed = 0;
+				companion.aiActor.MovementSpeed = 0.8f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
 				companion.aiActor.CollisionDamage = 1f;
 				companion.aiActor.HasShadow = false;
@@ -144,15 +144,66 @@ namespace Planetside
 
 				
 
-				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "attack", new string[] { "charge_back",
+				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "charge", new string[] { "charge_back",
 						"charge_back_right",
 						"charge_front_right",
 						"charge_front",
 						"charge_front_left",
 						"charge_back_left"}, new DirectionalAnimation.FlipType[6], DirectionalAnimation.DirectionType.SixWay);
 
+				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "attack", new string[] { "attack_back",
+						"attack_back_right",
+						"attack_front_right",
+						"attack_front",
+						"attack_front_left",
+						"attack_back_left"}, new DirectionalAnimation.FlipType[6], DirectionalAnimation.DirectionType.SixWay);
+
+
 				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awaken" }, new DirectionalAnimation.FlipType[0]);
 				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "death", new string[] { "death" }, new DirectionalAnimation.FlipType[0]);
+
+				List<int> idle_front = new List<int>()
+				{
+					0,
+					1,
+					2,
+					3
+				};
+				List<int> idle_front_left = new List<int>()
+				{
+					4,
+					5,
+					6,
+					7
+				};
+				List<int> idle_front_right = new List<int>()
+				{
+					8,
+					9,
+					10,
+					11
+				};
+				List<int> idle_back = new List<int>()
+				{
+				 	12,
+					13,
+					14,
+					15
+				};
+				List<int> idle_back_left = new List<int>()
+				{
+					16,
+					17,
+					18,
+					19
+				};
+				List<int> idle_back_right = new List<int>()
+				{
+					20,
+					21,
+					22,
+					23
+				};
 
 
 				companion.aiActor.AwakenAnimType = AwakenAnimationType.Awaken;
@@ -166,105 +217,31 @@ namespace Planetside
 					{
 						SpriteBuilder.AddSpriteToCollection(spritePaths[i], GlockulusCollection);
 					}
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, new List<int>
-					{
-		            0,
-					1,
-					2,
-					3
-					}, "idle_front", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
-
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, new List<int>
-					{
-					4,
-					5,
-					6,
-					7
-					}, "idle_front_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
-
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, new List<int>
-					{
-					8,
-					9,
-					10,
-					11
-					}, "idle_front_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
-
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, new List<int>
-					{
-					12,
-					13,
-					14,
-					15
-					}, "idle_back", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
-
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, new List<int>
-					{
-					16,
-					17,
-					18,
-					19
-					}, "idle_back_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
-
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, new List<int>
-					{
-					20,
-					21,
-					22,
-					23
-					}, "idle_back_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, idle_front, "idle_front", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, idle_front_left, "idle_front_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, idle_front_right, "idle_front_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, idle_back, "idle_back", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, idle_back_left, "idle_back_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, idle_back_right, "idle_back_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
 
 
 					//=====================
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, new List<int>
-					{
-					0,
-					1,
-					2,
-					3
-					}, "charge_front", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, idle_front, "charge_front", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, idle_front_left, "charge_front_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, idle_front_right, "charge_front_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, idle_back, "charge_back", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, idle_back_left, "charge_back_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, idle_back_right, "charge_back_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, new List<int>
-					{
-					4,
-					5,
-					6,
-					7
-					}, "charge_front_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
-
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, new List<int>
-					{
-					8,
-					9,
-					10,
-					11
-					}, "charge_front_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
-
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, new List<int>
-					{
-					12,
-					13,
-					14,
-					15
-					}, "charge_back", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
-
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, new List<int>
-					{
-					16,
-					17,
-					18,
-					19
-					}, "charge_back_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
-
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, new List<int>
-					{
-					20,
-					21,
-					22,
-					23
-					}, "charge_back_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
 
 					//=====================
+
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, idle_front, "attack_front", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, idle_front_left, "attack_front_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, idle_front_right, "attack_front_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, idle_back, "attack_back", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, idle_back_left, "attack_back_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, idle_back_right, "attack_back_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
 
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, new List<int>
 					{
@@ -286,6 +263,23 @@ namespace Planetside
 
 
 				}
+
+				EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "charge_back", new Dictionary<int, string> { { 0, "Charge" } });
+				EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "charge_back_right", new Dictionary<int, string> { { 0, "Charge" } });
+				EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "charge_front_right", new Dictionary<int, string> { { 0, "Charge" } });
+				EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "charge_front", new Dictionary<int, string> { { 0, "Charge" } });
+				EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "charge_front_left", new Dictionary<int, string> { { 0, "Charge" } });
+				EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "charge_back_left", new Dictionary<int, string> { { 0, "Charge" } });
+
+				EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "attack_back", new Dictionary<int, string> { { 0, "Play_ENM_cult_spew_01" } });
+				EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "attack_back_right", new Dictionary<int, string> { { 0, "Play_ENM_cult_spew_01" } });
+				EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "attack_front_right", new Dictionary<int, string> { { 0, "Play_ENM_cult_spew_01" } });
+				EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "attack_front", new Dictionary<int, string> { { 0, "Play_ENM_cult_spew_01" } });
+				EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "attack_front_left", new Dictionary<int, string> { { 0, "Play_ENM_cult_spew_01" } });
+				EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "attack_back_left", new Dictionary<int, string> { { 0, "Play_ENM_cult_spew_01" } });
+
+				EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "death", new Dictionary<int, string> { { 0, "Play_BOSS_doormimic_charge_01" }, { 3, "Play_BOSS_doormimic_eyes_01" } });
+
 				var bs = prefab.GetComponent<BehaviorSpeculator>();
 				prefab.GetComponent<ObjectVisibilityManager>();
 				BehaviorSpeculator behaviorSpeculator = EnemyDatabase.GetOrLoadByGuid("01972dee89fc4404a5c408d50007dad5").behaviorSpeculator;
@@ -297,7 +291,7 @@ namespace Planetside
 				shootpoint.transform.position = companion.sprite.WorldCenter;
 				GameObject m_CachedGunAttachPoint = companion.transform.Find("fuck").gameObject;
 				bs.TargetBehaviors = new List<TargetBehaviorBase>
-			{
+				{
 				new TargetPlayerBehavior
 				{
 					Radius = 35f,
@@ -307,7 +301,19 @@ namespace Planetside
 					PauseOnTargetSwitch = false,
 					PauseTime = 0.25f,
 				}
-			};
+				};
+				bs.MovementBehaviors = new List<MovementBehaviorBase>() {
+				new SeekTargetBehavior() {
+					StopWhenInRange = true,
+					CustomRange = 4,
+					LineOfSight = true,
+					ReturnToSpawn = true,
+					SpawnTetherDistance = 0,
+					PathInterval = 0.5f,
+					SpecifyRange = false,
+					MinActiveRange = 1,
+					MaxActiveRange = 10
+				} };
 				bs.AttackBehaviors = new List<AttackBehaviorBase>() {
 				new ShootBehavior() {
 					ShootPoint = m_CachedGunAttachPoint,
@@ -316,7 +322,9 @@ namespace Planetside
 					AttackCooldown = 0f,
 					Cooldown = 2f,
 					InitialCooldown = 0.5f,
-					TellAnimation = "attack",
+					TellAnimation = "charge",
+					PostFireAnimation = "attack",
+
 					//FireAnimation = "tell",
 					RequiresLineOfSight = true,
 					MultipleFireEvents = true,
@@ -343,12 +351,7 @@ namespace Planetside
 					AttackCooldown = 3,
 
 					bulletScript = new CustomBulletScriptSelector(typeof(DashAttack)),
-					//BulletScript = new CustomBulletScriptSelector(typeof(Wail)),
-					//LeadAmount = 0f,
-					//AttackCooldown = 5f,
-					//InitialCooldown = 4f,
-					//TellAnimation = "wail",
-					//FireAnimation = "wail",
+					
 					RequiresLineOfSight = false,
 					//Uninterruptible = true,
 					//FireVfx = ,
@@ -499,6 +502,8 @@ namespace Planetside
 				base.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("465da2bb086a4a88a803f79fe3a27677").bulletBank.bulletBank.GetBullet("homing"));
 				base.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("796a7ed4ad804984859088fc91672c7f").bulletBank.bulletBank.GetBullet("default"));
 				base.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("sweep"));
+				base.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("frogger"));
+
 
 				if (!base.aiActor.IsBlackPhantom)
 				{
@@ -521,6 +526,20 @@ namespace Planetside
 
 
 				};
+				base.aiActor.spriteAnimator.AnimationEventTriggered += this.AnimationEventTriggered;
+			}
+			private void AnimationEventTriggered(tk2dSpriteAnimator animator, tk2dSpriteAnimationClip clip, int frameIdx)
+			{
+				if (clip.GetFrame(frameIdx).eventInfo.Contains("Charge"))
+				{
+					//GameObject gameObject = SpawnManager.SpawnVFX(StaticVFXStorage.SecretRoomDoorImpactVFX);
+					//gameObject.transform.position = base.aiActor.sprite.WorldCenter;
+					 base.aiActor.PlayEffectOnActor(StaticVFXStorage.MachoBraceBurstVFX, new Vector3(0f, 1f, 0f), false, false, false);
+
+					AkSoundEngine.PostEvent("Play_ENM_book_charge_01", base.aiActor.gameObject);
+
+					//StaticVFXStorage.HighPriestClapVFX.SpawnAtPosition(base.aiActor.sprite.WorldCenter, 0, base.aiActor.gameObject.transform.Find("fuck").gameObject.transform);
+				}
 			}
 		}
 
@@ -528,16 +547,12 @@ namespace Planetside
 		{
 			protected override IEnumerator Top() 
 			{
-
-				if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
-				{
-					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("796a7ed4ad804984859088fc91672c7f").bulletBank.bulletBank.GetBullet("default"));
-				}
 				base.PostWwiseEvent("Play_WPN_eyeballgun_shot_01", null);
 				base.PostWwiseEvent("Play_WPN_eyeballgun_impact_01", null);
 				for (int i = -2; i <= 2; i++)
 				{
 					this.Fire(new Direction(i * 20, DirectionType.Aim, -1f), new Speed(9f, SpeedType.Absolute), new SpitNormal());
+					this.Fire(new Direction(i * 20, DirectionType.Aim, -1f), new Speed(8f, SpeedType.Absolute), new SpitNormal());
 				}
 				yield break;
 			}
@@ -547,7 +562,7 @@ namespace Planetside
 		public class SpitNormal : Bullet
 		{
 
-			public SpitNormal() : base("default", false, false, false)
+			public SpitNormal() : base("frogger", false, false, false)
 			{
 			}
 		}

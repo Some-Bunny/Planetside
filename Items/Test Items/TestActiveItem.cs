@@ -111,6 +111,12 @@ namespace Planetside
 
         protected override void DoEffect(PlayerController user)
         {
+
+            GameObject fart;
+            StaticReferences.StoredRoomObjects.TryGetValue("note1", out fart);
+            GameObject yes = UnityEngine.Object.Instantiate(fart, user.transform.position, Quaternion.identity);
+            user.CurrentRoom.RegisterInteractable(yes.GetComponent<NoteDoer>());
+
             //AkSoundEngine.PostEvent("Play_BossTheme", base.gameObject);
 
             //this.MyBallsHaveBeenPlaneted();

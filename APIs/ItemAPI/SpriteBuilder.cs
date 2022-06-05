@@ -81,16 +81,33 @@ namespace ItemAPI
             return AddSpriteToCollection(definition, collection);
         }
 
-      
+
+
+
+
+        public static int AddSpriteToCollection(tk2dSpriteDefinition spriteDefinition, tk2dSpriteCollectionData collection)
+        {
+            //Add definition to collection
+            var defs = collection.spriteDefinitions;
+            var newDefs = defs.Concat(new tk2dSpriteDefinition[] { spriteDefinition }).ToArray();
+            collection.spriteDefinitions = newDefs;
+
+            //Reset lookup dictionary
+            FieldInfo f = typeof(tk2dSpriteCollectionData).GetField("spriteNameLookupDict", BindingFlags.Instance | BindingFlags.NonPublic);
+            f.SetValue(collection, null);  //Set dictionary to null
+            collection.InitDictionary(); //InitDictionary only runs if the dictionary is null
+            return newDefs.Length - 1;
+        }
+
 
         /// <summary>
         /// Adds a sprite from a definition to a collection
         /// </summary>
         /// <returns>The spriteID of the defintion in the collection</returns>
-        public static int AddSpriteToCollection(tk2dSpriteDefinition spriteDefinition, tk2dSpriteCollectionData collection)
+        public static int AddSpriteToCollectionFromOtherCollection(tk2dSpriteDefinition spriteDefinition, tk2dSpriteCollectionData collectionToTakeFrom , tk2dSpriteCollectionData collection)
         {
             //Add definition to collection
-            var defs = collection.spriteDefinitions;
+            var defs = collectionToTakeFrom.spriteDefinitions;
             var newDefs = defs.Concat(new tk2dSpriteDefinition[] { spriteDefinition }).ToArray();
             collection.spriteDefinitions = newDefs;
 
@@ -111,28 +128,130 @@ namespace ItemAPI
         }
 
         public static tk2dSpriteAnimationClip AddAnimation(tk2dSpriteAnimator animator, tk2dSpriteCollectionData collection, List<int> spriteIDs,
-            string clipName, tk2dSpriteAnimationClip.WrapMode wrapMode = tk2dSpriteAnimationClip.WrapMode.LoopSection)
+            string clipName, tk2dSpriteAnimationClip.WrapMode wrapMode = tk2dSpriteAnimationClip.WrapMode.LoopSection)//, bool Debug = false)
         {
             if (animator.Library == null)
             {
                 animator.Library = animator.gameObject.AddComponent<tk2dSpriteAnimation>();
                 animator.Library.clips = new tk2dSpriteAnimationClip[0];
                 animator.Library.enabled = true;
-
             }
 
             List<tk2dSpriteAnimationFrame> frames = new List<tk2dSpriteAnimationFrame>();
             for (int i = 0; i < spriteIDs.Count; i++)
             {
+                //if (Debug == true) { ETGModConsole.Log("1"); }
                 tk2dSpriteDefinition sprite = collection.spriteDefinitions[spriteIDs[i]];
                 if (sprite.Valid)
                 {
+                    //if (Debug == true) { ETGModConsole.Log("2"); }
                     frames.Add(new tk2dSpriteAnimationFrame()
                     {
                         spriteCollection = collection,
                         spriteId = spriteIDs[i]
                     });
+                    //if (Debug == true) { ETGModConsole.Log("3"); }
                 }
+              
+            }
+
+            var clip = new tk2dSpriteAnimationClip();
+            clip.name = clipName;
+            clip.fps = 15;
+            clip.wrapMode = wrapMode;
+            Array.Resize(ref animator.Library.clips, animator.Library.clips.Length + 1);
+            animator.Library.clips[animator.Library.clips.Length - 1] = clip;
+
+            clip.frames = frames.ToArray();
+            return clip;
+        }
+
+        public static tk2dSpriteAnimationClip AddAnimation(tk2dSpriteAnimator targetAnimator, tk2dSpriteCollectionData collection, List<string> spriteNameList, string clipName, tk2dSpriteAnimationClip.WrapMode wrapMode = tk2dSpriteAnimationClip.WrapMode.Once, int frameRate = 15, int loopStart = 0, float minFidgetDuration = 0.5f, float maxFidgetDuration = 1)
+        {
+            if (!targetAnimator.Library)
+            {
+                targetAnimator.Library = targetAnimator.gameObject.AddComponent<tk2dSpriteAnimation>();
+                targetAnimator.Library.clips = new tk2dSpriteAnimationClip[0];
+            }
+            List<tk2dSpriteAnimationFrame> animationList = new List<tk2dSpriteAnimationFrame>();
+            for (int i = 0; i < spriteNameList.Count; i++)
+            {
+                tk2dSpriteDefinition spriteDefinition = collection.GetSpriteDefinition(spriteNameList[i]);
+                if (spriteDefinition != null && spriteDefinition.Valid)
+                {
+                    animationList.Add(
+                        new tk2dSpriteAnimationFrame
+                        {
+                            spriteCollection = collection,
+                            spriteId = collection.GetSpriteIdByName(spriteNameList[i]),
+                            invulnerableFrame = false,
+                            groundedFrame = true,
+                            requiresOffscreenUpdate = false,
+                            eventAudio = string.Empty,
+                            eventVfx = string.Empty,
+                            eventStopVfx = string.Empty,
+                            eventLerpEmissive = false,
+                            eventLerpEmissiveTime = 0.5f,
+                            eventLerpEmissivePower = 30,
+                            forceMaterialUpdate = false,
+                            finishedSpawning = false,
+                            triggerEvent = false,
+                            eventInfo = string.Empty,
+                            eventInt = 0,
+                            eventFloat = 0,
+                            eventOutline = tk2dSpriteAnimationFrame.OutlineModifier.Unspecified,
+                        }
+                    );
+                }
+            }
+
+            if (animationList.Count <= 0)
+            {
+                ETGModConsole.Log("[ExpandTheGungeon] AddAnimation: ERROR! Animation list is empty! No valid sprites found in specified list!");
+                return null;
+            }
+            tk2dSpriteAnimationClip animationClip = new tk2dSpriteAnimationClip()
+            {
+                name = clipName,
+                frames = animationList.ToArray(),
+                fps = frameRate,
+                wrapMode = wrapMode,
+                loopStart = loopStart,
+                minFidgetDuration = minFidgetDuration,
+                maxFidgetDuration = maxFidgetDuration,
+            };
+            Array.Resize(ref targetAnimator.Library.clips, targetAnimator.Library.clips.Length + 1);
+            targetAnimator.Library.clips[targetAnimator.Library.clips.Length - 1] = animationClip;
+            return animationClip;
+        }
+
+
+        public static tk2dSpriteAnimationClip AddAnimationDebug(tk2dSpriteAnimator animator, tk2dSpriteCollectionData collection, List<int> spriteIDs,
+          string clipName, tk2dSpriteAnimationClip.WrapMode wrapMode = tk2dSpriteAnimationClip.WrapMode.LoopSection, bool Debug = false)
+        {
+            if (animator.Library == null)
+            {
+                animator.Library = animator.gameObject.AddComponent<tk2dSpriteAnimation>();
+                animator.Library.clips = new tk2dSpriteAnimationClip[0];
+                animator.Library.enabled = true;
+            }
+
+            List<tk2dSpriteAnimationFrame> frames = new List<tk2dSpriteAnimationFrame>();
+            for (int i = 0; i < spriteIDs.Count; i++)
+            {
+                //if (Debug == true) { ETGModConsole.Log("1"); }
+                tk2dSpriteDefinition sprite = collection.spriteDefinitions[spriteIDs[i]];
+                if (sprite.Valid)
+                {
+                    //if (Debug == true) { ETGModConsole.Log("2"); }
+                    frames.Add(new tk2dSpriteAnimationFrame()
+                    {
+                        spriteCollection = collection,
+                        spriteId = spriteIDs[i]
+                    });
+                    //if (Debug == true) { ETGModConsole.Log("3"); }
+                }
+
             }
 
             var clip = new tk2dSpriteAnimationClip();
@@ -247,7 +366,7 @@ namespace ItemAPI
             PropertyInfo[] pinfos = type.GetProperties();
             foreach (var pinfo in pinfos)
             {
-                if (pinfo.CanWrite)
+                if (pinfo.CanWrite)//i LOVE HARDCODING i LOVE HARDCODING
                 {
                     try
                     {

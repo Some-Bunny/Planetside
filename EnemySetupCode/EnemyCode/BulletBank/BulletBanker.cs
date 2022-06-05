@@ -738,54 +738,10 @@ namespace Planetside
 					if (!preventSpawningProjectiles)
 					{
 						base.PostWwiseEvent("Play_BOSS_Rat_Cheese_Burst_02", null);
-						int RNG = UnityEngine.Random.Range(0, 10);
-						bool WeakShot = RNG == 1;
-						if (WeakShot)
-						{
-							var advanced = new List<string>
-						{
-						"apache_bullet",
-						"kyle_bullet",
-						"wow_bullet",
-						"spcreat_bullet",
-						"gr_bullet",
-						 "spapi_bullet",
-
-
-						};
-							string guid = BraveUtility.RandomElement<string>(advanced);
-							var Enemy = EnemyDatabase.GetOrLoadByGuid(guid);
-							Enemy.healthHaver.SetHealthMaximum(15f);
-							AIActor.Spawn(Enemy.aiActor, this.Projectile.sprite.WorldCenter, GameManager.Instance.PrimaryPlayer.CurrentRoom, true, AIActor.AwakenAnimationType.Default, true);
-						}
-						else
-						{
-							var basic = new List<string> {
-
-						"an3s_bullet",
-						"blazey_bullet",
-					   "bleak_bullet",
-					   "turbo_bullet",
-					   "bot_bullet",
-					   "bunny_bullet",
-					   "cel_bullet",
-					   "glaurung_bullet",
-					   "hunter_bullet",
-					   "king_bullet",
-					   "neighborino_bullet",
-					   "nevernamed_bullet",
-					   "panda_bullet",
-					   "retrash_bullet",
-					   "skilotar_bullet",
-					   "notsoai_bullet"
-						};
-							string guid = BraveUtility.RandomElement<string>(basic);
-							var Enemy = EnemyDatabase.GetOrLoadByGuid(guid);
-							Enemy.healthHaver.SetHealthMaximum(20f);
-							
-							AIActor.Spawn(Enemy.aiActor, this.Projectile.sprite.WorldCenter, GameManager.Instance.PrimaryPlayer.CurrentRoom, true, AIActor.AwakenAnimationType.Default, true);
-
-						}
+						string guid = BraveUtility.RandomElement<string>(StaticInformation.ModderBulletGUIDs);
+						var Enemy = EnemyDatabase.GetOrLoadByGuid(guid);
+						Enemy.healthHaver.SetHealthMaximum(15f);
+						AIActor.Spawn(Enemy.aiActor, this.Projectile.sprite.WorldCenter, GameManager.Instance.PrimaryPlayer.CurrentRoom, true, AIActor.AwakenAnimationType.Default, true);
 						float num = base.RandomAngle();
 						float Amount = 12;
 						float Angle = 360 / Amount;
@@ -860,51 +816,10 @@ namespace Planetside
 					if (!preventSpawningProjectiles)
 					{
 						base.PostWwiseEvent("Play_BOSS_Rat_Cheese_Burst_02", null);
-						int RNG = UnityEngine.Random.Range(0, 10);
-						bool WeakShot = RNG == 1;
-						if (WeakShot)
-						{
-						var advanced = new List<string>
-						{
-						"apache_bullet",
-						"kyle_bullet",
-						"wow_bullet",
-						"spcreat_bullet",
-						"gr_bullet",
-						"spapi_bullet",
-
-						};
-							string guid = BraveUtility.RandomElement<string>(advanced);
-							var Enemy = EnemyDatabase.GetOrLoadByGuid(guid);
-							Enemy.healthHaver.SetHealthMaximum(15f);
-							AIActor.Spawn(Enemy.aiActor, this.Projectile.sprite.WorldCenter, GameManager.Instance.PrimaryPlayer.CurrentRoom, true, AIActor.AwakenAnimationType.Default, true);
-						}
-						else
-						{
-						var basic = new List<string> { 
-						
-				        "an3s_bullet",
-						"turbo_bullet",
-				        "blazey_bullet",
-					   "bleak_bullet",
-					   "bot_bullet",
-					   "bunny_bullet",
-					   "cel_bullet",
-					   "glaurung_bullet",
-					   "hunter_bullet",
-					   "king_bullet",
-					   "neighborino_bullet",
-					   "nevernamed_bullet",
-					   "panda_bullet",
-					   "retrash_bullet",
-					   "skilotar_bullet",
-					   "notsoai_bullet",
-					    };
-							string guid = BraveUtility.RandomElement<string>(basic);
-							var Enemy = EnemyDatabase.GetOrLoadByGuid(guid);
-							Enemy.healthHaver.SetHealthMaximum(24f);
-							AIActor.Spawn(Enemy.aiActor, this.Projectile.sprite.WorldCenter, GameManager.Instance.PrimaryPlayer.CurrentRoom, true, AIActor.AwakenAnimationType.Default, true);
-						}
+						string guid = BraveUtility.RandomElement<string>(StaticInformation.ModderBulletGUIDs);
+						var Enemy = EnemyDatabase.GetOrLoadByGuid(guid);
+						Enemy.healthHaver.SetHealthMaximum(15f);
+						AIActor.Spawn(Enemy.aiActor, this.Projectile.sprite.WorldCenter, GameManager.Instance.PrimaryPlayer.CurrentRoom, true, AIActor.AwakenAnimationType.Default, true);
 
 
 						float num = base.RandomAngle();

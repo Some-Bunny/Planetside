@@ -42,6 +42,8 @@ namespace Planetside
             GunWarrant.GunWarrantID = item.PickupObjectId;
             ItemIDs.AddToList(item.PickupObjectId);
             new Hook(typeof(BaseShopController).GetMethod("DoSetup", BindingFlags.Instance | BindingFlags.NonPublic), typeof(GunWarrant).GetMethod("DoSetupHook"));
+            GameManager.Instance.RainbowRunForceExcludedIDs.Add(item.PickupObjectId);
+
         }
         public static int GunWarrantID;
 

@@ -590,7 +590,9 @@ namespace Planetside
 					ParticleSystem objparticles = silencerVFX.GetComponentInChildren<ParticleSystem>();
 					var main = objparticles.main;
 					main.useUnscaledTime = true;
-					GameObject.Instantiate(silencerVFX.gameObject, base.aiActor.transform.Find("ObservantShootpointLeft").position, Quaternion.identity);
+					GameObject gameObject = GameObject.Instantiate(silencerVFX.gameObject, base.aiActor.transform.Find("ObservantShootpointLeft").position, Quaternion.identity);
+					Destroy(gameObject, 2.5f);
+
 					Exploder.DoDistortionWave(base.aiActor.transform.Find("ObservantShootpointLeft").position, 10f, 0.4f, 3, 0.066f);
 				}
 			}

@@ -29,19 +29,21 @@ namespace Planetside
 			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 2);
 			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 2);
 
-			for (int i = 0; i < 5; i++)
+			int e = 0;
+			for (int i = -2; e < 5; i++, e++)
 			{
 				gun.AddProjectileModuleFrom(PickupObjectDatabase.GetById(35) as Gun, true, false);
-				gun.Volley.projectiles[i].ammoCost = 1;
-				gun.Volley.projectiles[i].shootStyle = ProjectileModule.ShootStyle.Automatic;
-				gun.Volley.projectiles[i].sequenceStyle = ProjectileModule.ProjectileSequenceStyle.Random;
-				gun.Volley.projectiles[i].cooldownTime = 0.66f;
-				gun.Volley.projectiles[i].angleVariance = 0f;
-				gun.Volley.projectiles[i].numberOfShotsInClip = 4;
-				gun.Volley.projectiles[i].angleFromAim = -16 + (8*i);
+				gun.Volley.projectiles[e].angleFromAim = 8 * i;
+
+				gun.Volley.projectiles[e].ammoCost = 1;
+				gun.Volley.projectiles[e].shootStyle = ProjectileModule.ShootStyle.Automatic;
+				gun.Volley.projectiles[e].sequenceStyle = ProjectileModule.ProjectileSequenceStyle.Random;
+				gun.Volley.projectiles[e].cooldownTime = 0.66f;
+				gun.Volley.projectiles[e].angleVariance = 0f;
+				gun.Volley.projectiles[e].numberOfShotsInClip = 4;
 				Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(gun.Volley.projectiles[0].projectiles[0]);
 				projectile.gameObject.SetActive(false);
-				gun.Volley.projectiles[i].projectiles[0] = projectile;
+				gun.Volley.projectiles[e].projectiles[0] = projectile;
 				projectile.baseData.damage = 7;
 				projectile.AdditionalScaleMultiplier = 0.75f;
 				projectile.baseData.speed = 12f;
@@ -50,10 +52,10 @@ namespace Planetside
 				FakePrefab.MarkAsFakePrefab(projectile.gameObject);
 				UnityEngine.Object.DontDestroyOnLoad(projectile);
 				gun.DefaultModule.projectiles[0] = projectile;
-				bool flag = gun.Volley.projectiles[i] != gun.DefaultModule;
+				bool flag = gun.Volley.projectiles[e] != gun.DefaultModule;
 				if (flag)
 				{
-					gun.Volley.projectiles[i].ammoCost = 0;
+					gun.Volley.projectiles[e].ammoCost = 0;
 				}
 			}
 

@@ -162,7 +162,6 @@ namespace GungeonAPI
                 AddExit(room, new Vector2(room.Width, room.Height / 2), DungeonData.Direction.EAST);
                 AddExit(room, new Vector2(0, room.Height / 2), DungeonData.Direction.WEST);
             }
-
             if (roomData.enemyPositions != null)
             {
                 for (int i = 0; i < roomData.enemyPositions.Length; i++)
@@ -356,9 +355,9 @@ namespace GungeonAPI
 
         public static int GetStyleValue(string dungeonName, string shrineID)
         {
-            if (OldShrineFactory.builtShrines != null && OldShrineFactory.builtShrines.ContainsKey(shrineID))
+            if (ShrineFactory.registeredShrines != null && ShrineFactory.registeredShrines.ContainsKey(shrineID))
             {
-                var shrineData = OldShrineFactory.builtShrines[shrineID]?.GetComponent<CustomShrineController>();
+                var shrineData = ShrineFactory.registeredShrines[shrineID]?.GetComponent<CustomShrineController>();
                 if (shrineData != null && shrineData.roomStyles != null && shrineData.roomStyles.ContainsKey(dungeonName))
                     return shrineData.roomStyles[dungeonName];
             }

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
-using static GungeonAPI.OldShrineFactory;
+using static GungeonAPI.ShrineFactory;
 using Gungeon;
 using ItemAPI;
 using Dungeonator;
@@ -20,7 +20,7 @@ namespace Planetside
 
 		public static void Add()
 		{
-			OldShrineFactory aa = new OldShrineFactory
+			ShrineFactory aa = new ShrineFactory
 			{
 
 				name = "ShrineOfCurses",

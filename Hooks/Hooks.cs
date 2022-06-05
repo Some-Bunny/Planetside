@@ -92,8 +92,11 @@ namespace Planetside
                     typeof(Projectile).GetMethod("HandleDamage", BindingFlags.NonPublic | BindingFlags.Instance),
                     typeof(UndodgeableProjectile).GetMethod("HandleDamageHook", BindingFlags.NonPublic | BindingFlags.Static)
                 );
+                Hook ffasdafsdsf = new Hook(
+                 typeof(PlayerController).GetMethod("HandleDodgedBeam", BindingFlags.Public | BindingFlags.Instance),
+                 typeof(Hooks).GetMethod("HandleDodgedBeamHook", BindingFlags.Public | BindingFlags.Static)
+             );
 
-                
             }
             catch (Exception e)
             {
@@ -101,14 +104,46 @@ namespace Planetside
             }
         }
 
-
-        public static IEnumerator StartHookMinorBreakable(Func<MinorBreakable, IEnumerator> orig, MinorBreakable self)
+        public static void HandleDodgedBeamHook(Action<PlayerController ,BeamController> orig, PlayerController self, BeamController beam)
         {
-            Material mat = self.sprite.renderer.material;
-            Shader shader = self.sprite.renderer.material.shader;
+            orig(self, beam);
+            ETGModConsole.Log("1");
+            if (beam.projectile.GetComponent<MarkForUndodgeAbleBeam>() != null && !self.IsEthereal)
+            {
+                HealthHaver healthHaver = self.healthHaver;
+                float damage = 0.5f;
+                if (beam.projectile.BlackPhantomDamageMultiplier != 1f && beam.projectile.Owner.aiActor && beam.projectile.Owner.aiActor.IsBlackPhantom)
+                {
+                    damage *= beam.projectile.BlackPhantomDamageMultiplier;
+                }
+                ETGModConsole.Log("2");
+                Vector2 velocity = self.specRigidbody.Velocity;
+                string ownerName = beam.projectile.OwnerName;
+                CoreDamageTypes coreDamageTypes = beam.projectile.damageTypes;
+                DamageCategory damageCategory = (!beam.projectile.IsBlackBullet) ? DamageCategory.Normal : DamageCategory.BlackBullet;
+                AkSoundEngine.PostEvent("Play_OBJ_key_impact_01", self.gameObject);
+                GameObject vfx = UnityEngine.Object.Instantiate<GameObject>((PickupObjectDatabase.GetById(228) as Gun).DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX);
+                tk2dBaseSprite component = vfx.GetComponent<tk2dBaseSprite>();
+                component.PlaceAtPositionByAnchor(self.transform.position + new Vector3(0.375f, 0.375f), tk2dBaseSprite.Anchor.MiddleCenter);
+                component.HeightOffGround = 35f;
+                component.UpdateZDepth();
+                tk2dSpriteAnimator component2 = component.GetComponent<tk2dSpriteAnimator>();
+                if (component2 != null)
+                {
+                    component2.ignoreTimeScale = true;
+                    component2.AlwaysIgnoreTimeScale = true;
+                    component2.AnimateDuringBossIntros = true;
+                    component2.alwaysUpdateOffscreen = true;
+                    component2.playAutomatically = true;
+                }
+                healthHaver.ApplyDamage(damage, velocity, ownerName, coreDamageTypes, damageCategory, true, null, beam.projectile.ignoreDamageCaps);
+                ETGModConsole.Log("3");
+            }
+        }
 
-            if (mat != null) { ETGModConsole.Log("Material: " + mat.ToString()); }
-            if (shader != null) { ETGModConsole.Log("Shader: " + shader.ToString()); }
+        public static IEnumerator FireplaceControllerStart(Func<FireplaceController, IEnumerator> orig, FireplaceController self)
+        {
+           
             IEnumerator origEnum = orig(self);
             while (origEnum.MoveNext())
             {

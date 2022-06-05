@@ -44,7 +44,7 @@ namespace Planetside
 
 
 			GameObject original;
-			OldShrineFactory.builtShrines.TryGetValue("psog:holychambershrine", out original);
+			ShrineFactory.registeredShrines.TryGetValue("psog:holychambershrine", out original);
 
 			DungeonPlaceable placeableContents = ScriptableObject.CreateInstance<DungeonPlaceable>();
 			placeableContents.width = 2;
@@ -209,7 +209,7 @@ namespace Planetside
 
 
 			GameObject original;
-			OldShrineFactory.builtShrines.TryGetValue("psog:brokenchambershrine", out original);
+			ShrineFactory.registeredShrines.TryGetValue("psog:brokenchambershrine", out original);
 			PlanetsideModule.BrokenChamberShrineController broken = original.gameObject.AddComponent<PlanetsideModule.BrokenChamberShrineController>();
 			broken.obj = original;
 
@@ -362,7 +362,7 @@ namespace Planetside
 
 
 			GameObject original;
-			OldShrineFactory.builtShrines.TryGetValue("psog:bluecasingshrine", out original);
+			ShrineFactory.registeredShrines.TryGetValue("psog:bluecasingshrine", out original);
 			DungeonPlaceable placeableContents = ScriptableObject.CreateInstance<DungeonPlaceable>();
 			placeableContents.width = 2;
 			placeableContents.height = 2;
@@ -515,7 +515,7 @@ namespace Planetside
 			DungeonPrerequisite[] array = new DungeonPrerequisite[0];
 
 			GameObject original;
-			OldShrineFactory.builtShrines.TryGetValue("psog:toolate", out original);
+			ShrineFactory.registeredShrines.TryGetValue("psog:toolate", out original);
 			DungeonPlaceable placeableContents = ScriptableObject.CreateInstance<DungeonPlaceable>();
 			placeableContents.width = 2;
 			placeableContents.height = 2;

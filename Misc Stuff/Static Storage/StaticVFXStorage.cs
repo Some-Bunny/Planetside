@@ -18,6 +18,7 @@ namespace Planetside
 
             var scarf = PickupObjectDatabase.GetById(436) as BlinkPassiveItem;
             ScarfObject = scarf.ScarfPrefab;
+            BloodiedScarfPoofVFX = scarf.BlinkpoofVfx;
 
             var partObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("TheperkParticle"));//this is the name of the object which by default will be "Particle System"
             PerkParticleObject = partObj;
@@ -96,10 +97,7 @@ namespace Planetside
             BeholsterChargeUpVFX = behCont.chargeUpVfx;
             BeholsterChargeDownVFX = behCont.chargeDownVfx;
 
-            GunFullyChargedVFX = BraveResources.Load<GameObject>("Global VFX/VFX_DBZ_Charge", ".prefab");
-
             FriendlyElectricLinkVFX = FakePrefab.Clone(Game.Items["shock_rounds"].GetComponent<ComplexProjectileModifier>().ChainLightningVFX);
-
 
             AIAnimator aiAnimator = EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").aiAnimator;
             List<AIAnimator.NamedVFXPool> namedVFX = aiAnimator.OtherVFX;
@@ -115,11 +113,41 @@ namespace Planetside
                             HighPriestClapVFX = new VFXPool();
                             HighPriestClapVFX.type = VFXPoolType.Single;
                             HighPriestClapVFX.effects = new VFXComplex[] {new VFXComplex() {effects = new VFXObject[] { myVFX } } };
+
+                            VFXObject myVFX2 = StaticVFXStorage.CopyFields<VFXObject>(vFXObject);
+                            tk2dSprite sprite = myVFX2.effect.GetComponent<tk2dSprite>();
+
+                            sprite.usesOverrideMaterial = true;
+                            sprite.renderer.material.shader = PlanetsideModule.ModAssets.LoadAsset<Shader>("inverseglowshader");
+                            sprite.renderer.material.SetFloat("_EmissiveColorPower", 70);
+                            HighPriestClapVFXInverse = new VFXPool();
+                            HighPriestClapVFXInverse.type = VFXPoolType.Single;
+                            HighPriestClapVFXInverse.effects = new VFXComplex[] { new VFXComplex() { effects = new VFXObject[] { myVFX2 } } };
                         }
                     }
                 }
             }
+
+            GunFullyChargedVFX = BraveResources.Load<GameObject>("Global VFX/VFX_DBZ_Charge", ".prefab");
+            DodgeRollImpactVFX = (GameObject)BraveResources.Load("Global VFX/VFX_DodgeRollHit", ".prefab");
+
+
+            var machoBrace = PickupObjectDatabase.GetById(665) as MachoBraceItem;
+            MachoBraceDustupVFX = machoBrace.DustUpVFX;
+            MachoBraceBurstVFX = machoBrace.BurstVFX;
+
+            var relodestone = PickupObjectDatabase.GetById(536) as RelodestoneItem;
+            RelodestoneContinuousSuckVFX = relodestone.ContinuousVFX;
+
+            //var relodestone = PickupObjectDatabase.GetById(536) as RelodestoneItem;
+            //KnifeShieldKnifeTileImpactVFX = relodestone.ContinuousVFX;
+            
+            //AIActor GuNut = EnemyDatabase.GetOrLoadByGuid("ec8ea75b557d4e7b8ceeaacdf6f8238c").aiActor;
+            //if (GuNut.GetComponentInChildren<GunNutSlamVfx>() != null) { ETGModConsole.Log("fdfdfdaafddffddfadfadfdfa"); }
+
         }
+
+
 
         public static VFXObject CopyFields<T>(VFXObject sample2) where T : VFXObject
         {
@@ -134,18 +162,32 @@ namespace Planetside
             return sample;
         }
 
+        public static GameObject RelodestoneContinuousSuckVFX;
+
+
+        //public static GameObject KnifeShieldKnifeTileImpactVFX;
+
+        public static GameObject MachoBraceDustupVFX;
+        public static GameObject MachoBraceBurstVFX;
 
 
         public static VFXPool HighPriestClapVFX;
+        public static VFXPool HighPriestClapVFXInverse;
 
 
         public static VFXPool BeholsterChargeUpVFX;
         public static VFXPool BeholsterChargeDownVFX;
 
 
+        public static GameObject DodgeRollImpactVFX;
+
+
         public static GameObject DragunBoulderLandVFX;
 
         public static GameObject GunFullyChargedVFX;
+
+        public static GameObject BloodiedScarfPoofVFX;
+
 
         public static GameObject GorgunEyesVFX;
         public static GameObject EnemyElectricLinkVFX;

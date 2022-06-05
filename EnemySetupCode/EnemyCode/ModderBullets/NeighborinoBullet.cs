@@ -45,13 +45,13 @@ namespace Planetside
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("1bc2a07ef87741be90c37096910843ab").bulletBank.GetBullet("icicle"));
 				for (int i = -7; i <= 3; i++)
 				{
-					base.Fire(new Direction((float)(i * 2), DirectionType.Aim, -1f), new Speed(13f - (float)Mathf.Abs(i) * 0.3f, SpeedType.Absolute), new Frost());
+					base.Fire(new Direction((float)(i * 2), DirectionType.Aim, -1f), new Speed(11f - (float)Mathf.Abs(i) * 0.3f, SpeedType.Absolute), new Frost());
 
 				}
 				yield return Wait(30);
 				for (int i = -3; i <= 7; i++)
 				{
-					base.Fire(new Direction((float)(i * 2), DirectionType.Aim, -1f), new Speed(13f - (float)Mathf.Abs(i) * 0.3f, SpeedType.Absolute), new Gunfire());
+					base.Fire(new Direction((float)(i * 2), DirectionType.Aim, -1f), new Speed(11f - (float)Mathf.Abs(i) * 0.3f, SpeedType.Absolute), new Gunfire());
 
 				}
 				yield break;

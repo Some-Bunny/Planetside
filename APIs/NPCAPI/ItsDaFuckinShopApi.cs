@@ -23,6 +23,172 @@ namespace NpcApi
         public static Vector3 defaultnpcPosition = new Vector3(1.9375f, 3.4375f, 5.9375f);
 
 
+        /// <summary>
+        /// Adds additional animations to certain events to your NPC. To Note, the aanimation names that are used here for certain animations (If the NPC will have one) are called: 
+        /// 
+        /// On Purchase Animation Name: purchase
+        /// 
+        /// On Denied Purchase Animation Name: denied
+        /// 
+        /// On Stolen From Animation Name: stolen
+        /// </summary>
+        /// <param name="self">The GameObject SetUpShop() returns.</param> 
+        /// <param name="purchaseSpritePaths">Your purchase animation sprite paths.</param> 
+        /// <param name="purchaseAnimFPS">Your purchase animation FPS.</param> 
+        /// <param name="denyPurchaseSpritePaths">Your purchase denied animation sprite paths.</param> 
+        /// <param name="denyPurchaseAnimFPS">Your purchase denied animation FPS.</param> 
+        /// <param name="stealSpritePaths">Your on stolen from animation sprite paths.</param> 
+        /// <param name="stealAnimFPS">Your on stolen from animation FPS.</param> 
+        public static void AddAdditionalAnimationsToShop(GameObject self, List<string> purchaseSpritePaths = null, float purchaseAnimFPS = 6, List<string> denyPurchaseSpritePaths = null, float denyPurchaseAnimFPS = 6, List<string> stealSpritePaths = null, float stealAnimFPS = 6)
+        {
+            var collection = self.GetComponentInChildren<tk2dSprite>().Collection;
+            tk2dSpriteAnimator spriteAnimator = self.GetComponentInChildren<tk2dSpriteAnimator>();
+            AIAnimator aianimator = self.GetComponentInChildren<AIAnimator>();
+
+            if (purchaseSpritePaths != null)
+            {
+                var danceIdsList = new List<int>();
+                foreach (string sprite in purchaseSpritePaths)
+                {
+                    danceIdsList.Add(SpriteBuilder.AddSpriteToCollection(sprite, collection));
+                }
+                CreateDirectionalAnimation(spriteAnimator, collection, aianimator, danceIdsList, "purchase", purchaseAnimFPS);
+            }
+            if (denyPurchaseSpritePaths != null)
+            {
+                var denyIdsList = new List<int>();
+                foreach (string sprite in denyPurchaseSpritePaths)
+                {
+                    denyIdsList.Add(SpriteBuilder.AddSpriteToCollection(sprite, collection));
+                }
+                CreateDirectionalAnimation(spriteAnimator, collection, aianimator, denyIdsList, "denied", denyPurchaseAnimFPS);
+            }
+            if (stealSpritePaths != null)
+            {
+                var stealIdsList = new List<int>();
+                foreach (string sprite in stealSpritePaths)
+                {
+                    stealIdsList.Add(SpriteBuilder.AddSpriteToCollection(sprite, collection));
+                }
+                CreateDirectionalAnimation(spriteAnimator, collection, aianimator, stealIdsList, "stolen", stealAnimFPS);
+            }
+        }
+
+        /// <summary>
+        /// Changes the voice that your NPC makes
+        /// </summary>
+        /// <param name="self">The GameObject SetUpShop() returns.</param> 
+        /// <param name="voicebox">The given VoiceBox to change to.</param> 
+        public static void ChangeVoiceBox(GameObject self, VoiceBoxes voicebox)
+        {
+            TalkDoerLite talker = self.GetComponentInChildren<TalkDoerLite>();
+            if (self == null || talker == null)
+            {
+                ETGModConsole.Log("NPCAPI: Unable to detect TalkDoerLite/GameObject in given object!");
+                return;
+            }
+            talker.audioCharacterSpeechTag = ReturnVoiceBox(voicebox);
+        }
+
+        /// <summary>
+        /// Add a new DIRECTIONAL animation to your NPC. You can then play it when you need to using CustomShopController.TryPlayAnimation()
+        /// </summary>
+        /// <param name="self">The GameObject SetUpShop() returns.</param> 
+        /// <param name="yourPaths">The sprite paths for your animation.</param> 
+        /// <param name="YourAnimFPS">Your animations FPS.</param> 
+        /// <param name="AnimationName">Your DIRECTIONAL animations name, along with the animations name.</param> 
+
+        public static void AddParentedAnimationToShop(GameObject self, List<string> yourPaths, float YourAnimFPS, string AnimationName)
+        {
+            var collection = self.GetComponentInChildren<tk2dSprite>().Collection;
+            tk2dSpriteAnimator spriteAnimator = self.GetComponentInChildren<tk2dSpriteAnimator>();
+            AIAnimator aianimator = self.GetComponentInChildren<AIAnimator>();
+            if (yourPaths != null)
+            {
+                var stealIdsList = new List<int>();
+                foreach (string sprite in yourPaths)
+                {
+                    stealIdsList.Add(SpriteBuilder.AddSpriteToCollection(sprite, collection));
+                }
+                CreateDirectionalAnimation(spriteAnimator, collection, aianimator, stealIdsList, AnimationName, YourAnimFPS);
+            }
+        }
+
+        /// <summary>
+        /// Add a new animation to your NPC. This animation is NOT a directional one, but can still be played via switching a pre-existing directional animations AnimNames with this animations name or other means.
+        /// </summary>
+        /// <param name="self">The GameObject SetUpShop() returns.</param> 
+        /// <param name="yourPaths">The sprite paths for your animation.</param> 
+        /// <param name="YourAnimFPS">Your animations FPS.</param> 
+        /// <param name="AnimationName">Your NON DIRECTIONAL animations name.</param> 
+        public static void AddUnparentedAnimationToShop(GameObject self, List<string> yourPaths, float YourAnimFPS, string AnimationName)
+        {
+            var collection = self.GetComponentInChildren<tk2dSprite>().Collection;
+            tk2dSpriteAnimator spriteAnimator = self.GetComponentInChildren<tk2dSpriteAnimator>();
+            AIAnimator aianimator = self.GetComponentInChildren<AIAnimator>();
+            if (yourPaths != null)
+            {
+                var IdsList = new List<int>();
+                foreach (string sprite in yourPaths)
+                {
+                    IdsList.Add(SpriteBuilder.AddSpriteToCollection(sprite, collection));
+                }
+                SpriteBuilder.AddAnimation(spriteAnimator, collection, IdsList, AnimationName, tk2dSpriteAnimationClip.WrapMode.Once, YourAnimFPS);
+            }
+        }
+        /// <summary>
+        /// Modifies a pre-existing directional animation in your NPC to use a different NON-Directional animation that it ALSO has.
+        /// </summary>
+        /// <param name="self">The GameObject SetUpShop() returns.</param> 
+        /// <param name="DirectionalAnimationPrefixToModify">The Prefix of your DIRECTIONAL animation.</param> 
+        /// <param name="YourNonDirectionalAnimationName">The NAME of your NON DIRECTIONAL animation.</param> 
+        public static void ModifyPreExistingDirectionalAnimation(GameObject self, string DirectionalAnimationPrefixToModify, string YourNonDirectionalAnimationName)
+        {
+            List<AIAnimator.NamedDirectionalAnimation> lists2 = self.GetComponentInChildren<AIAnimator>().OtherAnimations;
+            for (int k = 0; k < lists2.Count; k++)
+            {
+                if (lists2[k].anim.Prefix == DirectionalAnimationPrefixToModify)
+                {
+                    lists2[k].anim.AnimNames = new string[] { YourNonDirectionalAnimationName };
+                }
+            }  
+        }
+
+
+        private static void CreateDirectionalAnimation(tk2dSpriteAnimator spriteAnimator, tk2dSpriteCollectionData collection, AIAnimator aianimator, List<int> IdsList, string animationName, float FPS)
+        {
+            SpriteBuilder.AddAnimation(spriteAnimator, collection, IdsList, animationName, tk2dSpriteAnimationClip.WrapMode.Once, FPS);
+            DirectionalAnimation aa = new DirectionalAnimation
+            {
+                Type = DirectionalAnimation.DirectionType.Single,
+                Prefix = animationName,
+                AnimNames = new string[1],
+                Flipped = new DirectionalAnimation.FlipType[1]
+            };
+            if (aianimator.OtherAnimations != null)
+            {
+                aianimator.OtherAnimations.Add(
+                new AIAnimator.NamedDirectionalAnimation
+                {
+                    name = animationName,
+                    anim = aa
+                });
+            }
+            else
+            {
+                aianimator.OtherAnimations = new List<AIAnimator.NamedDirectionalAnimation>
+                {
+                    new AIAnimator.NamedDirectionalAnimation
+                    {
+                        name = animationName,
+                        anim = aa
+                    }
+                };
+            }
+
+          
+        }
+
 
         /// <summary>
         /// Creates a shop object along with an npc
@@ -67,12 +233,21 @@ namespace NpcApi
         /// <param name="percentChanceForMainPool">How likely it is for the shop to show up in the main pool base game shops use 0.1</param> 
         /// 
         /// <param name="prerequisites">These do unlocks and shit</param> 
+        /// <param name="fortunesFavorRadius">The radius of the fortunes favor effect.</param> 
+        /// <param name="poolType">Determines how your shop pool will pick items. DEFAULT is how basegame does it, DUPES allows your shop to sell deplicates and DUPES_AND_NOEXCLUSION allows your shop to sell duplicate items and EXCLUDED tier items.</param> 
+        /// <param name="RainbowModeImmunity">Enables/Disables immunity to the dreaded capitalism killer, Rainbow mode.</param> 
+
+
         /// <returns></returns>
+        /// 
+
+
         public static GameObject SetUpShop(string name, string prefix, List<string> idleSpritePaths, int idleFps, List<string> talkSpritePaths, int talkFps, GenericLootTable lootTable, CustomShopItemController.ShopCurrencyType currency, string runBasedMultilineGenericStringKey,
-            string runBasedMultilineStopperStringKey, string purchaseItemStringKey, string purchaseItemFailedStringKey, string introStringKey, string attackedStringKey, Vector3 talkPointOffset, Vector3 npcPosition, Vector3[] itemPositions = null, float costModifier = 1, bool giveStatsOnPurchase = false,
+            string runBasedMultilineStopperStringKey, string purchaseItemStringKey, string purchaseItemFailedStringKey, string introStringKey, string attackedStringKey, string stolenFromStringKey, Vector3 talkPointOffset, Vector3 npcPosition,VoiceBoxes voiceBox = VoiceBoxes.OLD_MAN ,Vector3[] itemPositions = null, float costModifier = 1, bool giveStatsOnPurchase = false,
             StatModifier[] statsToGiveOnPurchase = null, Func<CustomShopController, PlayerController, int, bool> CustomCanBuy = null, Func<CustomShopController, PlayerController, int, int> CustomRemoveCurrency = null, Func<CustomShopController, CustomShopItemController, PickupObject, int> CustomPrice = null,
             Func<PlayerController, PickupObject, int, bool> OnPurchase = null, Func<PlayerController, PickupObject, int, bool> OnSteal = null, string currencyIconPath = "", string currencyName = "", bool canBeRobbed = true, bool hasCarpet = false, string carpetSpritePath = "", float CarpetXOffset = 0, float CarpetYOffset = 0, bool hasMinimapIcon = false,
-            string minimapIconSpritePath = "", bool addToMainNpcPool = false, float percentChanceForMainPool = 0.1f, DungeonPrerequisite[] prerequisites = null, List<string> purchaseSpritePaths = null, float fortunesFavorRadius = 2, PoolType poolType = PoolType.DEFAULT)
+            string minimapIconSpritePath = "", bool addToMainNpcPool = false, float percentChanceForMainPool = 0.1f, DungeonPrerequisite[] prerequisites = null,
+            float fortunesFavorRadius = 2, PoolType poolType = PoolType.DEFAULT, bool RainbowModeImmunity = false)
         {
 
             try
@@ -144,7 +319,7 @@ namespace NpcApi
                 talkDoer.AllowPlayerToPassEventually = true;
                 talkDoer.speakPoint = SpeechPoint.transform;
                 talkDoer.SpeaksGleepGlorpenese = false;
-                talkDoer.audioCharacterSpeechTag = "oldman";
+                talkDoer.audioCharacterSpeechTag = ReturnVoiceBox(voiceBox);
                 talkDoer.playerApproachRadius = 5;
                 talkDoer.conversationBreakRadius = 5;
                 talkDoer.echo1 = null;
@@ -200,33 +375,8 @@ namespace NpcApi
                     }
                 };
 
-                if (purchaseSpritePaths != null)
-                {
-                    var danceIdsList = new List<int>();
-                    foreach (string sprite in purchaseSpritePaths)
-                    {
-                        danceIdsList.Add(SpriteBuilder.AddSpriteToCollection(sprite, collection));
-                    }
-                    SpriteBuilder.AddAnimation(spriteAnimator, collection, danceIdsList, "dance", tk2dSpriteAnimationClip.WrapMode.Once, talkFps);
+              
 
-                    DirectionalAnimation aa = new DirectionalAnimation
-                    {
-                        Type = DirectionalAnimation.DirectionType.Single,
-                        Prefix = "dance",
-                        AnimNames = new string[1],
-                        Flipped = new DirectionalAnimation.FlipType[1]
-                    };
-                    aIAnimator.OtherAnimations = new List<AIAnimator.NamedDirectionalAnimation>
-                    {
-                    new AIAnimator.NamedDirectionalAnimation
-                    {
-                        name = "dance",
-                        anim = aa
-                    }
-                    };
-
-
-                }
                 var basenpc = ResourceManager.LoadAssetBundle("shared_auto_001").LoadAsset<GameObject>("Merchant_Key").transform.Find("NPC_Key").gameObject;
 
                 PlayMakerFSM iHaveNoFuckingClueWhatThisIs = npcObj.AddComponent<PlayMakerFSM>();
@@ -246,12 +396,19 @@ namespace NpcApi
 
                 (fsmStringParams.GetValue(iHaveNoFuckingClueWhatThisIs.FsmStates[8].ActionData) as List<FsmString>)[0].Value = attackedStringKey;
 
-                (fsmStringParams.GetValue(iHaveNoFuckingClueWhatThisIs.FsmStates[9].ActionData) as List<FsmString>)[0].Value = "#SUBSHOP_GENERIC_CAUGHT_STEALING";
+                (fsmStringParams.GetValue(iHaveNoFuckingClueWhatThisIs.FsmStates[9].ActionData) as List<FsmString>)[0].Value = stolenFromStringKey;
+                (fsmStringParams.GetValue(iHaveNoFuckingClueWhatThisIs.FsmStates[9].ActionData) as List<FsmString>)[1].Value = stolenFromStringKey;
 
                 (fsmStringParams.GetValue(iHaveNoFuckingClueWhatThisIs.FsmStates[10].ActionData) as List<FsmString>)[0].Value = "#SHOP_GENERIC_NO_SALE_LABEL";
 
                 (fsmStringParams.GetValue(iHaveNoFuckingClueWhatThisIs.FsmStates[12].ActionData) as List<FsmString>)[0].Value = "#COOP_REBUKE";
 
+                /*
+                foreach (FsmString fuck in fsmStringParams.GetValue(iHaveNoFuckingClueWhatThisIs.FsmStates[9].ActionData) as List<FsmString>)
+                {
+                    ETGModConsole.Log(fuck.Value);
+                }
+                */
 
                 npcObj.name = prefix + ":" + name;
 
@@ -285,6 +442,7 @@ namespace NpcApi
 
 
                 var shopObj = new GameObject(prefix + ":" + name + "_Shop").AddComponent<CustomShopController>();
+                shopObj.AllowedToSpawnOnRainbowMode = RainbowModeImmunity;
                 FakePrefab.MarkAsFakePrefab(shopObj.gameObject);
                 UnityEngine.Object.DontDestroyOnLoad(shopObj.gameObject);
 
@@ -356,7 +514,6 @@ namespace NpcApi
 
                 shopObj.ShopCostModifier = costModifier;
                 shopObj.FlagToSetOnEncounter = GungeonFlags.NONE;
-
                 shopObj.giveStatsOnPurchase = giveStatsOnPurchase;
                 shopObj.statsToGive = statsToGiveOnPurchase;
 
@@ -387,7 +544,7 @@ namespace NpcApi
                 npcObj.transform.parent = shopObj.gameObject.transform;
                 npcObj.transform.position = npcPosition;//new Vector3(1.9375f, 3.4375f, 5.9375f) + npcPositionOffset;
 
-
+               
 
 
                 if (hasCarpet)
@@ -554,6 +711,161 @@ namespace NpcApi
 
             return npcObj;
         }*/
+
+
+        public enum VoiceBoxes
+        {
+            FEMALE,
+            BROTHER_ALBERN,
+            FRUMP,
+            SER_MANUEL,
+            OLD_MAN,
+            AGUNIM,
+            BELLO,
+            MANLY,
+            EMP_ROR,
+            ROBOT,
+            RESOURCEFUL_RAT,
+            WITCH_1,
+            WITCH_2,
+            WITCH_3,
+            MALE,
+            DAISUKE,
+            BOWLER,
+            TONIC,
+            GUNSLING_KING,
+            TEEN,
+            SYNERGRACE,
+            DOUG,
+            ALIEN,
+            WINCHESTER,
+            OX,
+            BRAT,
+            JOLLY,
+            MONSTER_MANUEL,
+            FOOL,
+            CONVICT,
+            VAMPIRE,
+            CO_OP,
+            SPACE_ROGUE,
+            COMPUTER
+        };
+
+
+
+        public static string ReturnVoiceBox(VoiceBoxes voicebox)
+        {
+            string voice = "oldman";
+            switch (voicebox)
+            {
+                case VoiceBoxes.FEMALE:
+                    voice = "female";
+                    return voice;
+                case VoiceBoxes.BROTHER_ALBERN:
+                    voice = "truthknower";
+                    return voice;
+                case VoiceBoxes.FRUMP:
+                    voice = "frump";
+                    return voice;
+                case VoiceBoxes.SER_MANUEL:
+                    voice = "tutorialknight";
+                    return voice;
+                case VoiceBoxes.OLD_MAN:
+                    voice = "oldman";
+                    return voice;
+                case VoiceBoxes.AGUNIM:
+                    voice = "agunim";
+                    return voice;
+                case VoiceBoxes.BELLO:
+                    voice = "shopkeep";
+                    return voice;
+                case VoiceBoxes.MANLY:
+                    voice = "manly";
+                    return voice;
+                case VoiceBoxes.EMP_ROR:
+                    voice = "mainframe";
+                    return voice;
+                case VoiceBoxes.ROBOT:
+                    voice = "robot";
+                    return voice;
+                case VoiceBoxes.RESOURCEFUL_RAT:
+                    voice = "rat";
+                    return voice;
+                case VoiceBoxes.WITCH_1:
+                    voice = "witch1";
+                    return voice;
+                case VoiceBoxes.WITCH_2:
+                    voice = "witch2";
+                    return voice;
+                case VoiceBoxes.WITCH_3:
+                    voice = "witch3";
+                    return voice;
+                case VoiceBoxes.MALE:
+                    voice = "male";
+                    return voice;
+                case VoiceBoxes.DAISUKE:
+                    voice = "dice";
+                    return voice;
+                case VoiceBoxes.BOWLER:
+                    voice = "bower";
+                    return voice;
+                case VoiceBoxes.TONIC:
+                    voice = "goofy";
+                    return voice;
+                case VoiceBoxes.GUNSLING_KING:
+                    voice = "gunslingking";
+                    return voice;
+                case VoiceBoxes.TEEN:
+                    voice = "teen";
+                    return voice;
+                case VoiceBoxes.SYNERGRACE:
+                    voice = "Lady";
+                    return voice;
+                case VoiceBoxes.DOUG:
+                    voice = "bug";
+                    return voice;
+                case VoiceBoxes.ALIEN:
+                    voice = "alien";
+                    return voice;
+                case VoiceBoxes.WINCHESTER:
+                    voice = "gambler";
+                    return voice;
+                case VoiceBoxes.OX:
+                    voice = "golem";
+                    return voice;
+                case VoiceBoxes.BRAT:
+                    voice = "brat";
+                    return voice;
+                case VoiceBoxes.JOLLY:
+                    voice = "jolly";
+                    return voice;
+                case VoiceBoxes.MONSTER_MANUEL:
+                    voice = "owl";
+                    return voice;
+                case VoiceBoxes.FOOL:
+                    voice = "fool";
+                    return voice;
+                case VoiceBoxes.CONVICT:
+                    voice = "convict";
+                    return voice;
+                case VoiceBoxes.VAMPIRE:
+                    voice = "vampire";
+                    return voice;
+                case VoiceBoxes.CO_OP:
+                    voice = "coop";
+                    return voice;
+                case VoiceBoxes.SPACE_ROGUE:
+                    voice = "spacerogue";
+                    return voice;
+                case VoiceBoxes.COMPUTER:
+                    voice = "computer";
+                    return voice;
+                default:
+                    voice = "oldman";
+                    return voice;
+
+            }
+        }
 
         public static string AddCustomCurrencyType(string ammoTypeSpritePath, string name)
         {

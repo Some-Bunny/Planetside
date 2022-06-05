@@ -139,7 +139,7 @@ namespace Planetside
 			companion.aiActor.MovementSpeed = MovementSpeed;
 			companion.aiActor.healthHaver.PreventAllDamage = false;
 			companion.aiActor.CollisionDamage = 1f;
-			companion.aiActor.HasShadow = false;
+			companion.aiActor.HasShadow = true;
 			companion.aiActor.IgnoreForRoomClear = true;
 			companion.aiActor.aiAnimator.HitReactChance = 0f;
 			companion.aiActor.specRigidbody.CollideWithOthers = true;
@@ -149,6 +149,7 @@ namespace Planetside
 			companion.aiActor.CollisionKnockbackStrength = 0f;
 			companion.aiActor.procedurallyOutlined = false;
 			companion.aiActor.CanTargetPlayers = true;
+			companion.aiActor.ShadowObject = EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").ShadowObject;
 			companion.aiActor.healthHaver.SetHealthMaximum(HP, null, false);
 			companion.aiActor.specRigidbody.PixelColliders.Clear();
 			companion.aiActor.specRigidbody.PixelColliders.Add(new PixelCollider

@@ -37,6 +37,8 @@ namespace Planetside
 			ItemIDs.AddToList(warVase.PickupObjectId);
 			warVase.gameObject.AddComponent<RustyItemPool>();
 			new Hook(typeof(MinorBreakable).GetMethod("OnBreakAnimationComplete", BindingFlags.Instance | BindingFlags.NonPublic), typeof(GildedPots).GetMethod("CoinChance"));
+			GameManager.Instance.RainbowRunForceExcludedIDs.Add(warVase.PickupObjectId);
+
 		}
 		public static int GildedPotsID;
 

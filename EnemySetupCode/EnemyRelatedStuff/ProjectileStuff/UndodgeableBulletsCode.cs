@@ -36,6 +36,10 @@ namespace Planetside
         }
         //public Projectile Proj;
     }
+
+    public class MarkForUndodgeAbleBeam : MonoBehaviour { }
+
+
     public class UndodgeableProjectile : Projectile
     {
         public static BindingFlags AnyBindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static;

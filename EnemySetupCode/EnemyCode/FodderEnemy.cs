@@ -11,6 +11,7 @@ using Brave.BulletScript;
 using Pathfinding;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
+using System.Reflection;
 
 namespace Planetside
 {
@@ -92,61 +93,62 @@ namespace Planetside
 
 
 				});
-				companion.aiActor.CorpseObject = EnemyDatabase.GetOrLoadByGuid("43426a2e39584871b287ac31df04b544").CorpseObject;
+				//companion.aiActor.CorpseObject = EnemyDatabase.GetOrLoadByGuid("43426a2e39584871b287ac31df04b544").CorpseObject;
 				companion.aiActor.PreventBlackPhantom = false;
 				AIAnimator aiAnimator = companion.aiAnimator;
-				aiAnimator.OtherAnimations = new List<AIAnimator.NamedDirectionalAnimation>
-				{
-					new AIAnimator.NamedDirectionalAnimation
-					{
-					name = "die",
-					anim = new DirectionalAnimation
-						{
-							Type = DirectionalAnimation.DirectionType.TwoWayHorizontal,
-							Flipped = new DirectionalAnimation.FlipType[2],
-							AnimNames = new string[]
-							{
-
-						   "die_left",
-						   "die_right"
-
-							}
-
-						}
-					}
-				};
+				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "die", new string[] { "die" }, new DirectionalAnimation.FlipType[1]);
 				aiAnimator.IdleAnimation = new DirectionalAnimation
 				{
 					Type = DirectionalAnimation.DirectionType.TwoWayHorizontal,
 					Flipped = new DirectionalAnimation.FlipType[2],
 					AnimNames = new string[]
 					{
-						"idle_left",
-						"idle_right"
+						"idle",
+						"idle"
 					}
 				};
-				aiAnimator.MoveAnimation = new DirectionalAnimation
-				{
-					Type = DirectionalAnimation.DirectionType.TwoWayHorizontal,
-					Flipped = new DirectionalAnimation.FlipType[2],
-					AnimNames = new string[]
-						{
-						"run_left",
-						"run_right"
-						}
-				};
+
+				
 				bool flag3 = FodderColection == null;
 				if (flag3)
 				{
-					FodderColection = SpriteBuilder.ConstructCollection(prefab, "FodderBoi_Collection");
+					FodderColection = SpriteBuilder.ConstructCollection(prefab, "FodderColection");
 					UnityEngine.Object.DontDestroyOnLoad(FodderColection);
 					for (int i = 0; i < spritePaths.Length; i++)
 					{
 						SpriteBuilder.AddSpriteToCollection(spritePaths[i], FodderColection);
 					}
+					
+
+				/*
+				GameObject FodderColectionObject = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("FodderCollection");
+				tk2dSpriteCollectionData FodderColection = FodderColectionObject.GetComponent<tk2dSpriteCollectionData>();
+				if (FodderColection != null && FodderColection != null)
+				{
+					UnityEngine.Object.DontDestroyOnLoad(FodderColectionObject);
+					UnityEngine.Object.DontDestroyOnLoad(FodderColection);
+					Material mat = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Material>("assets/Enemies/Fodder/FodderCollection Data/atlas0 material.mat");
+
+					UnityEngine.Object.DontDestroyOnLoad(mat);
+					FodderColection.material = mat;
+					
+					Texture texture = mat.GetTexture("_MainTex");
+					texture.filterMode = FilterMode.Point;
+
+					//FodderColection.textures = new Texture[] { texture };
+
+					FodderColection.materials = new Material[]
+					{
+						mat
+					};
+					companion.sprite.usesOverrideMaterial = true;
+					companion.sprite.renderer.material = mat;
+					companion.sprite.renderer.material.SetTexture("_MainTex", texture);
+					*/
+
+
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, FodderColection, new List<int>
 					{
-
 					0,
 					1,
 					2,
@@ -155,81 +157,22 @@ namespace Planetside
 					5,
 					6,
 					7
+					}, "idle", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 7f;
 
-					}, "idle_left", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 7f;
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, FodderColection, new List<int>
 					{
-					0,
-					1,
-					2,
-					3,
-					4,
-					5,
-					6,
-					7
-
-
-					}, "idle_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, FodderColection, new List<int>
-					{
-					0,
-					1,
-					2,
-					3,
-					4,
-					5,
-					6,
-					7
-
-
-					}, "run_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, FodderColection, new List<int>
-					{
-
-					0,
-					1,
-					2,
-					3,
-					4,
-					5,
-					6,
-					7
-
-
-					}, "run_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, FodderColection, new List<int>
-					{
-
-				 8,
-				 9,
-				 10,
-				 11,
-				 12,
-				 13,
-				 14,
-				 15,
-				 16,
-				 17
-
-
-
-
-					}, "die_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 13f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, FodderColection, new List<int>
-					{
-
-				 8,
-				 9,
-				 10,
-				 11,
-				 12,
-				 13,
-				 14,
-				 15,
-				 16,
-				 17
-
-					}, "die_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 13f;
+					8,
+					9,
+					10,
+					11,
+					12,
+					13,
+					14,
+					15,
+					16,
+					//17
+					}, "die", tk2dSpriteAnimationClip.WrapMode.Once).fps = 13f;
+					
 
 				}
 				var bs = prefab.GetComponent<BehaviorSpeculator>();
@@ -253,25 +196,7 @@ namespace Planetside
 					PauseTime = 0.25f,
 				}
 			};
-				/*
-				bs.AttackBehaviors = new List<AttackBehaviorBase>() {
-				new ShootBeamBehavior() {
-					//ShootPoint = m_CachedGunAttachPoint,
-
-					firingTime = 3f,
-					stopWhileFiring = true,
-					//beam
-					//BulletScript = new CustomBulletScriptSelector(typeof(SkellScript)),
-					//LeadAmount = 0f,
-					AttackCooldown = 5f,
-					//InitialCooldown = 4f,
-					RequiresLineOfSight = true,
-					//StopDuring = ShootBehavior.StopType.Attack,
-					//Uninterruptible = true,
-
-				}
-				};
-				*/
+				
 				companion.healthHaver.spawnBulletScript = true;
 				companion.healthHaver.chanceToSpawnBulletScript = 1f;
 				companion.healthHaver.bulletScriptType = HealthHaver.BulletScriptType.OnPreDeath;
@@ -428,11 +353,6 @@ namespace Planetside
 		{
 			protected override IEnumerator Top()
 			{
-
-				if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
-				{
-					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("sweep"));
-				}
 				for (int i = 0; i <= 12; i++)
 				{
 					this.Fire(new Direction(i * 30, DirectionType.Aim, -1f), new Speed(1f, SpeedType.Absolute), new SkellBullet());
@@ -444,15 +364,10 @@ namespace Planetside
 
 		public class SkellBullet : Bullet
 		{
-			public SkellBullet() : base("sweep", false, false, false)
-			{
-
-			}
+			public SkellBullet() : base("sweep", false, false, false){}
 			protected override IEnumerator Top()
 			{
 				base.ChangeSpeed(new Speed(20f, SpeedType.Absolute), 60);
-
-
 				yield break;
 			}
 		}

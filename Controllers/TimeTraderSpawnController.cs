@@ -50,7 +50,7 @@ namespace Planetside
                     }
                 };
                 GameObject TooLate;
-                OldShrineFactory.builtShrines.TryGetValue("psog:toolate", out TooLate);
+                ShrineFactory.registeredShrines.TryGetValue("psog:toolate", out TooLate);
 
                 RoomFactory.AddInjection(RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/ShopRooms/TimeTraderShopMinesEmpty.room").room, "Too Late For Special Shop", flowModifierPlacementTypes, 0, dungeonPrerequisitesOther, "Too Late For Special Shop", 1, 1,TooLate, -0.75f, -0.75f);
                 DungeonHooks.OnPostDungeonGeneration += this.ResetFloorSpecificData;

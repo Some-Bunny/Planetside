@@ -76,7 +76,7 @@ namespace Planetside
 		public override void OnPostFired(PlayerController player, Gun bruhgun)
 		{
 			gun.PreventNormalFireAudio = true;
-			AkSoundEngine.PostEvent("Play_ENM_bird_egg_01", gameObject);
+			AkSoundEngine.PostEvent("Play_ENM_bird_egg_01", bruhgun.gameObject);
 
 		}
 		private bool HasReloaded;
@@ -104,7 +104,7 @@ namespace Planetside
 				AkSoundEngine.PostEvent("Stop_WPN_All", base.gameObject);
 				HasReloaded = false;
 				base.OnReloadPressed(player, gun, bSOMETHING);
-				AkSoundEngine.PostEvent("Play_WPN_pillow_reload_01", gameObject);
+				AkSoundEngine.PostEvent("Play_WPN_pillow_reload_01", bruhgun.gameObject);
 			}
 		}
 	}

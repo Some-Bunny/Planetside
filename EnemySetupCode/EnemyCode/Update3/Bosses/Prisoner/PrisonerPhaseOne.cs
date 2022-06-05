@@ -2530,10 +2530,12 @@ namespace Planetside
 
 			public void MoveTowardsPositionMethod(float Time,float TileDistance ,float MinDistFromPlayer = 6, float MaxDistFromPlayer = 12)
             {
+				IsMoving = false;
 				GameManager.Instance.StartCoroutine(this.MoveTowardsPosition(Time, TileDistance, MinDistFromPlayer, MaxDistFromPlayer));
             }
 			private IEnumerator MoveTowardsPosition(float Time, float TileDistance, float MinDistFromPlayer = 6, float MaxDistFromPlayer = 12)
             {
+				IsMoving = true;
 				ImprovedAfterImage yeah = base.aiActor.gameObject.GetComponent<ImprovedAfterImage>();
 				yeah.spawnShadows = true;
 				IntVector2? intVector = this.GetRandomAvailableCellWithinDistance(base.aiActor.ParentRoom ,5, new IntVector2?(base.aiActor.Clearance), new CellTypes?(CellTypes.FLOOR), false, null);
@@ -2542,6 +2544,7 @@ namespace Planetside
 				Vector3 pos = base.aiActor.transform.position;
 				while (elaWait < duraWait)
 				{
+					if (IsMoving == false) { yield break; }
 					float t = (float)elaWait / (float)duraWait;
 					float throne1 = Mathf.Sin(t*(Mathf.PI/2));
 					Vector3 vector3 = Vector3.Lerp(pos, new Vector3(intVector.Value.X, intVector.Value.Y), throne1);
@@ -2551,9 +2554,11 @@ namespace Planetside
 					yield return null;
 				}
 				yeah.spawnShadows = false;
-
+				IsMoving = false;
 				yield break;
+
             }
+			private bool IsMoving;
 			public IntVector2? GetRandomAvailableCellWithinDistance(RoomHandler room, float Distance, IntVector2? footprint = null, CellTypes? passableCellTypes = null, bool canPassOccupied = true, CellValidator cellValidator = null)
 			{
 				if (footprint == null)

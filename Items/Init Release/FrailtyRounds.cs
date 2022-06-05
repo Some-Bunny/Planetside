@@ -41,6 +41,17 @@ namespace Planetside
 
 		}
 		public static int FrailtyRoundsID;
+
+		protected override void Update()
+		{
+			if (base.Owner != null)
+            {
+				float armorCount = base.Owner.healthHaver.Armor;
+
+
+            }
+		}
+
 		private void PostProcessProjectile(Projectile sourceProjectile, float effectChanceScalar)
 		{
 			try

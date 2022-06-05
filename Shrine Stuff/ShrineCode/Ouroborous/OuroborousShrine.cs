@@ -20,7 +20,7 @@ namespace Planetside
 		// Token: 0x0600004D RID: 77 RVA: 0x00004700 File Offset: 0x00002900
 		public static void Add()
 		{
-			OldShrineFactory sf = new OldShrineFactory()
+			ShrineFactory sf = new ShrineFactory()
 			{
 
 				name = "Ouroborous Shrine",

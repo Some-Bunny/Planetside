@@ -69,7 +69,6 @@ public class CustomDashBehavior : BasicAttackBehavior
 		{
 			SetState(CustomDashBehavior.DashState.Dash);
 		}
-
 		this.m_updateEveryFrame = true;
 		return BehaviorResult.RunContinuous;
 	}

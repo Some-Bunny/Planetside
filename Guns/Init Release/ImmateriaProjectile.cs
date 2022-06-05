@@ -94,8 +94,6 @@ namespace Planetside
 							}
 							DamageScalar += ((40 - (Pulses * 3.33f)) + (i * 2)) * Scaler;
 						}
-
-
 					}
 				}
 				yield return new WaitForSeconds(2f);

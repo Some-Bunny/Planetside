@@ -168,7 +168,10 @@ namespace Planetside
             return bone.Position;
         }
 
-        public static BasicBeamController GenerateBeamPrefab(this Projectile projectile, string spritePath, Vector2 colliderDimensions, Vector2 colliderOffsets, List<string> beamAnimationPaths = null, int beamFPS = -1, List<string> impactVFXAnimationPaths = null, int beamImpactFPS = -1, Vector2? impactVFXColliderDimensions = null, Vector2? impactVFXColliderOffsets = null, List<string> endVFXAnimationPaths = null, int beamEndFPS = -1, Vector2? endVFXColliderDimensions = null, Vector2? endVFXColliderOffsets = null, List<string> muzzleVFXAnimationPaths = null, int beamMuzzleFPS = -1, Vector2? muzzleVFXColliderDimensions = null, Vector2? muzzleVFXColliderOffsets = null, bool glows = false)
+        public static BasicBeamController GenerateBeamPrefab(this Projectile projectile, string spritePath, Vector2 colliderDimensions, Vector2 colliderOffsets, List<string> beamAnimationPaths = null, int beamFPS = -1, List<string> impactVFXAnimationPaths = null, int beamImpactFPS = -1, Vector2? impactVFXColliderDimensions = null, Vector2? impactVFXColliderOffsets = null, List<string> endVFXAnimationPaths = null, int beamEndFPS = -1, Vector2? endVFXColliderDimensions = null, Vector2? endVFXColliderOffsets = null, List<string> muzzleVFXAnimationPaths = null, int beamMuzzleFPS = -1, Vector2? muzzleVFXColliderDimensions = null, Vector2? muzzleVFXColliderOffsets = null, bool glows = false,
+           bool canTelegraph = false, List<string> beamTelegraphAnimationPaths = null, int beamtelegraphFPS = -1, List<string> beamStartTelegraphAnimationPaths = null, int beamStartTelegraphFPS = -1, List<string> beamEndTelegraphAnimationPaths = null, int beamEndTelegraphFPS = -1, float telegraphTime = 1,
+            bool canDissipate = false, List<string> beamDissipateAnimationPaths = null, int beamDissipateFPS = -1, List<string> beamStartDissipateAnimationPaths = null, int beamStartDissipateFPS = -1, List<string> beamEndDissipateAnimationPaths = null, int beamEndDissipateFPS = -1, float dissipateTime = 1)
+
         {
             try
             {
@@ -255,6 +258,52 @@ namespace Planetside
                     beamController.beamStartAnimation = "beam_start";
                 }
 
+                
+                if (canTelegraph == true)
+                {
+                    beamController.usesTelegraph = true;
+                    beamController.telegraphAnimations = new BasicBeamController.TelegraphAnims();
+
+                    if (beamStartTelegraphAnimationPaths != null)
+                    {
+                        SetupBeamPart(animation, beamStartTelegraphAnimationPaths, "beam_telegraph_start", beamStartTelegraphFPS, new Vector2(0, 0), new Vector2(0, 0));
+                        beamController.telegraphAnimations.beamStartAnimation = "beam_telegraph_start";
+                    }
+                    if (beamTelegraphAnimationPaths != null)
+                    {
+                        SetupBeamPart(animation, beamTelegraphAnimationPaths, "beam_telegraph_middle", beamtelegraphFPS, new Vector2(0, 0), new Vector2(0, 0));
+                        beamController.telegraphAnimations.beamAnimation = "beam_telegraph_middle";
+                    }
+                    if (beamEndTelegraphAnimationPaths != null)
+                    {
+                        SetupBeamPart(animation, beamEndTelegraphAnimationPaths, "beam_telegraph_end", beamEndTelegraphFPS, new Vector2(0,0), new Vector2(0, 0));
+                        beamController.telegraphAnimations.beamEndAnimation = "beam_telegraph_end";
+                    }
+                    beamController.telegraphTime = telegraphTime;
+                }
+                if (canDissipate == true)
+                {
+                    beamController.endType = BasicBeamController.BeamEndType.Dissipate;
+                    beamController.dissipateAnimations = new BasicBeamController.TelegraphAnims();
+                    if (beamStartTelegraphAnimationPaths != null)
+                    {
+                        SetupBeamPart(animation, beamStartDissipateAnimationPaths, "beam_dissipate_start", beamStartDissipateFPS, new Vector2(0, 0), new Vector2(0, 0));
+                        beamController.dissipateAnimations.beamStartAnimation = "beam_dissipate_start";
+                    }
+                    if (beamTelegraphAnimationPaths != null)
+                    {
+                        SetupBeamPart(animation, beamDissipateAnimationPaths, "beam_dissipate_middle", beamDissipateFPS, new Vector2(0, 0), new Vector2(0, 0));
+                        beamController.dissipateAnimations.beamAnimation = "beam_dissipate_middle";
+                    }
+                    if (beamEndTelegraphAnimationPaths != null)
+                    {
+                        SetupBeamPart(animation, beamEndDissipateAnimationPaths, "beam_dissipate_end", beamEndDissipateFPS, new Vector2(0, 0), new Vector2(0, 0));
+                        beamController.dissipateAnimations.beamEndAnimation = "beam_dissipate_end";
+                    }
+                    beamController.dissipateTime = dissipateTime;
+
+                }
+
                 if (glows)
                 {
                     EmmisiveBeams emission = projectile.gameObject.GetOrAddComponent<EmmisiveBeams>();
@@ -269,12 +318,12 @@ namespace Planetside
                 return null;
             }
         }
-        private static void SetupBeamPart(tk2dSpriteAnimation beamAnimation, List<string> animSpritePaths, string animationName, int fps, Vector2? colliderDimensions = null, Vector2? colliderOffsets = null, Vector3[] overrideVertices = null)
+        private static void SetupBeamPart(tk2dSpriteAnimation beamAnimation, List<string> animSpritePaths, string animationName, int fps, Vector2? colliderDimensions = null, Vector2? colliderOffsets = null, Vector3[] overrideVertices = null, tk2dSpriteAnimationClip.WrapMode wrapMode = tk2dSpriteAnimationClip.WrapMode.Once)
         {
             tk2dSpriteAnimationClip clip = new tk2dSpriteAnimationClip() { name = animationName, frames = new tk2dSpriteAnimationFrame[0], fps = fps };
             List<string> spritePaths = animSpritePaths;
-
             List<tk2dSpriteAnimationFrame> frames = new List<tk2dSpriteAnimationFrame>();
+            clip.wrapMode = wrapMode;
             foreach (string path in spritePaths)
             {
                 tk2dSpriteCollectionData collection = ETGMod.Databases.Items.ProjectileCollection;

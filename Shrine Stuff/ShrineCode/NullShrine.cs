@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
-using static GungeonAPI.OldShrineFactory;
+using static GungeonAPI.ShrineFactory;
 using Gungeon;
 using ItemAPI;
 using Dungeonator;
@@ -20,14 +20,14 @@ namespace Planetside
 
 		public static void Add()
 		{
-			OldShrineFactory aa = new OldShrineFactory
+			ShrineFactory aa = new ShrineFactory
 			{
 
 				name = "NullShrine",
 				modID = "psog",
 				text = "A shrine of nothings. You feel like somethings missing, or maybe its intentional...",
 				spritePath = "Planetside/Resources/Shrines/NullPedestal.png",
-				room = RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/NullShrineRoom.room").room,
+				//room = RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/NullShrineRoom.room").room,
 				RoomWeight = 1.5f,
 				acceptText = "Bestow your nothings.",
 				declineText = "Leave",
@@ -40,10 +40,13 @@ namespace Planetside
 				isBreachShrine = false,
 				shadowPath = "Planetside/Resources/Shrines/defaultShrineShadow.png",
 				ShadowOffsetX = 0f,
-				ShadowOffsetY = -0.3125f
+				ShadowOffsetY = -0.3125f,
+
+				preRequisites = new DungeonPrerequisite[0],
+				ShrinePercentageChance = 0.15f,
 
 			};
-			aa.Build();
+			aa.BuildWithoutBaseGameInterference();
 			SpriteBuilder.AddSpriteToCollection(spriteDefinition, SpriteBuilder.ammonomiconCollection);
 			SpriteBuilder.AddSpriteToCollection(spriteDefinition1, SpriteBuilder.ammonomiconCollection);
 

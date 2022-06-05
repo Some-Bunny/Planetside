@@ -183,7 +183,7 @@ namespace Planetside
                 if (flag4)
                 {
                     GameObject original;
-                    GungeonAPI.OldShrineFactory.builtShrines.TryGetValue("psog:" + objName, out original);
+                    GungeonAPI.ShrineFactory.registeredShrines.TryGetValue("psog:" + objName, out original);
                     GameObject gObj = UnityEngine.Object.Instantiate<GameObject>(original, new Vector3((float)randomVisibleClearSpot.x + offset.x, (float)randomVisibleClearSpot.y + offset.y), Quaternion.identity);
                     IPlayerInteractable[] interfaces1 = gObj.GetInterfaces<IPlayerInteractable>();
                     IPlaceConfigurable[] interfaces21 = gObj.GetInterfaces<IPlaceConfigurable>();

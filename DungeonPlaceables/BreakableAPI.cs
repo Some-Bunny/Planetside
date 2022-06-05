@@ -1083,8 +1083,8 @@ namespace BreakAbleAPI
         /// <summary>
         /// Generates, and returns a NoteDoer using a MajorBreakable. This is as much customization as you'll probably get for now.
         /// </summary>
-        /// <param name="majorBreakable">Your smajorbreakable that you're turning into a Note.</param>
-        /// <param name="textboxSpawnPoint">The trnasform position from where the textbox will spawn.</param>
+        /// <param name="majorBreakable">Your MajorBreakable that you're turning into a Note.</param>
+        /// <param name="textboxSpawnPoint">The transform position from where the textbox will spawn.</param>
         /// <param name="stringKey">What your note says.</param>
         /// <param name="DestroyedAfterRead">If true, destroys the note after being read.</param>
         /// <param name="noteBackgroundType">The background your note will have.</param>

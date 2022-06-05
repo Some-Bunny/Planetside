@@ -674,10 +674,12 @@ namespace Planetside
 					objanimator.AnimateDuringBossIntros = true;
 					objanimator.alwaysUpdateOffscreen = true;
 					objanimator.playAutomatically = true;
+
 					ParticleSystem objparticles = silencerVFX.GetComponentInChildren<ParticleSystem>();
 					var main = objparticles.main;
 					main.useUnscaledTime = true;
-					GameObject.Instantiate(silencerVFX.gameObject, base.aiActor.transform.Find("CreationistShootpoint").position, Quaternion.identity);
+					GameObject gameObject = GameObject.Instantiate(silencerVFX.gameObject, base.aiActor.transform.Find("CreationistShootpoint").position, Quaternion.identity);
+					Destroy(gameObject, 2.5f);
 					Exploder.DoDistortionWave(base.aiActor.transform.Find("CreationistShootpoint").position, 10f, 0.4f, 3, 0.066f);
 				}
 			}
@@ -688,13 +690,17 @@ namespace Planetside
 		{
 			protected override IEnumerator Top()
 			{
-				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableBig);
-				this.Fire(new Direction(0, DirectionType.Aim, -1f), new Speed(0f, SpeedType.Absolute), new BasicBigBall());
+				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableBigBullet);
+				for (int i = 0; i < 3; i++)
+				{
+					this.Fire(new Direction(0, DirectionType.Aim, -1f), new Speed(0f, SpeedType.Absolute), new BasicBigBall());
+					yield return this.Wait(10);
+				}
 				yield break;
 			}
 			public class BasicBigBall : Bullet
 			{
-				public BasicBigBall() : base("undodgeableBig", false, false, false)
+				public BasicBigBall() : base(StaticUndodgeableBulletEntries.undodgeableBigBullet.Name, false, false, false)
 				{
 
 				}

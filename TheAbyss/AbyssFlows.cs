@@ -32,6 +32,8 @@ namespace Planetside
 				//m_CachedFlow.fallbackRoomTable = BeyondPrefabs.BeyondRoomTable;
 				m_CachedFlow.fallbackRoomTable = ModPrefabs.CastleRoomTable;
 				m_CachedFlow.phantomRoomTable = null;
+				m_CachedFlow.phantomRoomTable = null;
+
 				m_CachedFlow.subtypeRestrictions = new List<DungeonFlowSubtypeRestriction>(0);
 				m_CachedFlow.flowInjectionData = new List<ProceduralFlowModifierData>(0);
 				m_CachedFlow.sharedInjectionData = new List<SharedInjectionData>() { BaseSharedInjectionData };

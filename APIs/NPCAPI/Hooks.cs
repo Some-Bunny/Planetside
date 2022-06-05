@@ -18,7 +18,6 @@ namespace NpcApi
             var LockedHook = new Hook(
                    typeof(ShopItemController).GetProperty("Locked", BindingFlags.Public | BindingFlags.Instance).GetGetMethod(),
                    typeof(Hooks).GetMethod("LockedHook"));
-
             var interactHook = new Hook(
                     typeof(ShopItemController).GetMethod("Interact", BindingFlags.Instance | BindingFlags.Public),
                     typeof(Hooks).GetMethod("InteractHook", BindingFlags.Static | BindingFlags.Public));

@@ -283,6 +283,18 @@ namespace Planetside
                     OtherTools.ApplyStat(user, PlayerStats.StatType.Damage, 2f, StatModifier.ModifyMethod.MULTIPLICATIVE);
                     OtherTools.ApplyStat(user, PlayerStats.StatType.Health,2f, StatModifier.ModifyMethod.ADDITIVE);
                     AkSoundEngine.PostEvent("Play_BOSS_lichB_intro_01", base.gameObject);
+
+                    for (int e = 0; e < 4; e++)
+                    {
+
+                        AIActor orLoadByGuid = EnemyDatabase.GetOrLoadByGuid("jammed_guardian");
+                        IntVector2? bestRewardLocation = GameManager.Instance.BestActivePlayer.CurrentRoom.GetRandomVisibleClearSpot(10, 10);
+                        AIActor aiactor = AIActor.Spawn(orLoadByGuid.aiActor, bestRewardLocation.Value, GameManager.Instance.BestActivePlayer.CurrentRoom, true, AIActor.AwakenAnimationType.Spawn, true);
+                        PhysicsEngine.Instance.RegisterOverlappingGhostCollisionExceptions(aiactor.specRigidbody, null, false);
+                        aiactor.HandleReinforcementFallIntoRoom(0);
+                    }
+
+                    /*
                     GameObject gameObject = new GameObject();
                     gameObject.transform.position = death.transform.position;
                     BulletScriptSource source = gameObject.GetOrAddComponent<BulletScriptSource>();
@@ -294,8 +306,13 @@ namespace Planetside
                     source.BulletManager = bulletBank;
                     source.BulletScript = bulletScriptSelected;
                     source.Initialize();//to fire the script once
-                    user.gameObject.AddComponent<HERETIC>();
-                    user.gameObject.AddComponent<BrokenChamberComponent>();
+                   */
+
+                    HERETIC heresy = user.gameObject.AddComponent<HERETIC>();
+                    heresy.player = user;
+
+                    BrokenChamberComponent chamber = user.gameObject.AddComponent<BrokenChamberComponent>();
+                    chamber.player = user;
                     base.StartCoroutine(ShrineParticlesOnDestoryBlue(death.sprite.WorldBottomLeft, death.sprite.WorldTopRight));
                 }
 
@@ -940,13 +957,7 @@ namespace Planetside
         public void Start()
         {
             CanHeresy = false;
-            this.Microwave = base.GetComponent<RoomHandler>();
-            this.playeroue = base.GetComponent<PlayerController>();
-            {
-                PlayerController player = GameManager.Instance.PrimaryPlayer;
-                GameManager.Instance.OnNewLevelFullyLoaded += this.OnNewFloor;
-            }
-
+            GameManager.Instance.OnNewLevelFullyLoaded += this.OnNewFloor;
         }
 
         private void OnNewFloor()
@@ -956,48 +967,41 @@ namespace Planetside
         public void Update()
         {
             Dungeon dung = GameManager.Instance.Dungeon;
-            if (this.playeroue != null)// && PastNames.Contains(SceneManager.GetActiveScene().name)) //SceneManager.GetActiveScene().name.Contains())// && validTilesets == GlobalDungeonData.ValidTilesets.A)
+            if (this.player != null && dung != null)
             {
                 if (dung.LevelOverrideType == GameManager.LevelOverrideState.CHARACTER_PAST)
                 {
-                    if (playeroue.GetComponent<HERETIC>() != null)
-                    {
-                        HERETIC cham = playeroue.GetComponent<HERETIC>();
-                        Destroy(cham);
-                    }
+                    Destroy(this);
                 }
-            }
-            if (CanHeresy == true)
-            {
-                this.elapsed += BraveTime.DeltaTime;
-                bool flag3 = this.elapsed > 30;
-                if (flag3)
+                if (CanHeresy == true)
                 {
-                    if (this.playeroue != null)
+                    this.elapsed += BraveTime.DeltaTime;
+                    bool flag3 = this.elapsed > 30;
+                    if (flag3)
                     {
-                        AIActor orLoadByGuid = EnemyDatabase.GetOrLoadByGuid("jammed_guardian");
-                        IntVector2 bestRewardLocation = GameManager.Instance.BestActivePlayer.CurrentRoom.GetBestRewardLocation(IntVector2.One * 3, RoomHandler.RewardLocationStyle.PlayerCenter, true);
-                        AIActor aiactor = AIActor.Spawn(orLoadByGuid.aiActor, bestRewardLocation, GameManager.Instance.BestActivePlayer.CurrentRoom, true, AIActor.AwakenAnimationType.Spawn, true);
-                        PhysicsEngine.Instance.RegisterOverlappingGhostCollisionExceptions(aiactor.specRigidbody, null, false);
-                        aiactor.gameObject.AddComponent<KillOnRoomClear>();
-                        aiactor.IgnoreForRoomClear = true;
-                        aiactor.HandleReinforcementFallIntoRoom(0f);
+                        if (this.player != null && this.player.CurrentRoom != null)
+                        {
+                            AIActor orLoadByGuid = EnemyDatabase.GetOrLoadByGuid("jammed_guardian");
+                            IntVector2 bestRewardLocation = player.CurrentRoom.GetBestRewardLocation(IntVector2.One * 3, RoomHandler.RewardLocationStyle.PlayerCenter, true);
+                            AIActor aiactor = AIActor.Spawn(orLoadByGuid.aiActor, bestRewardLocation, player.CurrentRoom, true, AIActor.AwakenAnimationType.Spawn, true);
+                            PhysicsEngine.Instance.RegisterOverlappingGhostCollisionExceptions(aiactor.specRigidbody, null, false);
+                            aiactor.IgnoreForRoomClear = true;
+                            aiactor.HandleReinforcementFallIntoRoom(0);
+                            this.elapsed = 0f;
+                            this.CanHeresy = false;
+                        }
                     }
-                    this.elapsed = 0f;
-                    this.CanHeresy = false;
                 }
             }
         }
 
         protected override void OnDestroy()
         {
-
+            GameManager.Instance.OnNewLevelFullyLoaded -= this.OnNewFloor;
         }
         public bool CanHeresy;
-        public float TimeBetweenRockFalls;
         private float elapsed;
-        private RoomHandler Microwave;
-        private PlayerController playeroue;
+        public PlayerController player;
     }
 }
 

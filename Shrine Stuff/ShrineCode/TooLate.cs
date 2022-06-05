@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
-using static GungeonAPI.OldShrineFactory;
+using static GungeonAPI.ShrineFactory;
 using Dungeonator;
 using System.Reflection;
 using MonoMod.RuntimeDetour;
@@ -22,7 +22,7 @@ namespace Planetside
 
 		public static void Add()
 		{
-			OldShrineFactory iei = new OldShrineFactory
+			ShrineFactory iei = new ShrineFactory
 			{
 				name = "TooLate",
 				modID = "psog",

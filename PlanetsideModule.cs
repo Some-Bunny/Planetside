@@ -41,15 +41,20 @@ namespace Planetside
 
         public static AssetBundle ModAssets;
         public static AssetBundle TilesetAssets;
+        public static AssetBundle SpriteCollectionAssets;
+
+        public static bool DebugMode = true;
 
         public override void Start()
         {
+
+
             var forgeDungeon = DungeonDatabase.GetOrLoadByName("Base_Forge");
             PlanetsideModule.hellDrag = forgeDungeon.PatternSettings.flows[0].AllNodes.Where(node => node.overrideExactRoom != null && node.overrideExactRoom.name.Contains("EndTimes")).First().overrideExactRoom.placedObjects.Where(ppod => ppod != null && ppod.nonenemyBehaviour != null).First().nonenemyBehaviour.gameObject.GetComponentsInChildren<HellDragZoneController>()[0];
             forgeDungeon = null;
 
             ZipFilePath = this.Metadata.Archive;
-            RoomFilePath = this.Metadata.Directory + "/rooms";   
+            RoomFilePath = this.Metadata.Directory + "/rooms";
             FilePathFolder = this.Metadata.Directory;
             metadata = this.Metadata;
             //Initialise World-Stuff here
@@ -65,10 +70,15 @@ namespace Planetside
             }
             AssetBundle tilesets = AssetBundleLoader.LoadAssetBundleFromLiterallyAnywhere("planetsidetilesets");
             if (tilesets != null) { TilesetAssets = tilesets; }
+
+            AssetBundle spriteCollections = AssetBundleLoader.LoadAssetBundleFromLiterallyAnywhere("planetsidesprites");
+            if (spriteCollections != null) { SpriteCollectionAssets = spriteCollections; }
+
             foreach (string str in PlanetsideModule.TilesetAssets.GetAllAssetNames())
             {
                 //ETGModConsole.Log(PlanetsideModule.TilesetAssets.name + ": " + str, false);
             }
+
             //Initialise Statically Stored Stuff Here
             StaticVFXStorage.Init();
             EasyGoopDefinitions.DefineDefaultGoops();
@@ -100,8 +110,8 @@ namespace Planetside
             ItemBuilder.Init();
 
             //Shrine Initialisation
+            //ShrineFactory.Init();
             ShrineFactory.Init();
-            OldShrineFactory.Init();
             ShrineFakePrefabHooks.Init();
             GunOrbitShrine.Add();
             NullShrine.Add();
@@ -232,7 +242,7 @@ namespace Planetside
             HeresyHammer.Init();
             PerfectedColossus.Add();
             Colossus.Add();
-            ResourceGuonMaker.Init();     
+            ResourceGuonMaker.Init();
             ChargerGun.Add();
             //FIX THIS SWORD TO NOT CAUSE MASSIVE EXCEPTIONS WITH EXPAND ON LOAD
             PlanetBlade.Add();
@@ -342,9 +352,11 @@ namespace Planetside
             WowBullet.Init();
             TurboBullet.Init();
             SpcreatBullet.Init();
-            
+
             GoldenRevolverBullet.Init();
             NotSoAIBullet.Init();
+            CortifyBullet.Init();
+            ShotzerBullet.Init();
 
             BulletBankMan.Init();
 
@@ -352,14 +364,14 @@ namespace Planetside
             Wailer.Init();
 
             CelBullet.Init();
-                        
+
             InitialiseSynergies.DoInitialisation();
             SynergyFormInitialiser.AddSynergyForms();
             InitialiseGTEE.DoInitialisation();
             HoveringGunsAdder.AddHovers();
-            
 
-            
+
+
             BrokenChamberShrine.Add();
             //ShrineOfEvil.Add();
             ShrineOfDarkness.Add();
@@ -510,7 +522,7 @@ namespace Planetside
             Random r = new Random();
             int index = r.Next(RandomFunnys.Count);
             string randomString = RandomFunnys[index];
-            Log(" - "+randomString, TEXT_COLOR);
+            Log(" - " + randomString, TEXT_COLOR);
 
             Log("Here's a To-Do list for unlocks, hope you have fun!", TEXT_COLOR);
             Log("If you ever need a reminder, the command 'psog to_do_list' to remind yourself.", TEXT_COLOR);
@@ -528,7 +540,7 @@ namespace Planetside
             string l = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.HAS_COMPLETED_SOMETHING_WICKED) ? " Done!\n" : " -Survive An Encounter With Something Wicked.\n";
             string m = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.TRESPASS_INTO_OTHER_PLACE) ? " Done!\n" : " -Trespass Into Somewhere Else.\n";
 
-            string n = AdvancedGameStatsManager.Instance.GetPlayerStatValue(CustomTrackedStats.UMBRAL_ENEMIES_KILLED) >= 4? " Done!\n" : " -Slay 5 Umbral Enemies.\n";
+            string n = AdvancedGameStatsManager.Instance.GetPlayerStatValue(CustomTrackedStats.UMBRAL_ENEMIES_KILLED) >= 4 ? " Done!\n" : " -Slay 5 Umbral Enemies.\n";
             string o = AdvancedGameStatsManager.Instance.GetPlayerStatValue(CustomTrackedStats.JAMMED_ARCHGUNJURERS_KILLED) >= 14 ? " Done!\n" : " -Defeat 15 Jammed Arch Gunjurers.\n";
             string p = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.HM_PRIME_DEFEATED) ? " Done!\n" : " -Perform Maintenance On The Damaged Robot.\n";
 
@@ -536,16 +548,9 @@ namespace Planetside
 
 
             string color1 = "9006FF";
-            OtherTools.PrintNoID("Unlock List:\n" + a + b + c + d + e + f + g +h+i+j+k+l+m+n+o+p+q, color1);
+            OtherTools.PrintNoID("Unlock List:\n" + a + b + c + d + e + f + g + h + i + j + k + l + m + n + o + p + q, color1);
             OtherTools.Init();
 
-
-            /*
-            ETGModConsole.Commands.GetGroup("psog").AddUnit("dumpPlayerSprites", delegate (string[] args)
-            {
-                OtherTools.DumpCollection(GameManager.Instance.PrimaryPlayer.sprite.Collection);
-            });
-            */
         }
 
         private void LoadFloor(string[] obj)
@@ -657,7 +662,7 @@ namespace Planetside
                             if (flag4)
                             {
                                 GameObject original;
-                                OldShrineFactory.builtShrines.TryGetValue("psog:shrineofdarkness", out original);
+                                ShrineFactory.registeredShrines.TryGetValue("psog:shrineofdarkness", out original);
                                 GameObject gObj = UnityEngine.Object.Instantiate<GameObject>(original, new Vector3((float)randomVisibleClearSpot.x + 5.0625f, (float)randomVisibleClearSpot.y+ 5.0625f), Quaternion.identity);
                                 gObj.AddComponent<HellShrineController>();
                                 IPlayerInteractable[] interfaces = gObj.GetInterfaces<IPlayerInteractable>();
@@ -672,7 +677,7 @@ namespace Planetside
                                     interfaces2[k].ConfigureOnPlacement(roomHandler2);
                                 }
                                 GameObject original1;
-                                OldShrineFactory.builtShrines.TryGetValue("psog:shrineofcurses", out original1);
+                                ShrineFactory.registeredShrines.TryGetValue("psog:shrineofcurses", out original1);
                                 GameObject gObj1 = UnityEngine.Object.Instantiate<GameObject>(original1, new Vector3((float)randomVisibleClearSpot.x - 6.0625f, (float)randomVisibleClearSpot.y - 6.0625f), Quaternion.identity);
                                 gObj1.AddComponent<HellShrineController>();
 
@@ -689,7 +694,7 @@ namespace Planetside
                                 }
 
                                 GameObject original11;
-                                OldShrineFactory.builtShrines.TryGetValue("psog:shrineofpetrification", out original11);
+                                ShrineFactory.registeredShrines.TryGetValue("psog:shrineofpetrification", out original11);
                                 GameObject gObj11 = UnityEngine.Object.Instantiate<GameObject>(original11, new Vector3((float)randomVisibleClearSpot.x + 5.0625f, (float)randomVisibleClearSpot.y - 6.0625f), Quaternion.identity);
                                 gObj11.AddComponent<HellShrineController>();
 
@@ -706,7 +711,7 @@ namespace Planetside
                                 }
 
                                 GameObject original2;
-                                OldShrineFactory.builtShrines.TryGetValue("psog:shrineofsomething", out original2);
+                                ShrineFactory.registeredShrines.TryGetValue("psog:shrineofsomething", out original2);
                                 GameObject gObj2 = UnityEngine.Object.Instantiate<GameObject>(original2, new Vector3((float)randomVisibleClearSpot.x -6.25f , (float)randomVisibleClearSpot.y + 5.0625f), Quaternion.identity);
                                 HellShrineController deez = gObj2.AddComponent<HellShrineController>();
 
@@ -754,7 +759,7 @@ namespace Planetside
                             if (flag4)
                             {
                                 GameObject original;
-                                OldShrineFactory.builtShrines.TryGetValue("psog:shrineofpurity", out original);
+                                ShrineFactory.registeredShrines.TryGetValue("psog:shrineofpurity", out original);
                                 GameObject gObj = UnityEngine.Object.Instantiate<GameObject>(original, new Vector3((float)randomVisibleClearSpot.x, (float)randomVisibleClearSpot.y), Quaternion.identity);
 
                                 gObj.gameObject.AddComponent<PurityShrineController>();
@@ -820,7 +825,7 @@ namespace Planetside
                             if (flag4)
                             {
                                 GameObject original;
-                                OldShrineFactory.builtShrines.TryGetValue("psog:brokenchambershrine", out original);
+                                ShrineFactory.registeredShrines.TryGetValue("psog:brokenchambershrine", out original);
                                 GameObject gObj = UnityEngine.Object.Instantiate<GameObject>(original, new Vector3((float)randomVisibleClearSpot.x, (float)randomVisibleClearSpot.y), Quaternion.identity);
 
                                 BrokenChamberShrineController broken = gObj.gameObject.AddComponent<BrokenChamberShrineController>();
@@ -913,8 +918,8 @@ namespace Planetside
                 BrokenChamberShrineController.Notify(header, text);
 
 
-                shrine.GetComponent<OldShrineFactory.CustomShrineController>().numUses++;
-                shrine.GetComponent<OldShrineFactory.CustomShrineController>().GetRidOfMinimapIcon();
+                shrine.GetComponent<ShrineFactory.CustomShrineController>().numUses++;
+                shrine.GetComponent<ShrineFactory.CustomShrineController>().GetRidOfMinimapIcon();
             }
             private static void Notify(string header, string text)
             {

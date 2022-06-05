@@ -34,7 +34,7 @@ namespace Planetside
             activeitem.quality = PickupObject.ItemQuality.D;
             activeitem.AddToSubShop(ItemBuilder.ShopType.Cursula, 1f);
 
-			DiasukesPolymorphine.PolyFailVFXPrefab = SpriteBuilder.SpriteFromResource(DiasukesPolymorphine.PolyFailVFX, null, false);
+			DiasukesPolymorphine.PolyFailVFXPrefab = SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/PolymorphFail/daisukespolymorphfailvfx", null, false);
 			DiasukesPolymorphine.PolyFailVFXPrefab.name = "PolyFailVFX";
 			UnityEngine.Object.DontDestroyOnLoad(DiasukesPolymorphine.PolyFailVFXPrefab);
 			FakePrefab.MarkAsFakePrefab(DiasukesPolymorphine.PolyFailVFXPrefab);
@@ -205,8 +205,6 @@ namespace Planetside
 
 		public static List<AIActor> enemiesToReRoll = new List<AIActor>();
 		public static List<AIActor> enemiesToPostMogModify = new List<AIActor>();
-
-		private static string PolyFailVFX = "Planetside/Resources/VFX/PolymorphFail/daisukespolymorphfailvfx";
 
 		private static GameObject PolyFailVFXPrefab;
 	}

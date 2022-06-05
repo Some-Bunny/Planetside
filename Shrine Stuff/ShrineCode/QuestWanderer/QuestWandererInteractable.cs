@@ -12,7 +12,6 @@ namespace GungeonAPI
 	// Token: 0x02000158 RID: 344
 	public class QuestWandererInteractable : SimpleInteractable, IPlayerInteractable
 	{
-		// Token: 0x06000AFB RID: 2811 RVA: 0x00066254 File Offset: 0x00064454
 		private void Start()
 		{
 			tk2dSprite fatrd = base.gameObject.GetComponent<tk2dSprite>();
@@ -22,8 +21,6 @@ namespace GungeonAPI
 			mat.SetColor("_EmissiveColor", new Color32(255, 0, 120, 255));
 			mat.SetFloat("_EmissiveColorPower", 1.55f);
 			mat.SetFloat("_EmissivePower", 400);
-			//mat.SetFloat("_EmissiveThresholdSensitivity", 0.05f);
-
 			fatrd.sprite.renderer.material = mat;
 			this.talkPoint = base.transform.Find("talkpoint");
 			this.talkPoint.position += new Vector3(0.4f, 2f, 0f);
@@ -101,11 +98,7 @@ namespace GungeonAPI
 		}
 		public void Interact(PlayerController interactor)
 		{
-			bool flag = TextBoxManager.HasTextBox(this.talkPoint);
-			bool flag2 = !flag;
-			bool flag3 = flag2;
-			bool flag4 = flag3;
-			if (flag4)
+			if (!TextBoxManager.HasTextBox(this.talkPoint))
 			{
 				this.m_canUse = ((this.CanUse != null) ? this.CanUse(interactor, base.gameObject) : this.m_canUse);
 				bool flag5 = !this.m_canUse;

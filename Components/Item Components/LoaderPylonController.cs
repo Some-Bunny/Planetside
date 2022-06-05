@@ -186,7 +186,7 @@ namespace Planetside
 		}
 		private void ApplyLinearDamage(Vector2 p1, Vector2 p2)
 		{
-			float num = 6;
+			float num = 12;
 			for (int i = 0; i < StaticReferenceManager.AllEnemies.Count; i++)
 			{
 				AIActor aiactor = StaticReferenceManager.AllEnemies[i];

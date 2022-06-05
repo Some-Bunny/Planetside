@@ -1779,7 +1779,7 @@ namespace Planetside
 				UnityEngine.Object.DontDestroyOnLoad(shopObj.gameObject);
 
 				shopObj.gameObject.SetActive(false);
-
+				shopObj.AllowedToSpawnOnRainbowMode = true;
 				shopObj.currencyType = CustomShopItemController.ShopCurrencyType.CUSTOM;
 
 				shopObj.ActionAndFuncSetUp(null, RobotShopkeeperRemoveCurrency, RobotShopkeeperCustomPrice, null, null);
@@ -1802,6 +1802,7 @@ namespace Planetside
 				shopObj.IsBeetleMerchant = false;
 				shopObj.ExampleBlueprintPrefab = null;
 				shopObj.poolType = CustomShopController.PoolType.DUPES_AND_NOEXCLUSION;
+				
 
 				GenericLootTable table = LootTableTools.CreateLootTable();
 				table.AddItemsToPool(new Dictionary<int, float>() { { RepairNode.RepairNodeID, 1 } });
@@ -3030,15 +3031,12 @@ namespace Planetside
 						foreach (var KeysAndValues in positions)
 						{
                             {
-								GameObject gameObject = SpawnManager.SpawnVFX(BraveResources.Load<GameObject>("Global VFX/VFX_DBZ_Charge", ".prefab"), false);
+								GameObject gameObject = SpawnManager.SpawnVFX(StaticVFXStorage.MachoBraceDustupVFX, false);
 								gameObject.transform.position = base.aiActor.transform.position + KeysAndValues.Key.ToVector3ZisY();
 								tk2dSpriteAnimator component2 = gameObject.GetComponent<tk2dSpriteAnimator>();
 								if (component2 != null)
 								{
-									foreach (var value in component2.GetClipById(component2.DefaultClipId).frames)
-									{
-										value.triggerEvent = false;
-									}
+								
 
 									component2.ignoreTimeScale = true;
 									component2.AlwaysIgnoreTimeScale = true;
@@ -3048,15 +3046,12 @@ namespace Planetside
 								}
 							}
 							{
-								GameObject gameObject = SpawnManager.SpawnVFX(BraveResources.Load<GameObject>("Global VFX/VFX_DBZ_Charge", ".prefab"), false);
+								GameObject gameObject = SpawnManager.SpawnVFX(StaticVFXStorage.MachoBraceDustupVFX, false);
 								gameObject.transform.position = base.aiActor.transform.position + KeysAndValues.Value.ToVector3ZisY();
 								tk2dSpriteAnimator component2 = gameObject.GetComponent<tk2dSpriteAnimator>();
 								if (component2 != null)
 								{
-									foreach (var value in component2.GetClipById(component2.DefaultClipId).frames)
-									{
-										value.triggerEvent = false;
-									}
+									
 									component2.ignoreTimeScale = true;
 									component2.AlwaysIgnoreTimeScale = true;
 									component2.AnimateDuringBossIntros = true;

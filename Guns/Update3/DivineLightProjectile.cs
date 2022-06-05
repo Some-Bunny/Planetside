@@ -61,24 +61,27 @@ namespace Planetside
             if (myrigidbody && HasSpeared != true)
             {
                 PlayerController user = myrigidbody.GetComponent<Projectile>().Owner as PlayerController;
-                GameObject projObj = DivineLight.DivineLightProjectile.gameObject;
-                GameObject spawnedBulletOBJ = SpawnManager.SpawnProjectile(projObj, myrigidbody.sprite.WorldCenter, Quaternion.Euler(0f, 0f, 0f), true);
-                Projectile component = spawnedBulletOBJ.GetComponent<Projectile>();
-                if (component != null)
+                if (user != null)
                 {
-                    component.Owner = user;
-                    component.Shooter = user.specRigidbody;
+                    GameObject projObj = DivineLight.DivineLightProjectile.gameObject;
+                    GameObject spawnedBulletOBJ = SpawnManager.SpawnProjectile(projObj, myrigidbody.sprite.WorldCenter, Quaternion.Euler(0f, 0f, 0f), true);
+                    Projectile component = spawnedBulletOBJ.GetComponent<Projectile>();
+                    if (component != null)
+                    {
+                        component.Owner = user;
+                        component.Shooter = user.specRigidbody;
 
-                    component.baseData.damage = 10;
-                    component.gameObject.AddComponent<MaintainDamageOnPierce>();
-                    component.baseData.speed = 0;
-                    PierceProjModifier spook = component.gameObject.GetOrAddComponent<PierceProjModifier>();
-                    spook.penetration = 10000;
-                    DivineLightObjectController divine = component.gameObject.AddComponent<DivineLightObjectController>();
-                    divine.player = user;
-                    divine.self = component;
-                }
-                GameManager.Instance.StartCoroutine(this.ResetSpearTimer());
+                        component.baseData.damage = 10;
+                        component.gameObject.AddComponent<MaintainDamageOnPierce>();
+                        component.baseData.speed = 0;
+                        PierceProjModifier spook = component.gameObject.GetOrAddComponent<PierceProjModifier>();
+                        spook.penetration = 10000;
+                        DivineLightObjectController divine = component.gameObject.AddComponent<DivineLightObjectController>();
+                        divine.player = user;
+                        divine.self = component;
+                    }
+                    GameManager.Instance.StartCoroutine(this.ResetSpearTimer());
+                }       
             }
         }
         private Projectile projectile;

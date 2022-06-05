@@ -6,6 +6,9 @@ using NpcApi;
 using UnityEngine;
 using ItemAPI;
 using GungeonAPI;
+using MonoMod.RuntimeDetour;
+using System.Reflection;
+
 namespace Planetside
 {
     class CustomShopInitialiser
@@ -16,6 +19,14 @@ namespace Planetside
             InitialiseTablert();
             Gregthly();
             InitMasteryTrader();
+
+            //new Hook(typeof(PlayMakerFSM).GetMethod("SendEvent", BindingFlags.Instance | BindingFlags.Public), typeof(CustomShopInitialiser).GetMethod("SendEventHook"));
+        }
+
+        public static void SendEventHook(Action<PlayMakerFSM, string> orig, PlayMakerFSM self, string str)
+        {
+            ETGModConsole.Log(str);
+            orig(self, str);
         }
 
         public static void InitialiseTablert()
@@ -33,6 +44,7 @@ namespace Planetside
             ETGMod.Databases.Strings.Core.Set("#TABLERT_RUNBASEDMULTILINE_INTRO", "?!");
             ETGMod.Databases.Strings.Core.Set("#TABLERT_RUNBASEDMULTILINE_ATTACKED", "HARPAHALACH!");
 
+            ETGMod.Databases.Strings.Core.Set("#TABLERT_RUNBASEDMULTILINE_STOLEN", "GRAAHHHPALACH!");
 
             List<string> DancePaths = new List<string>()
             {
@@ -68,8 +80,10 @@ namespace Planetside
             , "#TABLERT_RUNBASEDMULTILINE_FAILPURCHASE"
             , "#TABLERT_RUNBASEDMULTILINE_INTRO"
             , "#TABLERT_RUNBASEDMULTILINE_ATTACKED"
+            , "#TABLERT_RUNBASEDMULTILINE_STOLEN"
             , new Vector3(1.375f, 1f)
             , new Vector3(1.25f, 2.4375f, 5.9375f)
+            , ItsDaFuckinShopApi.VoiceBoxes.MONSTER_MANUEL
             , new Vector3[] { new Vector3(0.5f, 1.25f, 1), new Vector3(2f, 1.1f, 1), new Vector3(3.5f, 1.5625f, 1),  }
             , 0.66f
             , false
@@ -91,10 +105,12 @@ namespace Planetside
             , true
             , 0.15f
             , null
-            , DancePaths);
-           
+            );
+            ItsDaFuckinShopApi.AddAdditionalAnimationsToShop(talbertObj, DancePaths, 6);
+
+
             talbertObj.GetComponentInChildren<tk2dSpriteAnimator>().gameObject.AddComponent<SlideSurface>();
-            EnemyToolbox.AddSoundsToAnimationFrame(talbertObj.GetComponentInChildren<tk2dSpriteAnimator>(), "dance", new Dictionary<int, string>() { { 4, "Play_OBJ_chest_shake_01" }, { 0, "Play_OBJ_chest_shake_01" } });
+            EnemyToolbox.AddSoundsToAnimationFrame(talbertObj.GetComponentInChildren<tk2dSpriteAnimator>(), "purchase", new Dictionary<int, string>() { { 4, "Play_OBJ_chest_shake_01" }, { 0, "Play_OBJ_chest_shake_01" } });
             EnemyToolbox.AddSoundsToAnimationFrame(talbertObj.GetComponentInChildren<tk2dSpriteAnimator>(), "talk", new Dictionary<int, string>() { { 3, "Play_VO_mimic_death_01" } });
 
             talbertObj.GetComponentInChildren<tk2dBaseSprite>().usesOverrideMaterial = true;
@@ -123,6 +139,8 @@ namespace Planetside
             ETGMod.Databases.Strings.Core.Set("#GREGTHLY_RUNBASEDMULTILINE_INTRO", "...");
             ETGMod.Databases.Strings.Core.Set("#GREGTHLY_RUNBASEDMULTILINE_ATTACKED", "???");
 
+            ETGMod.Databases.Strings.Core.Set("#GREGTHLY_RUNBASEDMULTILINE_STOLEN", ">:(");
+
             GameObject timedShop = ItsDaFuckinShopApi.SetUpShop(
                   "gregthly"
                 , "psog"
@@ -138,8 +156,10 @@ namespace Planetside
                 , "#GREGTHLY_RUNBASEDMULTILINE_FAILPURCHASE"
                 , "#GREGTHLY_RUNBASEDMULTILINE_INTRO"
                 , "#GREGTHLY_RUNBASEDMULTILINE_ATTACKED"
+                , "#GREGTHLY_RUNBASEDMULTILINE_STOLEN"
                 , new Vector3(0.25f, 1f)
                 , new Vector3(0.375f, 1.375f, 5.9375f)
+                , ItsDaFuckinShopApi.VoiceBoxes.FOOL
                 , new Vector3[] { new Vector3(0.75f, 0.875f, 1) }
                 , 0.8f
                 , false
@@ -161,8 +181,17 @@ namespace Planetside
                 , false
                 , 0.1f
                 , null
-                , new List<string> { baseFilepath + "squeeze_001.png", baseFilepath + "squeeze_002.png", baseFilepath + "squeeze_003.png", baseFilepath + "squeeze_004.png" });
-            EnemyToolbox.AddSoundsToAnimationFrame(timedShop.GetComponentInChildren<tk2dSpriteAnimator>(), "dance", new Dictionary<int, string>() { { 1, "Play_WPN_teddy_impact_03" } });
+                ,2, 
+                 CustomShopController.PoolType.DEFAULT, 
+                 true);
+            ItsDaFuckinShopApi.AddAdditionalAnimationsToShop(timedShop, 
+                new List<string> { baseFilepath + "squeeze_001.png", baseFilepath + "squeeze_002.png", baseFilepath + "squeeze_003.png", baseFilepath + "squeeze_004.png" }, 6,
+                new List<string> { baseFilepath + "squeeze_002.png", baseFilepath + "squeeze_002.png", baseFilepath + "squeeze_002.png", baseFilepath + "squeeze_002.png" }, 2,
+                new List<string> { baseFilepath + "squeeze_003.png", baseFilepath + "squeeze_003.png", baseFilepath + "squeeze_003.png", baseFilepath + "squeeze_003.png" }, 1
+            );
+ 
+            EnemyToolbox.AddSoundsToAnimationFrame(timedShop.GetComponentInChildren<tk2dSpriteAnimator>(), "purchase", new Dictionary<int, string>() { { 1, "Play_WPN_teddy_impact_03" } });
+            EnemyToolbox.AddSoundsToAnimationFrame(timedShop.GetComponentInChildren<tk2dSpriteAnimator>(), "stolen", new Dictionary<int, string>() { { 0, "Play_ENM_wizardred_appear_01" } });
 
 
             //gregthyShop = timedShop;
@@ -229,6 +258,9 @@ namespace Planetside
             ETGMod.Databases.Strings.Core.AddComplex("#MASTERYTRADER_RUNBASEDMULTILINE_ATTACKED", "No mercy... in you...");
             ETGMod.Databases.Strings.Core.AddComplex("#MASTERYTRADER_RUNBASEDMULTILINE_ATTACKED", "Why..?");
 
+            ETGMod.Databases.Strings.Core.AddComplex("#MASTERYTRADER_RUNBASEDMULTILINE_STOLEN", "How..?");
+
+
             GenericLootTable MasteryTable = LootTableTools.CreateLootTable();
             MasteryTable.AddItemsToPool(new Dictionary<int, float> { {AllSeeingEye.AllSeeingEyeID, 1}, { AllStatsUp.AllStatsUpID, 1 }, { BlastProjectiles.BlastProjectilesID, 1 }, { ChaoticShift.ChaoticShiftID, 1 }, { Contract.ContractID, 1 }, { Glass.GlassID, 1 }, { Greedy.GreedyID, 1 }, { Gunslinger.GunslingerID, 1 }, { PitLordsPact.PitLordsPactID, 1 }, { UnbreakableSpirit.UnbreakableSpiritID, 1 }, });
             GameObject masteryShop = ItsDaFuckinShopApi.SetUpShop(
@@ -246,8 +278,10 @@ namespace Planetside
                 , "#MASTERYTRADER_RUNBASEDMULTILINE_FAILPURCHASE"
                 , "#MASTERYTRADER_RUNBASEDMULTILINE_INTRO"
                 , "#MASTERYTRADER_RUNBASEDMULTILINE_ATTACKED"
+                , "#MASTERYTRADER_RUNBASEDMULTILINE_STOLEN"
                 , new Vector3(1.25f, 3.75f)
                 , new Vector3(0f, 0f, 5.9375f)
+                , ItsDaFuckinShopApi.VoiceBoxes.TONIC
                 , new Vector3[] { new Vector3(0.5f, -1f, 1), new Vector3(2.25f, -1.5f, 1), new Vector3(4f, -1f, 1) }
                 , 1f
                 , false
@@ -269,9 +303,9 @@ namespace Planetside
                 , false //addtoNPCPool
                 , 0 //chancetobeinmainnpcPoool
                 , null //dungeonprereqwuisite
-                , null
                 ,2
-                , CustomShopController.PoolType.DUPES_AND_NOEXCLUSION);
+                , CustomShopController.PoolType.DUPES_AND_NOEXCLUSION
+                , true);
             masteryShop.GetComponentInChildren<tk2dBaseSprite>().usesOverrideMaterial = true;
             Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
             mat.mainTexture = masteryShop.GetComponentInChildren<tk2dBaseSprite>().sprite.renderer.material.mainTexture;
@@ -351,6 +385,7 @@ namespace Planetside
             ETGMod.Databases.Strings.Core.AddComplex("#TIMETRADER_RUNBASEDMULTILINE_ATTACKED", "That won't work like last time!");
             ETGMod.Databases.Strings.Core.AddComplex("#TIMETRADER_RUNBASEDMULTILINE_ATTACKED", "Whadd'ya expect to change from last time?");
 
+            ETGMod.Databases.Strings.Core.AddComplex("#TIMETRADER_RUNBASEDMULTILINE_STOLEN", "You'll be paying with your time for this!");
 
 
             GameObject timedShop = ItsDaFuckinShopApi.SetUpShop(
@@ -368,8 +403,10 @@ namespace Planetside
                 , "#TIMETRADER_RUNBASEDMULTILINE_FAILPURCHASE"
                 , "#TIMETRADER_RUNBASEDMULTILINE_INTRO"
                 , "#TIMETRADER_RUNBASEDMULTILINE_ATTACKED"
+                ,"#TIMETRADER_RUNBASEDMULTILINE_STOLEN"        
                 , new Vector3(1.375f, 2f)
                 , new Vector3(1.4375f, 3.4375f, 5.9375f)
+                , ItsDaFuckinShopApi.VoiceBoxes.ALIEN
                 , new Vector3[] { new Vector3(1.125f, 1.5625f, 1), new Vector3(2.625f, 0.875f, 1), new Vector3(4.125f, 1.5625f, 1), new Vector3(2.625f, 2.125f, 1) }
                 , 0.6f
                 , false

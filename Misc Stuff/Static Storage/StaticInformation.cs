@@ -156,9 +156,34 @@ namespace Planetside
                 undodgeableSkull.AudioEvent = null;
                 undodgeableSkull.MuzzleFlashEffects = new VFXPool { type = VFXPoolType.None, effects = new VFXComplex[0] };
 
+
+
+
+                //					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("ec6b674e0acd4553b47ee94493d66422").bulletBank.GetBullet("bigBullet"));
+
             }
-            //EnemyDatabase.GetOrLoadByGuid("465da2bb086a4a88a803f79fe3a27677").bulletBank.GetBullet("homing")
+
+            {
+                AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("ec6b674e0acd4553b47ee94493d66422").bulletBank.GetBullet("bigBullet"), "undodgeableBigBullet");
+                entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                undodgeableBigBullet = entry;
+            }
         }
+
+        private static AIBulletBank.Entry CopyBulletBankEntry(AIBulletBank.Entry entryToCopy, string Name, string AudioEvent = null, VFXPool muzzleflashVFX = null)
+        {
+            AIBulletBank.Entry entry = StaticUndodgeableBulletEntries.CopyFields<AIBulletBank.Entry>(entryToCopy);
+            entry.Name = Name;
+            Projectile projectile = UnityEngine.Object.Instantiate<GameObject>(entry.BulletObject).GetComponent<Projectile>();
+            projectile.gameObject.SetActive(false);
+            FakePrefab.MarkAsFakePrefab(projectile.gameObject);
+            UnityEngine.Object.DontDestroyOnLoad(projectile);
+            entry.BulletObject = projectile.gameObject;
+            entry.AudioEvent = AudioEvent;
+            entry.MuzzleFlashEffects = muzzleflashVFX == null ? new VFXPool { type = VFXPoolType.None, effects = new VFXComplex[0] } : muzzleflashVFX;
+            return entry;
+        }
+
 
         public static AIBulletBank.Entry CopyFields<T>(AIBulletBank.Entry sample2) where T : AIBulletBank.Entry
         {
@@ -195,6 +220,7 @@ namespace Planetside
 
             return sample;
         }
+        public static AIBulletBank.Entry undodgeableBigBullet;
 
         public static AIBulletBank.Entry undodgeableSniper;
         public static AIBulletBank.Entry undodgeableBig;

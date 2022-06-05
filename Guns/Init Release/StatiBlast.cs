@@ -92,16 +92,6 @@ namespace Planetside
 		}
 		
 		public GameObject ChainLightningVFX;
-
-		public CoreDamageTypes ChainLightningDamageTypes;
-
-		public float ChainLightningMaxLinkDistance = 15f;
-
-		public float ChainLightningDamagePerHit = 6f;
-
-		public float ChainLightningDamageCooldown = 1f;
-
 		public GameObject ChainLightningDispersalParticles;
-		public bool AddsChainLightning;
 	}
 }

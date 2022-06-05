@@ -43,6 +43,7 @@ namespace NpcApi
 		public bool canBeRobbed;
 		public StatModifier[] statsToGive;
 		public DungeonPrerequisite[] prerequisites = new DungeonPrerequisite[0];
+		public bool AllowedToSpawnOnRainbowMode;
 
 		public PoolType poolType;
 		public enum PoolType
@@ -52,8 +53,7 @@ namespace NpcApi
 			DUPES_AND_NOEXCLUSION
         };
 
-		//public List<CustomShopItemController> m_customShopItemControllers;
-		//public List<ShopItemController> m_shopItemControllers;
+		
 
 		public int CustomPriceMethod(CustomShopController shop, CustomShopItemController shopItem, PickupObject item)
 		{
@@ -85,6 +85,7 @@ namespace NpcApi
 
 		public bool OnPurchaseMethod(PlayerController player, PickupObject item, int cost)
 		{
+			TryPlayAnimation(this.shopkeepFSM.gameObject, "purchase");
 			if (OnPurchase != null)
 			{
 				return OnPurchase(player, item, cost);
@@ -111,6 +112,60 @@ namespace NpcApi
 			}
 		}
 
+		public static void TryPlayAnimation(GameObject shopKeeperObject ,string animation)
+        {
+			bool hasSpecAnim1 = false;
+			bool hasSpecAnim2 = false;
+
+			List<AIAnimator.NamedDirectionalAnimation> lists = shopKeeperObject.GetComponent<AIAnimator>().OtherAnimations;
+			for (int k = 0; k < lists.Count; k++)
+			{
+				if (lists[k].anim.Prefix == animation) {
+					hasSpecAnim1 = true;
+				}
+			}
+			List<AIAnimator.NamedDirectionalAnimation> lists2 = shopKeeperObject.GetComponentInChildren<AIAnimator>().OtherAnimations;
+			for (int k = 0; k < lists2.Count; k++)
+			{
+				if (lists2[k].anim.Prefix == animation) 
+				{
+					hasSpecAnim2 = true;
+				}
+			}
+			if (shopKeeperObject.GetComponent<AIAnimator>() != null && hasSpecAnim1 == true)
+			{
+				shopKeeperObject.GetComponent<AIAnimator>().PlayUntilFinished(animation);
+			}
+			if (shopKeeperObject.GetComponentInChildren<AIAnimator>() != null && hasSpecAnim2 == true)
+			{
+				shopKeeperObject.GetComponentInChildren<AIAnimator>().PlayUntilFinished(animation);
+			}
+		}
+
+
+		public new void NotifyStealFailed()
+		{
+			TryPlayAnimation(this.shopkeepFSM.gameObject, "stolen");
+			this.shopkeepFSM.SendEvent("caughtStealing");			
+			this.m_wasCaughtStealing = true;
+		}
+
+		public override void NotifyFailedPurchase(ShopItemController itemController)
+		{
+			TryPlayAnimation(this.shopkeepFSM.gameObject, "denied");
+			if (this.shopkeepFSM != null)
+			{
+				FsmObject fsmObject = this.shopkeepFSM.FsmVariables.FindFsmObject("referencedItem");
+				if (fsmObject != null)
+				{
+					fsmObject.Value = itemController;
+				}
+				this.shopkeepFSM.SendEvent("failedPurchase");
+			}
+		}
+
+		
+
 		public override void PurchaseItem(ShopItemController itemBad, bool actualPurchase = true, bool allowSign = true)
 		{
 			var item = itemBad as CustomShopItemController;
@@ -121,8 +176,6 @@ namespace NpcApi
 			}
 			if (actualPurchase)
 			{
-				
-
 				if (giveStatsOnPurchase)
 				{
 					foreach (var stat in statsToGive)
@@ -139,22 +192,10 @@ namespace NpcApi
 						fsmObject.Value = item;
 					}
 					this.shopkeepFSM.SendEvent("succeedPurchase");
-					bool hasDanceAnim = false;
-					List<AIAnimator.NamedDirectionalAnimation> lista = this.shopkeepFSM.gameObject.GetComponent<AIAnimator>().OtherAnimations;
-					for (int k = 0; k < lista.Count; k++)
-                    {
-						if (lista[k].anim.Prefix == "dance") { hasDanceAnim = true; }
-                    }
-					if (this.shopkeepFSM.gameObject.GetComponent<AIAnimator>() != null && hasDanceAnim == true)
-					{
-						this.shopkeepFSM.gameObject.GetComponent<AIAnimator>().PlayUntilFinished("dance");
-					}
-					if (this.shopkeepFSM.gameObject.GetComponentInChildren<AIAnimator>() != null && hasDanceAnim == true)
-					{
-						this.shopkeepFSM.gameObject.GetComponentInChildren<AIAnimator>().PlayUntilFinished("dance");
-					}
 				}
 			}
+			
+
 			if (!item.item.PersistsOnPurchase)
 			{
 				if (allowSign)
@@ -188,6 +229,7 @@ namespace NpcApi
 
 		}
 
+		//			TryPlayAnimation("dance");
 
 		protected override void DoSetup()
 		{
@@ -209,10 +251,10 @@ namespace NpcApi
 					return num7;
 				};
 			}
-			bool flag = GameStatsManager.Instance.IsRainbowRun;
+			bool flag = GameStatsManager.Instance.IsRainbowRun && AllowedToSpawnOnRainbowMode == false;
 			for (int i = 0; i < base.spawnPositions.Length; i++)
 			{
-				if (flag)
+				if (flag == true)
 				{
 					base.m_shopItems.Add(null);
 				}
@@ -277,7 +319,7 @@ namespace NpcApi
 
 						shopItemController.OnPurchase += OnPurchaseMethod;
 						shopItemController.OnSteal += OnStealMethod;
-
+						
 						shopItemController.customPriceSprite = this.customPriceSprite;
 
 						shopItemController.Initialize(component4, this);
@@ -334,7 +376,7 @@ namespace NpcApi
 										break;
 								}
 							}
-							else if (!GameStatsManager.Instance.IsRainbowRun)
+							else if (!GameStatsManager.Instance.IsRainbowRun || AllowedToSpawnOnRainbowMode == true)
 							{
 								GameObject rewardObjectShopStyle2 = GameManager.Instance.RewardManager.GetRewardObjectShopStyle(GameManager.Instance.PrimaryPlayer, false, false, base.m_shopItems);
 								base.m_shopItems.Add(rewardObjectShopStyle2);

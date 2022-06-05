@@ -41,6 +41,8 @@ namespace Planetside
             activeitem.gameObject.AddComponent<RustyItemPool>();
             BloodIdol.BloodIdolID = activeitem.PickupObjectId;
             SynergyAPI.SynergyBuilder.AddItemToSynergy(activeitem, CustomSynergyType.BLOOD_LOCKET);
+            GameManager.Instance.RainbowRunForceExcludedIDs.Add(activeitem.PickupObjectId);
+
 
             ItemIDs.AddToList(activeitem.PickupObjectId);
         }

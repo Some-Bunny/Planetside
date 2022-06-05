@@ -16,7 +16,10 @@ public class CustomBeholsterLaserBehavior : BasicAttackBehavior
 		RampHeight = 5;
 		LocksFacingDirection = true;
 		DoesSpeedLerp = false;
+		DoesReverseSpeedLerp = false;
 		FacesLaserAngle = false;
+		AdditionalHeightOffset = 0;
+		StopDuring = StopType.None;
 	}
 
 	public override void Start()
@@ -156,13 +159,23 @@ public class CustomBeholsterLaserBehavior : BasicAttackBehavior
 			this.m_aiAnimator.PlayUntilCancelled(this.ChargeAnimation, true, null, -1f, false);
 
 		}
+		if (StopDuring == StopType.Charge | StopDuring == StopType.All)
+        {
+			this.StopMoving();
+        }
 		return BehaviorResult.RunContinuous;
 	}
 
 	public bool DoesSpeedLerp;
+	public bool DoesReverseSpeedLerp;
+
 	public float InitialStartingSpeed;
 	public float TimeToReachFullSpeed;
 	public float TimeToStayAtZeroSpeedAt;
+
+	public float EndingSpeed;
+	public float TimeToReachEndingSpeed;
+
 	public bool FacesLaserAngle;
 
 	public override ContinuousBehaviorResult ContinuousUpdate()
@@ -279,7 +292,18 @@ public class CustomBeholsterLaserBehavior : BasicAttackBehavior
 								float t = ((m_timer / TimeToReachFullSpeed)- TimeToStayAtZeroSpeedAt);
 								t = Mathf.Max(t, 0);
 								Mhm = Mathf.Lerp(InitialStartingSpeed, maxTurnRate, Mathf.Min(t, 1));
-                            }
+							}
+							if (DoesReverseSpeedLerp == true)
+                            {
+								float stir = firingTime - (TimeToReachEndingSpeed + TimeToStayAtZeroSpeedAt);
+								if (m_timer > stir)
+								{
+									float t2 = (m_timer - stir / firingTime- TimeToStayAtZeroSpeedAt);
+									t2 = Mathf.Max(t2, 0);
+									Mhm = Mathf.Lerp(EndingSpeed, maxTurnRate, t2);
+								}
+							}
+
 							alaserAngle = BraveMathCollege.ClampAngle360(this.AlaserAngle + Mhm * this.m_deltaTime);
 						}
 						bool flag16 = this.IsfiringLaser == true;
@@ -321,19 +345,24 @@ public class CustomBeholsterLaserBehavior : BasicAttackBehavior
 	public void PrechargeFiringLaser()
 	{
 		if (LocksFacingDirection == true) { base.m_aiActor.aiAnimator.LockFacingDirection = true; }
-		if (EnemyChargeSound != null) { AkSoundEngine.PostEvent(EnemyChargeSound, base.m_aiActor.gameObject); }
+		if (EnemyChargeSound != null && UsesBaseSounds == false) { AkSoundEngine.PostEvent(EnemyChargeSound, base.m_aiActor.gameObject); }
 		else if (UsesBaseSounds == true) { AkSoundEngine.PostEvent("Play_ENM_beholster_charging_01", base.m_aiActor.gameObject); }
 	}
 
 	public void ChargeFiringLaser(float time)
 	{
-		if (BeamChargingSound != null) { AkSoundEngine.PostEvent(BeamChargingSound, base.m_aiActor.gameObject); }
+		if (BeamChargingSound != null && UsesBaseSounds == false) { AkSoundEngine.PostEvent(BeamChargingSound, base.m_aiActor.gameObject); }
 		else if (UsesBaseSounds == true) { AkSoundEngine.PostEvent("Play_ENM_beholster_charging_01", base.m_aiActor.gameObject); }
 		this.m_laserActive = true;
 	}
 
 	public void StartFiringTheLaser()
 	{
+
+		if (StopDuring == StopType.Attack | StopDuring == StopType.All)
+		{
+			this.StopMoving(StopDuring == StopType.All);
+		}
 		MonoBehaviour yes = this.m_aiActor.GetComponent<MonoBehaviour>();
 		if (!string.IsNullOrEmpty(this.FireAnimation))
 		{
@@ -363,6 +392,7 @@ public class CustomBeholsterLaserBehavior : BasicAttackBehavior
 		}
 		//if (StopLaserFiringSound != null) {	AkSoundEngine.PostEvent(StopLaserFiringSound, base.m_aiActor.gameObject);}
 		//else if (UsesBaseSounds == true) {	AkSoundEngine.PostEvent("Stop_ENM_deathray_loop_01", base.m_aiActor.gameObject);}
+		this.m_behaviorSpeculator.PreventMovement = false;
 		this.m_laserActive = false;
 		this.IsfiringLaser = false;
 		this.m_aiActor.aiAnimator.LockFacingDirection = false;
@@ -396,8 +426,11 @@ public class CustomBeholsterLaserBehavior : BasicAttackBehavior
 		beamCont.HitsEnemies = true;
 
 		if (UsesBaseSounds == true) { LaserFiringSound = "Play_ENM_deathray_shot_01"; }
-		else if (LaserFiringSound != null) { beamCont.startAudioEvent = LaserFiringSound; }
-		if (StopLaserFiringSound != null)
+		else if (LaserFiringSound != null && UsesBaseSounds == false) { beamCont.startAudioEvent = LaserFiringSound; }
+
+
+
+		if (StopLaserFiringSound != null && UsesBaseSounds == false)
         {
 			beamCont.endAudioEvent = StopLaserFiringSound;
 		}
@@ -524,14 +557,18 @@ public class CustomBeholsterLaserBehavior : BasicAttackBehavior
 			//startingPoint.y += sign * this.firingEllipseA * this.firingEllipseB * tanAngle / denominator;
 			if (aibeamShooter2.firingEllipseA != 0 && aibeamShooter2.firingEllipseB != 0)
             {
+
+				startingPoint = GetTrueLaserOrigin(aibeamShooter2, clampedAngle);
+				/*
 				float tanAngle = Mathf.Tan(clampedAngle * 0.017453292f);
 				float sign = (float)((clampedAngle <= 90f || clampedAngle >= 270f) ? 1 : -1);
 				float denominator = Mathf.Sqrt(aibeamShooter2.firingEllipseB * aibeamShooter2.firingEllipseB + aibeamShooter2.firingEllipseA * aibeamShooter2.firingEllipseA * (tanAngle * tanAngle));
 				startingPoint.x += sign *aibeamShooter2.firingEllipseA * aibeamShooter2.firingEllipseB / denominator;
 				startingPoint.y += sign * aibeamShooter2.firingEllipseA * aibeamShooter2.firingEllipseB * tanAngle / denominator;
+				*/
 			}
 			bool facingNorth = BraveMathCollege.ClampAngle180(beamCont.Direction.ToAngle()) > 0f;
-			beamCont.RampHeightOffset = (float)((!facingNorth) ? 5 : 0);
+			beamCont.RampHeightOffset = (float)((!facingNorth) ? 5 : 0) + AdditionalHeightOffset;
 			beamCont.Origin = startingPoint;
 			beamCont.Direction = dirVec2;
 			aibeamShooter2.m_laserBeam = beamCont;
@@ -580,13 +617,34 @@ public class CustomBeholsterLaserBehavior : BasicAttackBehavior
 		yield break;
 	}
 
+	private Vector2 GetTrueLaserOrigin(AIBeamShooter2 aIBeamShooter2, float laserAngle)
+	{
+		Vector2 vector = aIBeamShooter2.LaserFiringCenter - new Vector2(this.m_aiActor.sprite.GetBounds().size.x, this.m_aiActor.sprite.GetBounds().size.y) /2 ;
+		if (aIBeamShooter2.firingEllipseA != 0f && aIBeamShooter2.firingEllipseB != 0f)
+		{
+			float num = Mathf.Lerp(aIBeamShooter2.eyeballFudgeAngle, 0f, BraveMathCollege.AbsAngleBetween(90f, Mathf.Abs(BraveMathCollege.ClampAngle180(laserAngle))) / 90f);
+			vector = BraveMathCollege.GetEllipsePoint(vector, aIBeamShooter2.firingEllipseA, aIBeamShooter2.firingEllipseB, laserAngle + num);
+		}
+		return vector;
+	}
 
+
+	private void StopMoving(bool PreventMoveMent = true)
+	{
+		if (this.m_aiActor)
+		{
+			this.m_aiActor.ClearPath();
+			this.m_behaviorSpeculator.PreventMovement = PreventMoveMent;
+		}
+	}
 
 
 	public CustomBeholsterLaserBehavior.TrackingType trackingType;
 	public CustomBeholsterLaserBehavior.FiringType firingType;
 
 	public float initialAimOffset;
+
+	public float AdditionalHeightOffset;
 
 	public float chargeTime;
 
@@ -635,6 +693,15 @@ public class CustomBeholsterLaserBehavior : BasicAttackBehavior
 	public BulletScriptSelector BulletScript;
 	public Transform ShootPoint;
 
+	public CustomBeholsterLaserBehavior.StopType StopDuring;
+
+	public enum StopType
+	{
+		None,
+		All,
+		Attack,
+		Charge,
+	}
 	private enum State
 	{
 		PreCharging,
@@ -648,9 +715,6 @@ public class CustomBeholsterLaserBehavior : BasicAttackBehavior
 		ONLY_NORTHANGLEVARIANCE,
 		FACINGDIRECTION_AND_CLAMPED_ANGLE
 	}
-
-
-
 	public enum TrackingType
 	{
 		Follow,

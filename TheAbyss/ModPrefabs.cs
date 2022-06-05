@@ -1227,8 +1227,10 @@ namespace Planetside
 					tk2dSpriteDefinition[] array3 = (tk2dSpriteDefinition[])ReflectionHelper.GetValue(component3.GetType().GetField("spriteDefinitions"), component3);
 					ETGModConsole.Log(array3.Length.ToString(), false);
 					Material material2 = PlanetsideModule.TilesetAssets.LoadAsset<Material>(Experimental == false ? "assets/sprites/Abyss Tileset/AbyssTestCollection Data/atlas0 material.mat" : "assets/sprites/Experimental Tileset/ExperimentalCollection Data/atlas0 material.mat");
-					ETGModConsole.Log("mat loaded", false);
-					ETGModConsole.Log(ModPrefabs.AbyssTilesetCollection.materials.Length.ToString(), false);
+					
+					//ETGModConsole.Log("mat loaded", false);
+					//ETGModConsole.Log(ModPrefabs.AbyssTilesetCollection.materials.Length.ToString(), false);
+
 					Material material3 = new Material(ModPrefabs.AbyssTilesetCollection.materials[0]);
 					Material material4 = new Material(ModPrefabs.AbyssTilesetCollection.materials[1]);
 					Material material5 = new Material(ModPrefabs.AbyssTilesetCollection.materials[2]);

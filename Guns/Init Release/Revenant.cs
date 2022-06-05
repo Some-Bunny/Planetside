@@ -69,7 +69,6 @@ namespace Planetside
 			PierceProjModifier spook = projectile.gameObject.AddComponent<PierceProjModifier>();
 			spook.penetration = 3;
 			spook.penetratesBreakables = true;
-			//projectile.baseData.range = 5.8f;
 			gun.encounterTrackable.EncounterGuid = "https://www.youtube.com/watch?v=HKmYRsnMsOk";
 			ETGMod.Databases.Items.Add(gun, null, "ANY");
 			Revenant.RevenantID = gun.PickupObjectId;
@@ -90,29 +89,9 @@ namespace Planetside
 			ItemIDs.AddToList(gun.PickupObjectId);
 		}
 		public static int RevenantID;
-		public override void PostProcessProjectile(Projectile projectile)
-		{
-			
-		}
 		
 		private bool HasReloaded;
 
-		protected void Update()
-		{
-			if (gun.CurrentOwner)
-			{
-
-				if (!gun.PreventNormalFireAudio)
-				{
-					this.gun.PreventNormalFireAudio = true;
-				}
-				if (!gun.IsReloading && !HasReloaded)
-				{
-					this.HasReloaded = true;
-				}
-			}
-
-		}
 
 		public override void OnReloadPressed(PlayerController player, Gun bruhgun, bool bSOMETHING)
 		{

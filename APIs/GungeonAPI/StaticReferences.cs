@@ -150,6 +150,80 @@ namespace GungeonAPI
                 {
                     var table = GetAsset<GenericRoomTable>(entry.Value);
                     RoomTables.Add(entry.Key, table);
+
+
+                    /*
+                    if (table.name.ToLower().Contains("basic special"))
+                    {
+
+                        Debug.Log("start Logging of basic special room tables");
+                        if (table.includedRooms != null)
+                        {
+                            int r1 = 0;
+                            int r2 = 0;
+                            int r3 = 0;
+                            int r4 = 0;
+                            int r5 = 0;
+                            for (int i = 0; i <= 999; i++)
+                            {
+                                WeightedRoom roomer = table.includedRooms.SelectByWeight();
+                                if (roomer == table.includedRooms.elements[0])
+                                {
+                                    r1++;
+                                }
+                                if (roomer == table.includedRooms.elements[1])
+                                {
+                                    r2++;
+                                }
+                                if (roomer == table.includedRooms.elements[2])
+                                {
+                                    r3++;
+                                }
+                                if (roomer == table.includedRooms.elements[3])
+                                {
+                                    r4++;
+                                }
+                                if (roomer == table.includedRooms.elements[4])
+                                {
+                                    r5++;
+                                }
+                            }
+
+                            Debug.Log("includedRoom name: " + table.includedRooms.elements[0].room.name +" got chosen "+r1+" times.");
+                            Debug.Log("includedRoom name: " + table.includedRooms.elements[1].room.name + " got chosen " + r2 + " times.");
+                            Debug.Log("includedRoom name: " + table.includedRooms.elements[2].room.name + " got chosen " + r3 + " times.");
+                            Debug.Log("includedRoom name: " + table.includedRooms.elements[3].room.name + " got chosen " + r4 + " times.");
+                            Debug.Log("includedRoom name: " + table.includedRooms.elements[4].room.name + " got chosen " + r5 + " times.");
+
+
+                            DungeonPrerequisite[] reqs = table.includedRooms.elements[0].additionalPrerequisites;
+                            foreach(var req in reqs)
+                            {
+                                if (req != null)
+                                {
+                                    ItemAPI.Tools.LogPropertiesAndFields(req, "", true);
+                                }
+                            }
+                            //int i = 0;
+
+                            
+                            foreach (var room in table.includedRooms.elements)
+                            {
+                                Debug.Log("includedRoom in pos: "+i+" : with name: "+room.room.name);
+                                Debug.Log("includedRoom weight: " + room.weight);
+                                Debug.Log("======================");
+                                i++;
+                            }
+                            
+                        }
+
+
+                    }
+                    */
+
+
+
+
                 }
                 catch (Exception e)
                 {
@@ -235,8 +309,86 @@ namespace GungeonAPI
             rngDungeon = null;
 
             var forgeDungeon = DungeonDatabase.GetOrLoadByName("Base_Forge");
+
+            /*
+            List<SharedInjectionData> datumes =  forgeDungeon.PatternSettings.flows[0].sharedInjectionData;
+
+            
+            foreach (var dates in datumes)
+            {
+                Debug.Log("===================================================");
+                ItemAPI.Tools.LogPropertiesAndFields(dates, "", true);
+                foreach (var data in dates.AttachedInjectionData)
+                {
+                    Debug.Log("===================================================");
+                    Debug.Log(data.name != null ? data.name : "null");
+                    ETGModConsole.Log("attachedInjData chance: "+ data.ChanceToSpawnOne.ToString());
+                    ItemAPI.Tools.LogPropertiesAndFields(data, "", true);
+                    foreach (var datum in data.InjectionData)
+                    {
+                        Debug.Log("===================================================");
+                        Debug.Log(datum.annotation != null ? datum.annotation : "null");
+                        ItemAPI.Tools.LogPropertiesAndFields(datum, "", true);
+                        if (datum.roomTable != null)
+                        {
+                            Debug.Log("===================================================");
+                            Debug.Log(datum.roomTable.name != null ? datum.roomTable.name : "null");
+                            ItemAPI.Tools.LogPropertiesAndFields(datum.roomTable, "", true);
+
+                        }
+
+                    }
+                    foreach (var es in data.AttachedInjectionData)
+                    {
+                        Debug.Log("===================================================");
+                        Debug.Log(es.name != null ? data.name : "null");
+                        ETGModConsole.Log("attachedInjData chance: " + es.ChanceToSpawnOne.ToString());
+                        ItemAPI.Tools.LogPropertiesAndFields(es, "", true);
+                        foreach (var datum in es.InjectionData)
+                        {
+                            Debug.Log(datum.annotation != null ? datum.annotation : "null");
+                            ItemAPI.Tools.LogPropertiesAndFields(datum, "", true);
+                            if (datum.roomTable != null)
+                            {
+                                Debug.Log("===================================================");
+                                Debug.Log(datum.roomTable.name != null ? datum.roomTable.name : "null");
+                                ItemAPI.Tools.LogPropertiesAndFields(datum.roomTable, "", true);
+
+                            }
+
+                        }
+                    }
+
+                
+
+
+                }
+                Debug.Log("===================================================");
+                ETGModConsole.Log("baseharedinj Data chance: " + dates.ChanceToSpawnOne.ToString());
+
+                foreach (var data in dates.InjectionData)
+                {
+                    Debug.Log("===================================================");
+                    Debug.Log(data.annotation != null ? data.annotation : "null");
+
+                    ItemAPI.Tools.LogPropertiesAndFields(data, "", true);
+
+                    if (data.roomTable != null)
+                    {
+                        Debug.Log("===================================================");
+
+                        Debug.Log(data.roomTable.name != null ? data.roomTable.name : "null");
+                        ItemAPI.Tools.LogPropertiesAndFields(data.roomTable, "", true);
+                        //data.roomTable.includedRoomTables
+                    }
+                }
+            }
+            */
+
+              
             foreach (WeightedRoom wRoom in forgeDungeon.PatternSettings.flows[0].fallbackRoomTable.includedRooms.elements)
             {
+
                 if (wRoom.room != null && !string.IsNullOrEmpty(wRoom.room.name))
                 {
                     if (wRoom.room.name.ToLower().StartsWith("forge_normal_cubulead_03"))

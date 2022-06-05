@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
-using static GungeonAPI.OldShrineFactory;
+using static GungeonAPI.ShrineFactory;
 using Dungeonator;
 using System.Collections;
 
@@ -15,14 +15,14 @@ namespace Planetside
 	{
 		public static void Add()
 		{
-			OldShrineFactory OHFUUCK = new OldShrineFactory
+			ShrineFactory OHFUUCK = new ShrineFactory
 			{
 
 				name = "GunOrbitingShrine",
 				modID = "psog",
 				text = "A shrine dedicated to an old gunslinger, who could sling guns with such proficiency that they fired while in mid-air.",
 				spritePath = "Planetside/Resources/Shrines/GunOrbitShrinel.png",
-				room = RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/GunOrbitShrineRoom.room").room,
+				//room = RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/GunOrbitShrineRoom.room").room,
 				RoomWeight = 2f,
 				acceptText = "Grant an offering to bestow similar power.",
 				declineText = "Leave",
@@ -35,10 +35,13 @@ namespace Planetside
 				isBreachShrine = false,
 				shadowPath = "Planetside/Resources/Shrines/defaultShrineShadow.png",
 				ShadowOffsetX = 0.3125f,
-				ShadowOffsetY = -0.25f
+				ShadowOffsetY = -0.25f,
+
+				preRequisites = new DungeonPrerequisite[0],
+				ShrinePercentageChance = 0.2f,
 			};
 			//register shrine
-			GunShrine = OHFUUCK.Build();
+			GunShrine = OHFUUCK.BuildWithoutBaseGameInterference();
 		}
 		public static GameObject GunShrine;
 

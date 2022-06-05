@@ -34,6 +34,7 @@ namespace Planetside
 			pickup.SetupItem(shortDesc, longDesc, "psog");
 			pickup.quality = PickupObject.ItemQuality.EXCLUDED;
 			RepairNode.RepairNodeID = pickup.PickupObjectId;
+
 			pickup.CustomCost = 25;
 			pickup.UsesCustomCost = true;
 		}

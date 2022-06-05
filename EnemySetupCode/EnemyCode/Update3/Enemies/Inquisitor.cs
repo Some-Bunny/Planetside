@@ -45,7 +45,7 @@ namespace Planetside
 				companion.aiActor.specRigidbody.CollideWithOthers = true;
 				companion.aiActor.specRigidbody.CollideWithTileMap = true;
 				companion.aiActor.PreventFallingInPitsEver = true;
-				companion.aiActor.healthHaver.ForceSetCurrentHealth(125f);
+				companion.aiActor.healthHaver.ForceSetCurrentHealth(180f);
 				companion.aiActor.CollisionKnockbackStrength = 0f;
 				companion.aiActor.procedurallyOutlined = true;
 				companion.aiActor.CanTargetPlayers = true;
@@ -53,7 +53,7 @@ namespace Planetside
 				EnemyToolbox.AddShadowToAIActor(companion.aiActor, StaticEnemyShadows.largeShadow, new Vector2(2.125f, 0.25f), "shadowPos");
 
 
-				companion.aiActor.healthHaver.SetHealthMaximum(125f, null, false);
+				companion.aiActor.healthHaver.SetHealthMaximum(180f, null, false);
 				companion.aiActor.specRigidbody.PixelColliders.Clear();
 				companion.aiActor.specRigidbody.PixelColliders.Add(new PixelCollider
 				{
@@ -107,21 +107,197 @@ namespace Planetside
 					Flipped = new DirectionalAnimation.FlipType[2]
 				};
 
-			/*
-				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "death", new string[] { "death" }, new DirectionalAnimation.FlipType[0], DirectionalAnimation.DirectionType.Single);
-				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "attack", new string[] { "attack" }, new DirectionalAnimation.FlipType[0], DirectionalAnimation.DirectionType.Single);
-				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "chargeattack", new string[0], new DirectionalAnimation.FlipType[0], DirectionalAnimation.DirectionType.Single);
-				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "chargespecialattack", new string[0], new DirectionalAnimation.FlipType[0], DirectionalAnimation.DirectionType.Single);
-				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "attackspec", new string[0], new DirectionalAnimation.FlipType[0], DirectionalAnimation.DirectionType.Single);
+				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "die", new string[] { "death" }, new DirectionalAnimation.FlipType[1], DirectionalAnimation.DirectionType.Single);
 				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awaken" }, new DirectionalAnimation.FlipType[1], DirectionalAnimation.DirectionType.Single);
+				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "chargeup", new string[] { "chargeup_right", "chargeup_left" }, new DirectionalAnimation.FlipType[2], DirectionalAnimation.DirectionType.TwoWayHorizontal);
+				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "chargeupslow", new string[] { "chargeupslow_right", "chargeupslow_left" }, new DirectionalAnimation.FlipType[2], DirectionalAnimation.DirectionType.TwoWayHorizontal);
+
+				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "chargefire", new string[] { "chargefire_right", "chargefire_left" }, new DirectionalAnimation.FlipType[2], DirectionalAnimation.DirectionType.TwoWayHorizontal);
+
+				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "lasercharge", new string[] { "lasercharge_right", "lasercharge_left" }, new DirectionalAnimation.FlipType[2], DirectionalAnimation.DirectionType.TwoWayHorizontal);
+				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "laser", new string[] { "laser_right", "laser_left" }, new DirectionalAnimation.FlipType[2], DirectionalAnimation.DirectionType.TwoWayHorizontal);
+				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "unlaser", new string[] { "unlaser_right", "unlaser_left" }, new DirectionalAnimation.FlipType[2], DirectionalAnimation.DirectionType.TwoWayHorizontal);
+
+				/*
+					EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "death", new string[] { "death" }, new DirectionalAnimation.FlipType[0], DirectionalAnimation.DirectionType.Single);
+					EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "attack", new string[] { "attack" }, new DirectionalAnimation.FlipType[0], DirectionalAnimation.DirectionType.Single);
+					EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "chargeattack", new string[0], new DirectionalAnimation.FlipType[0], DirectionalAnimation.DirectionType.Single);
+					EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "chargespecialattack", new string[0], new DirectionalAnimation.FlipType[0], DirectionalAnimation.DirectionType.Single);
+					EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "attackspec", new string[0], new DirectionalAnimation.FlipType[0], DirectionalAnimation.DirectionType.Single);
+					EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awaken" }, new DirectionalAnimation.FlipType[1], DirectionalAnimation.DirectionType.Single);
 				*/
+
+
+				AIActor actor = EnemyDatabase.GetOrLoadByGuid("4b992de5b4274168a8878ef9bf7ea36b");
+				BeholsterController beholsterbeam = actor.GetComponent<BeholsterController>();
+
+				
+				List<string> BeamAnimPaths = new List<string>()
+				{
+					"Planetside/Resources/Beams/Inquistor/inqBeam_mid_001",
+					"Planetside/Resources/Beams/Inquistor/inqBeam_mid_002",
+					"Planetside/Resources/Beams/Inquistor/inqBeam_mid_003",
+					"Planetside/Resources/Beams/Inquistor/inqBeam_mid_004",
+				};
+				List<string> StartAnimPaths = new List<string>()
+				{
+					"Planetside/Resources/Beams/Inquistor/inqBeam_start_001",
+					"Planetside/Resources/Beams/Inquistor/inqBeam_start_002",
+					"Planetside/Resources/Beams/Inquistor/inqBeam_start_003",
+					"Planetside/Resources/Beams/Inquistor/inqBeam_start_004",
+				};
+				List<string> End = new List<string>()
+				{
+					"Planetside/Resources/Beams/Inquistor/inqBeam_end_001",
+					"Planetside/Resources/Beams/Inquistor/inqBeam_end_002",
+					"Planetside/Resources/Beams/Inquistor/inqBeam_end_003",
+					"Planetside/Resources/Beams/Inquistor/inqBeam_end_004",
+				};
+
+				List<string> BeamAnimPathsTele = new List<string>()
+				{
+					"Planetside/Resources/Beams/Inquistor/inqBeamtelegraph_mid_001",
+					"Planetside/Resources/Beams/Inquistor/inqBeamtelegraph_mid_002",
+					"Planetside/Resources/Beams/Inquistor/inqBeamtelegraph_mid_003",
+					"Planetside/Resources/Beams/Inquistor/inqBeamtelegraph_mid_004",
+					"Planetside/Resources/Beams/Inquistor/inqBeamtelegraph_mid_005",
+					"Planetside/Resources/Beams/Inquistor/inqBeamtelegraph_mid_006",
+					"Planetside/Resources/Beams/Inquistor/inqBeamtelegraph_mid_007",
+					"Planetside/Resources/Beams/Inquistor/inqBeamtelegraph_mid_008",
+				};
+				List<string> BeamStartPathsTele = new List<string>()
+				{
+					"Planetside/Resources/Beams/Inquistor/inqBeamtelegraph_start_001",
+					"Planetside/Resources/Beams/Inquistor/inqBeamtelegraph_start_002",
+					"Planetside/Resources/Beams/Inquistor/inqBeamtelegraph_start_003",
+					"Planetside/Resources/Beams/Inquistor/inqBeamtelegraph_start_004",
+					"Planetside/Resources/Beams/Inquistor/inqBeamtelegraph_start_005",
+					"Planetside/Resources/Beams/Inquistor/inqBeamtelegraph_start_006",
+					"Planetside/Resources/Beams/Inquistor/inqBeamtelegraph_start_007",
+					"Planetside/Resources/Beams/Inquistor/inqBeamtelegraph_start_008",
+
+				};
+				List<string> BeamEndPathsTele = new List<string>()
+				{
+					"Planetside/Resources/Beams/Inquistor/inqBeamtelegraph_end_001",
+					"Planetside/Resources/Beams/Inquistor/inqBeamtelegraph_end_002",
+					"Planetside/Resources/Beams/Inquistor/inqBeamtelegraph_end_003",
+					"Planetside/Resources/Beams/Inquistor/inqBeamtelegraph_end_004",
+					"Planetside/Resources/Beams/Inquistor/inqBeamtelegraph_end_005",
+					"Planetside/Resources/Beams/Inquistor/inqBeamtelegraph_end_006",
+					"Planetside/Resources/Beams/Inquistor/inqBeamtelegraph_end_007",
+					"Planetside/Resources/Beams/Inquistor/inqBeamtelegraph_end_008",
+
+				};
+
+				List<string> BeamAnimPathsDiss = new List<string>()
+				{
+					"Planetside/Resources/Beams/Inquistor/inqBeamdissipate_mid_001",
+					"Planetside/Resources/Beams/Inquistor/inqBeamdissipate_mid_002",
+					"Planetside/Resources/Beams/Inquistor/inqBeamdissipate_mid_003",
+					"Planetside/Resources/Beams/Inquistor/inqBeamdissipate_mid_004",
+					"Planetside/Resources/Beams/Inquistor/inqBeamdissipate_mid_005",
+					"Planetside/Resources/Beams/Inquistor/inqBeamdissipate_mid_006",
+					"Planetside/Resources/Beams/Inquistor/inqBeamdissipate_mid_007",
+					"Planetside/Resources/Beams/Inquistor/inqBeamdissipate_mid_008",
+
+				};
+
+				List<string> BeamStartAnimPathsDiss = new List<string>()
+				{
+					"Planetside/Resources/Beams/Inquistor/inqBeamdissipate_start_001",
+					"Planetside/Resources/Beams/Inquistor/inqBeamdissipate_start_002",
+					"Planetside/Resources/Beams/Inquistor/inqBeamdissipate_start_003",
+					"Planetside/Resources/Beams/Inquistor/inqBeamdissipate_start_004",
+					"Planetside/Resources/Beams/Inquistor/inqBeamdissipate_start_005",
+					"Planetside/Resources/Beams/Inquistor/inqBeamdissipate_start_006",
+					"Planetside/Resources/Beams/Inquistor/inqBeamdissipate_start_007",
+					"Planetside/Resources/Beams/Inquistor/inqBeamdissipate_start_008",
+
+
+				};
+
+				List<string> BeamEndAnimPathsDiss = new List<string>()
+				{
+					"Planetside/Resources/Beams/Inquistor/inqBeamdissipate_end_001",
+					"Planetside/Resources/Beams/Inquistor/inqBeamdissipate_end_002",
+					"Planetside/Resources/Beams/Inquistor/inqBeamdissipate_end_003",
+					"Planetside/Resources/Beams/Inquistor/inqBeamdissipate_end_004",
+					"Planetside/Resources/Beams/Inquistor/inqBeamdissipate_end_005",
+					"Planetside/Resources/Beams/Inquistor/inqBeamdissipate_end_006",
+					"Planetside/Resources/Beams/Inquistor/inqBeamdissipate_end_007",
+					"Planetside/Resources/Beams/Inquistor/inqBeamdissipate_end_008",
+
+
+
+				};
+
+				Projectile projectile = UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(86) as Gun).DefaultModule.projectiles[0]);
+
+
+				BasicBeamController beamComp = projectile.GenerateBeamPrefab(
+					"Planetside/Resources/Beams/Inquistor/inqBeam_start_001",
+					new Vector2(16, 16),
+					new Vector2(0, 0),
+					BeamAnimPaths,
+					6,
+					//Beam Impact
+					null,
+					6,
+					new Vector2(16, 16),
+					new Vector2(0, 0),
+					//End of the Beam
+					End,
+					-1,
+					null,
+					null,
+					//Start of the Beam
+					StartAnimPaths,
+					12,
+					new Vector2(16, 16),
+					new Vector2(0, 0), false,
+					true,
+					BeamAnimPathsTele, 8,
+					BeamStartPathsTele, 8,
+					BeamEndPathsTele, 8,
+					1,
+					true,
+					BeamAnimPathsDiss, 8,
+					BeamStartAnimPathsDiss, 8,
+					BeamEndAnimPathsDiss, 8,
+					1
+					);
+
+
+				projectile.gameObject.SetActive(false);
+				FakePrefab.MarkAsFakePrefab(projectile.gameObject);
+				UnityEngine.Object.DontDestroyOnLoad(projectile);
+				projectile.gameObject.AddComponent<MarkForUndodgeAbleBeam>();
+
+				EmmisiveBeams emiss = beamComp.gameObject.AddComponent<EmmisiveBeams>();
+				emiss.EmissiveColorPower = 10f;
+				emiss.EmissivePower = 100;
+
+				ProjectileModule projectileModule = ProjectileModule.CreateClone(beholsterbeam.beamModule, false, -1);
+				projectileModule.projectiles[0] = projectile;
+
+				GameObject LaserOne = EnemyToolbox.GenerateShootPoint(companion.gameObject, companion.sprite.WorldCenter, "Laser1");
+				AIBeamShooter2 bholsterbeam1 = companion.gameObject.AddComponent<AIBeamShooter2>();
+				bholsterbeam1.beamTransform = LaserOne.transform;
+				bholsterbeam1.beamModule = projectileModule;
+				bholsterbeam1.beamProjectile = projectile;
+				bholsterbeam1.firingEllipseCenter = LaserOne.transform.position;
+				bholsterbeam1.northAngleTolerance = -36;
+				bholsterbeam1.firingEllipseA = 1.75f;
+				bholsterbeam1.firingEllipseB = 0.75f;
+				bholsterbeam1.eyeballFudgeAngle = 5;
+
 
 				companion.aiActor.AwakenAnimType = AwakenAnimationType.Awaken;
 				companion.aiActor.reinforceType = ReinforceType.SkipVfx;
 				Creationist.TrespassEnemyEngageDoer trespassEngager = companion.aiActor.gameObject.AddComponent<Creationist.TrespassEnemyEngageDoer>();
 				trespassEngager.PortalLifeTime = 5;
 				trespassEngager.PortalSize = 0.3f;
-
 
 				bool flag3 = InquisitorCollection == null;
 				if (flag3)
@@ -140,20 +316,16 @@ namespace Planetside
 					2,
 					3,
 					3,
-					4,
-					
+					4,			
 					4,
 					3,
 					2,
 					1,
 					1,
 					0,
-					
-
 					}, "idle_left", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 7f;
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, InquisitorCollection, new List<int>
 					{
-
 					5,
 					6,
 					7,
@@ -161,64 +333,13 @@ namespace Planetside
 					8,
 					8,
 					9,
-					9,
-					
+					9,		
 					8,
 					7,
 					6,
 					6,
-					5,
-					
+					5,				
 					}, "idle_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-
-					/*
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, InquisitorCollection, new List<int>
-					{
-					16,
-					17,
-					18,
-					19,
-					20,
-					21,
-					22,
-					23,
-					24
-					}, "chargeattack", tk2dSpriteAnimationClip.WrapMode.Once).fps = 11f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, InquisitorCollection, new List<int>
-					{
-					16,
-					17,
-					18,
-					19,
-					20,
-					21,
-					22,
-					23,
-					24
-					}, "chargespecialattack", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, InquisitorCollection, new List<int>
-					{
-					25,
-					26,
-					27,
-					28,
-					29,
-					30,
-					31,
-					32
-					}, "attack", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, InquisitorCollection, new List<int>
-					{
-					25,
-					26,
-					27,
-					28,
-					29,
-					30,
-					31,
-					32
-					}, "attackspec", tk2dSpriteAnimationClip.WrapMode.Once).fps = 10f;
-					*/
 
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, InquisitorCollection, new List<int>
 					{
@@ -241,7 +362,8 @@ namespace Planetside
 					23,
 					24
 					}, "death", tk2dSpriteAnimationClip.WrapMode.Once).fps = 11f;
-
+					EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "death", new Dictionary<int, string> { { 0, "Play_BigGuyDeath" }, { 8, "Play_BiGGuyDethAgain" } });
+					EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "death", new Dictionary<int, string> { { 3, "SpawnDeathPortal" } });
 
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, InquisitorCollection, new List<int>
 					{
@@ -268,10 +390,147 @@ namespace Planetside
 					40,
 					41
 
-					}, "awaken", tk2dSpriteAnimationClip.WrapMode.Once).fps = 10f;
+					}, "awaken", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
+					EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "awaken", new Dictionary<int, string> { { 0, "Play_BOSS_lichA_turn_01" }, { 8, "Play_BOSS_dragun_stomp_01" }, { 11, "Play_BigGuyGrowl" }, { 14, "Play_ENM_blobulord_reform_01" } });
 
-					
+					List<int> chargeUpLeft = new List<int>()
+					{
+					43,
+					44,
+					44,
+					45,
+					45,
+					45,
+					46,
+					46,
+					46,
+					46,
+					};
+					List<int> chargeUpRight = new List<int>()
+					{
+					48,
+					49,
+					50,
+					50,
+					51,
+					51,
+					51,
+					52,
+					52,
+					53,
+					53
+					};
 
+
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, InquisitorCollection, chargeUpLeft, "chargeup_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
+					//EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "chargeup_left", new Dictionary<int, string> { { 0, "Blast" } });
+					EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "chargeup_left", new Dictionary<int, string> { { 0, "Play_ENM_blobulord_charge_01" }, { 9, "Play_ENM_mummy_cast_01" } });
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, InquisitorCollection, chargeUpRight, "chargeup_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
+					EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "chargeup_right", new Dictionary<int, string> { { 0, "Play_ENM_blobulord_charge_01" }, { 9, "Play_ENM_mummy_cast_01" } });
+
+
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, InquisitorCollection, chargeUpRight, "chargeupslow_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5f;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, InquisitorCollection, chargeUpLeft, "chargeupslow_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5f;
+					EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "chargeupslow_left", new Dictionary<int, string> { { 0, "Play_ENM_blobulord_intro_01" }, { 6, "Play_BOSS_dragun_charge_01" } });
+					EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "chargeupslow_right", new Dictionary<int, string> { { 0, "Play_ENM_blobulord_intro_01" }, { 6, "Play_BOSS_dragun_charge_01" } });
+
+
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, InquisitorCollection, new List<int>
+					{
+					47,
+					47,
+					46,
+					45,
+					44,
+					44,
+					43,
+					43,
+					42,
+					42,
+					}, "chargefire_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 28f;
+					EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "chargefire_left", new Dictionary<int, string> { { 0, "Play_Stomp" } });
+					EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "chargefire_left", new Dictionary<int, string> { { 0, "Stompy" } });
+
+					EnemyToolbox.GenerateShootPoint(companion.gameObject, new Vector2(2.125f, 3.3125f), "LeftHandFire");
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, InquisitorCollection, new List<int>
+					{
+					53,
+					53,
+					52,
+					51,
+					50,
+					50,
+					49,
+					49,
+					48,
+					48,
+					}, "chargefire_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 28f;
+					EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "chargefire_right", new Dictionary<int, string> { { 0, "Play_Stomp" } });
+					EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "chargefire_right", new Dictionary<int, string> { { 0, "Stompy" } });
+
+					EnemyToolbox.GenerateShootPoint(companion.gameObject, new Vector2(2.875f, 3.3125f), "RightHandFire");
+
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, InquisitorCollection, new List<int>
+					{
+					54,
+					55,
+					56,
+					56,
+					57,
+					57,
+					}, "lasercharge_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
+					EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "lasercharge_left", new Dictionary<int, string> { { 0, "Play_ENM_squidface_illusion_01" }, {5, "Play_BOSS_omegaBeam_charge_01" } });
+					EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "lasercharge_left", new Dictionary<int, string> { { 3, "LaserCharge" }});
+
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, InquisitorCollection, new List<int>
+					{
+					58,
+					59,
+					60,
+					60,
+					61,
+					61
+					}, "lasercharge_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
+					EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "lasercharge_right", new Dictionary<int, string> { { 0, "Play_ENM_squidface_illusion_01" }, { 5, "Play_BOSS_omegaBeam_charge_01" } });
+					EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "lasercharge_right", new Dictionary<int, string> { { 3, "LaserCharge" } });
+					//pewGobrr
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, InquisitorCollection, new List<int>
+					{
+					62,
+					63,
+					64,
+					65,
+					}, "laser_left", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 6f;
+					EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "laser_left", new Dictionary<int, string> { { 2, "pewGobrr" } });
+
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, InquisitorCollection, new List<int>
+					{
+					66,
+					67,
+					68,
+					69
+					}, "laser_right", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 6f;
+					EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "laser_right", new Dictionary<int, string> { { 2, "pewGobrr" } });
+
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, InquisitorCollection, new List<int>
+					{
+					57,
+					56,
+					55,
+					55,
+					54,
+					54
+					}, "unlaser_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
+
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, InquisitorCollection, new List<int>
+					{
+					61,
+					60,
+					59,
+					59,
+					58,
+					58
+					}, "unlaser_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
 				}
 
 				/*
@@ -318,7 +577,8 @@ namespace Planetside
 					MaxActiveRange = 0f
 				}
 				};
-				/*
+				//lasercharge//laser//unlaser//chargeup//chargefire
+
 				bs.AttackBehaviorGroup.AttackBehaviors = new List<AttackBehaviorGroup.AttackGroupItem>
 				{
 					new AttackBehaviorGroup.AttackGroupItem()
@@ -326,39 +586,90 @@ namespace Planetside
 						Probability = 1f,
 						Behavior = new ShootBehavior{
 						ShootPoint = shootpoint,
-						BulletScript = new CustomBulletScriptSelector(typeof(BasicCreationistAttack)),
+						BulletScript = new CustomBulletScriptSelector(typeof(Force)),
 						LeadAmount = 0f,
 						AttackCooldown = 2.25f,
-						Cooldown = 1f,
+						Cooldown = 2f,
 						InitialCooldown = 0.5f,
-						ChargeTime = 1f,
+						ChargeTime = 0.8f,
 						RequiresLineOfSight = false,
 						MultipleFireEvents = false,
 						Uninterruptible = true,
-						//ChargeAnimation = "chargeattack",
-						//PostFireAnimation = "attack",
+						ChargeAnimation = "chargeup",
+						PostFireAnimation = "chargefire",
 						}
 					},
-
+					new AttackBehaviorGroup.AttackGroupItem()
+					{
+						Probability = 1f,
+						Behavior = new ShootBehavior{
+						ShootPoint = shootpoint,
+						BulletScript = new CustomBulletScriptSelector(typeof(Repel)),
+						LeadAmount = 0f,
+						AttackCooldown = 3f,
+						Cooldown = 5,
+						InitialCooldown = 2f,
+						ChargeTime = 1.6f,
+						RequiresLineOfSight = false,
+						MultipleFireEvents = false,
+						Uninterruptible = true,
+						ChargeAnimation = "chargeupslow",
+						PostFireAnimation = "chargefire",
+						}
+					},
 					new AttackBehaviorGroup.AttackGroupItem()
 					{
 						Probability = 2f,
-						Behavior = new ShootBehavior{
-						ShootPoint = shootpoint,
-						BulletScript = new CustomBulletScriptSelector(typeof(TelegraphScript)),
-						LeadAmount = 0f,
-						AttackCooldown = 2f,
-						Cooldown = 6f,
-						InitialCooldown = 2f,
+						Behavior = new CustomBeholsterLaserBehavior{
+						InitialCooldown = 4f,
+						firingTime = 6f,
+						AttackCooldown = 3f,
+						Cooldown = 8f,
 						RequiresLineOfSight = false,
-						MultipleFireEvents = false,
-						Uninterruptible = true,
-						//FireAnimation = "chargespecialattack",
-						//PostFireAnimation = "attackspec",
+						UsesCustomAngle = true,
+						chargeTime = 1.5f,
+						UsesBaseSounds = false,
+						LaserFiringSound = "Play_ENM_deathray_shot_01",
+						StopLaserFiringSound = "Stop_ENM_deathray_loop_01",
+						ChargeAnimation = "lasercharge",
+						FireAnimation = "laser",
+						PostFireAnimation = "unlaser",
+						beamSelection = ShootBeamBehavior.BeamSelection.Random,
+						trackingType = CustomBeholsterLaserBehavior.TrackingType.ConstantTurn,
+
+						DoesSpeedLerp = true,
+						TimeToReachFullSpeed = 1.5f,
+
+						DoesReverseSpeedLerp = true,
+						TimeToStayAtZeroSpeedAt = 0.5f,
+						TimeToReachEndingSpeed = 1.5f,
+				
+						unitCatchUpSpeed = 1f,
+						maxTurnRate = 30f,
+						turnRateAcceleration = 1.2f,
+						useDegreeCatchUp = companion.transform,
+						minDegreesForCatchUp = 0,
+						degreeCatchUpSpeed = 1,
+						useUnitCatchUp = true,
+						minUnitForCatchUp = 1,
+						maxUnitForCatchUp = 1,
+						useUnitOvershoot = true,
+						minUnitForOvershoot = 1,
+						FacesLaserAngle = true,
+						firingType = CustomBeholsterLaserBehavior.FiringType.TOWARDS_PLAYER_AND_NORTHANGLEVARIANCE,
+						unitOvershootTime = 0.5f,
+						unitOvershootSpeed = 1.25f,
+						BulletScript = new CustomBulletScriptSelector(typeof(FakeUndodgeableBeam)),
+						ShootPoint = shootpoint.transform,
+						StopDuring = CustomBeholsterLaserBehavior.StopType.All
 						}
-					}
+					},
+
 				};
-				*/
+				//lasercharge//laser//unlaser
+
+				
+				
 				/*
 				string basepath = "Planetside/Resources/Enemies/Creationist/";
 				DebrisObject shoulder1 = BreakableAPIToolbox.GenerateDebrisObject(basepath + "creationistDebris1.png", true, 0.5f, 3, 540, 120, null, 0.9f, "Play_BOSS_lichA_crack_01", null, 0);
@@ -384,7 +695,7 @@ namespace Planetside
 
 
 
-				SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Enemies/Creationist/creationist_charge_attack_001.png", SpriteBuilder.ammonomiconCollection);
+				SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Ammocom/inqICon.png", SpriteBuilder.ammonomiconCollection);
 				if (companion.GetComponent<EncounterTrackable>() != null)
 				{
 					UnityEngine.Object.Destroy(companion.GetComponent<EncounterTrackable>());
@@ -397,11 +708,11 @@ namespace Planetside
 				companion.encounterTrackable.journalData.IsEnemy = true;
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
-				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Enemies/Creationist/creationist_charge_attack_001";
-				companion.encounterTrackable.journalData.enemyPortraitSprite = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\creationistTemplateTrespass.png");
+				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Ammocom/inqICon";
+				companion.encounterTrackable.journalData.enemyPortraitSprite = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\sheetInquisitorTrespass.png");
 				PlanetsideModule.Strings.Enemies.Set("#INQUISITOR", "Inquisitor");
-				PlanetsideModule.Strings.Enemies.Set("#INQUISITOR_SHORTDESC", "Power Crept");
-				PlanetsideModule.Strings.Enemies.Set("#INQUISITOR_LONGDESC", "Now with infinite foresight.\n\nNow with infinite time.\n\nNow with infinite potential.\n\nYet, blinded by their new powers, they failed to see their eventual, eternal entombment.");
+				PlanetsideModule.Strings.Enemies.Set("#INQUISITOR_SHORTDESC", "With Great Power");
+				PlanetsideModule.Strings.Enemies.Set("#INQUISITOR_LONGDESC", "Those who are able to stand against their new found powers are able to keep a semblance of their former selves.");
 				companion.encounterTrackable.journalData.PrimaryDisplayName = "#INQUISITOR";
 				companion.encounterTrackable.journalData.NotificationPanelDescription = "#INQUISITOR_SHORTDESC";
 				companion.encounterTrackable.journalData.AmmonomiconFullEntry = "#INQUISITOR_LONGDESC";
@@ -478,6 +789,40 @@ namespace Planetside
 			basePath+"inquisitor_awaken_016.png",
 			basePath+"inquisitor_awaken_017.png",//41
 
+			basePath+"inquisitor_chargeleft_001.png",//42
+			basePath+"inquisitor_chargeleft_002.png",
+			basePath+"inquisitor_chargeleft_003.png",
+			basePath+"inquisitor_chargeleft_004.png",
+			basePath+"inquisitor_chargeleft_005.png",
+			basePath+"inquisitor_chargeleft_006.png",//47
+
+			basePath+"inquisitor_chargeright_001.png",//48
+			basePath+"inquisitor_chargeright_002.png",
+			basePath+"inquisitor_chargeright_003.png",
+			basePath+"inquisitor_chargeright_004.png",
+			basePath+"inquisitor_chargeright_005.png",
+			basePath+"inquisitor_chargeright_006.png",//53
+
+			basePath+"inquisitor_lasahleft_001.png",//54
+			basePath+"inquisitor_lasahleft_002.png",
+			basePath+"inquisitor_lasahleft_003.png",
+			basePath+"inquisitor_lasahleft_004.png",//57
+
+			basePath+"inquisitor_lasahright_001.png",//58
+			basePath+"inquisitor_lasahright_002.png",
+			basePath+"inquisitor_lasahright_003.png",
+			basePath+"inquisitor_lasahright_004.png",//61
+
+			basePath+"inquisitor_lasahpewleft_001.png",//62
+			basePath+"inquisitor_lasahpewleft_002.png",
+			basePath+"inquisitor_lasahpewleft_003.png",
+			basePath+"inquisitor_lasahpewleft_004.png",//65
+
+			basePath+"inquisitor_lasahpewright_001.png",//66
+			basePath+"inquisitor_lasahpewright_002.png",
+			basePath+"inquisitor_lasahpewright_003.png",
+			basePath+"inquisitor_lasahpewright_004.png",//69 //nice
+
 		};
 
 		public class EnemyBehavior : BraveBehaviour
@@ -524,14 +869,15 @@ namespace Planetside
 			}
 			private void AnimationEventTriggered(tk2dSpriteAnimator animator, tk2dSpriteAnimationClip clip, int frameIdx)
 			{
-				if (clip.GetFrame(frameIdx).eventInfo.Contains("deathBurst"))
+				if (clip.GetFrame(frameIdx).eventInfo.Contains("ddasasd"))
 				{
 					var partObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("PortalClose"));
 					partObj.transform.position = base.aiActor.transform.Find("CreationistShootpoint").position;
 					partObj.transform.localScale *= 1f;
 					Destroy(partObj, 3.4f);
+					//LaserCharge
 				}
-				if (clip.GetFrame(frameIdx).eventInfo.Contains("Blast"))
+				if (clip.GetFrame(frameIdx).eventInfo.Contains("Stompy"))
 				{
 					GameObject silencerVFX = (GameObject)ResourceCache.Acquire("Global VFX/BlankVFX_Ghost");
 					tk2dSpriteAnimator objanimator = silencerVFX.GetComponentInChildren<tk2dSpriteAnimator>();
@@ -543,33 +889,322 @@ namespace Planetside
 					ParticleSystem objparticles = silencerVFX.GetComponentInChildren<ParticleSystem>();
 					var main = objparticles.main;
 					main.useUnscaledTime = true;
-					GameObject.Instantiate(silencerVFX.gameObject, base.aiActor.transform.Find("CreationistShootpoint").position, Quaternion.identity);
-					Exploder.DoDistortionWave(base.aiActor.transform.Find("CreationistShootpoint").position, 10f, 0.4f, 3, 0.066f);
+
+					string shootPointCalc = (string)((BraveMathCollege.AbsAngleBetween(this.aiActor.aiAnimator.FacingDirection, 0f) <= 90f) ? "RightHandFire" : "LeftHandFire");
+
+					GameObject gameObject = GameObject.Instantiate(silencerVFX.gameObject, base.aiActor.transform.Find(shootPointCalc).position, Quaternion.identity);
+					Destroy(gameObject, 2.5f);
+
+					Exploder.DoDistortionWave(base.aiActor.transform.Find(shootPointCalc).position, 10f, 0.05f, 10, 0.5f);
+				}
+				if (clip.GetFrame(frameIdx).eventInfo.Contains("LaserCharge"))
+                {
+					string shootPointCalc = (string)((BraveMathCollege.AbsAngleBetween(this.aiActor.aiAnimator.FacingDirection, 0f) <= 90f) ? "RightHandFire" : "LeftHandFire");
+					Vector2 pos = base.aiActor.transform.Find(shootPointCalc).position;
+					GameManager.Instance.StartCoroutine(fuck.DoReverseDistortionWaveLocal(pos, 12, 0.075f, 30, 0.5f));
+					StaticVFXStorage.HighPriestClapVFXInverse.SpawnAtPosition(pos, 0, base.aiActor.transform.Find(shootPointCalc));
+
+				}
+				if (clip.GetFrame(frameIdx).eventInfo.Contains("pewGobrr"))
+                {
+					string shootPointCalc = (string)((BraveMathCollege.AbsAngleBetween(this.aiActor.aiAnimator.FacingDirection, 0f) <= 90f) ? "RightHandFire" : "LeftHandFire");
+					Exploder.DoDistortionWave(base.aiActor.transform.Find(shootPointCalc).position - new Vector3(0, 0.5f), 5f, 0.05f, 2, 0.25f);
+				}
+				if (clip.GetFrame(frameIdx).eventInfo.Contains("SpawnDeathPortal"))
+                {
+					GameObject portalObj = UnityEngine.Object.Instantiate<GameObject>(PickupObjectDatabase.GetById(155).GetComponent<SpawnObjectPlayerItem>().objectToSpawn.GetComponent<BlackHoleDoer>().HellSynergyVFX, this.aiActor.sprite.WorldBottomCenter, Quaternion.Euler(0f, 0f, 0f));
+					portalObj.layer = this.aiActor.gameObject.layer + (int)GameManager.Instance.MainCameraController.CurrentZOffset;
+					portalObj.gameObject.SetLayerRecursively(LayerMask.NameToLayer("BG_Critical"));
+					MeshRenderer mesh = portalObj.GetComponent<MeshRenderer>();
+					mesh.material.SetTexture("_PortalTex", StaticTextures.NebulaTexture);
+					GameManager.Instance.StartCoroutine(PortalDoer(mesh, true));
 				}
 			}
-		}
-
-
-		public class BasicCreationistAttack : Script
-		{
-			protected override IEnumerator Top()
+			private IEnumerator PortalDoer(MeshRenderer portal, bool DestroyWhenDone = false)
 			{
-				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableBig);
-				this.Fire(new Direction(0, DirectionType.Aim, -1f), new Speed(0f, SpeedType.Absolute), new BasicBigBall());
+				float elapsed = 0f;
+				while (elapsed < 3)
+				{
+					elapsed += BraveTime.DeltaTime;
+					float t = elapsed / 3;
+					if (portal.gameObject == null) { yield break; }
+					float throne1 = Mathf.Sin(t * (Mathf.PI));
+					portal.material.SetFloat("_UVDistCutoff", Mathf.Lerp(0, 0.4f, throne1));
+					portal.material.SetFloat("_HoleEdgeDepth", Mathf.Lerp(12, 2, throne1));
+					yield return null;
+				}
+
+				if (DestroyWhenDone == true)
+				{
+					Destroy(portal.gameObject);
+				}
 				yield break;
 			}
-			public class BasicBigBall : Bullet
+
+		}
+
+		public class Repel : Script
+        {
+			protected override IEnumerator Top()
 			{
-				public BasicBigBall() : base("undodgeableBig", false, false, false)
+				string shootPointCalc = (string)((BraveMathCollege.AbsAngleBetween(this.BulletBank.aiActor.aiAnimator.FacingDirection, 0f) <= 90f) ? "RightHandFire" : "LeftHandFire");
+				float Pos = (base.GetPredictedTargetPosition(0.6f, 34) - base.BulletBank.aiActor.transform.Find(shootPointCalc).PositionVector2()).ToAngle();
+				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableQuickHoming);
+				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
+
+				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableBig);
+
+				for (int e = -3; e < 4; e++)
+                {
+					this.Fire(Offset.OverridePosition(base.BulletBank.aiActor.transform.Find(shootPointCalc).position), new Direction(Pos + (20 * e), DirectionType.Absolute, -1f), new Speed(3f, SpeedType.Absolute), new Repel.Def());
+				}
+				for (int e = -3; e < 3; e++)
+                {
+					this.Fire(Offset.OverridePosition(base.BulletBank.aiActor.transform.Find(shootPointCalc).position), new Direction(Pos + (20 * e)+10, DirectionType.Absolute, -1f), new Speed(1f, SpeedType.Absolute), new Repel.Def(30));
+				}
+				this.Fire(Offset.OverridePosition(base.BulletBank.aiActor.transform.Find(shootPointCalc).position), new Direction(Pos, DirectionType.Absolute, -1f), new Speed(7f, SpeedType.Absolute), new Repel.Ballin());
+
+				yield break;
+			}
+			public class Def : Bullet
+			{
+				public Def(float delay = 0) : base(StaticUndodgeableBulletEntries.undodgeableQuickHoming.Name, false, false, false)
+				{
+					Delay = delay;
+				}
+				protected override IEnumerator Top()
+				{
+					yield return this.Wait(Delay);
+					base.ChangeSpeed(new Speed(8f, SpeedType.Absolute), 60);
+					yield break;
+				}
+				private float Delay;
+			}
+			public class Spore : Bullet
+			{
+				public Spore() : base("undodgeableSpore", false, false, false)
 				{
 
 				}
 				protected override IEnumerator Top()
 				{
-					base.ChangeSpeed(new Speed(20f, SpeedType.Absolute), 120);
+					base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 60);
+					yield return this.Wait(480);
+					base.Vanish(false);
 					yield break;
 				}
 			}
+			public class Ballin : Bullet
+			{
+				public Ballin() : base(StaticUndodgeableBulletEntries.undodgeableBig.Name, false, false, false)
+				{
+				}
+				protected override IEnumerator Top()
+				{
+					base.ChangeSpeed(new Speed(18f, SpeedType.Absolute), 60);
+					yield break;
+				}
+				public override void OnBulletDestruction(DestroyType destroyType, SpeculativeRigidbody hitRigidbody, bool preventSpawningProjectiles)
+				{
+					float H = UnityEngine.Random.Range(-180, 180);
+					base.PostWwiseEvent("Play_ENM_creecher_burst_01");
+
+					for (int i = 0; i < 20; i++)
+					{
+						this.Fire(new Direction((18 * i) + H, DirectionType.Aim, -1f), new Speed(UnityEngine.Random.Range(1f, 8), SpeedType.Absolute), new Spore());
+					}
+					base.OnBulletDestruction(destroyType, hitRigidbody, preventSpawningProjectiles);
+				}
+			}
+
+		}
+		public class FakeUndodgeableBeam : Script
+		{
+			protected override IEnumerator Top()
+			{
+				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
+				AIBeamShooter2[] beams = this.BulletBank.aiActor.GetComponents<AIBeamShooter2>();
+				yield return this.Wait(30);
+				int i = 0;
+				while (beams != null || beams.Length > 0)
+                {
+					foreach (AIBeamShooter2 beam in beams)
+					{
+						if (beam && beam.LaserBeam && i % 3 == 0)
+						{
+							LinkedList<BasicBeamController.BeamBone> linkedList = PlanetsideReflectionHelper.ReflectGetField<LinkedList<BasicBeamController.BeamBone>>(typeof(BasicBeamController), "m_bones", beam.m_laserBeam);
+							LinkedListNode<BasicBeamController.BeamBone> last = linkedList.Last;
+							Vector2 bonePosition = beam.m_laserBeam.GetBonePosition(last.Value);
+							this.Fire(Offset.OverridePosition(bonePosition), new Direction(UnityEngine.Random.Range(-180, 180), DirectionType.Absolute, -1f), new Speed(UnityEngine.Random.Range(1, 3)), new FakeBeamPart());
+						}
+					}
+					i++;
+					yield return this.Wait(1);
+				}
+				yield break;
+
+			}
+			public class FakeBeamPart : Bullet
+			{
+				public FakeBeamPart() : base(StaticUndodgeableBulletEntries.undodgeableSmallSpore.Name, false, false, false)
+				{
+				}
+				protected override IEnumerator Top()
+				{
+					this.Projectile.IgnoreTileCollisionsFor(6000f);
+					base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 75);
+					yield return this.Wait(600);
+					base.Vanish(false);
+					yield break;
+				}
+			}
+		
+			}
+
+		public class Force : Script
+		{
+			protected override IEnumerator Top()
+			{
+				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableBig);
+				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
+				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableBigBullet);
+				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableChainLink);
+
+				string shootPointCalc = (string)((BraveMathCollege.AbsAngleBetween(this.BulletBank.aiActor.aiAnimator.FacingDirection, 0f) <= 90f) ? "RightHandFire" : "LeftHandFire");
+				float Pos = (base.GetPredictedTargetPosition(0.6f, 34) - base.BulletBank.aiActor.transform.Find(shootPointCalc).PositionVector2()).ToAngle();
+				this.Fire(Offset.OverridePosition(base.BulletBank.aiActor.transform.Find(shootPointCalc).position), new Direction(Pos, DirectionType.Absolute, -1f), new Speed(13f, SpeedType.Absolute), new Force.HelixBullet(false, 0 , StaticUndodgeableBulletEntries.undodgeableBig.Name, 0 ,0));
+				for (int e = 0; e < 7; e++)
+				{
+					base.Fire(Offset.OverridePosition(base.BulletBank.aiActor.transform.Find(shootPointCalc).position), new Direction(Pos, DirectionType.Absolute, -1f), new Speed(13, SpeedType.Absolute), new Force.HelixBullet(false, (4 * e)+6, StaticUndodgeableBulletEntries.undodgeableChainLink.Name, -0.75f, 0.75f));
+					base.Fire(Offset.OverridePosition(base.BulletBank.aiActor.transform.Find(shootPointCalc).position), new Direction(Pos, DirectionType.Absolute, -1f), new Speed(13, SpeedType.Absolute), new Force.HelixBullet(true, (4 * e)+6, StaticUndodgeableBulletEntries.undodgeableChainLink.Name, - 0.75f, 0.75f));
+
+				}
+				yield break;
+			}
+			public class BasicBigBall : Bullet
+			{
+				public BasicBigBall() : base(StaticUndodgeableBulletEntries.undodgeableBig.Name, false, false, false) { }
+				protected override IEnumerator Top()
+				{
+					while (this.Projectile)
+                    {
+						base.PostWwiseEvent("Play_OBJ_ash_burst_02");
+						for (int i = 0; i < 12; i++)
+                        {
+							this.Fire(new Direction(30*i, DirectionType.Aim, -1f), new Speed(3f, SpeedType.Absolute), new Spore());
+						}
+						yield return this.Wait(45);
+					}
+					yield break;
+				}
+                public override void OnBulletDestruction(DestroyType destroyType, SpeculativeRigidbody hitRigidbody, bool preventSpawningProjectiles)
+                {
+					float H = UnityEngine.Random.Range(-180, 180);
+					base.PostWwiseEvent("Play_ENM_creecher_burst_01");
+					for (int i = 0; i < 6; i++)
+					{
+						this.Fire(new Direction((60 * i)+H, DirectionType.Aim, -1f), new Speed(0f, SpeedType.Absolute), new Big());
+					}
+					for (int i = 0; i < 20; i++)
+					{
+						this.Fire(new Direction((18 * i) + H, DirectionType.Aim, -1f), new Speed(UnityEngine.Random.Range(0.5f, 6), SpeedType.Absolute), new Spore());
+					}
+					base.OnBulletDestruction(destroyType, hitRigidbody, preventSpawningProjectiles);
+                }
+            }
+
+			public class HelixBullet : Bullet
+			{
+				public HelixBullet(bool reverse, int delay, string BulletType, float Power, float NegativePower) : base(BulletType, false, false, false)
+				{
+					this.reverse = reverse;
+					this.Delay = delay;
+					this.bullettype = BulletType;
+					base.SuppressVfx = true;
+					this.Power = Power;
+					this.NegativePower = NegativePower;
+
+				}
+				protected override IEnumerator Top()
+				{
+					this.ManualControl = true;
+					yield return base.Wait(this.Delay);
+					Vector2 truePosition = this.Position;
+					float startVal = 1;
+					for (int i = 0; i < 360; i++)
+					{
+						if (i % 45 == 0 && bullettype == StaticUndodgeableBulletEntries.undodgeableBig.Name)
+                        {
+							for (int t = 0; t < 12; t++)
+							{
+								this.Fire(new Direction(30 * t, DirectionType.Aim, -1f), new Speed(3f, SpeedType.Absolute), new Spore());
+							}
+						}
+						float offsetMagnitude = Mathf.SmoothStep(NegativePower, Power, Mathf.PingPong(startVal + (float)i / 90f * 3f, 1f));
+						truePosition += BraveMathCollege.DegreesToVector(this.Direction, this.Speed / 90f);
+						this.Position = truePosition + (this.reverse ? BraveMathCollege.DegreesToVector(this.Direction + 90f, offsetMagnitude) : BraveMathCollege.DegreesToVector(this.Direction - 90f, offsetMagnitude));
+						yield return this.Wait(1);
+					}
+					this.Vanish(false);
+					yield break;
+				}
+
+				public override void OnBulletDestruction(DestroyType destroyType, SpeculativeRigidbody hitRigidbody, bool preventSpawningProjectiles)
+				{
+					if (bullettype == StaticUndodgeableBulletEntries.undodgeableBig.Name)
+                    {
+						float H = UnityEngine.Random.Range(-180, 180);
+						base.PostWwiseEvent("Play_ENM_creecher_burst_01");
+						for (int i = 0; i < 6; i++)
+						{
+							this.Fire(new Direction((60 * i) + H, DirectionType.Aim, -1f), new Speed(0f, SpeedType.Absolute), new Big());
+						}
+						for (int i = 0; i < 20; i++)
+						{
+							this.Fire(new Direction((18 * i) + H, DirectionType.Aim, -1f), new Speed(UnityEngine.Random.Range(0.5f, 6), SpeedType.Absolute), new Spore());
+						}
+					}
+						
+					base.OnBulletDestruction(destroyType, hitRigidbody, preventSpawningProjectiles);
+				}
+				private float Power;
+				private float NegativePower;
+
+				private bool reverse;
+				private int Delay;
+				private string bullettype;
+			}
+
+			public class Big : Bullet
+			{
+				public Big() : base(StaticUndodgeableBulletEntries.undodgeableBigBullet.Name, false, false, false)
+				{
+
+				}
+				protected override IEnumerator Top()
+				{
+					base.ChangeSpeed(new Speed(18f, SpeedType.Absolute), 75);
+					yield return this.Wait(480);
+					base.Vanish(false);
+					yield break;
+				}
+			}
+
+			public class Spore : Bullet
+			{
+				public Spore() : base("undodgeableSpore", false, false, false)
+				{
+
+				}
+				protected override IEnumerator Top()
+				{
+					base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 60);
+					yield return this.Wait(480);
+					base.Vanish(false);
+					yield break;
+				}
+			}
+			
 		}
 
 		public class TelegraphScript : Script 

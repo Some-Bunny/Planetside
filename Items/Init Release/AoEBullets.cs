@@ -133,14 +133,15 @@ namespace Planetside
 			player.PostProcessProjectile -= this.PostProcessProjectile;
 			return result;
 		}
-			protected override void OnDestroy()
+		protected override void OnDestroy()
+		{
+			if (Owner != null)
 			{
-				if (Owner != null)
-				{
-					base.Owner.PostProcessProjectile -= this.PostProcessProjectile;
-				}
-				base.OnDestroy();
+				base.Owner.PostProcessProjectile -= this.PostProcessProjectile;
 			}
+			base.OnDestroy();
+		}
+
 		public override void Pickup(PlayerController player)
 		{
 			base.Pickup(player);

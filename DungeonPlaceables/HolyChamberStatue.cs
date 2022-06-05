@@ -68,7 +68,6 @@ namespace Planetside
                     IntVector2 bestRewardLocation = GameManager.Instance.BestActivePlayer.CurrentRoom.GetBestRewardLocation(IntVector2.One * 3, RoomHandler.RewardLocationStyle.PlayerCenter, true);
                     AIActor aiactor = AIActor.Spawn(orLoadByGuid.aiActor, bestRewardLocation, GameManager.Instance.BestActivePlayer.CurrentRoom, true, AIActor.AwakenAnimationType.Spawn, true);
                     PhysicsEngine.Instance.RegisterOverlappingGhostCollisionExceptions(aiactor.specRigidbody, null, false);
-                    aiactor.gameObject.AddComponent<KillOnRoomClear>();
                     aiactor.IgnoreForRoomClear = true;
                     aiactor.HandleReinforcementFallIntoRoom(0f);
                 }
