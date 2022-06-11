@@ -9,6 +9,7 @@ namespace Planetside
     {
         public static void InitPlaceables()
         {
+            EmberPot.Init();
             TrespassLight.Init();
             TrespassLightBig.Init();
             TrespassPot.Init();
@@ -20,6 +21,7 @@ namespace Planetside
             BoxOfGrenades.Init();
             TrespassContainer.Init();
             TrespassDecals.Init();
+            TrespassCandle.Init();
         }
     }
 }

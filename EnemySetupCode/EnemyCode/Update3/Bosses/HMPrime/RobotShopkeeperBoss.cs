@@ -3032,7 +3032,7 @@ namespace Planetside
 						{
                             {
 								GameObject gameObject = SpawnManager.SpawnVFX(StaticVFXStorage.MachoBraceDustupVFX, false);
-								gameObject.transform.position = base.aiActor.transform.position + KeysAndValues.Key.ToVector3ZisY();
+								gameObject.transform.position = base.aiActor.transform.position + KeysAndValues.Key.ToVector3ZisY()- new Vector3(2.5f, 2.5f);
 								tk2dSpriteAnimator component2 = gameObject.GetComponent<tk2dSpriteAnimator>();
 								if (component2 != null)
 								{
@@ -3047,7 +3047,7 @@ namespace Planetside
 							}
 							{
 								GameObject gameObject = SpawnManager.SpawnVFX(StaticVFXStorage.MachoBraceDustupVFX, false);
-								gameObject.transform.position = base.aiActor.transform.position + KeysAndValues.Value.ToVector3ZisY();
+								gameObject.transform.position = base.aiActor.transform.position + KeysAndValues.Value.ToVector3ZisY() - new Vector3(2.5f, 2.5f);
 								tk2dSpriteAnimator component2 = gameObject.GetComponent<tk2dSpriteAnimator>();
 								if (component2 != null)
 								{

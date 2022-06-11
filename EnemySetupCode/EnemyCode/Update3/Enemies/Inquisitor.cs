@@ -118,16 +118,7 @@ namespace Planetside
 				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "laser", new string[] { "laser_right", "laser_left" }, new DirectionalAnimation.FlipType[2], DirectionalAnimation.DirectionType.TwoWayHorizontal);
 				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "unlaser", new string[] { "unlaser_right", "unlaser_left" }, new DirectionalAnimation.FlipType[2], DirectionalAnimation.DirectionType.TwoWayHorizontal);
 
-				/*
-					EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "death", new string[] { "death" }, new DirectionalAnimation.FlipType[0], DirectionalAnimation.DirectionType.Single);
-					EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "attack", new string[] { "attack" }, new DirectionalAnimation.FlipType[0], DirectionalAnimation.DirectionType.Single);
-					EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "chargeattack", new string[0], new DirectionalAnimation.FlipType[0], DirectionalAnimation.DirectionType.Single);
-					EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "chargespecialattack", new string[0], new DirectionalAnimation.FlipType[0], DirectionalAnimation.DirectionType.Single);
-					EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "attackspec", new string[0], new DirectionalAnimation.FlipType[0], DirectionalAnimation.DirectionType.Single);
-					EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awaken" }, new DirectionalAnimation.FlipType[1], DirectionalAnimation.DirectionType.Single);
-				*/
-
-
+			
 				AIActor actor = EnemyDatabase.GetOrLoadByGuid("4b992de5b4274168a8878ef9bf7ea36b");
 				BeholsterController beholsterbeam = actor.GetComponent<BeholsterController>();
 
@@ -262,9 +253,9 @@ namespace Planetside
 					BeamEndPathsTele, 8,
 					1,
 					true,
-					BeamAnimPathsDiss, 8,
-					BeamStartAnimPathsDiss, 8,
-					BeamEndAnimPathsDiss, 8,
+					BeamAnimPathsDiss, 9,
+					BeamStartAnimPathsDiss, 9,
+					BeamEndAnimPathsDiss, 9,
 					1
 					);
 
@@ -722,10 +713,6 @@ namespace Planetside
 				EnemyDatabase.GetEntry("psog:inquisitor").isNormalEnemy = true;
 
 
-				//companion.healthHaver.spawnBulletScript = true;
-				//companion.healthHaver.chanceToSpawnBulletScript = 1f;
-				//companion.healthHaver.bulletScriptType = HealthHaver.BulletScriptType.OnPreDeath;
-				//companion.healthHaver.bulletScript = new CustomBulletScriptSelector(typeof(EatPants));
 
 				companion.aiActor.sprite.usesOverrideMaterial = true;
 				Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);

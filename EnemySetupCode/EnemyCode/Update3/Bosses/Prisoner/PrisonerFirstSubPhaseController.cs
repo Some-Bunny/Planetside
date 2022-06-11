@@ -70,26 +70,51 @@ namespace Planetside
                 Destroy(gameObject, 2);
             }
             elaWait = 0f;
-            /*
+            
             GameManager.Instance.BestActivePlayer.CurrentRoom.BecomeTerrifyingDarkRoom(5f, 0.5f, 0.1f, "Play_ENM_darken_world_01");
            
             SpawnManager.SpawnBulletScript(Actor, Actor.sprite.WorldCenter, Actor.GetComponent<AIBulletBank>(), new CustomBulletScriptSelector(typeof(SubphaseOneAttack)), StringTableManager.GetEnemiesString("#PRISONERPHASEONENAME", -1));
+
+            GameObject partObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("Amogus"));
+            MeshRenderer rend = partObj.GetComponentInChildren<MeshRenderer>();
+
+            rend.allowOcclusionWhenDynamic = true;
+
+            partObj.transform.position = Actor.ParentRoom.GetCenterCell().ToVector3().WithZ(50);
+
+            partObj.name = "VoidHole";
+            partObj.transform.localScale = Vector3.zero;
+
+            VoidHoleController voidHoleController = partObj.AddComponent<VoidHoleController>();
+
+            voidHoleController.trueCenter = Actor.ParentRoom.GetCenterCell().ToCenterVector2();
+            voidHoleController.CanHurt = false;
+            voidHoleController.Radius = 30;
+            voidHoleController.ChangeHoleSize(0);
+
             while (elaWait < 3f)
             {
                 float t = elaWait / 3;
+                float throne1 = Mathf.Sin(t * (Mathf.PI / 2));
+                partObj.transform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one*6.25f, throne1);
                 Actor.renderer.material.SetFloat("_Fade", 1-t);
                 elaWait += BraveTime.DeltaTime;
                 yield return null;
             }
+            voidHoleController.CanHurt = true;
             Actor.SetOutlines(false);
             Actor.renderer.enabled = false;
             elaWait = 0f;
             while (elaWait < 30f)
             {
                 elaWait += BraveTime.DeltaTime;
+                float t = Mathf.Min((elaWait / 20), 1);
+                voidHoleController.Radius = Mathf.Lerp(28.5f, 8.75f, t);
+                partObj.transform.localScale = Vector3.Lerp(Vector3.one*6.25f, Vector3.one*2, t);
+
                 yield return null;
             }
-            */
+            voidHoleController.CanHurt = false;
             Actor.healthHaver.minimumHealth = Actor.healthHaver.GetMaxHealth() * 0.33f;
             GameManager.Instance.BestActivePlayer.CurrentRoom.EndTerrifyingDarkRoom(2.5f);
             ImprovedAfterImage yeah = Actor.gameObject.GetComponent<ImprovedAfterImage>();
@@ -106,12 +131,15 @@ namespace Planetside
             elaWait = 0f;
             while (elaWait < 3f)
             {
+
                 float t = elaWait / 3;
+                partObj.transform.localScale = Vector3.Lerp(Vector3.one*2f , Vector3.one * 20, t);
                 Actor.renderer.material.SetFloat("_Fade", t);
                 elaWait += BraveTime.DeltaTime;
                 Actor.renderer.enabled = true;
                 yield return null;
             }
+            Destroy(partObj);
             if (WasJammed == true)
             {
                 GameObject gameObject = SpawnManager.SpawnVFX(StaticVFXStorage.JammedDeathVFX, Actor.sprite.WorldBottomLeft, Quaternion.identity, false);
@@ -184,11 +212,8 @@ namespace Planetside
                     new WeightedInt(){additionalPrerequisites = new DungeonPrerequisite[0], annotation = "Attack4", value = 4, weight = 0f},
                 };
                 this.EndOnBlank = false;
-                if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
-                {
-                    base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableDefault);
-                    base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSniper);
-                }
+                base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableDefault);
+                base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSniper);
 
 
                 Vector2 TopRight = base.BulletBank.aiActor.GetAbsoluteParentRoom().area.UnitTopRight;
@@ -209,13 +234,14 @@ namespace Planetside
 						{TopRight, "right" },//Right wall
 					};
                 Vector2 spawnPos = base.BulletBank.aiActor.ParentRoom.GetCenterCell().ToCenterVector2();
-                StartTask(ContinuallySpawnRings());
+                //StartTask(ContinuallySpawnRings());
                 yield return base.Wait(180);
                 int i = 0;
                 for (; ; )
                 {
                     if (SubPhaseEnded == true) { this.Destroyed = true; yield break; }
 
+                    
                     if (i % 80 == 1)
                     {
                         bool LeftOrRight = (UnityEngine.Random.value > 0.5f) ? false : true;
@@ -226,6 +252,8 @@ namespace Planetside
                             base.Fire(Offset.OverridePosition(spawnPos), new Direction(0f, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SubphaseOneAttack.RotatedBulletBasic(RNGSPIN, 0, 0, "undodgeableDefault", this, (e * 30)+ OffsetF, 0.05f));
                         }
                     }
+                    
+
                     int Speed = 120;
                     if (i % Speed == 1)
                     {

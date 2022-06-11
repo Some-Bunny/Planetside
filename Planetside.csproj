@@ -93,6 +93,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="APIs\ChallengeAPI\ChallengeBuilder.cs" />
+    <Compile Include="APIs\ChallengeAPI\ChallengeTools.cs" />
+    <Compile Include="APIs\ChallengeAPI\dfLanguageExtraStringHolder.cs" />
+    <Compile Include="APIs\ChallengeAPI\FakePrefabHandler.cs" />
+    <Compile Include="APIs\ChallengeAPI\ResourceGetter.cs" />
     <Compile Include="APIs\ChamberGunAPI.cs" />
     <Compile Include="APIs\GungeonAPI\DungeonRoomFactory.cs" />
     <Compile Include="APIs\LootTableAPI\CustomLootTableInitialiser.cs" />
@@ -117,7 +122,9 @@
     <Compile Include="Components\Other Components\TrespassPortalController.cs" />
     <Compile Include="Components\Projectile Components\MirrorProjectileController.cs" />
     <Compile Include="Components\Projectile Components\RecursionPreventer.cs" />
+    <Compile Include="Components\Projectile Components\sadsda.cs" />
     <Compile Include="Components\Projectile Components\StickyProjectileModifier.cs" />
+    <Compile Include="Controllers\ChallengeModeExtraChallenges.cs" />
     <Compile Include="Controllers\MasteryTraderSpawnController.cs" />
     <Compile Include="Controllers\PlanetsideCommands.cs" />
     <Compile Include="Controllers\PlanetsideBalanceChanges.cs" />
@@ -129,6 +136,7 @@
     <Compile Include="Controllers\HMPrimeSpawnController.cs" />
     <Compile Include="Controllers\ContainmentBreachController.cs" />
     <Compile Include="Controllers\TimeTraderSpawnController.cs" />
+    <Compile Include="Debuff Stuff\BrainHostDummyEffect.cs" />
     <Compile Include="Debuff Stuff\TarnishEffect.cs" />
     <Compile Include="DungeonGenStuff\ExpandTK2DDungeonAssembler.cs" />
     <Compile Include="DungeonPlaceables\BreakableAPI.cs" />
@@ -136,6 +144,7 @@
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassContainer.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassFadingBlocker.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassDecals.cs" />
+    <Compile Include="DungeonPlaceables\TrespassObjects\TrespassCandle.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TutorialNotes.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassPots.cs" />
     <Compile Include="DungeonPlaceables\HolyChamberStatue.cs" />
@@ -147,11 +156,13 @@
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassLight.cs" />
     <Compile Include="DungeonPlaceables\TrespassPortalBack.cs" />
     <Compile Include="EnemySetupCode\EnemyAPI %28The one that modifies behaviors%29\OverrideBehavior.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\Update3\Enemies\Vessel.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\CortifyBullet.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\ShotzerBullet.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\Update3\Bosses\Prisoner\PrisonerSecondSubPhaseController.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\Update3\Bosses\Prisoner\PrisonerSubPhase3Attacks.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\Update3\Bosses\Prisoner\PrisonerSubPhase2Attacks.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\Update3\Bosses\Prisoner\VoidHoleController.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\Update3\Enemies\Inquisitor.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\Update3\Enemies\Stagnant.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\Update3\Enemies\Observant.cs" />
@@ -185,6 +196,8 @@
     <Compile Include="Hooks\ExplosionHooks.cs" />
     <Compile Include="Items\ItemClasses\MultiCompanionItem.cs" />
     <Compile Include="Items\Update4\GunClassToken.cs" />
+    <Compile Include="Items\Update4\TatteredRobe.cs" />
+    <Compile Include="Items\Update4\OrbOfPower.cs" />
     <Compile Include="Items\Update4\TarnishedAmmolet.cs" />
     <Compile Include="Items\Update4\TarnishedRounds.cs" />
     <Compile Include="Items\Update4\OrbitalInsertion.cs" />
@@ -2340,6 +2353,14 @@
     <EmbeddedResource Include="Resources\Shellrax\shellrax_fireeye_003.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\VFX\BrainHost\brainnerphehehoo1.png" />
+    <EmbeddedResource Include="Resources\VFX\BrainHost\brainnerphehehoo2.png" />
+    <EmbeddedResource Include="Resources\VFX\BrainHost\brainnerphehehoo3.png" />
+    <EmbeddedResource Include="Resources\VFX\BrainHost\brainnerphehehoo4.png" />
+    <EmbeddedResource Include="Resources\VFX\BrainHost\brainnerphehehoo5.png" />
+    <EmbeddedResource Include="Resources\VFX\BrainHost\brainnerphehehoo6.png" />
+    <EmbeddedResource Include="Resources\orbofpower.png" />
+    <EmbeddedResource Include="Resources\tatteredcloth.png" />
     <EmbeddedResource Include="Resources\tarnishedammolet.png" />
     <EmbeddedResource Include="Resources\tarnishedRounds.png" />
     <EmbeddedResource Include="Resources\VFX\Tarnish\TarnishEffect_idle_001.png" />
@@ -3635,6 +3656,57 @@
     <EmbeddedResource Include="Resources2\ProjectileTrails\Petrifier\petrifierstart_005.png" />
     <EmbeddedResource Include="Resources2\ProjectileTrails\Petrifier\petrifierstart_006.png" />
     <EmbeddedResource Include="Resources2\ProjectileTrails\Petrifier\petrifierstart_007.png" />
+    <EmbeddedResource Include="Resources\ChallengeModeIcons\leadStorm.png" />
+    <EmbeddedResource Include="Resources\ChallengeModeIcons\shamberWatchman.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\Candle\trespasscandle_idle_001.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\Candle\trespasscandle_idle_002.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\Candle\trespasscandle_idle_003.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\Candle\trespasscandle_idle_004.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\Candle\trespasscandle_idle_005.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\Candle\trespasscandle_idle_006.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\Candle\Debris\trespasscandle_debris_001.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\Candle\Debris\trespasscandle_debris_002.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\Candle\Debris\trespasscandle_debris_003.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\Candle\Debris\trespasscandle_debris_004.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\Candle\Debris\trespasscandle_debris_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\Vessel\host_die_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Vessel\host_die_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Vessel\host_die_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Vessel\host_die_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Vessel\host_die_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\Vessel\host_die_006.png" />
+    <EmbeddedResource Include="Resources\Enemies\Vessel\host_die_007.png" />
+    <EmbeddedResource Include="Resources\Enemies\Vessel\host_die_008.png" />
+    <EmbeddedResource Include="Resources\Enemies\Vessel\host_die_009.png" />
+    <EmbeddedResource Include="Resources\Enemies\Vessel\host_die_010.png" />
+    <EmbeddedResource Include="Resources\Enemies\Vessel\host_die_011.png" />
+    <EmbeddedResource Include="Resources\Enemies\Vessel\host_idle_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Vessel\host_idle_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Vessel\host_idle_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Vessel\host_idle_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Vessel\host_idle_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\Vessel\host_idle_006.png" />
+    <EmbeddedResource Include="Resources\Enemies\Vessel\host_idle_007.png" />
+    <EmbeddedResource Include="Resources\Enemies\Vessel\host_teleport_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Vessel\host_teleport_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Vessel\host_teleport_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Vessel\host_teleport_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Vessel\host_teleport_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\Vessel\host_teleport_006.png" />
+    <EmbeddedResource Include="Resources\Enemies\Vessel\host_teleport_007.png" />
+    <EmbeddedResource Include="Resources\Enemies\Vessel\host_teleport_008.png" />
+    <EmbeddedResource Include="Resources\Enemies\Vessel\host_awaken_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Vessel\host_awaken_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Vessel\host_awaken_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Vessel\host_awaken_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Vessel\host_awaken_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\Vessel\host_awaken_006.png" />
+    <EmbeddedResource Include="Resources\Enemies\Vessel\host_awaken_007.png" />
+    <EmbeddedResource Include="Resources\Enemies\Vessel\host_awaken_008.png" />
+    <EmbeddedResource Include="Resources\Enemies\Vessel\host_awaken_009.png" />
+    <EmbeddedResource Include="Resources\Enemies\Vessel\host_awaken_010.png" />
+    <EmbeddedResource Include="Resources\Enemies\Vessel\host_awaken_011.png" />
+    <EmbeddedResource Include="Resources\Ammocom\sheetvesselTrespass.png" />
     <Content Include="Resources\Shellrax\shellrax_intro_019.png" />
     <EmbeddedResource Include="Resources\VFX\LockOnVFX\lockonvfx1.png" />
     <EmbeddedResource Include="Resources\VFX\LockOnVFX\lockonvfx2.png" />
@@ -3731,6 +3803,17 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\AbyssRooms\AbyssEntry\AbyssEntranceRoom.room" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssEntry\TheDeepEntrance.room" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\TrespassRooms\TrespassDeeperRooms\TrespassInquisitorInvades.room" />
+    <EmbeddedResource Include="Resources\TrespassRooms\TrespassDeeperRooms\TrespassvesselRoom1.room" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\TrespassRooms\TrespassDeeperRooms\trespassvesselRoomytwoey.room" />
+    <EmbeddedResource Include="Resources\TrespassRooms\TrespassDeeperRooms\tresspassevilInqy.room" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

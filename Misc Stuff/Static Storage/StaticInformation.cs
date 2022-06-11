@@ -95,7 +95,19 @@ namespace Planetside
                 undodgeableSmallSporeVar.BulletObject = projectileSpore.gameObject;
                 undodgeableSmallSpore = undodgeableSmallSporeVar;
             }
-         
+
+            {
+                AIBulletBank.Entry undodgeableSmallSporeVar = StaticUndodgeableBulletEntries.CopyFields<AIBulletBank.Entry>(EnemyDatabase.GetOrLoadByGuid("f905765488874846b7ff257ff81d6d0c").bulletBank.GetBullet("spore1"));
+                undodgeableSmallSporeVar.Name = "undodgeableSporeLarge";
+                Projectile projectileSpore = UnityEngine.Object.Instantiate<GameObject>(undodgeableSmallSporeVar.BulletObject).GetComponent<Projectile>();
+                projectileSpore.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                projectileSpore.gameObject.SetActive(false);
+                FakePrefab.MarkAsFakePrefab(projectileSpore.gameObject);
+                UnityEngine.Object.DontDestroyOnLoad(projectileSpore);
+                undodgeableSmallSporeVar.BulletObject = projectileSpore.gameObject;
+                undodgeableLargeSpore = undodgeableSmallSporeVar;
+            }
+
             {
                 AIBulletBank.Entry undodgeableDefaultVar = StaticUndodgeableBulletEntries.CopyFields<AIBulletBank.Entry>(EnemyDatabase.GetOrLoadByGuid("01972dee89fc4404a5c408d50007dad5").bulletBank.GetBullet("default"));
                 undodgeableDefaultVar.Name = "undodgeableDefault";
@@ -225,6 +237,8 @@ namespace Planetside
         public static AIBulletBank.Entry undodgeableSniper;
         public static AIBulletBank.Entry undodgeableBig;
         public static AIBulletBank.Entry undodgeableSmallSpore;
+        public static AIBulletBank.Entry undodgeableLargeSpore;
+
         public static AIBulletBank.Entry undodgeableDefault;
         public static AIBulletBank.Entry undodgeableQuickHoming;
         public static AIBulletBank.Entry undodgeableIcicle;

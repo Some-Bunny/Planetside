@@ -97,6 +97,8 @@ namespace Planetside
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("463d16121f884984abe759de38418e48").bulletBank.GetBullet("link"));
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("463d16121f884984abe759de38418e48").bulletBank.GetBullet("ball"));
 				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSniper);
+				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableDefault);
+
 				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableChainLink);
 
 				Divider = 60;
@@ -306,7 +308,7 @@ namespace Planetside
 				base.PostWwiseEvent("Play_ENM_bulletking_skull_01", null);
 				for (int e = 0; e < 12; e++)
 				{
-					base.Fire(new Direction((30 * e), DirectionType.Aim, -1f), new Speed(1.6f, SpeedType.Absolute), new ChainRotatorsThree.BasicBullet());
+					base.Fire(new Direction((30 * e), DirectionType.Aim, -1f), new Speed(2f, SpeedType.Absolute), new ChainRotatorsThree.BasicBullet());
 				}
 			}
 
@@ -370,7 +372,7 @@ namespace Planetside
 			}
 			public class BasicBullet : Bullet
 			{
-				public BasicBullet(float SpeedIncrease = 7) : base(StaticUndodgeableBulletEntries.undodgeableSniper.Name, false, false, false)
+				public BasicBullet(float SpeedIncrease = 7) : base(StaticUndodgeableBulletEntries.undodgeableDefault.Name, false, false, false)
 				{
 					this.Inc = SpeedIncrease;
 				}
@@ -425,8 +427,8 @@ namespace Planetside
 				yield return this.Wait(60);
 				for (int e = 0; e < 5; e++)
 				{
-					float m = UnityEngine.Random.Range(20, 45);
-					for (int i = -2; i < 3; i++)
+					float m = UnityEngine.Random.Range(25, 45);
+					for (int i = -3; i < 4; i++)
 					{
 						ISDodgeAble = false;
 
@@ -449,12 +451,10 @@ namespace Planetside
 						component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f);
 						component2.sprite.renderer.material.SetColor("_OverrideColor", ISDodgeAble == false ? laser : laserRed);
 						component2.sprite.renderer.material.SetColor("_EmissiveColor", ISDodgeAble == false ? laser : laserRed);
-						GameManager.Instance.StartCoroutine(FlashReticles(component2, ISDodgeAble, Angle, Offset, this, ISDodgeAble == false ? "sniperUndodgeable" : "directedfire", ISDodgeAble == false ? 3 : 1));
+						GameManager.Instance.StartCoroutine(FlashReticles(component2, ISDodgeAble, Angle, Offset, this, ISDodgeAble == false ? "sniperUndodgeable" : "directedfire", ISDodgeAble == false ? 1 : 1, 3));
 						controller.extantReticles.Add(gameObject);
-
-
 					}
-					yield return this.Wait(50);
+					yield return this.Wait(40);
 				}
 
 
@@ -462,7 +462,7 @@ namespace Planetside
 				yield return this.Wait(60);
 				yield break;
 			}
-			private IEnumerator FlashReticles(tk2dTiledSprite tiledspriteObject, bool isDodgeAble, float Angle, float Offset, BasicLaserAttackTellThree parent, string BulletType, float bulletAmount = 6)
+			private IEnumerator FlashReticles(tk2dTiledSprite tiledspriteObject, bool isDodgeAble, float Angle, float Offset, BasicLaserAttackTellThree parent, string BulletType, float bulletAmount = 6, float speed = 12)
 			{
 				tk2dTiledSprite tiledsprite = tiledspriteObject.GetComponent<tk2dTiledSprite>();
 				float elapsed = 0;
@@ -530,7 +530,7 @@ namespace Planetside
 				}
 				for (int i = 0; i < bulletAmount; i++)
 				{
-					base.Fire(new Direction(Angle, DirectionType.Absolute, -1f), new Speed(12f + (i * 1.5f), SpeedType.Absolute), new WallBullet(BulletType));
+					base.Fire(new Direction(Angle, DirectionType.Absolute, -1f), new Speed(speed + (i * 1.5f), SpeedType.Absolute), new WallBullet(BulletType));
 
 				}
 				yield break;
@@ -935,19 +935,20 @@ namespace Planetside
 				Vector2 predictedPosition = BraveMathCollege.GetPredictedPosition(vector2, this.BulletManager.PlayerVelocity(), this.Position, 18f);
 				float CentreAngle = (predictedPosition - this.Position).ToAngle();
 				base.PostWwiseEvent("Play_BOSS_omegaBeam_charge_01");
-				base.BulletBank.aiActor.StartCoroutine(FlashReticles(CentreAngle - 180, 160, this));
-				base.BulletBank.aiActor.StartCoroutine(FlashReticles(CentreAngle - 180, -160, this));
+				base.BulletBank.aiActor.StartCoroutine(FlashReticles(CentreAngle - 180, 156, this));
+				base.BulletBank.aiActor.StartCoroutine(FlashReticles(CentreAngle - 180, -156, this));
 				for (int e = 0; e < 4; e++)
 				{
 					yield return this.Wait(30);
 					base.PostWwiseEvent("Play_BOSS_omegaBeam_charge_01");
-					base.BulletBank.aiActor.StartCoroutine(SwipeLaser(CentreAngle - 180, -160, this, 1.5f - (0.5f * e)));
-					base.BulletBank.aiActor.StartCoroutine(SwipeLaser(CentreAngle - 180, 160, this, 1.5f - (0.5f * e)));
+					base.BulletBank.aiActor.StartCoroutine(SwipeLaser(CentreAngle - 180, -156, this, 1.5f - (0.5f * e)));
+					base.BulletBank.aiActor.StartCoroutine(SwipeLaser(CentreAngle - 180, 156, this, 1.5f - (0.5f * e)));
 				}
 				for (int e = 0; e < 12; e++)
 				{
-					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(CentreAngle, this, 0.75f, 50));
-
+					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(CentreAngle, this, 0.75f, 4, -25));
+					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(CentreAngle, this, 0.75f, 4, 25));
+					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(CentreAngle, this, 0.75f, 4));
 					yield return this.Wait(40);
 				}
 				yield return this.Wait(30);
@@ -1223,7 +1224,7 @@ namespace Planetside
 				}
 				for (int e = 0; e < GameManager.Instance.AllPlayers.Length; e++)
 				{
-					float u = UnityEngine.Random.Range(30, 120);
+					float u = UnityEngine.Random.Range(15, 75);
 					float Dir = UnityEngine.Random.value > 0.5f ? 0 : 30f;
 					float M = UnityEngine.Random.value < 0.5f ? u : -u;
 					for (int i = 0; i < 12; i++)
@@ -1238,7 +1239,7 @@ namespace Planetside
 				{
 					for (int e = 0; e < GameManager.Instance.AllPlayers.Length; e++)
 					{
-						float u = UnityEngine.Random.Range(30, 120);
+						float u = UnityEngine.Random.Range(15, 75);
 						float Dir = UnityEngine.Random.Range(-180, 180);
 						float helpme = UnityEngine.Random.Range(180, -180);
 						float M = UnityEngine.Random.value < 0.5f ? u : -u;
@@ -1254,7 +1255,7 @@ namespace Planetside
 				yield return this.Wait(60);
 				for (int e = 0; e < GameManager.Instance.AllPlayers.Length; e++)
 				{
-					float u = UnityEngine.Random.Range(30, 120);
+					float u = UnityEngine.Random.Range(15, 75);
 					float Dir = UnityEngine.Random.value > 0.5f ? 0 : 30f;
 					float M = UnityEngine.Random.value < 0.5f ? u : -u;
 					for (int i = 0; i < 12; i++)

@@ -2504,10 +2504,12 @@ namespace Planetside
 			}
 			public void MoveTowardsCenterMethod(float Time)
 			{
+				TriggerForDash = false;
 				GameManager.Instance.StartCoroutine(this.MoveTowardsCenter(Time));
 			}
 			private IEnumerator MoveTowardsCenter(float Time)
 			{
+				TriggerForDash = true;
 				ImprovedAfterImage yeah = base.aiActor.gameObject.GetComponent<ImprovedAfterImage>();
 				yeah.spawnShadows = true;
 				IntVector2? intVector = base.aiActor.ParentRoom.GetCenterCell();
@@ -2516,6 +2518,7 @@ namespace Planetside
 				Vector3 pos = base.aiActor.transform.position;
 				while (elaWait < duraWait)
 				{
+					if (TriggerForDash == false) { yield break; }
 					float t = (float)elaWait / (float)duraWait;
 					float throne1 = Mathf.Sin(t * (Mathf.PI / 2));
 					Vector3 vector3 = Vector3.Lerp(pos, new Vector3(intVector.Value.X, intVector.Value.Y), throne1);
@@ -2527,7 +2530,7 @@ namespace Planetside
 				yeah.spawnShadows = false;
 				yield break;
 			}
-
+			private bool TriggerForDash;
 			public void MoveTowardsPositionMethod(float Time,float TileDistance ,float MinDistFromPlayer = 6, float MaxDistFromPlayer = 12)
             {
 				IsMoving = false;

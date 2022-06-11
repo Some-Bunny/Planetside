@@ -770,8 +770,8 @@ namespace Planetside
             dungeon.gameObject.name = "Base_Abyss";
             dungeon.contentSource = ContentSource.CONTENT_UPDATE_03;
             dungeon.DungeonSeed = 0;
-            dungeon.DungeonFloorName = "The Abyss."; // what shows up At the top when floor is loaded
-            dungeon.DungeonShortName = "Abyss."; // no clue lol, just make it the same
+            dungeon.DungeonFloorName = "The Deep."; // what shows up At the top when floor is loaded
+            dungeon.DungeonShortName = "Deep."; // no clue lol, just make it the same
             dungeon.DungeonFloorLevelTextOverride = "Gungeons Forgotten."; // what shows up below the floorname
             dungeon.LevelOverrideType = GameManager.LevelOverrideState.NONE;
             dungeon.debugSettings = new DebugDungeonSettings()

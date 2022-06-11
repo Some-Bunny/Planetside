@@ -49,6 +49,9 @@ namespace Planetside
         public void StartDeathSequence()
         {
             KillRing = true;
+            if (controllerOfTheVoid) { controllerOfTheVoid.CanHurt = false; }
+
+
             Pixelator.Instance.FadeToColor(1f, Color.cyan, true, 0.5f);
             AkSoundEngine.PostEvent("Stop_MUS_All", base.gameObject);
             AkSoundEngine.PostEvent("Play_BOSS_DragunGold_Crackle_01", Actor.gameObject);
@@ -70,9 +73,13 @@ namespace Planetside
             float elaWait = 0f;
             while (elaWait < 1f)
             {
+                if (controllerOfTheVoid) { controllerOfTheVoid.ChangeHoleSize(Mathf.Lerp(24, 50, elaWait)); }
+                if (controllerOfTheVoid) { controllerOfTheVoid.gameObject.transform.localScale = Vector3.Lerp(Vector3.one * 50, Vector3.one * 100, elaWait); }
+
                 elaWait += BraveTime.DeltaTime;
                 yield return null;
             }
+            if (controllerOfTheVoid) { Destroy(controllerOfTheVoid.gameObject, 0); }
             Controller.MoveTowardsCenterMethod(3f);
             AkSoundEngine.PostEvent("Play_PrisonerCough", base.gameObject);
             while (elaWait < 3f)
@@ -167,9 +174,45 @@ namespace Planetside
                 elaWait += BraveTime.DeltaTime;
                 yield return null;
             }
-            Destroy(portalObject);    
+            Destroy(portalObject);
+
+
+            SpawnReward(new IntVector2(0, 2), TatteredRobe.PrisonItemID);
+            if (TookDamage() == false) { SpawnReward(new IntVector2(0, 4), OrbOfPower.PrisonItemID); }
+
             yield break;
         }
+
+        public void SpawnReward(IntVector2 offset, int ID)
+        {
+            GameObject gameObject = GameManager.Instance.Dungeon.sharedSettingsPrefab.ChestsForBosses.SelectByWeight();
+            Chest chest = gameObject.GetComponent<Chest>();
+            if (chest != null)
+            {
+
+            }
+            else
+            {
+                DungeonData data = GameManager.Instance.Dungeon.data;
+                RewardPedestal component = gameObject.GetComponent<RewardPedestal>();
+                if (component)
+                {
+                    RewardPedestal rewardPedestal = RewardPedestal.Spawn(component, GameManager.Instance.PrimaryPlayer.CurrentRoom.GetCenteredVisibleClearSpot(2, 2) + offset);
+                    rewardPedestal.contents = PickupObjectDatabase.GetById(ID);
+
+                }
+            }
+        }
+
+        public bool TookDamage()
+        {
+            foreach (PlayerController player in GameManager.Instance.AllPlayers)
+            {
+                if (player.CurrentRoom.PlayerHasTakenDamageInThisRoom == true) { return true; }
+            }
+            return false;
+        }
+
 
         public bool HoleTriggered;
 
@@ -291,25 +334,47 @@ namespace Planetside
                 Destroy(gameObject, 2);
             }
             elaWait = 0f;
-            /*
-             GameManager.Instance.BestActivePlayer.CurrentRoom.BecomeTerrifyingDarkRoom(5f, 0.5f, 0.1f, "Play_ENM_darken_world_01");
+
+
+            GameObject partObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("Amogus"));
+            MeshRenderer rend = partObj.GetComponentInChildren<MeshRenderer>();
+            rend.allowOcclusionWhenDynamic = true;
+            partObj.transform.position = Actor.ParentRoom.GetCenterCell().ToVector3().WithZ(50);
+            partObj.name = "VoidHole";
+            partObj.transform.localScale = Vector3.zero;
+            VoidHoleController voidHoleController = partObj.AddComponent<VoidHoleController>();
+            voidHoleController.trueCenter = Actor.ParentRoom.GetCenterCell().ToCenterVector2();
+            voidHoleController.CanHurt = false;
+            voidHoleController.Radius = 30;
+
+            GameManager.Instance.BestActivePlayer.CurrentRoom.BecomeTerrifyingDarkRoom(5f, 0.5f, 0.1f, "Play_ENM_darken_world_01");
              while (elaWait < 3f)
              {
-                 float t = elaWait / 3;
-                 Actor.renderer.material.SetFloat("_Fade", 1-t);
-                 elaWait += BraveTime.DeltaTime;
+                float t = elaWait / 3;
+                float throne1 = Mathf.Sin(t * (Mathf.PI / 2));
+                partObj.transform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one * 6.25f, throne1);
+                Actor.renderer.material.SetFloat("_Fade", 1 - t);
+                elaWait += BraveTime.DeltaTime;
                  yield return null;
              }
-             SpawnManager.SpawnBulletScript(Actor, Actor.sprite.WorldCenter, Actor.GetComponent<AIBulletBank>(), new CustomBulletScriptSelector(typeof(SubphaseTwoAttack)), StringTableManager.GetEnemiesString("#PRISONERPHASEONENAME", -1));
+            voidHoleController.CanHurt = true;
+            SpawnManager.SpawnBulletScript(Actor, Actor.sprite.WorldCenter, Actor.GetComponent<AIBulletBank>(), new CustomBulletScriptSelector(typeof(SubphaseTwoAttack)), StringTableManager.GetEnemiesString("#PRISONERPHASEONENAME", -1));
              Actor.SetOutlines(false);
              Actor.renderer.enabled = false;
              elaWait = 0f;
              while (elaWait < 30f)
              {
                  elaWait += BraveTime.DeltaTime;
-                 yield return null;
+                float t = Mathf.Min((elaWait / 20), 1);
+                voidHoleController.Radius = Mathf.Lerp(28.5f, 8.75f, t);
+                partObj.transform.localScale = Vector3.Lerp(Vector3.one * 6.25f, Vector3.one * 2, t);
+                yield return null;
              }
-             */
+            voidHoleController.actorToFollow = Actor;
+            voidHoleController.trueCenter = Actor.sprite.WorldCenter;
+            controllerOfTheVoid = voidHoleController;
+            Actor.CollisionDamage = 0;
+
             SubPhaseEnded = true;
             GameManager.Instance.BestActivePlayer.CurrentRoom.EndTerrifyingDarkRoom(2.5f);
             ImprovedAfterImage yeah = Actor.gameObject.GetComponent<ImprovedAfterImage>();
@@ -331,7 +396,7 @@ namespace Planetside
                 Actor.renderer.enabled = true;
                 yield return null;
             }
-            SpawnManager.SpawnBulletScript(Actor, Actor.sprite.WorldCenter, Actor.GetComponent<AIBulletBank>(), new CustomBulletScriptSelector(typeof(A)), StringTableManager.GetEnemiesString("#PRISONERPHASEONENAME", -1));
+            //SpawnManager.SpawnBulletScript(Actor, Actor.sprite.WorldCenter, Actor.GetComponent<AIBulletBank>(), new CustomBulletScriptSelector(typeof(A)), StringTableManager.GetEnemiesString("#PRISONERPHASEONENAME", -1));
             if (WasJammed == true)
             {
                 GameObject gameObject = SpawnManager.SpawnVFX(StaticVFXStorage.JammedDeathVFX, Actor.sprite.WorldBottomLeft, Quaternion.identity, false);
@@ -356,7 +421,7 @@ namespace Planetside
         }
 
 
-
+        public VoidHoleController controllerOfTheVoid;
 
 
         private void ProcessAttackGroup(AttackBehaviorGroup attackGroup)
@@ -380,7 +445,7 @@ namespace Planetside
         private static Dictionary<string, float> AttackNamesAndProbabilities = new Dictionary<string, float>()
         {
             {"SimpleBlastsThree", 0.8f },
-            {"WallSweepThree", 1f },
+            {"WallSweepThree", 0f },
             {"LaserCrossThree", 2 },
             {"SweepJukeAttackThree", 0.9f },
             {"BasicLaserAttackTellThree", 1.2f },
@@ -490,7 +555,7 @@ namespace Planetside
                         base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableBig);
                         base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSniper);
                     }
-                    this.StartTask(ContinuallySpawnRings());
+                    //this.StartTask(ContinuallySpawnRings());
                     this.EndOnBlank = false;
                     this.StartTask(this.SpawnRingOfHell());
                     int e = 0;

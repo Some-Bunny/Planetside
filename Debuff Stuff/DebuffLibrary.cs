@@ -15,6 +15,21 @@ namespace Planetside
 
 		}
 
+		public static BrainHostDummyBuff BrainHostBuff = new BrainHostDummyBuff
+		{
+			effectIdentifier = "BrainHost",
+			AffectsEnemies = true,
+			resistanceType = EffectResistanceType.None,
+			duration = 1f,
+			AppliesTint = true,
+			AppliesDeathTint = true,
+			//PlaysVFXOnActor = true,
+			OverheadVFX = BrainHostDummyBuff.BrainHostVFX,
+			AffectsPlayers = false,
+			stackMode = GameActorEffect.EffectStackingMode.Refresh
+
+		};
+
 
 		public static TarnishEffect Corrosion = new TarnishEffect
 		{
@@ -30,7 +45,6 @@ namespace Planetside
 			OverheadVFX = TarnishEffect.TarnishVFXObject,
 			AffectsPlayers = false,
 			stackMode = GameActorEffect.EffectStackingMode.Refresh
-
 		};
 
 

@@ -40,7 +40,7 @@ namespace Planetside
             breakable.chanceToRain = 1;
             breakable.dropCoins = false;
             breakable.goopsOnBreak = true;
-            breakable.goopRadius = 1.33f;
+            breakable.goopRadius = 2.5f;
             breakable.goopType = EasyGoopDefinitions.FireDef;
             breakable.breakStyle = MinorBreakable.BreakStyle.BURST;
             string shardDefaultPath = "Planetside/Resources/DungeonObjects/EmberPot/";
@@ -76,12 +76,12 @@ namespace Planetside
                 emberDefPath+"embermedium_003.png",
             };
             GameObject poofVFX = (PickupObjectDatabase.GetById(336) as Gun).DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX;
-            DebrisObject smallEmber = BreakableAPIToolbox.GenerateAnimatedDebrisObject(emberSmallPaths, 6, tk2dSpriteAnimationClip.WrapMode.Loop, true, 0.5f, 3, 1080, 540, null, 0.7f, null, poofVFX, 0, true, EasyGoopDefinitions.FireDef, 0.7f);
-            DebrisObject tinyEmber = BreakableAPIToolbox.GenerateAnimatedDebrisObject(emberTinyPaths, 7, tk2dSpriteAnimationClip.WrapMode.Loop, true, 0.4f, 2, 1600, 800, null, 0.5f, null, poofVFX, 0, true, EasyGoopDefinitions.FireDef, 0.5f);
-            DebrisObject mediumEmber = BreakableAPIToolbox.GenerateAnimatedDebrisObject(emberMediumPaths, 5, tk2dSpriteAnimationClip.WrapMode.Loop, true, 0.5f, 3, 1080, 540, null, 0.7f, null, poofVFX, 0, true, EasyGoopDefinitions.FireDef, 0.9f);
-            DebrisObject smallEmberTwo = BreakableAPIToolbox.GenerateAnimatedDebrisObject(emberSmallPaths, 7, tk2dSpriteAnimationClip.WrapMode.Loop, true, 0.35f, 2.5f, 900, 450, null, 0.8f, null, poofVFX, 0, true, EasyGoopDefinitions.FireDef, 0.9f);
-            DebrisObject tinyEmberTwo = BreakableAPIToolbox.GenerateAnimatedDebrisObject(emberTinyPaths, 6, tk2dSpriteAnimationClip.WrapMode.Loop, true, 0.4f, 2, 1300, 650, null, 0.5f, null, poofVFX, 0, true, EasyGoopDefinitions.FireDef, 0.5f);
-            DebrisObject mediumEmberTwo = BreakableAPIToolbox.GenerateAnimatedDebrisObject(emberMediumPaths, 4, tk2dSpriteAnimationClip.WrapMode.Loop, true, 0.7f, 4, 1500, 600, null, 0.8f, null, poofVFX, 0, true, EasyGoopDefinitions.FireDef, 1f);
+            DebrisObject smallEmber = BreakableAPIToolbox.GenerateAnimatedDebrisObject(emberSmallPaths, 6, tk2dSpriteAnimationClip.WrapMode.Loop, true, 0.5f, 3, 1080, 540, null, 0.7f, null, poofVFX, 0, false,null, 0.7f);
+            DebrisObject tinyEmber = BreakableAPIToolbox.GenerateAnimatedDebrisObject(emberTinyPaths, 7, tk2dSpriteAnimationClip.WrapMode.Loop, true, 0.4f, 2, 1600, 800, null, 0.5f, null, poofVFX, 0, false, null, 0.5f);
+            DebrisObject mediumEmber = BreakableAPIToolbox.GenerateAnimatedDebrisObject(emberMediumPaths, 5, tk2dSpriteAnimationClip.WrapMode.Loop, true, 0.5f, 3, 1080, 540, null, 0.7f, null, poofVFX, 0, false, null, 0.9f);
+            DebrisObject smallEmberTwo = BreakableAPIToolbox.GenerateAnimatedDebrisObject(emberSmallPaths, 7, tk2dSpriteAnimationClip.WrapMode.Loop, true, 0.35f, 2.5f, 900, 450, null, 0.8f, null, poofVFX, 0, false, null, 0.9f);
+            DebrisObject tinyEmberTwo = BreakableAPIToolbox.GenerateAnimatedDebrisObject(emberTinyPaths, 6, tk2dSpriteAnimationClip.WrapMode.Loop, true, 0.4f, 2, 1300, 650, null, 0.5f, null, poofVFX, 0, false, null, 0.5f);
+            DebrisObject mediumEmberTwo = BreakableAPIToolbox.GenerateAnimatedDebrisObject(emberMediumPaths, 4, tk2dSpriteAnimationClip.WrapMode.Loop, true, 0.7f, 4, 1500, 600, null, 0.8f, null, poofVFX, 0, false, null, 1f);
             ShardCluster emberClusterOne = BreakableAPIToolbox.GenerateShardCluster(new DebrisObject[] { smallEmber, tinyEmber, mediumEmber, smallEmberTwo, tinyEmberTwo, mediumEmberTwo }, 1f, 1.5f, 4, 7, 0.8f);
             ShardCluster emberClusterTwo = BreakableAPIToolbox.GenerateShardCluster(new DebrisObject[] { smallEmber, tinyEmber, mediumEmber, smallEmberTwo, tinyEmberTwo, mediumEmberTwo }, 1f, 2f, 4, 7, 1f);
             ShardCluster emberClusterThree = BreakableAPIToolbox.GenerateShardCluster(new DebrisObject[] { smallEmber, tinyEmber, mediumEmber, smallEmberTwo, tinyEmberTwo, mediumEmberTwo }, 1f, 2.5f, 4, 7, 1.2f);
@@ -101,7 +101,7 @@ namespace Planetside
             breakable.MaxParticlesOnBurst = 10;
             breakable.MinParticlesOnBurst = 4;
 
-
+            /*
             string defaultTablePath = "Planetside/Resources/DungeonObjects/megaTable/";
             string[] outlinePaths = new string[]
             {
@@ -162,15 +162,15 @@ namespace Planetside
                 {25, defaultPath+"megatable_idlebreak_001.png"}
             };
             FlippableCover table = BreakableAPIToolbox.GenerateTable("Mega_Table", new string[] { defaultPath + "megatable_idle_001.png" }, outlinePaths, northFlipPaths, southFlipPaths, null, null, northBreakPaths, southBreakPaths, null, null, unflippedBreakPaths, 1, 10, 7, 7, true, 64, 30, 0, 8, 64, 5, 64, 5, FlippableCover.FlipStyle.ONLY_FLIPS_UP_DOWN, 300, null, north, south, null, null, aTwo, true, true, 1);
+            */
 
             Dictionary<GameObject, float> dict = new Dictionary<GameObject, float>()
             {
                 { breakable.gameObject, 0.5f },
-                { table.gameObject, 0.5f },
             };
 
             DungeonPlaceable placeable = BreakableAPIToolbox.GenerateDungeonPlaceable(dict);
-            StaticReferences.StoredDungeonPlaceables.Add("test", placeable);
+            StaticReferences.StoredDungeonPlaceables.Add("emberPot", placeable);
 
             //StaticReferences.StoredRoomObjects.Add("test", breakable.gameObject);
         }

@@ -39,9 +39,9 @@ public class ShamberController : BraveBehaviour
 		partObj.transform.parent = pso.transform;
 
 		particle = partObj.GetComponent<ParticleSystem>();
-
+		var h = particle.main;
+		h.simulationSpace = ParticleSystemSimulationSpace.World;
 		base.sprite.renderer.material = mat;
-		//CanSucc = true;
 		base.healthHaver.OnPreDeath += this.OnPreDeath;
 	}
 

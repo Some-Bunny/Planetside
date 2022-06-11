@@ -43,14 +43,15 @@ namespace Planetside
 		{
 			try
 			{
+				sourceProjectile.gameObject.AddComponent<MagnetBehaviour>();
 
-				TemplateMovementModule mod = new TemplateMovementModule();
+				//TemplateMovementModule mod = new TemplateMovementModule();
 				//mod.ForceInvert = (UnityEngine.Random.value > 0.5f) ? false : true;
-				sourceProjectile.OverrideMotionModule = mod;	
+				//sourceProjectile.OverrideMotionModule = mod;	
 
-				sourceProjectile.sprite.usesOverrideMaterial = true;
-				sourceProjectile.sprite.renderer.material.shader = Shader.Find("Brave/Internal/SimpleAlphaFadeUnlit");
-				sourceProjectile.sprite.renderer.material.SetFloat("_Fade", 0.2f);
+				//sourceProjectile.sprite.usesOverrideMaterial = true;
+				//sourceProjectile.sprite.renderer.material.shader = Shader.Find("Brave/Internal/SimpleAlphaFadeUnlit");
+				//sourceProjectile.sprite.renderer.material.SetFloat("_Fade", 0.2f);
 				//sourceProjectile.gameObject.AddComponent<TransShader>();
 
 

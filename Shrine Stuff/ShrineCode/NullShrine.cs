@@ -44,7 +44,6 @@ namespace Planetside
 
 				preRequisites = new DungeonPrerequisite[0],
 				ShrinePercentageChance = 0.15f,
-
 			};
 			aa.BuildWithoutBaseGameInterference();
 			SpriteBuilder.AddSpriteToCollection(spriteDefinition, SpriteBuilder.ammonomiconCollection);
@@ -158,7 +157,6 @@ namespace Planetside
 				bool flag2 = OtherTools.Randomizer(0.1f);
 				if (flag2)
 				{
-					//ETGModConsole.Log("ROOM CLEARED.", false);
 					IntVector2 bestRewardLocation2 = obj.CurrentRoom.GetBestRewardLocation(IntVector2.One * 3, RoomHandler.RewardLocationStyle.PlayerCenter, true);
 
 					LootEngine.SpawnItem(PickupObjectDatabase.GetById(NullPickupInteractable.NollahID).gameObject, bestRewardLocation2.ToVector3(), Vector2.up, 1f, true, true, false);

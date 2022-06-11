@@ -20,6 +20,8 @@ namespace Planetside
         {
             if (base.gameObject.GetComponent<Projectile>() != null)
             {
+                //base.gameObject.SetLayerRecursively
+                base.gameObject.GetComponent<Projectile>().gameObject.layer = 23;
                 //Proj.renderer.enabled = true;
                 base.gameObject.GetComponent<Projectile>().sprite.usesOverrideMaterial = true;
                 if (base.gameObject.GetComponent<Projectile>().spriteAnimator != null)

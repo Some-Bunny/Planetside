@@ -115,11 +115,19 @@ namespace Planetside
                             HighPriestClapVFX.effects = new VFXComplex[] {new VFXComplex() {effects = new VFXObject[] { myVFX } } };
 
                             VFXObject myVFX2 = StaticVFXStorage.CopyFields<VFXObject>(vFXObject);
-                            tk2dSprite sprite = myVFX2.effect.GetComponent<tk2dSprite>();
+                            GameObject yas=  FakePrefab.Clone(myVFX2.effect);
+                            myVFX2.effect = yas;
 
+                            tk2dSprite sprite = myVFX2.effect.GetComponent<tk2dSprite>();
                             sprite.usesOverrideMaterial = true;
-                            sprite.renderer.material.shader = PlanetsideModule.ModAssets.LoadAsset<Shader>("inverseglowshader");
-                            sprite.renderer.material.SetFloat("_EmissiveColorPower", 70);
+
+                            sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
+                            sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+                            sprite.renderer.material.SetFloat("_EmissivePower", 100);
+                            sprite.renderer.material.SetFloat("_EmissiveColorPower", 10f);
+                            sprite.renderer.material.SetColor("_OverrideColor", Color.cyan);
+                            sprite.renderer.material.SetColor("_EmissiveColor", Color.cyan);
+
                             HighPriestClapVFXInverse = new VFXPool();
                             HighPriestClapVFXInverse.type = VFXPoolType.Single;
                             HighPriestClapVFXInverse.effects = new VFXComplex[] { new VFXComplex() { effects = new VFXObject[] { myVFX2 } } };

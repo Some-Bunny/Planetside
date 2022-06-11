@@ -56,7 +56,7 @@ namespace Planetside
 				entryCopy.Name = "homingOuroboros";
 				entryCopy.MuzzleFlashEffects = new VFXPool { type = VFXPoolType.None, effects = new VFXComplex[0] };
 				entryCopy.BulletObject = projectile.gameObject;
-
+				entryCopy.SpawnShells = false;
 
 
 				AIBulletBank.Entry sewwpCopy = StaticUndodgeableBulletEntries.CopyFields<AIBulletBank.Entry>(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("sweep"));
@@ -97,6 +97,14 @@ namespace Planetside
 					   m.GetParameters().Length == 2 &&
 					   m.GetParameters()[1].ParameterType == typeof(ShopController)),
 				   typeof(OuroborosController).GetMethod("InitializeHook", BindingFlags.Static | BindingFlags.Public));
+
+
+				new Hook(typeof(Chest).GetMethod("Awake", BindingFlags.Instance | BindingFlags.NonPublic),
+					typeof(OuroborosController).GetMethod("ChestAwakeHook"));
+
+				chestPickupsLootTable = LootTableTools.CreateLootTable();
+				chestPickupsLootTable.AddItemsToPool(new Dictionary<int, float> { { 120, 1 }, {224, 0.8f }, {600, 0.5f}, {78, 0.75f } });
+
 				Debug.Log("Finished OuroborosController setup without failure!");
 			}
 			catch (Exception e)
@@ -109,12 +117,21 @@ namespace Planetside
 		private static List<Type> basicEliteTypes = new List<Type>();
 		private static List<Type> specialEliteTypes = new List<Type>();
 		private static List<Type> bossEliteTypes = new List<Type>();
-
+		private static GenericLootTable chestPickupsLootTable;
 
 
 		public static Dictionary<string, GameObject> eliteCrownKeys = new Dictionary<string, GameObject>();
 
 	
+		public static void ChestAwakeHook(Action<Chest> orig, Chest self)
+        {
+			orig(self);
+			if (self != null && OuroborosMode() == true)
+            {
+				if (UnityEngine.Random.value <= ChanceAccordingToGivenValues(0.01f, 0.5f, 100))
+				{self.lootTable.overrideItemLootTables.Add(chestPickupsLootTable);}
+			}
+		}
 
 		public static void InitializeHookBase(Action<ShopItemController, PickupObject, BaseShopController> orig, ShopItemController self, PickupObject i, BaseShopController shop)
         {

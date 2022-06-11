@@ -211,6 +211,7 @@ namespace Planetside
             HolyBlessingEffect.Init();
             HeatStrokeEffect.Init();
             TarnishEffect.Init();
+            BrainHostDummyBuff.Init();
 
             DebuffLibrary.Init();
 
@@ -246,7 +247,7 @@ namespace Planetside
             ChargerGun.Add();
             //FIX THIS SWORD TO NOT CAUSE MASSIVE EXCEPTIONS WITH EXPAND ON LOAD
             PlanetBlade.Add();
-            //TestShaderBullets.Init();
+            TestShaderBullets.Init();
             DerpyBullets.Init();
             PrayerAmulet.Init();
             LockOnGun.Add();
@@ -272,6 +273,8 @@ namespace Planetside
             StableVector.Init();
 
             ModifierNeedle.Init();
+            TatteredRobe.Init();
+            OrbOfPower.Init();
 
             Whistler.Add();
             ThunderShot.Add();
@@ -317,6 +320,7 @@ namespace Planetside
             Observant.Init();
             Stagnant.Init();
             Inquisitor.Init();
+            Vessel.Init();
 
             DeTurretRight.Init();
             DeTurretLeft.Init();
@@ -418,6 +422,7 @@ namespace Planetside
             ETGModMainBehaviour.Instance.gameObject.AddComponent<OuroborosController>();
             ETGModMainBehaviour.Instance.gameObject.AddComponent<CursesController>();
             ETGModMainBehaviour.Instance.gameObject.AddComponent<ContainmentBreachController>();
+            ETGModMainBehaviour.Instance.gameObject.AddComponent<ChallengeModeExtraChallenges>();
 
             PlanetsideQOL.Init();
             PlanetsideBalanceChanges.Init();

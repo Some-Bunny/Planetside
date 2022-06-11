@@ -92,6 +92,9 @@ namespace Planetside
 
 		public tk2dSprite CircleSprite;
 
+	
+		
+
 
 	}
 }

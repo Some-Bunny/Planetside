@@ -22,10 +22,10 @@ namespace Planetside
         public delegate T9 Func<T1, T2, T3, T4, T5, T6, T7, T8, T9>(T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8);
 
 
-        public static Mesh GetChunkMeshHook(Func<DeadlyDeadlyGoopManager ,Single, Single, Mesh> orig, DeadlyDeadlyGoopManager self, int x, int y)
+        public static Mesh GetChunkMeshHook(Func<DeadlyDeadlyGoopManager, Single, Single, Mesh> orig, DeadlyDeadlyGoopManager self, int x, int y)
         {
             GameObject gameObject = new GameObject(string.Format("goop_{0}_chunk_{1}_{2}", self.goopDefinition.name, x, y));
-            ETGModConsole.Log("Layer:"+gameObject.layer.ToString());
+            ETGModConsole.Log("Layer:" + gameObject.layer.ToString());
             ETGModConsole.Log("goopDepth:" + self.goopDepth.ToString());
             return orig(self, x, y);
         }
@@ -34,60 +34,16 @@ namespace Planetside
         {
             try
             {
-                //new Hook(typeof(DeadlyDeadlyGoopManager).GetMethod("GetChunkMesh", BindingFlags.Instance | BindingFlags.NonPublic), typeof(Hooks).GetMethod("GetChunkMeshHook"));
-
-                //new Hook(typeof(Exploder).GetMethod("HandleExplosion", BindingFlags.Instance | BindingFlags.NonPublic), typeof(Hooks).GetMethod("HandleExplosionHook"));
-
-                //new Hook(typeof(BabyDragunBurst1).GetMethod("Top", BindingFlags.Instance | BindingFlags.NonPublic), typeof(Hooks).GetMethod("TopHook"));
-
-
-                Hook uhohgun = new Hook(typeof(GameManager).GetMethod("DelayedQuickRestart", BindingFlags.Instance | BindingFlags.Public), typeof(Hooks).GetMethod("OnQuickRestart1"));
-
-
-                Hook breachshrinereloadhook = new Hook(typeof(Foyer).GetMethod("Awake", BindingFlags.Instance | BindingFlags.NonPublic), typeof(PlanetsideModule).GetMethod("ReloadBreachShrinesPSOG"));
-
-                //Hook OuroborousTrappedChests = new Hook(typeof(Chest).GetMethod("Open", BindingFlags.Instance | BindingFlags.NonPublic), typeof(Ouroborous).GetMethod("TrappedChest"));
-                //Hook OuroborousMimicGunScaler = new Hook(typeof(LootEngine).GetMethod("PostprocessGunSpawn", BindingFlags.Static | BindingFlags.NonPublic), typeof(Ouroborous).GetMethod("MimicGunScaler"));
-                //Hook OuroborousGunfairyScaler = new Hook(typeof(MinorBreakable).GetMethod("OnBreakAnimationComplete", BindingFlags.Instance | BindingFlags.NonPublic), typeof(Ouroborous).GetMethod("DoFairy"));
-                //Hook AngerTheGods = new Hook(typeof(PlayerController).GetMethod("DoSpinfallSpawn", BindingFlags.Instance | BindingFlags.Public), typeof(PlanetsideModule).GetMethod("RunStartHook"));
-
-                Hook GalaxyChestReward = new Hook(typeof(RoomHandler).GetMethod("HandleRoomClearReward", BindingFlags.Instance | BindingFlags.Public), typeof(Hooks).GetMethod("GalaxyChestReward"));
-
-                Hook GalaxyChestRoom = new Hook(typeof(Chest).GetMethod("Initialize", BindingFlags.Instance | BindingFlags.NonPublic), typeof(Hooks).GetMethod("GalaxyChestPls"));
-
-                Hook MACHOOOOOO = new Hook(typeof(PlayerController).GetMethod("OnDidDamage", BindingFlags.Instance | BindingFlags.Public), typeof(Hooks).GetMethod("DamageHook"));
-
-                //Hook LOTJ = new Hook(typeof(SuperReaperController).GetMethod("SpawnProjectiles", BindingFlags.Instance | BindingFlags.NonPublic), typeof(PlanetsideModule).GetMethod("SpawnProjectilesLOTJ"));
-
-                //Hook OuroborousReducedInvulnFrames = new Hook(typeof(HealthHaver).GetMethod("TriggerInvulnerabilityPeriod", BindingFlags.Instance | BindingFlags.Public), typeof(Ouroborous).GetMethod("ReducedIFrames"));
-                //Hook customEnemyChangesHook = new Hook(typeof(AIActor).GetMethod("Update", BindingFlags.Instance | BindingFlags.Public),typeof(Hooks).GetMethod("HandleCustomEnemyChanges"));
-                //Hook customEnemyChangesHook = new Hook(typeof(AIActor).GetMethod("Awake", BindingFlags.Instance | BindingFlags.Public),typeof(Hooks).GetMethod("HandleCustomEnemyChanges"));
-               // Hook Reard = new Hook(typeof(RoomHandler).GetMethod("HandleRoomClearReward", BindingFlags.Instance | BindingFlags.Public), typeof(Hooks).GetMethod("OuroborousRoomDrop"));
-                
-                //Hook TabelFlip = new Hook(typeof(FlippableCover).GetMethod("Interact", BindingFlags.Instance | BindingFlags.Public), typeof(Hooks).GetMethod("TableFlipOuroborous"));
-
-                //var StartHook = new Hook(
-                //typeof(BehaviorSpeculator).GetMethod("Start", BindingFlags.Instance | BindingFlags.NonPublic),
-                //typeof(Hooks).GetMethod("StartHookSB", BindingFlags.Static | BindingFlags.NonPublic));
-
-                /*
-                var HookToWriteLogToTxtFile2 = new Hook(typeof(AkSoundEngine).GetMethods().Single(
-                    m =>
-                        m.Name == "PostEvent" &&
-                        m.GetParameters().Length == 2 &&
-                        m.GetParameters()[0].ParameterType == typeof(string)),
-                    typeof(Hooks).GetMethod("PostEventHook", BindingFlags.Static | BindingFlags.Public));
-                */
-
-                //Hook helpme = new Hook(typeof(ResourcefulRatMazeSystemController).GetMethod("Update", BindingFlags.Instance | BindingFlags.NonPublic), typeof(Hooks).GetMethod("endme"));
-
-                //Hook streeteor = new Hook(typeof(PlayerController).GetMethod("HandlePlayerInput", BindingFlags.NonPublic | BindingFlags.Instance), typeof(Hooks).GetMethod("Hook_PlayerController_HandlePlayerInput"));
-
+                new Hook(typeof(GameManager).GetMethod("DelayedQuickRestart", BindingFlags.Instance | BindingFlags.Public), typeof(Hooks).GetMethod("OnQuickRestart1"));
+                new Hook(typeof(Foyer).GetMethod("Awake", BindingFlags.Instance | BindingFlags.NonPublic), typeof(PlanetsideModule).GetMethod("ReloadBreachShrinesPSOG"));
+                new Hook(typeof(RoomHandler).GetMethod("HandleRoomClearReward", BindingFlags.Instance | BindingFlags.Public), typeof(Hooks).GetMethod("GalaxyChestReward"));
+                new Hook(typeof(Chest).GetMethod("Initialize", BindingFlags.Instance | BindingFlags.NonPublic), typeof(Hooks).GetMethod("GalaxyChestPls"));
+                new Hook(typeof(PlayerController).GetMethod("OnDidDamage", BindingFlags.Instance | BindingFlags.Public), typeof(Hooks).GetMethod("DamageHook"));
                 Hook h = new Hook(
                     typeof(Projectile).GetMethod("OnPreCollision", BindingFlags.NonPublic | BindingFlags.Instance),
                     typeof(Hooks).GetMethod("PreCollisionHook")
                 );
-                
+
                 Hook h2 = new Hook(
                     typeof(Projectile).GetMethod("HandleDamage", BindingFlags.NonPublic | BindingFlags.Instance),
                     typeof(UndodgeableProjectile).GetMethod("HandleDamageHook", BindingFlags.NonPublic | BindingFlags.Static)
@@ -95,7 +51,9 @@ namespace Planetside
                 Hook ffasdafsdsf = new Hook(
                  typeof(PlayerController).GetMethod("HandleDodgedBeam", BindingFlags.Public | BindingFlags.Instance),
                  typeof(Hooks).GetMethod("HandleDodgedBeamHook", BindingFlags.Public | BindingFlags.Static)
-             );
+                );
+               // new Hook(typeof(AmmonomiconDeathPageController).GetMethod("InitializeLeftPage", BindingFlags.Instance | BindingFlags.NonPublic), typeof(Hooks).GetMethod("AmmoHook"));
+
 
             }
             catch (Exception e)
@@ -104,10 +62,15 @@ namespace Planetside
             }
         }
 
+
+        public static void AmmoHook(Action<AmmonomiconDeathPageController> orig, AmmonomiconDeathPageController self)
+        {
+            orig(self);
+        }
+
         public static void HandleDodgedBeamHook(Action<PlayerController ,BeamController> orig, PlayerController self, BeamController beam)
         {
             orig(self, beam);
-            ETGModConsole.Log("1");
             if (beam.projectile.GetComponent<MarkForUndodgeAbleBeam>() != null && !self.IsEthereal)
             {
                 HealthHaver healthHaver = self.healthHaver;
@@ -116,28 +79,30 @@ namespace Planetside
                 {
                     damage *= beam.projectile.BlackPhantomDamageMultiplier;
                 }
-                ETGModConsole.Log("2");
                 Vector2 velocity = self.specRigidbody.Velocity;
                 string ownerName = beam.projectile.OwnerName;
                 CoreDamageTypes coreDamageTypes = beam.projectile.damageTypes;
                 DamageCategory damageCategory = (!beam.projectile.IsBlackBullet) ? DamageCategory.Normal : DamageCategory.BlackBullet;
-                AkSoundEngine.PostEvent("Play_OBJ_key_impact_01", self.gameObject);
-                GameObject vfx = UnityEngine.Object.Instantiate<GameObject>((PickupObjectDatabase.GetById(228) as Gun).DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX);
-                tk2dBaseSprite component = vfx.GetComponent<tk2dBaseSprite>();
-                component.PlaceAtPositionByAnchor(self.transform.position + new Vector3(0.375f, 0.375f), tk2dBaseSprite.Anchor.MiddleCenter);
-                component.HeightOffGround = 35f;
-                component.UpdateZDepth();
-                tk2dSpriteAnimator component2 = component.GetComponent<tk2dSpriteAnimator>();
-                if (component2 != null)
+                if (PlanetsideReflectionHelper.ReflectGetField<bool>(typeof(HealthHaver), "vulnerable", self.healthHaver) == true && self.healthHaver.spriteAnimator.QueryInvulnerabilityFrame())
                 {
-                    component2.ignoreTimeScale = true;
-                    component2.AlwaysIgnoreTimeScale = true;
-                    component2.AnimateDuringBossIntros = true;
-                    component2.alwaysUpdateOffscreen = true;
-                    component2.playAutomatically = true;
+
+                    AkSoundEngine.PostEvent("Play_OBJ_key_impact_01", self.gameObject);
+                    GameObject vfx = UnityEngine.Object.Instantiate<GameObject>((PickupObjectDatabase.GetById(228) as Gun).DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX);
+                    tk2dBaseSprite component = vfx.GetComponent<tk2dBaseSprite>();
+                    component.PlaceAtPositionByAnchor(self.transform.position + new Vector3(0.375f, 0.375f), tk2dBaseSprite.Anchor.MiddleCenter);
+                    component.HeightOffGround = 35f;
+                    component.UpdateZDepth();
+                    tk2dSpriteAnimator component2 = component.GetComponent<tk2dSpriteAnimator>();
+                    if (component2 != null)
+                    {
+                        component2.ignoreTimeScale = true;
+                        component2.AlwaysIgnoreTimeScale = true;
+                        component2.AnimateDuringBossIntros = true;
+                        component2.alwaysUpdateOffscreen = true;
+                        component2.playAutomatically = true;
+                    }
                 }
                 healthHaver.ApplyDamage(damage, velocity, ownerName, coreDamageTypes, damageCategory, true, null, beam.projectile.ignoreDamageCaps);
-                ETGModConsole.Log("3");
             }
         }
 
