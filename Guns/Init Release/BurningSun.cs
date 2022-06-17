@@ -112,10 +112,21 @@ namespace Planetside
 			trail.BaseColor = new Color(5f, 1f, 0f, 2f);
 			trail.EndColor = new Color(5f, 1f, 1f, 0f);
 			*/
+
+			/*
+			foreach (ProjectileModule.ChargeProjectile chargeProj in (PickupObjectDatabase.GetById(390) as Gun).DefaultModule.chargeProjectiles)
+			{
+				gun.DefaultModule.chargeProjectiles.Add(new ProjectileModule.ChargeProjectile
+				{
+					VfxPool = chargeProj.VfxPool
+				});
+			}
+			*/
 			ProjectileModule.ChargeProjectile item2 = new ProjectileModule.ChargeProjectile
 			{
 				Projectile = projectile2,
-				ChargeTime = 2.2f
+				ChargeTime = 2.2f,
+				
 			};
 			gun.DefaultModule.chargeProjectiles = new List<ProjectileModule.ChargeProjectile>
 			{
@@ -162,11 +173,7 @@ namespace Planetside
 			}
 		}
 
-		public override void PostProcessProjectile(Projectile projectile)
-		{
-
-
-		}
+		
         protected void Update()
 		{
 			if (gun.CurrentOwner)

@@ -55,10 +55,12 @@ namespace Planetside
             gun.DefaultModule.projectiles[0] = projectile;
             projectile.baseData.damage *= 0f;
             projectile.transform.parent = gun.barrelOffset;
-            projectile.baseData.range *= 0000000000000000000000001f;
+            projectile.baseData.range *= 0;
             projectile.sprite.renderer.enabled = false;
             projectile.hitEffects.suppressMidairDeathVfx = true;
-            projectile.AdditionalScaleMultiplier = .0005f;
+            projectile.AdditionalScaleMultiplier *= 0f;
+
+
             gun.gunClass = GunClass.NONE;
 
             ETGMod.Databases.Items.Add(gun, null, "ANY");
@@ -76,20 +78,15 @@ namespace Planetside
 
         protected void Update()
         {
-            PlayerController player = gun.CurrentOwner as PlayerController;
             if (gun.CurrentOwner)
             {
-                if (gun.CurrentOwner)
+                if (!gun.PreventNormalFireAudio)
                 {
-
-                    if (!gun.PreventNormalFireAudio)
-                    {
-                        this.gun.PreventNormalFireAudio = true;
-                    }
-                    if (!gun.IsReloading && !HasReloaded)
-                    {
-                        this.HasReloaded = true;
-                    }
+                    this.gun.PreventNormalFireAudio = true;
+                }
+                if (!gun.IsReloading && !HasReloaded)
+                {
+                    this.HasReloaded = true;
                 }
             }
         }

@@ -87,11 +87,5 @@ namespace Planetside
 				base.OnReloadPressed(player, gun, bSOMETHING);
 			}
 		}
-		public override void PostProcessProjectile(Projectile projectile)
-		{
-		}
-		
-		public GameObject ChainLightningVFX;
-		public GameObject ChainLightningDispersalParticles;
 	}
 }

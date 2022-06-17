@@ -176,14 +176,14 @@ namespace Planetside
 				for (int i = 0; i < 60; i++)
 				{
 					float t = (float)i / (float)60;
-					this.TurnSpeed = Mathf.SmoothStep(20, 0, t) * turnSign;
+					this.TurnSpeed = Mathf.SmoothStep(20, -10, t) * turnSign;
 					yield return this.Wait(1);
 				}
 				FireQuickBurst();
 				for (int i = 0; i < 60; i++)
 				{
 					float t = (float)i / (float)60;
-					this.TurnSpeed = Mathf.SmoothStep(0, -20, t) * turnSign;
+					this.TurnSpeed = Mathf.SmoothStep(-10, -30, t) * turnSign;
 					yield return this.Wait(1);
 				}
 				for (int i = 0; i < 3; i++)
@@ -194,7 +194,7 @@ namespace Planetside
 				for (int i = 0; i < 60; i++)
 				{
 					float t = (float)i / (float)60;
-					this.TurnSpeed = Mathf.SmoothStep(-20, 0, t) * turnSign;
+					this.TurnSpeed = Mathf.SmoothStep(-30, 0, t) * turnSign;
 					yield return this.Wait(1);
 				}
 				base.PostWwiseEvent("Play_ENM_cannonball_eyes_01", null);
@@ -403,7 +403,7 @@ namespace Planetside
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("ffca09398635467da3b1f4a54bcfda80").bulletBank.GetBullet("directedfire"));
 				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSniper);
 				PrisonerPhaseOne.PrisonerController controller = base.BulletBank.aiActor.GetComponent<PrisonerPhaseOne.PrisonerController>();
-				controller.MoveTowardsPositionMethod(0.5f, 7);
+				controller.MoveTowardsPositionMethod(1f, 4);
 				for (int i = -4; i < 5; i++)
 				{
 					float OffsetPhase = 18;
@@ -968,11 +968,16 @@ namespace Planetside
 					base.BulletBank.aiActor.StartCoroutine(SwipeLaser(CentreAngle - 180, -168, this, 1.5f - (0.5f * e)));
 					base.BulletBank.aiActor.StartCoroutine(SwipeLaser(CentreAngle - 180, 168, this, 1.5f - (0.5f * e)));
 				}
-				for (int e = 0; e < 11; e++)
+				for (int e = 0; e < 9; e++)
 				{
-					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(CentreAngle, this, 0.625f));
-					yield return this.Wait(45);
+					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(CentreAngle, this, 0.75f));
+					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(CentreAngle, this, 0.75f, 15f));
+					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(CentreAngle, this, 0.75f, -15f));
+
+					yield return this.Wait(60);
 				}
+				yield return this.Wait(30);
+
 				yield break;
 			}
 
@@ -1099,6 +1104,10 @@ namespace Planetside
 
 				for (int e = 0; e < 25; e++)
 				{
+					if (parent.IsEnded || parent.Destroyed)
+					{
+						yield break;
+					}
 					for (int i = 0; i < 36; i++)
 					{
 						float t = (float)i / (float)36;
@@ -1110,7 +1119,7 @@ namespace Planetside
 				yield break;
 			}
 
-			private IEnumerator QuickscopeNoob(float Angle, SweepJukeAttackTwo parent, float delay = 0.25f)
+			private IEnumerator QuickscopeNoob(float Angle, SweepJukeAttackTwo parent, float delay = 0.25f, float Offset = 0)
 			{
 
 				GameObject gameObject = SpawnManager.SpawnVFX(RandomPiecesOfStuffToInitialise.LaserReticle, false);
@@ -1142,7 +1151,7 @@ namespace Planetside
 					if (component2 != null)
 					{
 
-						float Pos = (base.GetPredictedTargetPosition(0.6f, 34) - base.Position).ToAngle();
+						float Pos = ((base.GetPredictedTargetPosition(0.6f, 34) - base.Position).ToAngle()) + Offset;
 
 						component2.transform.position = new Vector3(this.Position.x, this.Position.y, 0);
 						component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (25 * t));
@@ -1153,7 +1162,7 @@ namespace Planetside
 						component2.dimensions = new Vector2(1000f, 1f);
 						component2.UpdateZDepth();
 
-						Angle = base.AimDirection;
+						Angle = Pos;
 					}
 					elapsed += BraveTime.DeltaTime;
 					yield return null;
@@ -1243,7 +1252,7 @@ namespace Planetside
 				controller.MoveTowardsPositionMethod(3f, 7);
 				for (int e = 0; e < GameManager.Instance.AllPlayers.Length; e++)
 				{
-					float u = UnityEngine.Random.Range(30, 120);
+					float u = UnityEngine.Random.Range(15, 90);
 					float Dir = UnityEngine.Random.value > 0.5f ? 0 : 30f;
 					float M = UnityEngine.Random.value < 0.5f ? u : -u;
 					for (int i = 0; i < 12; i++)
@@ -1256,7 +1265,7 @@ namespace Planetside
 				{
 					for (int e = 0; e < GameManager.Instance.AllPlayers.Length; e++)
 					{
-						float u = UnityEngine.Random.Range(30, 120);
+						float u = UnityEngine.Random.Range(15, 90);
 						float Dir = UnityEngine.Random.Range(-180, 180);
 						float helpme = UnityEngine.Random.Range(180, -180);
 						float M = UnityEngine.Random.value < 0.5f ? u : -u;

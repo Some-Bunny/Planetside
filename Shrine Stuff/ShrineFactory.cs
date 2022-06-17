@@ -197,6 +197,10 @@ namespace GungeonAPI
 				customShrineController.OnAccept = this.OnAccept;
 				customShrineController.OnDecline = this.OnDecline;
 				customShrineController.CanUse = this.CanUse;
+				customShrineController.text = this.text;
+				customShrineController.acceptText = this.acceptText;
+				customShrineController.declineText = this.declineText;
+
 				bool flag3 = this.interactableComponent != null;
 				bool flag4 = flag3;
 
@@ -587,10 +591,7 @@ namespace GungeonAPI
 
 			public void GetRidOfMinimapIcon()
 			{
-				bool flag = this.m_instanceMinimapIcon != null;
-				bool flag2 = flag;
-				bool flag3 = flag2;
-				if (flag3)
+				if (this.m_instanceMinimapIcon != null)
 				{
 					Minimap.Instance.DeregisterRoomIcon(this.m_parentRoom, this.m_instanceMinimapIcon);
 					this.m_instanceMinimapIcon = null;

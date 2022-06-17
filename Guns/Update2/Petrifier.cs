@@ -45,6 +45,8 @@ namespace Planetside
 				projectileModule.cooldownTime = 0.3f;
 				projectileModule.angleVariance = 19f;
 				projectileModule.numberOfShotsInClip = 2;
+				projectileModule.customAmmoType = (PickupObjectDatabase.GetById(81) as Gun).DefaultModule.customAmmoType;
+				projectileModule.ammoType = (PickupObjectDatabase.GetById(81) as Gun).DefaultModule.ammoType;
 
 
 				Projectile projectile = UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(86) as Gun).DefaultModule.projectiles[0]);

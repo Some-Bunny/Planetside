@@ -50,8 +50,6 @@ namespace Planetside
         {
             KillRing = true;
             if (controllerOfTheVoid) { controllerOfTheVoid.CanHurt = false; }
-
-
             Pixelator.Instance.FadeToColor(1f, Color.cyan, true, 0.5f);
             AkSoundEngine.PostEvent("Stop_MUS_All", base.gameObject);
             AkSoundEngine.PostEvent("Play_BOSS_DragunGold_Crackle_01", Actor.gameObject);
@@ -79,22 +77,24 @@ namespace Planetside
                 elaWait += BraveTime.DeltaTime;
                 yield return null;
             }
-            if (controllerOfTheVoid) { Destroy(controllerOfTheVoid.gameObject, 0); }
-            Controller.MoveTowardsCenterMethod(3f);
+            if (controllerOfTheVoid.gameObject) { Destroy(controllerOfTheVoid.gameObject, 0); }
+            Controller.MoveTowardsCenterMethod(2f);
             AkSoundEngine.PostEvent("Play_PrisonerCough", base.gameObject);
             while (elaWait < 3f)
             {
                 elaWait += BraveTime.DeltaTime;
                 yield return null;
             }
-            Actor.aiAnimator.PlayUntilFinished("chargelaser", true, null, -1f, false);
+            Actor.aiAnimator.PlayUntilFinished("chargedeath", true, null, -1f, false);
             elaWait = 0f;
             while (elaWait < 0.5f)
             {
                 elaWait += BraveTime.DeltaTime;
                 yield return null;
             }
-            Actor.aiAnimator.PlayUntilFinished("firelaser", true, null, -1f, false);
+            GameManager.Instance.StartCoroutine(fuck.DoReverseDistortionWaveLocal(Actor.transform.Find("OrbPoint").position, 10, 0.1f, 30, 2f));
+            StaticVFXStorage.HighPriestClapVFXInverse.SpawnAtPosition(Actor.transform.Find("OrbPoint").position);
+            Actor.aiAnimator.PlayUntilFinished("firedeath", true, null, -1f, false);
 
             GameObject portalObject = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("Portal"));
             portalObject.transform.position = Actor.sprite.WorldCenter;
@@ -678,7 +678,7 @@ namespace Planetside
                         this.Projectile.ForcePlayerBlankable = true;
                         this.Projectile.IgnoreTileCollisionsFor(6000f);
                         yield return this.Wait(60f);
-                        int time = 120;
+                        int time = 180;
                         int i = 0;
                         for (; ; )
                         {
@@ -688,6 +688,8 @@ namespace Planetside
                             }
                             if (i % time == 0 && parent.Center == false)
                             {
+                                if (time > 91) { time -= 10; }
+                                if (time < 90) { time = 90; }
                                 switch (attackWeights.SelectByWeight(new System.Random(UnityEngine.Random.Range(1, 100))))
                                 {
                                     case 1:

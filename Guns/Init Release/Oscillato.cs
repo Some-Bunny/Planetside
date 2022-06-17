@@ -71,7 +71,7 @@ namespace Planetside
 				"oscillato_projectile_007"
 			}, 13, true, new List<IntVector2> {
 				new IntVector2(7, 5), //1
-                new IntVector2(7, 5), //2            All frames are 13x16 except select ones that are 11-14
+                new IntVector2(7, 5), //2            
                 new IntVector2(7, 5), //3
                 new IntVector2(7, 5),//4
                 new IntVector2(7, 5),//5

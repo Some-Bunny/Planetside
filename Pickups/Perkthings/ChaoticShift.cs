@@ -16,7 +16,7 @@ namespace Planetside
         public void AddModule()
         {
             AmountOfModulesCurrently++;
-            Gun randomGun = PickupObjectDatabase.GetRandomGunOfQualities(new System.Random(UnityEngine.Random.Range(1, 1000)), BannedIDs, new PickupObject.ItemQuality[] { self.quality });
+            Gun randomGun = GetRandomGunOfQualitiesAndShootStyle(new System.Random(UnityEngine.Random.Range(1, 1000)), BannedIDs, self.DefaultModule.shootStyle, new PickupObject.ItemQuality[] { self.quality });
             BannedIDs.Add(randomGun.PickupObjectId);
             ProjectileVolleyData projectileVolleyData = CombineVolleys(self, randomGun);
             ReconfigureVolley(projectileVolleyData);
@@ -26,6 +26,47 @@ namespace Planetside
             self.OnPrePlayerChange();
             player.inventory.ChangeGun(0, false, false);
         }
+
+        public static Gun GetRandomGunOfQualitiesAndShootStyle(System.Random usedRandom, List<int> excludedIDs, ProjectileModule.ShootStyle shootStyle , params PickupObject.ItemQuality[] qualities )
+        {
+            List<Gun> list = new List<Gun>();
+            for (int i = 0; i < PickupObjectDatabase.Instance.Objects.Count; i++)
+            {
+                if (PickupObjectDatabase.Instance.Objects[i] != null && PickupObjectDatabase.Instance.Objects[i] is Gun)
+                {
+                    if (PickupObjectDatabase.Instance.Objects[i].quality != PickupObject.ItemQuality.EXCLUDED && PickupObjectDatabase.Instance.Objects[i].quality != PickupObject.ItemQuality.SPECIAL)
+                    {
+                        if (!(PickupObjectDatabase.Instance.Objects[i] is ContentTeaserGun))
+                        {
+                            if (Array.IndexOf<PickupObject.ItemQuality>(qualities, PickupObjectDatabase.Instance.Objects[i].quality) != -1)
+                            {
+                                if (!excludedIDs.Contains(PickupObjectDatabase.Instance.Objects[i].PickupObjectId))
+                                {
+                                    if (PickupObjectDatabase.Instance.Objects[i].PickupObjectId != GlobalItemIds.UnfinishedGun || !GameStatsManager.Instance.GetFlag(GungeonFlags.ITEMSPECIFIC_AMMONOMICON_COMPLETE))
+                                    {
+                                        EncounterTrackable component = PickupObjectDatabase.Instance.Objects[i].GetComponent<EncounterTrackable>();
+                                        if (component && component.PrerequisitesMet())
+                                        {
+                                            if ((PickupObjectDatabase.Instance.Objects[i] as Gun).DefaultModule.shootStyle == shootStyle)
+                                            {
+                                                list.Add(PickupObjectDatabase.Instance.Objects[i] as Gun);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            int num = usedRandom.Next(list.Count);
+            if (num < 0 || num >= list.Count)
+            {
+                return null;
+            }
+            return list[num];
+        }
+
         private List<int> BannedIDs = new List<int>();
         protected static void ReconfigureVolley(ProjectileVolleyData newVolley)
         {
@@ -220,11 +261,10 @@ namespace Planetside
         public override void Pickup(PlayerController player)
         {
             if (m_hasBeenPickedUp)
-                return;
-          
+                return;    
             m_hasBeenPickedUp = true;
             AkSoundEngine.PostEvent("Play_OBJ_dice_bless_01", player.gameObject);
-            OtherTools.ApplyStat(player, PlayerStats.StatType.Damage, 0.67f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+            OtherTools.ApplyStat(player, PlayerStats.StatType.Damage, 0.575f, StatModifier.ModifyMethod.MULTIPLICATIVE);
             PerkParticleSystemController cont = base.GetComponent<PerkParticleSystemController>();
             if (cont != null) { cont.DoBigBurst(player); }
             ChaoticShiftController chaos = player.gameObject.GetOrAddComponent<ChaoticShiftController>();

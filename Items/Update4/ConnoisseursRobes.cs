@@ -85,8 +85,6 @@ namespace Planetside
 
 		private void PostProcessBeamTick(BeamController beam, SpeculativeRigidbody hitRigidBody, float tickrate)
 		{
-			//BeamChainController chain = beam.gameObject.GetOrAddComponent<BeamChainController>();
-			//chain.beam = beam.GetComponent<BasicBeamController>();
 			float procChance = 0.4f; //Chance per second or some shit idk
 			GameActor gameActor = hitRigidBody.gameActor;
 			if (!gameActor)

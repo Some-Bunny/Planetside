@@ -25,22 +25,11 @@ namespace Planetside
             GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(35) as Gun, true, false);
             gun.SetBaseMaxAmmo(120);
 
-            //Riftaker.RiftTakerGun = gun;
-
             gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_WPN_energy_accent_01";
             gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].triggerEvent = true;
             gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.reloadAnimation).frames[2].eventAudio = "Play_WPN_plasmacell_reload_01";
             gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.reloadAnimation).frames[2].triggerEvent = true;
-            /*
-            gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[2].eventAudio = "Play_Heartbeat";
-            gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[2].triggerEvent = true;
-
-            gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.idleAnimation).frames[2].eventAudio = "Play_Heartbeat";
-            gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.idleAnimation).frames[2].triggerEvent = true;
-
-            gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.reloadAnimation).frames[3].eventAudio = "Play_Heartbeat";
-            gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.reloadAnimation).frames[3].triggerEvent = true;
-            */
+          
             gun.gunSwitchGroup = (PickupObjectDatabase.GetById(33) as Gun).gunSwitchGroup;
             gun.DefaultModule.ammoCost = 1;
             gun.DefaultModule.shootStyle = ProjectileModule.ShootStyle.Automatic;
@@ -121,7 +110,6 @@ namespace Planetside
 
         protected void Update()
         {
-            //Riftaker.AddRift();
             PlayerController player = gun.CurrentOwner as PlayerController;
             if (gun.CurrentOwner)
             {

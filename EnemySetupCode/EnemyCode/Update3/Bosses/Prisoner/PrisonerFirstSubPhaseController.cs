@@ -209,7 +209,7 @@ namespace Planetside
                     new WeightedInt(){additionalPrerequisites = new DungeonPrerequisite[0], annotation = "Attack1", value = 1, weight = 1},
                     new WeightedInt(){additionalPrerequisites = new DungeonPrerequisite[0], annotation = "Attack2", value = 2, weight = 0.9f},
                     new WeightedInt(){additionalPrerequisites = new DungeonPrerequisite[0], annotation = "Attack3", value = 3, weight = 0.7f},
-                    new WeightedInt(){additionalPrerequisites = new DungeonPrerequisite[0], annotation = "Attack4", value = 4, weight = 0f},
+                    new WeightedInt(){additionalPrerequisites = new DungeonPrerequisite[0], annotation = "Attack4", value = 4, weight = 0.5f},
                 };
                 this.EndOnBlank = false;
                 base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableDefault);
@@ -234,14 +234,12 @@ namespace Planetside
 						{TopRight, "right" },//Right wall
 					};
                 Vector2 spawnPos = base.BulletBank.aiActor.ParentRoom.GetCenterCell().ToCenterVector2();
-                //StartTask(ContinuallySpawnRings());
                 yield return base.Wait(180);
                 int i = 0;
+                int Speed = 180;
                 for (; ; )
                 {
-                    if (SubPhaseEnded == true) { this.Destroyed = true; yield break; }
-
-                    
+                    if (SubPhaseEnded == true) { this.Destroyed = true; yield break; }  
                     if (i % 80 == 1)
                     {
                         bool LeftOrRight = (UnityEngine.Random.value > 0.5f) ? false : true;
@@ -252,20 +250,19 @@ namespace Planetside
                             base.Fire(Offset.OverridePosition(spawnPos), new Direction(0f, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SubphaseOneAttack.RotatedBulletBasic(RNGSPIN, 0, 0, "undodgeableDefault", this, (e * 30)+ OffsetF, 0.05f));
                         }
                     }
-                    
-
-                    int Speed = 120;
                     if (i % Speed == 1)
                     {
-                        if (Speed > 31) { Speed -= 30; }
+                        if (Speed > 91)  {  Speed -= 10; }
+                        if (Speed < 90) { Speed = 90; }
+
                         switch (attackWeights.SelectByWeight(new System.Random(UnityEngine.Random.Range(1, 100))))
                         {
                             case 1:
-                                float Dir = UnityEngine.Random.value > 0.5f ? 0 : 22.5f;
+                                //float Dir = UnityEngine.Random.value > 0.5f ? 0 : 30f;
                                 float cu = UnityEngine.Random.Range(0, 30);
-                                for (int e = 0; e < 12; e++)
+                                for (int e = 0; e < 6; e++)
                                 {
-                                    GameManager.Instance.StartCoroutine(QuickReticleNoAngleChange(spawnPos, (30f * e) + cu, this, 0.625f, 18, 5));
+                                    GameManager.Instance.StartCoroutine(QuickReticleNoAngleChange(spawnPos, (60f * e) + cu, this, 0.625f, 12, 7));
                                 }
                                 yield return base.Wait(1);
                                 i++;
@@ -274,6 +271,9 @@ namespace Planetside
                                 for (int e = 0; e < GameManager.Instance.AllPlayers.Length; e++)
                                 {
                                     GameManager.Instance.StartCoroutine(QuickReticleRedirectTowardsPlayer(spawnPos, 0, this));
+                                    GameManager.Instance.StartCoroutine(QuickReticleRedirectTowardsPlayer(spawnPos, 0, this, 1f));
+                                    GameManager.Instance.StartCoroutine(QuickReticleRedirectTowardsPlayer(spawnPos, 0, this, 1.5f));
+
                                 }
                                 yield return base.Wait(1);
                                 i++;
@@ -284,16 +284,17 @@ namespace Planetside
                                     float Dir1 = UnityEngine.Random.value > 0.5f ? 0 : 45f;
                                     for (int q = 0; q < 4; q++)
                                     {
-                                        base.BulletBank.aiActor.StartCoroutine(QuickReticleNoAngleChange(GameManager.Instance.AllPlayers[e].transform.PositionVector2(), (90 * q) + Dir1, this, 0.75f, 25, 3));
+                                        base.BulletBank.aiActor.StartCoroutine(QuickReticleNoAngleChange(GameManager.Instance.AllPlayers[e].sprite.WorldCenter, (90 * q) + Dir1, this, 0.75f, 25, 3));
                                     }
                                 }
                                 yield return base.Wait(1);
                                 i++;
                                 break;
                             case 4:
+                                float h = UnityEngine.Random.Range(0, 30);
                                 for (int e = 0; e < 12; e++)
                                 {
-                                    GameManager.Instance.StartCoroutine(QuickReticleNoAngleChange(spawnPos, (30f * e) + UnityEngine.Random.Range(0, 30), this, 1f, 18, 5));
+                                    GameManager.Instance.StartCoroutine(QuickReticleNoAngleChange(spawnPos, (30f * e) +h, this, 1f, 18, 5));
                                 }
                                 yield return base.Wait(1);
                                 i++;
@@ -430,7 +431,7 @@ namespace Planetside
             }
 
 
-            private IEnumerator QuickReticleRedirectTowardsPlayer(Vector2 attachPos,float Angle, SubphaseOneAttack parent)
+            private IEnumerator QuickReticleRedirectTowardsPlayer(Vector2 attachPos,float Angle, SubphaseOneAttack parent, float Delay = 0.5f)
             {
                 GameObject gameObject = SpawnManager.SpawnVFX(RandomPiecesOfStuffToInitialise.LaserReticle, false);
 
@@ -449,7 +450,7 @@ namespace Planetside
                 component2.sprite.renderer.material.SetColor("_OverrideColor", laser);
                 component2.sprite.renderer.material.SetColor("_EmissiveColor", laser);
                 float elapsed = 0;
-                float Time = 0.5f;
+                float Time = Delay;
                 while (elapsed < Time)
                 {
                     float t = (float)elapsed / (float)Time;

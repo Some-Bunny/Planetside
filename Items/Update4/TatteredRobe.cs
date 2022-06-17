@@ -32,22 +32,23 @@ namespace Planetside
 
 		public override void Pickup(PlayerController player)
 		{
-            player.OnDodgedProjectile += DodgedBullet;
-			base.Pickup(player);
-			if (!base.m_pickedUpThisRun)
+			player.OnDodgedProjectile += DodgedBullet;
+			if (!base.PickedUp)
             {
 				player.healthHaver.FullHeal();
+				player.PlayEffectOnActor(StaticVFXStorage.HealingSparklesVFX, new Vector3(0,0));
 				if (player.ForceZeroHealthState)
                 {player.healthHaver.Armor += 6;}
             }
+			base.Pickup(player);
 		}
 
-        protected override void Update()
+		protected override void Update()
         {
             base.Update();
 			if (base.Owner)
             {
-				if (RolledCount == 50 && IsDoingTheWacky == false)
+				if (RolledCount > 35 && IsDoingTheWacky == false)
 				{
 					StaticVFXStorage.HighPriestClapVFXInverse.SpawnAtPosition(base.Owner.sprite.WorldCenter, 0);
 					IsDoingTheWacky = true;
@@ -67,6 +68,7 @@ namespace Planetside
 			rend.allowOcclusionWhenDynamic = true;
 			partObj.transform.position = spawnPos;
 			partObj.name = "VoidHole";
+			partObj.transform.localRotation = Quaternion.Euler(0, 90, 90f);
 			partObj.transform.localScale = Vector3.zero;
 			List<AIActor> activeEnemies = base.Owner.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
 
@@ -84,7 +86,9 @@ namespace Planetside
 					}
 				}
 			}
-
+			AkSoundEngine.PostEvent("Play_PortalOpen", base.Owner.gameObject);
+			AkSoundEngine.PostEvent("Play_BOSS_spacebaby_explode_01", base.Owner.gameObject);
+			elaWait = 0f;
 			while (elaWait < 2f)
 			{
 				float t = elaWait / 2;
@@ -94,18 +98,13 @@ namespace Planetside
 				yield return null;
 			}
 			Destroy(partObj);
-
-			
-
-		
-
-					IsDoingTheWacky = false;
+			IsDoingTheWacky = false;
 			yield break;
         }
 
         private void DodgedBullet(Projectile obj)
         {
-            if (!IsDoingTheWacky && !projectiles.Contains(obj)) { projectiles.Add(obj); RolledCount++; }
+            if (IsDoingTheWacky == false && !projectiles.Contains(obj)) { projectiles.Add(obj); RolledCount++; }
         }
 
 		public List<Projectile> projectiles = new List<Projectile>();

@@ -129,9 +129,7 @@ namespace Planetside
 		public static int SoulLanternID;
 
 		private bool HasReloaded;
-		public override void PostProcessProjectile(Projectile projectile)
-		{
-		}
+
 		public Texture _gradTexture;
 		
 

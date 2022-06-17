@@ -44,11 +44,11 @@ namespace Planetside
 				companion.aiActor.specRigidbody.CollideWithOthers = true;
 				companion.aiActor.specRigidbody.CollideWithTileMap = true;
 				companion.aiActor.PreventFallingInPitsEver = true;
-				companion.aiActor.healthHaver.ForceSetCurrentHealth(60f);
+				companion.aiActor.healthHaver.ForceSetCurrentHealth(55f);
 				companion.aiActor.CollisionKnockbackStrength = 0f;
 				companion.aiActor.procedurallyOutlined = true;
 				companion.aiActor.CanTargetPlayers = true;
-				companion.aiActor.healthHaver.SetHealthMaximum(60f, null, false);
+				companion.aiActor.healthHaver.SetHealthMaximum(55f, null, false);
 				EnemyToolbox.AddShadowToAIActor(companion.aiActor, StaticEnemyShadows.largeShadow, new Vector2(0.875f, 0.25f), "shadowPos");
 				companion.aiActor.SetIsFlying(true, "Gamemode: Creative", true, true);
 				companion.aiActor.PathableTiles = CellTypes.PIT | CellTypes.FLOOR;
@@ -63,10 +63,10 @@ namespace Planetside
 					BagleUseFirstFrameOnly = false,
 					SpecifyBagelFrame = string.Empty,
 					BagelColliderNumber = 0,
-					ManualOffsetX = 0,
-					ManualOffsetY = 0,
-					ManualWidth = 30,
-					ManualHeight = 52,
+					ManualOffsetX = 7,
+					ManualOffsetY = 4,
+					ManualWidth = 18,
+					ManualHeight = 44,
 					ManualDiameter = 0,
 					ManualLeftX = 0,
 					ManualLeftY = 0,
@@ -82,10 +82,10 @@ namespace Planetside
 					BagleUseFirstFrameOnly = false,
 					SpecifyBagelFrame = string.Empty,
 					BagelColliderNumber = 0,
-					ManualOffsetX = 0,
-					ManualOffsetY = 0,
-					ManualWidth = 22,
-					ManualHeight = 40,
+					ManualOffsetX = 7,
+					ManualOffsetY = 4,
+					ManualWidth = 18,
+					ManualHeight = 44,
 					ManualDiameter = 0,
 					ManualLeftX = 0,
 					ManualLeftY = 0,
@@ -593,7 +593,7 @@ namespace Planetside
 				base.aiActor.healthHaver.OnPreDeath += (obj) =>
 				{
 				  AkSoundEngine.PostEvent("Play_WPN_Life_Orb_Fade_01", base.aiActor.gameObject);
-					AkSoundEngine.PostEvent("Play_BOSS_mineflayer_belldrop_01", null);
+					//AkSoundEngine.PostEvent("Play_BOSS_mineflayer_belldrop_01", null);
 				};
 			}
 

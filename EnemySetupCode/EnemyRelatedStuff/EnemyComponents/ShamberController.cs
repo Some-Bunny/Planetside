@@ -85,28 +85,31 @@ public class ShamberController : BraveBehaviour
 
 	protected void Update()
 	{
-		if (CanSuckBullets() == true)
+		if (base.aiActor)
         {
-			ReadOnlyCollection<Projectile> allProjectiles = StaticReferenceManager.AllProjectiles;
-			if (allProjectiles != null && allProjectiles.Count >= 0 && base.gameObject != null)
+			if (CanSuckBullets() == true)
 			{
-				for (int i = 0; i < allProjectiles.Count; i++)
-                {
-					Projectile  proj = allProjectiles[i];
-					BeamController beamController = proj.GetComponent<BeamController>();
-					BasicBeamController basicBeamController = proj.GetComponent<BasicBeamController>();
-					bool isNotBeam = basicBeamController == null || beamController == null;
-					if (Vector2.Distance(proj.sprite.WorldCenter, base.sprite.WorldCenter) < 3f && proj != null && proj.specRigidbody != null && isNotBeam == true)
+				ReadOnlyCollection<Projectile> allProjectiles = StaticReferenceManager.AllProjectiles;
+				if (allProjectiles != null && allProjectiles.Count >= 0 && base.gameObject != null)
+				{
+					for (int i = 0; i < allProjectiles.Count; i++)
 					{
-						GameManager.Instance.Dungeon.StartCoroutine(this.HandleBulletSuck(proj));
+						Projectile proj = allProjectiles[i];
+						if (proj)
+                        {
+							BeamController beamController = proj.GetComponent<BeamController>();
+							BasicBeamController basicBeamController = proj.GetComponent<BasicBeamController>();
+							bool isNotBeam = basicBeamController == null || beamController == null;
+							if (Vector2.Distance(proj.sprite.WorldCenter, base.sprite.WorldCenter) < 3f && proj != null && proj.specRigidbody != null && isNotBeam == true)
+							{
+								GameManager.Instance.Dungeon.StartCoroutine(this.HandleBulletSuck(proj));
+							}
+						}				
 					}
 				}
 			}
-		}
+		}		
 	}
-
-
-	//public List<Projectile> activeBullets;
 	private IEnumerator HandleBulletSuck(Projectile target)
 	{
 		if (BulletsEaten <= 249)
@@ -150,7 +153,6 @@ public class ShamberController : BraveBehaviour
 		GameObject gameObject2 = new GameObject("image parent");
 		gameObject2.transform.position = tk2dSprite.WorldCenter;
 		tk2dSprite.transform.parent = gameObject2.transform;
-
 		return gameObject2.transform;
 	}
 

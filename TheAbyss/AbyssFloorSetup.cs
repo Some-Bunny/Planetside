@@ -802,14 +802,12 @@ namespace Planetside
             var deco = dungeon.decoSettings;
             deco.ambientLightColor = new Color(0, 0.3f, 0.9f);
             deco.generateLights = false;
-
+            
 
             if (gofuckyourself == null)
             {
                 gofuckyourself = RatDungeonPrefab.tileIndices.dungeonCollection;
             }
-
-
 
             dungeon.tileIndices = new TileIndices()
             {
@@ -933,8 +931,7 @@ namespace Planetside
             dungeon.PrefabsToAutoSpawn = new GameObject[0];
 
             //include this for custom floor audio
-            //dungeon.musicEventName = "play_sound"; 
-
+            dungeon.musicEventName = "Play_MUS_Ending_Pilot_01";
 
             CatacombsPrefab = null;
             RatDungeonPrefab = null;

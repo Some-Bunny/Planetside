@@ -10,11 +10,13 @@ using System.Linq;
 using Brave.BulletScript;
 using GungeonAPI;
 using SpriteBuilder = ItemAPI.SpriteBuilder;
-using DirectionType = DirectionalAnimation.DirectionType;
+//using DirectionType = DirectionalAnimation.DirectionType;
 using static DirectionalAnimation;
 using EnemyBulletBuilder;
 using Pathfinding;
 using SaveAPI;
+
+
 
 namespace Planetside
 {
@@ -58,7 +60,7 @@ namespace Planetside
 				AIAnimator aiAnimator = enemy.aiAnimator;
 
 				enemy.aiActor.knockbackDoer.weight = 35;
-				enemy.aiActor.MovementSpeed = 2.4f;
+				enemy.aiActor.MovementSpeed = 1.7f;
 				enemy.aiActor.healthHaver.PreventAllDamage = false;
 				enemy.aiActor.CollisionDamage = 1f;
 				enemy.aiActor.HasShadow = false;
@@ -67,11 +69,11 @@ namespace Planetside
 				enemy.aiActor.specRigidbody.CollideWithOthers = true;
 				enemy.aiActor.specRigidbody.CollideWithTileMap = true;
 				enemy.aiActor.PreventFallingInPitsEver = false;
-				enemy.aiActor.healthHaver.ForceSetCurrentHealth(1450f);
+				enemy.aiActor.healthHaver.ForceSetCurrentHealth(1200f);
 				enemy.aiActor.SetIsFlying(true, "Gamemode: Creative", true, true);
 				enemy.aiActor.CollisionKnockbackStrength = 10f;
 				enemy.aiActor.CanTargetPlayers = true;
-				enemy.aiActor.healthHaver.SetHealthMaximum(1450f, null, false);
+				enemy.aiActor.healthHaver.SetHealthMaximum(1200f, null, false);
 
 				aiAnimator.IdleAnimation = new DirectionalAnimation
 				{
@@ -825,7 +827,7 @@ namespace Planetside
 					},
 				new AttackBehaviorGroup.AttackGroupItem()
 						{
-						Probability = 1f,
+						Probability = 3f,
 						Behavior = new ShootBehavior()
 						{
 							TellAnimation = "charge1",
@@ -1417,7 +1419,7 @@ namespace Planetside
 					}
 				}
 			}
-			public static bool Phase2Check;
+			public bool Phase2Check;
 			private void CheckPlayerRoom()
 			{
 				if (GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() != null && GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() == m_StartRoom && GameManager.Instance.PrimaryPlayer.IsInCombat == true)
@@ -1546,8 +1548,7 @@ namespace Planetside
 			}
 			private IEnumerator unmatchedpowerofthesun()
 			{
-
-				
+			
 				Material targetMaterial = base.aiAnimator.sprite.renderer.material;
 				float ela = 0f;
 				float dura = 1f;
@@ -1598,11 +1599,13 @@ namespace Planetside
 						for (int j = 0; j < 3; j++)
                         {
 							base.Fire(new Direction(120*j + (i*2), Brave.BulletScript.DirectionType.Aim, -1f), new Speed(0, SpeedType.Absolute), new TheFlameThing.Flames1());
+							//base.Fire(new Direction(120 * j - (i * 2), Brave.BulletScript.DirectionType.Aim, -1f), new Speed(0, SpeedType.Absolute), new TheFlameThing.Flames1());
+
 						}
 						base.PostWwiseEvent("Play_BOSS_doormimic_flame_01", null);
 					}
 					float Amount = 60;
-					if (Ophanaim.EyeEnemyBehavior.Phase2Check == true)
+					if (base.BulletBank.aiActor.GetComponent<EyeEnemyBehavior>().Phase2Check == true)
 					{
 						Amount = 40;
 					}
@@ -1610,7 +1613,7 @@ namespace Planetside
 					if (i % Amount == 0)
 					{
 						float radius = 0.0166f;
-						if (Ophanaim.EyeEnemyBehavior.Phase2Check == true)
+						if (base.BulletBank.aiActor.GetComponent<EyeEnemyBehavior>().Phase2Check == true)
 						{
 							radius = 0.0233f;
 						}
@@ -1721,7 +1724,6 @@ namespace Planetside
 		//Attack For Special Beam Attack
 
 
-		//Attack that fires 5 sets of curvy bullets
 		public class FireCircles : Script
 		{
 			protected override IEnumerator Top()
@@ -1733,27 +1735,46 @@ namespace Planetside
 				base.EndOnBlank = true;
 
 				float floatDirection = base.AimDirection + UnityEngine.Random.Range(10f, -10f);
-				Vector2 floatVelocity = BraveMathCollege.DegreesToVector(floatDirection, 5f);
+				base.PostWwiseEvent("Play_BOSS_Rat_Kunai_Prep_01", null);
+				GameManager.Instance.StartCoroutine(fuck.DoReverseDistortionWaveLocal(base.Position + new Vector2(2.125f, -1.3125f), 10, 0.1f, 30, 0.666f));
+				yield return base.Wait(40f);
+
 				base.PostWwiseEvent("Play_BigSlam", null);
-				for (int j = 0; j < 20; j++)
-				{
-					this.Fire(new Offset(new Vector2(2.125f, -1.3125f)), new Direction(this.SubdivideCircle(0, 20, j, 1f, false), Brave.BulletScript.DirectionType.Aim, -1f), new Speed(5f, SpeedType.Absolute), new FireCircles.BurstBullet("frogger", floatVelocity));
+				for (int e = 0; e < 2; e++)
+                {
+					Vector2 floatVelocity = BraveMathCollege.DegreesToVector(floatDirection, 6f);
+					for (int j = 0; j < 10; j++)
+					{
+						this.Fire(new Offset(new Vector2(2.125f, -1.3125f)), new Direction(this.SubdivideCircle(0, 10, j, 1f, false), Brave.BulletScript.DirectionType.Aim, -1f), new Speed(3f + (e * 2), SpeedType.Absolute), new FireCircles.BurstBullet("frogger", floatVelocity));
+					}
 				}
-				yield return base.Wait(60f);
+				yield return base.Wait(20f);
+
+				base.PostWwiseEvent("Play_BOSS_Rat_Kunai_Prep_01", null);
+				GameManager.Instance.StartCoroutine(fuck.DoReverseDistortionWaveLocal(base.Position + new Vector2(-2.125f, -1.3125f), 10, 0.1f, 30, 0.666f));
+				yield return base.Wait(40f);
 				floatDirection = base.AimDirection + UnityEngine.Random.Range(10f, -10f);
 				base.PostWwiseEvent("Play_BigSlam", null);
-				for (int j = 0; j < 20; j++)
-				{
-					this.Fire(new Offset(new Vector2(-2.125f, -1.3125f)), new Direction(this.SubdivideCircle(0, 20, j, 1f, false), Brave.BulletScript.DirectionType.Aim, -1f), new Speed(5f, SpeedType.Absolute), new FireCircles.BurstBullet("frogger", floatVelocity));
+				for (int e = 0; e < 2; e++)
+                {
+					Vector2 floatVelocity = BraveMathCollege.DegreesToVector(floatDirection, 6);
+					for (int j = 0; j < 10; j++)
+					{
+						this.Fire(new Offset(new Vector2(-2.125f, -1.3125f)), new Direction(this.SubdivideCircle(0, 10, j, 1f, false), Brave.BulletScript.DirectionType.Aim, -1f), new Speed(3f + (e*2), SpeedType.Absolute), new FireCircles.BurstBullet("frogger", floatVelocity));
+					}
 				}
-				if (Ophanaim.EyeEnemyBehavior.Phase2Check == true)
+					
+				if (base.BulletBank.aiActor.GetComponent<EyeEnemyBehavior>().Phase2Check == true)
 				{
+					base.PostWwiseEvent("Play_BOSS_Rat_Kunai_Prep_01", null);
+					GameManager.Instance.StartCoroutine(fuck.DoReverseDistortionWaveLocal(base.Position + new Vector2(2.125f, -1.3125f), 10, 0.1f, 40, 1f));
 					yield return base.Wait(60f);
 					floatDirection = base.AimDirection + UnityEngine.Random.Range(10f, -10f);
 					base.PostWwiseEvent("Play_BigSlam", null);
-					for (int j = 0; j < 20; j++)
+					Vector2 floatVelocity = BraveMathCollege.DegreesToVector(floatDirection, 7f);
+					for (int j = 0; j < 30; j++)
 					{
-						this.Fire(new Direction(this.SubdivideCircle(0, 20, j, 1f, false), Brave.BulletScript.DirectionType.Aim, -1f), new Speed(4f, SpeedType.Absolute), new FireCircles.BurstBullet("frogger", floatVelocity));
+						this.Fire(new Direction(this.SubdivideCircle(0, 30, j, 1f, false), Brave.BulletScript.DirectionType.Aim, -1f), new Speed(4f, SpeedType.Absolute), new FireCircles.BurstBullet("frogger", floatVelocity));
 					}
 					yield return base.Wait(60f);
 				}
@@ -1801,7 +1822,6 @@ namespace Planetside
 					float spinSpeed = 0f;
 					for (int i = 0; i < 250; i++)
 					{
-						//speed += 0.00333f;
 						radius += speed / 60f;
 						if (yesToSpeenOneWay == true)
 						{
@@ -1856,127 +1876,42 @@ namespace Planetside
 		{
 			protected override IEnumerator Top()
 			{
+				yield return base.Wait(30);
 
-
-					
-					DeadlyDeadlyGoopManager.DelayedClearGoopsInRadius(base.BulletBank.aiActor.sprite.WorldCenter, 25);
-					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("frogger"));
-					base.EndOnBlank = true;
-					float startAngle = base.RandomAngle();
-					float delta = 12f;
-					float Amount = 30;
+				bool IsSXecondPhase = base.BulletBank.aiActor.GetComponent<EyeEnemyBehavior>().Phase2Check;
+				DeadlyDeadlyGoopManager.DelayedClearGoopsInRadius(base.BulletBank.aiActor.sprite.WorldCenter, 25);
+				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("frogger"));
+				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("41ee1c8538e8474a82a74c4aff99c712").bulletBank.GetBullet("big"));
+				base.EndOnBlank = true;
 
 				base.PostWwiseEvent("Play_BigSlam", null);
-					for (int A = 0; A < Amount; A++)
+				for (int A = 0; A < 12; A++)
+				{
+					float num = 30 * A;
+					base.Fire(new Direction(num, Brave.BulletScript.DirectionType.Aim, -1f), new Speed(5, SpeedType.Absolute), new BouncyCicleTheShoot.WaveBullet());
+					base.Fire(new Direction(num + 15, Brave.BulletScript.DirectionType.Aim, -1f), new Speed(4, SpeedType.Absolute), new BouncyCicleTheShoot.WaveBullet());
+					if (IsSXecondPhase == true)
 					{
-					float num = startAngle + (float)A * delta;
-
-					base.Fire(new Direction(num, Brave.BulletScript.DirectionType.Aim, -1f), new Speed(7, SpeedType.Absolute), new BouncyCicleTheShoot.WaveBullet());
-					if (Ophanaim.EyeEnemyBehavior.Phase2Check == true)
-                    {
-						base.Fire(new Direction(num, Brave.BulletScript.DirectionType.Aim, -1f), new Speed(3, SpeedType.Absolute), new BouncyCicleTheShoot.WaveBullet());
-
+						base.Fire(new Direction(num, Brave.BulletScript.DirectionType.Aim, -1f), new Speed(7, SpeedType.Absolute), new BouncyCicleTheShoot.WaveBullet());
 					}
 				}
 
 
-				//yield return base.Wait(1);
-				for (int A = 0; A < 20; A++)
-					{
-						base.PostWwiseEvent("Play_BOSS_doormimic_flame_01", null);
-						base.Fire(new Offset(new Vector2(-2.125f, -1.3125f)), new Direction(UnityEngine.Random.Range(-30, 30), Brave.BulletScript.DirectionType.Aim, -1f), new Speed(6, SpeedType.Absolute), new BouncyCicleTheShoot.Fard());
-						base.Fire(new Offset(new Vector2(2.125f, -1.3125f)), new Direction(UnityEngine.Random.Range(-30, 30), Brave.BulletScript.DirectionType.Aim, -1f), new Speed(6, SpeedType.Absolute), new BouncyCicleTheShoot.Fard());
-						yield return base.Wait(10);
-					}
-
-				startAngle = base.RandomAngle();
-
+				yield return base.Wait(60);
+				float Am = IsSXecondPhase == false ? 4 : 6;
+				float Wa = IsSXecondPhase == false ? 60 : 40;
+				for (int A = 0; A < Am; A++)
+                {
+					Vector2 vector2 = this.BulletManager.PlayerPosition();
+					Vector2 predictedPosition = BraveMathCollege.GetPredictedPosition(vector2, this.BulletManager.PlayerVelocity(), this.Position, 18f);
+					base.PostWwiseEvent("Play_ENM_kali_shockwave_01", null);
+					base.Fire(new Direction(0, Brave.BulletScript.DirectionType.Aim, -1f), new Speed(5, SpeedType.Absolute), new BouncyCicleTheShoot.Superball());
+					yield return base.Wait(Wa);
+				}
+				yield return base.Wait(90);
 				yield break;
 			}
-			public class Fard : Bullet
-			{
-				public Fard() : base("frogger", false, false, false)
-				{
 
-				}
-
-				protected override IEnumerator Top()
-				{
-					yield break;
-				}
-			}
-			public class Flames1 : Bullet
-			{
-				public Flames1() : base("frogger", false, false, false)
-				{
-
-				}
-				protected override IEnumerator Top()
-				{
-					yield break;
-				}
-			}
-
-			private class WaveBullet : Bullet
-			{
-				public WaveBullet() : base("frogger", false, false, false)
-				{
-				}
-
-				protected override IEnumerator Top()
-				{
-					base.ManualControl = true;
-					Vector2 truePosition = base.Position;
-					//float Amount = 1.66f;
-					for (int e = 0; e < 8; e++)
-					{
-						for (int i = 0; i < 75; i++)
-						{
-							base.UpdateVelocity();
-							truePosition += this.Velocity / 60f;
-							base.Position = truePosition + new Vector2(0f, Mathf.Sin((float)base.Tick / 60f / 0.75f * 3.14159274f) * 1.5f);
-							yield return base.Wait(1);
-						}
-					}
-					base.Vanish(false);
-					yield break;
-				}
-
-				private const float SinPeriod = 0.75f;
-				private const float SinMagnitude = 1.5f;
-			}
-		}
-		public class FireWalls : Script
-		{
-			private const int SpinTime = 450;
-			protected override IEnumerator Top()
-			{
-				float Amount = 8;
-				if (Ophanaim.EyeEnemyBehavior.Phase2Check == true)
-				{
-					Amount = 12;
-				}
-				for (int j = 0; j < Amount; j++)
-				{
-					base.PostWwiseEvent("Play_BOSS_doormimic_flame_01", null);
-					Exploder.DoDistortionWave(base.BulletBank.sprite.WorldCenter, 3, 0.02f, 15, 0.3f);
-					base.Fire(new Direction((UnityEngine.Random.Range(-180, 180)), Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(UnityEngine.Random.Range(9, 16), SpeedType.Absolute), new FireWalls.Superball());
-					yield return base.Wait(450 / Amount);
-				}
-				yield break;
-			}
-			public class Fard : Bullet
-			{
-				public Fard() : base("frogger", false, false, false)
-				{
-
-				}
-
-				protected override IEnumerator Top()
-				{
-					yield break;
-				}
-			}
 			public class Superball : Bullet
 			{
 				public Superball() : base("big", false, false, false)
@@ -1984,73 +1919,326 @@ namespace Planetside
 				}
 				protected override IEnumerator Top()
 				{
-					if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
+					base.ChangeSpeed(new Speed(17, SpeedType.Absolute), 120);
+					for (int i = 0; i < 300; i++)
 					{
-						base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("frogger"));
-					}
-					for (int i = 0; i < 90; i++)
-					{
-						float Speed = base.Speed;
-						base.ChangeSpeed(new Speed(Speed * 0.98f, SpeedType.Absolute), 0);
-						yield return this.Wait(1);
-					}
+						Vector2 Point2 = MathToolbox.GetUnitOnCircle(UnityEngine.Random.Range(-180, 180), UnityEngine.Random.Range(0.5f, 1.25f));
+						base.Fire(new Offset(Point2), new Direction(180, Brave.BulletScript.DirectionType.Relative, -1f), new Speed(2f, SpeedType.Absolute), new BouncyCicleTheShoot.Spore(90));
+						yield return this.Wait(5f);
 
-					base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 1);
-					base.Vanish(true);
+					}
 					yield break;
 				}
 				public override void OnBulletDestruction(Bullet.DestroyType destroyType, SpeculativeRigidbody hitRigidbody, bool preventSpawningProjectiles)
 				{
 					if (!preventSpawningProjectiles)
 					{
-						base.PostWwiseEvent("Play_BOSS_doormimic_blast_01", null);
-						float Fart = UnityEngine.Random.Range(-180, 180);
-						if (Ophanaim.EyeEnemyBehavior.Phase2Check == true)
+						base.PostWwiseEvent("Play_ENM_bulletking_slam_01", null);
+						for (int i = 0; i < 12; i++)
 						{
-							for (int j = 0; j < 6; j++)
-							{
-								base.Fire(new Direction((60 * j), Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(7f, SpeedType.Absolute), new SomeBigAttackThatGetsReplacedInPhase2.Break(base.Position, true, (60 * j), 0.06f));
-								base.Fire(new Direction((60 * j), Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(7f, SpeedType.Absolute), new SomeBigAttackThatGetsReplacedInPhase2.Break(base.Position, false, (60 * j), 0.06f));
-
-							}
-						}
-						else
-                        {
-							for (int j = 0; j < 12; j++)
-							{
-								base.Fire(new Direction((30 * j), Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(7f, SpeedType.Absolute), new SomeBigAttackThatGetsReplacedInPhase2.Break(base.Position, true, (30 * j), 0.04f));
-								base.Fire(new Direction((30 * j), Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(7f, SpeedType.Absolute), new SomeBigAttackThatGetsReplacedInPhase2.Break(base.Position, false, (30 * j), 0.04f));
-							}
-						}
-
-
-
-						for (int j = 0; j < 15; j++)
-						{
-							for (int e = 0; e < 4; e++)
-                            {
-								this.Fire(new Offset(new Vector2(UnityEngine.Random.Range(-0.125f, 0.125f), UnityEngine.Random.Range(-0.5f, 0.5f))), new Direction(90 * e, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(8.5f, SpeedType.Relative), new Break(j*5f));
-							}
+							base.Fire(new Direction(30f*i, Brave.BulletScript.DirectionType.Relative, -1f), new Speed(5, SpeedType.Absolute), new BouncyCicleTheShoot.Flames1());
 						}
 						return;
 					}
 				}
-
-				public class Break : Bullet
+			}
+			public class Spore : Bullet
+			{
+				public Spore(float Airtime) : base("frogger", false, false, false)
 				{
-					public Break(float aaaa) : base("frogger", false, false, false)
+					this.AirTime = Airtime;
+				}
+
+				protected override IEnumerator Top()
+				{
+					base.ChangeSpeed(new Speed(0, SpeedType.Absolute), UnityEngine.Random.Range(60, 240));
+
+					yield return this.Wait(AirTime);
+					base.Vanish(false);
+					yield break;
+				}
+				public float AirTime;
+			}
+
+
+
+			private IEnumerator QuickscopeNoob(float Angle, BouncyCicleTheShoot parent)
+			{
+				GameObject gameObject = SpawnManager.SpawnVFX(RandomPiecesOfStuffToInitialise.LaserReticle, false);
+
+				tk2dTiledSprite component2 = gameObject.GetComponent<tk2dTiledSprite>();
+				component2.transform.position = new Vector3(this.Position.x, this.Position.y, 99999);
+				component2.transform.localRotation = Quaternion.Euler(0f, 0f, Angle);
+				component2.dimensions = new Vector2(1000f, 1f);
+				component2.UpdateZDepth();
+				component2.HeightOffGround = -2;
+				Color laser = new Color(1f, 0f, 0f, 1f);
+				component2.sprite.usesOverrideMaterial = true;
+				component2.sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
+				component2.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+				component2.sprite.renderer.material.SetFloat("_EmissivePower", 10);
+				component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f);
+				component2.sprite.renderer.material.SetColor("_OverrideColor", laser);
+				component2.sprite.renderer.material.SetColor("_EmissiveColor", laser);
+				float elapsed = 0;
+				float Time = 0.75f;
+				while (elapsed < Time)
+				{
+					float t = (float)elapsed / (float)Time;
+
+					if (parent.IsEnded || parent.Destroyed)
 					{
-						this.Delay = aaaa;
-					}
-					protected override IEnumerator Top()
-					{
-						base.ChangeSpeed(new Speed(0, SpeedType.Absolute), 0);
-						yield return base.Wait(Delay);
-						base.ChangeSpeed(new Speed(8, SpeedType.Absolute), 0);
+						Destroy(component2.gameObject);
 						yield break;
 					}
-					private float Delay;
+					if (component2 != null)
+					{
+						component2.transform.position = new Vector3(this.Position.x, this.Position.y, 0);
+
+						component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (25 * t));
+						component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (10 * t));
+						component2.transform.localRotation = Quaternion.Euler(0f, 0f, base.AimDirection);
+						component2.HeightOffGround = -2;
+						component2.renderer.gameObject.layer = 23;
+						component2.dimensions = new Vector2(1000f, 1f);
+						component2.UpdateZDepth();
+
+						Angle = base.AimDirection;
+					}
+					elapsed += BraveTime.DeltaTime;
+					yield return null;
 				}
+				elapsed = 0;
+				Time = 0.25f;
+				base.PostWwiseEvent("Play_FlashTell");
+				while (elapsed < Time)
+				{
+					if (parent.IsEnded || parent.Destroyed)
+					{
+						Destroy(component2.gameObject);
+						yield break;
+					}
+					float t = (float)elapsed / (float)Time;
+					if (component2 != null)
+					{
+						component2.transform.position = new Vector3(this.Position.x, this.Position.y, 0);
+						component2.dimensions = new Vector2(1000f, 1f);
+						component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (60 * t));
+						component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (20 * t));
+						component2.HeightOffGround = -2;
+						component2.renderer.gameObject.layer = 23;
+						component2.UpdateZDepth();
+					}
+					elapsed += BraveTime.DeltaTime;
+					yield return null;
+				}
+				Destroy(component2.gameObject);
+				base.PostWwiseEvent("Play_BOSS_doormimic_blast_01", null);
+				base.Fire(new Direction(Angle, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(25f, SpeedType.Absolute), new Flameert());
+				yield break;
+			}
+
+			public class Fard : Bullet{public Fard() : base("frogger", false, false, false){}}
+			public class Flames1 : Bullet { public Flames1() : base("frogger", false, false, false) { } }
+
+			public class Flameert : Bullet
+			{
+				public Flameert() : base("frogger", false, false, false)
+				{
+
+				}
+
+				protected override IEnumerator Top()
+				{
+					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("frogger"));
+					for (int i = 0; i < 200; i++)
+					{
+						base.Fire(new Direction(0, Brave.BulletScript.DirectionType.Relative, -1f), new Speed(0f, SpeedType.Absolute), new BouncyCicleTheShoot.Bounce(60));
+						yield return this.Wait(1f);
+
+					}
+					yield break;
+				}
+			}
+			public class Bounce : Bullet
+			{
+				public Bounce(float timetilldie) : base("frogger", false, false, false)
+				{
+					TimeTillDeath = timetilldie;
+				}
+
+				protected override IEnumerator Top()
+				{
+					yield return this.Wait(TimeTillDeath);
+					base.Vanish(false);
+					yield break;
+				}
+				private float TimeTillDeath;
+			}
+			private class WaveBullet : Bullet
+			{
+				public WaveBullet() : base("frogger", false, false, false) { }
+
+				protected override IEnumerator Top()
+				{
+					base.ManualControl = true;
+					Vector2 truePosition = base.Position;
+					for (int e = 0; e < 8; e++)
+					{
+						for (int i = 0; i < 75; i++)
+						{
+							base.UpdateVelocity();
+							truePosition += this.Velocity / 120f;
+							base.Position = truePosition + new Vector2(0f, Mathf.Sin((float)base.Tick / 60f / 0.75f * 3.14159274f) * 1.5f);
+							yield return base.Wait(1);
+						}
+					}
+					base.Vanish(false);
+					yield break;
+				}
+				private const float SinPeriod = 0.75f;
+				private const float SinMagnitude = 1.5f;
+			}
+		}
+
+		public class FireWalls : Script
+		{
+			private const int SpinTime = 450;
+			protected override IEnumerator Top()
+			{
+				bool Ph2 = base.BulletBank.aiActor.GetComponent<EyeEnemyBehavior>().Phase2Check;
+				float Offset = Ph2 == false ? 90 : 60;
+				float Amount = Ph2 == false ? 4 : 6;
+				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("frogger"));
+				for (int l = 0; l < 3; l++)
+                {
+					float u = UnityEngine.Random.Range(45, 135);
+					for (int j = 0; j < Amount; j++)
+					{
+						base.BulletBank.aiActor.StartCoroutine(SpecialRotation(new Vector2(2.125f, -1.3125f), (Offset * j), this, u, "frogger", true, 1f, 20, 1));
+					}
+					u = UnityEngine.Random.Range(45, 135);
+					for (int j = 0; j < Amount; j++)
+					{
+						base.BulletBank.aiActor.StartCoroutine(SpecialRotation(new Vector2(-2.125f, -1.3125f), (Offset * j), this, -u, "frogger", true, 1f, 20, 1));
+					}
+					yield return base.Wait(60);
+				}
+
+				yield return base.Wait(90);
+
+			
+				yield break;
+			}
+
+			private IEnumerator SpecialRotation(Vector2 Offset, float aimDir, FireWalls parent, float rotSet, string BulletType, bool isRed, float chargeTime = 0.5f, float BulletSpeed = 20, float BulletAmount = 10)
+			{
+
+				GameObject gameObject = SpawnManager.SpawnVFX(RandomPiecesOfStuffToInitialise.LaserReticle, false);
+				tk2dTiledSprite component2 = gameObject.GetComponent<tk2dTiledSprite>();
+				component2.transform.position = new Vector3(base.Position.x + Offset.x, base.Position.y + Offset.y, 99999);
+				component2.transform.localRotation = Quaternion.Euler(0f, 0f, aimDir);
+				component2.dimensions = new Vector2(1000f, 1f);
+				component2.UpdateZDepth();
+				component2.HeightOffGround = -2;
+				Color laser = isRed == true ? new Color(1, 0, 0) : new Color(0f, 1f, 1f, 1f);
+				component2.sprite.usesOverrideMaterial = true;
+				component2.sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
+				component2.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+				component2.sprite.renderer.material.SetFloat("_EmissivePower", 10);
+				component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f);
+				component2.sprite.renderer.material.SetColor("_OverrideColor", laser);
+				component2.sprite.renderer.material.SetColor("_EmissiveColor", laser);
+				float elapsed = 0;
+				float Time = chargeTime;
+				while (elapsed < Time)
+				{
+					float t = (float)elapsed / (float)Time;
+
+					if (parent.IsEnded || parent.Destroyed)
+					{
+						UnityEngine.Object.Destroy(component2.gameObject);
+						yield break;
+					}
+					if (component2 != null)
+					{
+						float throne1 = Mathf.Sin(t * (Mathf.PI / 2));
+						float Q = Mathf.Lerp(0, rotSet, throne1);
+
+						component2.transform.position = new Vector3(base.Position.x + Offset.x, base.Position.y + Offset.y, 0);
+						component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (350 * t));
+						component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (20 * t));
+						component2.transform.localRotation = Quaternion.Euler(0f, 0f, aimDir + Q);
+						component2.HeightOffGround = -2;
+						component2.renderer.gameObject.layer = 23;
+						component2.dimensions = new Vector2(1000f, 1f);
+						component2.UpdateZDepth();
+					}
+					elapsed += BraveTime.DeltaTime;
+					yield return null;
+				}
+
+				elapsed = 0;
+				Time = 0.5f;
+				base.PostWwiseEvent("Play_FlashTell");
+				while (elapsed < Time)
+				{
+					if (parent.IsEnded || parent.Destroyed)
+					{
+						UnityEngine.Object.Destroy(component2.gameObject);
+						yield break;
+					}
+					float t = (float)elapsed / (float)Time;
+					if (component2 != null)
+					{
+						component2.transform.position = new Vector3(base.Position.x + Offset.x, base.Position.y + Offset.y, 0);
+						component2.dimensions = new Vector2(1000f, 1f);
+						component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (125 * t));
+						component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (20 * t));
+						component2.HeightOffGround = -2;
+						component2.renderer.gameObject.layer = 23;
+						component2.UpdateZDepth();
+					}
+					elapsed += BraveTime.DeltaTime;
+					yield return null;
+				}
+				UnityEngine.Object.Destroy(component2.gameObject);
+				base.PostWwiseEvent("Play_ENM_bulletking_skull_01", null);
+				for (int i = 0; i < BulletAmount; i++)
+				{
+					base.Fire(new Offset(Offset),new Direction(aimDir+ rotSet, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(BulletSpeed, SpeedType.Absolute), new Flameert());
+					yield return new WaitForSeconds(0.025f);
+				}
+				yield break;
+			}
+			public class Flameert : Bullet
+			{
+				public Flameert() : base("frogger", false, false, false) { }
+				protected override IEnumerator Top()
+				{
+					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("frogger"));
+					for (int i = 0; i < 200; i++)
+					{
+						base.Fire(new Direction(0, Brave.BulletScript.DirectionType.Relative, -1f), new Speed(0f, SpeedType.Absolute), new BouncyCicleTheShoot.Bounce(90));
+						yield return this.Wait(3f);
+					}
+					yield break;
+				}
+			}
+			public class Bounce : Bullet
+			{
+				public Bounce(float timetilldie) : base("frogger", false, false, false)
+				{
+					TimeTillDeath = timetilldie;
+				}
+
+				protected override IEnumerator Top()
+				{
+					yield return this.Wait(TimeTillDeath);
+					base.Vanish(false);
+					yield break;
+				}
+				private float TimeTillDeath;
 			}
 		}
 
@@ -2173,11 +2361,6 @@ namespace Planetside
 				Exploder.DoDistortionWave(base.BulletBank.sprite.WorldCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("383175a55879441d90933b5c4e60cf6f").bulletBank.GetBullet("bigBullet"));
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("5729c8b5ffa7415bb3d01205663a33ef").bulletBank.GetBullet("suck"));
-
-				for (int E = 0; E < 4; E++)
-                {
-					//base.Fire(new Direction(90*E, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(15, SpeedType.Absolute), new THESUN.FireThatSpawnsFireGoop());
-				}
 				base.PostWwiseEvent("Play_Burn", null);
 				for (int R = 0; R < 6; R++)
                 {
@@ -2191,7 +2374,6 @@ namespace Planetside
 							{
 								base.Fire(new Direction((120 * n) + (12f * E), Brave.BulletScript.DirectionType.Aim, -1f), new Speed(6f, SpeedType.Absolute), new THESUN.Break(base.Position, false, (120 * n) + (12f * E), 0.0125f));
 								base.Fire(new Direction((120 * n) - (12f * E) + 60, Brave.BulletScript.DirectionType.Aim, -1f), new Speed(6f, SpeedType.Absolute), new THESUN.Break(base.Position, true, (120 * n) + (12f * E) + 60, -0.025f));
-								//base.Fire(new Direction((120 * n) - (6f * E) + 40, Brave.BulletScript.DirectionType.Aim, -1f), new Speed(6.5f, SpeedType.Absolute), new THESUN.Break(base.Position, true, (120 * n) + (12f * E) + 40, 0.005f));
 							}
 						}
 					}
@@ -2287,6 +2469,7 @@ namespace Planetside
 				protected override IEnumerator Top()
 				{
 					base.Projectile.ImmuneToSustainedBlanks = true;
+					base.Projectile.BecomeBlackBullet();
 					for (int j = 0; j < 300; j++)
 					{
 						DeadlyDeadlyGoopManager.GetGoopManagerForGoopType(EasyGoopDefinitions.FireDef).TimedAddGoopCircle(base.Projectile.sprite.WorldCenter, 1, 1f, false);
@@ -2300,6 +2483,17 @@ namespace Planetside
 		public class MithrixSlam : Script
 		{
 			private const int SpinTime = 450;
+
+            public override void OnForceEnded()
+            {
+                base.OnForceEnded();
+				EyeEnemyBehavior vfx = base.BulletBank.GetComponent<EyeEnemyBehavior>();
+				for (int e = 0; e < vfx.extantReticles.Count; e++)
+                {
+					Destroy(vfx.extantReticles[e]);
+                }
+			}
+
 			protected override IEnumerator Top()
 			{
 				CellArea area = base.BulletBank.aiActor.ParentRoom.area;
@@ -2311,9 +2505,7 @@ namespace Planetside
 				float WaitTime = 75;
 				float delta = 30;
 				float Lines = 12;
-
-
-				if (Ophanaim.EyeEnemyBehavior.Phase2Check == true)
+				if (base.BulletBank.aiActor.GetComponent<EyeEnemyBehavior>().Phase2Check == true)
 				{
 					Amount = 5;
 					WaitTime = 60f;
@@ -2323,14 +2515,9 @@ namespace Planetside
 
 				for (int e = 0; e < Amount; e++)
                 {
-					List<float> log = new List<float>()
-					{
-
-
-					};
+					List<float> log = new List<float>() { };
 					EyeEnemyBehavior vfx = base.BulletBank.GetComponent<EyeEnemyBehavior>();
-					vfx.LaserShit = EnemyDatabase.GetOrLoadByGuid("6868795625bd46f3ae3e4377adce288b").GetComponent<ResourcefulRatController>().ReticleQuad;
-					//vfx.name = "LaserTellEye" + j.ToString();
+					vfx.LaserShit = RandomPiecesOfStuffToInitialise.LaserReticle;
 					float fuck = (UnityEngine.Random.Range(-180, 180));
 					for (int i = 0; i < Lines; i++)
 					{
@@ -2341,16 +2528,12 @@ namespace Planetside
 						{
 							num2 = (zero - this.Position).magnitude;
 						}
-						if (vfx == null)
-						{
-							vfx.LaserShit = EnemyDatabase.GetOrLoadByGuid("6868795625bd46f3ae3e4377adce288b").GetComponent<ResourcefulRatController>().ReticleQuad;
-							//ETGModConsole.Log("TRIPPED NULLCHECK");
-						}
+						
 						GameObject gameObject = SpawnManager.SpawnVFX(vfx.LaserShit, false);
-						tk2dSlicedSprite component2 = gameObject.GetComponent<tk2dSlicedSprite>();
+						tk2dTiledSprite component2 = gameObject.GetComponent<tk2dTiledSprite>();
 						component2.transform.position = new Vector3(this.Position.x, this.Position.y, 99999);
 						component2.transform.localRotation = Quaternion.Euler(0f, 0f, angle);
-						component2.dimensions = new Vector2((num2) * 50f, 5f);
+						component2.dimensions = new Vector2((num2) * 50f, 1f);
 						component2.UpdateZDepth();
 
 						component2.HeightOffGround = -2;
@@ -2372,7 +2555,7 @@ namespace Planetside
 					{
 						foreach (GameObject obj in vfx.extantReticles)
 						{
-							tk2dSlicedSprite component2 = obj.GetComponent<tk2dSlicedSprite>();
+							tk2dTiledSprite component2 = obj.GetComponent<tk2dTiledSprite>();
 							float ix = component2.transform.localRotation.eulerAngles.x;
 							float wai = component2.transform.localRotation.eulerAngles.y;
 							if (base.BulletBank.aiActor != null)
@@ -2397,13 +2580,13 @@ namespace Planetside
                             {
 								component2.sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
 								component2.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
-								component2.sprite.renderer.material.SetFloat("_EmissivePower", 200 + (i - 20) * 200);
-								component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 1.55f + 1 / (i-20));
+								component2.sprite.renderer.material.SetFloat("_EmissivePower", 200 + (i - 20));
+								component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 1.55f + 1 / (i-5));
 							}
 							if (LeftOrRight == true)
 							{
 								component2.transform.localRotation = Quaternion.Euler(ix, wai, zee + ((3f - (i / 20) + 3600)));
-								AddOnNum += (3f - (i / 20));// - (i / 16);
+								AddOnNum += (3f - (i / 20));// -
 							}
 							else
 							{

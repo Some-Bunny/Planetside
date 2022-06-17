@@ -217,7 +217,8 @@ namespace ItemAPI
             //allows enemies to be tinted
             prefab.AddComponent<Tint>();
             //prefab.AddComponent<EngageLate>();
-            prefab.AddComponent<AIBulletBank>();
+            AIBulletBank bank = prefab.AddComponent<AIBulletBank>();
+            bank.Bullets = new List<AIBulletBank.Entry>();
             //if (usesDefaultEngage) { prefab.AddComponent<DefaultSpawnEngage>(); }
             //Add to enemy database
             EnemyDatabaseEntry enemyDatabaseEntry = new EnemyDatabaseEntry()

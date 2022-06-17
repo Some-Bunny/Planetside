@@ -146,6 +146,10 @@ namespace Planetside
 				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "swipehandback", new string[1], new DirectionalAnimation.FlipType[1]);
 				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "swipehandcharge", new string[1], new DirectionalAnimation.FlipType[1]);
 				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "swipehandmoveback", new string[1], new DirectionalAnimation.FlipType[1]);
+
+
+				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "chargedeath", new string[1], new DirectionalAnimation.FlipType[1]);
+				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "firedeath", new string[1], new DirectionalAnimation.FlipType[1]);
 				//subphaseoneanimation
 				//sweengarm
 
@@ -432,8 +436,27 @@ namespace Planetside
 					EnemyToolbox.AddSoundsToAnimationFrame(fuckyouprefab.GetComponent<tk2dSpriteAnimator>(), "raisearm", new Dictionary<int, string> { { 0, "Play_PrisonerCough" }, { 5, "Play_EnergySwirl" } });
 
 
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, PrisonerPhaseOneSpriteCollection, new List<int>
+					{
+					38,
+					39,
+					40,
+					41,
+					42,
+					43,
+					44,
+					}, "chargedeath", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6f;
+					EnemyToolbox.AddSoundsToAnimationFrame(fuckyouprefab.GetComponent<tk2dSpriteAnimator>(), "chargedeath", new Dictionary<int, string> { { 0, "Play_PrisonerCharge" } });
+					EnemyToolbox.AddEventTriggersToAnimation(fuckyouprefab.GetComponent<tk2dSpriteAnimator>(), "chargedeath", new Dictionary<int, string> { { 4, "SummonOmega" } });
 
-				
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, PrisonerPhaseOneSpriteCollection, new List<int>
+					{
+					45,
+					46,
+					47
+					}, "firedeath", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 4f;
+
+
 
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, PrisonerPhaseOneSpriteCollection, new List<int>
 					{
@@ -1046,71 +1069,7 @@ namespace Planetside
 				//==================
 			}
 		}
-		/*
-		public class Blasty : Script
-		{
-			protected override IEnumerator Top()
-			{
-				PrisonerController controller = base.BulletBank.aiActor.GetComponent<PrisonerController>();
-				controller.MoveTowardsPositionMethod(4f, 11);
-
-				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("41ee1c8538e8474a82a74c4aff99c712").bulletBank.GetBullet("big"));
-				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("31a3ea0c54a745e182e22ea54844a82d").bulletBank.GetBullet("sniper"));
-				for (int i = 0; i < 8; i++)
-				{
-					float Displace = UnityEngine.Random.Range(-3, 3);
-					base.Fire(new Offset(Displace), new Direction(0f, DirectionType.Aim, -1f), new Speed(0f, SpeedType.Absolute), new MegaBullet());
-					for (int e = 0; e < 12; e++)
-                    {
-						base.Fire(new Offset(Displace), new Direction(30*e, DirectionType.Aim, -1f), new Speed(0f, SpeedType.Absolute), new BasicBullet());
-						base.Fire(new Offset(Displace), new Direction((30*e)+15, DirectionType.Aim, -1f), new Speed(7f, SpeedType.Absolute), new BasicBullet());
-
-					}
-					float basevalue = 60 - (i*5);					
-					yield return this.Wait(basevalue);
-				}
-				for (int i = 0; i < 10; i++)
-                {
-					float Displace = UnityEngine.Random.Range(-3, 3);
-					base.Fire(new Offset(Displace), new Direction(0f, DirectionType.Aim, -1f), new Speed(0f, SpeedType.Absolute), new MegaBullet());
-					for (int e = 0; e < 12; e++)
-					{
-						base.Fire(new Offset(Displace), new Direction(30 * e, DirectionType.Aim, -1f), new Speed(0f, SpeedType.Absolute), new BasicBullet());
-						base.Fire(new Offset(Displace), new Direction((30 * e) + 15, DirectionType.Aim, -1f), new Speed(7f, SpeedType.Absolute), new BasicBullet());
-
-					}
-					yield return this.Wait(20);
-				}
-				yield break;
-			}
-			public class BasicBullet : Bullet
-			{
-				public BasicBullet() : base("sniper", false, false, false)
-				{
-
-				}
-				protected override IEnumerator Top()
-				{
-					base.ChangeSpeed(new Speed(base.Speed+11, SpeedType.Absolute), 60);
-					yield break;
-				}
-			}
-			public class MegaBullet : Bullet
-			{
-				public MegaBullet() : base("big", false, false, false)
-				{
-
-				}
-				protected override IEnumerator Top()
-				{
-					base.Projectile.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
-					SpawnManager.PoolManager.Remove(base.Projectile.transform);
-					base.ChangeSpeed(new Speed(30f, SpeedType.Absolute), 150);
-					yield break;
-				}
-			}
-		}
-		*/
+		
 		public class ChainRotators : Script
         {
 			public const int NumBullets = 9;
@@ -1368,8 +1327,8 @@ namespace Planetside
 				for (int e = 0; e < 12; e++)
 				{
 					base.Fire(new Direction((30 * e), DirectionType.Aim, -1f), new Speed(1f, SpeedType.Absolute), new ChainRotators.BasicBullet());
-					base.Fire(new Direction((30 * e), DirectionType.Aim, -1f), new Speed(1.33f, SpeedType.Absolute), new ChainRotators.BasicBullet());
-					base.Fire(new Direction((30 * e), DirectionType.Aim, -1f), new Speed(1.66f, SpeedType.Absolute), new ChainRotators.BasicBullet());
+					base.Fire(new Direction((30 * e), DirectionType.Aim, -1f), new Speed(1.5f, SpeedType.Absolute), new ChainRotators.BasicBullet());
+					base.Fire(new Direction((30 * e), DirectionType.Aim, -1f), new Speed(2f, SpeedType.Absolute), new ChainRotators.BasicBullet());
 				}
 			}
 
@@ -1455,7 +1414,7 @@ namespace Planetside
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("ffca09398635467da3b1f4a54bcfda80").bulletBank.GetBullet("directedfire"));
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("31a3ea0c54a745e182e22ea54844a82d").bulletBank.GetBullet("sniper"));
 				PrisonerController controller = base.BulletBank.aiActor.GetComponent<PrisonerController>();
-				controller.MoveTowardsPositionMethod(0.5f, 7);
+				controller.MoveTowardsPositionMethod(1, 5);
 				for (int i = -3; i < 4; i++)
 				{
 					float OffsetPhase = 20;
@@ -1636,7 +1595,7 @@ namespace Planetside
 				for (int l = 0; l < 4; l++)
                 {
 					PrisonerController controller = base.BulletBank.aiActor.GetComponent<PrisonerController>();
-					controller.MoveTowardsPositionMethod(1f, 7);
+					controller.MoveTowardsPositionMethod(1.25f, 4);
 					bool ISDodgeAble = true;
 					Dictionary<Vector2, string> wallcornerstrings = new Dictionary<Vector2, string>()
 					{
@@ -1985,11 +1944,11 @@ namespace Planetside
 		{
 			protected override IEnumerator Top()
 			{
-				this.EndOnBlank = false;
+				this.EndOnBlank = true;
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("31a3ea0c54a745e182e22ea54844a82d").bulletBank.GetBullet("sniper"));
 
 				PrisonerController controller = base.BulletBank.aiActor.GetComponent<PrisonerController>();
-				controller.MoveTowardsPositionMethod(2f, 11);
+				controller.MoveTowardsPositionMethod(2f, 9);
 				Vector2 vector2 = this.BulletManager.PlayerPosition();
 				Vector2 predictedPosition = BraveMathCollege.GetPredictedPosition(vector2, this.BulletManager.PlayerVelocity(), this.Position, 18f);
 				float CentreAngle = (predictedPosition - this.Position).ToAngle();
@@ -2134,6 +2093,10 @@ namespace Planetside
 
 				for (int e = 0; e < 15; e++)
                 {
+					if (parent.IsEnded || parent.Destroyed)
+					{
+						yield break;
+					}
 					for (int i = 0; i < 36; i++)
 					{
 						float t = (float)i / (float)36;
@@ -2257,7 +2220,7 @@ namespace Planetside
 				PrisonerController controller = base.BulletBank.aiActor.GetComponent<PrisonerController>();
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("41ee1c8538e8474a82a74c4aff99c712").bulletBank.GetBullet("big"));
 				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSniper);
-				controller.MoveTowardsPositionMethod(3f, 7);
+				controller.MoveTowardsPositionMethod(3f, 6);
 				for (int e = 0; e < GameManager.Instance.AllPlayers.Length; e++)
                 {
 					float Dir = UnityEngine.Random.value > 0.5f ? 0 : 22.5f;
@@ -2280,7 +2243,7 @@ namespace Planetside
 					}
 					yield return this.Wait(20);
 				}
-				controller.MoveTowardsPositionMethod(1f, 5);
+				controller.MoveTowardsPositionMethod(1.5f, 6);
 				yield return this.Wait(60);
 				yield break;
 			}
@@ -2500,6 +2463,10 @@ namespace Planetside
 				{
 					Vector3 pos= MathToolbox.GetUnitOnCircle(UnityEngine.Random.Range(-180, 180), UnityEngine.Random.Range(1, 4));
 					Instantiate((PickupObjectDatabase.GetById(145) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapVertical.effects[0].effects[0].effect, base.aiActor.transform.Find("RaisedArmLaserAttachPoint").position+ pos, Quaternion.identity);
+				}
+				if (clip.GetFrame(frameIdx).eventInfo.Contains("SummonOmega"))
+				{
+
 				}
 			}
 			public void MoveTowardsCenterMethod(float Time)

@@ -47,7 +47,7 @@ namespace Planetside
                 mod.shootStyle = ProjectileModule.ShootStyle.Beam;
                 mod.sequenceStyle = ProjectileModule.ProjectileSequenceStyle.Random;
                 mod.cooldownTime = 0.001f;
-                mod.numberOfShotsInClip = 50;
+                mod.numberOfShotsInClip = 40;
 
 
             List<string> BeamAnimPaths = new List<string>()
@@ -180,7 +180,6 @@ namespace Planetside
                 new IntVector2(11, 11)
             }, AnimateBullet.ConstructListOfSameValues(false, 7), AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.MiddleCenter, 7), AnimateBullet.ConstructListOfSameValues(true, 7), AnimateBullet.ConstructListOfSameValues(false, 7),
                 AnimateBullet.ConstructListOfSameValues<Vector3?>(null, 7), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 7), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 7), AnimateBullet.ConstructListOfSameValues<Projectile>(null, 7));
-                //perfProjectile.SetProjectileSpriteRight("perfectedProj_001", 11, 11, false, tk2dBaseSprite.Anchor.MiddleCenter, 11, 11);
                 perfProjectile.hitEffects.alwaysUseMidair = true;
                 perfProjectile.hitEffects.overrideMidairDeathVFX = (PickupObjectDatabase.GetById(228) as Gun).DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX;
                 PerfectedProjectile = perfProjectile;

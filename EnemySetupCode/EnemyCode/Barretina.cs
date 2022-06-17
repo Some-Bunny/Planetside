@@ -52,7 +52,7 @@ namespace Planetside
 				EnemyToolbox.AddShadowToAIActor(companion.aiActor, StaticEnemyShadows.largeShadow, new Vector2(1f, 0.25f), "shadowPos");
 
 				companion.aiActor.healthHaver.SetHealthMaximum(40f, null, false);
-				companion.aiActor.PathableTiles = CellTypes.PIT | CellTypes.FLOOR;
+				companion.aiActor.PathableTiles = CellTypes.PIT;
 
 				ImprovedAfterImage image = companion.aiActor.gameObject.AddComponent<ImprovedAfterImage>();
 				image.dashColor = new Color(1, 0.85f, 0.7f);
@@ -72,10 +72,10 @@ namespace Planetside
 					BagleUseFirstFrameOnly = false,
 					SpecifyBagelFrame = string.Empty,
 					BagelColliderNumber = 0,
-					ManualOffsetX = 0,
-					ManualOffsetY = 0,
-					ManualWidth = 23,
-					ManualHeight = 24,
+					ManualOffsetX = 3,
+					ManualOffsetY = 10,
+					ManualWidth = 27,
+					ManualHeight = 22,
 					ManualDiameter = 0,
 					ManualLeftX = 0,
 					ManualLeftY = 0,
@@ -91,18 +91,15 @@ namespace Planetside
 					BagleUseFirstFrameOnly = false,
 					SpecifyBagelFrame = string.Empty,
 					BagelColliderNumber = 0,
-					ManualOffsetX = 0,
-					ManualOffsetY = 0,
-					ManualWidth = 23,
-					ManualHeight = 24,
+					ManualOffsetX = 3,
+					ManualOffsetY = 10,
+					ManualWidth = 27,
+					ManualHeight = 22,
 					ManualDiameter = 0,
 					ManualLeftX = 0,
 					ManualLeftY = 0,
 					ManualRightX = 0,
 					ManualRightY = 0,
-
-
-
 				});
 				companion.aiActor.CorpseObject = EnemyDatabase.GetOrLoadByGuid("01972dee89fc4404a5c408d50007dad5").CorpseObject;
 				companion.aiActor.PreventBlackPhantom = false;

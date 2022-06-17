@@ -16,16 +16,6 @@ namespace Planetside
 {
     public class VoidHoleController : MonoBehaviour
     {
-        /*
-         *  GameObject partObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("VoidHole"));
-            MeshRenderer rend = partObj.GetComponent<MeshRenderer>();
-            rend.allowOcclusionWhenDynamic = true;
-            partObj.transform.position = user.transform.position;
-            partObj.transform.localScale = Vector3.one;
-            partObj.name = "yes";
-            partObj.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
-            TrespassPortalController romas = partObj.AddComponent<TrespassPortalController>();
-        */
         public void Start()
         {
             MeshRenderer rend = base.gameObject.GetComponentInChildren<MeshRenderer>();

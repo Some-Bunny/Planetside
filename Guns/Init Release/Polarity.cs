@@ -144,12 +144,7 @@ namespace Planetside
 
 		private bool HasReloaded;
 
-		public Vector3 projectilePos;
-
-		public override void PostProcessProjectile(Projectile projectile)
-		{
-			
-		}
+	
 		public override void OnReloadPressed(PlayerController player, Gun gun, bool bSOMETHING)
 		{
 			if (gun.IsReloading && this.HasReloaded)

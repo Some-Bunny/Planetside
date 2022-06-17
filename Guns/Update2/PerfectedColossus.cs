@@ -19,8 +19,6 @@ namespace Planetside
             Gun gun = ETGMod.Databases.Items.NewGun("Perfected Colossus", "prefectedcolossus");
             Game.Items.Rename("outdated_gun_mods:perfected_colossus", "psog:perfected_colossus");
             var behav = gun.gameObject.AddComponent<PerfectedColossus>();
-            //behav.overrideNormalFireAudio = "Play_ENM_shelleton_beam_01";
-            //behav.preventNormalFireAudio = true;
             gun.SetShortDescription("Lunar Design");
             gun.SetLongDescription("A collection of rocks powered by the blood of a now-dead demi-god, who used their own blood to create the Titans found on a planet far, far away.");
 
@@ -47,7 +45,7 @@ namespace Planetside
                 mod.shootStyle = ProjectileModule.ShootStyle.Beam;
                 mod.sequenceStyle = ProjectileModule.ProjectileSequenceStyle.Random;
                 mod.cooldownTime = 0.001f;
-                mod.numberOfShotsInClip = 50;
+                mod.numberOfShotsInClip = 40;
                 mod.ammoType = GameUIAmmoType.AmmoType.BEAM;
 
                 List<string> BeamAnimPaths = new List<string>()
@@ -157,8 +155,8 @@ namespace Planetside
             gun.reloadTime = 1f;
             gun.muzzleFlashEffects.type = VFXPoolType.None;
             gun.barrelOffset.transform.localPosition = new Vector3(1.625f, 0.5625f, 0f);
-            gun.SetBaseMaxAmmo(300);
-            gun.ammo = 300;
+            gun.SetBaseMaxAmmo(360);
+            gun.ammo = 360;
 
             gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).wrapMode = tk2dSpriteAnimationClip.WrapMode.LoopSection;
             gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).loopStart = 1;

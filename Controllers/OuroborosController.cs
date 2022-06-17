@@ -235,9 +235,7 @@ namespace Planetside
 			}
         }
 		public static List<string> enemiesNotAffectedByBehaviorSpecMultiplier => new List<string>()
-		{
-			"3f11bbbc439c4086a180eb0fb9990cb4"
-		};
+		{"3f11bbbc439c4086a180eb0fb9990cb4"};
 
 
 

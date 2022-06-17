@@ -78,9 +78,7 @@ namespace Planetside
 			projectile2.angularVelocity = 0f;
 			projectile2.OverrideTrailPoint = new Vector2(0, 0);
 
-			//projectile2.SetProjectileSpriteRight("rebar_projectile_001", 31, 2, false, tk2dBaseSprite.Anchor.MiddleCenter, 31, 2);
-
-			//projectile2.gameObject.AddComponent<StickyProjectile>();
+		
 
 			ProjectileModule.ChargeProjectile item2 = new ProjectileModule.ChargeProjectile
 			{
@@ -99,8 +97,8 @@ namespace Planetside
 			ETGMod.Databases.Items.Add(gun, null, "ANY");
 			RebarPuncher.RebarerID = gun.PickupObjectId;
 
-			RebarPuncher.PlusNailsPrefab = SpriteBuilder.SpriteFromResource(RebarPuncher.PlusNailsVFX, null, false);
-			RebarPuncher.PlusNailsPrefab.name = RebarPuncher.vfxName;
+			RebarPuncher.PlusNailsPrefab = SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Rebar/plusnails", null, false);
+			RebarPuncher.PlusNailsPrefab.name = "PlusNailsVFX";
 			UnityEngine.Object.DontDestroyOnLoad(RebarPuncher.PlusNailsPrefab);
 			FakePrefab.MarkAsFakePrefab(RebarPuncher.PlusNailsPrefab);
 			RebarPuncher.PlusNailsPrefab.SetActive(false);
@@ -125,9 +123,7 @@ namespace Planetside
 					Projectile projectile1 = ((Gun)ETGMod.Databases.Items[26]).DefaultModule.projectiles[0];
 					GameObject gameObject = SpawnManager.SpawnProjectile(projectile1.gameObject, AAAA, Quaternion.Euler(0f, 0f, ((this.gun.CurrentOwner.CurrentGun == null) ? 1.2f : this.gun.CurrentOwner.CurrentGun.CurrentAngle) + (counter * 6) - 15), true);
 					Projectile component = gameObject.GetComponent<Projectile>();
-					bool flag = component != null;
-					bool flag2 = flag;
-					if (flag2)
+					if (component != null)
 					{
 						component.SpawnedFromOtherPlayerProjectile = true;
 						component.Shooter = this.gun.CurrentOwner.specRigidbody;
@@ -140,7 +136,6 @@ namespace Planetside
 						component.baseData.damage = 8f * dmg;
 						component.baseData.range *= 2f;
 						component.baseData.speed *= 2f;
-
 					}
 					HasCommitedWeaponSwitch = false;
 				}
@@ -209,10 +204,6 @@ namespace Planetside
 		}
 		public bool HasCommitedWeaponSwitch;
 
-		private static string PlusNailsVFX = "Planetside/Resources/VFX/Rebar/plusnails";
-
 		private static GameObject PlusNailsPrefab;
-
-		private static string vfxName = "PlusNailsVFX";
 	}
 }

@@ -28,27 +28,34 @@ namespace Planetside
 
         public void Start()
         {
-            //GameObject original;
             this.projectile = base.GetComponent<Projectile>();
-            Projectile projectile = this.projectile;
-            PlayerController playerController = projectile.Owner as PlayerController;
-            Projectile component = base.gameObject.GetComponent<Projectile>();
-            bool flag = component != null;
-            bool flag2 = flag;
-            if (flag2)
-            {
-                if (Capactior.Chrager == true)
-                {
-                    projectile.baseData.range = 0;
-                    projectile.sprite.renderer.enabled = false;
-                    projectile.baseData.damage = 0;
-                }
-                else
-                {
+            this.gunComp = projectile.PossibleSourceGun.GetComponent<Capactior>();
+            this.gun = projectile.PossibleSourceGun;
 
+            if (this.projectile != null)
+            {
+                if (gun != null && gunComp != null)
+                {
+                    if (gun.LocalInfiniteAmmo == true || gun.InfiniteAmmo == false)
+                    {
+                        projectile.baseData.damage *= 0.125f;
+                    }
+                    else
+                    {
+                        if (gunComp.IsChargeUp() == true)
+                        {
+                            projectile.baseData.range = 0;
+                            projectile.sprite.renderer.enabled = false;
+                            projectile.baseData.damage = 0;
+                        }   
+                    }             
                 }
+
             }
         }
+        public Capactior gunComp;
+        public Gun gun;
+
 
         private FieldInfo remainingTimeCooldown = typeof(PlayerItem).GetField("remainingTimeCooldown", BindingFlags.Instance | BindingFlags.NonPublic);
         private FieldInfo remainingDamageCooldown = typeof(PlayerItem).GetField("remainingDamageCooldown", BindingFlags.Instance | BindingFlags.NonPublic);

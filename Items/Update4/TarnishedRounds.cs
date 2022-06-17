@@ -33,18 +33,15 @@ namespace Planetside
                 "\n\nAny foe hit with these rounds will be tarnished just as they are.";
             ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
 			item.quality = PickupObject.ItemQuality.A;
-			//item.SetupUnlockOnCustomFlag(CustomDungeonFlags.HIGHER_CURSE_DRAGUN_KILLED, true);
 
 			TarnishedRounds.TarnishedRoundsID = item.PickupObjectId;
 			ItemIDs.AddToList(item.PickupObjectId);
-
 		}
 		public static int TarnishedRoundsID;
 		private void PostProcessProjectile(Projectile sourceProjectile, float effectChanceScalar)
 		{
 			try
 			{
-
 				float procChance = 0.25f;
 				procChance *= effectChanceScalar;
 				if (UnityEngine.Random.value <= procChance)

@@ -122,33 +122,15 @@ namespace Planetside
 
 		public static GameObject ChargeUpPrefab;
 		public static List<int> spriteIds = new List<int>();
-		public override void PostProcessProjectile(Projectile projectile)
-		{
-
-
-
-			//projectile.DefaultTintColor = new Color32(255, 0, 0, 255);
-
-			/*
-			foreach (Component item in projectile.GetComponentsInChildren(typeof(Component)))
-			{
-				ETGModConsole.Log(item.name+"\n"+item.GetType().ToString()+"\n======");
-
-			}
-			*/
-
-		}
 
 		public override void OnPostFired(PlayerController player, Gun gun)
 		{
 
-			GameObject original;
 			if (player != null)
 			{
 				bool ee = player.activeItems == null;
 				if (!ee)
 				{
-
 					foreach (PlayerItem playerItem in player.activeItems)
 					{
 						bool aa = playerItem == null;
@@ -163,28 +145,24 @@ namespace Planetside
 								bool flag3 = eee <= 0f || eee <= 0f;
 								if (!flag3)
 								{
-									original = Capactior.ChargeUpPrefab;
+									GameObject original = Capactior.ChargeUpPrefab;
 									tk2dSprite ahfuck = original.GetComponent<tk2dSprite>();
-									bool flagA = player.PlayerHasActiveSynergy("Back For Seconds");
-									if (flagA)
+									if (player.PlayerHasActiveSynergy("Back For Seconds"))
 									{
-										this.random = UnityEngine.Random.Range(0.0f, 1.0f);
-										if (random <= 0.5f)
+										if (UnityEngine.Random.value < 0.5f)
                                         {
 											original.GetComponent<tk2dBaseSprite>().SetSprite(Capactior.spriteIds[1]);
-											Chrager = false;
-
+											SetCharge(false);
 										}
 										else
                                         {
-
-											Chrager = true;
+											SetCharge(true);
 											original.GetComponent<tk2dBaseSprite>().SetSprite(Capactior.spriteIds[0]);
 										}
 									}
 									else
 									{
-										Chrager = true;
+										SetCharge(true);
 										original.GetComponent<tk2dBaseSprite>().SetSprite(Capactior.spriteIds[0]);
 									}
 									player.BloopItemAboveHead(ahfuck, "");
@@ -194,25 +172,32 @@ namespace Planetside
 								}
 								else
                                 {
-									Chrager = false;
-                                }
+									SetCharge(false);
+								}
 							}
 							catch (Exception ex)
 							{
 								ETGModConsole.Log(ex.Message + ": " + ex.StackTrace, false);
 							}
 						}
-
 					}
 				}
 			}
 		}
-		private float random;
-		public static bool Chrager;
+		public bool Charger;
 		public GameObject ChargeUpVFX;
 		private FieldInfo remainingTimeCooldown = typeof(PlayerItem).GetField("remainingTimeCooldown", BindingFlags.Instance | BindingFlags.NonPublic);
 		private FieldInfo remainingDamageCooldown = typeof(PlayerItem).GetField("remainingDamageCooldown", BindingFlags.Instance | BindingFlags.NonPublic);
 		private bool HasReloaded;
+
+		public bool IsChargeUp()
+        {
+			return Charger;
+		}
+		public void SetCharge(bool b)
+		{
+			Charger = b;
+		}
 
 		protected void Update()
 		{
@@ -228,9 +213,7 @@ namespace Planetside
 					this.HasReloaded = true;
 				}
 			}
-
 		}
-
 		public override void OnReloadPressed(PlayerController player, Gun bruhgun, bool bSOMETHING)
 		{
 			if (gun.IsReloading && this.HasReloaded)

@@ -27,6 +27,10 @@ namespace GungeonAPI
 
 		private IEnumerator HandleConversation(PlayerController interactor)
 		{
+			if (this.talkPoint == null) { ETGModConsole.Log("talkPoint is NULL"); }
+			if (this.talkPoint.position == null) { ETGModConsole.Log("talkPoint.position is NULL"); }
+			if (this.text == null) { ETGModConsole.Log("text is NULL"); }
+
 			TextBoxManager.ShowStoneTablet(this.talkPoint.position, this.talkPoint, -1f, this.text, true, false);
 			int selectedResponse = -1;
 			interactor.SetInputOverride("shrineConversation");
@@ -65,32 +69,24 @@ namespace GungeonAPI
 			}
 			interactor.ClearInputOverride("shrineConversation");
 			TextBoxManager.ClearTextBox(this.talkPoint);
-			bool flag2 = !this.m_canUse;
-			bool flag8 = flag2;
-			if (flag8)
+			if (!this.m_canUse)
 			{
 				yield break;
 			}
-			bool flag3 = selectedResponse == 0 && this.isToggle;
-			bool flag9 = flag3;
-			if (flag9)
+			if (selectedResponse == 0 && this.isToggle)
 			{
 				Action<PlayerController, GameObject> action = this.m_isToggled ? this.OnDecline : this.OnAccept;
-				bool flag10 = action != null;
-				if (flag10)
+				if (action != null)
 				{
 					action(interactor, base.gameObject);
 				}
 				this.m_isToggled = !this.m_isToggled;
 				yield break;
 			}
-			bool flag4 = selectedResponse == 0;
-			bool flag11 = flag4;
-			if (flag11)
+			if (selectedResponse == 0)
 			{
 				Action<PlayerController, GameObject> onAccept = this.OnAccept;
-				bool flag12 = onAccept != null;
-				if (flag12)
+				if (onAccept != null)
 				{
 					onAccept(interactor, base.gameObject);
 				}
@@ -99,8 +95,7 @@ namespace GungeonAPI
 			else
 			{
 				Action<PlayerController, GameObject> onDecline = this.OnDecline;
-				bool flag13 = onDecline != null;
-				if (flag13)
+				if (onDecline != null)
 				{
 					onDecline(interactor, base.gameObject);
 				}

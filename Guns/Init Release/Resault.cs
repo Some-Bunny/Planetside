@@ -66,38 +66,38 @@ namespace Planetside
 			gun.gunClass = GunClass.RIFLE;
 
 			//+10
-			Resault.Plus10AMMOVFXPrefab = SpriteBuilder.SpriteFromResource(Resault.Plus10AMMOVFX, null, false);
+			Resault.Plus10AMMOVFXPrefab = SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Resault/plus10ammo", null, false);
 			Resault.Plus10AMMOVFXPrefab.name = Resault.vfxName;
 			UnityEngine.Object.DontDestroyOnLoad(Resault.Plus10AMMOVFXPrefab);
 			FakePrefab.MarkAsFakePrefab(Resault.Plus10AMMOVFXPrefab);
 			Resault.Plus10AMMOVFXPrefab.SetActive(false);
 			//+20
-			Resault.Plus20AMMOVFXPrefab = SpriteBuilder.SpriteFromResource(Resault.Plus20AMMOVFX, null, false);
+			Resault.Plus20AMMOVFXPrefab = SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Resault/plus20ammo", null, false);
 			Resault.Plus20AMMOVFXPrefab.name = Resault.vfxName1;
 			UnityEngine.Object.DontDestroyOnLoad(Resault.Plus20AMMOVFXPrefab);
 			FakePrefab.MarkAsFakePrefab(Resault.Plus20AMMOVFXPrefab);
 			Resault.Plus20AMMOVFXPrefab.SetActive(false);
 			//+4
-			Resault.Plus4AMMOVFXPrefab = SpriteBuilder.SpriteFromResource(Resault.Plus4AMMOVFX, null, false);
+			Resault.Plus4AMMOVFXPrefab = SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Resault/plus4ammo", null, false);
 			Resault.Plus4AMMOVFXPrefab.name = Resault.vfxName2;
 			UnityEngine.Object.DontDestroyOnLoad(Resault.Plus4AMMOVFXPrefab);
 			FakePrefab.MarkAsFakePrefab(Resault.Plus4AMMOVFXPrefab);
 			Resault.Plus4AMMOVFXPrefab.SetActive(false);
 
 			//+16
-			Resault.Plus16AMMOVFXPrefab = SpriteBuilder.SpriteFromResource(Resault.Plus16AMMOVFX, null, false);
+			Resault.Plus16AMMOVFXPrefab = SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Resault/plus16ammosyn", null, false);
 			Resault.Plus16AMMOVFXPrefab.name = Resault.vfxName;
 			UnityEngine.Object.DontDestroyOnLoad(Resault.Plus16AMMOVFXPrefab);
 			FakePrefab.MarkAsFakePrefab(Resault.Plus16AMMOVFXPrefab);
 			Resault.Plus16AMMOVFXPrefab.SetActive(false);
 			//+40
-			Resault.Plus40AMMOVFXPrefab = SpriteBuilder.SpriteFromResource(Resault.Plus40AMMOVFX, null, false);
+			Resault.Plus40AMMOVFXPrefab = SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Resault/plus40ammosyn", null, false);
 			Resault.Plus40AMMOVFXPrefab.name = Resault.vfxName1;
 			UnityEngine.Object.DontDestroyOnLoad(Resault.Plus40AMMOVFXPrefab);
 			FakePrefab.MarkAsFakePrefab(Resault.Plus40AMMOVFXPrefab);
 			Resault.Plus40AMMOVFXPrefab.SetActive(false);
 			//+80
-			Resault.Plus80AMMOVFXPrefab = SpriteBuilder.SpriteFromResource(Resault.Plus80AMMOVFX, null, false);
+			Resault.Plus80AMMOVFXPrefab = SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Resault/plus80ammosyn", null, false);
 			Resault.Plus80AMMOVFXPrefab.name = Resault.vfxName2;
 			UnityEngine.Object.DontDestroyOnLoad(Resault.Plus80AMMOVFXPrefab);
 			FakePrefab.MarkAsFakePrefab(Resault.Plus80AMMOVFXPrefab);
@@ -126,6 +126,9 @@ namespace Planetside
 			ResaultSelf = gun;
 			ItemIDs.AddToList(gun.PickupObjectId);
 		}
+
+
+
 		public static int ResaultID;
 		public static Gun ResaultSelf; 
 
@@ -288,13 +291,7 @@ namespace Planetside
 			Ammo = (int)data[i];
 			i += 1;
 		}
-		private static string Plus10AMMOVFX = "Planetside/Resources/VFX/Resault/plus10ammo";
-		private static string Plus20AMMOVFX = "Planetside/Resources/VFX/Resault/plus20ammo";
-		private static string Plus4AMMOVFX = "Planetside/Resources/VFX/Resault/plus4ammo";
 
-		private static string Plus16AMMOVFX = "Planetside/Resources/VFX/Resault/plus16ammosyn";
-		private static string Plus40AMMOVFX = "Planetside/Resources/VFX/Resault/plus40ammosyn";
-		private static string Plus80AMMOVFX = "Planetside/Resources/VFX/Resault/plus80ammosyn";
 
 		private static GameObject Plus10AMMOVFXPrefab;
 		private static GameObject Plus20AMMOVFXPrefab;
@@ -310,9 +307,6 @@ namespace Planetside
 
 
 	}
-	public class MarkResault : BraveBehaviour
-	{
-
-	}
+	public class MarkResault : BraveBehaviour{}
 }
 

@@ -85,7 +85,7 @@ namespace Planetside
                 BasicBeamController beamComp = projectile.GenerateBeamPrefab(
                     "Planetside/Resources/Beams/TractorBeam/tractorbeam_mid_001",
                     new Vector2(10, 10),
-                    new Vector2(0, 0),
+                    new Vector2(0, -2),
                     BeamAnimPaths,
                     48,
                     //Beam Impact
@@ -139,6 +139,8 @@ namespace Planetside
 
             //GUN STATS
             gun.doesScreenShake = false;
+            gun.gunSwitchGroup = (PickupObjectDatabase.GetById(370) as Gun).gunSwitchGroup;
+
             gun.reloadTime = 2.4f;
             gun.muzzleFlashEffects.type = VFXPoolType.None;
             gun.barrelOffset.transform.localPosition = new Vector3(1.625f, 0.375f, 0f);

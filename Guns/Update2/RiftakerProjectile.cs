@@ -110,7 +110,7 @@ namespace Planetside
                                 bool ae = Vector2.Distance(aiactor.CenterPosition, centerPosition) < Rad * 16 && aiactor.healthHaver.GetMaxHealth() > 0f && aiactor != null && aiactor.specRigidbody != null && player != null;
                                 if (ae)
                                 {
-                                    aiactor.healthHaver.ApplyDamage((27f * num) * BraveTime.DeltaTime, Vector2.zero, "fwomp", CoreDamageTypes.Electric, DamageCategory.Normal, false, null, false);
+                                    aiactor.healthHaver.ApplyDamage((20f * num) * BraveTime.DeltaTime, Vector2.zero, "fwomp", CoreDamageTypes.Electric, DamageCategory.Normal, false, null, false);
                                     if (player.PlayerHasActiveSynergy("Event Horizon"))
                                     {
                                         if (!aiactor.healthHaver.IsBoss)

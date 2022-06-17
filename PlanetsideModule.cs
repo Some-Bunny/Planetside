@@ -118,6 +118,7 @@ namespace Planetside
             HolyChamberShrine.Add();
             TooLate.Add();
 
+            //TestTeleporter.Init();
 
 
             EnemyBuilder.Init();
@@ -321,6 +322,7 @@ namespace Planetside
             Stagnant.Init();
             Inquisitor.Init();
             Vessel.Init();
+            Unwilling.Init();
 
             DeTurretRight.Init();
             DeTurretLeft.Init();
@@ -446,9 +448,6 @@ namespace Planetside
             ETGModConsole.Commands.GetGroup("psog_floor").AddUnit("load", this.LoadFloor);
 
 
-            //AdvancedLogging.Log($"{MOD_NAME} v{VERSION} started successfully.", new Color(144, 6, 255, 255), false, true, null);
-
-
             PlanetsideModule.Log($"{MOD_NAME} v{VERSION} started successfully.", TEXT_COLOR);
             List<string> RandomFunnys = new List<string>
             {
@@ -555,6 +554,8 @@ namespace Planetside
             string color1 = "9006FF";
             OtherTools.PrintNoID("Unlock List:\n" + a + b + c + d + e + f + g + h + i + j + k + l + m + n + o + p + q, color1);
             OtherTools.Init();
+
+         
 
         }
 

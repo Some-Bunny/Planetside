@@ -53,6 +53,175 @@ namespace BreakAbleAPI
 
         public static Shader worldShader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTiltedCutoutFastPixelShadow");
 
+
+        /// <summary>
+        /// Generates, and returns a TeleporterController. This is for generating a Teleporter that you can teleport to from the map. Of note, any of the gameObject stuff at the end of the method is nullable and should use the default teleporter VFX stuff if left as null
+        /// </summary>
+        /// <param name="name">The name of your Teleporter object. Keep it simple, no special characters.</param>
+        /// <param name="name">The name of your Teleporter object. Keep it simple, no special characters.</param>
+        /// <param name="idleSpritePaths">Your idle aniamtion sprite paths. Only insert one path if you don't want it to be animated.</param>
+        /// <param name="activationSpritePaths">Your sprite paths for the aniamtion is plays when its activated.</param>
+        /// <param name="activeIdleSpritePaths">Your sprite paths for the idle aniamtion it plays when its active.</param>
+        /// <param name="MinimapIconPath">Your sprite path for the room icon.</param>
+        /// <param name="idleAnimFPS">Your idle aniamtion FPS.</param>
+        /// <param name="activateAnimFPS">Your active animtion FPS. Due to how Teleporters are coded, the "activate" and "active idle" animation are one aniamtion with the "active idle" just being looped. (CITATION NEEDED)</param>
+        /// <param name="isActiveVFX">The VFX that plays on the Teleporter when you teleporter to one.</param>
+        /// <param name="singleTimeActivateVFX">The VFX that plays on the Teleporter its initially activated.</param>
+        /// <param name="teleproterArrivedVFX">The VFX that plays on the Teleporter when you teleport to it.</param>
+        /// <param name="teleporterDepartVFX">The VFX that plays on the Teleporter when you teleport away from it.</param>
+
+        public static TeleporterController GenerateTeleporterController(string name, string[] idleSpritePaths, string[] activationSpritePaths, string[] activeIdleSpritePaths, string MinimapIconPath, int idleAnimFPS = 5, int activateAnimFPS = 5, GameObject isActiveVFX = null, GameObject singleTimeActivateVFX = null, GameObject teleproterArrivedVFX = null, GameObject teleporterDepartVFX = null, tk2dSpriteAnimator portalVFX = null)
+        {
+
+            TeleporterController existingTeleporterController = ResourceManager.LoadAssetBundle("brave_resources_001").LoadAsset<GameObject>("Teleporter_Gungeon_01").GetComponentInChildren<TeleporterController>();
+
+            GameObject gameObject = SpriteBuilder.SpriteFromResource(idleSpritePaths[0], null, false);
+            FakePrefab.MarkAsFakePrefab(gameObject);
+            gameObject.name = name;
+            gameObject.layer = 20;
+
+            tk2dSpriteCollectionData SpriteObjectSpriteCollection = SpriteBuilder.ConstructCollection(gameObject, (name + "_Collection"));
+            int spriteID = SpriteBuilder.AddSpriteToCollection(idleSpritePaths[0], SpriteObjectSpriteCollection);
+            tk2dSprite sprite = gameObject.GetOrAddComponent<tk2dSprite>();
+            sprite.SetSprite(SpriteObjectSpriteCollection, spriteID);
+
+
+            tk2dSpriteAnimator animator = gameObject.GetOrAddComponent<tk2dSpriteAnimator>();
+            tk2dSpriteAnimation animation = gameObject.AddComponent<tk2dSpriteAnimation>();
+            animation.clips = new tk2dSpriteAnimationClip[0];
+            animator.Library = animation;
+
+            TeleporterController teleporterController = gameObject.GetOrAddComponent<TeleporterController>();
+
+            teleporterController.sprite = sprite;
+            teleporterController.spriteAnimator = animator;
+
+
+            GameObject roomIcon = SpriteBuilder.SpriteFromResource(MinimapIconPath, null, false);
+            FakePrefab.MarkAsFakePrefab(roomIcon);
+            roomIcon.name = name+"_RoomIcon";
+            roomIcon.layer = 22;
+            teleporterController.teleporterIcon = roomIcon;
+
+            if (isActiveVFX == null)
+            {
+                GameObject clonedextantActiveVFX = FakePrefab.Clone(existingTeleporterController.extantActiveVFX);
+                clonedextantActiveVFX.PostProcessFakePrefab();
+                teleporterController.extantActiveVFX = clonedextantActiveVFX;
+            }
+            else
+            { teleporterController.extantActiveVFX = isActiveVFX;}
+
+
+            if (singleTimeActivateVFX != null)
+            {
+                teleporterController.onetimeActivateVFX = singleTimeActivateVFX;
+            }
+
+            if (teleproterArrivedVFX == null)
+            {
+
+                GameObject clonedteleportArrivalVFX = FakePrefab.Clone(existingTeleporterController.teleportArrivalVFX);
+                clonedteleportArrivalVFX.PostProcessFakePrefab();
+                teleporterController.teleportArrivalVFX = clonedteleportArrivalVFX;
+            }
+            else
+            { teleporterController.teleportArrivalVFX = teleproterArrivedVFX; }
+
+
+            if (teleporterDepartVFX == null)
+            {
+
+                GameObject clonedteleportDepartureVFX = FakePrefab.Clone(existingTeleporterController.teleportDepartureVFX);
+                clonedteleportDepartureVFX.PostProcessFakePrefab();
+                teleporterController.teleportDepartureVFX = clonedteleportDepartureVFX;
+            }
+            else
+            { teleporterController.teleportDepartureVFX = teleporterDepartVFX; }
+
+
+            if (portalVFX == null)
+            {
+
+                GameObject clonedportalVFX = FakePrefab.Clone(existingTeleporterController.portalVFX.gameObject);
+                clonedportalVFX.PostProcessFakePrefab();
+                teleporterController.portalVFX = clonedportalVFX.GetComponent<tk2dSpriteAnimator>();
+            }
+            else
+            { teleporterController.portalVFX = portalVFX; }
+
+            List<tk2dSpriteAnimationClip> clips = new List<tk2dSpriteAnimationClip>();
+
+
+            if (idleSpritePaths.Length >= 1)
+            {
+                tk2dSpriteAnimationClip idleClip = new tk2dSpriteAnimationClip() { name = "idle", frames = new tk2dSpriteAnimationFrame[0], fps = idleAnimFPS };
+                List<tk2dSpriteAnimationFrame> frames = new List<tk2dSpriteAnimationFrame>();
+                for (int i = 0; i < idleSpritePaths.Length; i++)
+                {
+                    tk2dSpriteCollectionData collection = SpriteObjectSpriteCollection;
+                    int frameSpriteId = SpriteBuilder.AddSpriteToCollection(idleSpritePaths[i], collection);
+                    tk2dSpriteDefinition frameDef = collection.spriteDefinitions[frameSpriteId];
+                    frames.Add(new tk2dSpriteAnimationFrame { spriteId = frameSpriteId, spriteCollection = collection });
+                    frameDef.ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.LowerLeft);
+                }
+                idleClip.frames = frames.ToArray();
+                idleClip.wrapMode = tk2dSpriteAnimationClip.WrapMode.Loop;
+                animator.Library.clips = animation.clips.Concat(new tk2dSpriteAnimationClip[] { idleClip }).ToArray();
+                animator.playAutomatically = true;
+                animator.DefaultClipId = animator.GetClipIdByName("idle");
+                clips.Add(idleClip);
+
+                tk2dSpriteAnimationClip[] array = clips.ToArray();
+                animator.Library.clips = array;
+                animator.playAutomatically = true;
+                animator.DefaultClipId = animator.GetClipIdByName("idle");
+
+            }
+
+            if (activationSpritePaths.Length >= 1)
+            {
+                tk2dSpriteAnimationClip unsealClip = new tk2dSpriteAnimationClip() { name = "teleport_pad_activate", frames = new tk2dSpriteAnimationFrame[0], fps = activateAnimFPS };
+                List<tk2dSpriteAnimationFrame> unsealFrames = new List<tk2dSpriteAnimationFrame>();
+
+                for (int i = 0; i < activationSpritePaths.Length; i++)
+                {
+                    tk2dSpriteCollectionData collection = SpriteObjectSpriteCollection;
+                    int frameSpriteId = SpriteBuilder.AddSpriteToCollection(activationSpritePaths[i], collection);
+                    tk2dSpriteDefinition frameDef = collection.spriteDefinitions[frameSpriteId];
+                    unsealFrames.Add(new tk2dSpriteAnimationFrame { spriteId = frameSpriteId, spriteCollection = collection });
+                    frameDef.ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.LowerLeft);
+                }
+
+                for (int i = 0; i < activeIdleSpritePaths.Length; i++)
+                {
+                    tk2dSpriteCollectionData collection = SpriteObjectSpriteCollection;
+                    int frameSpriteId = SpriteBuilder.AddSpriteToCollection(activeIdleSpritePaths[i], collection);
+                    tk2dSpriteDefinition frameDef = collection.spriteDefinitions[frameSpriteId];
+                    unsealFrames.Add(new tk2dSpriteAnimationFrame { spriteId = frameSpriteId, spriteCollection = collection });
+                    frameDef.ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.LowerLeft);
+                }
+                unsealClip.wrapMode = tk2dSpriteAnimationClip.WrapMode.LoopSection;
+                unsealClip.loopStart = activationSpritePaths.Length;
+                unsealClip.frames = unsealFrames.ToArray();
+                animator.Library.clips = animation.clips.Concat(new tk2dSpriteAnimationClip[] { unsealClip }).ToArray();
+                clips.Add(unsealClip);
+            }
+
+            animator.Library.clips = clips.ToArray();
+            animator.playAutomatically = true;
+            animator.DefaultClipId = animator.GetClipIdByName("idle");
+
+            return teleporterController;
+        }
+
+        private static void PostProcessFakePrefab(this GameObject self)
+        {
+            FakePrefab.MarkAsFakePrefab(self);
+            UnityEngine.Object.DontDestroyOnLoad(self);
+        }
+
+
         public static DungeonDoorSubsidiaryBlocker GenerateDungeonDoorSubsidiaryBlocker(string name, string[] idleSpritePaths, string[] sealSpritePaths, string[] unsealSpritePaths, bool isNorthSouthDoor, string[] playerNearSealedDoorAnimPaths = null, int idleAnimFPS = 5, int sealAnimFPS = 5, int unsealAnimFPS = 5, int playerNearSealedDoorAnimFPS = 5, string[] chainIdleSpritePaths = null, string[] chainSealSpritePaths = null, string[] chainUnsealSpritePaths = null, string[] chainPlayerNearChainPaths = null )
         {
 
@@ -326,9 +495,6 @@ namespace BreakAbleAPI
             //controller.messageTransformPoint = GenerateTransformObject().transform;
             return controller;
         }
-
-
-
 
         public static DungeonDoorController.DoorModule GenerateDoorModule(string name, string[] idleSpritePaths, string[] closeAnimPaths, string[] openAimPaths, int AnimFPS = 5)
         {

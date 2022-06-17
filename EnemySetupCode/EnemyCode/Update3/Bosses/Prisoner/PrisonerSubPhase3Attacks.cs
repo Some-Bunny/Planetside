@@ -143,7 +143,7 @@ namespace Planetside
 				for (int i = 0; i < 60; i++)
 				{
 					float t = (float)i / (float)60;
-					this.TurnSpeed = Mathf.SmoothStep(60, 30, t) * turnSign;
+					this.TurnSpeed = Mathf.SmoothStep(60, 40, t) * turnSign;
 					yield return this.Wait(1);
 				}
 
@@ -165,7 +165,7 @@ namespace Planetside
 				for (int i = 0; i < 60; i++)
 				{
 					float t = (float)i / (float)60;
-					this.TurnSpeed = Mathf.SmoothStep(30, 18f, t) * turnSign;
+					this.TurnSpeed = Mathf.SmoothStep(40, 22.5f, t) * turnSign;
 					yield return this.Wait(1);
 
 				}
@@ -185,7 +185,7 @@ namespace Planetside
 				for (int i = 0; i < 90; i++)
 				{
 					float t = (float)i / (float)90;
-					this.TurnSpeed = Mathf.SmoothStep(18, 0, t) * turnSign;
+					this.TurnSpeed = Mathf.SmoothStep(22.5f, 0, t) * turnSign;
 					yield return this.Wait(1);
 				}
 				FireQuickBurst();
@@ -392,7 +392,7 @@ namespace Planetside
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("ffca09398635467da3b1f4a54bcfda80").bulletBank.GetBullet("directedfire"));
 				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSniper);
 				PrisonerPhaseOne.PrisonerController controller = base.BulletBank.aiActor.GetComponent<PrisonerPhaseOne.PrisonerController>();
-				if (Vector2.Distance(base.BulletBank.aiActor.transform.position, ((Vector2)base.BulletBank.aiActor.ParentRoom.GetCenterCell())) < 8)
+				if (Vector2.Distance(base.BulletBank.aiActor.sprite.WorldCenter, ((Vector2)base.BulletBank.aiActor.ParentRoom.GetCenterCell())) < 6)
                 {
 					controller.MoveTowardsPositionMethod(2f, 3);
 				}
@@ -425,10 +425,10 @@ namespace Planetside
 
 				}
 				yield return this.Wait(60);
-				for (int e = 0; e < 5; e++)
+				for (int e = 0; e < 6; e++)
 				{
-					float m = UnityEngine.Random.Range(25, 45);
-					for (int i = -3; i < 4; i++)
+					float m = UnityEngine.Random.Range(25, 40);
+					for (int i = -4; i < 5; i++)
 					{
 						ISDodgeAble = false;
 
@@ -451,10 +451,10 @@ namespace Planetside
 						component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f);
 						component2.sprite.renderer.material.SetColor("_OverrideColor", ISDodgeAble == false ? laser : laserRed);
 						component2.sprite.renderer.material.SetColor("_EmissiveColor", ISDodgeAble == false ? laser : laserRed);
-						GameManager.Instance.StartCoroutine(FlashReticles(component2, ISDodgeAble, Angle, Offset, this, ISDodgeAble == false ? "sniperUndodgeable" : "directedfire", ISDodgeAble == false ? 1 : 1, 3));
+						GameManager.Instance.StartCoroutine(FlashReticles(component2, ISDodgeAble, Angle, Offset, this, ISDodgeAble == false ? "sniperUndodgeable" : "directedfire", ISDodgeAble == false ? 1 : 2, 2.5f));
 						controller.extantReticles.Add(gameObject);
 					}
-					yield return this.Wait(40);
+					yield return this.Wait(30);
 				}
 
 
@@ -944,12 +944,12 @@ namespace Planetside
 					base.BulletBank.aiActor.StartCoroutine(SwipeLaser(CentreAngle - 180, -156, this, 1.5f - (0.5f * e)));
 					base.BulletBank.aiActor.StartCoroutine(SwipeLaser(CentreAngle - 180, 156, this, 1.5f - (0.5f * e)));
 				}
-				for (int e = 0; e < 12; e++)
+				for (int e = 0; e < 10; e++)
 				{
-					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(CentreAngle, this, 0.75f, 4, -25));
-					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(CentreAngle, this, 0.75f, 4, 25));
+					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(CentreAngle, this, 0.75f, 4, -18));
+					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(CentreAngle, this, 0.75f, 4, 18));
 					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(CentreAngle, this, 0.75f, 4));
-					yield return this.Wait(40);
+					yield return this.Wait(50);
 				}
 				yield return this.Wait(30);
 				yield break;
@@ -1078,6 +1078,10 @@ namespace Planetside
 
 				for (int e = 0; e < 25; e++)
 				{
+					if (parent.IsEnded || parent.Destroyed)
+					{
+						yield break;
+					}
 					for (int i = 0; i < 36; i++)
 					{
 						float t = (float)i / (float)36;
@@ -1219,7 +1223,7 @@ namespace Planetside
 				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSniper);
 
 				if (Vector2.Distance(base.BulletBank.aiActor.transform.position, ((Vector2)base.BulletBank.aiActor.ParentRoom.GetCenterCell())) < 8)
-                {
+				{
 					controller.MoveTowardsPositionMethod(3f, 3);
 				}
 				for (int e = 0; e < GameManager.Instance.AllPlayers.Length; e++)

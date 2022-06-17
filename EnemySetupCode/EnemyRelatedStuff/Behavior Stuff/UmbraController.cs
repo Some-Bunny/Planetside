@@ -17,9 +17,8 @@ public class UmbraController : BraveBehaviour
 
 		base.aiActor.sprite.usesOverrideMaterial = true;
 
-		var texture = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\plating.png");
 		base.aiActor.sprite.renderer.material.shader = Shader.Find("Brave/PlayerShaderEevee");
-		base.aiActor.sprite.renderer.material.SetTexture("_EeveeTex", texture);
+		base.aiActor.sprite.renderer.material.SetTexture("_EeveeTex", StaticTextures.NebulaTexture);
 		base.aiActor.sprite.renderer.material.SetFloat("_StencilVal", 0);
 		base.aiActor.sprite.renderer.material.SetFloat("_FlatColor", 0f);
 		base.aiActor.sprite.renderer.material.SetFloat("_Perpendicular", 0);
@@ -37,9 +36,8 @@ public class UmbraController : BraveBehaviour
     {
 		if (!base.aiActor.IsBlackPhantom && base.aiActor != null)
         {
-			var texture = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\plating.png");
 			base.aiActor.sprite.renderer.material.shader = Shader.Find("Brave/PlayerShaderEevee");
-			base.aiActor.sprite.renderer.material.SetTexture("_EeveeTex", texture);
+			base.aiActor.sprite.renderer.material.SetTexture("_EeveeTex", StaticTextures.NebulaTexture);
 			base.aiActor.sprite.renderer.material.SetFloat("_StencilVal", 0);
 			base.aiActor.sprite.renderer.material.SetFloat("_FlatColor", 0f);
 			base.aiActor.sprite.renderer.material.SetFloat("_Perpendicular", 0);

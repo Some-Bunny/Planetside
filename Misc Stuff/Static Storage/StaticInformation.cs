@@ -167,18 +167,28 @@ namespace Planetside
                 undodgeableSkull = undodgeableSkullvar;
                 undodgeableSkull.AudioEvent = null;
                 undodgeableSkull.MuzzleFlashEffects = new VFXPool { type = VFXPoolType.None, effects = new VFXComplex[0] };
-
-
-
-
-                //					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("ec6b674e0acd4553b47ee94493d66422").bulletBank.GetBullet("bigBullet"));
-
             }
+
+
+            //2feb50a6a40f4f50982e89fd276f6f15
+            // EnemyDatabase.GetOrLoadByGuid("ec6b674e0acd4553b47ee94493d66422").bulletBank
+            /*
+            for (int i = 0; i < EnemyDatabase.GetOrLoadByGuid("2feb50a6a40f4f50982e89fd276f6f15").bulletBank.Bullets.Count; i++)
+            {
+                ETGModConsole.Log(EnemyDatabase.GetOrLoadByGuid("2feb50a6a40f4f50982e89fd276f6f15").bulletBank.Bullets[i].Name);
+            }
+            */
 
             {
                 AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("ec6b674e0acd4553b47ee94493d66422").bulletBank.GetBullet("bigBullet"), "undodgeableBigBullet");
                 entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
                 undodgeableBigBullet = entry;
+            }
+
+            {
+                AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("2feb50a6a40f4f50982e89fd276f6f15").bulletBank.Bullets[1], "undodgeableBatBullet");
+                entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                undodgeableBatBullet = entry;
             }
         }
 
@@ -244,6 +254,7 @@ namespace Planetside
         public static AIBulletBank.Entry undodgeableIcicle;
         public static AIBulletBank.Entry undodgeableChainLink;
         public static AIBulletBank.Entry undodgeableSkull;
+        public static AIBulletBank.Entry undodgeableBatBullet;
 
     }
 }

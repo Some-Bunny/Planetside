@@ -37,12 +37,6 @@ namespace Planetside
 			GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(56) as Gun, true, false);
 			gun.SetBaseMaxAmmo(70);
 			
-			//gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_WPN_woodbow_shot_01";
-			//gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].triggerEvent = true;
-
-			//gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.reloadAnimation).frames[0].eventAudio = "Play_npc_Blessing_GunAlt_01";
-			//gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.reloadAnimation).frames[0].triggerEvent = true;
-
 			gun.DefaultModule.ammoCost = 1;
 			gun.DefaultModule.shootStyle = ProjectileModule.ShootStyle.Charged;
 			gun.reloadTime = 3.4f;
@@ -61,11 +55,7 @@ namespace Planetside
 
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.chargeAnimation).wrapMode = tk2dSpriteAnimationClip.WrapMode.LoopSection;
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.chargeAnimation).loopStart = 3;
-
-			//gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
-			//gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Holy Spear", "Planetside/Resources/GunClips/DivineLight/divinelightfull", "Planetside/Resources/GunClips/DivineLight/divinelightempty");
-
-
+	
 			Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(gun.DefaultModule.projectiles[0]); projectile.gameObject.SetActive(false);
 			FakePrefab.MarkAsFakePrefab(projectile.gameObject);
 			UnityEngine.Object.DontDestroyOnLoad(projectile);
@@ -75,7 +65,7 @@ namespace Planetside
 
 			ImprovedAfterImage yes = projectile.gameObject.AddComponent<ImprovedAfterImage>();
 			yes.spawnShadows = true;
-			yes.shadowLifetime = 0.75f;
+			yes.shadowLifetime = 0.7f;
 			yes.shadowTimeDelay = 0.01f;
 			yes.dashColor = new Color(1.2f, 0f, 2f, 1f);
 
@@ -111,7 +101,7 @@ namespace Planetside
 			ProjectileModule.ChargeProjectile whistler1 = new ProjectileModule.ChargeProjectile
 			{
 				Projectile = projectile,
-				ChargeTime = 0.8f,
+				ChargeTime = 0.6f,
 				AdditionalWwiseEvent = "Play_OBJ_pastkiller_charge_01",
 			};
 			gun.DefaultModule.chargeProjectiles = new List<ProjectileModule.ChargeProjectile>
@@ -150,14 +140,6 @@ namespace Planetside
 			Whistler.WhistlerID = gun.PickupObjectId;
 			ItemIDs.AddToList(gun.PickupObjectId);			
 		}
-		public static Projectile DivineLightProjectile;
 		public static int WhistlerID;
-
-	
-		protected override void Update()
-		{
-			base.Update();
-			
-		}
 	}
 }

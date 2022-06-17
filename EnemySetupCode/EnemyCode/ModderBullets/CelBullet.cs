@@ -83,6 +83,7 @@ namespace Planetside
 					resetCooldownOnDamage = null,
 					RequiresLineOfSight = true,
 					MaxUsages = 0,
+					
 				}
 			};
 			AIActor aIActor = EnemyDatabase.GetOrLoadByGuid("01972dee89fc4404a5c408d50007dad5");

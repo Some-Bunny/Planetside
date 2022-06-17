@@ -33,7 +33,6 @@ namespace Planetside
 			for (int i = 0; i < 3; i++)
 			{
 				gun.AddProjectileModuleFrom(PickupObjectDatabase.GetById(33) as Gun, true, false);
-
 			}
 
 			gun.Volley.projectiles[0].ammoCost = 1;
@@ -116,7 +115,6 @@ namespace Planetside
 			gun.SetBaseMaxAmmo(25);
 			gun.muzzleFlashEffects = (PickupObjectDatabase.GetById(417) as Gun).muzzleFlashEffects;
 			gun.CanReloadNoMatterAmmo = true;
-			//gun.GoopReloadsFree = true;
 
 
 			gun.quality = PickupObject.ItemQuality.D;
@@ -186,8 +184,7 @@ namespace Planetside
 
 		}
 		protected override void OnPickup(PlayerController player)
-		{
-			
+		{		
 			base.OnPickup(player);
 		}
 
@@ -197,8 +194,7 @@ namespace Planetside
 		}
 
 		public override void OnReloadPressed(PlayerController player, Gun bruhgun, bool bSOMETHING)
-		{
-			
+		{	
 			if (gun.IsReloading && this.HasReloaded)
 			{
 				AkSoundEngine.PostEvent("Stop_WPN_All", base.gameObject);
@@ -250,7 +246,6 @@ namespace Planetside
 			{"demonwallgoop", "fire" },
 
 			//Green Fire Goops
-			//{EasyGoopDefinitions.GreenFireDef.name.ToLower(), "hellfire" },
 			{"greennapalmgoopthatworks", "hellfire" },
 
 			//Blob Goops 
@@ -259,7 +254,6 @@ namespace Planetside
 
 			//Oil Goops 
 			{EasyGoopDefinitions.OilDef.name, "oil" },
-			//{"oil goop", "oil" },
 
 			//Cheese Goops 
 			{EasyGoopDefinitions.CheeseDef.name, "cheese" },

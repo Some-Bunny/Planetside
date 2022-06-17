@@ -118,12 +118,11 @@ namespace Planetside
 			Destroy(epicwin, 8);
 			AkSoundEngine.PostEvent("Play_OBJ_nuke_blast_01", player.gameObject);
 			
-				ExplosionData defaultSmallExplosionData = StaticExplosionDatas.genericSmallExplosion;
+			ExplosionData defaultSmallExplosionData = StaticExplosionDatas.genericSmallExplosion;
 			defaultSmallExplosionData.damageRadius = 6;
 			defaultSmallExplosionData.damage = 1000;
-				Exploder.Explode(position.ToCenterVector3(1), defaultSmallExplosionData, Vector2.zero, null, false, CoreDamageTypes.None, false);
-
-				yield break;
+			Exploder.Explode(position.ToCenterVector3(1), defaultSmallExplosionData, Vector2.zero, null, false, CoreDamageTypes.None, false);
+			yield break;
         }
 		private IEnumerator DeployReticle(Vector2 startPosition, float aimDir, float ID)
 		{
@@ -149,7 +148,8 @@ namespace Planetside
 				if (component2 != null)
 				{
                     component2.dimensions = new Vector2(1000f, 1f);
-                    component2.transform.position = Vector2.Lerp(startPosition, startPosition + MathToolbox.GetUnitOnCircle(aimDir, 4), t);
+					if (UnityEngine.Random.value < 0.33f) { GlobalSparksDoer.DoSingleParticle(Vector2.Lerp(startPosition, startPosition + MathToolbox.GetUnitOnCircle(aimDir, 4), t), Vector3.up, null, null, null, GlobalSparksDoer.SparksType.EMBERS_SWIRLING); }
+					component2.transform.position = Vector2.Lerp(startPosition, startPosition + MathToolbox.GetUnitOnCircle(aimDir, 4), t);
 					component2.sprite.renderer.material.SetFloat("_EmissivePower", 50);
 					component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 20);
 					component2.HeightOffGround = -2;
@@ -169,6 +169,7 @@ namespace Planetside
 				{
 					aimDir++;
 					component2.dimensions = new Vector2(1000f, 1f);
+					if (UnityEngine.Random.value < 0.33f) { GlobalSparksDoer.DoSingleParticle(Vector2.Lerp(startPosition + MathToolbox.GetUnitOnCircle(aimDir, 4), startPosition + MathToolbox.GetUnitOnCircle(aimDir, 0), t), Vector3.up, null, null, null, GlobalSparksDoer.SparksType.EMBERS_SWIRLING); }
 					component2.transform.position = Vector2.Lerp(startPosition + MathToolbox.GetUnitOnCircle(aimDir, 4), startPosition + MathToolbox.GetUnitOnCircle(aimDir, 0), t);
 					component2.sprite.renderer.material.SetFloat("_EmissivePower", 50 * (t*10));
 					component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 20 * (5*t));

@@ -128,7 +128,7 @@ namespace Planetside
 			return attacher.transform.Find(name).gameObject;
 		}
 
-		public static AIActor CreateNewBulletBankerEnemy(string guid, string DisplayName,int sizeX, int sizeY, string firstIdleFrame, string[] spritePaths ,List<int> IdleFrameKeys, List<int> DeathFrameKeys, List<int> AttackFrameKeys,Script bulletScript = null, float MovementSpeed = 2.5f, float HP = 14, float IdleFPS = 5f,float MovementFPS = 10f, float DeathFPS = 8f)
+		public static AIActor CreateNewBulletBankerEnemy(string guid, string DisplayName,int sizeX, int sizeY, string firstIdleFrame, string[] spritePaths ,List<int> IdleFrameKeys, List<int> DeathFrameKeys, List<int> AttackFrameKeys,Script bulletScript = null, float MovementSpeed = 2.5f, float HP = 14, float IdleFPS = 5f,float MovementFPS = 10f, float DeathFPS = 8f, float attackFPS = 6f)
         {
 		   tk2dSpriteCollectionData collectionData = new tk2dSpriteCollectionData();
 
@@ -238,30 +238,9 @@ namespace Planetside
 					}
 			};
 
-			if (AttackFrameKeys != null)
-            {
-				aiAnimator.OtherAnimations = new List<AIAnimator.NamedDirectionalAnimation>
-				{
-					new AIAnimator.NamedDirectionalAnimation
-					{
-						name = "attack",
-						anim = new DirectionalAnimation
-						{
-							Type = DirectionalAnimation.DirectionType.TwoWayHorizontal,
-							Flipped = new DirectionalAnimation.FlipType[2],
-							AnimNames = new string[]
-							{
-							"attack_left",
-							"attack_right"
 
-							}
-						}
-					}
-				};
-			}
 
-			
-
+			EnemyToolbox.AddNewDirectionAnimation(companion.aiAnimator, "attack", new string[] { "attack_right", "attack_left" }, new DirectionalAnimation.FlipType[2], DirectionalAnimation.DirectionType.TwoWayHorizontal);
 
 
 			collectionData = SpriteBuilder.ConstructCollection(prefab, guid+"_Collection");
@@ -280,9 +259,18 @@ namespace Planetside
 			SpriteBuilder.AddAnimation(companion.spriteAnimator, collectionData, DeathFrameKeys, "die_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = DeathFPS;
 			if (AttackFrameKeys != null)
             {
-				SpriteBuilder.AddAnimation(companion.spriteAnimator, collectionData, AttackFrameKeys, "attack_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = DeathFPS;
-				SpriteBuilder.AddAnimation(companion.spriteAnimator, collectionData, AttackFrameKeys, "attack_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = DeathFPS;
+				SpriteBuilder.AddAnimation(companion.spriteAnimator, collectionData, AttackFrameKeys, "attack_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = attackFPS;
+				SpriteBuilder.AddAnimation(companion.spriteAnimator, collectionData, AttackFrameKeys, "attack_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = attackFPS;
 			}
+			else
+            {
+				SpriteBuilder.AddAnimation(companion.spriteAnimator, collectionData, IdleFrameKeys, "attack_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = attackFPS;
+				SpriteBuilder.AddAnimation(companion.spriteAnimator, collectionData, IdleFrameKeys, "attack_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = attackFPS;
+			}
+
+			EnemyToolbox.AddEventTriggersToAnimation(companion.GetComponent<tk2dSpriteAnimator>(), "attack_left", new Dictionary<int, string> { { 0, "tellCharge" } });
+			EnemyToolbox.AddEventTriggersToAnimation(companion.GetComponent<tk2dSpriteAnimator>(), "attack_right", new Dictionary<int, string> { { 0, "tellCharge" } });
+
 			var bs = prefab.GetComponent<BehaviorSpeculator>();
 			prefab.GetComponent<ObjectVisibilityManager>();
 			BehaviorSpeculator behaviorSpeculator = EnemyDatabase.GetOrLoadByGuid("01972dee89fc4404a5c408d50007dad5").behaviorSpeculator;
@@ -319,7 +307,7 @@ namespace Planetside
 					RequiresLineOfSight = true,
 					StopDuring = ShootBehavior.StopType.Attack,
 					Uninterruptible = true,
-					ChargeAnimation = AttackFrameKeys != null ? "attack" : null
+					ChargeAnimation = "attack"
 				}
 			};
 			}
@@ -369,8 +357,9 @@ namespace Planetside
 				{
 					base.aiActor.HasBeenEngaged = true;
 				}
-
 			}
+
+			
 			private void Start()
 			{
 				base.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("465da2bb086a4a88a803f79fe3a27677").bulletBank.GetBullet("homing"));
@@ -383,8 +372,27 @@ namespace Planetside
 					base.aiActor.sprite.renderer.material.SetFloat("_EmissivePower", 40);
 					base.aiActor.sprite.renderer.material.SetFloat("_EmissiveColorPower", 1.2f);
 				}
+				base.aiActor.spriteAnimator.AnimationEventTriggered += this.AnimationEventTriggered;
 				m_StartRoom = aiActor.GetAbsoluteParentRoom();
 				base.aiActor.healthHaver.OnPreDeath += (obj) =>{AkSoundEngine.PostEvent("Play_ENM_highpriest_blast_01", base.aiActor.gameObject);};
+			}
+			private void AnimationEventTriggered(tk2dSpriteAnimator animator, tk2dSpriteAnimationClip clip, int frameIdx)
+            {
+				if (clip.GetFrame(frameIdx).eventInfo.Contains("tellCharge"))
+                {
+
+					GameObject gameObject = SpawnManager.SpawnVFX(StaticVFXStorage.MachoBraceDustupVFX, false);
+					gameObject.transform.position = base.aiActor.transform.position - new Vector3(1.25f, 1.25f);
+					tk2dSpriteAnimator component2 = gameObject.GetComponent<tk2dSpriteAnimator>();
+					if (component2 != null)
+					{
+						component2.ignoreTimeScale = true;
+						component2.AlwaysIgnoreTimeScale = true;
+						component2.AnimateDuringBossIntros = true;
+						component2.alwaysUpdateOffscreen = true;
+						component2.playAutomatically = true;
+					}
+				}
 			}
 		}
 	}

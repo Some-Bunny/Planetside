@@ -27,7 +27,7 @@ namespace Planetside
 			GunExt.SetupSprite(gun, null, "lockongun_idle_001", 11);
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_wpn_voidcannon_shot_01";
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].triggerEvent = true;
-			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 30);
+			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 40);
 			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 6);
 			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 2);
 			GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(345) as Gun, true, false);

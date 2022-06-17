@@ -172,7 +172,6 @@ namespace Planetside
 		private static List<GameObject> Chargerreticles = new List<GameObject>();
 		private bool VFXActive;
 		private float elapsed;
-		//private static AssetBundle bundle = ResourceManager.LoadAssetBundle("brave_resources_001");
 		private static GameObject LaserReticle;
 
 
@@ -233,13 +232,9 @@ namespace Planetside
 								tk2dTiledSprite component2 = obj.GetComponent<tk2dTiledSprite>();
 
 								if (i == -3 | i == 0 | i == 3)	
-								{
-									component2.dimensions = new Vector2((16) * 2f, 1f);
-								}
+								{component2.dimensions = new Vector2((16) * 2f, 1f);	}
 								else
-								{
-									component2.dimensions = new Vector2((10) * 2f, 1f);
-								}
+								{component2.dimensions = new Vector2((10) * 2f, 1f);	}
 								component2.usesOverrideMaterial = true;
 								component2.sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
 								component2.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
@@ -266,10 +261,8 @@ namespace Planetside
 						{
 							projectileModule.angleVariance = elapsed * (Accuracy*3);
 							Projectile proj = projectileModule.GetCurrentProjectile();
-							float dmg = player.stats.GetStatValue(PlayerStats.StatType.Damage);
-							float spd = player.stats.GetStatValue(PlayerStats.StatType.ProjectileSpeed);
-							proj.baseData.damage = ((elapsed * 8) + 4)*dmg;
-							proj.baseData.speed = UnityEngine.Random.Range(22f, 28f) * spd; 
+							proj.baseData.damage = ((elapsed * 8) + 4);
+							proj.baseData.speed = UnityEngine.Random.Range(22f, 28f); 
 						}
 					}
 					else
@@ -321,10 +314,6 @@ namespace Planetside
 				{
 					CleanupReticles();
 				}
-				//else
-                //{
-					//gun.GetComponent<tk2dSpriteAnimator>().Play("start");
-				//}
 			}
 		}
 	}

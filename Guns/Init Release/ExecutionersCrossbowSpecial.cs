@@ -53,12 +53,9 @@ namespace Planetside
 		}
 		private void HandleHit(Projectile arg1, SpeculativeRigidbody arg2, bool arg3)
 		{
-			//PlayerController player = GameManager.Instance.PrimaryPlayer;
 			if (arg2.aiActor != null && !arg2.healthHaver.IsBoss)
 			{
-				GameObject original;
-				original = ExecutionersCrossbowSpecial.LockInVFXPrefab;
-				tk2dSprite component = UnityEngine.Object.Instantiate<GameObject>(original, arg2.transform).GetComponent<tk2dSprite>();
+				tk2dSprite component = UnityEngine.Object.Instantiate<GameObject>(ExecutionersCrossbowSpecial.LockInVFXPrefab, arg2.transform).GetComponent<tk2dSprite>();
 				component.name = "pain";
 				component.PlaceAtPositionByAnchor(arg2.sprite.WorldTopCenter, tk2dBaseSprite.Anchor.LowerCenter);
 				component.scale = Vector3.one;

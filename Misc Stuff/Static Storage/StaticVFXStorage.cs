@@ -135,7 +135,6 @@ namespace Planetside
                     }
                 }
             }
-
             GunFullyChargedVFX = BraveResources.Load<GameObject>("Global VFX/VFX_DBZ_Charge", ".prefab");
             DodgeRollImpactVFX = (GameObject)BraveResources.Load("Global VFX/VFX_DodgeRollHit", ".prefab");
 
