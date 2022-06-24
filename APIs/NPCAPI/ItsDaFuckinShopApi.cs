@@ -229,7 +229,7 @@ namespace NpcApi
         /// <param name="hasMinimapIcon">Whether the shop has a minimap icon to show what room theyre in</param> 
         /// <param name="minimapIconSpritePath">Sprite path minimap icon leave blank to just use deafult smiley face</param> 
         /// 
-        /// <param name="addToMainNpcPool">Whether the shop should be added to the pool of npcs that show up in the main shop a long side bello</param> 
+        /// <param name="addToMainNpcPool">Whether the shop should be added to the pool of npcs that show up in the main shop a long side bello</param> currencyIconPath
         /// <param name="percentChanceForMainPool">How likely it is for the shop to show up in the main pool base game shops use 0.1</param> 
         /// 
         /// <param name="prerequisites">These do unlocks and shit</param> 

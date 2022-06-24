@@ -30,6 +30,22 @@ namespace Planetside
                 typeof(Gun).GetMethod("Reload", BindingFlags.Public | BindingFlags.Instance),
                 typeof(MultiActiveReloadManager).GetMethod("ReloadHook")
             );
+
+            Hook hook5 = new Hook(
+               typeof(Gun).GetMethod("DropGun", BindingFlags.Public | BindingFlags.Instance),
+               typeof(MultiActiveReloadManager).GetMethod("DropGunHook")
+           );
+        }
+
+        public static DebrisObject DropGunHook(Func<Gun, Single, DebrisObject> orig, Gun self, float H = 0.5f)
+        {
+            MultiActiveReloadController controller = self.GetComponent<MultiActiveReloadController>();
+            if (controller != null)
+            {
+                controller.reloads = new List<MultiActiveReloadData>();
+                controller.reloads.AddRange((PickupObjectDatabase.GetById(self.PickupObjectId) as Gun).GetComponent<MultiActiveReloadController>().reloads);
+            }
+            return orig(self, H);
         }
 
         public static bool ReloadHook(Func<Gun, bool> orig, Gun self)
@@ -118,7 +134,9 @@ namespace Planetside
                     }
                 }
             }
+
             
+
         }
 
         public static bool AttemptActiveReloadHook(Func<GameUIReloadBarController, bool> orig, GameUIReloadBarController self)

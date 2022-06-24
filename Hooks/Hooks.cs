@@ -35,10 +35,15 @@ namespace Planetside
             try
             {
                 new Hook(typeof(GameManager).GetMethod("DelayedQuickRestart", BindingFlags.Instance | BindingFlags.Public), typeof(Hooks).GetMethod("OnQuickRestart1"));
+
                 new Hook(typeof(Foyer).GetMethod("Awake", BindingFlags.Instance | BindingFlags.NonPublic), typeof(PlanetsideModule).GetMethod("ReloadBreachShrinesPSOG"));
+
                 new Hook(typeof(RoomHandler).GetMethod("HandleRoomClearReward", BindingFlags.Instance | BindingFlags.Public), typeof(Hooks).GetMethod("GalaxyChestReward"));
+
                 new Hook(typeof(Chest).GetMethod("Initialize", BindingFlags.Instance | BindingFlags.NonPublic), typeof(Hooks).GetMethod("GalaxyChestPls"));
+
                 new Hook(typeof(PlayerController).GetMethod("OnDidDamage", BindingFlags.Instance | BindingFlags.Public), typeof(Hooks).GetMethod("DamageHook"));
+                
                 Hook h = new Hook(
                     typeof(Projectile).GetMethod("OnPreCollision", BindingFlags.NonPublic | BindingFlags.Instance),
                     typeof(Hooks).GetMethod("PreCollisionHook")
@@ -52,8 +57,14 @@ namespace Planetside
                  typeof(PlayerController).GetMethod("HandleDodgedBeam", BindingFlags.Public | BindingFlags.Instance),
                  typeof(Hooks).GetMethod("HandleDodgedBeamHook", BindingFlags.Public | BindingFlags.Static)
                 );
-               // new Hook(typeof(AmmonomiconDeathPageController).GetMethod("InitializeLeftPage", BindingFlags.Instance | BindingFlags.NonPublic), typeof(Hooks).GetMethod("AmmoHook"));
 
+                new Hook(
+                typeof(Projectile).GetMethod("BecomeBlackBullet", BindingFlags.Public | BindingFlags.Instance),
+                typeof(Hooks).GetMethod("BecomeBlackBulletHook"));
+
+                new Hook(
+                typeof(Projectile).GetMethod("ReturnFromBlackBullet", BindingFlags.Public | BindingFlags.Instance),
+                typeof(Hooks).GetMethod("ReturnFromBlackBulletHook"));
 
             }
             catch (Exception e)
@@ -62,6 +73,36 @@ namespace Planetside
             }
         }
 
+        public static void BecomeBlackBulletHook(Action<Projectile> orig, Projectile self)
+        {
+            if (self.GetComponent<MarkForUndodgeAbleBullet>() != null)
+            {
+                if (!self.IsBlackBullet && self.sprite)
+                {
+                    self.IsBlackBullet = true;
+                    self.sprite.renderer.material.SetFloat("_BlackBullet", -1);
+                }
+            }
+            else
+            {
+                orig(self);
+            }
+        }
+        public static void ReturnFromBlackBulletHook(Action<Projectile> orig, Projectile self)
+        {
+            if (self.GetComponent<MarkForUndodgeAbleBullet>() != null)
+            {
+                if (self.IsBlackBullet && self.sprite)
+                {
+                    self.IsBlackBullet = false;
+                    self.sprite.renderer.material.SetFloat("_BlackBullet", 0);
+                }
+            }
+            else
+            {
+                orig(self);
+            }
+        }
 
         public static void AmmoHook(Action<AmmonomiconDeathPageController> orig, AmmonomiconDeathPageController self)
         {

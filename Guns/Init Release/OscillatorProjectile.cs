@@ -20,9 +20,6 @@ namespace Planetside
 {
 	internal class OscillatorProjectile : MonoBehaviour
 	{
-		public OscillatorProjectile()
-		{
-		}
         public void Start()
         {
             this.projectile = base.GetComponent<Projectile>();

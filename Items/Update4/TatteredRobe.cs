@@ -48,7 +48,7 @@ namespace Planetside
             base.Update();
 			if (base.Owner)
             {
-				if (RolledCount > 35 && IsDoingTheWacky == false)
+				if (RolledCount > 25 && IsDoingTheWacky == false)
 				{
 					StaticVFXStorage.HighPriestClapVFXInverse.SpawnAtPosition(base.Owner.sprite.WorldCenter, 0);
 					IsDoingTheWacky = true;

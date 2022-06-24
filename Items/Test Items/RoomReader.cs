@@ -79,12 +79,23 @@ namespace Planetside
 
         protected override void DoEffect(PlayerController user)
         {
+            /*
             RoomHandler roome =  user.CurrentRoom;
             ETGModConsole.Log(user.CurrentRoom.GetRoomName());
             ETGModConsole.Log("room visual subtype int: " + roome.RoomVisualSubtype.ToString());
             Dungeon currentFloor = GameManager.Instance.Dungeon;
             DungeonMaterial mat = currentFloor.roomMaterialDefinitions[roome.RoomVisualSubtype];
             ItemAPI.Tools.LogPropertiesAndFields(mat.roomFloorBorderGrid, "tile", true);
+            */
+
+            GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(PickupObjectDatabase.GetById(HardlightNailgun.HardAsNailsID).gameObject, user.transform.position, Quaternion.identity);
+            Gun component = gameObject.GetComponent<Gun>();
+            if (component != null)
+            {
+                //LootEngine.PostprocessGunSpawn(component);
+                component.DropGun(2f);
+            }
+
             //mat.roomFloorBorderGrid
 
             /*

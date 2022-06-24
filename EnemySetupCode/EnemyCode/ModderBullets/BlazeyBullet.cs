@@ -42,7 +42,8 @@ namespace Planetside
 
 				for (int i = 0; i <= 18; i++)
 				{
-					this.Fire(new Direction(i * 20, DirectionType.Aim, -1f), new Speed(7f+(i/2), SpeedType.Absolute), new SkellBullet());
+					this.Fire(new Direction(i * 20, DirectionType.Aim, -1f), new Speed(6f, SpeedType.Absolute), new SkellBullet());
+					yield return this.Wait(5);
 				}
 				yield break;
 			}

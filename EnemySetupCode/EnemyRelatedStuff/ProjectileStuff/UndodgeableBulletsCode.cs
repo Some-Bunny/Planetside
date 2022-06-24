@@ -20,23 +20,21 @@ namespace Planetside
         {
             if (base.gameObject.GetComponent<Projectile>() != null)
             {
-                //base.gameObject.SetLayerRecursively
                 base.gameObject.GetComponent<Projectile>().gameObject.layer = 23;
-                //Proj.renderer.enabled = true;
                 base.gameObject.GetComponent<Projectile>().sprite.usesOverrideMaterial = true;
                 if (base.gameObject.GetComponent<Projectile>().spriteAnimator != null)
                 {
                     base.gameObject.GetComponent<Projectile>().spriteAnimator.sprite.usesOverrideMaterial = true;
                     base.gameObject.GetComponent<Projectile>().spriteAnimator.renderer.enabled = true;
-                    base.gameObject.GetComponent<Projectile>().spriteAnimator.renderer.material.shader = PlanetsideModule.ModAssets.LoadAsset<Shader>("inverseglowshader");
+                    base.gameObject.GetComponent<Projectile>().spriteAnimator.renderer.material.shader = PlanetsideModule.InverseGlowShader;
                 }
                 base.gameObject.GetComponent<Projectile>().sprite.renderer.enabled = true;
-                base.gameObject.GetComponent<Projectile>().sprite.renderer.material.shader = PlanetsideModule.ModAssets.LoadAsset<Shader>("inverseglowshader");
-                base.gameObject.GetComponent<Projectile>().sprite.renderer.material.SetFloat("_EmissiveColorPower", 7);
-                if (base.gameObject.GetComponent<Projectile>().IsBlackBullet) { base.gameObject.GetComponent<Projectile>().sprite.renderer.material.SetFloat("_BlackBullet", -1); }
+                base.gameObject.GetComponent<Projectile>().sprite.renderer.material.shader = PlanetsideModule.InverseGlowShader;
+                //base.gameObject.GetComponent<Projectile>().sprite.renderer.material.SetFloat("_EmissiveColorPower", 7);
+                if (base.gameObject.GetComponent<Projectile>().IsBlackBullet) { base.gameObject.GetComponent<Projectile>().sprite.renderer.material.SetFloat("_BlackBullet", 1); }
             }
         }
-        //public Projectile Proj;
+     
     }
 
     public class MarkForUndodgeAbleBeam : MonoBehaviour { }

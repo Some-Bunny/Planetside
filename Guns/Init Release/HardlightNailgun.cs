@@ -25,11 +25,14 @@ namespace Planetside
             gun.SetBaseMaxAmmo(250);
             gun.DefaultModule.ammoCost = 1;
 
+            
             gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_WPN_dl45heavylaser_shot_01";
             gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].triggerEvent = true;
             gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.reloadAnimation).frames[0].eventAudio = "Play_WPN_dl45heavylaser_reload";
             gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.reloadAnimation).frames[0].triggerEvent = true;
+            
 
+            gun.gunSwitchGroup = (PickupObjectDatabase.GetById(89) as Gun).gunSwitchGroup;
 
             Projectile spear = UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(377) as Gun).DefaultModule.projectiles[0]);
             spear.gameObject.SetActive(false);
@@ -58,6 +61,7 @@ namespace Planetside
             Gun gun2 = PickupObjectDatabase.GetById(223) as Gun;
             gun.muzzleFlashEffects = gun2.muzzleFlashEffects;
             gun.gunClass = GunClass.PISTOL;
+            gun.PreventNormalFireAudio = true;
 
 
             gun.barrelOffset.transform.localPosition = new Vector3(0.75f, .3125f, 0f);
@@ -99,6 +103,7 @@ namespace Planetside
         private bool Switchclip = false;
         protected override void Update()
         {
+            base.Update();
             if (gun.CurrentOwner)
             {
                 if (!gun.IsReloading && !HasReloaded)
@@ -107,14 +112,29 @@ namespace Planetside
                 }
             }
         }
+
+        protected override void OnPickup(GameActor owner)
+        {
+            base.OnPickup(owner);
+        }
+
+        protected override void OnPickedUpByPlayer(PlayerController player)
+        {
+            base.OnPickedUpByPlayer(player);
+        }
+
+        protected override void OnPostDroppedByPlayer(PlayerController player)
+        {
+            base.OnPostDroppedByPlayer(player);
+        }
+
         public override void OnReloadEndedSafe(PlayerController player, Gun gun)
         {
-            base.OnReloadEnded(player, gun);
+            base.OnReloadEndedSafe(player, gun);
             if (Switchclip == true)
             {
                 Switchclip = false;
             }
-            //player.stats.RecalculateStats(player, false, false);
         }
         public override void PostProcessVolley(ProjectileVolleyData volley)
         {
@@ -143,10 +163,6 @@ namespace Planetside
                 this.gun.DefaultModule.numberOfFinalProjectiles = num;
             }
 
-        }
-        public override void OnPostFired(PlayerController player, Gun flakcannon)
-        {
-            gun.PreventNormalFireAudio = true;
         }
         private void NoClip(PlayerController player)
         {

@@ -98,6 +98,15 @@ namespace Planetside
 			}
 		}
 
+		public static void AddInvulnverabilityFramesToAnimation(tk2dSpriteAnimator animator, string animationName, Dictionary<int, bool> frameAndBool)//int frame, string soundName)
+		{
+			foreach (var value in frameAndBool)
+			{
+				animator.GetClipByName(animationName).frames[value.Key].invulnerableFrame = value.Value;
+				animator.GetClipByName(animationName).frames[value.Key].triggerEvent = true;
+			}
+		}
+
 		public static void DestroyUnnecessaryHandObjects(Transform transform)
         {
 			foreach (Transform obj in transform.transform)

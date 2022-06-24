@@ -97,6 +97,33 @@ namespace Planetside
             BeholsterChargeUpVFX = behCont.chargeUpVfx;
             BeholsterChargeDownVFX = behCont.chargeDownVfx;
 
+            foreach (VFXComplex vFXComplex in behCont.chargeUpVfx.effects)
+            {
+                foreach (VFXObject vFXObject in vFXComplex.effects)
+                {
+                    VFXObject myVFX2 = StaticVFXStorage.CopyFields<VFXObject>(vFXObject);
+                    GameObject yas = FakePrefab.Clone(myVFX2.effect);
+                    myVFX2.effect = yas;
+
+                    tk2dSprite sprite = myVFX2.effect.GetComponent<tk2dSprite>();
+                    sprite.usesOverrideMaterial = true;
+
+                    sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
+                    sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+                    sprite.renderer.material.SetFloat("_EmissivePower", 100);
+                    sprite.renderer.material.SetFloat("_EmissiveColorPower", 10f);
+                    sprite.renderer.material.SetColor("_OverrideColor", Color.cyan);
+                    sprite.renderer.material.SetColor("_EmissiveColor", Color.cyan);
+
+                    BeholsterChargeUpVFXInverse = new VFXPool();
+                    BeholsterChargeUpVFXInverse.type = VFXPoolType.Single;
+                    BeholsterChargeUpVFXInverse.effects = new VFXComplex[] { new VFXComplex() { effects = new VFXObject[] { myVFX2 } } };
+                }
+            }
+
+
+
+
             FriendlyElectricLinkVFX = FakePrefab.Clone(Game.Items["shock_rounds"].GetComponent<ComplexProjectileModifier>().ChainLightningVFX);
 
             AIAnimator aiAnimator = EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").aiAnimator;
@@ -180,6 +207,8 @@ namespace Planetside
 
         public static VFXPool HighPriestClapVFX;
         public static VFXPool HighPriestClapVFXInverse;
+
+        public static VFXPool BeholsterChargeUpVFXInverse;
 
 
         public static VFXPool BeholsterChargeUpVFX;

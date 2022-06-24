@@ -169,15 +169,44 @@ namespace Planetside
                 undodgeableSkull.MuzzleFlashEffects = new VFXPool { type = VFXPoolType.None, effects = new VFXComplex[0] };
             }
 
+            //undodgeableBouncyBatBullet
+
 
             //2feb50a6a40f4f50982e89fd276f6f15
             // EnemyDatabase.GetOrLoadByGuid("ec6b674e0acd4553b47ee94493d66422").bulletBank
             /*
-            for (int i = 0; i < EnemyDatabase.GetOrLoadByGuid("2feb50a6a40f4f50982e89fd276f6f15").bulletBank.Bullets.Count; i++)
+            for (int i = 0; i < EnemyDatabase.GetOrLoadByGuid("1a4872dafdb34fd29fe8ac90bd2cea67").bulletBank.Bullets.Count; i++)
             {
-                ETGModConsole.Log(EnemyDatabase.GetOrLoadByGuid("2feb50a6a40f4f50982e89fd276f6f15").bulletBank.Bullets[i].Name);
+                ETGModConsole.Log(EnemyDatabase.GetOrLoadByGuid("1a4872dafdb34fd29fe8ac90bd2cea67").bulletBank.Bullets[i].Name);
             }
             */
+
+            {
+                AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("1a4872dafdb34fd29fe8ac90bd2cea67").bulletBank.Bullets[0], "undodgeableDefaultBouncy");
+                entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                ProjectileTrailRendererController projectileTrailRendererController = entry.BulletObject.GetComponent<ProjectileTrailRendererController>();
+                //projectileTrailRendererController.trailRenderer.startColor = Color.cyan;
+                //projectileTrailRendererController.trailRenderer.endColor = Color.white;
+                projectileTrailRendererController.customTrailRenderer.colors = new Color[] { Color.cyan };
+                undodgeableBouncyBatBullet = entry;
+                /*
+                foreach (Component comp in entry.BulletObject.GetComponents(typeof(Component)))
+                {
+                    ETGModConsole.Log(comp.GetType().ToString() ?? "null");
+                }
+                */
+            }
+
+
+            {
+                AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("465da2bb086a4a88a803f79fe3a27677").bulletBank.GetBullet("homing"), "NemesisGuon");
+                entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+          
+                CustomTrailRenderer projectileTrailRendererController = entry.BulletObject.GetComponentInChildren<CustomTrailRenderer>();
+                projectileTrailRendererController.colors = new Color[] { Color.cyan };
+                NemesisGuon = entry;
+             
+            }
 
             {
                 AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("ec6b674e0acd4553b47ee94493d66422").bulletBank.GetBullet("bigBullet"), "undodgeableBigBullet");
@@ -190,8 +219,19 @@ namespace Planetside
                 entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
                 undodgeableBatBullet = entry;
             }
+
+            {
+                AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("fa76c8cfdf1c4a88b55173666b4bc7fb").bulletBank.GetBullet("hugeBullet"), "undodgeableMine");
+                entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                undodgeableMine = entry;
+            }
         }
 
+        //				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("fa76c8cfdf1c4a88b55173666b4bc7fb").bulletBank.GetBullet("hugeBullet"));
+
+        /*
+         * 
+        */
         private static AIBulletBank.Entry CopyBulletBankEntry(AIBulletBank.Entry entryToCopy, string Name, string AudioEvent = null, VFXPool muzzleflashVFX = null)
         {
             AIBulletBank.Entry entry = StaticUndodgeableBulletEntries.CopyFields<AIBulletBank.Entry>(entryToCopy);
@@ -255,6 +295,10 @@ namespace Planetside
         public static AIBulletBank.Entry undodgeableChainLink;
         public static AIBulletBank.Entry undodgeableSkull;
         public static AIBulletBank.Entry undodgeableBatBullet;
+        public static AIBulletBank.Entry undodgeableMine;
+
+        public static AIBulletBank.Entry undodgeableBouncyBatBullet;
+        public static AIBulletBank.Entry NemesisGuon;
 
     }
 }

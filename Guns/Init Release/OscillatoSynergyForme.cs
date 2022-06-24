@@ -150,14 +150,5 @@ namespace Planetside
 			OscillatoSynergyForme.AeID = gun.PickupObjectId;
 		}
 		public static int AeID;
-		public override void PostProcessProjectile(Projectile projectile)
-		{
-			projectile.OverrideMotionModule = new OscillatingeMotionModule();
-		}
-		public override void OnReloadPressed(PlayerController player, Gun bruhgun, bool bSOMETHING)
-		{
-			
-		}
 	}
-
 }

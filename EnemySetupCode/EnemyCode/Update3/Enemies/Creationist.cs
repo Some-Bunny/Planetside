@@ -21,6 +21,91 @@ namespace Planetside
 		public static readonly string guid = "creationist";
 		private static tk2dSpriteCollectionData CreationistCollection;
 
+
+		public class TrespassEnemyEngageDoerPortalless : CustomEngageDoer
+		{
+			public TrespassEnemyEngageDoerPortalless()
+			{
+
+			}
+
+
+			public void Update()
+			{
+
+			}
+
+			public override void StartIntro()
+			{
+				if (this.m_isFinished)
+				{
+					return;
+				}
+				base.StartCoroutine(this.DoIntro());
+			}
+
+		
+
+			private IEnumerator DoIntro()
+			{
+				m_isFinished = true;
+				this.aiActor.enabled = false;
+				this.behaviorSpeculator.enabled = false;
+				this.aiActor.ToggleRenderers(false);
+				this.specRigidbody.enabled = false;
+				this.aiActor.IgnoreForRoomClear = true;
+				this.aiActor.IsGone = true;
+				if (this.aiShooter)
+				{
+					this.aiShooter.ToggleGunAndHandRenderers(false, "GuardIsSpawning");
+				}
+				this.aiActor.ToggleRenderers(true);
+				this.aiActor.healthHaver.PreventAllDamage = true;
+				this.aiActor.enabled = true;
+				this.specRigidbody.enabled = true;
+				this.aiActor.IsGone = false;
+				this.aiActor.IgnoreForRoomClear = false;
+				this.aiAnimator.PlayDefaultAwakenedState();
+				this.aiActor.State = AIActor.ActorState.Awakening;
+				int playerMask = CollisionMask.LayerToMask(CollisionLayer.PlayerCollider, CollisionLayer.PlayerHitBox);
+				this.aiActor.specRigidbody.AddCollisionLayerIgnoreOverride(playerMask);
+
+			
+
+				while (this.aiAnimator.IsPlaying("awaken"))
+				{
+					this.behaviorSpeculator.enabled = false;
+					if (this.aiShooter)
+					{
+						this.aiShooter.ToggleGunAndHandRenderers(false, "GuardIsSpawning");
+					}
+					yield return null;
+				}
+				if (this.aiShooter)
+				{
+					this.aiShooter.ToggleGunAndHandRenderers(true, "GuardIsSpawning");
+				}
+				yield return new WaitForSeconds(0.25f);
+				this.aiActor.healthHaver.PreventAllDamage = false;
+				this.behaviorSpeculator.enabled = true;
+				this.aiActor.specRigidbody.RemoveCollisionLayerIgnoreOverride(playerMask);
+				this.aiActor.HasBeenEngaged = true;
+				this.aiActor.State = AIActor.ActorState.Normal;
+				this.StartIntro();
+				m_isFinished = true;
+				yield break;
+			}
+			public override bool IsFinished
+			{
+				get
+				{
+					return this.m_isFinished;
+				}
+			}
+
+			private bool m_isFinished;
+		}
+
 		public class TrespassEnemyEngageDoer : CustomEngageDoer
 		{
 			public TrespassEnemyEngageDoer()
@@ -432,7 +517,7 @@ namespace Planetside
 						RequiresLineOfSight = false,
 						MultipleFireEvents = false,
 						Uninterruptible = true,
-						ChargeAnimation = "chargeattack",
+						FireAnimation = "chargeattack",
 						PostFireAnimation = "attack",
 						}
 					},

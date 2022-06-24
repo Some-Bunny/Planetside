@@ -43,10 +43,14 @@ namespace Planetside
         public static AssetBundle TilesetAssets;
         public static AssetBundle SpriteCollectionAssets;
 
+        public static Shader InverseGlowShader;
+
         public static bool DebugMode = true;
 
         public override void Start()
         {
+
+
 
 
             var forgeDungeon = DungeonDatabase.GetOrLoadByName("Base_Forge");
@@ -79,6 +83,8 @@ namespace Planetside
                 //ETGModConsole.Log(PlanetsideModule.TilesetAssets.name + ": " + str, false);
             }
 
+            InverseGlowShader = PlanetsideModule.ModAssets.LoadAsset<Shader>("inverseglowshader");
+
             //Initialise Statically Stored Stuff Here
             StaticVFXStorage.Init();
             EasyGoopDefinitions.DefineDefaultGoops();
@@ -100,6 +106,9 @@ namespace Planetside
             Hooks.Init();
             MultiActiveReloadManager.SetupHooks();
             FakePrefabHooks.Init();
+            TitleDioramaHooks.Init();
+
+
 
             //Initialise API stuff here
             BulletBuilder.Init();
@@ -276,6 +285,9 @@ namespace Planetside
             ModifierNeedle.Init();
             TatteredRobe.Init();
             OrbOfPower.Init();
+            NemesisGun.Add();
+            NemesisRailgun.Add();
+            NemesisShotgun.Add();
 
             Whistler.Add();
             ThunderShot.Add();
@@ -323,6 +335,8 @@ namespace Planetside
             Inquisitor.Init();
             Vessel.Init();
             Unwilling.Init();
+            Collective.Init();
+            Nemesis.Init();
 
             DeTurretRight.Init();
             DeTurretLeft.Init();
