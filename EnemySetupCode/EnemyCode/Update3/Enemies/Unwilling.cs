@@ -35,6 +35,7 @@ namespace Planetside
 			{
 				prefab = EnemyBuilder.BuildPrefab("Unwilling", guid, spritePaths[0], new IntVector2(0, 0), new IntVector2(8, 9), false, true);
 				var companion = prefab.AddComponent<EnemyBehavior>();
+				prefab.AddComponent<ForgottenEnemyComponent>();
 				companion.aiActor.knockbackDoer.weight = 120;
 				companion.aiActor.MovementSpeed = 1.5f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
@@ -248,7 +249,7 @@ namespace Planetside
 					{
 						Probability = 1f,
 						Behavior = new SuicideShotBehavior{
-						bulletBankName = StaticUndodgeableBulletEntries.undodgeableSmallSpore.Name,
+						bulletBankName = StaticUndodgeableBulletEntries.UnwillingShot.Name,
 						chargeAnim = "charge",
 						Range = 20,
 						degreesBetween = 20,
@@ -314,8 +315,8 @@ namespace Planetside
 				mat.SetFloat("_EmissivePower", 50);
 				companion.aiActor.sprite.renderer.material = mat;
 
-				companion.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
-				companion.aiActor.bulletBank.Bullets[0].BulletObject.GetComponent<Projectile>().baseData.speed *= 2f;
+				companion.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UnwillingShot);
+				companion.aiActor.bulletBank.Bullets[0].BulletObject.GetComponent<Projectile>().baseData.speed = 14f;
 
 				companion.aiActor.healthHaver.persistsOnDeath = true;
 				//if (companion.aiActor.bulletBank != null) { ETGModConsole.Log("bank exists, just add bullets in Init()"); }

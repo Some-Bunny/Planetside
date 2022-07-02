@@ -106,7 +106,7 @@ namespace Planetside
             , 0.15f
             , null
             );
-            ItsDaFuckinShopApi.AddAdditionalAnimationsToShop(talbertObj, DancePaths, 6);
+            ItsDaFuckinShopApi.AddAdditionalAnimationsToShop(talbertObj, DancePaths, 12);
 
 
             talbertObj.GetComponentInChildren<tk2dSpriteAnimator>().gameObject.AddComponent<SlideSurface>();

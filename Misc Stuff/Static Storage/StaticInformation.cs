@@ -55,6 +55,57 @@ namespace Planetside
 
     public class StaticUndodgeableBulletEntries
     {
+
+        private static AIBulletBank.Entry CopyBulletBankEntry(AIBulletBank.Entry entryToCopy, string Name, string AudioEvent = null, VFXPool muzzleflashVFX = null, bool ChangeMuzzleFlashToEmpty = true)
+        {
+            AIBulletBank.Entry entry = StaticUndodgeableBulletEntries.CopyFields<AIBulletBank.Entry>(entryToCopy);
+            entry.Name = Name;
+            Projectile projectile = UnityEngine.Object.Instantiate<GameObject>(entry.BulletObject).GetComponent<Projectile>();
+            projectile.gameObject.SetActive(false);
+            FakePrefab.MarkAsFakePrefab(projectile.gameObject);
+            UnityEngine.Object.DontDestroyOnLoad(projectile);
+            entry.BulletObject = projectile.gameObject;
+            if (AudioEvent != "DNC") { entry.AudioEvent = AudioEvent; }
+            if (ChangeMuzzleFlashToEmpty == true) { entry.MuzzleFlashEffects = muzzleflashVFX == null ? new VFXPool { type = VFXPoolType.None, effects = new VFXComplex[0] } : muzzleflashVFX; }
+            return entry;
+        }
+
+
+        public static AIBulletBank.Entry CopyFields<T>(AIBulletBank.Entry sample2) where T : AIBulletBank.Entry
+        {
+            AIBulletBank.Entry sample = new AIBulletBank.Entry();
+            sample.AudioEvent = sample2.AudioEvent;
+            sample.AudioLimitOncePerAttack = sample2.AudioLimitOncePerAttack;
+            sample.AudioLimitOncePerFrame = sample2.AudioLimitOncePerFrame;
+            sample.AudioSwitch = sample2.AudioSwitch;
+            sample.PlayAudio = sample2.PlayAudio;
+            sample.BulletObject = sample2.BulletObject;
+            sample.conditionalMinDegFromNorth = sample2.conditionalMinDegFromNorth;
+
+            sample.DontRotateShell = sample2.DontRotateShell;
+            sample.forceCanHitEnemies = sample2.forceCanHitEnemies;
+            sample.MuzzleFlashEffects = sample2.MuzzleFlashEffects;
+            sample.MuzzleInheritsTransformDirection = sample2.MuzzleInheritsTransformDirection;
+            sample.MuzzleLimitOncePerFrame = sample2.MuzzleLimitOncePerFrame;
+            sample.Name = sample2.Name;
+            sample.OverrideProjectile = sample2.OverrideProjectile;
+            sample.preloadCount = sample2.preloadCount;
+            sample.ProjectileData = sample2.ProjectileData;
+            sample.rampBullets = sample2.rampBullets;
+
+            sample.rampStartHeight = sample2.rampStartHeight;
+            sample.rampTime = sample2.rampTime;
+            sample.ShellForce = sample2.ShellForce;
+            sample.ShellForceVariance = sample2.ShellForceVariance;
+            sample.ShellGroundOffset = sample2.ShellGroundOffset;
+            sample.ShellPrefab = sample2.ShellPrefab;
+            sample.ShellsLimitOncePerFrame = sample2.ShellsLimitOncePerFrame;
+            sample.ShellTransform = sample2.ShellTransform;
+            sample.SpawnShells = sample2.SpawnShells;
+            sample.suppressHitEffectsIfOffscreen = sample2.suppressHitEffectsIfOffscreen;
+
+            return sample;
+        }
         public static void Init()
         {
             {
@@ -171,6 +222,7 @@ namespace Planetside
 
             //undodgeableBouncyBatBullet
 
+            //
 
             //2feb50a6a40f4f50982e89fd276f6f15
             // EnemyDatabase.GetOrLoadByGuid("ec6b674e0acd4553b47ee94493d66422").bulletBank
@@ -215,6 +267,12 @@ namespace Planetside
             }
 
             {
+                AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("f905765488874846b7ff257ff81d6d0c").bulletBank.GetBullet("spore2"), "undodgeableUnwillingShot");
+                entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                UnwillingShot = entry;
+            }
+
+            {
                 AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("2feb50a6a40f4f50982e89fd276f6f15").bulletBank.Bullets[1], "undodgeableBatBullet");
                 entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
                 undodgeableBatBullet = entry;
@@ -225,64 +283,137 @@ namespace Planetside
                 entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
                 undodgeableMine = entry;
             }
+
+            {
+                AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("4b992de5b4274168a8878ef9bf7ea36b").bulletBank.GetBullet("donut"), "undodgeableDonut", "DNC");
+                entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                undodgeableDonut = entry;
+            }
+
+            {
+                AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("c367f00240a64d5d9f3c26484dc35833").bulletBank.GetBullet("scream"), "undodgeableScream", "DNC");
+                entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                undodgeableScream = entry;
+            }
+
+            {
+                AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("da797878d215453abba824ff902e21b4").bulletBank.GetBullet("randomBullet"), "UndodgeableRandomBullet", "DNC");
+                entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                UndodgeableRandomBullet = entry;
+            }
+            {
+                AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("da797878d215453abba824ff902e21b4").bulletBank.GetBullet("bigBullet"), "UndodgeableAmmocondaBigBullet", "DNC");
+                entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                UndodgeableAmmocondaBigBullet = entry;
+            }
+            {
+                AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("1b5810fafbec445d89921a4efb4e42b7").bulletBank.GetBullet("spew"), "UndodgeableSpew", "DNC");
+                entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                UndodgeableSpew = entry;
+            }
+            {
+                AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("1b5810fafbec445d89921a4efb4e42b7").bulletBank.GetBullet("slam"), "UndodgeableSlam", "DNC");
+                entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                UndodgeableSlam = entry;
+            }
+            {
+                AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("5e0af7f7d9de4755a68d2fd3bbc15df4").bulletBank.GetBullet("default_ground"), "UndodgeableGroundDefault", "DNC");
+                entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                UndodgeableGroundDefault = entry;
+            }
+            {
+                AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("5e0af7f7d9de4755a68d2fd3bbc15df4").bulletBank.GetBullet("cannon"), "UndodgeableCannonBullet", "DNC", null, false);
+                entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                UndodgeableCannonBullet = entry;
+            }
+            {
+                AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("fa76c8cfdf1c4a88b55173666b4bc7fb").bulletBank.GetBullet("scatterBullet"), "UndodgeableScatterBullet", "DNC", null, false);
+                entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                UndodgeableScatterBullet = entry;
+            }
+
+            {
+                AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("8b0dd96e2fe74ec7bebc1bc689c0008a").bulletBank.GetBullet("bounce"), "undodgeableMineflayerBounce");
+                entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+
+                CustomTrailRenderer projectileTrailRendererController = entry.BulletObject.GetComponentInChildren<CustomTrailRenderer>();
+                projectileTrailRendererController.colors = new Color[] { Color.cyan };
+                undodgeableMineflayerBounce = entry;
+
+            }
+
+            {
+                AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("5729c8b5ffa7415bb3d01205663a33ef").bulletBank.GetBullet("slam"), "UndodgeableOldKingSlamBullet", "DNC", null, false);
+                entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                UndodgeableOldKingSlamBullet = entry;
+            }
+            {
+                AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("5729c8b5ffa7415bb3d01205663a33ef").bulletBank.GetBullet("suck"), "UndodgeableOldKingSuckBullet", "DNC", null, false);
+                entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                UndodgeableOldKingSuckBullet = entry;
+            }
+            {
+                AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("5729c8b5ffa7415bb3d01205663a33ef").bulletBank.GetBullet("homingRing"), "UndodgeableOldKingHomingRingBullet", "DNC", null, false);
+                entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                UndodgeableOldKingHomingRingBullet = entry;
+            }
+            {
+                AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("frogger"), "UndodgeableFrogger", "DNC", null, false);
+                entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                UndodgeableFrogger = entry;
+            }
         }
 
         //				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("fa76c8cfdf1c4a88b55173666b4bc7fb").bulletBank.GetBullet("hugeBullet"));
 
         /*
-         * 
-        */
-        private static AIBulletBank.Entry CopyBulletBankEntry(AIBulletBank.Entry entryToCopy, string Name, string AudioEvent = null, VFXPool muzzleflashVFX = null)
-        {
-            AIBulletBank.Entry entry = StaticUndodgeableBulletEntries.CopyFields<AIBulletBank.Entry>(entryToCopy);
-            entry.Name = Name;
-            Projectile projectile = UnityEngine.Object.Instantiate<GameObject>(entry.BulletObject).GetComponent<Projectile>();
-            projectile.gameObject.SetActive(false);
-            FakePrefab.MarkAsFakePrefab(projectile.gameObject);
-            UnityEngine.Object.DontDestroyOnLoad(projectile);
-            entry.BulletObject = projectile.gameObject;
-            entry.AudioEvent = AudioEvent;
-            entry.MuzzleFlashEffects = muzzleflashVFX == null ? new VFXPool { type = VFXPoolType.None, effects = new VFXComplex[0] } : muzzleflashVFX;
-            return entry;
-        }
+         *4b992de5b4274168a8878ef9bf7ea36b 
+         *homingRing
+         *bounce
+         *
+         *8b0dd96e2fe74ec7bebc1bc689c0008a
+         *scatterBullet
+         *
+         *
+         *frogger
+         *68a238ed6a82467ea85474c595c49c6e
+         */
+        //randomBullet//bigBullet
+        //1b5810fafbec445d89921a4efb4e42b7
+
+        //5729c8b5ffa7415bb3d01205663a33ef
+        public static AIBulletBank.Entry UndodgeableOldKingHomingRingBullet;
+        public static AIBulletBank.Entry UndodgeableFrogger;
 
 
-        public static AIBulletBank.Entry CopyFields<T>(AIBulletBank.Entry sample2) where T : AIBulletBank.Entry
-        {
-            AIBulletBank.Entry sample = new AIBulletBank.Entry();
-            sample.AudioEvent = sample2.AudioEvent;
-            sample.AudioLimitOncePerAttack = sample2.AudioLimitOncePerAttack;
-            sample.AudioLimitOncePerFrame = sample2.AudioLimitOncePerFrame;
-            sample.AudioSwitch = sample2.AudioSwitch;
-            sample.PlayAudio = sample2.PlayAudio;
-            sample.BulletObject = sample2.BulletObject;
-            sample.conditionalMinDegFromNorth = sample2.conditionalMinDegFromNorth;
+        public static AIBulletBank.Entry UndodgeableOldKingSlamBullet;
+        public static AIBulletBank.Entry UndodgeableOldKingSuckBullet;
 
-            sample.DontRotateShell = sample2.DontRotateShell;
-            sample.forceCanHitEnemies = sample2.forceCanHitEnemies;
-            sample.MuzzleFlashEffects = sample2.MuzzleFlashEffects;
-            sample.MuzzleInheritsTransformDirection = sample2.MuzzleInheritsTransformDirection;
-            sample.MuzzleLimitOncePerFrame = sample2.MuzzleLimitOncePerFrame;
-            sample.Name = sample2.Name;
-            sample.OverrideProjectile = sample2.OverrideProjectile;
-            sample.preloadCount = sample2.preloadCount;
-            sample.ProjectileData = sample2.ProjectileData;
-            sample.rampBullets = sample2.rampBullets;
 
-            sample.rampStartHeight = sample2.rampStartHeight;
-            sample.rampTime = sample2.rampTime;
-            sample.ShellForce = sample2.ShellForce;
-            sample.ShellForceVariance = sample2.ShellForceVariance;
-            sample.ShellGroundOffset = sample2.ShellGroundOffset;
-            sample.ShellPrefab = sample2.ShellPrefab;
-            sample.ShellsLimitOncePerFrame = sample2.ShellsLimitOncePerFrame;
-            sample.ShellTransform = sample2.ShellTransform;
-            sample.SpawnShells = sample2.SpawnShells;
-            sample.suppressHitEffectsIfOffscreen = sample2.suppressHitEffectsIfOffscreen;
+        public static AIBulletBank.Entry undodgeableMineflayerBounce;
 
-            return sample;
-        }
+        public static AIBulletBank.Entry UndodgeableScatterBullet;
+
+
+        public static AIBulletBank.Entry UndodgeableGroundDefault;
+        public static AIBulletBank.Entry UndodgeableCannonBullet;
+
+
+        public static AIBulletBank.Entry UndodgeableSpew;
+        public static AIBulletBank.Entry UndodgeableSlam;
+
+
+        public static AIBulletBank.Entry UndodgeableRandomBullet;
+        public static AIBulletBank.Entry UndodgeableAmmocondaBigBullet;
+
+        public static AIBulletBank.Entry undodgeableDonut;
+        public static AIBulletBank.Entry undodgeableScream;
+
+
         public static AIBulletBank.Entry undodgeableBigBullet;
+        public static AIBulletBank.Entry UnwillingShot;
+
+
 
         public static AIBulletBank.Entry undodgeableSniper;
         public static AIBulletBank.Entry undodgeableBig;

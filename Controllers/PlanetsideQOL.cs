@@ -62,6 +62,8 @@ namespace Planetside
                 PlanetsideQOL.Log("==============================", PlanetsideQOL.TEXT_COLOR);
                 PlanetsideQOL.Log("psog_qol dewicksynergychests : Makes synergy chests spawned in chest rooms adhere to default wick rules instead of always being wicked.", QOLConfig.SynergyChestDeWicking == true ? ENABLED_COLOR : DISABLED_COLOR);
                 PlanetsideQOL.Log("psog_qol crackedsecretroomentries : Makes walls belonging to secret rooms cracked.", QOLConfig.RevealSecretRoomWalls == true ? ENABLED_COLOR : DISABLED_COLOR);
+                PlanetsideQOL.Log("psog_qol titlescreenmodifcation : Allows the title screen to be modified with additional visuals.", QOLConfig.TileScreenModifications == true ? ENABLED_COLOR : DISABLED_COLOR);
+
             });
             ETGModConsole.Commands.GetGroup("psog_qol").AddUnit("dewicksynergychests", delegate (string[] args)
             {
@@ -75,6 +77,13 @@ namespace Planetside
                 QOLConfig.RevealSecretRoomWalls = !QOLConfig.RevealSecretRoomWalls;
                 string str = QOLConfig.RevealSecretRoomWalls ? "enabled." : "disabled.";
                 PlanetsideQOL.Log("Cracked Secret Room Walls is now " + str, QOLConfig.RevealSecretRoomWalls == true ? ENABLED_COLOR : DISABLED_COLOR);
+                UpdateConfiguration();
+            });
+            ETGModConsole.Commands.GetGroup("psog_qol").AddUnit("titlescreenmodifcation", delegate (string[] args)
+            {
+                QOLConfig.TileScreenModifications = !QOLConfig.TileScreenModifications;
+                string str = QOLConfig.TileScreenModifications ? "enabled." : "disabled.";
+                PlanetsideQOL.Log("Title Screen Modifications are now " + str, QOLConfig.TileScreenModifications == true ? ENABLED_COLOR : DISABLED_COLOR);
                 UpdateConfiguration();
             });
         }
@@ -193,12 +202,15 @@ namespace Planetside
         public static PlanetsideQOL.Configuration QOLConfig = new PlanetsideQOL.Configuration
         {
             SynergyChestDeWicking = true,
-            RevealSecretRoomWalls = true
+            RevealSecretRoomWalls = true,
+            TileScreenModifications = true
+
         };
         public struct Configuration
         {
             public bool SynergyChestDeWicking;
             public bool RevealSecretRoomWalls;
+            public bool TileScreenModifications;
         }
     }
 }

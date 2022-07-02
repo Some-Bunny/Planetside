@@ -30,12 +30,8 @@ namespace Planetside
         public void Start()
         {
             this.projectile = base.GetComponent<Projectile>();
-            Projectile projectile = this.projectile;
-            PlayerController playerController = projectile.Owner as PlayerController;
-            Projectile component = base.gameObject.GetComponent<Projectile>();
-            bool flag = component != null;
-            bool flag2 = flag;
-            if (flag2)
+            PlayerController playerController = this.projectile.Owner as PlayerController;
+            if (this.projectile)
             {
                 try
                 {
@@ -45,19 +41,19 @@ namespace Planetside
                         AngualrVelocity = 720;
                     }
                     Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
-                    mat.mainTexture = component.sprite.renderer.material.mainTexture;
+                    mat.mainTexture = this.projectile.sprite.renderer.material.mainTexture;
                     mat.SetColor("_EmissiveColor", new Color32(107, 255, 135, 255));
                     mat.SetFloat("_EmissiveColorPower", 1.55f);
                     mat.SetFloat("_EmissivePower", 100);
-                    component.sprite.renderer.material = mat;
+                    this.projectile.sprite.renderer.material = mat;
 
-                    ImprovedAfterImage yes = component.gameObject.AddComponent<ImprovedAfterImage>();
+                    ImprovedAfterImage yes = this.projectile.gameObject.AddComponent<ImprovedAfterImage>();
                     yes.spawnShadows = true;
                     yes.shadowLifetime = 0.8f;
                     yes.shadowTimeDelay = 0.01f;
                     yes.dashColor = new Color(0.2f, 1f, 0.55f, 0.01f);
                     yes.name = "Gun Trail";
-                    GameManager.Instance.StartCoroutine(this.Speed(component, component.baseData.speed));
+                    GameManager.Instance.StartCoroutine(this.Speed(this.projectile, this.projectile.baseData.speed));
                 }
                 catch (Exception ex)
                 {

@@ -130,7 +130,7 @@ namespace Planetside
             var retstr = string.Join("\n", logs.ToArray());
             if (string.IsNullOrEmpty(path))
             {
-                ETGModConsole.Log(retstr);
+                ETGModConsole.Log(retstr, true);
             }
             else
             {

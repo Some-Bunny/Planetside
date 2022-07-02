@@ -26,15 +26,7 @@ namespace Planetside
         public void Start()
         {
             this.projectile = base.GetComponent<Projectile>();
-            this.Player = projectile.Owner as PlayerController;
-            if (this.projectile != null)
-            {
-
-            }
-        }
-
-      
-        private PlayerController Player;
+        } 
         private Projectile projectile;
 	}
 }

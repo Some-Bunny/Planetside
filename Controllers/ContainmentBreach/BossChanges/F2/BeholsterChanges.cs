@@ -12,9 +12,9 @@ namespace Planetside
 {
 
 
-	public class TestOverrideBehavior : OverrideBehavior
+	public class BeholsterChanges : OverrideBehavior
 	{
-		public override string OverrideAIActorGUID => "3a077fa5872d462196bb9a3cb1af02a3"; // Replace the GUID with whatever enemy you want to modify. This GUID is for the bullet kin.
+		public override string OverrideAIActorGUID => "4b992de5b4274168a8878ef9bf7ea36b"; // Replace the GUID with whatever enemy you want to modify. This GUID is for the bullet kin.
 																						  // You can find a full list of GUIDs at https://github.com/ModTheGungeon/ETGMod/blob/master/Assembly-CSharp.Base.mm/Content/gungeon_id_map/enemies.txt
 		public override void DoOverride()
 		{
@@ -28,6 +28,16 @@ namespace Planetside
 			// Tip: To debug an enemy's BehaviorSpeculator, you can uncomment the line below. This will print all the behavior information to the console.
 			//ToolsEnemy.DebugInformation(behaviorSpec);
 
+			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableDonut);
+
+			BeholsterShootBehavior shootWave = behaviorSpec.AttackBehaviorGroup.AttackBehaviors[2].Behavior as BeholsterShootBehavior;
+			shootWave.BulletScript = new CustomBulletScriptSelector(typeof(ModifiedShootWave));
+
+			/*
+			BeholsterLaserBehavior shootLaser = behaviorSpec.AttackBehaviorGroup.AttackBehaviors[4].Behavior as BeholsterLaserBehavior;
+			shootLaser.trackingType = BeholsterLaserBehavior.TrackingType.ConstantTurn;
+			shootLaser.maxTurnRate = 144;
+			*/
 			//behaviorSpec.aiActor.CanTargetPlayers = true;
 			//behaviorSpec.aiActor.CanTargetEnemies = false;
 
@@ -47,7 +57,6 @@ namespace Planetside
 			//shootGunBehavior.WeaponType = WeaponType.BulletScript;
 
 			//shootGunBehavior.BulletScript = new CustomBulletScriptSelector(typeof(Bullettest));
-			//actor.bulletBank.Bullets.Add(BulletBuilder.GetBulletEntryByName("HammerOfTheMoon"));
 
 
 
@@ -60,37 +69,37 @@ namespace Planetside
 		public AIBulletBank.Entry lol; 
 
 
-		public class Bullettest : Script
+		public class ModifiedShootWave : Script
 		{
 			protected override IEnumerator Top()
 			{
-				this.Fire(new Direction(0, DirectionType.Aim, -1f), new Speed(1f, SpeedType.Absolute), new SkellBullet());
-
-				yield break;
-			}
-		}
-
-
-		public class SkellBullet : Bullet
-		{
-			public SkellBullet() : base("big", false, false, false)
-			{
-
-			}
-
-			protected override IEnumerator Top()
-			{
-				
-				OtherTools.EasyTrailComponent yup = base.Projectile.gameObject.AddComponent<OtherTools.EasyTrailComponent>();
-				//yup.StartPositionX = 40;
-				//yup.StartPositionY = 23;
-				yup.LifeTime = 2.5f;
-				yup.StartWidth = 35;
-				yup.StartColor = Color.white;
-				yup.BaseColor = Color.white;
-				yup.EndColor = Color.red;
-				
-				base.ChangeSpeed(new Speed(20f, SpeedType.Absolute), 60);
+				int q = -1;
+				bool Flip = true;
+				for (int i = -28; i <= 28; i++)
+				{
+					q++;
+					if (q > 2) { q = 0; Flip = !Flip; }
+					this.Fire(new Direction((float)(i * 6), DirectionType.Aim, -1f), new Speed(6.5f, SpeedType.Absolute), new Bullet(Flip == true ? StaticUndodgeableBulletEntries.undodgeableDonut.Name : "donut", false, false, false));
+				}	
+				q = -1;
+				Flip = true;
+				yield return this.Wait(75);
+				for (int i = -28; i <= 28; i++)
+				{
+					q++;
+					if (q > 2) { q = 0; Flip = !Flip; }
+					this.Fire(new Direction((float)(i * 5), DirectionType.Aim, -1f), new Speed(6.5f, SpeedType.Absolute), new Bullet(Flip == true ? StaticUndodgeableBulletEntries.undodgeableDonut.Name : "donut", false, false, false));
+				}
+				yield return this.Wait(75);
+				for (int i = 0; i <= 12; i++)
+				{
+					this.Fire(new Direction((float)(i * 30f), DirectionType.Aim, -1f), new Speed(6f, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.undodgeableDonut.Name, false, false, false));
+				}
+				yield return this.Wait(20);
+				for (int i = 0; i <= 12; i++)
+				{
+					this.Fire(new Direction((float)(i * 30f) + 15, DirectionType.Aim, -1f), new Speed(8f, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.undodgeableDonut.Name, false, false, false));
+				}
 				yield break;
 			}
 		}

@@ -75,6 +75,8 @@ namespace Planetside
 
                 Vector3 pos = clip.GetFrame(frameIdx).eventInfo.Contains("Left") ? base.aiActor.transform.Find("LeftHandChainPoint").position : base.aiActor.transform.Find("RightHandChainPoint").position;
                 GameObject.Instantiate(silencerVFX.gameObject, pos, Quaternion.identity);
+
+
                 GameObject breakVFX = UnityEngine.Object.Instantiate<GameObject>((PickupObjectDatabase.GetById(178) as Gun).GetComponent<FireOnReloadSynergyProcessor>().DirectedBurstSettings.ProjectileInterface.SpecifiedProjectile.hitEffects.tileMapHorizontal.effects[0].effects[0].effect, clip.GetFrame(frameIdx).eventInfo.Contains("Left") ? base.aiActor.transform.Find("LeftHandChainPoint").position : base.aiActor.transform.Find("RightHandChainPoint").position, Quaternion.identity);
                 tk2dBaseSprite component = breakVFX.GetComponent<tk2dBaseSprite>();
                 component.PlaceAtPositionByAnchor(pos, tk2dBaseSprite.Anchor.MiddleCenter);

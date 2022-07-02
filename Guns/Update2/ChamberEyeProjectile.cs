@@ -27,26 +27,21 @@ namespace Planetside
         public void Start()
         {
             this.projectile = base.GetComponent<Projectile>();
-            Projectile projectile = this.projectile;
-            PlayerController playerController = projectile.Owner as PlayerController;
-            Projectile component = base.gameObject.GetComponent<Projectile>();
-            bool flag = component != null;
-            bool flag2 = flag;
-            if (flag2)
+            if (this.projectile != null)
             {
                 Material mat1 = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
-                mat1.mainTexture = component.sprite.renderer.material.mainTexture;
+                mat1.mainTexture = this.projectile.sprite.renderer.material.mainTexture;
                 mat1.SetColor("_EmissiveColor", new Color32(255, 255, 255, 255));
                 mat1.SetFloat("_EmissiveColorPower", 1.55f);
                 mat1.SetFloat("_EmissivePower", 100);
                 mat1.SetFloat("_EmissiveThresholdSensitivity", 0.05f);
-                projectile.OverrideMotionModule = new HelixProjectileMotionModule
+                this.projectile.OverrideMotionModule = new HelixProjectileMotionModule
                 {
                     helixAmplitude = 1.7f,
                     helixWavelength = 6f,
                     ForceInvert = (UnityEngine.Random.value > 0.5f) ? false : true
                 };
-                ImprovedAfterImage yes = component.gameObject.AddComponent<ImprovedAfterImage>();
+                ImprovedAfterImage yes = this.projectile.gameObject.AddComponent<ImprovedAfterImage>();
                 yes.spawnShadows = true;
                 yes.shadowLifetime = (UnityEngine.Random.Range(0.15f, 0.5f));
                 yes.shadowTimeDelay = 0.01f;

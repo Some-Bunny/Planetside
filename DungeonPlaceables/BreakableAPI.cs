@@ -72,7 +72,6 @@ namespace BreakAbleAPI
 
         public static TeleporterController GenerateTeleporterController(string name, string[] idleSpritePaths, string[] activationSpritePaths, string[] activeIdleSpritePaths, string MinimapIconPath, int idleAnimFPS = 5, int activateAnimFPS = 5, GameObject isActiveVFX = null, GameObject singleTimeActivateVFX = null, GameObject teleproterArrivedVFX = null, GameObject teleporterDepartVFX = null, tk2dSpriteAnimator portalVFX = null)
         {
-
             TeleporterController existingTeleporterController = ResourceManager.LoadAssetBundle("brave_resources_001").LoadAsset<GameObject>("Teleporter_Gungeon_01").GetComponentInChildren<TeleporterController>();
 
             GameObject gameObject = SpriteBuilder.SpriteFromResource(idleSpritePaths[0], null, false);

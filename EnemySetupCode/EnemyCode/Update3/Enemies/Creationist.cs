@@ -49,7 +49,7 @@ namespace Planetside
 			private IEnumerator DoIntro()
 			{
 				m_isFinished = true;
-				this.aiActor.enabled = false;
+				this.aiActor.enabled = true;
 				this.behaviorSpeculator.enabled = false;
 				this.aiActor.ToggleRenderers(false);
 				this.specRigidbody.enabled = false;
@@ -69,8 +69,9 @@ namespace Planetside
 				this.aiActor.State = AIActor.ActorState.Awakening;
 				int playerMask = CollisionMask.LayerToMask(CollisionLayer.PlayerCollider, CollisionLayer.PlayerHitBox);
 				this.aiActor.specRigidbody.AddCollisionLayerIgnoreOverride(playerMask);
+				this.specRigidbody.Initialize();
+				this.aiActor.IsInReinforcementLayer = true;
 
-			
 
 				while (this.aiAnimator.IsPlaying("awaken"))
 				{
@@ -153,7 +154,7 @@ namespace Planetside
 			private IEnumerator DoIntro()
 			{
 				m_isFinished = true;
-				this.aiActor.enabled = false;
+				this.aiActor.enabled = true;
 				this.behaviorSpeculator.enabled = false;
 				this.aiActor.ToggleRenderers(false);
 				this.specRigidbody.enabled = false;
@@ -163,16 +164,21 @@ namespace Planetside
 				{
 					this.aiShooter.ToggleGunAndHandRenderers(false, "GuardIsSpawning");
 				}
+
 				this.aiActor.ToggleRenderers(true);
 				this.aiActor.healthHaver.PreventAllDamage = true;
 				this.aiActor.enabled = true;
+
 				this.specRigidbody.enabled = true;
 				this.aiActor.IsGone = false;
 				this.aiActor.IgnoreForRoomClear = false;
 				this.aiAnimator.PlayDefaultAwakenedState();
 				this.aiActor.State = AIActor.ActorState.Awakening;
+
 				int playerMask = CollisionMask.LayerToMask(CollisionLayer.PlayerCollider, CollisionLayer.PlayerHitBox);
 				this.aiActor.specRigidbody.AddCollisionLayerIgnoreOverride(playerMask);
+				this.specRigidbody.Initialize();
+				this.aiActor.IsInReinforcementLayer = true;
 
 				if (HasSpawnedPortal != true)
 				{
@@ -184,10 +190,10 @@ namespace Planetside
 					GameManager.Instance.StartCoroutine(PortalDoer(mesh, true));
 					HasSpawnedPortal = true;
 				}
-
-
 				while (this.aiAnimator.IsPlaying("awaken"))
 				{
+					
+				
 					this.behaviorSpeculator.enabled = false;
 					if (this.aiShooter)
 					{
@@ -195,17 +201,18 @@ namespace Planetside
 					}
 					yield return null;
 				}
+
 				if (this.aiShooter)
 				{
 					this.aiShooter.ToggleGunAndHandRenderers(true, "GuardIsSpawning");
 				}
+
 				yield return new WaitForSeconds(0.25f);
 				this.aiActor.healthHaver.PreventAllDamage = false;
 				this.behaviorSpeculator.enabled = true;
 				this.aiActor.specRigidbody.RemoveCollisionLayerIgnoreOverride(playerMask);
 				this.aiActor.HasBeenEngaged = true;
 				this.aiActor.State = AIActor.ActorState.Normal;
-				this.StartIntro();
 				m_isFinished = true;
 				yield break;
 			}
@@ -238,6 +245,7 @@ namespace Planetside
 			{
 				prefab = EnemyBuilder.BuildPrefab("Creationist", guid, spritePaths[0], new IntVector2(0, 0), new IntVector2(8, 9), false, true);
 				var companion = prefab.AddComponent<EnemyBehavior>();
+				prefab.AddComponent<ForgottenEnemyComponent>();
 				companion.aiActor.knockbackDoer.weight = 120;
 				companion.aiActor.MovementSpeed = 2.4f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;

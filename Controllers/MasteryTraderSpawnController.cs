@@ -55,7 +55,7 @@ namespace Planetside
         {
             if (self.CurrentRoom != null && self.IsInCombat == true)
             {
-                if (!roomsRolledIn.Contains(self.CurrentRoom) && !roomsHurtIn.Contains(self.CurrentRoom))
+                if (!roomsRolledIn.Contains(self.CurrentRoom) /*&& !roomsHurtIn.Contains(self.CurrentRoom)*/)
                 {roomsRolledIn.Add(self.CurrentRoom);}
             }            
             return orig(self, direction);
@@ -66,7 +66,7 @@ namespace Planetside
             orig(self, direction);
             if (self.CurrentRoom != null && self.IsInCombat == true)
             {
-                if (!roomsHurtIn.Contains(self.CurrentRoom) && !roomsRolledIn.Contains(self.CurrentRoom))
+                if (/*!roomsHurtIn.Contains(self.CurrentRoom) && */!roomsRolledIn.Contains(self.CurrentRoom))
                 { roomsHurtIn.Add(self.CurrentRoom); }
             }
         }
@@ -183,7 +183,7 @@ namespace Planetside
                             { HurtIn++; }
                         }
                     }
-                    Debug.Log("Rooms count used for calculation: " + RoomCount);
+                    Debug.Log("Room count used for calculation: " + RoomCount);
                     Debug.Log("Rooms NOT rolled in (Including +1 Leeway): " + RolledIn);
                     Debug.Log("Rooms NOT hurt in: " + HurtIn);
 
@@ -192,7 +192,6 @@ namespace Planetside
                     float Chance = Mathf.Min(1, RolledIn / RoomCount);
                     float ChanceMult = HurtIn / RoomCount;
                     float checc = Mathf.Min(1, ChanceMult * Chance);
-
 
                     if (checc == 1 | PlayerHasAnchor() == true)
                     {
@@ -232,7 +231,7 @@ namespace Planetside
                         Total = Mathf.Min(1, Total);
 
                         Debug.Log("Total Chance: " + Total.ToString());
-                        if (UnityEngine.Random.value <= Total)
+                        if (UnityEngine.Random.value < Total)
                         {
                             Debug.Log("Opnening Portal with " + Total + " Chance!");
                             RoomHandler currentRoom = self;
@@ -249,7 +248,6 @@ namespace Planetside
                         else
                         {
                             Debug.Log("Portal failed to open with " + Total + " Chance!");
-
                         }
                         Debug.Log("Ending Portal Chance Calculation! =======\n");
                     }             

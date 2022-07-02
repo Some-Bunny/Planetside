@@ -32,7 +32,7 @@ namespace Planetside
 			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 4);
 			gun.AddPassiveStatModifier(PlayerStats.StatType.Curse, 0.5f, StatModifier.ModifyMethod.ADDITIVE);
 			GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(378) as Gun, true, false);
-			gun.gunSwitchGroup = (PickupObjectDatabase.GetById(52) as Gun).gunSwitchGroup;
+			gun.gunSwitchGroup = (PickupObjectDatabase.GetById(370) as Gun).gunSwitchGroup;
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_WPN_Life_Orb_Fade_01";
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].triggerEvent = true;
 			gun.DefaultModule.ammoCost = 1;

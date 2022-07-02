@@ -60,7 +60,7 @@ namespace Planetside
 				AIAnimator aiAnimator = enemy.aiAnimator;
 
 				enemy.aiActor.knockbackDoer.weight = 35;
-				enemy.aiActor.MovementSpeed = 1.7f;
+				enemy.aiActor.MovementSpeed = 1f;
 				enemy.aiActor.healthHaver.PreventAllDamage = false;
 				enemy.aiActor.CollisionDamage = 1f;
 				enemy.aiActor.HasShadow = false;
@@ -893,7 +893,7 @@ namespace Planetside
 							IsBlackPhantom = false,
 							resetCooldownOnDamage = null,
 							MaxUsages = 0,
-							MoveSpeedModifier = 0.6f,
+							MoveSpeedModifier = 0.1f,
 						},
 						NickName = "mithrix"
 					},
@@ -1368,7 +1368,7 @@ namespace Planetside
 							StaticReferenceManager.DestroyAllEnemyProjectiles();
 							Phase2Check = true;
 
-							base.aiActor.MovementSpeed = TurboModeController.MaybeModifyEnemyMovementSpeed(3f);
+							base.aiActor.MovementSpeed = TurboModeController.MaybeModifyEnemyMovementSpeed(1.2f);
 
 							Exploder.DoDistortionWave(base.aiActor.sprite.WorldTopCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
 
@@ -1390,7 +1390,7 @@ namespace Planetside
 								Destroy(Ophanaim.reticles[i]);
 							}
 							Ophanaim.reticles.Clear();
-							base.aiActor.behaviorSpeculator.AttackCooldown *= 0.8f;
+
 							for (int j = 0; j < base.aiActor.behaviorSpeculator.AttackBehaviors.Count; j++)
 							{
 								if (base.behaviorSpeculator.AttackBehaviors[j] is AttackBehaviorGroup && base.behaviorSpeculator.AttackBehaviors[j] != null)

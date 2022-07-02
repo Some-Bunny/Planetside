@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using Dungeonator;
 using ItemAPI;
 using UnityEngine;
+using System.Linq;
+using System.Text;
+using Planetside;
+
+
 namespace GungeonAPI
 {
 	public class ShrineFactory
@@ -267,6 +272,279 @@ namespace GungeonAPI
 			}
 			return result;
 		}
+
+		public GameObject BuildWithAnimations(string[] idlePaths, int idleFPS, string[] usePaths, int useFPS)
+		{
+			GameObject result;
+			try
+			{
+				Texture2D textureFromResource = ResourceExtractor.GetTextureFromResource(this.spritePath);
+				GameObject gameObject = SpriteBuilder.SpriteFromResource(this.spritePath, null, false);
+				string text = (this.modID + ":" + this.name).ToLower().Replace(" ", "_");
+				//string roomPath = this.roomPath;
+				gameObject.name = text;
+				tk2dSprite component = gameObject.GetComponent<tk2dSprite>();
+				component.IsPerpendicular = true;
+				component.PlaceAtPositionByAnchor(this.offset, tk2dBaseSprite.Anchor.LowerCenter);
+
+
+				tk2dSpriteCollectionData SpriteObjectSpriteCollection = SpriteBuilder.ConstructCollection(gameObject, (name + "_Collection"));
+				int spriteID = SpriteBuilder.AddSpriteToCollection(idlePaths[0], SpriteObjectSpriteCollection);
+				tk2dSprite sprite = gameObject.GetOrAddComponent<tk2dSprite>();
+				sprite.SetSprite(SpriteObjectSpriteCollection, spriteID);
+
+
+				tk2dSpriteAnimator animator = gameObject.GetOrAddComponent<tk2dSpriteAnimator>();
+				tk2dSpriteAnimation animation = gameObject.AddComponent<tk2dSpriteAnimation>();
+				animation.clips = new tk2dSpriteAnimationClip[0];
+				animator.Library = animation;
+
+				List<tk2dSpriteAnimationClip> clips = new List<tk2dSpriteAnimationClip>();
+				if (idlePaths.Length >= 1)
+				{
+					tk2dSpriteAnimationClip idleClip = new tk2dSpriteAnimationClip() { name = "idle", frames = new tk2dSpriteAnimationFrame[0], fps = idleFPS };
+					List<tk2dSpriteAnimationFrame> frames = new List<tk2dSpriteAnimationFrame>();
+					for (int i = 0; i < idlePaths.Length; i++)
+					{
+						tk2dSpriteCollectionData collection = SpriteObjectSpriteCollection;
+						int frameSpriteId = SpriteBuilder.AddSpriteToCollection(idlePaths[i], collection);
+						tk2dSpriteDefinition frameDef = collection.spriteDefinitions[frameSpriteId];
+						frames.Add(new tk2dSpriteAnimationFrame { spriteId = frameSpriteId, spriteCollection = collection });
+						frameDef.ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.LowerLeft);
+					}
+					idleClip.frames = frames.ToArray();
+					idleClip.wrapMode = tk2dSpriteAnimationClip.WrapMode.Loop;
+					animator.Library.clips = animation.clips.Concat(new tk2dSpriteAnimationClip[] { idleClip }).ToArray();
+					animator.playAutomatically = true;
+					animator.DefaultClipId = animator.GetClipIdByName("idle");
+					clips.Add(idleClip);
+					tk2dSpriteAnimationClip[] array = clips.ToArray();
+					animator.Library.clips = array;
+					animator.playAutomatically = true;
+					animator.DefaultClipId = animator.GetClipIdByName("idle");
+				}
+				if (usePaths != null)
+				{
+					tk2dSpriteAnimation breakAnimation = gameObject.AddComponent<tk2dSpriteAnimation>();
+					breakAnimation.clips = new tk2dSpriteAnimationClip[0];
+					tk2dSpriteAnimationClip breakClip = new tk2dSpriteAnimationClip() { name = "use", frames = new tk2dSpriteAnimationFrame[0], fps = useFPS };
+					List<tk2dSpriteAnimationFrame> breakFrames = new List<tk2dSpriteAnimationFrame>();
+					for (int i = 0; i < usePaths.Length; i++)
+					{
+						tk2dSpriteCollectionData collection = SpriteObjectSpriteCollection;
+						int frameSpriteId = SpriteBuilder.AddSpriteToCollection(usePaths[i], collection);
+						tk2dSpriteDefinition frameDef = collection.spriteDefinitions[frameSpriteId];
+						frameDef.ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.LowerLeft);
+						breakFrames.Add(new tk2dSpriteAnimationFrame { spriteId = frameSpriteId, spriteCollection = collection });
+					}
+					breakClip.frames = breakFrames.ToArray();
+					breakClip.wrapMode = tk2dSpriteAnimationClip.WrapMode.Once;
+					clips.Add(breakClip);
+					tk2dSpriteAnimationClip[] array = clips.ToArray();
+					animator.Library.clips = array;
+					animator.playAutomatically = true;
+					animator.DefaultClipId = animator.GetClipIdByName("idle");
+				}
+
+
+
+				Transform transform = new GameObject("talkpoint").transform;
+				transform.position = gameObject.transform.position + this.talkPointOffset;
+				transform.SetParent(gameObject.transform);
+				bool flag = !this.usesCustomColliderOffsetAndSize;
+				bool flag2 = flag;
+				if (flag2)
+				{
+					IntVector2 intVector = new IntVector2(textureFromResource.width, textureFromResource.height);
+					this.colliderOffset = new IntVector2(0, 0);
+					this.colliderSize = new IntVector2(intVector.x, intVector.y / 2);
+				}
+				SpeculativeRigidbody speculativeRigidbody = component.SetUpSpeculativeRigidbody(this.colliderOffset, this.colliderSize);
+
+
+				speculativeRigidbody.PixelColliders.Add(new PixelCollider
+				{
+					ColliderGenerationMode = PixelCollider.PixelColliderGeneration.Manual,
+					CollisionLayer = CollisionLayer.PlayerBlocker,
+					IsTrigger = false,
+					BagleUseFirstFrameOnly = false,
+					SpecifyBagelFrame = string.Empty,
+					BagelColliderNumber = 0,
+					ManualOffsetX = this.colliderOffset.x,
+					ManualOffsetY = this.colliderOffset.y,
+					ManualWidth = this.colliderSize.x,
+					ManualHeight = this.colliderSize.y,
+					ManualDiameter = 0,
+					ManualLeftX = 0,
+					ManualLeftY = 0,
+					ManualRightX = 0,
+					ManualRightY = 0,
+				});
+				speculativeRigidbody.PixelColliders.Add(new PixelCollider
+				{
+
+					ColliderGenerationMode = PixelCollider.PixelColliderGeneration.Manual,
+					CollisionLayer = CollisionLayer.EnemyBlocker,
+					IsTrigger = false,
+					BagleUseFirstFrameOnly = false,
+					SpecifyBagelFrame = string.Empty,
+					BagelColliderNumber = 0,
+					ManualOffsetX = this.colliderOffset.x,
+					ManualOffsetY = this.colliderOffset.y,
+					ManualWidth = this.colliderSize.x,
+					ManualHeight = this.colliderSize.y,
+					ManualDiameter = 0,
+					ManualLeftX = 0,
+					ManualLeftY = 0,
+					ManualRightX = 0,
+					ManualRightY = 0,
+				});
+				speculativeRigidbody.PixelColliders.Add(new PixelCollider
+				{
+					ColliderGenerationMode = PixelCollider.PixelColliderGeneration.Manual,
+					CollisionLayer = CollisionLayer.BulletBlocker,
+					IsTrigger = false,
+					BagleUseFirstFrameOnly = false,
+					SpecifyBagelFrame = string.Empty,
+					BagelColliderNumber = 0,
+					ManualOffsetX = this.colliderOffset.x,
+					ManualOffsetY = this.colliderOffset.y,
+					ManualWidth = this.colliderSize.x,
+					ManualHeight = this.colliderSize.y,
+					ManualDiameter = 0,
+					ManualLeftX = 0,
+					ManualLeftY = 0,
+					ManualRightX = 0,
+					ManualRightY = 0,
+				});
+				speculativeRigidbody.PixelColliders.Add(new PixelCollider
+				{
+					ColliderGenerationMode = PixelCollider.PixelColliderGeneration.Manual,
+					CollisionLayer = CollisionLayer.EnemyBulletBlocker,
+					IsTrigger = false,
+					BagleUseFirstFrameOnly = false,
+					SpecifyBagelFrame = string.Empty,
+					BagelColliderNumber = 0,
+					ManualOffsetX = this.colliderOffset.x,
+					ManualOffsetY = this.colliderOffset.y,
+					ManualWidth = this.colliderSize.x,
+					ManualHeight = this.colliderSize.y,
+					ManualDiameter = 0,
+					ManualLeftX = 0,
+					ManualLeftY = 0,
+					ManualRightX = 0,
+					ManualRightY = 0,
+				});
+				speculativeRigidbody.PixelColliders.Add(new PixelCollider
+				{
+					ColliderGenerationMode = PixelCollider.PixelColliderGeneration.Manual,
+					CollisionLayer = CollisionLayer.BeamBlocker,
+					IsTrigger = false,
+					BagleUseFirstFrameOnly = false,
+					SpecifyBagelFrame = string.Empty,
+					BagelColliderNumber = 0,
+					ManualOffsetX = this.colliderOffset.x,
+					ManualOffsetY = this.colliderOffset.y,
+					ManualWidth = this.colliderSize.x,
+					ManualHeight = this.colliderSize.y,
+					ManualDiameter = 0,
+					ManualLeftX = 0,
+					ManualLeftY = 0,
+					ManualRightX = 0,
+					ManualRightY = 0,
+				});
+
+				ShrineFactory.CustomShrineController customShrineController = gameObject.AddComponent<ShrineFactory.CustomShrineController>();
+				customShrineController.ID = text;
+				customShrineController.roomStyles = this.roomStyles;
+				customShrineController.isBreachShrine = true;
+				customShrineController.offset = this.offset;
+				customShrineController.pixelColliders = speculativeRigidbody.specRigidbody.PixelColliders;
+				customShrineController.factory = this;
+				customShrineController.OnAccept = this.OnAccept;
+				customShrineController.OnDecline = this.OnDecline;
+				customShrineController.CanUse = this.CanUse;
+				customShrineController.text = this.text;
+				customShrineController.acceptText = this.acceptText;
+				customShrineController.declineText = this.declineText;
+
+
+
+				if (shadowPath != null)
+				{
+					GameObject shadowObject = SpriteBuilder.SpriteFromResource(shadowPath, null, false);
+					shadowObject.name = "Shadow_" + name;
+					tk2dSprite orAddComponent3 = shadowObject.GetOrAddComponent<tk2dSprite>();
+					orAddComponent3.SetSprite(orAddComponent3.spriteId);
+					FakePrefab.MarkAsFakePrefab(shadowObject);
+					ShrineShadowHandler orAddComponent4 = gameObject.gameObject.GetOrAddComponent<ShrineShadowHandler>();
+					orAddComponent4.shadowObject = orAddComponent3.gameObject;
+					orAddComponent4.Offset = new Vector3(ShadowOffsetX, ShadowOffsetY);
+				}
+
+				bool flag3 = this.interactableComponent != null;
+				bool flag4 = flag3;
+
+				IPlayerInteractable item;
+				if (flag4)
+				{
+					item = (gameObject.AddComponent(this.interactableComponent) as IPlayerInteractable);
+				}
+				else
+				{
+					SimpleShrine simpleShrine = gameObject.AddComponent<SimpleShrine>();
+					simpleShrine.isToggle = this.isToggle;
+					simpleShrine.OnAccept = this.OnAccept;
+					simpleShrine.OnDecline = this.OnDecline;
+					simpleShrine.CanUse = this.CanUse;
+					simpleShrine.text = this.text;
+					simpleShrine.acceptText = this.acceptText;
+					simpleShrine.declineText = this.declineText;
+					simpleShrine.talkPoint = transform;
+					item = simpleShrine;
+				}
+
+				if (AdditionalComponent != null)
+                {
+					gameObject.AddComponent(this.AdditionalComponent);
+				}
+				GameObject gameObject2 = ShrineFakePrefab.Clone(gameObject);
+				gameObject2.GetComponent<ShrineFactory.CustomShrineController>().Copy(customShrineController);
+				gameObject2.name = text;
+				bool flag5 = this.isBreachShrine;
+				bool flag6 = flag5;
+				if (flag6)
+				{
+					bool flag7 = !RoomHandler.unassignedInteractableObjects.Contains(item);
+					bool flag8 = flag7;
+					if (flag8)
+					{
+						RoomHandler.unassignedInteractableObjects.Add(item);
+					}
+				}
+				else
+				{
+					bool flag9 = !this.room;
+					bool flag10 = flag9;
+					if (flag10)
+					{
+						this.room = RoomFactory.CreateEmptyRoom(12, 12);
+					}
+					ShrineFactory.RegisterShrineRoom(gameObject2, this.room, text, this.offset, this.RoomWeight);
+				}
+				ShrineFactory.registeredShrines.Add(text, gameObject2);
+				result = gameObject;
+			}
+			catch (Exception e)
+			{
+				Tools.PrintException(e, "FF0000");
+				result = null;
+			}
+			return result;
+		}
+
+
+
 		public float RoomWeight;
 
 
@@ -522,6 +800,8 @@ namespace GungeonAPI
 		public bool usesCustomColliderOffsetAndSize;
 
 		public Type interactableComponent = null;
+
+		public Type AdditionalComponent = null;
 
 		public bool isBreachShrine = false;
 

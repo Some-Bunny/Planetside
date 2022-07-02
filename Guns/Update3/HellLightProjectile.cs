@@ -28,18 +28,14 @@ namespace Planetside
         {
             //GameObject original;
             this.projectile = base.GetComponent<Projectile>();
-            Projectile projectile = this.projectile;
-            PlayerController playerController = projectile.Owner as PlayerController;
-            Projectile component = base.gameObject.GetComponent<Projectile>();
-            bool flag = component != null;
-            bool flag2 = flag;
-            if (flag2)
+           
+            if (this.projectile)
             {
-                component.baseData.damage += 2.5f;
+                this.projectile.baseData.damage += 2.5f;
 
-                SpeculativeRigidbody specRigidbody2 = component.specRigidbody;
+                SpeculativeRigidbody specRigidbody2 = this.projectile.specRigidbody;
 				specRigidbody2.OnPreTileCollision = (SpeculativeRigidbody.OnPreTileCollisionDelegate)Delegate.Combine(specRigidbody2.OnPreTileCollision, new SpeculativeRigidbody.OnPreTileCollisionDelegate(this.OnPreTileCollision));
-                component.collidesWithPlayer = false;
+                this.projectile.collidesWithPlayer = false;
 
             }
         }

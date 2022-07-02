@@ -26,15 +26,9 @@ namespace Planetside
         public void Start()
         {
             this.projectile = base.GetComponent<Projectile>();
-            Projectile projectile = this.projectile;
-            PlayerController playerController = projectile.Owner as PlayerController;
-            Projectile component = base.gameObject.GetComponent<Projectile>();
-            bool flag = component != null;
-            bool flag2 = flag;
-            if (flag2)
+            if (this.projectile != null)
             {
-                component.OnDestruction += this.Zzap;
-
+                this.projectile.OnDestruction += this.Zzap;
             }
         }
 

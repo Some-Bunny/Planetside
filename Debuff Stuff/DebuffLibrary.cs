@@ -15,6 +15,48 @@ namespace Planetside
 
 		}
 
+
+		public static InfectedEnemyEffect InfectedEnemyEffect = new InfectedEnemyEffect
+		{
+			crystalNum = 4,
+			debrisAngleVariance = 30,
+			AffectsPlayers = false,
+			crystalRot = 4,
+			
+
+			AffectsEnemies = true,
+			stackMode = GameActorEffect.EffectStackingMode.Stack,
+			duration = 3600,
+			FreezeAmount = 0.1f,
+			resistanceType = EffectResistanceType.Freeze,
+			UnfreezeDamagePercent = 1,
+			debrisMaxForce = 1,
+			effectIdentifier = "Infection",
+			FreezeCrystals = InfectedEnemyEffect.GeneratedInfectionCrystals,
+			TintColor = new Color(0.01f, 0.5f, 0.5f),
+			AppliesTint = true,
+			
+		};
+
+		public static InfectedBossEffect InfectedBossEffect = new InfectedBossEffect
+		{
+			crystalNum = 9,
+			debrisAngleVariance = 30,
+			AffectsPlayers = false,
+			crystalRot = 4,
+			AffectsEnemies = true,
+			stackMode = GameActorEffect.EffectStackingMode.Stack,
+			duration = 3600,
+			FreezeAmount = 0.1f,
+			resistanceType = EffectResistanceType.Freeze,
+			UnfreezeDamagePercent = 1,
+			debrisMaxForce = 1,
+			effectIdentifier = "Infection",
+			FreezeCrystals = InfectedBossEffect.GeneratedInfectionCrystals,
+			TintColor = new Color(0.01f, 0.5f, 0.5f),
+			AppliesTint = true,
+		};
+
 		public static BrainHostDummyBuff BrainHostBuff = new BrainHostDummyBuff
 		{
 			effectIdentifier = "BrainHost",
@@ -23,11 +65,9 @@ namespace Planetside
 			duration = 1f,
 			AppliesTint = true,
 			AppliesDeathTint = true,
-			//PlaysVFXOnActor = true,
 			OverheadVFX = BrainHostDummyBuff.BrainHostVFX,
 			AffectsPlayers = false,
 			stackMode = GameActorEffect.EffectStackingMode.Refresh
-
 		};
 
 

@@ -39,7 +39,9 @@ namespace Planetside
 				{
 					return;
 				}
-				base.StartCoroutine(this.DoIntro());
+				this.aiActor.enabled = true;
+				m_isFinished = true;
+				base.aiActor.GetComponent<GenericIntroDoer>().TriggerSequence(GameManager.Instance.BestActivePlayer);
 			}
 
 			private IEnumerator PortalDoer(MeshRenderer portal, bool DestroyWhenDone = false)
@@ -128,7 +130,6 @@ namespace Planetside
 				this.behaviorSpeculator.enabled = true;
 				this.aiActor.specRigidbody.RemoveCollisionLayerIgnoreOverride(playerMask);
 				this.aiActor.HasBeenEngaged = true;
-				this.aiActor.GetComponent<NemesisController>().DoEngagePostProcess();
 				this.aiActor.State = AIActor.ActorState.Normal;
 				this.StartIntro();
 				m_isFinished = true;
@@ -154,6 +155,7 @@ namespace Planetside
 		private static tk2dSpriteCollectionData nemesisCollection;
 		public static GameObject DummySpriteObject;
 
+		private static Texture2D BossCardTexture = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside/Resources/BossCards/nemesis_bosscard.png");
 
 		public static void Init()
 		{
@@ -186,6 +188,7 @@ namespace Planetside
 				prefab = EnemyBuilder.BuildPrefab("nemesis", guid, spritePaths[0], new IntVector2(0, 0), new IntVector2(8, 9), true, true);
 				var companion = prefab.AddComponent<EnemyBehavior>();
 				prefab.AddComponent<NemesisController>();
+				prefab.AddComponent<ForgottenEnemyComponent>();
 				companion.aiActor.knockbackDoer.weight = 120;
 				companion.aiActor.MovementSpeed = 4f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
@@ -229,7 +232,6 @@ namespace Planetside
 				});
 				companion.aiActor.specRigidbody.PixelColliders.Add(new PixelCollider
 				{
-
 					ColliderGenerationMode = PixelCollider.PixelColliderGeneration.Manual,
 					CollisionLayer = CollisionLayer.EnemyHitBox,
 					IsTrigger = false,
@@ -246,8 +248,6 @@ namespace Planetside
 					ManualRightX = 0,
 					ManualRightY = 0,
 					Enabled = true,
-
-
 				});
 				companion.aiActor.CorpseObject = EnemyDatabase.GetOrLoadByGuid("43426a2e39584871b287ac31df04b544").CorpseObject;
 				companion.aiActor.PreventBlackPhantom = false;
@@ -270,13 +270,14 @@ namespace Planetside
 						"run_bottom_right",
 						"run_bottom_left",
 						"run_top_right",
-
 					}
 				};
 
 
 				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "death", new string[] { "death" }, new DirectionalAnimation.FlipType[1], DirectionalAnimation.DirectionType.Single);
-				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awaken" }, new DirectionalAnimation.FlipType[1], DirectionalAnimation.DirectionType.Single);
+				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "intro", new string[] { "intro" }, new DirectionalAnimation.FlipType[1], DirectionalAnimation.DirectionType.Single);
+
+				//EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awaken" }, new DirectionalAnimation.FlipType[1], DirectionalAnimation.DirectionType.Single);
 
 				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "dodgeroll", new string[] { "dodge_top_left", "dodge_bottom_right", "dodge_bottom_left", "dodge_top_right" }, new DirectionalAnimation.FlipType[4], DirectionalAnimation.DirectionType.FourWay);
 			
@@ -466,9 +467,12 @@ namespace Planetside
 					EnemyToolbox.AddEventTriggersToAnimation(companion.spriteAnimator, "thanosSnap", new Dictionary<int, string>() { { 5, "DestroySelf" } });
 
 					
+				
+					
+
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, nemesisCollection, new List<int>
 					{
-					89,
+						89,
 					90,
 					90,
 					91,
@@ -505,19 +509,27 @@ namespace Planetside
 					4,
 					5,
 					6,
+					7,
+					4,//37
+					5,
+					6,
+					7,
+					4,
+					5,
+					6,
 					7
-					}, "awaken", tk2dSpriteAnimationClip.WrapMode.Once).fps = 10f;
-					
+					}, "intro", tk2dSpriteAnimationClip.WrapMode.Once).fps = 10f;
+
 				}
 
-				EnemyToolbox.AddSoundsToAnimationFrame(companion.spriteAnimator, "awaken", new Dictionary<int, string>() { { 1, "Play_EnergySwirl" }, { 17, "Play_CHR_forever_fall_01" }, { 27, "Play_BOSS_dragun_stomp_01" } });
+				//EnemyToolbox.AddSoundsToAnimationFrame(companion.spriteAnimator, "awaken", new Dictionary<int, string>() { { 1, "Play_EnergySwirl" } });
+
+				EnemyToolbox.AddEventTriggersToAnimation(companion.spriteAnimator, "intro", new Dictionary<int, string>() { { 37, "EquipSelf" } });
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.spriteAnimator, "intro", new Dictionary<int, string>() { { 1, "Play_EnergySwirl" }, { 17, "Play_CHR_forever_fall_01" }, { 27, "Play_BOSS_dragun_stomp_01" } });
+
+				//NemesisEngageDoer trespassEngager = companion.aiActor.gameObject.AddComponent<NemesisEngageDoer>();
 
 
-				companion.aiActor.AwakenAnimType = AwakenAnimationType.Awaken;
-				companion.aiActor.reinforceType = ReinforceType.SkipVfx;
-				NemesisEngageDoer trespassEngager = companion.aiActor.gameObject.AddComponent<NemesisEngageDoer>();
-
-				
 
 				GameObject shootpoint = EnemyToolbox.GenerateShootPoint(companion.gameObject, new Vector2(0.5f, 0.5f), "UnwillingShootpoint");
 
@@ -806,7 +818,7 @@ namespace Planetside
 				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Enemies/Nemesis/nemesis_awaken_018";
 				companion.encounterTrackable.journalData.enemyPortraitSprite = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\sheetUnwillingTrespass.png");
 				PlanetsideModule.Strings.Enemies.Set("#NEMESIS", "Nemesis");
-				PlanetsideModule.Strings.Enemies.Set("#NEMESIS_SHORTDESC", "VERSUS");
+				PlanetsideModule.Strings.Enemies.Set("#NEMESIS_SHORTDESC", "Versus");
 				PlanetsideModule.Strings.Enemies.Set("#NEMESIS_LONGDESC", "Even those who could harness the 3rd dimensions power innately were doomed to succumb to its influence.\n\nMaking the perfect duelist.");
 				companion.encounterTrackable.journalData.PrimaryDisplayName = "#NEMESIS";
 				companion.encounterTrackable.journalData.NotificationPanelDescription = "#NEMESIS_SHORTDESC";
@@ -839,6 +851,59 @@ namespace Planetside
 
 
 				companion.aiActor.bulletBank.Bullets[0].BulletObject.GetComponent<Projectile>().baseData.speed *= 2f;
+
+
+				GenericIntroDoer miniBossIntroDoer = prefab.AddComponent<GenericIntroDoer>();
+				prefab.AddComponent<NemesisIntroController>();
+				miniBossIntroDoer.triggerType = GenericIntroDoer.TriggerType.PlayerEnteredRoom;
+				miniBossIntroDoer.initialDelay = 0.1f;
+				miniBossIntroDoer.cameraMoveSpeed = 25;
+				miniBossIntroDoer.specifyIntroAiAnimator = null;
+				miniBossIntroDoer.BossMusicEvent = "Play_MUS_Lich_Double_01";
+				miniBossIntroDoer.PreventBossMusic = false;
+				miniBossIntroDoer.InvisibleBeforeIntroAnim = false;
+				miniBossIntroDoer.preIntroAnim = string.Empty;
+				miniBossIntroDoer.preIntroDirectionalAnim = string.Empty;
+				miniBossIntroDoer.introAnim = "intro";
+				miniBossIntroDoer.introDirectionalAnim = string.Empty;
+				miniBossIntroDoer.continueAnimDuringOutro = false;
+				miniBossIntroDoer.cameraFocus = null;
+				miniBossIntroDoer.roomPositionCameraFocus = Vector2.zero;
+				miniBossIntroDoer.restrictPlayerMotionToRoom = false;
+				miniBossIntroDoer.fusebombLock = false;
+				miniBossIntroDoer.AdditionalHeightOffset = 0;
+				miniBossIntroDoer.HideGunAndHand = true;
+				PlanetsideModule.Strings.Enemies.Set("#QUOTE", "");
+
+				miniBossIntroDoer.portraitSlideSettings = new PortraitSlideSettings()
+				{
+					bossNameString = "#NEMESIS",
+					bossSubtitleString = "#NEMESIS_SHORTDESC",
+					bossQuoteString = "#QUOTE",
+					bossSpritePxOffset = IntVector2.Zero,
+					topLeftTextPxOffset = IntVector2.Zero,
+					bottomRightTextPxOffset = IntVector2.Zero,
+					bgColor = Color.cyan
+				};
+				if (BossCardTexture)
+				{
+					miniBossIntroDoer.portraitSlideSettings.bossArtSprite = BossCardTexture;
+					miniBossIntroDoer.SkipBossCard = false;
+					companion.aiActor.healthHaver.bossHealthBar = HealthHaver.BossBarType.SubbossBar;
+				}
+				else
+				{
+					miniBossIntroDoer.SkipBossCard = true;
+					companion.aiActor.healthHaver.bossHealthBar = HealthHaver.BossBarType.SubbossBar;
+				}
+				miniBossIntroDoer.SkipFinalizeAnimation = true;
+				miniBossIntroDoer.RegenerateCache();
+
+				//==================
+				//Important for not breaking basegame stuff!
+				StaticReferenceManager.AllHealthHavers.Remove(companion.aiActor.healthHaver);
+				//==================
+
 
 			}
 		}
@@ -960,7 +1025,7 @@ namespace Planetside
 			}
 			public class UndodgeableSpore : Bullet
 			{
-				public UndodgeableSpore() : base("undodgeableSpore", false, false, false)
+				public UndodgeableSpore() : base("undodgeableSpore", true, false, false)
 				{
 
 				}
@@ -1056,7 +1121,7 @@ namespace Planetside
 					yield return null;
 				}
 				elapsed = 0;
-				Time = 0.5f;
+				Time = 0.125f;
 				base.BulletBank.aiActor.aiAnimator.LockFacingDirection = true;
 				while (elapsed < Time)
 				{
@@ -1095,7 +1160,7 @@ namespace Planetside
 			}
 			public class UndodgeableSpore : Bullet
 			{
-				public UndodgeableSpore(bool iswait) : base("undodgeableSpore", false, false, false)
+				public UndodgeableSpore(bool iswait) : base("undodgeableSpore", true, false, false)
 				{
 					IsWait = iswait;
 				}
@@ -1499,6 +1564,10 @@ namespace Planetside
 				if (clip.GetFrame(frameIdx).eventInfo.Contains("DestroySelf"))
                 {
 					Destroy(base.aiActor.gameObject);
+				}//ForceIntro
+				if (clip.GetFrame(frameIdx).eventInfo.Contains("ForceIntro"))
+                {
+					base.aiActor.gameObject.GetComponent<GenericIntroDoer>().TriggerSequence(GameManager.Instance.BestActivePlayer);
                 }
 			}
 			private IEnumerator CauseDeath(AIActor aiActor)

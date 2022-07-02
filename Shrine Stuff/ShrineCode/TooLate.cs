@@ -38,8 +38,6 @@ namespace Planetside
 				talkPointOffset = new Vector3(0, 0, 0),
 				isToggle = false,
 				isBreachShrine = false,
-				
-
 			};
 			iei.Build();
 		}

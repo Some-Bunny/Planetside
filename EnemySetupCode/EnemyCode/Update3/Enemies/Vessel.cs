@@ -225,6 +225,7 @@ namespace Planetside
 			{
 				prefab = EnemyBuilder.BuildPrefab("Vessel", guid, spritePaths[0], new IntVector2(0, 0), new IntVector2(8, 9), false, true);
 				var companion = prefab.AddComponent<EnemyBehavior>();
+				prefab.AddComponent<ForgottenEnemyComponent>();
 				prefab.AddComponent<VesselController>();
 				companion.aiActor.knockbackDoer.weight = 40;
 				companion.aiActor.MovementSpeed = 1f;
@@ -296,6 +297,7 @@ namespace Planetside
 				companion.aiActor.AwakenAnimType = AwakenAnimationType.Awaken;
 				companion.aiActor.reinforceType = ReinforceType.SkipVfx;
 
+
 				aiAnimator.IdleAnimation = new DirectionalAnimation
 				{
 					Type = DirectionalAnimation.DirectionType.TwoWayHorizontal,
@@ -366,7 +368,7 @@ namespace Planetside
 					12,
 					13,
 					14
-					}, "teleportOut", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
+					}, "teleportOut", tk2dSpriteAnimationClip.WrapMode.Once).fps = 11f;
 					EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "teleportOut", new Dictionary<int, string> { { 3, "Warp" } });
 					EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "teleportOut", new Dictionary<int, string> { { 1, "Play_BOSS_doormimic_jump_01" } });
 
@@ -383,7 +385,7 @@ namespace Planetside
 					9,
 					8,
 					7
-					}, "teleportIn", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
+					}, "teleportIn", tk2dSpriteAnimationClip.WrapMode.Once).fps = 11f;
 					EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "teleportIn", new Dictionary<int, string> { { 0, "InverseWarp" } });
 					EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "teleportIn", new Dictionary<int, string> { { 1, "Play_BOSS_doormimic_land_01" } });
 

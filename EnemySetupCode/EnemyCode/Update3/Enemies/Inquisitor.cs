@@ -35,6 +35,7 @@ namespace Planetside
 			{
 				prefab = EnemyBuilder.BuildPrefab("Inquisitor", guid, spritePaths[0], new IntVector2(0, 0), new IntVector2(8, 9), false, true);
 				var companion = prefab.AddComponent<EnemyBehavior>();
+				prefab.AddComponent<ForgottenEnemyComponent>();
 				companion.aiActor.knockbackDoer.weight = 1000;
 				companion.aiActor.MovementSpeed = 1.6f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;

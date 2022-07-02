@@ -26,15 +26,11 @@ namespace Planetside
         public void Start()
         {
             this.projectile = base.GetComponent<Projectile>();
-            Projectile projectile = this.projectile;
-            PlayerController playerController = projectile.Owner as PlayerController;
-            Projectile component = base.gameObject.GetComponent<Projectile>();
-            bool flag = component != null;
-            bool flag2 = flag;
-            if (flag2)
+            PlayerController playerController = this.projectile.Owner as PlayerController;
+            if (this.projectile)
             {
                 float GunClip = playerController.CurrentGun.ClipShotsRemaining != 0 ? playerController.CurrentGun.ClipShotsRemaining : 0;
-                component.baseData.speed += (GunClip/2);
+                this.projectile.baseData.speed += (GunClip/2);
                 projectile.UpdateSpeed();
             }
         }

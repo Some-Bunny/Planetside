@@ -30,12 +30,8 @@ namespace Planetside
         {
             //GameObject original;
             this.projectile = base.GetComponent<Projectile>();
-            Projectile projectile = this.projectile;
-            PlayerController playerController = projectile.Owner as PlayerController;
-            Projectile component = base.gameObject.GetComponent<Projectile>();
-            bool flag = component != null && playerController != null;
-            bool flag2 = flag;
-            if (flag2)
+            PlayerController playerController = this.projectile.Owner as PlayerController;
+            if (this.projectile)
             {
                 float Damage = playerController.stats.GetStatValue(PlayerStats.StatType.Damage);
                 float Range = playerController.stats.GetStatValue(PlayerStats.StatType.RangeMultiplier);
@@ -44,8 +40,7 @@ namespace Planetside
                     Damage = 1;
                     Range = 1;
                 }
-                
-
+               
                 Vector2 vector = playerController.unadjustedAimPoint.XY() - playerController.CenterPosition;
                 ProjectileSlashingBehaviour slasher = projectile.gameObject.AddComponent<ProjectileSlashingBehaviour>();
                 slasher.SlashDimensions = 270;

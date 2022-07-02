@@ -26,12 +26,7 @@ namespace Planetside
         public void Start()
         {
             this.projectile = base.GetComponent<Projectile>();
-            Projectile projectile = this.projectile;
-            PlayerController playerController = projectile.Owner as PlayerController;
-            Projectile component = base.gameObject.GetComponent<Projectile>();
-            bool flag = component != null;
-            bool flag2 = flag;
-            if (flag2)
+            if (this.projectile)
             {
                 try
                 {
@@ -45,17 +40,14 @@ namespace Planetside
         }
         private void HandlePreCollision(SpeculativeRigidbody myRigidbody, PixelCollider myPixelCollider, SpeculativeRigidbody otherRigidbody, PixelCollider otherPixelCollider)
         {
-            bool flag = otherRigidbody.gameObject.name != null;
-            if (flag)
+            if (otherRigidbody.gameObject.name != null)
             {
-                bool flag2 = otherRigidbody.gameObject.name == "Table_Vertical" || otherRigidbody.gameObject.name == "Table_Horizontal";
-                if (flag2)
+                if (otherRigidbody.gameObject.name == "Table_Vertical" || otherRigidbody.gameObject.name == "Table_Horizontal")
                 {
                     PhysicsEngine.SkipCollision = true;
                 }
             }
         }
-
         private Projectile projectile;
 	}
 }

@@ -126,6 +126,13 @@ namespace Planetside
             NullShrine.Add();
             HolyChamberShrine.Add();
             TooLate.Add();
+            PrisonShrine.Add();
+
+            ToolsEnemy.Init();
+            EnemyHooks.Init();
+
+            //InfectionReplacement.Init();
+
 
             //TestTeleporter.Init();
 
@@ -222,6 +229,8 @@ namespace Planetside
             HeatStrokeEffect.Init();
             TarnishEffect.Init();
             BrainHostDummyBuff.Init();
+            InfectedEnemyEffect.Init();
+            InfectedBossEffect.Init();
 
             DebuffLibrary.Init();
 
@@ -336,7 +345,6 @@ namespace Planetside
             Vessel.Init();
             Unwilling.Init();
             Collective.Init();
-            Nemesis.Init();
 
             DeTurretRight.Init();
             DeTurretLeft.Init();
@@ -384,6 +392,8 @@ namespace Planetside
             Wailer.Init();
 
             CelBullet.Init();
+            Nemesis.Init();
+
 
             InitialiseSynergies.DoInitialisation();
             SynergyFormInitialiser.AddSynergyForms();

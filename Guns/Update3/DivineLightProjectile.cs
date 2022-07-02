@@ -28,23 +28,16 @@ namespace Planetside
         {
             //GameObject original;
             this.projectile = base.GetComponent<Projectile>();
-            Projectile projectile = this.projectile;
-            Projectile component = base.gameObject.GetComponent<Projectile>();
-            bool flag = component != null;
-            bool flag2 = flag;
-            if (flag2)
+            if (this.projectile)
             {
-                PlayerController playerController = component.Owner as PlayerController;
+                PlayerController playerController = this.projectile.Owner as PlayerController;
                 if (playerController.PlayerHasActiveSynergy("Deliver Us From All Evil") )
                 {
-                    component.BlackPhantomDamageMultiplier *= 3;
+                    this.projectile.BlackPhantomDamageMultiplier *= 3;
                 }
-                component.collidesWithPlayer = false;
-
-
-                SpeculativeRigidbody specRigidbody2 = component.specRigidbody;
+                this.projectile.collidesWithPlayer = false;
+                SpeculativeRigidbody specRigidbody2 = this.projectile.specRigidbody;
                 specRigidbody2.OnPreTileCollision = (SpeculativeRigidbody.OnPreTileCollisionDelegate)Delegate.Combine(specRigidbody2.OnPreTileCollision, new SpeculativeRigidbody.OnPreTileCollisionDelegate(this.OnPreTileCollision));
-
             }
         }
         public IEnumerator ResetSpearTimer()

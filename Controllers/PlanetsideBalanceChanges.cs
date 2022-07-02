@@ -87,7 +87,7 @@ namespace Planetside
                     Blooper.SetBaseMaxAmmo(100);//Up from 80
                     Blooper.ammo = 100;
                     foreach (ProjectileModule projectileModule in Blooper.Volley.projectiles)
-                    { projectileModule.cooldownTime *= 0.7f;  } //increased by 30%
+                    { projectileModule.cooldownTime *= 0.8f;  } //increased by 20%
 
                     Gun Winchester = PickupObjectDatabase.GetById(1) as Gun;
                     Winchester.SetBaseMaxAmmo(120); //Up from 100
@@ -113,7 +113,7 @@ namespace Planetside
                     FrostGiant.ammo = 180;
 
                     Gun Glacier = PickupObjectDatabase.GetById(130) as Gun;
-                    Glacier.DefaultModule.cooldownTime *= 0.75f; //increased by 35%
+                    Glacier.DefaultModule.cooldownTime *= 0.75f; //increased by 25%
                     Glacier.SetBaseMaxAmmo(180); //up from 120
                     Glacier.ammo = 180;
 
@@ -181,20 +181,20 @@ namespace Planetside
 
         public static Dictionary<string, float> bulletEnemiesToChanceCharm = new Dictionary<string, float>
         {
-            {EnemyGuidDatabase.Entries["bullet_kin"], 0.25f},
-            {EnemyGuidDatabase.Entries["ak47_bullet_kin"], 0.2f},
-            {EnemyGuidDatabase.Entries["bandana_bullet_kin"], 0.2f},
-            {EnemyGuidDatabase.Entries["minelet"], 0.15f},
+            {EnemyGuidDatabase.Entries["bullet_kin"], 0.2f},
+            {EnemyGuidDatabase.Entries["ak47_bullet_kin"], 0.15f},
+            {EnemyGuidDatabase.Entries["bandana_bullet_kin"], 0.15f},
+            {EnemyGuidDatabase.Entries["minelet"], 0.125f},
             {EnemyGuidDatabase.Entries["cardinal"], 0.1f},
             {EnemyGuidDatabase.Entries["shroomer"], 0.5f},
-            {EnemyGuidDatabase.Entries["ashen_bullet_kin"], 0.125f},
-            {EnemyGuidDatabase.Entries["mutant_bullet_kin"], 0.2f},
+            {EnemyGuidDatabase.Entries["ashen_bullet_kin"], 0.1f},
+            {EnemyGuidDatabase.Entries["mutant_bullet_kin"], 0.166f},
             {EnemyGuidDatabase.Entries["fallen_bullet_kin"], 0.0666f},
-            {EnemyGuidDatabase.Entries["office_bullet_kin"], 0.20f},
-            {EnemyGuidDatabase.Entries["office_bullette_kin"], 0.20f},
+            {EnemyGuidDatabase.Entries["office_bullet_kin"], 0.166f},
+            {EnemyGuidDatabase.Entries["office_bullette_kin"], 0.1666f},
 
-            {EnemyGuidDatabase.Entries["western_bullet_kin"], 0.25f},
-            {EnemyGuidDatabase.Entries["pirate_bullet_kin"], 0.25f},
+            {EnemyGuidDatabase.Entries["western_bullet_kin"], 0.20f},
+            {EnemyGuidDatabase.Entries["pirate_bullet_kin"], 0.20f},
 
         };
         public static void AIActorMods(AIActor target)

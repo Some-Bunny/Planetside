@@ -65,64 +65,6 @@ namespace Planetside
 			//DarknessTime dark = player.gameObject.AddComponent<DarknessTime>();
 			//dark.playeroue = player;
 		}
-		public class DarknessTime : BraveBehaviour
-		{
-			public DarknessTime()
-            {
-				this.playeroue = base.GetComponent<PlayerController>();
-			}
-			public void Start()
-			{
-				playeroue.OnRoomClearEvent += this.RoomCleared;
-				playeroue.OnEnteredCombat += this.EnteredCombat;
-			}
-			public void RemoveSelf()
-			{
-				Destroy(this);
-			}
-			protected override void OnDestroy()
-			{
-				if (playeroue != null)
-				{
-					playeroue.OnRoomClearEvent -= this.RoomCleared;
-					playeroue.OnEnteredCombat -= this.EnteredCombat;
-				}
-				base.OnDestroy();
-			}
-			private void EnteredCombat()
-            {
-				List<AIActor> activeEnemies = playeroue.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
-				bool flag = activeEnemies != null;
-				if (flag)
-				{
-					if (UnityEngine.Random.value <= 0.66f)
-					{
-						AkSoundEngine.PostEvent("Play_ENM_darken_world_01", base.gameObject);
-						NevernamedsDarknessHandler.EnableDarkness(37.5f, 2);
-						IsDark = true;
-					}
-				}
-				else{IsDark = false;}
-			}
-
-			private void Update()
-            {
-				if (IsDark == true && playeroue != null && playeroue.IsInCombat != true) {IsDark = false; NevernamedsDarknessHandler.DisableDarkness(1);}
-			}
-			private void RoomCleared(PlayerController obj)
-			{
-				if (IsDark == true) { AkSoundEngine.PostEvent("Play_ENM_lighten_world_01", base.gameObject); NevernamedsDarknessHandler.DisableDarkness(1);	}
-				if (UnityEngine.Random.value <= 0.03f)
-				{
-					IntVector2 bestRewardLocation = playeroue.CurrentRoom.GetBestRewardLocation(IntVector2.One * 3, RoomHandler.RewardLocationStyle.PlayerCenter, true);
-					Chest chest2 = GameManager.Instance.RewardManager.SpawnRewardChestAt(bestRewardLocation, -1f, PickupObject.ItemQuality.EXCLUDED);
-					chest2.RegisterChestOnMinimap(chest2.GetAbsoluteParentRoom());
-				}
-			}
-			bool IsDark;
-			public PlayerController playeroue;
-
-		}
 	}
 }
 

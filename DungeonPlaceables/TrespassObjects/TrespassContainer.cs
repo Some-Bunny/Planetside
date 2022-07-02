@@ -56,7 +56,7 @@ namespace Planetside
             }
             if (clip.GetFrame(frameIdx).eventInfo.Contains("SpawnItem"))
             {
-                LootEngine.SpawnItem(UnityEngine.Random.value > 0.5f ? PickupObjectDatabase.GetRandomGunOfQualities(new System.Random(UnityEngine.Random.Range(1, 100)), new List<int> { }, new PickupObject.ItemQuality[] { PickupObject.ItemQuality.B, PickupObject.ItemQuality.B, PickupObject.ItemQuality.A, PickupObject.ItemQuality.S }).gameObject : PickupObjectDatabase.GetRandomPassiveOfQualities(new System.Random(UnityEngine.Random.Range(1, 100)), new List<int> { }, new PickupObject.ItemQuality[] { PickupObject.ItemQuality.B, PickupObject.ItemQuality.B, PickupObject.ItemQuality.A, PickupObject.ItemQuality.S }).gameObject, self.transform.position + new Vector3(0.25f, 0), Vector2.down, 2f, false, true, false);
+                LootEngine.SpawnItem(UnityEngine.Random.value > 0.5f ? PickupObjectDatabase.GetRandomGunOfQualities(new System.Random(UnityEngine.Random.Range(1, 100)), new List<int> { }, new PickupObject.ItemQuality[] {  PickupObject.ItemQuality.C, PickupObject.ItemQuality.C, PickupObject.ItemQuality.B, PickupObject.ItemQuality.B, PickupObject.ItemQuality.B, PickupObject.ItemQuality.A, PickupObject.ItemQuality.S }).gameObject : PickupObjectDatabase.GetRandomPassiveOfQualities(new System.Random(UnityEngine.Random.Range(1, 100)), new List<int> { }, new PickupObject.ItemQuality[] { PickupObject.ItemQuality.B, PickupObject.ItemQuality.B, PickupObject.ItemQuality.A, PickupObject.ItemQuality.S }).gameObject, self.transform.position + new Vector3(0.25f, 0), Vector2.down, 2f, false, true, false);
             }
         }
 

@@ -26,30 +26,21 @@ namespace Planetside
         public void Start()
         {
             this.projectile = base.GetComponent<Projectile>();
-            Projectile projectile = this.projectile;
-            PlayerController playerController = projectile.Owner as PlayerController;
-            Projectile component = base.gameObject.GetComponent<Projectile>();
-            bool flag = component != null;
-            bool flag2 = flag;
-            if (flag2)
+            if (this.projectile)
             {
 				projectile.statusEffectsToApply = new List<GameActorEffect> { DebuffLibrary.Possessed };
 				projectile.OnHitEnemy = (Action<Projectile, SpeculativeRigidbody, bool>)Delegate.Combine(projectile.OnHitEnemy, new Action<Projectile, SpeculativeRigidbody, bool>(this.HandleHit));
-                //base.StartCoroutine(this.Speed(projectile));
-
             }
         }
 		
 		private void HandleHit(Projectile projectile, SpeculativeRigidbody arg2, bool arg3)
 		{
-			bool flag = arg2.aiActor != null && !arg2.healthHaver.IsDead && arg2.aiActor.behaviorSpeculator && !arg2.aiActor.IsHarmlessEnemy && arg2.aiActor != null;
-			if (flag)
+			if (arg2.aiActor != null && !arg2.healthHaver.IsDead && arg2.aiActor.behaviorSpeculator && !arg2.aiActor.IsHarmlessEnemy && arg2.aiActor != null)
 			{
 				projectile.AppliesPoison = true;
 				projectile.PoisonApplyChance = 1f;
 				projectile.healthEffect = DebuffLibrary.Possessed;
 			}
-
 		}
 		private Projectile projectile;
 	}
