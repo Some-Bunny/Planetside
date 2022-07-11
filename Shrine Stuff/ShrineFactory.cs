@@ -78,6 +78,8 @@ namespace GungeonAPI
 			GameObject result;
 			try
 			{
+
+				
 				Texture2D textureFromResource = ResourceExtractor.GetTextureFromResource(this.spritePath);
 				GameObject gameObject = SpriteBuilder.SpriteFromResource(this.spritePath, null, false);
 				string text = (this.modID + ":" + this.name).ToLower().Replace(" ", "_");
@@ -205,7 +207,18 @@ namespace GungeonAPI
 				customShrineController.text = this.text;
 				customShrineController.acceptText = this.acceptText;
 				customShrineController.declineText = this.declineText;
+				if (!string.IsNullOrEmpty(RoomIconSpritePath))
+				{
+					GameObject OptionalMinimapIcon = SpriteBuilder.SpriteFromResource(RoomIconSpritePath);
+					UnityEngine.Object.DontDestroyOnLoad(OptionalMinimapIcon);
+					FakePrefab.MarkAsFakePrefab(OptionalMinimapIcon);
+					customShrineController.roomIcon = OptionalMinimapIcon;
+				}
+				else
+				{
+					customShrineController.roomIcon = (GameObject)BraveResources.Load("Global Prefabs/Minimap_Shrine_Icon", ".prefab");
 
+				}
 				bool flag3 = this.interactableComponent != null;
 				bool flag4 = flag3;
 
@@ -219,6 +232,11 @@ namespace GungeonAPI
 					ShrineShadowHandler orAddComponent4 = gameObject.gameObject.GetOrAddComponent<ShrineShadowHandler>();
 					orAddComponent4.shadowObject = orAddComponent3.gameObject;
 					orAddComponent4.Offset = new Vector3(ShadowOffsetX, ShadowOffsetY);
+				}
+
+				if (AdditionalComponent != null)
+                {
+					gameObject.AddComponent(this.AdditionalComponent);
 				}
 				IPlayerInteractable item;
 				if (flag4)
@@ -236,6 +254,7 @@ namespace GungeonAPI
 					simpleShrine.acceptText = this.acceptText;
 					simpleShrine.declineText = this.declineText;
 					simpleShrine.talkPoint = transform;
+					simpleShrine.roomIcon = customShrineController.roomIcon;
 					item = simpleShrine;
 				}
 				GameObject gameObject2 = ShrineFakePrefab.Clone(gameObject);
@@ -262,6 +281,7 @@ namespace GungeonAPI
 					}
 					ShrineFactory.RegisterShrineRoom(gameObject2, this.room, text, this.offset, this.RoomWeight);
 				}
+				StaticReferences.StoredRoomObjects.Add(this.name, gameObject2);
 				ShrineFactory.registeredShrines.Add(text, gameObject2);
 				result = gameObject;
 			}
@@ -278,6 +298,8 @@ namespace GungeonAPI
 			GameObject result;
 			try
 			{
+				
+
 				Texture2D textureFromResource = ResourceExtractor.GetTextureFromResource(this.spritePath);
 				GameObject gameObject = SpriteBuilder.SpriteFromResource(this.spritePath, null, false);
 				string text = (this.modID + ":" + this.name).ToLower().Replace(" ", "_");
@@ -467,7 +489,18 @@ namespace GungeonAPI
 				customShrineController.text = this.text;
 				customShrineController.acceptText = this.acceptText;
 				customShrineController.declineText = this.declineText;
+				if (!string.IsNullOrEmpty(RoomIconSpritePath))
+				{
+					GameObject OptionalMinimapIcon = SpriteBuilder.SpriteFromResource(RoomIconSpritePath);
+					UnityEngine.Object.DontDestroyOnLoad(OptionalMinimapIcon);
+					FakePrefab.MarkAsFakePrefab(OptionalMinimapIcon);
+					customShrineController.roomIcon = OptionalMinimapIcon;
+				}
+				else
+				{
+					customShrineController.roomIcon = (GameObject)BraveResources.Load("Global Prefabs/Minimap_Shrine_Icon", ".prefab");
 
+				}
 
 
 				if (shadowPath != null)
@@ -501,6 +534,7 @@ namespace GungeonAPI
 					simpleShrine.acceptText = this.acceptText;
 					simpleShrine.declineText = this.declineText;
 					simpleShrine.talkPoint = transform;
+					simpleShrine.roomIcon = customShrineController.roomIcon;
 					item = simpleShrine;
 				}
 
@@ -532,6 +566,7 @@ namespace GungeonAPI
 					}
 					ShrineFactory.RegisterShrineRoom(gameObject2, this.room, text, this.offset, this.RoomWeight);
 				}
+				StaticReferences.StoredRoomObjects.Add(this.name, gameObject2);
 				ShrineFactory.registeredShrines.Add(text, gameObject2);
 				result = gameObject;
 			}
@@ -553,6 +588,8 @@ namespace GungeonAPI
 			GameObject result;
 			try
 			{
+			
+
 				Texture2D textureFromResource = ResourceExtractor.GetTextureFromResource(this.spritePath);
 				GameObject gameObject = SpriteBuilder.SpriteFromResource(this.spritePath, null, false);
 				string text = (this.modID + ":" + this.name).ToLower().Replace(" ", "_");
@@ -586,6 +623,20 @@ namespace GungeonAPI
 				customShrineController.text = this.text;
 				customShrineController.acceptText = this.acceptText;
 				customShrineController.declineText = this.declineText;
+				if (!string.IsNullOrEmpty(RoomIconSpritePath))
+				{
+					GameObject OptionalMinimapIcon = SpriteBuilder.SpriteFromResource(RoomIconSpritePath);
+					UnityEngine.Object.DontDestroyOnLoad(OptionalMinimapIcon);
+					FakePrefab.MarkAsFakePrefab(OptionalMinimapIcon);
+					customShrineController.roomIcon = OptionalMinimapIcon;
+				}
+				else
+                {
+					customShrineController.roomIcon = (GameObject)BraveResources.Load("Global Prefabs/Minimap_Shrine_Icon", ".prefab");
+
+				}
+
+
 				bool flag4 = this.interactableComponent == null;
 				bool flag5 = flag4;
 				bool flag6 = flag5;
@@ -599,12 +650,19 @@ namespace GungeonAPI
 					simpleShrine.text = this.text;
 					simpleShrine.acceptText = this.acceptText;
 					simpleShrine.declineText = this.declineText;
+					simpleShrine.roomIcon = customShrineController.roomIcon;
 					simpleShrine.talkPoint = transform;
 				}
 				else
 				{
 					gameObject.AddComponent(this.interactableComponent);
 				}
+
+				if (AdditionalComponent != null)
+				{
+					gameObject.AddComponent(this.AdditionalComponent);
+				}
+
 				gameObject.name = text;
 				if (!this.isBreachShrine)
 				{
@@ -621,6 +679,7 @@ namespace GungeonAPI
 					}
 				}
 				FakePrefab.MarkAsFakePrefab(gameObject);
+				StaticReferences.StoredRoomObjects.Add(this.name, gameObject);
 				ShrineFactory.registeredShrines.Add(text, gameObject);
 				result = gameObject;
 			}
@@ -715,7 +774,6 @@ namespace GungeonAPI
 			DungeonHandler.RegisterForShrine(roomData);
 		}
 
-		// Token: 0x06000019 RID: 25 RVA: 0x00003ADC File Offset: 0x00001CDC
 		public static void PlaceBreachShrines()
 		{
 			bool flag = ShrineFactory.m_builtShrines;
@@ -760,6 +818,8 @@ namespace GungeonAPI
 				ShrineFactory.m_builtShrines = true;
 			}
 		}
+
+		public string RoomIconSpritePath;
 
 		public string name;
 
@@ -807,6 +867,8 @@ namespace GungeonAPI
 
 		public PrototypeDungeonRoom room;
 
+		public GameObject roomIcon;
+
 		public Dictionary<string, int> roomStyles;
 
 		private static bool m_initialized;
@@ -839,6 +901,7 @@ namespace GungeonAPI
 					component.text = this.text;
 					component.acceptText = this.acceptText;
 					component.declineText = this.declineText;
+					component.roomIcon = this.roomIcon;
 				}
 			}
 
@@ -856,6 +919,7 @@ namespace GungeonAPI
 				this.text = other.text;
 				this.acceptText = other.acceptText;
 				this.declineText = other.declineText;
+				this.roomIcon = other.roomIcon;
 			}
 
 			public void ConfigureOnPlacement(RoomHandler room)
@@ -866,7 +930,7 @@ namespace GungeonAPI
 
 			public void RegisterMinimapIcon()
 			{
-				this.m_instanceMinimapIcon = Minimap.Instance.RegisterRoomIcon(this.m_parentRoom, (GameObject)BraveResources.Load("Global Prefabs/Minimap_Shrine_Icon", ".prefab"), false);
+				this.m_instanceMinimapIcon = Minimap.Instance.RegisterRoomIcon(this.m_parentRoom, this.roomIcon, false);
 			}
 
 			public void GetRidOfMinimapIcon()
@@ -907,6 +971,9 @@ namespace GungeonAPI
 			public string acceptText;
 
 			public string declineText;
+
+			public GameObject roomIcon;
+
 		}
 	}
 }

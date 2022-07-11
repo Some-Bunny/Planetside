@@ -183,7 +183,7 @@ namespace Planetside
         }
         public override DebrisObject Drop(PlayerController player)
 		{
-            player.OnEnteredCombat = (Action)Delegate.Remove(player.OnEnteredCombat, new Action(this.Warrant));
+            //player.OnEnteredCombat = (Action)Delegate.Remove(player.OnEnteredCombat, new Action(this.Warrant));
             DebrisObject result = base.Drop(player);	
 			return result;
 		}
@@ -198,7 +198,7 @@ namespace Planetside
                     player.inventory.AllGuns[i].GainAmmo(Mathf.FloorToInt((float)player.inventory.AllGuns[i].AdjustedMaxAmmo));
                 }
             }
-            player.OnEnteredCombat = (Action)Delegate.Combine(player.OnEnteredCombat, new Action(this.Warrant));
+            //player.OnEnteredCombat = (Action)Delegate.Combine(player.OnEnteredCombat, new Action(this.Warrant));
             base.Pickup(player);
 		}
 	}

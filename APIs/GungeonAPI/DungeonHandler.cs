@@ -311,8 +311,9 @@ namespace GungeonAPI
             };
             //AssetBundle shared_auto_001 = ResourceManager.LoadAssetBundle("shared_auto_001");
 
-            GameObject iconPrefab = (GameObject)BraveResources.Load("Global Prefabs/Minimap_Shrine_Icon", ".prefab");
-            room.associatedMinimapIcon = iconPrefab;
+            //GameObject iconPrefab = (GameObject)BraveResources.Load("Global Prefabs/Minimap_Shrine_Icon", ".prefab");
+            //room.associatedMinimapIcon = iconPrefab;
+            
             // bool success = false;
             switch (room.category)
             {
@@ -475,6 +476,12 @@ namespace GungeonAPI
         {
             int i = 0;
             Tools.LogPropertiesAndFields(room, "ROOM");
+
+            //room.placedObjects.ForEach(x =>  Tools.Log($"\n----------------Object #{i++}----------------" +x?.placeableContents +"\n" + x?.placeableContents?.variantTiers[0]));
+                //Tools.LogPropertiesAndFields(placedObject, "PLACED OBJECT");
+                //Tools.LogPropertiesAndFields(placedObject?.placeableContents, "PLACEABLE CONTENT");
+                //Tools.LogPropertiesAndFields(placedObject?.placeableContents?.variantTiers[0], "VARIANT TIERS"););
+
             foreach (var placedObject in room.placedObjects)
             {
                 Tools.Log($"\n----------------Object #{i++}----------------");

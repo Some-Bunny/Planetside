@@ -23,17 +23,27 @@ namespace Planetside
         {
             orig(self);
             try
-            {        
-                var obehaviors = ToolsEnemy.overrideBehaviors.Where(ob => ob.OverrideAIActorGUID == self.EnemyGuid);
-                foreach (var obehavior in obehaviors)
+            {
+                if (self.OverrideDisplayName != "#BOSSSTATUES_ENCNAME")
                 {
-                    obehavior.SetupOB(self);
-                    if (obehavior.ShouldOverride())
+                    var obehaviors = ToolsEnemy.overrideBehaviors.Where(ob => ob.OverrideAIActorGUID == self.EnemyGuid);
+                    foreach (var obehavior in obehaviors)
                     {
-                        obehavior.DoOverride();
+                        obehavior.SetupOB(self);
+                        if (obehavior.ShouldOverride())
+                        {
+                            obehavior.DoOverride();
+                        }
                     }
                 }
-                
+                else
+                {
+                    if (ContainmentBreachController.CurrentState == ContainmentBreachController.States.ENABLED)
+                    {
+                        new KillPillarsChanges.KillPillarChanges().OverrideAllKillPillars(self);
+
+                    }
+                }
             }
             catch (Exception e)
             {

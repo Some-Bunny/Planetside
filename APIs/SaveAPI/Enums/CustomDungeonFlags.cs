@@ -59,5 +59,7 @@ namespace SaveAPI
         HASDONEEVRYTHING,
 
         HAS_COMPLETED_SOMETHING_WICKED,
+
+        SHIPMENT_TICKET_HAD
     }
 }

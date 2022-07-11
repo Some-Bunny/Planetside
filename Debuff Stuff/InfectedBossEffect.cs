@@ -389,7 +389,7 @@ namespace Planetside
 	{
 		public void Start()
 		{
-			base.aiActor.behaviorSpeculator.AttackCooldown *= 1.25f;
+			//base.aiActor.behaviorSpeculator.AttackCooldown *= 1.25f;
 			if (base.aiActor.bulletBank == null)
 			{
 

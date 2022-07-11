@@ -106,8 +106,6 @@ namespace Planetside
                             Minimap minimap = Minimap.Instance;
                             Dictionary<RoomHandler, GameObject> rTTIM = PlanetsideReflectionHelper.ReflectGetField<Dictionary<RoomHandler, GameObject>>(typeof(Minimap), "roomToTeleportIconMap", minimap);
                             rTTIM.Clear();
-                            //Dictionary<RoomHandler, GameObject> rTIM = PlanetsideReflectionHelper.ReflectGetField<Dictionary<RoomHandler, GameObject>>(typeof(Minimap), "roomToIconsMap", minimap);
-                            //rTIM.Clear();
                             minimap.roomsContainingTeleporters.Remove(roomHandler);
                             Minimap.Instance.DeregisterRoomIcon(roomHandler, interaactableObj.gameObject);
                         }

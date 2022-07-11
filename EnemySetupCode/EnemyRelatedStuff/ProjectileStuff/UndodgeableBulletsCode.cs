@@ -14,24 +14,28 @@ namespace Planetside
     {
         public MarkForUndodgeAbleBullet()
         {
-            //Proj = base.gameObject.GetComponent<Projectile>();
         }
         public void Start()
         {
             if (base.gameObject.GetComponent<Projectile>() != null)
             {
-                base.gameObject.GetComponent<Projectile>().gameObject.layer = 23;
+                DepthLookupManager.AssignRendererToSortingLayer(base.GetComponent<Projectile>().sprite.renderer, DepthLookupManager.GungeonSortingLayer.FOREGROUND);
+                DepthLookupManager.UpdateRenderer(base.GetComponent<Projectile>().sprite.renderer);
+                DepthLookupManager.UpdateRendererWithWorldYPosition(base.GetComponent<Projectile>().sprite.renderer, 18);
+
+
                 base.gameObject.GetComponent<Projectile>().sprite.usesOverrideMaterial = true;
                 if (base.gameObject.GetComponent<Projectile>().spriteAnimator != null)
                 {
                     base.gameObject.GetComponent<Projectile>().spriteAnimator.sprite.usesOverrideMaterial = true;
-                    base.gameObject.GetComponent<Projectile>().spriteAnimator.renderer.enabled = true;
                     base.gameObject.GetComponent<Projectile>().spriteAnimator.renderer.material.shader = PlanetsideModule.InverseGlowShader;
+                    base.gameObject.GetComponent<Projectile>().spriteAnimator.renderer.material.SetFloat("_EmissiveColorPower", 4);
                 }
-                base.gameObject.GetComponent<Projectile>().sprite.renderer.enabled = true;
                 base.gameObject.GetComponent<Projectile>().sprite.renderer.material.shader = PlanetsideModule.InverseGlowShader;
-                //base.gameObject.GetComponent<Projectile>().sprite.renderer.material.SetFloat("_EmissiveColorPower", 7);
-                if (base.gameObject.GetComponent<Projectile>().IsBlackBullet) { base.gameObject.GetComponent<Projectile>().sprite.renderer.material.SetFloat("_BlackBullet", 1); }
+                base.gameObject.GetComponent<Projectile>().sprite.renderer.material.SetFloat("_EmissiveColorPower", 4);
+                base.gameObject.GetComponent<Projectile>().sprite.renderer.material.SetFloat("_EmissivePower", 9);
+
+                if (base.gameObject.GetComponent<Projectile>().IsBlackBullet) { base.gameObject.GetComponent<Projectile>().sprite.renderer.material.SetFloat("_BlackBullet", -1); }
             }
         }
      
@@ -51,7 +55,7 @@ namespace Planetside
         protected static HandleDamageResult HandleDamageHook(Func<Projectile, SpeculativeRigidbody, PixelCollider, bool, PlayerController, bool, HandleDamageResult> orig, Projectile self, SpeculativeRigidbody rigidbody, PixelCollider hitPixelCollider, out bool killedTarget,
             PlayerController player, bool alreadyPlayerDelayed)
         {
-            if (self.GetType() == typeof(Projectile) && (self.Owner == null || !(self.Owner is PlayerController)) && self.gameObject.GetComponent<MarkForUndodgeAbleBullet>() != null)
+            if (self.GetType() == typeof(Projectile) && (self.Owner == null || !(self.Owner is PlayerController)) && self.gameObject.GetComponent<MarkForUndodgeAbleBullet>() != null && player != null)
             {
                 killedTarget = false;
                 if (rigidbody.ReflectProjectiles)
@@ -66,6 +70,11 @@ namespace Planetside
                 {
                     return HandleDamageResult.HEALTH;
                 }
+                if (!alreadyPlayerDelayed && s_delayPlayerDamage && player == null)
+                {
+                    return HandleDamageResult.HEALTH;
+                }
+
                 bool flag = !rigidbody.healthHaver.IsDead;
                 float num = self.ModifiedDamage;
                 if (self.Owner is AIActor && rigidbody && rigidbody.aiActor && (self.Owner as AIActor).IsNormalEnemy)

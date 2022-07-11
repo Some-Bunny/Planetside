@@ -133,10 +133,22 @@
     <Compile Include="Controllers\ContainmentBreach\BossChanges\F1.5\BlobulordChanges.cs" />
     <Compile Include="Controllers\ContainmentBreach\BossChanges\F2.5\OldKingChanges.cs" />
     <Compile Include="Controllers\ContainmentBreach\BossChanges\F2.5\OphanaimChanges.cs" />
+    <Compile Include="Controllers\ContainmentBreach\BossChanges\F1\GatlingGullChanges.cs" />
+    <Compile Include="Controllers\ContainmentBreach\BossChanges\F1\BulletKingChanges.cs" />
+    <Compile Include="Controllers\ContainmentBreach\BossChanges\F1\TriggerTwinsChanges.cs" />
+    <Compile Include="Controllers\ContainmentBreach\BossChanges\Misc\DoorLordChanges.cs" />
+    <Compile Include="Controllers\ContainmentBreach\BossChanges\F5\AdvancedDragunChanges.cs" />
+    <Compile Include="Controllers\ContainmentBreach\BossChanges\F5\AdvancedDragunKnifeChanges.cs" />
+    <Compile Include="Controllers\ContainmentBreach\BossChanges\F5\DragunKnifeChanges.cs" />
+    <Compile Include="Controllers\ContainmentBreach\BossChanges\F5\DragunChanges.cs" />
+    <Compile Include="Controllers\ContainmentBreach\BossChanges\F4\HighPriestChanges.cs" />
+    <Compile Include="Controllers\ContainmentBreach\BossChanges\F4\WallmongerChanges.cs" />
+    <Compile Include="Controllers\ContainmentBreach\BossChanges\F4\KillPillarChanges.cs" />
     <Compile Include="Controllers\ContainmentBreach\BossChanges\F3\MineFlayerChanges.cs" />
     <Compile Include="Controllers\ContainmentBreach\BossChanges\F3\TreadnoughtChanges.cs" />
     <Compile Include="Controllers\ContainmentBreach\BossChanges\F3\CannonbalrogChanges.cs" />
     <Compile Include="Controllers\ContainmentBreach\BossChanges\F2\GorgunChanges.cs" />
+    <Compile Include="Controllers\CrossGameDataStorage.cs" />
     <Compile Include="Controllers\MasteryTraderSpawnController.cs" />
     <Compile Include="Controllers\PlanetsideCommands.cs" />
     <Compile Include="Controllers\PlanetsideBalanceChanges.cs" />
@@ -156,6 +168,7 @@
     <Compile Include="DungeonPlaceables\TestTeleporter.cs" />
     <Compile Include="DungeonPlaceables\BreakableAPI.cs" />
     <Compile Include="DungeonPlaceables\BoxOfGrenades.cs" />
+    <Compile Include="DungeonPlaceables\TrespassObjects\TrespassDecorativePillar.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassContainer.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassFadingBlocker.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassDecals.cs" />
@@ -216,12 +229,15 @@
     <Compile Include="Guns\Update4\ParticleCollapser.cs" />
     <Compile Include="Guns\Update4\WhistlerProjectile.cs" />
     <Compile Include="Guns\Update4\Whistler.cs" />
-    <Compile Include="Hooks\DungeonHooks.cs" />
-    <Compile Include="Hooks\PickupHooks.cs" />
-    <Compile Include="Hooks\ExplosionHooks.cs" />
-    <Compile Include="Hooks\TitleDioramaHooks.cs" />
+    <Compile Include="Hooks And Actions\DungeonHooks.cs" />
+    <Compile Include="Hooks And Actions\Actions.cs" />
+    <Compile Include="Hooks And Actions\PickupHooks.cs" />
+    <Compile Include="Hooks And Actions\ExplosionHooks.cs" />
+    <Compile Include="Hooks And Actions\TitleDioramaHooks.cs" />
     <Compile Include="Items\ItemClasses\MultiCompanionItem.cs" />
+    <Compile Include="Items\Update4\ShopDiscountItem.cs" />
     <Compile Include="Items\Update4\GunClassToken.cs" />
+    <Compile Include="Items\Update4\ShipmentRequestForm.cs" />
     <Compile Include="Items\Update4\TatteredRobe.cs" />
     <Compile Include="Items\Update4\OrbOfPower.cs" />
     <Compile Include="Items\Update4\TarnishedAmmolet.cs" />
@@ -243,6 +259,7 @@
     <Compile Include="Misc Stuff\CustomNotificationHandler.cs" />
     <Compile Include="Misc Stuff\Static Storage\StaticInformation.cs" />
     <Compile Include="Misc Stuff\Static Storage\StaticVFXStorage.cs" />
+    <Compile Include="Misc Stuff\WeightedTypeCollection.cs" />
     <Compile Include="Pickups\PerkPickupClass.cs" />
     <Compile Include="Pickups\Perkthings\AllSeeingEye.cs" />
     <Compile Include="Pickups\Perkthings\Gunslinger.cs" />
@@ -257,7 +274,9 @@
     <Compile Include="Pickups\Perkthings\PerkParticleSystemController.cs" />
     <Compile Include="DungeonPlaceables\PrisonerShrineController.cs" />
     <Compile Include="Pickups\RepairNode.cs" />
+    <Compile Include="Shrine Stuff\ShrineCode\PrisonShrine\TrespassChallengeShrine.cs" />
     <Compile Include="Shrine Stuff\ShrineCode\PrisonShrine\PrisonShrine.cs" />
+    <Compile Include="Shrine Stuff\ShrineCode\VoidMuncher.cs" />
     <Compile Include="TheAbyss\AbyssFloorSetup.cs" />
     <Compile Include="TheAbyss\AbyssFlows.cs" />
     <Compile Include="TheAbyss\ModPrefabs.cs" />
@@ -501,7 +520,7 @@
     <Compile Include="Guns\Init Release\WitherLance.cs" />
     <Compile Include="Guns\Init Release\SwanOff.cs" />
     <Compile Include="Guns\Init Release\Polarity.cs" />
-    <Compile Include="Hooks\Hooks.cs" />
+    <Compile Include="Hooks And Actions\Hooks.cs" />
     <Compile Include="Misc Stuff\Synergy Stuff\Synergy Processors\AdvancedDualWieldProcessor.cs" />
     <Compile Include="Unsorted Garbage\EndOfEverything.cs" />
     <Compile Include="Misc Stuff\Non-Functioning Stuff\BulletsOnBulletDestructionComponent.cs" />
@@ -2381,6 +2400,10 @@
     <EmbeddedResource Include="Resources\Shellrax\shellrax_fireeye_003.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\shormActual.png" />
+    <EmbeddedResource Include="Resources\Shrines\voidMuncherRoomIcon.png" />
+    <EmbeddedResource Include="Resources\Shrines\voidGunmuncher.png" />
+    <EmbeddedResource Include="Resources\Shrines\voidGunmunchershadow.png" />
     <EmbeddedResource Include="Resources\VFX\InfectionBoss\bigblob1_001.png" />
     <EmbeddedResource Include="Resources\VFX\InfectionBoss\bigblob1_002.png" />
     <EmbeddedResource Include="Resources\VFX\InfectionBoss\bigblob1_003.png" />
@@ -3985,6 +4008,27 @@
     <EmbeddedResource Include="Resources\Enemies\Nemesis\nemesis_awaken_017.png" />
     <EmbeddedResource Include="Resources\Enemies\Nemesis\nemesis_awaken_018.png" />
     <EmbeddedResource Include="Resources\BossCards\nemesis_bosscard.png" />
+    <EmbeddedResource Include="Resources2\ParticleTextures\advancedparticles.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassBigObject\vesselLock_idle_001.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassBigObject\vesselLock_idle_002.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassBigObject\vesselLock_idle_003.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassBigObject\vesselLock_idle_004.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassBigObject\vesselLock_idle_005.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassBigObject\vesselLock_idle_006.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassBigObject\vesselLock_idle_007.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassBigObject\vesselLock_use_001.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassBigObject\vesselLock_use_002.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassBigObject\vesselLock_use_003.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassBigObject\vesselLock_use_004.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassBigObject\vesselLock_use_005.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassBigObject\vesselLock_use_006.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassBigObject\vesselLock_use_007.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassBigObject\vesselLock_use_008.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassBigObject\vesselLock_use_009.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassBigObject\vesselLock_use_010.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassBigObject\vesselLock_use_011.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassDecals\TrespassDirectionalDecal\decalHorizontal.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassDecals\TrespassDirectionalDecal\decalVertical.png" />
     <Content Include="Resources\Shellrax\shellrax_intro_019.png" />
     <EmbeddedResource Include="Resources\VFX\LockOnVFX\lockonvfx1.png" />
     <EmbeddedResource Include="Resources\VFX\LockOnVFX\lockonvfx2.png" />
@@ -4092,6 +4136,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\TrespassRooms\TrespassDeeperRooms\trespassvesselRoomytwoey.room" />
     <EmbeddedResource Include="Resources\TrespassRooms\TrespassDeeperRooms\tresspassevilInqy.room" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ShrineRooms\PrisonUnlockRoom.room" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -310,8 +310,8 @@ namespace Planetside
 				companion.aiActor.specRigidbody.CollideWithOthers = true;
 				companion.aiActor.specRigidbody.CollideWithTileMap = true;
 				companion.aiActor.PreventFallingInPitsEver = true;
-				companion.aiActor.healthHaver.ForceSetCurrentHealth(975f);
-				companion.aiActor.healthHaver.SetHealthMaximum(975f);
+				companion.aiActor.healthHaver.ForceSetCurrentHealth(900f);
+				companion.aiActor.healthHaver.SetHealthMaximum(900f);
 				companion.aiActor.CollisionKnockbackStrength = 2f;
 				companion.aiActor.CanTargetPlayers = true;
 				companion.aiActor.procedurallyOutlined = true;
@@ -335,10 +335,10 @@ namespace Planetside
 					BagleUseFirstFrameOnly = false,
 					SpecifyBagelFrame = string.Empty,
 					BagelColliderNumber = 0,
-					ManualOffsetX = 0,
-					ManualOffsetY = 0,
-					ManualWidth = 36,
-					ManualHeight = 40,
+					ManualOffsetX = 11,
+					ManualOffsetY = 13,
+					ManualWidth = 26,
+					ManualHeight = 27,
 					ManualDiameter = 0,
 					ManualLeftX = 0,
 					ManualLeftY = 0,
@@ -354,10 +354,10 @@ namespace Planetside
 					BagleUseFirstFrameOnly = false,
 					SpecifyBagelFrame = string.Empty,
 					BagelColliderNumber = 0,
-					ManualOffsetX = 0,
-					ManualOffsetY = 0,
-					ManualWidth = 36,
-					ManualHeight = 40,
+					ManualOffsetX = 11,
+					ManualOffsetY = 13,
+					ManualWidth = 26,
+					ManualHeight = 27,
 					ManualDiameter = 0,
 					ManualLeftX = 0,
 					ManualLeftY = 0,
@@ -2169,7 +2169,7 @@ namespace Planetside
 					GameObject gameObject = SpawnManager.SpawnVFX(RandomPiecesOfStuffToInitialise.LaserReticle, false);
 					tk2dTiledSprite component2 = gameObject.GetComponent<tk2dTiledSprite>();
 
-					component2.transform.position = new Vector3(base.Projectile.transform.position.x, base.Projectile.transform.position.y, 99999);
+					component2.transform.position = new Vector3(this.Projectile.transform.position.x, this.Projectile.transform.position.y, 99999);
 					component2.transform.localRotation = Quaternion.Euler(0f, 0f, aimDir);
 					component2.UpdateZDepth();
 					component2.HeightOffGround = -2;
@@ -2181,7 +2181,7 @@ namespace Planetside
 					component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f);
 					component2.sprite.renderer.material.SetColor("_OverrideColor", laser);
 					component2.sprite.renderer.material.SetColor("_EmissiveColor", laser);
-					component2.gameObject.transform.parent = parent.Projectile.gameObject.transform;
+					component2.gameObject.transform.parent = this.Projectile.gameObject.transform;
 					float elapsed = 0;
 					float Time = chargeTime;
 					while (elapsed < Time)
@@ -2195,7 +2195,7 @@ namespace Planetside
 						}
 						if (component2 != null)
 						{
-							component2.transform.position = new Vector3(base.Projectile.transform.position.x, base.Projectile.transform.position.y, 99999);
+							component2.transform.position = new Vector3(this.Projectile.transform.position.x, this.Projectile.transform.position.y, 99999);
 							component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (100 * t));
 							component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (10 * t));
 							component2.transform.localRotation = Quaternion.Euler(0f, 0f, aimDir);

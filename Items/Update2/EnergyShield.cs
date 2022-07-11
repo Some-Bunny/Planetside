@@ -197,7 +197,7 @@ namespace Planetside
             SpeculativeRigidbody specRigidbody = playerorbital.specRigidbody;
             specRigidbody.CollideWithTileMap = false;
             specRigidbody.CollideWithOthers = true;
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(3);
             AkSoundEngine.PostEvent("Play_OBJ_mine_beep_01", playerorbital.gameObject);
             playerorbital.sprite.renderer.material = GlowMat;
             Hits = 0;

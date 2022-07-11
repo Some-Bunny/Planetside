@@ -346,6 +346,7 @@ namespace Planetside
             voidHoleController.trueCenter = Actor.ParentRoom.GetCenterCell().ToCenterVector2();
             voidHoleController.CanHurt = false;
             voidHoleController.Radius = 30;
+            controllerOfTheVoid = voidHoleController;
 
             GameManager.Instance.BestActivePlayer.CurrentRoom.BecomeTerrifyingDarkRoom(5f, 0.5f, 0.1f, "Play_ENM_darken_world_01");
              while (elaWait < 3f)
@@ -357,12 +358,12 @@ namespace Planetside
                 elaWait += BraveTime.DeltaTime;
                  yield return null;
              }
-            voidHoleController.CanHurt = true;
             SpawnManager.SpawnBulletScript(Actor, Actor.sprite.WorldCenter, Actor.GetComponent<AIBulletBank>(), new CustomBulletScriptSelector(typeof(SubphaseTwoAttack)), StringTableManager.GetEnemiesString("#PRISONERPHASEONENAME", -1));
              Actor.SetOutlines(false);
              Actor.renderer.enabled = false;
              elaWait = 0f;
-             while (elaWait < 30f)
+            voidHoleController.CanHurt = true;
+            while (elaWait < 30f)
              {
                  elaWait += BraveTime.DeltaTime;
                 float t = Mathf.Min((elaWait / 20), 1);
@@ -372,7 +373,6 @@ namespace Planetside
              }
             voidHoleController.actorToFollow = Actor;
             voidHoleController.trueCenter = Actor.sprite.WorldCenter;
-            controllerOfTheVoid = voidHoleController;
             Actor.CollisionDamage = 0;
 
             SubPhaseEnded = true;

@@ -14,6 +14,7 @@ using System.Collections;
 using SaveAPI;
 using Gungeon;
 using ItemAPI;
+using System.Collections.ObjectModel;
 
 namespace Planetside
 {
@@ -286,8 +287,24 @@ namespace Planetside
 
 		public static void Accept(PlayerController player, GameObject shrine)
 		{
+
+			//SaveAPIManager.RegisterStatChange(CustomTrackedStats.INFECTION_FLOORS_ACTIVATED, 1);
+
 			tk2dSpriteAnimator animator = shrine.GetComponent<tk2dSpriteAnimator>();
 			animator.Play("use");
+
+
+			ReadOnlyCollection<IPlayerInteractable> yes = player.CurrentRoom.GetRoomInteractables();
+			for (int i = 0; i < yes.Count; i++)
+			{
+				IPlayerInteractable touchy = yes[i];
+				if (touchy is TrespassDecorativePillarInetractable interaactableObj)
+				{
+					tk2dSpriteAnimator animator2 = interaactableObj.GetComponent<tk2dSpriteAnimator>();
+					animator2.Play("break");
+				}
+			}
+
 
 			AkSoundEngine.PostEvent("Play_PortalOpen", shrine.gameObject);
 

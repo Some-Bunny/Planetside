@@ -63,6 +63,7 @@ namespace Planetside
             metadata = this.Metadata;
             //Initialise World-Stuff here
             StaticInformation.Init();
+            CrossGameDataStorage.Start();
 
             ChamberGunAPI.Init("PlanetsideOfGunymede");
 
@@ -101,11 +102,14 @@ namespace Planetside
             NpcTools.Init();
 
             //Hook stuff here
+            Actions.Init();
             PickupHooks.Init();
             ExplosionHooks.Init();
             Hooks.Init();
             MultiActiveReloadManager.SetupHooks();
+            
             FakePrefabHooks.Init();
+
             TitleDioramaHooks.Init();
 
 
@@ -127,6 +131,8 @@ namespace Planetside
             HolyChamberShrine.Add();
             TooLate.Add();
             PrisonShrine.Add();
+            VoidMuncher.Add();
+            TrespassChallengeShrine.Add();
 
             ToolsEnemy.Init();
             EnemyHooks.Init();
@@ -290,6 +296,7 @@ namespace Planetside
             LostVoidPotential.Init();
             ShopInABox.Init();
             StableVector.Init();
+            ShipmentRequestForm.Init();
 
             ModifierNeedle.Init();
             TatteredRobe.Init();

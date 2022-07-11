@@ -30,9 +30,11 @@ namespace Planetside
 			InitPrisonerRooms();
 		}
 
+
+
+
 		public static void InitHolyChamberShrineRooms(bool refreshFlows = false)
-		{
-			
+		{		
 			PrototypeDungeonRoom BrokenChamberRoomVar = RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/HolyChamberRoomAbbey.room").room;
 
 
@@ -603,5 +605,8 @@ namespace Planetside
 
 		public static PrototypeDungeonRoom HolyChamberRoomPrefab;
 		public static ProceduralFlowModifierData HolyChamberRoom;
+
+		public static PrototypeDungeonRoom PrisonCageRoomPrefab;
+		public static ProceduralFlowModifierData PrisonCageRoom;
 	}
 }

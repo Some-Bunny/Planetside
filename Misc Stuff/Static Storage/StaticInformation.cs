@@ -47,8 +47,10 @@ namespace Planetside
         {
             NebulaTexture = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\nebula_reducednoise.png");
             VoidTexture = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\voidTex.png");
+            AdvancedParticleBlue = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources2\\ParticleTextures\\advancedparticles.png");
 
         }
+        public static Texture AdvancedParticleBlue;
         public static Texture VoidTexture;
         public static Texture NebulaTexture;
     }
@@ -61,6 +63,8 @@ namespace Planetside
             AIBulletBank.Entry entry = StaticUndodgeableBulletEntries.CopyFields<AIBulletBank.Entry>(entryToCopy);
             entry.Name = Name;
             Projectile projectile = UnityEngine.Object.Instantiate<GameObject>(entry.BulletObject).GetComponent<Projectile>();
+            projectile.gameObject.SetLayerRecursively(18);
+            projectile.transform.position = projectile.transform.position.WithZ(210.5125f); 
             projectile.gameObject.SetActive(false);
             FakePrefab.MarkAsFakePrefab(projectile.gameObject);
             UnityEngine.Object.DontDestroyOnLoad(projectile);
@@ -211,13 +215,40 @@ namespace Planetside
                 undodgeableSkullvar.Name = "UndodgeableSkull";
                 Projectile projectile = UnityEngine.Object.Instantiate<GameObject>(undodgeableSkullvar.BulletObject).GetComponent<Projectile>();
                 projectile.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+
+                CustomTrailRenderer projectileTrailRendererController = projectile.gameObject.GetComponentInChildren<CustomTrailRenderer>();
+                projectileTrailRendererController.colors = new Color[] { Color.cyan };
+                /*
+                foreach (Component comp in projectile.gameObject.GetComponents(typeof(Component)))
+                {
+                    ETGModConsole.Log(comp.GetType().ToString() ?? "null");
+                }
+                */
+                //ProjectileTrailRendererController projectileTrailRendererController = projectile.GetComponent<ProjectileTrailRendererController>();
+                //projectileTrailRendererController.customTrailRenderer.colors = new Color[] { Color.cyan };
+
                 projectile.gameObject.SetActive(false);
                 FakePrefab.MarkAsFakePrefab(projectile.gameObject);
                 UnityEngine.Object.DontDestroyOnLoad(projectile);
                 undodgeableSkullvar.BulletObject = projectile.gameObject;
+
+
+
                 undodgeableSkull = undodgeableSkullvar;
                 undodgeableSkull.AudioEvent = null;
                 undodgeableSkull.MuzzleFlashEffects = new VFXPool { type = VFXPoolType.None, effects = new VFXComplex[0] };
+            }
+
+            {
+                AIBulletBank.Entry undodgeableSkullvar = StaticUndodgeableBulletEntries.CopyFields<AIBulletBank.Entry>(EnemyDatabase.GetOrLoadByGuid("465da2bb086a4a88a803f79fe3a27677").bulletBank.GetBullet("homing"));
+                undodgeableSkullvar.Name = "UndodgeableSkullUnmodded";
+                Projectile projectile = UnityEngine.Object.Instantiate<GameObject>(undodgeableSkullvar.BulletObject).GetComponent<Projectile>();
+                projectile.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                projectile.gameObject.SetActive(false);
+                FakePrefab.MarkAsFakePrefab(projectile.gameObject);
+                UnityEngine.Object.DontDestroyOnLoad(projectile);
+                undodgeableSkullvar.BulletObject = projectile.gameObject;
+                undodgeableSkullAudio = undodgeableSkullvar;
             }
 
             //undodgeableBouncyBatBullet
@@ -358,22 +389,89 @@ namespace Planetside
                 UndodgeableOldKingHomingRingBullet = entry;
             }
             {
+                AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("5729c8b5ffa7415bb3d01205663a33ef").bulletBank.GetBullet("homingRing"), "UndodgeableOldKingHomingRingBullet", null, null, false);
+                entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                UndodgeableOldKingHomingRingBulletSoundless = entry;
+            }
+
+            
+            {
                 AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("frogger"), "UndodgeableFrogger", "DNC", null, false);
                 entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
                 UndodgeableFrogger = entry;
             }
+
+            {
+                AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("f3b04a067a65492f8b279130323b41f0").bulletBank.GetBullet("wave"), "UndodgeableWallWave", "DNC", null, false);
+                entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                UndodgeableWallWave = entry;
+            }
+
+            {
+                AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("sweep"), "UndodgeableSweep", "DNC", null, false);
+                entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                UndodgeableSweep = entry;
+            }
+            {
+                AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("mergoWave"), "UndodgeableMergoWave", "DNC", null, false);
+                entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                UndodgeableMergoWave = entry;
+            }
+            {
+                AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("cross"), "UndodgeableCross", "DNC", null, false);
+                entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                UndodgeableCross = entry;
+            }
+            {
+                AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("ffca09398635467da3b1f4a54bcfda80").bulletBank.GetBullet("slam"), "UndodgeableSlammo", "DNC", null, false);
+                entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                undodgeableBulletKingSlam = entry;
+            }
+            {
+                AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("ffca09398635467da3b1f4a54bcfda80").bulletBank.GetBullet("directedfire"), "UndodgeableDirectedfire", "DNC", null, false);
+                entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                entry.BulletObject.GetComponent<Projectile>().shouldRotate = true;
+
+                UndodgeableDirectedfire = entry;
+            }
+
+            {
+                AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("c00390483f394a849c36143eb878998f").bulletBank.GetBullet("angrybullet"), "UndodgeableAngrybullet", "DNC", null, false);
+                entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                UndodgeableAngrybullet = entry;
+            }
+            {
+                AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("9189f46c47564ed588b9108965f975c9").bulletBank.GetBullet("burst"), "UndodgeableDoorLordBurst", "DNC", null, false);
+                entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                UndodgeableDoorLordBurst = entry;
+            }
+            {
+                AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("9189f46c47564ed588b9108965f975c9").bulletBank.GetBullet("flame"), "UndodgeableDoorLordFlame", "DNC", null, false);
+                entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                UndodgeableDoorLordFlame = entry;
+            }
+            {
+                AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("9189f46c47564ed588b9108965f975c9").bulletBank.GetBullet("puke_burst"), "UndodgeableDoorLordPuke", "DNC", null, false);
+                entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                UndodgeableDoorLordPuke = entry;
+            }
         }
+
+        //flame
+        //burst//puke_burst
+
+        //angrybullet
 
         //				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("fa76c8cfdf1c4a88b55173666b4bc7fb").bulletBank.GetBullet("hugeBullet"));
 
-        /*
+        /*mergoWave//ffca09398635467da3b1f4a54bcfda80
          *4b992de5b4274168a8878ef9bf7ea36b 
          *homingRing
          *bounce
          *
          *8b0dd96e2fe74ec7bebc1bc689c0008a
          *scatterBullet
-         *
+         *cross
          *
          *frogger
          *68a238ed6a82467ea85474c595c49c6e
@@ -382,6 +480,34 @@ namespace Planetside
         //1b5810fafbec445d89921a4efb4e42b7
 
         //5729c8b5ffa7415bb3d01205663a33ef
+
+        //f3b04a067a65492f8b279130323b41f0
+
+        //directedfire
+        public static AIBulletBank.Entry UndodgeableDoorLordPuke;
+        public static AIBulletBank.Entry UndodgeableDoorLordFlame;
+        public static AIBulletBank.Entry UndodgeableDoorLordBurst;
+
+        public static AIBulletBank.Entry UndodgeableAngrybullet;
+
+
+        public static AIBulletBank.Entry undodgeableBulletKingSlam;
+        public static AIBulletBank.Entry UndodgeableDirectedfire;
+
+
+        public static AIBulletBank.Entry undodgeableSkullAudio;
+
+        public static AIBulletBank.Entry UndodgeableCross;
+
+        public static AIBulletBank.Entry UndodgeableSweep;
+        public static AIBulletBank.Entry UndodgeableMergoWave;
+
+
+        public static AIBulletBank.Entry UndodgeableWallWave;
+
+        public static AIBulletBank.Entry UndodgeableOldKingHomingRingBulletSoundless;
+
+
         public static AIBulletBank.Entry UndodgeableOldKingHomingRingBullet;
         public static AIBulletBank.Entry UndodgeableFrogger;
 

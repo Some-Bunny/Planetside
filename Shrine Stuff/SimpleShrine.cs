@@ -11,15 +11,20 @@ namespace GungeonAPI
 			SpriteOutlineManager.AddOutlineToSprite(base.sprite, Color.black, 1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
 			this.talkPoint = base.transform.Find("talkpoint");
 			this.m_isToggled = false;
+
+			instanceRoom = GameManager.Instance.Dungeon.data.GetAbsoluteRoomFromPosition(base.transform.position.IntXY(VectorConversions.Floor));
+			this.instanceMinimapIcon = Minimap.Instance.RegisterRoomIcon(instanceRoom, roomIcon ?? (GameObject)BraveResources.Load("Global Prefabs/Minimap_Shrine_Icon", ".prefab"), false);
+
 		}
+		public RoomHandler instanceRoom;
+		public GameObject instanceMinimapIcon;
 
 		public void Interact(PlayerController interactor)
 		{
 			bool flag = TextBoxManager.HasTextBox(this.talkPoint);
 			bool flag2 = !flag;
 			if (flag2)
-			{
-			
+			{		
 				this.m_canUse = ((this.CanUse != null) ? this.CanUse(interactor, base.gameObject) : this.m_canUse);
 				base.StartCoroutine(this.HandleConversation(interactor));
 			}

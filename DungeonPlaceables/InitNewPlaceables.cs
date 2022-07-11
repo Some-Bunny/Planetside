@@ -22,6 +22,7 @@ namespace Planetside
             TrespassContainer.Init();
             TrespassDecals.Init();
             TrespassCandle.Init();
+            TrespassDecorativePillar.Init();
         }
     }
 }

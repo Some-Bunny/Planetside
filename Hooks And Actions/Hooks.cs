@@ -173,7 +173,7 @@ namespace Planetside
         public static void PreCollisionHook(Action<Projectile, SpeculativeRigidbody, PixelCollider, SpeculativeRigidbody, PixelCollider> orig, Projectile self, SpeculativeRigidbody myRigidbody, PixelCollider myCollider, SpeculativeRigidbody
             otherRigidbody, PixelCollider otherCollider)
         {
-            if (self.GetType() == typeof(Projectile) && (self.Owner == null || !(self.Owner is PlayerController)) && self.gameObject.GetComponent<MarkForUndodgeAbleBullet>() != null)
+            if (self.GetType() == typeof(Projectile) && (self.Owner == null || !(self.Owner is PlayerController)) && self.gameObject.GetComponent<MarkForUndodgeAbleBullet>() != null && otherRigidbody.aiActor == null)
             {
                 if (otherRigidbody == self.Shooter && !self.allowSelfShooting)
                 {

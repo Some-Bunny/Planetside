@@ -15,7 +15,8 @@ using MonoMod;
 using System.Collections.ObjectModel;
 using GungeonAPI;
 using static EnemyBulletBuilder.BulletBuilderFakePrefabHooks;
-
+using SaveAPI;
+using NpcApi;
 
 
 namespace Planetside
@@ -27,11 +28,26 @@ namespace Planetside
             Debug.Log("Starting ContainmentBreachController setup...");
             try
             {
-                CurrentState = States.ENABLED;
+                CurrentState = States.DISABLED;
                 DungeonHooks.OnPostDungeonGeneration += this.ResetFloorSpecificData;
-                new Hook(typeof(RewardManager).GetMethod("GenerationSpawnRewardChestAt", BindingFlags.Public | BindingFlags.Instance), typeof(ContainmentBreachController).GetMethod("ReplaceChestWithContainers", BindingFlags.Public | BindingFlags.Static));
+
                 GameManager.Instance.OnNewLevelFullyLoaded += Instance_OnNewLevelFullyLoaded;
                 ETGMod.AIActor.OnPreStart = (Action<AIActor>)Delegate.Combine(ETGMod.AIActor.OnPreStart, new Action<AIActor>(this.InfectionChanges));
+
+                List<ProceduralFlowModifierData.FlowModifierPlacementType> flowModifierPlacementTypes = new List<ProceduralFlowModifierData.FlowModifierPlacementType>()
+                { ProceduralFlowModifierData.FlowModifierPlacementType.RANDOM_NODE_CHILD};
+                List<DungeonPrerequisite> dungeonPrerequisites = new List<DungeonPrerequisite>()
+                {
+                    new DungeonGenToolbox.AdvancedDungeonPrerequisite
+                    {
+                        advancedPrerequisiteType = CustomDungeonPrerequisite.AdvancedPrerequisiteType.CUSTOM_STAT_COMPARISION,
+                        customStatToCheck = CustomTrackedStats.INFECTION_FLOORS_ACTIVATED,
+                        useSessionStatValue = true,
+                        prerequisiteOperation = DungeonPrerequisite.PrerequisiteOperation.EQUAL_TO,
+                        comparisonValue = 0
+                    },
+                };
+                RoomFactory.AddInjection(RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/PrisonUnlockRoom.room").room, "Prison Containment Shrine", flowModifierPlacementTypes, 0, dungeonPrerequisites, "Prison Containment Shrine", 1, 1f);
 
                 Debug.Log("Finished ContainmentBreachController setup without failure!");
             }
@@ -41,6 +57,11 @@ namespace Planetside
                 Debug.Log(e);
             }
         }
+
+     
+
+  
+
 
         private void Instance_OnNewLevelFullyLoaded()
         {
@@ -56,14 +77,11 @@ namespace Planetside
                     if (target.healthHaver.IsBoss || target.healthHaver.IsSubboss)
                     {
                         target.ApplyEffect(DebuffLibrary.InfectedBossEffect);
-
                     }
                     else
                     {
                         target.ApplyEffect(DebuffLibrary.InfectedEnemyEffect);
-
                     }
-
                 }
             }
         }
@@ -132,7 +150,104 @@ namespace Planetside
             if (CurrentState == States.ALLOWED)
             {
                 CurrentState = States.ENABLED;
+                bool ShopPlaced = false;
+                List<RoomHandler> rooms = GameManager.Instance.Dungeon.data.rooms;
+                foreach (RoomHandler roomHandler in rooms)
+                {
+                    BaseShopController[] componentsInChildren = GameManager.Instance.Dungeon.data.Entrance.hierarchyParent.parent.GetComponentsInChildren<BaseShopController>(true);
+                    bool flag3 = componentsInChildren != null && componentsInChildren.Length != 0;
+                    if (flag3)
+                    {
+                        foreach (BaseShopController shope in componentsInChildren)
+                        {
+                            List<ShopItemController> shopitem = PlanetsideReflectionHelper.ReflectGetField<List<ShopItemController>>(typeof(BaseShopController), "m_itemControllers", shope);
+                            for (int i = 0; i < shopitem.Count; i++)
+                            {
+                                if (shopitem[i] && shopitem[i].IsResourcefulRatKey == false)
+                                {
+                                    Destroy(shopitem[i].gameObject);
+                                }
+                            }
 
+                            if (ShopPlaced == false)
+                            {
+                                ShopPlaced = !ShopPlaced;
+                                GameObject obj = new GameObject();
+                                StaticReferences.StoredRoomObjects.TryGetValue("masteryRewardTrader", out obj);
+                                GameObject shopObj = DungeonPlaceableUtility.InstantiateDungeonPlaceable(obj, shope.GetAbsoluteParentRoom(), new IntVector2((int)shope.gameObject.transform.position.x + (7), (int)shope.gameObject.transform.position.y) - shope.GetAbsoluteParentRoom().area.basePosition, false);
+                                CustomShopController shopCont = shopObj.GetComponent<CustomShopController>();
+                                if (shopCont != null)
+                                {
+                                    List<Vector2> itemPositions = new List<Vector2>()
+                                {
+                                   shopObj.transform.PositionVector2() +  new Vector2(-1f, -0.25f),
+                                   shopObj.transform.PositionVector2() +  new Vector2(0.5f, -1f),
+                                   shopObj.transform.PositionVector2() + new Vector2(2.25f, -1.5f),
+                                   shopObj.transform.PositionVector2() +  new Vector2(4f, -1f),
+                                   shopObj.transform.PositionVector2() +  new Vector2(5.5f, -0.25f)
+
+                                 };
+                                    var posList = new List<Transform>();
+                                    for (int i = 0; i < itemPositions.Count; i++)
+                                    {
+                                        var ItemPoint = new GameObject("ItemPoint" + i);
+                                        ItemPoint.transform.position = itemPositions[i];
+                                        FakePrefab.MarkAsFakePrefab(ItemPoint);
+                                        UnityEngine.Object.DontDestroyOnLoad(ItemPoint);
+                                        ItemPoint.SetActive(true);
+                                        posList.Add(ItemPoint.transform);
+                                    }
+                                    shopCont.spawnPositions = posList.ToArray();
+
+                                    foreach (var pos in shopCont.spawnPositions)
+                                    {
+                                        pos.parent = shopObj.gameObject.transform;
+                                    }
+                                }
+                            }
+                            if (shope.OptionalMinimapIcon)
+                            {
+                                Minimap.Instance.DeregisterRoomIcon(roomHandler, shope.OptionalMinimapIcon);
+                            }
+                            Destroy(shope.gameObject);                    
+                        }
+                    }
+
+
+
+                    GunberMuncherController[] muncher = GameManager.Instance.Dungeon.data.Entrance.hierarchyParent.parent.GetComponentsInChildren<GunberMuncherController>(true);
+                    bool muncjyflag = muncher != null && muncher.Length != 0;
+                    if (muncjyflag)
+                    {
+                        foreach (GunberMuncherController shope in muncher)
+                        {
+
+                            GameObject obj = new GameObject();
+                            RoomHandler roomIn = GameManager.Instance.Dungeon.data.GetAbsoluteRoomFromPosition(base.transform.position.IntXY(VectorConversions.Floor));
+                            StaticReferences.StoredRoomObjects.TryGetValue("VoidMuncher", out obj);
+                            GameObject shopObj = DungeonPlaceableUtility.InstantiateDungeonPlaceable(obj, roomIn, new IntVector2((int)shope.gameObject.transform.position.x + (7), (int)shope.gameObject.transform.position.y) - roomIn.area.basePosition, false);
+                            Destroy(shope.gameObject);
+                        }
+                    }
+                    SellCellController[] sellcreep = GameManager.Instance.Dungeon.data.Entrance.hierarchyParent.parent.GetComponentsInChildren<SellCellController>(true);
+                    bool sellcreepflag = sellcreep != null && sellcreep.Length != 0;
+                    if (sellcreepflag)
+                    {
+                        foreach (SellCellController shope in sellcreep)
+                        {
+                            Destroy(shope.gameObject);
+                        }
+                    }
+                    TalkDoerLite[] talkers = GameManager.Instance.Dungeon.data.Entrance.hierarchyParent.parent.GetComponentsInChildren<TalkDoerLite>(true);
+                    bool talkersflag = talkers != null && talkers.Length != 0;
+                    if (talkersflag)
+                    {
+                        foreach (TalkDoerLite shope in talkers)
+                        {
+                            Destroy(shope.gameObject);
+                        }
+                    }
+                }
             }
 
             if (CurrentState == States.ENABLED)
