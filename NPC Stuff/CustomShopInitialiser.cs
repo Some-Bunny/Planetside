@@ -337,7 +337,7 @@ namespace Planetside
             }
             rounds.Shuffle();
             player.RemovePassiveItem(rounds[0].PickupObjectId);
-
+            SaveAPI.AdvancedGameStatsManager.Instance.RegisterStatChange(SaveAPI.CustomTrackedStats.PERKS_BOUGHT, 1);
             return 1;
         }
         public static bool MasterTraderCustomCanBuy(CustomShopController shop, PlayerController player, int cost)

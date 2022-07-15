@@ -85,12 +85,24 @@ namespace Planetside
             partObj.name = "VoidHole";
             partObj.transform.localScale = Vector3.zero;
 
-            VoidHoleController voidHoleController = partObj.AddComponent<VoidHoleController>();
 
+
+            VoidHoleController voidHoleController = partObj.AddComponent<VoidHoleController>();
             voidHoleController.trueCenter = Actor.ParentRoom.GetCenterCell().ToCenterVector2();
             voidHoleController.CanHurt = false;
             voidHoleController.Radius = 30;
             voidHoleController.ChangeHoleSize(0);
+
+            EmergencyPlayerDisappearedFromRoom emergencyPlayerDisappeared = Actor.gameObject.AddComponent<EmergencyPlayerDisappearedFromRoom>();
+            emergencyPlayerDisappeared.roomAssigned = Actor.GetAbsoluteParentRoom();
+            emergencyPlayerDisappeared.PlayerSuddenlyDisappearedFromRoom = (obj) =>
+            {
+                if (obj.IsDarkAndTerrifying == true)
+                {
+                    obj.EndTerrifyingDarkRoom(1);
+                }
+                if (partObj != null) { Destroy(partObj); }
+            };
 
             while (elaWait < 3f)
             {
@@ -140,6 +152,7 @@ namespace Planetside
                 yield return null;
             }
             Destroy(partObj);
+            Destroy(emergencyPlayerDisappeared);
             if (WasJammed == true)
             {
                 GameObject gameObject = SpawnManager.SpawnVFX(StaticVFXStorage.JammedDeathVFX, Actor.sprite.WorldBottomLeft, Quaternion.identity, false);

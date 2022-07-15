@@ -289,8 +289,12 @@ namespace Planetside
 			}
 
 		}
-		public static void SetMaterial(this tk2dSpriteCollectionData collection, int spriteId, int matNum)
+		public static void SetMaterial(this tk2dSpriteCollectionData collection, int spriteId, int matNum, bool textureChange = false)
 		{
+			if (textureChange == true)
+			{
+				collection.materials[matNum].mainTexture = collection.spriteDefinitions[spriteId].material.mainTexture;
+			}
 			collection.spriteDefinitions[spriteId].material = collection.materials[matNum];
 			collection.spriteDefinitions[spriteId].materialId = matNum;
 		}
@@ -619,7 +623,11 @@ namespace Planetside
 
     class ModPrefabs
     {
-        public static AssetBundle shared_auto_002;
+
+		public static DungeonMaterial abyssMaterial;
+		public static DungeonTileStampData AbyssStampData;
+
+		public static AssetBundle shared_auto_002;
         public static AssetBundle shared_auto_001;
         //public static AssetBundle ModAssets;
         public static AssetBundle braveResources;
@@ -658,24 +666,450 @@ namespace Planetside
 
 		public static void InitCustomPrefabs()
         {
-            //ModAssets = PlanetsideModule.ModAssets;
-            AssetBundle assetBundle = ResourceManager.LoadAssetBundle("shared_auto_001");
+
+
+			AbyssStampData = ScriptableObject.CreateInstance<DungeonTileStampData>();
+			AbyssStampData.name = "AbyssStampData";
+			AbyssStampData.spriteStampWeight = 1f;
+			AbyssStampData.objectStampWeight = 1f;
+			AbyssStampData.tileStampWeight = 1f;
+
+			AbyssStampData.objectStamps = new ObjectStampData[0];
+			AbyssStampData.spriteStamps = new SpriteStampData[0];
+
+			AbyssStampData.stamps = new TileStampData[]
+			{
+				new TileStampData
+				{
+					width = 1,
+					height = 1,
+					relativeWeight = 1,
+					placementRule = DungeonTileStampData.StampPlacementRule.ON_LOWER_FACEWALL,
+					occupySpace = DungeonTileStampData.StampSpace.WALL_SPACE,
+					stampCategory = DungeonTileStampData.StampCategory.DECORATIVE,
+					preferredIntermediaryStamps = 1,
+					intermediaryMatchingStyle = DungeonTileStampData.IntermediaryMatchingStyle.PORTRAIT,
+					requiresForcedMatchingStyle = false,
+					opulence = Opulence.FINE,
+					roomTypeData = new List<StampPerRoomPlacementSettings>
+					{
+						new StampPerRoomPlacementSettings
+						{
+							roomRelativeWeight = 1,
+							roomSubType = 1
+						}
+					},
+					indexOfSymmetricPartner = -1,
+					preventRoomRepeats = true,
+					stampTileIndices = new List<int>
+					{
+						131,
+					}
+				},
+				new TileStampData
+				{
+					width = 1,
+					height = 1,
+					relativeWeight = 1,
+					placementRule = DungeonTileStampData.StampPlacementRule.ON_UPPER_FACEWALL,
+					occupySpace = DungeonTileStampData.StampSpace.WALL_SPACE,
+					stampCategory = DungeonTileStampData.StampCategory.STRUCTURAL,
+					preferredIntermediaryStamps = 1,
+					intermediaryMatchingStyle = DungeonTileStampData.IntermediaryMatchingStyle.PORTRAIT,
+					requiresForcedMatchingStyle = false,
+					opulence = Opulence.FINE,
+					roomTypeData = new List<StampPerRoomPlacementSettings>
+					{
+						new StampPerRoomPlacementSettings
+						{
+							roomRelativeWeight = 1,
+							roomSubType = 1
+						}
+					},
+					indexOfSymmetricPartner = -1,
+					preventRoomRepeats = false,
+					stampTileIndices = new List<int>
+					{
+						132,
+					}
+				},
+				new TileStampData
+				{
+					width = 1,
+					height = 1,
+					relativeWeight = 0.03f,
+					placementRule = DungeonTileStampData.StampPlacementRule.ON_LOWER_FACEWALL,
+					occupySpace = DungeonTileStampData.StampSpace.WALL_SPACE,
+					stampCategory = DungeonTileStampData.StampCategory.STRUCTURAL,
+					preferredIntermediaryStamps = 6,
+					intermediaryMatchingStyle = DungeonTileStampData.IntermediaryMatchingStyle.ANY,
+					requiresForcedMatchingStyle = false,
+					opulence = Opulence.OPULENT,
+					roomTypeData = new List<StampPerRoomPlacementSettings>
+					{
+						new StampPerRoomPlacementSettings
+						{
+							roomRelativeWeight = 1,
+							roomSubType = 1
+						}
+					},
+					indexOfSymmetricPartner = -1,
+					preventRoomRepeats = false,
+					
+					stampTileIndices = new List<int>
+					{
+						133,
+					}
+				},
+				new TileStampData
+				{
+					width = 1,
+					height = 1,
+					relativeWeight = 0.03f,
+					placementRule = DungeonTileStampData.StampPlacementRule.ON_UPPER_FACEWALL,
+					occupySpace = DungeonTileStampData.StampSpace.WALL_SPACE,
+					stampCategory = DungeonTileStampData.StampCategory.STRUCTURAL,
+					preferredIntermediaryStamps = 4,
+					intermediaryMatchingStyle = DungeonTileStampData.IntermediaryMatchingStyle.PORTRAIT,
+					requiresForcedMatchingStyle = false,
+					opulence = Opulence.FINE,
+					roomTypeData = new List<StampPerRoomPlacementSettings>
+					{
+						new StampPerRoomPlacementSettings
+						{
+							roomRelativeWeight = 1,
+							roomSubType = 1
+						}
+					},
+					indexOfSymmetricPartner = -1,
+					preventRoomRepeats = false,
+					stampTileIndices = new List<int>
+					{
+						134,
+					}
+				},
+				new TileStampData
+				{
+					width = 1,
+					height = 1,
+					relativeWeight = 0.03f,
+					placementRule = DungeonTileStampData.StampPlacementRule.ON_LOWER_FACEWALL,
+					occupySpace = DungeonTileStampData.StampSpace.WALL_SPACE,
+					stampCategory = DungeonTileStampData.StampCategory.STRUCTURAL,
+					preferredIntermediaryStamps = 5,
+					intermediaryMatchingStyle = DungeonTileStampData.IntermediaryMatchingStyle.ANY,
+					requiresForcedMatchingStyle = false,
+					opulence = Opulence.OPULENT,
+					roomTypeData = new List<StampPerRoomPlacementSettings>
+					{
+						new StampPerRoomPlacementSettings
+						{
+							roomRelativeWeight = 1,
+							roomSubType = 1
+						}
+					},
+					indexOfSymmetricPartner = -1,
+					preventRoomRepeats = false,
+					stampTileIndices = new List<int>
+					{
+						135,
+					}
+				},
+				
+			};
+
+			abyssMaterial = ScriptableObject.CreateInstance<DungeonMaterial>();
+			abyssMaterial.supportsPits = true;
+			abyssMaterial.doPitAO = false;
+			abyssMaterial.useLighting = true;
+			abyssMaterial.supportsDiagonalWalls = false;
+			abyssMaterial.carpetIsMainFloor = false;
+			abyssMaterial.carpetGrids = new TileIndexGrid[0];
+			abyssMaterial.roomCeilingBorderGrid = TilesetToolbox.CreateBlankIndexGrid();
+			abyssMaterial.additionalPitBorderFlatGrid = TilesetToolbox.CreateBlankIndexGrid();
+			abyssMaterial.roomCeilingBorderGrid = TilesetToolbox.CreateBlankIndexGrid();
+			string[] pathsSmall = new string[]
+			{
+				"Planetside/Resources/FloorStuff/WallShards/wallshard1_001.png",
+				"Planetside/Resources/FloorStuff/WallShards/wallshard1_002.png",
+				"Planetside/Resources/FloorStuff/WallShards/wallshard1_003.png",
+
+			};
+			string[] pathsLarge = new string[]
+			{
+				"Planetside/Resources/FloorStuff/WallShards/wallshard2_001.png",
+				"Planetside/Resources/FloorStuff/WallShards/wallshard2_002.png",
+				"Planetside/Resources/FloorStuff/WallShards/wallshard2_003.png",
+				"Planetside/Resources/FloorStuff/WallShards/wallshard2_004.png",
+
+			};
+			abyssMaterial.wallShards = new WeightedGameObjectCollection()
+			{
+				elements = new List<WeightedGameObject>()
+				{
+					new WeightedGameObject(){ rawGameObject = BreakAbleAPI.BreakableAPIToolbox.GenerateAnimatedDebrisObject(pathsSmall, 4, tk2dSpriteAnimationClip.WrapMode.Once, true, 0.66f, 2f, 360, 180, null, 0.8f).gameObject, weight = 1},
+					new WeightedGameObject(){ rawGameObject = BreakAbleAPI.BreakableAPIToolbox.GenerateAnimatedDebrisObject(pathsSmall, 2, tk2dSpriteAnimationClip.WrapMode.Once, true, 1f, 3f, 360, 180, null, 0.8f).gameObject, weight = 0.7f},
+					new WeightedGameObject(){ rawGameObject = BreakAbleAPI.BreakableAPIToolbox.GenerateAnimatedDebrisObject(pathsSmall, 7, tk2dSpriteAnimationClip.WrapMode.Once, true, 0.33f, 1.5f, 360, 180, null, 0.8f).gameObject, weight = 0.5f},
+				},
+            };
+			abyssMaterial.bigWallShardDamageThreshold = 20;
+			abyssMaterial.bigWallShards = new WeightedGameObjectCollection()
+			{
+				elements = new List<WeightedGameObject>()
+				{
+					new WeightedGameObject(){ rawGameObject = BreakAbleAPI.BreakableAPIToolbox.GenerateAnimatedDebrisObject(pathsLarge, 4, tk2dSpriteAnimationClip.WrapMode.Once, true, 1f, 3f, 240, 120, null, 0.85f).gameObject, weight = 0.5f},
+					new WeightedGameObject(){ rawGameObject = BreakAbleAPI.BreakableAPIToolbox.GenerateAnimatedDebrisObject(pathsLarge, 7, tk2dSpriteAnimationClip.WrapMode.Once, true, 1f, 3f, 240, 120, null, 1.2f).gameObject, weight = 0.2f},
+					new WeightedGameObject(){ rawGameObject = BreakAbleAPI.BreakableAPIToolbox.GenerateAnimatedDebrisObject(pathsLarge, 1, tk2dSpriteAnimationClip.WrapMode.Once, true, 5f, 10f, 240, 120, null, 2f).gameObject, weight = 0.1f},
+				},
+			};
+			abyssMaterial.secretRoomWallShardCollections = new List<GameObject>()
+			{
+				BreakAbleAPI.BreakableAPIToolbox.GenerateAnimatedDebrisObject(pathsLarge, 4, tk2dSpriteAnimationClip.WrapMode.Once, true, 1f, 3f, 240, 120, null, 0.85f).gameObject,
+				BreakAbleAPI.BreakableAPIToolbox.GenerateAnimatedDebrisObject(pathsSmall, 4, tk2dSpriteAnimationClip.WrapMode.Once, true, 0.66f, 2f, 360, 180, null, 0.8f).gameObject
+			};
+
+			foreach (WeightedGameObject obj in abyssMaterial.wallShards.elements)
+            {
+				obj.rawGameObject.AddComponent<TresspassLightController>();
+			}
+			foreach (WeightedGameObject obj in abyssMaterial.bigWallShards.elements)
+			{
+				obj.rawGameObject.AddComponent<TresspassLightController>();
+			}
+
+			//==============================================================================================================================================================================================
+			//==============================================================================================================================================================================================
+			//==============================================================================================================================================================================================
+
+			var pitBorderGridCave = TilesetToolbox.CreateBlankIndexGrid();
+			pitBorderGridCave.topLeftIndices = new TileIndexList { indices = new List<int> { 70 }, indexWeights = new List<float> { 1f } };
+			pitBorderGridCave.topIndices = new TileIndexList { indices = new List<int> { 71 }, indexWeights = new List<float> { 1f } };
+			pitBorderGridCave.topRightIndices = new TileIndexList { indices = new List<int> { 72 }, indexWeights = new List<float> { 1f } };
+
+
+			pitBorderGridCave.leftIndices = new TileIndexList { indices = new List<int> { 73 }, indexWeights = new List<float> { 1f } };
+			pitBorderGridCave.rightIndices = new TileIndexList { indices = new List<int> { 74 }, indexWeights = new List<float> { 1f } };
+
+
+			pitBorderGridCave.bottomLeftIndices = new TileIndexList { indices = new List<int> { 75 }, indexWeights = new List<float> { 1f } };
+			pitBorderGridCave.bottomIndices = new TileIndexList { indices = new List<int> { 76 }, indexWeights = new List<float> { 1f } };
+			pitBorderGridCave.bottomRightIndices = new TileIndexList { indices = new List<int> { 77 }, indexWeights = new List<float> { 1f } };
+			pitBorderGridCave.horizontalIndices = new TileIndexList { indices = new List<int> { 78 }, indexWeights = new List<float> { 1f } };
+			pitBorderGridCave.verticalIndices = new TileIndexList { indices = new List<int> { 79 }, indexWeights = new List<float> { 1f } };
+			pitBorderGridCave.topCapIndices = new TileIndexList { indices = new List<int> { 80 }, indexWeights = new List<float> { 1f } };
+			pitBorderGridCave.rightCapIndices = new TileIndexList { indices = new List<int> { 81 }, indexWeights = new List<float> { 1f } };
+			pitBorderGridCave.bottomCapIndices = new TileIndexList { indices = new List<int> { 82 }, indexWeights = new List<float> { 1f } };
+			pitBorderGridCave.leftCapIndices = new TileIndexList { indices = new List<int> { 83 }, indexWeights = new List<float> { 1f } };
+			pitBorderGridCave.allSidesIndices = new TileIndexList { indices = new List<int> { 84 }, indexWeights = new List<float> { 1f } };
+			pitBorderGridCave.topLeftNubIndices = new TileIndexList { indices = new List<int> { 85 }, indexWeights = new List<float> { 1f } };
+			pitBorderGridCave.topRightNubIndices = new TileIndexList { indices = new List<int> { 88 }, indexWeights = new List<float> { 1f } };
+
+
+			pitBorderGridCave.bottomLeftNubIndices = new TileIndexList { indices = new List<int> { 89 }, indexWeights = new List<float> { 1f } };
+			pitBorderGridCave.bottomRightNubIndices = new TileIndexList { indices = new List<int> { 90 }, indexWeights = new List<float> { 1f } };
+			pitBorderGridCave.extendedSet = true;
+
+
+			//pitBorderGridCave.topCenterLeftIndices = new TileIndexList { indices = new List<int> { 89 }, indexWeights = new List<float> { 1f } };
+			//pitBorderGridCave.topCenterIndices = new TileIndexList { indices = new List<int> { 90 }, indexWeights = new List<float> { 1f } };
+
+
+			pitBorderGridCave.topCenterRightIndices = new TileIndexList { indices = new List<int> { 91 }, indexWeights = new List<float> { 1f } };
+
+			pitBorderGridCave.thirdTopRowLeftIndices = new TileIndexList { indices = new List<int> { 92 }, indexWeights = new List<float> { 1f } };
+			pitBorderGridCave.thirdTopRowCenterIndices = new TileIndexList { indices = new List<int> { 93 }, indexWeights = new List<float> { 1f } };
+			pitBorderGridCave.thirdTopRowRightIndices = new TileIndexList { indices = new List<int> { 94 }, indexWeights = new List<float> { 1f } };
+			pitBorderGridCave.internalBottomLeftCenterIndices = new TileIndexList { indices = new List<int> { 95 }, indexWeights = new List<float> { 1f } };
+
+
+			/*
+            pitBorderGridCave.internalBottomCenterIndices = new TileIndexList { indices = new List<int> { 101 }, indexWeights = new List<float> { 1f } };
+            pitBorderGridCave.internalBottomRightCenterIndices = new TileIndexList { indices = new List<int> { 102 }, indexWeights = new List<float> { 1f } };
+            pitBorderGridCave.borderTopNubLeftIndices = new TileIndexList { indices = new List<int> { 103 }, indexWeights = new List<float> { 1f } };
+            pitBorderGridCave.borderTopNubRightIndices = new TileIndexList { indices = new List<int> { 104 }, indexWeights = new List<float> { 1f } };
+            pitBorderGridCave.borderTopNubBothIndices = new TileIndexList { indices = new List<int> { 105 }, indexWeights = new List<float> { 1f } };
+            pitBorderGridCave.borderRightNubTopIndices = new TileIndexList { indices = new List<int> { 106 }, indexWeights = new List<float> { 1f } };
+            pitBorderGridCave.borderRightNubBottomIndices = new TileIndexList { indices = new List<int> { 107 }, indexWeights = new List<float> { 1f } };
+            pitBorderGridCave.borderRightNubBothIndices = new TileIndexList { indices = new List<int> { 108 }, indexWeights = new List<float> { 1f } };
+            pitBorderGridCave.borderBottomNubLeftIndices = new TileIndexList { indices = new List<int> { 109 }, indexWeights = new List<float> { 1f } };
+            pitBorderGridCave.borderBottomNubRightIndices = new TileIndexList { indices = new List<int> { 110 }, indexWeights = new List<float> { 1f } };
+            pitBorderGridCave.borderBottomNubBothIndices = new TileIndexList { indices = new List<int> { 111 }, indexWeights = new List<float> { 1f } };
+            pitBorderGridCave.borderLeftNubTopIndices = new TileIndexList { indices = new List<int> { 112 }, indexWeights = new List<float> { 1f } };
+            pitBorderGridCave.borderLeftNubBottomIndices = new TileIndexList { indices = new List<int> { 113 }, indexWeights = new List<float> { 1f } };
+            pitBorderGridCave.borderLeftNubBothIndices = new TileIndexList { indices = new List<int> { 114 }, indexWeights = new List<float> { 1f } };
+            pitBorderGridCave.diagonalNubsTopLeftBottomRight = new TileIndexList { indices = new List<int> { 115 }, indexWeights = new List<float> { 1f } };
+            pitBorderGridCave.diagonalNubsTopRightBottomLeft = new TileIndexList { indices = new List<int> { 116 }, indexWeights = new List<float> { 1f } };
+            pitBorderGridCave.doubleNubsTop = new TileIndexList { indices = new List<int> { 117 }, indexWeights = new List<float> { 1f } };
+            pitBorderGridCave.doubleNubsRight = new TileIndexList { indices = new List<int> { 118 }, indexWeights = new List<float> { 1f } };
+            pitBorderGridCave.doubleNubsBottom = new TileIndexList { indices = new List<int> { 119 }, indexWeights = new List<float> { 1f } };
+            pitBorderGridCave.doubleNubsLeft = new TileIndexList { indices = new List<int> { 120 }, indexWeights = new List<float> { 1f } };
+            pitBorderGridCave.quadNubs = new TileIndexList { indices = new List<int> { 121 }, indexWeights = new List<float> { 1f } };
+            pitBorderGridCave.topRightWithNub = new TileIndexList { indices = new List<int> { 122 }, indexWeights = new List<float> { 1f } };
+            pitBorderGridCave.topLeftWithNub = new TileIndexList { indices = new List<int> { 123 }, indexWeights = new List<float> { 1f } };
+            pitBorderGridCave.bottomRightWithNub = new TileIndexList { indices = new List<int> { 124 }, indexWeights = new List<float> { 1f } };
+            pitBorderGridCave.bottomLeftWithNub = new TileIndexList { indices = new List<int> { 125 }, indexWeights = new List<float> { 1f } };
+            pitBorderGridCave.diagonalBorderNE = new TileIndexList { indices = new List<int> { 126 }, indexWeights = new List<float> { 1f } };
+            pitBorderGridCave.diagonalBorderSE = new TileIndexList { indices = new List<int> { 127 }, indexWeights = new List<float> { 1f } };
+            pitBorderGridCave.diagonalBorderSW = new TileIndexList { indices = new List<int> { 128 }, indexWeights = new List<float> { 1f } };
+            pitBorderGridCave.diagonalBorderNW = new TileIndexList { indices = new List<int> { 129 }, indexWeights = new List<float> { 1f } };
+            pitBorderGridCave.diagonalCeilingNE = new TileIndexList { indices = new List<int> { 130 }, indexWeights = new List<float> { 1f } };
+            pitBorderGridCave.diagonalCeilingSE = new TileIndexList { indices = new List<int> { 130 }, indexWeights = new List<float> { 1f } };
+            pitBorderGridCave.diagonalCeilingSW = new TileIndexList { indices = new List<int> { 130 }, indexWeights = new List<float> { 1f } };
+            pitBorderGridCave.diagonalCeilingNW = new TileIndexList { indices = new List<int> { 130 }, indexWeights = new List<float> { 1f } };
+            */
+			pitBorderGridCave.CenterCheckerboard = false;
+			pitBorderGridCave.CheckerboardDimension = 0;
+
+			pitBorderGridCave.CenterIndicesAreStrata = false;
+			pitBorderGridCave.PitInternalSquareGrids = new List<TileIndexGrid>() { pitBorderGridCave };
+
+
+
+
+
+			pitBorderGridCave.PitInternalSquareOptions = new PitSquarePlacementOptions() { CanBeFlushBottom = true, CanBeFlushLeft = true, CanBeFlushRight = true, PitSquareChance = 1 };
+			pitBorderGridCave.PitBorderIsInternal = false;
+			pitBorderGridCave.PitBorderOverridesFloorTile = false;
+			pitBorderGridCave.CeilingBorderUsesDistancedCenters = false;
+			pitBorderGridCave.UsesRatChunkBorders = false;
+			pitBorderGridCave.RatChunkNormalSet = new TileIndexList { indices = new List<int> { 38 }, indexWeights = new List<float> { 1f } }; ;
+			pitBorderGridCave.RatChunkBottomSet = new TileIndexList { indices = new List<int> { 38 }, indexWeights = new List<float> { 1f } }; ;
+			//pitBorderGridCave.PathFacewallStamp = ob;
+			//pitBorderGridCave.PathSidewallStamp =;
+			pitBorderGridCave.PathPitPosts = new TileIndexList { indices = new List<int> { 38 }, indexWeights = new List<float> { 1f } }; ;
+			pitBorderGridCave.PathPitPostsBL = new TileIndexList { indices = new List<int> { 38 }, indexWeights = new List<float> { 1f } }; ;
+			pitBorderGridCave.PathPitPostsBR = new TileIndexList { indices = new List<int> { 38 }, indexWeights = new List<float> { 1f } }; ;
+			//pitBorderGridCave.PathStubNorth = ;
+			//pitBorderGridCave.PathStubEast =;
+			//pitBorderGridCave.PathStubSouth =;
+			//pitBorderGridCave.PathStubWest =;
+			abyssMaterial.roomFloorBorderGrid = pitBorderGridCave;
+			//abyssMaterial.pitLayoutGrid = pitBorderGridCave;
+			//abyssMaterial.pitBorderFlatGrid = pitBorderGridCave;
+			//abyssMaterial.additionalPitBorderFlatGrid = pitBorderGridCave;
+			//abyssMaterial.decalIndexGrid = pitBorderGridCave;
+
+			//==============================================================================================================================================================================================
+			//==============================================================================================================================================================================================
+			//==============================================================================================================================================================================================
+
+			var floorSquares = TilesetToolbox.CreateBlankIndexGrid();
+
+			floorSquares.topLeftIndices = new TileIndexList { indices = new List<int> { 25 }, indexWeights = new List<float> { 1f } };
+			floorSquares.topRightIndices = new TileIndexList { indices = new List<int> { 26 }, indexWeights = new List<float> { 1f } };
+			floorSquares.bottomLeftIndices = new TileIndexList { indices = new List<int> { 27 }, indexWeights = new List<float> { 1f } };
+			floorSquares.bottomRightIndices = new TileIndexList { indices = new List<int> { 28 }, indexWeights = new List<float> { 1f } };
+
+			var floorSquares1 = TilesetToolbox.CreateBlankIndexGrid();
+			floorSquares1.topLeftIndices = new TileIndexList { indices = new List<int> { 29 }, indexWeights = new List<float> { 0.5f } };
+			floorSquares1.topRightIndices = new TileIndexList { indices = new List<int> { 30 }, indexWeights = new List<float> { 0.5f } };
+			floorSquares1.bottomLeftIndices = new TileIndexList { indices = new List<int> { 31 }, indexWeights = new List<float> { 0.5f } };
+			floorSquares1.bottomRightIndices = new TileIndexList { indices = new List<int> { 32 }, indexWeights = new List<float> { 0.5f } };
+
+			abyssMaterial.floorSquares = new TileIndexGrid[] { floorSquares, floorSquares1 };
+			//==============================================================================================================================================================================================
+			//==============================================================================================================================================================================================
+			//==============================================================================================================================================================================================
+			{
+
+
+
+				var ceilingBorderGrid = TilesetToolbox.CreateBlankIndexGrid();
+				ceilingBorderGrid.topLeftIndices = new TileIndexList { indices = new List<int> { 60 }, indexWeights = new List<float> { 1f } };
+				ceilingBorderGrid.topIndices = new TileIndexList { indices = new List<int> { 61 }, indexWeights = new List<float> { 1f } };
+				ceilingBorderGrid.topRightIndices = new TileIndexList { indices = new List<int> { 62 }, indexWeights = new List<float> { 1f } };
+
+
+				ceilingBorderGrid.leftIndices = new TileIndexList { indices = new List<int> { 38, 40 }, indexWeights = new List<float> { 1f, 0.9f } };
+
+				//ceilingBorderGrid.centerIndices = new TileIndexList { indices = new List<int> { 96 }, indexWeights = new List<float> { 1f } };
+				//new TileIndexList { indices = new List<int> { 96, 97, 98, 99 }, indexWeights = new List<float> { 1f, 0.06f, 0.06f, 0.06f } };
+
+				ceilingBorderGrid.rightIndices = new TileIndexList { indices = new List<int> { 39, 41 }, indexWeights = new List<float> { 1f, 0.9f } };
+
+
+				ceilingBorderGrid.bottomLeftIndices = new TileIndexList { indices = new List<int> { 66 }, indexWeights = new List<float> { 1f } };
+				ceilingBorderGrid.bottomIndices = new TileIndexList { indices = new List<int> { 67 }, indexWeights = new List<float> { 1f } };
+				ceilingBorderGrid.bottomRightIndices = new TileIndexList { indices = new List<int> { 68 }, indexWeights = new List<float> { 1f } };
+
+				ceilingBorderGrid.verticalIndices = new TileIndexList { indices = new List<int> { 105 }, indexWeights = new List<float> { 1f } };
+				ceilingBorderGrid.horizontalIndices = new TileIndexList { indices = new List<int> { 106 }, indexWeights = new List<float> { 1f } };
+
+				//Caps
+				ceilingBorderGrid.topCapIndices = new TileIndexList { indices = new List<int> { 103 }, indexWeights = new List<float> { 1f } };
+				ceilingBorderGrid.leftCapIndices = new TileIndexList { indices = new List<int> { 101 }, indexWeights = new List<float> { 1f } };
+				ceilingBorderGrid.rightCapIndices = new TileIndexList { indices = new List<int> { 102 }, indexWeights = new List<float> { 1f } };
+				ceilingBorderGrid.bottomCapIndices = new TileIndexList { indices = new List<int> { 104 }, indexWeights = new List<float> { 1f } };
+
+				//
+
+				//========================================
+				//Nubs
+				ceilingBorderGrid.doubleNubsRight = new TileIndexList { indices = new List<int> { 80 }, indexWeights = new List<float> { 1f } };
+				ceilingBorderGrid.doubleNubsLeft = new TileIndexList { indices = new List<int> { 81 }, indexWeights = new List<float> { 1f } };
+				ceilingBorderGrid.doubleNubsTop = new TileIndexList { indices = new List<int> { 82 }, indexWeights = new List<float> { 1f } };
+				ceilingBorderGrid.doubleNubsBottom = new TileIndexList { indices = new List<int> { 83 }, indexWeights = new List<float> { 1f } };
+
+				ceilingBorderGrid.quadNubs = new TileIndexList { indices = new List<int> { 84 }, indexWeights = new List<float> { 1f } };
+				///Corner Nubs
+				ceilingBorderGrid.topRightWithNub = new TileIndexList { indices = new List<int> { 108 }, indexWeights = new List<float> { 1f } };
+				ceilingBorderGrid.topLeftWithNub = new TileIndexList { indices = new List<int> { 107 }, indexWeights = new List<float> { 1f } };
+				ceilingBorderGrid.bottomRightWithNub = new TileIndexList { indices = new List<int> { 109 }, indexWeights = new List<float> { 1f } };
+				ceilingBorderGrid.bottomLeftWithNub = new TileIndexList { indices = new List<int> { 110 }, indexWeights = new List<float> { 1f } };
+				//========================================
+
+				ceilingBorderGrid.allSidesIndices = new TileIndexList { indices = new List<int> { 75 }, indexWeights = new List<float> { 1f } };
+				ceilingBorderGrid.topLeftNubIndices = new TileIndexList { indices = new List<int> { 76 }, indexWeights = new List<float> { 1f } };
+				ceilingBorderGrid.topRightNubIndices = new TileIndexList { indices = new List<int> { 77 }, indexWeights = new List<float> { 1f } };
+				ceilingBorderGrid.bottomLeftNubIndices = new TileIndexList { indices = new List<int> { 78 }, indexWeights = new List<float> { 1f } };
+				ceilingBorderGrid.bottomRightNubIndices = new TileIndexList { indices = new List<int> { 79 }, indexWeights = new List<float> { 1f } };
+
+				//ceilingBorderGrid.borderTopNubBothIndices = new TileIndexList { indices = new List<int> { 80 }, indexWeights = new List<float> { 1f } };
+				//ceilingBorderGrid.borderRightNubTopIndices = new TileIndexList { indices = new List<int> { 81 }, indexWeights = new List<float> { 1f } };
+
+				ceilingBorderGrid.borderRightNubBottomIndices = new TileIndexList { indices = new List<int> { 82 }, indexWeights = new List<float> { 1f } };
+				ceilingBorderGrid.borderRightNubBothIndices = new TileIndexList { indices = new List<int> { 83 }, indexWeights = new List<float> { 1f } };
+				ceilingBorderGrid.borderBottomNubLeftIndices = new TileIndexList { indices = new List<int> { 84 }, indexWeights = new List<float> { 1f } };
+				ceilingBorderGrid.borderBottomNubRightIndices = new TileIndexList { indices = new List<int> { 85 }, indexWeights = new List<float> { 1f } };
+				ceilingBorderGrid.borderBottomNubBothIndices = new TileIndexList { indices = new List<int> { 86 }, indexWeights = new List<float> { 1f } };
+				ceilingBorderGrid.borderLeftNubTopIndices = new TileIndexList { indices = new List<int> { 87 }, indexWeights = new List<float> { 1f } };
+				ceilingBorderGrid.borderLeftNubBottomIndices = new TileIndexList { indices = new List<int> { 88 }, indexWeights = new List<float> { 1f } };
+				ceilingBorderGrid.borderLeftNubBothIndices = new TileIndexList { indices = new List<int> { 89 }, indexWeights = new List<float> { 1f } };
+				ceilingBorderGrid.diagonalNubsTopLeftBottomRight = new TileIndexList { indices = new List<int> { 90 }, indexWeights = new List<float> { 1f } };
+				ceilingBorderGrid.diagonalNubsTopRightBottomLeft = new TileIndexList { indices = new List<int> { 91 }, indexWeights = new List<float> { 1f } };
+
+
+				ceilingBorderGrid.CheckerboardDimension = 1;
+
+				//ceilingBorderGrid.CeilingBorderUsesDistancedCenters = true;
+				//ceilingBorderGrid.centerIndices = new TileIndexList { indices = new List<int> { 100, 101, 102, 103 }, indexWeights = new List<float> { 1f, 0.05f, 0.05f, 0.01f} };
+				ceilingBorderGrid.centerIndices = new TileIndexList { indices = new List<int> { 100 }, indexWeights = new List<float> { 1f } };
+				//ceilingBorderGrid.CeilingBorderUsesDistancedCenters = true;
+				//ceilingBorderGrid.internalBottomCenterIndices = new TileIndexList { indices = new List<int> { 100 }, indexWeights = new List<float> { 1f } }; ;
+				//ceilingBorderGrid.internalBottomLeftCenterIndices = new TileIndexList { indices = new List<int> { 100 }, indexWeights = new List<float> { 1f } }; ;
+				//ceilingBorderGrid.internalBottomRightCenterIndices = new TileIndexList { indices = new List<int> { 100 }, indexWeights = new List<float> { 1f } }; ;
+				//ceilingBorderGrid.UsesRatChunkBorders = true;
+				//ceilingBorderGrid.RatChunkNormalSet = new TileIndexList { indices = new List<int> { 58 }, indexWeights = new List<float> { 1f } };
+				//ceilingBorderGrid.RatChunkBottomSet = new TileIndexList { indices = new List<int> { 59 }, indexWeights = new List<float> { 1f } };
+
+
+				abyssMaterial.roomCeilingBorderGrid = ceilingBorderGrid;
+				//var borderBorderGrid = TilesetToolbox.CreateBlankIndexGrid();
+				//borderBorderGrid.centerIndices = new TileIndexList { indices = new List<int> { 100 }, indexWeights = new List<float> { 1f } };
+
+				//abyssMaterial.exteriorFacadeBorderGrid = borderBorderGrid;
+
+
+
+			}
+
+			//ModAssets = PlanetsideModule.ModAssets;
+			AssetBundle assetBundle = ResourceManager.LoadAssetBundle("shared_auto_001");
             AssetBundle assetBundle2 = ResourceManager.LoadAssetBundle("shared_auto_002");
             shared_auto_001 = assetBundle;
             shared_auto_002 = assetBundle2;
             braveResources = ResourceManager.LoadAssetBundle("brave_resources_001");
-			/*
-            if (ModAssets is null)
-            {
-                ETGModConsole.Log("ModAssets is null!");
-            }
-            */
-			/*
-						TutorialDungeonPrefab = DungeonDatabase.GetOrLoadByName("Base_Tutorial");
-						ratDungeon = DungeonDatabase.GetOrLoadByName("base_resourcefulrat");
-			NakatomiDungeonPrefab = DungeonDatabase.GetOrLoadByName("base_nakatomi");
-
-			*/
+			
 
 
 
@@ -717,453 +1151,6 @@ namespace Planetside
 			CatacombsDungeonPrefab = null;
 			doublebeholsterroom01 = AbyssDungeonFlows.LoadOfficialFlow("Secret_DoubleBeholster_Flow").AllNodes[2].overrideExactRoom;
 
-			//ENV_Tileset_Abyss = PlanetsideModule.ModAssets.LoadAsset("ENV_Tileset_Abyss") as Texture2D;
-
-
-
-			/*
-			var beyondCollectionObject = FakePrefab.Clone(marinePastPrefab.tileIndices.dungeonCollection.gameObject);
-			beyondCollectionObject.name = "BeyondCollection";
-			AbyssTilesetCollection = beyondCollectionObject.GetComponent<tk2dSpriteCollectionData>();
-
-			var baseObj = PlanetsideModule.TilesetAssets.LoadAsset<GameObject>("SpriteCollection");
-			ETGModConsole.Log("obj done");
-			foreach (Component component in baseObj.GetComponents<Component>())
-			{
-				ETGModConsole.Log(component.ToString());
-				if (component.GetType().ToString().ToLower().Contains("tk2dspritecollectiondata"))
-				{
-					ETGModConsole.Log("comp done");
-					tk2dSpriteDefinition[] uvArray = (tk2dSpriteDefinition[])ReflectionHelper.GetValue(component.GetType().GetField("spriteDefinitions"), component);
-
-					ETGModConsole.Log(uvArray.Length.ToString());
-					//var b = uvArray.ToList();
-					//b.Sort();
-					//uvArray = b.ToArray();
-
-					var material = PlanetsideModule.TilesetAssets.LoadAsset<Material>("assets/sprites/AbyssTileset/SpriteCollection Data/abyssmat.mat");
-					ETGModConsole.Log("mat loaded");
-					ETGModConsole.Log(AbyssTilesetCollection.materials.Length.ToString());
-
-					var mat1 = new Material(AbyssTilesetCollection.materials[0]);
-					var mat2 = new Material(AbyssTilesetCollection.materials[1]);
-					var mat3 = new Material(AbyssTilesetCollection.materials[2]);
-
-					AbyssTilesetCollection.material = mat1;
-
-					AbyssTilesetCollection.materials = new Material[] { mat1, mat2, mat3 };
-					ETGModConsole.Log("mat done");
-					var tex = material.GetTexture("_MainTex");
-					tex.filterMode = FilterMode.Point;
-					mat1.SetTexture("_MainTex", tex);
-					mat2.SetTexture("_MainTex", tex);
-					mat3.SetTexture("_MainTex", tex);
-
-					ETGModConsole.Log("tex loaded");
-					AbyssTilesetCollection.textures = new Texture[] { tex };
-					ETGModConsole.Log("tex done");
-
-
-					foreach (var def in uvArray)
-					{
-						bool isWall = (int.Parse(def.name) >= 22 && int.Parse(def.name) <= 28) || (int.Parse(def.name) >= 44 && int.Parse(def.name) <= 50) || (int.Parse(def.name) >= 44 && int.Parse(def.name) <= 50);
-						AbyssTilesetCollection.spriteDefinitions[int.Parse(def.name)].uvs = def.uvs.ToArray();
-						AbyssTilesetCollection.spriteDefinitions[int.Parse(def.name)].SetupTilesetSpriteDef(isWall, (int.Parse(def.name) >= 44 && int.Parse(def.name) <= 50));
-
-						//beyondCollection.spriteDefinitions[] = def;
-					}
-
-					var backupDefs = AbyssTilesetCollection.spriteDefinitions;
-
-					AbyssTilesetCollection.spriteDefinitions = new tk2dSpriteDefinition[704];
-
-					foreach (var def in backupDefs)
-					{
-						def.name = def.name.Replace("Final_Scenario_Tileset_Pilot/", "");
-						//ETGModConsole.Log(def.name);
-						AbyssTilesetCollection.spriteDefinitions[int.Parse(def.name)] = def;
-
-
-						def.name = "ENV_Beyond/" + def.name;
-					}
-					ETGModConsole.Log("reorder done");
-					for (int i = 0; i < 704; i++)
-					{
-						AbyssTilesetCollection.spriteDefinitions[i].material = AbyssTilesetCollection.materials[0];
-						AbyssTilesetCollection.spriteDefinitions[i].materialId = 0;
-						//ETGModConsole.Log($"[{i}] {beyondCollection.materials[beyondCollection.spriteDefinitions[i].materialId].name}");
-
-					}
-
-					AbyssTilesetCollection.SetMaterial(0, 1);
-					AbyssTilesetCollection.SetMaterial(1, 1);
-					AbyssTilesetCollection.SetMaterial(2, 1);
-					AbyssTilesetCollection.SetMaterial(3, 1);
-					AbyssTilesetCollection.SetMaterial(4, 1);
-					AbyssTilesetCollection.SetMaterial(5, 1);
-					AbyssTilesetCollection.SetMaterial(6, 1);
-					AbyssTilesetCollection.SetMaterial(7, 1);
-					AbyssTilesetCollection.SetMaterial(8, 1);
-					AbyssTilesetCollection.SetMaterial(9, 1);
-					AbyssTilesetCollection.SetMaterial(10, 1);
-					AbyssTilesetCollection.SetMaterial(11, 1);
-					AbyssTilesetCollection.SetMaterial(12, 1);
-					AbyssTilesetCollection.SetMaterial(13, 1);
-					AbyssTilesetCollection.SetMaterial(14, 1);
-					AbyssTilesetCollection.SetMaterial(15, 1);
-					AbyssTilesetCollection.SetMaterial(16, 1);
-					AbyssTilesetCollection.SetMaterial(17, 1);
-					AbyssTilesetCollection.SetMaterial(18, 1);
-					AbyssTilesetCollection.SetMaterial(19, 1);
-					AbyssTilesetCollection.SetMaterial(20, 1);
-
-					AbyssTilesetCollection.SetMaterial(42, 1);
-					AbyssTilesetCollection.SetMaterial(43, 1);
-
-					AbyssTilesetCollection.SetMaterial(64, 1);
-					AbyssTilesetCollection.SetMaterial(65, 1);
-
-					AbyssTilesetCollection.SetMaterial(86, 1);
-					AbyssTilesetCollection.SetMaterial(87, 1);
-
-					AbyssTilesetCollection.SetMaterial(242, 2);
-					AbyssTilesetCollection.SetMaterial(243, 2);
-					AbyssTilesetCollection.SetMaterial(264, 2);
-					AbyssTilesetCollection.SetMaterial(265, 2);
-					AbyssTilesetCollection.SetMaterial(286, 2);
-					AbyssTilesetCollection.SetMaterial(308, 2);
-					AbyssTilesetCollection.SetMaterial(330, 2);
-					AbyssTilesetCollection.SetMaterial(352, 2);
-					AbyssTilesetCollection.SetMaterial(374, 2);
-					AbyssTilesetCollection.SetMaterial(396, 2);
-					AbyssTilesetCollection.SetMaterial(418, 2);
-					AbyssTilesetCollection.SetMaterial(528, 2);
-					AbyssTilesetCollection.SetMaterial(529, 2);
-					AbyssTilesetCollection.SetMaterial(530, 2);
-					AbyssTilesetCollection.SetMaterial(550, 2);
-
-
-
-					AbyssTilesetCollection.spriteDefinitions[25].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FACEWALL_UPPER_LEFTEDGE, 1, 1);
-					AbyssTilesetCollection.spriteDefinitions[26].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FACEWALL_UPPER, 1, 1);
-					AbyssTilesetCollection.spriteDefinitions[27].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FACEWALL_UPPER, 0.05f, 1);
-					AbyssTilesetCollection.spriteDefinitions[28].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FACEWALL_UPPER_RIGHTEDGE, 1, 1);
-
-					AbyssTilesetCollection.spriteDefinitions[29].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FACEWALL_UPPER, 0, 1);
-					AbyssTilesetCollection.spriteDefinitions[30].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FACEWALL_UPPER, 0, 1);
-					AbyssTilesetCollection.spriteDefinitions[31].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FACEWALL_UPPER, 0, 1);
-
-					AbyssTilesetCollection.spriteDefinitions[27].metadata.usesAnimSequence = true;
-
-					SimpleTilesetAnimationSequence wallEye = new SimpleTilesetAnimationSequence();
-
-					wallEye.playstyle = SimpleTilesetAnimationSequence.TilesetSequencePlayStyle.DELAYED_LOOP;
-					wallEye.loopDelayMin = 6;
-					wallEye.loopDelayMax = 25;
-					wallEye.loopceptionTarget = -1;
-					wallEye.loopceptionMin = 1;
-					wallEye.loopceptionMax = 3;
-					wallEye.coreceptionMin = 1;
-					wallEye.coreceptionMax = 1;
-					wallEye.randomStartFrame = true;
-					wallEye.entries = new List<SimpleTilesetAnimationSequenceEntry>
-					{
-						new SimpleTilesetAnimationSequenceEntry
-						{
-							entryIndex = 29,
-							frameTime = 5f
-						},
-						new SimpleTilesetAnimationSequenceEntry
-						{
-							entryIndex = 30,
-							frameTime = 0.2f
-						},
-						new SimpleTilesetAnimationSequenceEntry
-						{
-							entryIndex = 31,
-							frameTime = 0.2f
-						},
-						new SimpleTilesetAnimationSequenceEntry
-						{
-							entryIndex = 27,
-							frameTime = 0.6f
-						},
-						new SimpleTilesetAnimationSequenceEntry
-						{
-							entryIndex = 31,
-							frameTime = 0.1f
-						},
-						new SimpleTilesetAnimationSequenceEntry
-						{
-							entryIndex = 29,
-							frameTime = 0.6f
-						},
-						new SimpleTilesetAnimationSequenceEntry
-						{
-							entryIndex = 31,
-							frameTime = 0.1f
-						},
-						new SimpleTilesetAnimationSequenceEntry
-						{
-							entryIndex = 27,
-							frameTime = 0.6f
-						},
-						new SimpleTilesetAnimationSequenceEntry
-						{
-							entryIndex = 31,
-							frameTime = 0.1f
-						},
-						new SimpleTilesetAnimationSequenceEntry
-						{
-							entryIndex = 30,
-							frameTime = 0.2f
-						},
-						new SimpleTilesetAnimationSequenceEntry
-						{
-							entryIndex = 29,
-							frameTime = 0.1f
-						},
-					};
-
-					AbyssTilesetCollection.SpriteIDsWithAnimationSequences.Add(27);
-					AbyssTilesetCollection.SpriteDefinedAnimationSequences.Add(wallEye);
-
-
-
-					AbyssTilesetCollection.spriteDefinitions[47].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FACEWALL_LOWER_LEFTEDGE, 1, 1);
-					AbyssTilesetCollection.spriteDefinitions[48].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FACEWALL_LOWER, 1, 1);
-					AbyssTilesetCollection.spriteDefinitions[49].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FACEWALL_LOWER, 1, 1);
-					AbyssTilesetCollection.spriteDefinitions[50].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FACEWALL_LOWER_RIGHTEDGE, 1, 1);
-
-					AbyssTilesetCollection.spriteDefinitions[58].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 1);
-					AbyssTilesetCollection.spriteDefinitions[59].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 1);
-					AbyssTilesetCollection.spriteDefinitions[60].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 1);
-					AbyssTilesetCollection.spriteDefinitions[61].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 1);
-
-					AbyssTilesetCollection.spriteDefinitions[80].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 0);
-					//AbyssTilesetCollection.spriteDefinitions[80].metadata.usesAnimSequence = true;
-					AbyssTilesetCollection.spriteDefinitions[81].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 0);
-					AbyssTilesetCollection.spriteDefinitions[82].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 0);
-					AbyssTilesetCollection.spriteDefinitions[83].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 0);
-
-					AbyssTilesetCollection.spriteDefinitions[102].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 0);
-					AbyssTilesetCollection.spriteDefinitions[103].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 0);
-					AbyssTilesetCollection.spriteDefinitions[104].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 0);
-					AbyssTilesetCollection.spriteDefinitions[105].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 0);
-
-					AbyssTilesetCollection.spriteDefinitions[124].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 0);
-					AbyssTilesetCollection.spriteDefinitions[125].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 0);
-					AbyssTilesetCollection.spriteDefinitions[126].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 0);
-					AbyssTilesetCollection.spriteDefinitions[127].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 0);
-
-					//AbyssTilesetCollection.spriteDefinitions[58].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 1);
-
-					AbyssTilesetCollection.spriteDefinitions[111].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FLOOR_TILE, 1, 1);
-
-					AbyssTilesetCollection.spriteDefinitions[112].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FLOOR_TILE, 0.01f, 1);
-
-					AbyssTilesetCollection.spriteDefinitions[112].metadata.usesAnimSequence = true;
-
-					SimpleTilesetAnimationSequence floorEye = new SimpleTilesetAnimationSequence();
-
-					floorEye.playstyle = SimpleTilesetAnimationSequence.TilesetSequencePlayStyle.DELAYED_LOOP;
-					floorEye.loopDelayMin = 6;
-					floorEye.loopDelayMax = 25;
-					floorEye.loopceptionTarget = -1;
-					floorEye.loopceptionMin = 1;
-					floorEye.loopceptionMax = 3;
-					floorEye.coreceptionMin = 1;
-					floorEye.coreceptionMax = 1;
-					floorEye.randomStartFrame = true;
-					floorEye.entries = new List<SimpleTilesetAnimationSequenceEntry>
-					{
-						new SimpleTilesetAnimationSequenceEntry
-						{
-							entryIndex = 112,
-							frameTime = 5f
-						},
-						new SimpleTilesetAnimationSequenceEntry
-						{
-							entryIndex = 113,
-							frameTime = 0.2f
-						},
-						new SimpleTilesetAnimationSequenceEntry
-						{
-							entryIndex = 114,
-							frameTime = 0.2f
-						},
-						new SimpleTilesetAnimationSequenceEntry
-						{
-							entryIndex = 115,
-							frameTime = 0.6f
-						},
-						new SimpleTilesetAnimationSequenceEntry
-						{
-							entryIndex = 113,
-							frameTime = 0.1f
-						},
-						new SimpleTilesetAnimationSequenceEntry
-						{
-							entryIndex = 115,
-							frameTime = 0.6f
-						},
-						new SimpleTilesetAnimationSequenceEntry
-						{
-							entryIndex = 113,
-							frameTime = 0.1f
-						},
-						new SimpleTilesetAnimationSequenceEntry
-						{
-							entryIndex = 115,
-							frameTime = 0.6f
-						},
-
-						new SimpleTilesetAnimationSequenceEntry
-						{
-							entryIndex = 114,
-							frameTime = 0.1f
-						},
-						new SimpleTilesetAnimationSequenceEntry
-						{
-							entryIndex = 113,
-							frameTime = 0.2f
-						},
-						new SimpleTilesetAnimationSequenceEntry
-						{
-							entryIndex = 112,
-							frameTime = 0.1f
-						},
-					};
-
-					AbyssTilesetCollection.SpriteIDsWithAnimationSequences.Add(112);
-					AbyssTilesetCollection.SpriteDefinedAnimationSequences.Add(floorEye);
-
-					AbyssTilesetCollection.spriteDefinitions[113].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FLOOR_TILE, 0, 1);
-					AbyssTilesetCollection.spriteDefinitions[114].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FLOOR_TILE, 0, 1);
-					AbyssTilesetCollection.spriteDefinitions[115].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FLOOR_TILE, 0, 1);
-
-
-
-					AbyssTilesetCollection.spriteDefinitions[286].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 0);
-					AbyssTilesetCollection.spriteDefinitions[308].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 0);
-					AbyssTilesetCollection.spriteDefinitions[330].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 0);
-					AbyssTilesetCollection.spriteDefinitions[352].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 0);
-
-
-					AbyssTilesetCollection.spriteDefinitions[291].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 1);
-					AbyssTilesetCollection.spriteDefinitions[292].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 1);
-
-					AbyssTilesetCollection.spriteDefinitions[313].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 1);
-					AbyssTilesetCollection.spriteDefinitions[314].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 1);
-
-					AbyssTilesetCollection.spriteDefinitions[335].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 1);
-					AbyssTilesetCollection.spriteDefinitions[336].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 1);
-
-					AbyssTilesetCollection.spriteDefinitions[357].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 1);
-					AbyssTilesetCollection.spriteDefinitions[358].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 1);
-
-					AbyssTilesetCollection.spriteDefinitions[379].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 1);
-					AbyssTilesetCollection.spriteDefinitions[380].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 1);
-					AbyssTilesetCollection.spriteDefinitions[381].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 1);
-					AbyssTilesetCollection.spriteDefinitions[382].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 1);
-
-					AbyssTilesetCollection.spriteDefinitions[401].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 1);
-					AbyssTilesetCollection.spriteDefinitions[402].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 1);
-					AbyssTilesetCollection.spriteDefinitions[403].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 1);
-					AbyssTilesetCollection.spriteDefinitions[404].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 1);
-
-					AbyssTilesetCollection.spriteDefinitions[423].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 1);
-					AbyssTilesetCollection.spriteDefinitions[424].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 1);
-					AbyssTilesetCollection.spriteDefinitions[425].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 1);
-					AbyssTilesetCollection.spriteDefinitions[426].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 1);
-
-					AbyssTilesetCollection.spriteDefinitions[445].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 1);
-					AbyssTilesetCollection.spriteDefinitions[446].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 1);
-					AbyssTilesetCollection.spriteDefinitions[447].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 1);
-					AbyssTilesetCollection.spriteDefinitions[448].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 1);
-
-					AbyssTilesetCollection.spriteDefinitions[467].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 1);
-					AbyssTilesetCollection.spriteDefinitions[469].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 1);
-					AbyssTilesetCollection.spriteDefinitions[470].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 1);
-					AbyssTilesetCollection.spriteDefinitions[471].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 1);
-
-					AbyssTilesetCollection.spriteDefinitions[489].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 1);
-					AbyssTilesetCollection.spriteDefinitions[490].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 1);
-					AbyssTilesetCollection.spriteDefinitions[491].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 1);
-					AbyssTilesetCollection.spriteDefinitions[492].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 1);
-					AbyssTilesetCollection.spriteDefinitions[493].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 1);
-
-					AbyssTilesetCollection.spriteDefinitions[511].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 1);
-					AbyssTilesetCollection.spriteDefinitions[512].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 1);
-					AbyssTilesetCollection.spriteDefinitions[513].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 1);
-					AbyssTilesetCollection.spriteDefinitions[514].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 1);
-					AbyssTilesetCollection.spriteDefinitions[515].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 1);
-
-					AbyssTilesetCollection.spriteDefinitions[533].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 1);
-					AbyssTilesetCollection.spriteDefinitions[555].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 1);
-					AbyssTilesetCollection.spriteDefinitions[577].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 1);
-					AbyssTilesetCollection.spriteDefinitions[599].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1, 1);
-
-					var waterMat = new Material(dungeon.tileIndices.dungeonCollection.materials[5]);
-					waterMat.SetColor("_CausticColor", new Color(0.4f, 0.11f, 0.41f, 0.672f));
-					waterMat.SetTexture("_MainTex", tex);
-					waterMat.SetTexture("_MaskTex", PlanetsideModule.TilesetAssets.LoadAsset<Texture2D>("atlasrefl0"));
-
-					AbyssTilesetCollection.spriteDefinitions[80].material = waterMat;
-					AbyssTilesetCollection.spriteDefinitions[80].materialId = 3;
-
-					AbyssTilesetCollection.spriteDefinitions[124].material = waterMat;
-					AbyssTilesetCollection.spriteDefinitions[124].materialId = 3;
-
-					var ihatearrays = AbyssTilesetCollection.materials.ToList();
-					ihatearrays.Add(waterMat);
-					AbyssTilesetCollection.materials = ihatearrays.ToArray();
-
-					SimpleTilesetAnimationSequence waterAnim = new SimpleTilesetAnimationSequence();
-
-					waterAnim.playstyle = SimpleTilesetAnimationSequence.TilesetSequencePlayStyle.SIMPLE_LOOP;
-					waterAnim.loopDelayMin = 1;
-					waterAnim.loopDelayMax = 3;
-					waterAnim.loopceptionTarget = -1;
-					waterAnim.loopceptionMin = 1;
-					waterAnim.loopceptionMax = 3;
-					waterAnim.coreceptionMin = 1;
-					waterAnim.coreceptionMax = 1;
-					waterAnim.randomStartFrame = false;
-					waterAnim.entries = new List<SimpleTilesetAnimationSequenceEntry>
-					{
-						new SimpleTilesetAnimationSequenceEntry
-						{
-							entryIndex = 80,
-							frameTime = 0.3f
-						},
-						new SimpleTilesetAnimationSequenceEntry
-						{
-							entryIndex = 81,
-							frameTime = 0.3f
-						},
-						new SimpleTilesetAnimationSequenceEntry
-						{
-							entryIndex = 82,
-							frameTime = 0.3f
-						},
-						new SimpleTilesetAnimationSequenceEntry
-						{
-							entryIndex = 83,
-							frameTime = 0.3f
-						},
-					};
-
-					//beyondCollection.SpriteIDsWithAnimationSequences.Add(80);
-					//beyondCollection.SpriteDefinedAnimationSequences.Add(waterAnim);
-
-
-
-
-					break;
-				}
-			}
-			*/
 
 
 			bool Experimental = false;
@@ -1172,60 +1159,20 @@ namespace Planetside
 			//var dungeon = DungeonDatabase.GetOrLoadByName("base_castle");
 			var orLoadByName = DungeonDatabase.GetOrLoadByName("Finalscenario_Soldier");
 
-			/*
-			var AbbeyDungeon = DungeonDatabase.GetOrLoadByName("base_bullethell");
-			var collection = AbbeyDungeon.tileIndices.dungeonCollection;
-			//			collection.spriteDefinitions
-			for (int e = 0; e < collection.spriteDefinitions.Length; e++)
-            {
-				ETGModConsole.Log("============", true);
-				tk2dSpriteDefinition dev = collection.spriteDefinitions[e];
-				ETGModConsole.Log("Position In List: " + e.ToString(), true);
-				if (dev != null)
-                {
-					if (dev.colliderType != null)
-					{
-						ETGModConsole.Log("Collider Type: "+dev.colliderType.ToString(), true);
-					}
-					if (dev.collisionLayer != null)
-					{
-						ETGModConsole.Log("Collider Type: " + dev.collisionLayer.ToString(), true);
-					}
-					if (dev.colliderVertices != null)
-					{
-						ETGModConsole.Log("Collider Vertices Start: ", true);
-						for (int n = 0; n < dev.colliderVertices.Length; n++)
-                        {
-							Vector3 vec3 = dev.colliderVertices[n];
-							if (vec3 != null)
-                            {
-								ETGModConsole.Log("Vector3: "+ vec3.ToString() +"     in position: "+n.ToString(), true);
-
-							}
-
-						}
-						ETGModConsole.Log("Collider Vertices End: ", true);
-					}
-				}
-				ETGModConsole.Log("============", true);
-			}
-			AbbeyDungeon = null;
-			*/
-
 			GameObject gameObject = FakePrefab.Clone(orLoadByName.tileIndices.dungeonCollection.gameObject);
 			gameObject.name = "AbyssCollection";
 			ModPrefabs.AbyssTilesetCollection = gameObject.GetComponent<tk2dSpriteCollectionData>();
 			GameObject gameObject2 = PlanetsideModule.TilesetAssets.LoadAsset<GameObject>(Experimental == false ? "AbyssTestCollection" : "ExperimentalCollection");
-			ETGModConsole.Log("obj done", false);
+			//ETGModConsole.Log("obj done", false);
 			foreach (Component component3 in gameObject2.GetComponents<Component>())
 			{
-				ETGModConsole.Log(component3.ToString(), false);
+				//ETGModConsole.Log(component3.ToString(), false);
 				bool flag3 = component3.GetType().ToString().ToLower().Contains("tk2dspritecollectiondata");
 				if (flag3)
 				{
-					ETGModConsole.Log("comp done", false);
+					//ETGModConsole.Log("comp done", false);
 					tk2dSpriteDefinition[] array3 = (tk2dSpriteDefinition[])ReflectionHelper.GetValue(component3.GetType().GetField("spriteDefinitions"), component3);
-					ETGModConsole.Log(array3.Length.ToString(), false);
+					//ETGModConsole.Log(array3.Length.ToString(), false);
 					Material material2 = PlanetsideModule.TilesetAssets.LoadAsset<Material>(Experimental == false ? "assets/sprites/Abyss Tileset/AbyssTestCollection Data/atlas0 material.mat" : "assets/sprites/Experimental Tileset/ExperimentalCollection Data/atlas0 material.mat");
 					
 					//ETGModConsole.Log("mat loaded", false);
@@ -1234,25 +1181,30 @@ namespace Planetside
 					Material material3 = new Material(ModPrefabs.AbyssTilesetCollection.materials[0]);
 					Material material4 = new Material(ModPrefabs.AbyssTilesetCollection.materials[1]);
 					Material material5 = new Material(ModPrefabs.AbyssTilesetCollection.materials[2]);
+					Material material6 = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+					material6.SetColor("_EmissiveColor", new Color32(0, 255, 255, 255));
+					material6.SetFloat("_EmissiveColorPower", 1.55f);
+					material6.SetFloat("_EmissivePower", 30);
 					ModPrefabs.AbyssTilesetCollection.material = material3;
 					ModPrefabs.AbyssTilesetCollection.materials = new Material[]
 					{
 						material3,
 						material4,
-						material5
+						material5,
+						material6
 					};
-					ETGModConsole.Log("mat done", false);
+					//ETGModConsole.Log("mat done", false);
 					Texture texture = material2.GetTexture("_MainTex");
 					texture.filterMode = FilterMode.Point;
 					material3.SetTexture("_MainTex", texture);
 					material4.SetTexture("_MainTex", texture);
 					material5.SetTexture("_MainTex", texture);
-					ETGModConsole.Log("tex loaded", false);
+					//ETGModConsole.Log("tex loaded", false);
 					ModPrefabs.AbyssTilesetCollection.textures = new Texture[]
 					{
 						texture
 					};
-					ETGModConsole.Log("tex done", false);
+					//ETGModConsole.Log("tex done", false);
 
 					List<int> walls = new List<int>()
 					{
@@ -1420,64 +1372,14 @@ namespace Planetside
 					ModPrefabs.AbyssTilesetCollection.SetMaterial(98, 0);
 					ModPrefabs.AbyssTilesetCollection.SetMaterial(99, 0);
 					ModPrefabs.AbyssTilesetCollection.SetMaterial(100, 2);
-					//ModPrefabs.AbyssTilesetCollection.SetMaterial(101, 2);
-					//ModPrefabs.AbyssTilesetCollection.SetMaterial(102, 2);
-					//ModPrefabs.AbyssTilesetCollection.SetMaterial(103, 2);
 
-					//ModPrefabs.AbyssTilesetCollection.SetMaterial(10, 1);
-					/*
-					ModPrefabs.AbyssTilesetCollection.SetMaterial(0, 2);
-					ModPrefabs.AbyssTilesetCollection.SetMaterial(1, 2);
-					ModPrefabs.AbyssTilesetCollection.SetMaterial(2, 2);
-					ModPrefabs.AbyssTilesetCollection.SetMaterial(3, 2);
-					ModPrefabs.AbyssTilesetCollection.SetMaterial(4, 2);
-					ModPrefabs.AbyssTilesetCollection.SetMaterial(5, 2);
-					ModPrefabs.AbyssTilesetCollection.SetMaterial(6, 2);
-					*/
-					/*
-					ModPrefabs.AbyssTilesetCollection.SetMaterial(3, 1);
-					ModPrefabs.AbyssTilesetCollection.SetMaterial(4, 1);
-					ModPrefabs.AbyssTilesetCollection.SetMaterial(5, 1);
-					ModPrefabs.AbyssTilesetCollection.SetMaterial(6, 1);
-					ModPrefabs.AbyssTilesetCollection.SetMaterial(7, 1);
-					ModPrefabs.AbyssTilesetCollection.SetMaterial(8, 1);
-					ModPrefabs.AbyssTilesetCollection.SetMaterial(9, 1);
-					ModPrefabs.AbyssTilesetCollection.SetMaterial(10, 1);
-					ModPrefabs.AbyssTilesetCollection.SetMaterial(11, 1);
-					ModPrefabs.AbyssTilesetCollection.SetMaterial(12, 1);
-					ModPrefabs.AbyssTilesetCollection.SetMaterial(13, 1);
-					ModPrefabs.AbyssTilesetCollection.SetMaterial(14, 1);
-					ModPrefabs.AbyssTilesetCollection.SetMaterial(15, 1);
-					ModPrefabs.AbyssTilesetCollection.SetMaterial(16, 1);
-					ModPrefabs.AbyssTilesetCollection.SetMaterial(17, 1);
-					ModPrefabs.AbyssTilesetCollection.SetMaterial(18, 1);
-					ModPrefabs.AbyssTilesetCollection.SetMaterial(19, 1);
-					ModPrefabs.AbyssTilesetCollection.SetMaterial(20, 1);
-					ModPrefabs.AbyssTilesetCollection.SetMaterial(42, 1);
-					ModPrefabs.AbyssTilesetCollection.SetMaterial(43, 1);
-					ModPrefabs.AbyssTilesetCollection.SetMaterial(64, 1);
-					ModPrefabs.AbyssTilesetCollection.SetMaterial(65, 1);
-					ModPrefabs.AbyssTilesetCollection.SetMaterial(86, 1);
-					ModPrefabs.AbyssTilesetCollection.SetMaterial(87, 1);
-					ModPrefabs.AbyssTilesetCollection.SetMaterial(242, 2);
-					ModPrefabs.AbyssTilesetCollection.SetMaterial(243, 2);
-					ModPrefabs.AbyssTilesetCollection.SetMaterial(264, 2);
-					ModPrefabs.AbyssTilesetCollection.SetMaterial(265, 2);
-					ModPrefabs.AbyssTilesetCollection.SetMaterial(286, 2);
-					ModPrefabs.AbyssTilesetCollection.SetMaterial(308, 2);
-					ModPrefabs.AbyssTilesetCollection.SetMaterial(330, 2);
-					ModPrefabs.AbyssTilesetCollection.SetMaterial(352, 2);
-					ModPrefabs.AbyssTilesetCollection.SetMaterial(374, 2);
-					ModPrefabs.AbyssTilesetCollection.SetMaterial(396, 2);
-					ModPrefabs.AbyssTilesetCollection.SetMaterial(418, 2);
-					ModPrefabs.AbyssTilesetCollection.SetMaterial(528, 2);
-					ModPrefabs.AbyssTilesetCollection.SetMaterial(529, 2);
-					ModPrefabs.AbyssTilesetCollection.SetMaterial(530, 2);
-					ModPrefabs.AbyssTilesetCollection.SetMaterial(550, 2);
-					*/
+					ModPrefabs.AbyssTilesetCollection.SetMaterial(131, 0);
+					ModPrefabs.AbyssTilesetCollection.SetMaterial(132, 0);
+					ModPrefabs.AbyssTilesetCollection.SetMaterial(133, 3, true);
+					ModPrefabs.AbyssTilesetCollection.SetMaterial(134, 3, true);
+					ModPrefabs.AbyssTilesetCollection.SetMaterial(135, 3, true);
 
-
-
+				
 					for (int me = 1; me < ModPrefabs.AbyssTilesetCollection.Count; me++)
 					{
 						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[me].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 0f, 1, 0, -1, false, true);
@@ -1493,7 +1395,7 @@ namespace Planetside
 						//ModPrefabs.AbyssTilesetCollection.spriteDefinitions[18].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.DECAL_TILE, 1f, 1, 0, -1, false, true);
 
 
-						
+
 						//ModPrefabs.AbyssTilesetCollection.spriteDefinitions[40].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.DIAGONAL_FACEWALL_TOP_NE, 1f, 1, 0, -1, false, true);
 						//ModPrefabs.AbyssTilesetCollection.spriteDefinitions[41].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.DIAGONAL_FACEWALL_TOP_NW, 1f, 1, 0, -1, false, true);
 						//ModPrefabs.AbyssTilesetCollection.spriteDefinitions[44].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.DIAGONAL_FACEWALL_UPPER_NE, 1f, 1, 0, -1, false, true);
@@ -1528,128 +1430,13 @@ namespace Planetside
 						//ModPrefabs.AbyssTilesetCollection.spriteDefinitions[58].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.PATTERN_TILE, 1f, 1, 0, -1, false, true);
 						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[44].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.DOOR_FEET_EW, 1f, 1, 0, -1, false, true);
 						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[45].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.DOOR_FEET_NS, 1f, 1, 0, -1, false, true);
-						
+
 						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[21].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FLOOR_TILE, 1f, 1, 0, -1, false, true);
 						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[22].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FLOOR_TILE, 1f, 1, 0, -1, false, true);
 						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[23].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FLOOR_TILE, 1f, 1, 0, -1, false, true);
 						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[24].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FLOOR_TILE, 1f, 1, 0, -1, false, true);
 
 
-						/*
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[62].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FLOOR_TILE, 1f, 1, 0, -1, false, true);
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[72].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FLOOR_TILE, 1f, 1, 0, -1, false, true);
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[73].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FLOOR_TILE, 1f, 1, 0, -1, false, true);
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[74].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FLOOR_TILE, 1f, 1, 0, -1, false, true);
-
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[75].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FLOOR_TILE, 0.5f, 1, 0, -1, false, true);
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[82].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FLOOR_TILE, 0.2f, 1, 0, -1, false, true);
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[83].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FLOOR_TILE, 0.1f, 1, 0, -1, false, true);
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[84].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FLOOR_TILE, 0.5f, 1, 0, -1, false, true);
-						*/
-						/*
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[1].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FLOOR_TILE, 1f, 1, 0, -1, false, true);
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[2].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FLOOR_TILE, 0.7f, 1, 0, -1, false, true);
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[3].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FLOOR_TILE, 0.3f, 1, 0, -1, false, true);
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[4].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FLOOR_TILE, 0.03f, 1, 0, -1, false, true);
-						*/
-						//ModPrefabs.AbyssTilesetCollection.spriteDefinitions[82].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FLOOR_TILE, 1f, 1, 2, -1, false, true);
-						//ModPrefabs.AbyssTilesetCollection.spriteDefinitions[83].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FLOOR_TILE, 1f, 1, 2, -1, false, true);
-						//ModPrefabs.AbyssTilesetCollection.spriteDefinitions[84].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FLOOR_TILE, 1f, 1, 2, -1, false, true);
-
-
-
-						/*
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[4].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FLOOR_TILE, 0.03f, 1, 0, -1, false, true);
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[13].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FACEWALL_LOWER, 1f, 1, 0, -1, false, true);
-						//ModPrefabs.AbyssTilesetCollection.spriteDefinitions[14].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FACEWALL_LOWER, 1f, 1, 0, -1, false, true);
-						//ModPrefabs.AbyssTilesetCollection.spriteDefinitions[15].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FACEWALL_LOWER, 1f, 1, 0, -1, false, true);
-						//ModPrefabs.AbyssTilesetCollection.spriteDefinitions[16].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FACEWALL_UPPER, 1f, 1, 0, -1, false, true);
-
-
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[18].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FACEWALL_UPPER_LEFTEDGE, 1f, 1, 0, -1, false, true);
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[19].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FACEWALL_UPPER_RIGHTEDGE, 1f, 1, 0, -1, false, true);
-					
-
-
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[24].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FACEWALL_LOWER_LEFTEDGE, 1f, 1, 0, -1, false, true);
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[25].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FACEWALL_LOWER_RIGHTEDGE, 1f, 1, 0, -1, false, true);
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[26].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.DIAGONAL_FACEWALL_LOWER_NW, 1f, 1, 0, -1, false, true);
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[27].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.DIAGONAL_FACEWALL_LOWER_NE, 1f, 1, 0, -1, false, true);
-
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[28].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FACEWALL_LOWER_LEFTCORNER, 1f, 1, 0, -1, false, true);
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[29].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FACEWALL_LOWER_RIGHTCORNER, 1f, 1, 0, -1, false, true);
-
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[30].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.DIAGONAL_FACEWALL_UPPER_NE, 1f, 1, 0, -1, false, true);
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[31].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.DIAGONAL_FACEWALL_UPPER_NW, 1f, 1, 0, -1, false, true);
-
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[32].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.CHEST_HIGH_WALL, 1f, 1, 0, -1, false, true);
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[33].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.DECAL_TILE, 1f, 1, 0, -1, false, true);
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[34].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.PATTERN_TILE, 1f, 1, 0, -1, false, true);
-
-
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[35].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.DOOR_FEET_EW, 1f, 1, 0, -1, false, true);
-						*/
-						//ModPrefabs.AbyssTilesetCollection.spriteDefinitions[47].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.DOOR_FEET_NS, 1f, 1, 0, -1, false, true);
-
-
-
-						//ModPrefabs.AbyssTilesetCollection.spriteDefinitions[31].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1f, 1, -1, -1, false, true);
-
-
-					
-						/*
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[32].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1f, 1, -1, -1, false, true);
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[33].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1f, 1, -1, -1, false, true);
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[34].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1f, 1, -1, -1, false, true);
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[35].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1f, 1, -1, -1, false, true);
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[36].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1f, 1, -1, -1, false, true);
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[37].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1f, 1, -1, -1, false, true);
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[38].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1f, 1, -1, -1, false, true);
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[39].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1f, 1, -1, -1, false, true);
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[40].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1f, 1, -1, -1, false, true);
-
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[40].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1f, 1, -1, -1, false, true);
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[41].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1f, 1, -1, -1, false, true);
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[42].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1f, 1, -1, -1, false, true);
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[43].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1f, 1, -1, -1, false, true);
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[44].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1f, 1, -1, -1, false, true);
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[45].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1f, 1, -1, -1, false, true);
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[46].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1f, 1, -1, -1, false, true);
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[47].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1f, 1, -1, -1, false, true);
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[48].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1f, 1, -1, -1, false, true);
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[49].metadata.SetupTileMetaData((TilesetIndexMetadata.TilesetFlagType)0, 1f, 1, -1, -1, false, true);
-						*/
-
-						/*
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[4].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FACEWALL_LOWER, 1f, 1, 0, -1, false, true);
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[5].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FACEWALL_LOWER_LEFTEDGE, 1f, 1, 0, -1, false, true);
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[6].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FACEWALL_LOWER_RIGHTEDGE, 1f, 1, 0, -1, false, true);
-
-
-
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[7].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FACEWALL_LOWER_LEFTEDGE, 1f, 1, 0, -1, false, true);
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[8].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FACEWALL_LOWER_RIGHTEDGE, 1f, 1, 0, -1, false, true);
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[8].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.DIAGONAL_FACEWALL_LOWER_NW, 1f, 1, 0, -1, false, true);
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[8].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.DIAGONAL_FACEWALL_LOWER_NE, 1f, 1, 0, -1, false, true);
-
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[9].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FACEWALL_LOWER_LEFTCORNER, 1f, 1, 0, -1, false, true);
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[10].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FACEWALL_LOWER_RIGHTCORNER, 1f, 1, 0, -1, false, true);
-
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[10].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.DIAGONAL_FACEWALL_UPPER_NE, 1f, 1, 0, -1, false, true);
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[10].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.DIAGONAL_FACEWALL_UPPER_NW, 1f, 1, 0, -1, false, true);
-
-
-
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[11].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.DOOR_FEET_EW, 1f, 1, 0, -1, false, true);
-						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[12].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.DOOR_FEET_NS, 1f, 1, 0, -1, false, true);
-						*/
-
-						//ModPrefabs.AbyssTilesetCollection.spriteDefinitions[5].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.a, 1f, 1, 0, -1, false, true);
-						//ModPrefabs.AbyssTilesetCollection.spriteDefinitions[5].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FACEWALL_LOWER_LEFTEDGE, 1f, 1, 0, -1, false, true);
-						//ModPrefabs.AbyssTilesetCollection.spriteDefinitions[5].metadata.SetupTileMetaData(TilesetIndexMetadata.TilesetFlagType.FACEWALL_LOWER_LEFTEDGE, 1f, 1, 0, -1, false, true);
-
-
-						//ModPrefabs.AbyssTilesetCollection.spriteDefinitions[2].metadata.a
 					}
 					catch (Exception e)
 					{

@@ -212,8 +212,6 @@ namespace Planetside
 
 			GameObject original;
 			ShrineFactory.registeredShrines.TryGetValue("psog:brokenchambershrine", out original);
-			PlanetsideModule.BrokenChamberShrineController broken = original.gameObject.AddComponent<PlanetsideModule.BrokenChamberShrineController>();
-			broken.obj = original;
 
 			BrokenChamberRoomVar.placedObjects.Add(new PrototypePlacedObjectData
 			{

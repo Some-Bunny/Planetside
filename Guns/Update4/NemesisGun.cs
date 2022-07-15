@@ -17,6 +17,9 @@ namespace Planetside
 {
 	public class NemesisGun : GunBehaviour
 	{
+		public class HippityHoppityTheProjectileDestroyModesIsAnUnserializedProperty : MonoBehaviour{public void Start(){this.GetComponent<Projectile>().DestroyMode = Projectile.ProjectileDestroyMode.BecomeDebris;}}
+
+
 		public static void Add()
 		{
 			Gun gun = ETGMod.Databases.Items.NewGun("NemesisGun", "nemesisgun");
@@ -45,15 +48,27 @@ namespace Planetside
 			projectile.gameObject.SetActive(false);
 			FakePrefab.MarkAsFakePrefab(projectile.gameObject);
 			UnityEngine.Object.DontDestroyOnLoad(projectile);
-			gun.DefaultModule.projectiles[0] = projectile;
 			projectile.baseData.damage = 35f;
-			projectile.baseData.speed *= 3f;
+			projectile.baseData.speed *= 1f;
 			projectile.AdditionalScaleMultiplier *= 0.75f;
 			projectile.shouldRotate = true;
 			projectile.pierceMinorBreakables = true;
-			projectile.PenetratesInternalWalls = true;
+			projectile.PenetratesInternalWalls = false;
 			projectile.gameObject.AddComponent<RevenantProjectile>();
 			projectile.gameObject.AddComponent<MaintainDamageOnPierce>();
+
+			//projectile.ga.eObject.AddComponent<HippityHoppityTheProjectileDestroyModesIsAnUnserializedProperty>();
+			//===
+			//gun.muzzleOffset.transform.localPosition = new Vector3(15f / 16f, 8f / 16f, 0f);
+
+			projectile.DestroyMode = Projectile.ProjectileDestroyMode.BecomeDebris;
+			projectile.OnBecameDebris += (obj) => { };
+
+			gun.DefaultModule.projectiles[0] = projectile;
+
+			//projectile.debris = BreakAbleAPI.BreakableAPIToolbox.GenerateDebrisObject("Planetside/Resources/GunObjects/Clips/bigassmag.png", true, 1, 3, 60, 20, null, 2, "Play_ITM_Crisis_Stone_Impact_02", null, 1).gameObject;
+
+			//===
 			gun.gunClass = GunClass.NONE;
 
 			/*

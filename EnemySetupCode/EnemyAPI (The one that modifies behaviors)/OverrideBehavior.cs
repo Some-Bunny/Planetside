@@ -25,7 +25,7 @@ namespace Planetside
 
         public virtual bool ShouldOverride()
         {
-            if (ContainmentBreachController.CurrentState == ContainmentBreachController.States.ENABLED) { return true; }
+            if (ContainmentBreachController.CurrentState == ContainmentBreachController.States.ALLOWED) { return true; }
             return false;
         }
 

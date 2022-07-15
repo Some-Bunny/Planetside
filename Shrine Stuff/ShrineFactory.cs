@@ -77,9 +77,7 @@ namespace GungeonAPI
 		{
 			GameObject result;
 			try
-			{
-
-				
+			{			
 				Texture2D textureFromResource = ResourceExtractor.GetTextureFromResource(this.spritePath);
 				GameObject gameObject = SpriteBuilder.SpriteFromResource(this.spritePath, null, false);
 				string text = (this.modID + ":" + this.name).ToLower().Replace(" ", "_");
@@ -207,6 +205,7 @@ namespace GungeonAPI
 				customShrineController.text = this.text;
 				customShrineController.acceptText = this.acceptText;
 				customShrineController.declineText = this.declineText;
+				customShrineController.HasRoomIcon = HasRoomIcon;
 				if (!string.IsNullOrEmpty(RoomIconSpritePath))
 				{
 					GameObject OptionalMinimapIcon = SpriteBuilder.SpriteFromResource(RoomIconSpritePath);
@@ -255,6 +254,7 @@ namespace GungeonAPI
 					simpleShrine.declineText = this.declineText;
 					simpleShrine.talkPoint = transform;
 					simpleShrine.roomIcon = customShrineController.roomIcon;
+					simpleShrine.HasRoomIcon = HasRoomIcon;
 					item = simpleShrine;
 				}
 				GameObject gameObject2 = ShrineFakePrefab.Clone(gameObject);
@@ -298,8 +298,7 @@ namespace GungeonAPI
 			GameObject result;
 			try
 			{
-				
-
+			
 				Texture2D textureFromResource = ResourceExtractor.GetTextureFromResource(this.spritePath);
 				GameObject gameObject = SpriteBuilder.SpriteFromResource(this.spritePath, null, false);
 				string text = (this.modID + ":" + this.name).ToLower().Replace(" ", "_");
@@ -373,9 +372,7 @@ namespace GungeonAPI
 				Transform transform = new GameObject("talkpoint").transform;
 				transform.position = gameObject.transform.position + this.talkPointOffset;
 				transform.SetParent(gameObject.transform);
-				bool flag = !this.usesCustomColliderOffsetAndSize;
-				bool flag2 = flag;
-				if (flag2)
+				if (!this.usesCustomColliderOffsetAndSize)
 				{
 					IntVector2 intVector = new IntVector2(textureFromResource.width, textureFromResource.height);
 					this.colliderOffset = new IntVector2(0, 0);
@@ -489,6 +486,7 @@ namespace GungeonAPI
 				customShrineController.text = this.text;
 				customShrineController.acceptText = this.acceptText;
 				customShrineController.declineText = this.declineText;
+				customShrineController.HasRoomIcon = HasRoomIcon;
 				if (!string.IsNullOrEmpty(RoomIconSpritePath))
 				{
 					GameObject OptionalMinimapIcon = SpriteBuilder.SpriteFromResource(RoomIconSpritePath);
@@ -515,11 +513,8 @@ namespace GungeonAPI
 					orAddComponent4.Offset = new Vector3(ShadowOffsetX, ShadowOffsetY);
 				}
 
-				bool flag3 = this.interactableComponent != null;
-				bool flag4 = flag3;
-
 				IPlayerInteractable item;
-				if (flag4)
+				if (this.interactableComponent != null)
 				{
 					item = (gameObject.AddComponent(this.interactableComponent) as IPlayerInteractable);
 				}
@@ -535,6 +530,7 @@ namespace GungeonAPI
 					simpleShrine.declineText = this.declineText;
 					simpleShrine.talkPoint = transform;
 					simpleShrine.roomIcon = customShrineController.roomIcon;
+					simpleShrine.HasRoomIcon = HasRoomIcon;
 					item = simpleShrine;
 				}
 
@@ -545,22 +541,16 @@ namespace GungeonAPI
 				GameObject gameObject2 = ShrineFakePrefab.Clone(gameObject);
 				gameObject2.GetComponent<ShrineFactory.CustomShrineController>().Copy(customShrineController);
 				gameObject2.name = text;
-				bool flag5 = this.isBreachShrine;
-				bool flag6 = flag5;
-				if (flag6)
+				if (this.isBreachShrine)
 				{
-					bool flag7 = !RoomHandler.unassignedInteractableObjects.Contains(item);
-					bool flag8 = flag7;
-					if (flag8)
+					if (!RoomHandler.unassignedInteractableObjects.Contains(item))
 					{
 						RoomHandler.unassignedInteractableObjects.Add(item);
 					}
 				}
 				else
 				{
-					bool flag9 = !this.room;
-					bool flag10 = flag9;
-					if (flag10)
+					if (!this.room)
 					{
 						this.room = RoomFactory.CreateEmptyRoom(12, 12);
 					}
@@ -577,11 +567,6 @@ namespace GungeonAPI
 			}
 			return result;
 		}
-
-
-
-		public float RoomWeight;
-
 
 		public GameObject BuildWithoutBaseGameInterference()
 		{
@@ -623,6 +608,7 @@ namespace GungeonAPI
 				customShrineController.text = this.text;
 				customShrineController.acceptText = this.acceptText;
 				customShrineController.declineText = this.declineText;
+				customShrineController.HasRoomIcon = HasRoomIcon;
 				if (!string.IsNullOrEmpty(RoomIconSpritePath))
 				{
 					GameObject OptionalMinimapIcon = SpriteBuilder.SpriteFromResource(RoomIconSpritePath);
@@ -652,6 +638,7 @@ namespace GungeonAPI
 					simpleShrine.declineText = this.declineText;
 					simpleShrine.roomIcon = customShrineController.roomIcon;
 					simpleShrine.talkPoint = transform;
+					simpleShrine.HasRoomIcon = HasRoomIcon;
 				}
 				else
 				{
@@ -819,6 +806,10 @@ namespace GungeonAPI
 			}
 		}
 
+		public bool HasRoomIcon = true;
+
+		public float RoomWeight;
+
 		public string RoomIconSpritePath;
 
 		public string name;
@@ -890,10 +881,7 @@ namespace GungeonAPI
 					Tools.PrintError<string>("Was this shrine registered correctly?: " + text, "FF0000");
 				}
 				SimpleInteractable component = base.GetComponent<SimpleInteractable>();
-				bool flag4 = !component;
-				bool flag5 = !flag4;
-				bool flag6 = flag5;
-				if (flag6)
+				if (component != null)
 				{
 					component.OnAccept = this.OnAccept;
 					component.OnDecline = this.OnDecline;
@@ -902,6 +890,7 @@ namespace GungeonAPI
 					component.acceptText = this.acceptText;
 					component.declineText = this.declineText;
 					component.roomIcon = this.roomIcon;
+					component.HasRoomIcon = this.HasRoomIcon;
 				}
 			}
 
@@ -920,6 +909,7 @@ namespace GungeonAPI
 				this.acceptText = other.acceptText;
 				this.declineText = other.declineText;
 				this.roomIcon = other.roomIcon;
+				this.HasRoomIcon = other.HasRoomIcon;
 			}
 
 			public void ConfigureOnPlacement(RoomHandler room)
@@ -930,7 +920,7 @@ namespace GungeonAPI
 
 			public void RegisterMinimapIcon()
 			{
-				this.m_instanceMinimapIcon = Minimap.Instance.RegisterRoomIcon(this.m_parentRoom, this.roomIcon, false);
+				if (HasRoomIcon == true) { this.m_instanceMinimapIcon = Minimap.Instance.RegisterRoomIcon(this.m_parentRoom, this.roomIcon, false); }
 			}
 
 			public void GetRidOfMinimapIcon()
@@ -941,6 +931,11 @@ namespace GungeonAPI
 					this.m_instanceMinimapIcon = null;
 				}
 			}
+
+			public bool HasRoomIcon;
+
+
+			public bool RoomIcon;
 
 			public string ID;
 

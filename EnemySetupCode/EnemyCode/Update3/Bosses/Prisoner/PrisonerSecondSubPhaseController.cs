@@ -348,6 +348,17 @@ namespace Planetside
             voidHoleController.Radius = 30;
             controllerOfTheVoid = voidHoleController;
 
+            EmergencyPlayerDisappearedFromRoom emergencyPlayerDisappeared = Actor.gameObject.AddComponent<EmergencyPlayerDisappearedFromRoom>();
+            emergencyPlayerDisappeared.roomAssigned = Actor.GetAbsoluteParentRoom();
+            emergencyPlayerDisappeared.PlayerSuddenlyDisappearedFromRoom = (obj) =>
+            {
+                if (obj.IsDarkAndTerrifying == true)
+                {
+                    obj.EndTerrifyingDarkRoom(1);
+                }
+                if (partObj != null) { Destroy(partObj); }
+            };
+
             GameManager.Instance.BestActivePlayer.CurrentRoom.BecomeTerrifyingDarkRoom(5f, 0.5f, 0.1f, "Play_ENM_darken_world_01");
              while (elaWait < 3f)
              {

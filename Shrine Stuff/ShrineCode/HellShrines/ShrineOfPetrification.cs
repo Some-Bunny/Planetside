@@ -38,16 +38,12 @@ namespace Planetside
 				talkPointOffset = new Vector3(0, 3, 0),
 				isToggle = false,
 				isBreachShrine = false,
-
-
+				HasRoomIcon = false
 			};
-			aa.Build();
-
-
-			SpriteBuilder.AddSpriteToCollection(spriteDefinition1, SpriteBuilder.ammonomiconCollection);
-
+			string DefPath = "Planetside/Resources/Shrines/HellShrines/";
+			aa.BuildWithAnimations(new string[] { DefPath + "shrineofressurection.png" }, 1, new string[] { DefPath + "shrinebroken.png" }, 1);
+			SpriteBuilder.AddSpriteToCollection("Planetside/Resources/ShrineIcons/PetrifyIcon", SpriteBuilder.ammonomiconCollection);
 		}
-		public static string spriteDefinition1 = "Planetside/Resources/ShrineIcons/PetrifyIcon";
 		public static bool CanUse(PlayerController player, GameObject shrine)
 		{
 			return shrine.GetComponent<CustomShrineController>().numUses <= 0;

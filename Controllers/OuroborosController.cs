@@ -105,12 +105,33 @@ namespace Planetside
 				chestPickupsLootTable = LootTableTools.CreateLootTable();
 				chestPickupsLootTable.AddItemsToPool(new Dictionary<int, float> { { 120, 1 }, {224, 0.8f }, {600, 0.5f}, {78, 0.75f } });
 
+				Actions.OnRunStart += OnRunStartMethod;
 				Debug.Log("Finished OuroborosController setup without failure!");
 			}
 			catch (Exception e)
 			{
 				Debug.Log("Unable to finish OuroborosController setup!");
 				Debug.Log(e);
+			}
+		}
+
+		public static void OnRunStartMethod(PlayerController player)
+        {
+			float Loop = SaveAPIManager.GetPlayerStatValue(CustomTrackedStats.TIMES_LOOPED);
+			bool LoopOn = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.LOOPING_ON);
+			if (LoopOn == true)
+			{
+				TextMaker text = player.gameObject.AddComponent<TextMaker>();
+				text.TextSize = 5;
+				text.Color = Color.red;
+				text.ExistTime = 3;
+				text.FadeInTime = 0.75f;
+				text.FadeOutTime = 1.25f;
+				text.Text = (Loop == 69) ? "Ouroborous Level: " + Loop.ToString() + "? Nice" : "Ouroborous Level: " + Loop.ToString();
+				text.Opacity = 1;
+				text.anchor = dfPivotPoint.TopCenter;
+				text.offset = new Vector3(-2, 2f);
+				text.GameObjectToAttachTo = player.gameObject;
 			}
 		}
 

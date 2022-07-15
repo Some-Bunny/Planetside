@@ -45,7 +45,7 @@ namespace Planetside
 				usesCustomColliderOffsetAndSize = true,
 				colliderSize = new IntVector2(32, 24),
 				colliderOffset = new IntVector2(1, 0),
-				RoomIconSpritePath = defaultPath + "trespassContainer_idle_001.png",
+				RoomIconSpritePath = "Planetside/Resources/Shrines/iconsmiley.png",
 				AdditionalComponent = typeof(TresspassLightController)
 			};
 			string[] L = new string[]
@@ -78,16 +78,17 @@ namespace Planetside
 			WeightedWaves = new WeightedTypeCollection<List<string>>();
 			WeightedWaves.elements = new WeightedType<List<string>>[]
 			{
-				GenerateQuickWeightedString(new List<string>(){Inquisitor.guid, Inquisitor.guid}, 0.2f),
-				GenerateQuickWeightedString(new List<string>(){Creationist.guid, Creationist.guid, Creationist.guid, Creationist.guid, Observant.guid}, 1),
-				GenerateQuickWeightedString(new List<string>(){Collective.guid, Collective.guid, Unwilling.guid,  Unwilling.guid}, 0.66f),
-				GenerateQuickWeightedString(new List<string>(){Observant.guid, Observant.guid, Observant.guid, Observant.guid, Observant.guid, Observant.guid, Observant.guid } , 0.7f),
+				GenerateQuickWeightedString(new List<string>(){Inquisitor.guid, Inquisitor.guid}, 0.25f),
+				GenerateQuickWeightedString(new List<string>(){Creationist.guid, Creationist.guid, Creationist.guid, Creationist.guid, Observant.guid}, 0.875f),
+				GenerateQuickWeightedString(new List<string>(){Collective.guid, Collective.guid, Unwilling.guid,  Unwilling.guid}, 0.5f),
+				GenerateQuickWeightedString(new List<string>(){Observant.guid, Observant.guid, Observant.guid, Observant.guid, Observant.guid } , 0.5f),
 				GenerateQuickWeightedString(new List<string>(){Vessel.guid, Stagnant.guid, Stagnant.guid, Stagnant.guid, Stagnant.guid,Stagnant.guid} , 0.5f),
 				GenerateQuickWeightedString(new List<string>(){Unwilling.guid, Unwilling.guid, Unwilling.guid, Unwilling.guid, Unwilling.guid, Unwilling.guid, Unwilling.guid, Unwilling.guid, Unwilling.guid, Unwilling.guid, Unwilling.guid, Unwilling.guid } , 0.5f),
-				GenerateQuickWeightedString(new List<string>(){Inquisitor.guid, Observant.guid, Observant.guid}, 0.5f),
-				GenerateQuickWeightedString(new List<string>(){Inquisitor.guid, Creationist.guid, Observant.guid}, 0.5f),
-				GenerateQuickWeightedString(new List<string>(){Stagnant.guid, Stagnant.guid, Stagnant.guid,Stagnant.guid,Stagnant.guid, Observant.guid,Observant.guid}, 0.6f),
-				GenerateQuickWeightedString(new List<string>(){Vessel.guid, Observant.guid, Observant.guid,Observant.guid, Observant.guid }, 0.5f),
+				GenerateQuickWeightedString(new List<string>(){Inquisitor.guid, Observant.guid, Observant.guid}, 0.626f),
+				GenerateQuickWeightedString(new List<string>(){Inquisitor.guid, Creationist.guid, Observant.guid}, 0.625f),
+				GenerateQuickWeightedString(new List<string>(){Stagnant.guid, Stagnant.guid, Stagnant.guid,Stagnant.guid,Stagnant.guid, Observant.guid,Observant.guid}, 0.75f),
+				GenerateQuickWeightedString(new List<string>(){Vessel.guid, Observant.guid, Observant.guid,Observant.guid}, 0.375f),
+				GenerateQuickWeightedString(new List<string>(){Vessel.guid, Unwilling.guid, Unwilling.guid, Unwilling.guid, Unwilling.guid, Unwilling.guid}, 0.33f),
 			};		
 		}
 
@@ -113,9 +114,11 @@ namespace Planetside
 
 		public static void Accept(PlayerController user, GameObject shrine)
 		{
+			shrine.GetComponent<CustomShrineController>().numUses++;
+			Minimap.Instance.DeregisterRoomIcon(shrine.GetComponent<SimpleShrine>().instanceRoom, shrine.GetComponent<SimpleShrine>().instanceMinimapIcon);
 			tk2dSpriteAnimator animator = shrine.GetComponent<tk2dSpriteAnimator>();
 			animator.Play("use");
-			GameManager.Instance.StartCoroutine(DoDelayStuff(shrine, user, shrine.GetComponent<SimpleShrine>()));
+			GameManager.Instance.StartCoroutine(DoDelayStuff(shrine, user));
 		}
 
 
@@ -136,8 +139,8 @@ namespace Planetside
 			{
 				elaWait += BraveTime.DeltaTime;
 				float t = Mathf.Min((elaWait / 20), 1);
-				voidHoleController.Radius = Mathf.Lerp(28.5f, 10f, t);
-				partObj.transform.localScale = Vector3.Lerp(Vector3.one * 6.25f, Vector3.one * 2.25f, t);
+				voidHoleController.Radius = Mathf.Lerp(28.5f, 8.75f, t);
+				partObj.transform.localScale = Vector3.Lerp(Vector3.one * 6.25f, Vector3.one * 2, t);
 				yield return null;
 			}
 			yield break;
@@ -160,13 +163,44 @@ namespace Planetside
 		}
 
 
-		public static IEnumerator DoDelayStuff(GameObject Shrine, PlayerController user, SimpleShrine shrineSelf)
+		public static GameObject DoSpawnPortalHole(Vector3 pos)
         {
+			GameObject partObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("Portal"));
+			MeshRenderer rend = partObj.GetComponent<MeshRenderer>();
+			rend.allowOcclusionWhenDynamic = true;
+			partObj.transform.position = pos - new Vector3(0, 2);
+			partObj.transform.localScale = Vector3.zero;
+			partObj.name = "DecorativePortal";
+			partObj.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
+			PortalVisualsController visuals = partObj.AddComponent<PortalVisualsController>();
+			visuals.LTS(Vector3.zero, Vector3.one * 2.5f, 1.2f);
+			visuals.LSV(0.05f, 0.1f, 0.33f, "_OutlineWidth");
+			visuals.LSV(10f, 45f, 0.33f, "_OutlinePower");
+			return partObj;	
+		}
+
+
+		
+
+
+		public static IEnumerator DoDelayStuff(GameObject Shrine, PlayerController user)
+        {
+			RoomHandler Room = user.CurrentRoom;
 
 			user.CurrentRoom.PreventStandardRoomReward = true;
-
-
 			yield return new WaitForSeconds(0.25f);
+
+
+
+			GameObject coolPortal = DoSpawnPortalHole(Shrine.GetComponent<tk2dBaseSprite>().WorldCenter + new Vector2(0, 1));
+			PortalVisualsController portalVisuals = coolPortal.GetComponent<PortalVisualsController>();
+			EmergencyPlayerDisappearedFromRoom disappearedFromRoomController = portalVisuals.AddComponent<EmergencyPlayerDisappearedFromRoom>();
+			disappearedFromRoomController.roomAssigned = user.CurrentRoom;
+			
+
+			StaticVFXStorage.HighPriestClapVFXInverse.SpawnAtPosition(coolPortal.transform.position);
+			yield return new WaitForSeconds(1);
+
 			GameObject partObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("Amogus"));
 			MeshRenderer rend = partObj.GetComponentInChildren<MeshRenderer>();
 			rend.allowOcclusionWhenDynamic = true;
@@ -179,50 +213,110 @@ namespace Planetside
 			voidHoleController.Radius = 30;
 			GameManager.Instance.StartCoroutine(VoidHoleShrinkage(voidHoleController, partObj));
 
+			disappearedFromRoomController.PlayerSuddenlyDisappearedFromRoom += (obj) =>
+			{
+				Room.UnsealRoom();
+				Room.EndTerrifyingDarkRoom(0);
+				UnityEngine.Object.Destroy(partObj);
+				UnityEngine.Object.Destroy(coolPortal);
+			};
+
+
+			AkSoundEngine.PostEvent("Play_PortalOpen", coolPortal.gameObject);
+			AkSoundEngine.PostEvent("Play_PortalOpen", coolPortal.gameObject);
+			Exploder.DoDistortionWave(coolPortal.transform.position, 1.5f, 0.25f, 30, 2f);
+			UnityEngine.Object.Destroy(Shrine);
+			portalVisuals.ConstantlyPulsates = true;
+
+
 			int WavesSpawned = 0;
 			IntVector2? targetCenter = new IntVector2?(user.CenterPosition.ToIntVector2(VectorConversions.Floor));
 			List<string> WAVE = WeightedWaves.SelectByWeight();
-			WavesSpawned++;
 			for (int i = 0; i < WAVE.Count; i++)
             {
 				DoEnemySpawn(targetCenter, user, WAVE[i]);
-				if (shrineSelf.instanceRoom.IsDarkAndTerrifying == false)
+				if (user.CurrentRoom.IsDarkAndTerrifying == false)
                 {
+					GameManager.Instance.DungeonMusicController.SwitchToActiveMusic(null);
 					user.CurrentRoom.SealRoom();
-					shrineSelf.instanceRoom.BecomeTerrifyingDarkRoom(3f, 0.5f, 0.1f, "Play_ENM_darken_world_01");
+					user.CurrentRoom.BecomeTerrifyingDarkRoom(3f, 0.1f, 0.05f, "Play_ENM_darken_world_01");
 				}
 				yield return new WaitForSeconds(0.75f);
 			}
+			WavesSpawned++;
 
 			user.CurrentRoom.OnEnemiesCleared += () =>
 			{
 				if (WavesSpawned == 3)
                 {
-					shrineSelf.instanceRoom.EndTerrifyingDarkRoom(2f);
+					portalVisuals.ConstantlyPulsates = false;
+					user.CurrentRoom.UnsealRoom();
+					user.CurrentRoom.EndTerrifyingDarkRoom(2f);
 					GameManager.Instance.StartCoroutine(VoidHoleAway(voidHoleController, partObj));
+					portalVisuals.LTS(Vector3.one * 2.5f, Vector3.zero, 1.2f);
+					portalVisuals.LSV(0.3f, 0f, 1.25f, "_OutlineWidth");
+					portalVisuals.LSV(105f, 10f, 3f, "_OutlinePower");
+					GameObject silencerVFX = (GameObject)ResourceCache.Acquire("Global VFX/BlankVFX_Ghost");
+					tk2dSpriteAnimator objanimator = silencerVFX.GetComponentInChildren<tk2dSpriteAnimator>();
+					objanimator.ignoreTimeScale = true;
+					objanimator.AlwaysIgnoreTimeScale = true;
+					objanimator.AnimateDuringBossIntros = true;
+					objanimator.alwaysUpdateOffscreen = true;
+					objanimator.playAutomatically = true;
+					ParticleSystem objparticles = silencerVFX.GetComponentInChildren<ParticleSystem>();
+					var main = objparticles.main;
+					main.useUnscaledTime = true;
+					GameObject vfx = GameObject.Instantiate(silencerVFX.gameObject, coolPortal.transform.position, Quaternion.identity);
+					UnityEngine.Object.Destroy(vfx, 2);
+					for (int i = 0; i < 3; i++)
+					{
+						int id = BraveUtility.RandomElement<int>(RobotShopkeeperBoss.Lootdrops);
+						DebrisObject pickups = LootEngine.SpawnItem(PickupObjectDatabase.GetById(id).gameObject, coolPortal.transform.position + new Vector3(0.25f, 0), MathToolbox.GetUnitOnCircle(120 * i, 1), 4f, false, true, false);
+					}
+					LootEngine.SpawnItem(UnityEngine.Random.value > 0.5f ? PickupObjectDatabase.GetRandomGunOfQualities(new System.Random(UnityEngine.Random.Range(1, 100)), new List<int> { }, new PickupObject.ItemQuality[] { PickupObject.ItemQuality.C, PickupObject.ItemQuality.C, PickupObject.ItemQuality.B, PickupObject.ItemQuality.B, PickupObject.ItemQuality.B, PickupObject.ItemQuality.A, PickupObject.ItemQuality.S }).gameObject : PickupObjectDatabase.GetRandomPassiveOfQualities(new System.Random(UnityEngine.Random.Range(1, 100)), new List<int> { }, new PickupObject.ItemQuality[] { PickupObject.ItemQuality.B, PickupObject.ItemQuality.B, PickupObject.ItemQuality.A, PickupObject.ItemQuality.S }).gameObject, coolPortal.transform.position + new Vector3(0.25f, 0), Vector2.down, 2f, false, true, false);
+
+
+					UnityEngine.Object.Destroy(coolPortal, 3);
 				}
 				else
                 {
-					if (WavesSpawned == 2) { MarkAsUnseal(user.CurrentRoom); }
 					WavesSpawned++;
-					GameManager.Instance.StartCoroutine(SpawnWave(shrineSelf, targetCenter, user));
+					GameManager.Instance.StartCoroutine(SpawnWave(coolPortal, targetCenter, user, true, portalVisuals));
 				}
 			};
 			yield break;
         }
-		public static IEnumerator SpawnWave(SimpleShrine shrineSelf, IntVector2? targetCenter, PlayerController user)
+		public static IEnumerator SpawnWave(GameObject portal, IntVector2? targetCenter, PlayerController user, bool DoDelay, PortalVisualsController portalVisualsController)
 		{
-			GameManager.Instance.DungeonMusicController.NotifyEnteredNewRoom(user.CurrentRoom);
-			List<string> WAVE = WeightedWaves.SelectByWeight();
+			if (DoDelay == true)
+            {
+				portalVisualsController.ConstantlyPulsates = false;
+				StaticVFXStorage.HighPriestClapVFXInverse.SpawnAtPosition(portal.transform.position);
+				yield return new WaitForSeconds(1);
+				AkSoundEngine.PostEvent("Play_PortalOpen", portal.gameObject);
+				AkSoundEngine.PostEvent("Play_PortalOpen", portal.gameObject);
+				Exploder.DoDistortionWave(portal.transform.position, 1.5f, 0.25f, 30, 2f);
+				portalVisualsController.ConstantlyPulsates = true;
+				portalVisualsController.TimeBetweenPulses -= 0.3f;
+
+				portalVisualsController.LSV(portalVisualsController.ReturnKeyWordValue("_OutlineWidth"), portalVisualsController.ReturnKeyWordValue("_OutlineWidth")+ 0.1f, 1.25f, "_OutlineWidth");
+				portalVisualsController.LSV(portalVisualsController.ReturnKeyWordValue("_OutlinePower"), portalVisualsController.ReturnKeyWordValue("_OutlinePower")+30f, 1f, "_OutlinePower");
+
+
+			}
+			PlanetsideReflectionHelper.ReflectSetField<DungeonFloorMusicController.DungeonMusicState>(typeof(DungeonFloorMusicController), "m_currentState", DungeonFloorMusicController.DungeonMusicState.ACTIVE_SIDE_A, GameManager.Instance.DungeonMusicController);
+			GameManager.Instance.DungeonMusicController.SwitchToActiveMusic(null);
+
+			List<string> WAVE = WeightedWaves.SelectByWeight().Shuffle();
+			if (user.CurrentRoom.IsDarkAndTerrifying == false)
+			{
+				user.CurrentRoom.SealRoom();
+				user.CurrentRoom.BecomeTerrifyingDarkRoom(3f, 0.5f, 0.1f, "Play_ENM_darken_world_01");
+			}
 			for (int i = 0; i < WAVE.Count; i++)
 			{
 				DoEnemySpawn(targetCenter, user, WAVE[i]);
-				if (shrineSelf.instanceRoom.IsDarkAndTerrifying == false)
-				{
-					user.CurrentRoom.SealRoom();
-					shrineSelf.instanceRoom.BecomeTerrifyingDarkRoom(3f, 0.5f, 0.1f, "Play_ENM_darken_world_01");
-				}
-				yield return new WaitForSeconds(0.75f);
+				yield return new WaitForSeconds(0.25f);
 			}
 			yield break;
 		}
@@ -276,4 +370,93 @@ namespace Planetside
 }
 
 
+namespace Planetside
+{
+	public class PortalVisualsController : MonoBehaviour
+    {
+		public PortalVisualsController()
+        {
+			ConstantlyPulsates = false;
+			TimeBetweenPulses = 1;
+		}
+		public bool ConstantlyPulsates;
+		public float TimeBetweenPulses;
+		private float ela;
 
+		public void LSV(float prevSize, float afterSize, float duration, string KeyWord)
+		{
+			GameManager.Instance.StartCoroutine(LerpShaderValue(prevSize, afterSize, duration, KeyWord));
+		}
+
+		public void Update()
+        {
+			if (gameObject != null)
+            {
+				ela += BraveTime.DeltaTime;
+				if (ela > TimeBetweenPulses)
+				{
+					ela = 0;
+					if (ConstantlyPulsates == true)
+					{
+						Exploder.DoDistortionWave(gameObject.transform.position, 3f, 0.05f, 20, 0.5f);
+					}
+				}
+			}
+        }
+
+
+
+		private IEnumerator LerpShaderValue(float prevSize, float afterSize, float duration, string KeyWord)
+		{
+			float elaWait = 0f;
+			float duraWait = duration;
+			while (elaWait < duraWait)
+			{
+				elaWait += BraveTime.DeltaTime;
+				float t = elaWait / duraWait;
+				if (gameObject == null) { yield break; }
+				if (gameObject != null)
+				{
+					gameObject.GetComponent<MeshRenderer>().material.SetFloat(KeyWord, Mathf.Lerp(prevSize, afterSize, t));
+				}
+				yield return null;
+			}
+			yield break;
+		}
+
+		public void LTS(Vector3 prevSize, Vector3 afterSize, float duration)
+		{
+			GameManager.Instance.StartCoroutine(LerpToSize(prevSize, afterSize, duration));
+        }
+
+		
+		public float ReturnKeyWordValue(string KeyWord)
+        {
+			return gameObject.GetComponent<MeshRenderer>().material.GetFloat(KeyWord);
+
+		}
+
+		private IEnumerator LerpToSize(Vector3 prevSize, Vector3 afterSize, float duration)
+		{
+			if (gameObject != null)
+			{
+				gameObject.transform.localScale = prevSize;
+				float elaWait = 0f;
+				float duraWait = duration;
+				while (elaWait < duraWait)
+				{
+					elaWait += BraveTime.DeltaTime;
+					float t = elaWait / duraWait;
+					if (gameObject == null) { yield break; }
+					if (gameObject != null)
+					{
+						gameObject.transform.localScale = Vector3.Lerp(prevSize, afterSize, t);
+					}
+					yield return null;
+				}
+			}
+
+			yield break;
+		}
+	}
+}

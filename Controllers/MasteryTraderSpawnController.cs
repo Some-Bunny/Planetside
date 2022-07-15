@@ -119,13 +119,13 @@ namespace Planetside
         public static float FloorMultiplier(Dungeon floor)
         {
             if (floor.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.CASTLEGEON) { return 0.7f; }
-            if (floor.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.GUNGEON) { return 0.85f; }
-            if (floor.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.MINEGEON) { return 0.95f; }
+            if (floor.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.GUNGEON) { return 0.80f; }
+            if (floor.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.MINEGEON) { return 0.9f; }
             if (floor.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.CATACOMBGEON) { return 1; }
             if (floor.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.FORGEGEON) { return 1; }
             if (floor.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.SEWERGEON) { return 1f; }
             if (floor.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.CATHEDRALGEON) { return 1.1f; }
-            if (floor.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.OFFICEGEON) { return 1.33f; }
+            if (floor.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.OFFICEGEON) { return 1.2f; }
             return 1f;
         }
 
@@ -138,7 +138,7 @@ namespace Planetside
                 {
                     if (mastery.IsMasteryToken == true)
                     {
-                        Multiplier += 0.05f;
+                        Multiplier += 0.033f;
                     }
                 }
             }
@@ -226,8 +226,10 @@ namespace Planetside
                         Debug.Log("No Damage Chance: " + ChanceMult.ToString());
 
                         float Total = ChanceMult * Chance;
-
-
+                        for (int L = 0; L < SaveAPI.AdvancedGameStatsManager.Instance.GetSessionStatValue(SaveAPI.CustomTrackedStats.PERKS_BOUGHT); L++)
+                        {
+                            Total *= 0.66f;
+                        }
                         Total = Mathf.Min(1, Total);
 
                         Debug.Log("Total Chance: " + Total.ToString());

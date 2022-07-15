@@ -12,9 +12,11 @@ namespace GungeonAPI
 			this.talkPoint = base.transform.Find("talkpoint");
 			this.m_isToggled = false;
 
-			instanceRoom = GameManager.Instance.Dungeon.data.GetAbsoluteRoomFromPosition(base.transform.position.IntXY(VectorConversions.Floor));
-			this.instanceMinimapIcon = Minimap.Instance.RegisterRoomIcon(instanceRoom, roomIcon ?? (GameObject)BraveResources.Load("Global Prefabs/Minimap_Shrine_Icon", ".prefab"), false);
-
+			if (HasRoomIcon == true)
+            {
+				instanceRoom = GameManager.Instance.Dungeon.data.GetAbsoluteRoomFromPosition(base.transform.position.IntXY(VectorConversions.Floor));
+				this.instanceMinimapIcon = Minimap.Instance.RegisterRoomIcon(instanceRoom, roomIcon ?? (GameObject)BraveResources.Load("Global Prefabs/Minimap_Shrine_Icon", ".prefab"), false);
+			}
 		}
 		public RoomHandler instanceRoom;
 		public GameObject instanceMinimapIcon;

@@ -41,7 +41,8 @@ namespace Planetside
 				isBreachShrine = false,
 				shadowPath = "Planetside/Resources/Shrines/defaultShrineShadow.png",
 				ShadowOffsetX = 0f,
-				ShadowOffsetY = -0.5f
+				ShadowOffsetY = -0.5f,
+                AdditionalComponent = typeof(BrokenChamberShrineController)
 			};
 			GameObject self = iei.Build();
 			SpriteID = ItemAPI.SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Shrines/brokenchambershrinelifted.png", self.GetComponent<tk2dBaseSprite>().Collection);
@@ -52,7 +53,75 @@ namespace Planetside
 			return shrine.GetComponent<CustomShrineController>().numUses == 0;
 		}
 
-		public static void Accept(PlayerController player, GameObject shrine)
+        public class BrokenChamberShrineController : BraveBehaviour
+        {
+
+            public BrokenChamberShrineController()
+            {
+            }
+            public void Start()
+            {
+                bool Shrine = SaveAPIManager.GetFlag(CustomDungeonFlags.BROKEN_CHAMBER_RUN_COMPLETED);
+                if (Shrine == true)
+                {
+                    tk2dSprite sprite = base.gameObject.GetComponent<tk2dSprite>();
+                    sprite.GetComponent<tk2dBaseSprite>().SetSprite(SpriteID);
+                    try
+                    {
+                        SimpleShrine shrine = base.gameObject.GetComponent<SimpleShrine>();
+                        shrine.text = "A shrine with 4 engravings carved onto it. Although the engravings shift, you can slightly make out what they are...";
+                        shrine.OnAccept = Accept;
+                        shrine.OnDecline = null;
+                        shrine.acceptText = "Kneel.";
+                        shrine.declineText = "Leave.";
+                        //shrine.CanUse = CanUse;
+                    }
+                    catch
+                    {
+                        ETGModConsole.Log("Failure in modifying shrines (1)");
+                    }
+                }
+            }
+            public static void Accept(PlayerController player, GameObject shrine)
+            {
+                Gun gun = PickupObjectDatabase.GetByEncounterName(InitialiseGTEE.GunIDForEOE) as Gun;
+                int StoredGunID = gun.PickupObjectId;
+
+                //PickupObject Item1 = PickupObjectDatabase.GetByName(InitialiseGTEE.HOneToFireIt);
+                int Item1ID = Game.Items[InitialiseGTEE.HOneToFireIt].PickupObjectId;
+                int Item2ID = Game.Items[InitialiseGTEE.HOneToPrimeIt].PickupObjectId;
+                int Item3ID = Game.Items[InitialiseGTEE.HOneToHoldIt].PickupObjectId;
+
+                string encounterNameOrDisplayName1 = (PickupObjectDatabase.GetById(StoredGunID) as Gun).EncounterNameOrDisplayName;
+                string encounterNameOrDisplayName2 = (PickupObjectDatabase.GetById(Item1ID)).EncounterNameOrDisplayName;
+                string encounterNameOrDisplayName3 = (PickupObjectDatabase.GetById(Item2ID)).EncounterNameOrDisplayName;
+                string encounterNameOrDisplayName4 = (PickupObjectDatabase.GetById(Item3ID)).EncounterNameOrDisplayName;
+
+                string header;
+                string text;
+
+                header = encounterNameOrDisplayName1 + " / " + encounterNameOrDisplayName2;
+                text = "Filler.";
+                BrokenChamberShrineController.Notify(header, text);
+
+
+                header = encounterNameOrDisplayName3 + " / " + encounterNameOrDisplayName4;
+                text = "Filler.";
+                BrokenChamberShrineController.Notify(header, text);
+
+
+                shrine.GetComponent<ShrineFactory.CustomShrineController>().numUses++;
+                shrine.GetComponent<ShrineFactory.CustomShrineController>().GetRidOfMinimapIcon();
+            }
+            private static void Notify(string header, string text)
+            {
+                tk2dSpriteCollectionData encounterIconCollection = AmmonomiconController.Instance.EncounterIconCollection;
+                int spriteIdByName = encounterIconCollection.GetSpriteIdByName("Planetside/Resources/shellheart");
+                GameUIRoot.Instance.notificationController.DoCustomNotification(header, text, null, spriteIdByName, UINotificationController.NotificationColor.PURPLE, true, true);
+            }
+        }
+
+        public static void Accept(PlayerController player, GameObject shrine)
 		{
 			tk2dSprite sprite = shrine.GetComponent<tk2dSprite>();
 			sprite.GetComponent<tk2dBaseSprite>().SetSprite(SpriteID);

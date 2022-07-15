@@ -9,6 +9,12 @@ namespace Planetside
 {
 	public class HMPrimeIntroController : SpecificIntroDoer
     {
+        public bool isActuallyEnded;
+        public void Start()
+        {
+            isActuallyEnded = false;
+        }
+
         private void ProcessAttackGroup(AttackBehaviorGroup attackGroup)
         {
             for (int i = 0; i < attackGroup.AttackBehaviors.Count; i++)
@@ -22,6 +28,7 @@ namespace Planetside
         }
         public override void EndIntro()
         {
+            isActuallyEnded = true;
             if (base.aiActor.aiAnimator != null)
             {
                 GameUIBossHealthController gameUIBossHealthController = GameUIRoot.Instance.bossController;
@@ -82,7 +89,6 @@ namespace Planetside
             }
 
             base.EndIntro();
-          
         }
     }
 }

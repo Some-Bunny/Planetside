@@ -320,7 +320,6 @@ namespace Planetside
 			ContainmentBreachController.CurrentState = ContainmentBreachController.States.ALLOWED;
 			SaveAPIManager.RegisterStatChange(CustomTrackedStats.INFECTION_FLOORS_ACTIVATED, 1);
 
-
 			if (GameManager.Instance != null && GameManager.Instance.BestActivePlayer != null)
 			{ AkSoundEngine.PostEvent("Play_OBJ_moondoor_close_01", GameManager.Instance.BestActivePlayer.gameObject); }
 		}
@@ -328,7 +327,7 @@ namespace Planetside
 		public static IEnumerator DoDelayStuff(GameObject Shrine)
         {
 			yield return new WaitForSeconds(3f);
-			GameManager.Instance.MainCameraController.StopContinuousScreenShake(Shrine.GetComponent<TresspassLightController>());
+			GameManager.Instance.MainCameraController.StopContinuousScreenShake(Shrine.GetComponent<tk2dBaseSprite>());
 			OtherTools.Notify("SOMETHING EMERGES", "DEEP BELOW.", "Planetside/Resources/ShrineIcons/prisonShrineIcon");
 			yield break;
         }

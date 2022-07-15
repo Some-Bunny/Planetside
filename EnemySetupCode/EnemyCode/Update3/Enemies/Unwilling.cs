@@ -318,7 +318,7 @@ namespace Planetside
 				companion.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UnwillingShot);
 				companion.aiActor.bulletBank.Bullets[0].BulletObject.GetComponent<Projectile>().baseData.speed = 14f;
 
-				companion.aiActor.healthHaver.persistsOnDeath = true;
+				//companion.aiActor.healthHaver.persistsOnDeath = true;
 				//if (companion.aiActor.bulletBank != null) { ETGModConsole.Log("bank exists, just add bullets in Init()"); }
 
 			}

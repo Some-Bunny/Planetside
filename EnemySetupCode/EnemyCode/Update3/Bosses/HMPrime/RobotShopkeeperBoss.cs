@@ -41,6 +41,39 @@ namespace Planetside
 
 		public void Start()
         {
+
+			EmergencyPlayerDisappearedFromRoom disappearedFromRoomController = this.aiActor.gameObject.AddComponent<EmergencyPlayerDisappearedFromRoom>();
+			disappearedFromRoomController.roomAssigned = this.aiActor.GetAbsoluteParentRoom();
+			disappearedFromRoomController.PlayerSuddenlyDisappearedFromRoom += (obj) =>
+			{
+				if (this.aiActor.GetComponent<HMPrimeIntroController>().isActuallyEnded == true)
+                {
+					GameObject bom = new GameObject();
+					StaticReferences.StoredRoomObjects.TryGetValue("hmprimeBattery", out bom);
+					GameObject shopObj = DungeonPlaceableUtility.InstantiateDungeonPlaceable(bom, base.aiActor.GetAbsoluteParentRoom(), new IntVector2((int)base.aiActor.sprite.WorldCenter.x, (int)base.aiActor.sprite.WorldCenter.y) - base.aiActor.GetAbsoluteParentRoom().area.basePosition, false);
+
+					DungeonDoorSubsidiaryBlocker[] blockers = UnityEngine.Object.FindObjectsOfType<DungeonDoorSubsidiaryBlocker>();
+					foreach (var blocker in blockers)
+					{
+						blocker.Unseal();
+					}
+
+					AkSoundEngine.PostEvent("Play_OBJ_teleport_depart_01", base.aiActor.gameObject);
+					GameObject teleportVFX = UnityEngine.Object.Instantiate<GameObject>(StaticVFXStorage.TeleportVFX);
+					teleportVFX.GetComponent<tk2dBaseSprite>().PlaceAtLocalPositionByAnchor(base.aiActor.transform.PositionVector2() + new Vector2(0f, -0.5f), tk2dBaseSprite.Anchor.LowerCenter);
+					teleportVFX.transform.position = teleportVFX.transform.position.Quantize(0.0625f);
+					teleportVFX.GetComponent<tk2dBaseSprite>().UpdateZDepth();
+					Destroy(teleportVFX, 2);
+
+					GameUIBossHealthController gameUIBossHealthController = GameUIRoot.Instance.bossController;
+					gameUIBossHealthController.DeregisterBossHealthHaver(this.aiActor.healthHaver);
+					gameUIBossHealthController.DisableBossHealth();
+					GameManager.Instance.DungeonMusicController.EndBossMusicNoVictory();
+
+					UnityEngine.Object.Destroy(this.aiActor.gameObject);
+				}
+			};
+
 			this.aiActor.gameObject.GetComponent<GenericIntroDoer>().enabled = false;
 			this.aiActor.enabled = false;
 			this.aiActor.CollisionDamage = 0;
@@ -80,7 +113,6 @@ namespace Planetside
 					this.AllowedToDoIntro = false;
 				}
 			}	
-		
 		}
 		public override void StartIntro()
 		{}
@@ -310,8 +342,8 @@ namespace Planetside
 				companion.aiActor.specRigidbody.CollideWithOthers = true;
 				companion.aiActor.specRigidbody.CollideWithTileMap = true;
 				companion.aiActor.PreventFallingInPitsEver = true;
-				companion.aiActor.healthHaver.ForceSetCurrentHealth(900f);
-				companion.aiActor.healthHaver.SetHealthMaximum(900f);
+				companion.aiActor.healthHaver.ForceSetCurrentHealth(925f);
+				companion.aiActor.healthHaver.SetHealthMaximum(925f);
 				companion.aiActor.CollisionKnockbackStrength = 2f;
 				companion.aiActor.CanTargetPlayers = true;
 				companion.aiActor.procedurallyOutlined = true;
@@ -2054,6 +2086,8 @@ namespace Planetside
 				component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f);
 				component2.sprite.renderer.material.SetColor("_OverrideColor", laser);
 				component2.sprite.renderer.material.SetColor("_EmissiveColor", laser);
+				component2.transform.parent = this.BulletBank.aiActor.transform;
+
 				float elapsed = 0;
 				float Time = chargeTime;
 				while (elapsed < Time)
@@ -2735,6 +2769,8 @@ namespace Planetside
 				component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f);
 				component2.sprite.renderer.material.SetColor("_OverrideColor", laser);
 				component2.sprite.renderer.material.SetColor("_EmissiveColor", laser);
+				component2.transform.parent = this.BulletBank.aiActor.transform;
+
 				float elapsed = 0;
 				float Time = chargeTime;
 				while (elapsed < Time)
@@ -3498,7 +3534,7 @@ namespace Planetside
 						blocker.Unseal();
 					}
 					int pruch = base.aiActor.GetComponent<RobotShopkeeperEngageDoer>().AmountOfPurchases;
-					int amountOfitemsToSpawn = UnityEngine.Random.Range(3+ (int)(pruch*1.5f), 6 + pruch);
+					int amountOfitemsToSpawn = UnityEngine.Random.Range(3+ (int)(pruch*1.5f), 5 + pruch);
 					AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.HM_PRIME_DEFEATED, true);//Done
 					for (int i = 0; i < amountOfitemsToSpawn; i++)
 					{
@@ -3512,7 +3548,7 @@ namespace Planetside
 						chest2.IsLocked = false;
 						chest2.RegisterChestOnMinimap(chest2.GetAbsoluteParentRoom());
 					}
-					if (UnityEngine.Random.value <= (Mathf.Min(0.4f*pruch, 1)))
+					if (UnityEngine.Random.value <= (Mathf.Min(0.25f*pruch, 1)))
 					{
 						Chest chest2 = GameManager.Instance.RewardManager.SpawnTotallyRandomChest(GameManager.Instance.PrimaryPlayer.CurrentRoom.GetRandomVisibleClearSpot(1, 1));
 						chest2.IsLocked = false;

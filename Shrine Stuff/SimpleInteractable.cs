@@ -40,5 +40,7 @@ namespace GungeonAPI
 		protected bool m_isToggled;
 
 		protected bool m_canUse = true;
+
+		public bool HasRoomIcon;
 	}
 }

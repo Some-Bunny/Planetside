@@ -48,6 +48,7 @@ namespace Planetside
 				m_CachedFlow.AddNodeToFlow(bossfoyerNode, entranceNode);
 				m_CachedFlow.AddNodeToFlow(bossNode, bossfoyerNode);
 				m_CachedFlow.AddNodeToFlow(exitNode, bossNode);
+				m_CachedFlow.AddNodeToFlow(bossNode, entranceNode);
 
 				m_CachedFlow.FirstNode = entranceNode;
 

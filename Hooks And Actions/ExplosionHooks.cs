@@ -34,7 +34,7 @@ namespace Planetside
                     {
                         BlastProjectilesCheck blast = player.GetComponent<BlastProjectilesCheck>();
                         float RNG = UnityEngine.Random.Range(-180, 180);
-                        int projectileToSpawn = blast.MinToSpawn + (int)(data.damage / 8);
+                        int projectileToSpawn = blast.MinToSpawn + (int)(data.damage / (data.ignoreList.Contains(player.specRigidbody) ? 10f : 15));
                         if (projectileToSpawn >= blast.Cap) { projectileToSpawn = blast.Cap; }
                         for (int e = 0; e < projectileToSpawn; e++)
                         {
@@ -50,7 +50,7 @@ namespace Planetside
                                 component.Shooter = player.specRigidbody;
                                 SpriteOutlineManager.AddOutlineToSprite(component.sprite, Color.black);
                                 HomingModifier HomingMod = component.gameObject.GetOrAddComponent<HomingModifier>();
-                                HomingMod.AngularVelocity = 300;
+                                HomingMod.AngularVelocity = 200;
                                 HomingMod.HomingRadius = 20;
                                 PierceProjModifier spook = component.gameObject.GetOrAddComponent<PierceProjModifier>();
                                 spook.penetration = 2;
@@ -58,8 +58,7 @@ namespace Planetside
                             }
                         }
                     }
-                }
-             
+                }       
             }
             catch (Exception e)
             {

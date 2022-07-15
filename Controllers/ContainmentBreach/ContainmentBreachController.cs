@@ -47,7 +47,23 @@ namespace Planetside
                         comparisonValue = 0
                     },
                 };
+
+                List<DungeonPrerequisite> dungeonPrerequisites1 = new List<DungeonPrerequisite>()
+                {
+                    new DungeonGenToolbox.AdvancedDungeonPrerequisite
+                    {
+                        advancedPrerequisiteType = CustomDungeonPrerequisite.AdvancedPrerequisiteType.CUSTOM_STAT_COMPARISION,
+                        customStatToCheck = CustomTrackedStats.INFECTION_FLOORS_ACTIVATED,
+                        useSessionStatValue = true,
+                        prerequisiteOperation = DungeonPrerequisite.PrerequisiteOperation.EQUAL_TO,
+                        comparisonValue = 1
+                    },
+                };
+
                 RoomFactory.AddInjection(RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/PrisonUnlockRoom.room").room, "Prison Containment Shrine", flowModifierPlacementTypes, 0, dungeonPrerequisites, "Prison Containment Shrine", 1, 1f);
+                RoomFactory.AddInjection(RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/MortalCombat.room").room, "Combat Shrine", flowModifierPlacementTypes, 0, dungeonPrerequisites1, "Combat Shrine", 1, 1f);
+
+                Actions.PostDungeonTrueStart += PostFloorgen;
 
                 Debug.Log("Finished ContainmentBreachController setup without failure!");
             }
@@ -59,10 +75,25 @@ namespace Planetside
         }
 
      
-
+        public static void PostFloorgen(Dungeon dungeon)
+        {
+            if (CurrentState == States.ALLOWED)
+            {                
+                dungeon.DungeonFloorName = GameUIRoot.Instance.GetComponent<dfLanguageManager>().GetValue(dungeon.DungeonFloorName) + "?";
+                dungeon.DungeonFloorLevelTextOverride = "Mixed Chamber";
+                var deco = dungeon.decoSettings;
+                deco.ambientLightColor = new Color(0.05f, 0.15f, 0.9f);
+                deco.generateLights = true;
+                deco.ambientLightColorTwo = new Color(0.05f, 0.15f, 0.9f);
+                deco.lowQualityAmbientLightColor = new Color(0.05f, 0.15f, 0.9f);
+                deco.lowQualityAmbientLightColorTwo = new Color(0.05f, 0.15f, 0.9f);
+                dungeon.PlayerIsLight = true;
+                dungeon.PlayerLightColor = Color.cyan;
+                dungeon.PlayerLightIntensity = 2;
+                dungeon.PlayerLightRadius = 3;
+            }
+        }
   
-
-
         private void Instance_OnNewLevelFullyLoaded()
         {
             InfectionReplacement.InitSpecialMods();
@@ -74,6 +105,7 @@ namespace Planetside
             {
                 if (EnemyIsValid(target) == true)
                 {
+
                     if (target.healthHaver.IsBoss || target.healthHaver.IsSubboss)
                     {
                         target.ApplyEffect(DebuffLibrary.InfectedBossEffect);
@@ -149,6 +181,8 @@ namespace Planetside
         {
             if (CurrentState == States.ALLOWED)
             {
+                SaveAPIManager.RegisterStatChange(CustomTrackedStats.INFECTION_FLOORS_ACTIVATED, 1);
+
                 CurrentState = States.ENABLED;
                 bool ShopPlaced = false;
                 List<RoomHandler> rooms = GameManager.Instance.Dungeon.data.rooms;
@@ -160,6 +194,7 @@ namespace Planetside
                     {
                         foreach (BaseShopController shope in componentsInChildren)
                         {
+                            Minimap.Instance.DeregisterRoomIcon(roomHandler, shope.OptionalMinimapIcon);
                             List<ShopItemController> shopitem = PlanetsideReflectionHelper.ReflectGetField<List<ShopItemController>>(typeof(BaseShopController), "m_itemControllers", shope);
                             for (int i = 0; i < shopitem.Count; i++)
                             {
@@ -221,7 +256,8 @@ namespace Planetside
                     {
                         foreach (GunberMuncherController shope in muncher)
                         {
-
+                            Minimap.Instance.DeregisterRoomIcon(roomHandler, (GameObject)ResourceCache.Acquire("Global Prefabs/Minimap_Muncher_Icon"));
+                            //Minimap.Instance.RegisterRoomIcon
                             GameObject obj = new GameObject();
                             RoomHandler roomIn = GameManager.Instance.Dungeon.data.GetAbsoluteRoomFromPosition(base.transform.position.IntXY(VectorConversions.Floor));
                             StaticReferences.StoredRoomObjects.TryGetValue("VoidMuncher", out obj);
@@ -244,15 +280,21 @@ namespace Planetside
                     {
                         foreach (TalkDoerLite shope in talkers)
                         {
+                            //God fucking damnit i hate room icons so goddamn much
+                            ShopController shopController = shope.GetComponent<ShopController>();
+                            if (shopController != null)
+                            {
+                                //shopController.
+                            }
                             Destroy(shope.gameObject);
                         }
                     }
                 }
             }
 
-            if (CurrentState == States.ENABLED)
+            else if (CurrentState == States.ENABLED)
             {
-                //CurrentState = States.DISABLED;
+                CurrentState = States.DISABLED;
             }
         }
     }

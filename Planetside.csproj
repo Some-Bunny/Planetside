@@ -121,6 +121,7 @@
     <Compile Include="APIs\SynergyAPI\AdvancedTransformGunSynergyProcessor.cs" />
     <Compile Include="APIs\SynergyAPI\SynergyBuilder.cs" />
     <Compile Include="Assetbundle Stuff\Assetbundle Loader.cs" />
+    <Compile Include="Components\EmergencyPlayerDisappearedFromRoom.cs" />
     <Compile Include="Components\Item Components\CustomHoveringGunController.cs" />
     <Compile Include="Components\Other Components\TrespassPortalController.cs" />
     <Compile Include="Components\Projectile Components\MirrorProjectileController.cs" />
@@ -149,6 +150,7 @@
     <Compile Include="Controllers\ContainmentBreach\BossChanges\F3\CannonbalrogChanges.cs" />
     <Compile Include="Controllers\ContainmentBreach\BossChanges\F2\GorgunChanges.cs" />
     <Compile Include="Controllers\CrossGameDataStorage.cs" />
+    <Compile Include="Controllers\HellShrinesController.cs" />
     <Compile Include="Controllers\MasteryTraderSpawnController.cs" />
     <Compile Include="Controllers\PlanetsideCommands.cs" />
     <Compile Include="Controllers\PlanetsideBalanceChanges.cs" />
@@ -173,6 +175,7 @@
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassFadingBlocker.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassDecals.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassCandle.cs" />
+    <Compile Include="DungeonPlaceables\HMPrimeBattery.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TutorialNotes.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassPots.cs" />
     <Compile Include="DungeonPlaceables\HolyChamberStatue.cs" />
@@ -2400,6 +2403,7 @@
     <EmbeddedResource Include="Resources\Shellrax\shellrax_fireeye_003.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\Shrines\iconsmiley.png" />
     <EmbeddedResource Include="Resources\shormActual.png" />
     <EmbeddedResource Include="Resources\Shrines\voidMuncherRoomIcon.png" />
     <EmbeddedResource Include="Resources\Shrines\voidGunmuncher.png" />
@@ -4029,6 +4033,29 @@
     <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassBigObject\vesselLock_use_011.png" />
     <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassDecals\TrespassDirectionalDecal\decalHorizontal.png" />
     <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassDecals\TrespassDirectionalDecal\decalVertical.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassDecals\Mega\mdeiumDecal.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\HMPrimeBattery\hmprime_idle_001.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\HMPrimeBattery\hmprime_idle_002.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\HMPrimeBattery\hmprime_idle_003.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\HMPrimeBattery\hmprime_idle_004.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\HMPrimeBattery\hmprime_idle_005.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\HMPrimeBattery\hmprime_idle_006.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\HMPrimeBattery\hmprime_use_001.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\HMPrimeBattery\hmprime_use_002.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\HMPrimeBattery\hmprime_use_003.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\HMPrimeBattery\hmprime_use_004.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\HMPrimeBattery\hmprime_use_005.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\HMPrimeBattery\hmprime_use_006.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\HMPrimeBattery\hmprime_use_007.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\HMPrimeBattery\hmprime_use_008.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\HMPrimeBattery\hmprime_use_009.png" />
+    <EmbeddedResource Include="Resources\FloorStuff\WallShards\wallshard1_001.png" />
+    <EmbeddedResource Include="Resources\FloorStuff\WallShards\wallshard1_002.png" />
+    <EmbeddedResource Include="Resources\FloorStuff\WallShards\wallshard1_003.png" />
+    <EmbeddedResource Include="Resources\FloorStuff\WallShards\wallshard2_001.png" />
+    <EmbeddedResource Include="Resources\FloorStuff\WallShards\wallshard2_002.png" />
+    <EmbeddedResource Include="Resources\FloorStuff\WallShards\wallshard2_003.png" />
+    <EmbeddedResource Include="Resources\FloorStuff\WallShards\wallshard2_004.png" />
     <Content Include="Resources\Shellrax\shellrax_intro_019.png" />
     <EmbeddedResource Include="Resources\VFX\LockOnVFX\lockonvfx1.png" />
     <EmbeddedResource Include="Resources\VFX\LockOnVFX\lockonvfx2.png" />
@@ -4139,6 +4166,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\ShrineRooms\PrisonUnlockRoom.room" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ShrineRooms\MortalCombat.room" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

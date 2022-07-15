@@ -35,8 +35,8 @@ namespace Planetside
             GameManager.Instance.OnNewLevelFullyLoaded += this.OnNewFloorLoaded;
             if (player != null)
             {
-                OtherTools.ApplyStat(player, PlayerStats.StatType.Damage, 0.85f, StatModifier.ModifyMethod.MULTIPLICATIVE);
-                OtherTools.ApplyStat(player, PlayerStats.StatType.DamageToBosses, 0.9f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+                OtherTools.ApplyStat(player, PlayerStats.StatType.Damage, 0.90f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+                OtherTools.ApplyStat(player, PlayerStats.StatType.DamageToBosses, 0.95f, StatModifier.ModifyMethod.MULTIPLICATIVE);
                 OtherTools.ApplyStat(player, PlayerStats.StatType.KnockbackMultiplier, 1.66f, StatModifier.ModifyMethod.MULTIPLICATIVE);
             }
         }

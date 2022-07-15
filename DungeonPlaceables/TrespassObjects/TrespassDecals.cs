@@ -38,6 +38,9 @@ namespace Planetside
             megaDecal.gameObject.GetOrAddComponent<TresspassUnlitShaderController>();
             StaticReferences.StoredRoomObjects.Add("megaDecal", megaDecal);
 
+            GameObject mediumDecal = BreakableAPIToolbox.GenerateDecalObject("trespass_decal", new string[] { "Planetside/Resources/DungeonObjects/TrespassObjects/TrespassDecals/Mega/mdeiumDecal.png" });
+            mediumDecal.gameObject.GetOrAddComponent<TresspassLightController>();
+            StaticReferences.StoredRoomObjects.Add("mediumDecal", mediumDecal);
 
             GameObject horizontalDecal = BreakableAPIToolbox.GenerateDecalObject("trespass_decal_horizontal", new string[] { "Planetside/Resources/DungeonObjects/TrespassObjects/TrespassDecals/TrespassDirectionalDecal/decalHorizontal.png" });
             horizontalDecal.gameObject.GetOrAddComponent<TresspassUnlitShaderController>();

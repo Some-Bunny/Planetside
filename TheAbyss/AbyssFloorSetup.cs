@@ -516,247 +516,12 @@ namespace Planetside
             */
 
             //DungeonMaterial FinalScenario_MainMaterial = UnityEngine.Object.Instantiate(MarinePastPrefab.roomMaterialDefinitions[0]);//UnityEngine.Object.Instantiate(RatDungeonPrefab.roomMaterialDefinitions[0]);
-            DungeonMaterial abyssMaterial = ScriptableObject.CreateInstance<DungeonMaterial>();
-            abyssMaterial.supportsPits = true;
-            abyssMaterial.doPitAO = false;
-            abyssMaterial.useLighting = true;
-            abyssMaterial.supportsDiagonalWalls = false;
-            abyssMaterial.carpetIsMainFloor = false;
-            abyssMaterial.carpetGrids = new TileIndexGrid[0];
-            abyssMaterial.roomCeilingBorderGrid = TilesetToolbox.CreateBlankIndexGrid();
-            abyssMaterial.additionalPitBorderFlatGrid = TilesetToolbox.CreateBlankIndexGrid();
-            abyssMaterial.roomCeilingBorderGrid = TilesetToolbox.CreateBlankIndexGrid();
-            abyssMaterial.wallShards = RatDungeonPrefab.roomMaterialDefinitions[0].wallShards;
-
+          
             //==============================================================================================================================================================================================
             //==============================================================================================================================================================================================
             //==============================================================================================================================================================================================
-            
-            var pitBorderGridCave = TilesetToolbox.CreateBlankIndexGrid();
-            pitBorderGridCave.topLeftIndices = new TileIndexList { indices = new List<int> { 70 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.topIndices = new TileIndexList { indices = new List<int> { 71 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.topRightIndices = new TileIndexList { indices = new List<int> { 72 }, indexWeights = new List<float> { 1f } };
-
-
-            pitBorderGridCave.leftIndices = new TileIndexList { indices = new List<int> { 73 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.rightIndices = new TileIndexList { indices = new List<int> { 74 }, indexWeights = new List<float> { 1f } };
-
-
-            pitBorderGridCave.bottomLeftIndices = new TileIndexList { indices = new List<int> { 75 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.bottomIndices = new TileIndexList { indices = new List<int> { 76 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.bottomRightIndices = new TileIndexList { indices = new List<int> { 77 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.horizontalIndices = new TileIndexList { indices = new List<int> { 78 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.verticalIndices = new TileIndexList { indices = new List<int> { 79 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.topCapIndices = new TileIndexList { indices = new List<int> { 80 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.rightCapIndices = new TileIndexList { indices = new List<int> { 81 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.bottomCapIndices = new TileIndexList { indices = new List<int> { 82 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.leftCapIndices = new TileIndexList { indices = new List<int> { 83 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.allSidesIndices = new TileIndexList { indices = new List<int> { 84 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.topLeftNubIndices = new TileIndexList { indices = new List<int> { 85 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.topRightNubIndices = new TileIndexList { indices = new List<int> { 88 }, indexWeights = new List<float> { 1f } };
-            
-
-            pitBorderGridCave.bottomLeftNubIndices = new TileIndexList { indices = new List<int> { 89 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.bottomRightNubIndices = new TileIndexList { indices = new List<int> { 90 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.extendedSet = true;
-            
-            
-            //pitBorderGridCave.topCenterLeftIndices = new TileIndexList { indices = new List<int> { 89 }, indexWeights = new List<float> { 1f } };
-            //pitBorderGridCave.topCenterIndices = new TileIndexList { indices = new List<int> { 90 }, indexWeights = new List<float> { 1f } };
-
-
-            pitBorderGridCave.topCenterRightIndices = new TileIndexList { indices = new List<int> { 91 }, indexWeights = new List<float> { 1f } };
-
-            pitBorderGridCave.thirdTopRowLeftIndices = new TileIndexList { indices = new List<int> { 92 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.thirdTopRowCenterIndices = new TileIndexList { indices = new List<int> { 93 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.thirdTopRowRightIndices = new TileIndexList { indices = new List<int> { 94 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.internalBottomLeftCenterIndices = new TileIndexList { indices = new List<int> { 95 }, indexWeights = new List<float> { 1f } };
-
 
             /*
-            pitBorderGridCave.internalBottomCenterIndices = new TileIndexList { indices = new List<int> { 101 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.internalBottomRightCenterIndices = new TileIndexList { indices = new List<int> { 102 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.borderTopNubLeftIndices = new TileIndexList { indices = new List<int> { 103 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.borderTopNubRightIndices = new TileIndexList { indices = new List<int> { 104 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.borderTopNubBothIndices = new TileIndexList { indices = new List<int> { 105 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.borderRightNubTopIndices = new TileIndexList { indices = new List<int> { 106 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.borderRightNubBottomIndices = new TileIndexList { indices = new List<int> { 107 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.borderRightNubBothIndices = new TileIndexList { indices = new List<int> { 108 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.borderBottomNubLeftIndices = new TileIndexList { indices = new List<int> { 109 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.borderBottomNubRightIndices = new TileIndexList { indices = new List<int> { 110 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.borderBottomNubBothIndices = new TileIndexList { indices = new List<int> { 111 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.borderLeftNubTopIndices = new TileIndexList { indices = new List<int> { 112 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.borderLeftNubBottomIndices = new TileIndexList { indices = new List<int> { 113 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.borderLeftNubBothIndices = new TileIndexList { indices = new List<int> { 114 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.diagonalNubsTopLeftBottomRight = new TileIndexList { indices = new List<int> { 115 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.diagonalNubsTopRightBottomLeft = new TileIndexList { indices = new List<int> { 116 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.doubleNubsTop = new TileIndexList { indices = new List<int> { 117 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.doubleNubsRight = new TileIndexList { indices = new List<int> { 118 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.doubleNubsBottom = new TileIndexList { indices = new List<int> { 119 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.doubleNubsLeft = new TileIndexList { indices = new List<int> { 120 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.quadNubs = new TileIndexList { indices = new List<int> { 121 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.topRightWithNub = new TileIndexList { indices = new List<int> { 122 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.topLeftWithNub = new TileIndexList { indices = new List<int> { 123 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.bottomRightWithNub = new TileIndexList { indices = new List<int> { 124 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.bottomLeftWithNub = new TileIndexList { indices = new List<int> { 125 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.diagonalBorderNE = new TileIndexList { indices = new List<int> { 126 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.diagonalBorderSE = new TileIndexList { indices = new List<int> { 127 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.diagonalBorderSW = new TileIndexList { indices = new List<int> { 128 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.diagonalBorderNW = new TileIndexList { indices = new List<int> { 129 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.diagonalCeilingNE = new TileIndexList { indices = new List<int> { 130 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.diagonalCeilingSE = new TileIndexList { indices = new List<int> { 130 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.diagonalCeilingSW = new TileIndexList { indices = new List<int> { 130 }, indexWeights = new List<float> { 1f } };
-            pitBorderGridCave.diagonalCeilingNW = new TileIndexList { indices = new List<int> { 130 }, indexWeights = new List<float> { 1f } };
-            */
-            pitBorderGridCave.CenterCheckerboard = false;
-            pitBorderGridCave.CheckerboardDimension = 0;
-
-            pitBorderGridCave.CenterIndicesAreStrata = false;
-            pitBorderGridCave.PitInternalSquareGrids = new List<TileIndexGrid>() { pitBorderGridCave };
-
-
-
-
-
-            pitBorderGridCave.PitInternalSquareOptions = new PitSquarePlacementOptions() { CanBeFlushBottom = true, CanBeFlushLeft = true, CanBeFlushRight = true, PitSquareChance = 1 };
-            pitBorderGridCave.PitBorderIsInternal = false;
-            pitBorderGridCave.PitBorderOverridesFloorTile = false;
-            pitBorderGridCave.CeilingBorderUsesDistancedCenters = false;
-            pitBorderGridCave.UsesRatChunkBorders = false;
-            pitBorderGridCave.RatChunkNormalSet = new TileIndexList { indices = new List<int> { 38 }, indexWeights = new List<float> { 1f } }; ;
-            pitBorderGridCave.RatChunkBottomSet = new TileIndexList { indices = new List<int> { 38 }, indexWeights = new List<float> { 1f } }; ;
-            //pitBorderGridCave.PathFacewallStamp = ob;
-            //pitBorderGridCave.PathSidewallStamp =;
-            pitBorderGridCave.PathPitPosts = new TileIndexList { indices = new List<int> { 38 }, indexWeights = new List<float> { 1f } }; ;
-            pitBorderGridCave.PathPitPostsBL = new TileIndexList { indices = new List<int> { 38 }, indexWeights = new List<float> { 1f } }; ;
-            pitBorderGridCave.PathPitPostsBR = new TileIndexList { indices = new List<int> { 38 }, indexWeights = new List<float> { 1f } }; ;
-            //pitBorderGridCave.PathStubNorth = ;
-            //pitBorderGridCave.PathStubEast =;
-            //pitBorderGridCave.PathStubSouth =;
-            //pitBorderGridCave.PathStubWest =;
-            abyssMaterial.roomFloorBorderGrid = pitBorderGridCave;
-            //abyssMaterial.pitLayoutGrid = pitBorderGridCave;
-            //abyssMaterial.pitBorderFlatGrid = pitBorderGridCave;
-            //abyssMaterial.additionalPitBorderFlatGrid = pitBorderGridCave;
-            //abyssMaterial.decalIndexGrid = pitBorderGridCave;
-            
-            //==============================================================================================================================================================================================
-            //==============================================================================================================================================================================================
-            //==============================================================================================================================================================================================
-
-            var floorSquares = TilesetToolbox.CreateBlankIndexGrid();
-
-            floorSquares.topLeftIndices = new TileIndexList { indices = new List<int> { 25 }, indexWeights = new List<float> { 1f } };
-            floorSquares.topRightIndices = new TileIndexList { indices = new List<int> { 26 }, indexWeights = new List<float> { 1f } };
-            floorSquares.bottomLeftIndices = new TileIndexList { indices = new List<int> { 27 }, indexWeights = new List<float> { 1f } };
-            floorSquares.bottomRightIndices = new TileIndexList { indices = new List<int> { 28 }, indexWeights = new List<float> { 1f } };
-
-            var floorSquares1 = TilesetToolbox.CreateBlankIndexGrid();
-            floorSquares1.topLeftIndices = new TileIndexList { indices = new List<int> { 29 }, indexWeights = new List<float> { 0.5f } };
-            floorSquares1.topRightIndices = new TileIndexList { indices = new List<int> { 30 }, indexWeights = new List<float> { 0.5f } };
-            floorSquares1.bottomLeftIndices = new TileIndexList { indices = new List<int> { 31 }, indexWeights = new List<float> { 0.5f } };
-            floorSquares1.bottomRightIndices = new TileIndexList { indices = new List<int> { 32 }, indexWeights = new List<float> { 0.5f } };
-
-            abyssMaterial.floorSquares = new TileIndexGrid[] { floorSquares, floorSquares1 };
-            //==============================================================================================================================================================================================
-            //==============================================================================================================================================================================================
-            //==============================================================================================================================================================================================
-            {
-                
-                
-                
-                var ceilingBorderGrid = TilesetToolbox.CreateBlankIndexGrid();
-                ceilingBorderGrid.topLeftIndices = new TileIndexList { indices = new List<int> { 60 }, indexWeights = new List<float> { 1f } };
-                ceilingBorderGrid.topIndices = new TileIndexList { indices = new List<int> { 61 }, indexWeights = new List<float> { 1f } };
-                ceilingBorderGrid.topRightIndices = new TileIndexList { indices = new List<int> { 62 }, indexWeights = new List<float> { 1f } };
-
-
-                ceilingBorderGrid.leftIndices = new TileIndexList { indices = new List<int> { 38, 40 }, indexWeights = new List<float> { 1f, 0.9f } };
-                
-                //ceilingBorderGrid.centerIndices = new TileIndexList { indices = new List<int> { 96 }, indexWeights = new List<float> { 1f } };
-                //new TileIndexList { indices = new List<int> { 96, 97, 98, 99 }, indexWeights = new List<float> { 1f, 0.06f, 0.06f, 0.06f } };
-
-                ceilingBorderGrid.rightIndices = new TileIndexList { indices = new List<int> { 39, 41 }, indexWeights = new List<float> { 1f, 0.9f } };
-
-
-                ceilingBorderGrid.bottomLeftIndices = new TileIndexList { indices = new List<int> { 66 }, indexWeights = new List<float> { 1f } };
-                ceilingBorderGrid.bottomIndices = new TileIndexList { indices = new List<int> { 67 }, indexWeights = new List<float> { 1f } };
-                ceilingBorderGrid.bottomRightIndices = new TileIndexList { indices = new List<int> { 68 }, indexWeights = new List<float> { 1f } };
-
-                ceilingBorderGrid.verticalIndices = new TileIndexList { indices = new List<int> { 105 }, indexWeights = new List<float> { 1f } };
-                ceilingBorderGrid.horizontalIndices = new TileIndexList { indices = new List<int> { 106 }, indexWeights = new List<float> { 1f } };
-
-                //Caps
-                ceilingBorderGrid.topCapIndices = new TileIndexList { indices = new List<int> { 103 }, indexWeights = new List<float> { 1f } };
-                ceilingBorderGrid.leftCapIndices = new TileIndexList { indices = new List<int> { 101 }, indexWeights = new List<float> { 1f } };
-                ceilingBorderGrid.rightCapIndices = new TileIndexList { indices = new List<int> { 102 }, indexWeights = new List<float> { 1f } };
-                ceilingBorderGrid.bottomCapIndices = new TileIndexList { indices = new List<int> { 104 }, indexWeights = new List<float> { 1f } };
-
-                //
-
-                //========================================
-                //Nubs
-                ceilingBorderGrid.doubleNubsRight = new TileIndexList { indices = new List<int> { 80 }, indexWeights = new List<float> { 1f } };
-                ceilingBorderGrid.doubleNubsLeft = new TileIndexList { indices = new List<int> { 81 }, indexWeights = new List<float> { 1f } };
-                ceilingBorderGrid.doubleNubsTop = new TileIndexList { indices = new List<int> { 82 }, indexWeights = new List<float> { 1f } };
-                ceilingBorderGrid.doubleNubsBottom = new TileIndexList { indices = new List<int> { 83 }, indexWeights = new List<float> { 1f } };
-
-                ceilingBorderGrid.quadNubs = new TileIndexList { indices = new List<int> { 84 }, indexWeights = new List<float> { 1f } };
-                ///Corner Nubs
-                ceilingBorderGrid.topRightWithNub = new TileIndexList { indices = new List<int> { 108 }, indexWeights = new List<float> { 1f } };
-                ceilingBorderGrid.topLeftWithNub = new TileIndexList { indices = new List<int> { 107 }, indexWeights = new List<float> { 1f } };
-                ceilingBorderGrid.bottomRightWithNub = new TileIndexList { indices = new List<int> { 109 }, indexWeights = new List<float> { 1f } };
-                ceilingBorderGrid.bottomLeftWithNub = new TileIndexList { indices = new List<int> { 110 }, indexWeights = new List<float> { 1f } };
-                //========================================
-
-                ceilingBorderGrid.allSidesIndices = new TileIndexList { indices = new List<int> { 75 }, indexWeights = new List<float> { 1f } };
-                ceilingBorderGrid.topLeftNubIndices = new TileIndexList { indices = new List<int> { 76 }, indexWeights = new List<float> { 1f } };
-                ceilingBorderGrid.topRightNubIndices = new TileIndexList { indices = new List<int> { 77 }, indexWeights = new List<float> { 1f } };
-                ceilingBorderGrid.bottomLeftNubIndices = new TileIndexList { indices = new List<int> { 78 }, indexWeights = new List<float> { 1f } };
-                ceilingBorderGrid.bottomRightNubIndices = new TileIndexList { indices = new List<int> { 79 }, indexWeights = new List<float> { 1f } };
-                
-                //ceilingBorderGrid.borderTopNubBothIndices = new TileIndexList { indices = new List<int> { 80 }, indexWeights = new List<float> { 1f } };
-                //ceilingBorderGrid.borderRightNubTopIndices = new TileIndexList { indices = new List<int> { 81 }, indexWeights = new List<float> { 1f } };
-                
-                ceilingBorderGrid.borderRightNubBottomIndices = new TileIndexList { indices = new List<int> { 82 }, indexWeights = new List<float> { 1f } };
-                ceilingBorderGrid.borderRightNubBothIndices = new TileIndexList { indices = new List<int> { 83 }, indexWeights = new List<float> { 1f } };
-                ceilingBorderGrid.borderBottomNubLeftIndices = new TileIndexList { indices = new List<int> { 84 }, indexWeights = new List<float> { 1f } };
-                ceilingBorderGrid.borderBottomNubRightIndices = new TileIndexList { indices = new List<int> { 85 }, indexWeights = new List<float> { 1f } };
-                ceilingBorderGrid.borderBottomNubBothIndices = new TileIndexList { indices = new List<int> { 86 }, indexWeights = new List<float> { 1f } };
-                ceilingBorderGrid.borderLeftNubTopIndices = new TileIndexList { indices = new List<int> { 87 }, indexWeights = new List<float> { 1f } };
-                ceilingBorderGrid.borderLeftNubBottomIndices = new TileIndexList { indices = new List<int> { 88 }, indexWeights = new List<float> { 1f } };
-                ceilingBorderGrid.borderLeftNubBothIndices = new TileIndexList { indices = new List<int> { 89 }, indexWeights = new List<float> { 1f } };
-                ceilingBorderGrid.diagonalNubsTopLeftBottomRight = new TileIndexList { indices = new List<int> { 90 }, indexWeights = new List<float> { 1f } };
-                ceilingBorderGrid.diagonalNubsTopRightBottomLeft = new TileIndexList { indices = new List<int> { 91 }, indexWeights = new List<float> { 1f } };
-
-              
-                ceilingBorderGrid.CheckerboardDimension = 1;
-
-                //ceilingBorderGrid.CeilingBorderUsesDistancedCenters = true;
-                //ceilingBorderGrid.centerIndices = new TileIndexList { indices = new List<int> { 100, 101, 102, 103 }, indexWeights = new List<float> { 1f, 0.05f, 0.05f, 0.01f} };
-                ceilingBorderGrid.centerIndices = new TileIndexList { indices = new List<int> { 100 }, indexWeights = new List<float> { 1f } };
-                //ceilingBorderGrid.CeilingBorderUsesDistancedCenters = true;
-                //ceilingBorderGrid.internalBottomCenterIndices = new TileIndexList { indices = new List<int> { 100 }, indexWeights = new List<float> { 1f } }; ;
-                //ceilingBorderGrid.internalBottomLeftCenterIndices = new TileIndexList { indices = new List<int> { 100 }, indexWeights = new List<float> { 1f } }; ;
-                //ceilingBorderGrid.internalBottomRightCenterIndices = new TileIndexList { indices = new List<int> { 100 }, indexWeights = new List<float> { 1f } }; ;
-                //ceilingBorderGrid.UsesRatChunkBorders = true;
-                //ceilingBorderGrid.RatChunkNormalSet = new TileIndexList { indices = new List<int> { 58 }, indexWeights = new List<float> { 1f } };
-                //ceilingBorderGrid.RatChunkBottomSet = new TileIndexList { indices = new List<int> { 59 }, indexWeights = new List<float> { 1f } };
-
-
-                abyssMaterial.roomCeilingBorderGrid = ceilingBorderGrid;
-                //var borderBorderGrid = TilesetToolbox.CreateBlankIndexGrid();
-                //borderBorderGrid.centerIndices = new TileIndexList { indices = new List<int> { 100 }, indexWeights = new List<float> { 1f } };
-
-                //abyssMaterial.exteriorFacadeBorderGrid = borderBorderGrid;
-
-
-
-            }
-            //==============================================================================================================================================================================================
-            //==============================================================================================================================================================================================
-            //==============================================================================================================================================================================================
-
             DungeonTileStampData m_FloorNameStampData = ScriptableObject.CreateInstance<DungeonTileStampData>();
             m_FloorNameStampData.name = "ENV_Abyss_STAMP_DATA";
             m_FloorNameStampData.tileStampWeight = 0;
@@ -767,6 +532,7 @@ namespace Planetside
             m_FloorNameStampData.objectStamps = new ObjectStampData[0];//RatDungeonPrefab.stampData.objectStamps;
             m_FloorNameStampData.SymmetricFrameChance = 0.25f;
             m_FloorNameStampData.SymmetricCompleteChance = 0.6f;
+            */
             dungeon.gameObject.name = "Base_Abyss";
             dungeon.contentSource = ContentSource.CONTENT_UPDATE_03;
             dungeon.DungeonSeed = 0;
@@ -812,9 +578,6 @@ namespace Planetside
             dungeon.tileIndices = new TileIndices()
             {
                 tilesetId = (GlobalDungeonData.ValidTilesets)CustomValidTilesetsClass.CustomValidTilesets.PLANETSIDEGEON, //sets it to our floors CustomValidTileset
-
-                //since the tileset im using here is a copy of the Rat dungeon tileset, the first variable in ReplaceDungeonCollection is RatDungeonPrefab.tileIndices.dungeonCollection,
-                //otherwise we will use a different dungeon prefab
                 dungeonCollection = ModPrefabs.AbyssTilesetCollection,//DungeonGenToolbox.ReplaceDungeonCollection(gofuckyourself),
                 dungeonCollectionSupportsDiagonalWalls = false,
                 aoTileIndices = RatDungeonPrefab.tileIndices.aoTileIndices,
@@ -833,15 +596,12 @@ namespace Planetside
                 patternIndexGrid = TilesetToolbox.CreateBlankIndexGrid(),//pitBorderGridCave,//RatDungeonPrefab.tileIndices.patternIndexGrid,
                 globalSecondBorderTiles = new List<int>(99),
                 edgeDecorationTiles = null,
-                
-                
+                     
             };
             dungeon.tileIndices.dungeonCollection.name = "ENV_AbyssFloor_Collection";
             dungeon.roomMaterialDefinitions = new DungeonMaterial[] {
-                abyssMaterial,
-                abyssMaterial,
-
-
+                ModPrefabs.abyssMaterial,
+                ModPrefabs.abyssMaterial,
                // FinalScenario_MainMaterial
             };
             dungeon.dungeonWingDefinitions = new DungeonWingDefinition[0];
@@ -876,12 +636,12 @@ namespace Planetside
                 },
                 mandatoryExtraRooms = new List<ExtraIncludedRoomData>(0),
                 optionalExtraRooms = new List<ExtraIncludedRoomData>(0),
-                MAX_GENERATION_ATTEMPTS = 250,
+                MAX_GENERATION_ATTEMPTS = 500,
                 DEBUG_RENDER_CANVASES_SEPARATELY = false
             };
 
             dungeon.damageTypeEffectMatrix = MinesDungeonPrefab.damageTypeEffectMatrix;
-            dungeon.stampData = m_FloorNameStampData;
+            dungeon.stampData = ModPrefabs.AbyssStampData;
             dungeon.UsesCustomFloorIdea = false;
             dungeon.FloorIdea = new RobotDaveIdea()
             {
@@ -908,7 +668,14 @@ namespace Planetside
             dungeon.oneWayDoorPressurePlate = MinesDungeonPrefab.oneWayDoorPressurePlate;
             dungeon.phantomBlockerDoorObjects = MinesDungeonPrefab.phantomBlockerDoorObjects;
             dungeon.UsesWallWarpWingDoors = false;
-            dungeon.baseChestContents = CatacombsPrefab.baseChestContents;
+            //(PickupObjectDatabase.GetById(DiamondChamber.DiamondChamberID) as PickupObject,
+
+
+            GenericLootTable table = LootTableTools.CreateLootTable();
+            table.AddItemsToPool(new Dictionary<int, float>() { { DiamondChamber.DiamondChamberID, 1 } });
+            dungeon.baseChestContents = table;
+            dungeon.baseChestContents.defaultItemDrops = new WeightedGameObjectCollection() { elements = new List<WeightedGameObject>(0)};
+
             dungeon.SecretRoomSimpleTriggersFacewall = new List<GameObject>() { CatacombsPrefab.SecretRoomSimpleTriggersFacewall[0] };
             dungeon.SecretRoomSimpleTriggersSidewall = new List<GameObject>() { CatacombsPrefab.SecretRoomSimpleTriggersSidewall[0] };
             dungeon.SecretRoomComplexTriggers = new List<ComplexSecretRoomTrigger>(0);
@@ -925,13 +692,14 @@ namespace Planetside
             dungeon.SuppressEmergencyCrates = false;
             dungeon.SetTutorialFlag = false;
             dungeon.PlayerIsLight = true;
-            dungeon.PlayerLightColor = CatacombsPrefab.PlayerLightColor;
-            dungeon.PlayerLightIntensity = 4;
-            dungeon.PlayerLightRadius = 4;
+            dungeon.PlayerLightColor = Color.cyan;
+            dungeon.PlayerLightIntensity = 2;
+            dungeon.PlayerLightRadius = 3;
             dungeon.PrefabsToAutoSpawn = new GameObject[0];
 
             //include this for custom floor audio
             dungeon.musicEventName = "Play_MUS_Ending_Pilot_01";
+            
 
             CatacombsPrefab = null;
             RatDungeonPrefab = null;
