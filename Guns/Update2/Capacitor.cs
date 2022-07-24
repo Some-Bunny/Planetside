@@ -199,7 +199,7 @@ namespace Planetside
 			Charger = b;
 		}
 
-		protected void Update()
+		public override void Update()
 		{
 			if (gun.CurrentOwner)
 			{

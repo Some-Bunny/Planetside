@@ -448,6 +448,7 @@ namespace Planetside
 
         public static void AddPlaceableToRoom(PrototypeDungeonRoom room, Vector2 location, string assetPath)
         {
+            //ETGModConsole.Log(assetPath);
             try
             {
                 if (GetGameObjectFromBundles(assetPath) != null)

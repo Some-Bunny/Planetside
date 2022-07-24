@@ -211,6 +211,7 @@ namespace GungeonAPI
 					GameObject OptionalMinimapIcon = SpriteBuilder.SpriteFromResource(RoomIconSpritePath);
 					UnityEngine.Object.DontDestroyOnLoad(OptionalMinimapIcon);
 					FakePrefab.MarkAsFakePrefab(OptionalMinimapIcon);
+					OptionalMinimapIcon.SetActive(false);
 					customShrineController.roomIcon = OptionalMinimapIcon;
 				}
 				else
@@ -492,6 +493,8 @@ namespace GungeonAPI
 					GameObject OptionalMinimapIcon = SpriteBuilder.SpriteFromResource(RoomIconSpritePath);
 					UnityEngine.Object.DontDestroyOnLoad(OptionalMinimapIcon);
 					FakePrefab.MarkAsFakePrefab(OptionalMinimapIcon);
+					OptionalMinimapIcon.SetActive(false);
+
 					customShrineController.roomIcon = OptionalMinimapIcon;
 				}
 				else
@@ -614,6 +617,7 @@ namespace GungeonAPI
 					GameObject OptionalMinimapIcon = SpriteBuilder.SpriteFromResource(RoomIconSpritePath);
 					UnityEngine.Object.DontDestroyOnLoad(OptionalMinimapIcon);
 					FakePrefab.MarkAsFakePrefab(OptionalMinimapIcon);
+					OptionalMinimapIcon.SetActive(false);
 					customShrineController.roomIcon = OptionalMinimapIcon;
 				}
 				else

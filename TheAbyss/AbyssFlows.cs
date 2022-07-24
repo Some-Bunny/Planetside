@@ -26,6 +26,10 @@ namespace Planetside
 				DungeonFlowNode bossfoyerNode = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.SPECIAL, overrideTable: ModPrefabs.boss_foyertable);
 				DungeonFlowNode bossNode = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.BOSS, ModRoomPrefabs.Mod_Boss);
 
+				DungeonFlowNode defaultCombatNode = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.NORMAL, overrideTable: ModPrefabs.FloorNameRoomTable);
+				DungeonFlowNode defaultCombatNode1 = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.NORMAL, overrideTable: ModPrefabs.FloorNameRoomTable);
+				DungeonFlowNode defaultCombatNode2 = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.NORMAL, overrideTable: ModPrefabs.FloorNameRoomTable);
+
 				//DungeonFlowNode BeyondShopNode = GenerateDefaultNode(m_CachedFlow, BeyondPrefabs.shop02.category, ModRoomPrefabs.Mod_Shop_Room);
 
 				m_CachedFlow.name = "F1b_Beyond_flow_Overseer_Test_01";
@@ -42,10 +46,14 @@ namespace Planetside
 
 				m_CachedFlow.AddNodeToFlow(entranceNode, null);
 
-				//m_CachedFlow.AddNodeToFlow(BeyondShopNode, entranceNode);
+
+				m_CachedFlow.AddNodeToFlow(defaultCombatNode, entranceNode);
+				m_CachedFlow.AddNodeToFlow(defaultCombatNode1, defaultCombatNode);
+				m_CachedFlow.AddNodeToFlow(defaultCombatNode2, defaultCombatNode1);
 
 
-				m_CachedFlow.AddNodeToFlow(bossfoyerNode, entranceNode);
+				m_CachedFlow.AddNodeToFlow(bossfoyerNode, defaultCombatNode2);
+
 				m_CachedFlow.AddNodeToFlow(bossNode, bossfoyerNode);
 				m_CachedFlow.AddNodeToFlow(exitNode, bossNode);
 				m_CachedFlow.AddNodeToFlow(bossNode, entranceNode);

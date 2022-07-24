@@ -15,6 +15,9 @@ namespace GungeonAPI
 			if (HasRoomIcon == true)
             {
 				instanceRoom = GameManager.Instance.Dungeon.data.GetAbsoluteRoomFromPosition(base.transform.position.IntXY(VectorConversions.Floor));
+				if (instanceRoom == null) { return; }
+				if (roomIcon == null) { return; }
+
 				this.instanceMinimapIcon = Minimap.Instance.RegisterRoomIcon(instanceRoom, roomIcon ?? (GameObject)BraveResources.Load("Global Prefabs/Minimap_Shrine_Icon", ".prefab"), false);
 			}
 		}

@@ -135,13 +135,10 @@ namespace Planetside
 		}
 		public static int ElectricMusicID;
 
-		public override void PostProcessProjectile(Projectile projectile)
-		{
-			
-		}
+		
 
 		private bool HasReloaded;
-		protected void Update()
+		public override void Update()
 		{
 			if (gun.CurrentOwner)
 			{

@@ -127,7 +127,7 @@ namespace Planetside
             component.sharedMaterials = sharedMaterials;
 
         }
-        protected void Update()
+        public override void Update()
         {
             if (gun != null) { foreach (ProjectileModule mod in gun.RawSourceVolley.projectiles) { if (mod != null) { mod.angleVariance = 0f; } } }
         }

@@ -145,7 +145,7 @@ namespace Planetside
         private bool HasReloaded;
         public bool HasFlipped;
 
-        protected void Update()
+        public override void Update()
         {
             gun.PreventNormalFireAudio = true;
         }

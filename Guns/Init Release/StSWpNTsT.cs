@@ -67,9 +67,9 @@ namespace Planetside
 
 		private bool HasReloaded;
 
-		protected void Update()
-		{
-			if (gun.CurrentOwner)
+        public override void Update()
+        {
+            if (gun.CurrentOwner)
 			{
 
 				if (!gun.PreventNormalFireAudio)

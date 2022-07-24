@@ -50,7 +50,7 @@ namespace Planetside
 				GameManager.Instance.StartCoroutine(this.SaveFlawless());
 			}
 			AkSoundEngine.PostEvent("Play_ENM_shells_gather_01", base.gameObject);
-			player.inventory.CurrentGun.GainAmmo(Mathf.FloorToInt((float)player.inventory.CurrentGun.AdjustedMaxAmmo * 0.25f));
+			player.inventory.CurrentGun.GainAmmo(Mathf.FloorToInt((float)player.inventory.CurrentGun.AdjustedMaxAmmo * 0.15f));
 		}
 		private IEnumerator SaveFlawless()
 		{

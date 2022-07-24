@@ -44,7 +44,7 @@ namespace EnemyBulletBuilder
             );
 
             Hook instantiateO = new Hook(
-                typeof(Object).GetMethod("orig_Instantiate", new Type[]{
+                typeof(Object).GetMethod("Instantiate", new Type[]{
                     typeof(Object),
                  }),
                 typeof(BulletBuilderFakePrefabHooks).GetMethod("InstantiateO")

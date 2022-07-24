@@ -136,7 +136,6 @@ namespace Planetside
             Vector3 pos = position + MathToolbox.GetUnitOnCircle((60*i)+ang, 2f);
             simpleCrate.Trigger(new Vector3(-5f, -5f, -5f), pos + new Vector3(15f, 15f, 15f), p.CurrentRoom);
         }
-
     }
 
 

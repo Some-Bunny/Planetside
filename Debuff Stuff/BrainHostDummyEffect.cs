@@ -23,8 +23,6 @@ namespace Planetside
 		public static void Init()
         {
 			GameObject vfxObj = ItemBuilder.AddSpriteToObject("TarnishVFX", "Planetside/Resources/VFX/BrainHost/brainnerphehehoo1", null);
-			FakePrefab.MarkAsFakePrefab(vfxObj);
-			UnityEngine.Object.DontDestroyOnLoad(vfxObj);
 			tk2dSpriteAnimator animator = vfxObj.GetOrAddComponent<tk2dSpriteAnimator>();
 			tk2dSpriteAnimation animation = vfxObj.AddComponent<tk2dSpriteAnimation>();
 
@@ -38,7 +36,7 @@ namespace Planetside
 				tk2dSpriteCollectionData collection = DeathMarkcollection;
 				int frameSpriteId = SpriteBuilder.AddSpriteToCollection($"Planetside/Resources/VFX/BrainHost/brainnerphehehoo{i}", collection);
 				tk2dSpriteDefinition frameDef = collection.spriteDefinitions[frameSpriteId];
-				frameDef.ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.MiddleCenter);
+				frameDef.ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.LowerLeft);
 				frames.Add(new tk2dSpriteAnimationFrame { spriteId = frameSpriteId, spriteCollection = collection });
 			}
 			idleClip.frames = frames.ToArray();
@@ -54,9 +52,10 @@ namespace Planetside
 			mat.SetFloat("_EmissiveColorPower", 2f);
 			mat.SetFloat("_EmissivePower", 35);
 			animator.sprite.renderer.material = mat;
+			FakePrefab.MarkAsFakePrefab(vfxObj);
+			UnityEngine.Object.DontDestroyOnLoad(vfxObj);
 
 			BrainHostVFX = vfxObj;
 		}
 	}
-
 }

@@ -343,7 +343,7 @@ namespace Planetside
             partObj.name = "VoidHole";
             partObj.transform.localScale = Vector3.zero;
             VoidHoleController voidHoleController = partObj.AddComponent<VoidHoleController>();
-            voidHoleController.trueCenter = Actor.ParentRoom.GetCenterCell().ToCenterVector2();
+            voidHoleController.trueCenter = Actor.sprite.WorldCenter;
             voidHoleController.CanHurt = false;
             voidHoleController.Radius = 30;
             controllerOfTheVoid = voidHoleController;
@@ -542,570 +542,653 @@ namespace Planetside
                 private AIActor dummy;
             }
         }
-            public class SubphaseTwoAttack : Script
+
+        public class SubphaseTwoAttack : Script
+        {
+            private bool Center;
+
+            private bool Done;
+
+
+            public List<TargetBullet> activeRingSegments = new List<TargetBullet>();
+            public TargetDummy activeDummy;
+
+            protected override IEnumerator Top()
             {
-                private bool Center;
-
-                private bool Done;
 
 
-                public List<TargetBullet> activeRingSegments = new List<TargetBullet>();
-                public TargetDummy activeDummy;
+                Center = false;
+                Done = false;
+                this.EndOnBlank = false;
+                Vector2 spawnPos = base.BulletBank.aiActor.ParentRoom.GetCenterCell().ToCenterVector2();
+                if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
+                {
+                    base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableDefault);
+                    base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableBig);
+                    base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSniper);
+                    base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableDoorLordBurst);
+                    base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableBig);
 
+                }
+                this.EndOnBlank = false;
+
+                int e = 0;
+                int H = 0;
+                int Speed = 180;
+                for (; ; )
+                {
+                    if (SubPhaseEnded == true) { this.Destroyed = true; yield break; }
+                    if (e % 40 == 0)
+                    {
+                        this.FireWallBullets("top");
+                    }
+                    if (H == Speed)
+                    {
+                        H = 0; Speed -= 12;
+                        Speed = Mathf.Max(70, Speed);
+                        this.StartTask(SpawnBoulder());
+                    }
+                    e++; H++;
+                    yield return base.Wait(1);
+                }
+            }
+
+            public IEnumerator SpawnBoulder()
+            {
+                Vector2 pos = GameManager.Instance.BestActivePlayer.sprite.WorldCenter + MathToolbox.GetUnitOnCircle(this.RandomAngle(), UnityEngine.Random.Range(7, 9));
+                StaticVFXStorage.HighPriestClapVFXInverse.SpawnAtPosition(pos);
+                yield return this.Wait(60f);
+                base.PostWwiseEvent("Play_BOSS_spacebaby_explode_01", null);
+                base.Fire(Offset.OverridePosition(pos), new Direction(this.GetAimDirection(pos, 1,300), Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(0, SpeedType.Absolute), new MegaBoulder());
+            }
+
+            public class MegaBoulder : Bullet
+            {
+                public MegaBoulder() : base(StaticUndodgeableBulletEntries.undodgeableBig.Name, true, false, true)
+                {
+                }
                 protected override IEnumerator Top()
                 {
+                    this.Projectile.IgnoreTileCollisionsFor(180f);
+                    this.Projectile.specRigidbody.AddCollisionLayerIgnoreOverride(CollisionMask.LayerToMask(CollisionLayer.HighObstacle, CollisionLayer.LowObstacle));
+                    base.ChangeSpeed(new Brave.BulletScript.Speed(20, SpeedType.Absolute),90);
+                    yield break;
+                }
+            }
 
+            private void FireWallBullets(string Placement)
+            {
+                Vector2 TopRight = base.BulletBank.aiActor.GetAbsoluteParentRoom().area.UnitTopRight;
+                Vector2 BottomLeft = base.BulletBank.aiActor.GetAbsoluteParentRoom().area.UnitBottomLeft;
+                Dictionary<Vector2, Vector2> wallcornerPositions = new Dictionary<Vector2, Vector2>()
+                {
+                    {new Vector2(BottomLeft.x, TopRight.y), TopRight },//Bottom wall
+					{new Vector2(TopRight.x, BottomLeft.y), BottomLeft },//Top wall
+					{BottomLeft, new Vector2(BottomLeft.x, TopRight.y) },//Left wall
+					{TopRight, new Vector2(TopRight.x, BottomLeft.y) },//Right wall
+				};
+                //All of these are flipped. IDFK WHY BUT I NEED TO GET THE "TOP" to spawn it at THE BOTTOM AAAAAAAAAAAAAAAAA
+                Dictionary<string, Vector2> wallcornerstrings = new Dictionary<string, Vector2>()
+                {
+                    { "bottom" ,new Vector2(TopRight.x, BottomLeft.y)},
+                    { "top" ,new Vector2(BottomLeft.x, TopRight.y)},
+                    { "left" ,TopRight},
+                    { "right" ,BottomLeft}
+                };
 
-                    Center = false;
-                    Done = false;
-                    this.EndOnBlank = false;
-                    Vector2 spawnPos = base.BulletBank.aiActor.ParentRoom.GetCenterCell().ToCenterVector2();
-                    if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
+                Vector2 OneCorner = new Vector2();
+                wallcornerstrings.TryGetValue(Placement, out OneCorner);
+                Vector2 OtherCorner = new Vector2();
+                wallcornerPositions.TryGetValue(OneCorner, out OtherCorner);
+                float Tiles = Vector2.Distance(OneCorner, OtherCorner);
+                float facingDir = 0;
+                if (Placement == "bottom") { facingDir = 90; }
+                if (Placement == "top") { facingDir = 270; }
+                if (Placement == "left") { facingDir = 180; }
+                if (Placement == "right") { facingDir = 0; }
+
+                //base.PostWwiseEvent("Play_RockBreaking", null);
+                for (int l = 0; l < Tiles; l++)
+                {
+                    float t = (float)l / (float)Tiles;
+                    Vector2 SpawnPos = Vector2.Lerp(OneCorner, OtherCorner, t);
+                    if (l % 4 == 1)
                     {
-                        base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableDefault);
-                        base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableBig);
-                        base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSniper);
-                    }
-                    //this.StartTask(ContinuallySpawnRings());
-                    this.EndOnBlank = false;
-                    this.StartTask(this.SpawnRingOfHell());
-                    int e = 0;
-                    for (; ; )
-                    {
-                        if (e > 1620) { Center = true; }
-                        if (SubPhaseEnded == true) { this.Destroyed = true; yield break; }
-                        e++;
-                        yield return base.Wait(1);
+                        int travelTime = UnityEngine.Random.Range(90, 360);
+                        base.Fire(Offset.OverridePosition(SpawnPos), new Direction(facingDir, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(UnityEngine.Random.Range(5.5f, 6.25f), SpeedType.Absolute), new WallBullets(StaticUndodgeableBulletEntries.UndodgeableDoorLordBurst.Name, facingDir));
                     }
                 }
+            }
 
-                private IEnumerator ContinuallySpawnRings()
+            public class WallBullets : Bullet
+            {
+                public WallBullets(string bulletName, float angle) : base(bulletName, true, false, false)
                 {
-                    while (SubPhaseEnded == false || !this.Destroyed || !this.IsEnded)
-                    {
-                        bool LeftOrRight = (UnityEngine.Random.value > 0.5f) ? false : true;
-                        float RNGSPIN = LeftOrRight == true ? 20 : -20;
-                        for (int e = 0; e < 60; e++)
-                        {
-                            base.Fire(new Offset(MathToolbox.GetUnitOnCircle(e * 6, 30)), new Direction(0f, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SubphaseTwoAttack.RotatedBullet(RNGSPIN, 0, 0, "undodgeableDefault", this, e == 0, e * 6, 30));
-                        }
-                        yield return this.Wait(80f);
-                    }
-                    if (SubPhaseEnded == true)
-                    {
-                        yield break;
-                    }
+                    this.Angle = angle;
                 }
-
-                public IEnumerator SpawnRingOfHell()
+                protected override IEnumerator Top()
                 {
-
-                    if (SubPhaseEnded == false)
-                    {
-                        for (int i = 0; i < activeRingSegments.Count; i++)
-                        {
-                            if (activeRingSegments[i] != null)
-                            {
-                                activeRingSegments[i].Vanish(false);
-                            }
-                        }
-                        GameManager.Instance.StartCoroutine(HandleSpawnVFXPortal());
-                    }
-                    yield return this.Wait(90f);
-                    if (SubPhaseEnded == false)
-                    {
-
-                        SubphaseTwoAttack.TargetDummy targetDummy = new SubphaseTwoAttack.TargetDummy(this);
-                        targetDummy.Position = this.BulletBank.aiActor.ParentRoom.area.UnitCenter;
-                        targetDummy.Direction = this.AimDirection;
-                        targetDummy.BulletManager = this.BulletManager;
-                        activeDummy = targetDummy;
-                        this.Fire(Offset.OverridePosition(targetDummy.Position), targetDummy);
-                        for (int j = 0; j < 30; j++)
-                        {
-                            float angle = this.SubdivideCircle(0f, 30, j, 1f, false);
-                            this.Fire(Offset.OverridePosition(targetDummy.Position + BraveMathCollege.DegreesToVector(angle, 0.375f)), new SubphaseTwoAttack.TargetBullet(this, targetDummy.Projectile));
-                        }
-                    }
+                    this.Projectile.IgnoreTileCollisionsFor(180f);
+                    this.Projectile.specRigidbody.AddCollisionLayerIgnoreOverride(CollisionMask.LayerToMask(CollisionLayer.HighObstacle, CollisionLayer.LowObstacle));
+                    base.ChangeDirection(new Brave.BulletScript.Direction(UnityEngine.Random.Range(-15, 15), DirectionType.Relative), UnityEngine.Random.Range(100, 300));
                     yield break;
                 }
 
-                public IEnumerator HandleSpawnVFXPortal()
+                private float Angle;
+            }
+
+
+
+            public IEnumerator SpawnRingOfHell()
+            {
+
+                if (SubPhaseEnded == false)
                 {
-                    GameObject portalObject = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("Portal"));
-                    portalObject.transform.position = this.BulletBank.aiActor.ParentRoom.area.UnitCenter;
-                    portalObject.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
-
-                    AkSoundEngine.PostEvent("Play_PortalOpen", portalObject.gameObject);
-                    for (int j = 0; j < 90; j++)
+                    for (int i = 0; i < activeRingSegments.Count; i++)
                     {
-                        float t = (float)j / (float)90;
-                        float t1 = Mathf.Sin(t * (Mathf.PI / 2));
-                        portalObject.transform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one * 3, t1);
-                        portalObject.GetComponent<MeshRenderer>().material.SetFloat("_OutlineWidth", Mathf.Lerp(0, 0.125f, t1));
-                        portalObject.GetComponent<MeshRenderer>().material.SetFloat("_OutlinePower", Mathf.Lerp(0, 100, t1));
-
-                        yield return this.Wait(1f);
+                        if (activeRingSegments[i] != null)
+                        {
+                            activeRingSegments[i].Vanish(false);
+                        }
                     }
-                    for (int j = 0; j < 60; j++)
+                    GameManager.Instance.StartCoroutine(HandleSpawnVFXPortal());
+                }
+                yield return this.Wait(90f);
+                if (SubPhaseEnded == false)
+                {
+
+                    SubphaseTwoAttack.TargetDummy targetDummy = new SubphaseTwoAttack.TargetDummy(this);
+                    targetDummy.Position = this.BulletBank.aiActor.ParentRoom.area.UnitCenter;
+                    targetDummy.Direction = this.AimDirection;
+                    targetDummy.BulletManager = this.BulletManager;
+                    activeDummy = targetDummy;
+                    this.Fire(Offset.OverridePosition(targetDummy.Position), targetDummy);
+                    for (int j = 0; j < 30; j++)
                     {
-                        float t = (float)j / (float)60;
-                        float t1 = Mathf.Sin(t * (Mathf.PI / 2));
-                        portalObject.transform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one * 3, 1 - t1);
-                        portalObject.GetComponent<MeshRenderer>().material.SetFloat("_OutlineWidth", Mathf.Lerp(0, 0.125f, 1 - t1));
-                        portalObject.GetComponent<MeshRenderer>().material.SetFloat("_OutlinePower", Mathf.Lerp(0, 100, 1 - t1));
-                        yield return this.Wait(1f);
+                        float angle = this.SubdivideCircle(0f, 30, j, 1f, false);
+                        this.Fire(Offset.OverridePosition(targetDummy.Position + BraveMathCollege.DegreesToVector(angle, 0.375f)), new SubphaseTwoAttack.TargetBullet(this, targetDummy.Projectile));
                     }
+                }
+                yield break;
+            }
 
-                    Destroy(portalObject);
-                    yield break;
+            public IEnumerator HandleSpawnVFXPortal()
+            {
+                GameObject portalObject = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("Portal"));
+                portalObject.transform.position = this.BulletBank.aiActor.ParentRoom.area.UnitCenter;
+                portalObject.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
+
+                AkSoundEngine.PostEvent("Play_PortalOpen", portalObject.gameObject);
+                for (int j = 0; j < 90; j++)
+                {
+                    float t = (float)j / (float)90;
+                    float t1 = Mathf.Sin(t * (Mathf.PI / 2));
+                    portalObject.transform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one * 3, t1);
+                    portalObject.GetComponent<MeshRenderer>().material.SetFloat("_OutlineWidth", Mathf.Lerp(0, 0.125f, t1));
+                    portalObject.GetComponent<MeshRenderer>().material.SetFloat("_OutlinePower", Mathf.Lerp(0, 100, t1));
+
+                    yield return this.Wait(1f);
+                }
+                for (int j = 0; j < 60; j++)
+                {
+                    float t = (float)j / (float)60;
+                    float t1 = Mathf.Sin(t * (Mathf.PI / 2));
+                    portalObject.transform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one * 3, 1 - t1);
+                    portalObject.GetComponent<MeshRenderer>().material.SetFloat("_OutlineWidth", Mathf.Lerp(0, 0.125f, 1 - t1));
+                    portalObject.GetComponent<MeshRenderer>().material.SetFloat("_OutlinePower", Mathf.Lerp(0, 100, 1 - t1));
+                    yield return this.Wait(1f);
                 }
 
+                Destroy(portalObject);
+                yield break;
+            }
 
 
 
-                public class TargetDummy : Bullet
+
+            public class TargetDummy : Bullet
+            {
+                public TargetDummy(SubphaseTwoAttack parent) : base("undodgeableBig", false, false, false)
                 {
-                    public TargetDummy(SubphaseTwoAttack parent) : base("undodgeableBig", false, false, false)
+                    this.parent = parent;
+                }
+                protected override IEnumerator Top()
+                {
+                    WeightedIntCollection attackWeights = new WeightedIntCollection();
+                    attackWeights.elements = new WeightedInt[]
                     {
-                        this.parent = parent;
-                    }
-                    protected override IEnumerator Top()
-                    {
-                        WeightedIntCollection attackWeights = new WeightedIntCollection();
-                        attackWeights.elements = new WeightedInt[]
-                        {
                             new WeightedInt(){additionalPrerequisites = new DungeonPrerequisite[0], annotation = "Attack1", value = 1, weight = 1},
                             new WeightedInt(){additionalPrerequisites = new DungeonPrerequisite[0], annotation = "Attack2", value = 2, weight = 0.9f},
                             new WeightedInt(){additionalPrerequisites = new DungeonPrerequisite[0], annotation = "Attack3", value = 3, weight = 0.5f},
-                            //new WeightedInt(){additionalPrerequisites = new DungeonPrerequisite[0], annotation = "Attack4", value = 4, weight = 0.8f},
-                        };
+                        //new WeightedInt(){additionalPrerequisites = new DungeonPrerequisite[0], annotation = "Attack4", value = 4, weight = 0.8f},
+                    };
 
 
-                        this.PostWwiseEvent("Play_PortalOpen", null);
-                        Exploder.DoDistortionWave(this.Position, 5, 0.2f, 50, 0.75f);
-                        this.Projectile.ImmuneToBlanks = true;
-                        this.Projectile.ImmuneToSustainedBlanks = true;
-                        this.Projectile.ForcePlayerBlankable = true;
-                        this.Projectile.IgnoreTileCollisionsFor(6000f);
-                        yield return this.Wait(60f);
-                        int time = 180;
-                        int i = 0;
-                        for (; ; )
-                        {
-                            if (parent.IsEnded || parent.Destroyed)
-                            {
-                                base.Vanish(false);
-                            }
-                            if (i % time == 0 && parent.Center == false)
-                            {
-                                if (time > 91) { time -= 10; }
-                                if (time < 90) { time = 90; }
-                                switch (attackWeights.SelectByWeight(new System.Random(UnityEngine.Random.Range(1, 100))))
-                                {
-                                    case 1:
-                                        for (int j = 0; j < 6; j++)
-                                        {
-                                            GameManager.Instance.StartCoroutine(QuickscopeNoob(0, parent, j * 60, 80, 30, 0.75f, 3, 0.5f));
-                                        }
-                                        yield return base.Wait(1);
-                                        i++;
-                                        break;
-                                    case 2:
-                                        float Dir = UnityEngine.Random.value > 0.5f ? 0 : 45f;
-                                        for (int e = 0; e < 4; e++)
-                                        {
-                                            GameManager.Instance.StartCoroutine(QuickReticleNoAngleChange(this.Position, (90f * e) + Dir, parent, 0.75f, 25, 4));
-                                        }
-                                        yield return base.Wait(1);
-                                        i++;
-                                        break;
-                                    case 3:
-                                        GameManager.Instance.StartCoroutine(QuickscopeNoob(0, parent, 0, 80, 20, 0.5f, 3, 0.5f));
-                                        GameManager.Instance.StartCoroutine(QuickscopeNoob(0, parent, 0, 80, 20, 1f, 3, 0.5f));
-                                        GameManager.Instance.StartCoroutine(QuickscopeNoob(0, parent, 0, 80, 20, 1.5f, 3, 0.5f));
-
-                                        yield return base.Wait(1);
-                                        i++;
-                                        break;
-
-                                    case 4:
-                                        GameManager.Instance.StartCoroutine(QuickscopeNoob(0, parent, 0, 80, 30, 3, 1, 0.5f));
-
-                                        yield return base.Wait(1);
-                                        i++;
-                                        break;
-                                }
-                            }
-
-                            float distToTarget = (this.BulletManager.PlayerPosition() - this.Position).magnitude;
-                            float a = Mathf.Lerp(9f, 2f, Mathf.InverseLerp(6f, 2f, distToTarget));
-                            this.Speed = Mathf.Min(a, (float)(this.Tick - 30) / 60f * 10f);
-
-                            this.ChangeDirection(new Direction(0f, DirectionType.Aim, 3f), 1);
-                            i++;
-                            yield return this.Wait(1);
-                        }
-                    }
-
-                    public override void OnBulletDestruction(DestroyType destroyType, SpeculativeRigidbody hitRigidbody, bool preventSpawningProjectiles)
+                    this.PostWwiseEvent("Play_PortalOpen", null);
+                    Exploder.DoDistortionWave(this.Position, 5, 0.2f, 50, 0.75f);
+                    this.Projectile.ImmuneToBlanks = true;
+                    this.Projectile.ImmuneToSustainedBlanks = true;
+                    this.Projectile.ForcePlayerBlankable = true;
+                    this.Projectile.IgnoreTileCollisionsFor(6000f);
+                    yield return this.Wait(60f);
+                    int time = 180;
+                    int i = 0;
+                    for (; ; )
                     {
-                        base.OnBulletDestruction(destroyType, hitRigidbody, preventSpawningProjectiles);
-                        if (!parent.IsEnded || !parent.Destroyed)
+                        if (parent.IsEnded || parent.Destroyed)
                         {
-                            parent.StartTask(parent.SpawnRingOfHell());
-                            this.PostWwiseEvent("Play_WPN_Life_Orb_Blast_01", null);
-                            float sadFace = UnityEngine.Random.Range(0, 30);
-                            Exploder.DoDistortionWave(this.Position, 4, 0.5f, 50, 1f);
-                            for (int e = 0; e < 24; e++)
-                            {
-                                GameManager.Instance.StartCoroutine(QuickReticleNoAngleChange(this.Position, (15f * e) + sadFace, parent, 0.625f, 30, 8, false));
-                            }
-                            parent.activeDummy = null;
+                            base.Vanish(false);
                         }
+                        if (i % time == 0 && parent.Center == false)
+                        {
+                            if (time > 91) { time -= 10; }
+                            if (time < 90) { time = 90; }
+                            switch (attackWeights.SelectByWeight(new System.Random(UnityEngine.Random.Range(1, 100))))
+                            {
+                                case 1:
+                                    for (int j = 0; j < 6; j++)
+                                    {
+                                        GameManager.Instance.StartCoroutine(QuickscopeNoob(0, parent, j * 60, 80, 30, 0.75f, 3, 0.5f));
+                                    }
+                                    yield return base.Wait(1);
+                                    i++;
+                                    break;
+                                case 2:
+                                    float Dir = UnityEngine.Random.value > 0.5f ? 0 : 45f;
+                                    for (int e = 0; e < 4; e++)
+                                    {
+                                        GameManager.Instance.StartCoroutine(QuickReticleNoAngleChange(this.Position, (90f * e) + Dir, parent, 0.75f, 25, 4));
+                                    }
+                                    yield return base.Wait(1);
+                                    i++;
+                                    break;
+                                case 3:
+                                    GameManager.Instance.StartCoroutine(QuickscopeNoob(0, parent, 0, 80, 20, 0.5f, 3, 0.5f));
+                                    GameManager.Instance.StartCoroutine(QuickscopeNoob(0, parent, 0, 80, 20, 1f, 3, 0.5f));
+                                    GameManager.Instance.StartCoroutine(QuickscopeNoob(0, parent, 0, 80, 20, 1.5f, 3, 0.5f));
+
+                                    yield return base.Wait(1);
+                                    i++;
+                                    break;
+
+                                case 4:
+                                    GameManager.Instance.StartCoroutine(QuickscopeNoob(0, parent, 0, 80, 30, 3, 1, 0.5f));
+
+                                    yield return base.Wait(1);
+                                    i++;
+                                    break;
+                            }
+                        }
+
+                        float distToTarget = (this.BulletManager.PlayerPosition() - this.Position).magnitude;
+                        float a = Mathf.Lerp(9f, 2f, Mathf.InverseLerp(6f, 2f, distToTarget));
+                        this.Speed = Mathf.Min(a, (float)(this.Tick - 30) / 60f * 10f);
+
+                        this.ChangeDirection(new Direction(0f, DirectionType.Aim, 3f), 1);
+                        i++;
+                        yield return this.Wait(1);
                     }
-
-                    private IEnumerator QuickscopeNoob(float Angle, SubphaseTwoAttack parent, float offset, float PredictionSpeedStart, float PredictionSpeedEnd, float delay = 0.25f, int BulletAmount = 3, float chargeTime = 0.25f)
-                    {
-
-                        GameObject gameObject = SpawnManager.SpawnVFX(RandomPiecesOfStuffToInitialise.LaserReticle, false);
-                        tk2dTiledSprite component2 = gameObject.GetComponent<tk2dTiledSprite>();
-                        component2.transform.position = new Vector3(this.Position.x, this.Position.y, 99999);
-                        component2.transform.localRotation = Quaternion.Euler(0f, 0f, Angle);
-                        component2.dimensions = new Vector2(1000f, 1f);
-                        component2.UpdateZDepth();
-                        component2.HeightOffGround = -2;
-                        Color laser = new Color(0f, 1f, 1f, 1f);
-                        component2.sprite.usesOverrideMaterial = true;
-                        component2.sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
-                        component2.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
-                        component2.sprite.renderer.material.SetFloat("_EmissivePower", 10);
-                        component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f);
-                        component2.sprite.renderer.material.SetColor("_OverrideColor", laser);
-                        component2.sprite.renderer.material.SetColor("_EmissiveColor", laser);
-                        float elapsed = 0;
-                        float Time = delay;
-                        while (elapsed < Time)
-                        {
-                            float t = (float)elapsed / (float)Time;
-                            if (parent.activeDummy == null)
-                            {
-                                UnityEngine.Object.Destroy(component2.gameObject);
-                                yield break;
-                            }
-
-                            if (parent.IsEnded || parent.Destroyed)
-                            {
-                                UnityEngine.Object.Destroy(component2.gameObject);
-                                yield break;
-                            }
-
-                            if (component2 != null)
-                            {
-                                float Pos = (base.GetPredictedTargetPosition(Mathf.Lerp(0, 0.6f, t), Mathf.Lerp(PredictionSpeedStart, PredictionSpeedEnd, t)) - parent.activeDummy.Position).ToAngle();
-                                component2.transform.position = new Vector3(parent.activeDummy.Position.x, parent.activeDummy.Position.y, 0);
-                                component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (25 * t));
-                                component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (10 * t));
-                                component2.transform.localRotation = Quaternion.Euler(0f, 0f, Pos + offset);
-                                component2.HeightOffGround = -2;
-                                component2.renderer.gameObject.layer = 23;
-                                component2.dimensions = new Vector2(1000f, 1f);
-                                component2.UpdateZDepth();
-                                Angle = Pos + offset;
-                            }
-                            elapsed += BraveTime.DeltaTime;
-                            yield return null;
-                        }
-                        elapsed = 0;
-                        Time = chargeTime;
-                        base.PostWwiseEvent("Play_FlashTell");
-                        while (elapsed < Time)
-                        {
-                            if (parent.activeDummy == null)
-                            {
-                                UnityEngine.Object.Destroy(component2.gameObject);
-                                yield break;
-                            }
-                            if (parent.IsEnded || parent.Destroyed)
-                            {
-                                UnityEngine.Object.Destroy(component2.gameObject);
-                                yield break;
-                            }
-                            float t = (float)elapsed / (float)Time;
-                            if (component2 != null)
-                            {
-                                component2.transform.position = new Vector3(parent.activeDummy.Position.x, parent.activeDummy.Position.y, 0);
-                                component2.dimensions = new Vector2(1000f, 1f);
-                                component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (60 * t));
-                                component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (20 * t));
-                                component2.HeightOffGround = -2;
-                                component2.renderer.gameObject.layer = 23;
-                                component2.UpdateZDepth();
-                            }
-                            elapsed += BraveTime.DeltaTime;
-                            yield return null;
-                        }
-                        UnityEngine.Object.Destroy(component2.gameObject);
-                        base.PostWwiseEvent("Play_ENM_bulletking_skull_01", null);
-                        for (int i = 0; i < BulletAmount; i++)
-                        {
-                            base.Fire(Offset.OverridePosition(parent.activeDummy.Position), new Direction(Angle, DirectionType.Absolute, -1f), new Speed(12, SpeedType.Absolute), new WallBulletNoDodge("sniperUndodgeable"));
-                            yield return new WaitForSeconds(0.025f);
-                        }
-                        yield break;
-                    }
-
-
-                    private IEnumerator QuickReticleNoAngleChange(Vector2 startPos, float aimDir, SubphaseTwoAttack parent, float chargeTime = 0.5f, float BulletSpeed = 15, int buletAmount = 10, bool ActiveDummyRequired = true)
-                    {
-
-                        GameObject gameObject = SpawnManager.SpawnVFX(RandomPiecesOfStuffToInitialise.LaserReticle, false);
-                        tk2dTiledSprite component2 = gameObject.GetComponent<tk2dTiledSprite>();
-                        component2.transform.position = new Vector3(startPos.x, startPos.y, 99999);
-                        component2.transform.localRotation = Quaternion.Euler(0f, 0f, aimDir);
-                        component2.dimensions = new Vector2(1000f, 1f);
-                        component2.UpdateZDepth();
-                        component2.HeightOffGround = -2;
-                        Color laser = new Color(0f, 1f, 1f, 1f);
-                        component2.sprite.usesOverrideMaterial = true;
-                        component2.sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
-                        component2.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
-                        component2.sprite.renderer.material.SetFloat("_EmissivePower", 10);
-                        component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f);
-                        component2.sprite.renderer.material.SetColor("_OverrideColor", laser);
-                        component2.sprite.renderer.material.SetColor("_EmissiveColor", laser);
-                        float elapsed = 0;
-                        float Time = chargeTime;
-                        while (elapsed < Time)
-                        {
-                            float t = (float)elapsed / (float)Time;
-
-                            if (parent.activeDummy == null && ActiveDummyRequired == true)
-                            {
-                                Destroy(component2.gameObject);
-                                yield break;
-                            }
-
-                            if (parent.IsEnded || parent.Destroyed)
-                            {
-                                Destroy(component2.gameObject);
-                                yield break;
-                            }
-                            if (component2 != null)
-                            {
-                                if (ActiveDummyRequired == true) { component2.transform.position = new Vector3(parent.activeDummy.Position.x, parent.activeDummy.Position.y, 0); }
-
-                                component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (25 * t));
-                                component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (10 * t));
-                                component2.transform.localRotation = Quaternion.Euler(0f, 0f, aimDir);
-                                component2.HeightOffGround = -2;
-                                component2.renderer.gameObject.layer = 23;
-                                component2.dimensions = new Vector2(1000f, 1f);
-                                component2.UpdateZDepth();
-                            }
-                            elapsed += BraveTime.DeltaTime;
-                            yield return null;
-                        }
-                        elapsed = 0;
-                        Time = 0.25f;
-                        base.PostWwiseEvent("Play_FlashTell");
-                        while (elapsed < Time)
-                        {
-                            if (parent.activeDummy == null && ActiveDummyRequired == true)
-                            {
-                                Destroy(component2.gameObject);
-                                yield break;
-                            }
-                            if (parent.IsEnded || parent.Destroyed)
-                            {
-                                Destroy(component2.gameObject);
-                                yield break;
-                            }
-                            float t = (float)elapsed / (float)Time;
-                            if (component2 != null)
-                            {
-                                if (ActiveDummyRequired == true) { component2.transform.position = new Vector3(parent.activeDummy.Position.x, parent.activeDummy.Position.y, 0); }
-                                component2.dimensions = new Vector2(1000f, 1f);
-                                component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (60 * t));
-                                component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (20 * t));
-                                component2.HeightOffGround = -2;
-                                component2.renderer.gameObject.layer = 23;
-                                component2.UpdateZDepth();
-                            }
-                            elapsed += BraveTime.DeltaTime;
-                            yield return null;
-                        }
-                        Vector2 position = component2.gameObject.transform.PositionVector2();
-                        Destroy(component2.gameObject);
-                        base.PostWwiseEvent("Play_ENM_bulletking_skull_01", null);
-                        for (int i = 0; i < buletAmount; i++)
-                        {
-                            base.Fire(Offset.OverridePosition(ActiveDummyRequired == true ? parent.activeDummy.Position : position), new Direction(aimDir, DirectionType.Absolute, -1f), new Speed(BulletSpeed, SpeedType.Absolute), new WallBulletNoDodge("sniperUndodgeable"));
-                            yield return new WaitForSeconds(0.025f);
-                        }
-                        yield break;
-                    }
-                    private SubphaseTwoAttack parent;
                 }
 
-
-
-
-                public class WallBulletNoDodge : Bullet
+                public override void OnBulletDestruction(DestroyType destroyType, SpeculativeRigidbody hitRigidbody, bool preventSpawningProjectiles)
                 {
-                    public WallBulletNoDodge(string BulletType) : base(BulletType, false, false, false)
+                    base.OnBulletDestruction(destroyType, hitRigidbody, preventSpawningProjectiles);
+                    if (!parent.IsEnded || !parent.Destroyed)
                     {
-                    }
-                    protected override IEnumerator Top()
-                    {
-                        this.Projectile.IgnoreTileCollisionsFor(300f);
-                        this.Projectile.specRigidbody.AddCollisionLayerIgnoreOverride(CollisionMask.LayerToMask(CollisionLayer.HighObstacle, CollisionLayer.LowObstacle));
-
-                        this.Projectile.ImmuneToBlanks = true;
-                        this.Projectile.ImmuneToSustainedBlanks = true;
-
-                        this.Projectile.pierceMinorBreakables = true;
-                        yield break;
+                        parent.StartTask(parent.SpawnRingOfHell());
+                        this.PostWwiseEvent("Play_WPN_Life_Orb_Blast_01", null);
+                        float sadFace = UnityEngine.Random.Range(0, 30);
+                        Exploder.DoDistortionWave(this.Position, 4, 0.5f, 50, 1f);
+                        for (int e = 0; e < 24; e++)
+                        {
+                            GameManager.Instance.StartCoroutine(QuickReticleNoAngleChange(this.Position, (15f * e) + sadFace, parent, 0.625f, 30, 8, false));
+                        }
+                        parent.activeDummy = null;
                     }
                 }
 
-                public class TargetBullet : Bullet
+                private IEnumerator QuickscopeNoob(float Angle, SubphaseTwoAttack parent, float offset, float PredictionSpeedStart, float PredictionSpeedEnd, float delay = 0.25f, int BulletAmount = 3, float chargeTime = 0.25f)
                 {
-                    public TargetBullet(SubphaseTwoAttack parent, Projectile targetDummy) : base("undodgeableDefault", false, false, false)
+
+                    GameObject gameObject = SpawnManager.SpawnVFX(RandomPiecesOfStuffToInitialise.LaserReticle, false);
+                    tk2dTiledSprite component2 = gameObject.GetComponent<tk2dTiledSprite>();
+                    component2.transform.position = new Vector3(this.Position.x, this.Position.y, 99999);
+                    component2.transform.localRotation = Quaternion.Euler(0f, 0f, Angle);
+                    component2.dimensions = new Vector2(1000f, 1f);
+                    component2.UpdateZDepth();
+                    component2.HeightOffGround = -2;
+                    Color laser = new Color(0f, 1f, 1f, 1f);
+                    component2.sprite.usesOverrideMaterial = true;
+                    component2.sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
+                    component2.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+                    component2.sprite.renderer.material.SetFloat("_EmissivePower", 10);
+                    component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f);
+                    component2.sprite.renderer.material.SetColor("_OverrideColor", laser);
+                    component2.sprite.renderer.material.SetColor("_EmissiveColor", laser);
+                    float elapsed = 0;
+                    float Time = delay;
+                    while (elapsed < Time)
                     {
-                        this.m_parent = parent;
-                        this.m_targetDummy = targetDummy;
-                    }
-
-                    protected override IEnumerator Top()
-                    {
-                        this.m_parent.activeRingSegments.Add(this);
-                        this.Projectile.ImmuneToBlanks = true;
-                        this.Projectile.ImmuneToSustainedBlanks = true;
-                        this.Projectile.ForcePlayerBlankable = true;
-                        this.Projectile.IgnoreTileCollisionsFor(6000f);
-
-
-                        Vector2 toCenter = this.Position - this.m_targetDummy.transform.PositionVector2();
-                        float angle = toCenter.ToAngle();
-                        float radius = toCenter.magnitude;
-                        float deltaRadius = radius / 60f;
-                        this.ManualControl = true;
-                        this.Projectile.specRigidbody.CollideWithTileMap = false;
-                        this.Projectile.specRigidbody.AddCollisionLayerIgnoreOverride(CollisionMask.LayerToMask(CollisionLayer.HighObstacle, CollisionLayer.LowObstacle));
-                        while (!this.m_parent.Destroyed && !this.m_parent.IsEnded && this.m_parent.Done == false)
+                        float t = (float)elapsed / (float)Time;
+                        if (parent.activeDummy == null)
                         {
-                            if (m_targetDummy == null)
-                            {
-                                this.Vanish(false);
-                                yield break;
-                            }
-
-                            if (this.Tick < 60)
-                            {
-                                radius += deltaRadius * 3f;
-                            }
-                            if (this.m_parent.Center)
-                            {
-                                radius += deltaRadius;
-                            }
-                            angle += 1.3333334f;
-                            this.Position = this.m_targetDummy.transform.PositionVector2() + BraveMathCollege.DegreesToVector(angle, radius);
-                            yield return this.Wait(1);
+                            UnityEngine.Object.Destroy(component2.gameObject);
+                            yield break;
                         }
-                        this.Vanish(false);
-                        //this.PostWwiseEvent("Play_BOSS_RatMech_Bomb_01", null);
-                        yield break;
+
+                        if (parent.IsEnded || parent.Destroyed)
+                        {
+                            UnityEngine.Object.Destroy(component2.gameObject);
+                            yield break;
+                        }
+
+                        if (component2 != null)
+                        {
+                            float Pos = (base.GetPredictedTargetPosition(Mathf.Lerp(0, 0.6f, t), Mathf.Lerp(PredictionSpeedStart, PredictionSpeedEnd, t)) - parent.activeDummy.Position).ToAngle();
+                            component2.transform.position = new Vector3(parent.activeDummy.Position.x, parent.activeDummy.Position.y, 0);
+                            component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (25 * t));
+                            component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (10 * t));
+                            component2.transform.localRotation = Quaternion.Euler(0f, 0f, Pos + offset);
+                            component2.HeightOffGround = -2;
+                            component2.renderer.gameObject.layer = 23;
+                            component2.dimensions = new Vector2(1000f, 1f);
+                            component2.UpdateZDepth();
+                            Angle = Pos + offset;
+                        }
+                        elapsed += BraveTime.DeltaTime;
+                        yield return null;
                     }
-
-                    private SubphaseTwoAttack m_parent;
-
-                    private Projectile m_targetDummy;
+                    elapsed = 0;
+                    Time = chargeTime;
+                    base.PostWwiseEvent("Play_FlashTell");
+                    while (elapsed < Time)
+                    {
+                        if (parent.activeDummy == null)
+                        {
+                            UnityEngine.Object.Destroy(component2.gameObject);
+                            yield break;
+                        }
+                        if (parent.IsEnded || parent.Destroyed)
+                        {
+                            UnityEngine.Object.Destroy(component2.gameObject);
+                            yield break;
+                        }
+                        float t = (float)elapsed / (float)Time;
+                        if (component2 != null)
+                        {
+                            component2.transform.position = new Vector3(parent.activeDummy.Position.x, parent.activeDummy.Position.y, 0);
+                            component2.dimensions = new Vector2(1000f, 1f);
+                            component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (60 * t));
+                            component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (20 * t));
+                            component2.HeightOffGround = -2;
+                            component2.renderer.gameObject.layer = 23;
+                            component2.UpdateZDepth();
+                        }
+                        elapsed += BraveTime.DeltaTime;
+                        yield return null;
+                    }
+                    UnityEngine.Object.Destroy(component2.gameObject);
+                    base.PostWwiseEvent("Play_ENM_bulletking_skull_01", null);
+                    for (int i = 0; i < BulletAmount; i++)
+                    {
+                        base.Fire(Offset.OverridePosition(parent.activeDummy.Position), new Direction(Angle, DirectionType.Absolute, -1f), new Speed(12, SpeedType.Absolute), new WallBulletNoDodge("sniperUndodgeable"));
+                        yield return new WaitForSeconds(0.025f);
+                    }
+                    yield break;
                 }
 
-                public class RotatedBullet : Bullet
+
+                private IEnumerator QuickReticleNoAngleChange(Vector2 startPos, float aimDir, SubphaseTwoAttack parent, float chargeTime = 0.5f, float BulletSpeed = 15, int buletAmount = 10, bool ActiveDummyRequired = true)
                 {
-                    public RotatedBullet(float spinspeed, float RevUp, float StartSpeenAgain, string BulletType, SubphaseTwoAttack parent, bool IsEarliestRing, float angle = 0f, float startRadius = 50) : base(BulletType, false, false, false)
+
+                    GameObject gameObject = SpawnManager.SpawnVFX(RandomPiecesOfStuffToInitialise.LaserReticle, false);
+                    tk2dTiledSprite component2 = gameObject.GetComponent<tk2dTiledSprite>();
+                    component2.transform.position = new Vector3(startPos.x, startPos.y, 99999);
+                    component2.transform.localRotation = Quaternion.Euler(0f, 0f, aimDir);
+                    component2.dimensions = new Vector2(1000f, 1f);
+                    component2.UpdateZDepth();
+                    component2.HeightOffGround = -2;
+                    Color laser = new Color(0f, 1f, 1f, 1f);
+                    component2.sprite.usesOverrideMaterial = true;
+                    component2.sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
+                    component2.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+                    component2.sprite.renderer.material.SetFloat("_EmissivePower", 10);
+                    component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f);
+                    component2.sprite.renderer.material.SetColor("_OverrideColor", laser);
+                    component2.sprite.renderer.material.SetColor("_EmissiveColor", laser);
+                    float elapsed = 0;
+                    float Time = chargeTime;
+                    while (elapsed < Time)
                     {
-                        this.m_spinSpeed = spinspeed;
-                        this.TimeToRevUp = RevUp;
-                        this.StartAgain = StartSpeenAgain;
+                        float t = (float)elapsed / (float)Time;
 
-                        this.m_parent = parent;
-                        this.m_angle = angle;
-                        this.m_bulletype = BulletType;
-                        this.SuppressVfx = true;
-                        this.startRadius = startRadius;
-                        this.IsEarliestRing = IsEarliestRing;
-                    }
-
-                    protected override IEnumerator Top()
-                    {
-                        this.Projectile.IgnoreTileCollisionsFor(6000f);
-                        this.Projectile.specRigidbody.AddCollisionLayerIgnoreOverride(CollisionMask.LayerToMask(CollisionLayer.HighObstacle, CollisionLayer.LowObstacle));
-
-                        this.Projectile.ImmuneToBlanks = true;
-                        this.Projectile.ImmuneToSustainedBlanks = true;
-
-                        this.Projectile.pierceMinorBreakables = true;
-
-                        base.Projectile.transform.localRotation = Quaternion.Euler(0f, 0f, this.m_angle);
-                        base.ManualControl = true;
-                        Vector2 centerPosition = base.BulletBank.aiActor.ParentRoom.GetCenterCell().ToCenterVector2();
-                        float radius = startRadius;
-                        for (int i = 0; i < 6000; i++)
+                        if (parent.activeDummy == null && ActiveDummyRequired == true)
                         {
-
-                            radius -= (BraveTime.DeltaTime * 1.15f);
-                            if (radius < 8.75f) { this.Projectile.DieInAir(false); yield break; }
-                            if (m_parent.IsEnded || m_parent.Destroyed)
-                            {
-                                this.StartTask(ChangeSpinSpeedTask(radius, centerPosition));
-                                yield break;
-                            }
-                            centerPosition += this.Velocity / 60f;
-                            base.UpdateVelocity();
-                            this.m_angle += this.m_spinSpeed / 60f;
-                            base.Projectile.shouldRotate = true;
-                            base.Direction = this.m_angle;
-                            base.Position = centerPosition + BraveMathCollege.DegreesToVector(this.m_angle, radius);
-
-                            yield return base.Wait(1);
+                            Destroy(component2.gameObject);
+                            yield break;
                         }
-                        base.Vanish(false);
-                        yield break;
-                    }
 
-                    private IEnumerator ChangeSpinSpeedTask(float ra, Vector2 CenterPos)
-                    {
-                        float radius = ra;
-                        Vector2 centerPosition = CenterPos;
-                        for (int i = 0; i < 150; i++)
+                        if (parent.IsEnded || parent.Destroyed)
                         {
-                            radius += 0.01f * (i / 2);
-                            base.UpdateVelocity();
-                            this.m_angle += this.m_spinSpeed / 60f;
-                            base.Projectile.shouldRotate = true;
-                            base.Direction = this.m_angle;
-                            base.Position = centerPosition + BraveMathCollege.DegreesToVector(this.m_angle, radius);
-                            yield return base.Wait(1);
+                            Destroy(component2.gameObject);
+                            yield break;
                         }
-                        this.Projectile.DieInAir(false);
-                        yield break;
-                    }
-                    private const float ExpandSpeed = 4.5f;
-                    private const float SpinSpeed = 40f;
-                    private SubphaseTwoAttack m_parent;
-                    private float m_angle;
-                    private float m_spinSpeed;
-                    private string m_bulletype;
-                    private float TimeToRevUp;
-                    private float StartAgain;
-                    private float startRadius;
-                    private bool IsEarliestRing;
+                        if (component2 != null)
+                        {
+                            if (ActiveDummyRequired == true) { component2.transform.position = new Vector3(parent.activeDummy.Position.x, parent.activeDummy.Position.y, 0); }
 
+                            component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (25 * t));
+                            component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (10 * t));
+                            component2.transform.localRotation = Quaternion.Euler(0f, 0f, aimDir);
+                            component2.HeightOffGround = -2;
+                            component2.renderer.gameObject.layer = 23;
+                            component2.dimensions = new Vector2(1000f, 1f);
+                            component2.UpdateZDepth();
+                        }
+                        elapsed += BraveTime.DeltaTime;
+                        yield return null;
+                    }
+                    elapsed = 0;
+                    Time = 0.25f;
+                    base.PostWwiseEvent("Play_FlashTell");
+                    while (elapsed < Time)
+                    {
+                        if (parent.activeDummy == null && ActiveDummyRequired == true)
+                        {
+                            Destroy(component2.gameObject);
+                            yield break;
+                        }
+                        if (parent.IsEnded || parent.Destroyed)
+                        {
+                            Destroy(component2.gameObject);
+                            yield break;
+                        }
+                        float t = (float)elapsed / (float)Time;
+                        if (component2 != null)
+                        {
+                            if (ActiveDummyRequired == true) { component2.transform.position = new Vector3(parent.activeDummy.Position.x, parent.activeDummy.Position.y, 0); }
+                            component2.dimensions = new Vector2(1000f, 1f);
+                            component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (60 * t));
+                            component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (20 * t));
+                            component2.HeightOffGround = -2;
+                            component2.renderer.gameObject.layer = 23;
+                            component2.UpdateZDepth();
+                        }
+                        elapsed += BraveTime.DeltaTime;
+                        yield return null;
+                    }
+                    Vector2 position = component2.gameObject.transform.PositionVector2();
+                    Destroy(component2.gameObject);
+                    base.PostWwiseEvent("Play_ENM_bulletking_skull_01", null);
+                    for (int i = 0; i < buletAmount; i++)
+                    {
+                        base.Fire(Offset.OverridePosition(ActiveDummyRequired == true ? parent.activeDummy.Position : position), new Direction(aimDir, DirectionType.Absolute, -1f), new Speed(BulletSpeed, SpeedType.Absolute), new WallBulletNoDodge("sniperUndodgeable"));
+                        yield return new WaitForSeconds(0.025f);
+                    }
+                    yield break;
                 }
-            
+                private SubphaseTwoAttack parent;
+            }
+
+
+
+
+            public class WallBulletNoDodge : Bullet
+            {
+                public WallBulletNoDodge(string BulletType) : base(BulletType, false, false, false)
+                {
+                }
+                protected override IEnumerator Top()
+                {
+                    this.Projectile.IgnoreTileCollisionsFor(300f);
+                    this.Projectile.specRigidbody.AddCollisionLayerIgnoreOverride(CollisionMask.LayerToMask(CollisionLayer.HighObstacle, CollisionLayer.LowObstacle));
+
+                    this.Projectile.ImmuneToBlanks = true;
+                    this.Projectile.ImmuneToSustainedBlanks = true;
+
+                    this.Projectile.pierceMinorBreakables = true;
+                    yield break;
+                }
+            }
+
+            public class TargetBullet : Bullet
+            {
+                public TargetBullet(SubphaseTwoAttack parent, Projectile targetDummy) : base("undodgeableDefault", false, false, false)
+                {
+                    this.m_parent = parent;
+                    this.m_targetDummy = targetDummy;
+                }
+
+                protected override IEnumerator Top()
+                {
+                    this.m_parent.activeRingSegments.Add(this);
+                    this.Projectile.ImmuneToBlanks = true;
+                    this.Projectile.ImmuneToSustainedBlanks = true;
+                    this.Projectile.ForcePlayerBlankable = true;
+                    this.Projectile.IgnoreTileCollisionsFor(6000f);
+
+
+                    Vector2 toCenter = this.Position - this.m_targetDummy.transform.PositionVector2();
+                    float angle = toCenter.ToAngle();
+                    float radius = toCenter.magnitude;
+                    float deltaRadius = radius / 60f;
+                    this.ManualControl = true;
+                    this.Projectile.specRigidbody.CollideWithTileMap = false;
+                    this.Projectile.specRigidbody.AddCollisionLayerIgnoreOverride(CollisionMask.LayerToMask(CollisionLayer.HighObstacle, CollisionLayer.LowObstacle));
+                    while (!this.m_parent.Destroyed && !this.m_parent.IsEnded && this.m_parent.Done == false)
+                    {
+                        if (m_targetDummy == null)
+                        {
+                            this.Vanish(false);
+                            yield break;
+                        }
+
+                        if (this.Tick < 60)
+                        {
+                            radius += deltaRadius * 3f;
+                        }
+                        if (this.m_parent.Center)
+                        {
+                            radius += deltaRadius;
+                        }
+                        angle += 1.3333334f;
+                        this.Position = this.m_targetDummy.transform.PositionVector2() + BraveMathCollege.DegreesToVector(angle, radius);
+                        yield return this.Wait(1);
+                    }
+                    this.Vanish(false);
+                    //this.PostWwiseEvent("Play_BOSS_RatMech_Bomb_01", null);
+                    yield break;
+                }
+
+                private SubphaseTwoAttack m_parent;
+
+                private Projectile m_targetDummy;
+            }
+
+            public class RotatedBullet : Bullet
+            {
+                public RotatedBullet(float spinspeed, float RevUp, float StartSpeenAgain, string BulletType, SubphaseTwoAttack parent, bool IsEarliestRing, float angle = 0f, float startRadius = 50) : base(BulletType, false, false, false)
+                {
+                    this.m_spinSpeed = spinspeed;
+                    this.TimeToRevUp = RevUp;
+                    this.StartAgain = StartSpeenAgain;
+
+                    this.m_parent = parent;
+                    this.m_angle = angle;
+                    this.m_bulletype = BulletType;
+                    this.SuppressVfx = true;
+                    this.startRadius = startRadius;
+                    this.IsEarliestRing = IsEarliestRing;
+                }
+
+                protected override IEnumerator Top()
+                {
+                    this.Projectile.IgnoreTileCollisionsFor(6000f);
+                    this.Projectile.specRigidbody.AddCollisionLayerIgnoreOverride(CollisionMask.LayerToMask(CollisionLayer.HighObstacle, CollisionLayer.LowObstacle));
+
+                    this.Projectile.ImmuneToBlanks = true;
+                    this.Projectile.ImmuneToSustainedBlanks = true;
+
+                    this.Projectile.pierceMinorBreakables = true;
+
+                    base.Projectile.transform.localRotation = Quaternion.Euler(0f, 0f, this.m_angle);
+                    base.ManualControl = true;
+                    Vector2 centerPosition = base.BulletBank.aiActor.ParentRoom.GetCenterCell().ToCenterVector2();
+                    float radius = startRadius;
+                    for (int i = 0; i < 6000; i++)
+                    {
+
+                        radius -= (BraveTime.DeltaTime * 1.15f);
+                        if (radius < 8.75f) { this.Projectile.DieInAir(false); yield break; }
+                        if (m_parent.IsEnded || m_parent.Destroyed)
+                        {
+                            this.StartTask(ChangeSpinSpeedTask(radius, centerPosition));
+                            yield break;
+                        }
+                        centerPosition += this.Velocity / 60f;
+                        base.UpdateVelocity();
+                        this.m_angle += this.m_spinSpeed / 60f;
+                        base.Projectile.shouldRotate = true;
+                        base.Direction = this.m_angle;
+                        base.Position = centerPosition + BraveMathCollege.DegreesToVector(this.m_angle, radius);
+
+                        yield return base.Wait(1);
+                    }
+                    base.Vanish(false);
+                    yield break;
+                }
+
+                private IEnumerator ChangeSpinSpeedTask(float ra, Vector2 CenterPos)
+                {
+                    float radius = ra;
+                    Vector2 centerPosition = CenterPos;
+                    for (int i = 0; i < 150; i++)
+                    {
+                        radius += 0.01f * (i / 2);
+                        base.UpdateVelocity();
+                        this.m_angle += this.m_spinSpeed / 60f;
+                        base.Projectile.shouldRotate = true;
+                        base.Direction = this.m_angle;
+                        base.Position = centerPosition + BraveMathCollege.DegreesToVector(this.m_angle, radius);
+                        yield return base.Wait(1);
+                    }
+                    this.Projectile.DieInAir(false);
+                    yield break;
+                }
+                private const float ExpandSpeed = 4.5f;
+                private const float SpinSpeed = 40f;
+                private SubphaseTwoAttack m_parent;
+                private float m_angle;
+                private float m_spinSpeed;
+                private string m_bulletype;
+                private float TimeToRevUp;
+                private float StartAgain;
+                private float startRadius;
+                private bool IsEarliestRing;
+
+            }
+
         }
+
     }
 }

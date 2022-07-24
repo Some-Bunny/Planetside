@@ -214,7 +214,7 @@ namespace Planetside
 			yield break;
 		}
 
-		protected void Update()
+		public override void Update()
 		{
 			if (gun.CurrentOwner)
 			{

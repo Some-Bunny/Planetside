@@ -3,13 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using HarmonyLib;
 
 namespace ItemAPI
 {
+
+    [HarmonyPatch]
     static class CustomClipAmmoTypeToolbox
     {
-
-
+        /*
+        [HarmonyPatch(typeof(GameUIAmmoController), "UpdateAmmoUIForModule")]
+        [HarmonyPostfix]
+        public static void ActivateClipSprites(dfTiledSprite currentAmmoFGSprite, dfTiledSprite currentAmmoBGSprite)
+        {
+            if (currentAmmoFGSprite != null && !currentAmmoFGSprite.gameObject.activeSelf)
+            {
+                currentAmmoFGSprite.gameObject.SetActive(true);
+            }
+            if (currentAmmoBGSprite != null && !currentAmmoBGSprite.gameObject.activeSelf)
+            {
+                currentAmmoBGSprite.gameObject.SetActive(true);
+            }
+        }
+        */
         /*
          gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
          gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Rebar Shells", "NevernamedsItems/Resources/CustomGunAmmoTypes/rebargun_clipfull", "NevernamedsItems/Resources/CustomGunAmmoTypes/rebargun_clipempty");

@@ -6,6 +6,7 @@ using System.Reflection;
 using System.IO;
 using Ionic.Zip;
 using System.Runtime.InteropServices;
+using BepInEx;
 
 namespace SoundAPI
 {
@@ -79,16 +80,16 @@ namespace SoundAPI
         /// </summary>
         /// <param name="mod">The mod's <see cref="ETGModule"/>.</param>
         /// <param name="fileName">The name of the bank file. Doesn't need to include the .bnk at the end.</param>
-        public static void LoadBankFromModFolderOrZip(this ETGModule mod, string fileName)
+        public static void LoadBankFromModFolderOrZip(this BaseUnityPlugin mod, string fileName)
         {
             if (!fileName.EndsWith(".bnk"))
             {
                 fileName += ".bnk";
             }
             int FilesLoaded = 0;
-            if (File.Exists(mod.Metadata.Archive))
+            if (File.Exists(Planetside.PlanetsideModule.FilePathFolder))
             {
-                ZipFile ModZIP = ZipFile.Read(mod.Metadata.Archive);
+                ZipFile ModZIP = ZipFile.Read(Planetside.PlanetsideModule.FilePathFolder);
                 if (ModZIP != null && ModZIP.Entries.Count > 0)
                 {
                     foreach (ZipEntry entry in ModZIP.Entries)
@@ -108,19 +109,19 @@ namespace SoundAPI
                     if (FilesLoaded > 0) { return; }
                 }
             }
-            LoadFromPath(mod.Metadata.Directory, fileName);
+            LoadFromPath(Planetside.PlanetsideModule.FilePathFolder, fileName);
         }
 
         /// <summary>
         /// Loads all soundbanks from the mod's folder/zip.
         /// </summary>
         /// <param name="mod">The mod's <see cref="ETGModule"/>.</param>
-        public static void LoadBanksFromModFolderOrZip(this ETGModule mod)
+        public static void LoadBanksFromModFolderOrZip(this BaseUnityPlugin mod)
         {
             int FilesLoaded = 0;
-            if (File.Exists(mod.Metadata.Archive))
+            if (File.Exists(Planetside.PlanetsideModule.FilePathFolder))
             {
-                ZipFile ModZIP = ZipFile.Read(mod.Metadata.Archive);
+                ZipFile ModZIP = ZipFile.Read(Planetside.PlanetsideModule.FilePathFolder);
                 if (ModZIP != null && ModZIP.Entries.Count > 0)
                 {
                     foreach (ZipEntry entry in ModZIP.Entries)
@@ -139,7 +140,7 @@ namespace SoundAPI
                     if (FilesLoaded > 0) { return; }
                 }
             }
-            AutoloadFromPath(mod.Metadata.Directory);
+            AutoloadFromPath(Planetside.PlanetsideModule.FilePathFolder);
         }
 
         /// <summary>

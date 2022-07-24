@@ -53,6 +53,10 @@ namespace Planetside
             return _returnVector;
         }
 
+        public static float SinLerpTValue(float t)
+        {
+            return  Mathf.Sin(t * (Mathf.PI / 2));
+        }
     }
 }
 

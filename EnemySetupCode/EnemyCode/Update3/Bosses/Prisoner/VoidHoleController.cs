@@ -55,7 +55,7 @@ namespace Planetside
                                 component2.playAutomatically = true;
                             }
                         }
-                        player.healthHaver.ApplyDamage(0.5f, player.transform.position, "Eye Of The Deep", CoreDamageTypes.Void, DamageCategory.Normal, true, null, true);
+                        player.healthHaver.ApplyDamage(0.5f, player.transform.position, "Void Fog", CoreDamageTypes.Void, DamageCategory.Unstoppable, true, null, true);
                     }
                 }
             }
@@ -69,6 +69,7 @@ namespace Planetside
         {
             if (base.gameObject == null) { ETGModConsole.Log("object is NULL"); }
            // if (base.gameObject.GetComponent<MeshRenderer>() == null) { ETGModConsole.Log("MeshRenderer is NULL"); }
+            /*
             foreach (Component a in base.gameObject.GetComponentsInChildren(typeof(Component)))
             {
                 if (a)
@@ -78,7 +79,7 @@ namespace Planetside
 
                 }
             }
-
+            */
             //Vector2.Distance(new Vector2(0,0), new Vector2(base.gameObject.GetComponentInChildren<MeshRenderer>().sharedMaterials[0].GetFloat("_HoleSize")))
 
             if (base.gameObject.GetComponentInChildren<MeshRenderer>().sharedMaterial.shader == null) { ETGModConsole.Log("sharedMaterial is NULL"); }

@@ -152,9 +152,6 @@ namespace Planetside
                 gun.spriteAnimator.UpdateAnimation(0.1f);
             }
         }
-        protected void Update()
-        {
-        }
     }
 }
 

@@ -81,7 +81,7 @@ namespace Planetside
 		}
 		private bool HasReloaded;
 
-		protected void Update()
+		public override void Update()
 		{
 			if (gun.CurrentOwner)
 			{

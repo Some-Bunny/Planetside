@@ -33,15 +33,13 @@ namespace Planetside
                 defaultPath+"trespassPillar6.png",
                 defaultPath+"trespassPillar7.png",
             };
-            MajorBreakable statue = BreakableAPIToolbox.GenerateMajorBreakable("trespass_light", idlePaths, 6, null, 1, 15000, null, 0f, -0.1875f, true, 12, 20, 4, -4, true, null, null, true, null);
+            MajorBreakable statue = BreakableAPIToolbox.GenerateMajorBreakable("trespass_light", idlePaths, 6, null, 1, 15000, defaultPath+ "trespassPillarShadow.png", 0.1875f, -0.1875f, true, 12, 20, 4, -4, true, null, null, true, null);
             statue.gameObject.AddComponent<TresspassLightController>();
             statue.DamageReduction = 1000;
-
             Dictionary<GameObject, float> dict = new Dictionary<GameObject, float>()
             {
                 { statue.gameObject, 0.5f },
             };
-
             DungeonPlaceable placeable = BreakableAPIToolbox.GenerateDungeonPlaceable(dict);
             StaticReferences.StoredDungeonPlaceables.Add("trespassLight", placeable);
         }

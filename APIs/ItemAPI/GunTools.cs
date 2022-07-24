@@ -150,6 +150,10 @@ namespace ItemAPI
             def.position1 = new Vector3(0f + trueWidth, 0f, 0f);
             def.position2 = new Vector3(0f, 0f + trueHeight, 0f);
             def.position3 = new Vector3(0f + trueWidth, 0f + trueHeight, 0f);
+
+            def.materialInst.mainTexture = ETGMod.Databases.Items.ProjectileCollection.inst.spriteDefinitions[id].materialInst.mainTexture;
+            def.uvs = ETGMod.Databases.Items.ProjectileCollection.inst.spriteDefinitions[id].uvs.ToArray();
+
             def.colliderVertices = new Vector3[2];
             def.colliderVertices[0] = new Vector3(colliderOffsetX, colliderOffsetY, 0f);
             def.colliderVertices[1] = new Vector3(colliderWidth / 2, colliderHeight / 2);
@@ -177,6 +181,7 @@ namespace ItemAPI
                 proj.GetAnySprite().spriteId = ETGMod.Databases.Items.ProjectileCollection.inst.GetSpriteIdByName(name);
                 tk2dSpriteDefinition def = SetupDefinitionForProjectileSprite(name, proj.GetAnySprite().spriteId, pixelWidth, pixelHeight, lightened, overrideColliderPixelWidth, overrideColliderPixelHeight, overrideColliderOffsetX,
                     overrideColliderOffsetY, overrideProjectileToCopyFrom);
+
                 def.ConstructOffsetsFromAnchor(anchor, def.position3, fixesScale, anchorChangesCollider);
                 proj.GetAnySprite().scale = new Vector3(1f, 1f, 1f);
                 proj.transform.localScale = new Vector3(1f, 1f, 1f);

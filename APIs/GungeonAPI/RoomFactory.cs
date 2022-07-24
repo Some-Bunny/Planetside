@@ -24,9 +24,10 @@ namespace GungeonAPI
 
         public static void LoadRoomsFromRoomDirectory()
         {
-            string roomDirectory = PlanetsideModule.ZipFilePath;
-            string unzippedDirectory = PlanetsideModule.RoomFilePath;
 
+            //string roomDirectory = PlanetsideModule.ZipFilePath;
+            //string unzippedDirectory = PlanetsideModule.RoomFilePath;
+            /*
             if (File.Exists(roomDirectory))
             {
 
@@ -51,13 +52,18 @@ namespace GungeonAPI
                     }
             }
             else
+            */
+            string unzippedDirectory = PlanetsideModule.RoomFilePath;
+            //ETGModConsole.Log(unzippedDirectory);
+
             {
-                Directory.CreateDirectory(unzippedDirectory);
+                //Directory.CreateDirectory(unzippedDirectory);
                 foreach (string g in Directory.GetFiles(unzippedDirectory, "*", SearchOption.AllDirectories))
                 {
                     if (g.EndsWith(".room", StringComparison.OrdinalIgnoreCase))
                     {
                         string name = Path.GetFullPath(g).RemovePrefix(unzippedDirectory).RemoveSuffix(".room");
+                        //ETGModConsole.Log(name);
                         //Tools.PrintNoID($"Found room: \"{name}\"");
                         var roomData = BuildFromRoomFile(g);
                         DungeonHandler.Register(roomData);

@@ -342,8 +342,8 @@ namespace Planetside
 				companion.aiActor.specRigidbody.CollideWithOthers = true;
 				companion.aiActor.specRigidbody.CollideWithTileMap = true;
 				companion.aiActor.PreventFallingInPitsEver = true;
-				companion.aiActor.healthHaver.ForceSetCurrentHealth(925f);
-				companion.aiActor.healthHaver.SetHealthMaximum(925f);
+				companion.aiActor.healthHaver.ForceSetCurrentHealth(975f);
+				companion.aiActor.healthHaver.SetHealthMaximum(975f);
 				companion.aiActor.CollisionKnockbackStrength = 2f;
 				companion.aiActor.CanTargetPlayers = true;
 				companion.aiActor.procedurallyOutlined = true;
@@ -352,7 +352,6 @@ namespace Planetside
 				companion.aiActor.gameObject.AddComponent<tk2dSpriteAttachPoint>();
 				companion.aiActor.gameObject.AddComponent<ObjectVisibilityManager>();
 				companion.aiActor.HasShadow = true;
-
 				EnemyToolbox.AddShadowToAIActor(companion.aiActor, StaticEnemyShadows.largeShadow, new Vector2(1.5f, 0.25f), "shadowPos");
 
 
@@ -1930,6 +1929,7 @@ namespace Planetside
 				companion.encounterTrackable.journalData.NotificationPanelDescription = "#HMPRIME_SD";
 				companion.encounterTrackable.journalData.AmmonomiconFullEntry = "#HMPRIME_LD";
 				EnemyBuilder.AddEnemyToDatabase(companion.gameObject, "psog:hm_prime");
+
 				EnemyDatabase.GetEntry("psog:hm_prime").ForcedPositionInAmmonomicon = 201;
 				EnemyDatabase.GetEntry("psog:hm_prime").isInBossTab = true;
 				EnemyDatabase.GetEntry("psog:hm_prime").isNormalEnemy = true;
@@ -1970,12 +1970,12 @@ namespace Planetside
 				{
 					miniBossIntroDoer.portraitSlideSettings.bossArtSprite = BossCardTexture;
 					miniBossIntroDoer.SkipBossCard = false;
-					companion.aiActor.healthHaver.bossHealthBar = HealthHaver.BossBarType.SubbossBar;
+					companion.aiActor.healthHaver.bossHealthBar = HealthHaver.BossBarType.MainBar;
 				}
 				else
 				{
 					miniBossIntroDoer.SkipBossCard = true;
-					companion.aiActor.healthHaver.bossHealthBar = HealthHaver.BossBarType.SubbossBar;
+					companion.aiActor.healthHaver.bossHealthBar = HealthHaver.BossBarType.MainBar;
 				}
 				miniBossIntroDoer.SkipFinalizeAnimation = true;
 				miniBossIntroDoer.RegenerateCache();

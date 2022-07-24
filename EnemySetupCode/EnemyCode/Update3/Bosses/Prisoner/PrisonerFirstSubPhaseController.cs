@@ -197,9 +197,9 @@ namespace Planetside
         {
             {"SimpleBlastsTwo", 0.8f },
             {"WallSweepTwo", 1f },
-            {"LaserCrossTwo", 2 },
+            {"LaserCrossTwo", 1.5f },
             {"SweepJukeAttackTwo", 0.9f },
-            {"BasicLaserAttackTellTwo", 1.2f },
+            {"BasicLaserAttackTellTwo", 1.1f },
             {"ChainRotatorsTwo", 0.8f },
         };
 
@@ -227,6 +227,7 @@ namespace Planetside
                 this.EndOnBlank = false;
                 base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableDefault);
                 base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSniper);
+                base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableOldKingHomingRingBulletSoundless);
 
 
                 Vector2 TopRight = base.BulletBank.aiActor.GetAbsoluteParentRoom().area.UnitTopRight;
@@ -249,29 +250,31 @@ namespace Planetside
                 Vector2 spawnPos = base.BulletBank.aiActor.ParentRoom.GetCenterCell().ToCenterVector2();
                 yield return base.Wait(180);
                 int i = 0;
+                int T = 0;
+
                 int Speed = 180;
                 for (; ; )
                 {
                     if (SubPhaseEnded == true) { this.Destroyed = true; yield break; }  
-                    if (i % 80 == 1)
+                    if (i % 80 == 0)
                     {
                         bool LeftOrRight = (UnityEngine.Random.value > 0.5f) ? false : true;
-                        float RNGSPIN = LeftOrRight == true ? 8 : -8;
+                        float RNGSPIN = LeftOrRight == true ? 15 : -15;
                         float OffsetF = UnityEngine.Random.Range(0, 30);
                         for (int e = 0; e < 12; e++)
                         {
-                            base.Fire(Offset.OverridePosition(spawnPos), new Direction(0f, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SubphaseOneAttack.RotatedBulletBasic(RNGSPIN, 0, 0, "undodgeableDefault", this, (e * 30)+ OffsetF, 0.05f));
+                            base.Fire(Offset.OverridePosition(spawnPos), new Direction(0f, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SubphaseOneAttack.RotatedBulletBasic(RNGSPIN, 0, 0, StaticUndodgeableBulletEntries.UndodgeableOldKingHomingRingBulletSoundless.Name, this, (e * 30)+ OffsetF, 0.05f));
                         }
                     }
-                    if (i % Speed == 1)
-                    {
-                        if (Speed > 91)  {  Speed -= 10; }
-                        if (Speed < 90) { Speed = 90; }
 
+                    if (T == Speed)
+                    {
+                        T = 0;
+                        Speed -= 10;
+                        Speed = Mathf.Max(75, Speed);
                         switch (attackWeights.SelectByWeight(new System.Random(UnityEngine.Random.Range(1, 100))))
                         {
                             case 1:
-                                //float Dir = UnityEngine.Random.value > 0.5f ? 0 : 30f;
                                 float cu = UnityEngine.Random.Range(0, 30);
                                 for (int e = 0; e < 6; e++)
                                 {
@@ -281,13 +284,23 @@ namespace Planetside
                                 i++;
                                 break;
                             case 2:
+
+                                float f = this.RandomAngle(); 
+                                for (int e = 0; e < 6; e++)
+                                {                      
+                                    base.BulletBank.aiActor.StartCoroutine(QuickReticleNoAngleChange(spawnPos + MathToolbox.GetUnitOnCircle(f + (e * 60), Vector2.Distance(spawnPos, GameManager.Instance.PrimaryPlayer.sprite.WorldCenter)), (60 * e) + 0, this, 0.75f, 25, 3));
+                                    base.BulletBank.aiActor.StartCoroutine(QuickReticleNoAngleChange(spawnPos + MathToolbox.GetUnitOnCircle(f + (e * 60), Vector2.Distance(spawnPos, GameManager.Instance.PrimaryPlayer.sprite.WorldCenter)), (60 * e) + 180, this, 0.75f, 25, 3));
+                                }
+
+
+                                /*
                                 for (int e = 0; e < GameManager.Instance.AllPlayers.Length; e++)
                                 {
                                     GameManager.Instance.StartCoroutine(QuickReticleRedirectTowardsPlayer(spawnPos, 0, this));
                                     GameManager.Instance.StartCoroutine(QuickReticleRedirectTowardsPlayer(spawnPos, 0, this, 1f));
                                     GameManager.Instance.StartCoroutine(QuickReticleRedirectTowardsPlayer(spawnPos, 0, this, 1.5f));
-
                                 }
+                                */
                                 yield return base.Wait(1);
                                 i++;
                                 break;
@@ -297,17 +310,20 @@ namespace Planetside
                                     float Dir1 = UnityEngine.Random.value > 0.5f ? 0 : 45f;
                                     for (int q = 0; q < 4; q++)
                                     {
-                                        base.BulletBank.aiActor.StartCoroutine(QuickReticleNoAngleChange(GameManager.Instance.AllPlayers[e].sprite.WorldCenter, (90 * q) + Dir1, this, 0.75f, 25, 3));
+                                        base.BulletBank.aiActor.StartCoroutine(QuickReticleNoAngleChange(GameManager.Instance.AllPlayers[e].sprite.WorldCenter, (90 * q) + Dir1, this, 0.75f, 11, 5));
                                     }
                                 }
                                 yield return base.Wait(1);
                                 i++;
                                 break;
                             case 4:
-                                float h = UnityEngine.Random.Range(0, 30);
-                                for (int e = 0; e < 12; e++)
+                                for (int e = 0; e < GameManager.Instance.AllPlayers.Length; e++)
                                 {
-                                    GameManager.Instance.StartCoroutine(QuickReticleNoAngleChange(spawnPos, (30f * e) +h, this, 1f, 18, 5));
+                                    float Dir1 = UnityEngine.Random.value > 0.5f ? 0 : 22.5f;
+                                    for (int q = 0; q < 8; q++)
+                                    {
+                                        base.BulletBank.aiActor.StartCoroutine(QuickReticleNoAngleChange(GameManager.Instance.AllPlayers[e].sprite.WorldCenter, (45 * q) + Dir1, this, 0.75f, 18, 5));
+                                    }
                                 }
                                 yield return base.Wait(1);
                                 i++;
@@ -316,68 +332,8 @@ namespace Planetside
                     }
                     yield return base.Wait(1);
                     i++;
+                    T++;
                 }
-
-
-
-
-                /*
-                for (int q = 0; q < 3; q++)
-                {
-                    for (int e = 0; e < 60; e++)
-                    {
-                        base.Fire(new Offset(MathToolbox.GetUnitOnCircle(e*6, 30)), new Direction(0f, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SubphaseOneAttack.RotatedBullet(RNGSPIN, 0, 0, "undodgeableDefault" ,this, e == 0, e * 6, 30));
-                    }
-                    yield return this.Wait(80f);
-                }
-                for (int q = 0; q < 22; q++)
-                {
-                    for (int e = 0; e < 60; e++)
-                    {
-                        base.Fire(new Offset(MathToolbox.GetUnitOnCircle(e * 6, 30)), new Direction(0f, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SubphaseOneAttack.RotatedBullet(RNGSPIN, 0, 0, "undodgeableDefault", this,false , e * 6, 30));
-                    }
-                    switch (attackWeights.SelectByWeight(new System.Random(UnityEngine.Random.Range(1, 100))))
-                    {
-                        case 1:
-                            float Dir = UnityEngine.Random.value > 0.5f ? 0 : 22.5f;
-                            for (int i = 0; i < 6; i++)
-                            {
-                                GameManager.Instance.StartCoroutine(QuickReticleNoAngleChange(base.Position, (60 * i) + Dir, this, 0.75f, 18, 5));
-                                GameManager.Instance.StartCoroutine(QuickReticleNoAngleChange(base.Position, (60 * i) + (Dir + 30f), this, 1.25f, 18, 5));
-                            }
-                            break;
-                        case 2:
-
-                            for (int i = 0; i < 4; i++)
-                            {
-                                GameManager.Instance.StartCoroutine(QuickReticleRedirectTowardsPlayer(base.Position + MathToolbox.GetUnitOnCircle(90 * i, CurrentRingRadius / 10), 0, this));
-                            }
-
-                            break;
-                        case 3:
-                            for (int e = 0; e < GameManager.Instance.AllPlayers.Length; e++)
-                            {
-                                float Dir1 = UnityEngine.Random.value > 0.5f ? 0 : 45f;
-                                for (int i = 0; i < 4; i++)
-                                {
-                                    base.BulletBank.aiActor.StartCoroutine(QuickReticleNoAngleChange(GameManager.Instance.AllPlayers[e].transform.PositionVector2(), (90 * i) + Dir1, this, 0.75f, 25, 3));
-                                }
-                            }
-
-                            break;
-                        case 4:
-                            string String = "NULL";
-                            List<Vector2> keyList = new List<Vector2>(wallcornerPositions.Keys);
-                            System.Random rand = new System.Random();
-                            Vector2 randomKey = keyList[rand.Next(keyList.Count)];
-                            wallcornerstrings.TryGetValue(randomKey, out String);
-                            this.FireWallBullets(String);
-                            break;
-                    }
-                    yield return this.Wait(80f);
-                }
-                */
-                //yield break;
             }
 
             private IEnumerator ContinuallySpawnRings()

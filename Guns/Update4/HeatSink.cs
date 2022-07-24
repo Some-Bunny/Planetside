@@ -186,11 +186,6 @@ namespace Planetside
         {
             gun.PreventNormalFireAudio = true;
         }
-
-        protected void Update()
-        {
-            
-        }
     }
 }
 

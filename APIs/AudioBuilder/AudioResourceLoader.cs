@@ -15,13 +15,12 @@ namespace Planetside
         public static readonly string AutoprocessModPathName = "Mods/Planetside";
         public static readonly string ResourcesAutoprocessDirectoryName = AutoprocessDirectoryName;
 
-        public static readonly string pathzip = PlanetsideModule.ZipFilePath;
         public static readonly string pathfile = PlanetsideModule.FilePathFolder;
 
 
         public static void InitAudio()
         {
-            LoadAllAutoloadResourcesFromModPath(pathzip);
+            LoadAllAutoloadResourcesFromModPath(pathfile);
             // LoadAllAutoloadResourcesFromAssembly(Assembly.GetExecutingAssembly(), "ExpandTheGungeon");
 
             // LoadAllAutoloadResourcesFromPath(FullPathAutoprocess, "ExpandTheGungeon");

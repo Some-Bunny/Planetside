@@ -108,7 +108,7 @@ namespace Planetside
 
         private bool HasReloaded;
 
-        protected void Update()
+        public override void Update()
         {
             PlayerController player = gun.CurrentOwner as PlayerController;
             if (gun.CurrentOwner)

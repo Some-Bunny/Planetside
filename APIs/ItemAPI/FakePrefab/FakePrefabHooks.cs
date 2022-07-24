@@ -74,6 +74,7 @@ namespace ItemAPI
                 }),
                 typeof(FakePrefabHooks).GetMethod("InstantiateO")
             );
+
         }
 
         public static void AcquirePassiveItemPrefabDirectly(Action<PlayerController, PassiveItem> orig, PlayerController self, PassiveItem item)

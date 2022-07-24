@@ -156,7 +156,7 @@ namespace Planetside
 				for (int i = 0; i < 60; i++)
 				{
 					float t = (float)i / (float)60;
-					this.TurnSpeed = Mathf.SmoothStep(45, 22.5f, t) * turnSign;
+					this.TurnSpeed = Mathf.SmoothStep(45, 30, t) * turnSign;
 					yield return this.Wait(1);
 
 				}
@@ -176,14 +176,14 @@ namespace Planetside
 				for (int i = 0; i < 60; i++)
 				{
 					float t = (float)i / (float)60;
-					this.TurnSpeed = Mathf.SmoothStep(20, -10, t) * turnSign;
+					this.TurnSpeed = Mathf.SmoothStep(30, -15, t) * turnSign;
 					yield return this.Wait(1);
 				}
 				FireQuickBurst();
 				for (int i = 0; i < 60; i++)
 				{
 					float t = (float)i / (float)60;
-					this.TurnSpeed = Mathf.SmoothStep(-10, -30, t) * turnSign;
+					this.TurnSpeed = Mathf.SmoothStep(-15, -30, t) * turnSign;
 					yield return this.Wait(1);
 				}
 				for (int i = 0; i < 3; i++)
@@ -302,6 +302,10 @@ namespace Planetside
 						{
 							if (bulletLists[e][k] != null)
 							{
+								if (k % 6 == 0)
+                                {
+									base.Fire(Offset.OverridePosition(bulletLists[e][k].Position), new Direction(0, DirectionType.Aim, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet("link", 10, 90));
+								}
 								bulletLists[e][k].Vanish();
 							}
 						}
@@ -951,6 +955,8 @@ namespace Planetside
 			{
 				this.EndOnBlank = true;
 				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSniper);
+				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableQuickHoming);
+
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("31a3ea0c54a745e182e22ea54844a82d").bulletBank.GetBullet("sniper"));
 
 				PrisonerPhaseOne.PrisonerController controller = base.BulletBank.aiActor.GetComponent<PrisonerPhaseOne.PrisonerController>();
@@ -968,7 +974,7 @@ namespace Planetside
 					base.BulletBank.aiActor.StartCoroutine(SwipeLaser(CentreAngle - 180, -168, this, 1.5f - (0.5f * e)));
 					base.BulletBank.aiActor.StartCoroutine(SwipeLaser(CentreAngle - 180, 168, this, 1.5f - (0.5f * e)));
 				}
-				for (int e = 0; e < 9; e++)
+				for (int e = 0; e < 8; e++)
 				{
 					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(CentreAngle, this, 0.75f));
 					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(CentreAngle, this, 0.75f, 15f));
@@ -976,10 +982,32 @@ namespace Planetside
 
 					yield return this.Wait(60);
 				}
-				yield return this.Wait(30);
+				base.BulletBank.aiActor.StartCoroutine(DoBlast(this));
+				yield return this.Wait(75);
 
 				yield break;
 			}
+
+			private IEnumerator DoBlast(SweepJukeAttackTwo parent)
+			{
+				StaticVFXStorage.HighPriestClapVFXInverse.SpawnAtPosition(this.Position);
+				yield return new WaitForSeconds(1);
+				base.PostWwiseEvent("Play_BOSS_spacebaby_explode_01");
+				for (int i = 0; i < 60; i++)
+				{
+					int r = 2;
+					if (i % 5 == 0)
+                    {
+						r = 6;
+					}
+					for (int h = 0; h < r; h++)
+                    {
+						base.Fire(new Direction(6 * i, DirectionType.Aim, -1f), new Speed(i % 5 == 0 ? 7f + h: 9, SpeedType.Absolute), new SpeedChangingBullet(i % 5 == 0 ? StaticUndodgeableBulletEntries.undodgeableQuickHoming.Name : "sniper", 20, 90));
+					}
+				}
+				yield break;
+			}
+
 
 
 			private IEnumerator SwipeLaser(float StartAngle, float AddOrSubtract, SweepJukeAttackTwo parent, float Time)
@@ -1261,11 +1289,11 @@ namespace Planetside
 					}
 				}
 				yield return this.Wait(90);
-				for (int q = 0; q < 5; q++)
+				for (int q = 0; q < 3; q++)
 				{
 					for (int e = 0; e < GameManager.Instance.AllPlayers.Length; e++)
 					{
-						float u = UnityEngine.Random.Range(15, 90);
+						float u = UnityEngine.Random.Range(15, 60);
 						float Dir = UnityEngine.Random.Range(-180, 180);
 						float helpme = UnityEngine.Random.Range(180, -180);
 						float M = UnityEngine.Random.value < 0.5f ? u : -u;
@@ -1276,11 +1304,103 @@ namespace Planetside
 					}
 					yield return this.Wait(45);
 				}
+
+				float f1 = this.RandomAngle();
+				float u1 = UnityEngine.Random.Range(15, 30);
+				float M1 = UnityEngine.Random.value < 0.5f ? u1 : -u1;
+				Vector2 pos = this.BulletBank.aiActor.sprite.WorldCenter;
+				for (int e = 0; e < 10; e++)
+				{
+					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(pos, pos + MathToolbox.GetUnitOnCircle(f1 + (e * 36), Vector2.Distance(pos, GameManager.Instance.PrimaryPlayer.sprite.WorldCenter)), (36 * e) + 0, this, M1, 1.5f));
+					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(pos, pos + MathToolbox.GetUnitOnCircle(f1 + (e * 36) , Vector2.Distance(pos, GameManager.Instance.PrimaryPlayer.sprite.WorldCenter)), (36 * e) + 120, this, M1, 1.5f));
+					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(pos, pos + MathToolbox.GetUnitOnCircle(f1 + (e * 36) , Vector2.Distance(pos, GameManager.Instance.PrimaryPlayer.sprite.WorldCenter)), (36 * e) + 240, this, M1, 1.5f));
+				}
+
 				controller.MoveTowardsPositionMethod(1f, 5);
-				yield return this.Wait(60);
+				yield return this.Wait(150);
 				yield break;
 			}
 
+			private IEnumerator QuickscopeNoobLerpPosition(Vector2 startPos,Vector3 endPos ,float aimDir, LaserCrossTwo parent, float rotSet, float chargeTime = 0.5f)
+			{
+
+				GameObject gameObject = SpawnManager.SpawnVFX(RandomPiecesOfStuffToInitialise.LaserReticle, false);
+				tk2dTiledSprite component2 = gameObject.GetComponent<tk2dTiledSprite>();
+				component2.transform.position = new Vector3(startPos.x, startPos.y, 99999);
+				component2.transform.localRotation = Quaternion.Euler(0f, 0f, aimDir);
+				component2.dimensions = new Vector2(1000f, 1f);
+				component2.UpdateZDepth();
+				component2.HeightOffGround = -2;
+				Color laser = new Color(0f, 1f, 1f, 1f);
+				component2.sprite.usesOverrideMaterial = true;
+				component2.sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
+				component2.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+				component2.sprite.renderer.material.SetFloat("_EmissivePower", 10);
+				component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f);
+				component2.sprite.renderer.material.SetColor("_OverrideColor", laser);
+				component2.sprite.renderer.material.SetColor("_EmissiveColor", laser);
+				float elapsed = 0;
+				float Time = chargeTime;
+				while (elapsed < Time)
+				{
+					float t = (float)elapsed / (float)Time;
+
+					if (parent.IsEnded || parent.Destroyed)
+					{
+						UnityEngine.Object.Destroy(component2.gameObject);
+						yield break;
+					}
+					if (component2 != null)
+					{
+						float throne1 = Mathf.Sin(t * (Mathf.PI / 2));
+						float Q = Mathf.Lerp(0, rotSet, throne1);
+
+						component2.transform.position = Vector3.Lerp(new Vector3(startPos.x, startPos.y, 0), endPos, MathToolbox.SinLerpTValue(t));
+						component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (25 * t));
+						component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (10 * t));
+						component2.transform.localRotation = Quaternion.Euler(0f, 0f, aimDir + Q);
+						component2.HeightOffGround = -2;
+						component2.renderer.gameObject.layer = 23;
+						component2.dimensions = new Vector2(1000f, 1f);
+						component2.UpdateZDepth();
+					}
+					elapsed += BraveTime.DeltaTime;
+					yield return null;
+				}
+
+				elapsed = 0;
+				Time = 0.5f;
+				base.PostWwiseEvent("Play_FlashTell");
+				while (elapsed < Time)
+				{
+					if (parent.IsEnded || parent.Destroyed)
+					{
+						UnityEngine.Object.Destroy(component2.gameObject);
+						yield break;
+					}
+					float t = (float)elapsed / (float)Time;
+					if (component2 != null)
+					{
+						component2.transform.position = new Vector3(endPos.x, endPos.y, 0);
+						component2.dimensions = new Vector2(1000f, 1f);
+						component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (60 * t));
+						component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (20 * t));
+						component2.HeightOffGround = -2;
+						component2.renderer.gameObject.layer = 23;
+						component2.UpdateZDepth();
+					}
+					elapsed += BraveTime.DeltaTime;
+					yield return null;
+				}
+				UnityEngine.Object.Destroy(component2.gameObject);
+				base.PostWwiseEvent("Play_ENM_bulletking_skull_01", null);
+				for (int i = 0; i < 10; i++)
+				{
+					base.Fire(Offset.OverridePosition(endPos), new Direction(aimDir + rotSet, DirectionType.Absolute, -1f), new Speed(20f, SpeedType.Absolute), new WallBulletNoDodge("sniperUndodgeable"));
+					yield return new WaitForSeconds(0.025f);
+				}
+				yield break;
+			}
 
 			private IEnumerator QuickscopeNoob(Vector2 startPos, float aimDir, LaserCrossTwo parent, float rotSet, float chargeTime = 0.5f)
 			{

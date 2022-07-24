@@ -31,77 +31,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\CustomItems\CustomItems\bin\Debug\Assembly-CSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="Assembly-CSharp.Base.mm, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\Assembly-CSharp.Base.mm.dll</HintPath>
-    </Reference>
-    <Reference Include="Ionic.Zip">
-      <HintPath>.\Ionic.Zip.dll</HintPath>
-    </Reference>
-    <Reference Include="MonoMod.RuntimeDetour">
-      <HintPath>..\CustomItems\CustomItems\bin\Debug\MonoMod.RuntimeDetour.dll</HintPath>
-    </Reference>
-    <Reference Include="MonoMod.Utils">
-      <HintPath>..\CustomItems\CustomItems\bin\Debug\MonoMod.Utils.dll</HintPath>
-    </Reference>
-    <Reference Include="PlayMaker, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Enter the Gungeon\EtG_Data\Managed\PlayMaker.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-    <Reference Include="UnityEngine">
-      <HintPath>.\UnityEngine.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.AnimationModule">
-      <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Enter the Gungeon\EtG_Data\Managed\UnityEngine.AnimationModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Base.mm">
-      <HintPath>..\CustomItems\CustomItems\bin\Debug\UnityEngine.Base.mm.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\CustomItems\CustomItems\bin\Debug\UnityEngine.CoreModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.CoreModule.Base.mm, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\CustomItems\CustomItems\bin\Debug\UnityEngine.CoreModule.Base.mm.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.ImageConversionModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\CustomItems\CustomItems\bin\Debug\UnityEngine.ImageConversionModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.JSONSerializeModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\CustomItems\CustomItems\bin\Debug\UnityEngine.JSONSerializeModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.ParticleSystemModule">
-      <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Enter the Gungeon\EtG_Data\Managed\UnityEngine.ParticleSystemModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.TextRenderingModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\CustomItems\CustomItems\bin\Debug\UnityEngine.TextRenderingModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\CustomItems\CustomItems\bin\Debug\UnityEngine.UI.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="APIs\ChallengeAPI\ChallengeBuilder.cs" />
     <Compile Include="APIs\ChallengeAPI\ChallengeTools.cs" />
     <Compile Include="APIs\ChallengeAPI\dfLanguageExtraStringHolder.cs" />
     <Compile Include="APIs\ChallengeAPI\FakePrefabHandler.cs" />
     <Compile Include="APIs\ChallengeAPI\ResourceGetter.cs" />
     <Compile Include="APIs\ChamberGunAPI.cs" />
+    <Compile Include="APIs\ExpandDungeonMusicAPI.cs" />
     <Compile Include="APIs\GungeonAPI\DungeonRoomFactory.cs" />
     <Compile Include="APIs\LootTableAPI\CustomLootTableInitialiser.cs" />
     <Compile Include="APIs\RoomTableAPI\RoomTableTools.cs" />
@@ -167,15 +103,21 @@
     <Compile Include="Debuff Stuff\BrainHostDummyEffect.cs" />
     <Compile Include="Debuff Stuff\TarnishEffect.cs" />
     <Compile Include="DungeonGenStuff\ExpandTK2DDungeonAssembler.cs" />
+    <Compile Include="DungeonPlaceables\AbyssFloorDoor.cs" />
+    <Compile Include="DungeonPlaceables\TrespassObjects\TrespassSniperTurrets.cs" />
+    <Compile Include="DungeonPlaceables\SniperTurrets.cs" />
+    <Compile Include="DungeonPlaceables\Deturrets.cs" />
     <Compile Include="DungeonPlaceables\TestTeleporter.cs" />
     <Compile Include="DungeonPlaceables\BreakableAPI.cs" />
     <Compile Include="DungeonPlaceables\BoxOfGrenades.cs" />
+    <Compile Include="DungeonPlaceables\TrespassObjects\TrespassSmallCubes.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassDecorativePillar.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassContainer.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassFadingBlocker.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassDecals.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassCandle.cs" />
     <Compile Include="DungeonPlaceables\HMPrimeBattery.cs" />
+    <Compile Include="DungeonPlaceables\TrespassObjects\TrespassCubes.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TutorialNotes.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassPots.cs" />
     <Compile Include="DungeonPlaceables\HolyChamberStatue.cs" />
@@ -788,6 +730,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="APIs\SaveAPI\Properties\" />
+    <Folder Include="Resources\AbyssRooms\AbyssHubRooms\" />
     <Folder Include="Resources\AbyssRooms\AbyssSpecial\" />
     <Folder Include="Resources\VFX\EliteCrowns\" />
   </ItemGroup>
@@ -4056,6 +3999,108 @@
     <EmbeddedResource Include="Resources\FloorStuff\WallShards\wallshard2_002.png" />
     <EmbeddedResource Include="Resources\FloorStuff\WallShards\wallshard2_003.png" />
     <EmbeddedResource Include="Resources\FloorStuff\WallShards\wallshard2_004.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\SniperTurret\Default\sniperturret_front_idle.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\SniperTurret\Default\sniperturret_front_idle1.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\SniperTurret\Default\sniperturret_front_idle2.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\SniperTurret\Default\sniperturret_front_idle3.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\SniperTurret\Default\sniperturret_front_idle4.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\SniperTurret\Default\sniperturret_left_idle1.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\SniperTurret\Default\sniperturret_right_idle1.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\SniperTurret\Default\sniperturret_right_idle2.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\SniperTurret\Default\sniperturret_right_idle3.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\SniperTurret\Default\sniperturret_right_idle4.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\SniperTurret\Professional\professionalsniperturret_front_idle1.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\SniperTurret\Professional\professionalsniperturret_front_idle2.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\SniperTurret\Professional\professionalsniperturret_front_idle3.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\SniperTurret\Professional\professionalsniperturret_front_idle4.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\SniperTurret\Professional\professionalsniperturret_left_idle1.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\SniperTurret\Professional\professionalsniperturret_right_idle1.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\SniperTurret\Professional\professionalsniperturret_right_idle2.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\SniperTurret\Professional\professionalsniperturret_right_idle3.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\SniperTurret\Professional\professionalsniperturret_right_idle4.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Blocker\Horizontal\deep_door_blocker_horizontal_down_001.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Blocker\Horizontal\deep_door_blocker_horizontal_down_002.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Blocker\Horizontal\deep_door_blocker_horizontal_down_003.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Blocker\Horizontal\deep_door_blocker_horizontal_down_004.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Blocker\Horizontal\deep_door_blocker_horizontal_down_005.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Blocker\Horizontal\deep_door_blocker_horizontal_down_006.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Blocker\Horizontal\deep_door_blocker_horizontal_up_001.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Blocker\Horizontal\deep_door_blocker_horizontal_up_002.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Blocker\Horizontal\deep_door_blocker_horizontal_up_003.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Blocker\Horizontal\deep_door_blocker_horizontal_up_004.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Blocker\Horizontal\deep_door_blocker_horizontal_up_005.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Blocker\Horizontal\deep_door_blocker_horizontal_up_006.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Blocker\Shake\deep_door_block_vertical_refuse_001.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Blocker\Shake\deep_door_block_vertical_refuse_002.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Blocker\Shake\deep_door_block_vertical_refuse_003.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Blocker\Shake\deep_door_block_vertical_refuse_004.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Blocker\Shake\deep_door_block_vertical_refuse_005.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Blocker\Shake\deep_door_block_vertical_refuse_006.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Blocker\Shake\deep_door_block_vertical_refuse_007.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Blocker\Shake\deep_door_block_vertical_refuse_008.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Blocker\Shake\deep_door_block_vertical_refuse_009.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Blocker\Vertical\deep_door_block_vertical_down_001.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Blocker\Vertical\deep_door_block_vertical_down_002.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Blocker\Vertical\deep_door_block_vertical_down_003.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Blocker\Vertical\deep_door_block_vertical_down_004.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Blocker\Vertical\deep_door_block_vertical_down_005.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Blocker\Vertical\deep_door_block_vertical_down_006.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Blocker\Vertical\deep_door_block_vertical_down_007.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Blocker\Vertical\deep_door_block_vertical_down_008.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Blocker\Vertical\deep_door_block_vertical_up_001.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Blocker\Vertical\deep_door_block_vertical_up_002.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Blocker\Vertical\deep_door_block_vertical_up_003.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Blocker\Vertical\deep_door_block_vertical_up_004.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Blocker\Vertical\deep_door_block_vertical_up_005.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Blocker\Vertical\deep_door_block_vertical_up_006.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Blocker\Vertical\deep_door_block_vertical_up_007.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Blocker\Vertical\deep_door_block_vertical_up_008.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Door\Horizontal\Bottom\deep_door_horizontal_bottom_001.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Door\Horizontal\Bottom\deep_door_horizontal_bottom_002.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Door\Horizontal\Bottom\deep_door_horizontal_bottom_003.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Door\Horizontal\Bottom\deep_door_horizontal_bottom_004.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Door\Horizontal\Bottom\deep_door_horizontal_bottom_005.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Door\Horizontal\Bottom\deep_door_horizontal_bottom_006.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Door\Horizontal\Top\deep_door_horizontal_top_001.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Door\Horizontal\Top\deep_door_horizontal_top_002.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Door\Horizontal\Top\deep_door_horizontal_top_003.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Door\Horizontal\Top\deep_door_horizontal_top_004.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Door\Horizontal\Top\deep_door_horizontal_top_005.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Door\Horizontal\Top\deep_door_horizontal_top_006.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Door\Vertical\deep_door_south_left_001.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Door\Vertical\deep_door_south_left_002.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Door\Vertical\deep_door_south_left_003.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Door\Vertical\deep_door_south_left_004.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Door\Vertical\deep_door_south_left_005.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Door\Vertical\deep_door_south_left_006.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Door\Vertical\deep_door_south_right_001.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Door\Vertical\deep_door_south_right_002.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Door\Vertical\deep_door_south_right_003.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Door\Vertical\deep_door_south_right_004.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Door\Vertical\deep_door_south_right_005.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\DeepDoor\Door\Vertical\deep_door_south_right_006.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassBigLight\tresspasslightBigShadow.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassLight\trespassPillarShadow.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\SmallCubes\cube1.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\SmallCubes\cube2.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\SmallCubes\cube3.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\SmallCubes\smallcube1.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\SmallCubes\smallcube2.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\SmallCubes\smallcube3.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\SmallCubes\smallcube4.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\SmallCubes\smallcube5.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassSniper\Down\sniperturret_front_idle1.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassSniper\Down\sniperturret_front_idle2.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassSniper\Down\sniperturret_front_idle3.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassSniper\Down\sniperturret_front_idle4.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassSniper\Left\sniperturret_left_idle1.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassSniper\Left\sniperturret_left_idle2.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassSniper\Left\sniperturret_left_idle3.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassSniper\Left\sniperturret_left_idle4.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassSniper\Right\sniperturret_right_idle1.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassSniper\Right\sniperturret_right_idle2.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassSniper\Right\sniperturret_right_idle3.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassSniper\Right\sniperturret_right_idle4.png" />
     <Content Include="Resources\Shellrax\shellrax_intro_019.png" />
     <EmbeddedResource Include="Resources\VFX\LockOnVFX\lockonvfx1.png" />
     <EmbeddedResource Include="Resources\VFX\LockOnVFX\lockonvfx2.png" />
@@ -4086,9 +4131,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\ShrineRooms\hellpain.room" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="PlanetsideBank.bnk" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\ShrineRooms\PrisonerBossRoom.room" />
@@ -4169,6 +4211,96 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\ShrineRooms\MortalCombat.room" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="0Harmony">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Enter the Gungeon\BepInEx\core\0Harmony.dll</HintPath>
+    </Reference>
+    <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Enter the Gungeon\EtG_Data\Managed\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="BepInEx">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Enter the Gungeon\BepInEx\core\BepInEx.dll</HintPath>
+    </Reference>
+    <Reference Include="Ionic.Zip, Version=1.9.1.8, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\Ionic.Zip.dll</HintPath>
+    </Reference>
+    <Reference Include="ModTheGungeonAPI">
+      <HintPath>.\ModTheGungeonAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Enter the Gungeon\BepInEx\core\Mono.Cecil.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoMod.RuntimeDetour, Version=18.9.0.42435, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Enter the Gungeon\BepInEx\core\MonoMod.RuntimeDetour.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoMod.Utils, Version=18.9.0.42433, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Enter the Gungeon\BepInEx\core\MonoMod.Utils.dll</HintPath>
+    </Reference>
+    <Reference Include="PlayMaker, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\PlayMaker.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Enter the Gungeon\EtG_Data\Managed\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AnimationModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Enter the Gungeon\EtG_Data\Managed\UnityEngine.AnimationModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Enter the Gungeon\EtG_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ImageConversionModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Enter the Gungeon\EtG_Data\Managed\UnityEngine.ImageConversionModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Enter the Gungeon\EtG_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.JSONSerializeModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Enter the Gungeon\EtG_Data\Managed\UnityEngine.JSONSerializeModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ParticleSystemModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Enter the Gungeon\EtG_Data\Managed\UnityEngine.ParticleSystemModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SharedInternalsModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Enter the Gungeon\EtG_Data\Managed\UnityEngine.SharedInternalsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Enter the Gungeon\EtG_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Enter the Gungeon\EtG_Data\Managed\UnityEngine.UI.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\BasicSquareRoom.room" />
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\LRoomAbyss.room" />
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\RoomWithExtraSoos.room" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="PlanetsideBank.bnk" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\SmallRoompewPew.room" />
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\TunnelWays.room" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\ExtraSpicy.room" />
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\SmallTunnelWithPew.room" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

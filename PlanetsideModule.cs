@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 using UnityEngine;
 using MonoMod.RuntimeDetour;
 using System.Reflection;
@@ -21,20 +20,32 @@ using EnemyBulletBuilder;
 using NpcApi;
 using SoundAPI;
 using BreakAbleAPI;
+using BepInEx;
+using HarmonyLib;
+
+
+
 
 namespace Planetside
 {
-    public class PlanetsideModule : ETGModule
+    // [HarmonyLib]
+
+    [BepInDependency("etgmodding.etg.mtgapi")]
+    [BepInPlugin(GUID, NAME, VERSION)]
+    [HarmonyPatch]
+
+    public class PlanetsideModule : BaseUnityPlugin
     {
-        public static readonly string MOD_NAME = "Planetside Of Gunymede";
-        public static readonly string VERSION = "1.3 Beta";
+        public const string GUID = "somebunny.etg.planetsideofgunymede";
+        public const string NAME = "Planetside Of Gunymede";
+        public const string VERSION = "1.3.0";
+
         public static readonly string TEXT_COLOR = "#9006FF";
 
-        public static string ZipFilePath;
         public static string RoomFilePath;
         public static string FilePathFolder;
 
-        public static ETGModuleMetadata metadata = new ETGModuleMetadata(); 
+        //public static ETGModuleMetadata metadata = new ETGModuleMetadata(); 
 
         public static AdvancedStringDB Strings;
         public static HellDragZoneController hellDrag;
@@ -47,16 +58,25 @@ namespace Planetside
 
         public static bool DebugMode = true;
 
-        public override void Start()
+        public void Start()
+        {
+            ETGModMainBehaviour.WaitForGameManagerStart(GameManagerStart);
+        }
+
+        public void GameManagerStart(GameManager gameManager)
         {
             var forgeDungeon = DungeonDatabase.GetOrLoadByName("Base_Forge");
             PlanetsideModule.hellDrag = forgeDungeon.PatternSettings.flows[0].AllNodes.Where(node => node.overrideExactRoom != null && node.overrideExactRoom.name.Contains("EndTimes")).First().overrideExactRoom.placedObjects.Where(ppod => ppod != null && ppod.nonenemyBehaviour != null).First().nonenemyBehaviour.gameObject.GetComponentsInChildren<HellDragZoneController>()[0];
             forgeDungeon = null;
 
-            ZipFilePath = this.Metadata.Archive;
-            RoomFilePath = this.Metadata.Directory + "/rooms";
-            FilePathFolder = this.Metadata.Directory;
-            metadata = this.Metadata;
+            ETGMod.Assets.SetupSpritesFromFolder(this.FolderPath()+"/sprites");
+
+            
+            //ZipFilePath = this.Metadata.Archive;
+            RoomFilePath = this.FolderPath() + "/rooms";
+            FilePathFolder = this.FolderPath();
+            //metadata = this.Metadata;
+
             //Initialise World-Stuff here
             StaticInformation.Init();
             CrossGameDataStorage.Start();
@@ -84,12 +104,19 @@ namespace Planetside
 
             //Initialise Statically Stored Stuff Here
             StaticVFXStorage.Init();
+
             EasyGoopDefinitions.DefineDefaultGoops();
+
             RandomPiecesOfStuffToInitialise.BuildPrefab();
+
             PlanetsideModule.Strings = new AdvancedStringDB();
+
             PlanetsideCommands.Init();
+
             ItemIDs.MakeCommand();
+
             StaticReferences.Init(); //<- Used in GungeonAPI, IMPORTANT to initialise it before DungeonHandler
+
             InitNewPlaceables.InitPlaceables();
 
 
@@ -103,7 +130,7 @@ namespace Planetside
             ExplosionHooks.Init();
             Hooks.Init();
             MultiActiveReloadManager.SetupHooks();
-            
+
             FakePrefabHooks.Init();
 
             TitleDioramaHooks.Init();
@@ -112,11 +139,16 @@ namespace Planetside
 
             //Initialise API stuff here
             BulletBuilder.Init();
+
             SoundManager.Init();
+
             SoundManager.LoadBankFromModProject("Planetside/PlanetsideBank");
+
             SoundManager.RegisterStopEvent("Stop_MUS_PrisonerTheme", StopEventType.Music);
 
             ItemBuilder.Init();
+            ExpandDungeonMusicAPI.InitHooks();
+
 
             //Shrine Initialisation
             //ShrineFactory.Init();
@@ -193,8 +225,11 @@ namespace Planetside
             WitherLance.Add();
             SwanOff.Add();
             UglyDuckling.Add();
+
             HardlightNailgun.Add();
+
             BurningSun.Add();
+
             StatiBlast.Add();
             Polarity.Add();
             PolarityForme.Add();
@@ -317,6 +352,7 @@ namespace Planetside
             Autocannon.Add();
             PunctureWound.Add();
             GunClassToken.Init();
+            ShopDiscountItem.Init();
 
             //Perks
             AllStatsUp.Init();
@@ -477,7 +513,7 @@ namespace Planetside
             ETGModConsole.Commands.GetGroup("psog_floor").AddUnit("load", this.LoadFloor);
 
 
-            PlanetsideModule.Log($"{MOD_NAME} v{VERSION} started successfully.", TEXT_COLOR);
+            PlanetsideModule.Log($"{NAME} v{VERSION} started successfully.", TEXT_COLOR);
             List<string> RandomFunnys = new List<string>
             {
                 "Powered by SaveAPI!",
@@ -585,6 +621,9 @@ namespace Planetside
             OtherTools.Init();
         }
 
+       // public override void Start(){}
+
+
         private void LoadFloor(string[] obj)
         {
             GameManager.Instance.LoadCustomLevel(AbyssDungeon.AbyssDefinition.dungeonSceneName);
@@ -625,6 +664,7 @@ namespace Planetside
                     ETGModConsole.Log(fycjyou.TargetRoomTable.name);
                 }
             }
+            //SaveAPIManager.Setup("psog");
 
             //manager.whatever code you need;
             return manager;
@@ -635,16 +675,22 @@ namespace Planetside
             ETGModConsole.Log($"<color={color}>{text}</color>");
         }
 
-        /*
 
-        }
-        */
-
-        public override void Exit() { }
-        public override void Init() 
+        public void Awake() 
         {
+            //new Harmony(GUID).PatchAll();
             SaveAPIManager.Setup("psog");
         }
+        /*
+        [HarmonyPatch(typeof(Minimap), "AddIconToRoomList")]
+        [HarmonyPrefix]
+        public static void MIniMapPatch(RoomHandler room, GameObject instanceIcon)
+        {
+            bool active =instanceIcon.activeSelf;
+            instanceIcon.SetActive(true);
+            instanceIcon.SetActive(active);
+        }
+        */
         public static void ReloadBreachShrinesPSOG(Action<Foyer> orig, Foyer self1)
         {
             orig(self1);

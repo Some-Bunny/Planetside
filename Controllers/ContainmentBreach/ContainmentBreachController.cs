@@ -60,7 +60,7 @@ namespace Planetside
                     },
                 };
 
-                RoomFactory.AddInjection(RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/PrisonUnlockRoom.room").room, "Prison Containment Shrine", flowModifierPlacementTypes, 0, dungeonPrerequisites, "Prison Containment Shrine", 1, 1f);
+                RoomFactory.AddInjection(RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/PrisonUnlockRoom.room").room, "Prison Containment Shrine", flowModifierPlacementTypes, 0, dungeonPrerequisites, "Prison Containment Shrine", 1, 0.1f);
                 RoomFactory.AddInjection(RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/MortalCombat.room").room, "Combat Shrine", flowModifierPlacementTypes, 0, dungeonPrerequisites1, "Combat Shrine", 1, 1f);
 
                 Actions.PostDungeonTrueStart += PostFloorgen;
@@ -254,14 +254,25 @@ namespace Planetside
                     bool muncjyflag = muncher != null && muncher.Length != 0;
                     if (muncjyflag)
                     {
+                        bool triggered = false;
                         foreach (GunberMuncherController shope in muncher)
                         {
-                            Minimap.Instance.DeregisterRoomIcon(roomHandler, (GameObject)ResourceCache.Acquire("Global Prefabs/Minimap_Muncher_Icon"));
-                            //Minimap.Instance.RegisterRoomIcon
-                            GameObject obj = new GameObject();
-                            RoomHandler roomIn = GameManager.Instance.Dungeon.data.GetAbsoluteRoomFromPosition(base.transform.position.IntXY(VectorConversions.Floor));
-                            StaticReferences.StoredRoomObjects.TryGetValue("VoidMuncher", out obj);
-                            GameObject shopObj = DungeonPlaceableUtility.InstantiateDungeonPlaceable(obj, roomIn, new IntVector2((int)shope.gameObject.transform.position.x + (7), (int)shope.gameObject.transform.position.y) - roomIn.area.basePosition, false);
+                            if (triggered == false)
+                            {
+                                Minimap.Instance.DeregisterRoomIcon(roomHandler, (GameObject)ResourceCache.Acquire("Global Prefabs/Minimap_Muncher_Icon"));
+                                //Minimap.Instance.RegisterRoomIcon
+                                GameObject obj = new GameObject();
+                                RoomHandler roomIn = GameManager.Instance.Dungeon.data.GetAbsoluteRoomFromPosition(base.transform.position.IntXY(VectorConversions.Floor));
+                                StaticReferences.StoredRoomObjects.TryGetValue("VoidMuncher", out obj);
+                                GameObject shopObj = DungeonPlaceableUtility.InstantiateDungeonPlaceable(obj, roomIn, new IntVector2((int)shope.gameObject.transform.position.x + (7), (int)shope.gameObject.transform.position.y) - roomIn.area.basePosition, false);
+                                IPlayerInteractable[] interfaces = shopObj.GetInterfaces<IPlayerInteractable>();
+                                for (int j = 0; j < interfaces.Length; j++)
+                                {
+                                    roomHandler.RegisterInteractable(interfaces[j]);
+                                }
+                                triggered = true;
+                            }
+                          
                             Destroy(shope.gameObject);
                         }
                     }

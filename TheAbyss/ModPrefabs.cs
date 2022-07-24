@@ -542,26 +542,14 @@ namespace Planetside
         {
             Mod_RoomList = new List<string>()
             {
-                "AbyssTestCombatRoom.room",
-                "AbyssTestCombatRoom.room",
-                "AbyssTestCombatRoom.room",
-                "AbyssTestCombatRoom.room",
-                "AbyssTestCombatRoom.room",
-                "AbyssTestCombatRoom.room",
-                "AbyssTestCombatRoom.room",
-                "AbyssTestCombatRoom.room",
-                "AbyssTestCombatRoom.room",
-                "AbyssTestCombatRoom.room",
-                "AbyssTestCombatRoom.room",
-                "AbyssTestCombatRoom.room",
-                "AbyssTestHubRoom.room",
-                "AbyssTestHubRoom.room",
-                "AbyssTestHubRoom.room",
-                "AbyssTestHubRoom.room",
-                "AbyssTestHubRoom.room",
-                "AbyssTestHubRoom.room",
-
-            };
+				"BasicSquareRoom.room",
+				"LRoomAbyss.room",
+				"RoomWithExtraSoos.room",
+				"TunnelWays.room",
+				"SmallRoompewPew.room",
+				"ExtraSpicy.room",
+				"SmallTunnelWithPew.room",
+			};
             Mod_Entrance_Room = DungeonRoomFactory.BuildFromResource("Planetside/Resources/AbyssRooms/AbyssEntry/TheDeepEntrance.room");
             Mod_Exit_Room = DungeonRoomFactory.BuildFromResource("Planetside/Resources/AbyssRooms/AbyssBossRoom/AbyssTestBossRoom.room");
             Mod_Entrance_Room.category = PrototypeDungeonRoom.RoomCategory.ENTRANCE;
@@ -581,7 +569,10 @@ namespace Planetside
 
             foreach (PrototypeDungeonRoom room in Mod_Rooms)
             {
-                ModPrefabs.FloorNameRoomTable.includedRooms.elements.Add(GenerateWeightedRoom(room, 1));
+				//room.CustomMusicEvent = "Play_MUS_Office_Theme_01";
+				//room.UseCustomMusic = true;
+
+				ModPrefabs.FloorNameRoomTable.includedRooms.elements.Add(GenerateWeightedRoom(room, 1));
             }
 
             Mod_Boss = DungeonRoomFactory.BuildFromResource("Planetside/Resources/AbyssRooms/AbyssBossRoom/AbyssTestBossRoom.room");
@@ -662,10 +653,11 @@ namespace Planetside
         public static GenericRoomTable ForgeRoomTable;
         public static GenericRoomTable BulletHellRoomTable;
 
-		
+
 
 		public static void InitCustomPrefabs()
         {
+
 
 
 			AbyssStampData = ScriptableObject.CreateInstance<DungeonTileStampData>();
@@ -1065,16 +1057,34 @@ namespace Planetside
 				ceilingBorderGrid.bottomRightNubIndices = new TileIndexList { indices = new List<int> { 79 }, indexWeights = new List<float> { 1f } };
 
 				//ceilingBorderGrid.borderTopNubBothIndices = new TileIndexList { indices = new List<int> { 80 }, indexWeights = new List<float> { 1f } };
-				//ceilingBorderGrid.borderRightNubTopIndices = new TileIndexList { indices = new List<int> { 81 }, indexWeights = new List<float> { 1f } };
+				//
 
-				ceilingBorderGrid.borderRightNubBottomIndices = new TileIndexList { indices = new List<int> { 82 }, indexWeights = new List<float> { 1f } };
-				ceilingBorderGrid.borderRightNubBothIndices = new TileIndexList { indices = new List<int> { 83 }, indexWeights = new List<float> { 1f } };
-				ceilingBorderGrid.borderBottomNubLeftIndices = new TileIndexList { indices = new List<int> { 84 }, indexWeights = new List<float> { 1f } };
-				ceilingBorderGrid.borderBottomNubRightIndices = new TileIndexList { indices = new List<int> { 85 }, indexWeights = new List<float> { 1f } };
-				ceilingBorderGrid.borderBottomNubBothIndices = new TileIndexList { indices = new List<int> { 86 }, indexWeights = new List<float> { 1f } };
-				ceilingBorderGrid.borderLeftNubTopIndices = new TileIndexList { indices = new List<int> { 87 }, indexWeights = new List<float> { 1f } };
-				ceilingBorderGrid.borderLeftNubBottomIndices = new TileIndexList { indices = new List<int> { 88 }, indexWeights = new List<float> { 1f } };
-				ceilingBorderGrid.borderLeftNubBothIndices = new TileIndexList { indices = new List<int> { 89 }, indexWeights = new List<float> { 1f } };
+
+				ceilingBorderGrid.borderTopNubLeftIndices = new TileIndexList { indices = new List<int> { 117 }, indexWeights = new List<float> { 1f } };
+				ceilingBorderGrid.borderTopNubRightIndices = new TileIndexList { indices = new List<int> { 118 }, indexWeights = new List<float> { 1f } };
+				ceilingBorderGrid.borderTopNubBothIndices= new TileIndexList { indices = new List<int> { 119 }, indexWeights = new List<float> { 1f } };
+
+
+				ceilingBorderGrid.borderBottomNubLeftIndices = new TileIndexList { indices = new List<int> { 115 }, indexWeights = new List<float> { 1f } };
+				ceilingBorderGrid.borderBottomNubRightIndices = new TileIndexList { indices = new List<int> { 116 }, indexWeights = new List<float> { 1f } };
+				ceilingBorderGrid.borderBottomNubBothIndices = new TileIndexList { indices = new List<int> { 120 }, indexWeights = new List<float> { 1f } }; 
+
+
+				ceilingBorderGrid.borderLeftNubTopIndices = new TileIndexList { indices = new List<int> { 111 }, indexWeights = new List<float> { 1f } };
+				ceilingBorderGrid.borderLeftNubBottomIndices = new TileIndexList { indices = new List<int> { 112 }, indexWeights = new List<float> { 1f } };
+				ceilingBorderGrid.borderLeftNubBothIndices = new TileIndexList { indices = new List<int> { 122 }, indexWeights = new List<float> { 1f } };
+
+
+				ceilingBorderGrid.borderRightNubTopIndices = new TileIndexList { indices = new List<int> { 113 }, indexWeights = new List<float> { 1f } };
+				ceilingBorderGrid.borderRightNubBottomIndices = new TileIndexList { indices = new List<int> { 114 }, indexWeights = new List<float> { 1f } };
+				ceilingBorderGrid.borderRightNubBothIndices = new TileIndexList { indices = new List<int> { 121 }, indexWeights = new List<float> { 1f } };
+
+
+
+
+
+
+
 				ceilingBorderGrid.diagonalNubsTopLeftBottomRight = new TileIndexList { indices = new List<int> { 90 }, indexWeights = new List<float> { 1f } };
 				ceilingBorderGrid.diagonalNubsTopRightBottomLeft = new TileIndexList { indices = new List<int> { 91 }, indexWeights = new List<float> { 1f } };
 

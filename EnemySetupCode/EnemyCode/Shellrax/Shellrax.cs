@@ -1696,9 +1696,6 @@ namespace Planetside
 			isTelerting = false;
 			yield return new WaitForSeconds(1f);
 
-
-
-
 			GameObject thing = base.aiActor.transform.Find("attach").gameObject;
 			if (thing == null)
 			{
@@ -1795,6 +1792,7 @@ namespace Planetside
 
 			base.aiActor.healthHaver.IsVulnerable = true;
 			base.healthHaver.minimumHealth = 0;
+			base.aiActor.healthHaver.SetHealthMaximum(base.aiActor.healthHaver.GetMaxHealth() * 3);
 			base.healthHaver.FullHeal();
 			for (int j = 0; j < base.aiActor.behaviorSpeculator.AttackBehaviors.Count; j++)
 			{
@@ -1841,8 +1839,6 @@ namespace Planetside
 					base.aiActor.healthHaver.ApplyDamage(base.healthHaver.GetMaxHealth() / 20, Vector2.zero, "Shellrax fucking dies", CoreDamageTypes.None, DamageCategory.Normal, false, null, false);
 				}
 			}
-			
-
 			yield break;
 		}
 		private void NullifyAllAttacks(AttackBehaviorGroup attackGroup)

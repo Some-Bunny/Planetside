@@ -81,7 +81,7 @@ namespace Planetside
 			OtherTools.EasyTrailComponent trail = projectile.gameObject.AddComponent<OtherTools.EasyTrailComponent>();
 
 			trail.TrailPos = projectile.transform.position;
-			//Where the trail attaches itself to. 
+			//Where the trail attaches itself to. z`
 			//You can input a custom Vector3 but its best to use the base preset, since it usually attaches directly to the center of the projectile, even ones with custom sprites. , unless fuckery ensues. (Namely"projectile.transform.position;")
 
 			trail.StartWidth = 0.1f;

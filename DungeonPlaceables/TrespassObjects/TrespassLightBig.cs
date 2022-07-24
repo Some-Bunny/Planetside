@@ -72,7 +72,7 @@ namespace Planetside
                 defaultPath+"tresspasslightBig_006.png",
                 defaultPath+"tresspasslightBig_007.png",
             };
-            MajorBreakable statue = BreakableAPIToolbox.GenerateMajorBreakable("trespass_big_light", idlePaths, 5, null, 1, 15000, null, 0f, -0.1875f, true, 28, 32, 4, -4, true, null, null, true, null);
+            MajorBreakable statue = BreakableAPIToolbox.GenerateMajorBreakable("trespass_big_light", idlePaths, 5, null, 1, 15000, defaultPath+ "tresspasslightBigShadow.png", 0.125f, -0.25f, true, 28, 32, 4, -4, true, null, null, true, null);
             statue.gameObject.AddComponent<TresspassLightController>();
             statue.DamageReduction = 1000;
 

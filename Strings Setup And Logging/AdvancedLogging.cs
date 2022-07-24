@@ -10,6 +10,7 @@ using System.Reflection;
 using UnityEngine.Collections;
 using MonoMod.RuntimeDetour;
 
+/*
 namespace Planetside
 {
 	public static class AdvancedLogging
@@ -68,6 +69,7 @@ namespace Planetside
 			sGroup.AutoLayoutPadding = 0;
 			sGroup.Background = Color.clear;
 
+			/*
 			if (File.Exists(PlanetsideModule.metadata.Archive))
 			{
 				if (HaveModIcon)
@@ -82,6 +84,8 @@ namespace Planetside
 				modname.Colors[0] = color;
 				sGroup.Children.Add(modname);
 			}
+			*/
+/*
 			string[] split = Regex.Split(message, "(@\\(.+?\\))");
 			foreach (string item in split)
 			{
@@ -128,6 +132,7 @@ namespace Planetside
 			ETGModConsole.Instance.GUI[0].UpdateStyle();
 			return sGroup;
 		}
+*/
 
 		/// <summary>
 		/// used to log buttons, buttons can run certain code when pressed. 
@@ -138,6 +143,8 @@ namespace Planetside
 		/// <param name="col">text color you want</param>
 		/// <param name="HaveModName">whether your log messege will have the mod name at the front</param>
 		/// <param name="HaveModIcon">whether your logged messege will have your mod icon at the front</param>
+		/// 
+		/*
 		public static SButton LogButton(object msg, Color32? col = null, bool HaveModName = false, bool HaveModIcon = false)
 		{
 
@@ -147,6 +154,7 @@ namespace Planetside
 			{
 				color = col.Value;
 			}
+			
 			if (HaveModIcon == false)
 			{
 				if (HaveModName == false)
@@ -182,10 +190,11 @@ namespace Planetside
 					ETGModConsole.Instance.GUI[0].Children.Add(img);
 				}
 			}
+			
 			return img;
 
 		}
-
+*/
 		/// <summary>
 		/// Used to log images. 
 		/// if you want to log something you have in your mod, 
@@ -193,13 +202,14 @@ namespace Planetside
 		/// </summary>
 		/// <param name="img">The texture of the item/enemy/image you want to log.</param> 
 		/// <returns></returns>
-		public static SImage LogImage(Texture img)
+/*	
+public static SImage LogImage(Texture img)
 		{
 			var image = new SImage(img);
 			ETGModConsole.Instance.GUI[0].Children.Add(image);
 			return image;
 		}
-
+*/
 		///// <summary>
 		///// Used to log animations. 
 		///// </summary>
@@ -215,7 +225,7 @@ namespace Planetside
 		//	anim.imgToAnim = img;
 		//	anim.frames = frames;
 		//}
-
+		/*
 		public static byte[] ExtractEmbeddedResource(String filePath)
 		{
 			filePath = filePath.Replace("/", ".");
@@ -305,3 +315,4 @@ namespace Planetside
 
 
 
+*/

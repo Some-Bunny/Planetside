@@ -11,6 +11,7 @@ namespace Planetside
 		public static AssetBundle LoadAssetBundleFromLiterallyAnywhere(string name)
 		{
 			AssetBundle result = null;
+			/*
 			bool flag = File.Exists(PlanetsideModule.ZipFilePath);
 			bool flag2 = flag;
 			if (flag2)
@@ -39,6 +40,7 @@ namespace Planetside
 				}
 			}
 			else
+			*/
 			{
 				bool flag7 = File.Exists(PlanetsideModule.FilePathFolder + "/" + name);
 				bool flag8 = flag7;

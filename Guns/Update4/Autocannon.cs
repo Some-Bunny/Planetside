@@ -93,6 +93,7 @@ namespace Planetside
 
             gun.DefaultModule.angleVariance = 6f;
             gun.Volley.ModulesAreTiers = true;
+
             gun.gameObject.transform.Find("Casing").transform.position = new Vector3(1.8125f, 0.875f);
             gun.shellCasing = BreakAbleAPI.BreakableAPIToolbox.GenerateDebrisObject("Planetside/Resources/GunObjects/Casings/casingBigGun.png", true, 2, 4, 540, 300, null, 0.75f, null, null, 2).gameObject;
             gun.shellsToLaunchOnFire = 2;

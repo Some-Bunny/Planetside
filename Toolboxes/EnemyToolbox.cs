@@ -127,7 +127,7 @@ namespace Planetside
 			shadowPoint.transform.position = attachpoint;
 			actor.ShadowParent = shadowPoint.transform;
 		}
-
+	
 
 		public static GameObject GenerateShootPoint(GameObject attacher, Vector2 attachpoint, string name = "shootPoint")
         {

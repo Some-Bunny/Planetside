@@ -49,7 +49,7 @@ namespace Planetside
 			if (!flag2)
 			{
 				prefab = CompanionBuilder.BuildPrefab("Baby Candle Kin", guid, spritePaths[0], new IntVector2(0, 0), new IntVector2(8, 9));
-				prefab.AddComponent<PetInteractableTransferrable>();
+				//prefab.AddComponent<PetInteractableTransferrable>();
 				var companion = prefab.AddComponent<BabyCandleBehavior>();
 				companion.aiActor.MovementSpeed = 2f;
 				companion.aiActor.healthHaver.PreventAllDamage = true;

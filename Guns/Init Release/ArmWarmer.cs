@@ -191,7 +191,7 @@ namespace Planetside
 			}
 		}
 
-		protected void Update()
+		public override void Update()
 		{
 			if (gun.CurrentOwner)
 			{

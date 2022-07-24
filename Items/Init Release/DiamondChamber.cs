@@ -58,7 +58,11 @@ namespace Planetside
 				bool P = SaveAPIManager.GetFlag(CustomDungeonFlags.DEFEAT_ANNIHICHAMBER);
 				bool A = SaveAPIManager.GetFlag(CustomDungeonFlags.DECURSE_HELL_SHRINE_UNLOCK);
 				bool S = SaveAPIManager.GetFlag(CustomDungeonFlags.HAS_COMPLETED_SOMETHING_WICKED);
-				if (Q == true && W == true && E == true && R == true && T == true && Y == true && U == true && I == true && O == true && P == true && A == true && S == true)
+				bool D = SaveAPIManager.GetFlag(CustomDungeonFlags.HM_PRIME_DEFEATED);
+				bool F = SaveAPIManager.GetFlag(CustomDungeonFlags.HM_PRIME_DEFEATED_T4);
+				bool G = SaveAPIManager.GetFlag(CustomDungeonFlags.TRESPASS_INTO_OTHER_PLACE);
+
+				if (Q == true && W == true && E == true && R == true && T == true && Y == true && U == true && I == true && O == true && P == true && A == true && S == true && D == true && F == true && G == true)
                 {
 					AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.PLATE_DIAMOND_CHAMBER, true);
 					base.Owner.RemovePassiveItem(DiamondChamber.DiamondChamberID);

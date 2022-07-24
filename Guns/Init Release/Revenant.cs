@@ -61,7 +61,7 @@ namespace Planetside
 			gun.shellCasing = BreakAbleAPI.BreakableAPIToolbox.GenerateDebrisObject("Planetside/Resources/GunObjects/Casings/revenantcasing.png", true, 0.333f, 2, 1080, 360, null, 1.2f).gameObject;
 			gun.shellsToLaunchOnFire = 0;
 			gun.shellsToLaunchOnReload = 5;
-			gun.reloadShellLaunchFrame = 6;
+			gun.reloadShellLaunchFrame = 6;	
 
 			gun.reloadClipLaunchFrame = 0;
 			gun.clipsToLaunchOnReload = 0;

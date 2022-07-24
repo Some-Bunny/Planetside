@@ -567,6 +567,8 @@ namespace Planetside
             dungeon.decoSettings.standardRoomVisualSubtypes = intCollection;
             var deco = dungeon.decoSettings;
             deco.ambientLightColor = new Color(0, 0.3f, 0.9f);
+            deco.ambientLightColorTwo = new Color(0, 0.3f, 0.9f);
+
             deco.generateLights = false;
             
 
@@ -662,12 +664,13 @@ namespace Planetside
             };
 
             //more variable we can copy from other floors, or make our own
-            dungeon.PlaceDoors = true;
-            dungeon.doorObjects = CatacombsPrefab.doorObjects;
+            dungeon.PlaceDoors = false;
+            dungeon.doorObjects = AbyssFloorDoor.AbyssDoor;
             dungeon.oneWayDoorObjects = MinesDungeonPrefab.oneWayDoorObjects;
             dungeon.oneWayDoorPressurePlate = MinesDungeonPrefab.oneWayDoorPressurePlate;
             dungeon.phantomBlockerDoorObjects = MinesDungeonPrefab.phantomBlockerDoorObjects;
             dungeon.UsesWallWarpWingDoors = false;
+            
             //(PickupObjectDatabase.GetById(DiamondChamber.DiamondChamberID) as PickupObject,
 
 
@@ -698,7 +701,7 @@ namespace Planetside
             dungeon.PrefabsToAutoSpawn = new GameObject[0];
 
             //include this for custom floor audio
-            dungeon.musicEventName = "Play_MUS_Ending_Pilot_01";
+            dungeon.musicEventName = "Play_PSOG_MUS_DEEP_01";
             
 
             CatacombsPrefab = null;
