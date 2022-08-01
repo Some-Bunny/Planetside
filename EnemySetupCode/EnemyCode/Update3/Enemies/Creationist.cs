@@ -753,10 +753,7 @@ namespace Planetside
 			{
 				if (clip.GetFrame(frameIdx).eventInfo.Contains("deathBurst"))
 				{
-					var partObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("PortalClose"));
-					partObj.transform.position = base.aiActor.transform.Find("CreationistShootpoint").position;
-					partObj.transform.localScale *= 1f;
-					Destroy(partObj, 3.4f);
+					
 				}
 				if (clip.GetFrame(frameIdx).eventInfo.Contains("Blast"))
 				{
@@ -812,8 +809,8 @@ namespace Planetside
 				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSniper);
 				for (int i = -1; i < 2; i++)
 				{
-					float Angle = base.AimDirection + (20 * i);
-					float Offset = (20 * i);
+					float Angle = base.AimDirection + (30 * i);
+					float Offset = (30 * i);
 					GameObject gameObject = SpawnManager.SpawnVFX(RandomPiecesOfStuffToInitialise.LaserReticle, false);
 
 					tk2dTiledSprite component2 = gameObject.GetComponent<tk2dTiledSprite>();
@@ -869,7 +866,7 @@ namespace Planetside
 						float math = isDodgeAble == true ? 250 : 25;
 						tiledsprite.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (math * t));
 						tiledsprite.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f + (10 * t));
-						tiledsprite.transform.localRotation = Quaternion.Euler(0f, 0f, base.AimDirection + Mathf.Lerp(0, Offset, t));
+						tiledsprite.transform.localRotation = Quaternion.Euler(0f, 0f, base.AimDirection + Mathf.SmoothStep(0, Offset, t));
 						tiledsprite.HeightOffGround = -2;
 						tiledsprite.renderer.gameObject.layer = 23;
 						tiledsprite.dimensions = new Vector2(1000f, 1f);
@@ -911,9 +908,9 @@ namespace Planetside
 				{
 					base.PostWwiseEvent("Play_ENM_bulletking_skull_01", null);
 				}
-				for (int i = 0; i < 3; i++)
+				for (int i = 0; i < 4; i++)
 				{
-					base.Fire(new Direction(Angle, DirectionType.Absolute, -1f), new Speed(11f + (i * 1.5f), SpeedType.Absolute), new UndodgeableBullshit());
+					base.Fire(new Direction(Angle, DirectionType.Absolute, -1f), new Speed(19f + (i * 1.5f), SpeedType.Absolute), new UndodgeableBullshit());
 				}
 				yield break;
 			}

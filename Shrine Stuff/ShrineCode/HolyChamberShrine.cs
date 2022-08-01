@@ -88,7 +88,7 @@ namespace Planetside
 
 			List<DebrisObject> perksThatExist = new List<DebrisObject>() { };
 			List<int> IDsUsed = new List<int>()
-            {
+			{
 				Contract.ContractID,
 				Greedy.GreedyID,
 				AllStatsUp.AllStatsUpID,
@@ -98,7 +98,8 @@ namespace Planetside
 				ChaoticShift.ChaoticShiftID,
 				PitLordsPact.PitLordsPactID,
 				UnbreakableSpirit.UnbreakableSpiritID,
-				Gunslinger.GunslingerID
+				Gunslinger.GunslingerID,
+				Patience.PatienceID
 			};
 			int PerksToSpawn = UnityEngine.Random.Range(2, 5);
 			for (int e = 0; e < PerksToSpawn; e++)

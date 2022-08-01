@@ -27,9 +27,9 @@ namespace Planetside
 			enemyless.OverrideBulletName = "default";
 			enemyless.NumBullets = 5;
 			enemyless.BulletMinRadius = 1;
-			enemyless.BulletMaxRadius = 4;
+			enemyless.BulletMaxRadius = 3.2f;
 			enemyless.BulletCircleSpeed = Speed;
-			enemyless.BulletsIgnoreTiles = false;
+			enemyless.BulletsIgnoreTiles = true;
 			enemyless.RegenTimer = 0.02f;
 			enemyless.AmountOFLines = 4;
 			SpriteOutlineManager.AddOutlineToSprite(base.GetComponent<tk2dBaseSprite>(), Color.black, 0.1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
@@ -194,17 +194,19 @@ namespace Planetside
 						projectile = gameObject.GetComponent<Projectile>();
 						projectile.specRigidbody.Velocity = Vector2.zero;
 						projectile.ManualControl = true;
-						if (this.BulletsIgnoreTiles)
+						if (this.BulletsIgnoreTiles == true)
 						{
 							projectile.specRigidbody.CollideWithTileMap = false;
-							projectile.specRigidbody.AddCollisionLayerOverride(CollisionMask.LayerToMask(CollisionLayer.EnemyBlocker));
-							projectile.specRigidbody.AddCollisionLayerOverride(CollisionMask.LayerToMask(CollisionLayer.HighObstacle));
-							projectile.specRigidbody.AddCollisionLayerOverride(CollisionMask.LayerToMask(CollisionLayer.LowObstacle));
-							projectile.specRigidbody.AddCollisionLayerOverride(CollisionMask.LayerToMask(CollisionLayer.BeamBlocker));
-							projectile.specRigidbody.AddCollisionLayerOverride(CollisionMask.LayerToMask(CollisionLayer.BulletBreakable));
-							projectile.specRigidbody.AddCollisionLayerOverride(CollisionMask.LayerToMask(CollisionLayer.TileBlocker));
-							projectile.specRigidbody.AddCollisionLayerOverride(CollisionMask.LayerToMask(CollisionLayer.BulletBlocker));
-							projectile.specRigidbody.AddCollisionLayerOverride(CollisionMask.LayerToMask(CollisionLayer.EnemyBulletBlocker));
+							projectile.specRigidbody.AddCollisionLayerIgnoreOverride(CollisionMask.LayerToMask(CollisionLayer.EnemyBlocker));
+							projectile.specRigidbody.AddCollisionLayerIgnoreOverride(CollisionMask.LayerToMask(CollisionLayer.HighObstacle));
+							projectile.specRigidbody.AddCollisionLayerIgnoreOverride(CollisionMask.LayerToMask(CollisionLayer.LowObstacle));
+							projectile.specRigidbody.AddCollisionLayerIgnoreOverride(CollisionMask.LayerToMask(CollisionLayer.BeamBlocker));
+							projectile.specRigidbody.AddCollisionLayerIgnoreOverride(CollisionMask.LayerToMask(CollisionLayer.BulletBreakable));
+							projectile.specRigidbody.AddCollisionLayerIgnoreOverride(CollisionMask.LayerToMask(CollisionLayer.TileBlocker));
+							projectile.specRigidbody.AddCollisionLayerIgnoreOverride(CollisionMask.LayerToMask(CollisionLayer.BulletBlocker));
+							projectile.specRigidbody.AddCollisionLayerIgnoreOverride(CollisionMask.LayerToMask(CollisionLayer.EnemyBulletBlocker));
+							projectile.specRigidbody.AddCollisionLayerIgnoreOverride(CollisionMask.LayerToMask(CollisionLayer.EnemyBulletBlocker));
+							//projectile.specRigidbody.AddCollisionLayerIgnoreOverride
 
 						}
 						this.m_projectiles[k].projectile = projectile;

@@ -549,15 +549,29 @@ namespace Planetside
 				"SmallRoompewPew.room",
 				"ExtraSpicy.room",
 				"SmallTunnelWithPew.room",
+				"BigBloaty1.room",
+				"EvilHAHAHAHAHA.room",
+				"IDoALittleTrollingHopeYouGetGood.room",
+				"TurretsBadGuysAndExplosions.room",
+				"VIOLENCE.room",
+				"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.room",
+				"H.room",
+				"deathdeath.room",
+				"painpain.room"
 			};
-            Mod_Entrance_Room = DungeonRoomFactory.BuildFromResource("Planetside/Resources/AbyssRooms/AbyssEntry/TheDeepEntrance.room");
+			Mod_RoomList_HUB = new List<string>()
+			{
+				"BigAssmegaHubRoom.room",
+				"ConnectoryRoomy.room",
+				"BigHell.room"
+			};
+
+			Mod_Entrance_Room = DungeonRoomFactory.BuildFromResource("Planetside/Resources/AbyssRooms/AbyssEntry/TheDeepEntrance.room");
             Mod_Exit_Room = DungeonRoomFactory.BuildFromResource("Planetside/Resources/AbyssRooms/AbyssBossRoom/AbyssTestBossRoom.room");
             Mod_Entrance_Room.category = PrototypeDungeonRoom.RoomCategory.ENTRANCE;
-
-
+			VoidMuncherRoom = DungeonRoomFactory.BuildFromResource("Planetside/Resources/AbyssRooms/AbyssSpecial/SpecialVoidMuncherRoom.room");
 
 			List<PrototypeDungeonRoom> m_floorNameRooms = new List<PrototypeDungeonRoom>();
-
             foreach (string name in Mod_RoomList)
             {
                 PrototypeDungeonRoom m_room = DungeonRoomFactory.BuildFromResource("Planetside/Resources/AbyssRooms/AbyssCombat/" + name);
@@ -569,13 +583,25 @@ namespace Planetside
 
             foreach (PrototypeDungeonRoom room in Mod_Rooms)
             {
-				//room.CustomMusicEvent = "Play_MUS_Office_Theme_01";
-				//room.UseCustomMusic = true;
-
 				ModPrefabs.FloorNameRoomTable.includedRooms.elements.Add(GenerateWeightedRoom(room, 1));
             }
 
-            Mod_Boss = DungeonRoomFactory.BuildFromResource("Planetside/Resources/AbyssRooms/AbyssBossRoom/AbyssTestBossRoom.room");
+			List<PrototypeDungeonRoom> m_floorNameRoomsHUB = new List<PrototypeDungeonRoom>();
+			foreach (string name in Mod_RoomList_HUB)
+			{
+				PrototypeDungeonRoom m_room = DungeonRoomFactory.BuildFromResource("Planetside/Resources/AbyssRooms/AbyssHubRooms/" + name);
+				m_floorNameRoomsHUB.Add(m_room);
+
+			}
+			Mod_Rooms_HUB = m_floorNameRoomsHUB.ToArray();
+			foreach (PrototypeDungeonRoom room in Mod_Rooms_HUB)
+			{
+				ModPrefabs.FloorNameRoomTable.includedRooms.elements.Add(GenerateWeightedRoom(room, 1));
+			}
+
+
+
+			Mod_Boss = DungeonRoomFactory.BuildFromResource("Planetside/Resources/AbyssRooms/AbyssBossRoom/AbyssTestBossRoom.room");
 
 			Mod_Boss.category = PrototypeDungeonRoom.RoomCategory.BOSS;
             Mod_Boss.subCategoryBoss = PrototypeDungeonRoom.RoomBossSubCategory.FLOOR_BOSS;
@@ -603,16 +629,21 @@ namespace Planetside
             return new WeightedRoom() { room = Room, weight = Weight, limitedCopies = LimitedCopies, maxCopies = MaxCopies, additionalPrerequisites = AdditionalPrerequisites };
         }
 
-        public static PrototypeDungeonRoom Mod_Entrance_Room;
+		public static PrototypeDungeonRoom VoidMuncherRoom;
+
+		public static PrototypeDungeonRoom Mod_Entrance_Room;
         public static PrototypeDungeonRoom Mod_Exit_Room;
+
         public static PrototypeDungeonRoom[] Mod_Rooms;
-        public static PrototypeDungeonRoom Mod_Boss;
+		public static PrototypeDungeonRoom[] Mod_Rooms_HUB;
+
+		public static PrototypeDungeonRoom Mod_Boss;
         public static List<string> Mod_RoomList; // this will contain all of our mods rooms.
+		public static List<string> Mod_RoomList_HUB; // this will contain all of our mods rooms.
+	}
 
-    }
 
-
-    class ModPrefabs
+	class ModPrefabs
     {
 
 		public static DungeonMaterial abyssMaterial;

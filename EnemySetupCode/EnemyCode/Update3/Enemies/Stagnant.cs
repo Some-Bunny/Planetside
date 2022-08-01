@@ -507,7 +507,7 @@ namespace Planetside
 						{
 							yield break;
 						}
-						this.Direction += Mathf.MoveTowards(0f, delta, 7.5f);
+						this.Direction += Mathf.MoveTowards(0f, delta, 6f);
 						yield return this.Wait(1);
 					}
 				}

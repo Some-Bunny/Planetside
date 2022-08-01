@@ -80,9 +80,6 @@ namespace Planetside
             base.Pickup(player);     
         }
 
-
-
-
         public override bool CanBeUsed(PlayerController user)
         {
             //Literally just stole this from Lead Key because im honestly not bothered to make a check myself
@@ -97,7 +94,6 @@ namespace Planetside
             LootEngine.DoDefaultItemPoof(user.sprite.WorldBottomCenter);
             SaveAPIManager.SetFlag(CustomDungeonFlags.SHIPMENT_TICKET_HAD, false);
             GameManager.Instance.StartCoroutine(SpawnCrates(false, user));
-
         }
 
         protected override void OnPreDrop(PlayerController user)

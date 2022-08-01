@@ -91,7 +91,7 @@ namespace Planetside
         /// <param name="po">The PickupObject you're adding</param>
         /// <param name="weight">The Weight of the item you're adding (default is 1)</param>
         /// <returns></returns>
-        public static void AddItemToPool(this GenericLootTable lootTable, PickupObject po, float weight = 1)
+        public static void AddItemToPool(this GenericLootTable lootTable, PickupObject po, float weight = 1, DungeonPrerequisite[] preReq = null)
         {
             lootTable.defaultItemDrops.Add(new WeightedGameObject()
             {
@@ -99,7 +99,7 @@ namespace Planetside
                 weight = weight,
                 rawGameObject = po.gameObject,
                 forceDuplicatesPossible = false,
-                additionalPrerequisites = new DungeonPrerequisite[0]
+                additionalPrerequisites = preReq ?? new DungeonPrerequisite[0]
             });
         }
         /// <summary>
@@ -122,7 +122,7 @@ namespace Planetside
                 additionalPrerequisites = new DungeonPrerequisite[0]
             });
         }
-        public static void AddItemsToPool(this GenericLootTable lootTable, Dictionary<int, float> poIDListWithWeights)
+        public static void AddItemsToPool(this GenericLootTable lootTable, Dictionary<int, float> poIDListWithWeights, DungeonPrerequisite[] preReq = null)
         {
             foreach (var entry in poIDListWithWeights)
             {
@@ -133,7 +133,7 @@ namespace Planetside
                     weight = entry.Value,
                     rawGameObject = po.gameObject,
                     forceDuplicatesPossible = false,
-                    additionalPrerequisites = new DungeonPrerequisite[0]
+                    additionalPrerequisites = preReq ?? new DungeonPrerequisite[0]
                 });
             }            
         }

@@ -2015,23 +2015,22 @@ namespace Planetside
             {
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("ffca09398635467da3b1f4a54bcfda80").bulletBank.GetBullet("directedfire"));
 				int amount = base.BulletBank.aiActor.GetComponent<RobotShopkeeperEngageDoer>().AmountOfPurchases;
-
-				for (int e = (-2 - amount); e < (3+amount); e++)
+				for (int e = (-1 - amount); e < (2+amount); e++)
                 {
-					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(true, base.AimDirection, (7+amount)*e, this, 0.75f));
+					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(true, base.AimDirection, (9+amount)*e, this, 0.75f));
 					yield return this.Wait(1);
 				}
 				yield return this.Wait(30);
-				for (int e = (-2 - amount); e < (3 + amount); e++)
+				for (int e = (-1 - amount); e < (2 + amount); e++)
 				{
-					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(false, base.AimDirection, (7 + amount) * e, this, 0.75f));
+					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(false, base.AimDirection, (9 + amount) * e, this, 0.75f));
 					yield return this.Wait(1);
 				}
 				yield return this.Wait(45);
 				if (amount > 3)
                 {
 					this.StartTask(this.ChargeMinigunsLeft());
-					yield return this.Wait(20);
+					yield return this.Wait(30);
 					this.StartTask(this.ChargeMinigunsRight());
 					yield return this.Wait(90);
 				}
@@ -2045,10 +2044,10 @@ namespace Planetside
 				amount = amount * 2;
 				for (int e = (-1 - amount); e < (2 + amount); e++)
 				{
-					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(true, base.AimDirection, (5 + amount) * e, this, 0.75f));
+					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(true, base.AimDirection, (6 + amount) * e, this, 1f));
 					yield return this.Wait(2.5f);
 				}
-				yield return this.Wait(90);
+				yield return this.Wait(120);
 				yield break;
             }
 			private IEnumerator ChargeMinigunsRight()
@@ -2057,10 +2056,10 @@ namespace Planetside
 				amount = amount * 2;
 				for (int e = (2 + amount); e > (-1 - amount); e--)
 				{
-					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(false, base.AimDirection, (5 + amount) * e, this, 0.75f));
+					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(false, base.AimDirection, (6 + amount) * e, this, 1f));
 					yield return this.Wait(2.5f);
 				}
-				yield return this.Wait(90);
+				yield return this.Wait(120);
 				yield break;
 			}
 
@@ -2132,7 +2131,7 @@ namespace Planetside
 						component2.HeightOffGround = -2;
 						component2.renderer.gameObject.layer = 23;
 						component2.UpdateZDepth();
-						bool enabled = elapsed % 0.05f > 0.025f;
+						bool enabled = elapsed % 0.2f > 0.1f;
 						component2.renderer.enabled = enabled;
 					}
 					elapsed += BraveTime.DeltaTime;
@@ -2820,7 +2819,7 @@ namespace Planetside
 						component2.HeightOffGround = -2;
 						component2.renderer.gameObject.layer = 23;
 						component2.UpdateZDepth();
-						bool enabled = elapsed % 0.05f > 0.025f;
+						bool enabled = elapsed % 0.1f > 0.05f;
 						component2.renderer.enabled = enabled;
 					}
 					elapsed += BraveTime.DeltaTime;

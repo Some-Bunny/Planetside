@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Planetside
 {
 
-    class AllSeeingEye : PickupObject, IPlayerInteractable
+    public class AllSeeingEye : PickupObject, IPlayerInteractable
     {
         public static void Init()
         {
@@ -28,7 +28,20 @@ namespace Planetside
 			particles.ParticleSystemColor2 = new Color(255, 53, 184);
 			OutlineColor = new Color(0.9f, 0.52f, 0.9f);
 
+
+			AllSeeingEye.gunVFXPrefab = SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/AllSeeingEye/gunicon.png", null, false);
+			AllSeeingEye.itemVFXPrefab = SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/AllSeeingEye/itemicon.png", null, false);
+			UnityEngine.Object.DontDestroyOnLoad(AllSeeingEye.gunVFXPrefab);
+			FakePrefab.MarkAsFakePrefab(AllSeeingEye.gunVFXPrefab);
+			AllSeeingEye.gunVFXPrefab.SetActive(false);
+			UnityEngine.Object.DontDestroyOnLoad(AllSeeingEye.itemVFXPrefab);
+			FakePrefab.MarkAsFakePrefab(AllSeeingEye.itemVFXPrefab);
+			AllSeeingEye.itemVFXPrefab.SetActive(false);
+
 		}
+		public static GameObject gunVFXPrefab;
+		public static GameObject itemVFXPrefab;
+
 		public static int AllSeeingEyeID;
 		private static Color OutlineColor;
 
@@ -145,221 +158,211 @@ namespace Planetside
     }
 }
 
-
-public class AllSeeingEyeController : BraveBehaviour
+namespace Planetside
 {
-	public void Start()
+	public class AllSeeingEyeController : BraveBehaviour
 	{
-		PlayerController player = GameManager.Instance.PrimaryPlayer;
-		this.RevealSecretRooms();
-		GameManager.Instance.OnNewLevelFullyLoaded += this.RevealSecretRooms;
-
-
-		player.gameObject.AddComponent<AllSeeingEyeController.AllSeeingEyeChestBehaviour>();
-
-	}
-	public void Update()
-	{
-
-	}
-	private void RevealSecretRooms()
-	{
-		for (int i = 0; i < GameManager.Instance.Dungeon.data.rooms.Count; i++)
+		public void Start()
 		{
-			RoomHandler roomHandler = GameManager.Instance.Dungeon.data.rooms[i];
-			bool flag = roomHandler.connectedRooms.Count != 0;
-			bool flag2 = flag;
-			bool flag3 = flag2;
-			if (flag3)
+			PlayerController player = GameManager.Instance.PrimaryPlayer;
+			this.RevealSecretRooms();
+			GameManager.Instance.OnNewLevelFullyLoaded += this.RevealSecretRooms;
+
+
+			player.gameObject.AddComponent<AllSeeingEyeController.AllSeeingEyeChestBehaviour>();
+
+		}
+		public void Update()
+		{
+
+		}
+		private void RevealSecretRooms()
+		{
+			for (int i = 0; i < GameManager.Instance.Dungeon.data.rooms.Count; i++)
 			{
-				bool flag4 = roomHandler.area.PrototypeRoomCategory == PrototypeDungeonRoom.RoomCategory.SECRET;
-				bool flag5 = flag4;
-				bool flag6 = flag5;
-				if (flag6)
+				RoomHandler roomHandler = GameManager.Instance.Dungeon.data.rooms[i];
+				bool flag = roomHandler.connectedRooms.Count != 0;
+				bool flag2 = flag;
+				bool flag3 = flag2;
+				if (flag3)
 				{
-					roomHandler.RevealedOnMap = true;
-					Minimap.Instance.RevealMinimapRoom(roomHandler, true, true, roomHandler == GameManager.Instance.PrimaryPlayer.CurrentRoom);
+					bool flag4 = roomHandler.area.PrototypeRoomCategory == PrototypeDungeonRoom.RoomCategory.SECRET;
+					bool flag5 = flag4;
+					bool flag6 = flag5;
+					if (flag6)
+					{
+						roomHandler.RevealedOnMap = true;
+						Minimap.Instance.RevealMinimapRoom(roomHandler, true, true, roomHandler == GameManager.Instance.PrimaryPlayer.CurrentRoom);
+					}
 				}
 			}
 		}
-	}
-	private static string gunVFX = "Planetside/Resources/VFX/AllSeeingEye/gunicon.png";
-	private static string itemVFX = "Planetside/Resources/VFX/AllSeeingEye/itemicon.png";
-	private static string vfxName = "WisperVFX";
-	private static GameObject gunVFXPrefab;
-	private static GameObject itemVFXPrefab;
-	private class AllSeeingEyeChestBehaviour : BraveBehaviour
-	{
-		private void Start()
+		private static string vfxName = "WisperVFX";
+		private class AllSeeingEyeChestBehaviour : BraveBehaviour
 		{
-			this.player = base.GetComponent<PlayerController>();
-
-			AllSeeingEyeController.gunVFXPrefab = SpriteBuilder.SpriteFromResource(AllSeeingEyeController.gunVFX, null, false);
-			AllSeeingEyeController.itemVFXPrefab = SpriteBuilder.SpriteFromResource(AllSeeingEyeController.itemVFX, null, false);
-			AllSeeingEyeController.gunVFXPrefab.name = AllSeeingEyeController.vfxName;
-			AllSeeingEyeController.itemVFXPrefab.name = AllSeeingEyeController.vfxName;
-			UnityEngine.Object.DontDestroyOnLoad(AllSeeingEyeController.gunVFXPrefab);
-			FakePrefab.MarkAsFakePrefab(AllSeeingEyeController.gunVFXPrefab);
-			AllSeeingEyeController.gunVFXPrefab.SetActive(false);
-			UnityEngine.Object.DontDestroyOnLoad(AllSeeingEyeController.itemVFXPrefab);
-			FakePrefab.MarkAsFakePrefab(AllSeeingEyeController.itemVFXPrefab);
-			AllSeeingEyeController.itemVFXPrefab.SetActive(false);
-		}
-
-		private void FixedUpdate()
-		{
-			bool flag = !this.player || this.player.CurrentRoom == null;
-			if (!flag)
+			private void Start()
 			{
-				IPlayerInteractable nearestInteractable = this.player.CurrentRoom.GetNearestInteractable(this.player.sprite.WorldCenter, 1f, this.player);
-				bool flag2 = nearestInteractable != null && nearestInteractable is Chest;
-				if (flag2)
-				{
-					Chest chest = nearestInteractable as Chest;
-					bool flag3 = !this.encounteredChests.Contains(chest) && !chest.transform.Find(AllSeeingEyeController.vfxName);
-					if (flag3)
-					{
-						this.InitializeChest(chest);
-					}
-					else
-					{
-						this.nearbyChest = chest;
-					}
-				}
-				else
-				{
-					this.nearbyChest = null;
-				}
-				this.HandleChests();
+				this.player = base.GetComponent<PlayerController>();
+
+
 			}
-		}
 
-		private void HandleChests()
-		{
-			foreach (Chest chest in this.encounteredChests)
+			private void FixedUpdate()
 			{
-				bool flag = !chest;
+				bool flag = !this.player || this.player.CurrentRoom == null;
 				if (!flag)
 				{
-					tk2dSprite tk2dSprite;
-					if (chest == null)
+					IPlayerInteractable nearestInteractable = this.player.CurrentRoom.GetNearestInteractable(this.player.sprite.WorldCenter, 1f, this.player);
+					bool flag2 = nearestInteractable != null && nearestInteractable is Chest;
+					if (flag2)
 					{
-						tk2dSprite = null;
+						Chest chest = nearestInteractable as Chest;
+						bool flag3 = !this.encounteredChests.Contains(chest) && !chest.transform.Find(AllSeeingEyeController.vfxName);
+						if (flag3)
+						{
+							this.InitializeChest(chest);
+						}
+						else
+						{
+							this.nearbyChest = chest;
+						}
 					}
 					else
 					{
-						Transform transform = chest.transform;
-						if (transform == null)
+						this.nearbyChest = null;
+					}
+					this.HandleChests();
+				}
+			}
+
+			private void HandleChests()
+			{
+				foreach (Chest chest in this.encounteredChests)
+				{
+					bool flag = !chest;
+					if (!flag)
+					{
+						tk2dSprite tk2dSprite;
+						if (chest == null)
 						{
 							tk2dSprite = null;
 						}
 						else
 						{
-							Transform transform2 = transform.Find(AllSeeingEyeController.vfxName);
-							tk2dSprite = ((transform2 != null) ? transform2.GetComponent<tk2dSprite>() : null);
+							Transform transform = chest.transform;
+							if (transform == null)
+							{
+								tk2dSprite = null;
+							}
+							else
+							{
+								Transform transform2 = transform.Find(AllSeeingEyeController.vfxName);
+								tk2dSprite = ((transform2 != null) ? transform2.GetComponent<tk2dSprite>() : null);
+							}
 						}
-					}
-					tk2dSprite tk2dSprite2 = tk2dSprite;
-					bool flag2 = !tk2dSprite2;
-					if (!flag2)
-					{
-						bool flag3 = chest != this.nearbyChest;
-						if (flag3)
+						tk2dSprite tk2dSprite2 = tk2dSprite;
+						bool flag2 = !tk2dSprite2;
+						if (!flag2)
 						{
-							tk2dSprite2.scale = Vector3.Lerp(tk2dSprite2.scale, Vector3.zero, 0.25f);
+							bool flag3 = chest != this.nearbyChest;
+							if (flag3)
+							{
+								tk2dSprite2.scale = Vector3.Lerp(tk2dSprite2.scale, Vector3.zero, 0.25f);
+							}
+							else
+							{
+								tk2dSprite2.scale = Vector3.Lerp(tk2dSprite2.scale, Vector3.one, 0.25f);
+							}
+							bool flag4 = Vector3.Distance(tk2dSprite2.scale, Vector3.zero) < 0.01f;
+							if (flag4)
+							{
+								tk2dSprite2.scale = Vector3.zero;
+							}
+							tk2dSprite2.PlaceAtPositionByAnchor(chest.sprite.WorldTopCenter + this.offset, tk2dBaseSprite.Anchor.LowerCenter);
 						}
-						else
-						{
-							tk2dSprite2.scale = Vector3.Lerp(tk2dSprite2.scale, Vector3.one, 0.25f);
-						}
-						bool flag4 = Vector3.Distance(tk2dSprite2.scale, Vector3.zero) < 0.01f;
-						if (flag4)
-						{
-							tk2dSprite2.scale = Vector3.zero;
-						}
-						tk2dSprite2.PlaceAtPositionByAnchor(chest.sprite.WorldTopCenter + this.offset, tk2dBaseSprite.Anchor.LowerCenter);
 					}
 				}
 			}
-		}
 
-		// Token: 0x0600065C RID: 1628 RVA: 0x0003FB34 File Offset: 0x0003DD34
-		private void InitializeChest(Chest chest)
-		{
-			int guess = this.GetGuess(chest);
-			bool flag = guess == 0;
-			GameObject original;
-			if (flag)
+			// Token: 0x0600065C RID: 1628 RVA: 0x0003FB34 File Offset: 0x0003DD34
+			private void InitializeChest(Chest chest)
 			{
-				original = AllSeeingEyeController.gunVFXPrefab;
-			}
-			else
-			{
-				original = AllSeeingEyeController.itemVFXPrefab;
-			}
-			tk2dSprite component = UnityEngine.Object.Instantiate<GameObject>(original, chest.transform).GetComponent<tk2dSprite>();
-			component.name = AllSeeingEyeController.vfxName;
-			component.PlaceAtPositionByAnchor(chest.sprite.WorldTopCenter + this.offset, tk2dBaseSprite.Anchor.LowerCenter);
-			component.scale = Vector3.zero;
-			this.nearbyChest = chest;
-			this.encounteredChests.Add(chest);
-		}
-
-		private int GetGuess(Chest chest)
-		{
-			Chest.GeneralChestType chestType = chest.ChestType;
-			bool flag = chestType == Chest.GeneralChestType.WEAPON;
-			int result;
-			if (flag)
-			{
-				result = 0;
-			}
-			else
-			{
-				bool flag2 = chestType == Chest.GeneralChestType.ITEM;
-				if (flag2)
+				int guess = this.GetGuess(chest);
+				bool flag = guess == 0;
+				GameObject original;
+				if (flag)
 				{
-					result = 1;
+					original = AllSeeingEye.gunVFXPrefab;
 				}
 				else
 				{
-					List<PickupObject> list = chest.PredictContents(this.player);
-					foreach (PickupObject pickupObject in list)
-					{
-						bool flag3 = pickupObject is Gun;
-						if (flag3)
-						{
-							return 0;
-						}
-						bool flag4 = pickupObject is PlayerItem || pickupObject is PassiveItem;
-						if (flag4)
-						{
-							return 1;
-						}
-					}
-					result = UnityEngine.Random.Range(0, 2);
+					original = AllSeeingEye.itemVFXPrefab;
 				}
+				tk2dSprite component = UnityEngine.Object.Instantiate<GameObject>(original, chest.transform).GetComponent<tk2dSprite>();
+				component.name = AllSeeingEyeController.vfxName;
+				component.PlaceAtPositionByAnchor(chest.sprite.WorldTopCenter + this.offset, tk2dBaseSprite.Anchor.LowerCenter);
+				component.scale = Vector3.zero;
+				this.nearbyChest = chest;
+				this.encounteredChests.Add(chest);
 			}
-			return result;
-		}
 
-		public void DestroyAllFX()
-		{
-			foreach (Chest chest in this.encounteredChests)
+			private int GetGuess(Chest chest)
 			{
-				Transform transform = chest.transform.Find(AllSeeingEyeController.vfxName);
-				bool flag = transform;
+				Chest.GeneralChestType chestType = chest.ChestType;
+				bool flag = chestType == Chest.GeneralChestType.WEAPON;
+				int result;
 				if (flag)
 				{
-					UnityEngine.Object.Destroy(transform);
+					result = 0;
 				}
+				else
+				{
+					bool flag2 = chestType == Chest.GeneralChestType.ITEM;
+					if (flag2)
+					{
+						result = 1;
+					}
+					else
+					{
+						List<PickupObject> list = chest.PredictContents(this.player);
+						foreach (PickupObject pickupObject in list)
+						{
+							bool flag3 = pickupObject is Gun;
+							if (flag3)
+							{
+								return 0;
+							}
+							bool flag4 = pickupObject is PlayerItem || pickupObject is PassiveItem;
+							if (flag4)
+							{
+								return 1;
+							}
+						}
+						result = UnityEngine.Random.Range(0, 2);
+					}
+				}
+				return result;
 			}
-			this.encounteredChests.Clear();
+
+			public void DestroyAllFX()
+			{
+				foreach (Chest chest in this.encounteredChests)
+				{
+					Transform transform = chest.transform.Find(AllSeeingEyeController.vfxName);
+					bool flag = transform;
+					if (flag)
+					{
+						UnityEngine.Object.Destroy(transform);
+					}
+				}
+				this.encounteredChests.Clear();
+			}
+			private List<Chest> encounteredChests = new List<Chest>();
+			private PlayerController player;
+			private Chest nearbyChest;
+			private Vector2 offset = new Vector2(0f, 0.25f);
+
 		}
-		private List<Chest> encounteredChests = new List<Chest>();
-		private PlayerController player;
-		private Chest nearbyChest;
-		private Vector2 offset = new Vector2(0f, 0.25f);
 
 	}
 

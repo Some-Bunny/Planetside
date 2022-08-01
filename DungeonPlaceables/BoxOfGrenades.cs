@@ -46,7 +46,7 @@ namespace Planetside
                 component2.alwaysUpdateOffscreen = true;
                 component2.playAutomatically = true;
             }
-            SpawnManager.SpawnBulletScript(null, self.transform.PositionVector2() , self.GetComponent<AIBulletBank>(), new CustomBulletScriptSelector(typeof(SpewGrenades)), StringTableManager.GetEnemiesString("#TRAP", -1));
+            SpawnManager.SpawnBulletScript(null, SpawnPos + new Vector2(0, 0.25f), self.GetComponent<AIBulletBank>(), new CustomBulletScriptSelector(typeof(SpewGrenades)), StringTableManager.GetEnemiesString("#TRAP", -1));
         }
         public class SpewGrenades : Script
         {
@@ -67,10 +67,6 @@ namespace Planetside
             }
         }
     }
-    
-
-
-
     public class BoxOfGrenades
     {
         public static void Init()

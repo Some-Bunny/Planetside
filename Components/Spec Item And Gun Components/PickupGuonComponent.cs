@@ -23,6 +23,9 @@ using static DirectionalAnimation;
 
 namespace Planetside
 {
+
+
+
 	public class PickupGuonComponent : MonoBehaviour
 	{
 		public PickupGuonComponent()
@@ -39,13 +42,14 @@ namespace Planetside
 			this.IsKey = false;
 			this.IsArmor = false;
 			this.DoPoof = true;
+			this.GivesStats = false;
 		}
+
 
 		public void Awake()
 		{
 			this.actor = base.GetComponent<PlayerOrbital>();
 			this.player = base.GetComponent<PlayerController>();
-
 		}
 		public static Hook guonHook;
 
@@ -56,7 +60,6 @@ namespace Planetside
             {
 				LootEngine.DoDefaultItemPoof(actor.transform.position, false, false);
 			}
-			//PickupGuonComponent.guonHook = new Hook(typeof(PlayerOrbital).GetMethod("Initialize"), typeof(PickupGuonComponent).GetMethod("GuonInit"));
 			PlayerController playerboi = GameManager.Instance.PrimaryPlayer;
 			if (this.actor == null)
             {
@@ -215,6 +218,7 @@ namespace Planetside
 		public bool IsArmor;
 		public bool IsBlank;
 		public bool DoPoof;
+		public bool GivesStats;
 
 		public int HitsBeforeDeath = 10;
 		private PlayerOrbital actor;

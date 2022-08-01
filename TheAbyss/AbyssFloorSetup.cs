@@ -687,7 +687,7 @@ namespace Planetside
             dungeon.SecretRoomVerticalPoofVFX = CatacombsPrefab.SecretRoomVerticalPoofVFX;
             dungeon.sharedSettingsPrefab = CatacombsPrefab.sharedSettingsPrefab;
             dungeon.NormalRatGUID = string.Empty;
-            dungeon.BossMasteryTokenItemId = CatacombsPrefab.BossMasteryTokenItemId;
+            dungeon.BossMasteryTokenItemId = NetheriteChamber.ChaamberID;
             dungeon.UsesOverrideTertiaryBossSets = false;
             dungeon.OverrideTertiaryRewardSets = new List<TertiaryBossRewardSet>(0);
             dungeon.defaultPlayerPrefab = MinesDungeonPrefab.defaultPlayerPrefab;

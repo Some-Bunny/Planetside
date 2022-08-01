@@ -32,7 +32,7 @@ namespace Planetside
 			string shortDesc = "See Beyond";
 			string longDesc = "Certain entrances appear consistently.\n\nContains a very small blue orb.";
 			ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
-			item.quality = PickupObject.ItemQuality.B;
+			item.quality = PickupObject.ItemQuality.A;
 			item.SetupUnlockOnCustomFlag(CustomDungeonFlags.TRESPASS_INTO_OTHER_PLACE, true);
 			ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.Curse, 1, StatModifier.ModifyMethod.ADDITIVE);
 			AnchorID = item.PickupObjectId;

@@ -31,6 +31,8 @@ namespace Planetside
             TrespassSmallCubes.Init();
             TrespassCubes.Init();
             TrespassSniperTurrets.Init();
+            TrespassBloodDecals.Init();
+            TrespassTentaclePillar.Init();
         }
     }
 }

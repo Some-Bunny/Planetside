@@ -199,9 +199,6 @@ namespace Planetside
 				"directional_pad"
 			};
 			CustomSynergies.Add("D-rectional", mandatoryConsoleIDs, optionalConsoleIDs, true);
-
-
-		
 		}
 
 

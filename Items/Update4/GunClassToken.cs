@@ -38,17 +38,13 @@ namespace Planetside
 			GunClassTokenID = item.PickupObjectId;
 			new Hook(typeof(LootDataGlobalSettings).GetMethod("GetModifierForClass", BindingFlags.Instance | BindingFlags.Public), typeof(GunClassToken).GetMethod("GetModifierForClassHook", BindingFlags.Static | BindingFlags.Public));
 		}
-
 		public static int GunClassTokenID;
-
-
 		public static float GetModifierForClassHook(Func<LootDataGlobalSettings, GunClass, float> orig, LootDataGlobalSettings self, GunClass gunClass)
         {
 			float f = orig(self,gunClass);
-			if (PlayerHasFavouritism() == true) { f = 3.5f; }
+			if (PlayerHasFavouritism() == true) { f = 5f; }
 			return f;
         }
-
 		public static bool PlayerHasFavouritism()
 		{
 			foreach (PlayerController player in GameManager.Instance.AllPlayers)
@@ -57,8 +53,6 @@ namespace Planetside
 			}
 			return false;
 		}
-
-
 		public override DebrisObject Drop(PlayerController player)
 		{
 			DebrisObject result = base.Drop(player);

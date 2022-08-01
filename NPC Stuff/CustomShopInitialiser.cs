@@ -25,7 +25,7 @@ namespace Planetside
 
         public static void SendEventHook(Action<PlayMakerFSM, string> orig, PlayMakerFSM self, string str)
         {
-            ETGModConsole.Log(str);
+            //ETGModConsole.Log(str);
             orig(self, str);
         }
 
@@ -262,7 +262,7 @@ namespace Planetside
 
 
             GenericLootTable MasteryTable = LootTableTools.CreateLootTable();
-            MasteryTable.AddItemsToPool(new Dictionary<int, float> { {AllSeeingEye.AllSeeingEyeID, 1}, { AllStatsUp.AllStatsUpID, 1 }, { BlastProjectiles.BlastProjectilesID, 1 }, { ChaoticShift.ChaoticShiftID, 1 }, { Contract.ContractID, 1 }, { Glass.GlassID, 1 }, { Greedy.GreedyID, 1 }, { Gunslinger.GunslingerID, 1 }, { PitLordsPact.PitLordsPactID, 1 }, { UnbreakableSpirit.UnbreakableSpiritID, 1 }, });
+            MasteryTable.AddItemsToPool(new Dictionary<int, float> { {AllSeeingEye.AllSeeingEyeID, 1}, { AllStatsUp.AllStatsUpID, 1 }, { BlastProjectiles.BlastProjectilesID, 1 }, { ChaoticShift.ChaoticShiftID, 0 }, { Contract.ContractID, 1 }, { Glass.GlassID, 1 }, { Greedy.GreedyID, 1 }, { Gunslinger.GunslingerID, 1 }, { PitLordsPact.PitLordsPactID, 1 }, { UnbreakableSpirit.UnbreakableSpiritID, 1 }, { Patience.PatienceID, 1 } });
             GameObject masteryShop = ItsDaFuckinShopApi.SetUpShop(
                   "masteryRewardTrader"
                 , "psog"

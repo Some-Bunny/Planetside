@@ -262,6 +262,7 @@ namespace Planetside
 				doorCollection.spriteDefinitions[id].materialId = 5;
 			}
 
+			doorCollection.spriteDefinitions[ids[0]].colliderVertices = new Vector3[] { new Vector3(1.5f, 1.21875f, 0), new Vector3(1f, 1.21875f, 0) };
 
 			AddAnimation(doorAnimator, doorCollection, ids, "door_block_beyond_close_headshake", tk2dSpriteAnimationClip.WrapMode.Once, 14);
 			ids.Clear();
@@ -380,6 +381,7 @@ namespace Planetside
 				ids.Add(id);
 				doorCollection.spriteDefinitions[id].materialId = 3;
 			}
+			doorCollection.spriteDefinitions[ids[0]].colliderVertices = new Vector3[] {new Vector3(0.1875f, 2.8125f, 0), new Vector3(0.1875f, 2.8125f, 0) };
 			AddAnimation(doorAnimator, doorCollection, ids, "door_block_beyond_side_close", tk2dSpriteAnimationClip.WrapMode.Once, 11);
 
 			doorH.transform.Find("BarsLeft").GetComponent<tk2dSprite>().spriteId = ids[0];

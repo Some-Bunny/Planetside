@@ -23,6 +23,9 @@ namespace Planetside
 				DungeonFlowNode entranceNode = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.ENTRANCE, ModRoomPrefabs.Mod_Entrance_Room);
 				DungeonFlowNode exitNode = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.EXIT, ModRoomPrefabs.Mod_Exit_Room);
 
+				DungeonFlowNode VoidMuncherNode = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.NORMAL, ModRoomPrefabs.VoidMuncherRoom);
+
+
 				DungeonFlowNode bossfoyerNode = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.SPECIAL, overrideTable: ModPrefabs.boss_foyertable);
 				DungeonFlowNode bossNode = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.BOSS, ModRoomPrefabs.Mod_Boss);
 
@@ -30,17 +33,24 @@ namespace Planetside
 				DungeonFlowNode defaultCombatNode1 = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.NORMAL, overrideTable: ModPrefabs.FloorNameRoomTable);
 				DungeonFlowNode defaultCombatNode2 = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.NORMAL, overrideTable: ModPrefabs.FloorNameRoomTable);
 
+				DungeonFlowNode defaultCombatNodeNonMain1_1 = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.NORMAL, overrideTable: ModPrefabs.FloorNameRoomTable);
+				DungeonFlowNode defaultCombatNodeNonMain1_2 = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.NORMAL, overrideTable: ModPrefabs.FloorNameRoomTable);
+				DungeonFlowNode defaultCombatNodeNonMain1_3 = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.NORMAL, overrideTable: ModPrefabs.FloorNameRoomTable);
+
+
+				DungeonFlowNode defaultHubNode1 = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.HUB, overrideTable: ModPrefabs.FloorNameRoomTable);
+
 				//DungeonFlowNode BeyondShopNode = GenerateDefaultNode(m_CachedFlow, BeyondPrefabs.shop02.category, ModRoomPrefabs.Mod_Shop_Room);
 
 				m_CachedFlow.name = "F1b_Beyond_flow_Overseer_Test_01";
 				//m_CachedFlow.fallbackRoomTable = BeyondPrefabs.BeyondRoomTable;
-				m_CachedFlow.fallbackRoomTable = ModPrefabs.CastleRoomTable;
+				m_CachedFlow.fallbackRoomTable = ModPrefabs.FloorNameRoomTable;
 				m_CachedFlow.phantomRoomTable = null;
 				m_CachedFlow.phantomRoomTable = null;
 
 				m_CachedFlow.subtypeRestrictions = new List<DungeonFlowSubtypeRestriction>(0);
 				m_CachedFlow.flowInjectionData = new List<ProceduralFlowModifierData>(0);
-				m_CachedFlow.sharedInjectionData = new List<SharedInjectionData>() { BaseSharedInjectionData };
+				m_CachedFlow.sharedInjectionData = new List<SharedInjectionData>() { };//{ BaseSharedInjectionData };
 
 				m_CachedFlow.Initialize();
 
@@ -51,6 +61,15 @@ namespace Planetside
 				m_CachedFlow.AddNodeToFlow(defaultCombatNode1, defaultCombatNode);
 				m_CachedFlow.AddNodeToFlow(defaultCombatNode2, defaultCombatNode1);
 
+				m_CachedFlow.AddNodeToFlow(defaultHubNode1, defaultCombatNode2);
+				//Non-branching path
+				m_CachedFlow.AddNodeToFlow(defaultCombatNodeNonMain1_1, defaultHubNode1);
+				m_CachedFlow.AddNodeToFlow(defaultCombatNodeNonMain1_2, defaultCombatNodeNonMain1_1);
+				m_CachedFlow.AddNodeToFlow(defaultCombatNodeNonMain1_3, defaultCombatNodeNonMain1_2);
+				m_CachedFlow.AddNodeToFlow(VoidMuncherNode, defaultCombatNodeNonMain1_3);
+
+
+				//
 
 				m_CachedFlow.AddNodeToFlow(bossfoyerNode, defaultCombatNode2);
 

@@ -56,7 +56,6 @@ namespace Planetside
                 }
             }
         }
-
         public bool ConsidersBothPlayers;
         public RoomHandler roomAssigned;
         public Action<RoomHandler> PlayerSuddenlyDisappearedFromRoom;

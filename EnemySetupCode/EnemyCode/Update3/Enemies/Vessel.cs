@@ -227,7 +227,7 @@ namespace Planetside
 				var companion = prefab.AddComponent<EnemyBehavior>();
 				prefab.AddComponent<ForgottenEnemyComponent>();
 				prefab.AddComponent<VesselController>();
-				companion.aiActor.knockbackDoer.weight = 40;
+				companion.aiActor.knockbackDoer.weight = 100;
 				companion.aiActor.MovementSpeed = 1f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
 				companion.aiActor.CollisionDamage = 1f;

@@ -22,8 +22,6 @@ namespace Planetside
             new Hook(typeof(PlayerController).GetMethod("HandleSpinfallSpawn", BindingFlags.Instance | BindingFlags.NonPublic), typeof(Actions).GetMethod("HandleSpinfallSpawnHook"));
 			Hook ifThisBreaksBlameTheGnomes = new Hook(typeof(Dungeon).GetMethod("Start", BindingFlags.Instance | BindingFlags.NonPublic),  typeof(Actions).GetMethod("StartHook", BindingFlags.Static | BindingFlags.Public));
 		}
-
-
 		public static IEnumerator StartHook(Func<Dungeon, IEnumerator> orig, Dungeon self)
 		{
 			IEnumerator origEnum = orig(self);
@@ -32,7 +30,6 @@ namespace Planetside
 				object obj = origEnum.Current;
 				yield return obj;
 			}
-		
 			if (PostDungeonTrueStart != null)
 			{
 				PostDungeonTrueStart(self);

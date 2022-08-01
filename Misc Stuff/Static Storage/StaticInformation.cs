@@ -298,6 +298,54 @@ namespace Planetside
             }
 
             {
+                AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("01972dee89fc4404a5c408d50007dad5").bulletBank.GetBullet("default"), "undodgeableHitscan");
+
+                entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                Projectile proj = entry.BulletObject.GetComponent<Projectile>();
+
+
+
+                EmmisiveTrail emis = proj.gameObject.AddComponent<EmmisiveTrail>();
+                emis.EmissiveColorPower = 10;
+                emis.EmissivePower = 100;
+                proj.shouldRotate = true;
+
+                List<string> BeamAnimPaths = new List<string>()
+                {
+                "Planetside/Resources2/ProjectileTrails/Undodgeable/hitscan_mid_001",
+                "Planetside/Resources2/ProjectileTrails/Undodgeable/hitscan_mid_002",
+                "Planetside/Resources2/ProjectileTrails/Undodgeable/hitscan_mid_003",
+                "Planetside/Resources2/ProjectileTrails/Undodgeable/hitscan_mid_004",
+                "Planetside/Resources2/ProjectileTrails/Undodgeable/hitscan_mid_005",
+
+
+                };
+                List<string> ImpactAnimPaths = new List<string>()
+                {
+                "Planetside/Resources2/ProjectileTrails/Undodgeable/hitscan_front_001",
+                "Planetside/Resources2/ProjectileTrails/Undodgeable/hitscan_front_002",
+                "Planetside/Resources2/ProjectileTrails/Undodgeable/hitscan_front_003",
+                "Planetside/Resources2/ProjectileTrails/Undodgeable/hitscan_front_004",
+                "Planetside/Resources2/ProjectileTrails/Undodgeable/hitscan_front_005",
+
+                };
+
+                proj.AddTrailToProjectile(
+                "Planetside/Resources2/ProjectileTrails/Undodgeable/hitscan_mid_001",
+                new Vector2(12, 12),
+                new Vector2(0, 0),
+                BeamAnimPaths, 20,
+                ImpactAnimPaths, 20,
+                0.1f,
+                30,
+                30,
+                false
+                );
+                UndodgeableHitscan = entry;
+            }
+
+
+            {
                 AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("f905765488874846b7ff257ff81d6d0c").bulletBank.GetBullet("spore2"), "undodgeableUnwillingShot");
                 entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
                 UnwillingShot = entry;
@@ -431,10 +479,16 @@ namespace Planetside
                 AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("ffca09398635467da3b1f4a54bcfda80").bulletBank.GetBullet("directedfire"), "UndodgeableDirectedfire", "DNC", null, false);
                 entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
                 entry.BulletObject.GetComponent<Projectile>().shouldRotate = true;
-
                 UndodgeableDirectedfire = entry;
             }
+            {
+                AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("ffca09398635467da3b1f4a54bcfda80").bulletBank.GetBullet("directedfire"), "UndodgeableDirectedfireNoAudio", null, null, false);
+                entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                entry.BulletObject.GetComponent<Projectile>().shouldRotate = true;
+                UndodgeableDirectedfireSoundless = entry;
+            }
 
+            //UndodgeableDirectedfireSoundless
             {
                 AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("c00390483f394a849c36143eb878998f").bulletBank.GetBullet("angrybullet"), "UndodgeableAngrybullet", "DNC", null, false);
                 entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
@@ -484,6 +538,10 @@ namespace Planetside
         //f3b04a067a65492f8b279130323b41f0
 
         //directedfire
+
+        public static AIBulletBank.Entry UndodgeableHitscan;
+
+
         public static AIBulletBank.Entry UndodgeableDoorLordPuke;
         public static AIBulletBank.Entry UndodgeableDoorLordFlame;
         public static AIBulletBank.Entry UndodgeableDoorLordBurst;
@@ -493,6 +551,7 @@ namespace Planetside
 
         public static AIBulletBank.Entry undodgeableBulletKingSlam;
         public static AIBulletBank.Entry UndodgeableDirectedfire;
+        public static AIBulletBank.Entry UndodgeableDirectedfireSoundless;
 
 
         public static AIBulletBank.Entry undodgeableSkullAudio;

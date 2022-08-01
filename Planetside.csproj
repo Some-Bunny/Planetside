@@ -104,6 +104,8 @@
     <Compile Include="Debuff Stuff\TarnishEffect.cs" />
     <Compile Include="DungeonGenStuff\ExpandTK2DDungeonAssembler.cs" />
     <Compile Include="DungeonPlaceables\AbyssFloorDoor.cs" />
+    <Compile Include="DungeonPlaceables\TrespassObjects\TrespassBloodDecals.cs" />
+    <Compile Include="DungeonPlaceables\TrespassObjects\TrespassTentaclePillar.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassSniperTurrets.cs" />
     <Compile Include="DungeonPlaceables\SniperTurrets.cs" />
     <Compile Include="DungeonPlaceables\Deturrets.cs" />
@@ -129,6 +131,7 @@
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassLight.cs" />
     <Compile Include="DungeonPlaceables\TrespassPortalBack.cs" />
     <Compile Include="EnemySetupCode\EnemyAPI %28The one that modifies behaviors%29\OverrideBehavior.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\Update3\Enemies\Bloat.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\Update3\Minibosses\NemesisIntroController.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\Update3\Enemies\Collective.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\Update3\Enemies\ForgottenEnemyComponent.cs" />
@@ -154,11 +157,14 @@
     <Compile Include="EnemySetupCode\EnemyCode\Update3\Bosses\Prisoner\PrisonerPhaseOneIntroController.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\Update3\Bosses\Prisoner\PrisonerPhaseOne.cs" />
     <Compile Include="EnemySetupCode\EnemyRelatedStuff\Behavior Stuff\CustomDodgeRollBehavior.cs" />
+    <Compile Include="EnemySetupCode\EnemyRelatedStuff\Behavior Stuff\ModifiedDashMoveBehavior.cs" />
+    <Compile Include="Guns\Update4\SawBladeGun.cs" />
     <Compile Include="Guns\Update4\NemesisShotgun.cs" />
     <Compile Include="Guns\Update4\NemesisRailgun.cs" />
     <Compile Include="Guns\Update4\NemesisGun.cs" />
     <Compile Include="Guns\Update2\EmmisiveTrails.cs" />
     <Compile Include="Guns\Update2\PetrifierProjectile.cs" />
+    <Compile Include="Guns\Update4\SawBladeGunProjectile.cs" />
     <Compile Include="Guns\Update4\PunctureWoundProjectile.cs" />
     <Compile Include="Guns\Update4\PunctureWound.cs" />
     <Compile Include="Guns\Update4\MeasuringTape.cs" />
@@ -174,6 +180,7 @@
     <Compile Include="Guns\Update4\ParticleCollapser.cs" />
     <Compile Include="Guns\Update4\WhistlerProjectile.cs" />
     <Compile Include="Guns\Update4\Whistler.cs" />
+    <Compile Include="Hooks And Actions\BlankHooks.cs" />
     <Compile Include="Hooks And Actions\DungeonHooks.cs" />
     <Compile Include="Hooks And Actions\Actions.cs" />
     <Compile Include="Hooks And Actions\PickupHooks.cs" />
@@ -207,6 +214,8 @@
     <Compile Include="Misc Stuff\WeightedTypeCollection.cs" />
     <Compile Include="Pickups\PerkPickupClass.cs" />
     <Compile Include="Pickups\Perkthings\AllSeeingEye.cs" />
+    <Compile Include="Pickups\Perkthings\CorruptedWealth.cs" />
+    <Compile Include="Pickups\Perkthings\Patience.cs" />
     <Compile Include="Pickups\Perkthings\Gunslinger.cs" />
     <Compile Include="Pickups\Perkthings\UnbreakableSpirit.cs" />
     <Compile Include="Pickups\Perkthings\PitLordsPact.cs" />
@@ -730,8 +739,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="APIs\SaveAPI\Properties\" />
-    <Folder Include="Resources\AbyssRooms\AbyssHubRooms\" />
-    <Folder Include="Resources\AbyssRooms\AbyssSpecial\" />
     <Folder Include="Resources\VFX\EliteCrowns\" />
   </ItemGroup>
   <ItemGroup>
@@ -4101,6 +4108,44 @@
     <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassSniper\Right\sniperturret_right_idle2.png" />
     <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassSniper\Right\sniperturret_right_idle3.png" />
     <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassSniper\Right\sniperturret_right_idle4.png" />
+    <EmbeddedResource Include="Resources\Enemies\Bloat\bigbloat_death_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Bloat\bigbloat_death_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Bloat\bigbloat_death_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Bloat\bigbloat_death_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Bloat\bigbloat_death_005.png" />
+    <EmbeddedResource Include="Resources\Enemies\Bloat\bigbloat_death_006.png" />
+    <EmbeddedResource Include="Resources\Enemies\Bloat\bigbloat_idle_001.png" />
+    <EmbeddedResource Include="Resources\Enemies\Bloat\bigbloat_idle_002.png" />
+    <EmbeddedResource Include="Resources\Enemies\Bloat\bigbloat_idle_003.png" />
+    <EmbeddedResource Include="Resources\Enemies\Bloat\bigbloat_idle_004.png" />
+    <EmbeddedResource Include="Resources\Enemies\Bloat\bigbloat_idle_005.png" />
+    <EmbeddedResource Include="Resources\PerkThings\patience.png" />
+    <EmbeddedResource Include="Resources\PerkThings\corrputed_wealth.png" />
+    <EmbeddedResource Include="Resources\Ammocom\sheetBolatTrespass.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassDecals\BloodSmall\bloodsplatter_001.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassDecals\BloodSmall\bloodsplatter_002.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassDecals\BloodSmall\bloodsplatter_003.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassDecals\BloodSmall\bloodsplatter_004.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassDecals\BloodSmall\bloodsplatter_005.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassDecals\BloodSmall\bloodsplatter_006.png" />
+    <EmbeddedResource Include="Resources2\ProjectileTrails\Undodgeable\hitscan_front_001.png" />
+    <EmbeddedResource Include="Resources2\ProjectileTrails\Undodgeable\hitscan_front_002.png" />
+    <EmbeddedResource Include="Resources2\ProjectileTrails\Undodgeable\hitscan_front_003.png" />
+    <EmbeddedResource Include="Resources2\ProjectileTrails\Undodgeable\hitscan_front_004.png" />
+    <EmbeddedResource Include="Resources2\ProjectileTrails\Undodgeable\hitscan_front_005.png" />
+    <EmbeddedResource Include="Resources2\ProjectileTrails\Undodgeable\hitscan_mid_001.png" />
+    <EmbeddedResource Include="Resources2\ProjectileTrails\Undodgeable\hitscan_mid_002.png" />
+    <EmbeddedResource Include="Resources2\ProjectileTrails\Undodgeable\hitscan_mid_003.png" />
+    <EmbeddedResource Include="Resources2\ProjectileTrails\Undodgeable\hitscan_mid_004.png" />
+    <EmbeddedResource Include="Resources2\ProjectileTrails\Undodgeable\hitscan_mid_005.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassTentacleCube\pillartentacle_idle_001.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassTentacleCube\pillartentacle_idle_002.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassTentacleCube\pillartentacle_idle_003.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassTentacleCube\pillartentacle_idle_004.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassTentacleCube\pillartentacle_idle_005.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassDecals\Blood\blooddecal_1.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassDecals\Blood\blooddecal_2.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassDecals\Blood\blooddecal_3.png" />
     <Content Include="Resources\Shellrax\shellrax_intro_019.png" />
     <EmbeddedResource Include="Resources\VFX\LockOnVFX\lockonvfx1.png" />
     <EmbeddedResource Include="Resources\VFX\LockOnVFX\lockonvfx2.png" />
@@ -4180,13 +4225,7 @@
     <EmbeddedResource Include="Resources\AbyssRooms\AbyssBossRoom\AbyssTestBossRoom.room" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\AbyssTestCombatRoom.room" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Resources\AbyssRooms\AbyssEntry\AbyssEntryRoom.room" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\AbyssTestHubRoom.room" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\TrespassRooms\TrespassDeeperRooms\trespassharderroom4.room" />
@@ -4301,6 +4340,27 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\ExtraSpicy.room" />
     <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\SmallTunnelWithPew.room" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\BigBloaty1.room" />
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\EvilHAHAHAHAHA.room" />
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\IDoALittleTrollingHopeYouGetGood.room" />
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\TurretsBadGuysAndExplosions.room" />
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\VIOLENCE.room" />
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssHubRooms\BigAssmegaHubRoom.room" />
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssHubRooms\ConnectoryRoomy.room" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssSpecial\SpecialVoidMuncherRoom.room" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.room" />
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\deathdeath.room" />
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\H.room" />
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\painpain.room" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssHubRooms\BigHell.room" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

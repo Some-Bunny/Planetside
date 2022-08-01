@@ -336,6 +336,7 @@ namespace Planetside
             NemesisRailgun.Add();
             NemesisShotgun.Add();
 
+
             Whistler.Add();
             ThunderShot.Add();
             HexaPulseCannon.Add();
@@ -353,6 +354,7 @@ namespace Planetside
             PunctureWound.Add();
             GunClassToken.Init();
             ShopDiscountItem.Init();
+            SawBladeGun.Add();
 
             //Perks
             AllStatsUp.Init();
@@ -365,6 +367,8 @@ namespace Planetside
             PitLordsPact.Init();
             UnbreakableSpirit.Init();
             Gunslinger.Init();
+            Patience.Init();
+            CorruptedWealth.Init();
 
             //VengefulShell.Init();
             //LaserWelder.Add();
@@ -384,6 +388,7 @@ namespace Planetside
             Vessel.Init();
             Unwilling.Init();
             Collective.Init();
+            Bloat.Init();
 
             DeTurretRight.Init();
             DeTurretLeft.Init();

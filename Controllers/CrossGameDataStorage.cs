@@ -51,12 +51,13 @@ namespace Planetside
         {
             primaryGunSaved = string.Empty,
             secondaryGunSaved = string.Empty,
-
+            AmountOfPerksToChooseFromOnRunStart = 0
         };
         public struct Configuration
         {
             public string primaryGunSaved;
             public string secondaryGunSaved;
+            public int AmountOfPerksToChooseFromOnRunStart;
         }
     }
 }

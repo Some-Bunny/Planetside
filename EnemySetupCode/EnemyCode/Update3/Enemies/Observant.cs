@@ -321,7 +321,7 @@ namespace Planetside
 						ShootPoint = shootpointLeft,
 						BulletScript = new CustomBulletScriptSelector(typeof(TelegraphScript)),
 						LeadAmount = 0f,
-						AttackCooldown = 3f,
+						AttackCooldown = 1f,
 						Cooldown = 1f,
 						InitialCooldown = 0.5f,
 						ChargeTime = 1f,
@@ -436,7 +436,9 @@ namespace Planetside
 				mat.SetFloat("_EmissiveColorPower", 3f);
 				mat.SetFloat("_EmissivePower", 80);
 				companion.aiActor.sprite.renderer.material = mat;
-
+				companion.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableHitscan);
+				companion.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
+				companion.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSniper);
 			}
 		}
 
@@ -574,10 +576,7 @@ namespace Planetside
 				}
 				if (clip.GetFrame(frameIdx).eventInfo.Contains("deathBurst"))
 				{
-					var partObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("PortalClose"));
-					partObj.transform.position = base.aiActor.transform.Find("ObservantShootpointLeft").position;
-					partObj.transform.localScale *= 1f;
-					Destroy(partObj, 3.4f);
+					
 				}
 				if (clip.GetFrame(frameIdx).eventInfo.Contains("Blast"))
 				{
@@ -604,7 +603,6 @@ namespace Planetside
 		{
 			protected override IEnumerator Top()
 			{
-				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
 				for (int i = 0; i < 12; i++)
                 {
 					this.Fire(new Direction(30 * i, DirectionType.Aim, -1f), new Speed(3f, SpeedType.Absolute), new BasicBigBall());
@@ -621,18 +619,32 @@ namespace Planetside
 				{
 					base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 60);
 					yield return this.Wait(360f);
+					//base.Fire(new Direction(this.Projectile.Direction.ToAngle(), Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(600, SpeedType.Absolute), new HitScan());
 					base.Vanish(false);
 					yield break;
 				}
 			}
+			public class HitScan : Bullet
+            {
+				public HitScan() : base(StaticUndodgeableBulletEntries.UndodgeableHitscan.Name, false, false, false)
+				{
+
+				}
+				protected override IEnumerator Top()
+				{
+					SpawnManager.PoolManager.Remove(this.Projectile.gameObject.transform);
+					this.Projectile.BulletScriptSettings.preventPooling = true;
+
+					yield break;
+				}
+			}
+
 		}
 
 		public class TelegraphScript : Script 
 		{
 			protected override IEnumerator Top()
 			{
-				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSniper);
-				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
 				float Angle = base.AimDirection;
 				GameObject gameObject = SpawnManager.SpawnVFX(RandomPiecesOfStuffToInitialise.LaserReticle, false);
 
@@ -761,6 +773,10 @@ namespace Planetside
 					GameObject.Instantiate(silencerVFX.gameObject, base.BulletBank.aiActor.transform.Find("ObservantShootpointLeft").position, Quaternion.identity);
 					Exploder.DoDistortionWave(base.BulletBank.aiActor.transform.Find("ObservantShootpointLeft").position, 10f, 0.4f, 3, 0.066f);
 					base.Fire(new Direction(Angle, DirectionType.Absolute, -1f), new Speed(30f, SpeedType.Absolute), new UndodgeableBullshit());
+					for (int i = 0; i < 6; i++)
+					{
+						this.Fire(new Direction(60 * i, DirectionType.Aim, -1f), new Speed(2f, SpeedType.Absolute), new TeleportScript.BasicBigBall());
+					}
 				}			
 				yield break;
 			}

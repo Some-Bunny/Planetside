@@ -17,10 +17,21 @@ namespace Planetside
                 typeof(MasteryReplacementOub).GetMethod("GetOrLoadByNameHook", BindingFlags.Static | BindingFlags.Public)
             );
 
-          
+            new Hook(
+                  typeof(RoomHandler).GetMethod("AddProceduralTeleporterToRoom", BindingFlags.Instance | BindingFlags.Public),
+                  typeof(MasteryReplacementOub).GetMethod("AddProceduralTeleporterToRoomHook", BindingFlags.Static | BindingFlags.Public)
+              );
         }
 
-      
+        public static void AddProceduralTeleporterToRoomHook(Action<RoomHandler> orig, RoomHandler roomHandler)
+        {
+            //yes, this is a really cheap way of preventing teleporters on **specificaly** my floor but it should work
+            if (GameManager.Instance.Dungeon.BossMasteryTokenItemId == NetheriteChamber.ChaamberID) { return; }
+            orig(roomHandler);
+        }
+
+
+
 
         public static Dungeon GetOrLoadByNameHook(Func<string, Dungeon> orig, string name)
         {

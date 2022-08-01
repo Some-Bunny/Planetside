@@ -18,59 +18,19 @@ using UnityEngine.Serialization;
 
 namespace Planetside
 {   
-    public class ShopDiscountController : MonoBehaviour
+
+
+    public class ShopDiscount : MonoBehaviour
     {
-        public ShopDiscountController()
-        {
-            isPriceReduced = false;
-            IdentificationKey = "None";
-            PriceMultiplier = 0.5f;
-            PriceReductionItemID = -1;
-            shopItemSelf = this.GetComponent<ShopItemController>();
-        }
+        public string IdentificationKey;
+        public float PriceMultiplier;
+        public List<int> IDsToReducePriceOf = new List<int>();
+        public int PriceReductionItemID;
+        public bool OverridePriceReduction;
 
-        public void Update()
+        public bool PriceReductionActive()
         {
-            if (PlayerHasValidItem() == true && ValidID(shopItemSelf.item.PickupObjectId))
-            {
-                DoPriceReduction();
-            }
-            else
-            {
-                ReturnPriceToDefault();
-            }
-        }
-        public void DoPriceReduction()
-        {
-            if (isPriceReduced == true) { return; }
-            if (shopItemSelf == null) { return; }
-            isPriceReduced = true;
-            GameLevelDefinition lastLoadedLevelDefinition = GameManager.Instance.GetLastLoadedLevelDefinition();
-            float newCost = shopItemSelf.item.PurchasePrice;
-            float num4 = (lastLoadedLevelDefinition == null) ? 1f : lastLoadedLevelDefinition.priceMultiplier;
-            newCost *= num4;
-            shopItemSelf.OverridePrice = (int)(newCost *= PriceMultiplier);
-        }
-        public void ReturnPriceToDefault()
-        {
-            if (isPriceReduced == false) { return; }
-            if (shopItemSelf == null) { return; }
-
-            isPriceReduced = false;
-            GameLevelDefinition lastLoadedLevelDefinition = GameManager.Instance.GetLastLoadedLevelDefinition();
-            float newCost = shopItemSelf.item.PurchasePrice;
-            float num4 = (lastLoadedLevelDefinition == null) ? 1f : lastLoadedLevelDefinition.priceMultiplier;
-            newCost *= num4;
-            shopItemSelf.OverridePrice = (int)(newCost);
-        }
-
-        public void OnDestroy()
-        {
-            ReturnPriceToDefault();
-        }
-
-        public bool PlayerHasValidItem()
-        {
+            if (OverridePriceReduction == true) { return false; }
             PlayerController[] players = GameManager.Instance.AllPlayers;
             for (int i = 0; i < players.Length; i++)
             {
@@ -82,17 +42,79 @@ namespace Planetside
             }
             return false;
         }
-        public bool ValidID(int ID)
+       
+
+    }
+
+    public class ShopDiscountController : MonoBehaviour
+    {
+        public ShopDiscountController()
         {
-            if (IDsToReducePriceOf.Contains(ID)) { return true; }
+           
+            shopItemSelf = this.GetComponent<ShopItemController>();
+        }
+
+        public void Update()
+        {
+            DoPriceReduction();
+        }
+        public void DoPriceReduction()
+        {
+            float mult = 1;
+            foreach (var DiscountVar in discounts)
+            {
+                if (ValidID(DiscountVar, shopItemSelf.item.PickupObjectId) == true && DiscountVar.PriceReductionActive() == true)
+                {
+                    mult *= DiscountVar.PriceMultiplier;
+                }
+            }
+            DoTotalDiscount(mult);
+        }
+
+        public void DoTotalDiscount(float H)
+        {
+            if (shopItemSelf == null) { return; }
+            GameLevelDefinition lastLoadedLevelDefinition = GameManager.Instance.GetLastLoadedLevelDefinition();
+            float newCost = shopItemSelf.item.PurchasePrice;
+            float num4 = (lastLoadedLevelDefinition == null) ? 1f : lastLoadedLevelDefinition.priceMultiplier;
+            newCost *= num4;
+            shopItemSelf.OverridePrice = (int)(newCost *= H);
+        }
+
+        public void ReturnPriceToDefault()
+        {
+            if (shopItemSelf == null) { return; }
+            GameLevelDefinition lastLoadedLevelDefinition = GameManager.Instance.GetLastLoadedLevelDefinition();
+            float newCost = shopItemSelf.item.PurchasePrice;
+            float num4 = (lastLoadedLevelDefinition == null) ? 1f : lastLoadedLevelDefinition.priceMultiplier;
+            newCost *= num4;
+            shopItemSelf.OverridePrice = (int)(newCost);
+        }
+
+
+        public void DisableSetShopDiscount(string stringID, bool b)
+        {
+            foreach (var DiscountVar in discounts)
+            {
+                if (DiscountVar.IdentificationKey == stringID) { DiscountVar.OverridePriceReduction = b; }
+            }
+        }
+
+        public void OnDestroy()
+        {
+            ReturnPriceToDefault();
+        }
+
+      
+        public bool ValidID(ShopDiscount shopDiscount,int ID)
+        {
+            if (shopDiscount.IDsToReducePriceOf.Contains(ID)) { return true; }
             return false;
         }
-        public string IdentificationKey;
-        public float PriceMultiplier;
-        public List<int> IDsToReducePriceOf = new List<int>();
-        public int PriceReductionItemID;
+
+
+        public List<ShopDiscount> discounts = new List<ShopDiscount>();
         public ShopItemController shopItemSelf;
-        public bool isPriceReduced;
     }
 
     public class ShopDiscountItem : PassiveItem
@@ -153,9 +175,9 @@ namespace Planetside
         public static void OnMyShopItemStarted(ShopItemController shopItemController)
         {
             ShopDiscountController steamSale = shopItemController.gameObject.AddComponent<ShopDiscountController>();
-            steamSale.IdentificationKey = "HP_Reduction";
-            steamSale.IDsToReducePriceOf = new List<int>() { 73, 85, 120 };
-            steamSale.PriceReductionItemID = ShopDiscountItemID;
+            //steamSale.IdentificationKey = "HP_Reduction";
+            //steamSale.IDsToReducePriceOf = new List<int>() { 73, 85, 120 };
+            //steamSale.PriceReductionItemID = ShopDiscountItemID;
         }
         public static void DoSetupHook(Action<BaseShopController> orig, BaseShopController self)
         {

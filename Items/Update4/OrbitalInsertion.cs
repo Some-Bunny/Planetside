@@ -40,7 +40,6 @@ namespace Planetside
             ItemIDs.AddToList(activeitem.PickupObjectId);
 
 			activeitem.SetupUnlockOnCustomFlag(CustomDungeonFlags.HM_PRIME_DEFEATED_T4, true);
-
 		}
 		public static GenericLootTable shopInABoxPickupTable;
 
