@@ -2994,11 +2994,11 @@ namespace Planetside
 				}
 				if (clip.GetFrame(frameIdx).eventInfo.Contains("Wimper"))
 				{
-					ShowBoxInternal(base.aiActor.GetComponent<TalkDoerLite>().transform.position + new Vector3(3, 3), base.aiActor.transform, 2f, ETGMod.Databases.Strings.Core.Get("#ROBOTSHOPKEEPER_WAWA1"), "TextBox", 0.5f, "golem", false, TextBoxManager.BoxSlideOrientation.NO_ADJUSTMENT, false, false);
+					ShowBoxInternal(base.aiActor.GetComponent<TalkDoerLite>().transform.position + new Vector3(3, 3), base.aiActor.transform, 2f, StringTableManager.GetString("#ROBOTSHOPKEEPER_WAWA1"), "TextBox", 0.5f, "golem", false, TextBoxManager.BoxSlideOrientation.NO_ADJUSTMENT, false, false);
 				}
 				if (clip.GetFrame(frameIdx).eventInfo.Contains("CryingAboutIt"))
                 {
-					ShowBoxInternal(base.aiActor.GetComponent<TalkDoerLite>().transform.position + new Vector3(3, 3), base.aiActor.transform, 2, ETGMod.Databases.Strings.Core.Get("#ROBOTSHOPKEEPER_CRYABOUTIT"), "TextBox", 0.5f, "golem", false, TextBoxManager.BoxSlideOrientation.NO_ADJUSTMENT, false, false);
+					ShowBoxInternal(base.aiActor.GetComponent<TalkDoerLite>().transform.position + new Vector3(3, 3), base.aiActor.transform, 2, StringTableManager.GetString("#ROBOTSHOPKEEPER_CRYABOUTIT"), "TextBox", 0.5f, "golem", false, TextBoxManager.BoxSlideOrientation.NO_ADJUSTMENT, false, false);
 				}
 
 				if (clip.GetFrame(frameIdx).eventInfo.Contains("Lights"))
@@ -3029,7 +3029,7 @@ namespace Planetside
 					}
 					if (clip.GetFrame(frameIdx).eventInfo.Contains("4"))
 					{TextToUse = "#ROBOTSHOPKEEPER_ENGAGED_4"; time = 1.25f; }					
-					ShowBoxInternal(base.aiActor.GetComponent<TalkDoerLite>().transform.position + new Vector3(3,3), base.aiActor.transform, time, ETGMod.Databases.Strings.Core.Get(TextToUse), "TextBox", 0.5f,"golem", false, TextBoxManager.BoxSlideOrientation.NO_ADJUSTMENT, false, false);
+					ShowBoxInternal(base.aiActor.GetComponent<TalkDoerLite>().transform.position + new Vector3(3,3), base.aiActor.transform, time, StringTableManager.GetString(TextToUse), "TextBox", 0.5f,"golem", false, TextBoxManager.BoxSlideOrientation.NO_ADJUSTMENT, false, false);
 				}
 				if (clip.GetFrame(frameIdx).eventInfo.Contains("Start"))
                 {

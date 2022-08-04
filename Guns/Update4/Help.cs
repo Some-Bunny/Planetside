@@ -105,7 +105,7 @@ namespace Planetside
                 );
 
             gun.quality = PickupObject.ItemQuality.B;
-            ETGMod.Databases.Items.Add(gun, null, "ANY");
+            ETGMod.Databases.Items.Add(gun, false, "ANY");
 
             ID = gun.PickupObjectId;
 

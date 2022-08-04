@@ -35,14 +35,13 @@ namespace Planetside
 
 				DungeonFlowNode defaultCombatNodeNonMain1_1 = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.NORMAL, overrideTable: ModPrefabs.FloorNameRoomTable);
 				DungeonFlowNode defaultCombatNodeNonMain1_2 = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.NORMAL, overrideTable: ModPrefabs.FloorNameRoomTable);
-				DungeonFlowNode defaultCombatNodeNonMain1_3 = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.NORMAL, overrideTable: ModPrefabs.FloorNameRoomTable);
 
 
 				DungeonFlowNode defaultHubNode1 = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.HUB, overrideTable: ModPrefabs.FloorNameRoomTable);
 
 				//DungeonFlowNode BeyondShopNode = GenerateDefaultNode(m_CachedFlow, BeyondPrefabs.shop02.category, ModRoomPrefabs.Mod_Shop_Room);
 
-				m_CachedFlow.name = "F1b_Beyond_flow_Overseer_Test_01";
+				m_CachedFlow.name = "LoopDeLoop";
 				//m_CachedFlow.fallbackRoomTable = BeyondPrefabs.BeyondRoomTable;
 				m_CachedFlow.fallbackRoomTable = ModPrefabs.FloorNameRoomTable;
 				m_CachedFlow.phantomRoomTable = null;
@@ -65,8 +64,7 @@ namespace Planetside
 				//Non-branching path
 				m_CachedFlow.AddNodeToFlow(defaultCombatNodeNonMain1_1, defaultHubNode1);
 				m_CachedFlow.AddNodeToFlow(defaultCombatNodeNonMain1_2, defaultCombatNodeNonMain1_1);
-				m_CachedFlow.AddNodeToFlow(defaultCombatNodeNonMain1_3, defaultCombatNodeNonMain1_2);
-				m_CachedFlow.AddNodeToFlow(VoidMuncherNode, defaultCombatNodeNonMain1_3);
+				m_CachedFlow.AddNodeToFlow(VoidMuncherNode, defaultCombatNodeNonMain1_2);
 
 
 				//

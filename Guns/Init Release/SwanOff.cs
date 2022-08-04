@@ -20,7 +20,7 @@ namespace Planetside
 		public static void Add()
 		{
 			Gun gun = ETGMod.Databases.Items.NewGun("Swan-Off", "swanoff");
-			Game.Items.Rename("outdated_gun_mods:swan-off", "psog:swan-off");
+			Game.Items.Rename("outdated_gun_mods:swanoff", "psog:swanoff");
 			gun.gameObject.AddComponent<SwanOff>();
 			gun.SetShortDescription("HONK!");
 			gun.SetLongDescription("Accidentally conjured by a dyslexic wizard, this swan demands cuddles and love in exchange for firepower.");
@@ -67,7 +67,7 @@ namespace Planetside
 
 			gun.quality = PickupObject.ItemQuality.C;
 			gun.encounterTrackable.EncounterGuid = "Cheer up Bunny ^ᴗ^ (i dont want to change this, at the very least not remove it)ae";
-			ETGMod.Databases.Items.Add(gun, null, "ANY");
+			ETGMod.Databases.Items.Add(gun, false, "ANY");
 			SwanOff.SwanOffID = gun.PickupObjectId;
 
 			ItemIDs.AddToList(gun.PickupObjectId);

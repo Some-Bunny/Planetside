@@ -94,7 +94,7 @@ namespace Planetside
 
 
 
-			ETGMod.Databases.Items.Add(gun, null, "ANY");
+			ETGMod.Databases.Items.Add(gun, false, "ANY");
 			SynergyAPI.SynergyBuilder.AddItemToSynergy(gun, CustomSynergyType.DODGELOAD);
 
 			Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(gun.DefaultModule.projectiles[0]); projectile.gameObject.SetActive(false);

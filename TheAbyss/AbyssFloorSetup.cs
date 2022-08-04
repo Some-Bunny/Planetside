@@ -73,7 +73,7 @@ namespace Planetside
                 dungeonPrefabPath = "base_abyss", //this is what we will use when we want to acess our dungeon prefab
                 priceMultiplier = 1.5f, //multiplies how much things cost in the shop
                 secretDoorHealthMultiplier = 1, //multiplies how much health secret room doors have, aka how many shots you will need to expose them
-                enemyHealthMultiplier = 2, //multiplies how much health enemies have
+                enemyHealthMultiplier = 1.6f, //multiplies how much health enemies have
                 damageCap = 300, // damage cap for regular enemies
                 bossDpsCap = 78, // damage cap for bosses
                 flowEntries = new List<DungeonFlowLevelEntry>(0),

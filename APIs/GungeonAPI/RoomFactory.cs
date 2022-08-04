@@ -54,7 +54,7 @@ namespace GungeonAPI
             else
             */
             string unzippedDirectory = PlanetsideModule.RoomFilePath;
-            //ETGModConsole.Log(unzippedDirectory);
+            ETGModConsole.Log(unzippedDirectory);
 
             {
                 //Directory.CreateDirectory(unzippedDirectory);
@@ -62,6 +62,7 @@ namespace GungeonAPI
                 {
                     if (g.EndsWith(".room", StringComparison.OrdinalIgnoreCase))
                     {
+
                         string name = Path.GetFullPath(g).RemovePrefix(unzippedDirectory).RemoveSuffix(".room");
                         //ETGModConsole.Log(name);
                         //Tools.PrintNoID($"Found room: \"{name}\"");

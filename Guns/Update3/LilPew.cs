@@ -66,7 +66,7 @@ namespace Planetside
 			gun.muzzleFlashEffects = (PickupObjectDatabase.GetById(150) as Gun).muzzleFlashEffects;
 			gun.quality = PickupObject.ItemQuality.D;
 			gun.encounterTrackable.EncounterGuid = "air pew pewp pewp ewpe wpewpe wp";
-			ETGMod.Databases.Items.Add(gun, null, "ANY");
+			ETGMod.Databases.Items.Add(gun, false, "ANY");
 			List<string> yes = new List<string>
 			{
 				"psog:air_blaster",

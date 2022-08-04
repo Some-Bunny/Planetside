@@ -135,7 +135,7 @@ namespace Planetside
 
 			gun.muzzleFlashEffects = (PickupObjectDatabase.GetById(370) as Gun).muzzleFlashEffects;
 			gun.quality = PickupObject.ItemQuality.A;
-			ETGMod.Databases.Items.Add(gun, null, "ANY");
+			ETGMod.Databases.Items.Add(gun, false, "ANY");
 			List<string> mandatoryConsoleIDs = new List<string>
 			{
 				"psog:burning_sun",

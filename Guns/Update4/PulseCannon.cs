@@ -21,7 +21,7 @@ namespace Planetside
         public static void Add()
         {
             Gun gun = ETGMod.Databases.Items.NewGun("Radial Pulse-Cannon", "pulsecannon");
-            Game.Items.Rename("outdated_gun_mods:radial_pulse-cannon", "psog:radial_pulse-cannon");
+            Game.Items.Rename("outdated_gun_mods:radial_pulsecannon", "psog:radial_pulsecannon");
             gun.gameObject.AddComponent<PulseCannon>();
             gun.SetShortDescription("Good For Frying Dwarves");
             gun.SetLongDescription("A downscaled version of a pulse cannon that would be attached to a colossal battle-tower. They were decommisioned after a rise of employees reporting their legs were getting cut off.");
@@ -96,10 +96,10 @@ namespace Planetside
             gun.gunClass = GunClass.SILLY;
 
             gun.quality = PickupObject.ItemQuality.C;
-            ETGMod.Databases.Items.Add(gun, null, "ANY");
+            ETGMod.Databases.Items.Add(gun, false, "ANY");
             List<string> mandatoryConsoleIDs1 = new List<string>
             {
-                "psog:radial_pulse-cannon"
+                "psog:radial_pulsecannon"
             };
             List<string> optionalConsoleIDs = new List<string>
             {

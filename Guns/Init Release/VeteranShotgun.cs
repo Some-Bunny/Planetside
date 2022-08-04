@@ -67,7 +67,7 @@ namespace Planetside
 			gun.muzzleFlashEffects = (PickupObjectDatabase.GetById(51) as Gun).muzzleFlashEffects;
 			gun.quality = PickupObject.ItemQuality.D;
 			gun.encounterTrackable.EncounterGuid = "Its a shtung";
-			ETGMod.Databases.Items.Add(gun, null, "ANY");
+			ETGMod.Databases.Items.Add(gun, false, "ANY");
 			SynergyAPI.SynergyBuilder.AddItemToSynergy(gun, CustomSynergyType.IRONSHOT);
 			List<string> mandatoryConsoleIDs1 = new List<string>
 			{

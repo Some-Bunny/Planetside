@@ -20,7 +20,7 @@ namespace Planetside
 		public static void Add()
 		{
 			Gun gun = ETGMod.Databases.Items.NewGun("T4-GTR", "lockongun");
-			Game.Items.Rename("outdated_gun_mods:t4-gtr", "psog:t4-gtr");
+			Game.Items.Rename("outdated_gun_mods:t4gtr", "psog:t4gtr");
 			gun.gameObject.AddComponent<LockOnGun>();
 			gun.SetShortDescription("Brain With Brawn");
 			gun.SetLongDescription("Fires mini-rockets towards the in-built target system, reloading on a full clip locks on to the currently targeted enemy.\n\nA shoulder-mounted rocket launcher made to end all brain versus brawn discussions.");
@@ -66,7 +66,7 @@ namespace Planetside
 			spook.penetration = 0;
 			spook.penetratesBreakables = true;
 			gun.encounterTrackable.EncounterGuid = "haha funny big shot";
-			ETGMod.Databases.Items.Add(gun, null, "ANY");
+			ETGMod.Databases.Items.Add(gun, false, "ANY");
 
 			GameObject gameObject = SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/LockOnVFX/lockonvfx1", null, true);
 			gameObject.SetActive(false);
@@ -128,7 +128,7 @@ namespace Planetside
 
 			List<string> AAA = new List<string>
 			{
-				"psog:t4-gtr",
+				"psog:t4gtr",
 			};
 
 			List<string> AAA1= new List<string>
@@ -149,7 +149,7 @@ namespace Planetside
 
 			List<string> yes = new List<string>
 			{
-				"psog:t4-gtr",
+				"psog:t4gtr",
 				"rc_rocket"
 			};
 			CustomSynergies.Add("Double Trouble!", yes, null, true);

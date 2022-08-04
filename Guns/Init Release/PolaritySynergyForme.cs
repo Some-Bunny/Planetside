@@ -91,7 +91,7 @@ namespace Planetside
 
 
 			gun.encounterTrackable.EncounterGuid = "cunt";
-			ETGMod.Databases.Items.Add(gun, null, "ANY");
+			ETGMod.Databases.Items.Add(gun, false, "ANY");
 			gun.barrelOffset.transform.localPosition += new Vector3(2.25f, 0.0625f, 0f);
 			Gun gun4 = PickupObjectDatabase.GetById(156) as Gun;
 			gun.quality = PickupObject.ItemQuality.EXCLUDED;

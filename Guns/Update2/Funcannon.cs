@@ -68,7 +68,7 @@ namespace Planetside
 			PierceProjModifier spook = projectile.gameObject.AddComponent<PierceProjModifier>();
 			spook.penetratesBreakables = true;
 			gun.encounterTrackable.EncounterGuid = "Big Fungus";
-			ETGMod.Databases.Items.Add(gun, null, "ANY");
+			ETGMod.Databases.Items.Add(gun, false, "ANY");
 			gun.SetupUnlockOnCustomFlag(CustomDungeonFlags.DEFEAT_FUNGANNON, true);
 			gun.AddToSubShop(ItemBuilder.ShopType.Goopton, 1f);
 

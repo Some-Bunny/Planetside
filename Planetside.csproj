@@ -4266,8 +4266,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>.\Ionic.Zip.dll</HintPath>
     </Reference>
-    <Reference Include="ModTheGungeonAPI">
-      <HintPath>.\ModTheGungeonAPI.dll</HintPath>
+    <Reference Include="ModTheGungeonAPI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Enter the Gungeon\BepInEx\plugins\MtGAPI\ModTheGungeonAPI.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Cecil">
       <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Enter the Gungeon\BepInEx\core\Mono.Cecil.dll</HintPath>
@@ -4361,6 +4362,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\AbyssRooms\AbyssHubRooms\BigHell.room" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\GetNaenaed.room" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssHubRooms\AnotehrHubRoom.room" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

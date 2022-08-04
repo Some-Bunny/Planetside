@@ -16,7 +16,7 @@ namespace Planetside
 		public static void Add()
 		{
 			Gun gun = ETGMod.Databases.Items.NewGun("Shock-Chain", "shocklaser");
-			Game.Items.Rename("outdated_gun_mods:shock-chain", "psog:shock-chain");
+			Game.Items.Rename("outdated_gun_mods:shockchain", "psog:shockchain");
 			gun.gameObject.AddComponent<ShockChain>();
 			GunExt.SetShortDescription(gun, "Proc Coefficient: 0.2");
 			GunExt.SetLongDescription(gun, "A reformed taser weapon that fires electric arcs in a wide area. Gungeonologists speculate whether the similarities between this weapon and an existing weapon are intentional, or just coincidence.");
@@ -102,7 +102,7 @@ namespace Planetside
 			gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Shock Chain", "Planetside/Resources/GunClips/ShockChain/shocklaserfull", "Planetside/Resources/GunClips/ShockChain/shocklaserempty");
 
 			gun.encounterTrackable.EncounterGuid = "):";
-			ETGMod.Databases.Items.Add(gun, null, "ANY");
+			ETGMod.Databases.Items.Add(gun, false, "ANY");
 
 			gun.barrelOffset.transform.localPosition = new Vector3(2.5f, 0.375f, 0f);
 			gun.carryPixelOffset = new IntVector2((int)4f, (int)-0.5f);
@@ -125,7 +125,7 @@ namespace Planetside
 			*/
 			List<string> AAA = new List<string>
 			{
-				"psog:shock-chain",
+				"psog:shockchain",
 				"shock_rounds"
 			};
 			CustomSynergies.Add("Single A", AAA, null, true);

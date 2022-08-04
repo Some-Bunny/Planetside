@@ -26,7 +26,7 @@ namespace Planetside
 		public static void Add()
 		{
 			Gun gun = ETGMod.Databases.Items.NewGun("Re-Sault", "resault");
-			Game.Items.Rename("outdated_gun_mods:re-sault", "psog:re-sault");
+			Game.Items.Rename("outdated_gun_mods:resault", "psog:resault");
 			gun.gameObject.AddComponent<Resault>();
 
 			GunExt.SetShortDescription(gun, "Reduce, Reuse, Reload");
@@ -61,7 +61,7 @@ namespace Planetside
 			gun.barrelOffset.transform.localPosition = new Vector3(2.375f, 0.75f, 0f);
 			gun.carryPixelOffset = new IntVector2((int)2f, (int)-1.5f);
 			gun.encounterTrackable.EncounterGuid = "IUJFDHUBJKHHGUJGHJUKGJHJGHJGJGJGJGJGHJGJHHDFBSFJSHFGJSDHKJHJJJJJJJJJJJJJJ";
-			ETGMod.Databases.Items.Add(gun, null, "ANY");
+			ETGMod.Databases.Items.Add(gun, false, "ANY");
 			gun.AddToSubShop(ItemBuilder.ShopType.Trorc, 1f);
 			gun.gunClass = GunClass.RIFLE;
 
@@ -106,13 +106,13 @@ namespace Planetside
 			Resault.ResaultID = gun.PickupObjectId;
 			List<string> yah = new List<string>
 			{
-				"psog:re-sault",
+				"psog:resault",
 				"ancient_heros_bandana"
 			};
 			CustomSynergies.Add("Infinite Ammo?", yah, null, true);
 			List<string> aaa = new List<string>
 			{
-				"psog:re-sault",
+				"psog:resault",
 			};
 			List<string> aw = new List<string>
 			{

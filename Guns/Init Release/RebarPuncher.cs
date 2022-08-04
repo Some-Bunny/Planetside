@@ -94,7 +94,7 @@ namespace Planetside
 			gun.quality = PickupObject.ItemQuality.C;
 			gun.DefaultModule.angleFromAim = 0f;
 
-			ETGMod.Databases.Items.Add(gun, null, "ANY");
+			ETGMod.Databases.Items.Add(gun, false, "ANY");
 			RebarPuncher.RebarerID = gun.PickupObjectId;
 
 			RebarPuncher.PlusNailsPrefab = SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Rebar/plusnails", null, false);
@@ -115,13 +115,13 @@ namespace Planetside
 			Vector2 AAAA = new Vector2(this.gun.CurrentOwner.CurrentGun.barrelOffset.position.x, this.gun.CurrentOwner.CurrentGun.barrelOffset.position.y);
 			if (HasCommitedWeaponSwitch == true)
 			{
-				for (int counter = 0; counter < 6; counter++)
+				for (int counter = -3; counter < 4; counter++)
 				{
 
 					PlayerController playerController = this.gun.CurrentOwner as PlayerController;
 					float dmg = (playerController.stats.GetStatValue(PlayerStats.StatType.Damage));
 					Projectile projectile1 = ((Gun)ETGMod.Databases.Items[26]).DefaultModule.projectiles[0];
-					GameObject gameObject = SpawnManager.SpawnProjectile(projectile1.gameObject, AAAA, Quaternion.Euler(0f, 0f, ((this.gun.CurrentOwner.CurrentGun == null) ? 1.2f : this.gun.CurrentOwner.CurrentGun.CurrentAngle) + (counter * 6) - 15), true);
+					GameObject gameObject = SpawnManager.SpawnProjectile(projectile1.gameObject, AAAA, Quaternion.Euler(0f, 0f, ((this.gun.CurrentOwner.CurrentGun == null) ? 1.2f : this.gun.CurrentOwner.CurrentGun.CurrentAngle) + (counter * 7.5f)), true);
 					Projectile component = gameObject.GetComponent<Projectile>();
 					if (component != null)
 					{

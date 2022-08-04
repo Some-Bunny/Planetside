@@ -18,7 +18,7 @@ namespace Planetside
         public static void Add()
         {
             Gun gun = ETGMod.Databases.Items.NewGun("H.M Auto-Cannon", "autocannon");
-            Game.Items.Rename("outdated_gun_mods:h.m_auto-cannon", "psog:h.m_auto-cannon");
+            Game.Items.Rename("outdated_gun_mods:hm_autocannon", "psog:hm_autocannon");
             gun.gameObject.AddComponent<Autocannon>();
             gun.SetShortDescription("So What If I Like Really Big Guns?");
             gun.SetLongDescription("Fires faster the longer you hold the trigger, loaded with depleted uranium rounds.\n\nManufactured by the same people that produced the H.M Prime models, these portable auto-cannons deliver the same kick to your enemies as they do to you.");
@@ -110,7 +110,7 @@ namespace Planetside
             gun.gunClass = GunClass.FULLAUTO;
 
             gun.quality = PickupObject.ItemQuality.B;
-            ETGMod.Databases.Items.Add(gun, null, "ANY");
+            ETGMod.Databases.Items.Add(gun, false, "ANY");
 
 
             Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);

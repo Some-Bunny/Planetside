@@ -21,7 +21,7 @@ namespace Planetside
         public static void Add()
         {
             Gun gun = ETGMod.Databases.Items.NewGun("Thunder-Shot", "bulldog");
-            Game.Items.Rename("outdated_gun_mods:thunder-shot", "psog:thunder-shot");
+            Game.Items.Rename("outdated_gun_mods:thundershot", "psog:thundershot");
             gun.gameObject.AddComponent<ThunderShot>();
             gun.SetShortDescription("Make It Go Boom!");
             gun.SetLongDescription("Fires rounds with embedded detonators in them.\n\nSmells of beard shampoo.");
@@ -76,12 +76,12 @@ namespace Planetside
             gun.clipsToLaunchOnReload = 1;
 
             gun.quality = PickupObject.ItemQuality.C;
-            ETGMod.Databases.Items.Add(gun, null, "ANY");
+            ETGMod.Databases.Items.Add(gun, false, "ANY");
             SynergyAPI.SynergyBuilder.AddItemToSynergy(gun, CustomSynergyType.DODGELOAD);
 
             List<string> AAA = new List<string>
             {
-                "psog:thunder-shot"
+                "psog:thundershot"
             };
             List<string> aee = new List<string>
             {
@@ -96,7 +96,7 @@ namespace Planetside
             
             List<string> eee = new List<string>
             {
-                "psog:thunder-shot",
+                "psog:thundershot",
                 "double_vision"
             };
             CustomSynergies.Add("ROCK, AAAAND, STOOOOONE!", eee, null, true);

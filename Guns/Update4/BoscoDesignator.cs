@@ -100,7 +100,7 @@ namespace Planetside
                 );
 
             gun.quality = PickupObject.ItemQuality.SPECIAL;
-            ETGMod.Databases.Items.Add(gun, null, "ANY");
+            ETGMod.Databases.Items.Add(gun, false, "ANY");
 
             Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
             mat.SetColor("_EmissiveColor", new Color32(255, 51, 31, 255));

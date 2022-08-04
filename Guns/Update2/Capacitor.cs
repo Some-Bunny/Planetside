@@ -78,7 +78,7 @@ namespace Planetside
 			gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Battery", "Planetside/Resources/GunClips/Capacitor/capacitirfull", "Planetside/Resources/GunClips/Capacitor/capacitirempty");
 
 			gun.encounterTrackable.EncounterGuid = "https://www.youtube.com/watch?v=_VF7G8T1Ajs";
-			ETGMod.Databases.Items.Add(gun, null, "ANY");
+			ETGMod.Databases.Items.Add(gun, false, "ANY");
 
 			GameObject gameObject = SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/CapacitorVFX/chargeupnonsyn", null, true);
 			gameObject.SetActive(false);

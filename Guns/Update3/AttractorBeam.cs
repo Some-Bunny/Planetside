@@ -156,7 +156,7 @@ namespace Planetside
             gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).loopStart = 0;
 
             gun.quality = PickupObject.ItemQuality.C; //D
-            ETGMod.Databases.Items.Add(gun, null, "ANY");
+            ETGMod.Databases.Items.Add(gun, false, "ANY");
             Colossus.ColossusID = gun.PickupObjectId;
 
 

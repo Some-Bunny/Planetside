@@ -53,7 +53,7 @@ namespace Planetside
 			projectile.shouldRotate = true;
 			EndOfEverything fuck = projectile.GetComponent<EndOfEverything>();
 			gun.encounterTrackable.EncounterGuid = "Haha gun go *ends world*";
-			ETGMod.Databases.Items.Add(gun, null, "ANY");
+			ETGMod.Databases.Items.Add(gun, false, "ANY");
 			GTEE.fuckinGhELL = gun.PickupObjectId;
 
 		}

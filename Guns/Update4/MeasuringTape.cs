@@ -108,7 +108,7 @@ namespace Planetside
             gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).loopStart = 0;
 
             gun.quality = PickupObject.ItemQuality.D;
-            ETGMod.Databases.Items.Add(gun, null, "ANY");
+            ETGMod.Databases.Items.Add(gun, false, "ANY");
             MeasuringTape.MeasuringTapeID = gun.PickupObjectId;
 
             List<string> yes = new List<string>

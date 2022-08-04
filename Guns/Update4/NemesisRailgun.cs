@@ -94,7 +94,7 @@ namespace Planetside
 			spook.penetration = 3;
 			spook.penetratesBreakables = true;
 			gun.encounterTrackable.EncounterGuid = "C-C-COME HERE";
-			ETGMod.Databases.Items.Add(gun, null, "ANY");
+			ETGMod.Databases.Items.Add(gun, false, "ANY");
 			NemesisRailgun.NemesisRailgunID = gun.PickupObjectId;
 		}
 		public static int NemesisRailgunID;

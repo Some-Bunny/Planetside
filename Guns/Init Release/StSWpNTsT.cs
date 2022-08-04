@@ -57,10 +57,10 @@ namespace Planetside
 			spook.penetration = 3;
 			//projectile.baseData.range = 5.8f;
 			gun.encounterTrackable.EncounterGuid = "ree";
-			ETGMod.Databases.Items.Add(gun, null, "ANY");
+            ETGMod.Databases.Items.Add(gun, false, "ANY");
 
-		}
-		public override void PostProcessProjectile(Projectile projectile)
+        }
+        public override void PostProcessProjectile(Projectile projectile)
 		{
 		}
 

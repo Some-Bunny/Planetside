@@ -114,7 +114,7 @@ namespace Planetside
 				item3
 			};
 			gun.quality = PickupObject.ItemQuality.B;
-			ETGMod.Databases.Items.Add(gun, null, "ANY");
+			ETGMod.Databases.Items.Add(gun, false, "ANY");
 			gun.AddToSubShop(ItemBuilder.ShopType.Cursula, 1f);
 
 			ExecutionersCrossbow.ExecutionersCrossbowID = gun.PickupObjectId;

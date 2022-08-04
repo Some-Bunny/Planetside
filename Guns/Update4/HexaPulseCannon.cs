@@ -17,8 +17,8 @@ namespace Planetside
     {
         public static void Add()
         {
-            Gun gun = ETGMod.Databases.Items.NewGun("Hexagonal Pulse-Cannon", "pulsecannonYellow");
-            Game.Items.Rename("outdated_gun_mods:hexagonal_pulse-cannon", "psog:hexagonal_pulse-cannon");
+            Gun gun = ETGMod.Databases.Items.NewGun("Hexagonal Pulse Cannon", "pulsecannonYellow");
+            Game.Items.Rename("outdated_gun_mods:hexagonal_pulse_cannon", "psog:hexagonal_pulse_cannon");
             gun.gameObject.AddComponent<HexaPulseCannon>();
             gun.SetShortDescription("Good For Frying Dwarves");
             gun.SetLongDescription("Fires rounds with embedded detonators in them.\n\nSmells of beard shampoo.");
@@ -91,7 +91,7 @@ namespace Planetside
             gun.gunClass = GunClass.SILLY;
 
             gun.quality = PickupObject.ItemQuality.EXCLUDED;
-            ETGMod.Databases.Items.Add(gun, null, "ANY");
+            ETGMod.Databases.Items.Add(gun, false, "ANY");
             HexaPluseID = gun.PickupObjectId;
         }
         public static int HexaPluseID;

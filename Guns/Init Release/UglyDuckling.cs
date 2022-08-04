@@ -64,7 +64,7 @@ namespace Planetside
 
 			gun.quality = PickupObject.ItemQuality.EXCLUDED;
 			gun.encounterTrackable.EncounterGuid = "stinky";
-			ETGMod.Databases.Items.Add(gun, null, "ANY");
+			ETGMod.Databases.Items.Add(gun, false, "ANY");
 			UglyDuckling.DuckyID = gun.PickupObjectId;
 
 		}

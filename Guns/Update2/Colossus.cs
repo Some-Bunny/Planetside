@@ -203,8 +203,8 @@ namespace Planetside
 
 
 
-            gun.quality = PickupObject.ItemQuality.B; 
-            ETGMod.Databases.Items.Add(gun, null, "ANY");
+            gun.quality = PickupObject.ItemQuality.B;
+            ETGMod.Databases.Items.Add(gun, false, "ANY");
             List<string> mandatoryConsoleIDs = new List<string>
             {
                 "psog:colossus",

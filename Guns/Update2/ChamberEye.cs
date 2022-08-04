@@ -125,7 +125,7 @@ namespace Planetside
 
 			gun.quality = PickupObject.ItemQuality.EXCLUDED;
 			gun.encounterTrackable.EncounterGuid = "eie";
-			ETGMod.Databases.Items.Add(gun, null, "ANY");
+			ETGMod.Databases.Items.Add(gun, false, "ANY");
 			EyeOfAnnihilation.EyeOfAnnihilationID = gun.PickupObjectId;
 
 		}

@@ -63,7 +63,7 @@ namespace Planetside
 
             gun.gunClass = GunClass.NONE;
 
-            ETGMod.Databases.Items.Add(gun, null, "ANY");
+            ETGMod.Databases.Items.Add(gun, false, "ANY");
             SynergyAPI.SynergyBuilder.AddItemToSynergy(gun, CustomSynergyType.CONTRAIL);
             ParasiticHeart.HeartID = gun.PickupObjectId;
             gun.SetupUnlockOnCustomFlag(CustomDungeonFlags.DEFEAT_ANNIHICHAMBER, true);

@@ -66,7 +66,7 @@ namespace Planetside
 			gun.muzzleFlashEffects = (PickupObjectDatabase.GetById(51) as Gun).muzzleFlashEffects;
 			gun.quality = PickupObject.ItemQuality.EXCLUDED;
 			gun.encounterTrackable.EncounterGuid = "Its a supershtung";
-			ETGMod.Databases.Items.Add(gun, null, "ANY");
+			ETGMod.Databases.Items.Add(gun, false, "ANY");
 			VeteranerShotgun.VeteranerID = gun.PickupObjectId;
 		}
 		public static int VeteranerID;

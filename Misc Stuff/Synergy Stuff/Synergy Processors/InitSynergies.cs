@@ -28,7 +28,7 @@ namespace Planetside
 			CustomSynergies.Add("Stop!", mandatoryConsoleIDs2, null, true);
 			List<string> ee = new List<string>
 			{
-			"psog:shock-chain",
+			"psog:shockchain",
 			"thunderclap"
 			};
 
@@ -36,7 +36,7 @@ namespace Planetside
 
 			List<string> SwanOff = new List<string>
 			{
-			"psog:swan-off"
+			"psog:swanoff"
 			};
 			List<string> SwanOff1 = new List<string>
 			{

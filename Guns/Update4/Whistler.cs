@@ -136,7 +136,7 @@ namespace Planetside
 			sharedMaterials[sharedMaterials.Length - 1] = material;
 			component.sharedMaterials = sharedMaterials;
 
-			ETGMod.Databases.Items.Add(gun, null, "ANY");
+			ETGMod.Databases.Items.Add(gun, false, "ANY");
 			Whistler.WhistlerID = gun.PickupObjectId;
 			ItemIDs.AddToList(gun.PickupObjectId);			
 		}

@@ -121,7 +121,7 @@ namespace Planetside
 
 
 
-			ETGMod.Databases.Items.Add(gun, null, "ANY");
+			ETGMod.Databases.Items.Add(gun, false, "ANY");
 			DivineLight.DivineLightID = gun.PickupObjectId;
 			ItemIDs.AddToList(gun.PickupObjectId);
 
@@ -182,22 +182,26 @@ namespace Planetside
 		private void flightCheck(Gun currentGun)
 		{
 			PlayerController playerController = currentGun.CurrentOwner as PlayerController;
-			if (currentGun == this.gun && !this.GaveFlight && playerController.PlayerHasActiveSynergy("Deliver Us From All Evil") && !playerController.PlayerHasActiveSynergy("BLASPHEMY AGAINST THE SPIRIT"))
-			{
-				base.Player.SetIsFlying(true, "Holy", false, false);
-				base.Player.AdditionalCanDodgeRollWhileFlying.AddOverride("Holy", null);
-				this.GaveFlight = true;
-			}
-			else
-			{
-				if ((currentGun != this.gun || !playerController.PlayerHasActiveSynergy("Deliver Us From All Evil")) && this.GaveFlight)
+			if (playerController != null)
+            {
+				if (currentGun == this.gun && !this.GaveFlight && playerController.PlayerHasActiveSynergy("Deliver Us From All Evil") && !playerController.PlayerHasActiveSynergy("BLASPHEMY AGAINST THE SPIRIT"))
 				{
-					base.Player.SetIsFlying(false, "Holy", false, false);
-					base.Player.AdditionalCanDodgeRollWhileFlying.RemoveOverride("Holy");
-					this.GaveFlight = false;
+					base.Player.SetIsFlying(true, "Holy", false, false);
+					base.Player.AdditionalCanDodgeRollWhileFlying.AddOverride("Holy", null);
+					this.GaveFlight = true;
+				}
+				else
+				{
+					if ((currentGun != this.gun || !playerController.PlayerHasActiveSynergy("Deliver Us From All Evil")) && this.GaveFlight)
+					{
+						base.Player.SetIsFlying(false, "Holy", false, false);
+						base.Player.AdditionalCanDodgeRollWhileFlying.RemoveOverride("Holy");
+						this.GaveFlight = false;
 
+					}
 				}
 			}
+			
 		}
 
 		protected override void Update()
@@ -209,12 +213,16 @@ namespace Planetside
 				this.HasReloaded = true;
 			}
 			PlayerController player = gun.CurrentOwner as PlayerController;
-			isHoly = player.PlayerHasActiveSynergy("Deliver Us From All Evil");
-			if (isHoly != hadHoliness)
-			{
-				flightCheck(player.CurrentGun);
-				hadHoliness = isHoly;
+			if(player)
+            {
+				isHoly = player.PlayerHasActiveSynergy("Deliver Us From All Evil");
+				if (isHoly != hadHoliness)
+				{
+					flightCheck(player.CurrentGun);
+					hadHoliness = isHoly;
+				}
 			}
+			
 		}
 	}
 }

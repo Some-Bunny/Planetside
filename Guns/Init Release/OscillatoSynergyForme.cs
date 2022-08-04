@@ -146,7 +146,7 @@ namespace Planetside
 			}
 			projectile.transform.parent = gun.barrelOffset;
 			gun.encounterTrackable.EncounterGuid = "https://www.youtube.com/watch?v=8KmiS1VyUgA";
-			ETGMod.Databases.Items.Add(gun, null, "ANY");
+			ETGMod.Databases.Items.Add(gun, false, "ANY");
 			OscillatoSynergyForme.AeID = gun.PickupObjectId;
 		}
 		public static int AeID;

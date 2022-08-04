@@ -82,7 +82,7 @@ namespace Planetside
 
 			gun.quality = PickupObject.ItemQuality.A;
 			gun.encounterTrackable.EncounterGuid = "I. AM. ETERNAL.";
-			ETGMod.Databases.Items.Add(gun, null, "ANY");
+			ETGMod.Databases.Items.Add(gun, false, "ANY");
 			//====================================================================================================================
 			GameObject gameObject = SpriteBuilder.SpriteFromResource("Planetside/Resources/Guons/GunknownGuon/superguon.png");
 			gameObject.name = $"Gunknown Guon";

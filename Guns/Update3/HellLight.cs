@@ -120,7 +120,7 @@ namespace Planetside
 
 
 
-			ETGMod.Databases.Items.Add(gun, null, "ANY");
+			ETGMod.Databases.Items.Add(gun, false, "ANY");
 			HellLight.HellLightID = gun.PickupObjectId;
 			//ItemIDs.AddToList(gun.PickupObjectId);
 		}

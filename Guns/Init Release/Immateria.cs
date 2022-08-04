@@ -167,7 +167,7 @@ namespace Planetside
 			gun.light = glow;
 			gun.muzzleFlashEffects = (PickupObjectDatabase.GetById(228) as Gun).muzzleFlashEffects;
 
-			ETGMod.Databases.Items.Add(gun, null, "ANY");
+			ETGMod.Databases.Items.Add(gun, false, "ANY");
 			Immateria.ImmateriaID = gun.PickupObjectId;
 			ItemIDs.AddToList(gun.PickupObjectId);
 		}

@@ -20,6 +20,32 @@ namespace Planetside
 			material.floorSquareDensity = density;
 		}
 
+		public enum TileType
+		{
+			WallTop,
+			WallBottom,
+			//WallRightTop,
+			//WallLeftTop,
+			//WallRightBottom,
+			//WallLeftBottom,
+		}
+
+		public static void SetWallCollistion(this tk2dSpriteDefinition def, TileType type)
+		{
+
+			def.colliderType = tk2dSpriteDefinition.ColliderType.Box;
+			switch (type)
+			{
+				case TileType.WallTop:
+					def.colliderVertices = new Vector3[] { new Vector3(0.5f, 0.5f), new Vector3(0.5f, 0.5f, 0.1f) };
+					def.collisionLayer = CollisionLayer.HighObstacle;
+					break;
+				case TileType.WallBottom:
+					def.colliderVertices = new Vector3[] { new Vector3(0.5f, 0.5f), new Vector3(0.5f, 0.5f, 0.1f) };
+					def.collisionLayer = CollisionLayer.LowObstacle;
+					break;
+			}
+		}
 
 		public static void SetupBeyondRoomMaterial(ref DungeonMaterial material)
 		{
@@ -557,13 +583,15 @@ namespace Planetside
 				"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.room",
 				"H.room",
 				"deathdeath.room",
-				"painpain.room"
+				"painpain.room",
+				"GetNaenaed.room"
 			};
 			Mod_RoomList_HUB = new List<string>()
 			{
 				"BigAssmegaHubRoom.room",
 				"ConnectoryRoomy.room",
-				"BigHell.room"
+				"BigHell.room",
+				"AnotehrHubRoom.room"
 			};
 
 			Mod_Entrance_Room = DungeonRoomFactory.BuildFromResource("Planetside/Resources/AbyssRooms/AbyssEntry/TheDeepEntrance.room");
@@ -1264,6 +1292,11 @@ namespace Planetside
 						67,
 						68,
 					};
+
+					foreach (int A in walls)
+					{
+						TilesetToolbox.SetWallCollistion(ModPrefabs.AbyssTilesetCollection.spriteDefinitions[A], TilesetToolbox.TileType.WallBottom);
+					}
 					List<int> topWalls = new List<int>()
 					{
 						1,
@@ -1283,6 +1316,11 @@ namespace Planetside
 						56,
 						57,
 					};
+
+					foreach (int A in topWalls)
+                    {
+						TilesetToolbox.SetWallCollistion(ModPrefabs.AbyssTilesetCollection.spriteDefinitions[A], TilesetToolbox.TileType.WallTop);
+					}
 
 					//bottom walls
 					/*
@@ -1320,7 +1358,7 @@ namespace Planetside
 					}
 					*/
 
-					ETGModConsole.Log("reorder done", false);
+					//ETGModConsole.Log("reorder done", false);
 					for (int m = 0; m < 704; m++)
 					{
 						ModPrefabs.AbyssTilesetCollection.spriteDefinitions[m].material = ModPrefabs.AbyssTilesetCollection.materials[0];

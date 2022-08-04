@@ -103,7 +103,7 @@ namespace Planetside
 			//The End color of your trail. Having it different to the StartColor/BaseColor will make it transition from the Starting/Base Color to its End Color during its lifetime.
 
 			gun.encounterTrackable.EncounterGuid = "The Jar";
-			ETGMod.Databases.Items.Add(gun, null, "ANY");
+			ETGMod.Databases.Items.Add(gun, false, "ANY");
 			gun.AddToSubShop(ItemBuilder.ShopType.Cursula, 1f);
 			gun.PreventNormalFireAudio = true;
 			gun.SetupUnlockOnCustomFlag(CustomDungeonFlags.BULLETBANK_DEFEATED, true);

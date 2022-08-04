@@ -87,7 +87,7 @@ namespace Planetside
 			projectile.OverrideMotionModule = new OscillatingeMotionModule();
 			spook.penetratesBreakables = true;
 			gun.encounterTrackable.EncounterGuid = "https://www.youtube.com/watch?v=P5ChKb_9JoY";
-			ETGMod.Databases.Items.Add(gun, null, "ANY");
+			ETGMod.Databases.Items.Add(gun, false, "ANY");
 			List<string> AAA = new List<string>
 			{
 				"psog:oscillator",

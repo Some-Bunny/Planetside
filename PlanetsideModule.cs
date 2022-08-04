@@ -308,8 +308,8 @@ namespace Planetside
             PrayerAmulet.Init();
             LockOnGun.Add();
             CoinTosser.Init();
-            DivineLight.Add();
-            HellLight.Add();
+            //DivineLight.Add();
+            //HellLight.Add();
             KnuckleBlaster.Init();
             Preigniter.Init();
             AttractorBeam.Add();

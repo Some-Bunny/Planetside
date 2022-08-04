@@ -134,7 +134,7 @@ namespace Planetside
             gun.clipsToLaunchOnReload = 1;
 
             gun.quality = PickupObject.ItemQuality.C;
-            ETGMod.Databases.Items.Add(gun, null, "ANY");
+            ETGMod.Databases.Items.Add(gun, false, "ANY");
             PunctureWoundID = gun.PickupObjectId;
             ItemIDs.AddToList(gun.PickupObjectId);
         }

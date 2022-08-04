@@ -79,7 +79,7 @@ namespace Planetside
 			//projectile.baseData.range = 5.8f;
 			gun.AddPassiveStatModifier(PlayerStats.StatType.Curse, 1f, StatModifier.ModifyMethod.ADDITIVE);
 			gun.encounterTrackable.EncounterGuid = "Malachite Elite go BWOOOOOOOOOOOOOOOOOM";
-			ETGMod.Databases.Items.Add(gun, null, "ANY");
+			ETGMod.Databases.Items.Add(gun, false, "ANY");
 			gun.AddToSubShop(ItemBuilder.ShopType.Cursula, 1f);
 			WitherLance.WitherLanceID = gun.PickupObjectId;
 			ItemIDs.AddToList(gun.PickupObjectId);

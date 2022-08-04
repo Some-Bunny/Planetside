@@ -84,7 +84,7 @@ namespace Planetside
 
 			gun.quality = PickupObject.ItemQuality.EXCLUDED;
 			gun.encounterTrackable.EncounterGuid = "foosh smile :D";
-			ETGMod.Databases.Items.Add(gun, null, "ANY");
+			ETGMod.Databases.Items.Add(gun, false, "ANY");
 			SirenSynergyForme.smileid = gun.PickupObjectId;
 		}
 		public static int smileid; 

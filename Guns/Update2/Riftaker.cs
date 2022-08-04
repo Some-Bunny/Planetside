@@ -88,7 +88,7 @@ namespace Planetside
             component.sharedMaterials = sharedMaterials;
 
 
-            ETGMod.Databases.Items.Add(gun, null, "ANY");
+            ETGMod.Databases.Items.Add(gun, false, "ANY");
             List<string> mandatoryConsoleIDs = new List<string>
             {
                 "psog:riftaker",

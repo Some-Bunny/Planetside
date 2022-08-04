@@ -70,7 +70,7 @@ namespace Planetside
 			spook.penetration = 3;
 			spook.penetratesBreakables = true;
 			gun.encounterTrackable.EncounterGuid = "https://www.youtube.com/watch?v=HKmYRsnMsOk";
-			ETGMod.Databases.Items.Add(gun, null, "ANY");
+			ETGMod.Databases.Items.Add(gun, false, "ANY");
 			Revenant.RevenantID = gun.PickupObjectId;
 
 			List<string> mandatoryConsoleIDs = new List<string>

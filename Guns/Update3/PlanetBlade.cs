@@ -69,7 +69,7 @@ namespace Planetside
                 new Color(0, 0.8f,1),
                new Color(0, 0.2f,1)});
 
-            ETGMod.Databases.Items.Add(gun, null, "ANY");
+            ETGMod.Databases.Items.Add(gun, false, "ANY");
 
             tk2dSpriteAnimationClip fireClip = gun.sprite.spriteAnimator.GetClipByName(gun.shootAnimation);
             float[] offsetsX = new float[] { -0.375f, -0.3125f, -1.625f, -1.75f, -1.8125f, -1.875f, -1.9125f, -1.875f, -1.625f ,-1.25f ,-1.0625f, -0.9125f, -0.75f, -0.125f, 1 };

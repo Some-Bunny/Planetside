@@ -79,7 +79,7 @@ namespace Planetside
             projectile.baseData.range *= 4;
             projectile.HasDefaultTint = true;
 
-            ETGMod.Databases.Items.Add(gun, null, "ANY");
+            ETGMod.Databases.Items.Add(gun, false, "ANY");
             projectile.transform.parent = gun.barrelOffset;
             behav.activeReloadEnabled = true;
             behav.canAttemptActiveReload = true;

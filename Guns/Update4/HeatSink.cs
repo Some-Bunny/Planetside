@@ -164,9 +164,9 @@ namespace Planetside
 
             gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
             gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("HeatSink", "Planetside/Resources/GunClips/HeatSink/heatsinkfull", "Planetside/Resources/GunClips/HeatSink/heatsinkempty");
-            gun.quality = PickupObject.ItemQuality.S; 
-            ETGMod.Databases.Items.Add(gun, null, "ANY");
-           
+            gun.quality = PickupObject.ItemQuality.S;
+            ETGMod.Databases.Items.Add(gun, false, "ANY");
+
             HeatSink.HeatSinkID = gun.PickupObjectId;
             ItemIDs.AddToList(gun.PickupObjectId);
         }

@@ -57,7 +57,7 @@ namespace Planetside
 			PierceProjModifier spook = projectile.gameObject.AddComponent<PierceProjModifier>();
 			spook.penetration = 3;
 			gun.encounterTrackable.EncounterGuid = "and his music was electric...";
-			ETGMod.Databases.Items.Add(gun, null, "ANY");
+			ETGMod.Databases.Items.Add(gun, false, "ANY");
 			gun.barrelOffset.transform.localPosition = new Vector3(2.0f, 0.75f, 0f);
 			gun.AddToSubShop(ItemBuilder.ShopType.Trorc, 1f);
 			StatiBlast.StatiBlastID = gun.PickupObjectId;

@@ -119,7 +119,7 @@ namespace Planetside
 
 			gun.quality = PickupObject.ItemQuality.D;
 			gun.encounterTrackable.EncounterGuid = "mop";
-			ETGMod.Databases.Items.Add(gun, null, "ANY");
+			ETGMod.Databases.Items.Add(gun, false, "ANY");
 			Mop.MopID = gun.PickupObjectId;
 
 			gun.AddToSubShop(ItemBuilder.ShopType.Goopton, 1f);

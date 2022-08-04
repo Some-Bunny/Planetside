@@ -162,7 +162,9 @@ namespace Planetside
 			gun.muzzleFlashEffects = gun4.muzzleFlashEffects;
 
 			gun.encounterTrackable.EncounterGuid = "OM NOMNOMNOMNONMNONMONMNONMNONMONMNONMNO";
-			ETGMod.Databases.Items.Add(gun, null, "ANY");
+
+			ETGMod.Databases.Items.Add(gun, false, "ANY");
+
 			SynergyAPI.SynergyBuilder.AddItemToSynergy(gun, CustomSynergyType.CONTRAIL);
 
 			gun.barrelOffset.transform.localPosition = new Vector3(1f, 0.5f, 0f);

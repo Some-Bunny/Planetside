@@ -176,7 +176,7 @@ namespace Planetside
 			gun.muzzleFlashEffects = (PickupObjectDatabase.GetById(338) as Gun).muzzleFlashEffects;
 			gun.gunClass = GunClass.SILLY;
 
-			ETGMod.Databases.Items.Add(gun, null, "ANY");
+			ETGMod.Databases.Items.Add(gun, false, "ANY");
 			ParticleCollapser.ParticleCollapserID = gun.PickupObjectId;
 			ItemIDs.AddToList(gun.PickupObjectId);			
 		}

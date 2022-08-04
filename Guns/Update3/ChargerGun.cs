@@ -24,7 +24,7 @@ namespace Planetside
 		public static void Add()
 		{
 			Gun gun = ETGMod.Databases.Items.NewGun("Protract-non", "chargergun");
-			Game.Items.Rename("outdated_gun_mods:protract-non", "psog:protract-non");
+			Game.Items.Rename("outdated_gun_mods:protractnon", "psog:protractnon");
 			gun.gameObject.AddComponent<ChargerGun>();
 			gun.SetShortDescription("Great For Measuring Angles!");
 			gun.SetLongDescription("Fires more powerful shots, less accurately the more its charged up.\n\nA gun designed to be the complete polar opposite of a standard railgun, and as a form of crowd control in the war-torn sectors of the Hegemony.");
@@ -101,7 +101,7 @@ namespace Planetside
 			gun.muzzleFlashEffects = (PickupObjectDatabase.GetById(370) as Gun).muzzleFlashEffects;
 			gun.quality = PickupObject.ItemQuality.A;
 			gun.encounterTrackable.EncounterGuid = "It's just a protractor gun";
-			ETGMod.Databases.Items.Add(gun, null, "ANY");
+			ETGMod.Databases.Items.Add(gun, false, "ANY");
 
 			gun.sprite.usesOverrideMaterial = true;
 

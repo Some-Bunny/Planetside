@@ -131,4 +131,5 @@ C:\Users\maxvo\source\repos\Planetside\bin\Debug\UnityEngine.UnityWebRequestAudi
 C:\Users\maxvo\source\repos\Planetside\bin\Debug\UnityEngine.UnityWebRequestTextureModule.xml
 C:\Users\maxvo\source\repos\Planetside\bin\Debug\UnityEngine.VideoModule.xml
 C:\Users\maxvo\source\repos\Planetside\bin\Debug\UnityEngine.WindModule.xml
+C:\Users\maxvo\source\repos\Planetside\bin\Debug\ModTheGungeonAPI.xml
 C:\Users\maxvo\source\repos\Planetside\obj\Debug\Planetside.csproj.AssemblyReference.cache
