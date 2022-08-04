@@ -4369,5 +4369,20 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\AbyssRooms\AbyssHubRooms\AnotehrHubRoom.room" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssHubRooms\CrossHouse.room" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\AABBADONNNN.room" />
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\afhjudsadhsadssdahjadjhs.room" />
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\amogus.room" />
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\FUCK.room" />
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\GoodFuckingLuckLmao.room" />
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\hhhhhhhhhhhhhhhhhhhhhhhhhh.room" />
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\IHateThePlayer.room" />
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\jkhkjhdsfkjdfskjfdskjhfdskjhkjhfdkjsh.room" />
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\jknbfkjhfdskjhfdsjhkfdsjhkdfs.room" />
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\ROCKEDDON.room" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
