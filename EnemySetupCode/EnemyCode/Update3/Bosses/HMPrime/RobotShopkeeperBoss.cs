@@ -2153,7 +2153,12 @@ namespace Planetside
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("poundSmall"));
 
 				int amount = base.BulletBank.aiActor.GetComponent<RobotShopkeeperEngageDoer>().AmountOfPurchases;
-				base.BulletBank.aiActor.GetComponent<HMPrimeController>().StartDisableAttackFor("Taser", 8.5f, 5);
+				base.BulletBank.aiActor.GetComponent<HMPrimeController>().StartDisableAttackFor("Taser", 10f, 5);
+				if (amount > 3)
+                {
+					base.BulletBank.aiActor.GetComponent<HMPrimeController>().StartDisableAttackFor("BigLaser", 8f, 3);
+				}
+
 				base.Fire(new Direction(0f, DirectionType.Aim, -1f), new Speed(4, SpeedType.Absolute), new BigBomb.BigBob(amount));
 
 				yield return this.Wait(30);
@@ -2174,15 +2179,15 @@ namespace Planetside
 						float CentreAngle = (predictedPosition - this.Position).ToAngle();
 						for (int i = 0; i < 6; i++)
                         {
-							this.StartTask(this.QuickscopeNoobProfessional(CentreAngle + (60 * i), this, 7, false));
+							base.BulletBank.StartCoroutine(this.QuickscopeNoobProfessional(CentreAngle + (60 * i), this, 7, false));
 						}
 						yield return this.Wait(300);
 						predictedPosition = BraveMathCollege.GetPredictedPosition(this.BulletManager.PlayerPosition(), this.BulletManager.PlayerVelocity(), this.Projectile.transform.position, 1000);
 						CentreAngle = (predictedPosition - this.Position).ToAngle();
 						for (int i = 0; i < 6; i++)
 						{
-							
-							this.StartTask(this.QuickscopeNoobProfessional(CentreAngle + (60 * i), this, 7, true));
+
+							base.BulletBank.StartCoroutine(this.QuickscopeNoobProfessional(CentreAngle + (60 * i), this, 7, true));
 						}
 					}
 					else
@@ -2190,7 +2195,7 @@ namespace Planetside
 						this.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 180);
 						for (int i = 0; i < 8; i++)
 						{
-							this.StartTask(this.QuickscopeNoob(45 * i, this, 6));
+							base.BulletBank.StartCoroutine(this.QuickscopeNoob(45 * i, this, 6));
 						}
 					}
 					yield return this.Wait(60);
@@ -2214,18 +2219,24 @@ namespace Planetside
 					component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f);
 					component2.sprite.renderer.material.SetColor("_OverrideColor", laser);
 					component2.sprite.renderer.material.SetColor("_EmissiveColor", laser);
-					component2.gameObject.transform.parent = this.Projectile.gameObject.transform;
 					float elapsed = 0;
 					float Time = chargeTime;
 					while (elapsed < Time)
 					{
 						float t = (float)elapsed / (float)Time;
 
-						if (parent.Projectile == null)
+						if (this.Projectile == null)
 						{
 							Destroy(component2.gameObject);
 							yield break;
 						}
+
+						if (this.IsEnded == true || this.Destroyed == true)
+						{
+							Destroy(component2.gameObject);
+							yield break;
+						}
+
 						if (component2 != null)
 						{
 							component2.transform.position = new Vector3(this.Projectile.transform.position.x, this.Projectile.transform.position.y, 99999);
@@ -2250,7 +2261,7 @@ namespace Planetside
 					base.PostWwiseEvent("Play_BOSS_RatMech_Stomp_01", null);
 					for (int i = 0; i < 12; i++)
 					{
-						base.Fire(new Direction(aimDir + UnityEngine.Random.Range(-1, 1), DirectionType.Absolute, -1f), new Speed(UnityEngine.Random.Range(22, 26), SpeedType.Absolute), new BasicBullet(i, UnityEngine.Random.value < 0.33f ? "poundSmall" : "poundLarge"));
+						base.Fire(new Direction(aimDir + UnityEngine.Random.Range(-1, 1), DirectionType.Absolute, -1f), new Speed(UnityEngine.Random.Range(29, 37), SpeedType.Absolute), new BasicBullet(i, UnityEngine.Random.value < 0.33f ? "poundSmall" : "poundLarge"));
 					}
 					for (int e = -6; e < 7; e++)
 					{
@@ -2294,11 +2305,18 @@ namespace Planetside
 					{
 						float t = (float)elapsed / (float)Time;
 
-						if (parent.Projectile == null)
+						if (this.Projectile == null)
 						{
 							Destroy(component2.gameObject);
 							yield break;
 						}
+						if (this.IsEnded == true || this.Destroyed == true)
+						{
+							Destroy(component2.gameObject);
+							yield break;
+						}
+
+
 						if (component2 != null)
 						{
 							component2.transform.position = new Vector3(base.Projectile.transform.position.x, base.Projectile.transform.position.y, 99999);
@@ -2323,7 +2341,7 @@ namespace Planetside
 					base.PostWwiseEvent("Play_BOSS_RatMech_Stomp_01", null);
 					for (int i = 0; i < 12; i++)
                     {
-						base.Fire(new Direction(aimDir + UnityEngine.Random.Range(-1, 1), DirectionType.Absolute, -1f), new Speed(UnityEngine.Random.Range(22, 26), SpeedType.Absolute), new BasicBullet(i, UnityEngine.Random.value < 0.33f ? "poundSmall" : "poundLarge"));
+						base.Fire(new Direction(aimDir + UnityEngine.Random.Range(-1, 1), DirectionType.Absolute, -1f), new Speed(UnityEngine.Random.Range(28, 36), SpeedType.Absolute), new BasicBullet(i, UnityEngine.Random.value < 0.33f ? "poundSmall" : "poundLarge"));
 					}
 					for (int e = -4; e < 5; e++)
 					{
@@ -2393,7 +2411,7 @@ namespace Planetside
 			{
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("amuletRing"));
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("poundSmall"));
-				yield return this.Wait(122);
+				yield return this.Wait(126);
 				AIBeamShooter2[] beams = this.BulletBank.aiActor.GetComponents<AIBeamShooter2>();
 				for (int e = 0; e < 4; e++)
 				{
@@ -2429,14 +2447,15 @@ namespace Planetside
 					}
 					yield return this.Wait(37.5f);
 				}
-				for (int e = 0; e < 10; e++)
+				for (int e = 1; e < 12; e++)
                 {
 					this.PostWwiseEvent("Play_BOSS_lichC_zap_01", null);
-					for (int i = 0; i < 20; i++)
+					for (int i = 0; i < 18; i++)
 					{
-						this.Fire(new Direction((18 * i) + 9, DirectionType.Aim, -1f), new Speed(8), new Taser.BasicBullet());
+						this.Fire(new Direction((20 * i) + 10f, DirectionType.Aim, -1f), new Speed(8), new Taser.BasicBullet());
+						this.Fire(new Direction((20 * i) + 10f, DirectionType.Aim, -1f), new Speed(8), new SpeedChangingBullet("amuletRing", 7, 300/e));
 					}
-					yield return this.Wait(60);
+					yield return this.Wait(50);
 				}
 				yield break;
 			}
@@ -2446,9 +2465,7 @@ namespace Planetside
         {
 			protected override IEnumerator Top()
 			{
-				//Taser.LargeBomb
-
-				base.BulletBank.aiActor.GetComponent<HMPrimeController>().StartDisableAttackFor("LargeBomb", 10f, 5);
+				base.BulletBank.aiActor.GetComponent<HMPrimeController>().StartDisableAttackFor("LargeBomb", 12f, 5);
 				this.m_clms = new List<ChainLightningModifier>();
 				this.m_clms2 = new List<ChainLightningModifier>();
 				this.m_firstCLM = null;
@@ -2610,6 +2627,8 @@ namespace Planetside
 						yield return this.Wait(20);
 					}
 				}
+				yield return this.Wait(20);
+
 				yield break;
 			}
 			public class LingeringBullet : Bullet

@@ -45,8 +45,6 @@ namespace Planetside
         public static string RoomFilePath;
         public static string FilePathFolder;
 
-        //public static ETGModuleMetadata metadata = new ETGModuleMetadata(); 
-
         public static AdvancedStringDB Strings;
         public static HellDragZoneController hellDrag;
 
@@ -78,7 +76,6 @@ namespace Planetside
             //metadata = this.Metadata;
 
             //Initialise World-Stuff here
-            StaticInformation.Init();
             CrossGameDataStorage.Start();
 
             ChamberGunAPI.Init("PlanetsideOfGunymede");
@@ -99,6 +96,7 @@ namespace Planetside
             {
                 //ETGModConsole.Log(PlanetsideModule.TilesetAssets.name + ": " + str, false);
             }
+            StaticInformation.Init();
 
             InverseGlowShader = PlanetsideModule.ModAssets.LoadAsset<Shader>("inverseglowshader");
 
@@ -328,8 +326,9 @@ namespace Planetside
             ShopInABox.Init();
             StableVector.Init();
             ShipmentRequestForm.Init();
+            Tracker.Add();
 
-            ModifierNeedle.Init();
+            //ModifierNeedle.Init();
             TatteredRobe.Init();
             OrbOfPower.Init();
             NemesisGun.Add();
@@ -527,7 +526,7 @@ namespace Planetside
                 "WEAK.",
                 "Bullet Banks are not to rob!",
                 "Art By SirWow!",
-                "*Don't* Download Some Bunnys Content Pack",
+                "*Don't Download Some Bunnys Content Pack, you can't even have it on Bepinex anyway :D",
                 "weeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "If you see this, you owe me 10 bucks you nerd.",
                 "https://www.youtube.com/watch?v=qn0YdT_pQF8",
@@ -566,15 +565,12 @@ namespace Planetside
                 "bepis",
                 "pootis",
                 "Frogs are cool!",
-                "It's... so... warm...",
                 "Poor aim, and a poor Reaper.",
                 "egassem sdrawkcab",
                 "The Sun! The Sun! The Sun!",
                 "if(player.IsStupid){  }",
                 "cultist_comits_tax_evasion.mp3",
                 "Stop it, I'm bees!",
-                "bonk",
-                "fwendship",
                 "nice",
                 "Powered By AudioBuilder!",
                 "Powered By BeamBuilder!",
@@ -582,7 +578,6 @@ namespace Planetside
                 "YOUR PAST IS DEAD",
                 "LEAD IS FUEL",
                 "BULLET HELL IS FULL",
-                "bzaazzz",
                 "What the dog doin'",
                 "Powered by like 7 different APIs",
                 "Rock And Stone!",
@@ -591,7 +586,11 @@ namespace Planetside
                 "I removed Clone from the item pool, thank me later.",
                 "Powered By SynergyAPI!",
                 "Amogus!",
-                "DM me images of pigeons you find on the street."
+                "DM me images of pigeons you find on the street.",
+                "Powered by MTGAPI!",
+                "Now with 100% more Bepinex!",
+                "I once sneezed a pasta noodle out through my nose -- back when I had a nose, on Earth.",
+                "You shouldn't read too much anyway. It's bad for your teeth."
             };
             Random r = new Random();
             int index = r.Next(RandomFunnys.Count);

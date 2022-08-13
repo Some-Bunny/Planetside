@@ -87,6 +87,8 @@ namespace Planetside
 
 
 			}
+			//gun.Volley.UsesShotgunStyleVelocityRandomizer = true;
+
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.chargeAnimation).wrapMode = tk2dSpriteAnimationClip.WrapMode.LoopSection;
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.chargeAnimation).loopStart = 5;
 
@@ -129,9 +131,6 @@ namespace Planetside
 			sharedMaterials[sharedMaterials.Length - 1] = material;
 			component.sharedMaterials = sharedMaterials;
 
-			AssetBundle bundle = ResourceManager.LoadAssetBundle("brave_resources_001");
-			LaserReticle = bundle.LoadAsset("assets/resourcesbundle/global vfx/vfx_lasersight.prefab") as GameObject;
-			bundle = null;
 
 			/*
 			tk2dSpriteAnimationClip animationClip = new tk2dSpriteAnimationClip();
@@ -172,7 +171,6 @@ namespace Planetside
 		private static List<GameObject> Chargerreticles = new List<GameObject>();
 		private bool VFXActive;
 		private float elapsed;
-		private static GameObject LaserReticle;
 
 
 		public void CleanupReticles()
@@ -211,7 +209,7 @@ namespace Planetside
 								{
 									num2 = (zero - new Vector2(this.gun.barrelOffset.transform.position.x, this.gun.barrelOffset.transform.position.y)).magnitude;
 								}
-								GameObject gameObject = SpawnManager.SpawnVFX(ChargerGun.LaserReticle, false);
+								GameObject gameObject = SpawnManager.SpawnVFX(RandomPiecesOfStuffToInitialise.LaserReticle, false);
 								tk2dTiledSprite component2 = gameObject.GetComponent<tk2dTiledSprite>();
 								component2.transform.position = new Vector3(this.gun.barrelOffset.transform.position.x, this.gun.barrelOffset.transform.position.y, 99999);
 								component2.transform.localRotation = Quaternion.Euler(0f, 0f, player.CurrentGun.CurrentAngle);
@@ -220,6 +218,23 @@ namespace Planetside
 								component2.HeightOffGround = -2;
 								component2.renderer.enabled = true;
 								component2.transform.position.WithZ(component2.transform.position.z + 99999);
+
+
+								if (i == 0 | i == 3 | i == 6)
+								{ component2.dimensions = new Vector2(16 * 2f, 1f); }
+								else
+								{ component2.dimensions = new Vector2(16 * 1.25f, 1f); }
+								component2.usesOverrideMaterial = true;
+
+								component2.sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
+								component2.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+
+								component2.sprite.renderer.material.SetFloat("_EmissivePower", 100);
+								component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 1.55f);
+								Color laser = new Color(1f, 0.9f, 0.6f, 1f);
+								component2.sprite.renderer.material.SetColor("_OverrideColor", laser);
+								component2.sprite.renderer.material.SetColor("_EmissiveColor", laser);
+
 								ChargerGun.Chargerreticles.Add(gameObject);
 							}
 						}
@@ -231,30 +246,17 @@ namespace Planetside
                             {
 								tk2dTiledSprite component2 = obj.GetComponent<tk2dTiledSprite>();
 
-								if (i == -3 | i == 0 | i == 3)	
-								{component2.dimensions = new Vector2((16) * 2f, 1f);	}
-								else
-								{component2.dimensions = new Vector2((10) * 2f, 1f);	}
-								component2.usesOverrideMaterial = true;
-								component2.sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
-								component2.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
-
-								component2.sprite.renderer.material.SetFloat("_EmissivePower", 100);
-								component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 1.55f);
-								Color laser = new Color(1f, 0.9f, 0.6f, 1f);
-								component2.sprite.renderer.material.SetColor("_OverrideColor", laser);
-								component2.sprite.renderer.material.SetColor("_EmissiveColor", laser);
-
 								float AddaAngle = (elapsed * (Accuracy * i));
 								float ix = obj.transform.localRotation.eulerAngles.x + player.CurrentGun.barrelOffset.transform.localRotation.eulerAngles.x;
 								float wai = obj.transform.localRotation.eulerAngles.y + player.CurrentGun.barrelOffset.transform.localRotation.eulerAngles.y;
 								float zee = obj.transform.localRotation.z + player.CurrentGun.transform.eulerAngles.z;
+
+
 								obj.transform.localRotation = Quaternion.Euler(ix, wai, zee + AddaAngle + 3600);
 								obj.transform.position = this.gun.barrelOffset.transform.position;
 								component2.transform.position.WithZ(component2.transform.position.z + 99999);
 								component2.UpdateZDepth();
 								component2.HeightOffGround = -2;
-								component2.renderer.enabled = true;
 							}
 						}
 						foreach (ProjectileModule projectileModule in gun.Volley.projectiles)
@@ -262,7 +264,6 @@ namespace Planetside
 							projectileModule.angleVariance = elapsed * (Accuracy*3);
 							Projectile proj = projectileModule.GetCurrentProjectile();
 							proj.baseData.damage = ((elapsed * 8) + 4);
-							proj.baseData.speed = UnityEngine.Random.Range(22f, 28f); 
 						}
 					}
 					else

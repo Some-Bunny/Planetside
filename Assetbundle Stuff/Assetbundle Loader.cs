@@ -8,7 +8,7 @@ namespace Planetside
 {
 	internal class AssetBundleLoader
 	{
-		public static AssetBundle LoadAssetBundleFromLiterallyAnywhere(string name)
+		public static AssetBundle LoadAssetBundleFromLiterallyAnywhere(string name, bool logs = false)
 		{
 			AssetBundle result = null;
 			/*
@@ -49,7 +49,10 @@ namespace Planetside
 					try
 					{
 						result = AssetBundle.LoadFromFile(Path.Combine(PlanetsideModule.FilePathFolder, name));
-						global::ETGModConsole.Log("Successfully loaded assetbundle!", false);
+						if (logs == true)
+                        {
+							global::ETGModConsole.Log("Successfully loaded assetbundle!", false);
+						}
 					}
 					catch (Exception ex)
 					{

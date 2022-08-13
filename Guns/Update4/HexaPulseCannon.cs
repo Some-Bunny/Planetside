@@ -68,7 +68,7 @@ namespace Planetside
 
                 ImprovedAfterImage yes = projectile.gameObject.AddComponent<ImprovedAfterImage>();
                 yes.spawnShadows = true;
-                yes.shadowLifetime = 0.25f;
+                yes.shadowLifetime = 0.166f;
                 yes.shadowTimeDelay = 0.01f;
                 yes.dashColor = new Color(1f, 0.2f, 0f, 1f);
 

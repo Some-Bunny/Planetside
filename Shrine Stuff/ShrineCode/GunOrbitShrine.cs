@@ -22,7 +22,6 @@ namespace Planetside
 				modID = "psog",
 				text = "A shrine dedicated to an old gunslinger, who could sling guns with such proficiency that they fired while in mid-air.",
 				spritePath = "Planetside/Resources/Shrines/GunOrbitShrinel.png",
-				//room = RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/GunOrbitShrineRoom.room").room,
 				RoomWeight = 2f,
 				acceptText = "Grant an offering to bestow similar power.",
 				declineText = "Leave",
@@ -40,11 +39,9 @@ namespace Planetside
 				preRequisites = new DungeonPrerequisite[0],
 				ShrinePercentageChance = 0.2f,
 			};
-			//register shrine
 			GunShrine = OHFUUCK.BuildWithoutBaseGameInterference();
 		}
 		public static GameObject GunShrine;
-
 
 		public static bool CanUse(PlayerController player, GameObject shrine)
 		{
@@ -109,14 +106,12 @@ namespace Planetside
 		{
 
 			Gun currentGun = player.CurrentGun;
-			float affectstats = 0f;
-			bool DorC = currentGun.quality == PickupObject.ItemQuality.D | currentGun.quality == PickupObject.ItemQuality.C |currentGun.quality == PickupObject.ItemQuality.B ;
-			if (DorC)
+			float affectstats = 1f;
+			if (currentGun.quality == PickupObject.ItemQuality.D | currentGun.quality == PickupObject.ItemQuality.C | currentGun.quality == PickupObject.ItemQuality.B)
 			{
 				affectstats = 1;
 			}
-			bool Sonly = currentGun.quality == PickupObject.ItemQuality.A | currentGun.quality == PickupObject.ItemQuality.S;
-			if (Sonly)
+			if (currentGun.quality == PickupObject.ItemQuality.A | currentGun.quality == PickupObject.ItemQuality.S)
 			{
 				affectstats = 2;
 			}
@@ -142,7 +137,6 @@ namespace Planetside
 				{
 					player.healthHaver.Armor -= affectstats * 2;
 				}
-
 			}
 			Gun gun = player.CurrentGun;
 			GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(ResourceCache.Acquire("Global Prefabs/HoveringGun") as GameObject, player.CenterPosition.ToVector3ZisY(0f), Quaternion.identity);
@@ -158,7 +152,6 @@ namespace Planetside
 			hover.OnlyOnEmptyReload = false;
 			hover.Initialize(gun, player);
 			player.ownerlessStatModifiers.Add(item2);
-			player.stats.RecalculateStats(player, false, false);
 			shrine.GetComponent<CustomShrineController>().numUses++;
 			shrine.GetComponent<CustomShrineController>().GetRidOfMinimapIcon();
 			player.inventory.DestroyCurrentGun();
@@ -167,7 +160,7 @@ namespace Planetside
             {
 				ImprovedAfterImage yes = player.gameObject.AddComponent<ImprovedAfterImage>();
 				yes.spawnShadows = true;
-				yes.shadowLifetime = 0.66f;
+				yes.shadowLifetime = 0.5f;
 				yes.shadowTimeDelay = 0.02f;
 				yes.dashColor = Color.clear;
 				StatModifier money = new StatModifier
@@ -177,8 +170,8 @@ namespace Planetside
 					modifyType = StatModifier.ModifyMethod.MULTIPLICATIVE
 				};
 				player.ownerlessStatModifiers.Add(money);
-
 			}
+			player.stats.RecalculateStats(player, false, false);
 		}
 	}
 }

@@ -44,54 +44,81 @@ namespace Planetside
 			weightedObject.pickupId = pickup.PickupObjectId;
 			weightedObject.forceDuplicatesPossible = true;
 			weightedObject.additionalPrerequisites = new DungeonPrerequisite[0];
-			
 
 			GenericLootTable thanksbotluvya = ItemBuilder.LoadShopTable("Shop_Gungeon_Cheap_Items_01");
 			thanksbotluvya.defaultItemDrops.elements.Add(weightedObject);
+
+			Normal_Table = LootTableTools.CreateLootTable();
+			Normal_Table.AddItemsToPool(new Dictionary<int, float>()
+			{
+				{67, 1},
+				{224, 0.8f},
+				{600, 0.5f},
+				{78, 0.8f},
+				{565, 0.5f},
+				{73, 0.8f},
+				{85, 0.5f},
+				{120, 0.6f}
+			});
+
+			HP_Table = LootTableTools.CreateLootTable();
+			HP_Table.AddItemsToPool(new Dictionary<int, float>() 
+			{
+				{73, 0.8f},
+				{120, 1f},
+				{85, 0.5f}
+			});
+
+			Wacky_Table = LootTableTools.CreateLootTable();
+			Wacky_Table.AddItemsToPool(new Dictionary<int, float>()
+			{
+				{63, 0.3f},
+				{74, 0.1f},
+				{108, 0.3f },
+				{67, 1},
+				{224, 0.8f},
+				{600, 0.5f},
+				{78, 0.8f},
+				{565, 0.5f},
+
+				{73, 0.8f},
+				{85, 0.5f},
+				{120, 0.6f},
+				{127, 0.5f},
+				{148, 0.1f},
+				{77, 0.4f},
+				{79, 0.1f}
+			});
 		}
+		public static GenericLootTable Normal_Table;
+		public static GenericLootTable HP_Table;
+		public static GenericLootTable Wacky_Table;
+	
+
 
 		public override void Pickup(PlayerController player)
-		{			
-			this.random = UnityEngine.Random.Range(0.0f, 1.0f);
-			if (random < 0.7 && random > 0)
+		{
+			int itemsToSpawn = UnityEngine.Random.Range(2, 5);
+			float random = UnityEngine.Random.Range(0.00f, 1.00f);
+			GenericLootTable Table = Normal_Table;
+			if (random.IsBetweenRange(0.7f, 0.95f))
 			{
-				float itemsToSpawn = UnityEngine.Random.Range(2, 4);
-				float spewItemDir = 360 / itemsToSpawn;
+				Table = HP_Table;
+			}
+			else if (random > 0.95 && random < 1)
+			{
+				Table = Wacky_Table;
+			}
 
-				for (int i = 0; i < itemsToSpawn; i++)
-				{
-					int id = BraveUtility.RandomElement<int>(LeSackPickup.GenericPool);
-					LootEngine.SpawnItem(PickupObjectDatabase.GetById(id).gameObject, player.sprite.WorldCenter, new Vector2((spewItemDir * (itemsToSpawn*i)) , spewItemDir * (itemsToSpawn * i)), 1.2f, false, true, false);
-				}
-			}
-			else if (random > 0.7 && random < 0.95)
+			for (int i = 0; i < itemsToSpawn; i++)
 			{
-				float itemsToSpawn = UnityEngine.Random.Range(2, 4);
-				float spewItemDir = 360 / itemsToSpawn;
+				LootEngine.SpawnItem(Table.SelectByWeight(), player.sprite.WorldBottomCenter,MathToolbox.GetUnitOnCircle(MathToolbox.SubdivideArc(Vector2.left.ToAngle(), -180, itemsToSpawn, i), 1.5f), 1.2f, false, true, false);
+			}
 
-				for (int i = 0; i < itemsToSpawn; i++)
-				{
-					int id = BraveUtility.RandomElement<int>(LeSackPickup.HPPool);
-					LootEngine.SpawnItem(PickupObjectDatabase.GetById(id).gameObject, player.sprite.WorldCenter, new Vector2((spewItemDir * (itemsToSpawn * i)), spewItemDir * (itemsToSpawn * i)), 1.2f, false, true, false);
-				}
-			}
-			if (random > 0.95 && random < 1)
-			{
-				float itemsToSpawn = UnityEngine.Random.Range(3, 5);
-				float spewItemDir = 360 / itemsToSpawn;
-				for (int i = 0; i < itemsToSpawn; i++)
-				{
-					int id = BraveUtility.RandomElement<int>(LeSackPickup.Lootdrops);
-					LootEngine.SpawnItem(PickupObjectDatabase.GetById(id).gameObject, player.sprite.WorldCenter, new Vector2((spewItemDir * (itemsToSpawn * i)), spewItemDir * (itemsToSpawn * i)), 1.2f, false, true, false);
-				}
-			}
-			
 			player.BloopItemAboveHead(base.sprite, "");
 			AkSoundEngine.PostEvent("Play_ENM_critter_poof_01", base.gameObject);
 			UnityEngine.Object.Destroy(base.gameObject);
 		}
-		private float random;
-
 		protected void Start()
 		{
 			try
@@ -124,36 +151,6 @@ namespace Planetside
 		public static int SaccID;
 		public SpeculativeRigidbody storedBody;
 		private bool m_hasBeenPickedUp;
-		public static List<int> GenericPool = new List<int>
-		{
-			67,//key
-			224,//blank
-			600,//partial-ammo
-			78,//ammo
-			565//glass guon stone
-		};
-		public static List<int> HPPool = new List<int>
-		{
-			73,//half-heart
-			85,//full-heart
-			120//armor
 
-		};
-		public static List<int> MoneyPool = new List<int>
-		{
-			68, //1 casing
-		};
-
-		public static List<int> Lootdrops = new List<int>
-		{
-			73,//half-heart
-			85,//full-heart
-			120,//armor
-			67,//key
-			224,//blank
-			600,//partial-ammo
-			78,//ammo
-			565//glass guon stone
-		};
 	}
 }

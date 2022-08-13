@@ -731,8 +731,7 @@ namespace Planetside
                 float X = 3 / itemsToSpawn;
                 for (int i = 0; i < itemsToSpawn; i++)
                 {
-                    int id = BraveUtility.RandomElement<int>(LeSackPickup.HPPool);
-                    LootEngine.SpawnItem(PickupObjectDatabase.GetById(id).gameObject,Center, new Vector2(3-(X*i) ,0), 1.2f, false, true, false);
+                    LootEngine.SpawnItem(LeSackPickup.HP_Table.SelectByWeight(), Center, new Vector2(3-(X*i) ,0), 1.2f, false, true, false);
                 }
             }
             if (random > 0.75 && random < 1)

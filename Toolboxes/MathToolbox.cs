@@ -30,6 +30,21 @@ namespace Planetside
 
     public static class MathToolbox
     {
+
+        public static float SubdivideRange(float startValue, float endValue, int numDivisions, int i, bool offset = false)
+        {
+            return Mathf.Lerp(startValue, endValue, ((float)i + ((!offset) ? 0f : 0.5f)) / (float)(numDivisions - 1));
+        }
+        public static float SubdivideArc(float startAngle, float sweepAngle, int numBullets, int i, bool offset = false)
+        {
+            return startAngle + Mathf.Lerp(0f, sweepAngle, ((float)i + ((!offset) ? 0f : 0.5f)) / (float)(numBullets - 1));
+        }
+
+        public static float SubdivideCircle(float startAngle, int numBullets, int i, float direction = 1f, bool offset = false)
+        {
+            return startAngle + direction * Mathf.Lerp(0f, 360f, ((float)i + ((!offset) ? 0f : 0.5f)) / (float)numBullets);
+        }
+
         public static Vector2 GetUnitOnCircle(float angleDegrees, float radius)
         {
 

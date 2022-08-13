@@ -122,16 +122,12 @@ namespace Planetside
                     yeehaw.TintColor = new Color(1f, 1f, 1f);
                     mhm.gameObject.AddComponent<FriendlyGhostEnemyComponent>();
                 }
-            }
-            
+            }   
         }
-
-
 
         public override void OnPostFired(PlayerController player, Gun gun)
         {
             gun.PreventNormalFireAudio = true;
         }
-
     }
 }

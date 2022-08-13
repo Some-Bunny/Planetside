@@ -246,7 +246,7 @@ namespace Planetside
 
 			minigunEntryTwo = MinigunEntryStronger;
 
-
+			/*
 			AIBulletBank.Entry MissileEntry = StaticUndodgeableBulletEntries.CopyFields<AIBulletBank.Entry>(EnemyDatabase.GetOrLoadByGuid("ffca09398635467da3b1f4a54bcfda80").bulletBank.GetBullet("directedfire"));
 
 			Projectile missileProjectile = UnityEngine.Object.Instantiate<Projectile>(UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(39) as Gun).DefaultModule.projectiles[0]));
@@ -264,18 +264,18 @@ namespace Planetside
 			MissileEntry.AudioEvent = null;
 
 			MissileEntry.BulletObject = missileProjectile.gameObject;
-			missileEntry = MissileEntry;
+			*/
+			//missileEntry = MissileEntry;
 
 
 			AIBulletBank.Entry TaserEntry = StaticUndodgeableBulletEntries.CopyFields<AIBulletBank.Entry>(EnemyDatabase.GetOrLoadByGuid("ffca09398635467da3b1f4a54bcfda80").bulletBank.GetBullet("directedfire"));
 
 			Projectile electricProjectile = UnityEngine.Object.Instantiate<Projectile>(UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(13) as Gun).DefaultModule.projectiles[0]));
-			electricProjectile.gameObject.SetActive(false);
 			FakePrefab.MarkAsFakePrefab(electricProjectile.gameObject);
 			UnityEngine.Object.DontDestroyOnLoad(electricProjectile);
 			PierceProjModifier pierce = electricProjectile.gameObject.GetOrAddComponent<PierceProjModifier>();
+			electricProjectile.gameObject.SetActive(false);
 			pierce.penetration = 10;
-
 			TaserEntry.Name = "taser";
 			TaserEntry.MuzzleFlashEffects = new VFXPool { type = VFXPoolType.None, effects = new VFXComplex[0] };
 			TaserEntry.BulletObject = electricProjectile.gameObject;
@@ -285,7 +285,7 @@ namespace Planetside
 		}
 		private static AIBulletBank.Entry minigunEntryTwo;
 		private static AIBulletBank.Entry minigunEntry;
-		private static AIBulletBank.Entry missileEntry;
+		//private static AIBulletBank.Entry missileEntry;
 		private static AIBulletBank.Entry taserEntry;
 
 		public static void BuildPrefab()
@@ -1964,39 +1964,34 @@ namespace Planetside
         {
 			protected override IEnumerator Top()
 			{
-				base.BulletBank.Bullets.Add(missileEntry);
+				//base.BulletBank.Bullets.Add(missileEntry);
 				Vector2 positionLeft = base.BulletBank.aiActor.transform.Find("LeftGun_Down(Left)").transform.PositionVector2();
 				Vector2 positionRight = base.BulletBank.aiActor.transform.Find("RightGun_Down(Right)").transform.PositionVector2();
 				for (int i = 0; i < 4; i++)
 				{
-					this.Fire(Offset.OverridePosition(positionLeft),new Direction(UnityEngine.Random.Range(-10, 10), DirectionType.Absolute, -1f), new Speed(9), new EatMissiles.HomingBullet());
+					//this.Fire(Offset.OverridePosition(positionLeft),new Direction(UnityEngine.Random.Range(-10, 10), DirectionType.Absolute, -1f), new Speed(9), new EatMissiles.HomingBullet());
+					FireRocket(positionLeft);
+
 					yield return this.Wait(20);
-					this.Fire(Offset.OverridePosition(positionRight), new Direction(UnityEngine.Random.Range(-10, 10), DirectionType.Aim, -1f), new Speed(9), new EatMissiles.HomingBullet());
+					//this.Fire(Offset.OverridePosition(positionRight), new Direction(UnityEngine.Random.Range(-10, 10), DirectionType.Aim, -1f), new Speed(9), new EatMissiles.HomingBullet());
+					FireRocket(positionRight);
 					yield return this.Wait(20);
 				}
 				
 				yield break;
 			}
-			public class LingeringBullet : Bullet
-			{
-				public LingeringBullet() : base("quickHoming", false, false, false)
+			public void FireRocket(Vector2 pos)
+            {
+				GameObject spawnedBulletOBJ = SpawnManager.SpawnProjectile((PickupObjectDatabase.GetById(39) as Gun).DefaultModule.projectiles[0].gameObject, pos, Quaternion.Euler(0f, 0f, this.AimDirection + UnityEngine.Random.Range(-10, 10)), true);
+				Projectile component = spawnedBulletOBJ.GetComponent<Projectile>();
+				if (component != null)
 				{
-
+					component.Owner = GameManager.Instance.BestActivePlayer;
+					component.Shooter = base.BulletBank.aiActor.specRigidbody;
+					HomingModifier bouncy = component.gameObject.GetOrAddComponent<HomingModifier>();
+					bouncy.AngularVelocity = 120;
+					bouncy.HomingRadius = 12;
 				}
-				protected override IEnumerator Top()
-				{
-					yield return this.Wait(300);
-					base.Vanish(false);
-					yield break;
-				}
-			}
-			private class HomingBullet : Bullet
-			{
-				public HomingBullet() : base("missile", false, false, false)
-				{
-				}
-
-
 			}
 		}
 		public class ShootGun : Script

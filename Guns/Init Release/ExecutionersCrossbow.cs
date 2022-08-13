@@ -41,7 +41,7 @@ namespace Planetside
 			gun.reloadTime = 2f;
 			gun.DefaultModule.cooldownTime = 0.2f;
 			gun.DefaultModule.numberOfShotsInClip = 4;
-			gun.SetBaseMaxAmmo(60);
+			gun.SetBaseMaxAmmo(80);
 			gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.ARROW;
 
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[1].eventAudio = "SND_WPN_crossbow_shot_01";

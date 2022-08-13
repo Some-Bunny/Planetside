@@ -105,6 +105,7 @@
     <Compile Include="DungeonGenStuff\ExpandTK2DDungeonAssembler.cs" />
     <Compile Include="DungeonPlaceables\AbyssFloorDoor.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassBloodDecals.cs" />
+    <Compile Include="DungeonPlaceables\TrespassObjects\TearInReality.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassTentaclePillar.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassSniperTurrets.cs" />
     <Compile Include="DungeonPlaceables\SniperTurrets.cs" />
@@ -158,6 +159,7 @@
     <Compile Include="EnemySetupCode\EnemyCode\Update3\Bosses\Prisoner\PrisonerPhaseOne.cs" />
     <Compile Include="EnemySetupCode\EnemyRelatedStuff\Behavior Stuff\CustomDodgeRollBehavior.cs" />
     <Compile Include="EnemySetupCode\EnemyRelatedStuff\Behavior Stuff\ModifiedDashMoveBehavior.cs" />
+    <Compile Include="Guns\Update4\Tracker.cs" />
     <Compile Include="Guns\Update4\SawBladeGun.cs" />
     <Compile Include="Guns\Update4\NemesisShotgun.cs" />
     <Compile Include="Guns\Update4\NemesisRailgun.cs" />
@@ -183,6 +185,7 @@
     <Compile Include="Hooks And Actions\BlankHooks.cs" />
     <Compile Include="Hooks And Actions\DungeonHooks.cs" />
     <Compile Include="Hooks And Actions\Actions.cs" />
+    <Compile Include="Hooks And Actions\GunHooks.cs" />
     <Compile Include="Hooks And Actions\PickupHooks.cs" />
     <Compile Include="Hooks And Actions\ExplosionHooks.cs" />
     <Compile Include="Hooks And Actions\TitleDioramaHooks.cs" />
@@ -4146,6 +4149,19 @@
     <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassDecals\Blood\blooddecal_1.png" />
     <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassDecals\Blood\blooddecal_2.png" />
     <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\TrespassDecals\Blood\blooddecal_3.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\PillarOfSalt\pillarsofsalt.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\PillarOfSalt\pillarsofsalt_break_001.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\PillarOfSalt\pillarsofsalt_break_002.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\PillarOfSalt\pillarsofsalt_break_003.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\PillarOfSalt\pillarsofsalt_break_004.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\PillarOfSalt\pillarsofsalt_break_005.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\PillarOfSalt\pillarsofsalt_break_006.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\PillarOfSalt\pillarsofsalt_break_007.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\PillarOfSalt\pillarsofsalt_break_008.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\PillarOfSalt\pillarsofsalt_break_009.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\TrespassObjects\PillarOfSalt\pillarsofsalt_break_010.png" />
+    <EmbeddedResource Include="Resources\GunObjects\Clips\smileycase.png" />
+    <EmbeddedResource Include="Resources\Guons\VoidglassGuon\voidglass_guon_stone.png" />
     <Content Include="Resources\Shellrax\shellrax_intro_019.png" />
     <EmbeddedResource Include="Resources\VFX\LockOnVFX\lockonvfx1.png" />
     <EmbeddedResource Include="Resources\VFX\LockOnVFX\lockonvfx2.png" />

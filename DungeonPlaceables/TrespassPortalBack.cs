@@ -222,7 +222,5 @@ namespace Planetside
             }
             yield break;
         }
-
     }
-
 }

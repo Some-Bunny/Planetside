@@ -54,7 +54,7 @@ namespace GungeonAPI
             else
             */
             string unzippedDirectory = PlanetsideModule.RoomFilePath;
-            ETGModConsole.Log(unzippedDirectory);
+            //ETGModConsole.Log(unzippedDirectory);
 
             {
                 //Directory.CreateDirectory(unzippedDirectory);

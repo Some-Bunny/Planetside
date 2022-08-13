@@ -32,11 +32,16 @@ namespace Planetside
 			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 24);
 			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 12);
 			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 3);
+			gun.finalShootAnimation = gun.shootAnimation;
 			GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(62) as Gun, true, false);
 			gun.SetBaseMaxAmmo(240);
-			
+			gun.ammo = 480;
+
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_WPN_colt1851_shot_03";
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].triggerEvent = true;
+
+			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.finalShootAnimation).frames[0].eventAudio = "Play_WPN_colt1851_shot_03";
+			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.finalShootAnimation).frames[0].triggerEvent = true;
 
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.reloadAnimation).frames[0].eventAudio = "Play_WPN_SAA_reload_01";
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.reloadAnimation).frames[0].triggerEvent = true;
@@ -49,6 +54,7 @@ namespace Planetside
 			FakePrefab.MarkAsFakePrefab(projectile1.gameObject);
 			UnityEngine.Object.DontDestroyOnLoad(projectile1);
 
+			//gun.gameObject.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
 
 			Projectile replacementProjectile = projectile1.projectile;
 			replacementProjectile.baseData.damage = 15;
@@ -118,8 +124,11 @@ namespace Planetside
 
 		protected override void OnPickup(PlayerController player)
 		{
+			//player.inventory.CurrentGun.LoseAmmo(-100	);
+			//gun.
 			base.OnPickup(player);
 			player.GunChanged += this.OnGunChanged;
+
 			CanMark = true;
 		}
 
@@ -173,8 +182,11 @@ namespace Planetside
 		protected override void Update()
 		{
 			base.Update();
+		//	gun.gameObject.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
+
 			if (gun.CurrentOwner as PlayerController)
 			{
+
 				PlayerController player = gun.CurrentOwner as PlayerController;
 				if (player.CurrentGun == gun && CanMark == true)
 				{

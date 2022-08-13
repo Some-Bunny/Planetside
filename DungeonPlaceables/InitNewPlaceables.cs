@@ -33,6 +33,7 @@ namespace Planetside
             TrespassSniperTurrets.Init();
             TrespassBloodDecals.Init();
             TrespassTentaclePillar.Init();
+            TearInReality.Init();
         }
     }
 }

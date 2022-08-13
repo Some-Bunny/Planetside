@@ -55,7 +55,7 @@ namespace Planetside
 				{
 					projectileModule.ammoCost = 0;
 				}
-				projectile.transform.parent = gun.barrelOffset;
+				
 			}
 			gun.barrelOffset.transform.localPosition += new Vector3(2.5f, 0.25f, 0f);
 			gun.reloadTime = 2.3f;

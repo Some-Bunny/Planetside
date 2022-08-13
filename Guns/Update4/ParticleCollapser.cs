@@ -69,7 +69,7 @@ namespace Planetside
 
 			ImprovedAfterImage yes = projectile.gameObject.AddComponent<ImprovedAfterImage>();
 			yes.spawnShadows = true;
-			yes.shadowLifetime = 0.375f;
+			yes.shadowLifetime = 0.1875f;
 			yes.shadowTimeDelay = 0.01f;
 			yes.dashColor = new Color(1f, 0f, 0.66f, 1f);
 			projectile.gameObject.AddComponent<ParticleCollapserSmallProjectile>();
@@ -107,7 +107,6 @@ namespace Planetside
 				"colalsped_004",
 				"colalsped_005",
 				"colalsped_006",
-
 			}, 11, true, new List<IntVector2> {
 				new IntVector2(9, 9),
 				new IntVector2(9, 9),
@@ -115,7 +114,6 @@ namespace Planetside
 				new IntVector2(9, 9),
 				new IntVector2(9, 9),
 				new IntVector2(9, 9)
-
 			}, AnimateBullet.ConstructListOfSameValues(false, 7), AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.MiddleCenter, 7), AnimateBullet.ConstructListOfSameValues(true, 7), AnimateBullet.ConstructListOfSameValues(false, 7), AnimateBullet.ConstructListOfSameValues<Vector3?>(null, 7), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 7), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 7), AnimateBullet.ConstructListOfSameValues<Projectile>(null, 7));
 
 

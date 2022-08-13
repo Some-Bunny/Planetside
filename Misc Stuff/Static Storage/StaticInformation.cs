@@ -49,10 +49,58 @@ namespace Planetside
             VoidTexture = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\voidTex.png");
             AdvancedParticleBlue = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources2\\ParticleTextures\\advancedparticles.png");
 
+            Keep_1_Texture = PlanetsideModule.ModAssets.LoadAsset<Texture2D>("keep_1");
+            Keep_2_Texture = PlanetsideModule.ModAssets.LoadAsset<Texture2D>("keep_2");
+
+            Sewer_1_Texture = PlanetsideModule.ModAssets.LoadAsset<Texture2D>("sewer_1");
+            Sewer_2_Texture = PlanetsideModule.ModAssets.LoadAsset<Texture2D>("sewer_2");
+
+            Proper_1_Texture = PlanetsideModule.ModAssets.LoadAsset<Texture2D>("proper_1");
+            Proper_2_Texture = PlanetsideModule.ModAssets.LoadAsset<Texture2D>("proper_2");
+
+            Abbey_1_Texture = PlanetsideModule.ModAssets.LoadAsset<Texture2D>("abbey_1");
+            Abbey_2_Texture = PlanetsideModule.ModAssets.LoadAsset<Texture2D>("abbey_2");
+
+            Mines_1_Texture = PlanetsideModule.ModAssets.LoadAsset<Texture2D>("mines_1");
+            Mines_2_Texture = PlanetsideModule.ModAssets.LoadAsset<Texture2D>("mines_2");
+
+            Hollow_1_Texture = PlanetsideModule.ModAssets.LoadAsset<Texture2D>("hollow_1");
+            Hollow_2_Texture = PlanetsideModule.ModAssets.LoadAsset<Texture2D>("hollow_2");
+
+            Forge_1_Texture = PlanetsideModule.ModAssets.LoadAsset<Texture2D>("forge_1");
+            Forge_2_Texture = PlanetsideModule.ModAssets.LoadAsset<Texture2D>("forge_2");
+
+            Hell_1_Texture = PlanetsideModule.ModAssets.LoadAsset<Texture2D>("hell_1");
+            Hell_2_Texture = PlanetsideModule.ModAssets.LoadAsset<Texture2D>("hell_2");
         }
         public static Texture AdvancedParticleBlue;
         public static Texture VoidTexture;
         public static Texture NebulaTexture;
+
+        public static Texture Keep_1_Texture;
+        public static Texture Keep_2_Texture;
+
+        public static Texture Sewer_1_Texture;
+        public static Texture Sewer_2_Texture;
+
+        public static Texture Proper_1_Texture;
+        public static Texture Proper_2_Texture;
+
+        public static Texture Abbey_1_Texture;
+        public static Texture Abbey_2_Texture;
+
+        public static Texture Mines_1_Texture;
+        public static Texture Mines_2_Texture;
+
+        public static Texture Hollow_1_Texture;
+        public static Texture Hollow_2_Texture;
+
+        public static Texture Forge_1_Texture;
+        public static Texture Forge_2_Texture;
+
+        public static Texture Hell_1_Texture;
+        public static Texture Hell_2_Texture;
+
     }
 
     public class StaticUndodgeableBulletEntries

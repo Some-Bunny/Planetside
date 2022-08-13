@@ -47,6 +47,11 @@ namespace Planetside
         {
             if (laserPointer != null && this.gameObject != null)
             {
+                if (TrapDefusalKit.IsHoldingDefusalItem == true)
+                {
+                    laserPointerTiledSprite.dimensions = new Vector2(0, 0f);
+                    return;
+                }
                 DoRayCast();
             }
         }

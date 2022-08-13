@@ -56,11 +56,12 @@ namespace Planetside
 			mat.SetFloat("_EmissivePower", 100);
 			vfxSprite.sprite.renderer.material = mat;
 
-
 			UnityEngine.Object.DontDestroyOnLoad(KineticStrikeTargetReticle);
-
 		}
 		public static GameObject KineticStrikeTargetReticle;
+
+
+		
 
 
 		public static void BuildSpeakerObject()
@@ -81,7 +82,6 @@ namespace Planetside
 				"Planetside/Resources/VFX/CursePoof/cursepoof_003",
 				"Planetside/Resources/VFX/CursePoof/cursepoof_004",
 				"Planetside/Resources/VFX/CursePoof/cursepoof_005",
-
 			};
 			cursepoofvfx = VFXToolbox.CreateVFX("Cursebulon Goop Poof", cursepoofvfxVFXPaths, 14, new IntVector2(12, 12), tk2dBaseSprite.Anchor.LowerCenter, true, 0.18f);
 		}
@@ -161,7 +161,7 @@ namespace Planetside
 			yeah.dashColor = new Color(0, 0.7f, 1);
 			yeah.spawnShadows = true;
 			yeah.shadowTimeDelay = 0.02f;
-			yeah.shadowLifetime = 0.2f;
+			yeah.shadowLifetime = 0.1f;
 
 			PlayerOrbital si = gameObject.GetComponent<PlayerOrbital>();
 

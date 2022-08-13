@@ -25,6 +25,20 @@ namespace Planetside
             mat.SetColor("_OverrideColor", new Color(0.02f, 0.4f, 1, 0.6f));
         }
 
+        public void Update()
+        {
+            var d = this.GetComponent<PlayerOrbitalItem>();
+            var D = this.GetComponentInChildren<PlayerOrbitalItem>();
+            if (d != null)
+            {
+                d.OrbitalPrefab = CorruptedWealth.VoidGlassStonePrefab.GetComponent<PlayerOrbital>();
+            }
+            if (D != null)
+            {
+                D.OrbitalPrefab = CorruptedWealth.VoidGlassStonePrefab.GetComponent<PlayerOrbital>();
+            }
+        }
+
         public CorruptedWealthController GetController(PlayerController P)
         {
             return P.GetComponent<CorruptedWealthController>();
@@ -38,7 +52,6 @@ namespace Planetside
             {
 
                 case PickupType.HP:
-                    //this.GetComponent<HealthPickup>().Pickup(player);
                     if (c != null)
                     {
                         c.ProcessDamageModsRedHP(this.GetComponent<HealthPickup>().healAmount);
@@ -58,10 +71,11 @@ namespace Planetside
         public PickupType pickup;
         public enum PickupType
         {
-            HP,
-            KEY,
+            HP,//DONE
+            KEY,//DONE
             AMMO,
-            BLANK,
+            BLANK,//DONE
+            ARMOR,//DONE
             GLASS_GUON
         };
     }
@@ -83,10 +97,26 @@ namespace Planetside
 
             player.healthHaver.OnDamaged += HealthHaver_OnDamaged;
             player.OnUsedBlank += Player_OnUsedBlank;
+            player.LostArmor += LostArmorgus;
         }
 
-
-
+        public void LostArmorgus()
+        {
+            if (AmountOfArmorConsumed > 0)
+            {
+                GameManager.Instance.StartCoroutine(this.SaveFlawless());
+                AmountOfArmorConsumed--;
+            }
+        }
+        private IEnumerator SaveFlawless()
+        {
+            yield return new WaitForSeconds(0.1f);
+            if (player.CurrentRoom != null)
+            {
+                player.CurrentRoom.PlayerHasTakenDamageInThisRoom = false;
+            }
+            yield break;
+        }
 
         private void Player_OnUsedBlank(PlayerController arg1, int arg2)
         {
@@ -118,6 +148,7 @@ namespace Planetside
         {
             if (AmountOfHPConsumed > 0f) { AmountOfHPConsumed -= 0.5f; }
             if (AmountOfHPConsumed < 0) { AmountOfArmorConsumed = 0; }
+
             RecalculateDamage();
             if (AmountOfHPConsumed > 0f)
             {
@@ -135,36 +166,49 @@ namespace Planetside
 
         public void Update()
         {
-            if (LastStoredAmountOfHPConsumed != ActualHPPointsStored())
+            if (player)
             {
-                LastStoredAmountOfHPConsumed = ActualHPPointsStored();
-                for (int i = 0; i < objects.Count; i++)
+                if (AmountOfArmorConsumed > (int)player.healthHaver.Armor)
+                { AmountOfArmorConsumed = (int)player.healthHaver.Armor; }
+
+                if (LastStoredAmountOfHPConsumed != ActualHPPointsStored())
                 {
-                    if (objects[i] != null) { Destroy(objects[i]); }
-                }
-                objects.Clear();
-                int UpRaise = 0;
-                int H = ActualHPPointsStored();
-                int r = ActualHPPointsStored();
-                for (int i = 0; i < H/2; i++)
-                {
-                    r -= 2;
-                    GameObject gameObject = player.PlayEffectOnActor(CorruptedWealth.heartorbitalVFX, new Vector3(0f, player.specRigidbody.HitboxPixelCollider.UnitDimensions.y + 0.25f + (0.5f * UpRaise), 0f), true);
-                    objects.Add(gameObject);
-                    UpRaise++;
-                }
-                if (r > 0)
-                {
-                    for (int i = 0; i < r; i++)
+                    LastStoredAmountOfHPConsumed = ActualHPPointsStored();
+                    for (int i = 0; i < objects.Count; i++)
                     {
-                        r--;
-                        GameObject gameObject = player.PlayEffectOnActor(CorruptedWealth.halfheartorbitalvfx, new Vector3(0f, player.specRigidbody.HitboxPixelCollider.UnitDimensions.y + 0.25f + (0.5f * UpRaise), 0f), true);
+                        if (objects[i] != null) { Destroy(objects[i]); }
+                    }
+                    objects.Clear();
+                    int UpRaise = 0;
+                    int H = ActualHPPointsStored();
+                    int r = ActualHPPointsStored();
+                    for (int i = 0; i < H / 2; i++)
+                    {
+                        r -= 2;
+                        GameObject gameObject = player.PlayEffectOnActor(CorruptedWealth.heartorbitalVFX, new Vector3(0f, player.specRigidbody.HitboxPixelCollider.UnitDimensions.y + 0.25f + (0.5f * UpRaise), 0f), true);
                         objects.Add(gameObject);
                         UpRaise++;
                     }
+                    if (r > 0)
+                    {
+                        for (int i = 0; i < r; i++)
+                        {
+                            r--;
+                            GameObject gameObject = player.PlayEffectOnActor(CorruptedWealth.halfheartorbitalvfx, new Vector3(0f, player.specRigidbody.HitboxPixelCollider.UnitDimensions.y + 0.25f + (0.5f * UpRaise), 0f), true);
+                            objects.Add(gameObject);
+                            UpRaise++;
+                        }
+                    }
                 }
-            }
+                if (player.carriedConsumables.KeyBullets == 0)
+                {
+                    AmountOfCorruptKeys = 0;
+                }
+            }      
         }
+
+     
+
 
         public List<GameObject> objects = new List<GameObject>();
 
@@ -186,7 +230,7 @@ namespace Planetside
             StatModifier item = new StatModifier
             {
                 statToBoost = PlayerStats.StatType.Damage,
-                amount = AmountOfHPConsumed/6,
+                amount = AmountOfHPConsumed/4,
                 modifyType = StatModifier.ModifyMethod.ADDITIVE
             };
             HPBasedDamageMod = item;
@@ -198,7 +242,10 @@ namespace Planetside
             StackCount++;
         }
 
+        
+
         public int AmountOfCorruptBlanks;
+        public int AmountOfCorruptKeys;
 
         public float AmountOfArmorConsumed;
         public float AmountOfHPConsumed;
@@ -236,8 +283,65 @@ namespace Planetside
 
             SetupHeartVFX();
             SetupHalfHeartVFX();
-
+            BuildVoidGlassStone();
         }
+
+        public static void BuildVoidGlassStone()
+        {
+            GameObject gameObject = SpriteBuilder.SpriteFromResource("Planetside/Resources/Guons/VoidglassGuon/voidglass_guon_stone.png");
+            gameObject.name = $"Soul Guon";
+            SpeculativeRigidbody speculativeRigidbody = gameObject.GetComponent<tk2dSprite>().SetUpSpeculativeRigidbody(IntVector2.Zero, new IntVector2(7, 9));
+            PlayerOrbital orbitalPrefab = gameObject.AddComponent<PlayerOrbital>();
+            speculativeRigidbody.CollideWithTileMap = false;
+            speculativeRigidbody.CollideWithOthers = true;
+            speculativeRigidbody.PrimaryPixelCollider.CollisionLayer = CollisionLayer.Projectile;
+            orbitalPrefab.shouldRotate = true;
+            orbitalPrefab.orbitRadius = 6.5f;
+            orbitalPrefab.orbitDegreesPerSecond = 72;
+            orbitalPrefab.SetOrbitalTier(0);
+
+            Shader glowshader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTiltedCutoutEmissive");
+
+            orbitalPrefab.sprite.usesOverrideMaterial = true;
+            orbitalPrefab.sprite.sprite.renderer.material.shader = glowshader;
+            orbitalPrefab.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+            orbitalPrefab.sprite.renderer.material.SetFloat("_EmissivePower", 100);
+            orbitalPrefab.sprite.renderer.material.SetFloat("_EmissiveColorPower", 10);
+            gameObject.AddComponent<VoidGlassGuonStoneController>();
+
+
+            VoidGlassStonePrefab = gameObject;
+            UnityEngine.Object.DontDestroyOnLoad(VoidGlassStonePrefab);
+            FakePrefab.MarkAsFakePrefab(VoidGlassStonePrefab);
+            VoidGlassStonePrefab.SetActive(false);
+        }
+
+        public class VoidGlassGuonStoneController : MonoBehaviour
+        {
+            public PlayerOrbital self;
+            public void Start()
+            {
+                self = GetComponent<PlayerOrbital>();
+                SpeculativeRigidbody specRigidbody = self.specRigidbody;
+                specRigidbody.OnPreRigidbodyCollision += this.OnPreCollision;
+            }
+            private void OnPreCollision(SpeculativeRigidbody myRigidbody, PixelCollider myCollider, SpeculativeRigidbody otherRigidbody, PixelCollider otherCollider)
+            {
+                PhysicsEngine.SkipCollision = true;
+                RoomHandler currentRoom = GameManager.Instance.BestActivePlayer.CurrentRoom;
+                AIActor component = otherRigidbody.GetComponent<AIActor>();
+                if (component != null)
+                {
+                    if (component.healthHaver && component.CenterPosition.GetAbsoluteRoom() == currentRoom)
+                    {
+                        component.healthHaver.ApplyDamage(60f * BraveTime.DeltaTime, Vector2.zero, "Void Glass", CoreDamageTypes.Void, DamageCategory.DamageOverTime, false, null, false);
+                    }
+                }
+            }
+        }
+
+
+        public static GameObject VoidGlassStonePrefab;
 
         public static void SetupHeartVFX()
         {

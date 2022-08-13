@@ -72,7 +72,7 @@ namespace Planetside
 
                 ImprovedAfterImage yes = projectile.gameObject.AddComponent<ImprovedAfterImage>();
                 yes.spawnShadows = true;
-                yes.shadowLifetime = 0.25f;
+                yes.shadowLifetime = 0.2f;
                 yes.shadowTimeDelay = 0.01f;
                 yes.dashColor = new Color(1f, 0f, 0.6f, 1f);
 
@@ -92,7 +92,8 @@ namespace Planetside
             gun.reloadTime = 1.4f;
             gun.barrelOffset.transform.localPosition = new Vector3(1f, 0.8f, 0f);
             gun.SetBaseMaxAmmo(1200);
-          
+            gun.ammo = 1200;
+
             gun.gunClass = GunClass.SILLY;
 
             gun.quality = PickupObject.ItemQuality.C;

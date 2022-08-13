@@ -30,7 +30,7 @@ namespace Planetside
             OrbitalInsertion activeitem = obj.AddComponent<OrbitalInsertion>();
             ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "I Need Backup!";
-            string longDesc = "Request heavy backup for the current floor. Single Use.\n\nDespite the victory of the Gungeon over the invading forces of the Hegemony, the Hegemonies presence still remains, watching... waiting...";
+            string longDesc = "Request heavy backup for the current floor. Single Use.\n\nDespite the victory of the Gungeon over the invading forces of the Hegemony, the Hegemonies presence still remains, watching...\n\nWaiting...";
             activeitem.SetupItem(shortDesc, longDesc, "psog");
             activeitem.SetCooldownType(ItemBuilder.CooldownType.Damage, 10f);
             activeitem.consumable = true;
@@ -168,7 +168,7 @@ namespace Planetside
 				{
 					aimDir++;
 					component2.dimensions = new Vector2(1000f, 1f);
-					if (UnityEngine.Random.value < 0.33f) { GlobalSparksDoer.DoSingleParticle(Vector2.Lerp(startPosition + MathToolbox.GetUnitOnCircle(aimDir, 4), startPosition + MathToolbox.GetUnitOnCircle(aimDir, 0), t), Vector3.up, null, null, null, GlobalSparksDoer.SparksType.EMBERS_SWIRLING); }
+					if (elapsed % 0.2f == 0.1f) { GlobalSparksDoer.DoSingleParticle(Vector2.Lerp(startPosition + MathToolbox.GetUnitOnCircle(aimDir, 4), startPosition + MathToolbox.GetUnitOnCircle(aimDir, 0), t), Vector3.up, null, null, null, GlobalSparksDoer.SparksType.EMBERS_SWIRLING); }
 					component2.transform.position = Vector2.Lerp(startPosition + MathToolbox.GetUnitOnCircle(aimDir, 4), startPosition + MathToolbox.GetUnitOnCircle(aimDir, 0), t);
 					component2.sprite.renderer.material.SetFloat("_EmissivePower", 50 * (t*10));
 					component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 20 * (5*t));

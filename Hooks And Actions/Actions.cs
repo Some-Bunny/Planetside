@@ -20,8 +20,23 @@ namespace Planetside
         public static void Init()
         {
             new Hook(typeof(PlayerController).GetMethod("HandleSpinfallSpawn", BindingFlags.Instance | BindingFlags.NonPublic), typeof(Actions).GetMethod("HandleSpinfallSpawnHook"));
+
+			new Hook(typeof(RoomHandler).GetMethod("TriggerReinforcementLayersOnEvent", BindingFlags.Instance | BindingFlags.Public), typeof(Actions).GetMethod("TriggerReinforcementLayersOnEventHook"));
+
 			Hook ifThisBreaksBlameTheGnomes = new Hook(typeof(Dungeon).GetMethod("Start", BindingFlags.Instance | BindingFlags.NonPublic),  typeof(Actions).GetMethod("StartHook", BindingFlags.Static | BindingFlags.Public));
 		}
+
+		public static bool TriggerReinforcementLayersOnEventHook(Func<RoomHandler, RoomEventTriggerCondition, bool, bool> orig, RoomHandler self, RoomEventTriggerCondition condition, bool instant = false)
+        {
+			if (OnReinforcementWaveTriggered != null)
+            {
+				OnReinforcementWaveTriggered(self, condition);
+			}
+			return orig(self, condition, instant);
+		}
+		public static Action<RoomHandler, RoomEventTriggerCondition> OnReinforcementWaveTriggered;
+
+
 		public static IEnumerator StartHook(Func<Dungeon, IEnumerator> orig, Dungeon self)
 		{
 			IEnumerator origEnum = orig(self);

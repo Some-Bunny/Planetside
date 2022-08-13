@@ -27,7 +27,7 @@ namespace Planetside
 			BabyGoodCandleKin item = gameObject.AddComponent<BabyGoodCandleKin>();
 			ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject, true);
 			string shortDesc = "All Will Be Warm...";
-			string longDesc = "A little living candle. It's warmth is given to it by an old friend of it.";
+			string longDesc = "A little living candle.\n\nIt's warmth is given to it by their old friend.";
 			ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
 			item.quality = PickupObject.ItemQuality.B;
 			BabyGoodCandleKin.BuildPrefab();

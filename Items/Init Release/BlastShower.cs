@@ -27,7 +27,7 @@ namespace Planetside
             BlastShower activeitem = obj.AddComponent<BlastShower>();
             ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "Comes With Auto-Hairdryer.";
-            string longDesc = "Damages all enemies in a room, and applies the players effects onto enemies. A quick and easy portable shower, intended for Gungeoneers to stay somewhat clean for their eventual demise.";
+            string longDesc = "Grants temporary immunity to debuffs, and applies any currently applied debuffs onto enemies. A quick and easy portable shower, intended for Gungeoneers to stay somewhat clean for their eventual demise.";
             activeitem.SetupItem(shortDesc, longDesc, "psog");
             activeitem.SetCooldownType(ItemBuilder.CooldownType.Damage, 250f);
             activeitem.consumable = false;

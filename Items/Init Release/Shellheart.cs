@@ -55,15 +55,13 @@ namespace Planetside
 		private IEnumerator SaveFlawless()
 		{
 			yield return new WaitForSeconds(0.1f);
-			PlayerController player = base.Owner;
-			bool flag = player.CurrentRoom != null;
-			if (flag)
+			if (base.Owner.CurrentRoom != null)
 			{
-				player.CurrentRoom.PlayerHasTakenDamageInThisRoom = false;
+				base.Owner.CurrentRoom.PlayerHasTakenDamageInThisRoom = false;
 			}
 			yield break;
 		}
-		public GameObject OnIgnoredDamageVFX;
+		//public GameObject OnIgnoredDamageVFX;
 
 		public override void Pickup(PlayerController player)
 		{

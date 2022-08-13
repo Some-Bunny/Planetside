@@ -260,7 +260,6 @@ namespace Planetside
 
         public static IEnumerator PitRespawnHook(Func<PlayerController, Vector2, IEnumerator> orig, PlayerController self, Vector2 splashPoint)
         {
-            //ETGModConsole.Log("1");
             bool IsFallingIntoElevatorShaft = self.CurrentRoom != null && self.CurrentRoom.RoomFallValidForMaintenance();
             bool IsFallingIntoOtherRoom = (self.CurrentRoom != null && self.CurrentRoom.TargetPitfallRoom != null) || GetCurrentCellPitfallTarget(self) != null;
             bool GunpreventsDamage = self.CurrentGun && self.CurrentGun.gunName == "Mermaid Gun";

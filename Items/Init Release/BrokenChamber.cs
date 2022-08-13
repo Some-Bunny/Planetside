@@ -21,7 +21,7 @@ namespace Planetside
 			BrokenChamber warVase = gameObject.AddComponent<BrokenChamber>();
 			ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
 			string shortDesc = "A bad omen looms...";
-			string longDesc = "A broken, forgotten chamber. Dark power seeps from it.\n\nYou feel unsafe, but feel like this is necessary.";
+			string longDesc = "A broken, forgotten chamber. Dark power seeps from it.\n\nYou feel uneasy carrying it, yet you feel like you must keep it.";
 			ItemBuilder.SetupItem(warVase, shortDesc, longDesc, "psog");
 			warVase.quality = PickupObject.ItemQuality.EXCLUDED;
 			BrokenChamber.BrokenChamberID = warVase.PickupObjectId;

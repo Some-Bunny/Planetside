@@ -40,7 +40,15 @@ namespace Planetside
         {
             if (laserPointer != null && this.gameObject != null)
             {
-                DoRayCast();
+                if (TrapDefusalKit.IsHoldingDefusalItem == true)
+                {
+                    laserPointerTiledSprite.dimensions = new Vector2(0, 0f);
+                    return;
+                }
+                else
+                {
+                    DoRayCast();
+                }
             }
         }
 
@@ -135,8 +143,11 @@ namespace Planetside
                 if (this == null) { yield break; }
                 if (laserPointerTiledSprite.gameObject == null) { yield break; }
                 if (this.gameObject == null) { yield break; }
-                if (elaWait > (duraWait-0.5f)) { laserPointerTiledSprite.renderer.enabled = true; }
+                if (elaWait > (duraWait-0.5f)) 
+                { laserPointerTiledSprite.renderer.enabled = true; 
+                }
                 elaWait += BraveTime.DeltaTime;
+                CurrentState = State.PRE_PRIMED;
                 yield return null;
             }
             CurrentState = State.PRIMED;
@@ -166,6 +177,7 @@ namespace Planetside
             PRIMED,
             ABOUT_TO_FIRE,
             POST_FIRE,
+            PRE_PRIMED,
         }
     }
     public class SniperTurrets

@@ -22,7 +22,7 @@ namespace Planetside
                 AttackBehaviorGroup.AttackGroupItem attackGroupItem = attackGroup.AttackBehaviors[i];
                 if (attackGroup != null && attackGroupItem.NickName == "BigLaser")
                 {
-                    attackGroupItem.Probability = 2f;
+                    attackGroupItem.Probability = 3f;
                 }
             }
         }
