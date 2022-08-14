@@ -599,7 +599,8 @@ namespace Planetside
 				"dfkfdkjkjdddddkkkkkkk.room",
 				"evilevilevil.room",
 				"HellHeheheHahaYe.room",
-				"yeah.room"
+				"yeah.room",
+				"whyarealltheseroomssquare.room"
 			};
 			Mod_RoomList_HUB = new List<string>()
 			{
@@ -607,7 +608,8 @@ namespace Planetside
 				"ConnectoryRoomy.room",
 				"BigHell.room",
 				"AnotehrHubRoom.room",
-				"CrossHouse.room"
+				"CrossHouse.room",
+				"forgefireroar.room"
 			};
 
 			Mod_Entrance_Room = DungeonRoomFactory.BuildFromResource("Planetside/Resources/AbyssRooms/AbyssEntry/TheDeepEntrance.room");
