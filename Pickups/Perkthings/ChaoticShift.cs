@@ -21,8 +21,8 @@ namespace Planetside
             ProjectileVolleyData projectileVolleyData = CombineVolleys(self, randomGun);
             ReconfigureVolley(projectileVolleyData);
             self.RawSourceVolley = projectileVolleyData;
-            self.SetBaseMaxAmmo(self.GetBaseMaxAmmo() + randomGun.GetBaseMaxAmmo());
-            self.GainAmmo(randomGun.CurrentAmmo);
+            //self.SetBaseMaxAmmo(self.GetBaseMaxAmmo() + randomGun.GetBaseMaxAmmo());
+            //self.GainAmmo(randomGun.CurrentAmmo);
             self.OnPrePlayerChange();
             player.inventory.ChangeGun(0, false, false);
         }

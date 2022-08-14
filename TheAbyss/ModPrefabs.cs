@@ -594,7 +594,12 @@ namespace Planetside
 				"FUCK.room",
 				"amogus.room",
 				"afhjudsadhsadssdahjadjhs.room",
-				"AABBADONNNN.room"
+				"AABBADONNNN.room",
+				"BasicWarpZone.room",
+				"dfkfdkjkjdddddkkkkkkk.room",
+				"evilevilevil.room",
+				"HellHeheheHahaYe.room",
+				"yeah.room"
 			};
 			Mod_RoomList_HUB = new List<string>()
 			{

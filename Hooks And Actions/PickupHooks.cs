@@ -42,7 +42,91 @@ namespace Planetside
             new Hook(typeof(Chest).GetMethod("Interact", BindingFlags.Instance | BindingFlags.Public), typeof(PickupHooks).GetMethod("InteractHook"));
 
             new Hook(typeof(AmmoPickup).GetMethod("Pickup", BindingFlags.Instance | BindingFlags.Public), typeof(PickupHooks).GetMethod("CanINotHaveTwoHookMethodsWithTheSameName"));
+
+            new Hook(typeof(GameUIHeartController).GetMethod("UpdateHealth", BindingFlags.Instance | BindingFlags.Public), typeof(PickupHooks).GetMethod("UpdateHealthHook"));
+
+            new Hook(typeof(ShopItemController).GetMethod("Update", BindingFlags.Instance | BindingFlags.NonPublic), typeof(PickupHooks).GetMethod("UpdateShopItemHook"));
+
+
+            new Hook(typeof(IounStoneOrbitalItem).GetMethod("Pickup", BindingFlags.Instance | BindingFlags.Public), typeof(PickupHooks).GetMethod("PickupGuonStoneHook"));
         }
+
+        public static void PickupGuonStoneHook(Action<IounStoneOrbitalItem, PlayerController> orig, IounStoneOrbitalItem self, PlayerController player)
+        {
+            var CWC = player.GetComponent<CorruptedWealthController>();
+            if (CWC != null && self.PickupObjectId == 565)
+            {
+                self.OrbitalPrefab = CorruptedWealth.VoidGlassStonePrefab.GetComponent<PlayerOrbital>();
+            }
+            orig(self, player);
+        }
+
+
+        public static void UpdateShopItemHook(Action<ShopItemController> orig, ShopItemController self)
+        {
+            orig(self);
+            foreach (PlayerController player in GameManager.Instance.AllPlayers)
+            {
+                var CWC = player.GetComponent<CorruptedWealthController>();
+                if (CWC != null)
+                {
+                    if (LazyAssCheck(self.item.PickupObjectId) == true)
+                    {
+                        self.sprite.usesOverrideMaterial = true;
+                        Material mat = self.sprite.renderer.material;
+                        mat.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
+                        mat.SetFloat("_EmissivePower", 100);
+                        mat.SetFloat("_EmissiveColorPower", 10);
+                        mat.SetColor("_OverrideColor", new Color(0.02f, 0.4f, 1, 0.6f));
+                    }
+                    else
+                    {
+                        self.sprite.usesOverrideMaterial = false;
+                    }
+                }
+            }
+        }
+
+        public static bool LazyAssCheck(int ID)
+        {
+            if (ID == 73) { return true; }//half heart
+            if (ID == 85) { return true; }//heart
+            if (ID == 120) { return true; }//armor
+            if (ID == 78) { return true; }//Ammo
+            if (ID == 600) { return true; }//PartialAmmo
+            if (ID == 224) { return true; }//blank
+            if (ID == 565) { return true; }
+            return false;
+        }
+
+
+        public static void UpdateHealthHook(Action<GameUIHeartController, HealthHaver> orig, GameUIHeartController self, HealthHaver hh)
+        {
+            orig(self, hh);
+            foreach (PlayerController player in GameManager.Instance.AllPlayers)
+            {
+                if (player.healthHaver == hh)
+                {
+                    var CWC = player.GetComponent<CorruptedWealthController>();
+                    if (CWC != null)
+                    {
+                        List<dfSprite> c = self.extantArmors;
+                        for (int i = 0; i < c.Count; i++)
+                        {
+                            if (i > (c.Count - 1) - CWC.AmountOfArmorConsumed)
+                            {
+                                c[i].Color = new Color(0.02f, 0.4f, 1, 0.6f);
+                            }
+                            else
+                            {
+                                c[i].Color = new Color32(255, 255, 255, 1);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
 
         public static void CanINotHaveTwoHookMethodsWithTheSameName(Action<AmmoPickup, PlayerController> orig, AmmoPickup self, PlayerController player)
         {

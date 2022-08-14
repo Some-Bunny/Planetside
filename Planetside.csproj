@@ -4400,5 +4400,12 @@
     <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\jknbfkjhfdskjhfdsjhkfdsjhkdfs.room" />
     <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\ROCKEDDON.room" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\BasicWarpZone.room" />
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\dfkfdkjkjdddddkkkkkkk.room" />
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\evilevilevil.room" />
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\HellHeheheHahaYe.room" />
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\yeah.room" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

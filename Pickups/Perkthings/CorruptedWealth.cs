@@ -131,7 +131,7 @@ namespace Planetside
         {
             List<Projectile> doNotWreck = new List<Projectile>();
             float elapsed = 0f;
-            while (elapsed < additionalTimeAtMaxRadius)
+            while (elapsed < additionalTimeAtMaxRadius + (StackCount*1.25f))
             {
                 elapsed += BraveTime.DeltaTime;
                 bool destroysEnemyBullets = true;
@@ -207,9 +207,6 @@ namespace Planetside
             }      
         }
 
-     
-
-
         public List<GameObject> objects = new List<GameObject>();
 
         public void ProcessDamageModsRedHP(float amount)
@@ -230,7 +227,7 @@ namespace Planetside
             StatModifier item = new StatModifier
             {
                 statToBoost = PlayerStats.StatType.Damage,
-                amount = AmountOfHPConsumed/4,
+                amount = (AmountOfHPConsumed/4) * (1+ (StackCount / 0.33f)),
                 modifyType = StatModifier.ModifyMethod.ADDITIVE
             };
             HPBasedDamageMod = item;
@@ -297,7 +294,7 @@ namespace Planetside
             speculativeRigidbody.PrimaryPixelCollider.CollisionLayer = CollisionLayer.Projectile;
             orbitalPrefab.shouldRotate = true;
             orbitalPrefab.orbitRadius = 6.5f;
-            orbitalPrefab.orbitDegreesPerSecond = 72;
+            orbitalPrefab.orbitDegreesPerSecond = 60;
             orbitalPrefab.SetOrbitalTier(0);
 
             Shader glowshader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTiltedCutoutEmissive");
@@ -305,7 +302,7 @@ namespace Planetside
             orbitalPrefab.sprite.usesOverrideMaterial = true;
             orbitalPrefab.sprite.sprite.renderer.material.shader = glowshader;
             orbitalPrefab.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
-            orbitalPrefab.sprite.renderer.material.SetFloat("_EmissivePower", 100);
+            orbitalPrefab.sprite.renderer.material.SetFloat("_EmissivePower", 80);
             orbitalPrefab.sprite.renderer.material.SetFloat("_EmissiveColorPower", 10);
             gameObject.AddComponent<VoidGlassGuonStoneController>();
 
@@ -322,11 +319,24 @@ namespace Planetside
             public void Start()
             {
                 self = GetComponent<PlayerOrbital>();
+                
                 SpeculativeRigidbody specRigidbody = self.specRigidbody;
                 specRigidbody.OnPreRigidbodyCollision += this.OnPreCollision;
+                foreach (PlayerController p in GameManager.Instance.AllPlayers)
+                {
+                    var GG = p.GetComponent<CorruptedWealthController>();
+                    if (GG != null)
+                    {
+                        c = GG;
+                    }
+                }
             }
+
+            private CorruptedWealthController c;
+
             private void OnPreCollision(SpeculativeRigidbody myRigidbody, PixelCollider myCollider, SpeculativeRigidbody otherRigidbody, PixelCollider otherCollider)
             {
+                
                 PhysicsEngine.SkipCollision = true;
                 RoomHandler currentRoom = GameManager.Instance.BestActivePlayer.CurrentRoom;
                 AIActor component = otherRigidbody.GetComponent<AIActor>();
@@ -334,7 +344,8 @@ namespace Planetside
                 {
                     if (component.healthHaver && component.CenterPosition.GetAbsoluteRoom() == currentRoom)
                     {
-                        component.healthHaver.ApplyDamage(60f * BraveTime.DeltaTime, Vector2.zero, "Void Glass", CoreDamageTypes.Void, DamageCategory.DamageOverTime, false, null, false);
+                        float M = 75 + c.StackCount * 25;
+                        component.healthHaver.ApplyDamage(M * BraveTime.DeltaTime, Vector2.zero, "Void Glass", CoreDamageTypes.Void, DamageCategory.DamageOverTime, false, null, false);
                     }
                 }
             }
