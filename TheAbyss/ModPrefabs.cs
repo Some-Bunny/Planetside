@@ -600,7 +600,10 @@ namespace Planetside
 				"evilevilevil.room",
 				"HellHeheheHahaYe.room",
 				"yeah.room",
-				"whyarealltheseroomssquare.room"
+				"whyarealltheseroomssquare.room",
+				"yeah_2.room",
+				"papersplease.room",
+				"mhm.room"
 			};
 			Mod_RoomList_HUB = new List<string>()
 			{
@@ -664,9 +667,16 @@ namespace Planetside
             Mod_Boss.rewardChestSpawnPosition = new IntVector2(25, 20); //Where the reward pedestal spawns, should be changed based on room size
             Mod_Boss.overriddenTilesets = GlobalDungeonData.ValidTilesets.JUNGLEGEON;
 
-            //foreach (PrototypeRoomExit exit in Mod_Boss.exitData.exits) { exit.exitType = PrototypeRoomExit.ExitType.ENTRANCE_ONLY; }
-                //RoomBuilder.AddExitToRoom(Mod_Boss, new Vector2(26, 37), DungeonData.Direction.NORTH, PrototypeRoomExit.ExitType.EXIT_ONLY, PrototypeRoomExit.ExitGroup.B);
-        }
+			//foreach (PrototypeRoomExit exit in Mod_Boss.exitData.exits) { exit.exitType = PrototypeRoomExit.ExitType.ENTRANCE_ONLY; }
+			//RoomBuilder.AddExitToRoom(Mod_Boss, new Vector2(26, 37), DungeonData.Direction.NORTH, PrototypeRoomExit.ExitType.EXIT_ONLY, PrototypeRoomExit.ExitGroup.B);
+
+			Loop_De_Loop_Flow = AbyssFlows.BuildPrimaryFlow();
+
+
+		}
+
+		public static DungeonFlow Loop_De_Loop_Flow;
+
 
         public static WeightedRoom GenerateWeightedRoom(PrototypeDungeonRoom Room, float Weight = 1, bool LimitedCopies = true, int MaxCopies = 1, DungeonPrerequisite[] AdditionalPrerequisites = null)
         {

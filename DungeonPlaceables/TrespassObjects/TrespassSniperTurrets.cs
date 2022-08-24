@@ -25,6 +25,12 @@ namespace Planetside
             CurrentState = State.PRIMED;
             bulletBank = this.GetComponent<AIBulletBank>();
             currentRoom = this.transform.position.GetAbsoluteRoom();
+            this.StartCoroutine(FrameDelay());
+        }
+
+        public IEnumerator FrameDelay()
+        {
+            yield return null;
             if (laserPointer == null)
             {
                 laserPointer = SpawnManager.SpawnVFX((GameObject)BraveResources.Load("Global VFX/VFX_LaserSight_Enemy"), true);
@@ -37,12 +43,14 @@ namespace Planetside
                 laserPointerTiledSprite.usesOverrideMaterial = true;
                 laserPointerTiledSprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
                 laserPointerTiledSprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
-                laserPointerTiledSprite.renderer.material.SetFloat("_EmissivePower", 600);
+                laserPointerTiledSprite.renderer.material.SetFloat("_EmissivePower", 500);
                 laserPointerTiledSprite.renderer.material.SetFloat("_EmissiveColorPower", 1);
                 laserPointerTiledSprite.renderer.material.SetColor("_OverrideColor", Color.cyan);
                 laserPointerTiledSprite.renderer.material.SetColor("_EmissiveColor", Color.cyan);
             }
+            yield break;
         }
+
         public void Update()
         {
             if (laserPointer != null && this.gameObject != null)

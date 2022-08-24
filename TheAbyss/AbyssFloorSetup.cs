@@ -634,7 +634,7 @@ namespace Planetside
             {
                 flows = new List<DungeonFlow>()
                 {
-                    AbyssFlows.FlowIStoleFromTheBeyond(),
+                    ModRoomPrefabs.Loop_De_Loop_Flow
                 },
                 mandatoryExtraRooms = new List<ExtraIncludedRoomData>(0),
                 optionalExtraRooms = new List<ExtraIncludedRoomData>(0),

@@ -129,15 +129,10 @@ namespace Planetside
             material.SetTexture("_MainTex", sharedMaterials[0].GetTexture("_MainTex"));
             sharedMaterials[sharedMaterials.Length - 1] = material;
             component.sharedMaterials = sharedMaterials;
-
-
-            AssetBundle bundle = ResourceManager.LoadAssetBundle("brave_resources_001");
-            LaserReticle = bundle.LoadAsset("assets/resourcesbundle/global vfx/vfx_lasersight.prefab") as GameObject;
-            bundle = null;
         }
 
         private static List<GameObject> Chargerreticles = new List<GameObject>();
-        private static GameObject LaserReticle;
+        //private static GameObject LaserReticle;
         private bool VFXActive;
         public void CleanupReticles()
         {
@@ -217,7 +212,7 @@ namespace Planetside
                         {
                             num2 = (zero - new Vector2(player.transform.position.x, player.transform.position.y)).magnitude;
                         }
-                        GameObject gameObject = SpawnManager.SpawnVFX(PlanetBlade.LaserReticle, false);
+                        GameObject gameObject = SpawnManager.SpawnVFX(RandomPiecesOfStuffToInitialise.LaserReticle, false);
                         tk2dTiledSprite component2 = gameObject.GetComponent<tk2dTiledSprite>();
 
 

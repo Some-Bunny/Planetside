@@ -742,6 +742,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="APIs\SaveAPI\Properties\" />
+    <Folder Include="DungeonPlaceables\TrespassObjects\MovingFloorTiles\" />
+    <Folder Include="Resources\DungeonObjects\TrespassObjects\MovingFloorTiles\1x1\" />
+    <Folder Include="Resources\DungeonObjects\TrespassObjects\MovingFloorTiles\2x2\" />
     <Folder Include="Resources\VFX\EliteCrowns\" />
   </ItemGroup>
   <ItemGroup>
@@ -4412,6 +4415,11 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\AbyssRooms\AbyssHubRooms\forgefireroar.room" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\mhm.room" />
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\papersplease.room" />
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\yeah_2.room" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
