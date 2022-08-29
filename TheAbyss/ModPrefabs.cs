@@ -603,8 +603,13 @@ namespace Planetside
 				"whyarealltheseroomssquare.room",
 				"yeah_2.room",
 				"papersplease.room",
-				"mhm.room"
-			};
+				"mhm.room",
+                "amonge.room",
+                "hardcorebuildup.room",
+                "kjhisashis.room",
+                "smalllllll.room",
+                "yeayeyeyeye.room"
+            };
 			Mod_RoomList_HUB = new List<string>()
 			{
 				"BigAssmegaHubRoom.room",

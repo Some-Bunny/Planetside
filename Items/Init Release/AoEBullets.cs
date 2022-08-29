@@ -92,6 +92,7 @@ namespace Planetside
 					Values.AreaIncreasesWithProjectileSizeStat = true;
 					Values.DamageValuesAlsoScalesWithDamageStat = true;
 					Values.EffectProcChance = 0.05f;
+					
 					if (player.PlayerHasActiveSynergy("Khh..k k k k"))
 					{
 						Values.InflictsPoison = true;
@@ -104,7 +105,7 @@ namespace Planetside
 					{
 						Values.InflictsFreeze = true;
 					}
-					this.ShockRing(sourceProjectile);
+					this.ShockRing(sourceProjectile, player.PlayerHasActiveSynergy("Handle The Heat") == true);
 				}
 			}
 			catch (Exception ex)
@@ -114,19 +115,20 @@ namespace Planetside
 		}
 		private void EndRingEffect(Projectile projectile)
 		{
-			this.m_radialIndicator.EndEffect();
+			//this.m_radialIndicator.EndEffect();
 		}
-		private void ShockRing(Projectile projectile)
+		private void ShockRing(Projectile projectile, bool f)
 		{
 			PlayerController player = projectile.Owner as PlayerController;
 			float num = 0f;
 			num = (player.stats.GetStatValue(PlayerStats.StatType.PlayerBulletScale));
-			this.m_radialIndicator = ((GameObject)UnityEngine.Object.Instantiate(StaticVFXStorage.RadialRing, projectile.sprite.WorldCenter, Quaternion.identity, projectile.transform)).GetComponent<HeatIndicatorController>();
-			this.m_radialIndicator.CurrentColor = Color.white.WithAlpha(4f);
-			this.m_radialIndicator.CurrentRadius = 1.75f* num;
-
-		}
-		private HeatIndicatorController m_radialIndicator;
+            HeatIndicatorController m_radialIndicator = ((GameObject)UnityEngine.Object.Instantiate(StaticVFXStorage.RadialRing, projectile.sprite.WorldCenter, Quaternion.identity, projectile.transform)).GetComponent<HeatIndicatorController>();
+			m_radialIndicator.CurrentColor = Color.white.WithAlpha(4f);
+			m_radialIndicator.CurrentRadius = 1.75f* num;
+			m_radialIndicator.IsFire = f;
+			m_radialIndicator.gameObject.transform.parent = projectile.transform;
+        }
+		//private HeatIndicatorController m_radialIndicator;
 		public override DebrisObject Drop(PlayerController player)
 		{
 			DebrisObject result = base.Drop(player);

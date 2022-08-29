@@ -118,7 +118,7 @@ namespace Planetside
 
         public static float FloorMultiplier(Dungeon floor)
         {
-            if (floor.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.CASTLEGEON) { return 0.7f; }
+            if (floor.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.CASTLEGEON) { return 0.75f; }
             if (floor.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.GUNGEON) { return 0.80f; }
             if (floor.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.MINEGEON) { return 0.9f; }
             if (floor.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.CATACOMBGEON) { return 1; }
@@ -222,13 +222,13 @@ namespace Planetside
 
                         Debug.Log("Post Calculation Dodgeroll chance: " + Chance);
 
-                        ChanceMult = ChanceMult * (ChanceMult * 1.075f);
+                        ChanceMult = ChanceMult * (ChanceMult * 1.15f);
                         Debug.Log("No Damage Chance: " + ChanceMult.ToString());
 
                         float Total = ChanceMult * Chance;
                         for (int L = 0; L < SaveAPI.AdvancedGameStatsManager.Instance.GetSessionStatValue(SaveAPI.CustomTrackedStats.PERKS_BOUGHT); L++)
                         {
-                            Total *= 0.66f;
+                            Total *= 0.8f;
                         }
                         Total = Mathf.Min(1, Total);
 

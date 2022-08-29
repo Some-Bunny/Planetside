@@ -47,8 +47,22 @@ namespace Planetside
 				projectileModule.projectiles[0] = projectile;
 				projectile.baseData.damage = 7f;
 				projectile.AdditionalScaleMultiplier = 0.9f;
-				
-				FakePrefab.MarkAsFakePrefab(projectile.gameObject);
+
+                Material mat1 = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+                mat1.mainTexture = projectile.sprite.renderer.material.mainTexture;
+                mat1.SetColor("_EmissiveColor", new Color32(255, 255, 255, 255));
+                mat1.SetFloat("_EmissiveColorPower", 1.55f);
+                mat1.SetFloat("_EmissivePower", 100);
+                mat1.SetFloat("_EmissiveThresholdSensitivity", 0.05f);
+
+                ImprovedAfterImage image = projectile.gameObject.AddComponent<ImprovedAfterImage>();
+                image.spawnShadows = true;
+                image.shadowLifetime = 0.25f;
+                image.shadowTimeDelay = 0.01f;
+                image.dashColor = new Color(1, 0, 0, 0.04f);
+
+
+                FakePrefab.MarkAsFakePrefab(projectile.gameObject);
 				UnityEngine.Object.DontDestroyOnLoad(projectile);
 				gun.DefaultModule.projectiles[0] = projectile;
 				bool flag = projectileModule != gun.DefaultModule;
@@ -84,7 +98,7 @@ namespace Planetside
 
 
 
-			/*
+            /*
 			TrailRenderer tr;
 			var tro = gun.gameObject.AddChild("trail object");
 			tro.transform.position = gun.transform.position;
@@ -108,7 +122,7 @@ namespace Planetside
 			tr.enabled = true;
 			*/
 
-			/*
+            /*
 			Material mat1 = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
 			mat1.mainTexture = gun.sprite.renderer.material.mainTexture;
 			mat1.SetColor("_EmissiveColor", new Color32(255, 255, 255, 255));
@@ -116,14 +130,32 @@ namespace Planetside
 			mat1.SetFloat("_EmissivePower", 100);
 			mat1.SetFloat("_EmissiveThresholdSensitivity", 0.05f);
 			*/
-			ImprovedAfterImage yes = gun.gameObject.AddComponent<ImprovedAfterImage>();
-			yes.spawnShadows = true;
-			yes.shadowLifetime = 0.5f;
-			yes.shadowTimeDelay = 0.001f;
-			yes.dashColor = Color.clear;
-			yes.name = "Gun Trail";
 
-			gun.quality = PickupObject.ItemQuality.EXCLUDED;
+            Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+            mat.SetColor("_EmissiveColor", new Color32(255, 225, 255, 255));
+            mat.SetFloat("_EmissiveColorPower", 1.55f);
+            mat.SetFloat("_EmissivePower", 100);
+            mat.SetFloat("_EmissiveThresholdSensitivity", 0.2f);
+            MeshRenderer component = gun.GetComponent<MeshRenderer>();
+            if (!component)
+            {
+                return;
+            }
+            Material[] sharedMaterials = component.sharedMaterials;
+            for (int i = 0; i < sharedMaterials.Length; i++)
+            {
+                if (sharedMaterials[i].shader == mat)
+                {
+                    return;
+                }
+            }
+            Array.Resize<Material>(ref sharedMaterials, sharedMaterials.Length + 1);
+            Material material = new Material(mat);
+            material.SetTexture("_MainTex", sharedMaterials[0].GetTexture("_MainTex"));
+            sharedMaterials[sharedMaterials.Length - 1] = material;
+            component.sharedMaterials = sharedMaterials;
+
+            gun.quality = PickupObject.ItemQuality.EXCLUDED;
 			gun.encounterTrackable.EncounterGuid = "eie";
 			ETGMod.Databases.Items.Add(gun, false, "ANY");
 			EyeOfAnnihilation.EyeOfAnnihilationID = gun.PickupObjectId;

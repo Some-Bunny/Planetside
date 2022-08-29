@@ -15,8 +15,10 @@ namespace Planetside
             this.NumToTrigger = 1;
             this.TriggerDuration = -1f;
             this.ChanceToConsumeTargetGunAmmo = 0.5f;
-            this.m_hovers = new List<HoveringGunController>();
+            this.m_hovers = new List<CustomHoveringGunController>();
             this.m_initialized = new List<bool>();
+            this.Radius = 2.5f;
+            this.RotationSpeed = 60;
         }
 
         public void Awake()
@@ -269,7 +271,9 @@ namespace Planetside
                     this.m_hovers.Add(null);
                     this.m_initialized.Add(false);
                 }
-                this.m_hovers[index] = gameObject.GetComponent<HoveringGunController>();
+                Destroy(gameObject.GetComponent<HoveringGunController>());
+
+                this.m_hovers[index] = gameObject.GetOrAddComponent<CustomHoveringGunController>();
                 this.m_hovers[index].ShootAudioEvent = this.ShootAudioEvent;
                 this.m_hovers[index].OnEveryShotAudioEvent = this.OnEveryShotAudioEvent;
                 this.m_hovers[index].FinishedShootingAudioEvent = this.FinishedShootingAudioEvent;
@@ -281,6 +285,11 @@ namespace Planetside
                 this.m_hovers[index].CooldownTime = this.FireCooldown;
                 this.m_hovers[index].ShootDuration = this.FireDuration;
                 this.m_hovers[index].OnlyOnEmptyReload = this.OnlyOnEmptyReload;
+                this.m_hovers[index].RotationSpeed = this.RotationSpeed;
+                this.m_hovers[index].Radius = this.Radius;
+                this.m_hovers[index].material = this.Material_To_Use;
+
+                //Material_To_Use
                 Gun gun = null;
                 int num = this.TargetGunID;
                 bool usesMultipleGuns = this.UsesMultipleGuns;
@@ -350,13 +359,19 @@ namespace Planetside
 
         public List<int> TargetGunIDs;
 
-        public HoveringGunController.HoverPosition PositionType;
+        public CustomHoveringGunController.HoverPosition PositionType;
 
-        public HoveringGunController.AimType AimType;
+        public CustomHoveringGunController.AimType AimType;
 
-        public HoveringGunController.FireType FireType;
+        public CustomHoveringGunController.FireType FireType;
 
         public float FireCooldown;
+
+        public float Radius;
+        public float RotationSpeed;
+        public Material Material_To_Use;
+
+
 
         public float FireDuration;
 
@@ -386,7 +401,7 @@ namespace Planetside
 
         private PassiveItem m_item;
 
-        private List<HoveringGunController> m_hovers;
+        private List<CustomHoveringGunController> m_hovers;
 
         private List<bool> m_initialized;
 

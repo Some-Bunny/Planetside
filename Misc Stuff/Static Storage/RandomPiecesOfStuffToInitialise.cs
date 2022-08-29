@@ -8,6 +8,121 @@ using ItemAPI;
 
 namespace Planetside
 {
+
+    public class ExpandReticleRiserEffect : MonoBehaviour
+    {
+        // Token: 0x060003F1 RID: 1009 RVA: 0x000BC801 File Offset: 0x000BAA01
+        public ExpandReticleRiserEffect()
+        {
+            this.NumRisers = 4;
+            this.RiserHeight = 1f;
+            this.RiseTime = 1.5f;
+            this.UpdateSpriteDefinitions = false;
+            this.CurrentSpriteName = string.Empty;
+        }
+
+        private void Start()
+        {
+            this.m_sprite = base.GetComponent<tk2dSprite>();
+            this.m_sprite.usesOverrideMaterial = true;
+
+
+            GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(base.gameObject);
+			gameObject.GetComponent<tk2dSprite>().renderer.material.shader = ShaderCache.Acquire("tk2d/BlendVertexColorUnlitTilted");
+
+            UnityEngine.Object.Destroy(gameObject.GetComponent<ExpandReticleRiserEffect>());
+
+
+            this.m_risers = new tk2dSprite[this.NumRisers];
+            this.m_risers[0] = gameObject.GetComponent<tk2dSprite>();
+            for (int i = 0; i < this.NumRisers - 1; i++)
+            {
+                this.m_risers[i + 1] = UnityEngine.Object.Instantiate<GameObject>(gameObject).GetComponent<tk2dSprite>();
+            }
+            this.OnSpawned();
+        }
+
+        // Token: 0x060003F3 RID: 1011 RVA: 0x000BC8EC File Offset: 0x000BAAEC
+        private void OnSpawned()
+        {
+            this.m_localElapsed = 0f;
+            if (this.m_risers != null)
+            {
+                for (int i = 0; i < this.m_risers.Length; i++)
+                {
+                    this.m_risers[i].transform.parent = base.transform;
+                    this.m_risers[i].transform.localPosition = Vector3.zero;
+                    this.m_risers[i].transform.localRotation = Quaternion.identity;
+                    this.m_risers[i].usesOverrideMaterial = true;
+                    //this.m_risers[i].renderer.material.shader = this.m_shader;
+                    this.m_risers[i].gameObject.SetLayerRecursively(LayerMask.NameToLayer("FG_Critical"));
+                }
+            }
+        }
+
+        private void Update()
+        {
+            if (!this.m_sprite)
+            {
+                return;
+            }
+            this.m_localElapsed += BraveTime.DeltaTime;
+            if (this.UpdateSpriteDefinitions && !string.IsNullOrEmpty(this.CurrentSpriteName))
+            {
+                this.m_sprite.SetSprite(this.CurrentSpriteName);
+            }
+            this.m_sprite.ForceRotationRebuild();
+            this.m_sprite.UpdateZDepth();
+            //this.m_sprite.renderer.material.shader = this.m_shader;
+            if (this.m_risers != null)
+            {
+                for (int i = 0; i < this.m_risers.Length; i++)
+                {
+                    if (this.UpdateSpriteDefinitions && !string.IsNullOrEmpty(this.CurrentSpriteName))
+                    {
+                        this.m_risers[i].SetSprite(this.CurrentSpriteName);
+                    }
+                    float t = Mathf.Max(0f, this.m_localElapsed - this.RiseTime / (float)this.NumRisers * (float)i) % this.RiseTime / this.RiseTime;
+                    this.m_risers[i].color = Color.Lerp(new Color(1f, 1f, 1f, 0.75f), new Color(1f, 1f, 1f, 0f), t);
+                    float y = Mathf.Lerp(0f, this.RiserHeight, t);
+                    this.m_risers[i].transform.localPosition = Vector3.zero;
+                    this.m_risers[i].transform.position += Vector3.zero.WithY(y);
+                    this.m_risers[i].ForceRotationRebuild();
+                    this.m_risers[i].UpdateZDepth();
+                    //this.m_risers[i].renderer.material.shader = this.m_shader;
+                }
+            }
+        }
+
+        // Token: 0x04000664 RID: 1636
+        public bool UpdateSpriteDefinitions;
+
+        // Token: 0x04000665 RID: 1637
+        public string CurrentSpriteName;
+
+        // Token: 0x04000666 RID: 1638
+        public int NumRisers;
+
+        // Token: 0x04000667 RID: 1639
+        public float RiserHeight;
+
+        // Token: 0x04000668 RID: 1640
+        public float RiseTime;
+
+        // Token: 0x04000669 RID: 1641
+        private tk2dSprite m_sprite;
+
+        // Token: 0x0400066A RID: 1642
+        private tk2dSprite[] m_risers;
+
+        // Token: 0x0400066B RID: 1643
+        //private Shader m_shader;
+
+        // Token: 0x0400066C RID: 1644
+        private float m_localElapsed;
+    }
+
+
     public static class RandomPiecesOfStuffToInitialise
     {
 
@@ -43,20 +158,31 @@ namespace Planetside
 		{
 			KineticStrikeTargetReticle = SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/KineticStrike/redmarksthespot", new GameObject("Kinetic Strike Target Reticle"));
 			KineticStrikeTargetReticle.SetActive(false);
-			tk2dBaseSprite vfxSprite = KineticStrikeTargetReticle.GetComponent<tk2dBaseSprite>();
-			vfxSprite.GetCurrentSpriteDef().ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.LowerCenter, vfxSprite.GetCurrentSpriteDef().position3);
-			FakePrefab.MarkAsFakePrefab(KineticStrikeTargetReticle);
+            FakePrefab.MarkAsFakePrefab(KineticStrikeTargetReticle);
+            UnityEngine.Object.DontDestroyOnLoad(KineticStrikeTargetReticle);
 
-			vfxSprite.sprite.usesOverrideMaterial = true;
-			vfxSprite.sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitCutoutUber");
-			Material mat = vfxSprite.sprite.GetCurrentSpriteDef().material = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
-			mat.mainTexture = vfxSprite.sprite.renderer.material.mainTexture;
+            tk2dSprite bS = KineticStrikeTargetReticle.GetOrAddComponent<tk2dSprite>();
+
+
+            bS.GetCurrentSpriteDef().ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.LowerCenter, bS.GetCurrentSpriteDef().position3);
+
+
+            bS.sprite.usesOverrideMaterial = true;
+
+            bS.sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitCutoutUber");
+
+            Material mat = bS.sprite.GetCurrentSpriteDef().material = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+			mat.mainTexture = bS.sprite.renderer.material.mainTexture;
 			mat.SetColor("_EmissiveColor", new Color32(255, 0, 0, 255));
 			mat.SetFloat("_EmissiveColorPower", 1.55f);
-			mat.SetFloat("_EmissivePower", 100);
-			vfxSprite.sprite.renderer.material = mat;
+			mat.SetFloat("_EmissivePower", 50);
+            bS.sprite.renderer.material = mat;
 
-			UnityEngine.Object.DontDestroyOnLoad(KineticStrikeTargetReticle);
+            ExpandReticleRiserEffect rRE = bS.gameObject.AddComponent<ExpandReticleRiserEffect>();
+			rRE.RiserHeight = 2;
+			rRE.RiseTime = 1;
+			rRE.NumRisers = 3;
+
 		}
 		public static GameObject KineticStrikeTargetReticle;
 

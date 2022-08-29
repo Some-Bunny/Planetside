@@ -43,6 +43,8 @@ namespace Planetside
             FakePrefab.MarkAsFakePrefab(gameObject);
             UnityEngine.Object.DontDestroyOnLoad(gameObject);
             GameObject gameObject2 = new GameObject("Kinetic Strike Stuff");
+
+
             tk2dSprite tk2dSprite = gameObject2.AddComponent<tk2dSprite>();
             tk2dSprite.SetSprite(gameObject.GetComponent<tk2dBaseSprite>().Collection, gameObject.GetComponent<tk2dBaseSprite>().spriteId);
 
@@ -111,7 +113,6 @@ namespace Planetside
             if (HasTriggeredCrossHair != true)
             {
                 GameManager.Instance.StartCoroutine(ClearCooldown());
-                //base.ClearCooldowns();
                 CrossHair = UnityEngine.Object.Instantiate<GameObject>(RandomPiecesOfStuffToInitialise.KineticStrikeTargetReticle, user.sprite.WorldCenter, Quaternion.identity);
                 CrossHair.GetComponent<tk2dBaseSprite>().PlaceAtLocalPositionByAnchor(user.sprite.WorldCenter, tk2dBaseSprite.Anchor.LowerCenter);
                 AkSoundEngine.PostEvent("Play_OBJ_supplydrop_activate_01", gameObject);
@@ -191,9 +192,14 @@ namespace Planetside
             mat.mainTexture = ahfuck.renderer.material.mainTexture;
             mat.SetColor("_EmissiveColor", new Color32(255, 0, 0, 255));
             mat.SetFloat("_EmissiveColorPower", 3);
-            mat.SetFloat("_EmissivePower", 100);
+            mat.SetFloat("_EmissivePower", 50);
             mat.EnableKeyword("BRIGHTNESS_CLAMP_ON");
             mat.DisableKeyword("BRIGHTNESS_CLAMP_OFF");
+
+            ExpandReticleRiserEffect rRE = fuck.gameObject.AddComponent<ExpandReticleRiserEffect>();
+            rRE.RiserHeight = 2;
+            rRE.RiseTime = 1;
+            rRE.NumRisers = 3;
 
             ahfuck.renderer.material = mat;
 
@@ -234,15 +240,17 @@ namespace Planetside
             tk2dSprite troll = fuck1.GetComponent<tk2dSprite>();
             fuck1.GetComponent<tk2dBaseSprite>().SetSprite(KineticStrike.spriteIds[0]);
             
-            //StarNuke = EnemyDatabase.GetOrLoadByGuid("b98b10fca77d469e80fb45f3c5badec5").GetComponent<BossFinalRogueDeathController>().DeathStarExplosionVFX;
             GameObject epicwin = UnityEngine.Object.Instantiate<GameObject>(EnemyDatabase.GetOrLoadByGuid("b98b10fca77d469e80fb45f3c5badec5").GetComponent<BossFinalRogueDeathController>().DeathStarExplosionVFX);
             epicwin.GetComponent<tk2dBaseSprite>().PlaceAtLocalPositionByAnchor(LOL, tk2dBaseSprite.Anchor.LowerCenter);
             epicwin.transform.position = LOL.Quantize(0.0625f);
             epicwin.GetComponent<tk2dBaseSprite>().UpdateZDepth();
+
+
             fuck1.GetComponent<tk2dBaseSprite>().SetSprite(KineticStrike.spriteIds[1]);
             this.Boom(LOL);
+
             AkSoundEngine.PostEvent("Play_OBJ_nuke_blast_01", fuck);
-            text.ChangeText("Kinetic Impact Made Contact.\n\n     Reloading Payload.");
+            text.ChangeText("Kinetic Impact Delivered.\n\n     Reloading Payload.");
             text.ChangeOffset(new Vector3(-2, 3f));
 
             yield return new WaitForSeconds(5f);
@@ -251,6 +259,8 @@ namespace Planetside
             troll.sprite.usesOverrideMaterial = true;
             troll.renderer.material.EnableKeyword("_BurnAmount");
             troll.renderer.material.shader = ShaderCache.Acquire("Brave/LitCutoutUber");
+
+
             Material targetMaterial = troll.renderer.material;
             Destroy(epicwin);
             ela = 0f;
@@ -261,6 +271,10 @@ namespace Planetside
                 float t = ela / dura;
                 targetMaterial.SetFloat("_BurnAmount", t);
                 yield return null;
+            }
+            if (text != null)
+            {
+                Destroy(text);
             }
             Destroy(fuck1);
             yield break;
@@ -275,7 +289,7 @@ namespace Planetside
         }
         private ExplosionData KineticBomb = new ExplosionData
         {
-            damageRadius = 3.75f,
+            damageRadius = 4.2f,
             damageToPlayer = 2f,
             doDamage = true,
             damage = 5000f,

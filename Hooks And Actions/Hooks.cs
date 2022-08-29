@@ -66,11 +66,18 @@ namespace Planetside
                 typeof(Projectile).GetMethod("ReturnFromBlackBullet", BindingFlags.Public | BindingFlags.Instance),
                 typeof(Hooks).GetMethod("ReturnFromBlackBulletHook"));
 
+                new Hook(typeof(AIActor).GetMethod("TeleportSomewhere", BindingFlags.Instance | BindingFlags.Public), typeof(Hooks).GetMethod("TeleportationImmunity"));
             }
             catch (Exception e)
             {
                 ItemAPI.Tools.PrintException(e, "FF0000");
             }
+        }
+
+        public static void TeleportationImmunity(Action<AIActor, IntVector2?, bool> orig, AIActor self, IntVector2? overrideClearance = null, bool keepClose = false)
+        {
+            if (self.GetComponent<TeleportationImmunity>() != null) { return; }
+            orig(self, overrideClearance, keepClose);
         }
 
         public static void BecomeBlackBulletHook(Action<Projectile> orig, Projectile self)

@@ -745,7 +745,7 @@ namespace Planetside
 				{
 					new UseFakeActiveBehavior
 					{
-						timeToHitThreshold = 0.5f,
+						timeToHitThreshold = 1f,
 						ChanceTouse = 1,
 						Enabled = true,
 					}
@@ -816,7 +816,7 @@ namespace Planetside
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
 				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Enemies/Nemesis/nemesis_awaken_018";
-				companion.encounterTrackable.journalData.enemyPortraitSprite = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\sheetUnwillingTrespass.png");
+				companion.encounterTrackable.journalData.enemyPortraitSprite = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\nemesissheetTrespass.png");
 				PlanetsideModule.Strings.Enemies.Set("#NEMESIS", "Nemesis");
 				PlanetsideModule.Strings.Enemies.Set("#NEMESIS_SHORTDESC", "Versus");
 				PlanetsideModule.Strings.Enemies.Set("#NEMESIS_LONGDESC", "Even those who could harness the 3rd dimensions power innately were doomed to succumb to its influence.\n\nMaking the perfect duelist.");

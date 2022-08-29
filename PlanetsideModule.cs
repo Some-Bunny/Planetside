@@ -388,6 +388,11 @@ namespace Planetside
             Unwilling.Init();
             Collective.Init();
             Bloat.Init();
+            Tower.Init();
+
+            //fuck 
+            TrespassTrollRock.Init();
+
 
             DeTurretRight.Init();
             DeTurretLeft.Init();

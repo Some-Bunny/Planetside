@@ -23,9 +23,6 @@ namespace Planetside
 		public CapacitorProjectile()
 		{
 		}
-
-
-
         public void Start()
         {
             this.projectile = base.GetComponent<Projectile>();
@@ -36,7 +33,7 @@ namespace Planetside
             {
                 if (gun != null && gunComp != null)
                 {
-                    if (gun.LocalInfiniteAmmo == true || gun.InfiniteAmmo == false)
+                    if (gun.LocalInfiniteAmmo == true || gun.InfiniteAmmo == true)
                     {
                         projectile.baseData.damage *= 0.125f;
                     }
@@ -55,10 +52,6 @@ namespace Planetside
         }
         public Capactior gunComp;
         public Gun gun;
-
-
-        private FieldInfo remainingTimeCooldown = typeof(PlayerItem).GetField("remainingTimeCooldown", BindingFlags.Instance | BindingFlags.NonPublic);
-        private FieldInfo remainingDamageCooldown = typeof(PlayerItem).GetField("remainingDamageCooldown", BindingFlags.Instance | BindingFlags.NonPublic);
         private Projectile projectile;
 	}
 }

@@ -51,6 +51,8 @@ namespace Planetside
 				companion.aiActor.CanTargetPlayers = true;
 				companion.aiActor.IgnoreForRoomClear = true;
 
+				companion.gameObject.GetOrAddComponent<TeleportationImmunity>();
+
 				companion.aiActor.healthHaver.SetHealthMaximum(2f, null, false);
 				companion.aiActor.specRigidbody.PixelColliders.Clear();
 				companion.aiActor.specRigidbody.PixelColliders.Add(new PixelCollider

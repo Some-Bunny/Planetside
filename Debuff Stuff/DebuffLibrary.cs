@@ -174,6 +174,16 @@ namespace Planetside
 			possesedPuddle.goopTexture = ResourceExtractor.GetTextureFromResource("Planetside/Resources/possessed_standard_base_001.png");
 			possesedPuddle.AppliesDamageOverTime = true;
 			possesedPuddle.HealthModifierEffect = DebuffLibrary.Possessed;
+			possesedPuddle.goopDamageTypeInteractions = new System.Collections.Generic.List<GoopDefinition.GoopDamageTypeInteraction>()
+			{
+				new GoopDefinition.GoopDamageTypeInteraction()
+                {
+					freezesGoop = false,
+					electrifiesGoop = false,
+					ignitionMode = GoopDefinition.GoopDamageTypeInteraction.GoopIgnitionMode.IGNITE,
+					damageType = CoreDamageTypes.Fire
+                },
+			};
 			PossesedPuddle = possesedPuddle;
 		}
 		public static GoopDefinition PossesedPuddle;
@@ -187,9 +197,19 @@ namespace Planetside
 			GoopDef.damagesPlayers = false;
 			GoopDef.lifespan = 6f;
 			GoopDef.baseColor32 = new Color32(156, 155, 0, byte.MaxValue);
-			GoopDef.goopTexture = ResourceExtractor.GetTextureFromResource("Planetside/Resources/possessed_standard_base_001.png");
+			GoopDef.goopTexture = ResourceExtractor.GetTextureFromResource("Planetside/Resources/goop_standard_base_001.png");
 			GoopDef.AppliesDamageOverTime = true;
 			GoopDef.HealthModifierEffect = DebuffLibrary.Corrosion;
+			GoopDef.goopDamageTypeInteractions = new System.Collections.Generic.List<GoopDefinition.GoopDamageTypeInteraction>()
+			{
+				new GoopDefinition.GoopDamageTypeInteraction()
+				{
+					freezesGoop = false,
+					electrifiesGoop = false,
+					ignitionMode = GoopDefinition.GoopDamageTypeInteraction.GoopIgnitionMode.DOUSE,
+					damageType = CoreDamageTypes.Water
+				},
+			};
 			TarnishedGoop = GoopDef;
 		}
 		public static GoopDefinition TarnishedGoop;
@@ -212,6 +232,16 @@ namespace Planetside
 			cursebulonGoop.AppliesSpeedModifier = true;
 			cursebulonGoop.AppliesSpeedModifierContinuously = true;
 			cursebulonGoop.SpeedModifierEffect = CurseSpeedGoop;
+			cursebulonGoop.goopDamageTypeInteractions = new System.Collections.Generic.List<GoopDefinition.GoopDamageTypeInteraction>()
+			{
+				new GoopDefinition.GoopDamageTypeInteraction()
+				{
+					freezesGoop = false,
+					electrifiesGoop = false,
+					ignitionMode = GoopDefinition.GoopDamageTypeInteraction.GoopIgnitionMode.NONE,
+					damageType = CoreDamageTypes.None
+				},
+			};
 			CursebulonGoop = cursebulonGoop;
 		}
 		public static GoopDefinition CursebulonGoop;
@@ -228,6 +258,16 @@ namespace Planetside
 			frailPuddle.goopTexture = ResourceExtractor.GetTextureFromResource("Planetside/Resources/goop_standard_base_001.png");
 			frailPuddle.AppliesDamageOverTime = true;
 			frailPuddle.HealthModifierEffect = DebuffLibrary.Frailty;
+			frailPuddle.goopDamageTypeInteractions = new System.Collections.Generic.List<GoopDefinition.GoopDamageTypeInteraction>()
+			{
+				new GoopDefinition.GoopDamageTypeInteraction()
+				{
+					freezesGoop = false,
+					electrifiesGoop = false,
+					ignitionMode = GoopDefinition.GoopDamageTypeInteraction.GoopIgnitionMode.NONE,
+					damageType = CoreDamageTypes.Poison
+				},
+			};
 			FrailPuddle = frailPuddle;
 		}
 

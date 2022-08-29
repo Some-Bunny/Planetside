@@ -45,8 +45,9 @@ namespace Planetside
 
 			for (int i = 0; i < 20; i++)
 			{
-				gun.AddProjectileModuleFrom(PickupObjectDatabase.GetById(88) as Gun, true, false);
+				gun.AddProjectileModuleFrom(PickupObjectDatabase.GetById(88) as Gun, true, true);
 			}
+			gun.DefaultModule.chargeProjectiles = new List<ProjectileModule.ChargeProjectile>();
 			foreach (ProjectileModule projectileModule in gun.Volley.projectiles)
 			{
 				projectileModule.ammoCost = 1;
@@ -55,40 +56,37 @@ namespace Planetside
 				projectileModule.cooldownTime = 0.1f;
 				projectileModule.angleVariance = 0;
 				projectileModule.numberOfShotsInClip = 1;
-				Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(gun.DefaultModule.projectiles[0]);
+
+				Projectile projectile = UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(88) as Gun).DefaultModule.projectiles[0]);
 				projectile.gameObject.SetActive(false);
-				projectileModule.projectiles[0] = projectile;
 				projectile.baseData.damage = 4f;
 				projectile.AdditionalScaleMultiplier = 2f;
 				projectile.shouldRotate = true;
 				projectile.baseData.range = 1000f;
 				projectile.gameObject.AddComponent<ChargerGunProjectile>();
 				projectile.SetProjectileSpriteRight("chargergun_projectile_001", 7, 3, false, tk2dBaseSprite.Anchor.MiddleCenter, 7, 3);
+				gun.DefaultModule.projectiles[0] = projectile;
 
 				projectile.objectImpactEventName = (PickupObjectDatabase.GetById(384) as Gun).DefaultModule.projectiles[0].objectImpactEventName;
 				projectile.enemyImpactEventName = (PickupObjectDatabase.GetById(384) as Gun).DefaultModule.projectiles[0].enemyImpactEventName;
 
 				FakePrefab.MarkAsFakePrefab(projectile.gameObject);
 				UnityEngine.Object.DontDestroyOnLoad(projectile);
-				gun.DefaultModule.projectiles[0] = projectile;
-				bool flag = projectileModule != gun.DefaultModule;
-				if (flag)
+				if (projectileModule != gun.DefaultModule)
 				{
 					projectileModule.ammoCost = 0;
 				}
-				projectile.transform.parent = gun.barrelOffset;
 
 				ProjectileModule.ChargeProjectile item2 = new ProjectileModule.ChargeProjectile
 				{
 					Projectile = projectile,
 					ChargeTime = 0f
 				};
+				projectileModule.chargeProjectiles = new List<ProjectileModule.ChargeProjectile>() { item2 };
 				gun.DefaultModule.chargeProjectiles.Add(item2);
-
-
 			}
-			//gun.Volley.UsesShotgunStyleVelocityRandomizer = true;
 
+		
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.chargeAnimation).wrapMode = tk2dSpriteAnimationClip.WrapMode.LoopSection;
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.chargeAnimation).loopStart = 5;
 
@@ -105,8 +103,9 @@ namespace Planetside
 			gun.encounterTrackable.EncounterGuid = "It's just a protractor gun";
 			ETGMod.Databases.Items.Add(gun, false, "ANY");
 
-			gun.sprite.usesOverrideMaterial = true;
 
+
+			gun.sprite.usesOverrideMaterial = true;
 			Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
 			mat.SetColor("_EmissiveColor", new Color32(255, 224, 163, 255));
 			mat.SetFloat("_EmissiveColorPower", 1.55f);
@@ -131,38 +130,6 @@ namespace Planetside
 			sharedMaterials[sharedMaterials.Length - 1] = material;
 			component.sharedMaterials = sharedMaterials;
 
-
-			/*
-			tk2dSpriteAnimationClip animationClip = new tk2dSpriteAnimationClip();
-			animationClip.fps = 11;
-			animationClip.wrapMode = tk2dSpriteAnimationClip.WrapMode.Loop;
-			animationClip.name = "start";
-
-			//GameObject spriteObject = new GameObject("spriteObject");
-			ItemBuilder.AddSpriteToObject("spriteObject", $"Planetside/Resources/VFX/DeathMark/markedfordeathvfx_001", gun.gameObject);
-			tk2dSpriteAnimationFrame starterFrame = new tk2dSpriteAnimationFrame();
-			starterFrame.spriteId = gun.GetComponent<tk2dSprite>().spriteId;
-			starterFrame.spriteCollection = ETGMod.Databases.Items.WeaponCollection;
-			tk2dSpriteAnimationFrame[] frameArray = new tk2dSpriteAnimationFrame[]
-			{
-				starterFrame
-			};
-			animationClip.frames = frameArray;
-			for (int i = 2; i < 9; i++)
-			{
-				ItemBuilder.AddSpriteToObject("spriteForObject", $"Planetside/Resources/VFX/DeathMark/markedfordeathvfx_00{i}", gun.gameObject);
-				tk2dSpriteAnimationFrame frame = new tk2dSpriteAnimationFrame();
-				frame.spriteId = gun.GetComponent<tk2dSprite>().spriteId;
-				frame.spriteCollection = ETGMod.Databases.Items.WeaponCollection;
-			animationClip.frames = animationClip.frames.Concat(new tk2dSpriteAnimationFrame[] { frame }).ToArray();
-			}
-			gun.GetComponent<tk2dSpriteAnimator>().Library = gun.GetComponent<tk2dSpriteAnimator>().Library;
-
-			Array.Resize<tk2dSpriteAnimationClip>(ref gun.spriteAnimator.Library.clips, gun.spriteAnimator.Library.clips.Length + 1);
-			gun.spriteAnimator.Library.clips[gun.spriteAnimator.Library.clips.Length + 1] = animationClip;
-			//gun.GetComponent<tk2dSpriteAnimator>().DefaultClipId = gun.GetComponent<tk2dSpriteAnimator>().GetClipIdByName("idle");
-			gun.GetComponent<tk2dSpriteAnimator>().playAutomatically = true;
-			*/
 
 		}
 
@@ -259,11 +226,24 @@ namespace Planetside
 								component2.HeightOffGround = -2;
 							}
 						}
-						foreach (ProjectileModule projectileModule in gun.Volley.projectiles)
+						//int j = 0;
+						foreach (ProjectileModule projectileModule in this.gun.Volley.projectiles)
 						{
+							//ETGModConsole.Log("======");
+
+
+							//j++;
+							//ETGModConsole.Log(j);
 							projectileModule.angleVariance = elapsed * (Accuracy*3);
+
 							Projectile proj = projectileModule.GetCurrentProjectile();
-							proj.baseData.damage = ((elapsed * 8) + 4);
+							if (proj != null)
+                            {
+							//	ETGModConsole.Log(j);
+								proj.baseData.damage = ((elapsed * 8) + 4);
+							}
+							//ETGModConsole.Log("======");
+
 						}
 					}
 					else

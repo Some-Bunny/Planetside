@@ -34,6 +34,9 @@ namespace Planetside
             TrespassBloodDecals.Init();
             TrespassTentaclePillar.Init();
             TearInReality.Init();
+            MovingTile1X1.Init();
+            MovingTile2X2.Init();
+            //TrespassTrollRock.Init();
         }
     }
 }

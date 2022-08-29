@@ -42,15 +42,12 @@ namespace Planetside
             }
             return false;
         }
-       
-
     }
 
     public class ShopDiscountController : MonoBehaviour
     {
         public ShopDiscountController()
-        {
-           
+        {         
             shopItemSelf = this.GetComponent<ShopItemController>();
         }
 
@@ -77,17 +74,29 @@ namespace Planetside
             GameLevelDefinition lastLoadedLevelDefinition = GameManager.Instance.GetLastLoadedLevelDefinition();
             float newCost = shopItemSelf.item.PurchasePrice;
             float num4 = (lastLoadedLevelDefinition == null) ? 1f : lastLoadedLevelDefinition.priceMultiplier;
-            newCost *= num4;
+            float num3 = GameManager.Instance.PrimaryPlayer.stats.GetStatValue(PlayerStats.StatType.GlobalPriceMultiplier);
+            if (GameManager.Instance.CurrentGameType == GameManager.GameType.COOP_2_PLAYER && GameManager.Instance.SecondaryPlayer)
+            {
+                num3 *= GameManager.Instance.SecondaryPlayer.stats.GetStatValue(PlayerStats.StatType.GlobalPriceMultiplier);
+            }
+            newCost *= num4 * num3;
             shopItemSelf.OverridePrice = (int)(newCost *= H);
         }
 
         public void ReturnPriceToDefault()
         {
             if (shopItemSelf == null) { return; }
-            GameLevelDefinition lastLoadedLevelDefinition = GameManager.Instance.GetLastLoadedLevelDefinition();
+            GameLevelDefinition lastLoadedLevelDefinition = GameManager.Instance != null ? GameManager.Instance.GetLastLoadedLevelDefinition() : null;
             float newCost = shopItemSelf.item.PurchasePrice;
             float num4 = (lastLoadedLevelDefinition == null) ? 1f : lastLoadedLevelDefinition.priceMultiplier;
-            newCost *= num4;
+
+            float num3 = GameManager.Instance.PrimaryPlayer != null ? GameManager.Instance.PrimaryPlayer.stats.GetStatValue(PlayerStats.StatType.GlobalPriceMultiplier) : 1;
+            if (GameManager.Instance.CurrentGameType == GameManager.GameType.COOP_2_PLAYER && GameManager.Instance.SecondaryPlayer)
+            {
+                num3 *= GameManager.Instance.SecondaryPlayer.stats.GetStatValue(PlayerStats.StatType.GlobalPriceMultiplier);
+            }
+
+            newCost *= num4 * num3;
             shopItemSelf.OverridePrice = (int)(newCost);
         }
 
@@ -100,9 +109,21 @@ namespace Planetside
             }
         }
 
+        public ShopDiscount ReturnShopDiscountFromController(string IDTag)
+        {
+            foreach (var DiscountVar in discounts)
+            {
+                if (DiscountVar.IdentificationKey == IDTag) {return DiscountVar; }
+            }
+            return null;
+        }
+
         public void OnDestroy()
         {
-            ReturnPriceToDefault();
+            if (shopItemSelf != null)
+            {
+                ReturnPriceToDefault();
+            }
         }
 
       
@@ -171,10 +192,27 @@ namespace Planetside
                 OnShopItemStarted(self);
             }
         }
+        public static Action<ShopItemController> OnShopItemStarted;
 
         public static void OnMyShopItemStarted(ShopItemController shopItemController)
         {
             ShopDiscountController steamSale = shopItemController.gameObject.AddComponent<ShopDiscountController>();
+            steamSale.discounts = new List<ShopDiscount>() { new ShopDiscount()
+            {
+                IdentificationKey = "One",
+                PriceMultiplier = 0.5f,
+                IDsToReducePriceOf =  new List<int>() { 73, 85, 120 },
+                PriceReductionItemID = ShopDiscountItemID,
+
+            },
+            new ShopDiscount()
+            {
+                IdentificationKey = "Two",
+                PriceMultiplier = 0.5f,
+                IDsToReducePriceOf =  new List<int>() { 73, 85, 224 },
+                PriceReductionItemID = TarnishedAmmolet.TarnishedAmmoletID,
+            }
+            };
             //steamSale.IdentificationKey = "HP_Reduction";
             //steamSale.IDsToReducePriceOf = new List<int>() { 73, 85, 120 };
             //steamSale.PriceReductionItemID = ShopDiscountItemID;
@@ -194,7 +232,6 @@ namespace Planetside
             }           
         }
 
-        public static Action<ShopItemController> OnShopItemStarted;
 
 
         /*

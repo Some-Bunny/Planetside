@@ -144,7 +144,7 @@ namespace Planetside
                 if (gun.Volley.projectiles.Contains(tripleDeckerStorages[i].module)) { gun.Volley.projectiles.Remove(tripleDeckerStorages[i].module); }
            }
             ProjectileVolleyData projectileVolleyData = ScriptableObject.CreateInstance<ProjectileVolleyData>();
-            projectileVolleyData.InitializeFrom(gun.Volley);
+            projectileVolleyData.InitializeFrom(this.gun.Volley);
             gun.Volley = projectileVolleyData;
 
             tripleDeckerStorages.Clear();
@@ -259,6 +259,7 @@ namespace Planetside
         {
             if (enemy == null) { return false; }
             return ReturnAngle(enemy).IsBetweenRange(gun.CurrentAngle - 24, gun.CurrentAngle + 24);
+
         }
 
 

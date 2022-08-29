@@ -220,7 +220,7 @@ namespace Planetside
 				case "cluster":
 					return 15;
 				case "blast_shower":
-					return 10;
+					return 11;
 			}
 			return 11;
 		}

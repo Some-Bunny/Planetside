@@ -23,6 +23,8 @@ namespace Planetside
 			this.MagnitudePower = 15;
 		}
 
+		public Material material;
+
 		public void Initialize(Gun targetGun, PlayerController owner)
 		{
 			this.m_targetGun = targetGun;
@@ -36,7 +38,13 @@ namespace Planetside
 			this.m_shootPointTransform = new GameObject("shoot point").transform;
 			this.m_shootPointTransform.parent = base.transform;
 			this.m_shootPointTransform.localPosition = targetGun.barrelOffset.localPosition;
-			if (this.Position == CustomHoveringGunController.HoverPosition.CIRCULATE)
+			if (material != null)
+			{
+                material.mainTexture = sprite.renderer.material.mainTexture;
+                base.sprite.renderer.material = material;
+
+            }
+            if (this.Position == CustomHoveringGunController.HoverPosition.CIRCULATE)
 			{
 				this.SetOrbitalTier(PlayerOrbital.CalculateTargetTier(this.m_owner, this));
 				this.SetOrbitalTierIndex(PlayerOrbital.GetNumberOfOrbitalsInTier(this.m_owner, this.GetOrbitalTier()));

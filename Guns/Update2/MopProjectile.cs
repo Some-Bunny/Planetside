@@ -125,8 +125,6 @@ namespace Planetside
                         }
                     }
                 }
-
-
             }
         }
     }

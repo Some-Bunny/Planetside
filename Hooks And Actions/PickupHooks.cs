@@ -47,7 +47,6 @@ namespace Planetside
 
             new Hook(typeof(ShopItemController).GetMethod("Update", BindingFlags.Instance | BindingFlags.NonPublic), typeof(PickupHooks).GetMethod("UpdateShopItemHook"));
 
-
             new Hook(typeof(IounStoneOrbitalItem).GetMethod("Pickup", BindingFlags.Instance | BindingFlags.Public), typeof(PickupHooks).GetMethod("PickupGuonStoneHook"));
         }
 
@@ -140,9 +139,9 @@ namespace Planetside
                 AdvancedHoveringGunProcessor DroneHover = gungeon.gameObject.AddComponent<AdvancedHoveringGunProcessor>();
                 DroneHover.Activate = true;
                 DroneHover.ConsumesTargetGunAmmo = true;
-                DroneHover.AimType = HoveringGunController.AimType.PLAYER_AIM;
-                DroneHover.PositionType = HoveringGunController.HoverPosition.CIRCULATE;
-                DroneHover.FireType = HoveringGunController.FireType.ON_FIRED_GUN;
+                DroneHover.AimType = CustomHoveringGunController.AimType.PLAYER_AIM;
+                DroneHover.PositionType = CustomHoveringGunController.HoverPosition.CIRCULATE;
+                DroneHover.FireType = CustomHoveringGunController.FireType.ON_FIRED_GUN;
                 DroneHover.UsesMultipleGuns = true;
                 DroneHover.TargetGunIDs = new List<int> { gungeon.PickupObjectId };
                 DroneHover.FireCooldown = player.CurrentGun.DefaultModule != null ? player.CurrentGun.DefaultModule.cooldownTime *0.85f : 0.1f;
