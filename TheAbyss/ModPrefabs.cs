@@ -608,7 +608,11 @@ namespace Planetside
                 "hardcorebuildup.room",
                 "kjhisashis.room",
                 "smalllllll.room",
-                "yeayeyeyeye.room"
+                "yeayeyeyeye.room",
+                "turrets_of_hate.room",
+                "his_name_is_big.room",
+                "cry_of_the_weeper.room",
+                "teuyawe.room"
             };
 			Mod_RoomList_HUB = new List<string>()
 			{
@@ -617,8 +621,10 @@ namespace Planetside
 				"BigHell.room",
 				"AnotehrHubRoom.room",
 				"CrossHouse.room",
-				"forgefireroar.room"
-			};
+				"forgefireroar.room",
+                "chansomdautomne.room",
+                "open_up_a_little.room"
+            };
 
 			Mod_Entrance_Room = DungeonRoomFactory.BuildFromResource("Planetside/Resources/AbyssRooms/AbyssEntry/TheDeepEntrance.room");
             Mod_Exit_Room = DungeonRoomFactory.BuildFromResource("Planetside/Resources/AbyssRooms/AbyssBossRoom/AbyssTestBossRoom.room");
