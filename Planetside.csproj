@@ -4558,5 +4558,10 @@
     <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\teuyawe.room" />
     <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\turrets_of_hate.room" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\oh_so_basic.room" />
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\super_basic_but_funnyspahe.room" />
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\very_beautifil_very_powerful.room" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

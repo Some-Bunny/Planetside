@@ -20,6 +20,7 @@ namespace Planetside
     public class TresspassLightController : MonoBehaviour
     {
         public MajorBreakable self;
+        public float GlowIntensity = 70;
         public void Start()
         {
             self = base.gameObject.GetComponent<MajorBreakable>();
@@ -31,7 +32,7 @@ namespace Planetside
                 mat.mainTexture = sprite.renderer.material.mainTexture;
                 mat.SetColor("_EmissiveColor", new Color32(0, 255, 255, 255));
                 mat.SetFloat("_EmissiveColorPower", 1.55f);
-                mat.SetFloat("_EmissivePower", 70);
+                mat.SetFloat("_EmissivePower", GlowIntensity);
                 sprite.renderer.material = mat;
                
             }

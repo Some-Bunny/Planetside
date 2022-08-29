@@ -612,7 +612,10 @@ namespace Planetside
                 "turrets_of_hate.room",
                 "his_name_is_big.room",
                 "cry_of_the_weeper.room",
-                "teuyawe.room"
+                "teuyawe.room",
+                "oh_so_basic.room",
+                "super_basic_but_funnyspahe.room",
+                "very_beautifil_very_powerful.room"
             };
 			Mod_RoomList_HUB = new List<string>()
 			{
