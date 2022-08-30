@@ -4573,5 +4573,8 @@
     <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\hehehhohoh.room" />
     <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\hg.room" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssSpecial\abyssroom_special_free_loot.room" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -638,8 +638,9 @@ namespace Planetside
             Mod_Exit_Room = DungeonRoomFactory.BuildFromResource("Planetside/Resources/AbyssRooms/AbyssBossRoom/AbyssTestBossRoom.room");
             Mod_Entrance_Room.category = PrototypeDungeonRoom.RoomCategory.ENTRANCE;
 			VoidMuncherRoom = DungeonRoomFactory.BuildFromResource("Planetside/Resources/AbyssRooms/AbyssSpecial/SpecialVoidMuncherRoom.room");
+            AbyssSpawnLootRoom = DungeonRoomFactory.BuildFromResource("Planetside/Resources/AbyssRooms/AbyssSpecial/abyssroom_special_free_loot.room");
 
-			List<PrototypeDungeonRoom> m_floorNameRooms = new List<PrototypeDungeonRoom>();
+            List<PrototypeDungeonRoom> m_floorNameRooms = new List<PrototypeDungeonRoom>();
             foreach (string name in Mod_RoomList)
             {
                 PrototypeDungeonRoom m_room = DungeonRoomFactory.BuildFromResource("Planetside/Resources/AbyssRooms/AbyssCombat/" + name);
@@ -703,8 +704,9 @@ namespace Planetside
             if (AdditionalPrerequisites == null) { AdditionalPrerequisites = new DungeonPrerequisite[0]; }
             return new WeightedRoom() { room = Room, weight = Weight, limitedCopies = LimitedCopies, maxCopies = MaxCopies, additionalPrerequisites = AdditionalPrerequisites };
         }
+        public static PrototypeDungeonRoom AbyssSpawnLootRoom;
 
-		public static PrototypeDungeonRoom VoidMuncherRoom;
+        public static PrototypeDungeonRoom VoidMuncherRoom;
 
 		public static PrototypeDungeonRoom Mod_Entrance_Room;
         public static PrototypeDungeonRoom Mod_Exit_Room;

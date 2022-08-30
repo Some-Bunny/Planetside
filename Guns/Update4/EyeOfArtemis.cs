@@ -119,12 +119,23 @@ namespace Planetside
 
             gun.barrelOffset.transform.localPosition = new Vector3(2.125f, 0.75f, 0f);
 
+            gun.gunClass = GunClass.RIFLE;
+
+         
+
             gun.reloadTime = 1f;
             gun.SetBaseMaxAmmo(200);
             gun.ammo = 200;
 
             gun.quality = PickupObject.ItemQuality.B;
             ETGMod.Databases.Items.Add(gun, false, "ANY");
+            List<string> mandatoryConsoleIDs1 = new List<string>
+            {
+                "psog:eye_of_artemis",
+                "laser_sight"
+            };
+
+            CustomSynergies.Add("Improved Sights", mandatoryConsoleIDs1, null, true);
             TrackerID = gun.PickupObjectId;
             ItemIDs.AddToList(gun.PickupObjectId);
         }
@@ -132,11 +143,22 @@ namespace Planetside
         private bool HasReloaded;
 
         private static List<TripleDeckerStorage> tripleDeckerStorages = new List<TripleDeckerStorage>();
+        private static List<GameObject> SynergyLaserStorage = new List<GameObject>();
 
 
         public void CleanupReticles()
         {
-           if(tripleDeckerStorages.Count == 0) { return; }
+            if (SynergyLaserStorage.Count > 0) 
+            {
+                for (int i = 0; i < SynergyLaserStorage.Count; i++)
+                {
+                    Destroy(SynergyLaserStorage[i]);
+                }
+                SynergyLaserStorage.Clear();
+            }
+
+
+            if (tripleDeckerStorages.Count == 0) { return; }
            for (int i = 0; i < tripleDeckerStorages.Count; i++)
            {
                 tripleDeckerStorages[i].enemy = null;
@@ -206,6 +228,12 @@ namespace Planetside
             component2.sprite.renderer.material.SetFloat("_EmissivePower", 100);
             component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 1.55f);
             Color laser = new Color(1f, 0.3f, 0f, 1f);
+            /*
+            if (player.PlayerHasActiveSynergy("Improved Sights"))
+            {
+                laser = new Color(1f, 0f, 0f, 1f);
+            }
+            */
             component2.sprite.renderer.material.SetColor("_OverrideColor", laser);
             component2.sprite.renderer.material.SetColor("_EmissiveColor", laser);
 
@@ -255,11 +283,32 @@ namespace Planetside
             return (enemy.sprite.WorldCenter - this.gun.barrelOffset.transform.PositionVector2()).ToAngle();
         }
 
-        public bool Is(AIActor enemy)
+        public bool Is(AIActor enemy, PlayerController playerController)
         {
             if (enemy == null) { return false; }
+            if (playerController != null && playerController.PlayerHasActiveSynergy("Improved Sights") == true)
+            {
+                return ReturnAngle(enemy).IsBetweenRange(gun.CurrentAngle - 30, gun.CurrentAngle + 30);
+            }
+
             return ReturnAngle(enemy).IsBetweenRange(gun.CurrentAngle - 24, gun.CurrentAngle + 24);
 
+        }
+
+        public float RayCastToWall(float Angle)
+        {
+            float f = 0;
+            Func<SpeculativeRigidbody, bool> rigidbodyExcluder = (SpeculativeRigidbody otherRigidbody) => otherRigidbody.minorBreakable;
+            CollisionLayer layer2 = CollisionLayer.EnemyHitBox;
+            int rayMask2 = CollisionMask.LayerToMask(CollisionLayer.HighObstacle, CollisionLayer.BulletBlocker, layer2);
+            RaycastResult raycastResult2;
+            if (PhysicsEngine.Instance.Raycast(this.gun.barrelOffset.transform.PositionVector2(), MathToolbox.GetUnitOnCircle(Angle, 0.1f), 1000, out raycastResult2, true, true, rayMask2, null, false, rigidbodyExcluder, null))
+            {
+                f = raycastResult2.Distance;
+            }
+            RaycastResult.Pool.Free(ref raycastResult2);
+
+            return f;
         }
 
 
@@ -273,6 +322,48 @@ namespace Planetside
                 {
                     if (gun.IsCharging == true)
                     {
+                        for (int i = 0; i < SynergyLaserStorage.Count; i++)
+                        {
+                            float f = i == 0 ? 30 : -30;
+                            GameObject reticle = SynergyLaserStorage[i];
+                            tk2dTiledSprite component2 = reticle.GetComponent<tk2dTiledSprite>();
+                            component2.transform.localRotation = Quaternion.Euler(0f, 0f, gun.CurrentAngle + f);
+                            component2.dimensions = new Vector2(16 * RayCastToWall(gun.CurrentAngle + f), 1f);
+                            component2.transform.position.WithZ(component2.transform.position.z + 99999);
+                            component2.UpdateZDepth();
+                            component2.HeightOffGround = -2;
+                            reticle.transform.position = this.gun.barrelOffset.transform.position;
+                        }
+                        if (player.PlayerHasActiveSynergy("Improved Sights") && SynergyLaserStorage.Count == 0)
+                        {
+                            for (int i = 0; i < 2; i++)
+                            {
+                                float f = i == 0 ? 30 : -30;
+
+                                GameObject gameObject = SpawnManager.SpawnVFX(RandomPiecesOfStuffToInitialise.LaserReticle, false);
+                                tk2dTiledSprite component2 = gameObject.GetComponent<tk2dTiledSprite>();
+                                component2.transform.position = new Vector3(this.gun.barrelOffset.transform.position.x, this.gun.barrelOffset.transform.position.y, 99999);
+                                component2.transform.localRotation = Quaternion.Euler(0f, 0f, gun.CurrentAngle + f);
+                                component2.dimensions = new Vector2(16 * RayCastToWall(gun.CurrentAngle + f), 1f);
+                                component2.UpdateZDepth();
+                                component2.HeightOffGround = -2;
+                                component2.renderer.enabled = true;
+
+                                component2.usesOverrideMaterial = true;
+                                component2.sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
+                                component2.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+
+                                component2.sprite.renderer.material.SetFloat("_EmissivePower", 100);
+                                component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 1.55f);
+                                Color laser = new Color(1f, 0f, 0f, 1f);
+                                component2.sprite.renderer.material.SetColor("_OverrideColor", laser);
+                                component2.sprite.renderer.material.SetColor("_EmissiveColor", laser);
+                                SynergyLaserStorage.Add(gameObject);
+                            }
+                        }
+
+
+
                         for (int i = 0; i < tripleDeckerStorages.Count; i++)
                         {
                             GameObject reticle = tripleDeckerStorages[i].reticle;
@@ -308,7 +399,7 @@ namespace Planetside
                                 if (gun.Volley.projectiles.Contains(tripleDeckerStorages[i].module)) { gun.Volley.projectiles.Remove(tripleDeckerStorages[i].module); }
                                 tripleDeckerStorages.Remove(tripleDeckerStorages[i]);
                             }
-                            else if (Is(enemy) == false)
+                            else if (Is(enemy, gun.CurrentOwner as PlayerController) == false)
                             {
                                 tripleDeckerStorages[i].enemy = null;
                                 if (tripleDeckerStorages[i].reticle != null) { Destroy(tripleDeckerStorages[i].reticle); }
@@ -328,7 +419,7 @@ namespace Planetside
                                 {
                                     if (tripleDeckerStorage.enemy == actor[i]){has = true;}
                                 }
-                                if (Is(actor[i]) == true)
+                                if (Is(actor[i], gun.CurrentOwner as PlayerController) == true)
                                 {
                                     if (has == false && RayCastTowardsEnemy(ReturnAngle(actor[i])) == true)
                                     {

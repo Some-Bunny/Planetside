@@ -24,9 +24,11 @@ namespace Planetside
 				DungeonFlowNode exitNode = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.EXIT, ModRoomPrefabs.Mod_Exit_Room);
 
 				DungeonFlowNode VoidMuncherNode = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.NORMAL, ModRoomPrefabs.VoidMuncherRoom);
+                DungeonFlowNode Abyss_Loot_Node = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.NORMAL, ModRoomPrefabs.AbyssSpawnLootRoom);
+                DungeonFlowNode Abyss_Loot_Node_2 = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.NORMAL, ModRoomPrefabs.AbyssSpawnLootRoom);
 
 
-				DungeonFlowNode bossfoyerNode = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.SPECIAL, overrideTable: ModPrefabs.boss_foyertable);
+                DungeonFlowNode bossfoyerNode = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.SPECIAL, overrideTable: ModPrefabs.boss_foyertable);
 				DungeonFlowNode bossNode = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.BOSS, ModRoomPrefabs.Mod_Boss);
 
 				DungeonFlowNode defaultCombatNode = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.NORMAL, overrideTable: ModPrefabs.FloorNameRoomTable);
@@ -40,12 +42,23 @@ namespace Planetside
 				DungeonFlowNode defaultCombatNode_Branch_2 = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.NORMAL, overrideTable: ModPrefabs.FloorNameRoomTable);
 				DungeonFlowNode defaultCombatNode_Branch_3 = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.NORMAL, overrideTable: ModPrefabs.FloorNameRoomTable);
 
-				DungeonFlowNode defaultHubNode1 = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.HUB, overrideTable: ModPrefabs.FloorNameRoomTable);
+                DungeonFlowNode defaultCombatNodeNonMain2_1 = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.NORMAL, overrideTable: ModPrefabs.FloorNameRoomTable);
+                DungeonFlowNode defaultCombatNodeNonMain2_2 = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.NORMAL, overrideTable: ModPrefabs.FloorNameRoomTable);
+
+                DungeonFlowNode defaultCombatNodeNonMain3_1 = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.NORMAL, overrideTable: ModPrefabs.FloorNameRoomTable);
+
+
+                DungeonFlowNode defaultCombatNode_Branch2_1 = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.NORMAL, overrideTable: ModPrefabs.FloorNameRoomTable);
+                DungeonFlowNode defaultHubNode3 = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.HUB, overrideTable: ModPrefabs.FloorNameRoomTable);
+                DungeonFlowNode defaultCombatNode_Branch2_2 = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.NORMAL, overrideTable: ModPrefabs.FloorNameRoomTable);
+                DungeonFlowNode defaultCombatNode_Branch2_3 = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.NORMAL, overrideTable: ModPrefabs.FloorNameRoomTable);
+
+                DungeonFlowNode defaultHubNode1 = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.HUB, overrideTable: ModPrefabs.FloorNameRoomTable);
 				DungeonFlowNode defaultHubNode2 = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.HUB, overrideTable: ModPrefabs.FloorNameRoomTable);
 
 
 
-				m_CachedFlow.name = "LoopDeLoop";
+                m_CachedFlow.name = "LoopDeLoop";
 				m_CachedFlow.fallbackRoomTable = ModPrefabs.FloorNameRoomTable;
 				m_CachedFlow.phantomRoomTable = null;
 				m_CachedFlow.phantomRoomTable = null;
@@ -74,11 +87,29 @@ namespace Planetside
 				m_CachedFlow.AddNodeToFlow(defaultCombatNode_Branch_1, defaultHubNode1);
 				m_CachedFlow.AddNodeToFlow(defaultCombatNode_Branch_2, defaultCombatNode_Branch_1);
 				m_CachedFlow.AddNodeToFlow(defaultCombatNode_Branch_3, defaultCombatNode_Branch_2);
+
 				m_CachedFlow.AddNodeToFlow(defaultHubNode2, defaultCombatNode_Branch_3);
+                //new shortish branch
+                m_CachedFlow.AddNodeToFlow(defaultCombatNodeNonMain2_1, defaultHubNode2);
+                m_CachedFlow.AddNodeToFlow(defaultCombatNodeNonMain2_2, defaultCombatNodeNonMain2_1);
+                m_CachedFlow.AddNodeToFlow(Abyss_Loot_Node, defaultCombatNodeNonMain2_2);
+                //Path off to main path
+                m_CachedFlow.AddNodeToFlow(defaultCombatNode_Branch2_1, defaultHubNode2);
+                m_CachedFlow.AddNodeToFlow(defaultHubNode3, defaultCombatNode_Branch2_1);
+                //1 room detour
+                m_CachedFlow.AddNodeToFlow(defaultCombatNodeNonMain3_1, defaultHubNode3);
+                m_CachedFlow.AddNodeToFlow(Abyss_Loot_Node_2, defaultCombatNodeNonMain3_1);
+
+
+                //main branch
+                m_CachedFlow.AddNodeToFlow(defaultCombatNode_Branch2_2, defaultHubNode3);
+                m_CachedFlow.AddNodeToFlow(defaultCombatNode_Branch2_3, defaultCombatNode_Branch2_2);
 
 
 
-				m_CachedFlow.AddNodeToFlow(bossfoyerNode, defaultHubNode2);
+
+
+                m_CachedFlow.AddNodeToFlow(bossfoyerNode, defaultCombatNode_Branch2_3);
 
 				m_CachedFlow.AddNodeToFlow(bossNode, bossfoyerNode);
 				m_CachedFlow.AddNodeToFlow(exitNode, bossNode);

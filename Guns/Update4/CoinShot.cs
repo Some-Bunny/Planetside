@@ -144,7 +144,7 @@ namespace Planetside
             
             ThunderShot.ThunderShotID = gun.PickupObjectId;
             ItemIDs.AddToList(gun.PickupObjectId);
-            gun.gunClass = GunClass.SILLY;
+            gun.gunClass = GunClass.PISTOL;
 
         }
         public static int CoinShotID;
