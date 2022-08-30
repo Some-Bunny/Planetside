@@ -129,6 +129,35 @@ namespace Planetside
                     CurrentState = State.POST_FIRE;
                     AkSoundEngine.PostEvent("Play_AbyssBlast", this.gameObject);
 
+                    CoinRicoshotComponent CrC = component.AddComponent<CoinRicoshotComponent>();
+                    CrC.obj = this.gameObject;
+                    CrC.OnReflected += (obj) =>
+                    {
+                        component.baseData.damage = 50f;
+                        Vector2 Point1 = MathToolbox.GetUnitOnCircle(component.Direction.ToAngle() + 180, 0.1f);
+                        component.Direction = Point1;
+
+                        component.baseData.speed = 500;
+                        component.UpdateSpeed();
+
+                        ImprovedAfterImage yes = component.gameObject.AddComponent<ImprovedAfterImage>();
+                        yes.spawnShadows = true;
+                        yes.shadowLifetime = 0.4f;
+                        yes.shadowTimeDelay = 0.01f;
+                        yes.dashColor = new Color(0.9f, 0.5f, 0.3f, 1f);
+                        CrC.OnDestroyed += () =>
+                        {
+                            AkSoundEngine.PostEvent("Play_RockBreaking", component.gameObject);
+                            GameObject vfx = UnityEngine.Object.Instantiate<GameObject>(StaticVFXStorage.DragunBoulderLandVFX, component.transform.position, Quaternion.identity);
+                            tk2dBaseSprite sprite = vfx.GetComponent<tk2dBaseSprite>();
+                            sprite.PlaceAtPositionByAnchor(component.transform.position, tk2dBaseSprite.Anchor.MiddleCenter);
+                            sprite.HeightOffGround = 35f;
+                            sprite.UpdateZDepth();
+                            Destroy(vfx.gameObject, 2.5f);
+                            Destroy(this.gameObject);
+                        };
+                    };
+
                     if (muzzleFlashPrefab != null)
                     {
                         GameObject vfx = SpawnManager.SpawnVFX(muzzleFlashPrefab, true);

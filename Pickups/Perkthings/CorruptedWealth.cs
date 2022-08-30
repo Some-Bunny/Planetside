@@ -129,6 +129,12 @@ namespace Planetside
 
         private IEnumerator HandleSilence(Vector2 centerPoint, float maxRadius, float additionalTimeAtMaxRadius, PlayerController user)
         {
+
+            GameObject vfx = SpawnManager.SpawnVFX((PickupObjectDatabase.GetById(536) as RelodestoneItem).ContinuousVFX, true);
+            vfx.transform.position = user.sprite.WorldCenter;
+            vfx.GetComponent<tk2dBaseSprite>().HeightOffGround = 22;
+            AkSoundEngine.PostEvent("Play_WPN_Life_Orb_Blast_01", user.gameObject);
+
             List<Projectile> doNotWreck = new List<Projectile>();
             float elapsed = 0f;
             while (elapsed < additionalTimeAtMaxRadius + (StackCount*1.25f))
@@ -140,6 +146,22 @@ namespace Planetside
                 doNotWreck = BlankHooks.DestroyBulletsInRangeSpecial(centerPoint, maxRadius, destroysEnemyBullets, pvp_ENABLED, doNotWreck,user, false, previousRadius2, false, null);
                 yield return null;
             }
+            GameObject silencerVFX = (GameObject)ResourceCache.Acquire("Global VFX/BlankVFX_Ghost");
+            tk2dSpriteAnimator objanimator = silencerVFX.GetComponentInChildren<tk2dSpriteAnimator>();
+            objanimator.ignoreTimeScale = true;
+            objanimator.AlwaysIgnoreTimeScale = true;
+            objanimator.AnimateDuringBossIntros = true;
+            objanimator.alwaysUpdateOffscreen = true;
+            objanimator.playAutomatically = true;
+            ParticleSystem objparticles = silencerVFX.GetComponentInChildren<ParticleSystem>();
+            var main = objparticles.main;
+            main.useUnscaledTime = true;
+            GameObject gameObject = GameObject.Instantiate(silencerVFX.gameObject, user.sprite.WorldCenter, Quaternion.identity);
+            Destroy(gameObject, 2.5f);
+
+            UnityEngine.Object.Destroy(vfx, 0);
+
+
             yield break;
         }
 
@@ -152,6 +174,7 @@ namespace Planetside
             RecalculateDamage();
             if (AmountOfHPConsumed > 0f)
             {
+                AkSoundEngine.PostEvent("Play_BOSS_lichA_crack_01", player.gameObject);
                 { AmountOfHPConsumed -= 0.5f; }
                 player.healthHaver.ForceSetCurrentHealth(player.healthHaver.GetCurrentHealth() - 0.5f);
                 RecalculateDamage();
@@ -168,6 +191,16 @@ namespace Planetside
         {
             if (player)
             {
+                AkSoundEngine.PostEvent("Play_BOSS_Rat_Cheese_Jump_01", player.gameObject);
+
+                GameObject vfx = SpawnManager.SpawnVFX((PickupObjectDatabase.GetById(577) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapVertical.effects.First().effects.First().effect, true);
+                vfx.transform.position = player.sprite.WorldCenter;
+                vfx.GetComponent<tk2dBaseSprite>().HeightOffGround = 22;
+                vfx.transform.localScale *= 2;
+                vfx.transform.localRotation = Quaternion.Euler(0, 0, Vector2.up.ToAngle());
+                UnityEngine.Object.Destroy(vfx, 2);
+
+
                 if (AmountOfArmorConsumed > (int)player.healthHaver.Armor)
                 { AmountOfArmorConsumed = (int)player.healthHaver.Armor; }
 

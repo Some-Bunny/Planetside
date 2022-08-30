@@ -615,7 +615,12 @@ namespace Planetside
                 "teuyawe.room",
                 "oh_so_basic.room",
                 "super_basic_but_funnyspahe.room",
-                "very_beautifil_very_powerful.room"
+                "very_beautifil_very_powerful.room",
+                "please_help_me.room",
+                "squares.room",
+                "story_of_gundertale.room",
+                "hehehhohoh.room",
+                "hg.room"
             };
 			Mod_RoomList_HUB = new List<string>()
 			{

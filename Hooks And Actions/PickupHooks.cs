@@ -129,10 +129,20 @@ namespace Planetside
 
         public static void CanINotHaveTwoHookMethodsWithTheSameName(Action<AmmoPickup, PlayerController> orig, AmmoPickup self, PlayerController player)
         {
-            orig(self, player);
+
             bool b = false;
             if (b == false && player.GetComponent<CorruptedWealthController>() != null && player.CurrentGun != null)
             {
+
+                GameObject vfx = SpawnManager.SpawnVFX((PickupObjectDatabase.GetById(365) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapVertical.effects.First().effects.First().effect, true);
+                vfx.transform.position = player.sprite.WorldCenter;
+                vfx.GetComponent<tk2dBaseSprite>().HeightOffGround = 22;
+                vfx.transform.localScale *= 3;
+                UnityEngine.Object.Destroy(vfx, 1);
+
+                AkSoundEngine.PostEvent("Play_WPN_Life_Orb_Capture_01", player.gameObject);
+
+
                 Gun gungeon = player.CurrentGun;
                 int amo = Mathf.Max((int)(gungeon.AdjustedMaxAmmo * 0.85f), 1);
                 gungeon.SetBaseMaxAmmo(amo);
@@ -150,10 +160,11 @@ namespace Planetside
                 gungeon.ammo = Mathf.Max(gungeon.ammo, gungeon.AdjustedMaxAmmo);
                 b = true;
             }
+            orig(self, player);
         }
 
 
-   
+
         public static void InteractHook(Action<Chest, PlayerController> orig, Chest self, PlayerController player)
         {
             orig(self, player);
@@ -161,6 +172,16 @@ namespace Planetside
             CorruptedWealthController cont = player.GetComponent<CorruptedWealthController>();
             if (cont != null)
             {
+
+                GameObject vfx = SpawnManager.SpawnVFX(StaticVFXStorage.MachoBraceDustupVFX, true);
+                vfx.transform.position = player.sprite.WorldCenter;
+                vfx.GetComponent<tk2dBaseSprite>().HeightOffGround = 22;
+                vfx.transform.localScale *= 1.6f;
+                UnityEngine.Object.Destroy(vfx, 2);
+
+                AkSoundEngine.PostEvent("Play_BOSS_DragunGold_Crackle_01", player.gameObject);
+
+
                 if (cont.AmountOfCorruptKeys > 0)
                 {
                     cont.AmountOfCorruptKeys--;
@@ -249,7 +270,18 @@ namespace Planetside
             CorruptedWealthController c = player.GetComponent<CorruptedWealthController>();
             if (c != null)
             {
+
+
                 c.ProcessDamageModsRedHP(self.healAmount);
+                if (self.armorAmount > 0)
+                {
+                    GameObject vfx = SpawnManager.SpawnVFX((PickupObjectDatabase.GetById(385) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapVertical.effects.First().effects.First().effect, true);
+                    vfx.transform.position = player.sprite.WorldCenter;
+                    vfx.GetComponent<tk2dBaseSprite>().HeightOffGround = 22;
+                    vfx.transform.localScale *= 2;
+                    vfx.transform.localRotation = Quaternion.Euler(0, 0, Vector2.up.ToAngle()); 
+                    UnityEngine.Object.Destroy(vfx, 2);
+                }
                 c.AmountOfArmorConsumed += self.armorAmount;
             }
         }
@@ -270,6 +302,8 @@ namespace Planetside
         public static void AmmoPickupUpdateHook(Action<AmmoPickup> orig, AmmoPickup self)
         {
             orig(self);
+
+            //self.sprite.color = new Color(UnityEngine.Random.Range(0, 256), UnityEngine.Random.Range(0, 256), UnityEngine.Random.Range(0, 256), 255);
             foreach (PlayerController player in GameManager.Instance.AllPlayers)
             {
                 if (player.GetComponent<CorruptedWealthController>() != null)

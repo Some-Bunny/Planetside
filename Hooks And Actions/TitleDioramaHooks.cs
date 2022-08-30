@@ -103,9 +103,6 @@ namespace Planetside
             }
         }
 
-
-
-
         public static void UpdateHook(Action<TitleDioramaController> orig, TitleDioramaController self)
         {
             orig(self);

@@ -354,6 +354,7 @@ namespace Planetside
             GunClassToken.Init();
             ShopDiscountItem.Init();
             SawBladeGun.Add();
+            CoinShot.Add();
 
             //Perks
             AllStatsUp.Init();

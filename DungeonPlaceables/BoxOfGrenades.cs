@@ -36,6 +36,8 @@ namespace Planetside
             component.PlaceAtPositionByAnchor(SpawnPos, tk2dBaseSprite.Anchor.MiddleCenter);
             component.HeightOffGround = 35f;
             component.UpdateZDepth();
+            Destroy(component.gameActor, 2.5f);
+
             tk2dSpriteAnimator component2 = component.GetComponent<tk2dSpriteAnimator>();
             if (component2 != null)
             {

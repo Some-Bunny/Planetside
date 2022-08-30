@@ -179,6 +179,7 @@
     <Compile Include="Guns\Update4\HexaPulseCannon.cs" />
     <Compile Include="Guns\Update4\PulseCannon.cs" />
     <Compile Include="Guns\Update4\Autocannon.cs" />
+    <Compile Include="Guns\Update4\CoinShot.cs" />
     <Compile Include="Guns\Update4\ThunderShot.cs" />
     <Compile Include="Guns\Update4\ParticleCollapserLargeProjectile.cs" />
     <Compile Include="Guns\Update4\ParticleCollapserSmallProjectile.cs" />
@@ -4562,6 +4563,15 @@
     <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\oh_so_basic.room" />
     <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\super_basic_but_funnyspahe.room" />
     <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\very_beautifil_very_powerful.room" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\please_help_me.room" />
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\squares.room" />
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\story_of_gundertale.room" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\hehehhohoh.room" />
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\hg.room" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

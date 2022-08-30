@@ -12,6 +12,7 @@ using System.Collections;
 using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
+using System.ComponentModel;
 
 namespace Planetside
 {
@@ -76,7 +77,7 @@ namespace Planetside
                 new IntVector2(8, 8),
 
             }, AnimateBullet.ConstructListOfSameValues(false, 8), AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.MiddleCenter, 8), AnimateBullet.ConstructListOfSameValues(true, 8), AnimateBullet.ConstructListOfSameValues(false, 8),
-AnimateBullet.ConstructListOfSameValues<Vector3?>(null, 8), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 8), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 8), AnimateBullet.ConstructListOfSameValues<Projectile>(null, 8));
+            AnimateBullet.ConstructListOfSameValues<Vector3?>(null, 8), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 8), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 8), AnimateBullet.ConstructListOfSameValues<Projectile>(null, 8));
             ImprovedAfterImage yes = projectile.gameObject.AddComponent<ImprovedAfterImage>();
             yes.spawnShadows = true;
             yes.shadowLifetime = 0.2f;
@@ -132,7 +133,6 @@ AnimateBullet.ConstructListOfSameValues<Vector3?>(null, 8), AnimateBullet.Constr
                 "gunbow",
                 "eye_of_the_beholster",
                 "shock_rifle"
-
             };
 
             CustomSynergies.Add("Malicious", mandatoryConsoleIDs, optionalConsoleIDs4, true);
@@ -242,7 +242,6 @@ AnimateBullet.ConstructListOfSameValues<Vector3?>(null, 8), AnimateBullet.Constr
         protected override void DoEffect(PlayerController user)
         {
             user.carriedConsumables.Currency -= 1;
-            AkSoundEngine.PostEvent("Play_CoinFlip", user.gameObject);
             float finaldir = ProjSpawnHelper.GetAccuracyAngled(user.CurrentGun.CurrentAngle, 3, user);
             GameObject prefab = CoinProjectile.gameObject;
             GameObject spawnedBulletOBJ = SpawnManager.SpawnProjectile(prefab, user.sprite.WorldCenter, Quaternion.Euler(0f, 0f, finaldir), true);
@@ -250,20 +249,8 @@ AnimateBullet.ConstructListOfSameValues<Vector3?>(null, 8), AnimateBullet.Constr
             if (component != null)
             {
                 component.Owner = user;
-                component.Shooter = user.specRigidbody;
-                component.gameObject.AddComponent<CoinInterractManager>();
-                if (user.PlayerHasActiveSynergy("You Call Punching A Coin An Art?"))
-                {
-                    component.baseData.speed *= 1.2f;
-                    BounceProjModifier bouncy = component.gameObject.GetOrAddComponent<BounceProjModifier>();
-                    bouncy.numberOfBounces += 1;
-                    PierceProjModifier spook = component.gameObject.GetOrAddComponent<PierceProjModifier>();
-                    spook.penetration = 2;
-                    spook.penetratesBreakables = true;
-                }
-                SpriteOutlineManager.AddOutlineToSprite(component.sprite, Color.black);
+                component.Shooter = user.specRigidbody; 
             }
-
         }
     }
 }
@@ -272,7 +259,29 @@ AnimateBullet.ConstructListOfSameValues<Vector3?>(null, 8), AnimateBullet.Constr
 
 namespace Planetside
 {
-	public class CoinComponent : MonoBehaviour
+    public class CoinRicoshotComponent : MonoBehaviour 
+    {
+        public Action<Projectile> OnReflected;
+        public Action OnDestroyed;
+
+        public void OnDestroy()
+        {
+            if (OnDestroyed != null)
+            {
+                this.OnDestroyed();
+            }
+        }
+
+        public GameObject obj;
+    }
+    public class CoinArbitraryDamageMultiplier : MonoBehaviour
+    {
+        public float Multiplier = 1;
+    }
+
+
+
+    public class CoinComponent : MonoBehaviour
 	{
 		public CoinComponent()
 		{
@@ -280,6 +289,10 @@ namespace Planetside
         }
         private void Start()
         {
+
+            this.gameObject.AddComponent<CoinInterractManager>();
+      
+            AkSoundEngine.PostEvent("Play_CoinFlip", this.gameObject);
             HasPerformedRicochet = false;
             HasBeenBeamBoosted = false;
             AmountOfBlanksUsedWhileAlive = 0;
@@ -287,14 +300,25 @@ namespace Planetside
             {
                 CoinTosser.AllActiveCoins.Add(base.gameObject);
             }
+
+            if (this.m_projectile == null)
+            {
+                this.m_projectile = base.GetComponent<Projectile>();
+            }
+            PlayerController player = this.m_projectile.Owner as PlayerController;
+            if (player.PlayerHasActiveSynergy("You Call Punching A Coin An Art?"))
+            {
+                this.m_projectile.baseData.speed *= 1.2f;
+                BounceProjModifier bouncy = this.m_projectile.gameObject.GetOrAddComponent<BounceProjModifier>();
+                bouncy.numberOfBounces += 1;
+                PierceProjModifier spook = this.m_projectile.gameObject.GetOrAddComponent<PierceProjModifier>();
+                spook.penetration = 2;
+                spook.penetratesBreakables = true;
+            }
+            SpriteOutlineManager.AddOutlineToSprite(this.m_projectile.sprite, Color.black);
+
         }
-        private void Awake()
-		{
-			if (this.m_projectile != null)
-			{
-				this.m_projectile = base.GetComponent<Projectile>();
-			}
-		}
+      
         public bool MaxSpeedReached;
         private void Update()
         {
@@ -303,7 +327,7 @@ namespace Planetside
             {
                 this.m_projectile = base.GetComponent<Projectile>();
             }
-            if (m_projectile!= null && m_projectile.baseData.speed >= 75)
+            if (m_projectile != null && m_projectile.baseData.speed >= 75)
             {
                 if (MaxSpeedReached != true)
                 {
@@ -356,8 +380,37 @@ namespace Planetside
                 }
                 else
                 {
-                    bool ae = Vector2.Distance(proj.sprite.WorldCenter, centerPosition) < 0.666f && proj.Owner != null && proj.Owner == player && elapsed >= DeadTime && HasPerformedRicochet == false && !CoinTosser.AllActiveCoins.Contains(proj.gameObject);
-                    if (ae)
+
+                    if (Vector2.Distance(proj.sprite.WorldCenter, centerPosition) < 0.666f && elapsed >= DeadTime && HasPerformedRicochet == false && !CoinTosser.AllActiveCoins.Contains(proj.gameObject) && proj.gameObject.GetComponent<CoinRicoshotComponent>() != null)
+                    {
+                        var CrC = proj.gameObject.GetComponent<CoinRicoshotComponent>();
+                        if (CrC.OnReflected != null)
+                        {
+                            CrC.OnReflected(proj);
+                            HasPerformedRicochet = true;
+                            LootEngine.DoDefaultItemPoof(base.gameObject.transform.position, false, true);
+                            if (HasBeenBeamBoosted != true)
+                            {
+                                AkSoundEngine.PostEvent("Play_perfectshot", base.gameObject);
+                                Destroy(base.gameObject);
+                            }
+                            else
+                            {
+                                CoinTosser.AllActiveCoins.Remove(base.gameObject);
+                                proj.baseData.range += 30;
+                                m_projectile.baseData.speed *= 3;
+                                m_projectile.UpdateSpeed();
+                                AkSoundEngine.PostEvent("Play_ENM_rubber_blast_01", base.gameObject);
+                                m_projectile.ModifyVelocity = (Func<Vector2, Vector2>)Delegate.Combine(m_projectile.ModifyVelocity, new Func<Vector2, Vector2>(this.ModifyVelocity));
+                                m_projectile.OnHitEnemy = (Action<Projectile, SpeculativeRigidbody, bool>)Delegate.Combine(m_projectile.OnHitEnemy, new Action<Projectile, SpeculativeRigidbody, bool>(this.HandleHit));
+                                m_projectile.gameObject.AddComponent<PierceDeadActors>();
+                                PierceProjModifier spook = m_projectile.gameObject.GetOrAddComponent<PierceProjModifier>();
+                                spook.penetration += 2;
+                                Exploder.DoDistortionWave(m_projectile.sprite.WorldCenter, 4, 0.07f, 4, 0.3f);
+                            }
+                        }
+                    }
+                    else if (Vector2.Distance(proj.sprite.WorldCenter, centerPosition) < 0.666f && proj.Owner != null && proj.Owner == player && elapsed >= DeadTime && HasPerformedRicochet == false && !CoinTosser.AllActiveCoins.Contains(proj.gameObject))
                     {
                         float blankdamage = (AmountOfBlanksUsedWhileAlive * 0.333f) + 1;
                         float DmgMult = 1.35f;
@@ -372,10 +425,18 @@ namespace Planetside
                             DmgMult -= 0.25f;
                             Dmgplus -= 1;
                         }
+                      
                         HasPerformedRicochet = true;
                         proj.baseData.speed *= 1.2f;
                         proj.UpdateSpeed();
                         float DamageCalc = ((proj.baseData.damage * DmgMult) + Dmgplus) * blankdamage;
+
+                        var arbitraryMultiplier = proj.gameObject.GetComponent<CoinArbitraryDamageMultiplier>();
+                        if (arbitraryMultiplier != null)
+                        {
+                            DamageCalc *= arbitraryMultiplier.Multiplier;
+                        }
+
                         proj.baseData.damage = DamageCalc * AmountPunched;
                         proj.pierceMinorBreakables = true;
                         proj.baseData.range += 10;

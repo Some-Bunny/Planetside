@@ -703,6 +703,7 @@ namespace Planetside
                     GameObject vfx = SpawnManager.SpawnVFX((PickupObjectDatabase.GetById(365) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapVertical.effects.First().effects.First().effect, true);
                     vfx.transform.position = this.aiActor.sprite.WorldCenter;
                     vfx.GetComponent<tk2dBaseSprite>().HeightOffGround = 22;
+                    Destroy(vfx, 1);
                 }
             }
         }
