@@ -2179,7 +2179,7 @@ namespace Planetside
 						float CentreAngle = (predictedPosition - this.Position).ToAngle();
 						for (int i = 0; i < 6; i++)
                         {
-							base.BulletBank.StartCoroutine(this.QuickscopeNoobProfessional(CentreAngle + (60 * i), this, 7, false));
+							GameManager.Instance.StartCoroutine(this.QuickscopeNoobProfessional(CentreAngle + (60 * i), this, 7, false));
 						}
 						yield return this.Wait(300);
 						predictedPosition = BraveMathCollege.GetPredictedPosition(this.BulletManager.PlayerPosition(), this.BulletManager.PlayerVelocity(), this.Projectile.transform.position, 1000);
@@ -2187,7 +2187,7 @@ namespace Planetside
 						for (int i = 0; i < 6; i++)
 						{
 
-							base.BulletBank.StartCoroutine(this.QuickscopeNoobProfessional(CentreAngle + (60 * i), this, 7, true));
+                            GameManager.Instance.StartCoroutine(this.QuickscopeNoobProfessional(CentreAngle + (60 * i), this, 7, true));
 						}
 					}
 					else
@@ -2195,7 +2195,7 @@ namespace Planetside
 						this.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 180);
 						for (int i = 0; i < 8; i++)
 						{
-							base.BulletBank.StartCoroutine(this.QuickscopeNoob(45 * i, this, 6));
+                            GameManager.Instance.StartCoroutine(this.QuickscopeNoob(45 * i, this, 6));
 						}
 					}
 					yield return this.Wait(60);
@@ -2225,19 +2225,21 @@ namespace Planetside
 					{
 						float t = (float)elapsed / (float)Time;
 
-						if (this.Projectile == null)
+						if (parent.Projectile == null)
 						{
 							Destroy(component2.gameObject);
 							yield break;
 						}
 
-						if (this.IsEnded == true || this.Destroyed == true)
-						{
-							Destroy(component2.gameObject);
-							yield break;
-						}
+                        if (parent.Destroyed == true)
+                        {
+                            Destroy(component2.gameObject);
+                            yield break;
+                        }
 
-						if (component2 != null)
+   
+
+                        if (component2 != null)
 						{
 							component2.transform.position = new Vector3(this.Projectile.transform.position.x, this.Projectile.transform.position.y, 99999);
 							component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (100 * t));
@@ -2305,19 +2307,22 @@ namespace Planetside
 					{
 						float t = (float)elapsed / (float)Time;
 
-						if (this.Projectile == null)
+						if (parent.Projectile == null)
 						{
 							Destroy(component2.gameObject);
 							yield break;
 						}
-						if (this.IsEnded == true || this.Destroyed == true)
-						{
-							Destroy(component2.gameObject);
-							yield break;
-						}
+                        if (parent.Destroyed == true)
+                        {
+                            Destroy(component2.gameObject);
+                            yield break;
+                        }
+
+                       
 
 
-						if (component2 != null)
+
+                        if (component2 != null)
 						{
 							component2.transform.position = new Vector3(base.Projectile.transform.position.x, base.Projectile.transform.position.y, 99999);
 							component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (100 * t));
@@ -2354,6 +2359,7 @@ namespace Planetside
 					tk2dBaseSprite component = vfx.GetComponent<tk2dBaseSprite>();
 					component.PlaceAtPositionByAnchor(this.Projectile.transform.position, tk2dBaseSprite.Anchor.MiddleCenter);
 					component.HeightOffGround = 35f;
+					Destroy(vfx, 2);
 					if (parent != null)
                     {
 						parent.Vanish(false);

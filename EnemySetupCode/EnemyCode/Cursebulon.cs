@@ -11,6 +11,8 @@ using Brave.BulletScript;
 using Pathfinding;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
+using static tk2dSpriteDefinition;
+using PathologicalGames;
 
 namespace Planetside
 {
@@ -86,10 +88,9 @@ namespace Planetside
 					ManualLeftY = 0,
 					ManualRightX = 0,
 					ManualRightY = 0,
-
-
-
 				});
+
+
 				companion.aiActor.CorpseObject = EnemyDatabase.GetOrLoadByGuid("01972dee89fc4404a5c408d50007dad5").CorpseObject;
 				companion.aiActor.PreventBlackPhantom = false;
 				AIAnimator aiAnimator = companion.aiAnimator;
@@ -141,10 +142,288 @@ namespace Planetside
 				};
 
 				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "pitfall", new string[] { "pitfall" }, new DirectionalAnimation.FlipType[0], DirectionalAnimation.DirectionType.Single);
-				
-				
-				
-				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awaken" }, new DirectionalAnimation.FlipType[0]);
+
+
+				/*
+				{
+                    GameObject vfxObj = ItemBuilder.AddSpriteToObject("TarnishVFX", "Planetside/Resources/VFX/BrainHost/brainnerphehehoo1", null);
+
+                    vfxObj.transform.parent = companion.gameObject.transform;
+                    vfxObj.transform.position = new Vector3(1, 1);
+
+                    tk2dSpriteAnimator animator = vfxObj.GetOrAddComponent<tk2dSpriteAnimator>();
+                    tk2dSpriteAnimation animation = vfxObj.AddComponent<tk2dSpriteAnimation>();
+                    AIAnimator aiAnimatorBody = vfxObj.AddComponent<AIAnimator>();
+                    aiAnimatorBody.IdleAnimation = new DirectionalAnimation
+                    {
+                        Type = DirectionalAnimation.DirectionType.Single,
+                        Flipped = new DirectionalAnimation.FlipType[1],
+                        AnimNames = new string[]
+                        {
+                        "idle"
+                        }
+                    };
+
+
+                    EnemyToolbox.AddNewDirectionAnimation(aiAnimatorBody, "die", new string[] { "die" }, new DirectionalAnimation.FlipType[1], DirectionalAnimation.DirectionType.Single);
+
+                    vfxObj.AddComponent<MeshFilter>();
+                    vfxObj.AddComponent<MeshRenderer>();
+
+
+                    tk2dSpriteCollectionData DeathMarkcollection = SpriteBuilder.ConstructCollection(vfxObj, ("BrainHostVFX"));
+                    tk2dSpriteAnimationClip idleClip = new tk2dSpriteAnimationClip() { name = "idle", frames = new tk2dSpriteAnimationFrame[0], fps = 7 };
+                    List<tk2dSpriteAnimationFrame> frames = new List<tk2dSpriteAnimationFrame>();
+                    for (int i = 1; i < 7; i++)
+                    {
+                        tk2dSpriteCollectionData collection = DeathMarkcollection;
+                        int frameSpriteId = SpriteBuilder.AddSpriteToCollection($"Planetside/Resources/VFX/BrainHost/brainnerphehehoo{i}", collection);
+                        tk2dSpriteDefinition frameDef = collection.spriteDefinitions[frameSpriteId];
+                        frameDef.ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.LowerLeft);
+                        frames.Add(new tk2dSpriteAnimationFrame { spriteId = frameSpriteId, spriteCollection = collection });
+                    }
+
+                    tk2dSpriteAnimationClip deathClip = new tk2dSpriteAnimationClip() { name = "die", frames = new tk2dSpriteAnimationFrame[0], fps = 12 };
+                    List<tk2dSpriteAnimationFrame> deathFrames = new List<tk2dSpriteAnimationFrame>();
+                    for (int i = 1; i < 7; i++)
+                    {
+                        tk2dSpriteCollectionData collection = DeathMarkcollection;
+                        int frameSpriteId = SpriteBuilder.AddSpriteToCollection($"Planetside/Resources/Enemies/Cursebulon/cursebulon_idle_back_left_00{i}", collection);
+                        tk2dSpriteDefinition frameDef = collection.spriteDefinitions[frameSpriteId];
+                        frameDef.ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.LowerLeft);
+                        deathFrames.Add(new tk2dSpriteAnimationFrame { spriteId = frameSpriteId, spriteCollection = collection });
+                    }
+                    animator.sprite.usesOverrideMaterial = true;
+                    animator.sprite.renderer.material = EnemyDatabase.GetOrLoadByGuid("c4fba8def15e47b297865b18e36cbef8").sprite.renderer.material;
+
+                    //SpriteOutlineManager.AddOutlineToSprite(vfxObj.GetComponent<tk2dBaseSprite>(), Color.black, 0.1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
+
+
+
+
+                    deathClip.frames = deathFrames.ToArray();
+                    deathClip.wrapMode = tk2dSpriteAnimationClip.WrapMode.Once;
+
+                    idleClip.frames = frames.ToArray();
+                    idleClip.wrapMode = tk2dSpriteAnimationClip.WrapMode.Loop;
+                    animator.Library = animation;
+                    animator.Library.clips = new tk2dSpriteAnimationClip[] { idleClip, deathClip };
+                    animator.DefaultClipId = animator.GetClipIdByName("idle");
+                    animator.playAutomatically = true;
+
+                    vfxObj.transform.localScale *= 2;
+
+                    AdvancedBodyPartController bodyPart = vfxObj.AddComponent<AdvancedBodyPartController>();
+
+
+
+
+                    SpeculativeRigidbody body = vfxObj.AddComponent<SpeculativeRigidbody>();
+
+                    body.CollideWithOthers = true;
+                    body.CollideWithTileMap = false;
+
+                    vfxObj.GetComponent<tk2dBaseSprite>().OverrideMaterialMode = tk2dBaseSprite.SpriteMaterialOverrideMode.OVERRIDE_MATERIAL_SIMPLE;
+
+                    body.PixelColliders = new List<PixelCollider>();
+                    body.PixelColliders.Add(new PixelCollider
+                    {
+
+                        ColliderGenerationMode = PixelCollider.PixelColliderGeneration.Manual,
+                        CollisionLayer = CollisionLayer.EnemyHitBox,
+                        IsTrigger = false,
+                        BagleUseFirstFrameOnly = false,
+                        SpecifyBagelFrame = string.Empty,
+                        BagelColliderNumber = 0,
+                        ManualOffsetX = 0,
+                        ManualOffsetY = 0,
+                        ManualWidth = 12,
+                        ManualHeight = 12,
+                        ManualDiameter = 0,
+                        ManualLeftX = 0,
+                        ManualLeftY = 0,
+                        ManualRightX = 0,
+                        ManualRightY = 0,
+
+                    });
+
+                    HealthHaver healthHaver = vfxObj.AddComponent<HealthHaver>();
+                    healthHaver.SetHealthMaximum(169);
+                    healthHaver.ForceSetCurrentHealth(169);
+                    healthHaver.flashesOnDamage = true;
+                    vfxObj.GetOrAddComponent<GameActor>();
+
+                    Material mat = animator.sprite.renderer.material;
+                    mat.mainTexture = animator.sprite.renderer.material.mainTexture;
+
+                    mat.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+                    mat.DisableKeyword("BRIGHTNESS_CLAMP_OFF");
+
+                    bodyPart.ownBody = body;
+                    bodyPart.ownHealthHaver = healthHaver;
+
+
+                    FakePrefab.MarkAsFakePrefab(vfxObj);
+                    UnityEngine.Object.DontDestroyOnLoad(vfxObj);
+                }
+
+                {
+                    GameObject vfxObj = ItemBuilder.AddSpriteToObject("TarnishVFX", "Planetside/Resources/VFX/BrainHost/brainnerphehehoo1", null);
+
+                    vfxObj.transform.parent = companion.gameObject.transform;
+                    vfxObj.transform.position = new Vector3(-1, 1);
+
+                    tk2dSpriteAnimator animator = vfxObj.GetOrAddComponent<tk2dSpriteAnimator>();
+                    tk2dSpriteAnimation animation = vfxObj.AddComponent<tk2dSpriteAnimation>();
+                    AIAnimator aiAnimatorBody = vfxObj.AddComponent<AIAnimator>();
+                    aiAnimatorBody.IdleAnimation = new DirectionalAnimation
+                    {
+                        Type = DirectionalAnimation.DirectionType.Single,
+                        Flipped = new DirectionalAnimation.FlipType[1],
+                        AnimNames = new string[]
+                        {
+                        "idle"
+                        }
+                    };
+
+
+                    EnemyToolbox.AddNewDirectionAnimation(aiAnimatorBody, "die", new string[] { "die" }, new DirectionalAnimation.FlipType[1], DirectionalAnimation.DirectionType.Single);
+
+                    vfxObj.AddComponent<MeshFilter>();
+                    vfxObj.AddComponent<MeshRenderer>();
+
+
+                    tk2dSpriteCollectionData DeathMarkcollection = SpriteBuilder.ConstructCollection(vfxObj, ("BrainHostVFX"));
+                    tk2dSpriteAnimationClip idleClip = new tk2dSpriteAnimationClip() { name = "idle", frames = new tk2dSpriteAnimationFrame[0], fps = 7 };
+                    List<tk2dSpriteAnimationFrame> frames = new List<tk2dSpriteAnimationFrame>();
+                    for (int i = 1; i < 7; i++)
+                    {
+                        tk2dSpriteCollectionData collection = DeathMarkcollection;
+                        int frameSpriteId = SpriteBuilder.AddSpriteToCollection($"Planetside/Resources/VFX/BrainHost/brainnerphehehoo{i}", collection);
+                        tk2dSpriteDefinition frameDef = collection.spriteDefinitions[frameSpriteId];
+                        frameDef.ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.LowerLeft);
+                        frames.Add(new tk2dSpriteAnimationFrame { spriteId = frameSpriteId, spriteCollection = collection });
+                    }
+
+                    tk2dSpriteAnimationClip deathClip = new tk2dSpriteAnimationClip() { name = "die", frames = new tk2dSpriteAnimationFrame[0], fps = 12 };
+                    List<tk2dSpriteAnimationFrame> deathFrames = new List<tk2dSpriteAnimationFrame>();
+                    for (int i = 1; i < 7; i++)
+                    {
+                        tk2dSpriteCollectionData collection = DeathMarkcollection;
+                        int frameSpriteId = SpriteBuilder.AddSpriteToCollection($"Planetside/Resources/Enemies/Cursebulon/cursebulon_idle_back_left_00{i}", collection);
+                        tk2dSpriteDefinition frameDef = collection.spriteDefinitions[frameSpriteId];
+                        frameDef.ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.LowerLeft);
+                        deathFrames.Add(new tk2dSpriteAnimationFrame { spriteId = frameSpriteId, spriteCollection = collection });
+                    }
+                    animator.sprite.usesOverrideMaterial = true;
+                    animator.sprite.renderer.material = EnemyDatabase.GetOrLoadByGuid("c4fba8def15e47b297865b18e36cbef8").sprite.renderer.material;
+
+                    //SpriteOutlineManager.AddOutlineToSprite(vfxObj.GetComponent<tk2dBaseSprite>(), Color.black, 0.1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
+
+                    deathClip.frames = deathFrames.ToArray();
+                    deathClip.wrapMode = tk2dSpriteAnimationClip.WrapMode.Once;
+
+                    idleClip.frames = frames.ToArray();
+                    idleClip.wrapMode = tk2dSpriteAnimationClip.WrapMode.Loop;
+                    animator.Library = animation;
+                    animator.Library.clips = new tk2dSpriteAnimationClip[] { idleClip, deathClip };
+                    animator.DefaultClipId = animator.GetClipIdByName("idle");
+                    animator.playAutomatically = true;
+
+                    vfxObj.transform.localScale *= 1;
+
+                    AdvancedBodyPartController bodyPart = vfxObj.AddComponent<AdvancedBodyPartController>();
+
+
+
+
+                    SpeculativeRigidbody body = vfxObj.AddComponent<SpeculativeRigidbody>();
+
+                    body.CollideWithOthers = true;
+                    body.CollideWithTileMap = false;
+
+                    vfxObj.GetComponent<tk2dBaseSprite>().OverrideMaterialMode = tk2dBaseSprite.SpriteMaterialOverrideMode.OVERRIDE_MATERIAL_SIMPLE;
+
+                    body.PixelColliders = new List<PixelCollider>();
+                    body.PixelColliders.Add(new PixelCollider
+                    {
+
+                        ColliderGenerationMode = PixelCollider.PixelColliderGeneration.Manual,
+                        CollisionLayer = CollisionLayer.EnemyHitBox,
+                        IsTrigger = false,
+                        BagleUseFirstFrameOnly = false,
+                        SpecifyBagelFrame = string.Empty,
+                        BagelColliderNumber = 0,
+                        ManualOffsetX = 0,
+                        ManualOffsetY = 0,
+                        ManualWidth = 12,
+                        ManualHeight = 12,
+                        ManualDiameter = 0,
+                        ManualLeftX = 0,
+                        ManualLeftY = 0,
+                        ManualRightX = 0,
+                        ManualRightY = 0,
+
+                    });
+
+                    HealthHaver healthHaver = vfxObj.AddComponent<HealthHaver>();
+                    healthHaver.SetHealthMaximum(10);
+                    healthHaver.ForceSetCurrentHealth(10);
+                    healthHaver.flashesOnDamage = true;
+
+					vfxObj.GetOrAddComponent<GameActor>();
+                    Material mat = animator.sprite.renderer.material;
+                    mat.mainTexture = animator.sprite.renderer.material.mainTexture;
+
+                    mat.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+                    mat.DisableKeyword("BRIGHTNESS_CLAMP_OFF");
+
+                    bodyPart.ownBody = body;
+                    bodyPart.ownHealthHaver = healthHaver;
+
+
+                    FakePrefab.MarkAsFakePrefab(vfxObj);
+                    UnityEngine.Object.DontDestroyOnLoad(vfxObj);
+                }
+				*/
+
+
+
+
+
+
+
+                /*
+				AIActor dummy = EnemyDatabase.GetOrLoadByGuid("4d164ba3f62648809a4a82c90fc22cae");
+                for (int i = 0; i < dummy.transform.childCount; i++)
+				{
+					GameObject t = dummy.transform.GetChild(i).gameObject;
+					if (t != null)
+					{
+						if (t.GetComponent<BodyPartController>() != null)
+						{
+                            foreach (Component c in t.GetComponents(typeof(Component)))
+                            {
+                                ETGModConsole.Log(c.GetType().ToString());
+                                ETGModConsole.Log(c.name.ToString());
+                                ETGModConsole.Log("=====");
+
+                            }
+                        }
+					}
+                }
+				*/
+                /*
+				foreach (Component c in EnemyDatabase.GetOrLoadByGuid("21dd14e5ca2a4a388adab5b11b69a1e1").GetComponentInChildren<BodyPartController>().gameObject.GetComponents(typeof(Component)))
+				{
+					ETGModConsole.Log(c.GetType().ToString());
+					ETGModConsole.Log(c.name.ToString());
+					ETGModConsole.Log("=====");
+
+                }
+				*/
+
+                EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awaken" }, new DirectionalAnimation.FlipType[0]);
 				companion.aiActor.AwakenAnimType = AwakenAnimationType.Awaken;
 				bool flag3 = CurseblobCollection == null;
 				if (flag3)
@@ -463,6 +742,39 @@ namespace Planetside
 			}
 			private void Start()
 			{
+
+				for (int i = 0; i < base.aiActor.gameObject.transform.childCount; i++ )
+				{
+					var tr = base.aiActor.gameObject.transform.GetChild(i);
+
+                    if (tr.gameObject != null && tr.gameObject.GetComponent<AdvancedBodyPartController>() != null)
+					{
+						var mhm = tr.gameObject.GetComponent<AdvancedBodyPartController>();
+						if (mhm != null)
+						{
+                            mhm.OnBodyPartPreDeath += (obj1, obj2, obj3) =>
+                            {
+                                GameObject vfx = UnityEngine.Object.Instantiate<GameObject>(StaticVFXStorage.DragunBoulderLandVFX, this.aiActor.transform.position, Quaternion.identity);
+                                tk2dBaseSprite component = vfx.GetComponent<tk2dBaseSprite>();
+                                component.PlaceAtPositionByAnchor(this.aiActor.transform.position, tk2dBaseSprite.Anchor.MiddleCenter);
+                                component.HeightOffGround = 35f;
+                                component.UpdateZDepth();
+                                Destroy(component.gameObject, 2.5f);
+                            };
+                            mhm.OnBodyPartDamaged += (obj1, obj2, obj3, obj4, obj5, obj6, obj7) =>
+                            {
+                                mhm.MainBody.PlayEffectOnActor(ResourceCache.Acquire("Global VFX/VFX_Curse") as GameObject, Vector3.zero, true, false, false);
+                            };
+                            tr.gameObject.SetActive(true);
+                        }
+
+
+
+
+                    }
+
+				}
+
 				base.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("796a7ed4ad804984859088fc91672c7f").bulletBank.bulletBank.GetBullet("default"));
 				m_StartRoom = aiActor.GetAbsoluteParentRoom();
 				base.aiActor.healthHaver.OnPreDeath += (obj) =>

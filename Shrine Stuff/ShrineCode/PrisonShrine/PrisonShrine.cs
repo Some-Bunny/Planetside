@@ -160,10 +160,10 @@ namespace Planetside
 
 			List<List<AGDEnemyReplacementTier>> TheList = new List<List<AGDEnemyReplacementTier>>()
 			{
-				InfectionReplacement.GenerateEnemyReplacementTiers("creationist", fuck, targetTilesets, bulletKinEnemies, creationist, 0.125f),
-				InfectionReplacement.GenerateEnemyReplacementTiers("observant", fuck, targetTilesets, SniperlikeEnemies, observant, 0.4f),
-				InfectionReplacement.GenerateEnemyReplacementTiers("inquisitor", fuck, targetTilesets, GunnutlikeEnemies, inquisitor, 0.33f),
-				InfectionReplacement.GenerateEnemyReplacementTiers("vessel", fuck, targetTilesets, bufferEnemies, vessel, 0.3f),
+				InfectionReplacement.GenerateEnemyReplacementTiers("creationist", fuck, targetTilesets, bulletKinEnemies, creationist, 0.1f),
+				InfectionReplacement.GenerateEnemyReplacementTiers("observant", fuck, targetTilesets, SniperlikeEnemies, observant, 0.3f),
+				InfectionReplacement.GenerateEnemyReplacementTiers("inquisitor", fuck, targetTilesets, GunnutlikeEnemies, inquisitor, 0.25f),
+				InfectionReplacement.GenerateEnemyReplacementTiers("vessel", fuck, targetTilesets, bufferEnemies, vessel, 0.25f),
 				InfectionReplacement.GenerateEnemyReplacementTiers("collective", fuck, targetTilesets, strongEnemiesToReplace, collective, 0.25f),
 				InfectionReplacement.GenerateEnemyReplacementTiers("collective2", fuck, targetTilesets, shotgunEnemies, collective, 0.15f),
 				InfectionReplacement.GenerateEnemyReplacementTiers("stagnant", fuck, targetTilesets, batEnemies, stagnant, 0.1f),
@@ -304,10 +304,7 @@ namespace Planetside
 					animator2.Play("break");
 				}
 			}
-
-
 			AkSoundEngine.PostEvent("Play_PortalOpen", shrine.gameObject);
-
 
 			SimpleShrine simple = shrine.gameObject.GetComponent<SimpleShrine>();
 			simple.text = "The energy that once containted what was inside the shrine has departed.";
@@ -323,11 +320,10 @@ namespace Planetside
 			if (GameManager.Instance != null && GameManager.Instance.BestActivePlayer != null)
 			{ AkSoundEngine.PostEvent("Play_OBJ_moondoor_close_01", GameManager.Instance.BestActivePlayer.gameObject); }
 		}
-
 		public static IEnumerator DoDelayStuff(GameObject Shrine)
         {
 			yield return new WaitForSeconds(3f);
-			GameManager.Instance.MainCameraController.StopContinuousScreenShake(Shrine.GetComponent<tk2dBaseSprite>());
+			GameManager.Instance.MainCameraController.StopContinuousScreenShake(Shrine.GetComponent<TresspassLightController>());
 			OtherTools.Notify("SOMETHING EMERGES", "DEEP BELOW.", "Planetside/Resources/ShrineIcons/prisonShrineIcon");
 			yield break;
         }

@@ -191,21 +191,22 @@ namespace Planetside
         {
             if (player)
             {
-                AkSoundEngine.PostEvent("Play_BOSS_Rat_Cheese_Jump_01", player.gameObject);
-
-                GameObject vfx = SpawnManager.SpawnVFX((PickupObjectDatabase.GetById(577) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapVertical.effects.First().effects.First().effect, true);
-                vfx.transform.position = player.sprite.WorldCenter;
-                vfx.GetComponent<tk2dBaseSprite>().HeightOffGround = 22;
-                vfx.transform.localScale *= 2;
-                vfx.transform.localRotation = Quaternion.Euler(0, 0, Vector2.up.ToAngle());
-                UnityEngine.Object.Destroy(vfx, 2);
-
-
+            
                 if (AmountOfArmorConsumed > (int)player.healthHaver.Armor)
                 { AmountOfArmorConsumed = (int)player.healthHaver.Armor; }
 
                 if (LastStoredAmountOfHPConsumed != ActualHPPointsStored())
                 {
+                    AkSoundEngine.PostEvent("Play_BOSS_Rat_Cheese_Jump_01", player.gameObject);
+
+                    GameObject vfx = SpawnManager.SpawnVFX((PickupObjectDatabase.GetById(577) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapVertical.effects.First().effects.First().effect, true);
+                    vfx.transform.position = player.sprite.WorldCenter;
+                    vfx.GetComponent<tk2dBaseSprite>().HeightOffGround = 22;
+                    vfx.transform.localScale *= 2;
+                    vfx.transform.localRotation = Quaternion.Euler(0, 0, Vector2.up.ToAngle());
+                    UnityEngine.Object.Destroy(vfx, 2);
+
+
                     LastStoredAmountOfHPConsumed = ActualHPPointsStored();
                     for (int i = 0; i < objects.Count; i++)
                     {

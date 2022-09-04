@@ -387,11 +387,11 @@ namespace Planetside
 				companion.encounterTrackable.journalData.IsEnemy = true;
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
-				companion.encounterTrackable.journalData.AmmonomiconSprite = Defpath + "turretthing_idle_001.png";
-				companion.encounterTrackable.journalData.enemyPortraitSprite = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\fodderammonomiconentry.png");
+				companion.encounterTrackable.journalData.AmmonomiconSprite = Defpath + "turretthing_idle_001";
+				companion.encounterTrackable.journalData.enemyPortraitSprite = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\blockadesheetTrespass.png");
 				PlanetsideModule.Strings.Enemies.Set("#TOWER", "Blockade");
 				PlanetsideModule.Strings.Enemies.Set("#TOWER_SHORTDESC", "Iron Wall");
-				PlanetsideModule.Strings.Enemies.Set("#TOWER_LONGDESC", "Filled with the remnants of lively, yet deceased Gundead, though Gungeoneers often have little respect for Gundead practices.");
+				PlanetsideModule.Strings.Enemies.Set("#TOWER_LONGDESC", "Small parts of those who turned meshed themselves between the near-impenetrable brickwork of the -------, using loose parts as protective shells and peeking out to fire.");
 				companion.encounterTrackable.journalData.PrimaryDisplayName = "#TOWER";
 				companion.encounterTrackable.journalData.NotificationPanelDescription = "#TOWER_SHORTDESC";
 				companion.encounterTrackable.journalData.AmmonomiconFullEntry = "#TOWER_LONGDESC";

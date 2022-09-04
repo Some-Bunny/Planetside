@@ -46,12 +46,14 @@ namespace Planetside
 			animator.DefaultClipId = animator.GetClipIdByName("idle");
 			animator.playAutomatically = true;
 			animator.sprite.usesOverrideMaterial = true;
+
 			Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
 			mat.mainTexture = animator.sprite.renderer.material.mainTexture;
 			mat.SetColor("_EmissiveColor", new Color32(0, 255, 255, 255));
 			mat.SetFloat("_EmissiveColorPower", 2f);
 			mat.SetFloat("_EmissivePower", 35);
 			animator.sprite.renderer.material = mat;
+
 			FakePrefab.MarkAsFakePrefab(vfxObj);
 			UnityEngine.Object.DontDestroyOnLoad(vfxObj);
 

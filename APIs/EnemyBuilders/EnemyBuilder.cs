@@ -159,8 +159,6 @@ namespace ItemAPI
             aiActor.AwakenAnimType = AIActor.AwakenAnimationType.Default;
 
             aiActor.specRigidbody.PixelColliders.Add(new PixelCollider
-
-
             {
                 ColliderGenerationMode = PixelCollider.PixelColliderGeneration.Manual,
                 CollisionLayer = CollisionLayer.EnemyCollider,

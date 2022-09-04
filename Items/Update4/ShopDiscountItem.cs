@@ -27,6 +27,7 @@ namespace Planetside
         public List<int> IDsToReducePriceOf = new List<int>();
         public int PriceReductionItemID;
         public bool OverridePriceReduction;
+        public string SynergyToTrack;
 
         public bool PriceReductionActive()
         {
@@ -35,13 +36,31 @@ namespace Planetside
             for (int i = 0; i < players.Length; i++)
             {
                 PlayerController player = players[i];
-                if (player.HasPassiveItem(PriceReductionItemID))
+                if (discountTrigger == Trigger.ITEM)
                 {
-                    return true;
+                    if (player.HasPassiveItem(PriceReductionItemID))
+                    {
+                        return true;
+                    }
+                }
+                if (discountTrigger == Trigger.SYNERGY)
+                {
+                    if (SynergyToTrack != null && player.PlayerHasActiveSynergy(SynergyToTrack))
+                    {
+                        return true;
+                    }
                 }
             }
             return false;
         }
+
+        public Trigger discountTrigger = Trigger.ITEM;
+        public enum Trigger
+        {
+            ITEM,
+            SYNERGY,
+        };
+
     }
 
     public class ShopDiscountController : MonoBehaviour
@@ -204,7 +223,9 @@ namespace Planetside
                 IDsToReducePriceOf =  new List<int>() { 73, 85, 120 },
                 PriceReductionItemID = ShopDiscountItemID,
 
-            },
+            }
+            };
+            /*
             new ShopDiscount()
             {
                 IdentificationKey = "Two",
@@ -213,6 +234,7 @@ namespace Planetside
                 PriceReductionItemID = TarnishedAmmolet.TarnishedAmmoletID,
             }
             };
+            */
             //steamSale.IdentificationKey = "HP_Reduction";
             //steamSale.IDsToReducePriceOf = new List<int>() { 73, 85, 120 };
             //steamSale.PriceReductionItemID = ShopDiscountItemID;

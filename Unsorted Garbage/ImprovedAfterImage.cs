@@ -138,10 +138,16 @@ namespace Planetside
 
         private void SpawnNewShadow()
         {
+            if (this.m_inactiveShadows == null)
+            {
+                return;
+            }
+
             if (this.m_inactiveShadows.Count == 0)
             {
                 this.CreateInactiveShadow();
             }
+
             LinkedListNode<ImprovedAfterImage.Shadow> first = this.m_inactiveShadows.First;
             tk2dSprite sprite = first.Value.sprite;
             this.m_inactiveShadows.RemoveFirst();
@@ -149,6 +155,8 @@ namespace Planetside
             {
                 return;
             }
+
+
             first.Value.timer = this.shadowLifetime;
             sprite.SetSprite(base.sprite.Collection, base.sprite.spriteId);
             sprite.transform.position = base.sprite.transform.position;
@@ -188,6 +196,7 @@ namespace Planetside
             sprite.HeightOffGround = this.targetHeight;
             sprite.UpdateZDepth();
             this.m_activeShadows.AddLast(first);
+
         }
 
         public bool IsRandomShader;
@@ -390,12 +399,15 @@ namespace Planetside
 
         private void SpawnNewShadow()
         {
+
             if (base.GetComponentInChildren<tk2dTiledSprite>() == null) { ETGModConsole.Log("tk2dTiledSprite is NULL"); return; }
             if (base.GetComponent<tk2dTiledSprite>() == null) { ETGModConsole.Log("tk2dTiledSprite is NULL");  return; }
             if (this.m_inactiveShadows.Count == 0)
             {
                 this.CreateInactiveShadow();
             }
+
+
             LinkedListNode<ImprovedAfterImageForTiled.Shadow> first = this.m_inactiveShadows.First;
             tk2dTiledSprite sprite = first.Value.sprite;
             this.m_inactiveShadows.RemoveFirst();
@@ -403,26 +415,40 @@ namespace Planetside
             {
                 return;
             }
+
             first.Value.timer = this.shadowLifetime;
+
+
             sprite.SetSprite(base.GetComponent<tk2dTiledSprite>().sprite.Collection, base.GetComponent<tk2dTiledSprite>().sprite.spriteId);
+
             sprite.transform.position = base.GetComponent<tk2dTiledSprite>().sprite.transform.position;
+
             sprite.transform.rotation = base.GetComponent<tk2dTiledSprite>().sprite.transform.rotation;
-            if (base.transform.parent.GetComponentInChildren<BasicBeamController>() != null)
+
+            if (base.transform.parent != null)
             {
-                float angle = base.transform.parent.GetComponentInChildren<BasicBeamController>().Direction.ToAngle();
-                sprite.transform.rotation = Quaternion.Euler(0, 0, angle);
+                if (base.transform.parent.GetComponentInChildren<BasicBeamController>() != null)
+                {
+
+                    float angle = base.transform.parent.GetComponentInChildren<BasicBeamController>().Direction.ToAngle();
+
+                    sprite.transform.rotation = Quaternion.Euler(0, 0, angle);
+
+                }
+                if (base.transform.parent.GetComponentInChildren<BeamController>() != null)
+                {
+                    float angle = base.transform.parent.GetComponentInChildren<BeamController>().Direction.ToAngle();
+                    sprite.transform.rotation = Quaternion.Euler(0, 0, angle);
+                }
             }
-            if (base.transform.parent.GetComponentInChildren<BeamController>() != null)
-            {
-                float angle = base.transform.parent.GetComponentInChildren<BeamController>().Direction.ToAngle();
-                sprite.transform.rotation = Quaternion.Euler(0, 0, angle);
-            }
+          
 
             sprite.scale = base.GetComponent<tk2dTiledSprite>().sprite.scale;
             sprite.dimensions = base.GetComponent<tk2dTiledSprite>().dimensions;
             sprite.usesOverrideMaterial = true;
             sprite.IsPerpendicular = true;
             sprite.renderer.enabled = true;
+
             if (sprite.renderer && IsRandomShader)
             {
                 sprite.renderer.enabled = true;
@@ -448,6 +474,7 @@ namespace Planetside
                 sprite.renderer.sharedMaterial.SetColor("_DashColor", this.dashColor);
                 sprite.renderer.sharedMaterial.SetFloat("_AllColorsToggle", 1f);
             }
+
             sprite.HeightOffGround = this.targetHeight;
             sprite.UpdateZDepth();
             this.m_activeShadows.AddLast(first);

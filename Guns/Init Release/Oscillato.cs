@@ -55,7 +55,8 @@ namespace Planetside
 			gun.DefaultModule.projectiles[0] = projectile;
 			projectile.baseData.damage = 4.5f;
 			projectile.baseData.speed *= 0.7f;
-			projectile.AdditionalScaleMultiplier *= 1f;
+
+            projectile.AdditionalScaleMultiplier *= 1f;
 			projectile.shouldRotate = true;
 			projectile.pierceMinorBreakables = true;
 			projectile.objectImpactEventName = (PickupObjectDatabase.GetById(13) as Gun).DefaultModule.projectiles[0].objectImpactEventName;

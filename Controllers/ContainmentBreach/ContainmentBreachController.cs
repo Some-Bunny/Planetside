@@ -84,9 +84,9 @@ namespace Planetside
                 var deco = dungeon.decoSettings;
                 deco.ambientLightColor = new Color(0.05f, 0.15f, 0.9f);
                 deco.generateLights = true;
-                deco.ambientLightColorTwo = new Color(0.05f, 0.15f, 0.9f);
-                deco.lowQualityAmbientLightColor = new Color(0.05f, 0.15f, 0.9f);
-                deco.lowQualityAmbientLightColorTwo = new Color(0.05f, 0.15f, 0.9f);
+                deco.ambientLightColorTwo = new Color(0.05f, 0.10f, 0.7f);
+                deco.lowQualityAmbientLightColor = new Color(0.05f, 0.15f, 0.7f);
+                deco.lowQualityAmbientLightColorTwo = new Color(0.05f, 0.15f, 0.7f);
                 dungeon.PlayerIsLight = true;
                 dungeon.PlayerLightColor = Color.cyan;
                 dungeon.PlayerLightIntensity = 2;
@@ -185,7 +185,10 @@ namespace Planetside
 
                 CurrentState = States.ENABLED;
                 bool ShopPlaced = false;
+                bool triggered = false;
+
                 List<RoomHandler> rooms = GameManager.Instance.Dungeon.data.rooms;
+
                 foreach (RoomHandler roomHandler in rooms)
                 {
                     BaseShopController[] componentsInChildren = GameManager.Instance.Dungeon.data.Entrance.hierarchyParent.parent.GetComponentsInChildren<BaseShopController>(true);
@@ -248,34 +251,47 @@ namespace Planetside
                         }
                     }
 
-
-
                     GunberMuncherController[] muncher = GameManager.Instance.Dungeon.data.Entrance.hierarchyParent.parent.GetComponentsInChildren<GunberMuncherController>(true);
-                    bool muncjyflag = muncher != null && muncher.Length != 0;
-                    if (muncjyflag)
+                    if (muncher != null && muncher.Length > 0)
                     {
-                        bool triggered = false;
                         foreach (GunberMuncherController shope in muncher)
                         {
                             if (triggered == false)
                             {
-                                Minimap.Instance.DeregisterRoomIcon(roomHandler, (GameObject)ResourceCache.Acquire("Global Prefabs/Minimap_Muncher_Icon"));
-                                //Minimap.Instance.RegisterRoomIcon
+                                RoomHandler room = shope.transform.position.GetAbsoluteRoom();
+                                List<GameObject> ICONS = new List<GameObject>();
+                                var rTI = PlanetsideReflectionHelper.ReflectGetField<Dictionary<RoomHandler, List<GameObject>>>(typeof(Minimap), "roomToIconsMap", Minimap.Instance);
+                                if (rTI.ContainsKey(room))
+                                {
+                                    rTI.TryGetValue(room, out ICONS);
+                                    if (ICONS != null && ICONS.Count > 0)
+                                    {
+                                        for (int i = 0; i < ICONS.Count; i++)
+                                        {
+                                            if (ICONS[i].name.ToLower().Contains("muncher"))
+                                            {
+                                                Minimap.Instance.DeregisterRoomIcon(room, ICONS[i]);
+
+                                            }
+                                        }
+                                    }                 
+                                }
+
                                 GameObject obj = new GameObject();
                                 RoomHandler roomIn = GameManager.Instance.Dungeon.data.GetAbsoluteRoomFromPosition(base.transform.position.IntXY(VectorConversions.Floor));
                                 StaticReferences.StoredRoomObjects.TryGetValue("VoidMuncher", out obj);
-                                GameObject shopObj = DungeonPlaceableUtility.InstantiateDungeonPlaceable(obj, roomIn, new IntVector2((int)shope.gameObject.transform.position.x + (7), (int)shope.gameObject.transform.position.y) - roomIn.area.basePosition, false);
+                                GameObject shopObj = DungeonPlaceableUtility.InstantiateDungeonPlaceable(obj, roomIn, new IntVector2((int)shope.gameObject.transform.position.x +1, (int)shope.gameObject.transform.position.y + 1) - roomIn.area.basePosition, false);
                                 IPlayerInteractable[] interfaces = shopObj.GetInterfaces<IPlayerInteractable>();
                                 for (int j = 0; j < interfaces.Length; j++)
                                 {
-                                    roomHandler.RegisterInteractable(interfaces[j]);
+                                    room.RegisterInteractable(interfaces[j]);
                                 }
                                 triggered = true;
                             }
-                          
                             Destroy(shope.gameObject);
                         }
                     }
+
                     SellCellController[] sellcreep = GameManager.Instance.Dungeon.data.Entrance.hierarchyParent.parent.GetComponentsInChildren<SellCellController>(true);
                     bool sellcreepflag = sellcreep != null && sellcreep.Length != 0;
                     if (sellcreepflag)
@@ -295,7 +311,6 @@ namespace Planetside
                             ShopController shopController = shope.GetComponent<ShopController>();
                             if (shopController != null)
                             {
-                                //shopController.
                             }
                             Destroy(shope.gameObject);
                         }

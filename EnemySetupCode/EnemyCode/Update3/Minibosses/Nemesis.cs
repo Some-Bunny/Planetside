@@ -965,7 +965,8 @@ namespace Planetside
 				while (elapsed < Time)
 				{
 					float t = (float)elapsed / (float)Time;
-					if (parent.IsEnded || parent.Destroyed)
+
+                    if (parent.IsEnded || parent.Destroyed)
 					{
 						UnityEngine.Object.Destroy(component2.gameObject);
 						yield break;
@@ -977,7 +978,8 @@ namespace Planetside
 						component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (20 * t));
 						component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f + (1.2f * t));
 						component2.transform.localRotation = Quaternion.Euler(0f, 0f, Mathf.Lerp(Ang - AddOrSubtract, Ang, t));
-						component2.HeightOffGround = -2;
+
+                        component2.HeightOffGround = -2;
 						component2.renderer.gameObject.layer = 23;
 						component2.dimensions = new Vector2(1000f, 1f);
 						component2.UpdateZDepth();
@@ -999,7 +1001,6 @@ namespace Planetside
 					yield return null;
 				}
 				UnityEngine.Object.Destroy(component2.gameObject);
-				base.PostWwiseEvent("Play_Railgun");
 				if (Fires == true)
                 {
 					base.Fire(Offset.OverridePosition(CurrentBarrelPosition()), new Direction(Ang, DirectionType.Absolute, -1f), new Speed(Speed, SpeedType.Absolute), new UndodgeableBullshit());

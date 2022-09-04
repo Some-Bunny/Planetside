@@ -41,14 +41,18 @@ namespace Planetside
 				isBreachShrine = false,
 				shadowPath = "Planetside/Resources/Shrines/defaultShrineShadow.png",
 				ShadowOffsetX = 0f,
-				ShadowOffsetY = -0.5f,
+				ShadowOffsetY = -0.25f,
                 AdditionalComponent = typeof(BrokenChamberShrineController)
 			};
 			GameObject self = iei.Build();
 			SpriteID = ItemAPI.SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Shrines/brokenchambershrinelifted.png", self.GetComponent<tk2dBaseSprite>().Collection);
-		}
-		private static int SpriteID;
-		public static bool CanUse(PlayerController player, GameObject shrine)
+            SpriteID2 = ItemAPI.SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Shrines/EOEShrine.png", self.GetComponent<tk2dBaseSprite>().Collection);
+
+        }
+        private static int SpriteID;
+        private static int SpriteID2;
+
+        public static bool CanUse(PlayerController player, GameObject shrine)
 		{
 			return shrine.GetComponent<CustomShrineController>().numUses == 0;
 		}
@@ -65,7 +69,7 @@ namespace Planetside
                 if (Shrine == true)
                 {
                     tk2dSprite sprite = base.gameObject.GetComponent<tk2dSprite>();
-                    sprite.GetComponent<tk2dBaseSprite>().SetSprite(SpriteID);
+                    sprite.GetComponent<tk2dBaseSprite>().SetSprite(SpriteID2);
                     try
                     {
                         SimpleShrine shrine = base.gameObject.GetComponent<SimpleShrine>();

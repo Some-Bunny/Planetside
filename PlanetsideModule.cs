@@ -370,6 +370,8 @@ namespace Planetside
             Patience.Init();
             CorruptedWealth.Init();
 
+            CandyHeart.Init();
+
             //VengefulShell.Init();
             //LaserWelder.Add();
             //BoscoDesignator.Add();
@@ -390,6 +392,7 @@ namespace Planetside
             Collective.Init();
             Bloat.Init();
             Tower.Init();
+            Oppressor.Init();
 
             //fuck 
             TrespassTrollRock.Init();
