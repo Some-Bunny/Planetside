@@ -129,56 +129,49 @@ namespace Planetside
 
         private IEnumerator HandleSilence(Vector2 centerPoint, float maxRadius, float additionalTimeAtMaxRadius, PlayerController user)
         {
-
             GameObject vfx = SpawnManager.SpawnVFX((PickupObjectDatabase.GetById(536) as RelodestoneItem).ContinuousVFX, true);
+            vfx.transform.parent = user.transform;
             vfx.transform.position = user.sprite.WorldCenter;
             vfx.GetComponent<tk2dBaseSprite>().HeightOffGround = 22;
             AkSoundEngine.PostEvent("Play_WPN_Life_Orb_Blast_01", user.gameObject);
 
             List<Projectile> doNotWreck = new List<Projectile>();
             float elapsed = 0f;
-            while (elapsed < additionalTimeAtMaxRadius + (StackCount*1.25f))
+            while (elapsed < additionalTimeAtMaxRadius + (StackCount * 1.25f))
             {
                 elapsed += BraveTime.DeltaTime;
                 bool destroysEnemyBullets = true;
                 bool pvp_ENABLED = GameManager.PVP_ENABLED;
                 float? previousRadius2 = new float?(maxRadius);
-                doNotWreck = BlankHooks.DestroyBulletsInRangeSpecial(centerPoint, maxRadius, destroysEnemyBullets, pvp_ENABLED, doNotWreck,user, false, previousRadius2, false, null);
+                doNotWreck = BlankHooks.DestroyBulletsInRangeSpecial(centerPoint, maxRadius, destroysEnemyBullets, pvp_ENABLED, doNotWreck, user, false, previousRadius2, false, null);
                 yield return null;
             }
             GameObject silencerVFX = (GameObject)ResourceCache.Acquire("Global VFX/BlankVFX_Ghost");
-            tk2dSpriteAnimator objanimator = silencerVFX.GetComponentInChildren<tk2dSpriteAnimator>();
-            objanimator.ignoreTimeScale = true;
-            objanimator.AlwaysIgnoreTimeScale = true;
-            objanimator.AnimateDuringBossIntros = true;
-            objanimator.alwaysUpdateOffscreen = true;
-            objanimator.playAutomatically = true;
-            ParticleSystem objparticles = silencerVFX.GetComponentInChildren<ParticleSystem>();
-            var main = objparticles.main;
-            main.useUnscaledTime = true;
             GameObject gameObject = GameObject.Instantiate(silencerVFX.gameObject, user.sprite.WorldCenter, Quaternion.identity);
             Destroy(gameObject, 2.5f);
 
             UnityEngine.Object.Destroy(vfx, 0);
-
-
             yield break;
         }
 
 
         private void HealthHaver_OnDamaged(float resultValue, float maxValue, CoreDamageTypes damageTypes, DamageCategory damageCategory, Vector2 damageDirection)
         {
-            if (AmountOfHPConsumed > 0f) { AmountOfHPConsumed -= 0.5f; }
-            if (AmountOfHPConsumed < 0) { AmountOfArmorConsumed = 0; }
-
-            RecalculateDamage();
-            if (AmountOfHPConsumed > 0f)
+            if (player.healthHaver.Armor == 0)
             {
-                AkSoundEngine.PostEvent("Play_BOSS_lichA_crack_01", player.gameObject);
-                { AmountOfHPConsumed -= 0.5f; }
-                player.healthHaver.ForceSetCurrentHealth(player.healthHaver.GetCurrentHealth() - 0.5f);
+                if (AmountOfHPConsumed > 0f) { AmountOfHPConsumed -= 0.5f; }
+                if (AmountOfHPConsumed < 0) { AmountOfHPConsumed = 0; }
+                if (AmountOfArmorConsumed < 0) { AmountOfArmorConsumed = 0; }
+
                 RecalculateDamage();
-            }
+                if (AmountOfHPConsumed > 0f)
+                {
+                    AkSoundEngine.PostEvent("Play_BOSS_lichA_crack_01", player.gameObject);
+                    { AmountOfHPConsumed -= 0.5f; }
+                    player.healthHaver.ForceSetCurrentHealth(player.healthHaver.GetCurrentHealth() - 0.5f);
+                    RecalculateDamage();
+                }
+            }        
         }
 
         public int ActualHPPointsStored()

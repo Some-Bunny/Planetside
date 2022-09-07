@@ -537,8 +537,10 @@ namespace Planetside
 				prefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("jump").frames[3].triggerEvent = true;
 				prefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("jumpland").frames[1].eventAudio = "Play_ENM_cannonball_blast_01";
 				prefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("jumpland").frames[1].triggerEvent = true;
+
 				prefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("roar").frames[5].eventAudio = "Play_VO_lichB_death_01";
 				prefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("roar").frames[5].triggerEvent = true;
+
 				prefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("intro").frames[26].eventAudio = "Play_VO_lichB_death_01";
 				prefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("intro").frames[26].triggerEvent = true;
 

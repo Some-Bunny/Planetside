@@ -49,7 +49,8 @@ namespace Planetside
 			private IEnumerator DoIntro()
 			{
 				m_isFinished = true;
-				this.aiActor.enabled = true;
+                this.aiActor.State = AIActor.ActorState.Awakening;
+                this.aiActor.enabled = true;
 				this.behaviorSpeculator.enabled = false;
 				this.aiActor.ToggleRenderers(false);
 				this.specRigidbody.enabled = false;
@@ -66,7 +67,6 @@ namespace Planetside
 				this.aiActor.IsGone = false;
 				this.aiActor.IgnoreForRoomClear = false;
 				this.aiAnimator.PlayDefaultAwakenedState();
-				this.aiActor.State = AIActor.ActorState.Awakening;
 				int playerMask = CollisionMask.LayerToMask(CollisionLayer.PlayerCollider, CollisionLayer.PlayerHitBox);
 				this.aiActor.specRigidbody.AddCollisionLayerIgnoreOverride(playerMask);
 				this.specRigidbody.Initialize();

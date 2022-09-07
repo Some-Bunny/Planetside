@@ -190,8 +190,6 @@ namespace Planetside
 			user.CurrentRoom.PreventStandardRoomReward = true;
 			yield return new WaitForSeconds(0.25f);
 
-
-
 			GameObject coolPortal = DoSpawnPortalHole(Shrine.GetComponent<tk2dBaseSprite>().WorldCenter + new Vector2(0, 1));
 			PortalVisualsController portalVisuals = coolPortal.GetComponent<PortalVisualsController>();
 			EmergencyPlayerDisappearedFromRoom disappearedFromRoomController = portalVisuals.AddComponent<EmergencyPlayerDisappearedFromRoom>();
@@ -250,31 +248,26 @@ namespace Planetside
 				if (WavesSpawned == 3)
                 {
 					portalVisuals.ConstantlyPulsates = false;
-					user.CurrentRoom.UnsealRoom();
+                    portalVisuals.LTS(Vector3.one * 2.5f, Vector3.zero, 1.2f);
+                    portalVisuals.LSV(0.3f, 0f, 1.25f, "_OutlineWidth");
+                    portalVisuals.LSV(105f, 10f, 3f, "_OutlinePower");
+
+                    user.CurrentRoom.UnsealRoom();
 					user.CurrentRoom.EndTerrifyingDarkRoom(2f);
 					GameManager.Instance.StartCoroutine(VoidHoleAway(voidHoleController, partObj));
-					portalVisuals.LTS(Vector3.one * 2.5f, Vector3.zero, 1.2f);
-					portalVisuals.LSV(0.3f, 0f, 1.25f, "_OutlineWidth");
-					portalVisuals.LSV(105f, 10f, 3f, "_OutlinePower");
+
+
 					GameObject silencerVFX = (GameObject)ResourceCache.Acquire("Global VFX/BlankVFX_Ghost");
-					tk2dSpriteAnimator objanimator = silencerVFX.GetComponentInChildren<tk2dSpriteAnimator>();
-					objanimator.ignoreTimeScale = true;
-					objanimator.AlwaysIgnoreTimeScale = true;
-					objanimator.AnimateDuringBossIntros = true;
-					objanimator.alwaysUpdateOffscreen = true;
-					objanimator.playAutomatically = true;
-					ParticleSystem objparticles = silencerVFX.GetComponentInChildren<ParticleSystem>();
-					var main = objparticles.main;
-					main.useUnscaledTime = true;
+
 					GameObject vfx = GameObject.Instantiate(silencerVFX.gameObject, coolPortal.transform.position, Quaternion.identity);
 					UnityEngine.Object.Destroy(vfx, 2);
-					for (int i = 0; i < 3; i++)
+					for (int i = 0; i < 5; i++)
 					{
 						int id = BraveUtility.RandomElement<int>(RobotShopkeeperBoss.Lootdrops);
-						DebrisObject pickups = LootEngine.SpawnItem(PickupObjectDatabase.GetById(id).gameObject, coolPortal.transform.position + new Vector3(0.25f, 0), MathToolbox.GetUnitOnCircle(120 * i, 1), 4f, false, true, false);
+						DebrisObject pickups = LootEngine.SpawnItem(PickupObjectDatabase.GetById(id).gameObject, coolPortal.transform.position + new Vector3(0.25f, 0), MathToolbox.GetUnitOnCircle(72 * i, 1), 4f, false, true, false);
 					}
-					LootEngine.SpawnItem(UnityEngine.Random.value > 0.5f ? PickupObjectDatabase.GetRandomGunOfQualities(new System.Random(UnityEngine.Random.Range(1, 100)), new List<int> { }, new PickupObject.ItemQuality[] { PickupObject.ItemQuality.C, PickupObject.ItemQuality.C, PickupObject.ItemQuality.B, PickupObject.ItemQuality.B, PickupObject.ItemQuality.B, PickupObject.ItemQuality.A, PickupObject.ItemQuality.S }).gameObject : PickupObjectDatabase.GetRandomPassiveOfQualities(new System.Random(UnityEngine.Random.Range(1, 100)), new List<int> { }, new PickupObject.ItemQuality[] { PickupObject.ItemQuality.B, PickupObject.ItemQuality.B, PickupObject.ItemQuality.A, PickupObject.ItemQuality.S }).gameObject, coolPortal.transform.position + new Vector3(0.25f, 0), Vector2.down, 2f, false, true, false);
 
+					LootEngine.SpawnItem(UnityEngine.Random.value > 0.5f ? PickupObjectDatabase.GetRandomGunOfQualities(new System.Random(UnityEngine.Random.Range(1, 100)), new List<int> { }, new PickupObject.ItemQuality[] { PickupObject.ItemQuality.C, PickupObject.ItemQuality.C, PickupObject.ItemQuality.B, PickupObject.ItemQuality.B, PickupObject.ItemQuality.B, PickupObject.ItemQuality.A, PickupObject.ItemQuality.S }).gameObject : PickupObjectDatabase.GetRandomPassiveOfQualities(new System.Random(UnityEngine.Random.Range(1, 100)), new List<int> { }, new PickupObject.ItemQuality[] { PickupObject.ItemQuality.B, PickupObject.ItemQuality.B, PickupObject.ItemQuality.A, PickupObject.ItemQuality.S }).gameObject, coolPortal.transform.position + new Vector3(0.25f, 0), Vector2.down, 2f, false, true, false);
 
 					UnityEngine.Object.Destroy(coolPortal, 3);
 				}

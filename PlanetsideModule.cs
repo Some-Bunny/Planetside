@@ -371,6 +371,8 @@ namespace Planetside
             CorruptedWealth.Init();
 
             CandyHeart.Init();
+            CanisterLauncher.Add();
+            Sawcon.Add();
 
             //VengefulShell.Init();
             //LaserWelder.Add();

@@ -40,7 +40,6 @@ C:\Users\maxvo\source\repos\Planetside\bin\Debug\UnityEngine.IMGUIModule.dll
 C:\Users\maxvo\source\repos\Planetside\bin\Debug\UnityEngine.JSONSerializeModule.dll
 C:\Users\maxvo\source\repos\Planetside\bin\Debug\UnityEngine.TextRenderingModule.dll
 C:\Users\maxvo\source\repos\Planetside\bin\Debug\UnityEngine.UI.dll
-C:\Users\maxvo\source\repos\Planetside\bin\Debug\UnityEngine.AudioModule.dll
 C:\Users\maxvo\source\repos\Planetside\bin\Debug\UnityEngine.PhysicsModule.dll
 C:\Users\maxvo\source\repos\Planetside\bin\Debug\UnityEngine.AIModule.dll
 C:\Users\maxvo\source\repos\Planetside\bin\Debug\UnityEngine.Physics2DModule.dll
@@ -93,7 +92,6 @@ C:\Users\maxvo\source\repos\Planetside\bin\Debug\UnityEngine.ImageConversionModu
 C:\Users\maxvo\source\repos\Planetside\bin\Debug\UnityEngine.IMGUIModule.xml
 C:\Users\maxvo\source\repos\Planetside\bin\Debug\UnityEngine.JSONSerializeModule.xml
 C:\Users\maxvo\source\repos\Planetside\bin\Debug\UnityEngine.TextRenderingModule.xml
-C:\Users\maxvo\source\repos\Planetside\bin\Debug\UnityEngine.AudioModule.xml
 C:\Users\maxvo\source\repos\Planetside\bin\Debug\UnityEngine.PhysicsModule.xml
 C:\Users\maxvo\source\repos\Planetside\bin\Debug\UnityEngine.AIModule.xml
 C:\Users\maxvo\source\repos\Planetside\bin\Debug\UnityEngine.Physics2DModule.xml

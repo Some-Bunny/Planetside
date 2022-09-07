@@ -4,20 +4,12 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using static MonoMod.Cil.RuntimeILReferenceBag.FastDelegateInvokers;
+using static Planetside.CoinTosser;
 
 namespace Planetside
 {
     public class AdvancedBodyPartController : BraveBehaviour
     {
-
-        public bool HostBodyIsDead = false;
-        public bool OverrideFacingDirection { get; set; }
-
-        public virtual void Awake()
-        {
-           
-        }
-
         private void HealthHaver_OnPreDeathAIActor(Vector2 obj)
         {
             HostBodyIsDead = true;
@@ -55,10 +47,9 @@ namespace Planetside
 
         public virtual void Start()
         {
-            if (!this.MainBody && base.transform.parent)
-            {
-                this.MainBody = base.transform.parent.GetComponent<AIActor>();
-            }
+            this.MainBody = base.transform.parent.GetComponent<AIActor>();
+            this.renderer.enabled = Render;
+
             if (!this.ownBody)
             {
                 ownBody = this.gameObject.GetComponent<SpeculativeRigidbody>();
@@ -82,10 +73,6 @@ namespace Planetside
                     }
                 }
             }
-            if (!this.m_bodyFound && this.MainBody)
-            {
-                this.m_bodyFound = true;
-            }
             if (!base.specRigidbody)
             {
                 base.specRigidbody = this.MainBody.specRigidbody;
@@ -108,17 +95,6 @@ namespace Planetside
                 ownHealthHaver.OnDeath += OwnHealthHaver_OnDeath;
             }
 
-            /*
-            if ((this.faceTarget & base.aiAnimator) && this.m_body.aiAnimator)
-            {
-                base.aiAnimator.LockFacingDirection = true;
-                base.aiAnimator.FacingDirection = this.m_body.aiAnimator.FacingDirection;
-            }
-            if (base.specRigidbody && this.redirectHealthHaver)
-            {
-                base.specRigidbody.healthHaver = this.m_body.healthHaver;
-            }
-            */
         }
 
         private void OwnHealthHaver_OnDeath(Vector2 obj)
@@ -145,6 +121,7 @@ namespace Planetside
             }
         }
 
+        public bool Render = true;
         public virtual void Update()
         {
             float num;
@@ -153,6 +130,8 @@ namespace Planetside
                 ownBody.Reinitialize();
                 ownBody.healthHaver.sprite.ForceUpdateMaterial();
             }
+
+            this.renderer.enabled = Render;
 
             if (!this.OverrideFacingDirection && this.faceTarget && this.TryGetAimAngle(out num))
             {
@@ -207,6 +186,9 @@ namespace Planetside
             return false;
         }
 
+
+
+
         public string Name =  "BodyPart";
 
         public SpeculativeRigidbody ownBody;
@@ -218,30 +200,20 @@ namespace Planetside
 
 
         public int intPixelCollider;
-
-        public AIActor specifyActor;
-
         public bool hasOutlines;
-
         public bool faceTarget;
-
         [ShowInInspectorIf("faceTarget", true)]
         public float faceTargetTurnSpeed = -1f;
 
         [ShowInInspectorIf("faceTarget", true)]
         public BodyPartController.AimFromType aimFrom = BodyPartController.AimFromType.Transform;
-
         public bool autoDepth = true;
-
         public bool redirectHealthHaver;
-
         public bool independentFlashOnDamage;
-
         public AIActor MainBody;
-
         private float m_heightOffBody;
-
-        private bool m_bodyFound;
+        public bool HostBodyIsDead = false;
+        public bool OverrideFacingDirection { get; set; }
 
         public enum AimFromType
         {
@@ -249,5 +221,4 @@ namespace Planetside
             ActorHitBoxCenter = 20
         }
     }
-
 }

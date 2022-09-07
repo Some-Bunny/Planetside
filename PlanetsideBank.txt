@@ -3,6 +3,7 @@ Event	ID	Name			Wwise Object Path	Notes
 	83107013	Play_FlashTell			\Default Work Unit\Play_FlashTell	
 	126163728	Play_PSOG_MUS_DEEP_01_Intro_Secret			\Default Work Unit\Play_PSOG_MUS_DEEP_01_Intro_Secret	
 	171788890	Play_RockBreaking			\Default Work Unit\Play_RockBreaking	
+	419484741	Play_Oppressor_Laugh			\Default Work Unit\Play_Oppressor_Laugh	
 	447827484	Play_PrisonerCough			\Default Work Unit\Play_PrisonerCough	
 	678708164	Play_PSOG_MUS_DEEP_01_Calm			\Default Work Unit\Play_PSOG_MUS_DEEP_01_Calm	
 	819467808	Play_PSOG_MUS_DEEP_01_Intro_Shop			\Default Work Unit\Play_PSOG_MUS_DEEP_01_Intro_Shop	
@@ -10,10 +11,12 @@ Event	ID	Name			Wwise Object Path	Notes
 	973001168	Play_ChainBreak_01			\Default Work Unit\Play_ChainBreak_01	
 	1029240027	Play_Yari			\Default Work Unit\Play_Yari	
 	1129740972	Play_PortalOpen			\Default Work Unit\Play_PortalOpen	
+	1172597130	Play_Strafe_Shot			\Default Work Unit\Play_Strafe_Shot	
 	1357217975	Play_Squeal			\Default Work Unit\Play_Squeal	
 	1479613161	Play_EyeRoar			\Default Work Unit\Play_EyeRoar	
 	1553844495	Stop_MUS_PrisonerTheme			\Default Work Unit\Stop_MUS_PrisonerTheme	
 	1648309904	Play_Railgun			\Default Work Unit\Play_Railgun	
+	1648787241	Play_Oppresser_BigHurt			\Default Work Unit\Play_Oppresser_BigHurt	
 	1661444356	Play_ambienthum			\Default Work Unit\Play_ambienthum	
 	1708275573	Play_Burn			\Default Work Unit\Play_Burn	
 	1816174868	Stop_Tear			\Default Work Unit\Stop_Tear	
@@ -25,6 +28,7 @@ Event	ID	Name			Wwise Object Path	Notes
 	2357224967	Play_VesselHurt			\Default Work Unit\Play_VesselHurt	
 	2479500174	Play_PrisonerCharge			\Default Work Unit\Play_PrisonerCharge	
 	2529669854	Stop_Whistle			\Default Work Unit\Stop_Whistle	
+	2572192456	Play_Big_Break			\Default Work Unit\Play_Big_Break	
 	2693257580	Play_Whistle			\Default Work Unit\Play_Whistle	
 	2720341742	Play_Bleep			\Default Work Unit\Play_Bleep	
 	2753042117	Play_Stomp			\Default Work Unit\Play_Stomp	
@@ -47,6 +51,7 @@ Event	ID	Name			Wwise Object Path	Notes
 	3501561473	Play_PrisonerLaugh			\Default Work Unit\Play_PrisonerLaugh	
 	3527494775	Stop_Burn			\Default Work Unit\Stop_Burn	
 	3547654276	Play_BigGuyGrowl			\Default Work Unit\Play_BigGuyGrowl	
+	3689982839	Play_Grenade_shot_01			\Default Work Unit\Play_Grenade_shot_01	
 	3711307104	Play_BiGGuyDethAgain			\Default Work Unit\Play_BiGGuyDethAgain	
 	3765695918	Play_Heartbeat			\Default Work Unit\Play_Heartbeat	
 	3841265863	Stop_EyeRoar			\Default Work Unit\Stop_EyeRoar	
@@ -54,6 +59,7 @@ Event	ID	Name			Wwise Object Path	Notes
 	3989373337	Play_PSOG_MUS_DEEP_01_Intro			\Default Work Unit\Play_PSOG_MUS_DEEP_01_Intro	
 	4084283492	Play_CoinFlip			\Default Work Unit\Play_CoinFlip	
 	4129383554	Play_DistressSiren			\Default Work Unit\Play_DistressSiren	
+	4289690060	Play_Vertebreak_Shot			\Default Work Unit\Play_Vertebreak_Shot	
 
 Game Parameter	ID	Name			Wwise Object Path	Notes
 	2714767868	VOL_MUS			\Default Work Unit\VOL_MUS	
@@ -64,7 +70,6 @@ Effect plug-ins	ID	Name	Type				Notes
 	287224143	New_Wwise_Time_Stretch	Wwise Time Stretch			
 	350469619	Wwise Time Stretch (Custom)	Wwise Time Stretch			
 	701863527	Inside_My_Head	Wwise RoomVerb			
-	750682931	Robotic_Trash (Custom)	Wwise RoomVerb			
 	786117557	Not_A_Yellow_Submarine (Custom)	Wwise RoomVerb			
 	802545870	Wwise Gain (Custom)	Wwise Gain			
 	1588715066	Echoes_Linear	Wwise Delay			
@@ -85,6 +90,7 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	185399095	StartSegment	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\StartSegment_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\MUS_PrisonerTheme\StartSegment		309087
 	186333650	AbyssBlast_1	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\AbyssBlast_1_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\AbyssBlast\AbyssBlast_1		30418
 	250665413	PSOG_MUS_DEEP_01_LoopD	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\PSOG_MUS_DEEP_01_LoopD_AD29F36A.wem		\Actor-Mixer Hierarchy\Default Work Unit\PSOG_MUS_DEEP_01_LoopD		3570178
+	262136903	Grenade_shot_01	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Grenade_shot_01_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\Grenade_shot_01		11637
 	262352992	Yari3	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Yari3_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\Yari\Yari3		12622
 	297267472	BigGuyGrowl	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\BigGuyGrowl_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\BigGuyGrowl		35626
 	318799545	PrisonerCough	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\PrisonerCough_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\PrisonerCough		17962
@@ -93,8 +99,10 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	385222674	DistressSiren	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\DistressSiren_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\DistressSiren		27348
 	391233250	Railgun	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Railgun_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\Railgun		29738
 	392976817	StepTwo	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\StepTwo_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\NemesisStep\StepTwo		3132
+	395399080	Big_Break	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Big_Break_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\Big_Break		36268
 	413340843	Bleep	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Bleep_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\Bleep		6915
 	423828789	PortalCall	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\PortalCall_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\PortalCall		9931
+	427849008	Oppressor_Laugh	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Oppressor_Laugh_F7D0E330_25634AC6.wem		\Actor-Mixer Hierarchy\Default Work Unit\Oppressor_Laugh		57996
 	438416493	Bigbeam_Start	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Bigbeam_Start_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\BigBeam\Bigbeam_Start		27588
 	452294370	Yari1	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Yari1_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\Yari\Yari1		11820
 	462392770	PSOG_MUS_DEEP_01_Calm	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\PSOG_MUS_DEEP_01_Calm_AD29F36A.wem		\Actor-Mixer Hierarchy\Default Work Unit\PSOG_MUS_DEEP_01_Calm		1071907
@@ -105,10 +113,13 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	515989585	BigGuyDeath	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\BigGuyDeath_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\BigGuyDeath		32173
 	516849312	PSOG_MUS_DEEP_01_LoopC	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\PSOG_MUS_DEEP_01_LoopC_AD29F36A.wem		\Actor-Mixer Hierarchy\Default Work Unit\PSOG_MUS_DEEP_01_LoopC		3594841
 	530905431	GuardDie	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\GuardDie_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\GuardDie		28119
+	538399444	Oppresser_BigHurt	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Oppresser_BigHurt_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\Oppresser_BigHurt		21185
+	563959946	Vertebreak_02	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Vertebreak_02_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\Vertebreak_Shot\Vertebreak_02		8000
 	570669961	VesselHurt	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\VesselHurt_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\VesselHurt		15868
 	582211306	Yari4	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Yari4_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\Yari\Yari4		13208
 	622668535	Whistle	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Whistle_AD29F36A.wem		\Actor-Mixer Hierarchy\Default Work Unit\Whistle		38291
 	654684102	HornofWar	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\HornofWar_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\HornofWar		48249
+	657969940	Vertebreak_01	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Vertebreak_01_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\Vertebreak_Shot\Vertebreak_01		6519
 	694888182	PSOG_MUS_DEEP_01_Intro_Secret	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\PSOG_MUS_DEEP_01_Intro_Secret_AD29F36A.wem		\Actor-Mixer Hierarchy\Default Work Unit\PSOG_MUS_DEEP_01_Intro_Secret		1156236
 	700369861	StepThree	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\StepThree_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\NemesisStep\StepThree		2411
 	704114845	BiGGuyDethAgain	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\BiGGuyDethAgain_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\BiGGuyDethAgain		9666
@@ -117,8 +128,9 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	723480219	PSOG_MUS_DEEP_01_LoopB	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\PSOG_MUS_DEEP_01_LoopB_AD29F36A.wem		\Actor-Mixer Hierarchy\Default Work Unit\PSOG_MUS_DEEP_01_LoopB		2843171
 	726523095	Bigbeam_Loop	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Bigbeam_Loop_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\BigBeam\Bigbeam_Loop		71543
 	730334505	Dodge	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Dodge_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\Dodge		8030
+	786581132	Vertebreak_03	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Vertebreak_03_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\Vertebreak_Shot\Vertebreak_03		7605
 	798387623	Tear	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Tear_AD29F36A_5EDBE1FA.wem		\Actor-Mixer Hierarchy\Default Work Unit\Tear		147595
-	815791638	FlashTell	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\FlashTell_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\FlashTell		8706
+	815791638	FlashTell	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\FlashTell_F7D0E330_756D6989.wem		\Actor-Mixer Hierarchy\Default Work Unit\FlashTell		8446
 	824633122	perfectshot	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\perfectshot_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\perfectshot		14789
 	855731127	Squeal	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Squeal_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\Squeal		23037
 	879238780	PortalOpen	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\PortalOpen_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\PortalOpen		16162
@@ -131,5 +143,6 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	1005864510	MetalStep2	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\MetalStep2_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\MetalStep\MetalStep2		4324
 	1030884602	CobineShot1	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\CobineShot1_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\CombineShot\CobineShot1		9075
 	1034279694	CobineShot3	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\CobineShot3_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\CombineShot\CobineShot3		9461
+	1060339674	Strafe_Shot	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Strafe_Shot_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\Strafe_Shot		4450
 	1061456992	BigSlam	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\BigSlam_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\BigSlam		36129
 

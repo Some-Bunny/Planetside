@@ -1,0 +1,336 @@
+--Ported To BepinEx!
+
+================New:
+----Added Mastery Rewards for the Oubliette, Abbey And RnG Department (Each round gives a 12.5% damage up)
+----New Mastery Rewards also count for Chamber Guns floor-specific floors
+
+-Added new cosmetic additions to the title screen. (These do not interfere or override addons from other mods)
+
+-Added new special floor event
+
+-----------Placeables:
+Added decorative objects:
+-Targets
+-Grenade Box
+-Holy Chamber Statue
+-Ember Pots
+-Sniper Turret
+-Professional Turret
+
+
+-???????? Light
+-???????? Large Light
+-???????? Pot (Small, Medium, Large)
+-???????? Fading Blocker
+-?????? Notes
+-??????? Container
+-??????? Decals
+-??????? Candle
+-??????? Pillar
+-??????? Turret
+-??????? Cubes
+-???? ?? ???????
+-Moving Block (1x1)
+-Moving Block (2x2)
+
+-Added new interactables:
+-???????? Gun Muncher
+-???????? Combat Shrine
+
+-----------Dungeon Generation:
+100 new combat rooms
+2 new chest rooms
+
+-----------Shrines:
+-Added the Containment Shrine
+
+-----------Enemies:
+Added Boss:
+??? ?????
+????????
+
+Added enemy:
+-Creationist
+-Observant
+-Stagnant
+-Inquisitor
+-Vessel
+-Unwilling
+-Collective
+-Bloat
+-Blockade
+-Oppressor
+
+Added Miniboss:
+-Nemesis
+
+--Debuffs:
+-New Debuff: Tarnish (Slows enemies down by 30%, makes the enemy piercable and increases any damage of the projectile that passes through by 15%)
+
+--Challenge Mode Modifiers:
+-Bullet Sponge
+-Lead Storm
+
+-----------Items:
+-Trap Defusal Kit
+-Gunslingers Ring
+-Projectile Transmutator (Active) (Has 4 synergies: You Can Liquidate That???, Epic ____ Moments No.17 & You Killed Us All!, Rust Bucket)
+-Lucky Charm (Has 1 synergy: 1 in 177 Billion)
+-Table Tech Telefrag (Has 2 synergies: Thinking With Portals? & Collapsing Potential Vectors)
+-Spinning Death  (Has 1 synergy: D-rectional)
+-Connoisseurs Robes (Unlockable)
+-Shop-In-A-Box (Active) (Has 1 synergy: Make Your Choice)
+-The Anchor (Unlockable)
+-Spore Bullets
+-Orbital Insertion (Active) 
+-Tarnished Rounds
+-Tarnished Ammolet
+-Favouritism
+-Hegemony Shipment Ticket (Active)
+-Candy Heart
+
+-Tattered Robe (SPECIAL)
+-Orb Of Power (SPECIAL)
+
+-----------Guns:
+-Whistler
+-Thunder-Shot (Has 2 synergies: KA-BLEWY! & ROCK, AAAAND, STOOOOONE!)
+-Radial Pulse-Cannon (Has 1 synergy: Hexadecimally! (Turns it into a hexagonal firing pattern))
+-Particle Collapser
+-Crystalline (TODO)
+-Measuring Tape (Has 1 synergy: Workplace Accident)
+-Heat Sink
+-H.M Auto Cannon (Unlockable)
+-Puncture Wound
+-Eye Of Artemis (Has 1 synergy: Improved Sights)
+-Deadeyes Handgun
+-Canister Launcher
+-Saw Controlled Dispenser (Has 2 synergies: Screwdriver, Saw Your Heart Out)
+
+-----------NPCs:
+-Talbert (Table tech and Mimic item NPC)
+-???? (Buys ?????? ?????? for ?????) (Mastery Trader)
+-?.? ?????
+
+-----------Base Game Changes:
+-Note: These changes are toggleable via the F2 console, but some changes are only applied once the game has been reloaded.
+-Secret room walls now spawn pre-cracked
+-Synergy chests that spawn in chest rooms should now obey normal chest fusing rules, instead of being guaranteed to be fused. (Why was this a thing anyway?)
+-All 5 Heart Items now have additional bonuses to them to make them more interesting.
+
+-----------New Sub-Mechanic
+-Perks (Small mechanic that can change how a run is played, perk effects can be stacked infinitely if multiple of the same one are obtained)
+-Added:
+-All-Seeing Eye
+-All Stats Up
+-Explosive Birth
+-Chaotic Shift
+-Contract
+-Glass
+-Greedy
+-Gunslinger
+-Pit Lords Pact
+-Unbreakable Spirit
+-Patience
+-Corrupted Wealth
+
+===========Reworked:
+
+-----------Enemies:
+-Jammed Guardians have recieved a spawn animation and 2 new attacks, altered HP from 150 -> 250 and reduced amount of skulls orbiting it, but with increased radius
+-Glockulus and Barretina have recieved a complete sprite overhaul, including their Ammonomicon portraits.
+
+
+-----------Shrines:
+-Completely reworked Holy Chamber Shrine
+-Holy Chamber Shrine should now spawn in the Abbey with a 100% chance
+
+-----------Guns:
+-Arm Warmer has been completely reworked
+-The Mop has been completely re-coded and now can attempt to mop up and use the debuffs of goops from other mods.
+-Petrifier has recieved a unique mechanic, along with some modified visuals and stats.
+
+-----------Items:
+-Death Warrant has been completely reworked
+-Table Tech Devour has been completely reworked
+-Gun Warrant has been completely reworked
+-Injector Rounds has been completely re-coded and now can attempt to create goops from debuffs of other mods.
+
+-Systems:
+-The conditions for the Time Trader to spawn has been completely reworked.
+-The Something Wicked event should hopefully be less glitchy, along with the AI rework of Something Wicked.
+-With the Hell-Curses being recoded, certain effects have been slightly altered, such as the lifetime of curse-zones from Curse Of Petrification.
+-Stopped Hell Curses from giving more than 1 chest drop randomly in a room while a curse/curses is active BUT made chests from room clears more common. 
+
+================Fixes:
+-----------Dungeon Generation:
+-Fixed multiple combat rooms that were never tagged to appear.
+
+-----------Shrines:
+-The Gun Orbit Shrine should now spawn properly again
+-Fixed a long standing issue where shrines from this mod could affect the chances of things like Black Markets generating. This should now be mostly migitated, but now the Gun Orbit Shrine and Null Shrine no longer have unique shrine rooms.
+-The amount of Purity Shrines that spawn should now be 100% consistent (4)
+
+-----------Enemies:
+-Fixed most/all custom enemies from dealing contact damage while spawning
+-Fixed audio related issues with Detscavators
+-Shellrax should now have its glowing eye always active
+-Fixed Grenade Kin/Pinheads not dealing any damage at all
+-Hopefully prevented Annihi-Chamber from continuing its bulletscript that it uses in conjunction with the beam attack when changing phases.
+-Shambers can no longer absorb any type of beam (this was only really noticeable on slow moving beams but still needed a fix regardless)
+
+-----------Items:
+-Sack Of Pickups now spawn properly, and will occasionally appear on shops
+-Fixed Never Forgive Me erroring if the player had no items that activated upon harming an enemy and fixed it using the wrong sprites
+-Fixed Null Pickups not being able to be used if you didn't have an active item.
+-Volatile tesla-Pack should be a bit less jarring with its distortion waves.
+-Heresy Breaker can now be used on Purity Shrines even if the player cannot use them
+-Energy-Plated Shields recharge time for the individual orbitals has been reduced from 5s -> 3s
+
+-----------Guns:
+-Hopefully fixed Riftaker from leaving rifts behind
+-Hopefully fixed all beam weapons from being able to still be firing while reloading *while* firing.
+-Hardlight Nailguns active reload mechanic should now actually function. This issue was hard to pin-point as just giving it to yourself via the console would make it work fine, but getting it through normal means would not.
+-Fixed a potential issue with the BSG where its projectiles would be a lot smaller than intended.
+-Fixed Protract-non being affected by damage ups twice-fold (a 1.25x damage multiplier would function as a 1.6x~ damage multiplier for that weapon)
+
+-----------Misc:
+-Hopefully reduced the chances of floors failing to load.
+-Rebuilt the Hell Curses system from the ground up to be more stable/consistent and less buggy.
+
+================Misc:
+-----------Dungeon Generation:
+-A large amount of rooms got tweaks, relating to terrain placement, decoration, and some enemy placement.
+-Altered the chances of certain rooms showing up, but mainly chest rooms.
+
+-----------Shrines:
+-The Hell Curse shrines positions will be randomized each time you go to Bullet Hell.
+-Purity Shrines will now be much less intrusive during combat.
+
+-----------Enemies:
+-Cursebulons now can fall into pits and die/ made their moving sprites bouncier.
+-Cursebulon Goop now has a slightly shorter lifetime (13s -> 11.5s)
+-Hopefully fixed flight pathing for flying enemies.
+-Made the Shamber fly.
+-Ophanaim And Annihi-Chamber are now able to fly.
+-Shellrax's desparation attack now scales with its current HP instead of a timer. This makes the attack amp up faster if the player is actively injuring him. (Max bullet fire speed is capped, done worry.)
+-Glockulus and Barretina have recieved a sprite overhaul to match with the Ophanaim.
+
+-Any instances of Deturrets have been replaced with a variant that:
+--Will take no damage
+--Cannot be moved by Gungeons "move enemies away from entrance" system
+--Cannot have debuffs applied
+--Will not get modified by certain enemy post-processing effects
+--Should not be targeted by homing effects anymore.
+
+-Altered the weight of enemies so they can get knocked back.
+Of note:
+  Arch Gunjurers have had their weight reduced from 800 -> 200
+  Cursebulons have had their weight reduced from 150 -> 25
+  Fodder have had their weight increased from 800 -> 100000
+  Glockulus have had their weight reduced from 100 -> 50
+  Skullvenants have had their weight reduced from 800 -> 50
+
+-Altered a single line from Shellrax's dialogue to make more sense
+-Altered some of Annihi-Chambers attacks to be more fair and less telefraggy
+-Annihi-Chamber has a reworked beam attack with telegraphs.
+-Both of Annihi-Chambers dash attacks now have visual telegraphs (for if they're off screen.)
+-Annihi-Chambers movement speed has been greatly reduced, but buffed his base HP from 450 -> 500.
+-Bullet Banker should now have a cap on active minions, meaning it'll stop using minion-spawning attacks once this cap is reached
+-Bullet Banker recieves two new minions.
+-Altered some other Bullet Banker minions slightly.
+-Shellrax now triples his max HP upon entering his desparation phase. This should make damaging him not increase his fire rate of his desparation attack as much, but while still letting it ramp up consistently as his HP drains at a consistent rate.
+
+-Arch Gunjurers base HP has been reduced from 60 -> 55, and should also have a much more consistent hitbox that correlates to their sprite.
+-Barretinas recieved a tweaked hitbox.
+
+-Ophanaim recieved some attack reworks, reduced movement speed and has had their base HP reduced from 1450 -> 1200
+
+-Most enemies will now have proper, more fitting shadows.
+-Fodder should no longer be affected by the games "move away from entrance" mechanic to prevent them being in places they shouldn't
+
+-Debuffs:
+-All debuff icon placement are now handled properly by the game instead of by the debuff itself. (Weird to explain but now debuff icons should be removed cleanly and positioned hopefully correctly)
+-Frailty should no longer attempt to reduce an enemies HP past the enemies miniumum HP threshold, which could cause softlocks with certain enemies.
+-Frailtys duration has been extended (5s -> 8s)
+
+-----------Items:
+-Table Tech Null now converts a random pickup in the room into a null pickup.
+-Blast Shower now gives temporary fire/poison immunity, should now better spread its debuffs to enemies and has had its cooldown reduced from 300 dmg -> 250 dmg
+-Blast Shower should now better spread its debuffs to enemies.
+-Shelltans Blessing proc chance has been doubled, has a VFX when it procs, and has a new effect related to the Shelltan Shrine (Shrine now grants a 1.15x damage multiplier, a 0.9x ammo capacity multiplier and refills all your guns, without giving any curse while Shelltans Blessing is held)
+-Table Tech Devour recieves a new synergy, that fits with its new reworked state
+-Tome Of Guonmancy has been buffed: Reduced cooldown from 300 dmg -> 250 dmg / orbital lifetime increased from 10s -> 15s
+-Shell-heart now gives 1 armor on pickup.
+-Prayer Amulet is now unlocked by killing 5 Umbral enemies
+-Volatile Tesla-Pack now does *slightly* more damage
+-All of Scroll Of Guonifications synergies now buff their respective orbitals HP by 33% instead of 20%.
+-Some of Tome Of Guonmancys synergy effects now activate more often 
+	(Chapter Of Class proc chance increased from 8% to 10%)
+	(Chapter Of Restoration proc chance increased from 5% to 7%)
+-Heresy Breaker now activates the special effects for breaking certain shrines a bit more commonly
+-Blood Idols reward effect has been visually revamped, and the item will no longer be consumed when used, but will still deduct 250 kills from its count. To counter this, it is now more likely to pay out with lower tiers of item/gun.
+-Never Forgive Me has recieved a new item sprite
+-Portable Pylon damage per tick has been increased from 6 -> 12.
+-Shell-Hearts ammo restoration ability reduced from 25% -> 15%.
+-Updated some item descriptions
+-Cleaned up Sack Of Pickups drop system
+-Kinetic Bombardment reticle VFX  has been slightly tweaked
+-Coin Tosser, and coins as a mechanic, recieved a few special interactions.
+
+-----------Guns:
+-Polarity and its synergy form have recieved new sprites, leave debris when reloading, and should have proper shooting audio
+-Burning Sun has recieved new sprites, reduced reload time from 2.5s -> 2, projectile damage increased from 30 -> 35, and deals 15 dps in a 4 tile radius around it, and charge time increased from 1.3s to 2.2s.
+-Arm Warmer has now recieved new sprites 
+-Colossus has its damage and max ammo increased from 300 -> 360, Perfected Synergy has been buffed
+-Null Pickups now increase stats higher
+-Tractor Beam now has an afterimage on its beam.
+-Buffed Parasitic Hearts eyes from 4.5dmg -> 7 dmg, and increased the projectiles size *slightly*
+-Made the chain lightning damage effect from the Big Shocking Gun 9000 synergy for the BSG scale with the projectiles damage, and made the projectile smaller while the synergy is active
+-Certain guns now have less much intrusive impact sounds.
+-Certain guns now also now have custom clip objects on reload and custom casing objects.
+-Bandits Revolvers long description is now split into 2 smaller paragraphs.
+-Swan-Off should no longer have a muzzle flash of any kind.
+-Hardlight Nailguns stats for both of its "forms" have been altered to function as sidegrades, and the gun recieved an overall firerate buff. 
+-Shock-Chains electricity chains will now chain to *all* other Shock-Chain projectiles currently active within a large radius. Because of its increased effectiveness the damage of the chain is now decreased.
+-Wither Lance recieved some improved coloring, new projectile sprites and some stat and visual changes. Its main gimmick should now also be more effective and it should now no longer try and decrease an enemies max HP befow *specific* health thresholds for certain enemies, which could in theory cause softlocks.
+-Oscillator has recieved a mild damage buff.
+-Petrifiers damage has been decreased from 19 -> 13 damage per projectile, and its spread has been decreased from 25deg to 19 deg
+-Some guns have had their colors tweaked.
+-Veteran Shotgun has had its reload time *slightly* reduced from 2.6s -> 2.3s
+-Capacitor should no longer attempt to charge your actie item if its in an infinite ammo state, and will have its damage greatly reduced in that state.
+-Riftakers rift damage has been reduced from 27 DPS -> 20 DPS
+-Parasitic Hearts orbiting eyes no longer spin around the player, and now glow
+-Fixed StatiBlasts projectiles from breaking the game if thrown back by a red gunjurer
+
+-Synergies:	
+-Certain items now count towards basegame synergies:
+--Arm Warmer and Parasitic Heart now count for the "Contrail" synergy
+--Rebar Puncher now counts for the "Thorn Bath, ooh!" synergy
+--Veterans Shotgun and Petrifier now count for the "Iron Stance" synergy
+--Bandits Revolver and Thunder-Shot now count for the "Reload Roll" synergy
+--T4-GTR now counts for the "Smart Bombs" synergy
+--Baby Good Candle Kin now counts for the "Tea For Two" synergy
+--Echolocation Ammolet and Frailty Ammolet now count for the "Relodstar" synergy
+--Echolocation Ammolet and Frailty Ammolet now count for the "Don't Worry About The Vase" synergy
+--Hull-Breaker Bullets now counts for the "Massive Effect" synergy
+--Hull-Breaker Bullets and Kinetic Bombardment now count for the "Shot Across The Bow" synergy
+--Electro-Static Guon Stone and Portable Pylon now count for the "Battery Powered" synergy
+--Table Tech Devour, Table Tech Null and Table Rxwg Telefrag now count for the "Paperwork" synergy
+--Blood Idol now counts for the "Fear The old Blood" synergy
+--Wisp In A Bottle now counts for the "Firing With Flair" synergy
+--Wisp In A Bottle now counts for the "\o/" synergy
+--Projectile Transmutator now counts for the "Clearer Guon Stone" synergy
+
+----------Misc-er:
+-Hopefully prevented the Darkness controller from erroring sometimes, and hopefully prevented it from persisting after death.
+-Cleaned up code
+-Most/All shrines should now have shadows
+-Changed the sprite of the Broken Chamber Shrine and gave it a different sprite once used
+-Made the "Too Late" sign make the player play its table kick animation when kicked
+-Touched up some older item sprites
+-Removed a needlessly unfair chest room (The one with 2 cursed pots)
+-Cleaned up and hopefully optimized any usage of a specific nebula texture
+-Broken Chamber should remove itself a bit more cleanly
+-Certain items now should no longer appear in rainbow mode, depending on how useful they are.
+-Hopefully cleaned up some instances of vertain VFX objects from existing even after they have stopped existing, hopefully alleviating memory clutter a small bit.

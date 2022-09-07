@@ -9,16 +9,90 @@ namespace Planetside
 	{
 
 		public static void Init()
-        {
+		{
 			InitPossessedGoop();
 			InitCursebulonGoop();
 			InitFrailPuddle();
 			InitTarnishedGoop();
 
 		}
+		/*
+		 *  Gun crossbow = ETGMod.Databases.Items["triple_crossbow"] as Gun;
+            GameActorSpeedEffect speedEffect = crossbow.DefaultModule.projectiles[0].speedEffect;
+            WebSlow = new GameActorSpeedEffect
+            {
+                duration = 10,
+                TintColor = new Color32(184, 181, 147, 255),
+                DeathTintColor = new Color32(184, 181, 147, 255),
+                effectIdentifier = "web",
+                AppliesTint = true,
+                AppliesDeathTint = true,
+                resistanceType = EffectResistanceType.None,
+                SpeedMultiplier = 0.166f,
+                OverheadVFX = speedEffect.OverheadVFX,
+                AffectsEnemies = true,
+                AffectsPlayers = false,
+                AppliesOutlineTint = false,
+                OutlineTintColor = new Color32(184, 181, 147, 255),
+                PlaysVFXOnActor = false
+            };
+
+            BlobSlow = new GameActorSpeedEffect
+            {
+                duration = 6,
+                TintColor = new Color32(213, 77, 77, 255),
+                DeathTintColor = new Color32(213, 77, 77, 255),
+                effectIdentifier = "blob",
+                AppliesTint = true,
+                AppliesDeathTint = true,
+                resistanceType = EffectResistanceType.None,
+                SpeedMultiplier = 0.6f,
+                OverheadVFX = speedEffect.OverheadVFX,
+                AffectsEnemies = true,
+                AffectsPlayers = false,
+                AppliesOutlineTint = false,
+                OutlineTintColor = new Color32(213, 77, 77, 255),
+                PlaysVFXOnActor = false
+            };
+		*/
+		public static GameActorSpeedEffect MopWebEffect = new GameActorSpeedEffect
+		{
+            duration = 10,
+            TintColor = new Color32(184, 181, 147, 255),
+            DeathTintColor = new Color32(184, 181, 147, 255),
+            effectIdentifier = "web",
+            AppliesTint = true,
+            AppliesDeathTint = true,
+            resistanceType = EffectResistanceType.None,
+            SpeedMultiplier = 0.166f,
+            OverheadVFX = (ETGMod.Databases.Items["triple_crossbow"] as Gun).DefaultModule.projectiles[0].speedEffect.OverheadVFX,
+            AffectsEnemies = true,
+            AffectsPlayers = false,
+            AppliesOutlineTint = false,
+            OutlineTintColor = new Color32(184, 181, 147, 255),
+            PlaysVFXOnActor = false
+        };
+
+        public static GameActorSpeedEffect MopBlobEffect = new GameActorSpeedEffect
+        {
+            duration = 6,
+            TintColor = new Color32(213, 77, 77, 255),
+            DeathTintColor = new Color32(213, 77, 77, 255),
+            effectIdentifier = "blob",
+            AppliesTint = true,
+            AppliesDeathTint = true,
+            resistanceType = EffectResistanceType.None,
+            SpeedMultiplier = 0.6f,
+            OverheadVFX = (ETGMod.Databases.Items["triple_crossbow"] as Gun).DefaultModule.projectiles[0].speedEffect.OverheadVFX,
+            AffectsEnemies = true,
+            AffectsPlayers = false,
+            AppliesOutlineTint = false,
+            OutlineTintColor = new Color32(213, 77, 77, 255),
+            PlaysVFXOnActor = false
+        };
 
 
-		public static InfectedEnemyEffect InfectedEnemyEffect = new InfectedEnemyEffect
+        public static InfectedEnemyEffect InfectedEnemyEffect = new InfectedEnemyEffect
 		{
 			crystalNum = 4,
 			debrisAngleVariance = 30,

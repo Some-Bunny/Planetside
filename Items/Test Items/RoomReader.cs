@@ -23,6 +23,10 @@ using SaveAPI;
 using System.IO;
 using Planetside;
 using FullInspector.Internal;
+using UnityEngine.Video;
+using static FullInspector.Internal.fiLateBindings;
+using UnityEngine.Audio;
+
 
 namespace Planetside
 {
@@ -80,6 +84,53 @@ namespace Planetside
         protected override void DoEffect(PlayerController user)
         {
             /*
+            var portal = PlanetsideModule.ModAssets.LoadAsset<GameObject>("vdeioplayer");
+            MeshRenderer rend = portal.GetComponent<MeshRenderer>();
+            rend.allowOcclusionWhenDynamic = true;
+            portal.name = "ReturnPortal";
+            portal.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
+            portal.transform.position = user.transform.position;
+            */
+
+            //List<Type> t = UnityEngine.Object.FindObjectsOfType<Component>().GetType().GetBaseType() 
+
+
+
+            GameManager.Instance.MainCameraController.gameObject.GetOrAddComponent<AudioListener>();
+
+            GameObject partObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("videoplayer"));
+            MeshRenderer rend = partObj.GetComponent<MeshRenderer>();
+            rend.allowOcclusionWhenDynamic = true;
+            partObj.transform.position = user.transform.position;
+            partObj.transform.localScale = Vector3.one;
+            partObj.name = "ShopPortal";
+            VideoPlayer v = partObj.GetComponent<VideoPlayer>();
+            v.controlledAudioTrackCount = 1;
+
+            partObj.GetComponent<AudioSource>();
+
+            AudioListener[] a = FindObjectsOfType<AudioListener>();
+            foreach (var j in a)
+            {
+                ETGModConsole.Log(j.name);
+            }
+
+
+
+            v.audioOutputMode = VideoAudioOutputMode.AudioSource;
+            //v.EnableAudioTrack(1, true);
+            v.source = VideoSource.VideoClip;
+            
+            v.Play();
+           
+            partObj.transform.localScale *= 8;
+            partObj.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
+
+            var yyy = partObj.transform.localRotation = Quaternion.Euler(0, 180, 0);
+
+            //partObj.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
+
+            /*
             RoomHandler roome =  user.CurrentRoom;
             ETGModConsole.Log(user.CurrentRoom.GetRoomName());
             ETGModConsole.Log("room visual subtype int: " + roome.RoomVisualSubtype.ToString());
@@ -88,6 +139,7 @@ namespace Planetside
             ItemAPI.Tools.LogPropertiesAndFields(mat.roomFloorBorderGrid, "tile", true);
             */
 
+            /*
             GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(PickupObjectDatabase.GetById(HardlightNailgun.HardAsNailsID).gameObject, user.transform.position, Quaternion.identity);
             Gun component = gameObject.GetComponent<Gun>();
             if (component != null)
@@ -95,7 +147,7 @@ namespace Planetside
                 //LootEngine.PostprocessGunSpawn(component);
                 component.DropGun(2f);
             }
-
+            */
             //mat.roomFloorBorderGrid
 
             /*

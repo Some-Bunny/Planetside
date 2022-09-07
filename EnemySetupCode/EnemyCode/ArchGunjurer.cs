@@ -489,8 +489,11 @@ namespace Planetside
 				EnemyDatabase.GetEntry("psog:arch_gunjurer").ForcedPositionInAmmonomicon = 58;
 				EnemyDatabase.GetEntry("psog:arch_gunjurer").isInBossTab = false;
 				EnemyDatabase.GetEntry("psog:arch_gunjurer").isNormalEnemy = true;
-			}
-		}
+
+                companion.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("1bc2a07ef87741be90c37096910843ab").bulletBank.GetBullet("reversible"));
+                companion.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("ec6b674e0acd4553b47ee94493d66422").bulletBank.GetBullet("bigBullet"));
+            }
+        }
 
 
 
@@ -578,8 +581,6 @@ namespace Planetside
 
 			private void Start()
 			{
-				base.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("796a7ed4ad804984859088fc91672c7f").bulletBank.bulletBank.GetBullet("default"));
-				base.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("sweep"));
 				if (!base.aiActor.IsBlackPhantom)
                 {
 					Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
@@ -593,7 +594,6 @@ namespace Planetside
 				base.aiActor.healthHaver.OnPreDeath += (obj) =>
 				{
 				  AkSoundEngine.PostEvent("Play_WPN_Life_Orb_Fade_01", base.aiActor.gameObject);
-					//AkSoundEngine.PostEvent("Play_BOSS_mineflayer_belldrop_01", null);
 				};
 			}
 
@@ -603,10 +603,6 @@ namespace Planetside
 		{
 			protected override IEnumerator Top()
 			{
-				if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
-				{
-					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("1bc2a07ef87741be90c37096910843ab").bulletBank.GetBullet("reversible"));
-				}
 				AkSoundEngine.PostEvent("Play_BOSS_Rat_Kunai_Prep_01", this.BulletBank.aiActor.gameObject);
 				for (int k = 0; k < 12; k++)
 				{
@@ -641,12 +637,7 @@ namespace Planetside
 		{
 			protected override IEnumerator Top() 
 			{
-				if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
-				{
-					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("ec6b674e0acd4553b47ee94493d66422").bulletBank.GetBullet("bigBullet"));
-				}
 				base.PostWwiseEvent("Play_BOSS_RatMech_Wizard_Cast_01", null);
-				//float angleDelta = 60f;
 				yield return this.Wait(60);
 				for (int i = 0; i < 3; i++)
 				{
@@ -654,7 +645,6 @@ namespace Planetside
 					base.Fire(new Direction(120*i, DirectionType.Absolute, -1f), new Speed(6f, SpeedType.Absolute), new WallBullet());
 					yield return this.Wait(10);
 				}
-
 				yield break;
 			}
 		}
@@ -667,13 +657,9 @@ namespace Planetside
 			}
 			protected override IEnumerator Top()
 			{
-				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("1bc2a07ef87741be90c37096910843ab").bulletBank.GetBullet("reversible"));
-
 				base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 60);
 				yield return this.Wait(90);
-				float aim = base.AimDirection;
-				this.Direction = aim;
-
+				this.Direction = base.AimDirection;
 				base.ChangeSpeed(new Speed(15f, SpeedType.Absolute), 60);
 				yield break;
 			}
@@ -681,21 +667,12 @@ namespace Planetside
 			{
 				if (!preventSpawningProjectiles)
 				{
-					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("1bc2a07ef87741be90c37096910843ab").bulletBank.GetBullet("reversible"));
-					base.PostWwiseEvent("Play_OBJ_nuke_blast_01", null);
+                    AkSoundEngine.PostEvent("Play_ENM_kali_burst_01", this.Projectile.gameObject);
 					float num = base.RandomAngle();
-					float Amount = 8;
-					float Angle = 360 / Amount;
-					for (int i = 0; i < Amount; i++)
+					for (int i = 0; i < 8; i++)
 					{
-						base.Fire(new Direction(num + Angle * (float)i + 10, DirectionType.Absolute, -1f), new Speed(10f, SpeedType.Absolute), new BurstBullet());
+						base.Fire(new Direction((45 * i)+ num, DirectionType.Absolute, -1f), new Speed(10f, SpeedType.Absolute), new Bullet("reversible"));
 					}
-				}
-			}
-			public class BurstBullet : Bullet
-			{
-				public BurstBullet() : base("reversible", false, false, false)
-				{
 				}
 			}
 		}

@@ -12,10 +12,21 @@ using System.Collections;
 using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
+using HarmonyLib;
 
 namespace Planetside
 {
-	public class Mop : AdvancedGunBehavior
+    public class MopEffectContainer
+    {
+        public Color projectileColor;
+        public Type component;
+        public List<GameActorEffect> debuffs;
+        public string Key;
+        public List<string> goopNames;
+		public float DamageMultiplier = 1;
+    }
+
+    public class Mop : AdvancedGunBehavior
 	{
 		public static void Add()
 		{
@@ -34,6 +45,8 @@ namespace Planetside
 			{
 				gun.AddProjectileModuleFrom(PickupObjectDatabase.GetById(33) as Gun, true, false);
 			}
+
+			EnemyToolbox.AddSoundsToAnimationFrame(gun.spriteAnimator, gun.shootAnimation, new Dictionary<int, string>() { {0, "Play_ENM_wizardred_swing_01" } });
 
 			gun.Volley.projectiles[0].ammoCost = 1;
 			gun.Volley.projectiles[0].shootStyle = ProjectileModule.ShootStyle.Automatic;
@@ -158,8 +171,13 @@ namespace Planetside
 				fireClip2.frames[i].spriteCollection.spriteDefinitions[id].position3.x += offsetsX2[i];
 				fireClip2.frames[i].spriteCollection.spriteDefinitions[id].position3.y += offsetsY2[i];
 			}
-		}
-		public static int MopID;
+
+           
+
+        }
+
+
+        public static int MopID;
 		public override void OnPostFired(PlayerController player, Gun bruhgun)
 		{
 			gun.PreventNormalFireAudio = true;
@@ -202,94 +220,244 @@ namespace Planetside
 				base.OnReloadPressed(player, gun, bSOMETHING);
 			}
 			GoopDefinition currentGoop = player.CurrentGoop;
-			string Val = "Unknown";
 			if (currentGoop != null && currentGoop.name != null)
 			{
-				string Name = currentGoop.name;
-				DebuffKeys.TryGetValue(Name.ToLower(), out Val);
-				if (!DebuffKeys.ContainsValue(Val))
+                gun.GainAmmo(Mathf.Max(0, gun.ClipCapacity - gun.ClipShotsRemaining));
+
+				bool check = true;
+                string Name = currentGoop.name;
+				foreach (var container in containers)
 				{
-					Debug.Log("Unrecognized Goop, attempting to breakdown");
-					CurrentGoopKey = currentGoop;
-					CurrentGoopStringKey = "Unknown";
+					if (container.goopNames.Contains(Name.ToLower()))
+					{
+						currentEffectContainer = container;
+						check = false;
+                    }
 				}
-				else
-                {
-					CurrentGoopStringKey = Val;
-				}
-				gun.GainAmmo(Mathf.Max(0, gun.ClipCapacity - gun.ClipShotsRemaining));
+				if (check == true)
+				{
+                    Debug.Log("Unrecognized Goop, attempting to breakdown");
+
+                    List<GameActorEffect> gameActorEffects = new List<GameActorEffect>();
+                    if (currentGoop.CharmModifierEffect != null) { gameActorEffects.Add(currentGoop.CharmModifierEffect); }
+                    if (currentGoop.fireEffect != null) { gameActorEffects.Add(currentGoop.fireEffect); }
+                    if (currentGoop.HealthModifierEffect != null) { gameActorEffects.Add(currentGoop.HealthModifierEffect); }
+                    if (currentGoop.CheeseModifierEffect != null) { gameActorEffects.Add(currentGoop.CheeseModifierEffect); }
+                    if (currentGoop.SpeedModifierEffect != null) { gameActorEffects.Add(currentGoop.SpeedModifierEffect); }
+
+					MopEffectContainer c = new MopEffectContainer()
+					{
+						component = null,
+						DamageMultiplier = 1,
+						goopNames = new List<string>()
+						{
+							currentGoop.name.ToLower()
+						},
+						debuffs = gameActorEffects,
+						Key = currentGoop.name + "_Key",
+						projectileColor = currentGoop.baseColor32
+					};
+
+					containers.Add(c);
+					currentEffectContainer = c; 
+                }
 			}
 			else
             {
-				CurrentGoopStringKey = "none";
+				currentEffectContainer = null;
 			}
 			DeadlyDeadlyGoopManager.DelayedClearGoopsInRadius(player.CenterPosition, 2f);
 		}
 
 
 
-		public string CurrentGoopStringKey;
-		public GoopDefinition CurrentGoopKey;
+		public MopEffectContainer currentEffectContainer;
 
 
-		public static Dictionary<string, string> DebuffKeys = new Dictionary<string, string>()
+		public static List<MopEffectContainer> containers = new List<MopEffectContainer>()
 		{
-			//Fire Goops
-			{EasyGoopDefinitions.FireDef2.name.ToLower(), "fire" },
-			{EasyGoopDefinitions.FireDef.name.ToLower(), "fire" },
-			{"helicopternapalmgoop", "fire" },
-			{"napalm goop", "fire" },
-			{"napalmgoopshortlife", "fire" },
-			{"bulletkingwinegoop", "fire" },
-			{"devilgoop", "fire" },
-			{"flamelinegoop", "fire" },
-			{"demonwallgoop", "fire" },
-
-			//Green Fire Goops
-			{"greennapalmgoopthatworks", "hellfire" },
-
-			//Blob Goops 
-			{EasyGoopDefinitions.BlobulonGoopDef.name.ToLower(), "blob" },
-			{"blobulordgoop", "blob" },
-
-			//Oil Goops 
-			{EasyGoopDefinitions.OilDef.name, "oil" },
-
-			//Cheese Goops 
-			{EasyGoopDefinitions.CheeseDef.name, "cheese" },
-
-			//Water Goops 
-			{EasyGoopDefinitions.WaterGoop.name.ToLower(), "water" },
-			{"mimicspitgoop", "water" },
-
-			//Charm Goops 
-			{EasyGoopDefinitions.CharmGoopDef.name.ToLower(), "charm" },
-
-			//Poison Goops 
-			{EasyGoopDefinitions.PoisonDef.name.ToLower(), "poison" },
-			{"resourcefulratpoisongoop", "poison" },
-			{"meduzipoisongoop", "poison" },
-
-			//Web Goops
-			{EasyGoopDefinitions.WebGoop.name.ToLower(), "web" },
-
-			//Blood Goops 
-			{"permanentbloodgoop", "blood" },
-			{"bloodgoop", "blood" },
-			{"bloodbulongoop", "blood" },
-
-			//Poop Goops
-			{"poopulongoop", "poop" },
-
-			//Possessed Goops
-			{DebuffLibrary.PossesedPuddle.name.ToLower(), "possessed" },
-
-			//Frailty Goops
-			{DebuffLibrary.FrailPuddle.name.ToLower(), "frailty" },
-
-			
-			//Taarnish Goops
-			{DebuffLibrary.TarnishedGoop.name.ToLower(), "tarnish" },
-		};
+			new MopEffectContainer()
+			{
+				component = null,
+				debuffs = new List<GameActorEffect>(){ DebuffStatics.hotLeadEffect },
+				Key = "fire",
+				projectileColor = new Color32(255, 102, 0, 255),
+				goopNames = new List<string>()
+				{
+					EasyGoopDefinitions.FireDef2.name.ToLower(),
+					EasyGoopDefinitions.FireDef.name.ToLower(),
+					"helicopternapalmgoop",
+					"napalm goop",
+					"napalmgoopshortlife",
+					"bulletkingwinegoop",
+					"devilgoop",
+					"flamelinegoop",
+					"demonwallgoop"
+				}
+			},
+			new MopEffectContainer()
+			{
+				component = null,
+                debuffs = new List<GameActorEffect>(){ DebuffStatics.greenFireEffect },
+                Key = "hellfire",
+				projectileColor = new Color32(211, 229, 73, 255),
+				goopNames = new List<string>()
+				{
+					"greennapalmgoopthatworks"
+				}
+			},
+			new MopEffectContainer()
+			{
+				component = null,
+                debuffs = new List<GameActorEffect>(){  DebuffLibrary.MopBlobEffect  },
+                Key = "blob",
+				projectileColor = new Color32(213, 77, 77, 255),
+				goopNames = new List<string>()
+				{
+					EasyGoopDefinitions.BlobulonGoopDef.name.ToLower(),
+					"blobulordgoop"
+				}
+			},
+			new MopEffectContainer()
+			{
+				component = new ApplyStep2().GetType(),
+                debuffs = new List<GameActorEffect>(){ },
+                Key = "oil",
+				projectileColor = new Color32(10, 6, 18, 255),
+				goopNames = new List<string>()
+				{
+					EasyGoopDefinitions.OilDef.name.ToLower()
+				}
+			},
+			new MopEffectContainer()
+			{
+				component = null,
+                debuffs = new List<GameActorEffect>(){ DebuffStatics.cheeseeffect },
+                Key = "cheese",
+				projectileColor = new Color32(255, 102, 0, 255),
+				goopNames = new List<string>()
+				{
+					EasyGoopDefinitions.CheeseDef.name.ToLower()
+				}
+			},
+			new MopEffectContainer()
+			{
+				component = null,
+                debuffs = new List<GameActorEffect>(){ DebuffStatics.charmingRoundsEffect },
+                Key = "charm",
+				projectileColor = new Color32(252, 72, 241, 255),
+				goopNames = new List<string>()
+				{
+					EasyGoopDefinitions.CharmGoopDef.name.ToLower()
+				}
+			},
+			new MopEffectContainer()
+			{
+				component = null,
+                debuffs = new List<GameActorEffect>(){ },
+                Key = "water",
+				projectileColor = new Color(0,0,0,0),
+				goopNames = new List<string>()
+				{
+					EasyGoopDefinitions.WaterGoop.name.ToLower(),
+					"mimicspitgoop"
+				},
+				DamageMultiplier = 0.7f
+            },
+            new MopEffectContainer()
+            {
+                component = null,
+                debuffs = new List<GameActorEffect>(){ },
+                Key = "water",
+                projectileColor = new Color(0,0,0,0),
+                goopNames = new List<string>()
+                {
+                    EasyGoopDefinitions.WaterGoop.name.ToLower(),
+                    "mimicspitgoop"
+                },
+                DamageMultiplier = 0.75f
+            },
+            new MopEffectContainer()
+            {
+                component = null,
+                debuffs = new List<GameActorEffect>(){ DebuffStatics.irradiatedLeadEffect },
+                Key = "poison",
+                projectileColor = new Color32(145, 227, 120, 255),
+                goopNames = new List<string>()
+                {
+                    EasyGoopDefinitions.PoisonDef.name.ToLower(),
+                    "resourcefulratpoisongoop",
+                    "meduzipoisongoop"
+                },
+            },
+            new MopEffectContainer()
+            {
+                component = null,
+                debuffs = new List<GameActorEffect>(){ DebuffLibrary.MopWebEffect },
+                Key = "web",
+                projectileColor = new Color32(184, 181, 147, 255),
+                goopNames = new List<string>()
+                {
+                    EasyGoopDefinitions.WebGoop.name.ToLower()
+                },
+            },
+            new MopEffectContainer()
+            {
+                component = new ApplyEnrage().GetType(),
+                debuffs = new List<GameActorEffect>(){ },
+                Key = "blood",
+                projectileColor = new Color32(136, 8, 8, 255),
+                goopNames = new List<string>()
+                {
+                    "permanentbloodgoop",
+                    "bloodgoop",
+                    "bloodbulongoop"
+                }
+            },
+            new MopEffectContainer()
+            {
+                component = new ApplyFear().GetType(),
+                debuffs = new List<GameActorEffect>(){ },
+                Key = "poop",
+                projectileColor = new Color32(123, 92, 0, 255),
+                goopNames = new List<string>()
+                {
+                    "poopulongoop"
+                }
+            },
+            new MopEffectContainer()
+            {
+                component = null,
+                debuffs = new List<GameActorEffect>(){ DebuffLibrary.Possessed },
+                Key = "possessed",
+                projectileColor =  new Color32(255, 188, 76, 255),
+                goopNames = new List<string>()
+                {
+                    DebuffLibrary.PossesedPuddle.name.ToLower()
+                }
+            },
+            new MopEffectContainer()
+            {
+                component = null,
+                debuffs = new List<GameActorEffect>(){ DebuffLibrary.Frailty },
+                Key = "frailty",
+                projectileColor =  new Color32(136, 25, 149, 255),
+                goopNames = new List<string>()
+                {
+                    DebuffLibrary.FrailPuddle.name.ToLower()
+                }
+            },
+            new MopEffectContainer()
+            {
+                component = null,
+                debuffs = new List<GameActorEffect>(){ DebuffLibrary.Corrosion },
+                Key = "tarnish",
+                projectileColor = new Color32(157, 147, 0, 255),
+                goopNames = new List<string>()
+                {
+                    DebuffLibrary.TarnishedGoop.name.ToLower()
+                }
+            },
+        };
 	}
 }

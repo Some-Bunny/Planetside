@@ -94,7 +94,8 @@ namespace Planetside
             if (ID == 78) { return true; }//Ammo
             if (ID == 600) { return true; }//PartialAmmo
             if (ID == 224) { return true; }//blank
-            if (ID == 565) { return true; }
+            if (ID == 565) { return true; }//glass guon stone I think
+            if (ID == 67) { return true; }//key
             return false;
         }
 
@@ -129,37 +130,46 @@ namespace Planetside
 
         public static void CanINotHaveTwoHookMethodsWithTheSameName(Action<AmmoPickup, PlayerController> orig, AmmoPickup self, PlayerController player)
         {
-
-            bool b = false;
-            if (b == false && player.GetComponent<CorruptedWealthController>() != null && player.CurrentGun != null)
+            try
             {
+                bool b = false;
+                if (b == false && player.GetComponent<CorruptedWealthController>() != null && player.CurrentGun != null)
+                {
 
-                GameObject vfx = SpawnManager.SpawnVFX((PickupObjectDatabase.GetById(365) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapVertical.effects.First().effects.First().effect, true);
-                vfx.transform.position = player.sprite.WorldCenter;
-                vfx.GetComponent<tk2dBaseSprite>().HeightOffGround = 22;
-                vfx.transform.localScale *= 3;
-                UnityEngine.Object.Destroy(vfx, 1);
+                    GameObject vfx = SpawnManager.SpawnVFX((PickupObjectDatabase.GetById(365) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapVertical.effects.First().effects.First().effect, true);
+                    vfx.transform.position = player.sprite.WorldCenter;
+                    vfx.GetComponent<tk2dBaseSprite>().HeightOffGround = 22;
+                    vfx.transform.localScale *= 1.5f;
+                    UnityEngine.Object.Destroy(vfx, 1);
 
-                AkSoundEngine.PostEvent("Play_WPN_Life_Orb_Capture_01", player.gameObject);
+                    AkSoundEngine.PostEvent("Play_WPN_Life_Orb_Capture_01", player.gameObject);
 
 
-                Gun gungeon = player.CurrentGun;
-                int amo = Mathf.Max((int)(gungeon.AdjustedMaxAmmo * 0.85f), 1);
-                gungeon.SetBaseMaxAmmo(amo);
-                AdvancedHoveringGunProcessor DroneHover = gungeon.gameObject.AddComponent<AdvancedHoveringGunProcessor>();
-                DroneHover.Activate = true;
-                DroneHover.ConsumesTargetGunAmmo = true;
-                DroneHover.AimType = CustomHoveringGunController.AimType.PLAYER_AIM;
-                DroneHover.PositionType = CustomHoveringGunController.HoverPosition.CIRCULATE;
-                DroneHover.FireType = CustomHoveringGunController.FireType.ON_FIRED_GUN;
-                DroneHover.UsesMultipleGuns = true;
-                DroneHover.TargetGunIDs = new List<int> { gungeon.PickupObjectId };
-                DroneHover.FireCooldown = player.CurrentGun.DefaultModule != null ? player.CurrentGun.DefaultModule.cooldownTime *0.85f : 0.1f;
-                DroneHover.FireDuration = 0.1f;
-                DroneHover.NumToTrigger = 1;
-                gungeon.ammo = Mathf.Max(gungeon.ammo, gungeon.AdjustedMaxAmmo);
-                b = true;
+                    Gun gungeon = player.CurrentGun;
+                    int amo = Mathf.Max((int)(gungeon.AdjustedMaxAmmo * 0.8f), 1);
+                    gungeon.SetBaseMaxAmmo(amo);
+                    AdvancedHoveringGunProcessor DroneHover = gungeon.gameObject.AddComponent<AdvancedHoveringGunProcessor>();
+                    DroneHover.Activate = true;
+                    DroneHover.ConsumesTargetGunAmmo = true;
+                    DroneHover.AimType = CustomHoveringGunController.AimType.PLAYER_AIM;
+                    DroneHover.PositionType = CustomHoveringGunController.HoverPosition.CIRCULATE;
+                    DroneHover.FireType = CustomHoveringGunController.FireType.ON_FIRED_GUN;
+                    DroneHover.UsesMultipleGuns = true;
+                    DroneHover.TargetGunIDs = new List<int> { gungeon.PickupObjectId };
+                    DroneHover.FireCooldown = player.CurrentGun.DefaultModule != null ? player.CurrentGun.DefaultModule.cooldownTime * 0.85f : 0.1f;
+                    DroneHover.FireDuration = 0.1f;
+                    DroneHover.NumToTrigger = 1;
+                    gungeon.ammo = Mathf.Max(gungeon.ammo, gungeon.AdjustedMaxAmmo);
+                    b = true;
+                }
             }
+            catch (Exception e)
+            {
+                Debug.Log("Corrupted Ammo Pickup Hook is BrOke");
+                Debug.Log(e);
+            }
+
+           
             orig(self, player);
         }
 
@@ -169,32 +179,38 @@ namespace Planetside
         {
             orig(self, player);
             
+
+
+
             CorruptedWealthController cont = player.GetComponent<CorruptedWealthController>();
             if (cont != null)
             {
-
-                GameObject vfx = SpawnManager.SpawnVFX(StaticVFXStorage.MachoBraceDustupVFX, true);
-                vfx.transform.position = player.sprite.WorldCenter;
-                vfx.GetComponent<tk2dBaseSprite>().HeightOffGround = 22;
-                vfx.transform.localScale *= 1.6f;
-                UnityEngine.Object.Destroy(vfx, 2);
-
-                AkSoundEngine.PostEvent("Play_BOSS_DragunGold_Crackle_01", player.gameObject);
-
-
-                if (cont.AmountOfCorruptKeys > 0)
+                if (self.IsLocked == false && self.IsLockBroken == false)
                 {
-                    cont.AmountOfCorruptKeys--;
-                }
-                float MA = cont.AmountOfCorruptKeys;
-                for (int i = 0; i < MA; i++)
-                {
-                    float H = i +0.5f / MA;
-                    PickupObject pickupObject = self.lootTable.GetSingleItemForPlayer(player, 0);
-                    Vector2 t = MathToolbox.GetUnitOnCircle(Vector2.down.ToAngle() + Mathf.Lerp(-90, 90, H), 2.5f);
-                    DebrisObject j= LootEngine.SpawnItem(pickupObject.gameObject, self.sprite.WorldCenter - new Vector2(0.5f, 1), t, 0.5f, true, false, false);
-                    cont.AmountOfCorruptKeys--;
-                    player.carriedConsumables.KeyBullets--;
+                    if (cont.AmountOfCorruptKeys > 0)
+                    {
+                        cont.AmountOfCorruptKeys--;
+                    }
+                    float MA = cont.AmountOfCorruptKeys;
+                    if (MA > 0)
+                    {
+                        GameObject vfx = SpawnManager.SpawnVFX(StaticVFXStorage.MachoBraceDustupVFX, true);
+                        vfx.transform.position = self.sprite.WorldCenter;
+                        vfx.GetComponent<tk2dBaseSprite>().HeightOffGround = 22;
+                        vfx.transform.localScale *= 1.25f;
+                        UnityEngine.Object.Destroy(vfx, 2);
+
+                        AkSoundEngine.PostEvent("Play_BOSS_DragunGold_Crackle_01", player.gameObject);
+                    }
+                    for (int i = 0; i < MA; i++)
+                    {
+                        float H = i + 0.5f / MA;
+                        PickupObject pickupObject = self.lootTable.GetSingleItemForPlayer(player, 0);
+                        Vector2 t = MathToolbox.GetUnitOnCircle(Vector2.down.ToAngle() + Mathf.Lerp(-90, 90, H), 2.5f);
+                        DebrisObject j = LootEngine.SpawnItem(pickupObject.gameObject, self.sprite.WorldCenter - new Vector2(0.5f, 1), t, 0.5f, true, false, false);
+                        cont.AmountOfCorruptKeys--;
+                        player.carriedConsumables.KeyBullets--;
+                    }
                 }
             }       
         }
