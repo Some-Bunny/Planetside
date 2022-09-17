@@ -58,7 +58,47 @@ namespace Planetside
 
 		public static GoopDefinition templateDef;
 		public static int InjectorRoundsID;
-		private void PostProcessProjectile(Projectile sourceProjectile, float effectChanceScalar)
+
+
+        public static Dictionary<GameActorEffect, string> DebuffKeys = new Dictionary<GameActorEffect, string>()
+		{
+        {DebuffStatics.irradiatedLeadEffect, "poison" },
+        {DebuffStatics.hotLeadEffect, "fire" },
+        {DebuffStatics.cheeseeffect, "cheese" },
+        {DebuffStatics.charmingRoundsEffect, "charm" },
+        {DebuffStatics.frostBulletsEffect, "freeze" },
+        {DebuffStatics.chaosBulletsFreeze, "freeze" },
+        {DebuffStatics.greenFireEffect, "hellfire" },
+        {DebuffLibrary.Possessed, "possessed" },
+        {DebuffLibrary.Frailty, "frailty" },
+        {DebuffLibrary.Corrosion, "tarnish" },
+		};
+        public static List<GameActorEffect> BlacklistedKeys = new List<GameActorEffect>()
+		{
+        DebuffLibrary.HeatStroke,
+        DebuffLibrary.brokenArmor,
+        DebuffLibrary.Holy,
+		};
+        public static List<string> BlacklistedNames= new List<string>()
+        {
+        "jamBuff",
+		"leadBuff"
+        };
+
+        public static Dictionary<string, GoopDefinition> GoopKeys = new Dictionary<string, GoopDefinition>()
+		{
+        {"poison",  EasyGoopDefinitions.PoisonDef},
+        {"fire",  EasyGoopDefinitions.FireDef},
+        {"cheese",  EasyGoopDefinitions.CheeseDef},
+        {"charm",  EasyGoopDefinitions.CharmGoopDef},
+        {"freeze",  EasyGoopDefinitions.WaterGoop},
+        {"hellfire",  EasyGoopDefinitions.GreenFireDef},
+        {"possessed",  DebuffLibrary.PossesedPuddle},
+        {"frailty",  DebuffLibrary.FrailPuddle},
+        {"tarnish",  DebuffLibrary.TarnishedGoop},
+		};
+
+        private void PostProcessProjectile(Projectile sourceProjectile, float effectChanceScalar)
 		{
 			try
 			{

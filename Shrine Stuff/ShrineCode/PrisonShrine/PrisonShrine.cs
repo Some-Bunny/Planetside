@@ -323,8 +323,11 @@ namespace Planetside
 		public static IEnumerator DoDelayStuff(GameObject Shrine)
         {
 			yield return new WaitForSeconds(3f);
-			GameManager.Instance.MainCameraController.StopContinuousScreenShake(Shrine.GetComponent<TresspassLightController>());
-			OtherTools.Notify("SOMETHING EMERGES", "DEEP BELOW.", "Planetside/Resources/ShrineIcons/prisonShrineIcon");
+			if (Shrine != null)
+			{
+                GameManager.Instance.MainCameraController.StopContinuousScreenShake(Shrine.GetComponent<TresspassLightController>());
+            }
+            OtherTools.Notify("SOMETHING EMERGES", "DEEP BELOW.", "Planetside/Resources/ShrineIcons/prisonShrineIcon");
 			yield break;
         }
 	}

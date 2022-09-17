@@ -66,8 +66,41 @@ namespace Planetside
                 projectile.gameObject.SetActive(false);
                 FakePrefab.MarkAsFakePrefab(projectile.gameObject);
                 UnityEngine.Object.DontDestroyOnLoad(projectile);
-                projectile.baseData.damage = 6f;
+                projectile.baseData.damage = 4.5f;
                 projectile.baseData.speed *= 3f;
+
+                ExplosiveModifier explosiveModifier = projectile.gameObject.GetOrAddComponent<ExplosiveModifier>();
+                explosiveModifier.explosionData = new ExplosionData()
+                {
+                    breakSecretWalls = false,
+                    comprehensiveDelay = 0,
+                    damage = 2,
+                    damageRadius = 2,
+                    damageToPlayer = 0,
+                    debrisForce = 40,
+                    doDamage = true,
+                    doDestroyProjectiles = false,
+                    doExplosionRing = false,
+                    doForce = true,
+                    doScreenShake = false,
+                    doStickyFriction = false,
+                    effect = (PickupObjectDatabase.GetById(37) as Gun).DefaultModule.chargeProjectiles[0].Projectile.hitEffects.tileMapHorizontal.effects.First().effects.First().effect,
+                    explosionDelay = 0,
+                    force = 5,
+                    forcePreventSecretWallDamage = false,
+                    forceUseThisRadius = true,
+                    freezeEffect = null,
+                    freezeRadius = 0,
+                    IsChandelierExplosion = false,
+                    isFreezeExplosion = false,
+                    playDefaultSFX = true,
+                    preventPlayerForce = false,
+                    pushRadius = 1,
+                    secretWallsRadius = 1,
+                    
+                };
+                explosiveModifier.doExplosion = true;
+                explosiveModifier.IgnoreQueues = true;
 
 
                 ImprovedAfterImage yes = projectile.gameObject.AddComponent<ImprovedAfterImage>();

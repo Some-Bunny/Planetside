@@ -7,6 +7,7 @@ using UnityEngine;
 using Brave.BulletScript;
 using Dungeonator;
 using System.Reflection;
+using GungeonAPI;
 
 namespace Planetside
 {
@@ -104,6 +105,8 @@ namespace Planetside
             GameManager.Instance.StartCoroutine(DoInversePulse(portalObject));
             elaWait = 0f;
 
+            bool noteSpawned = false;
+
             while (elaWait < 15f)
             {
                 float t = (float)elaWait / (float)15;
@@ -114,11 +117,34 @@ namespace Planetside
 
                 if (CheckIfPlayerInVoidHole(Mathf.Lerp(1, 12, t1), base.aiActor.sprite.WorldCenter))
                 {
-                    DoHoleFall(portalObject);
-                    yield break;
+                    if (PlanetsideModule.PreRelease == false)
+                    {
+                        DoHoleFall(portalObject);
+                        yield break;
+                    }
+                    else
+                    {
+                        if (noteSpawned == false)
+                        {
+                            noteSpawned = !noteSpawned;
+
+                            GameObject bom = new GameObject();
+                            StaticReferences.StoredRoomObjects.TryGetValue("prisonerNote", out bom);
+                            var note = DungeonPlaceableUtility.InstantiateDungeonPlaceable(bom, base.aiActor.GetAbsoluteParentRoom(), new IntVector2((int)base.aiActor.sprite.WorldCenter.x, (int)base.aiActor.sprite.WorldCenter.y) - base.aiActor.GetAbsoluteParentRoom().area.basePosition, false).GetComponent<NoteDoer>();
+                            base.aiActor.transform.position.GetAbsoluteRoom().RegisterInteractable(note);
+                        }
+                        List<PlayerController> ps = ReturnPlayersInVoidHole(Mathf.Lerp(1, 12, t1), base.aiActor.sprite.WorldCenter);
+                        for (int i = 0; i < ps.Count; i++)
+                        {
+                            if (ps[i] != null)
+                            {
+                                ps[i].healthHaver.ApplyDamage(0.5f, ps[i].transform.position, "Deeps Grasp", CoreDamageTypes.Void, DamageCategory.Unstoppable, true, null, true);
+                            }
+                        }
+                    }
                 }
               
-                DoSmallPush(t1*5.33f, base.aiActor.sprite.WorldCenter);
+                DoSmallPush(t1*5.5f, base.aiActor.sprite.WorldCenter);
                 portalObject.transform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one * 22.5f, t1);
                 portalObject.GetComponent<MeshRenderer>().material.SetFloat("_OutlineWidth", Mathf.Lerp(0, 0.025f, r1));
                 portalObject.GetComponent<MeshRenderer>().material.SetFloat("_OutlinePower", Mathf.Lerp(0, 100, r1));
@@ -134,8 +160,31 @@ namespace Planetside
                 
                 if (CheckIfPlayerInVoidHole(12, base.aiActor.sprite.WorldCenter))
                 {
-                    DoHoleFall(portalObject);
-                    yield break;
+                    if (PlanetsideModule.PreRelease == false)
+                    {
+                        DoHoleFall(portalObject);
+                        yield break;
+                    }
+                    else
+                    {
+                        if (noteSpawned == false)
+                        {
+                            noteSpawned = !noteSpawned;
+
+                            GameObject bom = new GameObject();
+                            StaticReferences.StoredRoomObjects.TryGetValue("prisonerNote", out bom);
+                            var note = DungeonPlaceableUtility.InstantiateDungeonPlaceable(bom, base.aiActor.GetAbsoluteParentRoom(), new IntVector2((int)base.aiActor.sprite.WorldCenter.x, (int)base.aiActor.sprite.WorldCenter.y) - base.aiActor.GetAbsoluteParentRoom().area.basePosition, false).GetComponent<NoteDoer>();
+                            base.aiActor.transform.position.GetAbsoluteRoom().RegisterInteractable(note);
+                        }
+                        List<PlayerController> ps = ReturnPlayersInVoidHole(12, base.aiActor.sprite.WorldCenter);
+                        for (int i = 0; i < ps.Count; i++)
+                        {
+                            if (ps[i] != null)
+                            {
+                                ps[i].healthHaver.ApplyDamage(0.5f, ps[i].transform.position, "Deeps Grasp", CoreDamageTypes.Void, DamageCategory.Unstoppable, true, null, true);
+                            }
+                        }
+                    }
                 }
                 DoSmallPush(80, base.aiActor.sprite.WorldCenter);
                 elaWait += BraveTime.DeltaTime;
@@ -305,6 +354,17 @@ namespace Planetside
             return false;
         }
 
+        public List<PlayerController> ReturnPlayersInVoidHole(float radius, Vector2 centerPosition)
+        {
+            List<PlayerController> playerControllers = new List<PlayerController> { };
+
+            foreach (PlayerController player in GameManager.Instance.AllPlayers)
+            {
+                if (Vector2.Distance(player.transform.position, centerPosition) < radius) { playerControllers.Add(player); }
+            }
+            return playerControllers;
+        }
+
 
         private IEnumerator DoTransition()
         {
@@ -336,91 +396,143 @@ namespace Planetside
             elaWait = 0f;
 
 
-            GameObject partObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("Amogus"));
-            MeshRenderer rend = partObj.GetComponentInChildren<MeshRenderer>();
-            rend.allowOcclusionWhenDynamic = true;
-            partObj.transform.position = Actor.ParentRoom.GetCenterCell().ToVector3().WithZ(50);
-            partObj.name = "VoidHole";
-            partObj.transform.localScale = Vector3.zero;
-            VoidHoleController voidHoleController = partObj.AddComponent<VoidHoleController>();
-            voidHoleController.trueCenter = Actor.sprite.WorldCenter;
-            voidHoleController.CanHurt = false;
-            voidHoleController.Radius = 30;
-            controllerOfTheVoid = voidHoleController;
 
-            EmergencyPlayerDisappearedFromRoom emergencyPlayerDisappeared = Actor.gameObject.AddComponent<EmergencyPlayerDisappearedFromRoom>();
-            emergencyPlayerDisappeared.roomAssigned = Actor.GetAbsoluteParentRoom();
-            emergencyPlayerDisappeared.PlayerSuddenlyDisappearedFromRoom = (obj) =>
+
+            if (PlanetsideModule.DebugMode == false)
             {
-                if (obj.IsDarkAndTerrifying == true)
+                GameObject partObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("Amogus"));
+                MeshRenderer rend = partObj.GetComponentInChildren<MeshRenderer>();
+                rend.allowOcclusionWhenDynamic = true;
+                partObj.transform.position = Actor.ParentRoom.GetCenterCell().ToVector3().WithZ(50);
+                partObj.name = "VoidHole";
+                partObj.transform.localScale = Vector3.zero;
+                VoidHoleController voidHoleController = partObj.AddComponent<VoidHoleController>();
+                voidHoleController.trueCenter = Actor.sprite.WorldCenter;
+                voidHoleController.actorToFollow = Actor;
+
+                voidHoleController.CanHurt = false;
+                voidHoleController.Radius = 30;
+                controllerOfTheVoid = voidHoleController;
+
+                EmergencyPlayerDisappearedFromRoom emergencyPlayerDisappeared = Actor.gameObject.AddComponent<EmergencyPlayerDisappearedFromRoom>();
+                emergencyPlayerDisappeared.roomAssigned = Actor.GetAbsoluteParentRoom();
+                emergencyPlayerDisappeared.PlayerSuddenlyDisappearedFromRoom = (obj) =>
                 {
-                    obj.EndTerrifyingDarkRoom(1);
+                    if (obj.IsDarkAndTerrifying == true)
+                    {
+                        obj.EndTerrifyingDarkRoom(1);
+                    }
+                    if (partObj != null) { Destroy(partObj); }
+                };
+
+                GameManager.Instance.BestActivePlayer.CurrentRoom.BecomeTerrifyingDarkRoom(5f, 0.5f, 0.1f, "Play_ENM_darken_world_01");
+                while (elaWait < 3f)
+                {
+                    float t = elaWait / 3;
+                    float throne1 = Mathf.Sin(t * (Mathf.PI / 2));
+                    partObj.transform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one * 6.25f, throne1);
+                    Actor.renderer.material.SetFloat("_Fade", 1 - t);
+                    elaWait += BraveTime.DeltaTime;
+                    yield return null;
                 }
-                if (partObj != null) { Destroy(partObj); }
-            };
-
-            GameManager.Instance.BestActivePlayer.CurrentRoom.BecomeTerrifyingDarkRoom(5f, 0.5f, 0.1f, "Play_ENM_darken_world_01");
-             while (elaWait < 3f)
-             {
-                float t = elaWait / 3;
-                float throne1 = Mathf.Sin(t * (Mathf.PI / 2));
-                partObj.transform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one * 6.25f, throne1);
-                Actor.renderer.material.SetFloat("_Fade", 1 - t);
-                elaWait += BraveTime.DeltaTime;
-                 yield return null;
-             }
-            SpawnManager.SpawnBulletScript(Actor, Actor.sprite.WorldCenter, Actor.GetComponent<AIBulletBank>(), new CustomBulletScriptSelector(typeof(SubphaseTwoAttack)), StringTableManager.GetEnemiesString("#PRISONERPHASEONENAME", -1));
-             Actor.SetOutlines(false);
-             Actor.renderer.enabled = false;
-             elaWait = 0f;
-            voidHoleController.CanHurt = true;
-            while (elaWait < 30f)
-             {
-                 elaWait += BraveTime.DeltaTime;
-                float t = Mathf.Min((elaWait / 20), 1);
-                voidHoleController.Radius = Mathf.Lerp(28.5f, 8.75f, t);
-                partObj.transform.localScale = Vector3.Lerp(Vector3.one * 6.25f, Vector3.one * 2, t);
-                yield return null;
-             }
-            voidHoleController.actorToFollow = Actor;
-            voidHoleController.trueCenter = Actor.sprite.WorldCenter;
-            Actor.CollisionDamage = 0;
-
-            SubPhaseEnded = true;
-            GameManager.Instance.BestActivePlayer.CurrentRoom.EndTerrifyingDarkRoom(2.5f);
-            ImprovedAfterImage yeah = Actor.gameObject.GetComponent<ImprovedAfterImage>();
-            yeah.spawnShadows = false;
-            Actor.gameObject.layer = lay;
-            for (int j = 0; j < Actor.behaviorSpeculator.AttackBehaviors.Count; j++)
-            {
-                if (base.behaviorSpeculator.AttackBehaviors[j] is AttackBehaviorGroup && base.behaviorSpeculator.AttackBehaviors[j] != null)
+                SpawnManager.SpawnBulletScript(Actor, Actor.sprite.WorldCenter, Actor.GetComponent<AIBulletBank>(), new CustomBulletScriptSelector(typeof(SubphaseTwoAttack)), StringTableManager.GetEnemiesString("#PRISONERPHASEONENAME", -1));
+                Actor.SetOutlines(false);
+                Actor.renderer.enabled = false;
+                elaWait = 0f;
+                voidHoleController.CanHurt = true;
+                while (elaWait < 30f)
                 {
-                    this.ProcessAttackGroup(base.behaviorSpeculator.AttackBehaviors[j] as AttackBehaviorGroup);
+                    elaWait += BraveTime.DeltaTime;
+                    float t = Mathf.Min((elaWait / 20), 1);
+                    voidHoleController.Radius = Mathf.Lerp(28.5f, 8.75f, t);
+                    partObj.transform.localScale = Vector3.Lerp(Vector3.one * 6.25f, Vector3.one * 2, t);
+                    yield return null;
+                }
+                voidHoleController.actorToFollow = Actor;
+                voidHoleController.trueCenter = Actor.sprite.WorldCenter;
+                Actor.CollisionDamage = 0;
+
+                SubPhaseEnded = true;
+                GameManager.Instance.BestActivePlayer.CurrentRoom.EndTerrifyingDarkRoom(2.5f);
+                ImprovedAfterImage yeah = Actor.gameObject.GetComponent<ImprovedAfterImage>();
+                yeah.spawnShadows = false;
+                Actor.gameObject.layer = lay;
+                for (int j = 0; j < Actor.behaviorSpeculator.AttackBehaviors.Count; j++)
+                {
+                    if (base.behaviorSpeculator.AttackBehaviors[j] is AttackBehaviorGroup && base.behaviorSpeculator.AttackBehaviors[j] != null)
+                    {
+                        this.ProcessAttackGroup(base.behaviorSpeculator.AttackBehaviors[j] as AttackBehaviorGroup);
+                    }
+                }
+                elaWait = 0f;
+                while (elaWait < 3f)
+                {
+                    float t = elaWait / 3;
+                    Actor.renderer.material.SetFloat("_Fade", t);
+                    elaWait += BraveTime.DeltaTime;
+                    Actor.renderer.enabled = true;
+                    yield return null;
+                }
+                //SpawnManager.SpawnBulletScript(Actor, Actor.sprite.WorldCenter, Actor.GetComponent<AIBulletBank>(), new CustomBulletScriptSelector(typeof(A)), StringTableManager.GetEnemiesString("#PRISONERPHASEONENAME", -1));
+                if (WasJammed == true)
+                {
+                    GameObject gameObject = SpawnManager.SpawnVFX(StaticVFXStorage.JammedDeathVFX, Actor.sprite.WorldBottomLeft, Quaternion.identity, false);
+                    if (gameObject && gameObject.GetComponent<tk2dSprite>())
+                    {
+                        tk2dSprite component = gameObject.GetComponent<tk2dSprite>();
+                        component.scale *= 2.5f;
+                        component.HeightOffGround = 5f;
+                        component.UpdateZDepth();
+                    }
+                    Destroy(gameObject, 2);
+                    Actor.renderer.material.shader = ShaderCache.Acquire("Brave/LitCutoutUberPhantom");
                 }
             }
-            elaWait = 0f;
-            while (elaWait < 3f)
+            else
             {
-                float t = elaWait / 3;
-                Actor.renderer.material.SetFloat("_Fade", t);
-                elaWait += BraveTime.DeltaTime;
-                Actor.renderer.enabled = true;
-                yield return null;
-            }
-            //SpawnManager.SpawnBulletScript(Actor, Actor.sprite.WorldCenter, Actor.GetComponent<AIBulletBank>(), new CustomBulletScriptSelector(typeof(A)), StringTableManager.GetEnemiesString("#PRISONERPHASEONENAME", -1));
-            if (WasJammed == true)
-            {
-                GameObject gameObject = SpawnManager.SpawnVFX(StaticVFXStorage.JammedDeathVFX, Actor.sprite.WorldBottomLeft, Quaternion.identity, false);
-                if (gameObject && gameObject.GetComponent<tk2dSprite>())
+                SubPhaseEnded = true;
+
+                Actor.CollisionDamage = 0;
+
+
+                GameObject partObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("Amogus"));
+                MeshRenderer rend = partObj.GetComponentInChildren<MeshRenderer>();
+                rend.allowOcclusionWhenDynamic = true;
+                partObj.transform.position = Actor.ParentRoom.GetCenterCell().ToVector3().WithZ(50);
+                partObj.name = "VoidHole";
+                partObj.transform.localScale = Vector3.zero;
+                VoidHoleController voidHoleController = partObj.AddComponent<VoidHoleController>();
+                voidHoleController.trueCenter = Actor.sprite.WorldCenter;
+                voidHoleController.CanHurt = false;
+                voidHoleController.Radius = 30;
+                voidHoleController.actorToFollow = Actor;
+
+                controllerOfTheVoid = voidHoleController;
+
+                voidHoleController.Radius = 8.75f;
+                partObj.transform.localScale = Vector3.one * 2;
+
+                EmergencyPlayerDisappearedFromRoom emergencyPlayerDisappeared = Actor.gameObject.AddComponent<EmergencyPlayerDisappearedFromRoom>();
+                emergencyPlayerDisappeared.roomAssigned = Actor.GetAbsoluteParentRoom();
+                emergencyPlayerDisappeared.PlayerSuddenlyDisappearedFromRoom = (obj) =>
                 {
-                    tk2dSprite component = gameObject.GetComponent<tk2dSprite>();
-                    component.scale *= 2.5f;
-                    component.HeightOffGround = 5f;
-                    component.UpdateZDepth();
+                    if (obj.IsDarkAndTerrifying == true)
+                    {
+                        obj.EndTerrifyingDarkRoom(1);
+                    }
+                    if (partObj != null) { Destroy(partObj); }
+                };
+
+                for (int j = 0; j < Actor.behaviorSpeculator.AttackBehaviors.Count; j++)
+                {
+                    if (base.behaviorSpeculator.AttackBehaviors[j] is AttackBehaviorGroup && base.behaviorSpeculator.AttackBehaviors[j] != null)
+                    {
+                        this.ProcessAttackGroup(base.behaviorSpeculator.AttackBehaviors[j] as AttackBehaviorGroup);
+                    }
                 }
-                Destroy(gameObject, 2);
-                Actor.renderer.material.shader = ShaderCache.Acquire("Brave/LitCutoutUberPhantom");
             }
+
+          
 
             Actor.SetOutlines(true);
             Controller.CurrentSubPhase = PrisonerPhaseOne.PrisonerController.SubPhases.PHASE_3;

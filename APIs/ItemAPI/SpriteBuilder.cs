@@ -135,24 +135,22 @@ namespace ItemAPI
                 animator.Library = animator.gameObject.AddComponent<tk2dSpriteAnimation>();
                 animator.Library.clips = new tk2dSpriteAnimationClip[0];
                 animator.Library.enabled = true;
+               
             }
 
             List<tk2dSpriteAnimationFrame> frames = new List<tk2dSpriteAnimationFrame>();
             for (int i = 0; i < spriteIDs.Count; i++)
             {
-                //if (Debug == true) { ETGModConsole.Log("1"); }
                 tk2dSpriteDefinition sprite = collection.spriteDefinitions[spriteIDs[i]];
                 if (sprite.Valid)
                 {
-                    //if (Debug == true) { ETGModConsole.Log("2"); }
                     frames.Add(new tk2dSpriteAnimationFrame()
                     {
                         spriteCollection = collection,
-                        spriteId = spriteIDs[i]
+                        spriteId = spriteIDs[i],
+                        
                     });
-                    //if (Debug == true) { ETGModConsole.Log("3"); }
-                }
-              
+                }        
             }
 
             var clip = new tk2dSpriteAnimationClip();
@@ -165,6 +163,93 @@ namespace ItemAPI
             clip.frames = frames.ToArray();
             return clip;
         }
+
+        public static tk2dSpriteAnimationClip AddAnimationDebug(tk2dSpriteAnimator animator, tk2dSpriteCollectionData collection, List<int> spriteIDs,
+            string clipName, tk2dSpriteAnimationClip.WrapMode wrapMode = tk2dSpriteAnimationClip.WrapMode.LoopSection)
+        {
+
+            ETGModConsole.Log("Starting null checks");
+            if (animator == null)
+            {
+                ETGModConsole.Log("animator is NULL.");
+            }
+            if (collection == null)
+            {
+                ETGModConsole.Log("collection is NULL.");
+            }
+            if (spriteIDs == null)
+            {
+                ETGModConsole.Log("spriteIDs List is NULL.");
+            }
+            if (clipName == null)
+            {
+                ETGModConsole.Log("clipName is NULL.");
+            }
+
+
+            ETGModConsole.Log("Starting AddAnimation of clip name: "+clipName);
+            if (animator.Library == null)
+            {
+                ETGModConsole.Log("Library is NULL, constructing new one.");
+
+                animator.Library = animator.gameObject.AddComponent<tk2dSpriteAnimation>();
+                animator.Library.clips = new tk2dSpriteAnimationClip[0];
+                animator.Library.enabled = true;
+                ETGModConsole.Log("Library created.");
+            }
+
+            ETGModConsole.Log("Starting to add frames.");
+            List<tk2dSpriteAnimationFrame> frames = new List<tk2dSpriteAnimationFrame>();
+            ETGModConsole.Log("Created new List<tk2dSpriteAnimationFrame>");
+
+            for (int i = 0; i < spriteIDs.Count; i++)
+            {
+                tk2dSpriteDefinition sprite = collection.spriteDefinitions[spriteIDs[i]];
+
+                if (collection.spriteDefinitions == null)
+                {
+                    ETGModConsole.Log("collection.spriteDefinitions is NULL.");
+                }
+
+
+                if (sprite == null) 
+                {
+                    ETGModConsole.Log("Frame " + i + "is NULL.");
+                }
+
+                
+
+                if (sprite.Valid)
+                {
+                    if (collection == null)
+                    {
+                        ETGModConsole.Log("collection is NULL.");
+                    }
+                    frames.Add(new tk2dSpriteAnimationFrame()
+                    {
+                        spriteCollection = collection,
+                        spriteId = spriteIDs[i],
+                        
+                    });
+                }
+                ETGModConsole.Log("Frame "+i+"of animation added");
+            }
+            ETGModConsole.Log("Creating new clip");
+
+            var clip = new tk2dSpriteAnimationClip();
+            clip.name = clipName;
+            clip.fps = 15;
+            clip.wrapMode = wrapMode;
+            Array.Resize(ref animator.Library.clips, animator.Library.clips.Length + 1);
+            animator.Library.clips[animator.Library.clips.Length - 1] = clip;
+            ETGModConsole.Log("Adding frames");
+            clip.frames = frames.ToArray();
+            ETGModConsole.Log("Finsihed adding frames, returning CLIP");
+
+            return clip;
+        }
+
+
 
         public static tk2dSpriteAnimationClip AddAnimation(tk2dSpriteAnimator targetAnimator, tk2dSpriteCollectionData collection, List<string> spriteNameList, string clipName, tk2dSpriteAnimationClip.WrapMode wrapMode = tk2dSpriteAnimationClip.WrapMode.Once, int frameRate = 15, int loopStart = 0, float minFidgetDuration = 0.5f, float maxFidgetDuration = 1)
         {

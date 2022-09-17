@@ -12,6 +12,7 @@ using Pathfinding;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using System.Reflection;
+using UnityEngine.UI;
 
 namespace Planetside
 {
@@ -19,7 +20,7 @@ namespace Planetside
 	{
 		public static GameObject prefab;
 		public static readonly string guid = "fodder_enemy";
-		private static tk2dSpriteCollectionData FodderColection;
+		//private static tk2dSpriteCollectionData FodderColection;
 		public static GameObject shootpoint;
 		public static void Init()
 		{
@@ -33,7 +34,7 @@ namespace Planetside
 			bool flag2 = flag;
 			if (!flag2)
 			{
-				prefab = EnemyBuilder.BuildPrefab("Fodder Enemy", guid, spritePaths[0], new IntVector2(0, 0), new IntVector2(8, 9), false);
+				prefab = EnemyBuilder.BuildPrefab("Fodder Enemy", guid, spritePaths[0], new IntVector2(0, 0), new IntVector2(0,0), false);
 				var companion = prefab.AddComponent<EnemyBehavior>();
 				companion.aiActor.knockbackDoer.weight = 100000;
 				companion.aiActor.MovementSpeed = 0f;
@@ -84,7 +85,7 @@ namespace Planetside
 					BagelColliderNumber = 0,
 					ManualOffsetX = 0,
 					ManualOffsetY = 0,
-					ManualWidth = 15,
+					ManualWidth = 14,
 					ManualHeight = 20,
 					ManualDiameter = 0,
 					ManualLeftX = 0,
@@ -110,75 +111,44 @@ namespace Planetside
 					}
 				};
 
+
+                tk2dSpriteCollectionData FodderColection = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("FodderCollection").GetComponent<tk2dSpriteCollectionData>();
+                Material mat = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Material>("assets/Enemies/Fodder/FodderCollection Data/atlas0 material.mat");
+				EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, FodderColection, mat);
+             			
+                {
+                SpriteBuilder.AddAnimation(companion.spriteAnimator, FodderColection, new List<int>
+                {
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+                }, "idle", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 7f;
+
+                SpriteBuilder.AddAnimation(companion.spriteAnimator, FodderColection, new List<int>
+                {
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                //17
+                }, "die", tk2dSpriteAnimationClip.WrapMode.Once).fps = 13f;
+                }
 				
-				bool flag3 = FodderColection == null;
-				if (flag3)
-				{
-					FodderColection = SpriteBuilder.ConstructCollection(prefab, "FodderColection");
-					UnityEngine.Object.DontDestroyOnLoad(FodderColection);
-					for (int i = 0; i < spritePaths.Length; i++)
-					{
-						SpriteBuilder.AddSpriteToCollection(spritePaths[i], FodderColection);
-					}
-					
-
-				/*
-				GameObject FodderColectionObject = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("FodderCollection");
-				tk2dSpriteCollectionData FodderColection = FodderColectionObject.GetComponent<tk2dSpriteCollectionData>();
-				if (FodderColection != null && FodderColection != null)
-				{
-					UnityEngine.Object.DontDestroyOnLoad(FodderColectionObject);
-					UnityEngine.Object.DontDestroyOnLoad(FodderColection);
-					Material mat = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Material>("assets/Enemies/Fodder/FodderCollection Data/atlas0 material.mat");
-
-					UnityEngine.Object.DontDestroyOnLoad(mat);
-					FodderColection.material = mat;
-					
-					Texture texture = mat.GetTexture("_MainTex");
-					texture.filterMode = FilterMode.Point;
-
-					//FodderColection.textures = new Texture[] { texture };
-
-					FodderColection.materials = new Material[]
-					{
-						mat
-					};
-					companion.sprite.usesOverrideMaterial = true;
-					companion.sprite.renderer.material = mat;
-					companion.sprite.renderer.material.SetTexture("_MainTex", texture);
-					*/
 
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, FodderColection, new List<int>
-					{
-					0,
-					1,
-					2,
-					3,
-					4,
-					5,
-					6,
-					7
-					}, "idle", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 7f;
+                var bs = prefab.GetComponent<BehaviorSpeculator>();
+				var OvM =  prefab.GetComponent<ObjectVisibilityManager>();
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, FodderColection, new List<int>
-					{
-					8,
-					9,
-					10,
-					11,
-					12,
-					13,
-					14,
-					15,
-					16,
-					//17
-					}, "die", tk2dSpriteAnimationClip.WrapMode.Once).fps = 13f;
-					
-
-				}
-				var bs = prefab.GetComponent<BehaviorSpeculator>();
-				prefab.GetComponent<ObjectVisibilityManager>();
 				BehaviorSpeculator behaviorSpeculator = EnemyDatabase.GetOrLoadByGuid("43426a2e39584871b287ac31df04b544").behaviorSpeculator;
 				bs.OverrideBehaviors = behaviorSpeculator.OverrideBehaviors;
 				bs.OtherBehaviors = behaviorSpeculator.OtherBehaviors;
@@ -219,7 +189,17 @@ namespace Planetside
 				{
 					UnityEngine.Object.Destroy(companion.GetComponent<EncounterTrackable>());
 				}
-				companion.encounterTrackable = companion.gameObject.AddComponent<EncounterTrackable>();
+                Material mat2 = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+                mat2.mainTexture = companion.sprite.renderer.material.mainTexture;
+                mat2.SetColor("_EmissiveColor", new Color32(255, 255, 255, 255));
+                mat2.SetFloat("_EmissiveColorPower", 1.55f);
+                mat2.SetFloat("_EmissivePower", 100);
+                mat2.SetFloat("_EmissiveThresholdSensitivity", 0.05f);
+
+                companion.sprite.renderer.material = mat2;
+
+
+                companion.encounterTrackable = companion.gameObject.AddComponent<EncounterTrackable>();
 				companion.encounterTrackable.journalData = new JournalEntry();
 				companion.encounterTrackable.EncounterGuid = "psog:fodder";
 				companion.encounterTrackable.prerequisites = new DungeonPrerequisite[0];
@@ -313,7 +293,19 @@ namespace Planetside
 				{
 					CheckPlayerRoom();
 				}
-			}
+				/*
+                Material outlineMaterial1 = SpriteOutlineManager.GetOutlineMaterial(this.aiActor.sprite);
+                if (outlineMaterial1 != null)
+				{
+                    outlineMaterial1.SetColor("_OverrideColor", new Color(10f, 10f, 42f));
+                }
+				else
+				{
+					ETGModConsole.Log(outlineMaterial1 + "is NULL");
+				}
+				*/
+
+            }
 			private void CheckPlayerRoom()
 			{
 				if (GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() != null && GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() == m_StartRoom)
@@ -347,7 +339,9 @@ namespace Planetside
 					AkSoundEngine.PostEvent("Play_BOSS_mineflayer_belldrop_01", base.aiActor.gameObject);
 
 				};
-			}
+
+
+            }
 
 		}
 

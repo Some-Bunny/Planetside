@@ -153,7 +153,7 @@ namespace Planetside
 			bool flag2 = flag;
 			if (!flag2)
 			{
-				prefab = EnemyBuilder.BuildPrefab("Jammed Guardian", guid, spritePaths[0], new IntVector2(0, 0), new IntVector2(8, 9), false, false);
+				prefab = EnemyBuilder.BuildPrefab("Jammed Guardian", guid, spritePaths[0], new IntVector2(0, 0), new IntVector2(8, 9), false, true);
 				var companion = prefab.AddComponent<EnemyBehavior>();
 				companion.aiActor.knockbackDoer.weight = 10000;
 				companion.aiActor.MovementSpeed = 1.75f;
@@ -430,7 +430,81 @@ namespace Planetside
 					
 				}
 				};
-				
+
+				bs.AttackBehaviorGroup.AttackBehaviors = new List<AttackBehaviorGroup.AttackGroupItem>
+				{
+
+					new AttackBehaviorGroup.AttackGroupItem()
+					{
+					Probability = 2f,
+					Behavior = new ShootBehavior() {
+                    ShootPoint = m_CachedGunAttachPoint,
+                    BulletScript = new CustomBulletScriptSelector(typeof(BigBallAttack)),
+                    LeadAmount = 0f,
+                    AttackCooldown = 1f,
+                    Cooldown = 2f,
+                    TellAnimation = "attack",
+                    FireAnimation = "tell",
+                    RequiresLineOfSight = true,
+                    MultipleFireEvents = true,
+                    Uninterruptible = false,
+					},
+                    },
+                    new AttackBehaviorGroup.AttackGroupItem()
+                    {
+                    Probability = 1f,
+                    Behavior = new ShootBehavior() {
+                    ShootPoint = m_CachedGunAttachPoint,
+                    BulletScript = new CustomBulletScriptSelector(typeof(FireFastHoming)),
+                    LeadAmount = 0f,
+                    AttackCooldown = 1f,
+                    Cooldown = 3f,
+                    TellAnimation = "armtell",
+                    FireAnimation = "arm",
+                    PostFireAnimation = "armunraise",
+                    RequiresLineOfSight = true,
+                    MultipleFireEvents = true,
+                    Uninterruptible = false,
+                    },
+                    },
+                    new AttackBehaviorGroup.AttackGroupItem()
+                    {
+                    Probability = 0.7f,
+                    Behavior = new ShootBehavior() {
+                    ShootPoint = m_CachedGunAttachPoint,
+                    BulletScript = new CustomBulletScriptSelector(typeof(FireFastHomingHard)),
+                    LeadAmount = 0f,
+                    AttackCooldown = 1f,
+                    Cooldown = 4f,
+                    TellAnimation = "armtell",
+                    FireAnimation = "arm",
+                    PostFireAnimation = "armunraise",
+                    RequiresLineOfSight = true,
+                    MultipleFireEvents = true,
+                    Uninterruptible = false,
+                    },
+                    },
+                    new AttackBehaviorGroup.AttackGroupItem()
+					{
+					Probability = 1.2f,
+					Behavior = new ShootBehavior() {
+                    ShootPoint = m_CachedGunAttachPoint,
+                    BulletScript = new CustomBulletScriptSelector(typeof(Crosslads)),
+                    LeadAmount = 0f,
+                    AttackCooldown = 1f,
+                    Cooldown = 13,
+					InitialCooldown = 5,
+                    TellAnimation = "attack",
+                    FireAnimation = "tell",
+                    RequiresLineOfSight = false,
+                    MultipleFireEvents = true,
+                    Uninterruptible = false,
+                    },
+					}
+                };
+
+
+                /*
 				bs.AttackBehaviors = new List<AttackBehaviorBase>() {
 				
 					new ShootBehavior() {
@@ -471,7 +545,8 @@ namespace Planetside
 					MultipleFireEvents = true,
 					Uninterruptible = false,
 				}
-				/*
+				*/
+                /*
 				new DashBehavior()
 				{
 					ShootPoint = m_CachedGunAttachPoint,
@@ -486,8 +561,7 @@ namespace Planetside
 					RequiresLineOfSight = false,			
 				}
 				*/
-				};
-				bs.OtherBehaviors = new List<BehaviorBase>() {
+                bs.OtherBehaviors = new List<BehaviorBase>() {
 				new CustomSpinBulletsBehavior() {
 					ShootPoint = m_CachedGunAttachPoint,
 					OverrideBulletName = "homing",
@@ -765,12 +839,13 @@ namespace Planetside
 		{
 			protected override IEnumerator Top()
 			{
-				this.EndOnBlank = true;
+                base.PostWwiseEvent("Play_EnergySwirl", null);
+
+                this.EndOnBlank = true;
 				float startDirection = this.RandomAngle();
 				float Bullets = 18;
 
 				float scytleBullets = 18;
-
 				for (int i = 0; i < Bullets; i++)
 				{
 					float t = (float)i / (float)Bullets;
@@ -843,28 +918,64 @@ namespace Planetside
 			}
 		}
 
+		public class FireFastHomingHard : FireFastHoming
+		{
+			public override bool IsHard => true;
+		}
 
-		public class FireFastHoming : Script
+
+        public class FireFastHoming : Script
         {
+			public virtual bool IsHard
+			{
+				get 
+				{
+					return false;
+				}
+			}
+
 			protected override IEnumerator Top()
 			{
-				for (int i = 0; i < 12; i++)
-                {
-					this.Fire(new Offset(((BraveMathCollege.AbsAngleBetween(this.BulletBank.aiAnimator.FacingDirection, 0f) <= 90f) ? "leftHandShootpoint" : "rightHandShootpoint")), new Direction(UnityEngine.Random.Range(-75, 75), DirectionType.Aim, -1f), new Speed(6f, SpeedType.Absolute), new FireFastHoming.FastHomingShot());
-					yield return this.Wait(6);
-				}
-				yield break;
+				if (IsHard == true)
+				{
+                    for (int i = 0; i < 12; i++)
+                    {
+                        this.Fire(new Offset(((BraveMathCollege.AbsAngleBetween(this.BulletBank.aiAnimator.FacingDirection, 0f) <= 90f) ? "leftHandShootpoint" : "rightHandShootpoint")), new Direction(i * 30, DirectionType.Aim, -1f), new Speed(6f, SpeedType.Absolute), new FireFastHoming.FastHomingShot(5, 20, 210));
+                    }
+                    yield return this.Wait(30);
+                    for (int i = -3; i < 4; i++)
+                    {
+                        this.Fire(new Offset(((BraveMathCollege.AbsAngleBetween(this.BulletBank.aiAnimator.FacingDirection, 0f) <= 90f) ? "leftHandShootpoint" : "rightHandShootpoint")), new Direction(i * 10, DirectionType.Aim, -1f), new Speed(14f, SpeedType.Absolute), new FireFastHoming.FastHomingShot(1, 9, 150));
+                    }
+                }
+                else
+				{
+                    for (int e = 0; e < 4; e++)
+                    {
+                        for (int i = 0; i < 6; i++)
+                        {
+                            this.Fire(new Offset(((BraveMathCollege.AbsAngleBetween(this.BulletBank.aiAnimator.FacingDirection, 0f) <= 90f) ? "leftHandShootpoint" : "rightHandShootpoint")), new Direction(i * 60, DirectionType.Aim, -1f), new Speed(6f, SpeedType.Absolute), new FireFastHoming.FastHomingShot(2));
+                        }
+                        yield return this.Wait(30);
+                    }
+                }
+
+                 
+                yield break;
 			}
 
 			public class FastHomingShot : Bullet
 			{
-				public FastHomingShot() : base("quickHoming", false, false, false)
+				public FastHomingShot(float delta, float postSpeed = 14, int term = 120) : base("quickHoming", false, false, false)
 				{
-				}
+					Delta = delta;
+					PostSpeed = postSpeed;
+					Term = term;
+                }
 
 				protected override IEnumerator Top()
 				{
-					this.ChangeSpeed(new Speed(14f, SpeedType.Absolute), 120);
+					this.ChangeSpeed(new Speed(PostSpeed, SpeedType.Absolute), Term);
 					for (int i = 0; i < 30; i++)
 					{
 						float aim = this.GetAimDirection(1f, 16f);
@@ -873,13 +984,17 @@ namespace Planetside
 						{
 							yield break;
 						}
-						this.Direction += Mathf.MoveTowards(0f, delta, 5f);
+						this.Direction += Mathf.MoveTowards(0f, delta, Delta);
 						yield return this.Wait(1);
 					}
 					yield break;
 				}
-			}
-		}
+				private float Delta;
+                private float PostSpeed;
+                private int Term;
+
+            }
+        }
 
 		public class BigBallAttack : Script
 		{
@@ -931,34 +1046,15 @@ namespace Planetside
 						float Angle = 360 / Amount;
 						for (int i = 0; i < Amount; i++)
 						{
-							base.Fire(new Direction(num + Angle * (float)i, DirectionType.Absolute, -1f), new Speed(8f, SpeedType.Absolute), new BurstBullet());
-							base.Fire(new Direction(num + Angle * (float)i+15, DirectionType.Absolute, -1f), new Speed(10f, SpeedType.Absolute), new BurstBullet());
-							base.Fire(new Direction(num + Angle * (float)i, DirectionType.Absolute, -1f), new Speed(12f, SpeedType.Absolute), new BurstBullet());
-						}
+							base.Fire(new Direction(num + Angle * (float)i, DirectionType.Absolute, -1f), new Speed(8f, SpeedType.Absolute), new SpeedChangingBullet("default", 7, 150));
+							base.Fire(new Direction(num + Angle * (float)i+15, DirectionType.Absolute, -1f), new Speed(10f, SpeedType.Absolute), new SpeedChangingBullet("default", 7, 150));
+                            base.Fire(new Direction(num + Angle * (float)i, DirectionType.Absolute, -1f), new Speed(12f, SpeedType.Absolute), new SpeedChangingBullet("default", 7, 150));
+                        }
 					}
 				}
 			}
 
 		}
-		public class BurstBullet : Bullet
-		{
-			public BurstBullet() : base("reversible", false, false, false)
-			{
-			}
-			protected override IEnumerator Top()
-			{
-				yield break;
-			}
-		}
-
-		public class WallBullet : Bullet
-		{
-			public WallBullet() : base("default", false, false, false)
-			{
-
-			}
-		}
-		
 	}
 }
 

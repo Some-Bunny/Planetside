@@ -17,6 +17,36 @@ namespace Planetside
 	
 	internal static class EnemyToolbox
     {
+
+		public static void QuickAssetBundleSpriteSetup(AIActor actorObject, tk2dSpriteCollectionData bundleData, Material mat, bool changesSortingLayer = true)
+		{
+            Texture texture = mat.GetTexture("_MainTex");
+            texture.filterMode = FilterMode.Point;
+            mat.SetTexture("_MainTex", texture);
+            bundleData.material = mat;
+
+            bundleData.materials = new Material[]
+            {
+                mat,
+            };
+            bundleData.materialInsts = new Material[]
+            {
+                mat,
+            };
+            foreach (var c in bundleData.spriteDefinitions)
+            {
+                c.material = bundleData.materials[0];
+                c.materialInst = bundleData.materials[0];
+                c.materialId = 0;
+            }
+			if (changesSortingLayer == true)
+			{
+                actorObject.gameObject.layer = 28;
+                actorObject.sprite.SortingOrder = -2;
+            }
+        }
+
+
 		public static void ApplyGlitter(this AIActor target)
 		{
 			int count = target.healthHaver.bodySprites.Count;

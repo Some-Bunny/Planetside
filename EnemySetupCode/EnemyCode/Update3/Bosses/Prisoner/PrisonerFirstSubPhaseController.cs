@@ -70,102 +70,125 @@ namespace Planetside
                 Destroy(gameObject, 2);
             }
             elaWait = 0f;
-            
-            GameManager.Instance.BestActivePlayer.CurrentRoom.BecomeTerrifyingDarkRoom(5f, 0.5f, 0.1f, "Play_ENM_darken_world_01");
-           
-            SpawnManager.SpawnBulletScript(Actor, Actor.sprite.WorldCenter, Actor.GetComponent<AIBulletBank>(), new CustomBulletScriptSelector(typeof(SubphaseOneAttack)), StringTableManager.GetEnemiesString("#PRISONERPHASEONENAME", -1));
 
-            GameObject partObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("Amogus"));
-            MeshRenderer rend = partObj.GetComponentInChildren<MeshRenderer>();
-
-            rend.allowOcclusionWhenDynamic = true;
-
-            partObj.transform.position = Actor.ParentRoom.GetCenterCell().ToVector3().WithZ(50);
-
-            partObj.name = "VoidHole";
-            partObj.transform.localScale = Vector3.zero;
-
-
-
-            VoidHoleController voidHoleController = partObj.AddComponent<VoidHoleController>();
-            voidHoleController.trueCenter = Actor.ParentRoom.GetCenterCell().ToCenterVector2();
-            voidHoleController.CanHurt = false;
-            voidHoleController.Radius = 30;
-            voidHoleController.ChangeHoleSize(0);
-
-            EmergencyPlayerDisappearedFromRoom emergencyPlayerDisappeared = Actor.gameObject.AddComponent<EmergencyPlayerDisappearedFromRoom>();
-            emergencyPlayerDisappeared.roomAssigned = Actor.GetAbsoluteParentRoom();
-            emergencyPlayerDisappeared.PlayerSuddenlyDisappearedFromRoom = (obj) =>
+            if (PlanetsideModule.DebugMode == false)
             {
-                if (obj.IsDarkAndTerrifying == true)
+                GameManager.Instance.BestActivePlayer.CurrentRoom.BecomeTerrifyingDarkRoom(5f, 0.5f, 0.1f, "Play_ENM_darken_world_01");
+
+                SpawnManager.SpawnBulletScript(Actor, Actor.sprite.WorldCenter, Actor.GetComponent<AIBulletBank>(), new CustomBulletScriptSelector(typeof(SubphaseOneAttack)), StringTableManager.GetEnemiesString("#PRISONERPHASEONENAME", -1));
+
+                GameObject partObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("Amogus"));
+                MeshRenderer rend = partObj.GetComponentInChildren<MeshRenderer>();
+
+                rend.allowOcclusionWhenDynamic = true;
+
+                partObj.transform.position = Actor.ParentRoom.GetCenterCell().ToVector3().WithZ(50);
+
+                partObj.name = "VoidHole";
+                partObj.transform.localScale = Vector3.zero;
+
+
+
+                VoidHoleController voidHoleController = partObj.AddComponent<VoidHoleController>();
+                voidHoleController.trueCenter = Actor.ParentRoom.GetCenterCell().ToCenterVector2();
+                voidHoleController.CanHurt = false;
+                voidHoleController.Radius = 30;
+                voidHoleController.ChangeHoleSize(0);
+
+                EmergencyPlayerDisappearedFromRoom emergencyPlayerDisappeared = Actor.gameObject.AddComponent<EmergencyPlayerDisappearedFromRoom>();
+                emergencyPlayerDisappeared.roomAssigned = Actor.GetAbsoluteParentRoom();
+                emergencyPlayerDisappeared.PlayerSuddenlyDisappearedFromRoom = (obj) =>
                 {
-                    obj.EndTerrifyingDarkRoom(1);
-                }
-                if (partObj != null) { Destroy(partObj); }
-            };
+                    if (obj.IsDarkAndTerrifying == true)
+                    {
+                        obj.EndTerrifyingDarkRoom(1);
+                    }
+                    if (partObj != null) { Destroy(partObj); }
+                };
 
-            while (elaWait < 3f)
-            {
-                float t = elaWait / 3;
-                float throne1 = Mathf.Sin(t * (Mathf.PI / 2));
-                partObj.transform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one*6.25f, throne1);
-                Actor.renderer.material.SetFloat("_Fade", 1-t);
-                elaWait += BraveTime.DeltaTime;
-                yield return null;
-            }
-            voidHoleController.CanHurt = true;
-            Actor.SetOutlines(false);
-            Actor.renderer.enabled = false;
-            elaWait = 0f;
-            while (elaWait < 30f)
-            {
-                elaWait += BraveTime.DeltaTime;
-                float t = Mathf.Min((elaWait / 20), 1);
-                voidHoleController.Radius = Mathf.Lerp(28.5f, 8.75f, t);
-                partObj.transform.localScale = Vector3.Lerp(Vector3.one*6.25f, Vector3.one*2, t);
-
-                yield return null;
-            }
-            voidHoleController.CanHurt = false;
-            Actor.healthHaver.minimumHealth = Actor.healthHaver.GetMaxHealth() * 0.33f;
-            GameManager.Instance.BestActivePlayer.CurrentRoom.EndTerrifyingDarkRoom(2.5f);
-            ImprovedAfterImage yeah = Actor.gameObject.GetComponent<ImprovedAfterImage>();
-            yeah.spawnShadows = false;
-            Actor.gameObject.layer = lay;
-            for (int j = 0; j < Actor.behaviorSpeculator.AttackBehaviors.Count; j++)
-            {
-                if (base.behaviorSpeculator.AttackBehaviors[j] is AttackBehaviorGroup && base.behaviorSpeculator.AttackBehaviors[j] != null)
+                while (elaWait < 3f)
                 {
-                    this.ProcessAttackGroup(base.behaviorSpeculator.AttackBehaviors[j] as AttackBehaviorGroup);
+                    float t = elaWait / 3;
+                    float throne1 = Mathf.Sin(t * (Mathf.PI / 2));
+                    partObj.transform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one * 6.25f, throne1);
+                    Actor.renderer.material.SetFloat("_Fade", 1 - t);
+                    elaWait += BraveTime.DeltaTime;
+                    yield return null;
                 }
-            }
-            SubPhaseEnded = true;
-            elaWait = 0f;
-            while (elaWait < 3f)
-            {
-
-                float t = elaWait / 3;
-                partObj.transform.localScale = Vector3.Lerp(Vector3.one*2f , Vector3.one * 20, t);
-                Actor.renderer.material.SetFloat("_Fade", t);
-                elaWait += BraveTime.DeltaTime;
-                Actor.renderer.enabled = true;
-                yield return null;
-            }
-            Destroy(partObj);
-            Destroy(emergencyPlayerDisappeared);
-            if (WasJammed == true)
-            {
-                GameObject gameObject = SpawnManager.SpawnVFX(StaticVFXStorage.JammedDeathVFX, Actor.sprite.WorldBottomLeft, Quaternion.identity, false);
-                if (gameObject && gameObject.GetComponent<tk2dSprite>())
+                voidHoleController.CanHurt = true;
+                Actor.SetOutlines(false);
+                Actor.renderer.enabled = false;
+                elaWait = 0f;
+                while (elaWait < 30f)
                 {
-                    tk2dSprite component = gameObject.GetComponent<tk2dSprite>();
-                    component.scale *= 2.5f;
-                    component.HeightOffGround = 5f;
-                    component.UpdateZDepth();
+                    elaWait += BraveTime.DeltaTime;
+                    float t = Mathf.Min((elaWait / 20), 1);
+                    voidHoleController.Radius = Mathf.Lerp(28.5f, 8.75f, t);
+                    partObj.transform.localScale = Vector3.Lerp(Vector3.one * 6.25f, Vector3.one * 2, t);
+
+                    yield return null;
                 }
-                Destroy(gameObject, 2);
-                Actor.renderer.material.shader = ShaderCache.Acquire("Brave/LitCutoutUberPhantom");
+                voidHoleController.CanHurt = false;
+                Actor.healthHaver.minimumHealth = Actor.healthHaver.GetMaxHealth() * 0.33f;
+                GameManager.Instance.BestActivePlayer.CurrentRoom.EndTerrifyingDarkRoom(2.5f);
+                ImprovedAfterImage yeah = Actor.gameObject.GetComponent<ImprovedAfterImage>();
+                yeah.spawnShadows = false;
+                Actor.gameObject.layer = lay;
+
+                for (int j = 0; j < Actor.behaviorSpeculator.AttackBehaviors.Count; j++)
+                {
+                    if (base.behaviorSpeculator.AttackBehaviors[j] is AttackBehaviorGroup && base.behaviorSpeculator.AttackBehaviors[j] != null)
+                    {
+                        this.ProcessAttackGroup(base.behaviorSpeculator.AttackBehaviors[j] as AttackBehaviorGroup);
+                    }
+                }
+                SubPhaseEnded = true;
+                elaWait = 0f;
+                while (elaWait < 3f)
+                {
+
+                    float t = elaWait / 3;
+                    partObj.transform.localScale = Vector3.Lerp(Vector3.one * 2f, Vector3.one * 20, t);
+                    Actor.renderer.material.SetFloat("_Fade", t);
+                    elaWait += BraveTime.DeltaTime;
+                    Actor.renderer.enabled = true;
+                    yield return null;
+                }
+                Destroy(partObj);
+                Destroy(emergencyPlayerDisappeared);
+                if (WasJammed == true)
+                {
+                    GameObject gameObject = SpawnManager.SpawnVFX(StaticVFXStorage.JammedDeathVFX, Actor.sprite.WorldBottomLeft, Quaternion.identity, false);
+                    if (gameObject && gameObject.GetComponent<tk2dSprite>())
+                    {
+                        tk2dSprite component = gameObject.GetComponent<tk2dSprite>();
+                        component.scale *= 2.5f;
+                        component.HeightOffGround = 5f;
+                        component.UpdateZDepth();
+                    }
+                    Destroy(gameObject, 2);
+                    Actor.renderer.material.shader = ShaderCache.Acquire("Brave/LitCutoutUberPhantom");
+                }
+
             }
+            else
+            {
+                SubPhaseEnded = true;
+
+                Controller.CurrentSubPhase = PrisonerPhaseOne.PrisonerController.SubPhases.PHASE_2;
+                Actor.specRigidbody.enabled = true;
+
+                Actor.healthHaver.minimumHealth = Actor.healthHaver.GetMaxHealth() * 0.33f;
+
+                for (int j = 0; j < Actor.behaviorSpeculator.AttackBehaviors.Count; j++)
+                {
+                    if (base.behaviorSpeculator.AttackBehaviors[j] is AttackBehaviorGroup && base.behaviorSpeculator.AttackBehaviors[j] != null)
+                    {
+                        this.ProcessAttackGroup(base.behaviorSpeculator.AttackBehaviors[j] as AttackBehaviorGroup);
+                    }
+                }
+            }
+
 
             Actor.SetOutlines(true);
             Controller.CurrentSubPhase = PrisonerPhaseOne.PrisonerController.SubPhases.PHASE_2;

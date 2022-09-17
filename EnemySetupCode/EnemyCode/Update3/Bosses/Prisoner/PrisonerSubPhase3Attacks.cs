@@ -205,8 +205,6 @@ namespace Planetside
 					bullets8,
 				};
 				this.ClearAllLists(lists);
-
-
 				yield break;
 			}
 
@@ -306,15 +304,69 @@ namespace Planetside
 			public void FireQuickBurst()
 			{
 				base.PostWwiseEvent("Play_ENM_bulletking_skull_01", null);
-				for (int e = 0; e < 12; e++)
+				for (int e = 0; e < 8; e++)
 				{
-					base.Fire(new Direction((30 * e), DirectionType.Aim, -1f), new Speed(1.5f, SpeedType.Absolute), new ChainRotatorsThree.BasicBullet());
-					base.Fire(new Direction((30 * e), DirectionType.Aim, -1f), new Speed(2f, SpeedType.Absolute), new ChainRotatorsThree.BasicBullet());
-
-				}
+					string str = StaticUndodgeableBulletEntries.UndodgeableOldKingHomingRingBulletSoundless.Name;
+                    base.Fire(new Direction((45 * e), DirectionType.Aim, -1f), new Speed(0f, SpeedType.Absolute), new ChainRotatorsThree.TheGear(10, str, this, 45 * e, 0.0375f));
+					base.Fire(new Direction((45 * e), DirectionType.Aim, -1f), new Speed(0f, SpeedType.Absolute), new ChainRotatorsThree.TheGear(-10, str, this,  45 * e, 0.0375f));
+                }
 			}
 
-			private class SpinBullet : Bullet
+            public class TheGear : Bullet
+            {
+                public TheGear(float spinspeed, string BulletType, ChainRotatorsThree parent, float angle = 0f, float aradius = 0) : base(BulletType, false, false, false)
+                {
+                    this.m_parent = parent;
+                    this.m_angle = angle;
+                    this.m_radius = aradius;
+                    this.m_bulletype = BulletType;
+                    this.SuppressVfx = true;
+                    this.m_spinSpeed = spinspeed;
+                }
+
+                protected override IEnumerator Top()
+                {
+                    base.ManualControl = true;
+                    Vector2 centerPosition = base.Position;
+                    float radius = 0f;
+                    for (int i = 0; i < 300; i++)
+                    {
+                        
+                   
+                        base.UpdateVelocity();
+                        centerPosition += this.Velocity / 60f;
+                        radius += m_radius;
+
+                        this.m_angle += this.m_spinSpeed / 60f;
+                        base.Position = centerPosition + BraveMathCollege.DegreesToVector(this.m_angle, radius);
+                        yield return base.Wait(1);
+                    }
+                    base.Vanish(false);
+                    yield break;
+                }
+
+                private IEnumerator ChangeSpinSpeedTask(float newSpinSpeed, int term)
+                {
+                    float delta = (newSpinSpeed - this.m_spinSpeed) / (float)term;
+                    for (int i = 0; i < term; i++)
+                    {
+                        this.m_spinSpeed += delta;
+                        yield return base.Wait(1);
+                    }
+                    yield break;
+                }
+                private const float ExpandSpeed = 4.5f;
+                private const float SpinSpeed = 40f;
+                private ChainRotatorsThree m_parent;
+                private float m_angle;
+                private float m_spinSpeed;
+                private float m_radius;
+                private string m_bulletype;
+
+            }
+
+
+            private class SpinBullet : Bullet
 			{
 				public SpinBullet(ChainRotatorsThree parentScript, float maxDist, float angleOffset, int Delay, bool isAngleDecider = false, bool SpawnsUnDodgeablesOnDeath = false) : base("UndodgeableLink", false, false, false)
 				{
@@ -393,16 +445,27 @@ namespace Planetside
 				bool ISDodgeAble = false;
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("ffca09398635467da3b1f4a54bcfda80").bulletBank.GetBullet("directedfire"));
 				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSniper);
-				PrisonerPhaseOne.PrisonerController controller = base.BulletBank.aiActor.GetComponent<PrisonerPhaseOne.PrisonerController>();			
-				for (int e = 0; e < 3; e++)
-				{
-					controller.MoveTowardsPositionMethod(2f, 3);
-					float aimDir = base.AimDirection;
-					float m = 12f;
-					for (int i = -10; i < 11; i++)
-					{
-						ISDodgeAble = false;
+                base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableChainLink);
 
+                base.PostWwiseEvent("Play_ENM_cannonball_eyes_01", null);
+                yield return this.Wait(30);
+                base.PostWwiseEvent("Play_ChainBreak_01", null);
+                for (int i = 0; i < 12; i++)
+				{
+					for (int e = 0; e < 3; e++)
+					{
+                        base.Fire(new Direction(30 * i, DirectionType.Absolute, -1f), new Speed(4 + (e*2.25f), SpeedType.Absolute), new LerpBullet(120));
+                    }
+                }
+                yield return this.Wait(45);
+
+                PrisonerPhaseOne.PrisonerController controller = base.BulletBank.aiActor.GetComponent<PrisonerPhaseOne.PrisonerController>();			
+				for (int e = 0; e < 4; e++)
+				{
+					float aimDir = base.AimDirection;
+					float m = 20f;
+					for (int i = -7; i < 8; i++)
+					{
 						float Angle = (m * i);
 						GameObject gameObject = SpawnManager.SpawnVFX(RandomPiecesOfStuffToInitialise.LaserReticle, false);
 
@@ -421,11 +484,36 @@ namespace Planetside
 						component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f);
 						component2.sprite.renderer.material.SetColor("_OverrideColor", ISDodgeAble == false ? laser : laserRed);
 						component2.sprite.renderer.material.SetColor("_EmissiveColor", ISDodgeAble == false ? laser : laserRed);
-						GameManager.Instance.StartCoroutine(FlashReticles(component2, ISDodgeAble, aimDir, Angle, this, ISDodgeAble == false ? "sniperUndodgeable" : "directedfire", ISDodgeAble == false ? 3 : 2, 22f,1.25f));
+						GameManager.Instance.StartCoroutine(FlashReticles(component2, ISDodgeAble, aimDir, Angle, this, ISDodgeAble == false ? "sniperUndodgeable" : "directedfire", ISDodgeAble == false ? 3 : 2, 22f, 0.75f));
 						controller.extantReticles.Add(gameObject);
 					}
+                    m = 5f;
+                    for (int i = -3; i < 4; i++)
+                    {
+                        float Angle = (m * i);
+                        GameObject gameObject = SpawnManager.SpawnVFX(RandomPiecesOfStuffToInitialise.LaserReticle, false);
 
-					yield return this.Wait(150);
+                        tk2dTiledSprite component2 = gameObject.GetComponent<tk2dTiledSprite>();
+                        component2.transform.position = new Vector3(this.Position.x, this.Position.y, 99999);
+                        component2.transform.localRotation = Quaternion.Euler(0f, 0f, Angle);
+                        component2.dimensions = new Vector2(1000f, 1f);
+                        component2.UpdateZDepth();
+                        component2.HeightOffGround = -2;
+                        Color laser = new Color(0f, 1f, 1f, 1f);
+                        Color laserRed = new Color(1f, 0f, 0f, 1f);
+                        component2.sprite.usesOverrideMaterial = true;
+                        component2.sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
+                        component2.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+                        component2.sprite.renderer.material.SetFloat("_EmissivePower", 10);
+                        component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f);
+                        component2.sprite.renderer.material.SetColor("_OverrideColor", ISDodgeAble == false ? laser : laserRed);
+                        component2.sprite.renderer.material.SetColor("_EmissiveColor", ISDodgeAble == false ? laser : laserRed);
+                        GameManager.Instance.StartCoroutine(FlashReticles(component2, ISDodgeAble, aimDir, Angle, this, ISDodgeAble == false ? "sniperUndodgeable" : "directedfire", ISDodgeAble == false ? 3 : 2, 22f, 0.75f));
+                        controller.extantReticles.Add(gameObject);
+                    }
+
+
+                    yield return this.Wait(90);
 				}
 				yield return this.Wait(60);
 				yield break;
@@ -511,7 +599,24 @@ namespace Planetside
 					yield break;
 				}
 			}
-		}
+
+            public class LerpBullet : Bullet
+            {
+                public LerpBullet(int f) : base(StaticUndodgeableBulletEntries.undodgeableChainLink.Name, false, false, false)
+                {
+					term = f;
+                }
+                protected override IEnumerator Top()
+                {
+					this.ChangeSpeed(new Brave.BulletScript.Speed(0, SpeedType.Absolute), term);
+                    yield return this.Wait(450);
+					base.Vanish(false);
+                    yield break;
+                }
+				private int term;
+            }
+
+        }
 		public class WallSweepThree : Script
 		{
 			protected override IEnumerator Top()
@@ -887,284 +992,221 @@ namespace Planetside
 			{
 				this.EndOnBlank = false;
 				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSniper);
-				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("31a3ea0c54a745e182e22ea54844a82d").bulletBank.GetBullet("sniper"));
+                base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableOldKingHomingRingBulletSoundless);
+                base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableHitscan);
+
+
+                base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("31a3ea0c54a745e182e22ea54844a82d").bulletBank.GetBullet("sniper"));
 
 				PrisonerPhaseOne.PrisonerController controller = base.BulletBank.aiActor.GetComponent<PrisonerPhaseOne.PrisonerController>();
 				if (Vector2.Distance(base.BulletBank.aiActor.transform.position, ((Vector2)base.BulletBank.aiActor.ParentRoom.GetCenterCell())) < 8)
 				{
-					controller.MoveTowardsPositionMethod(3f, 3);
 				}
 
 				Vector2 vector2 = this.BulletManager.PlayerPosition();
 				Vector2 predictedPosition = BraveMathCollege.GetPredictedPosition(vector2, this.BulletManager.PlayerVelocity(), this.Position, 18f);
 				float CentreAngle = (predictedPosition - this.Position).ToAngle();
 				base.PostWwiseEvent("Play_BOSS_omegaBeam_charge_01");
-				base.BulletBank.aiActor.StartCoroutine(FlashReticles(CentreAngle - 180, 156, this));
-				base.BulletBank.aiActor.StartCoroutine(FlashReticles(CentreAngle - 180, -156, this));
-				for (int e = 0; e < 4; e++)
+				float f = 75;
+                for (int e = 0; e < 15; e++)
 				{
-					yield return this.Wait(30);
-					base.PostWwiseEvent("Play_BOSS_omegaBeam_charge_01");
-					base.BulletBank.aiActor.StartCoroutine(SwipeLaser(CentreAngle - 180, -156, this, 1.5f - (0.5f * e)));
-					base.BulletBank.aiActor.StartCoroutine(SwipeLaser(CentreAngle - 180, 156, this, 1.5f - (0.5f * e)));
-				}
-				for (int e = 0; e < 10; e++)
-				{
-					if (e % 2 == 0)
+                    bool b = BraveUtility.RandomBool();
+                    base.PostWwiseEvent("Play_AbyssBlast");
+                    for (int j = 0; j < 12; j++)
                     {
-						int randomizer = UnityEngine.Random.Range(-6, 6);
-						List<int> rL = new List<int>()
+                        base.Fire(Offset.OverridePosition(this.Position + MathToolbox.GetUnitOnCircle(30*j, 9)), new Direction(30 * j, DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new TheGear(b == true ? 22.5f : -22.5f, StaticUndodgeableBulletEntries.UndodgeableOldKingHomingRingBulletSoundless.Name, this, this.Position, (float)j * 30, 0.05f));
+                    }
+					if (e == 1 | e == 6| e == 11)
 					{
-					randomizer - 2,
-					randomizer - 1,
-					randomizer + 1,
-					randomizer + 2,
-					};
-						base.PostWwiseEvent("Play_ENM_bulletking_skull_01", null);
-						for (int r = -8; r < 9; r++)
-						{
-							if (rL.Contains(r))
-							{
-								base.Fire(new Direction(CentreAngle + (5 * r), DirectionType.Absolute, -1f), new Speed(6, SpeedType.Absolute), new Bullet("sniperUndodgeable"));
-							}
-						}
-					}
-					else
+						float F = this.AimDirection;
+                        base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(this.Position, F, this, 120, false, 0.5f));
+                        base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(this.Position, F, this, 240, false, 0.5f));
+                        base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(this.Position, F, this, 360, false, 0.5f));
+                    }
+					
+                    yield return this.Wait(Mathf.Max(50, f - (5f * e)));
+                }
+                for (int r = 0; r < 3; r++)
+				{
+                    float F2 = this.AimDirection;
+                    for (int e = 0; e < 3; e++)
                     {
-						for (int r = -3; r < 4; r++)
-						{
-							base.Fire(new Direction(CentreAngle + (15 * r), DirectionType.Absolute, -1f), new Speed(6, SpeedType.Absolute), new Bullet("sniperUndodgeable"));
-						}
-					}
+                        base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(this.Position, F2, this, 120 * e, false, 0.75f));
+                    }
+                    yield return this.Wait(20);
 
-				
-					yield return this.Wait(25);
-				}
-				yield return this.Wait(30);
+                }
+                yield return this.Wait(120);
 				yield break;
 			}
 
 
-			private IEnumerator SwipeLaser(float StartAngle, float AddOrSubtract, SweepJukeAttackThree parent, float Time)
-			{
-				GameObject reticle = SpawnManager.SpawnVFX(RandomPiecesOfStuffToInitialise.LaserReticle, false);
-				tk2dTiledSprite component2 = reticle.GetComponent<tk2dTiledSprite>();
-				component2.transform.position = new Vector3(this.Position.x, this.Position.y, 99999);
-				component2.transform.localRotation = Quaternion.Euler(0f, 0f, StartAngle);
-				component2.dimensions = new Vector2(1f, 1000f);
-				component2.UpdateZDepth();
-				component2.HeightOffGround = -2;
-				Color red = new Color(1f, 0f, 0f, 1f);
-				component2.sprite.usesOverrideMaterial = true;
-				component2.sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
-				component2.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
-				component2.sprite.renderer.material.SetFloat("_EmissivePower", 10);
-				component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f);
-				component2.sprite.renderer.material.SetColor("_OverrideColor", red);
-				component2.sprite.renderer.material.SetColor("_EmissiveColor", red);
+            public class TheGear : Bullet
+            {
+                public TheGear(float spinspeed, string BulletType, SweepJukeAttackThree parent, Vector2 center, float angle = 0f, float aradius = 0) : base(BulletType, false, false, false)
+                {
+                    this.m_parent = parent;
+                    this.m_angle = angle;
+                    this.m_radius = aradius;
+                    this.m_bulletype = BulletType;
+                    this.SuppressVfx = true;
+                    this.m_spinSpeed = spinspeed;
+					this.trueCenter = center;
+                }
 
-				ImprovedAfterImageForTiled yes1 = component2.gameObject.GetOrAddComponent<ImprovedAfterImageForTiled>();
-				yes1.spawnShadows = true;
-				yes1.shadowLifetime = 0.2f;
-				yes1.shadowTimeDelay = 0.005f;
-				yes1.dashColor = new Color(1f, 0f, 0f, 1f);
-				float elapsed = 0;
-				while (elapsed < Time)
-				{
-					float t = (float)elapsed / (float)Time;
-					if (parent.IsEnded || parent.Destroyed)
-					{
-						UnityEngine.Object.Destroy(component2.gameObject);
-						yield break;
-					}
-					if (component2.gameObject != null)
-					{
-						component2.transform.position = new Vector3(this.Position.x, this.Position.y, 0);
+                protected override IEnumerator Top()
+                {
+                    this.Projectile.IgnoreTileCollisionsFor(180f);
+                    this.Projectile.specRigidbody.AddCollisionLayerIgnoreOverride(CollisionMask.LayerToMask(CollisionLayer.HighObstacle, CollisionLayer.LowObstacle));
+                    base.ManualControl = true;
+                    Vector2 centerPosition = this.trueCenter;
+                    float radius = 10f;
+                    for (int i = 0; i < 300; i++)
+                    {
+                        if (i == 40)
+                        {
+                            //base.ChangeSpeed(new Speed(base.Speed + 11f, SpeedType.Absolute), 120);
+                            //base.ChangeDirection(new Direction(this.m_parent.GetAimDirection(1f, 10f), DirectionType.Absolute, -1f), 20);
+                            //base.StartTask(this.ChangeSpinSpeedTask(90f, 120));
+                        }
 
-						component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (50 * t));
-						component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f + (2 * t));
-						component2.transform.localRotation = Quaternion.Euler(0f, 0f, Mathf.Lerp(StartAngle, StartAngle + AddOrSubtract, t));
-						component2.HeightOffGround = -2;
-						component2.renderer.gameObject.layer = 23;
-						component2.dimensions = new Vector2(1000f, 1f);
-						component2.UpdateZDepth();
-					}
-					elapsed += BraveTime.DeltaTime;
-					yield return null;
-				}
-				UnityEngine.Object.Destroy(component2.gameObject);
-				yield break;
-			}
+                        base.UpdateVelocity();
+                        centerPosition += this.Velocity / 60f;
+                        if (i > 50)
+                        {
+                            radius -= m_radius;
+                        }
+                        if (radius < 0)
+                        {
+                            base.Vanish(false);
+                        }
 
+                        this.m_angle += this.m_spinSpeed / 60f;
+                        base.Position = centerPosition + BraveMathCollege.DegreesToVector(this.m_angle, radius);
+                        yield return base.Wait(1);
+                    }
+                    base.Vanish(false);
+                    yield break;
+                }
 
-			private IEnumerator FlashReticles(float StartAngle, float AddOrSubtract, SweepJukeAttackThree parent)
-			{
+                private IEnumerator ChangeSpinSpeedTask(float newSpinSpeed, int term)
+                {
+                    float delta = (newSpinSpeed - this.m_spinSpeed) / (float)term;
+                    for (int i = 0; i < term; i++)
+                    {
+                        this.m_spinSpeed += delta;
+                        yield return base.Wait(1);
+                    }
+                    yield break;
+                }
+                private const float ExpandSpeed = 4.5f;
+                private const float SpinSpeed = 40f;
+                private SweepJukeAttackThree m_parent;
+                private float m_angle;
+                private float m_spinSpeed;
+                private Vector2 trueCenter;
 
-				GameObject reticle = SpawnManager.SpawnVFX(RandomPiecesOfStuffToInitialise.LaserReticle, false);
-				tk2dTiledSprite component2 = reticle.GetComponent<tk2dTiledSprite>();
-				component2.transform.position = new Vector3(this.Position.x, this.Position.y, 99999);
-				component2.transform.localRotation = Quaternion.Euler(0f, 0f, StartAngle);
-				component2.dimensions = new Vector2(1f, 1000f);
-				component2.UpdateZDepth();
-				component2.HeightOffGround = -2;
-				Color red = new Color(1f, 0f, 0f, 1f);
-				component2.sprite.usesOverrideMaterial = true;
-				component2.sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
-				component2.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
-				component2.sprite.renderer.material.SetFloat("_EmissivePower", 10);
-				component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f);
-				component2.sprite.renderer.material.SetColor("_OverrideColor", red);
-				component2.sprite.renderer.material.SetColor("_EmissiveColor", red);
+                private float m_radius;
+                private string m_bulletype;
 
-				ImprovedAfterImageForTiled yes1 = component2.gameObject.GetOrAddComponent<ImprovedAfterImageForTiled>();
-				yes1.spawnShadows = true;
-				yes1.shadowLifetime = 0.2f;
-				yes1.shadowTimeDelay = 0.005f;
-				yes1.dashColor = new Color(1f, 0f, 0f, 1f);
-
-				float elapsed = 0;
-				float Time = 1.25f;
-				while (elapsed < Time)
-				{
-					float t = (float)elapsed / (float)Time;
-					if (parent.IsEnded || parent.Destroyed)
-					{
-						UnityEngine.Object.Destroy(component2.gameObject);
-						yield break;
-					}
-					if (component2.gameObject != null)
-					{
-						component2.transform.position = new Vector3(this.Position.x, this.Position.y, 0);
-
-						component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (50 * t));
-						component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f + (2 * t));
-						component2.transform.localRotation = Quaternion.Euler(0f, 0f, Mathf.Lerp(StartAngle, StartAngle + AddOrSubtract, t));
-						component2.HeightOffGround = -2;
-						component2.renderer.gameObject.layer = 23;
-						component2.dimensions = new Vector2(1000f, 1f);
-						component2.UpdateZDepth();
-					}
-					elapsed += BraveTime.DeltaTime;
-					yield return null;
-				}
-				elapsed = 0;
-				Time = 0.75f;
-				while (elapsed < Time)
-				{
-
-					if (parent.IsEnded || parent.Destroyed)
-					{
-						UnityEngine.Object.Destroy(component2.gameObject);
-						yield break;
-					}
-					elapsed += BraveTime.DeltaTime;
-					yield return null;
-				}
-				UnityEngine.Object.Destroy(component2.gameObject);
-
-				base.BulletBank.aiActor.GetComponent<PrisonerPhaseOne.PrisonerController>().extantReticles.Clear();
-				base.PostWwiseEvent("Play_ENM_bulletking_skull_01", null);
-
-				for (int e = 0; e < 25; e++)
-				{
-					if (parent.IsEnded || parent.Destroyed)
-					{
-						yield break;
-					}
-					for (int i = 0; i < 36; i++)
-					{
-						float t = (float)i / (float)36;
-						base.Fire(new Direction(Mathf.Lerp(StartAngle, StartAngle + AddOrSubtract, t), DirectionType.Absolute, -1f), new Speed(UnityEngine.Random.Range(28, 32), SpeedType.Absolute), new Bullet("sniper"));
-					}
-					base.PostWwiseEvent("Play_BOSS_doormimic_zap_01");
-					yield return new WaitForSeconds(0.33f);
-				}
-				yield break;
-			}
-
-			private IEnumerator QuickscopeNoob(float Angle, SweepJukeAttackThree parent, float delay = 0.25f, float BulletSpeed = 40, float Offset = 0, bool Dodgeable = false)
-			{
-
-				GameObject gameObject = SpawnManager.SpawnVFX(RandomPiecesOfStuffToInitialise.LaserReticle, false);
-				tk2dTiledSprite component2 = gameObject.GetComponent<tk2dTiledSprite>();
-				component2.transform.position = new Vector3(this.Position.x, this.Position.y, 99999);
-				component2.transform.localRotation = Quaternion.Euler(0f, 0f, Angle);
-				component2.dimensions = new Vector2(1000f, 1f);
-				component2.UpdateZDepth();
-				component2.HeightOffGround = -2;
-				Color laser = Dodgeable == false ?new Color(0f, 1f, 1f, 1f): Color.red;
-				component2.sprite.usesOverrideMaterial = true;
-				component2.sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
-				component2.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
-				component2.sprite.renderer.material.SetFloat("_EmissivePower", 10);
-				component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f);
-				component2.sprite.renderer.material.SetColor("_OverrideColor", laser);
-				component2.sprite.renderer.material.SetColor("_EmissiveColor", laser);
-				float elapsed = 0;
-				float Time = delay;
-				while (elapsed < Time)
-				{
-					float t = (float)elapsed / (float)Time;
-
-					if (parent.IsEnded || parent.Destroyed)
-					{
-						UnityEngine.Object.Destroy(component2.gameObject);
-						yield break;
-					}
-					if (component2 != null)
-					{
-
-						component2.transform.position = new Vector3(this.Position.x, this.Position.y, 0);
-						component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (25 * t));
-						component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (10 * t));
-						component2.transform.localRotation = Quaternion.Euler(0f, 0f, base.AimDirection + Offset);
-						component2.HeightOffGround = -2;
-						component2.renderer.gameObject.layer = 23;
-						component2.dimensions = new Vector2(1000f, 1f);
-						component2.UpdateZDepth();
-
-						Angle = base.AimDirection + Offset;
-					}
-					elapsed += BraveTime.DeltaTime;
-					yield return null;
-				}
-				elapsed = 0;
-				Time = 0.25f;
-				base.PostWwiseEvent("Play_FlashTell");
-				while (elapsed < Time)
-				{
-					if (parent.IsEnded || parent.Destroyed)
-					{
-						UnityEngine.Object.Destroy(component2.gameObject);
-						yield break;
-					}
-					float t = (float)elapsed / (float)Time;
-					if (component2 != null)
-					{
-						component2.transform.position = new Vector3(this.Position.x, this.Position.y, 0);
-						component2.dimensions = new Vector2(1000f, 1f);
-						component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (60 * t));
-						component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (20 * t));
-						component2.HeightOffGround = -2;
-						component2.renderer.gameObject.layer = 23;
-						component2.UpdateZDepth();
-					}
-					elapsed += BraveTime.DeltaTime;
-					yield return null;
-				}
-				UnityEngine.Object.Destroy(component2.gameObject);
-				base.PostWwiseEvent("Play_ENM_bulletking_skull_01", null);
-				for (int i = 0; i < 3; i++)
-				{
-					base.Fire(new Direction(Angle, DirectionType.Absolute, -1f), new Speed(BulletSpeed, SpeedType.Absolute), new WallBulletNoDodge(Dodgeable == false ? "sniperUndodgeable" : "sniper", Angle));
-					yield return new WaitForSeconds(0.025f);
-
-				}
-				yield break;
-			}
+            }
 
 
-			public class WallBulletNoDodge : Bullet
+            private IEnumerator QuickscopeNoob(Vector2 startPos, float aimDir, SweepJukeAttackThree parent, float rotSet, bool isRed, float chargeTime = 0.5f, float BulletSpeed = 20, float BulletAmount = 10)
+            {
+
+                GameObject gameObject = SpawnManager.SpawnVFX(RandomPiecesOfStuffToInitialise.LaserReticle, false);
+                tk2dTiledSprite component2 = gameObject.GetComponent<tk2dTiledSprite>();
+                component2.transform.position = new Vector3(startPos.x, startPos.y, 99999);
+                component2.transform.localRotation = Quaternion.Euler(0f, 0f, aimDir);
+                component2.dimensions = new Vector2(1000f, 1f);
+                component2.UpdateZDepth();
+                component2.HeightOffGround = -2;
+                Color laser = isRed == true ? new Color(1, 0, 0) : new Color(0f, 1f, 1f, 1f);
+                component2.sprite.usesOverrideMaterial = true;
+                component2.sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
+                component2.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+                component2.sprite.renderer.material.SetFloat("_EmissivePower", 10);
+                component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f);
+                component2.sprite.renderer.material.SetColor("_OverrideColor", laser);
+                component2.sprite.renderer.material.SetColor("_EmissiveColor", laser);
+                float elapsed = 0;
+                float Time = chargeTime;
+                while (elapsed < Time)
+                {
+                    float t = (float)elapsed / (float)Time;
+
+                    if (parent.IsEnded || parent.Destroyed)
+                    {
+                        UnityEngine.Object.Destroy(component2.gameObject);
+                        yield break;
+                    }
+                    if (component2 != null)
+                    {
+                        float throne1 = Mathf.Sin(t * (Mathf.PI / 2));
+
+                        component2.transform.position = new Vector3(startPos.x, startPos.y, 0);
+                        component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (25 * t));
+                        component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (10 * t));
+                        component2.transform.localRotation = Quaternion.Euler(0f, 0f, aimDir + rotSet);
+                        component2.HeightOffGround = -2;
+                        component2.renderer.gameObject.layer = 23;
+                        component2.dimensions = new Vector2(1000f, 1f);
+                        component2.UpdateZDepth();
+                    }
+                    elapsed += BraveTime.DeltaTime;
+                    yield return null;
+                }
+
+                elapsed = 0;
+                Time = 0.5f;
+                base.PostWwiseEvent("Play_FlashTell");
+                while (elapsed < Time)
+                {
+                    if (parent.IsEnded || parent.Destroyed)
+                    {
+                        UnityEngine.Object.Destroy(component2.gameObject);
+                        yield break;
+                    }
+                    float t = (float)elapsed / (float)Time;
+                    if (component2 != null)
+                    {
+                        component2.transform.position = new Vector3(startPos.x, startPos.y, 0);
+                        component2.dimensions = new Vector2(1000f, 1f);
+                        component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (60 * t));
+                        component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (20 * t));
+                        component2.HeightOffGround = -2;
+                        component2.renderer.gameObject.layer = 23;
+                        component2.UpdateZDepth();
+                    }
+                    elapsed += BraveTime.DeltaTime;
+                    yield return null;
+                }
+                UnityEngine.Object.Destroy(component2.gameObject);
+                base.PostWwiseEvent("Play_ENM_bulletking_skull_01", null);
+                base.Fire(Offset.OverridePosition(startPos), new Direction(aimDir + rotSet, DirectionType.Absolute, -1f), new Speed(600, SpeedType.Absolute), new HitScan());
+
+                yield break;
+            }
+
+
+            public class HitScan : Bullet
+            {
+                public HitScan() : base(StaticUndodgeableBulletEntries.UndodgeableHitscan.Name, false, false, false)
+                {
+
+                }
+                protected override IEnumerator Top()
+                {
+                    SpawnManager.PoolManager.Remove(this.Projectile.gameObject.transform);
+                    this.Projectile.BulletScriptSettings.preventPooling = true;
+
+                    yield break;
+                }
+            }
+
+
+            public class WallBulletNoDodge : Bullet
 			{
 				public WallBulletNoDodge(string BulletType, float Angle) : base(BulletType, false, false, false)
 				{
@@ -1190,19 +1232,23 @@ namespace Planetside
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("41ee1c8538e8474a82a74c4aff99c712").bulletBank.GetBullet("big"));
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("31a3ea0c54a745e182e22ea54844a82d").bulletBank.GetBullet("sniper"));
 				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSniper);
+                base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableHitscan);
 
-				if (Vector2.Distance(base.BulletBank.aiActor.transform.position, ((Vector2)base.BulletBank.aiActor.ParentRoom.GetCenterCell())) < 8)
+				Vector2 Position = base.BulletBank.aiActor.sprite.WorldCenter;
+
+                if (Vector2.Distance(base.BulletBank.aiActor.transform.position, ((Vector2)base.BulletBank.aiActor.ParentRoom.GetCenterCell())) < 8)
 				{
 					controller.MoveTowardsPositionMethod(3f, 3);
 				}
 				float f11 = this.RandomAngle();
 				float u11 = UnityEngine.Random.Range(60, 120);
 				float M11 = UnityEngine.Random.value < 0.5f ? u11 : -u11;
-				for (int i = 0; i < 8; i++)
+                Position = base.BulletBank.aiActor.sprite.WorldCenter;
+                for (int i = 0; i < 8; i++)
 				{
-					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(this.Position, this.Position + MathToolbox.GetUnitOnCircle(f11 + (i * 45), Vector2.Distance(this.Position, this.Position + (Vector2.one * 2.5f))), (45 * i) + 0, this, M11, 1f));
-					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(this.Position, this.Position + MathToolbox.GetUnitOnCircle(f11 + (i * 45), Vector2.Distance(this.Position, this.Position + (Vector2.one * 2.5f))), (45 * i) + 120, this, M11, 1f));
-					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(this.Position, this.Position + MathToolbox.GetUnitOnCircle(f11 + (i * 45), Vector2.Distance(this.Position, this.Position + (Vector2.one * 2.5f))), (45 * i) + 240, this, M11, 1f));
+					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(Position, Position + MathToolbox.GetUnitOnCircle(f11 + (i * 45), Vector2.Distance(Position, Position + (Vector2.one * 2.5f))), (45 * i) + 0, this, M11, 1f));
+					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(Position, Position + MathToolbox.GetUnitOnCircle(f11 + (i * 45), Vector2.Distance(Position, Position + (Vector2.one * 2.5f))), (45 * i) + 120, this, M11, 1f));
+					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(Position, Position + MathToolbox.GetUnitOnCircle(f11 + (i * 45), Vector2.Distance(Position, Position + (Vector2.one * 2.5f))), (45 * i) + 240, this, M11, 1f));
 				}
 				yield return this.Wait(100);
 				int AM = 6;
@@ -1211,21 +1257,38 @@ namespace Planetside
 					float f1 = this.RandomAngle();
 					float u1 = UnityEngine.Random.Range(22.5f, 45);
 					float M1 = UnityEngine.Random.value < 0.5f ? u1 : -u1;
-					for (int e = 0; e < AM; e++)
+                    Position = base.BulletBank.aiActor.sprite.WorldCenter;
+                    for (int e = 0; e < AM; e++)
 					{
-						base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(this.Position, this.Position + MathToolbox.GetUnitOnCircle(f1 + (e * (360/AM)), Vector2.Distance(this.Position, GameManager.Instance.PrimaryPlayer.sprite.WorldTopCenter)), ((360 / AM) * e) + 0, this, M1, 1f));
-						base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(this.Position, this.Position + MathToolbox.GetUnitOnCircle(f1 + (e * (360 / AM)), Vector2.Distance(this.Position, GameManager.Instance.PrimaryPlayer.sprite.WorldTopCenter)), ((360 / AM) * e) + 120, this, M1, 1f));
-						base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(this.Position, this.Position + MathToolbox.GetUnitOnCircle(f1 + (e * (360 / AM)), Vector2.Distance(this.Position, GameManager.Instance.PrimaryPlayer.sprite.WorldTopCenter)), ((360 / AM) * e) + 240, this, M1, 1f));
+						base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(Position, Position + MathToolbox.GetUnitOnCircle(f1 + (e * (360/AM)), Vector2.Distance(Position, GameManager.Instance.PrimaryPlayer.sprite.WorldTopCenter)), ((360 / AM) * e) + 0, this, M1, 1f));
+						base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(Position, Position + MathToolbox.GetUnitOnCircle(f1 + (e * (360 / AM)), Vector2.Distance(Position, GameManager.Instance.PrimaryPlayer.sprite.WorldTopCenter)), ((360 / AM) * e) + 120, this, M1, 1f));
+						base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(Position, Position + MathToolbox.GetUnitOnCircle(f1 + (e * (360 / AM)), Vector2.Distance(Position, GameManager.Instance.PrimaryPlayer.sprite.WorldTopCenter)), ((360 / AM) * e) + 240, this, M1, 1f));
 					}
 					AM++;
-					yield return this.Wait(90);
+					yield return this.Wait(80);
 				}
 				//controller.MoveTowardsPositionMethod(4f, 4);
 				yield return this.Wait(60);
 				yield break;
 			}
 
-			private IEnumerator QuickscopeNoobLerpPosition(Vector2 startPos, Vector3 endPos, float aimDir, LaserCrossThree parent, float rotSet, float chargeTime = 0.5f)
+
+            public class HitScan : Bullet
+            {
+                public HitScan() : base(StaticUndodgeableBulletEntries.UndodgeableHitscan.Name, false, false, false)
+                {
+
+                }
+                protected override IEnumerator Top()
+                {
+                    SpawnManager.PoolManager.Remove(this.Projectile.gameObject.transform);
+                    this.Projectile.BulletScriptSettings.preventPooling = true;
+
+                    yield break;
+                }
+            }
+
+            private IEnumerator QuickscopeNoobLerpPosition(Vector2 startPos, Vector3 endPos, float aimDir, LaserCrossThree parent, float rotSet, float chargeTime = 0.5f)
 			{
 
 				GameObject gameObject = SpawnManager.SpawnVFX(RandomPiecesOfStuffToInitialise.LaserReticle, false);
@@ -1298,12 +1361,9 @@ namespace Planetside
 				}
 				UnityEngine.Object.Destroy(component2.gameObject);
 				base.PostWwiseEvent("Play_ENM_bulletking_skull_01", null);
-				for (int i = 0; i < 3; i++)
-				{
-					base.Fire(Offset.OverridePosition(endPos), new Direction(aimDir + rotSet, DirectionType.Absolute, -1f), new Speed(20f, SpeedType.Absolute), new WallBulletNoDodge("sniperUndodgeable"));
-					yield return new WaitForSeconds(0.025f);
-				}
-				yield break;
+                base.Fire(Offset.OverridePosition(endPos), new Direction(aimDir + rotSet, DirectionType.Absolute, -1f), new Speed(600f, SpeedType.Absolute), new HitScan());
+
+                yield break;
 			}
 
 

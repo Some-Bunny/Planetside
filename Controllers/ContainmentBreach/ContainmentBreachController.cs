@@ -60,7 +60,7 @@ namespace Planetside
                     },
                 };
 
-                RoomFactory.AddInjection(RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/PrisonUnlockRoom.room").room, "Prison Containment Shrine", flowModifierPlacementTypes, 0, dungeonPrerequisites, "Prison Containment Shrine", 1, 0.1f);
+                RoomFactory.AddInjection(RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/PrisonUnlockRoom.room").room, "Prison Containment Shrine", flowModifierPlacementTypes, 0, dungeonPrerequisites, "Prison Containment Shrine", 1f, 0.1f);
                 RoomFactory.AddInjection(RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/MortalCombat.room").room, "Combat Shrine", flowModifierPlacementTypes, 0, dungeonPrerequisites1, "Combat Shrine", 1, 1f);
 
                 Actions.PostDungeonTrueStart += PostFloorgen;
@@ -312,7 +312,13 @@ namespace Planetside
                             if (shopController != null)
                             {
                             }
-                            Destroy(shope.gameObject);
+                            if (!shope.gameObject.name.ToLower().Contains("jailed"))
+                            {
+                                if (!shope.gameObject.name.ToLower().Contains("bowlercell"))
+                                {
+                                    Destroy(shope.gameObject);
+                                }
+                            }
                         }
                     }
                 }

@@ -202,6 +202,9 @@
     <Compile Include="Hooks And Actions\ExplosionHooks.cs" />
     <Compile Include="Hooks And Actions\TitleDioramaHooks.cs" />
     <Compile Include="Items\ItemClasses\MultiCompanionItem.cs" />
+    <Compile Include="Items\Test Items\balls - Copy.cs" />
+    <Compile Include="Items\Test Items\Flowder.cs" />
+    <Compile Include="Items\Test Items\HitBoxShower.cs" />
     <Compile Include="Items\Update4\CandyHeart.cs" />
     <Compile Include="Items\Update4\ShopDiscountItem.cs" />
     <Compile Include="Items\Update4\GunClassToken.cs" />
@@ -4362,6 +4365,7 @@
     <EmbeddedResource Include="Resources\Enemies\Oppressor\arms\oppressor_rightarm_fire_001.png" />
     <EmbeddedResource Include="Resources\Enemies\Oppressor\arms\oppressor_rightarm_fire_002.png" />
     <EmbeddedResource Include="Resources\Enemies\Oppressor\arms\oppressor_rightarm_fire_003.png" />
+    <Content Include="1.3 Pre-Release Changelog.txt" />
     <Content Include="1.3 Changelog.txt" />
     <EmbeddedResource Include="Resources\Enemies\Oppressor\oppressor_awaken_001.png" />
     <EmbeddedResource Include="Resources\Enemies\Oppressor\oppressor_awaken_002.png" />
@@ -4673,6 +4677,11 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\AbyssRooms\AbyssSpecial\abyssroom_special_free_loot.room" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\good_fucking_luck.room" />
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\oppress_this.room" />
+    <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\very__poqerful.room" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

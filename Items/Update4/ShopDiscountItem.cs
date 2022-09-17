@@ -90,6 +90,9 @@ namespace Planetside
         public void DoTotalDiscount(float H)
         {
             if (shopItemSelf == null) { return; }
+            if (GameManager.Instance == null) { return; }
+            if (GameManager.Instance.PrimaryPlayer == null) { return; }
+
             GameLevelDefinition lastLoadedLevelDefinition = GameManager.Instance.GetLastLoadedLevelDefinition();
             float newCost = shopItemSelf.item.PurchasePrice;
             float num4 = (lastLoadedLevelDefinition == null) ? 1f : lastLoadedLevelDefinition.priceMultiplier;

@@ -91,29 +91,31 @@ namespace Planetside
 		{
 			AkSoundEngine.PostEvent("Play_OBJ_key_impact_01", player.gameObject);
 			AkSoundEngine.PostEvent("Stop_MUS_All", player.gameObject);
-			/*
-			yield return new WaitForSeconds(3);
-			Vector2 lol = shrineSprite.WorldTopRight + new Vector2(0.25f, 3).RoundToInt();
-			float yes = lol.x.RoundToNearest(1);
-			for (int j = 0; j < 2; j++)
+
+			if (PlanetsideModule.DebugMode == false)
 			{
-				Vector2 pos = BraveUtility.RandomVector2(shrineSprite.WorldBottomLeft + new Vector2(-0.25f, 0), shrineSprite.WorldTopRight + new Vector2(0.25f, 3), new Vector2(0.025f, 0.025f));
-				LootEngine.DoDefaultItemPoof(pos, false, true);
-				AkSoundEngine.PostEvent("Play_RockBreaking", player.gameObject);
-				yield return new WaitForSeconds(2);
-			}
-			yield return new WaitForSeconds(1);
-			AkSoundEngine.PostEvent("Play_OBJ_key_impact_01", player.gameObject);
-			Exploder.DoDistortionWave(lol, 1, 0.3f, 15, 0.5f);
-			for (int e = 0; e < 15; e++)
-			{
-				GameManager.Instance.StartCoroutine(DoLineOfParticles(shrineSprite.WorldCenter + new Vector2(0, 1.125f)));
-				Vector2 pos = BraveUtility.RandomVector2(shrineSprite.WorldBottomLeft + new Vector2(-0.25f, 0), shrineSprite.WorldTopRight + new Vector2(0.25f, 3), new Vector2(0.025f, 0.025f));
-				LootEngine.DoDefaultItemPoof(pos, false, true);
-				AkSoundEngine.PostEvent("Play_RockBreaking", player.gameObject);
-				yield return new WaitForSeconds(0.2f);
-			}
-			*/
+                yield return new WaitForSeconds(3);
+                Vector2 lol = shrineSprite.WorldTopRight + new Vector2(0.25f, 3).RoundToInt();
+                float yes = lol.x.RoundToNearest(1);
+                for (int j = 0; j < 2; j++)
+                {
+                    Vector2 pos = BraveUtility.RandomVector2(shrineSprite.WorldBottomLeft + new Vector2(-0.25f, 0), shrineSprite.WorldTopRight + new Vector2(0.25f, 3), new Vector2(0.025f, 0.025f));
+                    LootEngine.DoDefaultItemPoof(pos, false, true);
+                    AkSoundEngine.PostEvent("Play_RockBreaking", player.gameObject);
+                    yield return new WaitForSeconds(2);
+                }
+                yield return new WaitForSeconds(1);
+                AkSoundEngine.PostEvent("Play_OBJ_key_impact_01", player.gameObject);
+                Exploder.DoDistortionWave(lol, 1, 0.3f, 15, 0.5f);
+                for (int e = 0; e < 15; e++)
+                {
+                    GameManager.Instance.StartCoroutine(DoLineOfParticles(shrineSprite.WorldCenter + new Vector2(0, 1.125f)));
+                    Vector2 pos = BraveUtility.RandomVector2(shrineSprite.WorldBottomLeft + new Vector2(-0.25f, 0), shrineSprite.WorldTopRight + new Vector2(0.25f, 3), new Vector2(0.025f, 0.025f));
+                    LootEngine.DoDefaultItemPoof(pos, false, true);
+                    AkSoundEngine.PostEvent("Play_RockBreaking", player.gameObject);
+                    yield return new WaitForSeconds(0.2f);
+                }
+            }
 			GameObject epicwin = UnityEngine.Object.Instantiate<GameObject>(EnemyDatabase.GetOrLoadByGuid("b98b10fca77d469e80fb45f3c5badec5").GetComponent<BossFinalRogueDeathController>().DeathStarExplosionVFX);
 			epicwin.GetComponent<tk2dBaseSprite>().PlaceAtLocalPositionByAnchor(shrineSprite.WorldCenter, tk2dBaseSprite.Anchor.LowerCenter);
 			epicwin.transform.position = shrineSprite.WorldCenter.Quantize(0.0625f);

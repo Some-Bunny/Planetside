@@ -20,9 +20,6 @@ using System.ComponentModel;
 
 namespace Planetside
 {
-
-   
-
     internal class MopProjectile : MonoBehaviour
 	{
 

@@ -41,9 +41,8 @@ namespace Planetside
 				prefab.AddComponent<ForgottenEnemyComponent>();
                 prefab.AddComponent<OppressorController>();
 
-                
-
-                companion.aiActor.knockbackDoer.weight = 300;
+               
+                companion.aiActor.knockbackDoer.weight = 1000;
 				companion.aiActor.MovementSpeed = 1.2f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
 				companion.aiActor.CollisionDamage = 1f;

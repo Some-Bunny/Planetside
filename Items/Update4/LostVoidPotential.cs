@@ -19,24 +19,20 @@ namespace Planetside
 			string shortDesc = "A Moment, Forgotten";
 			string longDesc = "A shard of dimmed energy from a collapsed portal.\n\nMaybe it still has some value.";
 			ItemBuilder.SetupItem(warVase, shortDesc, longDesc, "psog");
-			warVase.quality = PickupObject.ItemQuality.EXCLUDED;
+
+            ItemBuilder.AddPassiveStatModifier(warVase, PlayerStats.StatType.AdditionalBlanksPerFloor, 1f, StatModifier.ModifyMethod.ADDITIVE);
+            ItemBuilder.AddPassiveStatModifier(warVase, PlayerStats.StatType.Coolness, 1f, StatModifier.ModifyMethod.ADDITIVE);
+            ItemBuilder.AddPassiveStatModifier(warVase, PlayerStats.StatType.AdditionalItemCapacity, 1f, StatModifier.ModifyMethod.ADDITIVE);
+            ItemBuilder.AddPassiveStatModifier(warVase, PlayerStats.StatType.AmmoCapacityMultiplier, 1.2f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+
+            warVase.quality = PickupObject.ItemQuality.EXCLUDED;
 			warVase.IgnoredByRat = true;
 			warVase.RespawnsIfPitfall = true;
 			warVase.UsesCustomCost = true;
-			warVase.CustomCost = 40;
+			warVase.CustomCost = 75;
 			LostVoidPotential.LostVoidPotentialID = warVase.PickupObjectId;
 			EncounterDatabase.GetEntry(warVase.encounterTrackable.EncounterGuid).usesPurpleNotifications = true;
 		}
 		public static int LostVoidPotentialID;
-
-		public override void Pickup(PlayerController player)
-		{
-			base.Pickup(player);
-		}
-		public override DebrisObject Drop(PlayerController player)
-		{
-			DebrisObject result = base.Drop(player);
-			return result;
-		}		
 	}
 }

@@ -37,8 +37,8 @@ namespace Planetside
     public class PlanetsideModule : BaseUnityPlugin
     {
         public const string GUID = "somebunny.etg.planetsideofgunymede";
-        public const string NAME = "Planetside Of Gunymede";
-        public const string VERSION = "1.3.0";
+        public const string NAME = "Planetside Of Gunymede Pre-Release";
+        public const string VERSION = "1.3.7";
 
         public static readonly string TEXT_COLOR = "#9006FF";
 
@@ -54,7 +54,9 @@ namespace Planetside
 
         public static Shader InverseGlowShader;
 
-        public static bool DebugMode = true;
+        public static bool DebugMode = false;
+        public static bool PreRelease = true;
+
 
         public void Start()
         {
@@ -184,7 +186,8 @@ namespace Planetside
 
 
             SomethingWickedEnemy.Init();
-
+            Flowder.Init();
+            HitBoxShower.Init();
 
             Unstabullets.Init();
             HullBreakerBullets.Init();
@@ -449,6 +452,8 @@ namespace Planetside
             Nemesis.Init();
 
 
+            //MiniMap.Init();
+
             InitialiseSynergies.DoInitialisation();
             SynergyFormInitialiser.AddSynergyForms();
             InitialiseGTEE.DoInitialisation();
@@ -522,11 +527,13 @@ namespace Planetside
                      typeof(GameManager)
                  );
 
-            ETGModConsole.Commands.AddGroup("psog_floor", args =>
+            if (DebugMode == true)
             {
-            });
-            ETGModConsole.Commands.GetGroup("psog_floor").AddUnit("load", this.LoadFloor);
-
+                ETGModConsole.Commands.AddGroup("psog_floor", args =>
+                {
+                });
+                ETGModConsole.Commands.GetGroup("psog_floor").AddUnit("load", this.LoadFloor);
+            }
 
             PlanetsideModule.Log($"{NAME} v{VERSION} started successfully.", TEXT_COLOR);
             List<string> RandomFunnys = new List<string>

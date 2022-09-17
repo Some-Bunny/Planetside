@@ -227,35 +227,61 @@ namespace Planetside
 			
 			}
 		}
+
+
 		public static void StartHookAIActor(Action<AIActor> orig, AIActor self)
         {
             orig(self);
+
             if (OuroborosMode() == true && self != null && EnemyISFUCKINGKILLPILLARFUCKYOUFUCKYOU(self) == false)
             {
-				if (!enemiesNotAffectedByBehaviorSpecMultiplier.Contains(self.EnemyGuid)) { self.MovementSpeed *= ChanceAccordingToGivenValues(1f, 2f, 250); }
-				if (!enemiesNotAffectedByBehaviorSpecMultiplier.Contains(self.EnemyGuid) && self.behaviorSpeculator != null) { self.behaviorSpeculator.CooldownScale *= ChanceAccordingToGivenValues(1f, 0.4f, 250); }
-				if (!enemiesNotAffectedByBehaviorSpecMultiplier.Contains(self.EnemyGuid)) { self.healthHaver.SetHealthMaximum(self.healthHaver.GetCurrentHealth() * ChanceAccordingToGivenValues(1f, 1.3f, 250)); }
-				if (self != null && self.aiActor != null && EnemyIsValid(self.aiActor) == true && !bannedEnemiesForOrbitingSkulls.Contains(self.aiActor.EnemyGuid) && UnityEngine.Random.value <= ChanceAccordingToGivenValues(0.0015f, 0.5f, 75) && !enemiesNotAffectedByBehaviorSpecMultiplier.Contains(self.EnemyGuid))
+				if (self.aiActor != null)
 				{
-					GameObject transPos = self.aiActor.transform.Find("SkullAttackPointOuroboros").gameObject;
-					if (transPos != null)
-					{
-						float SkullAmount = ReturnSkullAmount(CurrentLoop());
-						SpinBulletsController spinBulletsController = self.aiActor.gameObject.AddComponent<SpinBulletsController>();
-						spinBulletsController.ShootPoint = self.aiActor.transform.Find("SkullAttackPointOuroboros").gameObject;
-						spinBulletsController.OverrideBulletName = "homingOuroboros";
-						spinBulletsController.NumBullets = 2;
-						spinBulletsController.BulletMinRadius = 2.25f;
-						spinBulletsController.BulletMaxRadius = 2.5f;
-						spinBulletsController.BulletCircleSpeed = 60;
-						spinBulletsController.BulletsIgnoreTiles = true;
-						spinBulletsController.RegenTimer = (CurrentLoop() / 25) + 0.25f;
-						spinBulletsController.AmountOFLines = SkullAmount;
-					}
-				}
+                    if (!enemiesNotAffectedByBehaviorSpecMultiplier.Contains(self.EnemyGuid)) { self.MovementSpeed *= ChanceAccordingToGivenValues(1f, 2f, 250); }
+                    if (!enemiesNotAffectedByBehaviorSpecMultiplier.Contains(self.EnemyGuid) && self.behaviorSpeculator != null) { self.behaviorSpeculator.CooldownScale *= ChanceAccordingToGivenValues(1f, 0.4f, 250); }
+                    if (!enemiesNotAffectedByBehaviorSpecMultiplier.Contains(self.EnemyGuid)) { self.healthHaver.SetHealthMaximum(self.healthHaver.GetCurrentHealth() * ChanceAccordingToGivenValues(1f, 1.3f, 250)); }
+                    if (self != null && self.aiActor != null && RoomSuitable(self.aiActor) == true && EnemyIsValid(self.aiActor) == true && !bannedEnemiesForOrbitingSkulls.Contains(self.aiActor.EnemyGuid) && UnityEngine.Random.value <= ChanceAccordingToGivenValues(0.0075f, 0.45f, 75) && !enemiesNotAffectedByBehaviorSpecMultiplier.Contains(self.EnemyGuid))
+                    {
+                        GameObject transPos = self.aiActor.transform.Find("SkullAttackPointOuroboros").gameObject;
+                        if (transPos != null && self.bulletBank != null)
+                        {
+                            float SkullAmount = ReturnSkullAmount(CurrentLoop());
+                            SpinBulletsController spinBulletsController = self.aiActor.gameObject.AddComponent<SpinBulletsController>();
+                            spinBulletsController.ShootPoint = self.aiActor.transform.Find("SkullAttackPointOuroboros").gameObject;
+                            spinBulletsController.OverrideBulletName = "homingOuroboros";
+                            spinBulletsController.NumBullets = 2;
+                            spinBulletsController.BulletMinRadius = 2.25f;
+                            spinBulletsController.BulletMaxRadius = 2.5f;
+                            spinBulletsController.BulletCircleSpeed = 60;
+                            spinBulletsController.BulletsIgnoreTiles = true;
+                            spinBulletsController.RegenTimer = (CurrentLoop() / 25) + 0.25f;
+                            spinBulletsController.AmountOFLines = SkullAmount;
+                        }
+                    }
+                }
+				
 			}
         }
-		public static List<string> enemiesNotAffectedByBehaviorSpecMultiplier => new List<string>()
+
+		public static bool RoomSuitable(AIActor aIActor)
+		{
+			RoomHandler room = aIActor.ParentRoom;
+			if (room != null)
+			{
+				var h = (room.GetActiveEnemies(RoomHandler.ActiveEnemyType.RoomClear));
+                if (h!= null)
+				{
+					if (h.Count > 1)
+					{
+						return true;
+					}
+				}
+                return false;
+            }
+            return false;
+        }
+
+        public static List<string> enemiesNotAffectedByBehaviorSpecMultiplier => new List<string>()
 		{"3f11bbbc439c4086a180eb0fb9990cb4"};
 
 
@@ -272,64 +298,79 @@ namespace Planetside
 			orig(self);
 			if (OuroborosMode() == true)
             {
+				//if (self == null) { ETGModConsole.Log("self is NULL"); }
+                //if (self.aiActor == null) { ETGModConsole.Log("self.aiActor is NULL"); }
+
+                if (self != null && self.aiActor != null && !EliteBlackListDefault.Contains(self.aiActor.EnemyGuid) && EnemyIsValid(self.aiActor) == true)
+                {
+                    if (UnityEngine.Random.value <= ChanceAccordingToGivenValues(0.05f, 0.75f, 50))
+                    {
+                        bool BossCheck = self.aiActor.healthHaver.IsBoss | self.aiActor.healthHaver.IsSubboss;
+                        float specialChance = ChanceAccordingToGivenValues(0.01f, 0.3f, 75);
+                        if (UnityEngine.Random.value <= specialChance && BossCheck == false)//if (UnityEngine.Random.value <= ChanceAccordingToGivenValues(0.03f, 0.1f, 50))
+                        {
+                            var SpecialElite = specialEliteTypes[UnityEngine.Random.Range(0, specialEliteTypes.Count)];
+                            self.aiActor.gameObject.AddComponent(SpecialElite);
+                        }
+                        else
+                        {
+                            self.aiActor.gameObject.AddComponent(basicEliteTypes[UnityEngine.Random.Range(0, basicEliteTypes.Count)]);
+                        }
+                    }
+                }
+
                 if (self != null && self.aiActor != null && EnemyIsValid(self.aiActor) == true)
                 {
 					if (self.aiActor.bulletBank == null)
 					{
-						AIBulletBank bulletBank = new AIBulletBank();
-						bulletBank.Bullets = new List<AIBulletBank.Entry>();
+						AIBulletBank bulletBank = self.aiActor.gameObject.AddComponent<AIBulletBank>();
+                        
+                        bulletBank.Bullets = new List<AIBulletBank.Entry>();
 
 						foreach (AIBulletBank.Entry entry in BulletList)
 						{
 							bulletBank.Bullets.Add(entry);
 						}
+                        //if (self.aiActor.specRigidbody == null) { ETGModConsole.Log("self.aiActor.specRigidbody is NULL"); }
 
-						bulletBank.FixedPlayerRigidbody = self.aiActor.specRigidbody;
+
+                        bulletBank.FixedPlayerRigidbody = self.aiActor.specRigidbody;
 						bulletBank.ActorName = self.aiActor.name != null ? self.aiActor.name : "Toddy";
-						self.aiActor.gameObject.AddComponent(bulletBank);
-					}
+
+                    }
 					else
                     {
 						foreach (AIBulletBank.Entry entry in BulletList)
 						{
 							self.aiActor.bulletBank.Bullets.Add(entry);
 						}
-					}		
-					EnemyToolbox.GenerateShootPoint(self.aiActor.gameObject, self.aiActor.CenterPosition, "SkullAttackPointOuroboros");
+					}
+
+                    //if (self.aiActor.CenterPosition == null) { ETGModConsole.Log("self.aiActor.CenterPosition is NULL"); }
+
+                    EnemyToolbox.GenerateShootPoint(self.aiActor.gameObject, self.aiActor.CenterPosition, "SkullAttackPointOuroboros");
 					if (self.OtherBehaviors == null)
                     {
-						self.OtherBehaviors = new List<BehaviorBase>();
+						//self.OtherBehaviors = new List<BehaviorBase>();
                     }
 				}
-				if (!EliteBlackListDefault.Contains(self.aiActor.EnemyGuid) && EnemyIsValid(self.aiActor) == true)
-                {
-					if (UnityEngine.Random.value <= ChanceAccordingToGivenValues(0.05f, 0.75f, 50))
-					{
-						bool BossCheck = self.aiActor.healthHaver.IsBoss | self.aiActor.healthHaver.IsSubboss;
-						float specialChance = ChanceAccordingToGivenValues(0.01f, 1f, 1);
-						if (UnityEngine.Random.value <= specialChance && BossCheck == false)//if (UnityEngine.Random.value <= ChanceAccordingToGivenValues(0.03f, 0.1f, 50))
-						{
-							var SpecialElite = specialEliteTypes[UnityEngine.Random.Range(0, specialEliteTypes.Count)];
-							self.aiActor.gameObject.AddComponent(SpecialElite);
-						}
-						else
-						{
-							self.aiActor.gameObject.AddComponent(basicEliteTypes[UnityEngine.Random.Range(0, basicEliteTypes.Count)]);
-						}
-					}
-				}		
+				
 			}
 		}
 
 		private static bool EnemyISFUCKINGKILLPILLARFUCKYOUFUCKYOU(AIActor aI)
         {
-			if (aI.gameObject.GetComponent<BossStatueController>() != null || aI.gameObject.GetComponentInChildren<BossStatueController>() != null) { return true; }
-			return false;
+			if (aI.gameObject.GetComponent<BossStatueController>() != null) { return false; }
+            if (aI.gameObject.GetComponentInChildren<BossStatueController>() != null) { return false; }
+            return false;
 		}
 
 		private static bool EnemyIsValid(AIActor aI)
 		{
-			if (aI.IgnoreForRoomClear == true) { return false; }
+            if (aI.gameObject.GetComponent<ChaoticShiftedElite>() != null) { return false; }
+            if (aI.gameObject.GetComponent<FrenzyElite>() != null) { return false; }
+            if (aI.IgnoreForRoomClear == true) { return false; }
+            if (aI.IgnoreForRoomClear == true) { return false; }
 			if (aI.gameObject.GetComponent<MirrorImageController>() != null) { return false; }
 			if (aI.gameObject.GetComponent<DisplacedImageController>() != null) { return false; ; }
 			if (aI.CompanionOwner != null) { return false;}
@@ -493,7 +534,7 @@ namespace Planetside
             float AmountOfSkulls = 3;
             for (int i = 0; i < Loop; i++)
             {
-                if (i % 10 == 0)
+                if (i % 15 == 0)
                 {AmountOfSkulls++;}
             }
             return AmountOfSkulls;
@@ -1000,6 +1041,7 @@ namespace Planetside
 		}
     }
 }
+/*
 namespace Planetside
 {
 	public class ReplicatorElite : SpecialEliteType
@@ -1063,6 +1105,7 @@ namespace Planetside
 		}
 	}
 }
+*/
 namespace Planetside
 {
 	public class ChaoticShiftedElite : SpecialEliteType
@@ -1096,16 +1139,11 @@ namespace Planetside
 			EnemyGuidDatabase.Entries["shambling_round"],
 			EnemyGuidDatabase.Entries["killithid"],
 		};
-		//lead_maiden
-		/*
-		 * fridge_maiden
-		 * megalich
-		 * infinilich
-		 */
+
 		public override List<ActorEffectResistance> DebuffImmunities => new List<ActorEffectResistance> { new ActorEffectResistance() { resistAmount = 1, resistType = EffectResistanceType.Freeze } };
 		public override void Start()
 		{
-			Timer = 2.5f;
+			Timer = 3f;
 			base.Start();
 		}
 		public override void OnPreDeath(Vector2 obj)
@@ -1116,20 +1154,169 @@ namespace Planetside
 		{
 			if (Timer == 0 | Timer <= 0)
 			{
-				Timer = 2.5f;
+				Timer = 6f;
 				if (base.aiActor != null && base.aiActor.GetAbsoluteParentRoom() != null)
 				{
-					UnityEngine.Object.Instantiate<GameObject>(PickupObjectDatabase.GetById(449).GetComponent<TeleporterPrototypeItem>().TelefragVFXPrefab, base.aiActor.sprite.WorldCenter, Quaternion.identity);
+					var obj = UnityEngine.Object.Instantiate<GameObject>(StaticVFXStorage.TeleportVFX, base.aiActor.sprite.WorldCenter, Quaternion.identity);
+					Destroy(obj, 2);
 					CellArea area = base.aiActor.ParentRoom.area;
-					Vector2 Center = area.UnitCenter;
-					Vector2 b = base.aiActor.specRigidbody.UnitBottomCenter - base.aiActor.transform.position.XY();
-					IntVector2? bestRewardLocation = base.aiActor.GetAbsoluteParentRoom().GetBestRewardLocation(IntVector2.One * 3, RoomHandler.RewardLocationStyle.PlayerCenter, true);
-					base.aiActor.transform.position = Pathfinder.GetClearanceOffset(bestRewardLocation.Value, base.aiActor.Clearance).WithY((float)bestRewardLocation.Value.y) - b;
-					base.aiActor.specRigidbody.Reinitialize();
-				}
-			}
+					DoTeleport();
+                    base.aiActor.behaviorSpeculator.Stun(0.5f);
+                }
+            }
 		}
-		public override void Update()
+
+        public SpeculativeRigidbody GetOwnBody()
+        {
+            return base.aiActor.gameObject.GetComponent<SpeculativeRigidbody>();
+        }
+
+        public float MinDistanceFromPlayer = 6;
+        public float MaxDistanceFromPlayer = 11;
+		public bool AvoidWalls = true;
+
+        private void DoTeleport()
+        {
+            float minDistanceFromPlayerSquared = this.MinDistanceFromPlayer * this.MinDistanceFromPlayer;
+            float maxDistanceFromPlayerSquared = this.MaxDistanceFromPlayer * this.MaxDistanceFromPlayer;
+            Vector2 playerLowerLeft = Vector2.zero;
+            Vector2 playerUpperRight = Vector2.zero;
+            bool hasOtherPlayer = false;
+            Vector2 otherPlayerLowerLeft = Vector2.zero;
+            Vector2 otherPlayerUpperRight = Vector2.zero;
+            bool hasDistChecks = (this.MinDistanceFromPlayer > 0f || this.MaxDistanceFromPlayer > 0f) && this.aiActor.TargetRigidbody;
+            if (hasDistChecks)
+            {
+                playerLowerLeft = this.aiActor.TargetRigidbody.HitboxPixelCollider.UnitBottomLeft;
+                playerUpperRight = this.aiActor.TargetRigidbody.HitboxPixelCollider.UnitTopRight;
+                PlayerController playerController = GetOwnBody().behaviorSpeculator.PlayerTarget as PlayerController;
+                if (GameManager.Instance.CurrentGameType == GameManager.GameType.COOP_2_PLAYER && playerController)
+                {
+                    PlayerController otherPlayer = GameManager.Instance.GetOtherPlayer(playerController);
+                    if (otherPlayer && otherPlayer.healthHaver.IsAlive)
+                    {
+                        hasOtherPlayer = true;
+                        otherPlayerLowerLeft = otherPlayer.specRigidbody.HitboxPixelCollider.UnitBottomLeft;
+                        otherPlayerUpperRight = otherPlayer.specRigidbody.HitboxPixelCollider.UnitTopRight;
+                    }
+                }
+            }
+            IntVector2 bottomLeft = IntVector2.Zero;
+            IntVector2 topRight = IntVector2.Zero;
+
+            bottomLeft = new IntVector2((int)BraveUtility.ViewportToWorldpoint(new Vector2(0f, 0f), ViewportType.Gameplay).RoundToInt().x, (int)BraveUtility.ViewportToWorldpoint(new Vector2(0f, 0f), ViewportType.Gameplay).RoundToInt().y);
+            topRight = new IntVector2((int)BraveUtility.ViewportToWorldpoint(new Vector2(1f, 1f), ViewportType.Gameplay).x, (int)BraveUtility.ViewportToWorldpoint(new Vector2(1f, 1f), ViewportType.Gameplay).y) - IntVector2.One;
+
+			CellValidator cellValidator = delegate (IntVector2 c)
+            {
+                for (int i = 0; i < this.aiActor.Clearance.x; i++)
+                {
+                    int num = c.x + i;
+                    for (int j = 0; j < this.aiActor.Clearance.y; j++)
+                    {
+                        int num2 = c.y + j;
+                        if (GameManager.Instance.Dungeon.data.isTopWall(num, num2))
+                        {
+                            return false;
+                        }
+                      
+                    }
+                }
+                if (hasDistChecks)
+                {
+                    PixelCollider hitboxPixelCollider = GetOwnBody().HitboxPixelCollider;
+                    Vector2 vector = new Vector2((float)c.x + 0.5f * ((float)this.aiActor.Clearance.x - hitboxPixelCollider.UnitWidth), (float)c.y);
+                    Vector2 aMax = vector + hitboxPixelCollider.UnitDimensions;
+                    if (this.MinDistanceFromPlayer > 0f)
+                    {
+                        if (BraveMathCollege.AABBDistanceSquared(vector, aMax, playerLowerLeft, playerUpperRight) < minDistanceFromPlayerSquared)
+                        {
+                            return false;
+                        }
+                        if (hasOtherPlayer && BraveMathCollege.AABBDistanceSquared(vector, aMax, otherPlayerLowerLeft, otherPlayerUpperRight) < minDistanceFromPlayerSquared)
+                        {
+                            return false;
+                        }
+                    }
+                    if (this.MaxDistanceFromPlayer > 0f)
+                    {
+                        if (BraveMathCollege.AABBDistanceSquared(vector, aMax, playerLowerLeft, playerUpperRight) > maxDistanceFromPlayerSquared)
+                        {
+                            return false;
+                        }
+                        if (hasOtherPlayer && BraveMathCollege.AABBDistanceSquared(vector, aMax, otherPlayerLowerLeft, otherPlayerUpperRight) > maxDistanceFromPlayerSquared)
+                        {
+                            return false;
+                        }
+                    }
+                }
+                if ((c.x < bottomLeft.x || c.y < bottomLeft.y || c.x + this.aiActor.Clearance.x - 1 > topRight.x || c.y + this.aiActor.Clearance.y - 1 > topRight.y))
+                {
+                    return false;
+                }
+                if (this.AvoidWalls)
+                {
+                    int k = -1;
+                    int l;
+                    for (l = -1; l < this.aiActor.Clearance.y + 1; l++)
+                    {
+                        if (GameManager.Instance.Dungeon.data.isWall(c.x + k, c.y + l))
+                        {
+                            return false;
+                        }
+                    }
+                    k = this.aiActor.Clearance.x;
+                    for (l = -1; l < this.aiActor.Clearance.y + 1; l++)
+                    {
+                        if (GameManager.Instance.Dungeon.data.isWall(c.x + k, c.y + l))
+                        {
+                            return false;
+                        }
+                    }
+                    l = -1;
+                    for (k = -1; k < this.aiActor.Clearance.x + 1; k++)
+                    {
+                        if (GameManager.Instance.Dungeon.data.isWall(c.x + k, c.y + l))
+                        {
+                            return false;
+                        }
+                    }
+                    l = this.aiActor.Clearance.y;
+                    for (k = -1; k < this.aiActor.Clearance.x + 1; k++)
+                    {
+                        if (GameManager.Instance.Dungeon.data.isWall(c.x + k, c.y + l))
+                        {
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            };
+
+            Vector2 b = GetOwnBody().UnitBottomCenter - this.aiActor.transform.position.XY();
+            //IntVector2? intVector = null;
+            IntVector2? randomAvailableCell;
+            randomAvailableCell = this.aiActor.ParentRoom.GetRandomAvailableCell(new IntVector2?(this.aiActor.Clearance), new CellTypes?(this.aiActor.PathableTiles), false, cellValidator);
+
+            if (randomAvailableCell != null)
+            {
+                var obj = UnityEngine.Object.Instantiate<GameObject>(StaticVFXStorage.TeleportVFX, randomAvailableCell.Value.ToCenterVector3(99), Quaternion.identity);
+                Destroy(obj, 2);
+                AkSoundEngine.PostEvent("Play_OBJ_teleport_depart_01", this.aiActor.gameObject);
+
+                GetOwnBody().transform.position = Pathfinder.GetClearanceOffset(randomAvailableCell.Value, this.aiActor.Clearance).WithY((float)randomAvailableCell.Value.y) - b;
+                GetOwnBody().Reinitialize();
+                GetOwnBody().behaviorSpeculator.Stun(0.66f, false);
+            }
+            else
+            {
+                //Debug.LogWarning("TELEPORT FAILED!", this.aiActor);
+            }
+        }
+
+
+
+        public override void Update()
 		{
 			base.Update();
 			if (base.aiActor)

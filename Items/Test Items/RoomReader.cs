@@ -109,12 +109,13 @@ namespace Planetside
 
             partObj.GetComponent<AudioSource>();
 
+            /*
             AudioListener[] a = FindObjectsOfType<AudioListener>();
             foreach (var j in a)
             {
                 ETGModConsole.Log(j.name);
             }
-
+            */
 
 
             v.audioOutputMode = VideoAudioOutputMode.AudioSource;
@@ -127,6 +128,9 @@ namespace Planetside
             partObj.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
 
             var yyy = partObj.transform.localRotation = Quaternion.Euler(0, 180, 0);
+
+            RoomHandler roome = user.CurrentRoom;
+            ETGModConsole.Log(user.CurrentRoom.GetRoomName());
 
             //partObj.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
 

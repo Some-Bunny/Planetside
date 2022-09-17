@@ -620,7 +620,10 @@ namespace Planetside
                 "squares.room",
                 "story_of_gundertale.room",
                 "hehehhohoh.room",
-                "hg.room"
+                "hg.room",
+                "very__poqerful.room",
+                "oppress_this.room",
+                "good_fucking_luck.room"
             };
 			Mod_RoomList_HUB = new List<string>()
 			{
@@ -928,7 +931,12 @@ namespace Planetside
 			abyssMaterial.roomCeilingBorderGrid = TilesetToolbox.CreateBlankIndexGrid();
 			abyssMaterial.additionalPitBorderFlatGrid = TilesetToolbox.CreateBlankIndexGrid();
 			abyssMaterial.roomCeilingBorderGrid = TilesetToolbox.CreateBlankIndexGrid();
-			string[] pathsSmall = new string[]
+
+			abyssMaterial.fallbackHorizontalTileMapEffects = new VFXComplex[] { (PickupObjectDatabase.GetById(228) as Gun).muzzleFlashEffects.effects[0] };
+            abyssMaterial.fallbackVerticalTileMapEffects = new VFXComplex[] { (PickupObjectDatabase.GetById(228) as Gun).muzzleFlashEffects.effects[0] };
+
+
+            string[] pathsSmall = new string[]
 			{
 				"Planetside/Resources/FloorStuff/WallShards/wallshard1_001.png",
 				"Planetside/Resources/FloorStuff/WallShards/wallshard1_002.png",
@@ -1317,7 +1325,6 @@ namespace Planetside
 					material3.SetTexture("_MainTex", texture);
 					material4.SetTexture("_MainTex", texture);
 					material5.SetTexture("_MainTex", texture);
-					//ETGModConsole.Log("tex loaded", false);
 					ModPrefabs.AbyssTilesetCollection.textures = new Texture[]
 					{
 						texture

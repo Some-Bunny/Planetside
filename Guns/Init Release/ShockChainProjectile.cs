@@ -153,7 +153,7 @@ namespace Planetside
 
         public float getCalculateddamage()
         {
-            float ElectricDamage = 5f;
+            float ElectricDamage = 2.2f;
             if (player == null) { return ElectricDamage; }
             bool flagA = player.PlayerHasActiveSynergy("Single A");
             if (flagA)

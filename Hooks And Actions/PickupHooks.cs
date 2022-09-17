@@ -48,7 +48,39 @@ namespace Planetside
             new Hook(typeof(ShopItemController).GetMethod("Update", BindingFlags.Instance | BindingFlags.NonPublic), typeof(PickupHooks).GetMethod("UpdateShopItemHook"));
 
             new Hook(typeof(IounStoneOrbitalItem).GetMethod("Pickup", BindingFlags.Instance | BindingFlags.Public), typeof(PickupHooks).GetMethod("PickupGuonStoneHook"));
+
+            new Hook(typeof(EscapeRopeItem).GetMethod("DoEffect", BindingFlags.Instance | BindingFlags.NonPublic), typeof(PickupHooks).GetMethod("DoEffectHook"));
         }
+
+        public static void DoEffectHook(Action<EscapeRopeItem, PlayerController> orig, EscapeRopeItem self, PlayerController user)
+        {
+            if (user.CurrentRoom.CompletelyPreventLeaving)
+            {
+                return;
+            }
+            if (user.IsInMinecart)
+            {
+                user.currentMineCart.EvacuateSpecificPlayer(user, true);
+            }
+            AkSoundEngine.PostEvent("Play_OBJ_rope_escape_01", self.gameObject);
+            if (!user.CurrentRoom.IsWildWestEntrance)
+            {
+                RoomHandler targetRoom = null;
+                BaseShopController[] componentsInChildren = GameManager.Instance.Dungeon.data.Entrance.hierarchyParent.parent.GetComponentsInChildren<BaseShopController>(true);
+                if (componentsInChildren != null && componentsInChildren.Length > 0)
+                {
+                    foreach (var a in componentsInChildren)
+                    {
+                        if (a.gameObject.GetComponent<HMPrimeEngageDoer>() == null)
+                        {
+                            targetRoom = GameManager.Instance.Dungeon.data.GetAbsoluteRoomFromPosition(componentsInChildren[0].transform.position.IntXY(VectorConversions.Round));
+                        }
+                    }
+                }
+                user.EscapeRoom(PlayerController.EscapeSealedRoomStyle.ESCAPE_SPIN, true, targetRoom);
+            }
+        }
+
 
         public static void PickupGuonStoneHook(Action<IounStoneOrbitalItem, PlayerController> orig, IounStoneOrbitalItem self, PlayerController player)
         {
