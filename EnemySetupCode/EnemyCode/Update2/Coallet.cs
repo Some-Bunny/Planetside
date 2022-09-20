@@ -379,8 +379,8 @@ namespace Planetside
 				enemy.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				enemy.encounterTrackable.ProxyEncounterGuid = "";
 				enemy.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Enemies/Coallet/Idle/coallet_idle_006";
-				enemy.encounterTrackable.journalData.enemyPortraitSprite = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\coalleticon.png");
-				PlanetsideModule.Strings.Enemies.Set("#COALLET", "Coallet");
+				enemy.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("coalleticon");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\coalleticon.png");
+                PlanetsideModule.Strings.Enemies.Set("#COALLET", "Coallet");
 				PlanetsideModule.Strings.Enemies.Set("#COALLET_SHORTDESC", "Just For Me");
 				PlanetsideModule.Strings.Enemies.Set("#COALLET_LONGDESC", "A tiny coaler from the freshly excavated veins of the Black Powder Mines. It's spends its time sleeping, but can erupt in flame just like its larger cousins.");
 				enemy.encounterTrackable.journalData.PrimaryDisplayName = "#COALLET";

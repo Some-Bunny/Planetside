@@ -635,8 +635,8 @@ namespace Planetside
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
 				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Enemies/Cursebulon/cursebulon_idle_front_right_006";
-				companion.encounterTrackable.journalData.enemyPortraitSprite = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\cursebulonsmmonomiconportrait.png");
-				PlanetsideModule.Strings.Enemies.Set("#THE_CURSEBULON", "Cursebulon");
+				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("cursebulonsmmonomiconportrait");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\cursebulonsmmonomiconportrait.png");
+                PlanetsideModule.Strings.Enemies.Set("#THE_CURSEBULON", "Cursebulon");
 				PlanetsideModule.Strings.Enemies.Set("#THE_CURSEBULON_SHORTDESC", "Jelly Or Jammed?");
 				PlanetsideModule.Strings.Enemies.Set("#THE_CURSEBULON_LONGDESC", "A blobuloid that has consumed so many cursed objects the curse has become one with it.\n\nSlaying one of these lets free the curses it holds inside.");
 				companion.encounterTrackable.journalData.PrimaryDisplayName = "#THE_CURSEBULON";

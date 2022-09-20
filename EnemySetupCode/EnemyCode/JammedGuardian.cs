@@ -615,9 +615,9 @@ namespace Planetside
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
 				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Enemies/JammedGuardian/stevelord_idle_left_001";
-				companion.encounterTrackable.journalData.enemyPortraitSprite = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\jammedguardicon.png");
+				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("jammedguardicon");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\jammedguardicon.png");
 
-				string basepath = "Planetside/Resources/Enemies/JammedGuardian/SteveShards/";
+                string basepath = "Planetside/Resources/Enemies/JammedGuardian/SteveShards/";
 
 
 				DebrisObject skull = BreakableAPIToolbox.GenerateDebrisObject(basepath + "steveSkull.png", true, 0.5f, 3, 540, 180, null, 2.2f, "Play_OBJ_pot_shatter_01", null, 1);

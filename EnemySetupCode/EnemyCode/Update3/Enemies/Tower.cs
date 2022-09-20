@@ -388,8 +388,8 @@ namespace Planetside
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
 				companion.encounterTrackable.journalData.AmmonomiconSprite = Defpath + "turretthing_idle_001";
-				companion.encounterTrackable.journalData.enemyPortraitSprite = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\blockadesheetTrespass.png");
-				PlanetsideModule.Strings.Enemies.Set("#TOWER", "Blockade");
+				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("blockadesheetTrespass");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\blockadesheetTrespass.png");
+                PlanetsideModule.Strings.Enemies.Set("#TOWER", "Blockade");
 				PlanetsideModule.Strings.Enemies.Set("#TOWER_SHORTDESC", "Iron Wall");
 				PlanetsideModule.Strings.Enemies.Set("#TOWER_LONGDESC", "Small parts of those who turned meshed themselves between the near-impenetrable brickwork of the -------, using loose parts as protective shells and peeking out to fire.");
 				companion.encounterTrackable.journalData.PrimaryDisplayName = "#TOWER";

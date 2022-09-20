@@ -407,8 +407,8 @@ namespace Planetside
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
 				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Enemies/ProperCube/toddy_idle_001";
-				companion.encounterTrackable.journalData.enemyPortraitSprite = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\bigcubeicon.png");
-				PlanetsideModule.Strings.Enemies.Set("#TODDY", "Youngling Cube");
+				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("bigcubeicon");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\bigcubeicon.png");
+                PlanetsideModule.Strings.Enemies.Set("#TODDY", "Youngling Cube");
 				PlanetsideModule.Strings.Enemies.Set("#TODDY_SHORTDESC", "Smash And Dash");
 				PlanetsideModule.Strings.Enemies.Set("#TODDY_LONGDESC", "A very small, yet lively stone cube ripped from the walls of the earlier chambers of the Gungeon.");
 				companion.encounterTrackable.journalData.PrimaryDisplayName = "#TODDY";

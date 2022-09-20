@@ -701,8 +701,8 @@ namespace Planetside
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
 				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Ammocom/inqICon";
-				companion.encounterTrackable.journalData.enemyPortraitSprite = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\sheetInquisitorTrespass.png");
-				PlanetsideModule.Strings.Enemies.Set("#INQUISITOR", "Inquisitor");
+				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("sheetInquisitorTrespass");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\sheetInquisitorTrespass.png");
+                PlanetsideModule.Strings.Enemies.Set("#INQUISITOR", "Inquisitor");
 				PlanetsideModule.Strings.Enemies.Set("#INQUISITOR_SHORTDESC", "With Great Power");
 				PlanetsideModule.Strings.Enemies.Set("#INQUISITOR_LONGDESC", "Those who are able to stand against their new found powers are able to keep a semblance of their former selves.");
 				companion.encounterTrackable.journalData.PrimaryDisplayName = "#INQUISITOR";

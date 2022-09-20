@@ -442,8 +442,8 @@ namespace Planetside
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
 				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Enemies/Detscavator/detscavator_idle-001";
-				companion.encounterTrackable.journalData.enemyPortraitSprite = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\detscavatorivonammo.png");
-				PlanetsideModule.Strings.Enemies.Set("#DETSCAVATOR", "Detscavator");
+				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("detscavatorivonammo");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\detscavatorivonammo.png");
+                PlanetsideModule.Strings.Enemies.Set("#DETSCAVATOR", "Detscavator");
 				PlanetsideModule.Strings.Enemies.Set("#DETSCAVATOR_SHORTDESC", "Subtract And Divide");
 				PlanetsideModule.Strings.Enemies.Set("#DETSCAVATOR_LONGDESC", "Unlike their robotic brethren that fire beams in 4 different directions, the single, high-powered mining beam used by the Detscavator has prevented it from being sacrificed for speeding up mining.");
 				companion.encounterTrackable.journalData.PrimaryDisplayName = "#DETSCAVATOR";

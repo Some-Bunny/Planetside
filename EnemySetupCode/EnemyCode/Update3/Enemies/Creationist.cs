@@ -617,8 +617,8 @@ namespace Planetside
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
 				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Enemies/Creationist/creationist_charge_attack_001";
-				companion.encounterTrackable.journalData.enemyPortraitSprite = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\creationistTemplateTrespass.png");
-				PlanetsideModule.Strings.Enemies.Set("#CREATIONIST", "Creationist");
+				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("creationistTemplateTrespass");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\creationistTemplateTrespass.png");
+                PlanetsideModule.Strings.Enemies.Set("#CREATIONIST", "Creationist");
 				PlanetsideModule.Strings.Enemies.Set("#CREATIONIST_SHORTDESC", "Power Crept");
 				PlanetsideModule.Strings.Enemies.Set("#CREATIONIST_LONGDESC", "Now with infinite foresight.\n\nNow with infinite time.\n\nNow with infinite potential.\n\nYet, blinded by their new powers, they failed to see their eventual, eternal entombment.");
 				companion.encounterTrackable.journalData.PrimaryDisplayName = "#CREATIONIST";

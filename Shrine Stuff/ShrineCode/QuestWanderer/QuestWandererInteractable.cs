@@ -43,18 +43,15 @@ namespace GungeonAPI
 			bool S = SaveAPIManager.GetFlag(CustomDungeonFlags.HAS_COMPLETED_SOMETHING_WICKED);
 			if (Q == true && W == true && E == true && R == true && T == true && Y == true && U == true && I == true && O == true && P == true && A == true && S == true)
 			{
-				QuestWandererInteractable component = base.gameObject.GetComponent<QuestWandererInteractable>();
-				QuestWandererInteractable.HoleObject = PickupObjectDatabase.GetById(155).GetComponent<SpawnObjectPlayerItem>();
+				GameObject synergyobject = PickupObjectDatabase.GetById(155).GetComponent<SpawnObjectPlayerItem>().objectToSpawn;
+				BlackHoleDoer component2 = synergyobject.GetComponent<BlackHoleDoer>();
 
-				component.synergyobject = QuestWandererInteractable.HoleObject.objectToSpawn;
-				BlackHoleDoer component2 = this.synergyobject.GetComponent<BlackHoleDoer>();
 				this.gameObject1 = UnityEngine.Object.Instantiate<GameObject>(component2.HellSynergyVFX, new Vector3(base.transform.position.x+0.75f, base.transform.position.y, base.transform.position.z + 5f), Quaternion.Euler(0f, 0f, 0f));
+
 				MeshRenderer component3 = this.gameObject1.GetComponent<MeshRenderer>();
 				base.StartCoroutine(this.HoldPortalOpen(component3, base.gameObject.transform.position, this.gameObject1));
+				component3.material.SetTexture("_PortalTex", StaticTextures.NebulaTexture);
 
-
-				var texture = StaticTextures.NebulaTexture;
-				component3.material.SetTexture("_PortalTex", texture);
 				if (SaveAPIManager.GetFlag(CustomDungeonFlags.HASDONEEVRYTHING))
 				{
 					GameObject original;
@@ -79,7 +76,7 @@ namespace GungeonAPI
 			}
 			else
             {
-				Destroy(base.gameObject);
+				Destroy(this.gameObject);
 			}
 		}
 
@@ -129,22 +126,22 @@ namespace GungeonAPI
 			if (!HasEverTalked)
 			{
 				AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.HAS_EVER_TALKED, true);
-				TextBoxManager.ShowTextBox(this.talkPoint.position, this.talkPoint, 3f, "I see you've finished everything there is to get.", interactor.characterAudioSpeechTag, false, TextBoxManager.BoxSlideOrientation.NO_ADJUSTMENT, true, false);
+				TextBoxManager.ShowTextBox(this.talkPoint.position, this.talkPoint, 1f, "I see you've finished everything there is to get.", interactor.characterAudioSpeechTag, false, TextBoxManager.BoxSlideOrientation.NO_ADJUSTMENT, true, false);
 				yield return new WaitForSeconds(2f);
-				TextBoxManager.ShowTextBox(this.talkPoint.position, this.talkPoint, 3f, "So...", interactor.characterAudioSpeechTag, false, TextBoxManager.BoxSlideOrientation.NO_ADJUSTMENT, true, false);
+				TextBoxManager.ShowTextBox(this.talkPoint.position, this.talkPoint, 1f, "So...", interactor.characterAudioSpeechTag, false, TextBoxManager.BoxSlideOrientation.NO_ADJUSTMENT, true, false);
 				yield return new WaitForSeconds(2f);
 
-				TextBoxManager.ShowTextBox(this.talkPoint.position, this.talkPoint, 3f, "I can give you new things to look out for.", interactor.characterAudioSpeechTag, false, TextBoxManager.BoxSlideOrientation.NO_ADJUSTMENT, true, false);
+				TextBoxManager.ShowTextBox(this.talkPoint.position, this.talkPoint, 1f, "I can give you new things to look out for.", interactor.characterAudioSpeechTag, false, TextBoxManager.BoxSlideOrientation.NO_ADJUSTMENT, true, false);
 				yield return new WaitForSeconds(2f);
-				TextBoxManager.ShowTextBox(this.talkPoint.position, this.talkPoint, 3f, "Quests, if you will.", interactor.characterAudioSpeechTag, false, TextBoxManager.BoxSlideOrientation.NO_ADJUSTMENT, true, false);
+				TextBoxManager.ShowTextBox(this.talkPoint.position, this.talkPoint, 1.5f, "Quests, if you will.", interactor.characterAudioSpeechTag, false, TextBoxManager.BoxSlideOrientation.NO_ADJUSTMENT, true, false);
 				yield return new WaitForSeconds(2f);
-				TextBoxManager.ShowTextBox(this.talkPoint.position, this.talkPoint, 5f, "They will yield no reward, and no reason to do them, other than me saying so.", interactor.characterAudioSpeechTag, false, TextBoxManager.BoxSlideOrientation.NO_ADJUSTMENT, true, false);
+				TextBoxManager.ShowTextBox(this.talkPoint.position, this.talkPoint, 3f, "They will yield no reward, and no reason to do them, other than me saying so.", interactor.characterAudioSpeechTag, false, TextBoxManager.BoxSlideOrientation.NO_ADJUSTMENT, true, false);
 				yield return new WaitForSeconds(3f);
 
-				TextBoxManager.ShowTextBox(this.talkPoint.position, this.talkPoint, 4f, "Yet, If you wish to ignore them... so be it.", interactor.characterAudioSpeechTag, false, TextBoxManager.BoxSlideOrientation.NO_ADJUSTMENT, true, false);
+				TextBoxManager.ShowTextBox(this.talkPoint.position, this.talkPoint, 2f, "Yet, If you wish to ignore them... so be it.", interactor.characterAudioSpeechTag, false, TextBoxManager.BoxSlideOrientation.NO_ADJUSTMENT, true, false);
 				yield return new WaitForSeconds(3f);
 
-				TextBoxManager.ShowTextBox(this.talkPoint.position, this.talkPoint, -1f, "Do you yant some guidance..?", interactor.characterAudioSpeechTag, false, TextBoxManager.BoxSlideOrientation.NO_ADJUSTMENT, true, false);
+				TextBoxManager.ShowTextBox(this.talkPoint.position, this.talkPoint, -1f, "Do you want some guidance..?", interactor.characterAudioSpeechTag, false, TextBoxManager.BoxSlideOrientation.NO_ADJUSTMENT, true, false);
 
 				string acceptanceTextToUse = this.acceptText;
 				string declineTextToUse = this.declineText;
@@ -251,9 +248,8 @@ namespace GungeonAPI
 		// Token: 0x040010E5 RID: 4325
 		public bool m_allowMeToIntroduceMyself = true;
 		public bool selfdestrut;
-		private static SpawnObjectPlayerItem HoleObject;
-		private GameObject synergyobject;
 		private GameObject gameObject1;
+
 		public void Talk(PlayerController interactor)
         {
 			base.StartCoroutine(WalkTalk(interactor));

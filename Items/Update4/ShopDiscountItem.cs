@@ -15,6 +15,7 @@ using MonoMod;
 using System.Collections.ObjectModel;
 
 using UnityEngine.Serialization;
+using SaveAPI;
 
 namespace Planetside
 {   
@@ -63,6 +64,7 @@ namespace Planetside
 
     }
 
+
     public class ShopDiscountController : MonoBehaviour
     {
         public ShopDiscountController()
@@ -70,12 +72,25 @@ namespace Planetside
             shopItemSelf = this.GetComponent<ShopItemController>();
         }
 
+        
+
         public void Update()
         {
-            DoPriceReduction();
+            
+                DoPriceReduction();
+
         }
         public void DoPriceReduction()
         {
+            if (shopItemSelf == null) {return; }
+
+            if (GameStatsManager.Instance != null)
+            {
+                if (shopItemSelf.item is PaydayDrillItem && GameStatsManager.Instance.GetFlag(GungeonFlags.ITEMSPECIFIC_STOLE_DRILL) == false) { return; }
+                if (shopItemSelf.item is BankMaskItem && GameStatsManager.Instance.GetFlag(GungeonFlags.ITEMSPECIFIC_STOLE_BANKMASK) == false) { return; }
+                if (shopItemSelf.item is BankBagItem && GameStatsManager.Instance.GetFlag(GungeonFlags.ITEMSPECIFIC_STOLE_BANKBAG) == false) { return; }
+            }
+
             float mult = 1;
             foreach (var DiscountVar in discounts)
             {
@@ -86,7 +101,6 @@ namespace Planetside
             }
             DoTotalDiscount(mult);
         }
-
         public void DoTotalDiscount(float H)
         {
             if (shopItemSelf == null) { return; }

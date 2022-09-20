@@ -289,8 +289,8 @@ namespace Planetside
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
 				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Enemies/Unwilling/willing_chargeup_001";
-				companion.encounterTrackable.journalData.enemyPortraitSprite = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\sheetUnwillingTrespass.png");
-				PlanetsideModule.Strings.Enemies.Set("#UNWILLING", "Unwilling");
+				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("sheetUnwillingTrespass");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\sheetUnwillingTrespass.png");
+                PlanetsideModule.Strings.Enemies.Set("#UNWILLING", "Unwilling");
 				PlanetsideModule.Strings.Enemies.Set("#UNWILLING_SHORTDESC", "Forced Conversion");
 				PlanetsideModule.Strings.Enemies.Set("#UNWILLING_LONGDESC", "Those who had the weakest resistance to its influence suffered the quickest, and usually an unwanted metamorphosis.\n\nAnd yet, it still hungered for more power.");
 				companion.encounterTrackable.journalData.PrimaryDisplayName = "#UNWILLING";

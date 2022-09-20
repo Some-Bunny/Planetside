@@ -829,7 +829,7 @@ namespace Planetside
 				bs.SkipTimingDifferentiator = behaviorSpeculator.SkipTimingDifferentiator;
 				Game.Enemies.Add("psog:shellrax", companion.aiActor);
 
-				//==================
+				//==================	
 				//Important for not breaking basegame stuff!
 				StaticReferenceManager.AllHealthHavers.Remove(companion.aiActor.healthHaver);
 				//==================
@@ -848,8 +848,8 @@ namespace Planetside
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
 				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Shellrax/shellrax_idle_001";
-				companion.encounterTrackable.journalData.enemyPortraitSprite = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\shellraxicon.png");
-				PlanetsideModule.Strings.Enemies.Set("#SHELLAD", "Shellrax");
+				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("shellraxicon");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\shellraxicon.png");
+                PlanetsideModule.Strings.Enemies.Set("#SHELLAD", "Shellrax");
 				PlanetsideModule.Strings.Enemies.Set("#SHELLAD_SHORTDESC", "Failed Demi-lich");
 				PlanetsideModule.Strings.Enemies.Set("#SHELLAD_LONGDESC", "A prior student of the Lich, Shellrax was destined to become the heir of the Gungeon. However, insanity and power-creep caused Shellrax to retort against his Master to claim the throne before it was due.\n\nAlthough Shellrax was no match for the Lich, impressed with his strength, the Lich spared him, and left him to roam the halls of the Gungeon as a powerful guardian of Bullet Hell.");
 				companion.encounterTrackable.journalData.PrimaryDisplayName = "#SHELLAD";

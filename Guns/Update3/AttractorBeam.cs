@@ -134,6 +134,7 @@ namespace Planetside
                 beamComp.penetration = 0;
                 beamComp.reflections = 0;
                 beamComp.IsReflectedBeam = false;
+                
 
                 mod.projectiles[0] = projectile;
 

@@ -111,12 +111,17 @@ namespace Planetside
 			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 10);
 			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 5);
 			GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(83) as Gun, true, false);
-			gun.DefaultModule.ammoCost = 1;
+
+            gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_ENM_blobulord_bubble_01";
+            gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].triggerEvent = true;
+
+			gun.gunSwitchGroup = (PickupObjectDatabase.GetById(479) as Gun).gunSwitchGroup;
+            gun.DefaultModule.ammoCost = 1;
 			gun.DefaultModule.shootStyle = ProjectileModule.ShootStyle.Burst;
 			gun.DefaultModule.sequenceStyle = ProjectileModule.ProjectileSequenceStyle.Random;
 			gun.reloadTime = 2f;
 			gun.DefaultModule.cooldownTime = .5f;
-			gun.DefaultModule.numberOfShotsInClip = 111;
+			gun.DefaultModule.numberOfShotsInClip = 33;
 			gun.SetBaseMaxAmmo(333);
 			gun.quality = PickupObject.ItemQuality.D;
 			gun.DefaultModule.angleVariance = 18f;
@@ -124,7 +129,8 @@ namespace Planetside
 			gun.DefaultModule.burstCooldownTime = 0.05f;
 			gun.Volley.projectiles[0].ammoCost = 1;
 			gun.InfiniteAmmo = false;
-			gun.gunClass = GunClass.SILLY;
+
+            gun.gunClass = GunClass.SILLY;
 			Gun goreThing = PickupObjectDatabase.GetById(43) as Gun;
 			Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(goreThing.DefaultModule.projectiles[0]);
 			projectile.gameObject.SetActive(false);
@@ -175,7 +181,6 @@ namespace Planetside
 			gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
 			gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("ArmWarmer", "Planetside/Resources/GunClips/ArmWarmer/flesfull", "Planetside/Resources/GunClips/ArmWarmer/flesempty");
 
-			gun.gunSwitchGroup = (PickupObjectDatabase.GetById(404) as Gun).gunSwitchGroup;
 			gun.muzzleFlashEffects = new VFXPool { type = VFXPoolType.None, effects = new VFXComplex[0] };
 
 			ArmWarmer.ArmWarmerID = gun.PickupObjectId;
@@ -188,7 +193,7 @@ namespace Planetside
 		{
 			if (gun.IsReloading && this.HasReloaded)
             {
-				AkSoundEngine.PostEvent("Play_BOSS_doormimic_vomit_01", base.gameObject);
+				AkSoundEngine.PostEvent("Play_ENM_blobulord_reform_01", base.gameObject);
 				this.HasReloaded = false;
 			}
 		}

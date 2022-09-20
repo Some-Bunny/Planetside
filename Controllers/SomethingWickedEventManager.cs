@@ -45,7 +45,7 @@ namespace Planetside
         }
         void DoEventChecks()
         {
-            if (GameManager.Instance.Dungeon.tileIndices.tilesetId != GlobalDungeonData.ValidTilesets.RATGEON | GameManager.Instance.Dungeon.tileIndices.tilesetId != GlobalDungeonData.ValidTilesets.HELLGEON)
+            if (GameManager.Instance.Dungeon.tileIndices.tilesetId != GlobalDungeonData.ValidTilesets.RATGEON || GameManager.Instance.Dungeon.tileIndices.tilesetId != GlobalDungeonData.ValidTilesets.HELLGEON)
             {
                 if (currentSWState == States.ALLOWED)
                 {
@@ -70,9 +70,14 @@ namespace Planetside
                     NevernamedsDarknessHandler.DisableDarkness(0);
                     Minimap.Instance.TemporarilyPreventMinimap = false;
                 }
+                else if (currentSWState == States.DISABLED)
+                {
+                    NevernamedsDarknessHandler.DisableDarkness(0);
+                }
             }
             else
             {
+                NevernamedsDarknessHandler.DisableDarkness(0);
                 currentSWState = States.DISABLED;
             }
         }
@@ -317,6 +322,7 @@ namespace Planetside
                 if (NevernamedsDarknessHandler.IsItDark() == false) { NevernamedsDarknessHandler.EnableDarkness(0, 0); }
             }
             if (GameManager.Instance.PrimaryPlayer == null) { currentSWState = States.DISABLED; }
+
         }
         //public static bool isDark = false;
         //public static Shader DarknessEffectShader;

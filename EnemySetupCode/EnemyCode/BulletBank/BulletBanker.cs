@@ -632,8 +632,8 @@ namespace Planetside
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
 				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/BulletBanker/bulletbanker_idle_001";
-				companion.encounterTrackable.journalData.enemyPortraitSprite = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\bankericon.png");
-				PlanetsideModule.Strings.Enemies.Set("#BULLETBANKNAME", "Bullet Banker");
+				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("bankericon");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\bankericon.png");
+                PlanetsideModule.Strings.Enemies.Set("#BULLETBANKNAME", "Bullet Banker");
 				PlanetsideModule.Strings.Enemies.Set("#BULLETBANKSHDES", "Ammunition Exception");
 				PlanetsideModule.Strings.Enemies.Set("#BULLETBANKSLES", "An enormous, sentient bullet who has tasked itself with gathering the souls of those who have begun forging their own creations within the confines of the Gungeon.");
 				companion.encounterTrackable.journalData.PrimaryDisplayName = "#BULLETBANKNAME";

@@ -262,8 +262,8 @@ namespace Planetside
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
 				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Enemies/Bloat/bigbloat_idle_001";
-				companion.encounterTrackable.journalData.enemyPortraitSprite = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\sheetBolatTrespass.png");
-				PlanetsideModule.Strings.Enemies.Set("#THE_BLOAT", "Bloat");
+				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("sheetBolatTrespass");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\sheetBolatTrespass.png");
+                PlanetsideModule.Strings.Enemies.Set("#THE_BLOAT", "Bloat");
 				PlanetsideModule.Strings.Enemies.Set("#THE_BLOAT_SHORTDESC", "Planted");
 				PlanetsideModule.Strings.Enemies.Set("#THE_BLOAT_LONGDESC", "Carrying the remains of dozens that fell under its influence, any little amount of force will release all of the contents within.");
 				companion.encounterTrackable.journalData.PrimaryDisplayName = "#THE_BLOAT";

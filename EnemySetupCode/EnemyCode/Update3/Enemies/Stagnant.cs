@@ -312,8 +312,8 @@ namespace Planetside
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
 				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Enemies/Stagnant/lilthing_die_001";
-				companion.encounterTrackable.journalData.enemyPortraitSprite = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\stagnantTrespass.png");
-				PlanetsideModule.Strings.Enemies.Set("#STAGNANT", "Stagnant");
+				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("stagnantTrespass");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\stagnantTrespass.png");
+                PlanetsideModule.Strings.Enemies.Set("#STAGNANT", "Stagnant");
 				PlanetsideModule.Strings.Enemies.Set("#STAGNANT_SHORTDESC", "Regressive Defensive");
 				PlanetsideModule.Strings.Enemies.Set("#STAGNANT_LONGDESC", "Overwhelmed by their new sight, Stagnants chain themselves to a surface and refuse to move from it.\n\nBringing themselves their own downfall.");
 				companion.encounterTrackable.journalData.PrimaryDisplayName = "#STAGNANT";

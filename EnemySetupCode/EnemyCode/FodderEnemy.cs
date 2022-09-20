@@ -208,8 +208,9 @@ namespace Planetside
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
 				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Fodder/fodder_idle_001";
-				companion.encounterTrackable.journalData.enemyPortraitSprite = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\fodderammonomiconentry.png");
-				PlanetsideModule.Strings.Enemies.Set("#THE_FODDER", "Fodder");
+				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("fodderammonomiconentry");
+                //StaticSpriteDefinitions.Amooncomicon_Enemy_Sheet_Data.spriteDefinitions[11].material.mainTexture
+                PlanetsideModule.Strings.Enemies.Set("#THE_FODDER", "Fodder");
 				PlanetsideModule.Strings.Enemies.Set("#THE_FODDER_SHORTDESC", "Hells Bells");
 				PlanetsideModule.Strings.Enemies.Set("#THE_FODDER_LONGDESC", "Filled with the remnants of lively, yet deceased Gundead, though Gungeoneers often have little respect for Gundead practices.");
 				companion.encounterTrackable.journalData.PrimaryDisplayName = "#THE_FODDER";

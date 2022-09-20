@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections;
 using MonoMod.RuntimeDetour;
 using System.Reflection;
+using System.Linq;
 
 namespace Planetside
 {
@@ -90,7 +91,6 @@ namespace Planetside
                     hover1.ShootDuration = 0.2f;
                     hover1.OnlyOnEmptyReload = false;
                     hover1.Initialize(gunComp, player);
-                    //hover1.DamageMultiplier = 0.8f;
                     hover1.RotationSpeed = 120;
                     SpawnDebrisObject sDo = gameObject1.AddComponent<SpawnDebrisObject>();
                     sDo.objIDToSpawn = gunComp.PickupObjectId;
@@ -259,7 +259,7 @@ namespace Planetside
         public void Update()
         {
             Timer += BraveTime.DeltaTime;
-            if (Timer >= 0.4f)
+            if (Timer >= 0.8f)
             {
                 Timer = 0;
                 UnityEngine.Object.Instantiate<GameObject>(PickupObjectDatabase.GetById(108).GetComponent<SpawnObjectPlayerItem>().objectToSpawn.gameObject, base.gameObject.transform.PositionVector2(), Quaternion.identity);
@@ -330,6 +330,25 @@ namespace Planetside
             {
                 OtherTools.ApplyStat(player, PlayerStats.StatType.AmmoCapacityMultiplier, 0.4f, StatModifier.ModifyMethod.MULTIPLICATIVE);
                 player.PostProcessThrownGun += ThrownGunModifier;
+                player.OnReloadPressed += MagDump;
+            }
+        }
+        public void MagDump(PlayerController p, Gun gun)
+        {
+            Gun g = p.CurrentGun;
+            if (g != null && g.InfiniteAmmo == false)
+            {
+                if (g.ClipShotsRemaining == g.ClipCapacity | g.ClipCapacity > g.CurrentAmmo)
+                {
+                    g.ammo -= g.ClipShotsRemaining;
+                    g.ClipShotsRemaining -= g.ClipShotsRemaining;
+                    GameObject vfx = SpawnManager.SpawnVFX((PickupObjectDatabase.GetById(365) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapVertical.effects.First().effects.First().effect, true);
+                    vfx.transform.position = p.sprite.WorldCenter;
+                    vfx.GetComponent<tk2dBaseSprite>().HeightOffGround = 22;
+                    vfx.transform.localScale *= 1f;
+                    UnityEngine.Object.Destroy(vfx, 1);
+                    AkSoundEngine.PostEvent("Play_WPN_Life_Orb_Capture_01", p.gameObject);
+                }
             }
         }
 
@@ -360,6 +379,9 @@ namespace Planetside
             obj.baseData.damage *= DamageMult;
             obj.pierceMinorBreakables = true;
             obj.IgnoreTileCollisionsFor(0.01f);
+            CoinArbitraryDamageMultiplier cAdM = obj.GetOrAddComponent<CoinArbitraryDamageMultiplier>();
+            cAdM.Multiplier = 3;
+
             obj.OnBecameDebris += HandleReturnLikeBoomerang;
             obj.OnBecameDebris = (Action<DebrisObject>)Delegate.Combine(obj.OnBecameDebris, new Action<DebrisObject>(this.HandleOnHitEffects));
             obj.StartCoroutine(this.ForceTeleportToPlayer(obj));
@@ -541,9 +563,6 @@ namespace Planetside
                         Vector2 centerPosition = gunComp.sprite.WorldCenter;
                         if (activeEnemies != null)
                         {
-
-
-
                             foreach (AIActor aiactor in activeEnemies)
                             {
                                 if (Vector2.Distance(aiactor.CenterPosition, centerPosition) < 4 && aiactor != null && aiactor.specRigidbody != null && player != null && !aiactor.healthHaver.IsBoss)
@@ -707,7 +726,7 @@ namespace Planetside
                         pickupMover.acceleration = 25f;
                         pickupMover.maxSpeed = 10f;
                         pickupMover.minRadius = 1f;
-                        pickupMover.moveIfRoomUnclear = true;
+                        pickupMover.moveIfRoomUnclear = false;
                         pickupMover.stopPathingOnContact = true;
                         break;
                     default:

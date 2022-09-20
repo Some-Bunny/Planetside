@@ -463,8 +463,8 @@ namespace Planetside
 				enemy.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				enemy.encounterTrackable.ProxyEncounterGuid = "";
 				enemy.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Ammocom/shamberammonomiconICON";
-				enemy.encounterTrackable.journalData.enemyPortraitSprite = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\shamberammonomicoenrtytab.png");
-				PlanetsideModule.Strings.Enemies.Set("#SHAMBER", "Shamber");
+				enemy.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("shamberammonomicoenrtytab");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\shamberammonomicoenrtytab.png");
+                PlanetsideModule.Strings.Enemies.Set("#SHAMBER", "Shamber");
 				PlanetsideModule.Strings.Enemies.Set("#SHAMBER_SHORT", "Tee Hee Hee!");
 				PlanetsideModule.Strings.Enemies.Set("#SHAMBER_LONGDESC", "A lively, hungry spirit that feeds itself on bullets of any kind.\n\nIn the past, Shambers would seek out Gungeoneers and loot their ammo supplies until they realised that it was much easier to just catch bullets from mid-air without the hassle of dealing with a surprised Gungeoneer.");
 				enemy.encounterTrackable.journalData.PrimaryDisplayName = "#SHAMBER";

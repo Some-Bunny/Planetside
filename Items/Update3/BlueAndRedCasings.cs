@@ -46,10 +46,10 @@ namespace Planetside
 		}
 		public override void Pickup(PlayerController player)
 		{
-            SomethingWickedEventManager.currentSWState = SomethingWickedEventManager.States.ALLOWED;
             base.Pickup(player);
-		}
-      
+            SomethingWickedEventManager.currentSWState = SomethingWickedEventManager.States.ALLOWED;
+        }
+
         protected override void OnDestroy()
 		{
             base.OnDestroy();

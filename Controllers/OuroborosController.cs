@@ -17,6 +17,8 @@ using GungeonAPI;
 using SaveAPI;
 using Brave.BulletScript;
 using Pathfinding;
+using NpcApi;
+
 namespace Planetside
 {
 	public class OuroborosController : MonoBehaviour
@@ -102,7 +104,70 @@ namespace Planetside
 				new Hook(typeof(Chest).GetMethod("Awake", BindingFlags.Instance | BindingFlags.NonPublic),
 					typeof(OuroborosController).GetMethod("ChestAwakeHook"));
 
-				chestPickupsLootTable = LootTableTools.CreateLootTable();
+                GameObject logoObj = ItemBuilder.AddSpriteToObject("OuroborosWinIcon", "Planetside/Resources/VFX/ouroborosmedal", null);
+                FakePrefab.MarkAsFakePrefab(logoObj);
+                UnityEngine.Object.DontDestroyOnLoad(logoObj);
+                logoObj.transform.position = logoObj.transform.position.WithZ(0);
+                dfSprite df = logoObj.AddComponent<dfSprite>();
+                df.Atlas = GameUIRoot.Instance.FoyerAmmonomiconLabel.Atlas;
+                string t = GameUIRoot.Instance.FoyerAmmonomiconLabel.Atlas.AddNewItemToAtlas(NpcTools.GetTextureFromResource("Planetside/Resources/VFX/ouroborosmedal.png"), "OuroborosWinIcon").name;
+                df.name = t;
+                df.SpriteName = t;
+				logoObj.transform.localScale *= 4;
+                WinIcon = logoObj;
+
+				{
+                    GameObject logoObj2 = ItemBuilder.AddSpriteToObject("OuroborosWinIconSideLeft", "Planetside/Resources/VFX/ouroborosMedal2Left", null);
+                    FakePrefab.MarkAsFakePrefab(logoObj2);
+                    UnityEngine.Object.DontDestroyOnLoad(logoObj2);
+                    logoObj2.transform.position = logoObj2.transform.position.WithZ(0);
+                    dfSprite df2 = logoObj2.AddComponent<dfSprite>();
+                    df2.Atlas = GameUIRoot.Instance.FoyerAmmonomiconLabel.Atlas;
+                    string t2 = GameUIRoot.Instance.FoyerAmmonomiconLabel.Atlas.AddNewItemToAtlas(NpcTools.GetTextureFromResource("Planetside/Resources/VFX/ouroborosMedal2Left.png"), "OuroborosWinIconTwoLeft").name;
+                    df2.name = t2;
+                    df2.SpriteName = t2;
+                    logoObj2.transform.localScale *= 4;
+                    WinIconTwoLeft = logoObj2;
+                }
+				{
+                    GameObject logoObj2 = ItemBuilder.AddSpriteToObject("OuroborosWinIconSideRight", "Planetside/Resources/VFX/ouroborosMedal2Right", null);
+                    FakePrefab.MarkAsFakePrefab(logoObj2);
+                    UnityEngine.Object.DontDestroyOnLoad(logoObj2);
+                    logoObj2.transform.position = logoObj2.transform.position.WithZ(0);
+                    dfSprite df2 = logoObj2.AddComponent<dfSprite>();
+                    df2.Atlas = GameUIRoot.Instance.FoyerAmmonomiconLabel.Atlas;
+                    string t2 = GameUIRoot.Instance.FoyerAmmonomiconLabel.Atlas.AddNewItemToAtlas(NpcTools.GetTextureFromResource("Planetside/Resources/VFX/ouroborosMedal2Right.png"), "OuroborosWinIconTwoRight").name;
+                    df2.name = t2;
+                    df2.SpriteName = t2;
+                    logoObj2.transform.localScale *= 4;
+                    WinIconTwoRight = logoObj2;
+                }
+				
+
+
+                GameObject textObj = (GameObject)UnityEngine.Object.Instantiate(BraveResources.Load("DamagePopupLabel", ".prefab"));
+                FakePrefab.MarkAsFakePrefab(textObj);
+                UnityEngine.Object.DontDestroyOnLoad(textObj);
+                textObj.transform.position = textObj.transform.position.WithZ(0);
+                dfLabel Label = textObj.GetComponent<dfLabel>();
+
+                dfLabel targetLabel = Label as dfLabel;
+                targetLabel.gameObject.SetActive(false);
+                targetLabel.Text = 0.ToString();
+                targetLabel.Color = Color.gray * 0.7f;
+				targetLabel.TextAlignment = TextAlignment.Center;
+                textObj.transform.localScale *= 1.35f;
+
+                Text = textObj;
+
+                new Hook(typeof(AmmonomiconDeathPageController).GetMethod("InitializeRightPage", BindingFlags.Instance | BindingFlags.NonPublic),
+					typeof(OuroborosController).GetMethod("InitializeRightPageHook"));
+
+
+                new Hook(typeof(AmmonomiconDeathPageController).GetMethod("Update", BindingFlags.Instance | BindingFlags.NonPublic),
+                    typeof(OuroborosController).GetMethod("UpdatePageHook"));
+
+                chestPickupsLootTable = LootTableTools.CreateLootTable();
 				chestPickupsLootTable.AddItemsToPool(new Dictionary<int, float> { { 120, 1 }, {224, 0.8f }, {600, 0.5f}, {78, 0.75f } });
 
 				Actions.OnRunStart += OnRunStartMethod;
@@ -114,6 +179,89 @@ namespace Planetside
 				Debug.Log(e);
 			}
 		}
+        public static GameObject WinIconTwoLeft;
+        public static GameObject WinIconTwoRight;
+
+
+        public static GameObject WinIcon;
+        public static GameObject ExtantWinIcon;
+
+        public static GameObject ExtantWinIcon2Right;
+        public static GameObject ExtantWinIcon2Left;
+
+
+        public static GameObject Text;
+        public static GameObject ExtantText;
+
+        public static void UpdatePageHook(Action<AmmonomiconDeathPageController> orig, AmmonomiconDeathPageController self)
+		{
+            orig(self);
+            if (ExtantWinIcon)
+            {
+                ExtantWinIcon.GetComponent<dfSprite>().Opacity = OuroborosMode() == true ? 1 : 0;
+            }
+            if (ExtantText)
+            {
+				//ExtantText.transform.position = self.transform.position.WithZ(0) + new Vector3(-0.2102f, -0.07f, 0);
+                //ExtantText.GetComponent<dfLabel>().enabled = true;
+                ExtantText.GetComponent<dfLabel>().Opacity = OuroborosMode() == true ? 1 : 0;
+            }
+        }
+
+
+        public static void InitializeRightPageHook(Action<AmmonomiconDeathPageController> orig, AmmonomiconDeathPageController self)
+		{
+			orig(self);
+            if (ExtantWinIcon == null)
+            {
+                ExtantWinIcon = UnityEngine.Object.Instantiate(WinIcon, self.transform.position, Quaternion.identity, self.transform);
+            }
+            if (ExtantWinIcon)
+            {
+                ExtantWinIcon.transform.position = self.transform.position.WithZ(0) + new Vector3(-0.5631f, 0.128f, 0);
+                ExtantWinIcon.GetComponent<dfSprite>().enabled = true;
+                ExtantWinIcon.GetComponent<dfSprite>().Opacity = OuroborosMode() == true ? 1 : 0;
+            }
+
+			if (ExtantText == null)
+			{
+                ExtantText = UnityEngine.Object.Instantiate(Text, self.transform.position, Quaternion.identity, self.transform);
+
+            }
+            if (ExtantText)
+            {
+				ExtantText.transform.position = self.transform.position.WithZ(0)+ new Vector3(-0.2502f, -0.07f, 0);
+                ExtantText.GetComponent<dfLabel>().enabled = true;
+                ExtantText.GetComponent<dfLabel>().Opacity = OuroborosMode() == true ? 1 : 0;
+                ExtantText.GetComponent<dfLabel>().Text = CurrentLoop().ToString();
+
+            }
+            if (ExtantWinIcon2Right == null)
+            {
+                ExtantWinIcon2Right = UnityEngine.Object.Instantiate(WinIconTwoRight, self.transform.position, Quaternion.identity, self.transform);
+            }
+            if (ExtantWinIcon2Right)
+            {
+                ExtantWinIcon2Right.transform.position = (self.transform.position.WithZ(0)) + new Vector3((0.071f * (self.killedByLabel.Text.Length / 2)), 0.128f, 0);
+                ExtantWinIcon2Right.transform.position += new Vector3(-0.2502f, 0f);
+
+                ExtantWinIcon2Right.GetComponent<dfSprite>().enabled = true;
+                ExtantWinIcon2Right.GetComponent<dfSprite>().Opacity = OuroborosMode() == true ? 1 : 0;
+
+            }
+            if (ExtantWinIcon2Left == null)
+            {
+                ExtantWinIcon2Left = UnityEngine.Object.Instantiate(WinIconTwoLeft, self.transform.position, Quaternion.identity, self.transform);
+            }
+            if (ExtantWinIcon2Left)
+            {
+                ExtantWinIcon2Left.transform.position = (self.transform.position.WithZ(0)) - new Vector3((0.071f * self.killedByLabel.Text.Length / 2), -0.128f, 0) ;
+				ExtantWinIcon2Left.transform.position += new Vector3(-0.2502f, 0f);
+                ExtantWinIcon2Left.GetComponent<dfSprite>().enabled = true;
+                ExtantWinIcon2Left.GetComponent<dfSprite>().Opacity = OuroborosMode() == true ? 1 : 0;
+
+            }
+        }
 
 		public static void OnRunStartMethod(PlayerController player)
         {

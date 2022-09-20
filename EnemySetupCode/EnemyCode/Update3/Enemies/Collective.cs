@@ -379,8 +379,8 @@ namespace Planetside
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
 				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Enemies/Collective/collective_idle_001";
-				companion.encounterTrackable.journalData.enemyPortraitSprite = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\sheetcollectiveTrespass.png");
-				PlanetsideModule.Strings.Enemies.Set("#COLLCTIVE", "Collective");
+				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("sheetcollectiveTrespass");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\sheetcollectiveTrespass.png");
+                PlanetsideModule.Strings.Enemies.Set("#COLLCTIVE", "Collective");
 				PlanetsideModule.Strings.Enemies.Set("#COLLCTIVE_SHORTDESC", "Consciousness");
 				PlanetsideModule.Strings.Enemies.Set("#UCOLLCTIVE_LONGDESC", "A mass of those affected by its influence. Unable to resist it by themselves, they merged together and try to overpower it through strength in numbers.\n\nThey never succeed.");
 				companion.encounterTrackable.journalData.PrimaryDisplayName = "#COLLCTIVE";

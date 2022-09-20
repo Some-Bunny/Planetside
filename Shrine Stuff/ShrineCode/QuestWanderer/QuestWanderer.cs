@@ -10,8 +10,39 @@ using UnityEngine;
 namespace Planetside
 {
 
-	public static class QuestWanderer
+    public class ShitPisseController : MonoBehaviour
+    {
+        public void Start()
+        {
+
+
+            bool Q = SaveAPIManager.GetFlag(CustomDungeonFlags.BROKEN_CHAMBER_RUN_COMPLETED);
+            bool W = SaveAPIManager.GetFlag(CustomDungeonFlags.BEAT_LOOP_1);
+            bool E = SaveAPIManager.GetFlag(CustomDungeonFlags.BEAT_A_BOSS_UNDER_A_SECOND);
+            bool R = SaveAPIManager.GetFlag(CustomDungeonFlags.BULLETBANK_DEFEATED);
+            bool T = SaveAPIManager.GetFlag(CustomDungeonFlags.HIGHER_CURSE_DRAGUN_KILLED);
+            bool Y = SaveAPIManager.GetFlag(CustomDungeonFlags.SHELLRAX_DEFEATED);
+            bool U = SaveAPIManager.GetFlag(CustomDungeonFlags.JAMMED_GUARD_DEFEATED);
+            bool I = SaveAPIManager.GetFlag(CustomDungeonFlags.DEFEAT_FUNGANNON);
+            bool O = SaveAPIManager.GetFlag(CustomDungeonFlags.DEFEAT_OPHANAIM);
+            bool P = SaveAPIManager.GetFlag(CustomDungeonFlags.DEFEAT_ANNIHICHAMBER);
+            bool A = SaveAPIManager.GetFlag(CustomDungeonFlags.DECURSE_HELL_SHRINE_UNLOCK);
+            bool S = SaveAPIManager.GetFlag(CustomDungeonFlags.HAS_COMPLETED_SOMETHING_WICKED);
+            if (Q == true && W == true && E == true && R == true && T == true && Y == true && U == true && I == true && O == true && P == true && A == true && S == true)
+            {
+            }
+            else
+            {
+                Destroy(this.gameObject);
+            }
+        }
+    }
+
+    public static class QuestWanderer
 	{
+
+
+
 		public static void Add()
 		{
 			ShrineFactory shrineFactory = new ShrineFactory
@@ -19,7 +50,7 @@ namespace Planetside
 				name = "Wandererer",
 				modID = "psog",
 				spritePath = "Planetside/Resources/Shrines/Wanderer/wanderer_idle_001.png",
-				acceptText = "<Talk to him>",
+				acceptText = "<Talk to them>",
 				declineText = "<Walk away>",
 				OnAccept = new Action<PlayerController, GameObject>(QuestWanderer.Accept),
 				OnDecline = new Action<PlayerController, GameObject>(QuestWanderer.Decline),
@@ -28,6 +59,7 @@ namespace Planetside
 				talkPointOffset = new Vector3(0f, 0f, 0f),
 				isToggle = false,
 				isBreachShrine = true,
+				AdditionalComponent = typeof(ShitPisseController),
 				interactableComponent = typeof(QuestWandererInteractable)
 			};
 			GameObject gameObject = shrineFactory.Build();

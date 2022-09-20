@@ -846,8 +846,8 @@ namespace Planetside
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
 				companion.encounterTrackable.journalData.AmmonomiconSprite = DefPath + "oppressor_awaken_012";
-				companion.encounterTrackable.journalData.enemyPortraitSprite = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\sheetOppressorTrespass.png");
-				PlanetsideModule.Strings.Enemies.Set("#OPPRESSOR", "Oppressor");
+				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("sheetOppressorTrespass");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\sheetOppressorTrespass.png");
+                PlanetsideModule.Strings.Enemies.Set("#OPPRESSOR", "Oppressor");
 				PlanetsideModule.Strings.Enemies.Set("#OPPRESSOR_SHORTDESC", "Overpowered");
 				PlanetsideModule.Strings.Enemies.Set("#OPPRESSOR_LONGDESC", "The strongest of those who turned are those with the most determination.\n\nAnd they are determined to end you.");
 				companion.encounterTrackable.journalData.PrimaryDisplayName = "#OPPRESSOR";

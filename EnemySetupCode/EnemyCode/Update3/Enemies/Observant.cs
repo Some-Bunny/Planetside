@@ -411,8 +411,8 @@ namespace Planetside
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
 				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Enemies/Observant/observant_idle_left_001";
-				companion.encounterTrackable.journalData.enemyPortraitSprite = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\observantsheetTrespass.png");
-				PlanetsideModule.Strings.Enemies.Set("#OBSERVANT", "Observant");
+				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("observantsheetTrespass");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\observantsheetTrespass.png");
+                PlanetsideModule.Strings.Enemies.Set("#OBSERVANT", "Observant");
 				PlanetsideModule.Strings.Enemies.Set("#OBSERVANT_SHORTDESC", "Foresighted");
 				PlanetsideModule.Strings.Enemies.Set("#OBSERVANT_LONGDESC", "Some say the lights that illumate the sky of Gunymede are trapped Observants, seeing into their old home world.\n\nWishing they could return, from the cells of their eternal prison.");
 				companion.encounterTrackable.journalData.PrimaryDisplayName = "#OBSERVANT";

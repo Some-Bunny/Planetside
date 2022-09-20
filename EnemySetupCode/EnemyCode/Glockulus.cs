@@ -403,8 +403,8 @@ namespace Planetside
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
 				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Enemies/Glockulus/glockulus_idle_front1";
-				companion.encounterTrackable.journalData.enemyPortraitSprite = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\glockulussheet.png");
-				PlanetsideModule.Strings.Enemies.Set("#THE_GLOCKULUS", "Glockulus");
+				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("glockulussheet");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\glockulussheet.png");
+                PlanetsideModule.Strings.Enemies.Set("#THE_GLOCKULUS", "Glockulus");
 				PlanetsideModule.Strings.Enemies.Set("#THE_GLOCKULUS_SHORTDESC", "Eye Spy");
 				PlanetsideModule.Strings.Enemies.Set("#THE_GLOCKULUS_LONGDESC", "A sentinel from beyond the Curtain, it watches over the Gungeon for any... suspicious activity.\n\nSome Gungeonologists speculate that Glockuli are an off-breed of the Beholster, but no evidence has pointed towards that.");
 				companion.encounterTrackable.journalData.PrimaryDisplayName = "#THE_GLOCKULUS";

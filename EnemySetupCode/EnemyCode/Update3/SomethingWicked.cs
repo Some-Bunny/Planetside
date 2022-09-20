@@ -342,8 +342,8 @@ namespace Planetside
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
 				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Enemies/SomethingWicked/somethingwicked_idle_001";
-				companion.encounterTrackable.journalData.enemyPortraitSprite = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\SomethingWickedAmmonomiconSheet.png");
-				PlanetsideModule.Strings.Enemies.Set("#WICKEDNESS", "Something Wicked");
+				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("SomethingWickedAmmonomiconSheet");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\SomethingWickedAmmonomiconSheet.png");
+                PlanetsideModule.Strings.Enemies.Set("#WICKEDNESS", "Something Wicked");
 				PlanetsideModule.Strings.Enemies.Set("#WICKEDNESS_SHORTDESC", "Relic Of The Past");
 				PlanetsideModule.Strings.Enemies.Set("#WICKEDNESS_LONGDESC", "The shade of a priest who resided in the Gungeon since before the Bullet struck, disgusted by the Lich's practices, sook to reclaim the Gungeon and restore it to its former glory.\n\n\n *Text illegible* \n\n\nNow, all that remains of him are the shrines scattered about the Gungeon, with those kneeling at it enacting the beliefs of the priest, unable to do so himself.");
 				companion.encounterTrackable.journalData.PrimaryDisplayName = "#WICKEDNESS";

@@ -228,6 +228,7 @@
     <Compile Include="Items\Update4\LuckyCharm.cs" />
     <Compile Include="Items\Update4\Modifiers\ModifierNeedle.cs" />
     <Compile Include="Misc Stuff\CustomNotificationHandler.cs" />
+    <Compile Include="Misc Stuff\Static Storage\StaticSpriteDefinitions.cs" />
     <Compile Include="Misc Stuff\Static Storage\StaticInformation.cs" />
     <Compile Include="Misc Stuff\Static Storage\StaticVFXStorage.cs" />
     <Compile Include="Misc Stuff\WeightedTypeCollection.cs" />
@@ -2374,6 +2375,9 @@
     <EmbeddedResource Include="Resources\Shellrax\shellrax_fireeye_003.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\VFX\ouroborosMedal2Left.png" />
+    <EmbeddedResource Include="Resources\VFX\ouroborosMedal2Right.png" />
+    <EmbeddedResource Include="Resources\VFX\ouroborosmedal.png" />
     <EmbeddedResource Include="Resources\Shrines\iconsmiley.png" />
     <EmbeddedResource Include="Resources\shormActual.png" />
     <EmbeddedResource Include="Resources\Shrines\voidMuncherRoomIcon.png" />

@@ -1,6 +1,7 @@
 ﻿using Dungeonator;
 using ItemAPI;
 using System;
+using System.Reflection;
 using UnityEngine;
 
 namespace Planetside
@@ -55,21 +56,22 @@ namespace Planetside
             aiactor.CompanionOwner = player;
             aiactor.specRigidbody.Reinitialize();
 
+
             CustomScarfDoer scorf = UnityEngine.Object.Instantiate<GameObject>(StaticVFXStorage.ScarfObject.gameObject).AddComponent<CustomScarfDoer>();
             scorf.AttachTarget = aiactor;
             scorf.ScarfMaterial = StaticVFXStorage.ScarfObject.ScarfMaterial;
             scorf.StartWidth = 0.0625f;
             scorf.EndWidth = 0.125f;
             scorf.AnimationSpeed = 30f;
-            scorf.ScarfLength = 0.8f;
-            scorf.AngleLerpSpeed = 30f;
+            scorf.ScarfLength = 0.5f;
+            scorf.AngleLerpSpeed = 20;
             scorf.BackwardZOffset = -0.2f;
             scorf.CatchUpScale = 1.3f;
             scorf.SinSpeed = 9f;
             scorf.AmplitudeMod = 0.235f;
             scorf.WavelengthMod = 1.3f;
 
-            scorf.ScarfMaterial.SetColor("_OverrideColor", new Color(1, 0.04f, 0.04f));
+            scorf.ScarfMaterial.SetColor("_OverrideColor", new Color(1, 0.2f, 0.04f));
 
             scorf.Initialize(aiactor);
         }
@@ -101,7 +103,7 @@ namespace Planetside
             OutlineColor = new Color(0.6f, 0.6f, 0.6f);
 
 
-            var actor = EnemyDatabase.GetOrLoadByGuid("db35531e66ce41cbb81d507a34366dfe");
+            var actor = EnemyDatabase.GetOrLoadByGuid("5861e5a077244905a8c25c2b7b4d6ebb");
             GameObject ContractEnemy = GameObject.Instantiate(actor.gameObject);
             GameObject.DontDestroyOnLoad(ContractEnemy);
             FakePrefab.MarkAsFakePrefab(ContractEnemy);
@@ -118,7 +120,7 @@ namespace Planetside
             aiactor.CanTargetPlayers = true;
             aiactor.IsHarmlessEnemy = true;
             aiactor.IgnoreForRoomClear = true;
-            aiactor.MovementSpeed *= 1.5f;
+            aiactor.MovementSpeed *= 1.25f;
             CompanionController yup = aiactor.gameObject.AddComponent<CompanionController>();
             yup.companionID = CompanionController.CompanionIdentifier.NONE;
             yup.CanCrossPits = true;
@@ -133,53 +135,97 @@ namespace Planetside
             EnemyToolbox.AddNewDirectionAnimation(aiactor.aiAnimator, "pet", anims, new DirectionalAnimation.FlipType[4], DirectionalAnimation.DirectionType.FourWayCardinal);
             //yup.Initialize(player);
 
-            Planetside.OtherTools.CompanionisedEnemyBulletModifiers yeehaw = yup.gameObject.AddComponent<Planetside.OtherTools.CompanionisedEnemyBulletModifiers>();
-            yeehaw.jammedDamageMultiplier *= 2.4f;
-            yeehaw.baseBulletDamage = 9f;
-            yeehaw.TintBullets = true;
-            yeehaw.TintColor = Color.yellow;
-
 
             var bs = aiactor.GetComponent<BehaviorSpeculator>();
 
-            foreach (MovementBehaviorBase att in aiactor.behaviorSpeculator.MovementBehaviors)
+            
+            foreach (AttackBehaviorBase att in aiactor.behaviorSpeculator.AttackBehaviors)
             {
-                if (att is SeekTargetBehavior)
-                {
-                    SeekTargetBehavior tagr = att as SeekTargetBehavior;
-                    tagr.ReturnToSpawn = false;
-                    tagr.StopWhenInRange = false;
-                    tagr.CustomRange = 7;
-                    tagr.LineOfSight = true;
-                    tagr.SpawnTetherDistance = 0;
-                    tagr.PathInterval = 0.25f;
-                    tagr.SpecifyRange = false;
-                    tagr.MinActiveRange = 3;
-                    tagr.MaxActiveRange = 11;
 
+                if (att is ShootGunBehavior)
+                {
+                    ShootGunBehavior tagr = att as ShootGunBehavior;
+                    tagr.LineOfSight = true;
+                    tagr.LeadAmount = 0.4f;
+                    tagr.MagazineCapacity = 15;
+                    tagr.ReloadSpeed = 3;
+                    tagr.RespectReload = true;
+                    tagr.EmptiesClip = true;
                 }
             }
 
+            Projectile projectile2 = UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(2) as Gun).DefaultModule.projectiles[0]);
+            projectile2.gameObject.SetActive(false);
+            FakePrefab.MarkAsFakePrefab(projectile2.gameObject);
+            projectile2.baseData.damage = 7;
+            projectile2.baseData.speed *= 0.6f;
+            projectile2.baseData.range *= 3;
+
+            AIBulletBank.Entry entry = new AIBulletBank.Entry();
+            entry.Name = "nyeahh";
+            entry.BulletObject = projectile2.gameObject;
+
+            if (aiactor.bulletBank.Bullets == null) { aiactor.bulletBank.Bullets = new System.Collections.Generic.List<AIBulletBank.Entry>(); }
+            aiactor.bulletBank.Bullets.Add(entry);
+
+            foreach (AttackBehaviorGroup.AttackGroupItem att in aiactor.behaviorSpeculator.AttackBehaviorGroup.AttackBehaviors)
+            {
+                if (att.Behavior.GetType() == typeof(ShootGunBehavior))
+                {
+                    ShootGunBehavior tagr = att.Behavior as ShootGunBehavior;
+                    tagr.LineOfSight = true;
+                    tagr.LeadAmount = 0f;
+                    tagr.MagazineCapacity = 15;
+                    tagr.ReloadSpeed = 3;
+                    tagr.RespectReload = true;
+                    tagr.EmptiesClip = true;
+                    tagr.UseLaserSight = true;
+                    tagr.Cooldown = 3f;
+                    tagr.TimeBetweenShots = 0.0066f;
+                    tagr.WeaponType = WeaponType.AIShooterProjectile;
+                    tagr.OverrideBulletName = "nyeahh";
+                }
+            }
+
+
             AIAnimator aiAnimator = aiactor.aiAnimator;
 
+            AIShooter shooter = aiactor.aiShooter;
+            shooter.Inventory.AddGunToInventory(PickupObjectDatabase.GetById(2) as Gun, true);
+            shooter.equippedGunId = 2;
+            FieldInfo leEnabler = typeof(AIShooter).GetField("m_hasCachedGun", BindingFlags.Instance | BindingFlags.NonPublic);
+            leEnabler.SetValue(shooter, false);
+            shooter.Inventory.DestroyAllGuns();
+            Gun equippedGun = shooter.Inventory.AddGunToInventory(PickupObjectDatabase.GetById(2) as Gun, true);
+            FieldInfo fieldInf = typeof(AIShooter).GetField("m_cachedGun", BindingFlags.Instance | BindingFlags.NonPublic);
+            fieldInf.SetValue(shooter, equippedGun);
+            FieldInfo m_currentGunField = typeof(GunInventory).GetField("m_currentGun", BindingFlags.Instance | BindingFlags.NonPublic);
+            m_currentGunField.SetValue(shooter.Inventory, equippedGun);
+            equippedGun.gameObject.SetActive(true);
+
+
+            
             CompanionFollowPlayerBehavior comp = new CompanionFollowPlayerBehavior();
             comp.CanRollOverPits = false;
-            comp.CatchUpOutAnimation = aiAnimator.MoveAnimation.Prefix;
+            //comp.CatchUpOutAnimation = aiAnimator.MoveAnimation.Prefix;
             comp.DisableInCombat = true;
-            comp.IdleAnimations = aiAnimator.IdleAnimation.AnimNames;
+            //comp.IdleAnimations = aiAnimator.IdleAnimation.AnimNames;
             comp.PathInterval = 0.25f;
             comp.IdealRadius = 6;
             comp.CatchUpRadius = 8;
             comp.CatchUpAccelTime = 5;
-            comp.CatchUpSpeed = aiactor.MovementSpeed *= 1.125f;
+            comp.CatchUpSpeed = aiactor.MovementSpeed *= 1.2f;
             comp.CatchUpMaxSpeed = aiactor.MovementSpeed *= 1.3f;
-            comp.CatchUpAnimation = aiAnimator.MoveAnimation.Prefix;
-            comp.RollAnimation = aiAnimator.MoveAnimation.Prefix;
-            comp.CatchUpOutAnimation = aiAnimator.MoveAnimation.Prefix;
-            comp.TemporarilyDisabled = false;
+           
+            //comp.CatchUpAnimation = aiAnimator.MoveAnimation.Prefix;
+            //comp.RollAnimation = aiAnimator.MoveAnimation.Prefix;
+            //comp.CatchUpOutAnimation = aiAnimator.MoveAnimation.Prefix;
+            comp.TemporarilyDisabled = true;
 
             bs.MovementBehaviors.Add(comp);
 
+            
+            /*
             SeekTargetBehavior seek = new SeekTargetBehavior();
             seek.ReturnToSpawn = false;
             seek.StopWhenInRange = true;
@@ -192,6 +238,7 @@ namespace Planetside
             seek.MaxActiveRange = 11;
 
             bs.MovementBehaviors.Add(seek);
+            */
 
             Contractor = aiactor;
         }

@@ -478,8 +478,8 @@ namespace Planetside
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
 				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/ArchJurer/archjurer_idle_001";
-				companion.encounterTrackable.journalData.enemyPortraitSprite = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\archgunjurericon.png");
-				PlanetsideModule.Strings.Enemies.Set("#THE_JURER", "Arch Gunjurer");
+				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("archgunjurericon");// ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\archgunjurericon.png");
+                PlanetsideModule.Strings.Enemies.Set("#THE_JURER", "Arch Gunjurer");
 				PlanetsideModule.Strings.Enemies.Set("#THE_JURER_SHORTDESC", "Master Of Al-gun-y");
 				PlanetsideModule.Strings.Enemies.Set("#THE_JURER_LONGDESC", "The highest rank of Gunjurer, these wizards have learned to create gunfire while beyond the Curtain.\n\nOld gungeoneer folk tales say that if one were to get a wand it would become truly unstoppable.");
 				companion.encounterTrackable.journalData.PrimaryDisplayName = "#THE_JURER";

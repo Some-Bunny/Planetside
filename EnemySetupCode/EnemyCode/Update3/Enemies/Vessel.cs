@@ -571,8 +571,8 @@ namespace Planetside
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = ""; 
 				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Enemies/Vessel/host_idle_001";
-				companion.encounterTrackable.journalData.enemyPortraitSprite = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\sheetvesselTrespass.png");
-				PlanetsideModule.Strings.Enemies.Set("#VESSEL", "Vessel");
+				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("sheetvesselTrespass");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\sheetvesselTrespass.png");
+                PlanetsideModule.Strings.Enemies.Set("#VESSEL", "Vessel");
 				PlanetsideModule.Strings.Enemies.Set("#VESSEL_SHORTDESC", "Carrier");
 				PlanetsideModule.Strings.Enemies.Set("#VESSEL_LONGDESC", "An amalgam of many, it psychically connects with all nearby living beings and uses them as vessels to stay out of danger.");
 				companion.encounterTrackable.journalData.PrimaryDisplayName = "#VESSEL";

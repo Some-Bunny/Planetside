@@ -38,7 +38,7 @@ namespace Planetside
     {
         public const string GUID = "somebunny.etg.planetsideofgunymede";
         public const string NAME = "Planetside Of Gunymede Pre-Release";
-        public const string VERSION = "1.3.7";
+        public const string VERSION = "1.3.71";
 
         public static readonly string TEXT_COLOR = "#9006FF";
 
@@ -93,6 +93,7 @@ namespace Planetside
 
             AssetBundle spriteCollections = AssetBundleLoader.LoadAssetBundleFromLiterallyAnywhere("planetsidesprites");
             if (spriteCollections != null) { SpriteCollectionAssets = spriteCollections; }
+            StaticSpriteDefinitions.Init();
 
             foreach (string str in PlanetsideModule.TilesetAssets.GetAllAssetNames())
             {

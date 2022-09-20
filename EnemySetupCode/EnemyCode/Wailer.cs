@@ -575,8 +575,8 @@ namespace Planetside
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
 				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Wailer/warped_scream_001";
-				companion.encounterTrackable.journalData.enemyPortraitSprite = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\wailericonammo.png");
-				PlanetsideModule.Strings.Enemies.Set("#THE_WAILER", "Wailer");
+				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("wailericonammo");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\wailericonammo.png");
+                PlanetsideModule.Strings.Enemies.Set("#THE_WAILER", "Wailer");
 				PlanetsideModule.Strings.Enemies.Set("#THE_WAILER_SHORTDESC", "Scream The Pain Away");
 				PlanetsideModule.Strings.Enemies.Set("#THE_WAILER_LONGDESC", "A writhing, agonized mess of a bullet kin that managed to escape the pits of Bullet Hell. The pain it feels so unbearable it manifists physically as bullets.");
 				companion.encounterTrackable.journalData.PrimaryDisplayName = "#THE_WAILER";

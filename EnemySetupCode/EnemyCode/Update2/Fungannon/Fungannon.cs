@@ -972,8 +972,8 @@ namespace Planetside
 				enemy.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				enemy.encounterTrackable.ProxyEncounterGuid = "";
 				enemy.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Ammocom/ammonimiconasdsadsa";
-				enemy.encounterTrackable.journalData.enemyPortraitSprite = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\ammoentryshrrom.png");
-				PlanetsideModule.Strings.Enemies.Set("#FUNGANNONAMMONOMICON", "Fungannon");
+				enemy.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("ammoentryshrrom");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\ammoentryshrrom.png");
+                PlanetsideModule.Strings.Enemies.Set("#FUNGANNONAMMONOMICON", "Fungannon");
 				PlanetsideModule.Strings.Enemies.Set("#FUNGANNONAMMONOMICONSHORT", "Sporangio-War");
 				PlanetsideModule.Strings.Enemies.Set("#FUNGANNONAMMONOMICONLONG", "The eldest of the Fungal species that roam the Gungeon. With their great cannons on their heads, and an appetite matched by few, many Gungeoneers tend to avoid them, with little surviving a close-quarters match against the collosal beasts.");
 				enemy.encounterTrackable.journalData.PrimaryDisplayName = "#FUNGANNONAMMONOMICON";

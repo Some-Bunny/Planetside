@@ -14,10 +14,20 @@ using SaveAPI;
 
 namespace Planetside
 {
-
-	public static class OuroborousShrine
+	public class OuroborousShrineController : MonoBehaviour
 	{
-		// Token: 0x0600004D RID: 77 RVA: 0x00004700 File Offset: 0x00002900
+		public void Start()
+		{
+			if (GameStatsManager.Instance.GetFlag(GungeonFlags.BOSSKILLED_LICH) == false)
+			{
+				Destroy(this.gameObject);
+			}
+		}
+	}
+
+
+    public static class OuroborousShrine
+	{
 		public static void Add()
 		{
 			ShrineFactory sf = new ShrineFactory()
@@ -38,9 +48,9 @@ namespace Planetside
 				isBreachShrine = true,
 				shadowPath = "Planetside/Resources/Shrines/ouroborousshrineShadow.png",
 				ShadowOffsetX = 0.0625f,
-				ShadowOffsetY = -0.25f
+				ShadowOffsetY = -0.25f,
+				AdditionalComponent = typeof(OuroborousShrineController),
 			};
-			//register shrine
 			sf.Build();
 		}
 
@@ -55,16 +65,12 @@ namespace Planetside
 			if (LoopOn == true)
 			{
 				AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.LOOPING_ON, false);
-				//Ouroborous.LoopingOn = false;
-				//File.WriteAllText(Ouroborous.SaveFilePath, "false");
 				header = "Ouroborous Disabled.";
 
 			}
 			else
 			{
 				AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.LOOPING_ON, true);
-				//Ouroborous.LoopingOn = true;
-				//File.WriteAllText(Ouroborous.SaveFilePath, "true");
 				header = "Ouroborous set to: " + Loop;
 			}
 			Notify(header, text);

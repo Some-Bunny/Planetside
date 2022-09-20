@@ -11,40 +11,8 @@ namespace Planetside
 		public static AssetBundle LoadAssetBundleFromLiterallyAnywhere(string name, bool logs = false)
 		{
 			AssetBundle result = null;
-			/*
-			bool flag = File.Exists(PlanetsideModule.ZipFilePath);
-			bool flag2 = flag;
-			if (flag2)
 			{
-				ZipFile zipFile = ZipFile.Read(PlanetsideModule.ZipFilePath);
-				bool flag3 = zipFile != null && zipFile.Entries.Count > 0;
-				bool flag4 = flag3;
-				if (flag4)
-				{
-					foreach (ZipEntry zipEntry in zipFile.Entries)
-					{
-						bool flag5 = zipEntry.FileName == name;
-						bool flag6 = flag5;
-						if (flag6)
-						{
-							using (MemoryStream memoryStream = new MemoryStream())
-							{
-								zipEntry.Extract(memoryStream);
-								memoryStream.Seek(0L, SeekOrigin.Begin);
-								result = AssetBundle.LoadFromStream(memoryStream);
-								global::ETGModConsole.Log("Successfully loaded assetbundle!", false);
-								break;
-							}
-						}
-					}
-				}
-			}
-			else
-			*/
-			{
-				bool flag7 = File.Exists(PlanetsideModule.FilePathFolder + "/" + name);
-				bool flag8 = flag7;
-				if (flag8)
+				if (File.Exists(PlanetsideModule.FilePathFolder + "/" + name))
 				{
 					try
 					{

@@ -349,7 +349,7 @@ namespace Planetside
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
 				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Enemies/RevolverSkull/revolverskull_idle_front_001";
-				companion.encounterTrackable.journalData.enemyPortraitSprite = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\skullvenanticonaoo.png");
+				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("skullvenanticonaoo");// ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\skullvenanticonaoo.png");
 				PlanetsideModule.Strings.Enemies.Set("#THE_SKULLVENANT", "Skullvenant");
 				PlanetsideModule.Strings.Enemies.Set("#THE_SKULLVENANT_SHORTDESC", "Headache");
 				PlanetsideModule.Strings.Enemies.Set("#THE_SKULLVENANT_LONGDESC", "The remaining remnants of slain Revolvenants, these heads have been imbued with life to relive their former lives as servants to the Gungeon and its Master.");
