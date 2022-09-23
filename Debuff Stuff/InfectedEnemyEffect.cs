@@ -48,7 +48,6 @@ namespace Planetside
 				if (b == null)
 				{
 					var bullet = base.aiActor.AddComponent<AIBulletBank>();
-
                     bullet.Bullets = new List<AIBulletBank.Entry>();
 
 
@@ -82,11 +81,13 @@ namespace Planetside
                     Destroy(ob, 3);
 					*/
                 }
+				if (base.aiActor.GetComponent<AIBulletBank>() != null)
+				{
+                    SpawnManager.SpawnBulletScript(base.aiActor, base.aiActor.sprite.WorldCenter, base.aiActor.GetComponent<AIBulletBank>(), new CustomBulletScriptSelector(typeof(Splat)), StringTableManager.GetEnemiesString("#TRAP", -1));
+                }
 
 
-                SpawnManager.SpawnBulletScript(base.aiActor, base.aiActor.sprite.WorldCenter, b, new CustomBulletScriptSelector(typeof(Splat)), StringTableManager.GetEnemiesString("#TRAP", -1));
-
-				AkSoundEngine.PostEvent("Play_ENM_blobulord_bubble_01", base.aiActor.gameObject);
+                AkSoundEngine.PostEvent("Play_ENM_blobulord_bubble_01", base.aiActor.gameObject);
 				GameObject gameObject = SpawnManager.SpawnVFX(StaticVFXStorage.BlueSynergyPoofVFX, false);
 
 				gameObject.transform.position = base.aiActor.sprite.WorldCenter;
@@ -238,19 +239,18 @@ namespace Planetside
 
 				actorToTrack = actor.aiActor;
 
-				if (actorToTrack.bulletBank == null)
+                if (actor.bulletBank == null)
 				{
-					AIBulletBank bulletBank = new AIBulletBank();
+                    AIBulletBank bulletBank = actor.gameObject.AddComponent<AIBulletBank>();
 					bulletBank.Bullets = new List<AIBulletBank.Entry>();
 
-                    bulletBank.FixedPlayerRigidbody = actorToTrack.specRigidbody;
+                    //bulletBank.FixedPlayerRigidbody = actor.specRigidbody;
 
-                    bulletBank.ActorName = actorToTrack.name ?? "Toddy";
+                    bulletBank.ActorName = actor.name ?? "Toddy";
 
-                    bulletBank.transforms = new List<Transform>() { actor.transform };
-					//bulletBank.gameActor = actorToTrack;
+                    bulletBank.transforms = new List<Transform>() { bulletBank.transform };
+                    //bulletBank.gameActor = actorToTrack;
 
-                    actorToTrack.gameObject.AddComponent(bulletBank);
 
                     bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableLargeSpore);
                     bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
@@ -259,10 +259,12 @@ namespace Planetside
                 else
                 {
 
-                    if (actorToTrack.bulletBank.Bullets == null) { actorToTrack.bulletBank.Bullets = new List<AIBulletBank.Entry>(); }
+                    if (actor.bulletBank.Bullets == null)
+                    {
+                        actor.bulletBank.Bullets = new List<AIBulletBank.Entry>(); }
 
-                    actorToTrack.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableLargeSpore);
-					actorToTrack.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
+                    actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableLargeSpore);
+                    actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
 
                 }
 

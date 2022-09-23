@@ -44,7 +44,7 @@ namespace Planetside
             AkSoundEngine.PostEvent("Play_OBJ_dice_bless_01", player.gameObject);
             OtherTools.ApplyStat(player, PlayerStats.StatType.Damage, 1.1f, StatModifier.ModifyMethod.MULTIPLICATIVE);
             OtherTools.ApplyStat(player, PlayerStats.StatType.MovementSpeed, 1.1f, StatModifier.ModifyMethod.MULTIPLICATIVE);
-            OtherTools.ApplyStat(player, PlayerStats.StatType.ChargeAmountMultiplier, 0.9f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+            OtherTools.ApplyStat(player, PlayerStats.StatType.ChargeAmountMultiplier, 1.1f, StatModifier.ModifyMethod.MULTIPLICATIVE);
             OtherTools.ApplyStat(player, PlayerStats.StatType.Accuracy, 0.9f, StatModifier.ModifyMethod.MULTIPLICATIVE);
             OtherTools.ApplyStat(player, PlayerStats.StatType.Coolness, 1f, StatModifier.ModifyMethod.ADDITIVE);
             OtherTools.ApplyStat(player, PlayerStats.StatType.DamageToBosses, 1.05f, StatModifier.ModifyMethod.MULTIPLICATIVE);

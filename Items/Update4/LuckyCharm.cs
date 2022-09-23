@@ -106,7 +106,6 @@ namespace Planetside
 			{
 				"psog:lucky_charm",
 				"seven_leaf_clover"
-
 			};		
 			CustomSynergies.Add("1 in 177 Billion", mandatoryConsoleIDs, null, true);
 		}

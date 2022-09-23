@@ -18,6 +18,7 @@ using SaveAPI;
 using Brave.BulletScript;
 using Pathfinding;
 using NpcApi;
+using static tk2dSpriteCollectionDefinition;
 
 namespace Planetside
 {
@@ -202,8 +203,6 @@ namespace Planetside
             }
             if (ExtantText)
             {
-				//ExtantText.transform.position = self.transform.position.WithZ(0) + new Vector3(-0.2102f, -0.07f, 0);
-                //ExtantText.GetComponent<dfLabel>().enabled = true;
                 ExtantText.GetComponent<dfLabel>().Opacity = OuroborosMode() == true ? 1 : 0;
             }
         }
@@ -380,17 +379,16 @@ namespace Planetside
 		public static void StartHookAIActor(Action<AIActor> orig, AIActor self)
         {
             orig(self);
-
             if (OuroborosMode() == true && self != null && EnemyISFUCKINGKILLPILLARFUCKYOUFUCKYOU(self) == false)
             {
-				if (self.aiActor != null)
+                if (self.aiActor != null)
 				{
                     if (!enemiesNotAffectedByBehaviorSpecMultiplier.Contains(self.EnemyGuid)) { self.MovementSpeed *= ChanceAccordingToGivenValues(1f, 2f, 250); }
                     if (!enemiesNotAffectedByBehaviorSpecMultiplier.Contains(self.EnemyGuid) && self.behaviorSpeculator != null) { self.behaviorSpeculator.CooldownScale *= ChanceAccordingToGivenValues(1f, 0.4f, 250); }
                     if (!enemiesNotAffectedByBehaviorSpecMultiplier.Contains(self.EnemyGuid)) { self.healthHaver.SetHealthMaximum(self.healthHaver.GetCurrentHealth() * ChanceAccordingToGivenValues(1f, 1.3f, 250)); }
                     if (self != null && self.aiActor != null && RoomSuitable(self.aiActor) == true && EnemyIsValid(self.aiActor) == true && !bannedEnemiesForOrbitingSkulls.Contains(self.aiActor.EnemyGuid) && UnityEngine.Random.value <= ChanceAccordingToGivenValues(0.0075f, 0.45f, 75) && !enemiesNotAffectedByBehaviorSpecMultiplier.Contains(self.EnemyGuid))
                     {
-                        GameObject transPos = self.aiActor.transform.Find("SkullAttackPointOuroboros").gameObject;
+                        Transform transPos = self.aiActor.transform.Find("SkullAttackPointOuroboros");
                         if (transPos != null && self.bulletBank != null)
                         {
                             float SkullAmount = ReturnSkullAmount(CurrentLoop());
@@ -406,8 +404,7 @@ namespace Planetside
                             spinBulletsController.AmountOFLines = SkullAmount;
                         }
                     }
-                }
-				
+                }			
 			}
         }
 
@@ -604,9 +601,16 @@ namespace Planetside
 			EnemyGuidDatabase.Entries["poisbulon"],
 			EnemyGuidDatabase.Entries["poisbuloid"],
 			EnemyGuidDatabase.Entries["poisbulin"],
-		};
 
-		private static List<string> EliteBlackListDefault = new List<string>()
+            EnemyGuidDatabase.Entries["bullat"],
+            EnemyGuidDatabase.Entries["shotgat"],
+            EnemyGuidDatabase.Entries["grenat"],
+            EnemyGuidDatabase.Entries["spirat"],
+
+        };
+
+      
+        private static List<string> EliteBlackListDefault = new List<string>()
 		{
 			"deturretleft_enemy",
 			"deturret_enemy",
@@ -724,7 +728,7 @@ namespace Planetside
 		public override List<ActorEffectResistance> DebuffImmunities => new List<ActorEffectResistance> { new ActorEffectResistance() { resistAmount = 1, resistType = EffectResistanceType.Freeze } };
 		public override void Start()
 		{
-			Timer = 2f;
+			Timer = 2.5f;
 			base.Start();
 		}
 		public override void OnPreDeath(Vector2 obj)
@@ -736,7 +740,7 @@ namespace Planetside
 		{
 			if (Timer == 0 | Timer <= 0)
 			{
-				Timer = 5f;
+				Timer = 6f;
 				if (base.aiActor != null)
 				{
 					GameManager.Instance.StartCoroutine(this.LaunchWave(base.aiActor.CenterPosition));
@@ -849,9 +853,9 @@ namespace Planetside
 	}
 	public class HealingElite : BasicEliteType
 	{
-		public override float HealthMultiplier => 1.33f;
-		public override float CooldownMultiplier => 0.4f;
-		public override float MovementSpeedMultiplier => 1f;
+		public override float HealthMultiplier => 0.8f;
+		public override float CooldownMultiplier => 0.66f;
+		public override float MovementSpeedMultiplier => 1.1f;
 		public override Color EliteOutlineColor => Color.green;
 		public override Color EliteParticleColor => Color.green;
 		public override Color SecondaryEliteParticleColor => Color.green;
@@ -881,7 +885,7 @@ namespace Planetside
 		private IEnumerator SpawnRadialPoofs(Vector2 centre, RoomHandler room)
 		{
 			float elapsed = 0f;
-			float duration = 1.5f;
+			float duration = 1.33f;
 			HeatIndicatorController radialIndicator = ((GameObject)UnityEngine.Object.Instantiate(ResourceCache.Acquire("Global VFX/HeatIndicator"), centre, Quaternion.identity)).GetComponent<HeatIndicatorController>();
 			radialIndicator.CurrentColor = Color.green.WithAlpha(50);
 			radialIndicator.IsFire = false;
@@ -891,35 +895,42 @@ namespace Planetside
 				if (radialIndicator.gameObject == null) { break; }
 				elapsed += BraveTime.DeltaTime;
 				float t = elapsed;
-				radialIndicator.CurrentRadius = Mathf.Lerp(0, 7, t);
-				yield return null;
+				radialIndicator.CurrentRadius = Mathf.Lerp(0, 5.2f, MathToolbox.SinLerpTValue(Mathf.Min(t, 1)));
+				radialIndicator.gameObject.layer = 0;
+
+                yield return null;
 			}
 			AkSoundEngine.PostEvent("Play_OBJ_dice_bless_01", radialIndicator.gameObject);
-			room.ApplyActionToNearbyEnemies(centre, 5, new Action<AIActor, float>(this.ProcessEnemy));
+			room.ApplyActionToNearbyEnemies(centre, 6, new Action<AIActor, float>(this.ProcessEnemy));
 			elapsed = 0f;
 			duration = 0.25f;
+			bool b = false;
 			while (elapsed < duration)
 			{
 				elapsed += BraveTime.DeltaTime;
 				float t = Mathf.SmoothStep(0f, 1f, elapsed / duration);
-				radialIndicator.CurrentRadius = Mathf.Lerp(5, 0, t);
-				for (int i = 0; i < 2; i++)
+				radialIndicator.CurrentRadius = Mathf.Lerp(5.2f, 0, t);
+				float r = BraveUtility.RandomAngle();
+				if (b == true)
 				{
-					float Dist = Mathf.Lerp(0.1f, 7, t);
-					Vector2 Point = MathToolbox.GetUnitOnCircle(UnityEngine.Random.Range(-180, 180), Dist);
-					GameObject obj = UnityEngine.Object.Instantiate<GameObject>(StaticVFXStorage.HealingSparklesVFX, centre + Point, Quaternion.identity);
-					obj.transform.localScale *= 1.2f;
-				}
+                    for (int i = 0; i < 24; i++)
+                    {
+                        float Dist = Mathf.Lerp(0.1f, 5.2f, t);
+                        Vector2 Point = MathToolbox.GetUnitOnCircle((15 * i) + r, Dist);
+                        GameObject obj = UnityEngine.Object.Instantiate<GameObject>(StaticVFXStorage.HealingSparklesVFX, centre + Point, Quaternion.identity);
+                        obj.transform.localScale *= 1.2f;
+                    }
+                }
+				b = !b;
 				yield return null;
 			}
-			Destroy(radialIndicator.gameObject);
-			
+			Destroy(radialIndicator.gameObject);		
 			yield break;
 		}
 	}
 	public class ResistantElite : BasicEliteType
 	{
-		public override float HealthMultiplier => 1.25f;
+		public override float HealthMultiplier => 1.3f;
 		public override float CooldownMultiplier => 0.9f;
 		public override float MovementSpeedMultiplier => 1.15f;
 		public override Color EliteOutlineColor => Color.white;
@@ -1004,7 +1015,7 @@ namespace Planetside
     }
 	public class CursedElite : BasicEliteType
 	{
-		public override float HealthMultiplier => 1.15f;
+		public override float HealthMultiplier => 0.9f;
 		public override float CooldownMultiplier => 0.8f;
 		public override float MovementSpeedMultiplier => 1.33f;
 		public override Color EliteOutlineColor => new Color(50, 0, 50);
@@ -1021,8 +1032,14 @@ namespace Planetside
 		public override void Start()
 		{
 			base.Start();
-		}
-		public override void OnPreDeath(Vector2 obj)
+			EnrageHP = base.aiActor.healthHaver.GetMaxHealth() / 6;
+
+
+        }
+		private float EnrageHP;
+        private bool Enraged = false;
+
+        public override void OnPreDeath(Vector2 obj)
 		{
 			DeadlyDeadlyGoopManager goopManagerForGoopType = DeadlyDeadlyGoopManager.GetGoopManagerForGoopType(DebuffLibrary.CursebulonGoop);
 			goopManagerForGoopType.TimedAddGoopCircle(base.aiActor.transform.PositionVector2(), OuroborosController.ChanceAccordingToGivenValues(3.5f, 7f, 100), 1f, false);
@@ -1037,6 +1054,21 @@ namespace Planetside
 				Vector3 position = new Vector3(UnityEngine.Random.Range(vector.x, vector2.x), UnityEngine.Random.Range(vector.y, vector2.y), UnityEngine.Random.Range(vector.z, vector2.z));
 				GlobalSparksDoer.DoSingleParticle(position, Vector3.up, null, null, null, GlobalSparksDoer.SparksType.BLACK_PHANTOM_SMOKE);
 			}
+			if (Enraged == false && base.aiActor.healthHaver.GetCurrentHealth() < EnrageHP)
+			{
+				Enraged = true;
+                AkSoundEngine.PostEvent("Play_OBJ_trashbag_burst_01", base.aiActor.gameObject);
+                AkSoundEngine.PostEvent("Play_CHR_shadow_curse_01", base.aiActor.gameObject);
+                base.aiActor.PlayEffectOnActor(ResourceCache.Acquire("Global VFX/VFX_Curse") as GameObject, Vector3.zero, true, false, false);
+                if (base.aiActor.IsBlackPhantom == true)
+				{
+                    base.aiActor.gameObject.AddComponent<UmbraController>();
+                }
+                else
+				{
+                    base.aiActor.BecomeBlackPhantom();
+                }
+            }
 		}
 	}
 	public class ReflectiveElite : BasicEliteType
@@ -1065,7 +1097,7 @@ namespace Planetside
         {
 			if (Timer == 0 | Timer <= 0)
             {
-				Timer = 0.5f;
+				Timer = 0.75f;
 				if (base.aiActor != null)
 				{
 					SpawnManager.SpawnBulletScript(base.aiActor, new CustomBulletScriptSelector(typeof(EliteReflect)));

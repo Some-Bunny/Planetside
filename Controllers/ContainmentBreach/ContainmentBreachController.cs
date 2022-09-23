@@ -121,6 +121,7 @@ namespace Planetside
         private static bool EnemyIsValid(AIActor aI)
         {
             if (aI == null) { return false; }
+            if (aI.gameObject.activeSelf == false) { return false; }
             if (aI.IgnoreForRoomClear == true) { return false; }
             if (aI.gameObject.GetComponent<MirrorImageController>() != null) { return false; }
             if (aI.gameObject.GetComponent<DisplacedImageController>() != null) { return false; }
@@ -217,14 +218,13 @@ namespace Planetside
                                 if (shopCont != null)
                                 {
                                     List<Vector2> itemPositions = new List<Vector2>()
-                                {
+                                    {
                                    shopObj.transform.PositionVector2() +  new Vector2(-1f, -0.25f),
                                    shopObj.transform.PositionVector2() +  new Vector2(0.5f, -1f),
                                    shopObj.transform.PositionVector2() + new Vector2(2.25f, -1.5f),
                                    shopObj.transform.PositionVector2() +  new Vector2(4f, -1f),
                                    shopObj.transform.PositionVector2() +  new Vector2(5.5f, -0.25f)
-
-                                 };
+                                    };
                                     var posList = new List<Transform>();
                                     for (int i = 0; i < itemPositions.Count; i++)
                                     {

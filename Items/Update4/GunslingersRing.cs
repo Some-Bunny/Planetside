@@ -227,7 +227,7 @@ namespace Planetside
 		private Dictionary<GunClass, Dictionary<PlayerStats.StatType, float>> gunClassStats = new Dictionary<GunClass, Dictionary<PlayerStats.StatType, float>>()
 		{
 			{GunClass.BEAM, new Dictionary<PlayerStats.StatType, float>{{ PlayerStats.StatType.PlayerBulletScale, 2f}}},
-			{GunClass.CHARGE, new Dictionary<PlayerStats.StatType, float>{{ PlayerStats.StatType.ChargeAmountMultiplier, 0.66f}}},			
+			{GunClass.CHARGE, new Dictionary<PlayerStats.StatType, float>{{ PlayerStats.StatType.ChargeAmountMultiplier, 1.33f}}},			
 			{GunClass.RIFLE, new Dictionary<PlayerStats.StatType, float>{{ PlayerStats.StatType.AdditionalClipCapacityMultiplier, 1.5f}}},
 			{GunClass.FULLAUTO, new Dictionary<PlayerStats.StatType, float>{{ PlayerStats.StatType.RateOfFire, 1.2f}}},
 			{GunClass.NONE, new Dictionary<PlayerStats.StatType, float>{{ PlayerStats.StatType.Damage, 1.15f}}},
@@ -238,20 +238,20 @@ namespace Planetside
 		};
 		private Dictionary<GunClass, Color> gunClassRGB = new Dictionary<GunClass, Color>()
 		{
-			{GunClass.BEAM, Color.blue},
-			{GunClass.CHARM, new Color(1, 0.2f, 1f)},
-			{GunClass.CHARGE, Color.yellow},	
+			{GunClass.BEAM, Color.blue},//DONE
+			{GunClass.CHARM, new Color(1, 0.2f, 1f)},//DONE
+			{GunClass.CHARGE, Color.yellow},	//DONE
 			{GunClass.EXPLOSIVE, new Color(1, 0.2f, 0f)},
-			{GunClass.RIFLE, Color.gray},
-			{GunClass.FIRE, Color.red},
-			{GunClass.FULLAUTO, new Color(0.9f, 0.8f, 0.6f)},
+			{GunClass.RIFLE, Color.gray},//DONE
+			{GunClass.FIRE, Color.red},//DONE
+			{GunClass.FULLAUTO, new Color(0.9f, 0.8f, 0.6f)},//DONE
 			{GunClass.ICE, Color.cyan },
-			{GunClass.NONE, Color.white},
-			{GunClass.PISTOL, Color.black},
-			{GunClass.POISON, Color.green},
-			{GunClass.SHITTY, new Color(0.6f,0.3f, 0.2f)},
-			{GunClass.SHOTGUN, new Color(0.3f, 0.4f, 0.1f)},
-			{GunClass.SILLY, new Color(0.6f, 0.02f, 0.6f)},
+			{GunClass.NONE, Color.white},//DONE
+			{GunClass.PISTOL, Color.black},//DONE
+			{GunClass.POISON, Color.green},//DONE
+			{GunClass.SHITTY, new Color(0.6f,0.3f, 0.2f)},//DONE
+			{GunClass.SHOTGUN, new Color(0.3f, 0.4f, 0.1f)},//DONE
+			{GunClass.SILLY, new Color(0.6f, 0.02f, 0.6f)},//DONE
 
         };
         private Dictionary<GunClass, CoreDamageTypes> gunClassDebuffs = new Dictionary<GunClass, CoreDamageTypes>()

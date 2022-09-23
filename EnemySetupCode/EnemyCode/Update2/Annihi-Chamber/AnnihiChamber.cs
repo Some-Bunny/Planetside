@@ -60,7 +60,6 @@ namespace Planetside
 				companion.aiActor.MovementSpeed = 1f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
 				companion.aiActor.CollisionDamage = 1f;
-				companion.aiActor.HasShadow = false;
 				companion.aiActor.IgnoreForRoomClear = false;
 				companion.aiActor.aiAnimator.HitReactChance = 0f;
 				companion.aiActor.specRigidbody.CollideWithOthers = true;
@@ -75,14 +74,17 @@ namespace Planetside
 				companion.aiActor.gameObject.AddComponent<AfterImageTrailController>().spawnShadows = false;
 				companion.aiActor.gameObject.AddComponent<tk2dSpriteAttachPoint>();
 				companion.aiActor.gameObject.AddComponent<ObjectVisibilityManager>();
-				companion.aiActor.ShadowObject = StaticEnemyShadows.massiveShadow;
+
 				companion.aiActor.HasShadow = true;
 
-				//companion.aiActor.sprite.allowDefaultLayer = false;
-				//companion.aiActor.gameObject.layer = 28;
+                EnemyToolbox.AddShadowToAIActor(companion.aiActor, StaticEnemyShadows.massiveShadow, new Vector2(2.1875f, 0.5f), "shadowPos");
 
-				//companion.gameObject.GetComponent<tk2dBaseSprite>().SortingOrder = 0;
-				fuckyouprefab.name = companion.aiActor.OverrideDisplayName;
+
+                //companion.aiActor.sprite.allowDefaultLayer = false;
+                //companion.aiActor.gameObject.layer = 28;
+
+                //companion.gameObject.GetComponent<tk2dBaseSprite>().SortingOrder = 0;
+                fuckyouprefab.name = companion.aiActor.OverrideDisplayName;
 
 				/*
 				OtherTools.EasyTrailOnEnemy trail1 = companion.gameObject.AddComponent<OtherTools.EasyTrailOnEnemy>();
@@ -891,9 +893,14 @@ namespace Planetside
 					PostFireAnimation = "uncharge1",
 					beamSelection = ShootBeamBehavior.BeamSelection.All,
 					trackingType = CustomBeholsterLaserBehavior.TrackingType.ConstantTurn,
+					DoesSpeedLerp = true,
+					InitialStartingSpeed = 0,
+					TimeToStayAtZeroSpeedAt = 0.5f,
+					TimeToReachFullSpeed = 1f,
+
 					LocksFacingDirection = false,
 					unitCatchUpSpeed = 2,
-					maxTurnRate = 72,
+					maxTurnRate = 84,
 					turnRateAcceleration = 2,
 					useDegreeCatchUp = companion.transform,
 					minDegreesForCatchUp = 4,
@@ -920,7 +927,7 @@ namespace Planetside
 					Behavior = new ChargeBehavior{
 						InitialCooldown = 1,
 						chargeAcceleration = -1,
-						chargeSpeed = 30,
+						chargeSpeed = 35,
 						maxChargeDistance = -1,
 						bulletScript = new CustomBulletScriptSelector(typeof(ChargeAttack1Attack)),
 						ShootPoint = shootpoint1,
@@ -952,7 +959,6 @@ namespace Planetside
 							StopDuring = ShootBehavior.StopType.Attack,
 							AttackCooldown = 0.875f,
 							Cooldown = 4f,
-
 							RequiresLineOfSight = true,
 							ShootPoint = shootpoint1,
 							CooldownVariance = 0f,
@@ -1030,7 +1036,7 @@ namespace Planetside
 					Behavior = new ChargeBehavior{
 						InitialCooldown = 1,
 						chargeAcceleration = -1,
-						chargeSpeed = 22.5f,
+						chargeSpeed = 25f,
 						maxChargeDistance = -1,
 						bulletScript = new CustomBulletScriptSelector(typeof(FakeOutCharge)),
 						ShootPoint = shootpoint1,
@@ -1992,7 +1998,7 @@ namespace Planetside
                 {
 					yield return base.Wait(75);
 					base.PostWwiseEvent("Play_ENM_blobulord_bubble_01", null);
-					base.Fire(new Direction(0, Brave.BulletScript.DirectionType.Aim, -1f), new Speed(5, SpeedType.Absolute), new BigBall.Superball());
+					base.Fire(new Direction(0, Brave.BulletScript.DirectionType.Aim, -1f), new Speed(1, SpeedType.Absolute), new BigBall.Superball());
 				}
 				yield break;
 			}
@@ -2006,12 +2012,12 @@ namespace Planetside
 				{
 					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("f905765488874846b7ff257ff81d6d0c").bulletBank.GetBullet("spore2"));
 					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("f905765488874846b7ff257ff81d6d0c").bulletBank.GetBullet("spore1"));
-					base.ChangeSpeed(new Speed(17, SpeedType.Absolute), 60);
+					base.ChangeSpeed(new Speed(17, SpeedType.Absolute), 150);
 					for (int i = 0; i < 300; i++)
 					{
-						Vector2 Point2 = MathToolbox.GetUnitOnCircle(UnityEngine.Random.Range(-180, 180), UnityEngine.Random.Range(0.5f, 1.25f));
+						Vector2 Point2 = MathToolbox.GetUnitOnCircle(UnityEngine.Random.Range(-180, 180), UnityEngine.Random.Range(0.25f, 1f));
 						string bankName = (UnityEngine.Random.value > 0.33f) ? "spore2" : "spore1";
-						base.Fire(new Offset(Point2),new Direction(180, Brave.BulletScript.DirectionType.Relative, -1f), new Speed(8f, SpeedType.Absolute), new BigBall.Spore(bankName, 30));
+						base.Fire(new Offset(Point2),new Direction(180, Brave.BulletScript.DirectionType.Relative, -1f), new Speed(2f, SpeedType.Absolute), new BigBall.Spore(bankName, 30 + BraveUtility.RandomAngle()));
 						yield return this.Wait(1f);
 
 					}
@@ -2119,15 +2125,15 @@ namespace Planetside
 			{
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("796a7ed4ad804984859088fc91672c7f").bulletBank.bulletBank.GetBullet("default"));
 				float aim = base.AimDirection;
-				for (int i = 0; i < 180; i++)
+				for (int i = 0; i < 144; i++)
 				{
 					float newAim = base.AimDirection;
 					aim = Mathf.MoveTowardsAngle(aim, newAim, 1f);
 					float t = Mathf.PingPong((float)i / 45f, 1f);
 					Bullet bullet;
 					bullet = new VomitsGutsAndShit.FirehoseBullet((float)((t >= 0.1f) ? 1 : -1));
-					base.Fire(new Offset(MathToolbox.GetUnitOnCircle(UnityEngine.Random.Range(-180, 180), UnityEngine.Random.Range(0.125f, 0.75f)), 0f, string.Empty, DirectionType.Absolute), new Direction(aim + Mathf.SmoothStep(-75f, 75f, t), DirectionType.Absolute, -1f), new Speed(10f, SpeedType.Absolute), bullet);
-					base.Fire(new Offset(MathToolbox.GetUnitOnCircle(UnityEngine.Random.Range(-180, 180), UnityEngine.Random.Range(0f, 0.25f)), 0f, string.Empty, DirectionType.Absolute), new Direction(aim + Mathf.SmoothStep(-75f, 75f, t), DirectionType.Absolute, -1f), new Speed(10f, SpeedType.Absolute), bullet);
+					base.Fire(new Offset(MathToolbox.GetUnitOnCircle(UnityEngine.Random.Range(-180, 180), UnityEngine.Random.Range(0.125f, 0.75f)), 0f, string.Empty, DirectionType.Absolute), new Direction(aim + Mathf.SmoothStep(-60f, 60f, t), DirectionType.Absolute, -1f), new Speed(8f, SpeedType.Absolute), bullet);
+					base.Fire(new Offset(MathToolbox.GetUnitOnCircle(UnityEngine.Random.Range(-180, 180), UnityEngine.Random.Range(0f, 0.25f)), 0f, string.Empty, DirectionType.Absolute), new Direction(aim + Mathf.SmoothStep(-60f, 60f, t), DirectionType.Absolute, -1f), new Speed(8f, SpeedType.Absolute), bullet);
 
 					if (i % 10 == 0)
 					{

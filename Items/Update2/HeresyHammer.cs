@@ -731,11 +731,11 @@ namespace Planetside
                 float X = 3 / itemsToSpawn;
                 for (int i = 0; i < itemsToSpawn; i++)
                 {
-                    LootEngine.SpawnItem(LeSackPickup.HP_Table.SelectByWeight(), Center, new Vector2(3-(X*i) ,0), 1.2f, false, true, false);
+                    LootEngine.SpawnItem(LeSackPickup.Normal_Table.SelectByWeight(), Center, new Vector2(3-(X*i) ,0), 1.2f, false, true, false);
                 }
             }
             if (random > 0.75 && random < 1)
-            {
+            {   
                 GameManager.Instance.RewardManager.SpawnTotallyRandomItem(Center, ItemQuality.B, ItemQuality.A);
             }
             yield break;

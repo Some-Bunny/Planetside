@@ -33,10 +33,10 @@ namespace Planetside
 			bool flag2 = flag;
 			if (!flag2)
 			{
-				prefab = EnemyBuilder.BuildPrefab("Barretina", guid, spritePaths[0], new IntVector2(0, 0), new IntVector2(8, 9), false);
+				prefab = EnemyBuilder.BuildPrefab("Barretina", guid, spritePaths[0], new IntVector2(0, 0), new IntVector2(8, 9), false, true);
 				var companion = prefab.AddComponent<EnemyBehavior>();
 				companion.aiActor.knockbackDoer.weight = 200;
-				companion.aiActor.MovementSpeed = 0.75f;
+				companion.aiActor.MovementSpeed = 0.8f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
 				companion.aiActor.CollisionDamage = 1f;
 				companion.aiActor.IgnoreForRoomClear = false;
@@ -52,7 +52,7 @@ namespace Planetside
 				EnemyToolbox.AddShadowToAIActor(companion.aiActor, StaticEnemyShadows.largeShadow, new Vector2(1f, 0.25f), "shadowPos");
 
 				companion.aiActor.healthHaver.SetHealthMaximum(40f, null, false);
-				companion.aiActor.PathableTiles = CellTypes.PIT;
+				companion.aiActor.PathableTiles = CellTypes.PIT | CellTypes.FLOOR;
 
 				ImprovedAfterImage image = companion.aiActor.gameObject.AddComponent<ImprovedAfterImage>();
 				image.dashColor = new Color(1, 0.85f, 0.7f);
@@ -315,6 +315,7 @@ namespace Planetside
 					PauseTime = 0.25f,
 				}
 			};
+				/*
 				bs.AttackBehaviors = new List<AttackBehaviorBase>() {
 				new ShootBehavior() {
 					ShootPoint = m_CachedGunAttachPoint,
@@ -330,7 +331,86 @@ namespace Planetside
 					PostFireAnimation = "attack"
 
 				},
-				new CustomDashBehavior()
+				*/
+
+
+                bs.AttackBehaviorGroup.AttackBehaviors = new List<AttackBehaviorGroup.AttackGroupItem>
+                {
+                    new AttackBehaviorGroup.AttackGroupItem()
+                    {
+                    Probability = 0.5f,
+                    Behavior =   new ShootBehavior() {
+                    ShootPoint = m_CachedGunAttachPoint,
+                    BulletScript = new CustomBulletScriptSelector(typeof(SpecialAttack)),
+                    LeadAmount = 0f,
+                    AttackCooldown = 1.5f,
+                    Cooldown = 6f,
+                    InitialCooldown = 2f,
+                    RequiresLineOfSight = true,
+                    MultipleFireEvents = false,
+                    Uninterruptible = true,
+                    ChargeAnimation = "charge",
+                    PostFireAnimation = "attack"
+                    },
+					},
+                    new AttackBehaviorGroup.AttackGroupItem()
+                    {
+                    Probability = 0.8f,
+                    Behavior =   new ShootBehavior() {
+                    ShootPoint = m_CachedGunAttachPoint,
+                    BulletScript = new CustomBulletScriptSelector(typeof(NormalAttack)),
+                    LeadAmount = 0f,
+                    AttackCooldown = 1.5f,
+                    Cooldown = 3f,
+                    InitialCooldown = 0.5f,
+                    RequiresLineOfSight = true,
+                    MultipleFireEvents = false,
+                    Uninterruptible = true,
+                    ChargeAnimation = "charge",
+                    PostFireAnimation = "attack"
+                    },
+                    },
+                     new AttackBehaviorGroup.AttackGroupItem()
+                    {
+                    Probability = 1f,
+                    Behavior =    new CustomDashBehavior()
+                {
+                    ShootPoint = m_CachedGunAttachPoint,
+                    dashDistance = 8f,
+                    dashTime = 0.75f,
+                    AmountOfDashes = 2,
+                    enableShadowTrail = false,
+                    Cooldown = 4f,
+                    dashDirection = DashBehavior.DashDirection.PerpendicularToTarget,
+                    warpDashAnimLength = true,
+                    hideShadow = true,
+                    fireAtDashStart = true,
+                    InitialCooldown = 1f,
+                    bulletScript = new CustomBulletScriptSelector(typeof(DashAttack)),
+                    RequiresLineOfSight = false,
+                    AttackCooldown = 0.1f,
+                
+                    },
+                    },
+                };
+
+
+				/*
+                new ShootBehavior() {
+                    ShootPoint = m_CachedGunAttachPoint,
+                    BulletScript = new CustomBulletScriptSelector(typeof(SpecialAttack)),
+                    LeadAmount = 0f,
+                    AttackCooldown = 3f,
+                    Cooldown = 6f,
+                    InitialCooldown = 0.5f,
+                    RequiresLineOfSight = true,
+                    MultipleFireEvents = false,
+                    Uninterruptible = true,
+                    ChargeAnimation = "charge",
+                    PostFireAnimation = "attack"
+
+                },
+                new CustomDashBehavior()
 				{
 					ShootPoint = m_CachedGunAttachPoint,
 					dashDistance = 8f,
@@ -348,6 +428,8 @@ namespace Planetside
 					AttackCooldown = 0.1f,
 				}
 				};
+
+				*/
 				bs.MovementBehaviors = new List<MovementBehaviorBase>() {
 				new SeekTargetBehavior() {
 					StopWhenInRange = true,
@@ -359,20 +441,21 @@ namespace Planetside
 					SpecifyRange = false,
 					MinActiveRange = 1,
 					MaxActiveRange = 10
-				}
-			};
+				} };
 
 
-				bs.InstantFirstTick = behaviorSpeculator.InstantFirstTick;
+
+                bs.InstantFirstTick = behaviorSpeculator.InstantFirstTick;
 				bs.TickInterval = behaviorSpeculator.TickInterval;
 				bs.PostAwakenDelay = behaviorSpeculator.PostAwakenDelay;
 				bs.RemoveDelayOnReinforce = behaviorSpeculator.RemoveDelayOnReinforce;
 				bs.OverrideStartingFacingDirection = behaviorSpeculator.OverrideStartingFacingDirection;
 				bs.StartingFacingDirection = behaviorSpeculator.StartingFacingDirection;
 				bs.SkipTimingDifferentiator = behaviorSpeculator.SkipTimingDifferentiator;
-				Game.Enemies.Add("psog:barretina", companion.aiActor);
 
-				SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Enemies/Berretina/berretina_idle_south_001", SpriteBuilder.ammonomiconCollection);
+                Game.Enemies.Add("psog:barretina", companion.aiActor);
+
+                SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Enemies/Berretina/berretina_idle_south_001", SpriteBuilder.ammonomiconCollection);
 				if (companion.GetComponent<EncounterTrackable>() != null)
 				{
 					UnityEngine.Object.Destroy(companion.GetComponent<EncounterTrackable>());
@@ -393,13 +476,20 @@ namespace Planetside
 				companion.encounterTrackable.journalData.PrimaryDisplayName = "#THE_BARRETINA";
 				companion.encounterTrackable.journalData.NotificationPanelDescription = "#THE_BARRETINA_SHORTDESC";
 				companion.encounterTrackable.journalData.AmmonomiconFullEntry = "#THE_BARRETINA_LONGDESC";
-				EnemyBuilder.AddEnemyToDatabase(companion.gameObject, "psog:barretina");
+				EnemyBuilder.AddEnemyToDatabase(companion.aiActor.gameObject, "psog:barretina");
 				EnemyDatabase.GetEntry("psog:barretina").ForcedPositionInAmmonomicon = 80;
 				EnemyDatabase.GetEntry("psog:barretina").isInBossTab = false;
 				EnemyDatabase.GetEntry("psog:barretina").isNormalEnemy = true;
-			}
 
-		}
+
+                companion.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("796a7ed4ad804984859088fc91672c7f").bulletBank.bulletBank.GetBullet("default"));
+                companion.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("31a3ea0c54a745e182e22ea54844a82d").bulletBank.GetBullet("sniper"));
+                companion.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("frogger"));
+                companion.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("ec6b674e0acd4553b47ee94493d66422").bulletBank.GetBullet("bigBullet"));
+				
+            }
+
+        }
 
 
 
@@ -514,10 +604,6 @@ namespace Planetside
 			}
 			private void Start()
 			{
-				base.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("frogger"));
-				base.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("796a7ed4ad804984859088fc91672c7f").bulletBank.bulletBank.GetBullet("default"));
-				base.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("31a3ea0c54a745e182e22ea54844a82d").bulletBank.GetBullet("sniper"));
-
 				m_StartRoom = aiActor.GetAbsoluteParentRoom();
 				base.aiActor.healthHaver.OnPreDeath += (obj) =>
 				{ 
@@ -546,7 +632,72 @@ namespace Planetside
 			}
 		}
 
-		public class NormalAttack : Script 
+        public class SpecialAttack : Script
+        {
+            protected override IEnumerator Top()
+            {
+
+                base.PostWwiseEvent("Play_ENM_gunknight_shockwave_01", null);
+                base.PostWwiseEvent("Play_ENM_gunknight_shockwave_01", null);
+
+                this.Fire(new Direction(150, DirectionType.Aim, -1f), new Speed(0f, SpeedType.Absolute), new Gordo(-180));
+                this.Fire(new Direction(100, DirectionType.Aim, -1f), new Speed(0f, SpeedType.Absolute), new Gordo(-120));
+                this.Fire(new Direction(50, DirectionType.Aim, -1f), new Speed(0f, SpeedType.Absolute), new Gordo(-60));
+                this.Fire(new Direction(0, DirectionType.Aim, -1f), new Speed(0f, SpeedType.Absolute), new Gordo(0));
+                this.Fire(new Direction(-50, DirectionType.Aim, -1f), new Speed(0f, SpeedType.Absolute), new Gordo(60));
+                this.Fire(new Direction(-100, DirectionType.Aim, -1f), new Speed(0f, SpeedType.Absolute), new Gordo(120));
+                this.Fire(new Direction(-150, DirectionType.Aim, -1f), new Speed(0f, SpeedType.Absolute), new Gordo(180));
+
+
+
+                yield break;
+            }
+            public class Gordo : Bullet
+            {
+                public Gordo(float tMius = 0) : base("bigBullet", false, false, false)
+                {
+                    t = tMius;
+                }
+                protected override IEnumerator Top()
+                {
+                    yield return base.Wait(20);
+                    base.ChangeSpeed(new Speed(20f, SpeedType.Absolute), 120);
+                    base.ChangeDirection(new Brave.BulletScript.Direction(t, DirectionType.Relative), 105);
+
+                    int i = 0;
+                    while (this.Projectile)
+                    {
+                        i++;
+                        yield return base.Wait(1);
+                        if (i == 4)
+                        {
+                            i = 0;
+                            this.Fire(new Direction(0, DirectionType.Aim, -1f), new Speed(0f, SpeedType.Absolute), new Dissipate());
+                        }
+                        yield return null;
+                    }
+                    yield break;
+                }
+                private float t;
+            }
+            public class Dissipate : Bullet
+            {
+                public Dissipate() : base("frogger", false, false, false)
+                {
+
+                }
+                protected override IEnumerator Top()
+                {
+                    yield return base.Wait((Mathf.Max(180, BraveUtility.RandomAngle()) / 2.25f));
+                    base.Vanish(false);
+                    yield break;
+                }
+            }
+        }
+
+
+
+        public class NormalAttack : Script 
 		{
 			protected override IEnumerator Top() 
 			{
@@ -558,7 +709,6 @@ namespace Planetside
 
 				}
 				base.PostWwiseEvent("Play_WPN_eyeballgun_shot_01", null);
-				//base.PostWwiseEvent("Play_WPN_eyeballgun_impact_01", null);
 				for (int i = -4; i <= 5; i++)
 				{
 					if (i != 0) { 
@@ -566,9 +716,11 @@ namespace Planetside
 						this.Fire(new Direction(i * 20, DirectionType.Aim, -1f), new Speed(10f, SpeedType.Absolute), new SpitNormal());
 					}
 				}
-				this.Fire(new Direction(0, DirectionType.Aim, -1f), new Speed(3f, SpeedType.Absolute), new SpitLarge());
-				this.Fire(new Direction(0, DirectionType.Aim, -1f), new Speed(4f, SpeedType.Absolute), new SpitLarge());
-				this.Fire(new Direction(0, DirectionType.Aim, -1f), new Speed(5f, SpeedType.Absolute), new SpitLarge());
+
+                for (int i = 0; i <= 5; i++)
+				{
+                    this.Fire(new Direction(0, DirectionType.Aim, -1f), new Speed(3f + i, SpeedType.Absolute), new SpitLarge());
+                }
 				yield break;
 			}
 		}
@@ -588,7 +740,6 @@ namespace Planetside
 			}
 			protected override IEnumerator Top()
 			{
-				base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 20);
 				yield return base.Wait(20);
 				base.ChangeSpeed(new Speed(20f, SpeedType.Absolute), 20);
 				yield break;
