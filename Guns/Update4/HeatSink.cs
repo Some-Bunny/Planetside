@@ -195,7 +195,7 @@ namespace Planetside
     {
         public HeatSinkController()
         {
-            this.explosionData = StaticExplosionDatas.genericSmallExplosion;
+            this.explosionData = StaticExplosionDatas.CopyFields(StaticExplosionDatas.genericSmallExplosion);//StaticExplosionDatas.genericSmallExplosion;
             this.tickDelay = 0.05f;
             this.ignoreQueues = true;
             this.maxRadius = 5;

@@ -126,6 +126,10 @@ namespace Planetside
                     component.IgnoreTileCollisionsFor(0.03f);
                     component.pierceMinorBreakables = true;
                     component.collidesWithEnemies = false;
+                    SpawnManager.PoolManager.Remove(component.gameObject.transform);
+                    component.BulletScriptSettings.preventPooling = true;
+
+
                     CurrentState = State.POST_FIRE;
                     AkSoundEngine.PostEvent("Play_AbyssBlast", this.gameObject);
 
@@ -218,6 +222,10 @@ namespace Planetside
             POST_FIRE,
         }
     }
+
+
+
+
     public class TrespassSniperTurrets
     {
         public static void Init()
@@ -231,6 +239,14 @@ namespace Planetside
                 defaultFrontPath+"sniperturret_front_idle4.png",
             };
 
+
+
+            AIBulletBank.Entry entry1 = StaticUndodgeableBulletEntries.CopyBulletBankEntry(StaticUndodgeableBulletEntries.undodgeableBigBullet, "turretShot1");
+            AIBulletBank.Entry entry2 = StaticUndodgeableBulletEntries.CopyBulletBankEntry(StaticUndodgeableBulletEntries.undodgeableDefault, "turretShot2");
+            AIBulletBank.Entry entry3 = StaticUndodgeableBulletEntries.CopyBulletBankEntry(StaticUndodgeableBulletEntries.undodgeableSmallSpore, "turretShot3");
+
+
+
             MajorBreakable sniperTurretDefaultaFront = BreakableAPIToolbox.GenerateMajorBreakable("sniperTurretDefaultaFront", idlePaths, 5, idlePaths, 18, 15000, null, 0f, -0.1875f, true, 0, 0, 0, 0, true, null, null, true, null);
 			EnemyToolbox.GenerateShootPoint(sniperTurretDefaultaFront.gameObject, new Vector2(0.4375f, 0.875f), "laserPoint");
             AIBulletBank bulletBankLeft = sniperTurretDefaultaFront.gameObject.AddComponent<AIBulletBank>();
@@ -240,19 +256,20 @@ namespace Planetside
 
             t.DirectionToFire = Vector2.down.ToAngle();
             bulletBankLeft.Bullets = new List<AIBulletBank.Entry>();
-			bulletBankLeft.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableBigBullet);
-            bulletBankLeft.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableDefault);
-            bulletBankLeft.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
+			bulletBankLeft.Bullets.Add(entry1);
+            bulletBankLeft.Bullets.Add(entry2);
+            bulletBankLeft.Bullets.Add(entry3);
+
             StaticReferences.StoredRoomObjects.Add("TrespassSniperTurretFront", sniperTurretDefaultaFront.gameObject);
 
          
 
 
-            MakeLeft();
-            MakeRight();
+            MakeLeft(entry1, entry2, entry3);
+            MakeRight(entry1, entry2, entry3);
         }
 
-        public static void MakeLeft()
+        public static void MakeLeft(AIBulletBank.Entry entry1, AIBulletBank.Entry entry2, AIBulletBank.Entry entry3)
         {
             string defaultFrontPath = "Planetside/Resources/DungeonObjects/TrespassObjects/TrespassSniper/Left/";
             string[] idlePaths = new string[]
@@ -271,12 +288,12 @@ namespace Planetside
             t.muzzleFlashPrefab = (PickupObjectDatabase.GetById(576) as Gun).muzzleFlashEffects.effects[0].effects[0].effect;
 
             bulletBankLeft.Bullets = new List<AIBulletBank.Entry>();
-            bulletBankLeft.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableBigBullet);
-            bulletBankLeft.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableDefault);
-            bulletBankLeft.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
+            bulletBankLeft.Bullets.Add(entry1);
+            bulletBankLeft.Bullets.Add(entry2);
+            bulletBankLeft.Bullets.Add(entry3);
             StaticReferences.StoredRoomObjects.Add("TrespassSniperTurretLeft", sniperTurretDefaultaFront.gameObject);
         }
-        public static void MakeRight()
+        public static void MakeRight(AIBulletBank.Entry entry1, AIBulletBank.Entry entry2, AIBulletBank.Entry entry3)
         {
             string defaultFrontPath = "Planetside/Resources/DungeonObjects/TrespassObjects/TrespassSniper/Right/";
             string[] idlePaths = new string[]
@@ -296,9 +313,9 @@ namespace Planetside
             t.muzzleFlashPrefab = (PickupObjectDatabase.GetById(576) as Gun).muzzleFlashEffects.effects[0].effects[0].effect;
 
             bulletBankLeft.Bullets = new List<AIBulletBank.Entry>();
-            bulletBankLeft.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableBigBullet);
-            bulletBankLeft.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableDefault);
-            bulletBankLeft.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
+            bulletBankLeft.Bullets.Add(entry1);
+            bulletBankLeft.Bullets.Add(entry2);
+            bulletBankLeft.Bullets.Add(entry3);
             StaticReferences.StoredRoomObjects.Add("TrespassSniperTurretRight", sniperTurretDefaultaFront.gameObject);
         }
     }

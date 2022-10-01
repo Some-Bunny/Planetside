@@ -141,6 +141,7 @@ namespace Planetside
 					   advancedAdvancedPrerequisiteType = DungeonGenToolbox.AdvancedDungeonPrerequisite.AdvancedAdvancedPrerequisiteType.UNLOCK,
 					   UnlockFlag = CustomDungeonFlags.HAS_COMPLETED_SOMETHING_WICKED,
 					   UnlockRequirement = true,
+
 					   requiredTileset = GlobalDungeonData.ValidTilesets.FORGEGEON,
 					   requireTileset = true
 					},
@@ -151,7 +152,7 @@ namespace Planetside
 				framedCombatNodes = 0,
 
 			};
-			BaseSharedInjectionData.InjectionData.Add(PrisonerShrineRoom);
+            BaseSharedInjectionData.InjectionData.Add(PrisonerShrineRoom);
 			PrisonerShrineRoomPrefab = prisonerShrineRoom;
 
 			PrototypeDungeonRoom prisonerBossRoom = RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/PrisonerBossRoom.room").room;
@@ -189,11 +190,10 @@ namespace Planetside
 			};
 			BaseSharedInjectionData.InjectionData.Add(PrisonerBossRoom);
 			PrisonerBossRoomPrefab = prisonerBossRoom;
+        }
 
-		}
-		
 
-		public static void AddVrokenChamberRoom(bool refreshFlows = false)
+        public static void AddVrokenChamberRoom(bool refreshFlows = false)
 		{
 			float Weight = 0.75f;
 			if (SaveAPIManager.GetFlag(CustomDungeonFlags.BROKEN_CHAMBER_RUN_COMPLETED) == true)

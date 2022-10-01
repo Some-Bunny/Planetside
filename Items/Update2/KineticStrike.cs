@@ -281,7 +281,7 @@ namespace Planetside
         }
         public void Boom(Vector3 position)
         {
-            ExplosionData defaultSmallExplosionData = StaticExplosionDatas.genericSmallExplosion;
+            ExplosionData defaultSmallExplosionData = StaticExplosionDatas.CopyFields(StaticExplosionDatas.genericSmallExplosion);//StaticExplosionDatas.genericSmallExplosion;
             this.KineticBomb.effect = defaultSmallExplosionData.effect;
             this.KineticBomb.ignoreList = defaultSmallExplosionData.ignoreList;
             this.KineticBomb.ss = defaultSmallExplosionData.ss;

@@ -53,7 +53,7 @@ namespace Planetside
                 teleportVFX.transform.position = teleportVFX.transform.position.Quantize(0.0625f);
                 teleportVFX.GetComponent<tk2dBaseSprite>().UpdateZDepth();
                 teleportVFX.GetComponent<tk2dBaseSprite>().scale *= 2;
-                ExplosionData boomboom = StaticExplosionDatas.genericSmallExplosion;
+                ExplosionData boomboom = StaticExplosionDatas.CopyFields(StaticExplosionDatas.genericSmallExplosion);//StaticExplosionDatas.genericSmallExplosion;
                 boomboom.damageToPlayer = 0;
                 boomboom.damageRadius = 50f;
                 boomboom.damage = 3500;

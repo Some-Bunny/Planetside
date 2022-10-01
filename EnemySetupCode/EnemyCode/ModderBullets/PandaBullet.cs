@@ -16,25 +16,7 @@ namespace Planetside
 	{
 		public static void Init()
 		{
-			string TemplatePath = "Planetside/Resources/Enemies/ModderBullets/";
-			string folderName = "panda";
-			string idleFrameName = "pandabullet_idle_00";
-			string deathFrameName = "pandabullet_die_00";
-			string[] spritePaths = new string[]
-			{
-			TemplatePath+folderName+"/"+idleFrameName+"1.png",
-			TemplatePath+folderName+"/"+idleFrameName+"2.png",
-			TemplatePath+folderName+"/"+idleFrameName+"3.png",
-			TemplatePath+folderName+"/"+idleFrameName+"4.png",
-
-			TemplatePath+folderName+"/"+deathFrameName+"1.png",
-			TemplatePath+folderName+"/"+deathFrameName+"2.png",
-			TemplatePath+folderName+"/"+deathFrameName+"3.png",
-			TemplatePath+folderName+"/"+deathFrameName+"4.png",
-			TemplatePath+folderName+"/"+deathFrameName+"5.png",
-			TemplatePath+folderName+"/"+deathFrameName+"6.png",
-			};
-			EnemyToolbox.CreateNewBulletBankerEnemy("panda_bullet", "Explosive Panda", 20, 19, spritePaths[0], spritePaths, new List<int> { 0, 1, 2, 3 }, new List<int> { 4, 5, 6, 7, 8, 9 }, null, new SkellScript(), 4f);
+			EnemyToolbox.CreateNewBulletBankerEnemy("panda_bullet", "Explosive Panda", 20, 19, new List<int> { 149, 150, 151, 152 }, new List<int> { 153, 154, 155, 156, 157, 158 }, null, new SkellScript(), 4f);
 		}
 		public class SkellScript : Script 
 		{

@@ -206,8 +206,6 @@ namespace Planetside
                 ExtantText.GetComponent<dfLabel>().Opacity = OuroborosMode() == true ? 1 : 0;
             }
         }
-
-
         public static void InitializeRightPageHook(Action<AmmonomiconDeathPageController> orig, AmmonomiconDeathPageController self)
 		{
 			orig(self);
@@ -230,31 +228,34 @@ namespace Planetside
             if (ExtantText)
             {
 				ExtantText.transform.position = self.transform.position.WithZ(0)+ new Vector3(-0.2502f, -0.07f, 0);
+                ExtantText.transform.position += new Vector3(0.025f, 0f);
+
                 ExtantText.GetComponent<dfLabel>().enabled = true;
                 ExtantText.GetComponent<dfLabel>().Opacity = OuroborosMode() == true ? 1 : 0;
                 ExtantText.GetComponent<dfLabel>().Text = CurrentLoop().ToString();
-
             }
+
             if (ExtantWinIcon2Right == null)
             {
                 ExtantWinIcon2Right = UnityEngine.Object.Instantiate(WinIconTwoRight, self.transform.position, Quaternion.identity, self.transform);
             }
             if (ExtantWinIcon2Right)
             {
-                ExtantWinIcon2Right.transform.position = (self.transform.position.WithZ(0)) + new Vector3((0.071f * (self.killedByLabel.Text.Length / 2)), 0.128f, 0);
-                ExtantWinIcon2Right.transform.position += new Vector3(-0.2502f, 0f);
+                ExtantWinIcon2Right.transform.position = (self.transform.position.WithZ(0)) + new Vector3(Mathf.Max(200, self.killedByLabel.Size.x) / 640, 0.128f, 0);
+                ExtantWinIcon2Right.transform.position += new Vector3(-0.3f, 0f);
 
                 ExtantWinIcon2Right.GetComponent<dfSprite>().enabled = true;
                 ExtantWinIcon2Right.GetComponent<dfSprite>().Opacity = OuroborosMode() == true ? 1 : 0;
-
             }
+
+
             if (ExtantWinIcon2Left == null)
             {
                 ExtantWinIcon2Left = UnityEngine.Object.Instantiate(WinIconTwoLeft, self.transform.position, Quaternion.identity, self.transform);
             }
             if (ExtantWinIcon2Left)
             {
-                ExtantWinIcon2Left.transform.position = (self.transform.position.WithZ(0)) - new Vector3((0.071f * self.killedByLabel.Text.Length / 2), -0.128f, 0) ;
+                ExtantWinIcon2Left.transform.position = (self.transform.position.WithZ(0)) - new Vector3(Mathf.Max(200, self.killedByLabel.Size.x) / 640, -0.128f, 0) ;
 				ExtantWinIcon2Left.transform.position += new Vector3(-0.2502f, 0f);
                 ExtantWinIcon2Left.GetComponent<dfSprite>().enabled = true;
                 ExtantWinIcon2Left.GetComponent<dfSprite>().Opacity = OuroborosMode() == true ? 1 : 0;
@@ -290,7 +291,7 @@ namespace Planetside
 
 		public static Dictionary<string, GameObject> eliteCrownKeys = new Dictionary<string, GameObject>();
 
-	
+
 		public static void ChestAwakeHook(Action<Chest> orig, Chest self)
         {
 			orig(self);
@@ -728,7 +729,7 @@ namespace Planetside
 		public override List<ActorEffectResistance> DebuffImmunities => new List<ActorEffectResistance> { new ActorEffectResistance() { resistAmount = 1, resistType = EffectResistanceType.Freeze } };
 		public override void Start()
 		{
-			Timer = 2.5f;
+			Timer = 2f;
 			base.Start();
 		}
 		public override void OnPreDeath(Vector2 obj)
@@ -747,7 +748,7 @@ namespace Planetside
 				}
 			}
 		}
-		private IEnumerator LaunchWave(Vector2 startPoint, float Time = 2.5f)
+		private IEnumerator LaunchWave(Vector2 startPoint, float Time = 2f)
 		{
 			float m_prevWaveDist = 0f;
 			float distortionMaxRadius = 20f;
@@ -990,7 +991,7 @@ namespace Planetside
 								{
 									if (item2 is DraGunBoulderController laser2)
 									{
-										laser2.LifeTime = 15;
+										laser2.LifeTime = 10;
 										GameManager.Instance.Dungeon.StartCoroutine(this.IncreaseInSize(laser2.CircleSprite, 0.5f));
 										SpeculativeRigidbody body = laser2.GetComponentInChildren<SpeculativeRigidbody>();
 										if (body)
@@ -1032,7 +1033,7 @@ namespace Planetside
 		public override void Start()
 		{
 			base.Start();
-			EnrageHP = base.aiActor.healthHaver.GetMaxHealth() / 6;
+			EnrageHP = base.aiActor.healthHaver.GetMaxHealth() / 5;
 
 
         }
@@ -1192,10 +1193,12 @@ namespace Planetside
 				radialIndicator.CurrentRadius = Mathf.Lerp(0, 7, t);
 				yield return null;
 			}
-			ExplosionData explo = StaticExplosionDatas.genericLargeExplosion;
+			ExplosionData explo = StaticExplosionDatas.CopyFields(StaticExplosionDatas.genericLargeExplosion);
 			explo.forceUseThisRadius = true;
 			explo.damageRadius = 7;
 			explo.damage = 350;
+
+
 			Exploder.Explode(DeathPosition, explo, Vector2.zero, null, false, CoreDamageTypes.None, false);
 			GameObject Blast = UnityEngine.Object.Instantiate<GameObject>(EnemyDatabase.GetOrLoadByGuid("b98b10fca77d469e80fb45f3c5badec5").GetComponent<BossFinalRogueDeathController>().DeathStarExplosionVFX);
 			Blast.GetComponent<tk2dBaseSprite>().PlaceAtLocalPositionByAnchor(DeathPosition, tk2dBaseSprite.Anchor.LowerCenter);
@@ -1564,8 +1567,8 @@ namespace Planetside
 				}
 				if (base.aiActor.sprite && !GameManager.Instance.IsPaused && (UnityEngine.Random.value > 0.5f))
 				{
-					Vector3 vector = sprite.WorldBottomLeft.ToVector3ZisY(0);
-					Vector3 vector2 = sprite.WorldTopRight.ToVector3ZisY(0);
+					Vector3 vector = base.aiActor.sprite.WorldBottomLeft.ToVector3ZisY(0);
+					Vector3 vector2 =  base.aiActor.sprite.WorldTopRight.ToVector3ZisY(0);
 					Vector3 position = new Vector3(UnityEngine.Random.Range(vector.x, vector2.x), UnityEngine.Random.Range(vector.y, vector2.y), UnityEngine.Random.Range(vector.z, vector2.z));
 					ParticleSystem particleSystem = ParticleSystem;
 					var trails = particleSystem.trails;
@@ -1642,8 +1645,8 @@ namespace Planetside
 				}
 				if (base.aiActor.sprite && !GameManager.Instance.IsPaused && (UnityEngine.Random.value > 0.5f))
 				{
-					Vector3 vector = sprite.WorldBottomLeft.ToVector3ZisY(0);
-					Vector3 vector2 = sprite.WorldTopRight.ToVector3ZisY(0);
+					Vector3 vector = base.aiActor.sprite.WorldBottomLeft.ToVector3ZisY(0);
+					Vector3 vector2 = base.aiActor.sprite.WorldTopRight.ToVector3ZisY(0);
 					Vector3 position = new Vector3(UnityEngine.Random.Range(vector.x, vector2.x), UnityEngine.Random.Range(vector.y, vector2.y), UnityEngine.Random.Range(vector.z, vector2.z));
 					ParticleSystem particleSystem = ParticleSystem;
 					var trails = particleSystem.trails;

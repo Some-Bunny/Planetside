@@ -43,17 +43,20 @@ namespace Planetside
             {
 				List<AIActor> activeEnemies = base.Owner.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
 				Vector2 centerPosition = base.Owner.CenterPosition;
-				foreach (AIActor aiactor in activeEnemies)
+				if (activeEnemies != null && activeEnemies.Count > 0)
 				{
-					if (gunClassCharm.ContainsKey(base.Owner.gameActor.CurrentGun.gunClass))
+                    foreach (AIActor aiactor in activeEnemies)
                     {
-						bool flag = aiactor != null && aiactor.specRigidbody != null && Vector2.Distance(aiactor.CenterPosition, centerPosition) < 2.5f && aiactor.healthHaver.GetMaxHealth() > 0f && base.Owner != null;
-						if (flag)
-						{
-							aiactor.ApplyEffect(Gungeon.Game.Items["charming_rounds"].GetComponent<BulletStatusEffectItem>().CharmModifierEffect);
-						}
-					}	
-				}
+                        if (gunClassCharm.ContainsKey(base.Owner.gameActor.CurrentGun.gunClass))
+                        {
+                            bool flag = aiactor != null && aiactor.specRigidbody != null && Vector2.Distance(aiactor.CenterPosition, centerPosition) < 2.5f && aiactor.healthHaver.GetMaxHealth() > 0f && base.Owner != null;
+                            if (flag)
+                            {
+                                aiactor.ApplyEffect(Gungeon.Game.Items["charming_rounds"].GetComponent<BulletStatusEffectItem>().CharmModifierEffect);
+                            }
+                        }
+                    }
+                }
 			}
 		}
 
@@ -70,14 +73,12 @@ namespace Planetside
 					Values.DealsDamage = false;
 					Values.AreaIncreasesWithProjectileSizeStat = true;
 					Values.DamageValuesAlsoScalesWithDamageStat = false;
-					Values.EffectProcChance = 0.5f;
-					bool flagA = sourceProjectile.PossibleSourceGun.gunClass == GunClass.POISON;
-					if (flagA){Values.InflictsPoison = true;}
-					bool flagB = sourceProjectile.PossibleSourceGun.gunClass == GunClass.FIRE;
-					if (flagB){Values.InflictsFire = true;}
-					bool flagC = sourceProjectile.PossibleSourceGun.gunClass == GunClass.CHARM;
-					if (flagC) { Values.InflictsCharm = true; }
-				}
+					Values.EffectProcChance = 0.33f;
+					if (sourceProjectile.PossibleSourceGun.gunClass == GunClass.POISON) {Values.InflictsPoison = true;}
+					if (sourceProjectile.PossibleSourceGun.gunClass == GunClass.FIRE) {Values.InflictsFire = true;}
+					if (sourceProjectile.PossibleSourceGun.gunClass == GunClass.CHARM) { Values.InflictsCharm = true; }
+                    if (sourceProjectile.PossibleSourceGun.gunClass == GunClass.ICE) { Values.InflictsFreeze = true; }
+                }
             }
         }
 
@@ -235,7 +236,9 @@ namespace Planetside
 			{GunClass.SHITTY, new Dictionary<PlayerStats.StatType, float>{{ PlayerStats.StatType.MoneyMultiplierFromEnemies, 1.15f}}},
 			{GunClass.SHOTGUN, new Dictionary<PlayerStats.StatType, float>{{ PlayerStats.StatType.Accuracy, 0.66f}}},
 			{GunClass.SILLY, new Dictionary<PlayerStats.StatType, float>{{ PlayerStats.StatType.AdditionalShotBounces, 3f}}},
-		};
+            {GunClass.ICE, new Dictionary<PlayerStats.StatType, float>{{ PlayerStats.StatType.Coolness, 2f}}},
+        };
+
 		private Dictionary<GunClass, Color> gunClassRGB = new Dictionary<GunClass, Color>()
 		{
 			{GunClass.BEAM, Color.blue},//DONE
@@ -252,7 +255,6 @@ namespace Planetside
 			{GunClass.SHITTY, new Color(0.6f,0.3f, 0.2f)},//DONE
 			{GunClass.SHOTGUN, new Color(0.3f, 0.4f, 0.1f)},//DONE
 			{GunClass.SILLY, new Color(0.6f, 0.02f, 0.6f)},//DONE
-
         };
         private Dictionary<GunClass, CoreDamageTypes> gunClassDebuffs = new Dictionary<GunClass, CoreDamageTypes>()
         {

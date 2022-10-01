@@ -16,21 +16,7 @@ namespace Planetside
 	{
 		public static void Init()
 		{
-			string TemplatePath = "Planetside/Resources/Enemies/ModderBullets/bunny/";
-			string[] spritePaths = new string[]
-			{
-				TemplatePath+"bunnybullet_idle_001.png",
-				TemplatePath+"bunnybullet_idle_002.png",
-				TemplatePath+"bunnybullet_idle_003.png",
-				TemplatePath+"bunnybullet_idle_004.png",
-
-				TemplatePath+"bunnybullet_die_001.png",
-				TemplatePath+"bunnybullet_die_002.png",
-				TemplatePath+"bunnybullet_die_003.png",
-				TemplatePath+"bunnybullet_die_004.png",
-				TemplatePath+"bunnybullet_die_005.png",
-			};
-			EnemyToolbox.CreateNewBulletBankerEnemy("bunny_bullet", "Some Bunny", 16, 21, spritePaths[0], spritePaths, new List<int> { 0, 1, 2, 3 }, new List<int> { 4, 5, 6, 7, 8 }, null, new SkellScript(), 2f);
+			EnemyToolbox.CreateNewBulletBankerEnemy("bunny_bullet", "Some Bunny", 16, 21,new List<int> { 44, 45, 46, 47 }, new List<int> { 48, 49, 50, 51, 52 }, null, new SkellScript(), 2f);
 		}
 
 

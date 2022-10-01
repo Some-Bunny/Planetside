@@ -17,21 +17,7 @@ namespace Planetside
 
 		public static void Init()
 		{
-			string TemplatePath = "Planetside/Resources/Enemies/ModderBullets/bot/";
-			string[] spritePaths = new string[]
-			{
-				TemplatePath+"botbullet_idle_001.png",
-				TemplatePath+"botbullet_idle_002.png",
-				TemplatePath+"botbullet_idle_003.png",
-				TemplatePath+"botbullet_idle_004.png",
-
-				TemplatePath+"botbullet_die_001.png",
-				TemplatePath+"botbullet_die_002.png",
-				TemplatePath+"botbullet_die_003.png",
-				TemplatePath+"botbullet_die_004.png",
-				TemplatePath+"botbullet_die_005.png",
-			};
-			EnemyToolbox.CreateNewBulletBankerEnemy("bot_bullet", "Not A Bot", 16, 16, spritePaths[0], spritePaths, new List<int> { 0, 1, 2, 3 }, new List<int> { 4, 5, 6, 7, 8 }, null, new SkellScript(), 3f);
+			EnemyToolbox.CreateNewBulletBankerEnemy("bot_bullet", "Not A Bot", 16, 16, new List<int> { 35, 36, 37, 38 }, new List<int> { 39, 40, 41, 42, 43 }, null, new SkellScript(), 3f);
 		}
 
 		public class SkellScript : Script 

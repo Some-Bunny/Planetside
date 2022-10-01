@@ -33,6 +33,7 @@ namespace NpcApi
 		public Func<CustomShopController, CustomShopItemController, PickupObject, int> customPrice;
 		public Func<PlayerController, PickupObject, int, bool> OnPurchase;
 		public Func<PlayerController, PickupObject, int, bool> OnSteal;
+		public bool CanReallyBeRobbed;
 
 		//public DungeonPrerequisite
 

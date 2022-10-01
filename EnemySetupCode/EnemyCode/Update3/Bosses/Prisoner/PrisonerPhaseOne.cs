@@ -23,7 +23,7 @@ namespace Planetside
 		public static readonly string guid = "Prisoner_Cloaked";
 		private static tk2dSpriteCollectionData PrisonerPhaseOneSpriteCollection;
 		public static GameObject shootpoint;
-		private static Texture2D BossCardTexture = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside/Resources/BossCards/prisonerbosscard.png");
+		//private static Texture2D BossCardTexture = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside/Resources/BossCards/prisonerbosscard.png");
 		public static string TargetVFX;
 		public static Texture _gradTexture;
 
@@ -1050,13 +1050,14 @@ namespace Planetside
 					bottomRightTextPxOffset = IntVector2.Zero,
 					bgColor = Color.red
 				};
-				if (BossCardTexture)
-				{
-					miniBossIntroDoer.portraitSlideSettings.bossArtSprite = BossCardTexture;
-					miniBossIntroDoer.SkipBossCard = false;
-					companion.aiActor.healthHaver.bossHealthBar = HealthHaver.BossBarType.MainBar;
-				}
-				else
+                var BossCardTexture = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("prisonerbosscard");
+                if (BossCardTexture)
+                {
+                    miniBossIntroDoer.portraitSlideSettings.bossArtSprite = BossCardTexture;
+                    miniBossIntroDoer.SkipBossCard = false;
+                    companion.aiActor.healthHaver.bossHealthBar = HealthHaver.BossBarType.SubbossBar;
+                }
+                else
 				{
 					miniBossIntroDoer.SkipBossCard = true;
 					companion.aiActor.healthHaver.bossHealthBar = HealthHaver.BossBarType.MainBar;
@@ -1811,6 +1812,7 @@ namespace Planetside
 									component2.alwaysUpdateOffscreen = true;
 									component2.playAutomatically = true;
 								}
+								Destroy(vfx, 2);
 							}
 						}
 					}
@@ -2181,8 +2183,12 @@ namespace Planetside
 				}
 				Destroy(component2.gameObject);
 				base.PostWwiseEvent("Play_ENM_bulletking_skull_01", null);
-				base.Fire(new Direction(Angle, DirectionType.Absolute, -1f), new Speed(32.5f, SpeedType.Absolute), new WallBulletNoDodge("sniper", Angle));
-				yield break;
+                for (int e = 1; e < 8; e++)
+				{
+                    base.Fire(new Direction(Angle, DirectionType.Absolute, -1f), new Speed(30f + (2.5f*e), SpeedType.Absolute), new WallBulletNoDodge("sniper", Angle));
+
+                }
+                yield break;
 			}
 
 

@@ -313,8 +313,8 @@ namespace Planetside
 			protected override IEnumerator Top()
 			{
 				float startDirection = this.RandomAngle();
-				float delta = 13.33f;
-				for (int i = 0; i < 120; i++)
+				float delta = 15f;
+				for (int i = 0; i < 100; i++)
 				{
 					this.Fire(new Direction(startDirection + (float)i * delta, DirectionType.Absolute, -1f), new Speed(12f, SpeedType.Absolute), new SlowDown());
 					this.Fire(new Direction(startDirection + (float)i * delta + 180f, DirectionType.Absolute, -1f), new Speed(12f, SpeedType.Absolute), new SlowDown());
@@ -333,9 +333,9 @@ namespace Planetside
 				{
 					this.Projectile.IgnoreTileCollisionsFor(1f);
 
-					this.ChangeSpeed(new Speed(2f, SpeedType.Absolute), 40);
-					yield return this.Wait(80);
-					this.ChangeSpeed(new Speed(13f, SpeedType.Absolute), 40);
+					this.ChangeSpeed(new Speed(2f, SpeedType.Absolute), 50);
+					yield return this.Wait(90);
+					this.ChangeSpeed(new Speed(11f, SpeedType.Absolute), 75);
 					yield return this.Wait(120);
 					
 					yield break;

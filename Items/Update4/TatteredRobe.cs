@@ -33,7 +33,7 @@ namespace Planetside
 		public override void Pickup(PlayerController player)
 		{
 			player.OnDodgedProjectile += DodgedBullet;
-			if (!base.PickedUp)
+			if (base.m_pickedUpThisRun == false)
             {
 				player.healthHaver.FullHeal();
 				player.PlayEffectOnActor(StaticVFXStorage.HealingSparklesVFX, new Vector3(0,0));
@@ -48,7 +48,7 @@ namespace Planetside
             base.Update();
 			if (base.Owner)
             {
-				if (RolledCount > 35 && IsDoingTheWacky == false)
+				if (RolledCount > 20 && IsDoingTheWacky == false)
 				{
 					StaticVFXStorage.HighPriestClapVFXInverse.SpawnAtPosition(base.Owner.sprite.WorldCenter, 0);
 					IsDoingTheWacky = true;
@@ -81,7 +81,7 @@ namespace Planetside
 					{
 						if (target != null)
 						{
-							target.healthHaver.ApplyDamage(75, Vector2.zero, "Take a bath, nerd.", CoreDamageTypes.Void, DamageCategory.Normal, false, null, false);
+							target.healthHaver.ApplyDamage(60, Vector2.zero, "Take a bath, nerd.", CoreDamageTypes.Void, DamageCategory.Normal, false, null, false);
 						}
 					}
 				}

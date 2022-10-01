@@ -22,9 +22,9 @@ namespace Planetside
 		{
             Texture texture = mat.GetTexture("_MainTex");
             texture.filterMode = FilterMode.Point;
+            
             mat.SetTexture("_MainTex", texture);
             bundleData.material = mat;
-
             bundleData.materials = new Material[]
             {
                 mat,
@@ -167,11 +167,17 @@ namespace Planetside
 			return attacher.transform.Find(name).gameObject;
 		}
 
-		public static AIActor CreateNewBulletBankerEnemy(string guid, string DisplayName,int sizeX, int sizeY, string firstIdleFrame, string[] spritePaths ,List<int> IdleFrameKeys, List<int> DeathFrameKeys, List<int> AttackFrameKeys,Script bulletScript = null, float MovementSpeed = 2.5f, float HP = 14, float IdleFPS = 5f,float MovementFPS = 10f, float DeathFPS = 8f, float attackFPS = 6f)
+		public static AIActor CreateNewBulletBankerEnemy(string guid, string DisplayName,int sizeX, int sizeY,List<int> IdleFrameKeys, List<int> DeathFrameKeys, List<int> AttackFrameKeys,Script bulletScript = null, float MovementSpeed = 2.5f, float HP = 14, float IdleFPS = 5f,float MovementFPS = 10f, float DeathFPS = 8f, float attackFPS = 6f)
         {
-		   tk2dSpriteCollectionData collectionData = new tk2dSpriteCollectionData();
 
-			GameObject prefab = EnemyBuilder.BuildPrefab(guid, guid, firstIdleFrame, new IntVector2(0, 0), new IntVector2(8, 9), false);
+			var collectionData = StaticSpriteDefinitions.Modder_Bullet_Sheet_Data;
+			if (collectionData == null)
+			{
+				ETGModConsole.Log("Modder_Bullet_Sheet_Data is NULL");
+				return null;
+			}
+
+            GameObject prefab = EnemyBuilder.BuildPrefabBundle(guid, guid, collectionData, IdleFrameKeys[0], new IntVector2(0, 0), new IntVector2(8, 9), new Vector3(1.25f, 1.25f), false, false);
 			StaticInformation.ModderBulletGUIDs.Add(guid);
 			var companion = prefab.AddComponent<BulletEnemyBehavior>();
 			companion.aiActor.knockbackDoer.weight = 800;
@@ -271,10 +277,10 @@ namespace Planetside
 				Type = DirectionalAnimation.DirectionType.TwoWayHorizontal,
 				Flipped = new DirectionalAnimation.FlipType[2],
 				AnimNames = new string[]
-					{
+				{
 						"run_left",
 						"run_right"
-					}
+				}
 			};
 
 
@@ -282,14 +288,7 @@ namespace Planetside
 			EnemyToolbox.AddNewDirectionAnimation(companion.aiAnimator, "attack", new string[] { "attack_right", "attack_left" }, new DirectionalAnimation.FlipType[2], DirectionalAnimation.DirectionType.TwoWayHorizontal);
 
 
-			collectionData = SpriteBuilder.ConstructCollection(prefab, guid+"_Collection");
-			UnityEngine.Object.DontDestroyOnLoad(collectionData);
-			
-			
-			for (int i = 0; i < spritePaths.Length; i++)
-			{
-				SpriteBuilder.AddSpriteToCollection(spritePaths[i], collectionData);
-			}
+
 			SpriteBuilder.AddAnimation(companion.spriteAnimator, collectionData, IdleFrameKeys, "idle_left", tk2dSpriteAnimationClip.WrapMode.Loop).fps = IdleFPS;
 			SpriteBuilder.AddAnimation(companion.spriteAnimator, collectionData, IdleFrameKeys, "idle_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = IdleFPS;
 			SpriteBuilder.AddAnimation(companion.spriteAnimator, collectionData, IdleFrameKeys, "run_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = MovementFPS;

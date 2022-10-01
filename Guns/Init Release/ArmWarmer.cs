@@ -71,8 +71,8 @@ namespace Planetside
 				objectToLookOutFor.transform.localScale = Vector3.Lerp(currentscale, currentscale * 2f, throne1);
 				yield return null;
 			}
-			ExplosionData data = StaticExplosionDatas.genericSmallExplosion;
-			data.effect = (PickupObjectDatabase.GetById(368) as Gun).DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX;
+			ExplosionData data = StaticExplosionDatas.CopyFields(StaticExplosionDatas.genericSmallExplosion);//StaticExplosionDatas.genericSmallExplosion;
+            data.effect = (PickupObjectDatabase.GetById(368) as Gun).DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX;
 			data.damage = 5.5f * (player != null ? player.stats.GetStatValue(PlayerStats.StatType.Damage) : 1);
 			data.damageRadius = 3;
 			data.doScreenShake = false;

@@ -176,112 +176,134 @@ namespace Planetside
 		protected override void Update()
 		{
 			base.Update();
-
-			if (gun.CurrentOwner as PlayerController)
+            PlayerController player = gun.CurrentOwner as PlayerController;
+            if (player != null && gun != null)
 			{
-				gun.DefaultModule.burstShotCount = gun.DefaultModule.numberOfShotsInClip;
-				PlayerController player = gun.CurrentOwner as PlayerController;
-				float clip = (player.stats.GetStatValue(PlayerStats.StatType.AdditionalClipCapacityMultiplier));
-				float num = (int)(4);
-				if (player.PlayerHasActiveSynergy("The Mighty Budget")){num *= 2;}
-				float clipsize = num * clip;
-				gun.DefaultModule.numberOfShotsInClip = (int)clipsize;
-				if (LockOnInstance != null)
-				{
-					if (IsLockedOn == true && LockOnInstance.GetComponent<tk2dBaseSprite>().spriteId != LockOnGun.spriteIds[1] && LockOnInstance!=null)
-					{
-						LockOnInstance.GetComponent<tk2dBaseSprite>().SetSprite(LockOnGun.spriteIds[1]);
-						LockOnInstance.GetComponent<tk2dBaseSprite>().renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
-						LockOnInstance.GetComponent<tk2dBaseSprite>().renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
-						LockOnInstance.GetComponent<tk2dBaseSprite>().renderer.material.SetFloat("_EmissivePower", 30);
-						LockOnInstance.GetComponent<tk2dBaseSprite>().renderer.material.SetFloat("_EmissiveColorPower", 2);
-					}
-					else if (IsLockedOn == false && LockOnInstance.GetComponent<tk2dBaseSprite>().spriteId != LockOnGun.spriteIds[0] && LockOnInstance != null)
-					{
-						LockOnInstance.GetComponent<tk2dBaseSprite>().SetSprite(LockOnGun.spriteIds[0]);
-						LockOnInstance.GetComponent<tk2dBaseSprite>().renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
-						LockOnInstance.GetComponent<tk2dBaseSprite>().renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
-						LockOnInstance.GetComponent<tk2dBaseSprite>().renderer.material.SetFloat("_EmissivePower", 30);
-						LockOnInstance.GetComponent<tk2dBaseSprite>().renderer.material.SetFloat("_EmissiveColorPower", 2);
-					}
-					List<AIActor> activeEnemies = player.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
-					if (activeEnemies != null)
-					{
-						foreach (AIActor aiactor in activeEnemies)
-						{
-							if (aiactor == null){LockOnInstance.transform.position = aimpoint;}
-							bool ae = Vector2.Distance(aiactor.CenterPosition, aimpoint) < 2f && aiactor.healthHaver.GetMaxHealth() > 0f && aiactor != null && aiactor.specRigidbody != null && player != null && IsLockedOn == false;
-							if (ae){LockedOnEnemy = aiactor;}
-						}
-					}
-				}
-				else
-				{
-					tk2dSprite component = UnityEngine.Object.Instantiate<GameObject>(LockOnPrefab, player.transform).GetComponent<tk2dSprite>();
-					if (component!= null)
-                    {
-						component.PlaceAtPositionByAnchor(aimpoint, tk2dBaseSprite.Anchor.MiddleCenter);
-						component.GetComponent<tk2dBaseSprite>().SetSprite(LockOnGun.spriteIds[0]);
-						component.HeightOffGround = -5;
-						component.renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
-						component.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
-						component.renderer.material.SetFloat("_EmissivePower", 30);
-						component.renderer.material.SetFloat("_EmissiveColorPower", 2);
-						LockOnInstance = component.gameObject;
-					}
-				}
-				if (LockedOnEnemy != null && Vector2.Distance(LockedOnEnemy.CenterPosition, aimpoint) < 2f && LockedOnEnemy.healthHaver.GetMaxHealth() > 0f && LockedOnEnemy != null && LockedOnEnemy.specRigidbody != null && player != null)
-                {
-					LockOnInstance.transform.position = LockedOnEnemy.sprite.WorldCenter- new Vector2(0.625f, 0.625f);
-				}
-				else if(IsLockedOn == true && LockedOnEnemy != null)
-				{
-					LockOnInstance.transform.position = LockedOnEnemy.sprite.WorldCenter - new Vector2(0.625f, 0.625f);
-				}
-				else
-                {
-					LockOnInstance.transform.position = aimpoint;
-					IsLockedOn = false;
-				}
-				if (player!=null)
-                {
-					if (BraveInput.GetInstanceForPlayer(player.PlayerIDX).IsKeyboardAndMouse(false))
-					{
-						aimpoint = player.unadjustedAimPoint.XY();
-						if (LockOnInstance != null)
-						{
-							Vector2 vector2 = aimpoint - LockOnInstance.GetComponent<tk2dSprite>().GetBounds().extents.XY();
-							aimpoint = vector2;
-						}
-					}
-					else
-					{
-						BraveInput instanceForPlayer = BraveInput.GetInstanceForPlayer(player.PlayerIDX);
-						Vector2 vector3 = player.CenterPosition + (Quaternion.Euler(0f, 0f, this.m_currentAngle) * Vector2.right).XY() * this.m_currentDistance;
-						vector3 += instanceForPlayer.ActiveActions.Aim.Vector * 8f * BraveTime.DeltaTime;
-						this.m_currentAngle = BraveMathCollege.Atan2Degrees(vector3 - player.CenterPosition);
-						this.m_currentDistance = Vector2.Distance(vector3, player.CenterPosition);
-						this.m_currentDistance = Mathf.Min(this.m_currentDistance, this.maxDistance);
-						vector3 = player.CenterPosition + (Quaternion.Euler(0f, 0f, this.m_currentAngle) * Vector2.right).XY() * this.m_currentDistance;
-						aimpoint = vector3;
-						if (LockOnInstance != null)
-						{
-							Vector2 vector4 = vector3 - LockOnInstance.GetComponent<tk2dSprite>().GetBounds().extents.XY();
-							aimpoint = vector4;
+                gun.DefaultModule.burstShotCount = gun.DefaultModule.numberOfShotsInClip;
+                float clip = (player.stats.GetStatValue(PlayerStats.StatType.AdditionalClipCapacityMultiplier));
+                float num = (int)(4);
+                if (player.PlayerHasActiveSynergy("The Mighty Budget")) { num *= 2; }
+                float clipsize = num * clip;
 
-						}
-					}
-				}
-				
-				if (!gun.PreventNormalFireAudio)
-				{
-					this.gun.PreventNormalFireAudio = true;
-				}
-				if (!gun.IsReloading && !HasReloaded)
-				{
-					this.HasReloaded = true;
-				}
-			}
+                gun.DefaultModule.numberOfShotsInClip = (int)clipsize;
+                if (LockOnInstance != null)
+                {
+
+                    if (IsLockedOn == true && LockOnInstance.GetComponent<tk2dBaseSprite>().spriteId != LockOnGun.spriteIds[1] && LockOnInstance != null)
+                    {
+                        LockOnInstance.GetComponent<tk2dBaseSprite>().SetSprite(LockOnGun.spriteIds[1]);
+                        LockOnInstance.GetComponent<tk2dBaseSprite>().renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
+                        LockOnInstance.GetComponent<tk2dBaseSprite>().renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+                        LockOnInstance.GetComponent<tk2dBaseSprite>().renderer.material.SetFloat("_EmissivePower", 30);
+                        LockOnInstance.GetComponent<tk2dBaseSprite>().renderer.material.SetFloat("_EmissiveColorPower", 2);
+                    }
+                    else if (IsLockedOn == false && LockOnInstance.GetComponent<tk2dBaseSprite>().spriteId != LockOnGun.spriteIds[0] && LockOnInstance != null)
+                    {
+                        LockOnInstance.GetComponent<tk2dBaseSprite>().SetSprite(LockOnGun.spriteIds[0]);
+                        LockOnInstance.GetComponent<tk2dBaseSprite>().renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
+                        LockOnInstance.GetComponent<tk2dBaseSprite>().renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+                        LockOnInstance.GetComponent<tk2dBaseSprite>().renderer.material.SetFloat("_EmissivePower", 30);
+                        LockOnInstance.GetComponent<tk2dBaseSprite>().renderer.material.SetFloat("_EmissiveColorPower", 2);
+                    }
+					if (player.CurrentRoom != null)
+					{
+                        List<AIActor> activeEnemies = player.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
+                        if (activeEnemies != null)
+                        {
+                            foreach (AIActor aiactor in activeEnemies)
+                            {
+                                if (aiactor == null)
+                                {
+                                    LockOnInstance.transform.position = aimpoint; ETGModConsole.Log(6);
+                                }
+                                if (Vector2.Distance(aiactor.CenterPosition, aimpoint) < 2f && aiactor.healthHaver.GetMaxHealth() > 0f && aiactor != null && aiactor.specRigidbody != null && player != null && IsLockedOn == false)
+                                { LockedOnEnemy = aiactor; }
+                            }
+                        }
+                    }
+                    
+
+                }
+                else
+                {
+                    tk2dSprite component = UnityEngine.Object.Instantiate<GameObject>(LockOnPrefab, player.transform).GetComponent<tk2dSprite>();
+                    if (component != null)
+                    {
+                        component.PlaceAtPositionByAnchor(aimpoint, tk2dBaseSprite.Anchor.MiddleCenter);
+                        component.GetComponent<tk2dBaseSprite>().SetSprite(LockOnGun.spriteIds[0]);
+                        component.HeightOffGround = -5;
+                        component.renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
+                        component.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+                        component.renderer.material.SetFloat("_EmissivePower", 30);
+                        component.renderer.material.SetFloat("_EmissiveColorPower", 2);
+                        LockOnInstance = component.gameObject;
+                    }
+                }
+                if (LockedOnEnemy != null && Vector2.Distance(LockedOnEnemy.CenterPosition, aimpoint) < 2f && LockedOnEnemy.healthHaver.GetMaxHealth() > 0f && LockedOnEnemy != null && LockedOnEnemy.specRigidbody != null && player != null)
+                {
+                    LockOnInstance.transform.position = LockedOnEnemy.sprite.WorldCenter - new Vector2(0.625f, 0.625f);
+                }
+                else if (IsLockedOn == true && LockedOnEnemy != null)
+                {
+                    LockOnInstance.transform.position = LockedOnEnemy.sprite.WorldCenter - new Vector2(0.625f, 0.625f);
+                }
+                else
+                {
+                    LockOnInstance.transform.position = aimpoint;
+                    IsLockedOn = false;
+
+                }
+                if (player != null)
+                {
+					if (GameManager.Instance.IsLoadingLevel == false)
+					{
+                        if (BraveInput.GetInstanceForPlayer(player.PlayerIDX).IsKeyboardAndMouse(false))
+                        {
+                            aimpoint = player.unadjustedAimPoint.XY();
+                            if (LockOnInstance != null)
+                            {
+                                Vector2 vector2 = aimpoint - LockOnInstance.GetComponent<tk2dSprite>().GetBounds().extents.XY();
+                                aimpoint = vector2;
+                            }
+                        }
+                        else
+                        {
+                            BraveInput instanceForPlayer = BraveInput.GetInstanceForPlayer(player.PlayerIDX);
+                            Vector2 vector3 = player.CenterPosition + (Quaternion.Euler(0f, 0f, this.m_currentAngle) * Vector2.right).XY() * this.m_currentDistance;
+                            vector3 += instanceForPlayer.ActiveActions.Aim.Vector * 8f * BraveTime.DeltaTime;
+                            this.m_currentAngle = BraveMathCollege.Atan2Degrees(vector3 - player.CenterPosition);
+                            this.m_currentDistance = Vector2.Distance(vector3, player.CenterPosition);
+                            this.m_currentDistance = Mathf.Min(this.m_currentDistance, this.maxDistance);
+                            vector3 = player.CenterPosition + (Quaternion.Euler(0f, 0f, this.m_currentAngle) * Vector2.right).XY() * this.m_currentDistance;
+                            aimpoint = vector3;
+                            if (LockOnInstance != null)
+                            {
+                                Vector2 vector4 = vector3 - LockOnInstance.GetComponent<tk2dSprite>().GetBounds().extents.XY();
+                                aimpoint = vector4;
+
+                            }
+                        }
+                    }
+
+
+                   
+
+                }
+                else
+                {
+                    aimpoint = new Vector2(0, 0);
+                }
+
+
+                if (!gun.PreventNormalFireAudio)
+                {
+                    this.gun.PreventNormalFireAudio = true;
+                }
+                if (!gun.IsReloading && !HasReloaded)
+                {
+                    this.HasReloaded = true;
+                }
+            }
 			else 
             {
 				if (LockOnInstance!=null){Destroy(LockOnInstance); LockedOnEnemy = null;}

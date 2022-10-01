@@ -17,26 +17,7 @@ namespace Planetside
 
 		public static void Init()
 		{
-			string TemplatePath = "Planetside/Resources/Enemies/ModderBullets/";
-			string folderName = "wow";
-			string idleFrameName = "wowbullet_idle_00";
-			string deathFrameName = "wowbullet_die_00";
-			string[] spritePaths = new string[]
-			{
-			TemplatePath+folderName+"/"+idleFrameName+"1.png",
-			TemplatePath+folderName+"/"+idleFrameName+"2.png",
-			TemplatePath+folderName+"/"+idleFrameName+"3.png",
-			TemplatePath+folderName+"/"+idleFrameName+"4.png",
-
-			TemplatePath+folderName+"/"+deathFrameName+"1.png",
-			TemplatePath+folderName+"/"+deathFrameName+"2.png",
-			TemplatePath+folderName+"/"+deathFrameName+"3.png",
-			TemplatePath+folderName+"/"+deathFrameName+"4.png",
-			TemplatePath+folderName+"/"+deathFrameName+"5.png",
-			TemplatePath+folderName+"/"+deathFrameName+"6.png",
-
-			};
-			AIActor sirWow= EnemyToolbox.CreateNewBulletBankerEnemy("wow_bullet", "SirWow", 18, 19, spritePaths[0], spritePaths, new List<int> { 0, 1, 2, 3 }, new List<int> { 4, 5, 6, 7, 8, 9 }, null, new SalamanderScript(), 5f);
+			AIActor sirWow = EnemyToolbox.CreateNewBulletBankerEnemy("wow_bullet", "SirWow", 18, 19, new List<int> { 217, 218, 219, 220 }, new List<int> { 221, 222, 223,224, 225, 226 }, null, new SalamanderScript(), 5f);
 			sirWow.gameObject.GetOrAddComponent<WowFireImmunity>();
 		}
 			

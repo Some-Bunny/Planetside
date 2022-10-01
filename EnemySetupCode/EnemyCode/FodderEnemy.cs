@@ -34,9 +34,14 @@ namespace Planetside
 			bool flag2 = flag;
 			if (!flag2)
 			{
-				prefab = EnemyBuilder.BuildPrefab("Fodder Enemy", guid, spritePaths[0], new IntVector2(0, 0), new IntVector2(0,0), false);
+                tk2dSpriteCollectionData FodderColection = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("FodderCollection").GetComponent<tk2dSpriteCollectionData>();
+                Material mat = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Material>("assets/Enemies/Fodder/FodderCollection Data/atlas0 material.mat");
+
+                prefab = EnemyBuilder.BuildPrefabBundle("Fodder Enemy", guid, FodderColection, 0, new IntVector2(0, 0), new IntVector2(0,0), new Vector3(0.625f, 1f), false);
 				var companion = prefab.AddComponent<EnemyBehavior>();
-				companion.aiActor.knockbackDoer.weight = 100000;
+                EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, FodderColection, mat);
+
+                companion.aiActor.knockbackDoer.weight = 100000;
 				companion.aiActor.MovementSpeed = 0f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
 				companion.aiActor.CollisionDamage = 1f;
@@ -112,9 +117,6 @@ namespace Planetside
 				};
 
 
-                tk2dSpriteCollectionData FodderColection = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("FodderCollection").GetComponent<tk2dSpriteCollectionData>();
-                Material mat = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Material>("assets/Enemies/Fodder/FodderCollection Data/atlas0 material.mat");
-				EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, FodderColection, mat);
              			
                 {
                 SpriteBuilder.AddAnimation(companion.spriteAnimator, FodderColection, new List<int>

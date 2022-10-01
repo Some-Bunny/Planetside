@@ -17,23 +17,7 @@ namespace Planetside
 
 		public static void Init()
 		{
-			string TemplatePath = "Planetside/Resources/Enemies/ModderBullets/cortify/";
-			string[] spritePaths = new string[]
-			{
-				TemplatePath+"cortify_idle_001.png",
-				TemplatePath+"cortify_idle_002.png",
-				TemplatePath+"cortify_idle_003.png",
-				TemplatePath+"cortify_idle_004.png",
-
-				TemplatePath+"cortify_die_001.png",
-				TemplatePath+"cortify_die_002.png",
-				TemplatePath+"cortify_die_003.png",
-				TemplatePath+"cortify_die_004.png",
-				TemplatePath+"cortify_die_005.png",
-				TemplatePath+"cortify_die_006.png",
-				TemplatePath+"cortify_die_007.png",
-			};
-			EnemyToolbox.CreateNewBulletBankerEnemy("cortify_bullet", "Cortify", 20, 20, spritePaths[0], spritePaths, new List<int> { 0, 1, 2, 3 }, new List<int> { 4, 5, 6, 7, 8, 9, 10 }, null, new SkellScript(), 2.1f);
+			EnemyToolbox.CreateNewBulletBankerEnemy("cortify_bullet", "Cortify", 20, 20,new List<int> { 63, 64, 65, 66 }, new List<int> { 67, 68, 69, 70, 71, 72, 73 }, null, new SkellScript(), 2.1f);
 		}
 
 		public class SkellScript : Script 

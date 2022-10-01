@@ -16,24 +16,7 @@ namespace Planetside
 	{
 		public static void Init()
 		{
-			string TemplatePath = "Planetside/Resources/Enemies/ModderBullets/";
-			string folderName = "spapi";
-			string idleFrameName = "spapibullet_idle_00";
-			string deathFrameName = "spapibullet_die_00";
-			string[] spritePaths = new string[]
-			{
-			TemplatePath+folderName+"/"+idleFrameName+"1.png",
-			TemplatePath+folderName+"/"+idleFrameName+"2.png",
-			TemplatePath+folderName+"/"+idleFrameName+"3.png",
-			TemplatePath+folderName+"/"+idleFrameName+"4.png",
-
-			TemplatePath+folderName+"/"+deathFrameName+"1.png",
-			TemplatePath+folderName+"/"+deathFrameName+"2.png",
-			TemplatePath+folderName+"/"+deathFrameName+"3.png",
-			TemplatePath+folderName+"/"+deathFrameName+"4.png",
-			TemplatePath+folderName+"/"+deathFrameName+"5.png",
-			};
-			EnemyToolbox.CreateNewBulletBankerEnemy("spapi_bullet", "SpecialAPI", 20, 22, spritePaths[0], spritePaths, new List<int> { 0, 1, 2, 3 }, new List<int> { 4, 5, 6, 7, 8 }, null, new SalamanderScript(), 2f);
+			EnemyToolbox.CreateNewBulletBankerEnemy("spapi_bullet", "SpecialAPI", 20, 22, new List<int> { 188, 189, 190, 191 }, new List<int> { 192, 193, 194, 195, 196 }, null, new SalamanderScript(), 2f);
 		}
 		public class SalamanderScript : Script 
 		{

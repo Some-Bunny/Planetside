@@ -17,6 +17,7 @@ using GungeonAPI;
 using static EnemyBulletBuilder.BulletBuilderFakePrefabHooks;
 using SaveAPI;
 using NpcApi;
+using static Dungeonator.ProceduralFlowModifierData;
 
 
 namespace Planetside
@@ -46,7 +47,22 @@ namespace Planetside
                         prerequisiteOperation = DungeonPrerequisite.PrerequisiteOperation.EQUAL_TO,
                         comparisonValue = 0
                     },
+                    new DungeonPrerequisite()
+                    {
+                        saveFlagToCheck = GungeonFlags.BOSSKILLED_LICH,
+                        requireFlag = true,
+                        prerequisiteType = DungeonPrerequisite.PrerequisiteType.FLAG,
+                        prerequisiteOperation = DungeonPrerequisite.PrerequisiteOperation.EQUAL_TO,
+                    },
+                    new DungeonGenToolbox.AdvancedDungeonPrerequisite
+                    {
+                        advancedAdvancedPrerequisiteType = DungeonGenToolbox.AdvancedDungeonPrerequisite.AdvancedAdvancedPrerequisiteType.MULTIPLE_FLOORS,
+                        validTilesets = new List<GlobalDungeonData.ValidTilesets>() {GlobalDungeonData.ValidTilesets.CASTLEGEON, GlobalDungeonData.ValidTilesets.GUNGEON, GlobalDungeonData.ValidTilesets.SEWERGEON, GlobalDungeonData.ValidTilesets.CATHEDRALGEON, GlobalDungeonData.ValidTilesets.MINEGEON, GlobalDungeonData.ValidTilesets.CATACOMBGEON}
+                    },
+
                 };
+                RoomFactory.AddInjection(RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/PrisonUnlockRoom.room").room, "Prison Containment Shrine", flowModifierPlacementTypes, 0, dungeonPrerequisites, "Prison Containment Shrine", 1f, 0.1f);
+
 
                 List<DungeonPrerequisite> dungeonPrerequisites1 = new List<DungeonPrerequisite>()
                 {
@@ -60,10 +76,15 @@ namespace Planetside
                     },
                 };
 
-                RoomFactory.AddInjection(RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/PrisonUnlockRoom.room").room, "Prison Containment Shrine", flowModifierPlacementTypes, 0, dungeonPrerequisites, "Prison Containment Shrine", 1f, 0.1f);
                 RoomFactory.AddInjection(RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/MortalCombat.room").room, "Combat Shrine", flowModifierPlacementTypes, 0, dungeonPrerequisites1, "Combat Shrine", 1, 1f);
 
                 Actions.PostDungeonTrueStart += PostFloorgen;
+
+                ETGModConsole.Commands.AddGroup("psog_void", args =>
+                {
+                });
+                //ETGModConsole.Commands.GetGroup("psog_void").AddUnit("enable_mixed_floor", ForceEnableMixedFloor);
+
 
                 Debug.Log("Finished ContainmentBreachController setup without failure!");
             }
@@ -74,7 +95,17 @@ namespace Planetside
             }
         }
 
-     
+        public static void AddInjecto(GlobalDungeonData.ValidTilesets s)
+        {
+          
+        }
+
+        public static void ForceEnableMixedFloor(string[] s)
+        {
+            CurrentState = States.ALLOWED;
+        }
+
+
         public static void PostFloorgen(Dungeon dungeon)
         {
             if (CurrentState == States.ALLOWED)

@@ -19,7 +19,7 @@ namespace Planetside
 	{
 		public static GameObject prefab;
 		public static readonly string guid = "glockulus";
-		private static tk2dSpriteCollectionData GlockulusCollection;
+		//private static tk2dSpriteCollectionData GlockulusCollection;
 		public static GameObject shootpoint;
 		public static void Init()
 		{
@@ -28,14 +28,20 @@ namespace Planetside
 
 		public static void BuildPrefab()
 		{
-			//
-			bool flag = prefab != null || EnemyBuilder.Dictionary.ContainsKey(guid);
+            //
+
+            tk2dSpriteCollectionData Collection = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("GlockulusCollection").GetComponent<tk2dSpriteCollectionData>();
+            Material mat = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Material>("glockulus material");
+
+            bool flag = prefab != null || EnemyBuilder.Dictionary.ContainsKey(guid);
 			bool flag2 = flag;
 			if (!flag2)
 			{
-				prefab = EnemyBuilder.BuildPrefab("Glockulus", guid, spritePaths[0], new IntVector2(0, 0), new IntVector2(8, 9), false);
+				prefab = EnemyBuilder.BuildPrefabBundle("Glockulus", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(8, 9), new Vector3(0.9375f, 1.1875f), false);
 				var companion = prefab.AddComponent<EnemyBehavior>();
-				companion.aiActor.knockbackDoer.weight = 50;
+                EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, Collection, mat);
+
+                companion.aiActor.knockbackDoer.weight = 50;
 				companion.aiActor.MovementSpeed = 0.8f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
 				companion.aiActor.CollisionDamage = 1f;
@@ -208,42 +214,44 @@ namespace Planetside
 
 				companion.aiActor.AwakenAnimType = AwakenAnimationType.Awaken;
 
-				bool flag3 = GlockulusCollection == null;
-				if (flag3)
+				//bool flag3 = GlockulusCollection == null;
+				//if (flag3)
 				{
+					/*
 					GlockulusCollection = SpriteBuilder.ConstructCollection(prefab, "Glockulus_Collection");
 					UnityEngine.Object.DontDestroyOnLoad(GlockulusCollection);
 					for (int i = 0; i < spritePaths.Length; i++)
 					{
 						SpriteBuilder.AddSpriteToCollection(spritePaths[i], GlockulusCollection);
 					}
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, idle_front, "idle_front", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, idle_front_left, "idle_front_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, idle_front_right, "idle_front_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, idle_back, "idle_back", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, idle_back_left, "idle_back_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, idle_back_right, "idle_back_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
+					*/
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, idle_front, "idle_front", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, idle_front_left, "idle_front_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, idle_front_right, "idle_front_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, idle_back, "idle_back", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, idle_back_left, "idle_back_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, idle_back_right, "idle_back_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
 
 
 					//=====================
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, idle_front, "charge_front", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, idle_front_left, "charge_front_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, idle_front_right, "charge_front_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, idle_back, "charge_back", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, idle_back_left, "charge_back_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, idle_back_right, "charge_back_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, idle_front, "charge_front", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, idle_front_left, "charge_front_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, idle_front_right, "charge_front_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, idle_back, "charge_back", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, idle_back_left, "charge_back_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, idle_back_right, "charge_back_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
 
 
 					//=====================
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, idle_front, "attack_front", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, idle_front_left, "attack_front_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, idle_front_right, "attack_front_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, idle_back, "attack_back", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, idle_back_left, "attack_back_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, idle_back_right, "attack_back_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, idle_front, "attack_front", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, idle_front_left, "attack_front_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, idle_front_right, "attack_front_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, idle_back, "attack_back", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, idle_back_left, "attack_back_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, idle_back_right, "attack_back_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					 24,
 					 25,
@@ -256,7 +264,7 @@ namespace Planetside
 					 32
 
 					}, "death", tk2dSpriteAnimationClip.WrapMode.Once).fps = 13f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, GlockulusCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					0
 					}, "awaken", tk2dSpriteAnimationClip.WrapMode.Once).fps = 1;

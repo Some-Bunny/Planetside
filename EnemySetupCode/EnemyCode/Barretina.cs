@@ -18,7 +18,7 @@ namespace Planetside
 	{
 		public static GameObject prefab;
 		public static readonly string guid = "barretina";
-		private static tk2dSpriteCollectionData BarretinaCollection;
+		//private static tk2dSpriteCollectionData BarretinaCollection;
 		public static GameObject shootpoint;
 		public static void Init()
 		{
@@ -28,14 +28,20 @@ namespace Planetside
 
 		public static void BuildPrefab()
 		{
-			
-			bool flag = prefab != null || EnemyBuilder.Dictionary.ContainsKey(guid);
+
+            tk2dSpriteCollectionData Collection = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("BarretinaCollection").GetComponent<tk2dSpriteCollectionData>();
+            Material mat = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Material>("barretina material");
+
+            bool flag = prefab != null || EnemyBuilder.Dictionary.ContainsKey(guid);
 			bool flag2 = flag;
 			if (!flag2)
 			{
-				prefab = EnemyBuilder.BuildPrefab("Barretina", guid, spritePaths[0], new IntVector2(0, 0), new IntVector2(8, 9), false, true);
+				prefab = EnemyBuilder.BuildPrefabBundle("Barretina", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(8, 9), new Vector3(2.0625f, 2.8125f),false, true);
 				var companion = prefab.AddComponent<EnemyBehavior>();
-				companion.aiActor.knockbackDoer.weight = 200;
+
+                EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, Collection, mat);
+
+                companion.aiActor.knockbackDoer.weight = 200;
 				companion.aiActor.MovementSpeed = 0.8f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
 				companion.aiActor.CollisionDamage = 1f;
@@ -212,39 +218,40 @@ namespace Planetside
 					47
 				};
 
-				bool flag3 = BarretinaCollection == null;
-				if (flag3)
+				//bool flag3 = BarretinaCollection == null;
+				//if (flag3)
 				{
+					/*
 					BarretinaCollection = SpriteBuilder.ConstructCollection(prefab, "Barretina_Collection");
 					UnityEngine.Object.DontDestroyOnLoad(BarretinaCollection);
 					for (int i = 0; i < spritePaths.Length; i++)
 					{
 						SpriteBuilder.AddSpriteToCollection(spritePaths[i], BarretinaCollection);
-					}
+					}*/
 
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, BarretinaCollection, idle_front, "idle_front", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, BarretinaCollection, idle_front_left, "idle_front_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, BarretinaCollection, idle_front_right, "idle_front_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, BarretinaCollection, idle_back, "idle_back", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, BarretinaCollection, idle_back_left, "idle_back_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, BarretinaCollection, idle_back_right, "idle_back_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, idle_front, "idle_front", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, idle_front_left, "idle_front_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, idle_front_right, "idle_front_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, idle_back, "idle_back", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, idle_back_left, "idle_back_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, idle_back_right, "idle_back_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6;
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, BarretinaCollection, idle_front, "charge_front", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, BarretinaCollection, idle_front_left, "charge_front_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, BarretinaCollection, idle_front_right, "charge_front_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, BarretinaCollection, idle_back, "charge_back", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, BarretinaCollection, idle_back_left, "charge_back_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, BarretinaCollection, idle_back_right, "charge_back_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, idle_front, "charge_front", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, idle_front_left, "charge_front_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, idle_front_right, "charge_front_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, idle_back, "charge_back", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, idle_back_left, "charge_back_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, idle_back_right, "charge_back_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6;
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, BarretinaCollection, idle_front, "attack_front", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, BarretinaCollection, idle_front_left, "attack_front_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, BarretinaCollection, idle_front_right, "attack_front_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, BarretinaCollection, idle_back, "attack_back", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, BarretinaCollection, idle_back_left, "attack_back_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, BarretinaCollection, idle_back_right, "attack_back_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, idle_front, "attack_front", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, idle_front_left, "attack_front_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, idle_front_right, "attack_front_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, idle_back, "attack_back", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, idle_back_left, "attack_back_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, idle_back_right, "attack_back_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6;
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, BarretinaCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					 48,
 					 49,
@@ -263,7 +270,7 @@ namespace Planetside
 
 					}, "death", tk2dSpriteAnimationClip.WrapMode.Once).fps = 11f;
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, BarretinaCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					0,
 					1,
@@ -299,9 +306,11 @@ namespace Planetside
 				BehaviorSpeculator behaviorSpeculator = EnemyDatabase.GetOrLoadByGuid("01972dee89fc4404a5c408d50007dad5").behaviorSpeculator;
 				bs.OverrideBehaviors = behaviorSpeculator.OverrideBehaviors;
 				bs.OtherBehaviors = behaviorSpeculator.OtherBehaviors;
+
+
 				shootpoint = new GameObject("fuck");
 				shootpoint.transform.parent = companion.transform;
-				shootpoint.transform.position = companion.sprite.WorldCenter;
+				shootpoint.transform.position = new Vector3(1.0625f, 1.9375f);
 				GameObject m_CachedGunAttachPoint = companion.transform.Find("fuck").gameObject;
 				bs.TargetBehaviors = new List<TargetBehaviorBase>
 			{
@@ -491,84 +500,6 @@ namespace Planetside
 
         }
 
-
-
-
-		private static string[] spritePaths = new string[]
-		{
-
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_south_001.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_south_002.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_south_003.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_south_004.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_south_005.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_south_006.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_south_007.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_south_008.png",
-
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_southleft_001.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_southleft_002.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_southleft_003.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_southleft_004.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_southleft_005.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_southleft_006.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_southleft_007.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_southleft_008.png",
-
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_southright_001.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_southright_002.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_southright_003.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_southright_004.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_southright_005.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_southright_006.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_southright_007.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_southright_008.png",
-
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_north_001.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_north_002.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_north_003.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_north_004.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_north_005.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_north_006.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_north_007.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_north_008.png",
-
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_northleft_001.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_northleft_002.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_northleft_003.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_northleft_004.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_northleft_005.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_northleft_006.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_northleft_007.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_northleft_008.png",
-
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_northright_001.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_northright_002.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_northright_003.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_northright_004.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_northright_005.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_northright_006.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_northright_007.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_idle_northright_008.png",
-
-			"Planetside/Resources/Enemies/Berretina/berretina_die_001.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_die_002.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_die_003.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_die_004.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_die_005.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_die_006.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_die_007.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_die_008.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_die_009.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_die_010.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_die_011.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_die_012.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_die_013.png",
-			"Planetside/Resources/Enemies/Berretina/berretina_die_014.png",
-
-
-		};
-
 		public class EnemyBehavior : BraveBehaviour
 		{
 
@@ -627,7 +558,7 @@ namespace Planetside
 			{
 				if (clip.GetFrame(frameIdx).eventInfo.Contains("Charge"))
 				{
-					StaticVFXStorage.HighPriestClapVFX.SpawnAtPosition(base.aiActor.sprite.WorldCenter, 0, base.aiActor.gameObject.transform.Find("fuck").gameObject.transform);
+					StaticVFXStorage.HighPriestClapVFX.SpawnAtPosition(base.aiActor.sprite.WorldCenter, 0);
 				}
 			}
 		}

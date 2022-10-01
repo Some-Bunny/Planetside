@@ -17,21 +17,7 @@ namespace Planetside
 
 		public static void Init()
 		{
-			string TemplatePath = "Planetside/Resources/Enemies/ModderBullets/bleak/";
-			string[] spritePaths = new string[]
-			{
-				TemplatePath+"bleakbullet_idle_001.png",
-				TemplatePath+"bleakbullet_idle_002.png",
-				TemplatePath+"bleakbullet_idle_003.png",
-				TemplatePath+"bleakbullet_idle_004.png",
-
-				TemplatePath+"bleakbullet_die_001.png",
-				TemplatePath+"bleakbullet_die_002.png",
-				TemplatePath+"bleakbullet_die_003.png",
-				TemplatePath+"bleakbullet_die_004.png",
-				TemplatePath+"bleakbullet_die_005.png",
-			};
-			EnemyToolbox.CreateNewBulletBankerEnemy("bleak_bullet", "BleakBullets", 20, 20, spritePaths[0], spritePaths, new List<int> { 0, 1, 2, 3 }, new List<int> { 4, 5, 6, 7, 8 }, null, new SkellScript());
+			EnemyToolbox.CreateNewBulletBankerEnemy("bleak_bullet", "BleakBullets", 20, 20, new List<int> { 26, 27, 28, 29 }, new List<int> { 30, 31, 32, 33, 34 }, null, new SkellScript());
 		}
 
 		public class SkellScript : Script 

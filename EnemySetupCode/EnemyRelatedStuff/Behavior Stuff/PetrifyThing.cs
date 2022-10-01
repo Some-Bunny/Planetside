@@ -41,13 +41,14 @@ namespace Planetside
 				if (item is SkyRocket laser)
 				{
 					ExplosionData explosionData = laser.ExplosionData;	
-					UnityEngine.Object.Instantiate<GameObject>(explosionData.effect, base.transform.position, Quaternion.identity);
+					GameObject boom = UnityEngine.Object.Instantiate<GameObject>(explosionData.effect, base.transform.position, Quaternion.identity);
+					Destroy(boom, 2);
 					foreach (Component item2 in UnityEngine.Object.Instantiate<GameObject>(laser.SpawnObject, base.transform.position, Quaternion.identity).GetComponentsInChildren(typeof(Component)))
 					{
 						if (item2 is DraGunBoulderController laser2)
 						{
 							float MaxHP = base.aiActor.healthHaver.GetMaxHealth();
-							if (base.aiActor.IsBlackPhantom == true) { MaxHP /= 3; }
+							if (base.aiActor.IsBlackPhantom == true) { MaxHP *= .33f; }
 							laser2.LifeTime = base.aiActor != null ? ((MaxHP / 75f)* Time) +1: Time;
 							float ZoneSize = (MaxHP / 50)+0.25f;
 							GameManager.Instance.Dungeon.StartCoroutine(this.IncreaseInSize(laser2.CircleSprite, ZoneSize >= 2 ? 2 : ZoneSize));

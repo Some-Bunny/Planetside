@@ -16,32 +16,34 @@ namespace Planetside
 	{
 		public static GameObject prefab;
 		public static readonly string guid = "wailer";
-		private static tk2dSpriteCollectionData WailerCollection;
 		public static GameObject shootpointwail;
 		public static AIBeamShooter AIBeamShooter;
 
 		public static void Init()
 		{
-
 			Wailer.BuildPrefab();
 		}
 
 		public static void BuildPrefab()
 		{
-			//
-			bool flag = prefab != null || EnemyBuilder.Dictionary.ContainsKey(guid);
-			bool flag2 = flag;
-			if (!flag2)
+
+
+            tk2dSpriteCollectionData Collection = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("WailerCollection").GetComponent<tk2dSpriteCollectionData>();
+            Material mat = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Material>("wailer material");
+
+			if (prefab == null || !EnemyBuilder.Dictionary.ContainsKey(guid))
 			{
 				AIActor aIActor = EnemyDatabase.GetOrLoadByGuid("01972dee89fc4404a5c408d50007dad5");
-				prefab = EnemyBuilder.BuildPrefab("wailer", guid, spritePaths[0], new IntVector2(0, 0), new IntVector2(8, 9), true);
+				prefab = EnemyBuilder.BuildPrefabBundle("wailer", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(8, 9), new Vector3(1.5f, 1), true);
 				var companion = prefab.AddComponent<EnemyBehavior>();
-				//prefab.AddComponent<AIBeamShooter>(); ;
-				companion.aiActor.knockbackDoer.weight = 800;
+
+                EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, Collection, mat);
+
+                //prefab.AddComponent<AIBeamShooter>(); ;
+                companion.aiActor.knockbackDoer.weight = 800;
 				companion.aiActor.MovementSpeed = 2f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
 				companion.aiActor.CollisionDamage = 1f;
-				companion.aiActor.HasShadow = false;
 				companion.aiActor.IgnoreForRoomClear = false;
 				companion.aiActor.aiAnimator.HitReactChance = 0f;
 				companion.aiActor.specRigidbody.CollideWithOthers = true;
@@ -52,7 +54,10 @@ namespace Planetside
 				companion.aiActor.CanTargetPlayers = true;
 				companion.aiActor.healthHaver.SetHealthMaximum(30f, null, false);
 				companion.aiActor.specRigidbody.PixelColliders.Clear();
-				companion.aiActor.specRigidbody.PixelColliders.Add(new PixelCollider
+
+                EnemyToolbox.AddShadowToAIActor(companion.aiActor, StaticEnemyShadows.defaultShadow, new Vector2(0.5f, -0.125f), "shadowPos");
+
+                companion.aiActor.specRigidbody.PixelColliders.Add(new PixelCollider
 
 				{
 					ColliderGenerationMode = PixelCollider.PixelColliderGeneration.Manual,
@@ -175,46 +180,48 @@ namespace Planetside
 				companion.aiActor.AwakenAnimType = AwakenAnimationType.Awaken;
 
 
-				bool flag3 = WailerCollection == null;
-				if (flag3)
+				//bool flag3 = WailerCollection == null;
+				//if (flag3)
 				{
+					/*
 					WailerCollection = SpriteBuilder.ConstructCollection(prefab, "Wailer_Collection");
 					UnityEngine.Object.DontDestroyOnLoad(WailerCollection);
 					for (int i = 0; i < spritePaths.Length; i++)
 					{
 						SpriteBuilder.AddSpriteToCollection(spritePaths[i], WailerCollection);
 					}
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, WailerCollection, new List<int>
+					*/
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 					2,
 					3
 
-					}, "idle_front_left", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 2f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, WailerCollection, new List<int>
+					}, "idle_front_left", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 3f;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 					4,
 					5
 
 
-					}, "idle_front_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 2f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, WailerCollection, new List<int>
+					}, "idle_front_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 3f;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 					0,
 					1
 
-					}, "idle_back_left", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 2f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, WailerCollection, new List<int>
+					}, "idle_back_left", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 3f;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 					0,
 					1
 
 
-					}, "idle_back_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 2f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, WailerCollection, new List<int>
+					}, "idle_back_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 3f;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 					6,
@@ -224,8 +231,8 @@ namespace Planetside
 					10,
 					11,
 
-					}, "run_back_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, WailerCollection, new List<int>
+					}, "run_back_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 11f;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 					12,
@@ -234,8 +241,8 @@ namespace Planetside
 					15,
 					16,
 					17
-					}, "run_front_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, WailerCollection, new List<int>
+					}, "run_front_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 11f;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 					18,
@@ -246,8 +253,8 @@ namespace Planetside
 					23
 
 
-					}, "run_front_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, WailerCollection, new List<int>
+					}, "run_front_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 11f;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 					24,
@@ -258,8 +265,8 @@ namespace Planetside
 					29
 
 
-					}, "run_back_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, WailerCollection, new List<int>
+					}, "run_back_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 11f;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 				 30,
@@ -270,8 +277,8 @@ namespace Planetside
 
 
 
-					}, "die_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, WailerCollection, new List<int>
+					}, "die_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 				35,
@@ -280,8 +287,8 @@ namespace Planetside
 				38,
 				39
 
-					}, "die_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, WailerCollection, new List<int>
+					}, "die_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 				40,
@@ -304,7 +311,7 @@ namespace Planetside
 
 
 					}, "wail", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6f;
-				SpriteBuilder.AddAnimation(companion.spriteAnimator, WailerCollection, new List<int>
+				SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 				{
 
 				
@@ -836,8 +843,10 @@ namespace Planetside
 			//idles
 			"Planetside/Resources/Wailer/bullet_idle_back_001.png",
 			"Planetside/Resources/Wailer/bullet_idle_back_002.png",
+
 			"Planetside/Resources/Wailer/bullet_idle_left_001.png",
 			"Planetside/Resources/Wailer/bullet_idle_left_002.png",
+
 			"Planetside/Resources/Wailer/bullet_idle_right_001.png",
 			"Planetside/Resources/Wailer/bullet_idle_right_002.png",
 
@@ -849,18 +858,21 @@ namespace Planetside
 			"Planetside/Resources/Wailer/bullet_run_left_back_004.png",
 			"Planetside/Resources/Wailer/bullet_run_left_back_005.png",
 			"Planetside/Resources/Wailer/bullet_run_left_back_006.png",
+
 			"Planetside/Resources/Wailer/bullet_run_left_001.png",
 			"Planetside/Resources/Wailer/bullet_run_left_002.png",
 			"Planetside/Resources/Wailer/bullet_run_left_003.png",
 			"Planetside/Resources/Wailer/bullet_run_left_004.png",
 			"Planetside/Resources/Wailer/bullet_run_left_005.png",
 			"Planetside/Resources/Wailer/bullet_run_left_006.png",
+			
 			"Planetside/Resources/Wailer/bullet_run_right_001.png",
 			"Planetside/Resources/Wailer/bullet_run_right_002.png",
 			"Planetside/Resources/Wailer/bullet_run_right_003.png",
 			"Planetside/Resources/Wailer/bullet_run_right_004.png",
 			"Planetside/Resources/Wailer/bullet_run_right_005.png",
 			"Planetside/Resources/Wailer/bullet_run_right_006.png",
+
 			"Planetside/Resources/Wailer/bullet_run_right_back_001.png",
 			"Planetside/Resources/Wailer/bullet_run_right_back_002.png",
 			"Planetside/Resources/Wailer/bullet_run_right_back_003.png",

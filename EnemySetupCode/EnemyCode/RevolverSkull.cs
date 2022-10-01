@@ -18,8 +18,8 @@ namespace Planetside
 	{
 		public static GameObject prefab;
 		public static readonly string guid = "skullvenant";
-		private static tk2dSpriteCollectionData SkullVenantCollection;
-		public static GameObject shootpoint;
+		//private static tk2dSpriteCollectionData SkullVenantCollection;
+		//public static GameObject shootpoint;
 		public static void Init()
 		{
 			RevolverSkull.BuildPrefab();
@@ -27,15 +27,21 @@ namespace Planetside
 
 		public static void BuildPrefab()
 		{
-			
-			bool flag = prefab != null || EnemyBuilder.Dictionary.ContainsKey(guid);
+
+            tk2dSpriteCollectionData Collection = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("SkullvenantCollection").GetComponent<tk2dSpriteCollectionData>();
+            Material mat = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Material>("skullvenant material");
+
+            bool flag = prefab != null || EnemyBuilder.Dictionary.ContainsKey(guid);
 			bool flag2 = flag;
 			if (!flag2)
 			{
-				prefab = EnemyBuilder.BuildPrefab("Skullvenant", guid, spritePaths[0], new IntVector2(0, 0), new IntVector2(8, 9), false);
+				prefab = EnemyBuilder.BuildPrefabBundle("Skullvenant", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(8, 9), new Vector3(1, 1), false);
 				var companion = prefab.AddComponent<EnemyBehavior>();
-				companion.aiActor.knockbackDoer.weight = 50;
-				companion.aiActor.MovementSpeed = 1.3f;
+                EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, Collection, mat);
+
+
+                companion.aiActor.knockbackDoer.weight = 50;
+				companion.aiActor.MovementSpeed = 2f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
 				companion.aiActor.CollisionDamage = 1f;
 				companion.aiActor.HasShadow = false;
@@ -48,11 +54,14 @@ namespace Planetside
 				companion.aiActor.CollisionKnockbackStrength = 0f;
 				companion.aiActor.procedurallyOutlined = true;
 				companion.aiActor.CanTargetPlayers = true;
-				companion.aiActor.SetIsFlying(false, "Gamemode: Creative");
+				companion.aiActor.SetIsFlying(true, "Gamemode: Creative");
 				companion.aiActor.healthHaver.SetHealthMaximum(35f, null, false);
 				companion.aiActor.PathableTiles = CellTypes.PIT | CellTypes.FLOOR;
 
-				companion.aiActor.specRigidbody.PixelColliders.Clear();
+                EnemyToolbox.AddShadowToAIActor(companion.aiActor, StaticEnemyShadows.defaultShadow, new Vector2(0.5f, 0.125f), "shadowPos");
+
+
+                companion.aiActor.specRigidbody.PixelColliders.Clear();
 				companion.aiActor.specRigidbody.PixelColliders.Add(new PixelCollider
 				{
 					ColliderGenerationMode = PixelCollider.PixelColliderGeneration.Manual,
@@ -64,7 +73,7 @@ namespace Planetside
 					ManualOffsetX = 0,
 					ManualOffsetY = 0,
 					ManualWidth = 15,
-					ManualHeight = 20,
+					ManualHeight = 15,
 					ManualDiameter = 0,
 					ManualLeftX = 0,
 					ManualLeftY = 0,
@@ -83,7 +92,7 @@ namespace Planetside
 					ManualOffsetX = 0,
 					ManualOffsetY = 0,
 					ManualWidth = 15,
-					ManualHeight = 20,
+					ManualHeight = 15,
 					ManualDiameter = 0,
 					ManualLeftX = 0,
 					ManualLeftY = 0,
@@ -176,61 +185,64 @@ namespace Planetside
 				};
 				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awaken" }, new DirectionalAnimation.FlipType[0]);
 				companion.aiActor.AwakenAnimType = AwakenAnimationType.Awaken;
-				bool flag3 = SkullVenantCollection == null;
-				if (flag3)
+				//bool flag3 = SkullVenantCollection == null;
+				//if (flag3)
 				{
+					/*
 					SkullVenantCollection = SpriteBuilder.ConstructCollection(prefab, "Skullvenant_Collection");
 					UnityEngine.Object.DontDestroyOnLoad(SkullVenantCollection);
 					for (int i = 0; i < spritePaths.Length; i++)
 					{
 						SpriteBuilder.AddSpriteToCollection(spritePaths[i], SkullVenantCollection);
 					}
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, SkullVenantCollection, new List<int>
+					*/
+
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 		            0
 					}, "idle_north", tk2dSpriteAnimationClip.WrapMode.Once).fps = 1;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, SkullVenantCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					2
 					}, "idle_north_east", tk2dSpriteAnimationClip.WrapMode.Once).fps = 1;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, SkullVenantCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					1
 					}, "idle_north_west", tk2dSpriteAnimationClip.WrapMode.Once).fps = 1;
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, SkullVenantCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 		            3
 					}, "idle_south", tk2dSpriteAnimationClip.WrapMode.Once).fps = 1;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, SkullVenantCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 		            5
 					}, "idle_south_east", tk2dSpriteAnimationClip.WrapMode.Once).fps = 1;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, SkullVenantCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 		            4
 					}, "idle_south_west", tk2dSpriteAnimationClip.WrapMode.Once).fps = 1;
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, SkullVenantCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					7
 					}, "idle_east", tk2dSpriteAnimationClip.WrapMode.Once).fps = 1;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, SkullVenantCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 		            6
 					}, "idle_west", tk2dSpriteAnimationClip.WrapMode.Once).fps = 1;
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, SkullVenantCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 		             8
 
 					}, "die_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 1f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, SkullVenantCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
                      8
 
 					}, "die_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 1f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, SkullVenantCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					0
 					}, "awaken", tk2dSpriteAnimationClip.WrapMode.Once).fps = 4;
@@ -242,9 +254,9 @@ namespace Planetside
 				BehaviorSpeculator behaviorSpeculator = EnemyDatabase.GetOrLoadByGuid("01972dee89fc4404a5c408d50007dad5").behaviorSpeculator;
 				bs.OverrideBehaviors = behaviorSpeculator.OverrideBehaviors;
 				bs.OtherBehaviors = behaviorSpeculator.OtherBehaviors;
-				shootpoint = new GameObject("fuck");
+				var shootpoint = new GameObject("fuck");
 				shootpoint.transform.parent = companion.transform;
-				shootpoint.transform.position = companion.sprite.WorldCenter;
+				shootpoint.transform.position = companion.sprite.WorldTopCenter;
 				GameObject m_CachedGunAttachPoint = companion.transform.Find("fuck").gameObject;
 				bs.TargetBehaviors = new List<TargetBehaviorBase>
 			{

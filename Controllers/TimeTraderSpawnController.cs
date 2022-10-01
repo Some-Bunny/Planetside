@@ -27,8 +27,8 @@ namespace Planetside
                 TimeToBeat = 0;
                 ShopAllowedToSpawn = false;
                 new Hook(
-                    typeof(RoomHandler).GetMethod("HandleBossClearReward", BindingFlags.Instance | BindingFlags.NonPublic),
-                    typeof(TimeTraderSpawnController).GetMethod("HandleBossClearRewardHook", BindingFlags.Static | BindingFlags.Public));
+                typeof(RoomHandler).GetMethod("HandleBossClearReward", BindingFlags.Instance | BindingFlags.NonPublic),
+                typeof(TimeTraderSpawnController).GetMethod("HandleBossClearRewardHook", BindingFlags.Static | BindingFlags.Public));
 
                 List<ProceduralFlowModifierData.FlowModifierPlacementType> flowModifierPlacementTypes = new List<ProceduralFlowModifierData.FlowModifierPlacementType>()
                 { ProceduralFlowModifierData.FlowModifierPlacementType.END_OF_CHAIN};
@@ -62,16 +62,28 @@ namespace Planetside
                 Debug.Log("Unable to finish TimeTraderSpawnController setup!");
                 Debug.Log(e);
             }
-
-           
-
         }
+
+
+        public static float FloorMultiplier(Dungeon floor)
+        {
+            if (floor.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.CASTLEGEON) { return 0; }
+            if (floor.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.GUNGEON) { return 30f; }
+            if (floor.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.MINEGEON) { return 60f; }
+            if (floor.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.CATACOMBGEON) { return 120; }
+            if (floor.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.FORGEGEON) { return 120; }
+            if (floor.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.SEWERGEON) { return 120f; }
+            if (floor.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.CATHEDRALGEON) { return 150f; }
+            if (floor.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.OFFICEGEON) { return 60f; }
+            return 0f;
+        }
+
         private void ResetFloorSpecificData()
         {
             ShopAllowedToSpawn = false;
             if (GameStatsManager.Instance.IsInSession == true)
             {
-                TimeToBeat = GameStatsManager.Instance.GetSessionStatValue(TrackedStats.TIME_PLAYED) + 195;
+                TimeToBeat = GameStatsManager.Instance.GetSessionStatValue(TrackedStats.TIME_PLAYED) + (195 + (FloorMultiplier(GameManager.Instance.Dungeon)));
                 Debug.Log("Player must beat boss under time time: " + TimeToBeat + " for shop to spawn!");
             }
         }

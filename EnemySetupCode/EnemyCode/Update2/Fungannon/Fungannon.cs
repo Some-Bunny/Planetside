@@ -32,7 +32,7 @@ namespace Planetside
 
 		public static List<int> spriteIds2 = new List<int>();
 
-		private static Texture2D BossCardTexture = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside/Resources/BossCards/fungannon_bosscard.png");
+		//private static Texture2D BossCardTexture = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside/Resources/BossCards/fungannon_bosscard.png");
 
 		public static void Init()
 		{
@@ -946,13 +946,14 @@ namespace Planetside
 					bottomRightTextPxOffset = IntVector2.Zero,
 					bgColor = Color.blue
 				};
-				if (BossCardTexture)
-				{
-					miniBossIntroDoer.portraitSlideSettings.bossArtSprite = BossCardTexture;
-					miniBossIntroDoer.SkipBossCard = false;
-					enemy.aiActor.healthHaver.bossHealthBar = HealthHaver.BossBarType.MainBar;
-				}
-				else
+                var BossCardTexture = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("fungannon_bosscard");
+                if (BossCardTexture)
+                {
+                    miniBossIntroDoer.portraitSlideSettings.bossArtSprite = BossCardTexture;
+                    miniBossIntroDoer.SkipBossCard = false;
+                    enemy.aiActor.healthHaver.bossHealthBar = HealthHaver.BossBarType.SubbossBar;
+                }
+                else
 				{
 					miniBossIntroDoer.SkipBossCard = true;
 					enemy.aiActor.healthHaver.bossHealthBar = HealthHaver.BossBarType.MainBar;

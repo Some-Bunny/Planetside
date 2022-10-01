@@ -32,7 +32,7 @@ namespace Planetside
 		public static GameObject Laser6;
 		*/
 
-		private static Texture2D BossCardTexture = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside/Resources/BossCards/annihichamber_bosscard.png");
+		//private static Texture2D BossCardTexture = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside/Resources/BossCards/annihichamber_bosscard.png");
 		public static string TargetVFX;
 
 		public static Texture2D BloodParticleTexture;
@@ -1251,13 +1251,14 @@ namespace Planetside
 					bottomRightTextPxOffset = IntVector2.Zero,
 					bgColor = Color.red
 				};
-				if (BossCardTexture)
-				{
-					miniBossIntroDoer.portraitSlideSettings.bossArtSprite = BossCardTexture;
-					miniBossIntroDoer.SkipBossCard = false;
-					companion.aiActor.healthHaver.bossHealthBar = HealthHaver.BossBarType.SubbossBar;
-				}
-				else
+                var BossCardTexture = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("annihichamber_bosscard");
+                if (BossCardTexture)
+                {
+                    miniBossIntroDoer.portraitSlideSettings.bossArtSprite = BossCardTexture;
+                    miniBossIntroDoer.SkipBossCard = false;
+                    companion.aiActor.healthHaver.bossHealthBar = HealthHaver.BossBarType.SubbossBar;
+                }
+                else
 				{
 					miniBossIntroDoer.SkipBossCard = true;
 					companion.aiActor.healthHaver.bossHealthBar = HealthHaver.BossBarType.SubbossBar;

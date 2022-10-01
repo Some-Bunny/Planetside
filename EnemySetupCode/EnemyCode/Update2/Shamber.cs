@@ -361,7 +361,7 @@ namespace Planetside
 
 				shootpoint = new GameObject("fuck");
 				shootpoint.transform.parent = enemy.transform;
-				shootpoint.transform.position = enemy.sprite.WorldBottomLeft;
+				shootpoint.transform.position = new Vector3(0,0);
 				GameObject shootpoint1 = enemy.transform.Find("fuck").gameObject;
 
 				var bs = prefab.GetComponent<BehaviorSpeculator>();

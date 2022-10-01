@@ -18,7 +18,6 @@ namespace Planetside
 	{
 		public static GameObject prefab;
 		public static readonly string guid = "arch_gunjurer";
-		private static tk2dSpriteCollectionData ArchGunjurerCholection;
 		public static GameObject shootpoint;
 		public static void Init()
 		{
@@ -27,14 +26,19 @@ namespace Planetside
 
 		public static void BuildPrefab()
 		{
-			//
-			bool flag = prefab != null || EnemyBuilder.Dictionary.ContainsKey(guid);
+            tk2dSpriteCollectionData Collection = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("ArchGunjurerCollection").GetComponent<tk2dSpriteCollectionData>();
+            Material mat = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Material>("archgunjurer material");
+
+            bool flag = prefab != null || EnemyBuilder.Dictionary.ContainsKey(guid);
 			bool flag2 = flag;
 			if (!flag2)
 			{
-				prefab = EnemyBuilder.BuildPrefab("Arch Gunjurer", guid, spritePaths[0], new IntVector2(0, 0), new IntVector2(8, 9), false);
+				prefab = EnemyBuilder.BuildPrefabBundle("Arch Gunjurer", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(8, 9),new Vector3(1.875f, 3.25f) ,false);
 				var companion = prefab.AddComponent<EnemyBehavior>();
-				companion.aiActor.knockbackDoer.weight = 200;
+
+                EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, Collection, mat);
+
+                companion.aiActor.knockbackDoer.weight = 200;
 				companion.aiActor.MovementSpeed = 1.25f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
 				companion.aiActor.CollisionDamage = 1f;
@@ -191,16 +195,10 @@ namespace Planetside
 				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awaken" }, new DirectionalAnimation.FlipType[0]);
 				companion.aiActor.AwakenAnimType = AwakenAnimationType.Awaken;
 
-				bool flag3 = ArchGunjurerCholection == null;
-				if (flag3)
+				//bool flag3 = ArchGunjurerCholection == null;
+				//if (flag3)
 				{
-					ArchGunjurerCholection = SpriteBuilder.ConstructCollection(prefab, "ArchGunjurer_Collection");
-					UnityEngine.Object.DontDestroyOnLoad(ArchGunjurerCholection);
-					for (int i = 0; i < spritePaths.Length; i++)
-					{
-						SpriteBuilder.AddSpriteToCollection(spritePaths[i], ArchGunjurerCholection);
-					}
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, ArchGunjurerCholection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 					0,
@@ -210,7 +208,7 @@ namespace Planetside
 					4
 
 					}, "idle_left", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 7f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, ArchGunjurerCholection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 					0,
@@ -221,7 +219,7 @@ namespace Planetside
 
 
 					}, "idle_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, ArchGunjurerCholection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 					0,
@@ -232,7 +230,7 @@ namespace Planetside
 
 
 					}, "run_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, ArchGunjurerCholection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 
@@ -244,7 +242,7 @@ namespace Planetside
 
 
 					}, "run_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, ArchGunjurerCholection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 				 5,
@@ -259,7 +257,7 @@ namespace Planetside
 
 
 					}, "attack_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 4f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, ArchGunjurerCholection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 
@@ -272,7 +270,7 @@ namespace Planetside
 				 11
 
 					}, "attack_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 4f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, ArchGunjurerCholection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 				 12,
@@ -290,7 +288,7 @@ namespace Planetside
 
 
 					}, "waprin", tk2dSpriteAnimationClip.WrapMode.Once).fps = 10f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, ArchGunjurerCholection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 				 21,
@@ -302,7 +300,7 @@ namespace Planetside
 				 27
 
 					}, "warpout", tk2dSpriteAnimationClip.WrapMode.Once).fps = 10f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, ArchGunjurerCholection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 				 28,
@@ -317,7 +315,7 @@ namespace Planetside
 
 
 					}, "die_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 13f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, ArchGunjurerCholection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 				 28,
@@ -329,7 +327,7 @@ namespace Planetside
 				 34
 
 					}, "die_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 13f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, ArchGunjurerCholection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
  12,
@@ -349,10 +347,14 @@ namespace Planetside
 				BehaviorSpeculator behaviorSpeculator = EnemyDatabase.GetOrLoadByGuid("01972dee89fc4404a5c408d50007dad5").behaviorSpeculator;
 				bs.OverrideBehaviors = behaviorSpeculator.OverrideBehaviors;
 				bs.OtherBehaviors = behaviorSpeculator.OtherBehaviors;
+
+
 				shootpoint = new GameObject("fuck");
 				shootpoint.transform.parent = companion.transform;
 				shootpoint.transform.position = companion.sprite.WorldCenter;
 				GameObject m_CachedGunAttachPoint = companion.transform.Find("fuck").gameObject;
+
+
 				bs.TargetBehaviors = new List<TargetBehaviorBase>
 			{
 				new TargetPlayerBehavior
@@ -494,56 +496,6 @@ namespace Planetside
                 companion.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("ec6b674e0acd4553b47ee94493d66422").bulletBank.GetBullet("bigBullet"));
             }
         }
-
-
-
-		private static string[] spritePaths = new string[]
-		{
-
-			"Planetside/Resources/ArchJurer/archjurer_idle_001.png",
-			"Planetside/Resources/ArchJurer/archjurer_idle_002.png",
-			"Planetside/Resources/ArchJurer/archjurer_idle_003.png",
-			"Planetside/Resources/ArchJurer/archjurer_idle_004.png",
-			"Planetside/Resources/ArchJurer/archjurer_idle_005.png",
-
-			"Planetside/Resources/ArchJurer/archjurer_fire_001.png",
-			"Planetside/Resources/ArchJurer/archjurer_fire_002.png",
-			"Planetside/Resources/ArchJurer/archjurer_fire_003.png",
-			"Planetside/Resources/ArchJurer/archjurer_fire_004.png",
-			"Planetside/Resources/ArchJurer/archjurer_fire_005.png",
-			"Planetside/Resources/ArchJurer/archjurer_fire_006.png",
-			"Planetside/Resources/ArchJurer/archjurer_fire_007.png",
-
-			"Planetside/Resources/ArchJurer/archjurer_warpin_001.png",
-			"Planetside/Resources/ArchJurer/archjurer_warpin_002.png",
-			"Planetside/Resources/ArchJurer/archjurer_warpin_003.png",
-			"Planetside/Resources/ArchJurer/archjurer_warpin_004.png",
-			"Planetside/Resources/ArchJurer/archjurer_warpin_005.png",
-			"Planetside/Resources/ArchJurer/archjurer_warpin_006.png",
-			"Planetside/Resources/ArchJurer/archjurer_warpin_007.png",
-			"Planetside/Resources/ArchJurer/archjurer_warpin_008.png",
-			"Planetside/Resources/ArchJurer/archjurer_warpin_009.png",
-
-			"Planetside/Resources/ArchJurer/archjurer_warpout_001.png",
-			"Planetside/Resources/ArchJurer/archjurer_warpout_002.png",
-			"Planetside/Resources/ArchJurer/archjurer_warpout_003.png",
-			"Planetside/Resources/ArchJurer/archjurer_warpout_004.png",
-			"Planetside/Resources/ArchJurer/archjurer_warpout_005.png",
-			"Planetside/Resources/ArchJurer/archjurer_warpout_006.png",
-			"Planetside/Resources/ArchJurer/archjurer_warpout_007.png",
-
-			//death
-			"Planetside/Resources/ArchJurer/archjurer_die_001.png",
-			"Planetside/Resources/ArchJurer/archjurer_die_002.png",
-			"Planetside/Resources/ArchJurer/archjurer_die_003.png",
-			"Planetside/Resources/ArchJurer/archjurer_die_004.png",
-			"Planetside/Resources/ArchJurer/archjurer_die_005.png",
-			"Planetside/Resources/ArchJurer/archjurer_die_006.png",
-			"Planetside/Resources/ArchJurer/archjurer_die_007.png",
-
-
-
-		};
 
 		public class EnemyBehavior : BraveBehaviour
 		{

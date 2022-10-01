@@ -16,24 +16,7 @@ namespace Planetside
 	{
 		public static void Init()
 		{
-			string TemplatePath = "Planetside/Resources/Enemies/ModderBullets/";
-			string folderName = "notsoai";
-			string idleFrameName = "aibullet_idle_00";
-			string deathFrameName = "aibullet_die_00";
-			string[] spritePaths = new string[]
-			{
-			TemplatePath+folderName+"/"+idleFrameName+"1.png",
-			TemplatePath+folderName+"/"+idleFrameName+"2.png",
-			TemplatePath+folderName+"/"+idleFrameName+"3.png",
-			TemplatePath+folderName+"/"+idleFrameName+"4.png",
-
-			TemplatePath+folderName+"/"+deathFrameName+"1.png",
-			TemplatePath+folderName+"/"+deathFrameName+"2.png",
-			TemplatePath+folderName+"/"+deathFrameName+"3.png",
-			TemplatePath+folderName+"/"+deathFrameName+"4.png",
-			TemplatePath+folderName+"/"+deathFrameName+"5.png",
-			};
-			EnemyToolbox.CreateNewBulletBankerEnemy("notsoai_bullet", "NotSoAI", 20, 19, spritePaths[0], spritePaths, new List<int> { 0, 1, 2, 3 }, new List<int> { 4, 5, 6, 7, 8 }, null, new SkellScript());
+			EnemyToolbox.CreateNewBulletBankerEnemy("notsoai_bullet", "NotSoAI", 20, 19, new List<int> { 140, 141, 142, 143 }, new List<int> { 144, 145, 146, 147, 148 }, null, new SkellScript());
 		}
 		public class SkellScript : Script 
 		{

@@ -155,7 +155,7 @@ namespace Planetside
 		private static tk2dSpriteCollectionData nemesisCollection;
 		public static GameObject DummySpriteObject;
 
-		private static Texture2D BossCardTexture = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside/Resources/BossCards/nemesis_bosscard.png");
+		//private static Texture2D BossCardTexture = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside/Resources/BossCards/nemesis_bosscard.png");
 
 		public static void Init()
 		{
@@ -885,13 +885,14 @@ namespace Planetside
 					bottomRightTextPxOffset = IntVector2.Zero,
 					bgColor = Color.cyan
 				};
-				if (BossCardTexture)
-				{
-					miniBossIntroDoer.portraitSlideSettings.bossArtSprite = BossCardTexture;
-					miniBossIntroDoer.SkipBossCard = false;
-					companion.aiActor.healthHaver.bossHealthBar = HealthHaver.BossBarType.SubbossBar;
-				}
-				else
+                var BossCardTexture = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("nemesis_bosscard");
+                if (BossCardTexture)
+                {
+                    miniBossIntroDoer.portraitSlideSettings.bossArtSprite = BossCardTexture;
+                    miniBossIntroDoer.SkipBossCard = false;
+                    companion.aiActor.healthHaver.bossHealthBar = HealthHaver.BossBarType.SubbossBar;
+                }
+                else
 				{
 					miniBossIntroDoer.SkipBossCard = true;
 					companion.aiActor.healthHaver.bossHealthBar = HealthHaver.BossBarType.SubbossBar;

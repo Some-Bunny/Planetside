@@ -669,9 +669,24 @@ namespace Planetside
 		{
 			public override bool CheckConditionsFulfilled()
 			{
-				if (advancedAdvancedPrerequisiteType != AdvancedAdvancedPrerequisiteType.NONE)
+
+
+                if (advancedAdvancedPrerequisiteType != AdvancedAdvancedPrerequisiteType.NONE)
 				{
-					if (advancedAdvancedPrerequisiteType == AdvancedAdvancedPrerequisiteType.PASSIVE_ITEM_FLAG)
+                    if (advancedAdvancedPrerequisiteType == AdvancedAdvancedPrerequisiteType.MULTIPLE_FLOORS)
+                    {
+						var h = GlobalDungeonData.ValidTilesets.GUNGEON;
+                        if (GameManager.Instance.BestGenerationDungeonPrefab != null)
+                        {
+                            h = GameManager.Instance.BestGenerationDungeonPrefab.tileIndices.tilesetId;
+                        }
+						else
+						{
+							return false;
+						}
+                        return validTilesets.Contains(h);
+                    }
+                    if (advancedAdvancedPrerequisiteType == AdvancedAdvancedPrerequisiteType.PASSIVE_ITEM_FLAG)
 					{
 						if (PassiveItem.IsFlagSetAtAll(requiredPassiveFlag) == true)
 						{
@@ -755,6 +770,10 @@ namespace Planetside
 
 			public AdvancedAdvancedPrerequisiteType advancedAdvancedPrerequisiteType;
 
+
+			public List<GlobalDungeonData.ValidTilesets> validTilesets = new List<GlobalDungeonData.ValidTilesets>();
+
+
 			public enum AdvancedAdvancedPrerequisiteType
 			{
 				NONE,
@@ -763,7 +782,8 @@ namespace Planetside
 				SPEEDRUN_TIMER_AFTER,
 				UNLOCK,
 				SPEEDRUNSHOP,
-				SPEEDRUNSHOPDISALLOWED
+				SPEEDRUNSHOPDISALLOWED,
+				MULTIPLE_FLOORS
 			}
 		}
 

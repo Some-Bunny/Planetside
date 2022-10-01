@@ -55,7 +55,7 @@ namespace Planetside
         {
             if (self.CurrentRoom != null && self.IsInCombat == true)
             {
-                if (!roomsRolledIn.Contains(self.CurrentRoom) /*&& !roomsHurtIn.Contains(self.CurrentRoom)*/)
+                if (!roomsRolledIn.Contains(self.CurrentRoom) && !roomsHurtIn.Contains(self.CurrentRoom))
                 {roomsRolledIn.Add(self.CurrentRoom);}
             }            
             return orig(self, direction);
@@ -66,7 +66,7 @@ namespace Planetside
             orig(self, direction);
             if (self.CurrentRoom != null && self.IsInCombat == true)
             {
-                if (/*!roomsHurtIn.Contains(self.CurrentRoom) && */!roomsRolledIn.Contains(self.CurrentRoom))
+                if (!roomsHurtIn.Contains(self.CurrentRoom) && !roomsRolledIn.Contains(self.CurrentRoom))
                 { roomsHurtIn.Add(self.CurrentRoom); }
             }
         }
@@ -118,8 +118,8 @@ namespace Planetside
 
         public static float FloorMultiplier(Dungeon floor)
         {
-            if (floor.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.CASTLEGEON) { return 0.75f; }
-            if (floor.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.GUNGEON) { return 0.80f; }
+            if (floor.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.CASTLEGEON) { return 0.777f; }
+            if (floor.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.GUNGEON) { return 0.825f; }
             if (floor.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.MINEGEON) { return 0.9f; }
             if (floor.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.CATACOMBGEON) { return 1; }
             if (floor.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.FORGEGEON) { return 1; }
@@ -222,7 +222,7 @@ namespace Planetside
 
                         Debug.Log("Post Calculation Dodgeroll chance: " + Chance);
 
-                        ChanceMult = ChanceMult * (ChanceMult * 1.15f);
+                        ChanceMult = ChanceMult * (ChanceMult * 1.1f);
                         Debug.Log("No Damage Chance: " + ChanceMult.ToString());
 
                         float Total = ChanceMult * Chance;

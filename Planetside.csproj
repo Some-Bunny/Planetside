@@ -228,9 +228,9 @@
     <Compile Include="Items\Update4\LuckyCharm.cs" />
     <Compile Include="Items\Update4\Modifiers\ModifierNeedle.cs" />
     <Compile Include="Misc Stuff\CustomNotificationHandler.cs" />
-    <Compile Include="Misc Stuff\Static Storage\StaticSpriteDefinitions.cs" />
-    <Compile Include="Misc Stuff\Static Storage\StaticInformation.cs" />
-    <Compile Include="Misc Stuff\Static Storage\StaticVFXStorage.cs" />
+    <Compile Include="Static Storage\StaticSpriteDefinitions.cs" />
+    <Compile Include="Static Storage\StaticInformation.cs" />
+    <Compile Include="Static Storage\StaticVFXStorage.cs" />
     <Compile Include="Misc Stuff\WeightedTypeCollection.cs" />
     <Compile Include="NewBehaviourScript1.cs" />
     <Compile Include="Pickups\PerkPickupClass.cs" />
@@ -304,10 +304,10 @@
     <Compile Include="Items\Test Items\TestShaderBullets.cs" />
     <Compile Include="Items\Test Items\TestShaderItem.cs" />
     <Compile Include="Items\Update3\DerpyBullets.cs" />
-    <Compile Include="Misc Stuff\Static Storage\CrossModShopComponents.cs" />
+    <Compile Include="Static Storage\CrossModShopComponents.cs" />
     <Compile Include="Misc Stuff\Item And Gun Addons\LabelablePlayeItem.cs" />
     <Compile Include="Controllers\NevernamedsDarknessController.cs" />
-    <Compile Include="Misc Stuff\Static Storage\StaticExplosions.cs" />
+    <Compile Include="Static Storage\StaticExplosions.cs" />
     <Compile Include="Misc Stuff\Item And Gun Addons\SlashBehavior.cs" />
     <Compile Include="Misc Stuff\Synergy Stuff\BSGSynergy.cs" />
     <Compile Include="NPC Stuff\CustomShopInitialiser.cs" />
@@ -355,7 +355,7 @@
     <Compile Include="Debuff Stuff\HolyBlessingEffect.cs" />
     <Compile Include="Debuff Stuff\HeatStrokeEffect.cs" />
     <Compile Include="Debuff Stuff\DebuffStatics.cs" />
-    <Compile Include="Misc Stuff\Static Storage\EasyGoopDefs.cs" />
+    <Compile Include="Static Storage\EasyGoopDefs.cs" />
     <Compile Include="EnemySetupCode\EnemyRelatedStuff\CustomEnemyBulletsInitialiser.cs" />
     <Compile Include="EnemySetupCode\EnemyRelatedStuff\Behavior Stuff\CustomZeldaChargeBehavior.cs" />
     <Compile Include="EnemySetupCode\EnemyRelatedStuff\Behavior Stuff\CustomBeholsterBeamBehavior.cs" />
@@ -470,7 +470,7 @@
     <Compile Include="EnemySetupCode\EnemyCode\Wailer.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\WallDweller.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\JammedGuardian.cs" />
-    <Compile Include="Misc Stuff\Static Storage\EnemyGUIDs.cs" />
+    <Compile Include="Static Storage\EnemyGUIDs.cs" />
     <Compile Include="Guns\Init Release\ExecutionersCrossbow.cs" />
     <Compile Include="Guns\Init Release\ExecutionersCrossbowSpecial.cs" />
     <Compile Include="Guns\Update2\CapacitorProjectile.cs" />
@@ -536,7 +536,7 @@
     <Compile Include="Items\Init Release\TableTechNull.cs" />
     <Compile Include="Items\Init Release\Shellheart.cs" />
     <Compile Include="Items\Init Release\SoulboundSkull.cs" />
-    <Compile Include="Misc Stuff\Static Storage\RandomPiecesOfStuffToInitialise.cs" />
+    <Compile Include="Static Storage\RandomPiecesOfStuffToInitialise.cs" />
     <Compile Include="Shrine Stuff\ShrineCode\HellShrines\ShrineOfCurses.cs" />
     <Compile Include="Shrine Stuff\ShrineCode\HellShrines\ShrineOfPurity.cs" />
     <Compile Include="Shrine Stuff\ShrineCode\HellShrines\ShrineOfSomething.cs" />

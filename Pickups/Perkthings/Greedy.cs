@@ -46,7 +46,7 @@ namespace Planetside
                         PlayerController player = otherRigidbody.GetComponent<PlayerController>();
                         if (player != null)
                         {
-                            ExplosionData boomboom = StaticExplosionDatas.genericSmallExplosion;
+                            ExplosionData boomboom = StaticExplosionDatas.CopyFields(StaticExplosionDatas.genericSmallExplosion);//StaticExplosionDatas.genericSmallExplosion;
                             boomboom.damageToPlayer = 0;
                             boomboom.preventPlayerForce = true;
                             boomboom.ignoreList.Add(player.specRigidbody);
@@ -212,11 +212,11 @@ namespace Planetside
                         PlayerController player = otherRigidbody.GetComponent<PlayerController>();
                         if (player != null)
                         {
-                            ExplosionData boomboom = StaticExplosionDatas.genericSmallExplosion;
+                            ExplosionData boomboom = StaticExplosionDatas.CopyFields(StaticExplosionDatas.genericSmallExplosion);//StaticExplosionDatas.genericSmallExplosion;
                             boomboom.damageToPlayer = 0;
                             boomboom.preventPlayerForce = true;
                             boomboom.ignoreList.Add(player.specRigidbody);
-                            Exploder.Explode(player.sprite.WorldCenter, StaticExplosionDatas.genericSmallExplosion, player.transform.PositionVector2());
+                            Exploder.Explode(player.sprite.WorldCenter, boomboom, player.transform.PositionVector2());
                             player.StartCoroutine(GrantTemporaryBoost(player));
                         }
                     }));

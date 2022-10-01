@@ -38,7 +38,7 @@ namespace Planetside
     {
         public const string GUID = "somebunny.etg.planetsideofgunymede";
         public const string NAME = "Planetside Of Gunymede Pre-Release";
-        public const string VERSION = "1.3.82";
+        public const string VERSION = "1.3.99";
 
         public static readonly string TEXT_COLOR = "#9006FF";
 
@@ -498,6 +498,8 @@ namespace Planetside
 
             FlowInjectionInitialiser.InitialiseFlows();
 
+
+            
             ETGModMainBehaviour.Instance.gameObject.AddComponent<HMPrimeSpawnController>();
             ETGModMainBehaviour.Instance.gameObject.AddComponent<NevernamedsDarknessHandler>();
             ETGModMainBehaviour.Instance.gameObject.AddComponent<MasteryTraderSpawnController>();
@@ -509,7 +511,7 @@ namespace Planetside
             ETGModMainBehaviour.Instance.gameObject.AddComponent<ContainmentBreachController>();
             ETGModMainBehaviour.Instance.gameObject.AddComponent<ChallengeModeExtraChallenges>();
             ETGModMainBehaviour.Instance.gameObject.AddComponent<HellShrinesController>();
-
+            
 
             //HellShrinesController
             PlanetsideQOL.Init();

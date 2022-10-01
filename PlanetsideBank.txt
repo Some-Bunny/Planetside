@@ -69,6 +69,7 @@ Effect plug-ins	ID	Name	Type				Notes
 	48620415	Have_U_Ever_Been_Outside	Wwise RoomVerb			
 	287224143	New_Wwise_Time_Stretch	Wwise Time Stretch			
 	350469619	Wwise Time Stretch (Custom)	Wwise Time Stretch			
+	573081716	Wwise Time Stretch (Custom)	Wwise Time Stretch			
 	701863527	Inside_My_Head	Wwise RoomVerb			
 	786117557	Not_A_Yellow_Submarine (Custom)	Wwise RoomVerb			
 	802545870	Wwise Gain (Custom)	Wwise Gain			
@@ -102,7 +103,7 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	395399080	Big_Break	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Big_Break_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\Big_Break		36268
 	413340843	Bleep	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Bleep_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\Bleep		6915
 	423828789	PortalCall	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\PortalCall_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\PortalCall		9931
-	427849008	Oppressor_Laugh	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Oppressor_Laugh_F7D0E330_25634AC6.wem		\Actor-Mixer Hierarchy\Default Work Unit\Oppressor_Laugh		57996
+	427849008	Oppressor_Laugh	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Oppressor_Laugh_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\Oppressor_Laugh		41343
 	438416493	Bigbeam_Start	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Bigbeam_Start_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\BigBeam\Bigbeam_Start		27588
 	452294370	Yari1	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Yari1_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\Yari\Yari1		11820
 	462392770	PSOG_MUS_DEEP_01_Calm	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\PSOG_MUS_DEEP_01_Calm_AD29F36A.wem		\Actor-Mixer Hierarchy\Default Work Unit\PSOG_MUS_DEEP_01_Calm		1071907

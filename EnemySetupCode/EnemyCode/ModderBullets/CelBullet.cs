@@ -20,22 +20,7 @@ namespace Planetside
 
 		public static void Init()
 		{
-			string TemplatePath = "Planetside/Resources/Enemies/ModderBullets/cel/";
-			string[] spritePaths = new string[]
-			{
-				TemplatePath+"celbullet_idle_001.png",
-				TemplatePath+"celbullet_idle_002.png",
-				TemplatePath+"celbullet_idle_003.png",
-				TemplatePath+"celbullet_idle_004.png",
-
-				TemplatePath+"celbullet_die_001.png",
-				TemplatePath+"celbullet_die_002.png",
-				TemplatePath+"celbullet_die_003.png",
-				TemplatePath+"celbullet_die_004.png",
-				TemplatePath+"celbullet_die_005.png",
-				TemplatePath+"celbullet_die_006.png",
-			};
-			AIActor cel = EnemyToolbox.CreateNewBulletBankerEnemy("cel_bullet", "Cel", 18, 22, spritePaths[0], spritePaths, new List<int> { 0, 1, 2, 3 }, new List<int> { 4, 5, 6, 7, 8, 9 }, null, null, 4f, 20, 5, 10, 10);
+			AIActor cel = EnemyToolbox.CreateNewBulletBankerEnemy("cel_bullet", "Cel", 18, 22, new List<int> { 53, 54, 55, 56 }, new List<int> { 57, 58, 59, 60, 61, 62 }, null, null, 4f, 20, 5, 10, 10);
 			var bs = cel.gameObject.GetComponent<BehaviorSpeculator>();
 			bs.AttackBehaviors = new List<AttackBehaviorBase>() {
 				new ShootGunBehavior() {

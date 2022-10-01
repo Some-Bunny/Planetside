@@ -20,7 +20,7 @@ namespace Planetside
 	{
 		public static GameObject prefab;
 		public static readonly string guid = "cursebulon";
-		private static tk2dSpriteCollectionData CurseblobCollection;
+		//private static tk2dSpriteCollectionData CurseblobCollection;
 		public static GameObject shootpoint;
 		public static void Init()
 		{
@@ -29,14 +29,21 @@ namespace Planetside
 
 		public static void BuildPrefab()
 		{
-			//
-			bool flag = prefab != null || EnemyBuilder.Dictionary.ContainsKey(guid);
+            //
+
+            tk2dSpriteCollectionData Collection = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("CursebulonCollection").GetComponent<tk2dSpriteCollectionData>();
+            Material mat = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Material>("cursebulon material");
+
+            bool flag = prefab != null || EnemyBuilder.Dictionary.ContainsKey(guid);
 			bool flag2 = flag;
 			if (!flag2)
 			{
-				prefab = EnemyBuilder.BuildPrefab("Cursebulon", guid, spritePaths[0], new IntVector2(0, 0), new IntVector2(8, 9), false);
-				var companion = prefab.AddComponent<EnemyBehavior>();
-				companion.aiActor.knockbackDoer.weight = 25;
+				prefab = EnemyBuilder.BuildPrefabBundle("Cursebulon", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(8, 9), new Vector3(1.4375f, 1.375f), false);
+                var companion = prefab.AddComponent<EnemyBehavior>();
+                EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, Collection, mat, false);
+
+
+                companion.aiActor.knockbackDoer.weight = 25;
 				companion.aiActor.MovementSpeed = 4.75f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
 				companion.aiActor.CollisionDamage = 1f;
@@ -52,7 +59,10 @@ namespace Planetside
 				companion.aiActor.CanTargetPlayers = true;
 				companion.aiActor.healthHaver.SetHealthMaximum(25f, null, false);
 				companion.aiActor.specRigidbody.PixelColliders.Clear();
-				companion.aiActor.specRigidbody.PixelColliders.Add(new PixelCollider
+
+
+
+                companion.aiActor.specRigidbody.PixelColliders.Add(new PixelCollider
 				{
 					ColliderGenerationMode = PixelCollider.PixelColliderGeneration.Manual,
 					CollisionLayer = CollisionLayer.EnemyCollider,
@@ -425,16 +435,19 @@ namespace Planetside
 
                 EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awaken" }, new DirectionalAnimation.FlipType[0]);
 				companion.aiActor.AwakenAnimType = AwakenAnimationType.Awaken;
-				bool flag3 = CurseblobCollection == null;
-				if (flag3)
+				//bool flag3 = CurseblobCollection == null;
+				//if (flag3)
 				{
+					/*
 					CurseblobCollection = SpriteBuilder.ConstructCollection(prefab, "Curseblob_Collection");
 					UnityEngine.Object.DontDestroyOnLoad(CurseblobCollection);
 					for (int i = 0; i < spritePaths.Length; i++)
 					{
 						SpriteBuilder.AddSpriteToCollection(spritePaths[i], CurseblobCollection);
 					}
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, CurseblobCollection, new List<int>
+					*/
+
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 					0,
@@ -446,7 +459,7 @@ namespace Planetside
 
 
 					}, "idle_back_left", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 9f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, CurseblobCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					6,
 					7,
@@ -457,7 +470,7 @@ namespace Planetside
 
 
 					}, "idle_back_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, CurseblobCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 					12,
@@ -468,7 +481,7 @@ namespace Planetside
 				    17
 
 					}, "idle_front_left", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 9f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, CurseblobCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					18,
 					19,
@@ -479,7 +492,7 @@ namespace Planetside
 
 
 					}, "idle_front_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, CurseblobCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 					12,
@@ -491,7 +504,7 @@ namespace Planetside
 
 
 					}, "run_front_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, CurseblobCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 					18,
@@ -503,7 +516,7 @@ namespace Planetside
 
 
 					}, "run_front_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, CurseblobCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					0,
 					1,
@@ -515,7 +528,7 @@ namespace Planetside
 
 
 					}, "run_back_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, CurseblobCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 				    6,
@@ -527,7 +540,7 @@ namespace Planetside
 
 
 					}, "run_back_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, CurseblobCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 				 32,
@@ -543,7 +556,7 @@ namespace Planetside
 
 
 					}, "die_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 15f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, CurseblobCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 				 24,
@@ -556,7 +569,7 @@ namespace Planetside
 				 31
 
 					}, "die_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 15f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, CurseblobCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 				 40,
@@ -568,7 +581,7 @@ namespace Planetside
 					}, "pitfall", tk2dSpriteAnimationClip.WrapMode.Once).fps = 10f;
 				}
 
-				SpriteBuilder.AddAnimation(companion.spriteAnimator, CurseblobCollection, new List<int>
+				SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 				{
 					18,
 				}, "awaken", tk2dSpriteAnimationClip.WrapMode.Once).fps = 4f;

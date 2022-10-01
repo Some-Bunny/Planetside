@@ -196,13 +196,16 @@ namespace Planetside
 			DamagePerSecondToEnemies = 0f,
 			effectIdentifier = "Heat Stroke",
 			AffectsEnemies = true,
-			resistanceType = EffectResistanceType.None,
-			duration = 5f,
+			resistanceType = EffectResistanceType.Fire,
+			duration = 0.2f,
 			TintColor = new Color(0, 0, 0, 0),
 			AppliesTint = true,
 			AppliesDeathTint = false,
-
-		};
+			OverheadVFX = HeatStrokeEffect.heatstrokeVFXObject,
+			maxStackedDuration = 1,
+			
+			stackMode = GameActorEffect.EffectStackingMode.Refresh
+        };
 		public static BrokenArmorEffect brokenArmor = new BrokenArmorEffect
 		{
 			DamagePerSecondToEnemies = 0f,

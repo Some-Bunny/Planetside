@@ -366,7 +366,22 @@ namespace ItemAPI
 
             return body;
         }
+        public static SpeculativeRigidbody SetUpSpeculativeRigidbody(this tk2dBaseSprite sprite, IntVector2 offset, IntVector2 dimensions)
+        {
+            var body = sprite.gameObject.GetOrAddComponent<SpeculativeRigidbody>();
+            PixelCollider collider = new PixelCollider();
+            collider.ColliderGenerationMode = PixelCollider.PixelColliderGeneration.Manual;
+            collider.CollisionLayer = CollisionLayer.EnemyCollider;
 
+            collider.ManualWidth = dimensions.x;
+            collider.ManualHeight = dimensions.y;
+            collider.ManualOffsetX = offset.x;
+            collider.ManualOffsetY = offset.y;
+
+            body.PixelColliders = new List<PixelCollider>() { collider };
+
+            return body;
+        }
         /// <summary>
         /// Constructs a new tk2dSpriteDefinition with the given texture
         /// </summary>

@@ -126,6 +126,9 @@ namespace Planetside
                 component.IgnoreTileCollisionsFor(0.03f);
                 component.pierceMinorBreakables = true;
                 component.collidesWithEnemies = false;
+                SpawnManager.PoolManager.Remove(component.gameObject.transform);
+                component.BulletScriptSettings.preventPooling = true;
+
 
                 CoinRicoshotComponent CrC = component.AddComponent<CoinRicoshotComponent>();
                 CrC.obj = this.gameObject;
@@ -187,7 +190,6 @@ namespace Planetside
             yield break;
         }
 
-
         public Vector2 ReturnDirection()
         {       
             return MathToolbox.GetUnitOnCircle(DirectionToFire, 1);
@@ -226,6 +228,10 @@ namespace Planetside
                 defaultFrontPath+"sniperturret_front_idle4.png",
             };
 
+            AIBulletBank.Entry entrySniper = StaticUndodgeableBulletEntries.CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("31a3ea0c54a745e182e22ea54844a82d").bulletBank.GetBullet("sniper"), "sniperTurret");
+
+
+
             MajorBreakable sniperTurretDefaultaFront = BreakableAPIToolbox.GenerateMajorBreakable("sniperTurretDefaultaFront", idlePaths, 5, idlePaths, 18, 15000, null, 0f, -0.1875f, true, 0, 0, 0, 0, true, null, null, true, null);
 			EnemyToolbox.GenerateShootPoint(sniperTurretDefaultaFront.gameObject, new Vector2(0.3125f, 0.5625f), "laserPoint");
             AIBulletBank bulletBankLeft = sniperTurretDefaultaFront.gameObject.AddComponent<AIBulletBank>();
@@ -234,7 +240,7 @@ namespace Planetside
             t.muzzleFlashPrefab = (PickupObjectDatabase.GetById(370) as Gun).muzzleFlashEffects.effects[0].effects[0].effect;
 
             bulletBankLeft.Bullets = new List<AIBulletBank.Entry>();
-			bulletBankLeft.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("31a3ea0c54a745e182e22ea54844a82d").bulletBank.GetBullet("sniper"));
+			bulletBankLeft.Bullets.Add(entrySniper);
 			StaticReferences.StoredRoomObjects.Add("sniperTurretFront", sniperTurretDefaultaFront.gameObject);
 
             string defaultProfessionalPath = "Planetside/Resources/DungeonObjects/SniperTurret/Professional/";
@@ -259,11 +265,11 @@ namespace Planetside
             StaticReferences.StoredRoomObjects.Add("professionalTurretFront", professionalTurretFront.gameObject);
 
 
-            MakeLeft();
-            MakeRight();
+            MakeLeft(entrySniper);
+            MakeRight(entrySniper);
         }
 
-        public static void MakeLeft()
+        public static void MakeLeft(AIBulletBank.Entry entry)
         {
             string defaultFrontPath = "Planetside/Resources/DungeonObjects/SniperTurret/Default/";
             string[] idlePaths = new string[]
@@ -297,10 +303,10 @@ namespace Planetside
             turret.muzzleFlashPrefab = (PickupObjectDatabase.GetById(370) as Gun).muzzleFlashEffects.effects[0].effects[0].effect;
 
             bulletBank.Bullets = new List<AIBulletBank.Entry>();
-            bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("31a3ea0c54a745e182e22ea54844a82d").bulletBank.GetBullet("sniper"));
+            bulletBank.Bullets.Add(entry);
             StaticReferences.StoredRoomObjects.Add("professionalTurretLeft", professionalTurretFront.gameObject);
         }
-        public static void MakeRight()
+        public static void MakeRight(AIBulletBank.Entry entry)
         {
             string defaultFrontPath = "Planetside/Resources/DungeonObjects/SniperTurret/Default/";
             string[] idlePaths = new string[]
@@ -340,7 +346,7 @@ namespace Planetside
             turret.muzzleFlashPrefab = (PickupObjectDatabase.GetById(370) as Gun).muzzleFlashEffects.effects[0].effects[0].effect;
 
             bulletBank.Bullets = new List<AIBulletBank.Entry>();
-            bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("31a3ea0c54a745e182e22ea54844a82d").bulletBank.GetBullet("sniper"));
+            bulletBank.Bullets.Add(entry);
             StaticReferences.StoredRoomObjects.Add("professionalTurretRight", professionalTurretFront.gameObject);
         }
     }

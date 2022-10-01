@@ -26,12 +26,10 @@ namespace Planetside
         public void Start()
         {
             this.projectile = base.GetComponent<Projectile>();
-            this.player = projectile.Owner as PlayerController;
 			this.gun = projectile.PossibleSourceGun.GetComponent<Petrifier>();
-
-			if (this.projectile != null)
+			if (this.projectile != null && this.gun != null)
             {
-				projectile.OnHitEnemy += ProjectileHit;
+                projectile.OnHitEnemy += ProjectileHit;
 			}
 		}
 
@@ -46,7 +44,6 @@ namespace Planetside
 			}		
 		}
 	
-		public PlayerController player;
 		public Petrifier gun;
         private Projectile projectile;
 	}

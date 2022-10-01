@@ -145,27 +145,17 @@ namespace Planetside
                                         aiactor.ApplyEffect(gameActorFire, 1f, null);
                                         if (HeatStrokeSynergy == true)
                                         {
-                                            bool flagA = player.PlayerHasActiveSynergy("Praise The Gun!");
-                                            if (flagA)
+                                            if (player.PlayerHasActiveSynergy("Praise The Gun!"))
                                             {
-                                                var Frail = aiactor.transform.Find("heatStrokeVFX");
-                                                bool fra = Frail == null;
-                                                if (fra)
-                                                {
-                                                    aiactor.ApplyEffect(DebuffLibrary.HeatStroke, 1f, null);
-                                                }
+                                                aiactor.ApplyEffect(DebuffLibrary.HeatStroke, 1f, null);
                                             }
                                         }
                                     }
                                 }
-
                             }
                         }
                         
-                    }
-
-					
-
+                    }			
 				}
 				this.elapsed = 0f;
 			}

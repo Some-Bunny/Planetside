@@ -445,12 +445,15 @@ namespace Planetside
 			yield break;
         }
 
-		void OnDestroy()
+		private void OnDestroy()
 		{
-			if (nameLabel.gameObject != null)
-            {
-				UnityEngine.Object.Destroy(nameLabel.gameObject);
-			}
+			if (nameLabel != null)
+			{
+                if (nameLabel.gameObject != null)
+                {
+                    UnityEngine.Object.Destroy(nameLabel.gameObject);
+                }
+            }		
 		}
 	}
 }

@@ -277,6 +277,14 @@ namespace Planetside
     public class CoinArbitraryDamageMultiplier : MonoBehaviour
     {
         public float Multiplier = 1;
+        public float CustomMultiplierChangeValue = -1;
+        public bool CanChangeMultiplier = false;
+        public void ChangeMultiplier(float newMult)
+        {
+            if (CanChangeMultiplier == false) { return; }
+            float m = CustomMultiplierChangeValue != -1 ? CustomMultiplierChangeValue : newMult;
+            Multiplier = m;
+        }
     }
 
 
@@ -435,6 +443,7 @@ namespace Planetside
                         if (arbitraryMultiplier != null)
                         {
                             DamageCalc *= arbitraryMultiplier.Multiplier;
+                            arbitraryMultiplier.ChangeMultiplier(1);
                         }
 
                         proj.baseData.damage = DamageCalc * AmountPunched;

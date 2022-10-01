@@ -153,38 +153,42 @@ namespace Planetside
 
         public void CurseAIActorChanges(AIActor target)
         {
-           if (JamnationCurseState != JamnationCurseStates.DISABLED)
-           {
-                float Chance = 0.4f;
-                if (JamnationCurseState == JamnationCurseStates.UPGRADED_AND_ONEROOMLEFT) { Chance = 1; }
-                if (target != null && !OtherTools.BossBlackList.Contains(target.aiActor.encounterTrackable.EncounterGuid) && UnityEngine.Random.value <= Chance)
-                {
-                    if (!target.IsBlackPhantom)
-                    { target.BecomeBlackPhantom(); }
-                    else
-                    { target.gameObject.GetOrAddComponent<UmbraController>(); }
-                }
-           }
-           if (PetrifyCurseState != PetrifyCurseStates.DISABLED)
-           {
-                if (target != null && !OtherTools.BossBlackList.Contains(target.aiActor.EnemyGuid) && !target.healthHaver.IsBoss)
-                {
-                    float Time = PetrifyCurseState == PetrifyCurseStates.UPGRADED_AND_ONEROOMLEFT ? 13.5f : 8;
-                    PetrifyThing petrifyComponent = target.gameObject.AddComponent<PetrifyThing>();
-                    petrifyComponent.Time = Time;
-                }
-           }
-           if (BolsterCurseState != BolsterCurseStates.DISABLED)
+            if (target != null)
             {
-                if (target != null && !OtherTools.BossBlackList.Contains(target.aiActor.encounterTrackable.EncounterGuid))
+                if (JamnationCurseState != JamnationCurseStates.DISABLED)
                 {
-                    float CooldownScale = 0.7f;
-                    float MovementSpeed = 1.2f;
-                    if (BolsterCurseState == BolsterCurseStates.UPGRADED_AND_ONEROOMLEFT) { CooldownScale = 0.33f; MovementSpeed = 1.5f; }
-                    if (target.behaviorSpeculator != null) { target.behaviorSpeculator.CooldownScale /= CooldownScale; }
-                    target.MovementSpeed *= MovementSpeed;
+                    float Chance = 0.4f;
+                    if (JamnationCurseState == JamnationCurseStates.UPGRADED_AND_ONEROOMLEFT) { Chance = 1; }
+                    if (target != null && !OtherTools.BossBlackList.Contains(target.aiActor.encounterTrackable.EncounterGuid) && UnityEngine.Random.value <= Chance)
+                    {
+                        if (!target.IsBlackPhantom)
+                        { target.BecomeBlackPhantom(); }
+                        else
+                        { target.gameObject.GetOrAddComponent<UmbraController>(); }
+                    }
+                }
+                if (PetrifyCurseState != PetrifyCurseStates.DISABLED)
+                {
+                    if (target != null && !OtherTools.BossBlackList.Contains(target.aiActor.EnemyGuid) && !target.healthHaver.IsBoss)
+                    {
+                        float Time = PetrifyCurseState == PetrifyCurseStates.UPGRADED_AND_ONEROOMLEFT ? 12f : 7;
+                        PetrifyThing petrifyComponent = target.gameObject.AddComponent<PetrifyThing>();
+                        petrifyComponent.Time = Time;
+                    }
+                }
+                if (BolsterCurseState != BolsterCurseStates.DISABLED)
+                {
+                    if (target != null && !OtherTools.BossBlackList.Contains(target.aiActor.encounterTrackable.EncounterGuid))
+                    {
+                        float CooldownScale = 0.7f;
+                        float MovementSpeed = 1.2f;
+                        if (BolsterCurseState == BolsterCurseStates.UPGRADED_AND_ONEROOMLEFT) { CooldownScale = 0.33f; MovementSpeed = 1.5f; }
+                        if (target.behaviorSpeculator != null) { target.behaviorSpeculator.CooldownScale /= CooldownScale; }
+                        target.MovementSpeed *= MovementSpeed;
+                    }
                 }
             }
+           
         }
 
         public static void EnableDarkness(bool IsSuperPowered = false, string OverrideTextLineOne = "You Obtained The", string OverrideTextLineTwo = "Curse Of Darkness.")

@@ -21,7 +21,7 @@ namespace Planetside
 		private static tk2dSpriteCollectionData TheBulletBankClooection;
 		public static GameObject shootpoint;
 		public static GameObject shootpoint1;
-		private static Texture2D BossCardTexture = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside/Resources/BossCards/bulletbanker_bosscard.png");
+		//private static Texture2D BossCardTexture = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside/Resources/BossCards/bulletbanker_bosscard.png");
 		public static string TargetVFX;
 		public static Texture _gradTexture;
 
@@ -675,13 +675,14 @@ namespace Planetside
 					bottomRightTextPxOffset = IntVector2.Zero,
 					bgColor = Color.cyan
 				};
-				if (BossCardTexture)
-				{
-					miniBossIntroDoer.portraitSlideSettings.bossArtSprite = BossCardTexture;
-					miniBossIntroDoer.SkipBossCard = false;
-					companion.aiActor.healthHaver.bossHealthBar = HealthHaver.BossBarType.SubbossBar;
-				}
-				else
+                var BossCardTexture = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("bulletbanker_bosscard");
+                if (BossCardTexture)
+                {
+                    miniBossIntroDoer.portraitSlideSettings.bossArtSprite = BossCardTexture;
+                    miniBossIntroDoer.SkipBossCard = false;
+                    companion.aiActor.healthHaver.bossHealthBar = HealthHaver.BossBarType.SubbossBar;
+                }
+                else
 				{
 					miniBossIntroDoer.SkipBossCard = true;
 					companion.aiActor.healthHaver.bossHealthBar = HealthHaver.BossBarType.SubbossBar;

@@ -992,6 +992,8 @@ namespace Planetside
 			{
 				this.EndOnBlank = false;
 				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSniper);
+                base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableDoorLordBurst);
+
                 base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableOldKingHomingRingBulletSoundless);
                 base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableHitscan);
 
@@ -1014,7 +1016,7 @@ namespace Planetside
                     base.PostWwiseEvent("Play_AbyssBlast");
                     for (int j = 0; j < 12; j++)
                     {
-                        base.Fire(Offset.OverridePosition(this.Position + MathToolbox.GetUnitOnCircle(30*j, 9)), new Direction(30 * j, DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new TheGear(b == true ? 22.5f : -22.5f, StaticUndodgeableBulletEntries.UndodgeableOldKingHomingRingBulletSoundless.Name, this, this.Position, (float)j * 30, 0.05f));
+                        base.Fire(Offset.OverridePosition(this.Position + MathToolbox.GetUnitOnCircle(30*j, 9)), new Direction(30 * j, DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new TheGear(b == true ? 22.5f : -22.5f, StaticUndodgeableBulletEntries.UndodgeableDoorLordBurst.Name, this, this.Position, (float)j * 30, 0.05f));
                     }
 					if (e == 1 | e == 6| e == 11)
 					{
@@ -1026,14 +1028,14 @@ namespace Planetside
 					
                     yield return this.Wait(Mathf.Max(50, f - (5f * e)));
                 }
-                for (int r = 0; r < 3; r++)
+                for (int r = 0; r < 5; r++)
 				{
                     float F2 = this.AimDirection;
                     for (int e = 0; e < 3; e++)
                     {
                         base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(this.Position, F2, this, 120 * e, false, 0.75f));
                     }
-                    yield return this.Wait(20);
+                    yield return this.Wait(15);
 
                 }
                 yield return this.Wait(120);

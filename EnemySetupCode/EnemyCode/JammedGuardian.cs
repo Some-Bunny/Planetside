@@ -14,6 +14,8 @@ using BreakAbleAPI;
 
 namespace Planetside
 {
+
+
 	public class JammedGuardEngageDoer : CustomEngageDoer
 	{
 		public void Awake()
@@ -139,7 +141,7 @@ namespace Planetside
 	{
 		public static GameObject prefab;
 		public static readonly string guid = "jammed_guardian";
-		private static tk2dSpriteCollectionData JammedGuardian;
+		//private static tk2dSpriteCollectionData JammedGuardian;
 		public static GameObject shootpoint;
 		public static void Init()
 		{
@@ -148,14 +150,19 @@ namespace Planetside
 
 		public static void BuildPrefab()
 		{
-			//
-			bool flag = prefab != null || EnemyBuilder.Dictionary.ContainsKey(guid);
-			bool flag2 = flag;
-			if (!flag2)
+
+
+            var Collection = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("JammedGuardianCollection").GetComponent<tk2dSpriteCollectionData>();
+            Material mat = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Material>("jamguard material");
+
+
+            if (prefab == null || !EnemyBuilder.Dictionary.ContainsKey(guid))
 			{
-				prefab = EnemyBuilder.BuildPrefab("Jammed Guardian", guid, spritePaths[0], new IntVector2(0, 0), new IntVector2(8, 9), false, true);
+				prefab = EnemyBuilder.BuildPrefabBundle("Jammed Guardian", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(0, 0), new Vector3(2.9375f, 2.9375f), false, true);
 				var companion = prefab.AddComponent<EnemyBehavior>();
-				companion.aiActor.knockbackDoer.weight = 10000;
+                EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, Collection, mat);
+
+                companion.aiActor.knockbackDoer.weight = 10000;
 				companion.aiActor.MovementSpeed = 1.75f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
 				companion.aiActor.CollisionDamage = 1f;
@@ -184,6 +191,7 @@ namespace Planetside
 				companion.aiActor.gameObject.AddComponent<ObjectVisibilityManager>();
 				companion.aiActor.gameObject.AddComponent<AIBeamShooter>();
 				companion.aiActor.gameObject.AddComponent<AIBulletBank>();
+
 
 				companion.aiActor.specRigidbody.PixelColliders.Add(new PixelCollider
 				{
@@ -241,16 +249,18 @@ namespace Planetside
 				companion.aiActor.reinforceType = ReinforceType.SkipVfx;
 				companion.aiActor.gameObject.AddComponent<JammedGuardEngageDoer>();
 
-				bool flag3 = JammedGuardian == null;
-				if (flag3)
+				//bool flag3 = JammedGuardian == null;
+				//if (flag3)
 				{
+					/*
 					JammedGuardian = SpriteBuilder.ConstructCollection(prefab, "Guarder_Collection");
 					UnityEngine.Object.DontDestroyOnLoad(JammedGuardian);
 					for (int i = 0; i < spritePaths.Length; i++)
 					{
 						SpriteBuilder.AddSpriteToCollection(spritePaths[i], JammedGuardian);
 					}
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, JammedGuardian, new List<int>
+					*/
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 					0,
@@ -261,7 +271,7 @@ namespace Planetside
 					5
 
 					}, "idle_left", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 5f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, JammedGuardian, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 					6,
@@ -274,7 +284,7 @@ namespace Planetside
 
 
 					}, "idle_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, JammedGuardian, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 					0,
@@ -285,7 +295,7 @@ namespace Planetside
 					5
 
 					}, "run_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, JammedGuardian, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					6,
 					7,
@@ -294,15 +304,15 @@ namespace Planetside
 					10,
 					11
 					}, "run_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, JammedGuardian, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					12
 					}, "tell_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 20f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, JammedGuardian, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					19
 					}, "tell_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 20f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, JammedGuardian, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					12,
 					13,
@@ -312,7 +322,7 @@ namespace Planetside
 					17,
 					18,
 					}, "attack_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 12f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, JammedGuardian, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					19,
 					20,
@@ -323,57 +333,57 @@ namespace Planetside
 					25,
 					
 					}, "attack_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 12f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, JammedGuardian, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					26,
 
 					}, "die_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, JammedGuardian, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					34,
 
 					}, "die_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, JammedGuardian, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					42,
 					43,
 					44,
 					45
 					}, "armtell_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, JammedGuardian, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					46,
 					47,
 					48,
 					49
 					}, "armtell_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, JammedGuardian, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{			
 					50,
 					51,
 					52,
 					}, "arm_left", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 7;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, JammedGuardian, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					53,
 					54,
 					55,
 					}, "arm_right", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 7;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, JammedGuardian, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					45,
 					44,
 					43,
 					42
 					}, "armunraise_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, JammedGuardian, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					49,
 					48,
 					47,
 					46
 					}, "armunraise_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, JammedGuardian, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					56,
 					57,
@@ -804,8 +814,10 @@ namespace Planetside
 			private RoomHandler m_StartRoom;
 			private void Update()
 			{
-				//if (!base.aiActor.HasBeenEngaged) { CheckPlayerRoom(); }
-			}
+                //if (!base.aiActor.HasBeenEngaged) { CheckPlayerRoom(); }
+				//base.aiActor.sprite.sprite.CurrentSprite.dim
+
+            }
 			private void CheckPlayerRoom()
 			{
 				if (GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() != null && GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() == m_StartRoom)

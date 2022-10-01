@@ -13,8 +13,6 @@ using HarmonyLib;
 
 namespace Planetside
 {
-
-
     public class CoinShot : AdvancedGunBehavior
     {
 
@@ -77,6 +75,11 @@ namespace Planetside
                 projectile.baseData.speed *= 1.5f;
                 var cADM = projectile.gameObject.AddComponent<CoinArbitraryDamageMultiplier>();
                 cADM.Multiplier = 8f;
+                cADM.CanChangeMultiplier = true;
+                cADM.CustomMultiplierChangeValue = 1f;
+                //CoinShotComponent
+
+
 
                 //projectile.SetProjectileSpriteRight("chargergun_projectile_001", 7, 3, false, tk2dBaseSprite.Anchor.MiddleCenter, 7, 3);
                 gun.DefaultModule.projectiles[0] = projectile;

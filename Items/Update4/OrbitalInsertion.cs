@@ -117,8 +117,8 @@ namespace Planetside
 			Destroy(epicwin, 8);
 			AkSoundEngine.PostEvent("Play_OBJ_nuke_blast_01", player.gameObject);
 			
-			ExplosionData defaultSmallExplosionData = StaticExplosionDatas.genericSmallExplosion;
-			defaultSmallExplosionData.damageRadius = 6;
+			ExplosionData defaultSmallExplosionData = StaticExplosionDatas.CopyFields(StaticExplosionDatas.genericSmallExplosion);//StaticExplosionDatas.genericSmallExplosion;
+            defaultSmallExplosionData.damageRadius = 6;
 			defaultSmallExplosionData.damage = 1000;
 			Exploder.Explode(position.ToCenterVector3(1), defaultSmallExplosionData, Vector2.zero, null, false, CoreDamageTypes.None, false);
 			yield break;

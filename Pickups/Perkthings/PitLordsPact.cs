@@ -176,7 +176,7 @@ namespace Planetside
                     component.UpdateZDepth();
 
                 }
-                ExplosionData boomboom = StaticExplosionDatas.genericSmallExplosion;
+                ExplosionData boomboom = StaticExplosionDatas.CopyFields(StaticExplosionDatas.genericSmallExplosion);//StaticExplosionDatas.genericSmallExplosion;
                 boomboom.damageToPlayer = 0;
                 boomboom.damageRadius = 8f;
                 boomboom.damage = pact.EnemySacrificeDamage * 3;
@@ -213,7 +213,7 @@ namespace Planetside
                     component.UpdateZDepth();
 
                 }
-                ExplosionData boomboom = StaticExplosionDatas.genericSmallExplosion;
+                ExplosionData boomboom = StaticExplosionDatas.CopyFields(StaticExplosionDatas.genericSmallExplosion);//StaticExplosionDatas.genericSmallExplosion;
                 boomboom.damageToPlayer = 0;
                 boomboom.damageRadius = 12f;
                 boomboom.damage = pact.EnemySacrificeDamage * 5;
@@ -246,7 +246,7 @@ namespace Planetside
                     component.UpdateZDepth();
 
                 }
-                ExplosionData boomboom = StaticExplosionDatas.genericSmallExplosion;
+                ExplosionData boomboom = StaticExplosionDatas.CopyFields(StaticExplosionDatas.genericSmallExplosion);//StaticExplosionDatas.genericSmallExplosion;
                 boomboom.damageToPlayer = 0;
                 boomboom.damageRadius = 6f;
                 boomboom.damage = pact.EnemySacrificeDamage/4;
@@ -278,7 +278,7 @@ namespace Planetside
                     component.UpdateZDepth();
 
                 }
-                ExplosionData boomboom = StaticExplosionDatas.genericSmallExplosion;
+                ExplosionData boomboom = StaticExplosionDatas.CopyFields(StaticExplosionDatas.genericSmallExplosion);//StaticExplosionDatas.genericSmallExplosion;
                 boomboom.damageToPlayer = 0;
                 boomboom.damageRadius = 8f;
                 boomboom.damage = pact.EnemySacrificeDamage * 5;
@@ -342,7 +342,7 @@ namespace Planetside
                             component.UpdateZDepth();
 
                         }
-                        ExplosionData boomboom = StaticExplosionDatas.genericSmallExplosion;
+                        ExplosionData boomboom = StaticExplosionDatas.CopyFields(StaticExplosionDatas.genericSmallExplosion);//StaticExplosionDatas.genericSmallExplosion;
                         boomboom.damageToPlayer = 0;
                         boomboom.damageRadius = 8f;
                         boomboom.damage = pact.EnemySacrificeDamage;
@@ -396,7 +396,7 @@ namespace Planetside
                       
                     }
                     ETGModConsole.Log("4");
-                    ExplosionData boomboom = StaticExplosionDatas.genericLargeExplosion;
+                    ExplosionData boomboom = StaticExplosionDatas.CopyFields(StaticExplosionDatas.genericSmallExplosion);//StaticExplosionDatas.genericLargeExplosion;
                     boomboom.damageToPlayer = 0;
                     boomboom.damageRadius = 6.5f;
                     boomboom.damage = pact.EnemySacrificeDamage;

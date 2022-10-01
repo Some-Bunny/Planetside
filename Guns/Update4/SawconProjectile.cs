@@ -160,7 +160,7 @@ namespace Planetside
                 blueIndicator.EndEffect();
             }
 
-            ExplosionData data = StaticExplosionDatas.genericSmallExplosion;
+            ExplosionData data = StaticExplosionDatas.CopyFields(StaticExplosionDatas.genericSmallExplosion);//StaticExplosionDatas.genericSmallExplosion;
             data.effect = (PickupObjectDatabase.GetById(601) as Gun).DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX;
             float damage = player != null ? player.PlayerHasActiveSynergy("Screwdriver") == true ? 20 : 6 : 6;
             data.damage = damage * (player != null ? player.stats.GetStatValue(PlayerStats.StatType.Damage) : 1);

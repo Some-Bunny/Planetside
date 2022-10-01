@@ -17,22 +17,7 @@ namespace Planetside
 
 		public static void Init()
 		{
-			string TemplatePath = "Planetside/Resources/Enemies/ModderBullets/glaur/";
-			string[] spritePaths = new string[]
-			{
-				TemplatePath+"glaurbullet_idle_001.png",
-				TemplatePath+"glaurbullet_idle_002.png",
-				TemplatePath+"glaurbullet_idle_003.png",
-				TemplatePath+"glaurbullet_idle_004.png",
-
-				TemplatePath+"glaurbullet_die_001.png",
-				TemplatePath+"glaurbullet_die_002.png",
-				TemplatePath+"glaurbullet_die_003.png",
-				TemplatePath+"glaurbullet_die_004.png",
-				TemplatePath+"glaurbullet_die_005.png",
-				TemplatePath+"glaurbullet_die_006.png",
-			};
-			EnemyToolbox.CreateNewBulletBankerEnemy("glaurung_bullet", "Glaurung", 20, 16, spritePaths[0], spritePaths, new List<int> { 0, 1, 2, 3 }, new List<int> { 4, 5, 6, 7, 8, 9 }, null, new SkellScript(), 2f);
+			EnemyToolbox.CreateNewBulletBankerEnemy("glaurung_bullet", "Glaurung", 20, 16,new List<int> { 74, 75, 76, 77 }, new List<int> { 78, 79, 80, 81, 82, 83 }, null, new SkellScript(), 2f);
 		}
 
 		public class SkellScript : Script 

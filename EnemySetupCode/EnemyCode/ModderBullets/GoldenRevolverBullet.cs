@@ -16,21 +16,7 @@ namespace Planetside
 	{
 		public static void Init()
 		{
-			string TemplatePath = "Planetside/Resources/Enemies/ModderBullets/goldenrevolver/";
-			string[] spritePaths = new string[]
-			{
-				TemplatePath+"grbullet_idle_001.png",
-				TemplatePath+"grbullet_idle_002.png",
-				TemplatePath+"grbullet_idle_003.png",
-				TemplatePath+"grbullet_idle_004.png",
-
-				TemplatePath+"grbullet_die_001.png",
-				TemplatePath+"grbullet_die_002.png",
-				TemplatePath+"grbullet_die_003.png",
-				TemplatePath+"grbullet_die_004.png",
-				TemplatePath+"grbullet_die_005.png",
-			};
-			EnemyToolbox.CreateNewBulletBankerEnemy("gr_bullet", "GoldenRevolver", 20, 19, spritePaths[0], spritePaths, new List<int> { 0, 1, 2, 3 }, new List<int> { 4, 5, 6, 7, 8 }, null, new SkellScript());
+			EnemyToolbox.CreateNewBulletBankerEnemy("gr_bullet", "GoldenRevolver", 20, 19, new List<int> { 84, 85, 86, 87 }, new List<int> { 88, 89, 90, 91, 92 }, null, new SkellScript());
 		}
 		public class SkellScript : Script 
 		{

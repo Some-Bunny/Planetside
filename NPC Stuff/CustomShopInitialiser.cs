@@ -305,7 +305,8 @@ namespace Planetside
                 , null //dungeonprereqwuisite
                 ,2
                 , CustomShopController.PoolType.DUPES_AND_NOEXCLUSION
-                , true);
+                , true,
+                  false);
             masteryShop.GetComponentInChildren<tk2dBaseSprite>().usesOverrideMaterial = true;
             Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
             mat.mainTexture = masteryShop.GetComponentInChildren<tk2dBaseSprite>().sprite.renderer.material.mainTexture;

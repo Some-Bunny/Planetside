@@ -620,7 +620,7 @@ namespace NpcApi
 
 		private bool pickedUp;
 		private CustomShopController m_parentShop = new CustomShopController();
-		private CustomShopController m_baseParentShop;
+		public CustomShopController m_baseParentShop;
 		private float THRESHOLD_CUTOFF_PRIMARY;
 		private float THRESHOLD_CUTOFF_SECONDARY;
 		private GameObject m_shadowObject;

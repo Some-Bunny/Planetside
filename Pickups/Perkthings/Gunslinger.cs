@@ -602,7 +602,7 @@ namespace Planetside
                     case GunClass.SHITTY:
                         break;
                     case GunClass.EXPLOSIVE:
-                        ExplosionData boomboom = StaticExplosionDatas.genericLargeExplosion;
+                        ExplosionData boomboom = StaticExplosionDatas.CopyFields(StaticExplosionDatas.genericSmallExplosion);//StaticExplosionDatas.genericLargeExplosion;
                         boomboom.damageToPlayer = 0;
                         boomboom.preventPlayerForce = true;
                         boomboom.ignoreList.Add(player.specRigidbody);

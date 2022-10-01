@@ -16,27 +16,7 @@ namespace Planetside
 	{
 		public static void Init()
 		{
-			string TemplatePath = "Planetside/Resources/Enemies/ModderBullets/";
-			string folderName = "nevernamed";
-			string idleFrameName = "nevernamedbullet_idle_00";
-			string deathFrameName = "nevernamedbullet_die_00";
-
-			string[] spritePaths = new string[]
-			{
-			TemplatePath+folderName+"/"+idleFrameName+"1.png",
-			TemplatePath+folderName+"/"+idleFrameName+"2.png",
-			TemplatePath+folderName+"/"+idleFrameName+"3.png",
-			TemplatePath+folderName+"/"+idleFrameName+"4.png",
-
-			TemplatePath+folderName+"/"+deathFrameName+"1.png",
-			TemplatePath+folderName+"/"+deathFrameName+"2.png",
-			TemplatePath+folderName+"/"+deathFrameName+"3.png",
-			TemplatePath+folderName+"/"+deathFrameName+"4.png",
-			TemplatePath+folderName+"/"+deathFrameName+"5.png",
-			TemplatePath+folderName+"/"+deathFrameName+"6.png",
-
-			};
-			EnemyToolbox.CreateNewBulletBankerEnemy("nevernamed_bullet", "Nevernamed", 16, 22, spritePaths[0], spritePaths, new List<int> { 0, 1, 2, 3 }, new List<int> { 4, 5, 6, 7, 8, 9 }, null, new SalamanderScript(), 1.5f);
+			EnemyToolbox.CreateNewBulletBankerEnemy("nevernamed_bullet", "Nevernamed", 16, 22, new List<int> { 130, 131, 132, 133 }, new List<int> { 134, 135, 136, 137, 138, 139 }, null, new SalamanderScript(), 1.5f);
 		}
 		public class SalamanderScript : Script 
 		{

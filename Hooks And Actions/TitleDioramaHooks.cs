@@ -61,38 +61,44 @@ namespace Planetside
             animator.playAutomatically = true;
             SpecialDioramaIcon = blessingObj;
 
-            new Hook(
-                     typeof(TitleDioramaController).GetMethod("Core", BindingFlags.NonPublic | BindingFlags.Instance),
-                     typeof(TitleDioramaHooks).GetMethod("CoreHook", BindingFlags.Public | BindingFlags.Static));
+            //new Hook(
+            //         typeof(TitleDioramaController).GetMethod("Core", BindingFlags.NonPublic | BindingFlags.Instance),
+            //         typeof(TitleDioramaHooks).GetMethod("CoreHook", BindingFlags.Public | BindingFlags.Static));
             new Hook(
                      typeof(TitleDioramaController).GetMethod("Update", BindingFlags.NonPublic | BindingFlags.Instance),
                      typeof(TitleDioramaHooks).GetMethod("UpdateHook", BindingFlags.Public | BindingFlags.Static));
         }
 
 
-        public static dfControl referencedController;
         public static IEnumerator CoreHook(Func<TitleDioramaController, bool, IEnumerator> orig, TitleDioramaController self, bool IsfOYER  = true)
         {
             //if (PlanetsideQOL.QOLConfig.TileScreenModifications == true)
             {
-                referencedController = UnityEngine.Object.FindObjectOfType<MainMenuFoyerController>().TitleCard;
-                if (ExtantIcon == null)
+                var thing = UnityEngine.Object.FindObjectOfType<MainMenuFoyerController>();
+                if (thing != null)
                 {
-                    ExtantIcon = UnityEngine.Object.Instantiate(SpecialDioramaIcon, self.transform.position, Quaternion.identity, self.transform);
-                    if (ExtantIcon)
+                    var referencedController = thing.TitleCard;
+                    if (referencedController != null && referencedController.enabled == true)
                     {
-                        ExtantIcon.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
-                    }
-                }
+                        if (ExtantIcon == null)
+                        {
+                            ExtantIcon = UnityEngine.Object.Instantiate(SpecialDioramaIcon, self.transform.position, Quaternion.identity, self.transform);
+                            if (ExtantIcon)
+                            {
+                                ExtantIcon.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
+                            }
+                        }
 
-                if (ExtantLogo == null)
-                {
-                    ExtantLogo = UnityEngine.Object.Instantiate(Logo, self.transform.position, Quaternion.identity, self.transform);
-                    if (ExtantLogo)
-                    {
-                        ExtantLogo.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
+                        if (ExtantLogo == null)
+                        {
+                            ExtantLogo = UnityEngine.Object.Instantiate(Logo, self.transform.position, Quaternion.identity, self.transform);
+                            if (ExtantLogo)
+                            {
+                                ExtantLogo.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
+                            }
+                        }
                     }
-                }
+                }          
             }
          
             IEnumerator origEnum = orig(self, IsfOYER);
@@ -106,16 +112,46 @@ namespace Planetside
         public static void UpdateHook(Action<TitleDioramaController> orig, TitleDioramaController self)
         {
             orig(self);
-            if (ExtantIcon != null && self != null)
-            {
-                ExtantIcon.transform.position = self.transform.position.WithZ(0) + new Vector3(15f, 8.5f).WithZ(10);
 
-            }
-            if (ExtantLogo != null && self != null)
+            var thing = UnityEngine.Object.FindObjectOfType<MainMenuFoyerController>();
             {
-                ExtantLogo.transform.position = self.transform.position.WithZ(0) + new Vector3(-6.9375f, -6f).WithZ(10);
-                ExtantLogo.GetComponent<tk2dBaseSprite>().renderer.material.SetFloat("_Fade", referencedController != null ? referencedController.Opacity : 0);
+                if (thing != null)
+                {
+                    var referencedController = thing.TitleCard;
+                    if (referencedController != null && referencedController.enabled == true)
+                    {
+                        if (ExtantIcon != null && self != null)
+                        {
+                            ExtantIcon.transform.position = self.transform.position.WithZ(0) + new Vector3(15f, 8.5f).WithZ(10);
+
+                        }
+                        if (ExtantLogo != null && self != null)
+                        {
+                            ExtantLogo.transform.position = self.transform.position.WithZ(0) + new Vector3(-6.9375f, -6f).WithZ(10);
+                            ExtantLogo.GetComponent<tk2dBaseSprite>().renderer.material.SetFloat("_Fade", referencedController != null ? referencedController.Opacity : 0);
+                        }
+                        if (ExtantIcon == null)
+                        {
+                            ExtantIcon = UnityEngine.Object.Instantiate(SpecialDioramaIcon, self.transform.position, Quaternion.identity, self.transform);
+                            if (ExtantIcon)
+                            {
+                                ExtantIcon.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
+                            }
+                        }
+
+                        if (ExtantLogo == null)
+                        {
+                            ExtantLogo = UnityEngine.Object.Instantiate(Logo, self.transform.position, Quaternion.identity, self.transform);
+                            if (ExtantLogo)
+                            {
+                                ExtantLogo.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
+                            }
+                        }
+                    }
+                }
             }
+
+
 
 
 

@@ -17,21 +17,7 @@ namespace Planetside
 
 		public static void Init()
 		{
-			string TemplatePath = "Planetside/Resources/Enemies/ModderBullets/blazey/";
-			string[] spritePaths = new string[]
-			{
-				TemplatePath+"blazeybullet_idle_001.png",
-				TemplatePath+"blazeybullet_idle_002.png",
-				TemplatePath+"blazeybullet_idle_003.png",
-				TemplatePath+"blazeybullet_idle_004.png",
-
-				TemplatePath+"blazeybullet_die_001.png",
-				TemplatePath+"blazeybullet_die_002.png",
-				TemplatePath+"blazeybullet_die_003.png",
-				TemplatePath+"blazeybullet_die_004.png",
-				TemplatePath+"blazeybullet_die_005.png",
-			};
-			EnemyToolbox.CreateNewBulletBankerEnemy("blazey_bullet", "Blazeykat", 18, 20, spritePaths[0], spritePaths, new List<int> { 0, 1, 2, 3 }, new List<int> { 4, 5, 6, 7, 8 }, null, new SkellScript());
+			EnemyToolbox.CreateNewBulletBankerEnemy("blazey_bullet", "Blazeykat", 18, 20, new List<int> { 17, 18, 19, 20 }, new List<int> { 21, 22, 23, 24, 25 }, null, new SkellScript());
 		}
 		public class SkellScript : Script
 		{

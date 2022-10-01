@@ -318,7 +318,7 @@ namespace Planetside
 		public static GameObject robotShopkeeperprefab;
 		public static readonly string guid = "RobotShopkeeperBoss";
 		private static tk2dSpriteCollectionData RobotShopkeeperCollection;
-		private static Texture2D BossCardTexture = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside/Resources/BossCards/hmprime_bosscard.png");
+		//private static Texture2D BossCardTexture = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside/Resources/BossCards/hmprime_bosscard.png");
 
 		public static void Init()
 		{
@@ -1966,13 +1966,14 @@ namespace Planetside
 					bottomRightTextPxOffset = IntVector2.Zero,
 					bgColor = Color.green
 				};
-				if (BossCardTexture)
-				{
-					miniBossIntroDoer.portraitSlideSettings.bossArtSprite = BossCardTexture;
-					miniBossIntroDoer.SkipBossCard = false;
-					companion.aiActor.healthHaver.bossHealthBar = HealthHaver.BossBarType.MainBar;
-				}
-				else
+                var BossCardTexture = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("hmprime_bosscard");
+                if (BossCardTexture)
+                {
+                    miniBossIntroDoer.portraitSlideSettings.bossArtSprite = BossCardTexture;
+                    miniBossIntroDoer.SkipBossCard = false;
+                    companion.aiActor.healthHaver.bossHealthBar = HealthHaver.BossBarType.SubbossBar;
+                }
+                else
 				{
 					miniBossIntroDoer.SkipBossCard = true;
 					companion.aiActor.healthHaver.bossHealthBar = HealthHaver.BossBarType.MainBar;
@@ -2137,10 +2138,34 @@ namespace Planetside
 					elapsed += BraveTime.DeltaTime;
 					yield return null;
 				}
-				Destroy(component2.gameObject);
 				base.PostWwiseEvent("Play_CombineShot", null);
-				base.Fire(Offset.OverridePosition(isLeft == true ? base.BulletBank.aiActor.transform.Find("LeftGun_Down(Left)").transform.PositionVector2() : base.BulletBank.aiActor.transform.Find("RightGun_Down(Right)").transform.PositionVector2()), new Direction(die, DirectionType.Absolute, -1f), new Speed(30f, SpeedType.Absolute), new BasicBullet());
-				yield break;
+				base.Fire(Offset.OverridePosition(isLeft == true ? base.BulletBank.aiActor.transform.Find("LeftGun_Down(Left)").transform.PositionVector2() : base.BulletBank.aiActor.transform.Find("RightGun_Down(Right)").transform.PositionVector2()), new Direction(die, DirectionType.Absolute, -1f), new Speed(36f, SpeedType.Absolute), new BasicBullet());
+                elapsed = 0;
+                Time = 0.33f;
+                while (elapsed < Time)
+                {
+                    if (parent.IsEnded || parent.Destroyed)
+                    {
+                        Destroy(component2.gameObject);
+                        yield break;
+                    }
+                    if (component2 != null)
+                    {
+                        component2.transform.position = isLeft == true ? base.BulletBank.aiActor.transform.Find("LeftGun_Down(Left)").transform.PositionVector2() : base.BulletBank.aiActor.transform.Find("RightGun_Down(Right)").transform.PositionVector2();
+                        component2.dimensions = new Vector2(1000f, 1f);
+                        component2.sprite.renderer.material.SetFloat("_EmissivePower", 50);
+                        component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 20);
+                        component2.HeightOffGround = -2;
+                        component2.renderer.gameObject.layer = 23;
+                        component2.UpdateZDepth();
+                        component2.renderer.enabled = true;
+                    }
+                    elapsed += BraveTime.DeltaTime;
+                    yield return null;
+                }
+                Destroy(component2.gameObject);
+
+                yield break;
 			}
 		}
 
@@ -2852,7 +2877,7 @@ namespace Planetside
 				}
 				Destroy(component2.gameObject);
 				base.PostWwiseEvent("Play_CombineShot", null);
-				base.Fire(Offset.OverridePosition(isLeft == true ? base.BulletBank.aiActor.transform.Find("LeftGun_Down(Left)").transform.PositionVector2() : base.BulletBank.aiActor.transform.Find("RightGun_Down(Right)").transform.PositionVector2()), new Direction(die + UnityEngine.Random.Range(-4, 4), DirectionType.Absolute, -1f), new Speed(36f, SpeedType.Absolute), new BasicBullet());
+				base.Fire(Offset.OverridePosition(isLeft == true ? base.BulletBank.aiActor.transform.Find("LeftGun_Down(Left)").transform.PositionVector2() : base.BulletBank.aiActor.transform.Find("RightGun_Down(Right)").transform.PositionVector2()), new Direction(die + UnityEngine.Random.Range(-4, 4), DirectionType.Absolute, -1f), new Speed(40f, SpeedType.Absolute), new BasicBullet());
 				yield break;
 			}
 			public class BasicBullet : Bullet

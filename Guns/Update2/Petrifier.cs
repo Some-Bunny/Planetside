@@ -124,7 +124,7 @@ namespace Planetside
 
 				projectile.gameObject.SetActive(false);
 				projectileModule.projectiles[0] = projectile;
-				projectile.baseData.damage = 13f;
+				projectile.baseData.damage = 17f;
 				projectile.AdditionalScaleMultiplier = 1f;
 				FakePrefab.MarkAsFakePrefab(projectile.gameObject);
 				UnityEngine.Object.DontDestroyOnLoad(projectile);
@@ -138,7 +138,7 @@ namespace Planetside
 			gun.gunSwitchGroup = (PickupObjectDatabase.GetById(156) as Gun).gunSwitchGroup;
 			gun.barrelOffset.transform.localPosition = new Vector3(1.75f, 0.5f, 0f);
 			gun.reloadTime = 1.7f;
-			gun.SetBaseMaxAmmo(80);
+			gun.SetBaseMaxAmmo(120);
 			gun.muzzleFlashEffects = (PickupObjectDatabase.GetById(370) as Gun).muzzleFlashEffects;
 			gun.gunClass = GunClass.SHOTGUN;
 

@@ -19,16 +19,14 @@ namespace Planetside
 	{
 		public static GameObject fuckyouprefab;
 		public static readonly string guid = "Shellrax";
-		private static tk2dSpriteCollectionData ShellraxClooection;
+		//private static tk2dSpriteCollectionData ShellraxClooection;
 		public static GameObject shootpoint;
 		public static GameObject shootpoint1;
-
-		public static GameObject Eye;
 
 		public static GameObject EyeScript;
 
 
-		private static Texture2D BossCardTexture = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside/Resources/BossCards/shellrax_bosscard.png");
+		//private static Texture2D BossCardTexture = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside/Resources/BossCards/shellrax_bosscard.png");
 		public static string TargetVFX;
 		public static Texture2D ShellraxEyeTexture;
 
@@ -40,14 +38,18 @@ namespace Planetside
 
 		public static void BuildPrefab()
 		{
-			// source = EnemyDatabase.GetOrLoadByGuid("c50a862d19fc4d30baeba54795e8cb93");
-			bool flag = fuckyouprefab != null || BossBuilder.Dictionary.ContainsKey(guid);
-			bool flag2 = flag;
-			if (!flag2)
+
+            tk2dSpriteCollectionData Collection = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("ShellraxCollection").GetComponent<tk2dSpriteCollectionData>();
+            Material mat = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Material>("shellrax material.mat");
+
+            if (fuckyouprefab == null || !BossBuilder.Dictionary.ContainsKey(guid))
 			{
-				fuckyouprefab = BossBuilder.BuildPrefab("Shellrax", guid, spritePaths[0], new IntVector2(0, 0), new IntVector2(8, 9), false, true);
+				fuckyouprefab = BossBuilder.BuildPrefabBundle("Shellrax", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(8, 9), new Vector3(3.125f,3.125f) ,false, true);
 				var companion = fuckyouprefab.AddComponent<EnemyBehavior>();
-				companion.aiActor.knockbackDoer.weight = 200;
+                EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, Collection, mat);
+
+
+                companion.aiActor.knockbackDoer.weight = 200;
 				companion.aiActor.MovementSpeed = 0f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
 				companion.aiActor.CollisionDamage = 1f;
@@ -312,16 +314,18 @@ namespace Planetside
 						anim = ribbys
 					}
 				};
-				bool flag3 = ShellraxClooection == null;
-				if (flag3)
+				//bool flag3 = ShellraxClooection == null;
+				//if (flag3)
 				{
+					/*
 					ShellraxClooection = SpriteBuilder.ConstructCollection(fuckyouprefab, "Shellrax-Clooection");
 					UnityEngine.Object.DontDestroyOnLoad(ShellraxClooection);
 					for (int i = 0; i < spritePaths.Length; i++)
 					{
 						SpriteBuilder.AddSpriteToCollection(spritePaths[i], ShellraxClooection);
 					}
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, ShellraxClooection, new List<int>
+					*/
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 					0,
@@ -332,7 +336,7 @@ namespace Planetside
 					5
 
 					}, "idle", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 5f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, ShellraxClooection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 					6,
@@ -343,7 +347,7 @@ namespace Planetside
 
 
 					}, "ribopen", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, ShellraxClooection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 					11,
@@ -369,7 +373,7 @@ namespace Planetside
 
 					}, "attackandclose", tk2dSpriteAnimationClip.WrapMode.Once).fps = 3.5f;
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, ShellraxClooection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 					11,
@@ -392,7 +396,7 @@ namespace Planetside
 
 					}, "keepribsopen", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 3.5f;
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, ShellraxClooection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 					18,
@@ -408,7 +412,7 @@ namespace Planetside
 					}, "tellfist", tk2dSpriteAnimationClip.WrapMode.Once).fps = 8f;
 
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, ShellraxClooection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					23,
 					24,
@@ -419,7 +423,7 @@ namespace Planetside
 					}, "slamfist", tk2dSpriteAnimationClip.WrapMode.Once).fps = 15f;
 
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, ShellraxClooection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					28,
 					29,
@@ -434,7 +438,7 @@ namespace Planetside
 					}, "TeleportOut", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
 
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, ShellraxClooection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					37,
 					38,
@@ -451,7 +455,7 @@ namespace Planetside
 					}, "TeleportIn", tk2dSpriteAnimationClip.WrapMode.Once).fps = 8f;
 
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, ShellraxClooection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 				48,
 				49,
@@ -481,7 +485,7 @@ namespace Planetside
 				
 
 					}, "intro", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, ShellraxClooection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 				66,
 				67,
@@ -505,7 +509,7 @@ namespace Planetside
 
 					}, "death", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, ShellraxClooection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 				85,
 				86,
@@ -514,7 +518,7 @@ namespace Planetside
 				89,
 				90,
 					}, "chargeeye", tk2dSpriteAnimationClip.WrapMode.Once).fps = 10f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, ShellraxClooection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 				91,
 				92,
@@ -573,11 +577,10 @@ namespace Planetside
 				bs.OverrideBehaviors = behaviorSpeculator.OverrideBehaviors;
 				bs.OtherBehaviors = behaviorSpeculator.OtherBehaviors;
 
+				EnemyToolbox.GenerateShootPoint(companion.gameObject, companion.sprite.WorldBottomLeft + new Vector2(1.25f, 2.5f), "eye");
 
-				Eye = ItemBuilder.AddSpriteToObject("eye", "Planetside/Resources/suncolor.png", null);
-				Eye.transform.parent = companion.transform;
-				Eye.transform.position = companion.sprite.WorldBottomLeft +new Vector2(1.25f, 2.5f);
-				GameObject eye = companion.transform.Find("eye").gameObject;
+
+
 
 				EyeScript = ItemBuilder.AddSpriteToObject("EyeScript", "Planetside/Resources/suncolor.png", null);
 				EyeScript.transform.parent = companion.transform;
@@ -896,7 +899,8 @@ namespace Planetside
 					bottomRightTextPxOffset = IntVector2.Zero,
 					bgColor = Color.red
 				};
-				if (BossCardTexture)
+				var BossCardTexture = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("shellrax_bosscard");
+                if (BossCardTexture)
 				{
 					miniBossIntroDoer.portraitSlideSettings.bossArtSprite = BossCardTexture;
 					miniBossIntroDoer.SkipBossCard = false;
@@ -1885,18 +1889,12 @@ namespace Planetside
 
 		private ParticleSystem MakeEyePartcile()
         {
-			GameObject thing = base.aiActor.transform.Find("eye").gameObject;
+			Transform thing = base.aiActor.transform.Find("eye");
 			if (thing == null)
 			{
-				ETGModConsole.Log("why?");
 				return null;
 			}
 			thing.gameObject.layer = 23;
-			tk2dSprite spriter = thing.GetComponent<tk2dSprite>();//.renderer.enabled = false;
-			spriter.sprite.HeightOffGround = 100;
-			spriter.sprite.renderer.sortingLayerName = "Foregound";
-			spriter.renderer.enabled = false;
-
 			var partObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("ShellraxEye")); ;//this is the name of the object which by default will be "Particle System"
 			partObj.transform.position = thing.transform.position;
 			partObj.transform.parent = thing.transform;
@@ -1910,94 +1908,6 @@ namespace Planetside
 			particleRenderer.gameObject.layer = 23;
 
 			return system;
-
-			/*
-			thing.gameObject.layer = 23;
-			tk2dSprite spriter = thing.GetComponent<tk2dSprite>();//.renderer.enabled = false;
-			spriter.sprite.HeightOffGround = -100;
-			spriter.sprite.renderer.sortingLayerName = "Foregound";
-			spriter.renderer.enabled = false;
-			ParticleSystem yes = thing.AddComponent<ParticleSystem>();
-			//yes.CopyFrom<ParticleSystem>(particle);
-
-			yes.name = "Shellrax Eye Particles";
-			yes.transform.position = thing.transform.position;
-			var main = yes.main;
-
-			main.maxParticles = 10000;
-			main.playOnAwake = transform;
-			main.duration = 1;
-			main.loop = true;
-			main.startLifetime = new ParticleSystem.MinMaxCurve(0.1f, 1.4f);
-			main.startSpeed = new ParticleSystem.MinMaxCurve(0f, 0f);
-			main.startSize = new ParticleSystem.MinMaxCurve(0.03f, 0.3f);
-			main.startColor = new ParticleSystem.MinMaxGradient(new Color32(255, 141, 0, 255), new Color32(255, 141, 0, 255));
-			main.simulationSpace = ParticleSystemSimulationSpace.World;
-			main.startRotation = new ParticleSystem.MinMaxCurve(-5, 5);
-			main.randomizeRotationDirection = 2;
-			main.gravityModifier = -1.5f;
-
-
-			var emm = yes.emission;
-			emm.rateOverTime = 50;
-
-			var colorOverLifetime = yes.colorOverLifetime;
-			colorOverLifetime.enabled = true;
-			var brightness = UnityEngine.Random.Range(0.2f, 1);
-			var gradient = new Gradient();
-			gradient.SetKeys(new[] { new GradientColorKey(Color.white, 0f), new GradientColorKey(Color.white, 0.9f) }, new[] { new GradientAlphaKey(1f, 0f), new GradientAlphaKey(1f, 1f) });
-			colorOverLifetime.color = new ParticleSystem.MinMaxGradient(gradient);
-
-			var vOL = yes.velocityOverLifetime;
-			vOL.enabled = true;
-			vOL.speedModifier = new ParticleSystem.MinMaxCurve(1f, new AnimationCurve(new Keyframe(0f, 1f), new Keyframe(1f, 0f)));
-
-			var sc = yes.shape;
-			sc.shapeType = ParticleSystemShapeType.Circle;
-			sc.radius = 0.1f;
-
-			var tsa = yes.textureSheetAnimation;
-			tsa.animation = ParticleSystemAnimationType.SingleRow;
-			tsa.numTilesX = 3;
-			tsa.numTilesY = 1;
-			tsa.enabled = true;
-			tsa.cycleCount = 1;
-			tsa.frameOverTimeMultiplier = 1.3f;
-
-			var vel = yes.inheritVelocity;
-
-			vel.mode = ParticleSystemInheritVelocityMode.Initial;
-			vel.curveMultiplier = 0.9f;
-
-			var sizeOverLifetime = yes.sizeOverLifetime;
-			sizeOverLifetime.enabled = true;
-			sizeOverLifetime.size = new ParticleSystem.MinMaxCurve(1f, new AnimationCurve(new Keyframe(0.4f, 1f), new Keyframe(1f, 0f)));
-
-
-			var sbs = yes.sizeBySpeed;
-			sbs.separateAxes = false;
-			sbs.sizeMultiplier = 0.9f;
-			sbs.size = new ParticleSystem.MinMaxCurve(1, 0);
-
-
-
-			var particleRenderer = yes.gameObject.GetComponent<ParticleSystemRenderer>();
-			particleRenderer.material = new Material(Shader.Find("Sprites/Default"));
-			particleRenderer.material.mainTexture = Shellrax.ShellraxEyeTexture;
-			particleRenderer.material.globalIlluminationFlags = MaterialGlobalIlluminationFlags.BakedEmissive;
-
-			Material sharedMaterial = particleRenderer.sharedMaterial;
-			Material material = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
-			material.SetTexture("_MainTex", sharedMaterial.GetTexture("_MainTex"));
-			material.SetColor("_EmissiveColor", new Color32(255, 141, 0, 255));
-			material.SetFloat("_EmissiveColorPower", 5f);
-			material.SetFloat("_EmissivePower", 25f);
-			particleRenderer.material = material;
-
-			*/
-
-
-			//return yes;
         }
 
 
@@ -2057,21 +1967,16 @@ namespace Planetside
 
 		private void Start()
 		{
+            EyeParticle = MakeEyePartcile();
 
-			if (EyeParticle == null)
-			{
-				EyeParticle = MakeEyePartcile();
-			}
-			IsActuallyDead = false;
+            IsActuallyDead = false;
 			isTelerting = false;
 			base.healthHaver.minimumHealth = 1;
-			//Important for not breaking basegame stuff!
 			base.aiActor.spriteAnimator.AnimationEventTriggered += this.AnimationEventTriggered;
 			StaticReferenceManager.AllHealthHavers.Remove(base.aiActor.healthHaver);
 			base.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("4d164ba3f62648809a4a82c90fc22cae").bulletBank.GetBullet("big_one"));
 
-			base.aiActor.gameObject.layer = 22;
-			
+			base.aiActor.gameObject.layer = 22;			
 			base.aiActor.sprite.HeightOffGround = 0;
 			
 
@@ -2086,7 +1991,6 @@ namespace Planetside
 				base.aiActor.sprite.renderer.material = mat;
 			}
 
-
 			base.aiActor.healthHaver.OnPreDeath += (obj) =>
 			{
 				IsActuallyDead = true;
@@ -2099,19 +2003,18 @@ namespace Planetside
 				"This is not my end... I will return!",
 				"With my final breath, I curse thee!"
 				};
-				TextBoxManager.ShowTextBox(base.aiActor.sprite.WorldTopCenter, base.aiActor.transform, 3, BraveUtility.RandomElement<string>(DEATH), string.Empty, false, TextBoxManager.BoxSlideOrientation.NO_ADJUSTMENT, false, false);
-				
+				TextBoxManager.ShowTextBox(base.aiActor.sprite.WorldTopCenter, base.aiActor.transform, 3, BraveUtility.RandomElement<string>(DEATH), string.Empty, false, TextBoxManager.BoxSlideOrientation.NO_ADJUSTMENT, false, false);		
 				AkSoundEngine.PostEvent("Play_VO_lichC_death_01", base.gameObject);
 			};
 			base.healthHaver.healthHaver.OnDeath += (obj) =>
 			{
-				float itemsToSpawn = UnityEngine.Random.Range(2, 5);
+                AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.SHELLRAX_DEFEATED, true);//Done
+                float itemsToSpawn = UnityEngine.Random.Range(3, 6);
 				float spewItemDir = 360 / itemsToSpawn;
-				AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.SHELLRAX_DEFEATED, true);//Done
 				for (int i = 0; i < itemsToSpawn; i++)
 				{
 					int id = BraveUtility.RandomElement<int>(Shellrax.Lootdrops);
-					LootEngine.SpawnItem(PickupObjectDatabase.GetById(id).gameObject, base.aiActor.sprite.WorldCenter, new Vector2((spewItemDir * itemsToSpawn)*i, spewItemDir * itemsToSpawn), 2.2f, false, true, false);
+					LootEngine.SpawnItem(PickupObjectDatabase.GetById(id).gameObject, base.aiActor.sprite.WorldCenter, MathToolbox.GetUnitOnCircle(spewItemDir * i, 2), 2.2f, false, true, false);
 				}
 
 				Chest chest2 = GameManager.Instance.RewardManager.SpawnTotallyRandomChest(GameManager.Instance.PrimaryPlayer.CurrentRoom.GetRandomVisibleClearSpot(1, 1));

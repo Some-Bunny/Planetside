@@ -73,8 +73,8 @@ namespace Planetside
 			}
 
 
-			ExplosionData data = StaticExplosionDatas.genericSmallExplosion;
-			data.effect = ResourceCache.Acquire("Global VFX/VFX_Synergy_Poof_001") as GameObject;
+			ExplosionData data = StaticExplosionDatas.CopyFields(StaticExplosionDatas.genericSmallExplosion);//StaticExplosionDatas.genericSmallExplosion;
+            data.effect = ResourceCache.Acquire("Global VFX/VFX_Synergy_Poof_001") as GameObject;
 			for (int i = 0; i < GameManager.Instance.AllPlayers.Length; i++)
 			{
 				PlayerController playerController = GameManager.Instance.AllPlayers[i];

@@ -92,7 +92,7 @@ namespace Planetside
                 "There will be something cool here during the full release, I promise!");
 
             MajorBreakable note4 = BreakableAPIToolbox.GenerateMajorBreakable("prisonerNote_1", idlePaths, 1, idlePaths, 1, 15000, null, 0f, -0.1875f, true, 0, 0, 0, 0, true, null, null, true, null);
-            NoteDoer PrisonerNote1 = BreakableAPIToolbox.GenerateNoteDoer(note4, BreakableAPIToolbox.GenerateTransformObject(note1.gameObject, new Vector2(0.25f, 0.25f), "noteattachPoint").transform, "#PRERELEASE_NOTE_1");
+            NoteDoer PrisonerNote1 = BreakableAPIToolbox.GenerateNoteDoer(note4, BreakableAPIToolbox.GenerateTransformObject(note4.gameObject, new Vector2(0.25f, 0.25f), "noteattachPoint").transform, "#PRERELEASE_NOTE_1");
 
 
             StaticReferences.StoredRoomObjects.Add("note1", finishedNote1.gameObject);

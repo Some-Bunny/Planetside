@@ -26,7 +26,7 @@ namespace Planetside
 			Gun gun = ETGMod.Databases.Items.NewGun("Whistler", "whistler");
 			Game.Items.Rename("outdated_gun_mods:whistler", "psog:whistler");
 			gun.gameObject.AddComponent<Whistler>();
-			GunExt.SetShortDescription(gun, "By The Beard!");
+			GunExt.SetShortDescription(gun, "Can You H	ear It?");
 			GunExt.SetLongDescription(gun, "A gun invented by someone *particularly* lazy, with the desire to never meet their enemy face on. It got its legendary name due to its unique bullet structure, causing the rounds to seemingly whistle.");
 			GunExt.SetupSprite(gun, null, "whistler_idle_001", 8);
 			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 24);

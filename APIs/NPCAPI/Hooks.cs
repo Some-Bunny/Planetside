@@ -1,9 +1,13 @@
-﻿using MonoMod.RuntimeDetour;
+﻿using Dungeonator;
+using MonoMod.RuntimeDetour;
+using Planetside;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using UnityEngine;
 
 namespace NpcApi
 {
@@ -42,10 +46,42 @@ namespace NpcApi
                     typeof(BaseShopController).GetMethod("LockItems", BindingFlags.Instance | BindingFlags.NonPublic),
                     typeof(Hooks).GetMethod("LockItemsHook", BindingFlags.Static | BindingFlags.NonPublic));
 
+
+            var ImpactedRigidbodyHook = new Hook(
+                     typeof(GrappleModule).GetMethod("ImpactedRigidbody", BindingFlags.Instance | BindingFlags.NonPublic),
+                     typeof(Hooks).GetMethod("ImpactedRigidbodyHook", BindingFlags.Static | BindingFlags.NonPublic));
+
             /*var LockItemsHook = new Hook(
                 typeof(BaseShopController).GetMethod("LockItems", BindingFlags.Instance | BindingFlags.NonPublic),
                 typeof(Hooks).GetMethod("LockItemsHook", BindingFlags.Static | BindingFlags.NonPublic));*/
         }
+
+        private static void ImpactedRigidbodyHook(Action<GrappleModule, CollisionData> orig, GrappleModule self, CollisionData rigidbodyCollision)
+        {
+            ShopItemController component = rigidbodyCollision.OtherRigidbody.GetComponent<ShopItemController>();
+            if (component)
+            {
+                if (component is CustomShopItemController Csic)
+                {
+                    PlanetsideReflectionHelper.ReflectSetField<bool>(typeof(GrappleModule), "m_hasImpactedShopItem", true, self);
+                    if (Csic.m_baseParentShop.CanReallyBeRobbed == false)
+                    {
+                        rigidbodyCollision.MyRigidbody.Velocity = Vector2.zero;
+                        return;
+                    }
+                    else
+                    {
+                        AkSoundEngine.PostEvent("Play_WPN_metalbullet_impact_01", self.sourceGameObject);
+                        PlanetsideReflectionHelper.ReflectSetField<ShopItemController>(typeof(GrappleModule), "m_impactedShopItem", component.Locked ? null : component, self);
+                        component.specRigidbody.enabled = false;
+                        rigidbodyCollision.MyRigidbody.Velocity = Vector2.zero;
+                        return;
+                    }
+                }
+            }
+            orig(self, rigidbodyCollision);
+        }
+
 
         private static void LockItemsHook(Action<BaseShopController> orig, BaseShopController self)
         {
@@ -116,9 +152,21 @@ namespace NpcApi
 
         public static void ForceStealHook(Action<ShopItemController, PlayerController> orig, ShopItemController self, PlayerController player)
         {
-            if (self is CustomShopItemController)
+            if (self is CustomShopItemController ass)
             {
-                (self as CustomShopItemController).ForceSteal(player);
+                if (ass.m_baseParentShop != null && ass.m_baseParentShop.CanReallyBeRobbed == true)
+                {
+                    ass.ForceSteal(player);
+                }
+                else
+                {
+                    if (!ass.m_baseParentShop.AttemptToSteal())
+                    {
+                        player.DidUnstealthyAction();
+                        ass.m_baseParentShop.NotifyStealFailed();
+                    }
+                    return;
+                }
             }
             else
             {

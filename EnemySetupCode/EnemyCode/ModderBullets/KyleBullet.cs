@@ -16,26 +16,7 @@ namespace Planetside
 	{
 		public static void Init()
 		{
-			string TemplatePath = "Planetside/Resources/Enemies/ModderBullets/";
-			string folderName = "kyle";
-			string idleFrameName = "kylebullet_idle_00";
-			string deathFrameName = "kylebullet_die_00";
-
-			string[] spritePaths = new string[]
-			{
-			TemplatePath+folderName+"/"+idleFrameName+"1.png",
-			TemplatePath+folderName+"/"+idleFrameName+"2.png",
-			TemplatePath+folderName+"/"+idleFrameName+"3.png",
-			TemplatePath+folderName+"/"+idleFrameName+"4.png",
-
-			TemplatePath+folderName+"/"+deathFrameName+"1.png",
-			TemplatePath+folderName+"/"+deathFrameName+"2.png",
-			TemplatePath+folderName+"/"+deathFrameName+"3.png",
-			TemplatePath+folderName+"/"+deathFrameName+"4.png",
-			TemplatePath+folderName+"/"+deathFrameName+"5.png",
-
-			};
-			AIActor kyle = EnemyToolbox.CreateNewBulletBankerEnemy("kyle_bullet", "Kyle The Scientist", 16, 17, spritePaths[0], spritePaths, new List<int> { 0, 1, 2, 3 }, new List<int> { 4, 5, 6, 7, 8 }, null, null, 3f);
+			AIActor kyle = EnemyToolbox.CreateNewBulletBankerEnemy("kyle_bullet", "Kyle The Scientist", 16, 17, new List<int> {112, 113, 114, 115 }, new List<int> {116, 117, 118, 119, 120 }, null, null, 3f);
 			GameObject m_CachedGunAttachPoint = kyle.transform.Find("baseShootpoint").gameObject;
 			var bs = kyle.gameObject.GetComponent<BehaviorSpeculator>();
 			bs.OtherBehaviors = new List<BehaviorBase>() {
@@ -51,7 +32,6 @@ namespace Planetside
 					AmountOFLines = 5,
 				}
 			};
-
 		}
 	}
 }

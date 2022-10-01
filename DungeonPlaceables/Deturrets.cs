@@ -24,7 +24,7 @@ namespace Planetside
         {
 			SpinBulletsControllerEnemyless enemyless = this.gameObject.AddComponent<SpinBulletsControllerEnemyless>();
 			enemyless.ShootPoint = base.gameObject.transform.Find("attachy").gameObject;
-			enemyless.OverrideBulletName = "default";
+			enemyless.OverrideBulletName = "deturretShell";
 			enemyless.NumBullets = 5;
 			enemyless.BulletMinRadius = 1;
 			enemyless.BulletMaxRadius = 3.2f;
@@ -54,25 +54,25 @@ namespace Planetside
                 defaultPath+"deturret_idle_010.png",
             };
 
+            AIBulletBank.Entry entry = StaticUndodgeableBulletEntries.CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("01972dee89fc4404a5c408d50007dad5").bulletBank.GetBullet("default"), "deturretShell");
+
             MajorBreakable deturretLeft = BreakableAPIToolbox.GenerateMajorBreakable("deturretLeft", idlePaths, 7, idlePaths, 18, 15000, null, 0f, -0.1875f, true, 16, 16, -4, 0, true, null, null, true, null);
 			EnemyToolbox.GenerateShootPoint(deturretLeft.gameObject, new Vector2(0.5f, 0.5f), "attachy");
             AIBulletBank bulletBankLeft = deturretLeft.gameObject.AddComponent<AIBulletBank>();
 			DeturretController deturretC = deturretLeft.gameObject.AddComponent<DeturretController>();
 			deturretC.Speed = -60;
 			bulletBankLeft.Bullets = new List<AIBulletBank.Entry>();
-			bulletBankLeft.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("01972dee89fc4404a5c408d50007dad5").bulletBank.GetBullet("default"));
+			bulletBankLeft.Bullets.Add(entry);
 
 
-			StaticReferences.StoredRoomObjects.Add("deturretLeft", deturretLeft.gameObject);
-
-
+            StaticReferences.StoredRoomObjects.Add("deturretLeft", deturretLeft.gameObject);
             MajorBreakable deturretRight = BreakableAPIToolbox.GenerateMajorBreakable("deturretRight", idlePaths.Reverse().ToArray(), 7, idlePaths, 18, 15000, null, 0f, -0.1875f, true, 16, 16, -4, 0, true, null, null, true, null);
 			EnemyToolbox.GenerateShootPoint(deturretRight.gameObject, new Vector2(0.5f, 0.5f), "attachy");
 			AIBulletBank bulletBankRight = deturretRight.gameObject.AddComponent<AIBulletBank>();
 			DeturretController deturretR = deturretRight.gameObject.AddComponent<DeturretController>();
 			deturretR.Speed = 60;
 			bulletBankRight.Bullets = new List<AIBulletBank.Entry>();
-			bulletBankRight.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("01972dee89fc4404a5c408d50007dad5").bulletBank.GetBullet("default"));
+			bulletBankRight.Bullets.Add(entry);
 
 			StaticReferences.StoredRoomObjects.Add("deturretRight", deturretRight.gameObject);
         }
@@ -194,7 +194,11 @@ namespace Planetside
 						projectile = gameObject.GetComponent<Projectile>();
 						projectile.specRigidbody.Velocity = Vector2.zero;
 						projectile.ManualControl = true;
-						if (this.BulletsIgnoreTiles == true)
+
+                        SpawnManager.PoolManager.Remove(projectile.gameObject.transform);
+                        projectile.BulletScriptSettings.preventPooling = true;
+
+                        if (this.BulletsIgnoreTiles == true)
 						{
 							projectile.specRigidbody.CollideWithTileMap = false;
 							projectile.specRigidbody.AddCollisionLayerIgnoreOverride(CollisionMask.LayerToMask(CollisionLayer.EnemyBlocker));

@@ -188,7 +188,6 @@ namespace Planetside
             material.SetFloat("_EmissiveColorPower", 5f);
             material.SetFloat("_EmissivePower", 37.5f);
             self.sprite.renderer.material = material;
-            AkSoundEngine.PostEvent("Play_Burn", player.gameObject);
 
         }
         public void Update()
@@ -209,6 +208,7 @@ namespace Planetside
                     HasTriggeredFireAnim = true;
                     self.GetComponent<tk2dSpriteAnimator>().Play("fire");
                     AkSoundEngine.PostEvent("Play_BOSS_doormimic_flame_01", player.gameObject);
+                    AkSoundEngine.PostEvent("Play_Burn", player.gameObject);
                 }
                 this.secondaryElapsed += BraveTime.DeltaTime;
                
@@ -223,15 +223,10 @@ namespace Planetside
                         for (int i = 0; i < activeEnemies.Count; i++)
                         {
                             AIActor aiactor = activeEnemies[i];
-                            bool ae = Vector2.Distance(aiactor.CenterPosition, centerPosition) < 20 && aiactor.healthHaver.GetMaxHealth() > 0f && aiactor != null && aiactor.specRigidbody != null && player != null;
-                            if (ae)
+                            if (Vector2.Distance(aiactor.CenterPosition, centerPosition) < 20 && aiactor.healthHaver.GetMaxHealth() > 0f && aiactor != null && aiactor.specRigidbody != null && player != null)
                             {
-                                var Frail = aiactor.transform.Find("heatStrokeVFX");
-                                if (Frail == null)
-                                {
-                                    aiactor.ApplyEffect(DebuffLibrary.HeatStroke, 1f, null);
+                                aiactor.ApplyEffect(DebuffLibrary.HeatStroke, 1f, null);
 
-                                }
                             }
                         }
                     }

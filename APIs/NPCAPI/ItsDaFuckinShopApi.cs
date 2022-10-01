@@ -247,7 +247,7 @@ namespace NpcApi
             StatModifier[] statsToGiveOnPurchase = null, Func<CustomShopController, PlayerController, int, bool> CustomCanBuy = null, Func<CustomShopController, PlayerController, int, int> CustomRemoveCurrency = null, Func<CustomShopController, CustomShopItemController, PickupObject, int> CustomPrice = null,
             Func<PlayerController, PickupObject, int, bool> OnPurchase = null, Func<PlayerController, PickupObject, int, bool> OnSteal = null, string currencyIconPath = "", string currencyName = "", bool canBeRobbed = true, bool hasCarpet = false, string carpetSpritePath = "", float CarpetXOffset = 0, float CarpetYOffset = 0, bool hasMinimapIcon = false,
             string minimapIconSpritePath = "", bool addToMainNpcPool = false, float percentChanceForMainPool = 0.1f, DungeonPrerequisite[] prerequisites = null,
-            float fortunesFavorRadius = 2, PoolType poolType = PoolType.DEFAULT, bool RainbowModeImmunity = false)
+            float fortunesFavorRadius = 2, PoolType poolType = PoolType.DEFAULT, bool RainbowModeImmunity = false, bool CanTrulyBeRobbed = true)
         {
 
             try
@@ -465,6 +465,7 @@ namespace NpcApi
                 //GungeonAPI.ToolsGAPI.AddNewItemToAtlas()
 
                 shopObj.canBeRobbed = canBeRobbed;
+                shopObj.CanReallyBeRobbed = CanTrulyBeRobbed;
 
                 shopObj.placeableHeight = 5;
                 shopObj.placeableWidth = 5;

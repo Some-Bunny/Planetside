@@ -57,6 +57,131 @@ namespace ItemAPI
             return orig(guid);
         }
 
+
+        public static GameObject BuildPrefabBundle(string name, string guid, tk2dSpriteCollectionData customCollection, int spriteID, IntVector2 hitboxOffset, IntVector2 hitBoxSize, Vector3 bounds, bool HasAiShooter, bool UsesAttackGroup = false)
+        {
+            if (BossBuilder.Dictionary.ContainsKey(guid))
+            {
+                ETGModConsole.Log("BossBuilder: Yea something went wrong. Complain to Neighborino about it.");
+                return null;
+            }
+            var prefab = GameObject.Instantiate(behaviorSpeculatorPrefab);
+            prefab.name = name;
+
+            //setup misc components
+
+            var sprite = prefab.AddComponent<tk2dSprite>();
+
+
+            for (int i = 0; i < customCollection.spriteDefinitions.Count() - 1; i++)
+            {
+                var c = customCollection.spriteDefinitions[i];
+
+
+                // ETGModConsole.Log(c.GetBounds());
+                c.boundsDataCenter = new Vector3(bounds.x / 2f, bounds.y / 2f, 0f);
+                c.boundsDataExtents = new Vector3(bounds.x, bounds.y, 0f);
+                c.untrimmedBoundsDataCenter = new Vector3(bounds.x / 2f, bounds.y / 2f, 0f);
+                c.untrimmedBoundsDataExtents = new Vector3(bounds.x, bounds.y, 0f);
+
+            }
+
+            sprite.Collection = customCollection;
+            customCollection.InitDictionary();
+            sprite.SetSprite(customCollection, spriteID);
+            sprite.Build();
+
+
+            sprite.SortingOrder = 0;
+            sprite.IsPerpendicular = true;
+
+
+
+            //var sprite = SpriteBuilder.SpriteFromResource(defaultSpritePath, prefab).GetComponent<tk2dSprite>();
+
+            sprite.SetUpSpeculativeRigidbody(hitboxOffset, hitBoxSize).CollideWithOthers = true;
+            prefab.AddComponent<tk2dSpriteAnimator>();
+            prefab.AddComponent<AIAnimator>();
+            prefab.GetOrAddComponent<ObjectVisibilityManager>();
+            //setup knockback
+            var knockback = prefab.AddComponent<KnockbackDoer>();
+            knockback.weight = 1;
+
+
+
+
+            //setup health haver
+            var healthHaver = prefab.AddComponent<HealthHaver>();
+            healthHaver.RegisterBodySprite(sprite);
+            healthHaver.PreventAllDamage = false;
+            healthHaver.SetHealthMaximum(15000);
+            healthHaver.FullHeal();
+
+            //setup AI Actor
+            var aiActor = prefab.AddComponent<AIActor>();
+            aiActor.State = AIActor.ActorState.Normal;
+            aiActor.EnemyGuid = guid;
+            aiActor.HasShadow = false;
+            //setup behavior speculator
+            var bs = prefab.GetComponent<BehaviorSpeculator>();
+
+            bs.MovementBehaviors = new List<MovementBehaviorBase>();
+            bs.TargetBehaviors = new List<TargetBehaviorBase>();
+            bs.OverrideBehaviors = new List<OverrideBehaviorBase>();
+            bs.OtherBehaviors = new List<BehaviorBase>();
+            bs.AttackBehaviorGroup.AttackBehaviors = new List<AttackBehaviorGroup.AttackGroupItem>();
+            if (HasAiShooter)
+            {
+
+                var actor = EnemyDatabase.GetOrLoadByGuid("01972dee89fc4404a5c408d50007dad5");
+                behaviorSpeculatorPrefab = GameObject.Instantiate(actor.gameObject);
+                foreach (Transform child in behaviorSpeculatorPrefab.transform)
+                {
+                    if (child != behaviorSpeculatorPrefab.transform)
+                        GameObject.DestroyImmediate(child);
+                }
+
+                foreach (var comp in behaviorSpeculatorPrefab.GetComponents<Component>())
+                {
+                    if (comp.GetType() != typeof(BehaviorSpeculator))
+                    {
+                        GameObject.DestroyImmediate(comp);
+                    }
+                }
+
+                GameObject.DontDestroyOnLoad(behaviorSpeculatorPrefab);
+                FakePrefab.MarkAsFakePrefab(behaviorSpeculatorPrefab);
+                behaviorSpeculatorPrefab.SetActive(false);
+
+            }
+            else
+            {
+                AIBulletBank aibulletBank = prefab.AddComponent<AIBulletBank>();
+            }
+
+            //Add to enemy database
+            EnemyDatabaseEntry enemyDatabaseEntry = new EnemyDatabaseEntry()
+            {
+                myGuid = guid,
+                placeableWidth = 2,
+                placeableHeight = 2,
+                isNormalEnemy = true
+            };
+
+            EnemyDatabase.Instance.Entries.Add(enemyDatabaseEntry);
+            BossBuilder.Dictionary.Add(guid, prefab);
+            prefab.AddComponent<Tint>();
+
+
+            //finalize
+            GameObject.DontDestroyOnLoad(prefab);
+            FakePrefab.MarkAsFakePrefab(prefab);
+            prefab.SetActive(false);
+
+            return prefab;
+        }
+
+
         public static GameObject BuildPrefab(string name, string guid, string defaultSpritePath, IntVector2 hitboxOffset, IntVector2 hitBoxSize, bool HasAiShooter, bool UsesAttackGroup = false)
         {
             if (BossBuilder.Dictionary.ContainsKey(guid))

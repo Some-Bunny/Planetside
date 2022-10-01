@@ -16,24 +16,8 @@ namespace Planetside
 	{
 		public static void Init()
 		{
-			string TemplatePath = "Planetside/Resources/Enemies/ModderBullets/";
-			string folderName = "retrash";
-			string idleFrameName = "retrashbullet_idle_00";
-			string deathFrameName = "retrashbullet_die_00";
-			string[] spritePaths = new string[]
-			{
-			TemplatePath+folderName+"/"+idleFrameName+"1.png",
-			TemplatePath+folderName+"/"+idleFrameName+"2.png",
-			TemplatePath+folderName+"/"+idleFrameName+"3.png",
-			TemplatePath+folderName+"/"+idleFrameName+"4.png",
 
-			TemplatePath+folderName+"/"+deathFrameName+"1.png",
-			TemplatePath+folderName+"/"+deathFrameName+"2.png",
-			TemplatePath+folderName+"/"+deathFrameName+"3.png",
-			TemplatePath+folderName+"/"+deathFrameName+"4.png",
-			TemplatePath+folderName+"/"+deathFrameName+"5.png",
-			};
-			EnemyToolbox.CreateNewBulletBankerEnemy("retrash_bullet", "Retrash", 15, 15, spritePaths[0], spritePaths, new List<int> { 0, 1, 2, 3 }, new List<int> { 4, 5, 6, 7, 8 }, null, new SalamanderScript(), 2f);
+			EnemyToolbox.CreateNewBulletBankerEnemy("retrash_bullet", "Retrash", 15, 15, new List<int> { 159, 160, 161, 162 }, new List<int> { 163, 164, 165, 166, 167 }, null, new SalamanderScript(), 2f);
 		}
 		public class SalamanderScript : Script 
 		{
