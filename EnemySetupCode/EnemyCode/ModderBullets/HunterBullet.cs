@@ -29,7 +29,7 @@ namespace Planetside
 				}
 				for (int i = -4; i < 4; i++)
 				{
-					base.Fire(new Direction(0 + (10 * i), DirectionType.Aim, -1f), new Speed(12f, SpeedType.Absolute), new WallBullet());
+					base.Fire(new Direction(0 + (10 * i), DirectionType.Aim, -1f), new Speed(5f, SpeedType.Absolute), new WallBullet());
 
 				}
 

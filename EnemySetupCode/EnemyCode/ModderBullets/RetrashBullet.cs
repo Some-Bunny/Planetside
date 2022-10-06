@@ -32,10 +32,10 @@ namespace Planetside
 					base.Fire(new Direction(0 + (30 * i), DirectionType.Aim, -1f), new Speed(13f, SpeedType.Absolute), new WallBullet());
 
 				}
-				yield return Wait(20);
+				yield return Wait(30);
 				base.Fire(new Direction(15, DirectionType.Aim, -1f), new Speed(13f, SpeedType.Absolute), new WallBullet());
 				base.Fire(new Direction(-15, DirectionType.Aim, -1f), new Speed(13f, SpeedType.Absolute), new WallBullet());
-				yield return Wait(20);
+				yield return Wait(30);
 				for (int i = -1; i < 2; i++)
 				{
 					base.Fire(new Direction(0 + (30 * i), DirectionType.Aim, -1f), new Speed(13f, SpeedType.Absolute), new WallBullet());

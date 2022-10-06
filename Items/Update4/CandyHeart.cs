@@ -33,22 +33,64 @@ namespace Planetside
 			item.quality = PickupObject.ItemQuality.D;
             CandyHeart.CandyHeartID = item.PickupObjectId;
             ItemIDs.AddToList(item.PickupObjectId);
-            ShopDiscountItem.OnShopItemStarted += OnMyShopItemStarted;
-        }
-        public static int CandyHeartID;
-        public static void OnMyShopItemStarted(ShopItemController shopItemController)
-        {
-            ShopDiscountController steamSale = shopItemController.gameObject.AddComponent<ShopDiscountController>();
-            steamSale.discounts = new List<ShopDiscount>() { new ShopDiscount()
+            ShopDiscountMegaMind.DiscountsToAdd.Add(new ShopDiscount()
             {
                 IdentificationKey = "Candy_Heart",
                 PriceMultiplier = 0.5f,
-                IDsToReducePriceOf =  new List<int>() { 73, 85, 120 },
-                PriceReductionItemID = CandyHeartID,
-                discountTrigger = ShopDiscount.Trigger.ITEM
-            }
-            };      
+                //IDsToReducePriceOf = new List<int>() { 73, 85, 120 },
+                CanDiscountCondition = CanBuy,
+                CustomPriceMultiplier = CanMult,
+                ItemToDiscount = Can
+            });
+
+            List<string> mandatoryConsoleIDs = new List<string>
+            {
+                "psog:candy_heart",
+            };
+            List<string> optionalConsoleIDs = new List<string>
+            {
+                "antibody"
+            };
+            CustomSynergies.Add("Hearts In Halves", mandatoryConsoleIDs, optionalConsoleIDs, true);
+
         }
+        public static int CandyHeartID;
+
+
+        public static bool Can(ShopItemController s)
+        {
+            if (s.item.PickupObjectId == 73) { return true; }
+            if (s.item.PickupObjectId == 85) { return true; }
+            if (s.item.PickupObjectId == 120) { return true; }
+
+            return false;
+        }
+
+        public static bool CanBuy()
+        {
+            foreach (var p in GameManager.Instance.AllPlayers)
+            {
+                if (p.HasPickupID(CandyHeart.CandyHeartID) == true)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static float CanMult()
+        {
+            foreach (var p in GameManager.Instance.AllPlayers)
+            {
+                if (p.PlayerHasActiveSynergy("Hearts In Halves") == true)
+                {
+                    return 0.25f;
+                }
+            }
+            return 0.5f;
+        }
+
         public override DebrisObject Drop(PlayerController player)
 		{
             DebrisObject result = base.Drop(player);	

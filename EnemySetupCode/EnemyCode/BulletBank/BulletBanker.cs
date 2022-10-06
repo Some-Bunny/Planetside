@@ -18,7 +18,7 @@ namespace Planetside
 	{
 		public static GameObject fuckyouprefab;
 		public static readonly string guid = "Bullet_Banker";
-		private static tk2dSpriteCollectionData TheBulletBankClooection;
+		//private static tk2dSpriteCollectionData TheBulletBankClooection;
 		public static GameObject shootpoint;
 		public static GameObject shootpoint1;
 		//private static Texture2D BossCardTexture = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside/Resources/BossCards/bulletbanker_bosscard.png");
@@ -33,14 +33,19 @@ namespace Planetside
 
 		public static void BuildPrefab()
 		{
-			bool flag = fuckyouprefab != null || BossBuilder.Dictionary.ContainsKey(guid);
-			bool flag2 = flag;
-			if (!flag2)
+
+            tk2dSpriteCollectionData Collection = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("BulletBankerCollection").GetComponent<tk2dSpriteCollectionData>();
+            Material mate = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Material>("bulletbanker material");
+
+            if (fuckyouprefab == null || !BossBuilder.Dictionary.ContainsKey(guid))
 			{
-				fuckyouprefab = BossBuilder.BuildPrefab("Bullet Banker", guid, spritePaths[0], new IntVector2(0, 0), new IntVector2(8, 9), false, true);
-				var companion = fuckyouprefab.AddComponent<EnemyBehavior>();
-				companion.aiActor.knockbackDoer.weight = 200;
-				companion.aiActor.MovementSpeed = 3.2f;
+				fuckyouprefab = BossBuilder.BuildPrefabBundle("Bullet Banker", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(8, 9), new Vector3(3, 4), false, true);
+				var companion = fuckyouprefab.AddComponent<BankerEnemyBehavior>();
+
+                EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, Collection, mate);
+
+                companion.aiActor.knockbackDoer.weight = 200;
+				companion.aiActor.MovementSpeed = 3f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
 				companion.aiActor.CollisionDamage = 1f;
 				companion.aiActor.IgnoreForRoomClear = false;
@@ -48,8 +53,8 @@ namespace Planetside
 				companion.aiActor.specRigidbody.CollideWithOthers = true;
 				companion.aiActor.specRigidbody.CollideWithTileMap = true;
 				companion.aiActor.PreventFallingInPitsEver = true;
-				companion.aiActor.healthHaver.ForceSetCurrentHealth(370f);
-				companion.aiActor.healthHaver.SetHealthMaximum(370f);
+				companion.aiActor.healthHaver.ForceSetCurrentHealth(350f);
+				companion.aiActor.healthHaver.SetHealthMaximum(350f);
 				companion.aiActor.CollisionKnockbackStrength = 2f;
 				companion.aiActor.CanTargetPlayers = true;
 				companion.aiActor.procedurallyOutlined = true;
@@ -58,13 +63,32 @@ namespace Planetside
 				//companion.aiActor.ShadowObject = EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").ShadowObject;
 				companion.aiActor.specRigidbody.PixelColliders.Clear();
 				companion.aiActor.gameObject.AddComponent<AfterImageTrailController>().spawnShadows = false;
-				companion.aiActor.gameObject.AddComponent<tk2dSpriteAttachPoint>();
-				companion.aiActor.gameObject.AddComponent<ObjectVisibilityManager>();
+				companion.aiActor.gameObject.GetComponent<tk2dSpriteAttachPoint>();
+				companion.aiActor.gameObject.GetComponent<ObjectVisibilityManager>();
 				//fuckyouprefab.name = companion.aiActor.OverrideDisplayName;
 				companion.aiActor.ShadowObject = EnemyDatabase.GetOrLoadByGuid("4db03291a12144d69fe940d5a01de376").ShadowObject;
 				companion.aiActor.HasShadow = true;
 
-				TrailRenderer tr;
+				EnemyToolbox.AddShadowToAIActor(companion.aiActor, StaticEnemyShadows.largeShadow, new Vector2(1.5f, 0.25f));
+
+                companion.aiActor.healthHaver.damageTypeModifiers = new List<DamageTypeModifier>();
+                DamageTypeModifier fireRes = new DamageTypeModifier();
+                fireRes.damageMultiplier = 0f;
+                fireRes.damageType = CoreDamageTypes.Fire;
+                companion.aiActor.healthHaver.damageTypeModifiers.Add(fireRes);
+
+                var nur = companion.aiActor;
+                nur.EffectResistances = new ActorEffectResistance[]
+                {
+                    new ActorEffectResistance()
+                    {
+                        resistAmount = 1,
+                        resistType = EffectResistanceType.Fire
+                    },
+                };
+
+
+                TrailRenderer tr;
 
 				var tro = companion.aiActor.gameObject.AddChild("trail object");
 				tro.transform.position = companion.aiActor.transform.position;
@@ -284,16 +308,24 @@ namespace Planetside
 					}
 				};
 
-				bool flag3 = TheBulletBankClooection == null;
-				if (flag3)
-				{
+				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "start_heal", new string[] { "start_heal" }, new DirectionalAnimation.FlipType[0]);
+                EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "heal", new string[] { "heal" }, new DirectionalAnimation.FlipType[0]);
+                EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "endheal", new string[] { "endheal" }, new DirectionalAnimation.FlipType[0]);
+
+
+                //endheal
+                //bool flag3 = TheBulletBankClooection == null;
+                //if (flag3)
+                {
+                    /*
 					TheBulletBankClooection = SpriteBuilder.ConstructCollection(fuckyouprefab, "TheBulletBank-Clooection");
 					UnityEngine.Object.DontDestroyOnLoad(TheBulletBankClooection);
 					for (int i = 0; i < spritePaths.Length; i++)
 					{
 						SpriteBuilder.AddSpriteToCollection(spritePaths[i], TheBulletBankClooection);
 					}
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, TheBulletBankClooection, new List<int>
+					*/
+                    SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 					0,
@@ -310,7 +342,7 @@ namespace Planetside
 
 					}, "idle", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 6f;
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, TheBulletBankClooection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					10,
 					11,
@@ -319,7 +351,7 @@ namespace Planetside
 
 					}, "blooptell", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, TheBulletBankClooection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 					14,
@@ -340,7 +372,7 @@ namespace Planetside
 
 					}, "bloop", tk2dSpriteAnimationClip.WrapMode.Once).fps = 3.5f;
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, TheBulletBankClooection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					18,
 					19,
@@ -351,7 +383,7 @@ namespace Planetside
 
 					}, "bottletell", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, TheBulletBankClooection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 					24,
@@ -376,7 +408,7 @@ namespace Planetside
 					}, "bottle", tk2dSpriteAnimationClip.WrapMode.Once).fps = 11f;
 
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, TheBulletBankClooection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 				40,
 				41,
@@ -387,7 +419,7 @@ namespace Planetside
 				46
 					}, "roartell", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, TheBulletBankClooection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 				47,
 				48,
@@ -409,7 +441,7 @@ namespace Planetside
 
 					}, "roar", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, TheBulletBankClooection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 				53,
 				54,
@@ -435,7 +467,7 @@ namespace Planetside
 
 
 					}, "intro", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, TheBulletBankClooection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 				74,
 				75,
@@ -448,13 +480,44 @@ namespace Planetside
 				82,
 				83,
 				84
-				
-
 					}, "death", tk2dSpriteAnimationClip.WrapMode.Once).fps = 10f;
 
-				}
+                    SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
+                    {
+                85,
+				86,
+				87,
+				87,
+				88,
+				88,
+				89,
+				89,
+                    }, "start_heal", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
+                    SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
+                    {
+                89,
+				89,
+				88,
+				87,
+				86,
+				85
+                    }, "endheal", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
+                    SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
+                    {
+                90,
+				91,
+				92,
+				93
+                    }, "heal", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 6f;
 
-				fuckyouprefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("intro").frames[15].eventAudio = "Play_ENV_time_shatter_01";
+
+                }
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.spriteAnimator, "start_heal", new Dictionary<int, string>() { {1, "Play_ENM_screamer_scream_01" } });
+                EnemyToolbox.AddSoundsToAnimationFrame(companion.spriteAnimator, "heal", new Dictionary<int, string>() { { 0, "Play_ENM_blobulord_reform_01" } });
+
+                //					AkSoundEngine.PostEvent("Play_ENM_screamer_scream_01", base.gameObject);
+
+                fuckyouprefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("intro").frames[15].eventAudio = "Play_ENV_time_shatter_01";
 				fuckyouprefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("intro").frames[15].triggerEvent = true;
 
 				fuckyouprefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("intro").frames[17].eventAudio = "Play_ENM_bombshee_scream_01";
@@ -512,14 +575,15 @@ namespace Planetside
 					ShootPoint = m_CachedGunAttachPoint,
 					BulletScript = new CustomBulletScriptSelector(typeof(BigWhips)),
 					LeadAmount = 0f,
-					AttackCooldown = 1f,
+					AttackCooldown = 1.5f,
 					Cooldown = 3f,
 					TellAnimation = "roartell",
 					FireAnimation = "roar",
 					RequiresLineOfSight = true,
 					MultipleFireEvents = true,
 					Uninterruptible = false,
-						},
+                    MaxEnemiesInRoom = 3,
+                        },
 						NickName = "ROAR"
 
 					},
@@ -539,7 +603,8 @@ namespace Planetside
 
 					MultipleFireEvents = true,
 					Uninterruptible = false,
-					MaxEnemiesInRoom = 4,
+					MaxEnemiesInRoom = 6,
+					
 						},
 						NickName = "Bottle"
 
@@ -547,13 +612,13 @@ namespace Planetside
 					new AttackBehaviorGroup.AttackGroupItem()
 					{
 
-					Probability = 0.6f,
+					Probability = 0.7f,
 					Behavior = new ShootBehavior{
 					ShootPoint = m_CachedGunAttachPoint,
 					BulletScript = new CustomBulletScriptSelector(typeof(BloopScript)),
 					LeadAmount = 0f,
 					AttackCooldown = 1f,
-					Cooldown = 3f,
+					Cooldown = 2f,
 					TellAnimation = "blooptell",
 					FireAnimation = "bloop",
 					RequiresLineOfSight = true,
@@ -564,17 +629,41 @@ namespace Planetside
 						NickName = "Bloop"
 
 					},
-					new AttackBehaviorGroup.AttackGroupItem()
+
+                    new AttackBehaviorGroup.AttackGroupItem()
+                    {
+
+                    Probability = 2f,
+                    Behavior = new ShootBehavior{
+                    ShootPoint = m_CachedGunAttachPoint,
+                    BulletScript = new CustomBulletScriptSelector(typeof(HealScript)),
+                    LeadAmount = 0f,
+                    AttackCooldown = 1f,
+                    Cooldown = 24,
+					InitialCooldown = 10,
+                    TellAnimation = "start_heal",
+                    FireAnimation = "heal",
+					PostFireAnimation = "endheal",
+                    RequiresLineOfSight = true,
+                    MultipleFireEvents = true,
+                    Uninterruptible = true,
+					MaxUsages = 6,
+                        },
+                        NickName = "FleshPrison"
+
+                    },
+
+                    new AttackBehaviorGroup.AttackGroupItem()
 					{
 
-					Probability = 0.7f,
+					Probability = 0.85f,
 					Behavior = new DashBehavior{
 					MaxHealthThreshold = 1f,
 					AttackCooldown = 1f,
 					InitialCooldown = 0f,
 					RequiresLineOfSight = false,
 					GlobalCooldown = 0.2f,
-					Cooldown = 6f,
+					Cooldown = 4.5f,
 					CooldownVariance = 1f,
 					InitialCooldownVariance = 0f,
 					IsBlackPhantom = false,
@@ -590,14 +679,14 @@ namespace Planetside
 					HealthThresholds = new float[0],
 					MinWallDistance = 0,
 					ShootPoint = m_CachedGunAttachPoint,
-					dashDistance = 7f,
+					dashDistance = 6f,
 					dashTime = 0.2f,
 					doubleDashChance = 0.7f,
 					dashDirection = DashBehavior.DashDirection.Random,
 					warpDashAnimLength = true,
 					hideShadow = true,
 					fireAtDashStart = true,
-					MaxEnemiesInRoom = 4,
+					MaxEnemiesInRoom = 6,
 					bulletScript = new CustomBulletScriptSelector(typeof(SpawnDash)),
 					},
 					NickName = "Dash"
@@ -741,9 +830,11 @@ namespace Planetside
 						base.PostWwiseEvent("Play_BOSS_Rat_Cheese_Burst_02", null);
 						string guid = BraveUtility.RandomElement<string>(StaticInformation.ModderBulletGUIDs);
 						var Enemy = EnemyDatabase.GetOrLoadByGuid(guid);
-						Enemy.healthHaver.SetHealthMaximum(15f);
-						AIActor.Spawn(Enemy.aiActor, this.Projectile.sprite.WorldCenter, GameManager.Instance.PrimaryPlayer.CurrentRoom, true, AIActor.AwakenAnimationType.Default, true);
-						float num = base.RandomAngle();
+						Enemy.healthHaver.SetHealthMaximum(20f);
+						var en = AIActor.Spawn(Enemy.aiActor, this.Projectile.sprite.WorldCenter, GameManager.Instance.PrimaryPlayer.CurrentRoom, true, AIActor.AwakenAnimationType.Default, true);
+                        base.BulletBank.aiActor.GetComponent<BankerEnemyBehavior>().spawnBullets.Add(en);
+
+                        float num = base.RandomAngle();
 						float Amount = 12;
 						float Angle = 360 / Amount;
 						for (int i = 0; i < Amount; i++)
@@ -819,16 +910,14 @@ namespace Planetside
 						base.PostWwiseEvent("Play_BOSS_Rat_Cheese_Burst_02", null);
 						string guid = BraveUtility.RandomElement<string>(StaticInformation.ModderBulletGUIDs);
 						var Enemy = EnemyDatabase.GetOrLoadByGuid(guid);
-						Enemy.healthHaver.SetHealthMaximum(15f);
-						AIActor.Spawn(Enemy.aiActor, this.Projectile.sprite.WorldCenter, GameManager.Instance.PrimaryPlayer.CurrentRoom, true, AIActor.AwakenAnimationType.Default, true);
-
+						Enemy.healthHaver.SetHealthMaximum(20f);
+						var en = AIActor.Spawn(Enemy.aiActor, this.Projectile.sprite.WorldCenter, GameManager.Instance.PrimaryPlayer.CurrentRoom, true, AIActor.AwakenAnimationType.Default, true);
+						base.BulletBank.aiActor.GetComponent<BankerEnemyBehavior>().spawnBullets.Add(en);
 
 						float num = base.RandomAngle();
-						float Amount = 12;
-						float Angle = 360 / Amount;
-						for (int i = 0; i < Amount; i++)
+						for (int i = 0; i < 12; i++)
 						{
-							base.Fire(new Direction(num + Angle * (float)i + 10, DirectionType.Absolute, -1f), new Speed(5f, SpeedType.Absolute), new BurstBullet());
+							base.Fire(new Direction((i * 30)+num, DirectionType.Absolute, -1f), new Speed(5f, SpeedType.Absolute), new BurstBullet());
 						}
 						return;
 					}
@@ -868,11 +957,11 @@ namespace Planetside
 				float Aim = base.AimDirection;
 				base.PostWwiseEvent("Play_ENM_bigshroom_roar_01", null);
 
-				for (int i = 0; i < 50; i++)
+				for (int i = 0; i < 30; i++)
 				{
-					base.Fire(new Direction(Aim +i*7.2f, DirectionType.Absolute, -1f), new Speed(9, SpeedType.Absolute), new BigWhips.BasicBullet());
-					base.Fire(new Direction(Aim - i*7.2f, DirectionType.Absolute, -1f), new Speed(9, SpeedType.Absolute), new BigWhips.BasicBullet());
-					yield return this.Wait(1.66f);
+					base.Fire(new Direction(((i*12f)+180)+Aim, DirectionType.Absolute, -1f), new Speed(9, SpeedType.Absolute), new BigWhips.BasicBullet());
+					base.Fire(new Direction(((i*12f)+Aim), DirectionType.Absolute, -1f), new Speed(9, SpeedType.Absolute), new BigWhips.BasicBullet());
+					yield return this.Wait(4f);
 
 				}
 				yield break;
@@ -882,11 +971,140 @@ namespace Planetside
 				public BasicBullet() : base("snakeBullet", false, false, false)
 				{
 				}
-
-			}
+                protected override IEnumerator Top()
+                {
+                    base.ChangeSpeed(new Speed(12f, SpeedType.Absolute), 120);
+                    base.ChangeDirection(new Brave.BulletScript.Direction(120, DirectionType.Relative), 120);
+                    yield return base.Wait(120);
+                    yield break;
+                }
+            }
 		}
 
-		public class BloopScript : Script
+        public class HealScript : Script
+		{
+			protected override IEnumerator Top()
+			{
+				List<AIActor> l = base.BulletBank.aiActor.GetComponent<BankerEnemyBehavior>().spawnBullets;
+				for (int i = 0; i < l.Count; i++)
+				{
+					if (l[i] == null)
+					{
+						l.Remove(l[i]);
+					}
+				}
+                if (l.Count == 0 | l == null) { yield break; }
+                for (int e = 0; e < l.Count; e++)
+				{
+                    AIActor enemy = l[e];
+					if (enemy != null)
+					{
+						GameManager.Instance.StartCoroutine(DisplayHealTether(enemy));
+					}
+                }
+                for (int i = 0; i < 180; i++)
+				{
+                    if (l.Count == 0 | l == null) { yield break; }         
+					if (i % 10 ==0)
+					{
+                        base.Fire(new Direction(base.RandomAngle(), DirectionType.Absolute, -1f), new Speed(UnityEngine.Random.Range(7, 10), SpeedType.Absolute), new Shrapnel());
+                        base.Fire(new Direction(base.RandomAngle(), DirectionType.Absolute, -1f), new Speed(UnityEngine.Random.Range(7, 10), SpeedType.Absolute), new Shrapnel());
+                    }
+					for (int e = 0; e < l.Count; e++)
+					{
+						AIActor enemy = l[e];
+						if (enemy == null)
+						{ l.Remove(enemy); }
+						else
+						{
+							enemy.behaviorSpeculator.Stun(2f, true);
+							if (i % 30 == 0)
+							{
+								var ob = SpawnManager.SpawnVFX(StaticVFXStorage.EnemyZappyTellVFX, enemy.sprite.WorldCenter, Quaternion.identity);
+								Destroy(ob, 3);
+							}
+						}
+						if (i == 120)
+						{
+                            StaticVFXStorage.HighPriestClapVFX.SpawnAtPosition(enemy.sprite.WorldCenter);
+                        }
+                    }
+                    yield return this.Wait(1f);
+                }
+                if (l.Count == 0 | l == null) { yield break; }
+                for (int e = 0; e < l.Count; e++)
+                {
+                    AIActor enemy = l[e];
+                    if (enemy != null)
+                    {
+                        Exploder.DoDistortionWave(base.BulletBank.sprite.WorldCenter, 2f, 0.2f, 50, 1);
+                        AkSoundEngine.PostEvent("Play_OBJ_power_up_01", base.BulletBank.aiActor.gameObject);
+                        base.PostWwiseEvent("Play_BOSS_Rat_Cheese_Burst_02", null);
+                        for (int r = 0; r < 16; r++)
+						{
+                            base.Fire(Offset.OverridePosition(enemy.transform.PositionVector2()), new Direction(base.RandomAngle(), DirectionType.Absolute, -1f), new Speed(UnityEngine.Random.Range(7, 12), SpeedType.Absolute), new Shrapnel());
+                        }
+                        enemy.healthHaver.ApplyDamage(100000, base.BulletBank.aiActor.transform.PositionVector2(), "Consumed");
+                        enemy.healthHaver.Die(base.BulletBank.aiActor.transform.PositionVector2());
+                        base.BulletBank.aiActor.healthHaver.ApplyHealing(35f);
+                        yield return this.Wait(15f);
+                    }
+                }
+				base.BulletBank.aiActor.GetComponent<BankerEnemyBehavior>().spawnBullets.Clear();
+                yield break;
+			}
+
+            public class Shrapnel : Bullet
+            {
+                public Shrapnel() : base("poundSmall", false, false, false)
+                {
+                }
+                protected override IEnumerator Top()
+                {
+                    base.ChangeSpeed(new Speed(5f, SpeedType.Absolute), 90);
+                    yield break;
+                }
+            }
+
+            private IEnumerator DisplayHealTether(AIActor enemy)
+			{
+				AIActor banker = base.BulletBank.aiActor;
+
+				while (enemy != null)
+				{
+                    Vector2 vector = banker.sprite.WorldCenter;
+                    Vector2 vector2 = enemy.sprite.WorldCenter;
+                    int num2 = Mathf.Max(Mathf.CeilToInt(Vector2.Distance(vector, vector2)), 1);
+                    for (int i = 0; i < num2; i++)
+                    {
+                        if (enemy == null) { yield break; }
+                        if (banker == null) { yield break; }
+
+                        float t = (float)i / (float)num2;
+                        Vector3 vector3 = Vector3.Lerp(enemy.sprite.WorldCenter, banker.sprite.WorldCenter, t);
+                        GameObject gameObject = SpawnManager.SpawnVFX(StaticVFXStorage.HealingSparklesVFX, false);
+                        gameObject.transform.position = vector3;
+                        tk2dSpriteAnimator component2 = gameObject.GetComponent<tk2dSpriteAnimator>();
+                        if (component2 != null)
+                        {
+                            component2.ignoreTimeScale = true;
+                            component2.AlwaysIgnoreTimeScale = true;
+                            component2.AnimateDuringBossIntros = true;
+                            component2.alwaysUpdateOffscreen = true;
+                            component2.playAutomatically = true;
+                        }
+                        Destroy(gameObject, 2);
+                        yield return this.Wait(2f);
+                    }
+                    yield return this.Wait(60f);
+                }
+                yield break;
+            }
+        }
+
+
+
+        public class BloopScript : Script
 		{
 			protected override IEnumerator Top()
 			{
@@ -977,9 +1195,11 @@ namespace Planetside
 
 
 
-		public class EnemyBehavior : BraveBehaviour
+		public class BankerEnemyBehavior : BraveBehaviour
 		{
 			private RoomHandler m_StartRoom;
+			public List<AIActor> spawnBullets = new List<AIActor>();
+
 
 			public void Update()
 			{

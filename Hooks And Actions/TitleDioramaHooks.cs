@@ -70,6 +70,8 @@ namespace Planetside
         }
 
 
+
+
         public static IEnumerator CoreHook(Func<TitleDioramaController, bool, IEnumerator> orig, TitleDioramaController self, bool IsfOYER  = true)
         {
             //if (PlanetsideQOL.QOLConfig.TileScreenModifications == true)
@@ -109,15 +111,30 @@ namespace Planetside
             }
         }
 
+
+        public static MainMenuFoyerController mainMenuFoyerController;
         public static void UpdateHook(Action<TitleDioramaController> orig, TitleDioramaController self)
         {
             orig(self);
 
-            var thing = UnityEngine.Object.FindObjectOfType<MainMenuFoyerController>();
+            if (mainMenuFoyerController == null)
             {
-                if (thing != null)
+                //ETGModConsole.Log(1);
+                mainMenuFoyerController = UnityEngine.Object.FindObjectOfType<MainMenuFoyerController>();
+            }
+
+
+
+            //var thing = UnityEngine.Object.FindObjectOfType<MainMenuFoyerController>();
+            {
+                if (mainMenuFoyerController != null)
                 {
-                    var referencedController = thing.TitleCard;
+                    if (mainMenuFoyerController != UnityEngine.Object.FindObjectOfType<MainMenuFoyerController>())
+                    {
+                        mainMenuFoyerController = UnityEngine.Object.FindObjectOfType<MainMenuFoyerController>();
+                    }
+
+                    var referencedController = mainMenuFoyerController.TitleCard;
                     if (referencedController != null && referencedController.enabled == true)
                     {
                         if (ExtantIcon != null && self != null)

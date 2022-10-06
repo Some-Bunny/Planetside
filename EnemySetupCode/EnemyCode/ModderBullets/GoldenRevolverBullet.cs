@@ -46,7 +46,7 @@ namespace Planetside
 				yield return this.Wait(60 + UnityEngine.Random.Range(0, 60));
 				float aim = base.AimDirection;
 				this.Direction = aim;
-				base.ChangeSpeed(new Speed(18f, SpeedType.Absolute), 30);
+				base.ChangeSpeed(new Speed(14f, SpeedType.Absolute), 40);
 				yield break;
 			}
 		}

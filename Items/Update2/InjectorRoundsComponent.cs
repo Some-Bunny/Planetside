@@ -32,19 +32,29 @@ public class InjectorRoundsComponent : BraveBehaviour
 		base.OnDestroy();
 	}
 
+	public bool ContainsSpecificValue(GameActorEffect gameActorEffect)
+	{
+		if (InjectorRounds.DebuffKeys.ContainsKey(gameActorEffect)) { return true; }
+        if (InjectorRounds.DebuffKeys.ContainsValue(gameActorEffect.effectIdentifier)) { return true; }
+		return false;
+    }
 
-	private void OnPreDeath(Vector2 obj)
+
+    private void OnPreDeath(Vector2 obj)
 	{
 		Dictionary<string, GameActorEffect> effectKeys = new Dictionary<string, GameActorEffect>();
 		List<string> Keys = new List<string>();
 		List<GameActorEffect> list = PlanetsideReflectionHelper.ReflectGetField<List<GameActorEffect>>(typeof(AIActor), "m_activeEffects", base.aiActor);
 		foreach (GameActorEffect gameActorEffect in list)
 		{
-			if (gameActorEffect != null && gameActorEffect.effectIdentifier != null && InjectorRounds.BlacklistedNames.Contains(gameActorEffect.effectIdentifier))
+
+            
+
+            if (gameActorEffect != null && gameActorEffect.effectIdentifier != null && InjectorRounds.BlacklistedNames.Contains(gameActorEffect.effectIdentifier))
 			{
 				//no
 			}
-            else if (gameActorEffect != null && InjectorRounds.DebuffKeys.ContainsKey(gameActorEffect) && !InjectorRounds.BlacklistedKeys.Contains(gameActorEffect))
+            else if (gameActorEffect != null && (InjectorRounds.DebuffKeys.ContainsKey(gameActorEffect)) && !InjectorRounds.BlacklistedKeys.Contains(gameActorEffect))
             {
 				string LocalValue = gameActorEffect.effectIdentifier ?? "H";
                 InjectorRounds.DebuffKeys.TryGetValue(gameActorEffect, out LocalValue);
@@ -60,7 +70,8 @@ public class InjectorRoundsComponent : BraveBehaviour
                     ETGModConsole.Log("name of key: " + LocalValue);
                     Keys.Add(LocalValue);
                     effectKeys.Add(LocalValue, gameActorEffect);
-					InjectorRounds.DebuffKeys.Add(gameActorEffect, gameActorEffect.effectIdentifier);
+
+                    InjectorRounds.DebuffKeys.Add(gameActorEffect, gameActorEffect.effectIdentifier);
                     //ETGModConsole.Log("added: " + gameActorEffect.effectIdentifier + " to effectKeys with key: " + LocalValue);
                 }
 			}
@@ -74,12 +85,12 @@ public class InjectorRoundsComponent : BraveBehaviour
                 {
 					GoopDefinition def = null;
                     InjectorRounds.GoopKeys.TryGetValue(ChosenDebuff, out def);
-					if (def != null)
+					if (def != null)	
 					{
 						DeadlyDeadlyGoopManager.GetGoopManagerForGoopType(def).TimedAddGoopCircle(base.aiActor.sprite.WorldBottomCenter, GoopPoolSize, 0.5f, false);
 					}
 				}
-				else if (effectKeys.ContainsKey(ChosenDebuff))
+				else if (InjectorRounds.DebuffKeys.ContainsValue(ChosenDebuff))
                 {
 
 					GameActorEffect effectToCopy = null;
@@ -90,11 +101,11 @@ public class InjectorRoundsComponent : BraveBehaviour
 						GoopDefinition def = InjectorRounds.templateDef;
 						def.damagesEnemies = true;
 						def.name = effectToCopy.effectIdentifier + " Dupe Goop";
-						if (effectToCopy is GameActorHealthEffect) { def.HealthModifierEffect = effectToCopy as GameActorHealthEffect; }
-						if (effectToCopy is GameActorSpeedEffect) { def.SpeedModifierEffect = effectToCopy as GameActorSpeedEffect; }
-						if (effectToCopy is GameActorCharmEffect) { def.CharmModifierEffect = effectToCopy as GameActorCharmEffect; }
-						if (effectToCopy is GameActorCheeseEffect) { def.CheeseModifierEffect = effectToCopy as GameActorCheeseEffect; }
-						if (effectToCopy is GameActorFireEffect) { def.fireEffect = effectToCopy as GameActorFireEffect; }
+						if (effectToCopy is GameActorHealthEffect) { def.HealthModifierEffect = effectToCopy as GameActorHealthEffect; def.AppliesDamageOverTime = true; }
+						if (effectToCopy is GameActorSpeedEffect) { def.SpeedModifierEffect = effectToCopy as GameActorSpeedEffect; def.AppliesSpeedModifier = true; }
+						if (effectToCopy is GameActorCharmEffect) { def.CharmModifierEffect = effectToCopy as GameActorCharmEffect; def.AppliesCharm = true; }
+						if (effectToCopy is GameActorCheeseEffect) { def.CheeseModifierEffect = effectToCopy as GameActorCheeseEffect; def.AppliesCheese = true; }
+						if (effectToCopy is GameActorFireEffect) { def.fireEffect = effectToCopy as GameActorFireEffect; def.fireBurnsEnemies = true; }
 						if (effectToCopy.TintColor != null) 
 						{
 							Color colorMult = effectToCopy.TintColor * 255;
@@ -104,10 +115,13 @@ public class InjectorRoundsComponent : BraveBehaviour
 							def.baseColor32 = new Color32(r, g, b, byte.MaxValue); 
 						}
 						def.CanBeIgnited = false;
+						def.damagePerSecondtoEnemies = 0;
 						def.damagesPlayers = false;
-						def.AppliesDamageOverTime = true;
+                        def.AppliesDamageOverTime = false;
 						def.damageToPlayers = 0;
-						def.lifespan = Mathf.Max(7f, effectToCopy.duration);
+                         
+
+                        def.lifespan = Mathf.Max(7f, effectToCopy.duration);
 						DeadlyDeadlyGoopManager.GetGoopManagerForGoopType(def).TimedAddGoopCircle(base.aiActor.sprite.WorldBottomCenter, GoopPoolSize, 0.5f, false);
 					}
 				}

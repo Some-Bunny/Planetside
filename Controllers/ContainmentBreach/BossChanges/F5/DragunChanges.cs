@@ -335,7 +335,7 @@ namespace Planetside
 
 				public override int Update(ref int state)
 				{
-					if (base.Tick >= 360)
+					if (base.Tick >= 450)
 					{
 						base.Vanish(false);
 						return base.Done();

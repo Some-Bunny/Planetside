@@ -38,7 +38,7 @@ namespace Planetside
     {
         public const string GUID = "somebunny.etg.planetsideofgunymede";
         public const string NAME = "Planetside Of Gunymede Pre-Release";
-        public const string VERSION = "1.3.99";
+        public const string VERSION = "1.3.103";
 
         public static readonly string TEXT_COLOR = "#9006FF";
 
@@ -100,6 +100,9 @@ namespace Planetside
                 //ETGModConsole.Log(PlanetsideModule.TilesetAssets.name + ": " + str, false);
             }
             StaticInformation.Init();
+
+            ShopDiscountMegaMind.Init();
+
 
             InverseGlowShader = PlanetsideModule.ModAssets.LoadAsset<Shader>("inverseglowshader");
 

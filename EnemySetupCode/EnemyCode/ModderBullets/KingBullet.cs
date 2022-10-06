@@ -37,7 +37,12 @@ namespace Planetside
 			{
 
 			}
-		}
+            protected override IEnumerator Top()
+            {
+                base.ChangeSpeed(new Speed(6, SpeedType.Absolute), 90);
+                yield break;
+            }
+        }
 	}
 }
 

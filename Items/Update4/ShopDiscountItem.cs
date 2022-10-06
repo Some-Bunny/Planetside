@@ -20,73 +20,193 @@ using SaveAPI;
 namespace Planetside
 {   
 
-
-    public class ShopDiscount : MonoBehaviour
+    public class ExampleShopDiscountSetup
     {
-        public string IdentificationKey;
-        public float PriceMultiplier;
-        public List<int> IDsToReducePriceOf = new List<int>();
-        public int PriceReductionItemID;
-        public bool OverridePriceReduction;
-        public string SynergyToTrack;
-
-        public bool PriceReductionActive()
+        public static void Init()
         {
-            if (OverridePriceReduction == true) { return false; }
-            PlayerController[] players = GameManager.Instance.AllPlayers;
-            for (int i = 0; i < players.Length; i++)
+            ShopDiscountMegaMind.DiscountsToAdd.Add(new ShopDiscount()
             {
-                PlayerController player = players[i];
-                if (discountTrigger == Trigger.ITEM)
+                IdentificationKey = "Example_Discount",
+                PriceMultiplier = 0.5f, //Halves the price of selected ids
+                //IDsToReducePriceOf = new List<int>() { 73, 85, 120 }, //These are half-hearts, hearts and armor
+                CanDiscountCondition = Example_CanBuy, // your example condition (required)
+                CustomPriceMultiplier = Example_Multiplier,// your example price multiplier controller (can be left as null and it will just use PriceMultiplier always)
+                ItemToDiscount = Example_Criteria
+            });
+        }
+
+        public static bool Example_Criteria(ShopItemController shopItemController)//this will be ran to see if your shop item even has the right criteria for being discounted. if returns TRUE, will be able to be discounted (if there is disocunt conditions in the first place), else will not be
+        {
+            if(shopItemController.item.PickupObjectId == 69) { return true; } //has a ShopItemController accessible that you can *yoink* any information you need
+            return false;
+        }
+        public static bool Example_CanBuy() //this will be ran to see if your discount should activate. if returns TRUE, will be active, else will not be
+        {
+            foreach (var p in GameManager.Instance.AllPlayers)
+            {
+                if (p.HasPickupID(CandyHeart.CandyHeartID) == true)
                 {
-                    if (player.HasPassiveItem(PriceReductionItemID))
-                    {
-                        return true;
-                    }
-                }
-                if (discountTrigger == Trigger.SYNERGY)
-                {
-                    if (SynergyToTrack != null && player.PlayerHasActiveSynergy(SynergyToTrack))
-                    {
-                        return true;
-                    }
+                    return true;
                 }
             }
             return false;
         }
 
-        public Trigger discountTrigger = Trigger.ITEM;
-        public enum Trigger
+        public static float Example_Multiplier() //this will be ran to see what multiplier your shop item should use. You can add your own code to make it smoothly switch prices and stuff
         {
-            ITEM,
-            SYNERGY,
-        };
-
+            foreach (var p in GameManager.Instance.AllPlayers)
+            {
+                if (p.PlayerHasActiveSynergy("your synergy") == true)
+                {
+                    return 0.33f;
+                }
+            }
+            return 0.5f;
+        }
     }
 
+
+
+    public class ShopDiscountMegaMind
+    {
+
+        //INITIALISE THIS, VERY IMPORTANT!!!
+        public static void Init()
+        {
+            new Hook(typeof(ShopItemController).GetMethods().Single(
+               a =>
+                   a.Name == "Initialize" &&
+                   a.GetParameters().Length == 2 &&
+                   a.GetParameters()[1].ParameterType == typeof(BaseShopController)),
+               typeof(ShopDiscountMegaMind).GetMethod("InitializeViaBaseShopController", BindingFlags.Static | BindingFlags.Public));
+
+            new Hook(typeof(ShopItemController).GetMethods().Single(
+              a =>
+                  a.Name == "Initialize" &&
+                  a.GetParameters().Length == 2 &&
+                  a.GetParameters()[1].ParameterType == typeof(ShopController)),
+              typeof(ShopDiscountMegaMind).GetMethod("InitializeViaShopController", BindingFlags.Static | BindingFlags.Public));
+
+            OnShopItemStarted += OnMyShopItemStartedGlobal;
+        }
+
+
+        /// <summary>
+        /// A subscribable Action for when any ShopItemController is started or pops into existence.
+        /// </summary>
+        public static Action<ShopItemController> OnShopItemStarted;
+
+        /// <summary>
+        /// The list you add your ShopDiscounts to. These will be added automatically when ShopDiscountController starts anywhere.
+        /// </summary>
+        public static List<ShopDiscount> DiscountsToAdd = new List<ShopDiscount>();
+
+        public static void OnMyShopItemStartedGlobal(ShopItemController shopItemController)
+        {
+            ShopDiscountController steamSale = shopItemController.gameObject.AddComponent<ShopDiscountController>();
+            steamSale.discounts = DiscountsToAdd ?? new List<ShopDiscount>();
+        }
+
+
+        //The hooks required for the shop items to register
+        public static void InitializeViaBaseShopController(Action<ShopItemController, PickupObject, BaseShopController> orig, ShopItemController self, PickupObject i, BaseShopController parent)
+        {
+            orig(self, i, parent);
+            if (OnShopItemStarted != null)
+            {
+                OnShopItemStarted(self);
+            }
+        }
+        public static void InitializeViaShopController(Action<ShopItemController, PickupObject, ShopController> orig, ShopItemController self, PickupObject i, ShopController parent)
+        {
+            orig(self, i, parent);
+            if (OnShopItemStarted != null)
+            {
+                OnShopItemStarted(self);
+            }
+        }
+
+
+        
+    }
+    public class ShopDiscount : MonoBehaviour
+    {
+        // The shop discount itself. This class controls how your discount should work, the price reduction amount and the purchase condition, and other things.
+        /// <summary>
+        /// The name of your discount. Mostly just for organization and other things.
+        /// </summary>
+        public string IdentificationKey = "ShopDisc";
+        /// <summary>
+        /// Price multipler, self explanatory. Set it to 0.5f and whatever items you set it to will be half price!
+        /// </summary>
+        public float PriceMultiplier = 1f;
+        /// <summary>
+        /// A list of item IDs you want to be discounted when the discount condition is active.
+        /// </summary>
+        public Func<ShopItemController, bool> ItemToDiscount;
+
+        /// <summary>
+        /// A function for your *condition* in which your discount will be active. Make sure to return it as TRUE when it should be active.
+        /// </summary>
+        public Func<bool> CanDiscountCondition;
+
+        /// <summary>
+        /// A function that lets you give a *custom* price multipler, for more dynamic price reductions..
+        /// </summary>
+        public Func<float> CustomPriceMultiplier;
+
+
+        private bool OverridePriceReduction = false;
+        /// <summary>
+        /// Returns the current override value. Your discount will NOT be active while the override value is TRUE.
+        /// </summary>
+        public bool GetOverride() { return OverridePriceReduction; }
+        /// <summary>
+        /// Sets the override value. Your discount will NOT be active while the override value is TRUE.
+        /// </summary>
+        public void SetOverride(bool overrideType) { OverridePriceReduction = overrideType; }
+        /// <summary>
+        /// Returns TRUE if your discount is active.
+        /// </summary>
+        public bool CanBeDiscounted()
+        {
+            if (OverridePriceReduction == true) { return false; }
+            if (CanDiscountCondition != null)
+            {
+                return CanDiscountCondition();
+            }
+            return false;
+        }
+
+
+        public float ReturnCustomPriceMultiplier()
+        {
+            if (CustomPriceMultiplier != null)
+            {
+                return CustomPriceMultiplier();
+            }
+            return PriceMultiplier;
+        }
+    }
 
     public class ShopDiscountController : MonoBehaviour
     {
         public ShopDiscountController()
-        {         
+        {
             shopItemSelf = this.GetComponent<ShopItemController>();
         }
 
-        
-
         public void Update()
         {
-            
-                DoPriceReduction();
-
+            DoPriceReduction();
         }
-        public void DoPriceReduction()
+        private void DoPriceReduction()
         {
-            if (shopItemSelf == null) {return; }
+            if (shopItemSelf == null) { return; }
 
             if (GameStatsManager.Instance != null)
             {
-                if (shopItemSelf.item is PaydayDrillItem && GameStatsManager.Instance.GetFlag(GungeonFlags.ITEMSPECIFIC_STOLE_DRILL) == false) { return; }
+                if (shopItemSelf.item is PaydayDrillItem && GameStatsManager.Instance.GetFlag(GungeonFlags.ITEMSPECIFIC_STOLE_DRILL) == false) { return; } //Payday item failsafes because dodge roll hates us
                 if (shopItemSelf.item is BankMaskItem && GameStatsManager.Instance.GetFlag(GungeonFlags.ITEMSPECIFIC_STOLE_BANKMASK) == false) { return; }
                 if (shopItemSelf.item is BankBagItem && GameStatsManager.Instance.GetFlag(GungeonFlags.ITEMSPECIFIC_STOLE_BANKBAG) == false) { return; }
             }
@@ -94,14 +214,17 @@ namespace Planetside
             float mult = 1;
             foreach (var DiscountVar in discounts)
             {
-                if (ValidID(DiscountVar, shopItemSelf.item.PickupObjectId) == true && DiscountVar.PriceReductionActive() == true)
+                if (Valid(DiscountVar) == true)
                 {
-                    mult *= DiscountVar.PriceMultiplier;
+                    if (DiscountVar.CanBeDiscounted() == true)
+                    {
+                        mult *= DiscountVar.ReturnCustomPriceMultiplier();
+                    }
                 }
             }
             DoTotalDiscount(mult);
         }
-        public void DoTotalDiscount(float H)
+        private void DoTotalDiscount(float H)
         {
             if (shopItemSelf == null) { return; }
             if (GameManager.Instance == null) { return; }
@@ -119,7 +242,7 @@ namespace Planetside
             shopItemSelf.OverridePrice = (int)(newCost *= H);
         }
 
-        public void ReturnPriceToDefault()
+        private void ReturnPriceToDefault()
         {
             if (shopItemSelf == null) { return; }
             GameLevelDefinition lastLoadedLevelDefinition = GameManager.Instance != null ? GameManager.Instance.GetLastLoadedLevelDefinition() : null;
@@ -137,24 +260,30 @@ namespace Planetside
         }
 
 
+
+        /// <summary>
+        /// Sets the override for a ShopDiscount with a specific IdentificationKey.
+        /// </summary>
         public void DisableSetShopDiscount(string stringID, bool b)
         {
             foreach (var DiscountVar in discounts)
             {
-                if (DiscountVar.IdentificationKey == stringID) { DiscountVar.OverridePriceReduction = b; }
+                if (DiscountVar.IdentificationKey == stringID) { DiscountVar.SetOverride(b); }
             }
         }
-
+        /// <summary>
+        /// Returns a ShopDiscount with a specific IdentificationKey.
+        /// </summary>
         public ShopDiscount ReturnShopDiscountFromController(string IDTag)
         {
             foreach (var DiscountVar in discounts)
             {
-                if (DiscountVar.IdentificationKey == IDTag) {return DiscountVar; }
+                if (DiscountVar.IdentificationKey == IDTag) { return DiscountVar; }
             }
             return null;
         }
 
-        public void OnDestroy()
+        private void OnDestroy()
         {
             if (shopItemSelf != null)
             {
@@ -162,17 +291,34 @@ namespace Planetside
             }
         }
 
-      
-        public bool ValidID(ShopDiscount shopDiscount,int ID)
+
+        //checks if the item itself is valid in the first place
+        private bool Valid(ShopDiscount shopDiscount)
         {
-            if (shopDiscount.IDsToReducePriceOf.Contains(ID)) { return true; }
+            if (shopItemSelf == null) { return false; }
+            if (shopDiscount.ItemToDiscount != null) { return shopDiscount.ItemToDiscount(shopItemSelf); }
             return false;
         }
 
-
         public List<ShopDiscount> discounts = new List<ShopDiscount>();
-        public ShopItemController shopItemSelf;
+        private ShopItemController shopItemSelf;
     }
+
+
+    //=============================================================================
+    //=============================================================================
+    //=============================================================================
+    //=============================================================================
+    //=============================================================================
+    //=============================================================================
+
+
+
+
+
+
+
+
 
     public class ShopDiscountItem : PassiveItem
     {
@@ -192,56 +338,40 @@ namespace Planetside
             //new Hook(typeof(BaseShopController).GetMethod("DoSetup", BindingFlags.Instance | BindingFlags.NonPublic), typeof(ShopDiscountItem).GetMethod("DoSetupHook"));
 
 
-           new Hook(typeof(ShopItemController).GetMethods().Single(
-                a =>
-                    a.Name == "Initialize" &&
-                    a.GetParameters().Length == 2 &&
-                    a.GetParameters()[1].ParameterType == typeof(BaseShopController)),
-                typeof(ShopDiscountItem).GetMethod("InitializeViaBaseShopController", BindingFlags.Static | BindingFlags.Public));
-            
-            new Hook(typeof(ShopItemController).GetMethods().Single(
-              a =>
-                  a.Name == "Initialize" &&
-                  a.GetParameters().Length == 2 &&
-                  a.GetParameters()[1].ParameterType == typeof(ShopController)),
-              typeof(ShopDiscountItem).GetMethod("InitializeViaShopController", BindingFlags.Static | BindingFlags.Public));
-
-            OnShopItemStarted += OnMyShopItemStarted;
+          
         }
         public static int ShopDiscountItemID;
 
 
-        public static void InitializeViaBaseShopController(Action<ShopItemController, PickupObject, BaseShopController> orig, ShopItemController self, PickupObject i, BaseShopController parent)
-        {
-            orig(self, i, parent);
-            if (OnShopItemStarted != null)
-            {
-                OnShopItemStarted(self);
-            }
-        }
+       
 
-        public static void InitializeViaShopController(Action<ShopItemController, PickupObject, ShopController> orig, ShopItemController self, PickupObject i, ShopController parent)
+        public static bool CanBuyItem()
         {
-            orig(self, i, parent);
-            if (OnShopItemStarted != null)
+            PlayerController[] players = GameManager.Instance.AllPlayers;
+            for (int i = 0; i < players.Length; i++)
             {
-                OnShopItemStarted(self);
+                PlayerController player = players[i];
+                if (player.HasPassiveItem(ShopDiscountItem.ShopDiscountItemID))
+                {
+                    return true;
+                }
             }
+            return false;
         }
-        public static Action<ShopItemController> OnShopItemStarted;
 
         public static void OnMyShopItemStarted(ShopItemController shopItemController)
         {
+            /*
             ShopDiscountController steamSale = shopItemController.gameObject.AddComponent<ShopDiscountController>();
             steamSale.discounts = new List<ShopDiscount>() { new ShopDiscount()
             {
                 IdentificationKey = "One",
                 PriceMultiplier = 0.5f,
                 IDsToReducePriceOf =  new List<int>() { 73, 85, 120 },
-                PriceReductionItemID = ShopDiscountItemID,
-
+                CanBuyCondition = CanBuyItem
             }
             };
+            */
             /*
             new ShopDiscount()
             {
@@ -256,6 +386,8 @@ namespace Planetside
             //steamSale.IDsToReducePriceOf = new List<int>() { 73, 85, 120 };
             //steamSale.PriceReductionItemID = ShopDiscountItemID;
         }
+
+        /*
         public static void DoSetupHook(Action<BaseShopController> orig, BaseShopController self)
         {
             orig(self);
@@ -270,7 +402,7 @@ namespace Planetside
                 }    
             }           
         }
-
+        */
 
 
         /*

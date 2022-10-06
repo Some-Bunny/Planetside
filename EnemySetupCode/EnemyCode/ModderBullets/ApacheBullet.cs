@@ -24,26 +24,22 @@ namespace Planetside
 			protected override IEnumerator Top() 
 			{
 				PlayerController player = GameManager.Instance.PrimaryPlayer;
-				for (int j = 0; j < 2; j++)
+                RoomHandler currentRoom = player.CurrentRoom;
+                AssetBundle assetBundle = ResourceManager.LoadAssetBundle("shared_auto_002");
+                this.Mines_Cave_In = assetBundle.LoadAsset<GameObject>("Mines_Cave_In");
+                GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(Mines_Cave_In, player.sprite.WorldCenter + new Vector2(UnityEngine.Random.Range(-4, 4), UnityEngine.Random.Range(-4, 4)), Quaternion.identity);
+                HangingObjectController RockSlideController = gameObject.GetComponent<HangingObjectController>();
+                RockSlideController.triggerObjectPrefab = null;
+                GameObject[] additionalDestroyObjects = new GameObject[]
                 {
-					RoomHandler currentRoom = player.CurrentRoom;
-					AssetBundle assetBundle = ResourceManager.LoadAssetBundle("shared_auto_002");
-					this.Mines_Cave_In = assetBundle.LoadAsset<GameObject>("Mines_Cave_In");
-					GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(Mines_Cave_In, player.sprite.WorldCenter + new Vector2(UnityEngine.Random.Range(-4, 4), UnityEngine.Random.Range(-4, 4)), Quaternion.identity);
-					HangingObjectController RockSlideController = gameObject.GetComponent<HangingObjectController>();
-					RockSlideController.triggerObjectPrefab = null;
-					GameObject[] additionalDestroyObjects = new GameObject[]
-					{
-				RockSlideController.additionalDestroyObjects[1]
-					};
-					RockSlideController.additionalDestroyObjects = additionalDestroyObjects;
-					UnityEngine.Object.Destroy(gameObject.transform.Find("Sign").gameObject);
-					RockSlideController.ConfigureOnPlacement(currentRoom);
-					yield return Wait(30);
-					RockSlideController.Interact(player);
-				}
-				yield return new WaitForSeconds(3f);
-				yield break; 
+                RockSlideController.additionalDestroyObjects[1]
+                };
+                RockSlideController.additionalDestroyObjects = additionalDestroyObjects;
+                UnityEngine.Object.Destroy(gameObject.transform.Find("Sign").gameObject);
+                RockSlideController.ConfigureOnPlacement(currentRoom);
+                yield return Wait(30);
+                RockSlideController.Interact(player);
+                yield break; 
 			}
 			private GameObject Mines_Cave_In;
 		}

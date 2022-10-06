@@ -249,7 +249,8 @@ namespace Planetside
                     bulletBank.ActorName = actor.name ?? "Toddy";
 
                     bulletBank.transforms = new List<Transform>() { bulletBank.transform };
-                    //bulletBank.gameActor = actorToTrack;
+
+                    bulletBank.gameActor = actor;
 
 
                     bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableLargeSpore);

@@ -65,10 +65,9 @@ namespace Planetside
 				image.spawnShadows = true;
 
 				//255, 210, 178, 255)
-				AfterImageTrailController im = companion.aiActor.gameObject.AddComponent<AfterImageTrailController>();
-				im.spawnShadows = false;
-				companion.aiActor.gameObject.AddComponent<tk2dSpriteAttachPoint>();
-				companion.aiActor.gameObject.AddComponent<ObjectVisibilityManager>();
+
+				companion.aiActor.gameObject.GetOrAddComponent<tk2dSpriteAttachPoint>();
+				companion.aiActor.gameObject.GetOrAddComponent<ObjectVisibilityManager>();
 
 				companion.aiActor.specRigidbody.PixelColliders.Add(new PixelCollider
 				{
@@ -144,12 +143,10 @@ namespace Planetside
 						"charge_front_left",
 						"charge_back_left" }, new DirectionalAnimation.FlipType[6], DirectionalAnimation.DirectionType.SixWay);
 
-				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awaken" }, new DirectionalAnimation.FlipType[0]);
+				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awake", "awake", "awake", "awake", "awake", "awake" }, new DirectionalAnimation.FlipType[6], DirectionalAnimation.DirectionType.SixWay);
 
 
-
-
-				companion.aiActor.AwakenAnimType = AwakenAnimationType.Awaken;
+                companion.aiActor.AwakenAnimType = AwakenAnimationType.Awaken;
 
 				List<int> idle_front = new List<int>()
 				{
@@ -280,11 +277,12 @@ namespace Planetside
 					5,
 					6,
 					7
-					}, "awaken", tk2dSpriteAnimationClip.WrapMode.Once).fps = 19;
+					}, "awake", tk2dSpriteAnimationClip.WrapMode.Once).fps = 19;
+                    EnemyToolbox.MarkAnimationAsSpawn(companion.gameObject.GetComponent<tk2dSpriteAnimator>(), "awake");
 
-				}
+                }
 
-				EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "charge_back", new Dictionary<int, string> { { 1, "Charge" } });
+                EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "charge_back", new Dictionary<int, string> { { 1, "Charge" } });
 				EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "charge_back_right", new Dictionary<int, string> { { 1, "Charge" } });
 				EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "charge_front_right", new Dictionary<int, string> { { 1, "Charge" } });
 				EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "charge_front", new Dictionary<int, string> { { 1, "Charge" } });
@@ -462,6 +460,14 @@ namespace Planetside
 				bs.StartingFacingDirection = behaviorSpeculator.StartingFacingDirection;
 				bs.SkipTimingDifferentiator = behaviorSpeculator.SkipTimingDifferentiator;
 
+                Material mat2 = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+                mat2.mainTexture = companion.aiActor.sprite.renderer.material.mainTexture;
+                mat2.SetColor("_EmissiveColor", new Color32(255, 210, 178, 255));
+                mat2.SetFloat("_EmissiveColorPower", 1.55f);
+                mat2.SetFloat("_EmissivePower", 100);
+                mat2.SetFloat("_EmissiveThresholdSensitivity", 0.05f);
+                companion.sprite.renderer.material = mat2;
+
                 Game.Enemies.Add("psog:barretina", companion.aiActor);
 
                 SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Enemies/Berretina/berretina_idle_south_001", SpriteBuilder.ammonomiconCollection);
@@ -503,6 +509,7 @@ namespace Planetside
 		public class EnemyBehavior : BraveBehaviour
 		{
 
+			/*
 			private RoomHandler m_StartRoom;
 
 			public void Update()
@@ -533,25 +540,15 @@ namespace Planetside
 				}
 				yield break;
 			}
+			*/
 			private void Start()
 			{
-				m_StartRoom = aiActor.GetAbsoluteParentRoom();
+				//m_StartRoom = aiActor.GetAbsoluteParentRoom();
 				base.aiActor.healthHaver.OnPreDeath += (obj) =>
 				{ 
 				  AkSoundEngine.PostEvent("Play_ENM_Tarnisher_Bite_01", base.aiActor.gameObject);
 				};
-				if (!base.aiActor.IsBlackPhantom)
-				{
-					Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
-					mat.mainTexture = base.aiActor.sprite.renderer.material.mainTexture;
-					mat.SetColor("_EmissiveColor", new Color32(255, 210, 178, 255));
-					mat.SetFloat("_EmissiveColorPower", 1.55f);
-					mat.SetFloat("_EmissivePower", 100);
-					mat.SetFloat("_EmissiveThresholdSensitivity", 0.05f);
-
-					aiActor.sprite.renderer.material = mat;
-
-				}
+				
 				base.aiActor.spriteAnimator.AnimationEventTriggered += this.AnimationEventTriggered;
 			}
 			private void AnimationEventTriggered(tk2dSpriteAnimator animator, tk2dSpriteAnimationClip clip, int frameIdx)
@@ -572,11 +569,11 @@ namespace Planetside
                 base.PostWwiseEvent("Play_ENM_gunknight_shockwave_01", null);
 
                 this.Fire(new Direction(150, DirectionType.Aim, -1f), new Speed(0f, SpeedType.Absolute), new Gordo(-180));
-                this.Fire(new Direction(100, DirectionType.Aim, -1f), new Speed(0f, SpeedType.Absolute), new Gordo(-120));
-                this.Fire(new Direction(50, DirectionType.Aim, -1f), new Speed(0f, SpeedType.Absolute), new Gordo(-60));
+                //this.Fire(new Direction(100, DirectionType.Aim, -1f), new Speed(0f, SpeedType.Absolute), new Gordo(-120));
+                //this.Fire(new Direction(50, DirectionType.Aim, -1f), new Speed(0f, SpeedType.Absolute), new Gordo(-60));
                 this.Fire(new Direction(0, DirectionType.Aim, -1f), new Speed(0f, SpeedType.Absolute), new Gordo(0));
-                this.Fire(new Direction(-50, DirectionType.Aim, -1f), new Speed(0f, SpeedType.Absolute), new Gordo(60));
-                this.Fire(new Direction(-100, DirectionType.Aim, -1f), new Speed(0f, SpeedType.Absolute), new Gordo(120));
+                //this.Fire(new Direction(-50, DirectionType.Aim, -1f), new Speed(0f, SpeedType.Absolute), new Gordo(60));
+                //this.Fire(new Direction(-100, DirectionType.Aim, -1f), new Speed(0f, SpeedType.Absolute), new Gordo(120));
                 this.Fire(new Direction(-150, DirectionType.Aim, -1f), new Speed(0f, SpeedType.Absolute), new Gordo(180));
 
 
@@ -619,7 +616,7 @@ namespace Planetside
                 }
                 protected override IEnumerator Top()
                 {
-                    yield return base.Wait((Mathf.Max(180, BraveUtility.RandomAngle()) / 2.25f));
+                    yield return base.Wait((Mathf.Max(180, BraveUtility.RandomAngle()) / 1.75f));
                     base.Vanish(false);
                     yield break;
                 }

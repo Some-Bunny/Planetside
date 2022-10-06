@@ -19,14 +19,68 @@ namespace Planetside
     {
         public static void Init()
         {
-            new Hook(typeof(PlayerController).GetMethod("HandleSpinfallSpawn", BindingFlags.Instance | BindingFlags.NonPublic), typeof(Actions).GetMethod("HandleSpinfallSpawnHook"));
+            //new Hook(typeof(PlayerController).GetMethod("HandleSpinfallSpawn", BindingFlags.Instance | BindingFlags.NonPublic), typeof(Actions).GetMethod("HandleSpinfallSpawnHook"));
 
 			new Hook(typeof(RoomHandler).GetMethod("TriggerReinforcementLayersOnEvent", BindingFlags.Instance | BindingFlags.Public), typeof(Actions).GetMethod("TriggerReinforcementLayersOnEventHook"));
 
-			Hook ifThisBreaksBlameTheGnomes = new Hook(typeof(Dungeon).GetMethod("Start", BindingFlags.Instance | BindingFlags.NonPublic),  typeof(Actions).GetMethod("StartHook", BindingFlags.Static | BindingFlags.Public));
-		}
+			Hook ifThisBreaksBlameTheGnomes = new Hook(typeof(Dungeon).GetMethod("Start", BindingFlags.Instance | BindingFlags.NonPublic),  typeof(Actions).GetMethod("StartHookDungeon", BindingFlags.Static | BindingFlags.Public));
 
-		public static bool TriggerReinforcementLayersOnEventHook(Func<RoomHandler, RoomEventTriggerCondition, bool, bool> orig, RoomHandler self, RoomEventTriggerCondition condition, bool instant = false)
+            //new Hook(typeof(GameStatsManager).GetMethod("BeginNewSession", BindingFlags.Instance | BindingFlags.Public), typeof(Actions).GetMethod("BeginNewSessionHook"));
+
+            //new Hook(typeof(MetaInjectionData).GetMethod("PreprocessRun", BindingFlags.Instance | BindingFlags.Public), typeof(Actions).GetMethod("PreprocessRunHook"));
+
+            //new Hook(typeof(PlayerController).GetMethod("Start", BindingFlags.Instance | BindingFlags.Public), typeof(Actions).GetMethod("StartHook"));
+
+            //new Hook(typeof(PlayerController).GetMethod("Awake", BindingFlags.Instance | BindingFlags.Public), typeof(Actions).GetMethod("AwakeHook"));
+
+            //new Hook(typeof(GameStatsManager).GetMethod("BeginNewSession", BindingFlags.Instance | BindingFlags.Public), typeof(Actions).GetMethod("BeginNewSessionHook"));
+
+            //new Hook(typeof(GameStatsManager).GetMethod("SetStat", BindingFlags.Instance | BindingFlags.Public), typeof(Actions).GetMethod("SetStatHook"));
+
+            //new Hook(typeof(GameStatsManager).GetMethod("RegisterStatChange", BindingFlags.Instance | BindingFlags.Public), typeof(Actions).GetMethod("RegisterStatChangeHook"));
+
+            new Hook(typeof(Dungeon).GetMethod("FloorReached", BindingFlags.Instance | BindingFlags.Public), typeof(Actions).GetMethod("FloorReachedHook"));
+
+        }
+
+        public static void FloorReachedHook(Action<Dungeon> orig, Dungeon self)
+		{
+            orig(self);
+            var gameManager = GameManager.Instance;
+            var gameStatsManager = GameStatsManager.Instance;
+            if (gameManager != null && gameStatsManager != null && gameStatsManager.IsInSession == true)
+			{
+                if (gameStatsManager.GetSessionStatValue(TrackedStats.TIME_PLAYED) < 0.1f)
+                {
+                    if (OnRunStart != null)
+                    {
+                        OnRunStart(gameManager.PrimaryPlayer, gameManager.SecondaryPlayer, gameManager.CurrentGameMode);
+                    }
+                }
+            }
+		}
+        public static Action<PlayerController, PlayerController, GameManager.GameMode> OnRunStart;
+
+
+
+        public static void RegisterStatChangeHook(Action<GameStatsManager, TrackedStats, float> orig, GameStatsManager self, TrackedStats stat, float value)
+        {
+            if (stat == TrackedStats.RUNS_PLAYED_POST_FTA) { ETGModConsole.Log("lets go?"); ETGModConsole.Log(self.GetPlayerStatValue(stat)); }
+            orig(self, stat, value);
+
+        }
+
+        public static void SetStatHook(Action<GameStatsManager, TrackedStats, float> orig, GameStatsManager self, TrackedStats stat, float value)
+        {
+            if (stat == TrackedStats.RUNS_PLAYED_POST_FTA) { ETGModConsole.Log(value); }
+            orig(self, stat, value);
+           
+        }
+
+       
+
+
+        public static bool TriggerReinforcementLayersOnEventHook(Func<RoomHandler, RoomEventTriggerCondition, bool, bool> orig, RoomHandler self, RoomEventTriggerCondition condition, bool instant = false)
         {
 			if (OnReinforcementWaveTriggered != null)
             {
@@ -37,7 +91,7 @@ namespace Planetside
 		public static Action<RoomHandler, RoomEventTriggerCondition> OnReinforcementWaveTriggered;
 
 
-		public static IEnumerator StartHook(Func<Dungeon, IEnumerator> orig, Dungeon self)
+		public static IEnumerator StartHookDungeon(Func<Dungeon, IEnumerator> orig, Dungeon self)
 		{
 			IEnumerator origEnum = orig(self);
 			while (origEnum.MoveNext())
@@ -61,16 +115,10 @@ namespace Planetside
 				object obj = origEnum.Current;
 				yield return obj;
 			}
-			if (GameStatsManager.Instance.GetSessionStatValue(TrackedStats.TIME_PLAYED) <= 0.33f)
-			{
-				if (OnRunStart != null)
-				{
-					OnRunStart(self);
-				}
-			}
-			yield break;
+			
+
+            yield break;
 		}
-		public static Action<PlayerController> OnRunStart;
 	}
 }
     

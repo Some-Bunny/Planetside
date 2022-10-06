@@ -329,8 +329,7 @@ namespace Planetside
 					}, "die_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 13f;
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
-
- 12,
+				 12,
 				 13,
 				 14,
 				 15,
@@ -466,7 +465,14 @@ namespace Planetside
 				bs.SkipTimingDifferentiator = behaviorSpeculator.SkipTimingDifferentiator;
 				Game.Enemies.Add("psog:arch_gunjurer", companion.aiActor);
 
-				SpriteBuilder.AddSpriteToCollection("Planetside/Resources/ArchJurer/archjurer_idle_001.png", SpriteBuilder.ammonomiconCollection);
+                Material mat2 = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+                mat2.mainTexture = companion.aiActor.sprite.renderer.material.mainTexture;
+                mat2.SetColor("_EmissiveColor", new Color32(255, 255, 255, 255));
+                mat2.SetFloat("_EmissiveColorPower", 1.55f);
+                mat2.SetFloat("_EmissivePower", 100);
+                companion.aiActor.sprite.renderer.material = mat2;
+
+                SpriteBuilder.AddSpriteToCollection("Planetside/Resources/ArchJurer/archjurer_idle_001.png", SpriteBuilder.ammonomiconCollection);
 				if (companion.GetComponent<EncounterTrackable>() != null)
 				{
 					UnityEngine.Object.Destroy(companion.GetComponent<EncounterTrackable>());
@@ -533,15 +539,6 @@ namespace Planetside
 
 			private void Start()
 			{
-				if (!base.aiActor.IsBlackPhantom)
-                {
-					Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
-					mat.mainTexture = base.aiActor.sprite.renderer.material.mainTexture;
-					mat.SetColor("_EmissiveColor", new Color32(255, 255, 255, 255));
-					mat.SetFloat("_EmissiveColorPower", 1.55f);
-					mat.SetFloat("_EmissivePower", 100);
-					aiActor.sprite.renderer.material = mat;
-				}
 				m_StartRoom = aiActor.GetAbsoluteParentRoom();
 				base.aiActor.healthHaver.OnPreDeath += (obj) =>
 				{

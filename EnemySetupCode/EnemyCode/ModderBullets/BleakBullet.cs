@@ -35,8 +35,11 @@ namespace Planetside
 					
 					yield return this.Wait(2);
 				}
-				base.Fire(new Direction(0, DirectionType.Aim, -1f), new Speed(15, SpeedType.Absolute), null);
-				yield break;
+				base.Fire(new Direction(0, DirectionType.Aim, -1f), new Speed(12, SpeedType.Absolute), null);
+                base.Fire(new Direction(0, DirectionType.Aim, -1f), new Speed(11, SpeedType.Absolute), null);
+                base.Fire(new Direction(0, DirectionType.Aim, -1f), new Speed(10, SpeedType.Absolute), null);
+
+                yield break;
 			}
 		}
 		public class WallBullet : Bullet

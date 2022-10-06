@@ -102,7 +102,7 @@ namespace Planetside
 				}
 				for (int i = -1; i <= 1; i++)
 				{
-					this.Fire(new Direction((float)(i * 3), DirectionType.Aim, -1f), new Speed(7f, SpeedType.Absolute), new SkellBullet());
+					this.Fire(new Direction((float)(i * 3), DirectionType.Aim, -1f), new Speed(4f, SpeedType.Absolute), new SkellBullet());
 				}
 				yield break;
 			}
@@ -117,7 +117,7 @@ namespace Planetside
 			}
 			protected override IEnumerator Top()
 			{
-				base.ChangeSpeed(new Speed(20f, SpeedType.Absolute), 60);
+				base.ChangeSpeed(new Speed(20f, SpeedType.Absolute), 90);
 				yield break;
 			}
 		}

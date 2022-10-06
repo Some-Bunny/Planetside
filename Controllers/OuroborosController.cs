@@ -263,7 +263,7 @@ namespace Planetside
             }
         }
 
-		public static void OnRunStartMethod(PlayerController player)
+		public static void OnRunStartMethod(PlayerController player, PlayerController player2, GameManager.GameMode gameMode)
         {
 			float Loop = SaveAPIManager.GetPlayerStatValue(CustomTrackedStats.TIMES_LOOPED);
 			bool LoopOn = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.LOOPING_ON);
@@ -821,7 +821,7 @@ namespace Planetside
 	public class FrenzyElite : BasicEliteType
 	{
 		public override float HealthMultiplier => 0.5f;
-		public override float CooldownMultiplier => 0.33f;
+		public override float CooldownMultiplier => 1.33f;
 		public override float MovementSpeedMultiplier => 1.55f;
 		public override Color EliteOutlineColor => Color.yellow;
 		public override Color EliteParticleColor => Color.yellow;
@@ -855,7 +855,7 @@ namespace Planetside
 	public class HealingElite : BasicEliteType
 	{
 		public override float HealthMultiplier => 0.8f;
-		public override float CooldownMultiplier => 0.66f;
+		public override float CooldownMultiplier => 1.1f;
 		public override float MovementSpeedMultiplier => 1.1f;
 		public override Color EliteOutlineColor => Color.green;
 		public override Color EliteParticleColor => Color.green;
@@ -952,7 +952,7 @@ namespace Planetside
 		{
 			base.Start();
 			base.aiActor.knockbackDoer.SetImmobile(true, "Elite.");
-		}
+        }
 		private float Timer;
 
 		private IEnumerator IncreaseInSize(tk2dSprite CircleSprite, float SizeMultiplier = 1)
@@ -991,7 +991,7 @@ namespace Planetside
 								{
 									if (item2 is DraGunBoulderController laser2)
 									{
-										laser2.LifeTime = 10;
+										laser2.LifeTime = 15;
 										GameManager.Instance.Dungeon.StartCoroutine(this.IncreaseInSize(laser2.CircleSprite, 0.5f));
 										SpeculativeRigidbody body = laser2.GetComponentInChildren<SpeculativeRigidbody>();
 										if (body)
@@ -1017,7 +1017,7 @@ namespace Planetside
 	public class CursedElite : BasicEliteType
 	{
 		public override float HealthMultiplier => 0.9f;
-		public override float CooldownMultiplier => 0.8f;
+		public override float CooldownMultiplier => 1f;
 		public override float MovementSpeedMultiplier => 1.33f;
 		public override Color EliteOutlineColor => new Color(50, 0, 50);
 		public override Color EliteParticleColor => Color.magenta;

@@ -27,7 +27,7 @@ namespace Planetside
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("796a7ed4ad804984859088fc91672c7f").bulletBank.GetBullet("default"));
 				for (int i = 0; i < 8; i++)
                 {
-					base.Fire(new Direction(UnityEngine.Random.Range(-25, 25), DirectionType.Aim, -1f), new Speed(UnityEngine.Random.Range(6, 12), SpeedType.Absolute), new HelixChainBullet((UnityEngine.Random.value > 0.5f) ? false : true, UnityEngine.Random.Range(0.3f, 0.9f)));
+					base.Fire(new Direction(UnityEngine.Random.Range(-25, 25), DirectionType.Aim, -1f), new Speed(UnityEngine.Random.Range(7, 13), SpeedType.Absolute), new HelixChainBullet((UnityEngine.Random.value > 0.5f) ? false : true, UnityEngine.Random.Range(0.3f, 0.9f)));
 					yield return base.Wait(6);
 				}
 				yield break;

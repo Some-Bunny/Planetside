@@ -51,8 +51,11 @@ namespace Planetside
 
             Actions.OnRunStart += OnRunStart;
         }
-        public static void OnRunStart(PlayerController player)
+        public static void OnRunStart(PlayerController player, PlayerController player2, GameManager.GameMode gameMode)
         {
+            float offset = 0;
+            if (gameMode != GameManager.GameMode.NORMAL) { offset = -6; }
+
             int perkCount = CrossGameDataStorage.CrossGameStorage.AmountOfPerksToChooseFromOnRunStart;
             if (perkCount > 0)
             {
@@ -78,7 +81,7 @@ namespace Planetside
                 for (int e = 0; e < perkCount; e++)
                 {
                     int IDtoUse = BraveUtility.RandomElement<int>(IDsUsed);
-                    DebrisObject debrisSpawned = LootEngine.SpawnItem(PickupObjectDatabase.GetById(IDtoUse).gameObject, player.sprite.WorldCenter.ToVector3ZisY() + MathToolbox.GetUnitOnCircle(((360 / perkCount) * e)+RNGOffset, 1.25f).ToVector3ZisY() + new Vector3(-0.5f, 0), MathToolbox.GetUnitOnCircle(((360 / perkCount) * e) + RNGOffset, 5), 2).GetComponent<DebrisObject>();
+                    DebrisObject debrisSpawned = LootEngine.SpawnItem(PickupObjectDatabase.GetById(IDtoUse).gameObject, player.sprite.WorldCenter.ToVector3ZisY() + MathToolbox.GetUnitOnCircle(((360 / perkCount) * e)+RNGOffset, 1.25f).ToVector3ZisY() + new Vector3(-0.5f, offset), MathToolbox.GetUnitOnCircle(((360 / perkCount) * e) + RNGOffset, 5), 2).GetComponent<DebrisObject>();
                     
                     perksThatExist.Add(debrisSpawned);
                 }

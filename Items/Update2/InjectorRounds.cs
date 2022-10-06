@@ -82,7 +82,13 @@ namespace Planetside
         public static List<string> BlacklistedNames= new List<string>()
         {
         "jamBuff",
-		"leadBuff"
+		"leadBuff",
+        "blob",
+        "web",
+        "Infection",
+        "InfectionBoss",
+        "BrainHost",
+        "broken Armor"
         };
 
         public static Dictionary<string, GoopDefinition> GoopKeys = new Dictionary<string, GoopDefinition>()

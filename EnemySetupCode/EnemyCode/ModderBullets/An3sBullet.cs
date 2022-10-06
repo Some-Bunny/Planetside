@@ -56,7 +56,7 @@ namespace Planetside
 				{
 					if (i == 40)
 					{
-						base.ChangeSpeed(new Speed(15f, SpeedType.Absolute), 120);
+						base.ChangeSpeed(new Speed(13f, SpeedType.Absolute), 120);
 						base.ChangeDirection(new Direction(this.m_parent.GetAimDirection(1f, 10f), DirectionType.Absolute, -1f), 20);
 						base.StartTask(this.ChangeSpinSpeedTask(180f, 240));
 					}

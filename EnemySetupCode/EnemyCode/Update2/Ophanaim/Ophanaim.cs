@@ -1157,7 +1157,7 @@ namespace Planetside
                 {
                     miniBossIntroDoer.portraitSlideSettings.bossArtSprite = BossCardTexture;
                     miniBossIntroDoer.SkipBossCard = false;
-                    enemy.aiActor.healthHaver.bossHealthBar = HealthHaver.BossBarType.SubbossBar;
+                    enemy.aiActor.healthHaver.bossHealthBar = HealthHaver.BossBarType.MainBar;
                 }
                 else
 				{
@@ -1350,14 +1350,12 @@ namespace Planetside
 				{
 					CheckPlayerRoom();
 				}
-				bool flag = base.aiActor && base.aiActor.healthHaver;
-				if (flag)
+				if (base.aiActor && base.aiActor.healthHaver)
 				{
 					float maxHealth = base.aiActor.healthHaver.GetMaxHealth();
 					float num = maxHealth * 0.5f;
 					float currentHealth = base.aiActor.healthHaver.GetCurrentHealth();
-					bool flag2 = currentHealth < num;
-					if (flag2)
+					if (currentHealth < num)
 					{
 						if (Phase2Check != true)
 						{
@@ -1385,9 +1383,9 @@ namespace Planetside
 							StickyFrictionManager.Instance.RegisterCustomStickyFriction(0.15f, 1f, false, false); FlashTime = 1f;
 							base.aiActor.behaviorSpeculator.Interrupt();
 							AkSoundEngine.PostEvent("Play_EyeRoar", base.gameObject);
+
 							for (int i = 0; i < Ophanaim.reticles.Count; i++)
 							{
-								SpawnManager.Despawn(Ophanaim.reticles[i]);
 								Destroy(Ophanaim.reticles[i]);
 							}
 							Ophanaim.reticles.Clear();
@@ -1474,7 +1472,6 @@ namespace Planetside
 					{
 						for (int i = 0; i < controller.extantReticles.Count; i++)
 						{
-							SpawnManager.Despawn(controller.extantReticles[i]);
 							Destroy(controller.extantReticles[i]);
 						}
 						controller.extantReticles.Clear();
@@ -2630,7 +2627,6 @@ namespace Planetside
 				{
 					for (int i = 0; i < controller.extantReticles.Count; i++)
 					{
-						SpawnManager.Despawn(controller.extantReticles[i]);
 						Destroy(controller.extantReticles[i]);
 					}
 					controller.extantReticles.Clear();

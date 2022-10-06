@@ -369,6 +369,7 @@ namespace ItemAPI
             aiActor.reinforceType = AIActor.ReinforceType.FullVfx;
             aiActor.invisibleUntilAwaken = true;
             aiActor.AwakenAnimType = AIActor.AwakenAnimationType.Default;
+            aiActor.IsGone = true;
 
             aiActor.specRigidbody.PixelColliders.Add(new PixelCollider
             {

@@ -47,8 +47,8 @@ namespace Planetside
 			me3rgo.shootBulletScript = new CustomBulletScriptSelector(typeof(ModifiedGiantPowderSkullCannonVolley1));
 			me3rgo.fireMainDistVariance = 0;
 			me3rgo.fireMainMidTime = 1;
-			me3rgo.fireMainDist = 7;
-			me3rgo.fireTime = 9;
+			me3rgo.fireMainDist = 8;
+			me3rgo.fireTime = 10;
 			/*
 			BeholsterLaserBehavior shootLaser = behaviorSpec.AttackBehaviorGroup.AttackBehaviors[4].Behavior as BeholsterLaserBehavior;
 			shootLaser.trackingType = BeholsterLaserBehavior.TrackingType.ConstantTurn;
@@ -96,8 +96,8 @@ namespace Planetside
 				float angle = this.AimDirection;
 				for (int i = 0; i < 1; i++)
 				{
-					this.Fire(new Direction(angle, DirectionType.Absolute, -1f), new Speed(14f, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.UndodgeableCannonBullet.Name, false, false, false));
-					this.Fire(new Direction(angle, DirectionType.Absolute, -1f), new Speed(14f, SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.UndodgeableCannonBullet.Name, 12, 60));
+					this.Fire(new Direction(angle, DirectionType.Absolute, -1f), new Speed(3f, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.UndodgeableCannonBullet.Name, false, false, false));
+					this.Fire(new Direction(angle, DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.UndodgeableCannonBullet.Name, 12, 60));
 					yield return this.Wait(4);
 				}
 				yield break;
@@ -174,16 +174,16 @@ namespace Planetside
 			{
 				AkSoundEngine.PostEvent("Play_BOSS_doormimic_blast_01", this.BulletBank.gameObject);
 				float startDirection = 0f;
-				for (int i = 0; i < 24; i++)
+				for (int i = 0; i < 20; i++)
 				{
-					float num = startDirection + (float)(i * 15);
+					float num = startDirection + (float)(i * 18);
 					this.Fire(new Offset(new Vector2(1.5f, 0f), num, string.Empty, DirectionType.Absolute), new Direction(num, DirectionType.Absolute, -1f), new Speed(5f, SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.UndodgeableSlam.Name, 9f, 180, -1, false));
 				}
 				yield return this.Wait(12);
 				startDirection = 7.5f;
-				for (int k = 0; k < 24; k++)
+				for (int k = 0; k < 20; k++)
 				{
-					float num3 = startDirection + (float)(k * 15);
+					float num3 = startDirection + (float)(k * 18);
 					this.Fire(new Offset(new Vector2(1.5f, 0f), num3, string.Empty, DirectionType.Absolute), new Direction(num3, DirectionType.Absolute, -1f), new Speed(3f, SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.UndodgeableSlam.Name, 12f, 120, -1, false));
 				}
 				yield break;

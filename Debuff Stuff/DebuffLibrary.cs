@@ -127,7 +127,7 @@ namespace Planetside
 			resistanceType = EffectResistanceType.None,
 			UnfreezeDamagePercent = 1,
 			debrisMaxForce = 1,
-			effectIdentifier = "Infection",
+			effectIdentifier = "InfectionBoss",
 			FreezeCrystals = InfectedBossEffect.GeneratedInfectionCrystals,
 			TintColor = new Color(0.01f, 0.5f, 0.5f),
 			AppliesTint = true,

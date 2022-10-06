@@ -18,11 +18,11 @@ namespace Planetside
 		public static void Init()
 		{
 			AIActor sirWow = EnemyToolbox.CreateNewBulletBankerEnemy("wow_bullet", "SirWow", 18, 19, new List<int> { 217, 218, 219, 220 }, new List<int> { 221, 222, 223,224, 225, 226 }, null, new SalamanderScript(), 5f);
-			sirWow.gameObject.GetOrAddComponent<WowFireImmunity>();
+			sirWow.gameObject.GetOrAddComponent<FireImmunity>();
 		}
 			
 
-		private class WowFireImmunity : BraveBehaviour
+		private class FireImmunity : BraveBehaviour
 		{
 			private void Start()
 			{
@@ -66,9 +66,9 @@ namespace Planetside
 			{
 				if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
 				{
-					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("796a7ed4ad804984859088fc91672c7f").bulletBank.GetBullet("default"));
-				}
-				for (int i = 0; i < 4; i++)
+                    base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("frogger"));
+                }
+                for (int i = 0; i < 4; i++)
 				{
 					base.Fire(new Direction(0 + (UnityEngine.Random.Range(-20,20)), DirectionType.Aim, -1f), new Speed(12f, SpeedType.Absolute), new WallBullet());
 					yield return Wait(10);
@@ -82,7 +82,7 @@ namespace Planetside
 
 		public class WallBullet : Bullet
 		{
-			public WallBullet() : base("default", false, false, false)
+			public WallBullet() : base("frogger", false, false, false)
 			{
 
 			}

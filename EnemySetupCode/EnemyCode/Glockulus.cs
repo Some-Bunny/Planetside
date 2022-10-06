@@ -70,9 +70,9 @@ namespace Planetside
 				//255, 210, 178, 255)
 				AfterImageTrailController im = companion.aiActor.gameObject.AddComponent<AfterImageTrailController>();
 				im.spawnShadows = false;
-				companion.aiActor.gameObject.AddComponent<tk2dSpriteAttachPoint>();
-				companion.aiActor.gameObject.AddComponent<ObjectVisibilityManager>();
-				companion.aiActor.specRigidbody.PixelColliders.Add(new PixelCollider
+                companion.aiActor.gameObject.GetOrAddComponent<tk2dSpriteAttachPoint>();
+                companion.aiActor.gameObject.GetOrAddComponent<ObjectVisibilityManager>();
+                companion.aiActor.specRigidbody.PixelColliders.Add(new PixelCollider
 
 
 				{
@@ -165,8 +165,8 @@ namespace Planetside
 						"attack_back_left"}, new DirectionalAnimation.FlipType[6], DirectionalAnimation.DirectionType.SixWay);
 
 
-				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awaken" }, new DirectionalAnimation.FlipType[0]);
-				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "death", new string[] { "death" }, new DirectionalAnimation.FlipType[0]);
+                EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awaken" }, new DirectionalAnimation.FlipType[1]);
+                EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "death", new string[] { "death" }, new DirectionalAnimation.FlipType[0]);
 
 				List<int> idle_front = new List<int>()
 				{
@@ -267,12 +267,13 @@ namespace Planetside
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					0
-					}, "awaken", tk2dSpriteAnimationClip.WrapMode.Once).fps = 1;
+					}, "awaken", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
+                    EnemyToolbox.MarkAnimationAsSpawn(companion.gameObject.GetComponent<tk2dSpriteAnimator>(), "awaken");
 
 
-				}
+                }
 
-				EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "charge_back", new Dictionary<int, string> { { 0, "Charge" } });
+                EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "charge_back", new Dictionary<int, string> { { 0, "Charge" } });
 				EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "charge_back_right", new Dictionary<int, string> { { 0, "Charge" } });
 				EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "charge_front_right", new Dictionary<int, string> { { 0, "Charge" } });
 				EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "charge_front", new Dictionary<int, string> { { 0, "Charge" } });
@@ -287,6 +288,7 @@ namespace Planetside
 				EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "attack_back_left", new Dictionary<int, string> { { 0, "Play_ENM_cult_spew_01" } });
 
 				EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "death", new Dictionary<int, string> { { 0, "Play_BOSS_doormimic_charge_01" }, { 3, "Play_BOSS_doormimic_eyes_01" } });
+
 
 				var bs = prefab.GetComponent<BehaviorSpeculator>();
 				prefab.GetComponent<ObjectVisibilityManager>();
@@ -395,7 +397,19 @@ namespace Planetside
 				bs.OverrideStartingFacingDirection = behaviorSpeculator.OverrideStartingFacingDirection;
 				bs.StartingFacingDirection = behaviorSpeculator.StartingFacingDirection;
 				bs.SkipTimingDifferentiator = behaviorSpeculator.SkipTimingDifferentiator;
-				Game.Enemies.Add("psog:glockulus", companion.aiActor);
+
+                Material mat2 = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+                mat2.mainTexture = companion.aiActor.sprite.renderer.material.mainTexture;
+                mat2.SetColor("_EmissiveColor", new Color32(255, 210, 178, 255));
+                mat2.SetFloat("_EmissiveColorPower", 1.55f);
+                mat2.SetFloat("_EmissivePower", 100);
+                mat2.SetFloat("_EmissiveThresholdSensitivity", 0.05f);
+                companion.sprite.renderer.material = mat2;
+
+                Game.Enemies.Add("psog:glockulus", companion.aiActor);
+
+
+
 
 				SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Enemies/Glockulus/glockulus_idle_front1", SpriteBuilder.ammonomiconCollection);
 				if (companion.GetComponent<EncounterTrackable>() != null)
@@ -511,20 +525,6 @@ namespace Planetside
 				base.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("796a7ed4ad804984859088fc91672c7f").bulletBank.bulletBank.GetBullet("default"));
 				base.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("sweep"));
 				base.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("frogger"));
-
-
-				if (!base.aiActor.IsBlackPhantom)
-				{
-					Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
-					mat.mainTexture = base.aiActor.sprite.renderer.material.mainTexture;
-					mat.SetColor("_EmissiveColor", new Color32(255, 210, 178, 255));
-					mat.SetFloat("_EmissiveColorPower", 1.55f);
-					mat.SetFloat("_EmissivePower", 100);
-					mat.SetFloat("_EmissiveThresholdSensitivity", 0.05f);
-
-					aiActor.sprite.renderer.material = mat;
-
-				}
 
 
 				m_StartRoom = aiActor.GetAbsoluteParentRoom();

@@ -18,6 +18,7 @@ using static EnemyBulletBuilder.BulletBuilderFakePrefabHooks;
 using SaveAPI;
 using NpcApi;
 using static Dungeonator.ProceduralFlowModifierData;
+using static Planetside.RealityTearData;
 
 
 namespace Planetside
@@ -83,7 +84,7 @@ namespace Planetside
                 ETGModConsole.Commands.AddGroup("psog_void", args =>
                 {
                 });
-                //ETGModConsole.Commands.GetGroup("psog_void").AddUnit("enable_mixed_floor", ForceEnableMixedFloor);
+                ETGModConsole.Commands.GetGroup("psog_void").AddUnit("enable_mixed_floor", ForceEnableMixedFloor);
 
 
                 Debug.Log("Finished ContainmentBreachController setup without failure!");
@@ -113,15 +114,20 @@ namespace Planetside
                 dungeon.DungeonFloorName = GameUIRoot.Instance.GetComponent<dfLanguageManager>().GetValue(dungeon.DungeonFloorName) + "?";
                 dungeon.DungeonFloorLevelTextOverride = "Mixed Chamber";
                 var deco = dungeon.decoSettings;
-                deco.ambientLightColor = new Color(0.05f, 0.15f, 0.9f);
+
+                float r = 0.6f; // im fucking lazy, okay?
+                float g = 0.6f; // im fucking lazy, okay?
+                float b = 0.35f; // im fucking lazy, okay?
+
+                deco.ambientLightColor = new Color(0.05f / r, 0.15f / g, 0.9f / b);
                 deco.generateLights = true;
-                deco.ambientLightColorTwo = new Color(0.05f, 0.10f, 0.7f);
-                deco.lowQualityAmbientLightColor = new Color(0.05f, 0.15f, 0.7f);
-                deco.lowQualityAmbientLightColorTwo = new Color(0.05f, 0.15f, 0.7f);
+                deco.ambientLightColorTwo = new Color(0.05f / r, 0.10f / g, 0.7f / b);
+                deco.lowQualityAmbientLightColor = new Color(0.05f / r, 0.15f / g, 0.7f / b);
+                deco.lowQualityAmbientLightColorTwo = new Color(0.05f / r, 0.15f / g, 0.7f / b);
                 dungeon.PlayerIsLight = true;
                 dungeon.PlayerLightColor = Color.cyan;
-                dungeon.PlayerLightIntensity = 2;
-                dungeon.PlayerLightRadius = 3;
+                dungeon.PlayerLightIntensity = 4;
+                dungeon.PlayerLightRadius = 7;
             }
         }
   
@@ -244,7 +250,13 @@ namespace Planetside
                                 ShopPlaced = !ShopPlaced;
                                 GameObject obj = new GameObject();
                                 StaticReferences.StoredRoomObjects.TryGetValue("masteryRewardTrader", out obj);
-                                GameObject shopObj = DungeonPlaceableUtility.InstantiateDungeonPlaceable(obj, shope.GetAbsoluteParentRoom(), new IntVector2((int)shope.gameObject.transform.position.x + (7), (int)shope.gameObject.transform.position.y) - shope.GetAbsoluteParentRoom().area.basePosition, false);
+
+                                bool b = GameManager.Instance.Dungeon.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.FORGEGEON;
+                                IntVector2 offset = b == true ? new IntVector2(1, -2) : new IntVector2(7, 0);
+
+
+
+                                GameObject shopObj = DungeonPlaceableUtility.InstantiateDungeonPlaceable(obj, shope.GetAbsoluteParentRoom(), new IntVector2((int)shope.gameObject.transform.position.x + (offset.x), ((int)shope.gameObject.transform.position.y)- offset.y) - shope.GetAbsoluteParentRoom().area.basePosition, false);
                                 CustomShopController shopCont = shopObj.GetComponent<CustomShopController>();
                                 if (shopCont != null)
                                 {

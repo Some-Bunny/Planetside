@@ -1813,7 +1813,7 @@ namespace Planetside
 				shopObj.AllowedToSpawnOnRainbowMode = true;
 				shopObj.currencyType = CustomShopItemController.ShopCurrencyType.CUSTOM;
 
-				shopObj.ActionAndFuncSetUp(null, RobotShopkeeperRemoveCurrency, RobotShopkeeperCustomPrice, null, null);
+				shopObj.ActionAndFuncSetUp(RobotShopkeeperCustomCanBuy, RobotShopkeeperRemoveCurrency, RobotShopkeeperCustomPrice, null, null);
 
 
 
@@ -1821,8 +1821,9 @@ namespace Planetside
 
 
 				shopObj.canBeRobbed = false;
+                shopObj.CanReallyBeRobbed = false;
 
-				shopObj.placeableHeight = 5;
+                shopObj.placeableHeight = 5;
 				shopObj.placeableWidth = 5;
 				shopObj.difficulty = 0;
 				shopObj.isPassable = true;
@@ -1971,7 +1972,7 @@ namespace Planetside
                 {
                     miniBossIntroDoer.portraitSlideSettings.bossArtSprite = BossCardTexture;
                     miniBossIntroDoer.SkipBossCard = false;
-                    companion.aiActor.healthHaver.bossHealthBar = HealthHaver.BossBarType.SubbossBar;
+                    companion.aiActor.healthHaver.bossHealthBar = HealthHaver.BossBarType.MainBar;
                 }
                 else
 				{
@@ -1993,7 +1994,7 @@ namespace Planetside
 		}
 		public static bool RobotShopkeeperCustomCanBuy(CustomShopController shop, PlayerController player, int cost)
 		{
-			int total = (int)GameStatsManager.Instance.GetPlayerStatValue(TrackedStats.META_CURRENCY);
+			int total = Mathf.RoundToInt(GameStatsManager.Instance.GetPlayerStatValue(TrackedStats.META_CURRENCY));
 			if (total > 14) { return true; }
 			return false;
 		}

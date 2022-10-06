@@ -61,12 +61,12 @@ namespace Planetside
                 });
             Actions.OnRunStart += OnRunStart;
         }
-        public static void OnRunStart(PlayerController player)
+        public static void OnRunStart(PlayerController player, PlayerController player2, GameManager.GameMode gameMode)
         {
             if (SaveAPIManager.GetFlag(CustomDungeonFlags.SHIPMENT_TICKET_HAD) == true)
             {
                 SaveAPIManager.SetFlag(CustomDungeonFlags.SHIPMENT_TICKET_HAD, false);
-                GameManager.Instance.StartCoroutine(SpawnCrates(true, player));
+                GameManager.Instance.StartCoroutine(SpawnCrates(true, player, new Vector2(0, -7)));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Planetside
         {
             LootEngine.DoDefaultItemPoof(user.sprite.WorldBottomCenter);
             SaveAPIManager.SetFlag(CustomDungeonFlags.SHIPMENT_TICKET_HAD, false);
-            GameManager.Instance.StartCoroutine(SpawnCrates(false, user));
+            GameManager.Instance.StartCoroutine(SpawnCrates(false, user, new Vector2(0,0)));
         }
 
         protected override void OnPreDrop(PlayerController user)
@@ -102,7 +102,7 @@ namespace Planetside
             base.OnPreDrop(user);
         }
 
-        private static IEnumerator SpawnCrates(bool isStartRun, PlayerController player)
+        private static IEnumerator SpawnCrates(bool isStartRun, PlayerController player, Vector2 offset)
         {
             float ang = BraveUtility.RandomAngle();
             Vector2 pos = player.sprite.WorldCenter;
@@ -115,12 +115,12 @@ namespace Planetside
                     yield return null;
                 }
                 AkSoundEngine.PostEvent("Play_OBJ_supplydrop_activate_01", player.gameObject);
-                SpawnCrate(isStartRun == false ? RequestInRunTable.SelectByWeight().GetComponent<PickupObject>().PickupObjectId : RequestStartRunTable.SelectByWeight().GetComponent<PickupObject>().PickupObjectId, player, e, ang, pos);
+                SpawnCrate(isStartRun == false ? RequestInRunTable.SelectByWeight().GetComponent<PickupObject>().PickupObjectId : RequestStartRunTable.SelectByWeight().GetComponent<PickupObject>().PickupObjectId, player, e, ang, pos, offset);
             }
             yield break;
         }
 
-        private static void SpawnCrate(int item, PlayerController p, int i, float ang, Vector2 position)
+        private static void SpawnCrate(int item, PlayerController p, int i, float ang, Vector2 position, Vector3 offset)
         {
             GameObject gameObject = (GameObject)BraveResources.Load("EmergencyCrate", ".prefab");
             GameObject gameObject2 = UnityEngine.Object.Instantiate<GameObject>(gameObject);
@@ -130,6 +130,7 @@ namespace Planetside
             
             
             Vector3 pos = position + MathToolbox.GetUnitOnCircle((60*i)+ang, 2f);
+            pos += offset;
             simpleCrate.Trigger(new Vector3(-5f, -5f, -5f), pos + new Vector3(15f, 15f, 15f), p.CurrentRoom);
         }
     }

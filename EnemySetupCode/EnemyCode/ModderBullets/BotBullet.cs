@@ -28,7 +28,7 @@ namespace Planetside
 				float aim = base.AimDirection;
 				for (int i = 0; i < 20; i++)
 				{
-					base.Fire(new Direction(aim, DirectionType.Absolute, -1f), new Speed(15, SpeedType.Absolute), new WallBullet());
+					base.Fire(new Direction(aim + UnityEngine.Random.Range(-3, 4), DirectionType.Absolute, -1f), new Speed(13, SpeedType.Absolute), new WallBullet());
 					yield return this.Wait(3);
 				}
 				yield break;

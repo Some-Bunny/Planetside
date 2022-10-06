@@ -1055,7 +1055,7 @@ namespace Planetside
                 {
                     miniBossIntroDoer.portraitSlideSettings.bossArtSprite = BossCardTexture;
                     miniBossIntroDoer.SkipBossCard = false;
-                    companion.aiActor.healthHaver.bossHealthBar = HealthHaver.BossBarType.SubbossBar;
+                    companion.aiActor.healthHaver.bossHealthBar = HealthHaver.BossBarType.MainBar;
                 }
                 else
 				{

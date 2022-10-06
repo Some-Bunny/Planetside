@@ -128,7 +128,16 @@ namespace Planetside
 			}
 		}
 
-		public static void AddInvulnverabilityFramesToAnimation(tk2dSpriteAnimator animator, string animationName, Dictionary<int, bool> frameAndBool)//int frame, string soundName)
+
+        public static void MarkAnimationAsSpawn(tk2dSpriteAnimator animator, string animationName)//int frame, string soundName)
+        {
+            foreach (var value in animator.GetClipByName(animationName).frames)
+            {
+				value.finishedSpawning = false;
+			}
+        }
+
+        public static void AddInvulnverabilityFramesToAnimation(tk2dSpriteAnimator animator, string animationName, Dictionary<int, bool> frameAndBool)//int frame, string soundName)
 		{
 			foreach (var value in frameAndBool)
 			{
@@ -196,7 +205,30 @@ namespace Planetside
 			companion.aiActor.CanTargetPlayers = true;
 			companion.aiActor.ShadowObject = EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").ShadowObject;
 			companion.aiActor.healthHaver.SetHealthMaximum(HP, null, false);
-			companion.aiActor.specRigidbody.PixelColliders.Clear();
+
+            companion.aiActor.PreventFallingInPitsEver = true;
+            companion.aiActor.PathableTiles = CellTypes.PIT | CellTypes.FLOOR;
+            companion.aiActor.FallingProhibited = true;
+            companion.aiActor.SetIsFlying(true, "I can fly", true, true);
+
+			companion.aiActor.healthHaver.damageTypeModifiers = new List<DamageTypeModifier>();
+            DamageTypeModifier fireRes = new DamageTypeModifier();
+            fireRes.damageMultiplier = 0f;
+            fireRes.damageType = CoreDamageTypes.Fire;
+            companion.aiActor.healthHaver.damageTypeModifiers.Add(fireRes);
+
+            var nur = companion.aiActor;
+            nur.EffectResistances = new ActorEffectResistance[]
+            {
+                    new ActorEffectResistance()
+                    {
+                        resistAmount = 1,
+                        resistType = EffectResistanceType.Fire
+                    },
+            };
+
+
+            companion.aiActor.specRigidbody.PixelColliders.Clear();
 			companion.aiActor.specRigidbody.PixelColliders.Add(new PixelCollider
 			{
 				ColliderGenerationMode = PixelCollider.PixelColliderGeneration.Manual,

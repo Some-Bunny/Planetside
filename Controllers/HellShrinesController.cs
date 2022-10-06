@@ -15,6 +15,7 @@ using MonoMod;
 using System.Collections.ObjectModel;
 using GungeonAPI;
 using SaveAPI;
+using HutongGames.PlayMaker.Actions;
 
 
 namespace Planetside
@@ -57,9 +58,9 @@ namespace Planetside
         {
             "Hell Entrance",
             "Boss Foyer",
-            "LichRoom1",
-            "LichRoom2",
-            "LichRoom3",
+            "LichRoom01",
+            "LichRoom02",
+            "LichRoom03",
             "BigDumbIdiotBossRoom1.room",
         };
 
@@ -90,6 +91,7 @@ namespace Planetside
             if (room.GetRoomName() == null) { return false; }
             if (blackListedRoomNames.Contains(room.GetRoomName())) { return false; }
             if (room.IsSecretRoom == true) { return false; }
+            //ETGModConsole.Log(room.GetRoomName() + " IS VALID");
             return true;
         }
 
@@ -105,23 +107,41 @@ namespace Planetside
                     if (ProcessRoom(list[i]) == false) { list.Remove(list[i]); }
                 }
                 list.Shuffle();
+
+                //ETGModConsole.Log("Starting loading this");
+                int attempts = 12;
                 for (int i = 0; i < 4; i++)
                 {
+                    attempts--;
+                    if (attempts == 0) { Debug.Log("ATTEMPTS HAVE RU DRY, ABORTING FURTHER PLACEMENT"); return; }
+
+                    if (list.Count == 0 || list == null) { Debug.Log("HELL ROOM LIST IS DRY, ABORTING FURTHER PLACEMENT"); return; }
                     RoomHandler room = list[i];
+                    if (room == null) { Debug.Log("ROOM IS NULL, ABORTING FURTHER PLACEMENT"); return; }
+
                     string name = room.GetRoomName();
-                    if (room.IsStandardRoom && name != "Hell Entrance" && name != "Boss Foyer" && name != "LichRoom1" && name != "LichRoom2" && name != "LichRoom3" && name != "BigDumbIdiotBossRoom1.room")
+                    if (room.IsStandardRoom && name != "Hell Entrance" && name != "Boss Foyer" && name != "LichRoom01" && name != "LichRoom02" && name != "LichRoom03" && name != "BigDumbIdiotBossRoom1.room")
                     {
+
+                        //ETGModConsole.Log("selected room: "+ room.GetRoomName());
+
                         IntVector2 randomVisibleClearSpot = room.GetRandomVisibleClearSpot(3, 3);
                         if (randomVisibleClearSpot != IntVector2.Zero)
                         {
+
                             GameObject original;
                             ShrineFactory.registeredShrines.TryGetValue("psog:shrineofpurity", out original);
                             GameObject gObj = UnityEngine.Object.Instantiate<GameObject>(original, new Vector3((float)randomVisibleClearSpot.x, (float)randomVisibleClearSpot.y), Quaternion.identity);
                             gObj.gameObject.AddComponent<PurityShrineController>();
+                            //ETGModConsole.Log("PLACED SHRINE OF PURITY");
                         }
                     }
                     else
-                    { i--; }
+                    {
+                        list.Remove(list[i]);
+                        //ETGModConsole.Log("Removing room: " + room.GetRoomName()+ " because it is INVALID!");
+                        i--;
+                    }
                 }
             }
             catch

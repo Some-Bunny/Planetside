@@ -70,7 +70,7 @@ namespace Planetside
 			protected override IEnumerator Top()
 			{
 				yield return this.Wait(30);
-				base.ChangeSpeed(new Speed(16f, SpeedType.Absolute), 45);
+				base.ChangeSpeed(new Speed(16f, SpeedType.Absolute), 60);
 				yield break;
 			}
 		}

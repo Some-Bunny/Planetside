@@ -229,8 +229,10 @@ namespace Planetside
 			Actions.OnRunStart += OnRunStart;
 
 		}
-		public static void OnRunStart(PlayerController self)
+		public static void OnRunStart(PlayerController self, PlayerController player2, GameManager.GameMode gameMode)
 		{
+            Vector3 offset = new Vector3(0.5f, 1.5f, 0);
+			if (gameMode != GameManager.GameMode.NORMAL){ offset = new Vector3(0.5f, -3f, 0); }
 			if (CrossGameDataStorage.CrossGameStorage.primaryGunSaved != string.Empty && CrossGameDataStorage.CrossGameStorage.secondaryGunSaved != string.Empty)
 			{
 				PickupObject pickup = PickupObjectDatabase.GetByEncounterName(UnityEngine.Random.value > 0.5f ? CrossGameDataStorage.CrossGameStorage.primaryGunSaved : CrossGameDataStorage.CrossGameStorage.secondaryGunSaved);
@@ -239,7 +241,7 @@ namespace Planetside
 				GameObject bubble = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("Portal"));
 				MeshRenderer rend = bubble.GetComponent<MeshRenderer>();
 				rend.allowOcclusionWhenDynamic = true;
-				bubble.transform.position = self.transform.position + new Vector3(0.5f, 1.5f, 0);
+				bubble.transform.position = self.transform.position + offset;
 				bubble.transform.localScale = Vector3.one;
 				bubble.name = "yes";
 				bubble.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));

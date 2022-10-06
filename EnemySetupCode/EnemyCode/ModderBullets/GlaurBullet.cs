@@ -28,7 +28,7 @@ namespace Planetside
 				for (int j = 0; j < 8; j++)
 				{
 					float Aim = UnityEngine.Random.Range(-25f, 25);
-					base.Fire(new Direction(Aim, DirectionType.Aim, -1f), new Speed(UnityEngine.Random.Range(8f, 12f), SpeedType.Absolute), new Flames());
+					base.Fire(new Direction(Aim, DirectionType.Aim, -1f), new Speed(UnityEngine.Random.Range(3f, 7f), SpeedType.Absolute), new Flames());
 				}
 				yield break;
 			}
@@ -45,7 +45,7 @@ namespace Planetside
 			protected override IEnumerator Top()
 			{
 				float speed = base.Speed;
-				base.ChangeSpeed(new Speed(speed*1.5f, SpeedType.Absolute), 120);
+				base.ChangeSpeed(new Speed(speed*2f, SpeedType.Absolute), 120);
 				yield break;
 			}
 		}

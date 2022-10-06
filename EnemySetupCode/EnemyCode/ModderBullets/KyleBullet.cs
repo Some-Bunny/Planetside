@@ -26,9 +26,9 @@ namespace Planetside
 					NumBullets = 2,
 					BulletMinRadius = 4.5f,
 					BulletMaxRadius = 5,
-					BulletCircleSpeed = 90,
+					BulletCircleSpeed = 60,
 					BulletsIgnoreTiles = true,
-					RegenTimer = 0.35f,
+					RegenTimer = 0.5f,
 					AmountOFLines = 5,
 				}
 			};

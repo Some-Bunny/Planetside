@@ -28,7 +28,7 @@ namespace Planetside
 				}
 				float startingDirection = UnityEngine.Random.Range(-45f, 45f);
 				Vector2 targetPos = base.GetPredictedTargetPosition((float)(((double)UnityEngine.Random.value >= 0.5) ? 1 : 0), 12f);
-				for (int j = 0; j < 7; j++)
+				for (int j = 0; j < 10; j++)
 				{
 					base.Fire(new Direction(startingDirection, DirectionType.Absolute, -1f), new Speed(11f, SpeedType.Absolute), new SalamanderScript.SnakeBullet(j * 3, targetPos));
 				}
