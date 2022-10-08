@@ -34,6 +34,8 @@ namespace Planetside
 			item.quality = PickupObject.ItemQuality.B;
 			TrapDefusalKit.TrapDefusalKitID = item.PickupObjectId;
 			ItemIDs.AddToList(item.PickupObjectId);
+
+
 			new Hook(typeof(ProjectileTrapController).GetMethod("ShootProjectileInDirection", BindingFlags.Instance | BindingFlags.NonPublic), typeof(TrapDefusalKit).GetMethod("ShootProjectileInDirectionHook"));
 			new Hook(typeof(BasicTrapController).GetMethod("Update", BindingFlags.Instance | BindingFlags.Public), typeof(TrapDefusalKit).GetMethod("UpdateHook"));
 			new Hook(typeof(CartTurretController).GetMethod("Fire", BindingFlags.Instance | BindingFlags.NonPublic), typeof(TrapDefusalKit).GetMethod("FireHook"));		
@@ -49,7 +51,7 @@ namespace Planetside
 		}
 		public static void ShootWallBulletScriptHook(Action<HighPriestSimpleMergoBehavior> orig, HighPriestSimpleMergoBehavior self)
 		{
-			if (IsHoldingDefusalItem == true)
+			if (TrapsShouldBeDefused() == true)
 			{
 				return;
 			}
@@ -58,7 +60,7 @@ namespace Planetside
 		public static BehaviorResult UpdateGoopHook(Func<SpawnGoopBehavior, BehaviorResult> orig, SpawnGoopBehavior self)
         {
 			AIActor host = PlanetsideReflectionHelper.ReflectGetField<AIActor>(typeof(SpawnGoopBehavior), "m_aiActor", self);
-            if (host != null && host.EnemyGuid == "6868795625bd46f3ae3e4377adce288b" && IsHoldingDefusalItem == true)
+            if (host != null && host.EnemyGuid == "6868795625bd46f3ae3e4377adce288b" && TrapsShouldBeDefused() == true)
 			{
 				return BehaviorResult.Continue;
 			}		
@@ -66,17 +68,17 @@ namespace Planetside
         }
 		public static void HandleRigidbodyCollisionHook(Action<ForgeFlamePipeController, CollisionData> orig, ForgeFlamePipeController self, CollisionData rigidbodyCollision)
 		{
-			if (IsHoldingDefusalItem == true) { return; }
+			if (TrapsShouldBeDefused() == true) { return; }
 			else { orig(self, rigidbodyCollision); }
 		}
 		public static void HandleBeamCollisionHook(Action<ForgeFlamePipeController, BeamController> orig, ForgeFlamePipeController self, BeamController beamController)
 		{
-			if (IsHoldingDefusalItem == true) { return; }
+			if (TrapsShouldBeDefused() == true) { return; }
 			else { orig(self, beamController); }
 		}
 		public static void DamageHook(Action<PathingTrapController, SpeculativeRigidbody, Single, Single> orig, PathingTrapController self, SpeculativeRigidbody rigidbody, float damage, float knockbackStrength)
         {
-			if (IsHoldingDefusalItem == true)
+			if (TrapsShouldBeDefused() == true)
             {
 				if (knockbackStrength > 0f && rigidbody.knockbackDoer){rigidbody.knockbackDoer.ApplySourcedKnockback(rigidbody.UnitCenter - self.specRigidbody.UnitCenter, knockbackStrength*0.5f, self.gameObject, false);}
 				return;
@@ -85,7 +87,7 @@ namespace Planetside
 		}
 		public static void UpdateSparksHook(Action<PathingTrapController> orig, PathingTrapController self)
         {
-			if (IsHoldingDefusalItem == true)
+			if (TrapsShouldBeDefused() == true)
 			{
 				if (self.Sparks_A != null && self.Sparks_A.gameObject.activeSelf == true){self.Sparks_A.gameObject.SetActive(false);}
 				if (self.Sparks_B != null && self.Sparks_B.gameObject.activeSelf == true){self.Sparks_B.gameObject.SetActive(false);}
@@ -105,19 +107,19 @@ namespace Planetside
 		}
 		public static void HandleTriggerHook(Action<ForgeCrushDoorController, SpeculativeRigidbody, SpeculativeRigidbody, CollisionData> orig, ForgeCrushDoorController self, SpeculativeRigidbody specRigidbody, SpeculativeRigidbody sourceSpecRigidbody, CollisionData collisionData)
         {
-			if (IsHoldingDefusalItem == true){return;}
+			if (TrapsShouldBeDefused() == true){return;}
 			else{orig(self, specRigidbody, sourceSpecRigidbody, collisionData);}
 		}
 
 		public static void UpdateHookForgeHammerController(Action<ForgeHammerController> orig, ForgeHammerController self)
         {
-			if (IsHoldingDefusalItem == true){return;}
+			if (TrapsShouldBeDefused() == true){return;}
 			else{orig(self);}
 		}
 
 		public static void UpdateHookPathingTrapController(Action<PathMover> orig, PathMover self)
         {
-			if (IsHoldingDefusalItem == true && self.name.ToLower().Contains("trap"))
+			if (TrapsShouldBeDefused() == true && self.name.ToLower().Contains("trap"))
             {
 				self.specRigidbody.PathSpeed = 0;
 				if (self.spriteAnimator != null) { self.spriteAnimator.Stop(); }
@@ -128,17 +130,17 @@ namespace Planetside
 
 		public static void FireHook(Action<CartTurretController> orig, CartTurretController self)
         {
-			if (IsHoldingDefusalItem == true){return;}
+			if (TrapsShouldBeDefused() == true){return;}
 			orig(self);
         }
 
 		public static void ShootProjectileInDirectionHook(Action<ProjectileTrapController, Vector3, Vector2> orig, ProjectileTrapController self, Vector3 spawnPosition, Vector2 direction)
         {
-			if (IsHoldingDefusalItem!=true){orig(self, spawnPosition, direction);}
+			if (TrapsShouldBeDefused() != true){orig(self, spawnPosition, direction);}
         }
 		public static void UpdateHook(Action<BasicTrapController> orig, BasicTrapController self)
         {
-			if (IsHoldingDefusalItem == true)
+			if (TrapsShouldBeDefused() == true)
             {
 				if (self.triggerOnBlank || self.triggerOnExplosion)
 				{
@@ -146,31 +148,31 @@ namespace Planetside
 					return;
 				}
 			}
-			if (IsHoldingDefusalItem == true){return;}
+			if (TrapsShouldBeDefused() == true){return;}
 			orig(self);
-			
+
 		}
-		private ExplosionData smallPlayerSafeExplosion = new ExplosionData
+
+
+		public static bool TrapsShouldBeDefused()
 		{
-			damageRadius = 3f,
-			damageToPlayer = 0f,
-			doDamage = true,
-			damage = 50f,
-			doExplosionRing = true,
-			doDestroyProjectiles = false,
-			doForce = true,
-			debrisForce = 200f,
-			preventPlayerForce = true,
-			explosionDelay = 0f,
-			usesComprehensiveDelay = false,
-			doScreenShake = true,
-			playDefaultSFX = true,
-		};
+			if (trapDefuseOverrides.Count > 0) { return true; }
+			return false;
+		}
+
+        public static void AddTrapDefuseOverride(string overrideName)
+        {if (!trapDefuseOverrides.Contains(overrideName)) { trapDefuseOverrides.Add(overrideName); } }
+
+        public static void RemoveTrapDefuseOverride(string overrideName)
+        { if (trapDefuseOverrides.Contains(overrideName)) { trapDefuseOverrides.Remove(overrideName); } }
+
+        public static List<string> trapDefuseOverrides = new List<string>();
+
+		
 		public static int TrapDefusalKitID;
-		public static bool IsHoldingDefusalItem;
-		public List<AIActor> FuckYouDie = new List<AIActor>();
 		protected override void Update()
 		{
+			/*
 			if (base.Owner)
 			{
 				IsHoldingDefusalItem = true;
@@ -211,155 +213,34 @@ namespace Planetside
 			{
 				IsHoldingDefusalItem = false;
 			}
+			*/
 		}
 
 		
 		public override DebrisObject Drop(PlayerController player)
 		{
-			IsHoldingDefusalItem = false;
-
-			DebrisObject result = base.Drop(player);
+			//IsHoldingDefusalItem = false;
+			RemoveTrapDefuseOverride("defusal_kit");
+            DebrisObject result = base.Drop(player);
 			return result;
 		}
 		public override void Pickup(PlayerController player)
 		{
-			IsHoldingDefusalItem = true;
-			base.Pickup(player);
+            //IsHoldingDefusalItem = true;
+            AddTrapDefuseOverride("defusal_kit");
+
+            base.Pickup(player);
 
 
 
-			/*
-			List<DungeonFlowNode> nodes =  GungeonAPI.OfficialFlows.GetDungeonPrefab("base_resourcefulrat").PatternSettings.flows[0].AllNodes;
-			foreach(DungeonFlowNode node in nodes)
-            {
-				if (node.overrideExactRoom != null)
-                {
-					if (node.overrideExactRoom.name == "ResourcefulRatRoom01" )
-                    {
-						List<PrototypePlacedObjectData> help = node.overrideExactRoom.placedObjects;
-						if (help != null)
-						{
-							ETGModConsole.Log("26");
-							for (int e = 0; e < help.Count; e++)
-							{
-								ETGModConsole.Log("q");
-
-								if (help[e].enemyBehaviourGuid != null)
-                                {
-									ETGModConsole.Log(help[e].enemyBehaviourGuid.ToString());
-									ETGModConsole.Log("4");
-								}
-
-								if (help[e].placeableContents != null)
-								{
-									ETGModConsole.Log(help[e].placeableContents.name.ToString());
-									ETGModConsole.Log("4");
-									/*
-									foreach (Component item in help[e].placeableContents.Get(typeof(Component)))
-									{
-										ETGModConsole.Log("5");
-										ETGModConsole.Log(item.GetType().ToString());
-										ETGModConsole.Log("6");
-										ETGModConsole.Log(item.name + "\n================");
-										ETGModConsole.Log("7");
-
-									}
-									
-								}
-								
-								if (help[e].nonenemyBehaviour != null)
-								{
-									ETGModConsole.Log("3");
-									ETGModConsole.Log(help[e].nonenemyBehaviour.gameObject.name.ToString());
-									ETGModConsole.Log("4");
-									foreach (Component item in help[e].nonenemyBehaviour.gameObject.GetComponentsInChildren(typeof(Component)))
-									{
-										ETGModConsole.Log("5");
-										ETGModConsole.Log(item.GetType().ToString());
-										ETGModConsole.Log("6");
-										ETGModConsole.Log(item.name + "\n================");
-										ETGModConsole.Log("7");
-
-									}
-									//ETGModConsole.Log(help[i].nonenemyBehaviour.gameObject.name.ToString());
-
-								}
-
-								//ETGModConsole.Log(help[i].name + "\n================");
-							}
-						}
-					}
-                }
-			}
-			*/
-
-
-			//Dungeon dung = GungeonAPI.OfficialFlows.GetDungeonPrefab("base_resourcefulrat");
-
-			//AssetBundle bundle = ResourceManager.LoadAssetBundle("base_resourcefulrat");
-			//RoomHandler fusebombroom01 = bundle.LoadAsset<Ob>("resourcefulratroom01");
-
-			//if (fusebombroom01 == null) { ETGModConsole.Log("FUCK is null"); }
-			//bundle = null;
-			/*
-			List<int> list = Enumerable.Range(0, dung.data.rooms.Count).ToList<int>();
-			for (int i = 0; i < list.Count; i++)
-			{
-				ETGModConsole.Log("2");
-				RoomHandler roomHandler = GameManager.Instance.Dungeon.data.rooms[list[i]];
-				ETGModConsole.Log("23");
-				string name = roomHandler.GetRoomName();
-				ETGModConsole.Log("24");
-				bool flag3 = name == "ResourcefulRatRoom01" && name != null;
-				if (flag3)
-				{
-					ETGModConsole.Log("25");
-					if (roomHandler == null) { ETGModConsole.Log("RoomHandler is NULL"); }
-					if (roomHandler.area == null) { ETGModConsole.Log("area is NULL"); }
-					if (roomHandler.area.prototypeRoom == null) { ETGModConsole.Log("prototypeRoom is NULL"); }
-					if (roomHandler.area.prototypeRoom.placedObjects == null) { ETGModConsole.Log("placedObjects is NULL"); }
-
-					List<PrototypePlacedObjectData> help = roomHandler.area.prototypeRoom.placedObjects;
-					if (help != null)
-                    {
-						ETGModConsole.Log("26");
-						for (int e = 0; e < help.Count; e++)
-						{
-							if (help[e].nonenemyBehaviour != null)
-							{
-								ETGModConsole.Log("3");
-								ETGModConsole.Log(help[i].nonenemyBehaviour.gameObject.name.ToString());
-								ETGModConsole.Log("4");
-								foreach (Component item in help[i].nonenemyBehaviour.gameObject.GetComponentsInChildren(typeof(Component)))
-								{
-									ETGModConsole.Log("5");
-									ETGModConsole.Log(item.GetType().ToString());
-									ETGModConsole.Log("6");
-									ETGModConsole.Log(item.name + "\n================");
-									ETGModConsole.Log("7");
-
-								}
-								//ETGModConsole.Log(help[i].nonenemyBehaviour.gameObject.name.ToString());
-
-							}
-
-							//ETGModConsole.Log(help[i].name + "\n================");
-						}
-					}
-					
-					
-				}
-			}
-			dung = null;
-
-			*/
+			
 
 		}
 
 		protected override void OnDestroy()
 		{
-			IsHoldingDefusalItem = false;
-			if (base.Owner != null)
+            RemoveTrapDefuseOverride("defusal_kit");
+            if (base.Owner != null)
             {
 				base.OnDestroy();
 			}

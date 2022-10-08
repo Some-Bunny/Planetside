@@ -178,7 +178,7 @@ namespace Planetside
 
 
                     Gun gungeon = player.CurrentGun;
-                    int amo = Mathf.Max((int)(gungeon.AdjustedMaxAmmo * 075f), 1);
+                    int amo = Mathf.Max((int)(gungeon.AdjustedMaxAmmo * 0.75f), 1);
                     gungeon.SetBaseMaxAmmo(amo);
                     AdvancedHoveringGunProcessor DroneHover = gungeon.gameObject.AddComponent<AdvancedHoveringGunProcessor>();
                     DroneHover.Activate = true;

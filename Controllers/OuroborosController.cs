@@ -748,7 +748,7 @@ namespace Planetside
 				}
 			}
 		}
-		private IEnumerator LaunchWave(Vector2 startPoint, float Time = 2f)
+		private IEnumerator LaunchWave(Vector2 startPoint, float Time = 2.5f)
 		{
 			float m_prevWaveDist = 0f;
 			float distortionMaxRadius = 20f;
@@ -791,8 +791,8 @@ namespace Planetside
 							{
 								float b = (unitCenter - startPoint).ToAngle();
 								if (BraveMathCollege.AbsAngleBetween(playerController.FacingDirection, b) >= 60f)
-								{
-									playerController.CurrentStoneGunTimer += Time;
+								{									
+                                    playerController.CurrentStoneGunTimer = playerController.CurrentStoneGunTimer + Time;
 								}
 							}
 						}

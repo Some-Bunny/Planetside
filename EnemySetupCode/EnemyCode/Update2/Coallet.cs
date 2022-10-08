@@ -20,7 +20,7 @@ namespace Planetside
 		public static GameObject prefab;
 		public static readonly string guid = "coallet_psog";
 		public static GameObject shootpoint;
-		private static tk2dSpriteCollectionData CoalletCollection;
+		//private static tk2dSpriteCollectionData CoalletCollection;
 
 		public static void Init()
 		{
@@ -28,14 +28,18 @@ namespace Planetside
 		}
 		public static void BuildPrefab()
 		{
-			bool flag = prefab != null || EnemyBuilder.Dictionary.ContainsKey(guid);
 
-			bool flag2 = flag;
-			if (!flag2)
+            tk2dSpriteCollectionData Collection = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("CoalletCollection").GetComponent<tk2dSpriteCollectionData>();
+            Material mat = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Material>("coallet material");
+
+            if (prefab == null ||!EnemyBuilder.Dictionary.ContainsKey(guid))
 			{
-				prefab = EnemyBuilder.BuildPrefab("Coallet", guid, "Planetside/Resources/Enemies/Coallet/Idle/coallet_idle_001", new IntVector2(0, 0), new IntVector2(0, 0), false, true);
+				prefab = EnemyBuilder.BuildPrefabBundle("Coallet", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(0, 0), new Vector3(1,1) ,false, true);;
 				var enemy = prefab.AddComponent<EnemyBehavior>();
-				CoalletController pain = prefab.AddComponent<CoalletController>();
+
+                EnemyToolbox.QuickAssetBundleSpriteSetup(enemy.aiActor, Collection, mat);
+
+                CoalletController pain = prefab.AddComponent<CoalletController>();
 				enemy.aiActor.knockbackDoer.weight = 35;
 				enemy.aiActor.MovementSpeed = 2f;
 				enemy.aiActor.healthHaver.PreventAllDamage = false;
@@ -114,16 +118,18 @@ namespace Planetside
 				};
 				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awaken" }, new DirectionalAnimation.FlipType[0]);
 				enemy.aiActor.AwakenAnimType = AwakenAnimationType.Awaken;
-				bool flag3 = CoalletCollection == null;
-				if (flag3)
+				//bool flag3 = CoalletCollection == null;
+				//if (flag3)
 				{
+					/*
 					CoalletCollection = SpriteBuilder.ConstructCollection(prefab, "CoalletCollection");
 					UnityEngine.Object.DontDestroyOnLoad(CoalletCollection);
 					for (int i = 0; i < spritePaths.Length; i++)
 					{
 						SpriteBuilder.AddSpriteToCollection(spritePaths[i], CoalletCollection);
 					}
-					SpriteBuilder.AddAnimation(enemy.spriteAnimator, CoalletCollection, new List<int>
+					*/
+					SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
 					{
 
 					0,
@@ -134,7 +140,7 @@ namespace Planetside
 					5
 
 					}, "idle_left", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 9f;
-					SpriteBuilder.AddAnimation(enemy.spriteAnimator, CoalletCollection, new List<int>
+					SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
 					{
 					0,
 					1,
@@ -144,7 +150,7 @@ namespace Planetside
 					5
 
 					}, "idle_right", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 9f;
-					SpriteBuilder.AddAnimation(enemy.spriteAnimator, CoalletCollection, new List<int>
+					SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
 					{
 
 					6,
@@ -156,7 +162,7 @@ namespace Planetside
 
 
 					}, "run_left", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 9f;
-					SpriteBuilder.AddAnimation(enemy.spriteAnimator, CoalletCollection, new List<int>
+					SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
 					{
 
 
@@ -169,7 +175,7 @@ namespace Planetside
 
 
 					}, "run_right", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 9f;
-					SpriteBuilder.AddAnimation(enemy.spriteAnimator, CoalletCollection, new List<int>
+					SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
 					{
 
 				 12,
@@ -180,7 +186,7 @@ namespace Planetside
 				 17
 
 					}, "runfire_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-					SpriteBuilder.AddAnimation(enemy.spriteAnimator, CoalletCollection, new List<int>
+					SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
 					{
 				 12,
 				 13,
@@ -190,7 +196,7 @@ namespace Planetside
 				 17
 
 					}, "runfire_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
-					SpriteBuilder.AddAnimation(enemy.spriteAnimator, CoalletCollection, new List<int>
+					SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
 					{
 
 				 18,
@@ -206,7 +212,7 @@ namespace Planetside
 
 
 					}, "die_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
-					SpriteBuilder.AddAnimation(enemy.spriteAnimator, CoalletCollection, new List<int>
+					SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
 					{
 
 				 18,
@@ -219,7 +225,7 @@ namespace Planetside
 				 25
 
 					}, "die_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
-					SpriteBuilder.AddAnimation(enemy.spriteAnimator, CoalletCollection, new List<int>
+					SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
 					{
 
 					0,

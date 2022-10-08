@@ -55,6 +55,24 @@ namespace Planetside
                 PlaysVFXOnActor = false
             };
 		*/
+
+		public static ExecuteDebuff executeDebuff = new ExecuteDebuff
+		{
+			OverheadVFX = ExecuteDebuff.LockInVFXPrefab,
+			stackMode = GameActorEffect.EffectStackingMode.Refresh,
+            effectIdentifier = "Execute",
+            AppliesTint = true,
+            AppliesDeathTint = true,
+            resistanceType = EffectResistanceType.None,
+            AffectsEnemies = true,
+            AffectsPlayers = false,
+            AppliesOutlineTint = false,
+            OutlineTintColor = new Color32(10, 201, 40, 60),
+            PlaysVFXOnActor = false,
+			duration = 4
+        };
+
+
 		public static GameActorSpeedEffect MopWebEffect = new GameActorSpeedEffect
 		{
             duration = 10,

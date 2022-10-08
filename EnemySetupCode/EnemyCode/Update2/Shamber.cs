@@ -20,7 +20,7 @@ namespace Planetside
 		public static GameObject prefab;
 		public static readonly string guid = "shamber_psog";
 		public static GameObject shootpoint;
-		private static tk2dSpriteCollectionData ShamberCollection;
+		//private static tk2dSpriteCollectionData ShamberCollection;
 
 		public static Texture2D ShamberParticleTexture;
 
@@ -33,16 +33,20 @@ namespace Planetside
 		}
 		public static void BuildPrefab()
 		{
-			bool flag = prefab != null || EnemyBuilder.Dictionary.ContainsKey(guid);
+            tk2dSpriteCollectionData Collection = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("ShamberCollection").GetComponent<tk2dSpriteCollectionData>();
+            Material mat = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Material>("shamber material");
 
-			bool flag2 = flag;
-			if (!flag2)
-			{
+            if (prefab == null || !EnemyBuilder.Dictionary.ContainsKey(guid))
+            {
 
 
-				prefab = EnemyBuilder.BuildPrefab("Shamber", guid, "Planetside/Resources/Enemies/Shamber/shamber_idle_001.png", new IntVector2(0, 0), new IntVector2(0, 0), false, true);
+				prefab = EnemyBuilder.BuildPrefabBundle("Shamber", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(0, 0),new Vector3(2, 2.25f), false, true);
 				var enemy = prefab.AddComponent<EnemyBehavior>();
-				prefab.AddComponent<ShamberController>();
+
+                EnemyToolbox.QuickAssetBundleSpriteSetup(enemy.aiActor, Collection, mat);
+
+
+                prefab.AddComponent<ShamberController>();
 				prefab.AddComponent<KillOnRoomClear>();
 				enemy.aiActor.IgnoreForRoomClear = true;
 				enemy.aiActor.knockbackDoer.weight = 35;
@@ -155,16 +159,18 @@ namespace Planetside
 				};
 				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awaken" }, new DirectionalAnimation.FlipType[0]);
 				enemy.aiActor.AwakenAnimType = AwakenAnimationType.Awaken;
-				bool flag3 = ShamberCollection == null;
-				if (flag3)
+				//bool flag3 = ShamberCollection == null;
+				//if (flag3)
 				{
+					/*
 					ShamberCollection = SpriteBuilder.ConstructCollection(prefab, "ArchGunjurer_Collection");
 					UnityEngine.Object.DontDestroyOnLoad(ShamberCollection);
 					for (int i = 0; i < spritePaths.Length; i++)
 					{
 						SpriteBuilder.AddSpriteToCollection(spritePaths[i], ShamberCollection);
 					}
-					SpriteBuilder.AddAnimation(enemy.spriteAnimator, ShamberCollection, new List<int>
+					*/
+					SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
 					{
 
 					0,
@@ -180,7 +186,7 @@ namespace Planetside
 					10
 
 					}, "idle_left", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 9f;
-					SpriteBuilder.AddAnimation(enemy.spriteAnimator, ShamberCollection, new List<int>
+					SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
 					{
 
 					0,
@@ -197,7 +203,7 @@ namespace Planetside
 
 
 					}, "idle_right", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 9f;
-					SpriteBuilder.AddAnimation(enemy.spriteAnimator, ShamberCollection, new List<int>
+					SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
 					{
 
 					0,
@@ -214,7 +220,7 @@ namespace Planetside
 
 
 					}, "run_left", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 9f;
-					SpriteBuilder.AddAnimation(enemy.spriteAnimator, ShamberCollection, new List<int>
+					SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
 					{
 
 					0,
@@ -231,7 +237,7 @@ namespace Planetside
 
 
 					}, "run_right", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 9f;
-					SpriteBuilder.AddAnimation(enemy.spriteAnimator, ShamberCollection, new List<int>
+					SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
 					{
 
 				 20,
@@ -241,7 +247,7 @@ namespace Planetside
 				 24,
 
 					}, "waprin", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-					SpriteBuilder.AddAnimation(enemy.spriteAnimator, ShamberCollection, new List<int>
+					SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
 					{
 
 				 11,
@@ -261,7 +267,7 @@ namespace Planetside
 				 19
 
 					}, "warpout", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
-					SpriteBuilder.AddAnimation(enemy.spriteAnimator, ShamberCollection, new List<int>
+					SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
 					{
 
 				 25,
@@ -277,7 +283,7 @@ namespace Planetside
 
 
 					}, "die_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
-					SpriteBuilder.AddAnimation(enemy.spriteAnimator, ShamberCollection, new List<int>
+					SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
 					{
 
 				 25,
@@ -290,7 +296,7 @@ namespace Planetside
 				 32
 
 					}, "die_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
-					SpriteBuilder.AddAnimation(enemy.spriteAnimator, ShamberCollection, new List<int>
+					SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
 					{
 
 				 20,

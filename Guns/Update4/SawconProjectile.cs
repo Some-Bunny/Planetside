@@ -108,7 +108,7 @@ namespace Planetside
 
         private void TransformToSticky(Projectile projectile, SpeculativeRigidbody otherBody)
         {
-            Damage = projectile.baseData.damage *= 0.5f;
+            Damage = projectile.baseData.damage *= 0.66f;
             projectile.DestroyMode = Projectile.ProjectileDestroyMode.DestroyComponent;
             objectToLookOutFor = projectile.gameObject;
             objectToLookOutFor.transform.parent = otherBody.transform;

@@ -63,7 +63,6 @@ namespace Planetside
 				if (EncounterDatabase.Instance.Entries[i].journalData.PrimaryDisplayName == "#WICKEDNESS")
 				{
 					GameStatsManager.Instance.HandleEncounteredObjectRaw(EncounterDatabase.Instance.Entries[i].myGuid);
-
 				}
 			}
 			OtherTools.Notify("THE EXIT", "Unblocks.", "Planetside/Resources/ShrineIcons/DarknessIcon");

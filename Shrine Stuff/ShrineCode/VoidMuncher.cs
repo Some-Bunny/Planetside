@@ -229,32 +229,43 @@ namespace Planetside
 			Actions.OnRunStart += OnRunStart;
 
 		}
+
 		public static void OnRunStart(PlayerController self, PlayerController player2, GameManager.GameMode gameMode)
 		{
-            Vector3 offset = new Vector3(0.5f, 1.5f, 0);
-			if (gameMode != GameManager.GameMode.NORMAL){ offset = new Vector3(0.5f, -3f, 0); }
-			if (CrossGameDataStorage.CrossGameStorage.primaryGunSaved != string.Empty && CrossGameDataStorage.CrossGameStorage.secondaryGunSaved != string.Empty)
-			{
-				PickupObject pickup = PickupObjectDatabase.GetByEncounterName(UnityEngine.Random.value > 0.5f ? CrossGameDataStorage.CrossGameStorage.primaryGunSaved : CrossGameDataStorage.CrossGameStorage.secondaryGunSaved);
-				if (pickup == null) { pickup = PickupObjectDatabase.GetById(GTEE.fuckinGhELL); }
-
-				GameObject bubble = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("Portal"));
-				MeshRenderer rend = bubble.GetComponent<MeshRenderer>();
-				rend.allowOcclusionWhenDynamic = true;
-				bubble.transform.position = self.transform.position + offset;
-				bubble.transform.localScale = Vector3.one;
-				bubble.name = "yes";
-				bubble.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
-				bubble.transform.localScale *= 0;
-				GameManager.Instance.StartCoroutine(LerpBubbleToSize(bubble, Vector3.zero, Vector3.one * 2.5f, 1.5f, pickup));
-				CrossGameDataStorage.CrossGameStorage.primaryGunSaved = string.Empty;
-				CrossGameDataStorage.CrossGameStorage.secondaryGunSaved = string.Empty;
-				CrossGameDataStorage.UpdateConfiguration();
-			}
+			GameManager.Instance.StartCoroutine(DelaySpawn(self, gameMode));  
 		}
 
+		public static IEnumerator DelaySpawn(PlayerController player, GameManager.GameMode gameMode)
+		{
 
-		public static IEnumerator LerpBubbleToSize(GameObject bubble, Vector3 prevSize, Vector3 afterSize, float duration, PickupObject pickup)
+            float d = 1.75f;
+            if (gameMode != GameManager.GameMode.NORMAL) { d = 1f; }
+            yield return new WaitForSeconds(d);
+
+            Vector3 offset = new Vector3(0.5f, 1.5f, 0);
+            if (gameMode != GameManager.GameMode.NORMAL) { offset = new Vector3(0.5f, -3f, 0); }
+            if (CrossGameDataStorage.CrossGameStorage.primaryGunSaved != string.Empty && CrossGameDataStorage.CrossGameStorage.secondaryGunSaved != string.Empty)
+            {
+                PickupObject pickup = PickupObjectDatabase.GetByEncounterName(UnityEngine.Random.value > 0.5f ? CrossGameDataStorage.CrossGameStorage.primaryGunSaved : CrossGameDataStorage.CrossGameStorage.secondaryGunSaved);
+                if (pickup == null) { pickup = PickupObjectDatabase.GetById(GTEE.fuckinGhELL); }
+
+                GameObject bubble = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("Portal"));
+                MeshRenderer rend = bubble.GetComponent<MeshRenderer>();
+                rend.allowOcclusionWhenDynamic = true;
+                bubble.transform.position = player.transform.position + offset;
+                bubble.transform.localScale = Vector3.one;
+                bubble.name = "yes";
+                bubble.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
+                bubble.transform.localScale *= 0;
+                GameManager.Instance.StartCoroutine(LerpBubbleToSize(bubble, Vector3.zero, Vector3.one * 2.5f, 1.5f, pickup));
+                CrossGameDataStorage.CrossGameStorage.primaryGunSaved = string.Empty;
+                CrossGameDataStorage.CrossGameStorage.secondaryGunSaved = string.Empty;
+                CrossGameDataStorage.UpdateConfiguration();
+            }
+        }
+
+
+            public static IEnumerator LerpBubbleToSize(GameObject bubble, Vector3 prevSize, Vector3 afterSize, float duration, PickupObject pickup)
 		{
 			if (bubble != null)
 			{

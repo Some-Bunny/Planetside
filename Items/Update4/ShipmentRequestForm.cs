@@ -15,6 +15,7 @@ using MonoMod;
 using GungeonAPI;
 using Pathfinding;
 using SaveAPI;
+using static GameManager;
 
 namespace Planetside
 {
@@ -66,7 +67,12 @@ namespace Planetside
             if (SaveAPIManager.GetFlag(CustomDungeonFlags.SHIPMENT_TICKET_HAD) == true)
             {
                 SaveAPIManager.SetFlag(CustomDungeonFlags.SHIPMENT_TICKET_HAD, false);
-                GameManager.Instance.StartCoroutine(SpawnCrates(true, player, new Vector2(0, -7)));
+
+
+
+                float offset = 0;
+                if (gameMode != GameManager.GameMode.NORMAL) { offset = -6; }
+                GameManager.Instance.StartCoroutine(SpawnCrates(true, player, new Vector2(0, offset), 1.75f));
             }
         }
 
@@ -102,8 +108,10 @@ namespace Planetside
             base.OnPreDrop(user);
         }
 
-        private static IEnumerator SpawnCrates(bool isStartRun, PlayerController player, Vector2 offset)
+        private static IEnumerator SpawnCrates(bool isStartRun, PlayerController player, Vector2 offset, float delay = 0)
         {
+            yield return new WaitForSeconds(delay);
+
             float ang = BraveUtility.RandomAngle();
             Vector2 pos = player.sprite.WorldCenter;
             for (int e = 0; e < 6; e++)

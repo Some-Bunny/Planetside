@@ -242,11 +242,11 @@ namespace Planetside
 
 		private GenericLootTable GetRewardValue()
 		{
-			if (Kills >= 14)
+			if (Kills >= 15)
             {return DeathWarrant.largeKillsTable;}
-			else if (Kills >= 7)
+			else if (Kills >= 9)
 			{return DeathWarrant.mediumKillsTable;}
-			else if (Kills >= 2)
+			else if (Kills >= 3)
 			{return DeathWarrant.smallKillsTable;}
 			return null;
 		}
@@ -269,6 +269,7 @@ namespace Planetside
 				component.HeightOffGround = 5f;
 				component.UpdateZDepth();
 			}
+			Destroy(gameObject, 2);
 			if (Target != null)
             {Target.healthHaver.OnPreDeath -= OnPreDeath;}
 		}

@@ -18,6 +18,7 @@ using HutongGames.PlayMaker.Actions;
 using System.Reflection;
 
 using System.Text;
+using static Planetside.Bloat;
 
 
 namespace Planetside
@@ -80,10 +81,13 @@ namespace Planetside
 			this.behaviorSpeculator.enabled = false;
 			this.specRigidbody.enabled = true;
 			this.aiActor.IgnoreForRoomClear = true;
-			this.AllowedToDoIntro = true;
+            this.aiActor.healthHaver.flashesOnDamage = false;
+            this.aiActor.healthHaver.IsVulnerable = false;
+
+
+            this.AllowedToDoIntro = true;
 			this.AmountOfPurchases = 0;
 			this.aiActor.aiAnimator.OverrideIdleAnimation = "broken";
-			//this.aiActor.aiAnimator.OverrideMoveAnimation = "broken";
 			this.aiActor.aiAnimator.EndAnimation();
 
 		}
@@ -2779,7 +2783,15 @@ namespace Planetside
 							base.PostWwiseEvent("Play_ITM_Macho_Brace_Fade_01", null);
 							base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(true, base.AimDirection, this, 0.5f, 32));
 							base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(false, base.AimDirection, this, 0.5f, 32));
-							yield return this.Wait(2.5f);
+
+                            base.PostWwiseEvent("Play_CombineShot", null);
+                            base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(true, base.AimDirection, this, 0.5f, 70));
+                            base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(false, base.AimDirection, this, 0.5f, 70));
+
+                            base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(true, base.AimDirection, this, 0.5f, 10));
+                            base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(false, base.AimDirection, this, 0.5f, 10));
+
+                            yield return this.Wait(2.5f);
 						}
 					}
 
@@ -2790,8 +2802,8 @@ namespace Planetside
 					for (int q = 0; q < 24 + amount; q++)
 					{
 						base.PostWwiseEvent("Play_ITM_Macho_Brace_Fade_01", null);
-						base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(true, base.AimDirection, this, 0.75f, 60 - (amount * 5f)));
-						base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(false, base.AimDirection, this, 0.75f,60 - (amount * 5f)));
+						base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(true, base.AimDirection, this, 0.75f, 60 - (amount * 6f)));
+						base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(false, base.AimDirection, this, 0.75f,60 - (amount * 6f)));
 						yield return this.Wait(5);
 					}
 				}

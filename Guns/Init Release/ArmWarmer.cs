@@ -73,7 +73,7 @@ namespace Planetside
 			}
 			ExplosionData data = StaticExplosionDatas.CopyFields(StaticExplosionDatas.genericSmallExplosion);//StaticExplosionDatas.genericSmallExplosion;
             data.effect = (PickupObjectDatabase.GetById(368) as Gun).DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX;
-			data.damage = 5.5f * (player != null ? player.stats.GetStatValue(PlayerStats.StatType.Damage) : 1);
+			data.damage = 6f * (player != null ? player.stats.GetStatValue(PlayerStats.StatType.Damage) : 1);
 			data.damageRadius = 3;
 			data.doScreenShake = false;
 			data.playDefaultSFX = false;

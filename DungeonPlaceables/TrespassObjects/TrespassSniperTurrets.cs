@@ -55,7 +55,7 @@ namespace Planetside
         {
             if (laserPointer != null && this.gameObject != null)
             {
-                if (TrapDefusalKit.IsHoldingDefusalItem == true)
+                if (TrapDefusalKit.TrapsShouldBeDefused() == true)
                 {
                     laserPointerTiledSprite.dimensions = new Vector2(0, 0f);
                     return;

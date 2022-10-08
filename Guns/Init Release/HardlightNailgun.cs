@@ -54,7 +54,7 @@ namespace Planetside
             gun.DefaultModule.shootStyle = ProjectileModule.ShootStyle.Automatic;
             gun.DefaultModule.sequenceStyle = ProjectileModule.ProjectileSequenceStyle.Random;
             gun.reloadTime = 1.6f;
-            gun.DefaultModule.cooldownTime = 0.25f;
+            gun.DefaultModule.cooldownTime = 0.3f;
             //gun.gunClass = GunClass.SHITTY;
             gun.DefaultModule.numberOfShotsInClip = 10;
             gun.quality = PickupObject.ItemQuality.C;

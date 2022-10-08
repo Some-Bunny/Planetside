@@ -18,7 +18,7 @@ namespace Planetside
 	{
 		public static GameObject prefab;
 		public static readonly string guid = "proper_cube";
-		private static tk2dSpriteCollectionData ProperCubeColection;
+		//private static tk2dSpriteCollectionData ProperCubeColection;
 		public static GameObject shootpoint;
 		public static GameObject noVFX;
 		public static void Init()
@@ -28,14 +28,18 @@ namespace Planetside
 
 		public static void BuildPrefab()
 		{
-			//
-			bool flag = prefab != null || EnemyBuilder.Dictionary.ContainsKey(guid);
-			bool flag2 = flag;
-			if (!flag2)
-			{
-				prefab = EnemyBuilder.BuildPrefab("Toddy Enemy", guid, spritePaths[0], new IntVector2(0, 0), new IntVector2(8, 9), false);
+            tk2dSpriteCollectionData Collection = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("ProperCubeCollection").GetComponent<tk2dSpriteCollectionData>();
+            Material mat = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Material>("propercube material");
+
+            if (prefab == null || !EnemyBuilder.Dictionary.ContainsKey(guid))
+            {
+				prefab = EnemyBuilder.BuildPrefabBundle("Toddy Enemy", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(8, 9), new Vector3(1, 1.375f), false);
 				var companion = prefab.AddComponent<EnemyBehavior>();
-				prefab.AddComponent<KillOnRoomClear>();
+
+                EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, Collection, mat);
+
+
+                prefab.AddComponent<KillOnRoomClear>();
 				companion.aiActor.knockbackDoer.weight = 800;
 				companion.aiActor.MovementSpeed = 0f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
@@ -187,16 +191,18 @@ namespace Planetside
 				};
 				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awaken" }, new DirectionalAnimation.FlipType[0]);
 				companion.aiActor.AwakenAnimType = AwakenAnimationType.Awaken;
-				bool flag3 = ProperCubeColection == null;
-				if (flag3)
+				//bool flag3 = ProperCubeColection == null;
+				//if (flag3)
 				{
+					/*
 					ProperCubeColection = SpriteBuilder.ConstructCollection(prefab, "Toddy_Collection");
 					UnityEngine.Object.DontDestroyOnLoad(ProperCubeColection);
 					for (int i = 0; i < spritePaths.Length; i++)
 					{
 						SpriteBuilder.AddSpriteToCollection(spritePaths[i], ProperCubeColection);
 					}
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, ProperCubeColection, new List<int>
+					*/
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 					0,
@@ -206,7 +212,7 @@ namespace Planetside
 					4
 
 					}, "idle_left", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 7f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, ProperCubeColection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					0,
 					1,
@@ -217,7 +223,7 @@ namespace Planetside
 
 					}, "idle_right", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 7f;
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, ProperCubeColection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					5,
 					6,
@@ -226,7 +232,7 @@ namespace Planetside
 
 
 					}, "charge_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, ProperCubeColection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					5,
 					6,
@@ -236,13 +242,13 @@ namespace Planetside
 
 					}, "charge_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, ProperCubeColection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					9,
 					20
 
 					}, "dash_left", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 7f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, ProperCubeColection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					9,
 					20
@@ -251,7 +257,7 @@ namespace Planetside
 					}, "dash_right", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 7f;
 
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, ProperCubeColection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					10,
 					11,
@@ -259,7 +265,7 @@ namespace Planetside
 
 
 					}, "impact_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, ProperCubeColection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					10,
 					11,
@@ -267,7 +273,7 @@ namespace Planetside
 					}, "impact_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
 
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, ProperCubeColection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 				 13,
@@ -282,7 +288,7 @@ namespace Planetside
 
 
 					}, "die_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 19f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, ProperCubeColection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 				 13,
@@ -294,7 +300,7 @@ namespace Planetside
 				 19
 
 					}, "die_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 19f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, ProperCubeColection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					10,
 					11,
@@ -483,7 +489,7 @@ namespace Planetside
 			"Planetside/Resources/Enemies/ProperCube/toddy_die_006.png",
 			"Planetside/Resources/Enemies/ProperCube/toddy_die_007.png",
 
-						"Planetside/Resources/Enemies/ProperCube/toddy_dash_002.png",
+			"Planetside/Resources/Enemies/ProperCube/toddy_dash_002.png",
 
 
 		};

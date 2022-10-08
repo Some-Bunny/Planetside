@@ -28,6 +28,8 @@ namespace Planetside
 			{
 				item
 			};
+
+
 			ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
 			string shortDesc = "Goodie Bag";
 			string longDesc = "A pre-packed sack filled with pickups. I wonder what's inside?";
@@ -37,7 +39,10 @@ namespace Planetside
 			pickup.CustomCost = 35;
 			pickup.UsesCustomCost = true;
 
-			WeightedGameObject weightedObject = new WeightedGameObject();
+			pickup.encounterTrackable.EncounterGuid = "saccccc";
+
+
+            WeightedGameObject weightedObject = new WeightedGameObject();
 			weightedObject.SetGameObject(gameObject);
 			weightedObject.weight = 0.33f;
 			weightedObject.rawGameObject = gameObject;
@@ -98,7 +103,10 @@ namespace Planetside
 
 		public override void Pickup(PlayerController player)
 		{
-			int itemsToSpawn = UnityEngine.Random.Range(2, 5);
+
+			//this.encounterTrackable.HandleEncounter();
+			GameStatsManager.Instance.HandleEncounteredObjectRaw(this.encounterTrackable.EncounterGuid);
+            int itemsToSpawn = UnityEngine.Random.Range(2, 5);
 			float random = UnityEngine.Random.Range(0.00f, 1.00f);
 			GenericLootTable Table = Normal_Table;
 			if (random.IsBetweenRange(0.7f, 0.95f))

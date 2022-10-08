@@ -47,7 +47,7 @@ namespace Planetside
 			FakePrefab.MarkAsFakePrefab(projectile.gameObject);
 			UnityEngine.Object.DontDestroyOnLoad(projectile);
 			gun.DefaultModule.projectiles[0] = projectile;
-			projectile.baseData.damage = 35f;
+			projectile.baseData.damage = 45f;
 			projectile.baseData.speed *= 3f;
 			projectile.AdditionalScaleMultiplier *= 0.75f;
 			projectile.shouldRotate = true;

@@ -57,6 +57,7 @@ namespace Planetside
                         Minimap.Instance.TemporarilyPreventMinimap = true;
                         NevernamedsDarknessHandler.EnableDarkness(0, 0);
                         GameManager.Instance.StartCoroutine(DelaySW());
+                        TrapDefusalKit.AddTrapDefuseOverride("somethingwicked");
                         StartSWEvent();
                     }
                     else
@@ -80,6 +81,8 @@ namespace Planetside
                 NevernamedsDarknessHandler.DisableDarkness(0);
                 currentSWState = States.DISABLED;
             }
+            TrapDefusalKit.RemoveTrapDefuseOverride("somethingwicked");
+
         }
 
 
@@ -212,7 +215,7 @@ namespace Planetside
 
         public bool HasPlacedAllShrines()
         {
-            bool EntranceShrine = PlaceSpecificShrine(GameManager.Instance.Dungeon.data.Entrance, "redshrine", new Vector2(-0.75f, -5));
+            bool EntranceShrine = PlaceSpecificShrine(GameManager.Instance.Dungeon.data.Entrance, "redshrine", new Vector2(-0.75f, -8));
             bool ExitShrine = PlaceSpecificShrine(GameManager.Instance.Dungeon.data.Exit, "blueshrine", new Vector2(-0.75f, -1));
             if (EntranceShrine == true && ExitShrine == true)
             {

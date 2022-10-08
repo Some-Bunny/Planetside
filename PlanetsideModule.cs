@@ -38,7 +38,7 @@ namespace Planetside
     {
         public const string GUID = "somebunny.etg.planetsideofgunymede";
         public const string NAME = "Planetside Of Gunymede Pre-Release";
-        public const string VERSION = "1.3.103";
+        public const string VERSION = "1.3.107";
 
         public static readonly string TEXT_COLOR = "#9006FF";
 
@@ -254,7 +254,6 @@ namespace Planetside
             RebarPuncher.Add();
             LaserChainsaw.Add();
             ExecutionersCrossbow.Add();
-            ExecutionersCrossbowSpecial.Init();
             ForgiveMePlease.Init();
             ForgiveMePlease.BuildPrefab();
             PortablePylon.Init();
@@ -273,6 +272,7 @@ namespace Planetside
             BrainHostDummyBuff.Init();
             InfectedEnemyEffect.Init();
             InfectedBossEffect.Init();
+            ExecuteDebuff.Init();
 
             DebuffLibrary.Init();
 

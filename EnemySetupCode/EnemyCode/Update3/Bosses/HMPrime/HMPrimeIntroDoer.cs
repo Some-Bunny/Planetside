@@ -29,6 +29,10 @@ namespace Planetside
         public override void EndIntro()
         {
             isActuallyEnded = true;
+
+            base.aiActor.healthHaver.flashesOnDamage = true;
+            base.aiActor.healthHaver.IsVulnerable = true;
+
             if (base.aiActor.aiAnimator != null)
             {
                 GameUIBossHealthController gameUIBossHealthController = GameUIRoot.Instance.bossController;

@@ -101,6 +101,7 @@
     <Compile Include="Debuff Stuff\InfectedBossEffect.cs" />
     <Compile Include="Debuff Stuff\InfectedEnemyEffect.cs" />
     <Compile Include="Debuff Stuff\BrainHostDummyEffect.cs" />
+    <Compile Include="Debuff Stuff\ExecuteDebuff.cs" />
     <Compile Include="Debuff Stuff\TarnishEffect.cs" />
     <Compile Include="DungeonGenStuff\ExpandTK2DDungeonAssembler.cs" />
     <Compile Include="DungeonPlaceables\AbyssFloorDoor.cs" />
@@ -761,6 +762,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="APIs\SaveAPI\Properties\" />
+    <Folder Include="Resources\DungeonObjects\MoneyPots\Copper\" />
+    <Folder Include="Resources\DungeonObjects\MoneyPots\Gold\" />
+    <Folder Include="Resources\DungeonObjects\MoneyPots\Hegemony\" />
+    <Folder Include="Resources\DungeonObjects\MoneyPots\Silver\" />
     <Folder Include="Resources\VFX\EliteCrowns\" />
   </ItemGroup>
   <ItemGroup>
@@ -2375,6 +2380,14 @@
     <EmbeddedResource Include="Resources\Shellrax\shellrax_fireeye_003.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\VFX\LockedIn\lockedin1.png" />
+    <EmbeddedResource Include="Resources\VFX\LockedIn\lockedin2.png" />
+    <EmbeddedResource Include="Resources\VFX\LockedIn\lockedin3.png" />
+    <EmbeddedResource Include="Resources\VFX\LockedIn\lockedin4.png" />
+    <EmbeddedResource Include="Resources\VFX\LockedIn\lockedin5.png" />
+    <EmbeddedResource Include="Resources\VFX\LockedIn\lockedin6.png" />
+    <EmbeddedResource Include="Resources\VFX\LockedIn\lockedin7.png" />
+    <EmbeddedResource Include="Resources\VFX\LockedIn\lockedin8.png" />
     <EmbeddedResource Include="Resources\VFX\ouroborosMedal2Left.png" />
     <EmbeddedResource Include="Resources\VFX\ouroborosMedal2Right.png" />
     <EmbeddedResource Include="Resources\VFX\ouroborosmedal.png" />

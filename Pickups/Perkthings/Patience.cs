@@ -53,18 +53,29 @@ namespace Planetside
         }
         public static void OnRunStart(PlayerController player, PlayerController player2, GameManager.GameMode gameMode)
         {
-            float offset = 0;
-            if (gameMode != GameManager.GameMode.NORMAL) { offset = -6; }
-
             int perkCount = CrossGameDataStorage.CrossGameStorage.AmountOfPerksToChooseFromOnRunStart;
             if (perkCount > 0)
             {
-                AkSoundEngine.PostEvent("Play_PortalOpen", player.gameObject);
+                GameManager.Instance.StartCoroutine(DelaySpawn(player, gameMode, perkCount));
+            }
+        }
+        public static IEnumerator DelaySpawn(PlayerController player, GameManager.GameMode gameMode, float perkCount)
+        {
+            float d = 1.75f;
+            if (gameMode != GameManager.GameMode.NORMAL) { d = 1f; }
+            yield return new WaitForSeconds(d);
 
 
-                float RNGOffset = BraveUtility.RandomAngle();
-                List<DebrisObject> perksThatExist = new List<DebrisObject>() { };
-                List<int> IDsUsed = new List<int>()
+            float offset = 0;
+            if (gameMode != GameManager.GameMode.NORMAL) { offset = -6; }
+
+            AkSoundEngine.PostEvent("Play_PortalOpen", player.gameObject);
+
+
+            float RNGOffset = BraveUtility.RandomAngle();
+            List<DebrisObject> perksThatExist = new List<DebrisObject>() { };
+
+            List<int> IDsUsed = new List<int>()
                 {
                 Contract.ContractID,
                 Greedy.GreedyID,
@@ -77,22 +88,30 @@ namespace Planetside
                 UnbreakableSpirit.UnbreakableSpiritID,
                 Gunslinger.GunslingerID
                 };
-                Exploder.DoDistortionWave(player.sprite.WorldTopCenter, 30, 0.5f, 50, 1);
-                for (int e = 0; e < perkCount; e++)
-                {
-                    int IDtoUse = BraveUtility.RandomElement<int>(IDsUsed);
-                    DebrisObject debrisSpawned = LootEngine.SpawnItem(PickupObjectDatabase.GetById(IDtoUse).gameObject, player.sprite.WorldCenter.ToVector3ZisY() + MathToolbox.GetUnitOnCircle(((360 / perkCount) * e)+RNGOffset, 1.25f).ToVector3ZisY() + new Vector3(-0.5f, offset), MathToolbox.GetUnitOnCircle(((360 / perkCount) * e) + RNGOffset, 5), 2).GetComponent<DebrisObject>();
-                    
-                    perksThatExist.Add(debrisSpawned);
-                }
-                if (perksThatExist.Count >= 0 || perksThatExist != null)
-                {
-                    GameManager.Instance.Dungeon.StartCoroutine(ItemChoiceCoroutine(perksThatExist));
-                }
-                CrossGameDataStorage.CrossGameStorage.AmountOfPerksToChooseFromOnRunStart = 0;
-                CrossGameDataStorage.UpdateConfiguration();
+
+            Exploder.DoDistortionWave(player.sprite.WorldTopCenter, 30, 0.5f, 50, 1);
+
+            for (int e = 0; e < perkCount; e++)
+            {
+                int IDtoUse = BraveUtility.RandomElement<int>(IDsUsed);
+                DebrisObject debrisSpawned = LootEngine.SpawnItem(PickupObjectDatabase.GetById(IDtoUse).gameObject, player.sprite.WorldCenter.ToVector3ZisY() + MathToolbox.GetUnitOnCircle(((360 / perkCount) * e) + RNGOffset, 1.25f).ToVector3ZisY() + new Vector3(-0.5f, offset), MathToolbox.GetUnitOnCircle(((360 / perkCount) * e) + RNGOffset, 5), 2);
+                if (debrisSpawned == null) { ETGModConsole.Log("bastard"); }
+
+                perksThatExist.Add(debrisSpawned);
             }
+
+            if (perksThatExist.Count >= 0 || perksThatExist != null)
+            {
+                GameManager.Instance.Dungeon.StartCoroutine(ItemChoiceCoroutine(perksThatExist));
+            }
+            CrossGameDataStorage.CrossGameStorage.AmountOfPerksToChooseFromOnRunStart = 0;
+            CrossGameDataStorage.UpdateConfiguration();
+
+
+            yield break;
         }
+
+
 
         public static IEnumerator ItemChoiceCoroutine(List<DebrisObject> pickups)
         {
@@ -137,9 +156,6 @@ namespace Planetside
 
             AkSoundEngine.PostEvent("Play_OBJ_dice_bless_01", player.gameObject);
 
-
-            Exploder.DoDistortionWave(player.sprite.WorldTopCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
-            player.BloopItemAboveHead(base.sprite, "");
 
             PatienceController blast = player.gameObject.GetOrAddComponent<PatienceController>();
             if (blast.hasBeenPickedup == true)

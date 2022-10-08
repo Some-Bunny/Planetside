@@ -18,7 +18,7 @@ namespace Planetside
 	{
 		public static GameObject prefab;
 		public static readonly string guid = "detscavator";
-		private static tk2dSpriteCollectionData DescavatorCollection;
+		//private static tk2dSpriteCollectionData DescavatorCollection;
 		public static GameObject shootpoint;
 		public static GameObject shootpoin1;
 
@@ -29,14 +29,19 @@ namespace Planetside
 
 		public static void BuildPrefab()
 		{
-			//
-			bool flag = prefab != null || EnemyBuilder.Dictionary.ContainsKey(guid);
-			bool flag2 = flag;
-			if (!flag2)
+
+            tk2dSpriteCollectionData Collection = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("DetscavatorCollection").GetComponent<tk2dSpriteCollectionData>();
+            Material mat = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Material>("detscavator material");
+
+            if (prefab == null || !EnemyBuilder.Dictionary.ContainsKey(guid))
 			{
-				prefab = EnemyBuilder.BuildPrefab("Detscavator", guid, spritePaths[0], new IntVector2(0, 0), new IntVector2(8, 9), false);
+				prefab = EnemyBuilder.BuildPrefabBundle("Detscavator", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(8, 9), new Vector3(1.75f, 2), false);
 				var companion = prefab.AddComponent<EnemyBehavior>();
-				companion.aiActor.knockbackDoer.weight = 800;
+
+                EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, Collection, mat);
+
+
+                companion.aiActor.knockbackDoer.weight = 800;
 				companion.aiActor.MovementSpeed = 0f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
 				companion.aiActor.CollisionDamage = 1f;
@@ -200,16 +205,18 @@ namespace Planetside
 				};
 				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awaken" }, new DirectionalAnimation.FlipType[0]);
 				companion.aiActor.AwakenAnimType = AwakenAnimationType.Awaken;
-				bool flag3 = DescavatorCollection == null;
-				if (flag3)
+				//bool flag3 = DescavatorCollection == null;
+				//if (flag3)
 				{
+					/*
 					DescavatorCollection = SpriteBuilder.ConstructCollection(prefab, "Detscavator_Collection");
 					UnityEngine.Object.DontDestroyOnLoad(DescavatorCollection);
 					for (int i = 0; i < spritePaths.Length; i++)
 					{
 						SpriteBuilder.AddSpriteToCollection(spritePaths[i], DescavatorCollection);
 					}
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, DescavatorCollection, new List<int>
+					*/
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 					0,
@@ -222,7 +229,7 @@ namespace Planetside
 					7
 
 					}, "idle_left", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 7f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, DescavatorCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					0,
 					1,
@@ -235,7 +242,7 @@ namespace Planetside
 
 
 					}, "idle_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, DescavatorCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					0,
 					1,
@@ -248,7 +255,7 @@ namespace Planetside
 
 
 					}, "run_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, DescavatorCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 					0,
@@ -262,16 +269,16 @@ namespace Planetside
 
 
 					}, "run_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, DescavatorCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 				 25
 					}, "die_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 10f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, DescavatorCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 				 25
 					}, "die_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 10f;
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, DescavatorCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 				 8,
 				 9,
@@ -285,20 +292,20 @@ namespace Planetside
 				 17,
 				 18
 					}, "charge", tk2dSpriteAnimationClip.WrapMode.Once).fps = 11f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, DescavatorCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 				19,
 				19,
 				19,
 					}, "shootlaser_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 1f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, DescavatorCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 				19,
 				19,
 				19,
 					}, "shootlaser_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 1f;
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, DescavatorCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 				20,
 				21,
@@ -308,7 +315,7 @@ namespace Planetside
 					}, "finishlaser_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
 
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, DescavatorCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 				20,
 				21,
@@ -316,7 +323,7 @@ namespace Planetside
 				23,
 				24
 					}, "finishlaser_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
-				SpriteBuilder.AddAnimation(companion.spriteAnimator, DescavatorCollection, new List<int>
+				SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 				{
 				20,
 				21,

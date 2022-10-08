@@ -29,7 +29,7 @@ namespace Planetside
 			PlayerController playerController = actor as PlayerController;
 			if (playerController) 
 			{ 
-				playerController.CurrentCurseMeterValue += (0.8f * BraveTime.DeltaTime);;
+				playerController.CurrentCurseMeterValue += (0.8f * BraveTime.DeltaTime);
 				playerController.CurseIsDecaying = false;
 				if (playerController.CurrentCurseMeterValue > 1f)
 				{
