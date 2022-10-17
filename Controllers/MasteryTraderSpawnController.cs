@@ -38,6 +38,8 @@ namespace Planetside
                 typeof(PlayerController).GetMethod("Damaged", BindingFlags.Instance | BindingFlags.NonPublic),
                 typeof(MasteryTraderSpawnController).GetMethod("DamagedHook", BindingFlags.Static | BindingFlags.Public));
 
+
+
                 DungeonHooks.OnPostDungeonGeneration += this.ClearFloorSpecificData;
                 Debug.Log("Finished MasteryTraderSpawnController setup without failure!");
 
@@ -46,10 +48,9 @@ namespace Planetside
             {
                 Debug.Log("Unable to finish MasteryTraderSpawnController setup!");
                 Debug.Log(e);
-            }
-
-           
+            }  
         }
+
 
         public static bool StartDodgeRollHook(Func<PlayerController, Vector2, bool> orig, PlayerController self, Vector2 direction)
         {

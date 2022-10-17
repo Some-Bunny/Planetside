@@ -70,19 +70,23 @@ namespace Planetside
                     currentSWState = States.DISABLED;
                     NevernamedsDarknessHandler.DisableDarkness(0);
                     Minimap.Instance.TemporarilyPreventMinimap = false;
+                    TrapDefusalKit.RemoveTrapDefuseOverride("somethingwicked");
+
                 }
                 else if (currentSWState == States.DISABLED)
                 {
                     NevernamedsDarknessHandler.DisableDarkness(0);
+                    TrapDefusalKit.RemoveTrapDefuseOverride("somethingwicked");
+
                 }
             }
             else
             {
                 NevernamedsDarknessHandler.DisableDarkness(0);
                 currentSWState = States.DISABLED;
-            }
-            TrapDefusalKit.RemoveTrapDefuseOverride("somethingwicked");
+                TrapDefusalKit.RemoveTrapDefuseOverride("somethingwicked");
 
+            }
         }
 
 
@@ -94,15 +98,32 @@ namespace Planetside
                 try
                 {
                     roomHandler.ClearReinforcementLayers();
+                    /*
                     List<AIActor> activeEnemies = roomHandler.GetActiveEnemies(RoomHandler.ActiveEnemyType.RoomClear);
                     if (activeEnemies != null && activeEnemies.Count > 0)
                     {
                         for (int i = 0; i < activeEnemies.Count; i++)
                         {
-                            roomHandler.DeregisterEnemy(activeEnemies[i], false);
-                            UnityEngine.Object.Destroy(activeEnemies[i].gameObject);
+                            if (activeEnemies[i] != null)
+                            {
+                                roomHandler.DeregisterEnemy(activeEnemies[i], false);
+                                UnityEngine.Object.Destroy(activeEnemies[i].gameObject);
+                            }
                         }
                     }
+                    */
+                    List<AIActor> e = PlanetsideReflectionHelper.ReflectGetField<List<AIActor>>(typeof(RoomHandler), "activeEnemies", roomHandler);
+                    if (e != null && e.Count > 0)
+                    {
+                        for (int i = 0; i < e.Count; i++)
+                        {
+                            if (e[i] != null)
+                            {
+                                UnityEngine.Object.Destroy(e[i].gameObject);
+                            }
+                        }
+                    }
+
                     ReadOnlyCollection<IPlayerInteractable> yes = roomHandler.GetRoomInteractables();
                     for (int i = 0; i < yes.Count; i++)
                     {

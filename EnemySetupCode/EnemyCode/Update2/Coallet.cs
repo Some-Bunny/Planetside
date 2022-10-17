@@ -37,7 +37,7 @@ namespace Planetside
 				prefab = EnemyBuilder.BuildPrefabBundle("Coallet", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(0, 0), new Vector3(1,1) ,false, true);;
 				var enemy = prefab.AddComponent<EnemyBehavior>();
 
-                EnemyToolbox.QuickAssetBundleSpriteSetup(enemy.aiActor, Collection, mat);
+                EnemyToolbox.QuickAssetBundleSpriteSetup(enemy.aiActor, Collection, mat, false);
 
                 CoalletController pain = prefab.AddComponent<CoalletController>();
 				enemy.aiActor.knockbackDoer.weight = 35;

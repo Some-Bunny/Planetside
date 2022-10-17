@@ -38,7 +38,7 @@ namespace Planetside
     {
         public const string GUID = "somebunny.etg.planetsideofgunymede";
         public const string NAME = "Planetside Of Gunymede Pre-Release";
-        public const string VERSION = "1.3.107";
+        public const string VERSION = "1.3.109";
 
         public static readonly string TEXT_COLOR = "#9006FF";
 
@@ -56,6 +56,8 @@ namespace Planetside
 
         public static bool DebugMode = false;
         public static bool PreRelease = true;
+
+        public static bool NewContent = true;
 
 
         public void Start()
@@ -380,6 +382,16 @@ namespace Planetside
             CandyHeart.Init();
             CanisterLauncher.Add();
             Sawcon.Add();
+
+
+            if (NewContent == true)
+            {
+                LightningController.Init();
+                SelfReplicatingBlank.Init();
+                LightningMaker.Init();
+                SurgeGrenade.Init();
+                StormBringer.Add();
+            }
 
             //VengefulShell.Init();
             //LaserWelder.Add();

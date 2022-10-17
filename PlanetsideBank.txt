@@ -33,6 +33,7 @@ Event	ID	Name			Wwise Object Path	Notes
 	2720341742	Play_Bleep			\Default Work Unit\Play_Bleep	
 	2753042117	Play_Stomp			\Default Work Unit\Play_Stomp	
 	2799843437	Play_GuardDie			\Default Work Unit\Play_GuardDie	
+	2817589652	Play_Lightning			\Default Work Unit\Play_Lightning	
 	2841397489	Play_CombineShot			\Default Work Unit\Play_CombineShot	
 	2895265341	Play_BigBeam			\Default Work Unit\Play_BigBeam	
 	3050749176	Play_NemesisStep			\Default Work Unit\Play_NemesisStep	
@@ -101,6 +102,7 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	391233250	Railgun	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Railgun_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\Railgun		29738
 	392976817	StepTwo	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\StepTwo_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\NemesisStep\StepTwo		3132
 	395399080	Big_Break	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Big_Break_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\Big_Break		36268
+	405241170	lightning	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\lightning_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\Lightning\lightning		44790
 	413340843	Bleep	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Bleep_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\Bleep		6915
 	423828789	PortalCall	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\PortalCall_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\PortalCall		9931
 	427849008	Oppressor_Laugh	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Oppressor_Laugh_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\Oppressor_Laugh		41343

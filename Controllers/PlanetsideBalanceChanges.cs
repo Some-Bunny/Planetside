@@ -215,8 +215,7 @@ namespace Planetside
                                 target.gameObject.AddComponent<KillOnRoomClear>();
                                 target.IsHarmlessEnemy = true;
                                 target.IgnoreForRoomClear = true;
-                                bool flag4 = target.gameObject.GetComponent<SpawnEnemyOnDeath>();
-                                if (flag4)
+                                if (target.gameObject.GetComponent<SpawnEnemyOnDeath>())
                                 {
                                     UnityEngine.Object.Destroy(target.gameObject.GetComponent<SpawnEnemyOnDeath>());
                                 }
@@ -275,7 +274,6 @@ namespace Planetside
             }
             return false;
         }
-
 
 
         public static void MakeCommands()

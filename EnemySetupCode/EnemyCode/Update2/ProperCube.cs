@@ -36,7 +36,7 @@ namespace Planetside
 				prefab = EnemyBuilder.BuildPrefabBundle("Toddy Enemy", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(8, 9), new Vector3(1, 1.375f), false);
 				var companion = prefab.AddComponent<EnemyBehavior>();
 
-                EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, Collection, mat);
+                EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, Collection, mat, false);
 
 
                 prefab.AddComponent<KillOnRoomClear>();
@@ -66,8 +66,8 @@ namespace Planetside
 					BagelColliderNumber = 0,
 					ManualOffsetX = 0,
 					ManualOffsetY = 0,
-					ManualWidth = 20,
-					ManualHeight = 24,
+					ManualWidth = 16,
+					ManualHeight = 20,
 					ManualDiameter = 0,
 					ManualLeftX = 0,
 					ManualLeftY = 0,
@@ -86,9 +86,9 @@ namespace Planetside
 					BagelColliderNumber = 0,
 					ManualOffsetX = 0,
 					ManualOffsetY = 0,
-					ManualWidth = 20,
-					ManualHeight = 24,
-					ManualDiameter = 0,
+                    ManualWidth = 16,
+                    ManualHeight = 20,
+                    ManualDiameter = 0,
 					ManualLeftX = 0,
 					ManualLeftY = 0,
 					ManualRightX = 0,

@@ -44,7 +44,6 @@ namespace Planetside
         {
             if (player != null)
             {          
-
                 if (player.CurrentRoom != null)
                 {
                     List<AIActor> activeEnemies = player.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
@@ -52,11 +51,9 @@ namespace Planetside
                     {
                         foreach (AIActor ai in activeEnemies)
                         {
-                            if (ai.specRigidbody != null)
+                            if (ai.specRigidbody != null && ai != null)
                             {
-                                bool isOver = ai.IsOverPit;
-
-                                if (isOver && ai != null && !ai.healthHaver.IsDead && !ai.IsFalling && ai.healthHaver != null)
+                                if (EnemyIsOverPit(ai) == true && ai != null && !ai.healthHaver.IsDead && !ai.IsFalling && ai.healthHaver != null)
                                 {
                                     ai.healthHaver.ApplyDamage(EnemyAbovePitDamage * BraveTime.DeltaTime, Vector2.zero, "Pit Lords Wrath", CoreDamageTypes.None, DamageCategory.Environment, false, null, false);
                                 }
@@ -67,6 +64,16 @@ namespace Planetside
                        
             }
         }
+
+        public bool EnemyIsOverPit(AIActor aIActor)
+        {
+            if (aIActor == null) { return false; }
+
+            Vector2 v = aIActor.specRigidbody == null ? aIActor.sprite.WorldCenter : aIActor.specRigidbody.GroundPixelCollider != null ? aIActor.specRigidbody.GroundPixelCollider.UnitCenter : aIActor.sprite.WorldCenter;
+            if (GameManager.Instance.Dungeon == null) { return false; }
+            return GameManager.Instance.Dungeon.CellSupportsFalling(v);
+        }
+
         private void OnNewFloorLoaded()
         {
             AmountOfItemsSacrificed = 0;

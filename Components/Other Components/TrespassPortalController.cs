@@ -105,7 +105,7 @@ namespace Planetside
                 AkSoundEngine.PostEvent("Stop_MUS_All", GameManager.Instance.gameObject);
                 AkSoundEngine.PostEvent("Play_ENM_beholster_teleport_01", interactor.gameObject);
                 room.TriggerReinforcementLayersOnEvent(RoomEventTriggerCondition.SHRINE_WAVE_C, false);
-
+                room.CompletelyPreventLeaving = true;
                 GameManager.Instance.StartCoroutine(this.TransportToRoom(interactor, room));
             }
             floor = null;

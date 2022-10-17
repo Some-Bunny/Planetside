@@ -17,6 +17,9 @@ namespace Planetside
 {
 	public class Oscillato : GunBehaviour
 	{
+
+
+
 		public static void Add()
 		{
 			Gun gun = ETGMod.Databases.Items.NewGun("Oscillator", "oscillato");
@@ -61,7 +64,13 @@ namespace Planetside
 			projectile.pierceMinorBreakables = true;
 			projectile.objectImpactEventName = (PickupObjectDatabase.GetById(13) as Gun).DefaultModule.projectiles[0].objectImpactEventName;
 			projectile.enemyImpactEventName = (PickupObjectDatabase.GetById(13) as Gun).DefaultModule.projectiles[0].enemyImpactEventName;
-			projectile.gameObject.AddComponent<OscillatorProjectile>();
+
+			//projectile.gameObject.AddComponent<DestroyThyself>();
+            
+			
+
+
+            projectile.gameObject.AddComponent<OscillatorProjectile>();
 			projectile.AnimateProjectile(new List<string> {
 				"oscillato_projectile_001",
 				"oscillato_projectile_002",
@@ -107,6 +116,7 @@ namespace Planetside
 			gun.baseLightIntensity = 100;
 			gun.light = glow;
 			gun.muzzleFlashEffects = (PickupObjectDatabase.GetById(199) as Gun).muzzleFlashEffects;
+
 
 			Oscillato.AAID = gun.PickupObjectId;
 			ItemIDs.AddToList(gun.PickupObjectId);

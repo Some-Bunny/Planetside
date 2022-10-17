@@ -98,6 +98,12 @@ namespace Planetside
             player.healthHaver.OnDamaged += HealthHaver_OnDamaged;
             player.OnUsedBlank += Player_OnUsedBlank;
             player.LostArmor += LostArmorgus;
+            player.OnNewFloorLoaded += ONFL;
+        }
+
+        public void ONFL(PlayerController player)
+        {
+            UpdateHearts();
         }
 
         public void LostArmorgus()
@@ -132,22 +138,29 @@ namespace Planetside
             GameObject vfx = SpawnManager.SpawnVFX((PickupObjectDatabase.GetById(536) as RelodestoneItem).ContinuousVFX, true);
             vfx.transform.parent = user.transform;
             vfx.transform.position = user.sprite.WorldCenter;
-            vfx.GetComponent<tk2dBaseSprite>().HeightOffGround = 22;
             AkSoundEngine.PostEvent("Play_WPN_Life_Orb_Blast_01", user.gameObject);
 
             List<Projectile> doNotWreck = new List<Projectile>();
             float elapsed = 0f;
+
             while (elapsed < additionalTimeAtMaxRadius + (StackCount * 1.25f))
             {
                 elapsed += BraveTime.DeltaTime;
                 bool destroysEnemyBullets = true;
+
                 bool pvp_ENABLED = GameManager.PVP_ENABLED;
                 float? previousRadius2 = new float?(maxRadius);
+
                 doNotWreck = BlankHooks.DestroyBulletsInRangeSpecial(centerPoint, maxRadius, destroysEnemyBullets, pvp_ENABLED, doNotWreck, user, false, previousRadius2, false, null);
+
                 yield return null;
             }
+
+
             GameObject silencerVFX = (GameObject)ResourceCache.Acquire("Global VFX/BlankVFX_Ghost");
+
             GameObject gameObject = GameObject.Instantiate(silencerVFX.gameObject, user.sprite.WorldCenter, Quaternion.identity);
+
             Destroy(gameObject, 2.5f);
 
             UnityEngine.Object.Destroy(vfx, 0);
@@ -183,8 +196,7 @@ namespace Planetside
         public void Update()
         {
             if (player)
-            {
-            
+            {    
                 if (AmountOfArmorConsumed > (int)player.healthHaver.Armor)
                 { AmountOfArmorConsumed = (int)player.healthHaver.Armor; }
 
@@ -199,39 +211,45 @@ namespace Planetside
                     vfx.transform.localRotation = Quaternion.Euler(0, 0, Vector2.up.ToAngle());
                     UnityEngine.Object.Destroy(vfx, 2);
 
+                    UpdateHearts();
 
-                    LastStoredAmountOfHPConsumed = ActualHPPointsStored();
-                    for (int i = 0; i < objects.Count; i++)
-                    {
-                        if (objects[i] != null) { Destroy(objects[i]); }
-                    }
-                    objects.Clear();
-                    int UpRaise = 0;
-                    int H = ActualHPPointsStored();
-                    int r = ActualHPPointsStored();
-                    for (int i = 0; i < H / 2; i++)
-                    {
-                        r -= 2;
-                        GameObject gameObject = player.PlayEffectOnActor(CorruptedWealth.heartorbitalVFX, new Vector3(0f, player.specRigidbody.HitboxPixelCollider.UnitDimensions.y + 0.25f + (0.5f * UpRaise), 0f), true);
-                        objects.Add(gameObject);
-                        UpRaise++;
-                    }
-                    if (r > 0)
-                    {
-                        for (int i = 0; i < r; i++)
-                        {
-                            r--;
-                            GameObject gameObject = player.PlayEffectOnActor(CorruptedWealth.halfheartorbitalvfx, new Vector3(0f, player.specRigidbody.HitboxPixelCollider.UnitDimensions.y + 0.25f + (0.5f * UpRaise), 0f), true);
-                            objects.Add(gameObject);
-                            UpRaise++;
-                        }
-                    }
+
                 }
                 if (player.carriedConsumables.KeyBullets == 0)
                 {
                     AmountOfCorruptKeys = 0;
                 }
             }      
+        }
+
+        public void UpdateHearts()
+        {
+            LastStoredAmountOfHPConsumed = ActualHPPointsStored();
+            for (int i = 0; i < objects.Count; i++)
+            {
+                if (objects[i] != null) { Destroy(objects[i]); }
+            }
+            objects.Clear();
+            int UpRaise = 0;
+            int H = ActualHPPointsStored();
+            int r = ActualHPPointsStored();
+            for (int i = 0; i < H / 2; i++)
+            {
+                r -= 2;
+                GameObject gameObject = player.PlayEffectOnActor(CorruptedWealth.heartorbitalVFX, new Vector3(0f, player.specRigidbody.HitboxPixelCollider.UnitDimensions.y + 0.25f + (0.5f * UpRaise), 0f), true);
+                objects.Add(gameObject);
+                UpRaise++;
+            }
+            if (r > 0)
+            {
+                for (int i = 0; i < r; i++)
+                {
+                    r--;
+                    GameObject gameObject = player.PlayEffectOnActor(CorruptedWealth.halfheartorbitalvfx, new Vector3(0f, player.specRigidbody.HitboxPixelCollider.UnitDimensions.y + 0.25f + (0.5f * UpRaise), 0f), true);
+                    objects.Add(gameObject);
+                    UpRaise++;
+                }
+            }
         }
 
         public List<GameObject> objects = new List<GameObject>();

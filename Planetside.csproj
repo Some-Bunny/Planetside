@@ -167,6 +167,8 @@
     <Compile Include="EnemySetupCode\EnemyRelatedStuff\AdvancedBodyPartController.cs" />
     <Compile Include="EnemySetupCode\EnemyRelatedStuff\Behavior Stuff\CustomDodgeRollBehavior.cs" />
     <Compile Include="EnemySetupCode\EnemyRelatedStuff\Behavior Stuff\ModifiedDashMoveBehavior.cs" />
+    <Compile Include="Guns\Update5\StormBringerProjectile.cs" />
+    <Compile Include="Guns\Update5\StormBringer.cs" />
     <Compile Include="Guns\Update4\SawconProjectile.cs" />
     <Compile Include="Guns\Update4\Sawcon.cs" />
     <Compile Include="Guns\Update4\CanisterLauncherProjectile.cs" />
@@ -204,9 +206,11 @@
     <Compile Include="Hooks And Actions\TitleDioramaHooks.cs" />
     <Compile Include="Items\ItemClasses\MultiCompanionItem.cs" />
     <Compile Include="Items\Test Items\balls - Copy.cs" />
+    <Compile Include="Items\Update5\LightningMaker.cs" />
     <Compile Include="Items\Test Items\Flowder.cs" />
     <Compile Include="Items\Test Items\HitBoxShower.cs" />
     <Compile Include="Items\Update4\CandyHeart.cs" />
+    <Compile Include="Items\Update5\SelfReplicatingBlank.cs" />
     <Compile Include="Items\Update4\ShopDiscountItem.cs" />
     <Compile Include="Items\Update4\GunClassToken.cs" />
     <Compile Include="Items\Update4\ShipmentRequestForm.cs" />
@@ -228,6 +232,7 @@
     <Compile Include="Items\Update4\GunslingersRing.cs" />
     <Compile Include="Items\Update4\LuckyCharm.cs" />
     <Compile Include="Items\Update4\Modifiers\ModifierNeedle.cs" />
+    <Compile Include="Items\Update5\SurgeGrenade.cs" />
     <Compile Include="Misc Stuff\CustomNotificationHandler.cs" />
     <Compile Include="Static Storage\StaticSpriteDefinitions.cs" />
     <Compile Include="Static Storage\StaticInformation.cs" />
@@ -2380,6 +2385,20 @@
     <EmbeddedResource Include="Resources\Shellrax\shellrax_fireeye_003.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\Tossables\SurgeGrenade\surge_grenade_boom_001.png" />
+    <EmbeddedResource Include="Resources\Tossables\SurgeGrenade\surge_grenade_primed_001.png" />
+    <EmbeddedResource Include="Resources\Tossables\SurgeGrenade\surge_grenade_primed_002.png" />
+    <EmbeddedResource Include="Resources\Tossables\SurgeGrenade\surge_grenade_primed_003.png" />
+    <EmbeddedResource Include="Resources\Tossables\SurgeGrenade\surge_grenade_primed_004.png" />
+    <EmbeddedResource Include="Resources\surge_grenade.png" />
+    <EmbeddedResource Include="Resources\Tossables\SurgeGrenade\surge_grenade_toss_001.png" />
+    <EmbeddedResource Include="Resources\Tossables\SurgeGrenade\surge_grenade_toss_002.png" />
+    <EmbeddedResource Include="Resources\Tossables\SurgeGrenade\surge_grenade_toss_003.png" />
+    <EmbeddedResource Include="Resources\Tossables\SurgeGrenade\surge_grenade_toss_004.png" />
+    <EmbeddedResource Include="Resources\Tossables\SurgeGrenade\surge_grenade_toss_005.png" />
+    <EmbeddedResource Include="Resources\Tossables\SurgeGrenade\surge_grenade_toss_006.png" />
+    <EmbeddedResource Include="Resources\Tossables\SurgeGrenade\surge_grenade_toss_007.png" />
+    <EmbeddedResource Include="Resources\Tossables\SurgeGrenade\surge_grenade_toss_008.png" />
     <EmbeddedResource Include="Resources\VFX\LockedIn\lockedin1.png" />
     <EmbeddedResource Include="Resources\VFX\LockedIn\lockedin2.png" />
     <EmbeddedResource Include="Resources\VFX\LockedIn\lockedin3.png" />
@@ -4400,6 +4419,10 @@
     <EmbeddedResource Include="Resources\Ammocom\sheetOppressorTrespass.png" />
     <EmbeddedResource Include="Resources\GunClips\Sawcon\sawemptyl.png" />
     <EmbeddedResource Include="Resources\GunClips\Sawcon\sawfull.png" />
+    <EmbeddedResource Include="Resources\selfreplicatingblank.png" />
+    <EmbeddedResource Include="Resources\RandomDebris\SporeDebris\sporebig.png" />
+    <EmbeddedResource Include="Resources\RandomDebris\SporeDebris\sporemedium.png" />
+    <EmbeddedResource Include="Resources\RandomDebris\SporeDebris\sporesmall.png" />
     <Content Include="Resources\Shellrax\shellrax_intro_019.png" />
     <EmbeddedResource Include="Resources\VFX\LockOnVFX\lockonvfx1.png" />
     <EmbeddedResource Include="Resources\VFX\LockOnVFX\lockonvfx2.png" />

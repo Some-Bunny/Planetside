@@ -141,7 +141,7 @@ namespace Planetside
                 };
                 if (GameManager.Instance.SecondaryPlayer) { dater.ignoreList.Add(GameManager.Instance.SecondaryPlayer.specRigidbody); }
 
-                dater.damage = Mathf.Min(100, Mathf.Max(2.5f, maxValue * 0.3f));
+                dater.damage = Mathf.Min(100, Mathf.Max(2f, maxValue * 0.3f));
                 dater.useDefaultExplosion = false;
                 dater.playDefaultSFX = false;
                 

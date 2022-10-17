@@ -143,15 +143,18 @@ namespace Planetside
                     if (CWC != null)
                     {
                         List<dfSprite> c = self.extantArmors;
-                        for (int i = 0; i < c.Count; i++)
+                        if (c != null || c.Count > 0)
                         {
-                            if (i > (c.Count - 1) - CWC.AmountOfArmorConsumed)
+                            for (int i = 0; i < c.Count; i++)
                             {
-                                c[i].Color = new Color(0.02f, 0.4f, 1, 0.6f);
-                            }
-                            else
-                            {
-                                c[i].Color = new Color32(255, 255, 255, 1);
+                                if (i > (c.Count - 1) - CWC.AmountOfArmorConsumed)
+                                {
+                                    c[i].Color = new Color(0.02f, 0.4f, 1, 0.6f);
+                                }
+                                else
+                                {
+                                    c[i].Color = new Color32(255, 255, 255, 1);
+                                }
                             }
                         }
                     }
@@ -161,7 +164,8 @@ namespace Planetside
 
 
         public static void CanINotHaveTwoHookMethodsWithTheSameName(Action<AmmoPickup, PlayerController> orig, AmmoPickup self, PlayerController player)
-        {
+        {       
+            orig(self, player);
             try
             {
                 bool b = false;
@@ -201,9 +205,6 @@ namespace Planetside
                 Debug.Log("Corrupted Ammo Pickup Hook is BrOke");
                 Debug.Log(e);
             }
-
-           
-            orig(self, player);
         }
 
 
@@ -237,6 +238,7 @@ namespace Planetside
                     }
                     for (int i = 0; i < MA; i++)
                     {
+                        if (player.carriedConsumables.KeyBullets == 0) { return; }
                         float H = i + 0.5f / MA;
                         PickupObject pickupObject = self.lootTable.GetSingleItemForPlayer(player, 0);
                         Vector2 t = MathToolbox.GetUnitOnCircle(Vector2.down.ToAngle() + Mathf.Lerp(-90, 90, H), 2.5f);
@@ -258,17 +260,21 @@ namespace Planetside
                 {
                     if (self.blankControllers[player.IsPrimaryPlayer ? 0 : 1] == null) { return; }
                     List<dfSprite> c = self.blankControllers[player.IsPrimaryPlayer ? 0 : 1].extantBlanks;
-                    for (int i = 0; i < c.Count; i++)
+                    if (c != null || c.Count > 0)
                     {
-                        if (i > (c.Count - 1) - cont.AmountOfCorruptBlanks)
+                        for (int i = 0; i < c.Count; i++)
                         {
-                            c[i].Color = new Color(0.02f, 0.4f, 1, 0.6f);
-                        }
-                        else
-                        {
-                            c[i].Color = new Color32(255, 255, 255, 1);
+                            if (i > (c.Count - 1) - cont.AmountOfCorruptBlanks)
+                            {
+                                c[i].Color = new Color(0.02f, 0.4f, 1, 0.6f);
+                            }
+                            else
+                            {
+                                c[i].Color = new Color32(255, 255, 255, 1);
+                            }
                         }
                     }
+                       
                     dfSprite dfSprite = self.p_playerKeyLabel.Parent.gameObject.transform.GetChild(1).GetComponent<dfSprite>();
                     if (dfSprite != null)
                     {

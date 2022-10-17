@@ -21,6 +21,19 @@ namespace Planetside
 {
     public class TestShaderBullets : PassiveItem
     {
+		public class BallsWide : MonoBehaviour
+		{
+			public void Start()
+			{
+				ETGModConsole.Log(this.GetComponent<Projectile>().DestroyMode);
+            }
+			public void OnDestroy()
+			{
+				//this.GetComponent<Projectile>().BecomeDebris(Vector3.one, 1);
+                ETGModConsole.Log(this.GetComponent<Projectile>().DestroyMode);
+            }
+        }
+
         public static void Init()
         {
             string itemName = "TestPSOGShaderBullets";
@@ -43,7 +56,8 @@ namespace Planetside
 		{
 			try
 			{
-				sourceProjectile.gameObject.AddComponent<MagnetBehaviour>();
+				sourceProjectile.gameObject.AddComponent<BallsWide>();
+				//sourceProjectile.gameObject.AddComponent<MagnetBehaviour>();
 
 				//TemplateMovementModule mod = new TemplateMovementModule();
 				//mod.ForceInvert = (UnityEngine.Random.value > 0.5f) ? false : true;

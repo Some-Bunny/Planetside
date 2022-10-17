@@ -14,6 +14,7 @@ using UnityEngine.UI;
 
 
 using static Planetside.MultiActiveReloadManager;
+using HutongGames.PlayMaker.Actions;
 
 namespace Planetside
 {
@@ -131,25 +132,38 @@ namespace Planetside
 
         public static void TriggerCountdownTimerHook(Action<Chest> orig, Chest self)
         {
-            if (QOLConfig.SynergyChestDeWicking == true && self.lootTable.CompletesSynergy)
+            
+            if (QOLConfig.SynergyChestDeWicking == true && self.lootTable.CompletesSynergy == true && self.lootTable != null)
             {
                 float num = 0.02f;
                 num += (float)PlayerStats.GetTotalCurse() * 0.05f;
                 num += (float)PlayerStats.GetTotalCoolness() * -0.025f;
+
                 num = Mathf.Max(0.01f, Mathf.Clamp01(num));
-                if (self.lootTable != null && (UnityEngine.Random.value < num))
+
+                if ((UnityEngine.Random.value < num))
                 {
                     orig(self);
                 }  
                 else
                 {
-                    AkSoundEngine.PostEvent("stop_obj_fuse_loop_01", self.gameObject);
+                    self.ForceKillFuse();
+                    self.StartCoroutine(DelayedDisable(self.gameObject));
+
+
                 }
             }
             else
             {
                 orig(self);
             }
+        }
+        public static IEnumerator DelayedDisable(GameObject s)
+        {
+            yield return null;
+
+            AkSoundEngine.PostEvent("stop_obj_fuse_loop_01", s.gameObject);
+            yield break;
         }
 
 

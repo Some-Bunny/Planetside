@@ -448,6 +448,11 @@ namespace Planetside
             sprite.usesOverrideMaterial = true;
             sprite.IsPerpendicular = true;
             sprite.renderer.enabled = true;
+            if (overrideHeight != -1)
+            {
+                sprite.renderer.gameObject.layer = overrideHeight;
+
+            }
 
             if (sprite.renderer && IsRandomShader)
             {
@@ -499,6 +504,7 @@ namespace Planetside
             });
         }
 
+        public int overrideHeight = -1;
 
         public bool spawnShadows;
 
