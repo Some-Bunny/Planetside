@@ -79,8 +79,6 @@ namespace Planetside
 
 
 
-
-
         protected override void DoEffect(PlayerController user)
         {
             /*
@@ -96,38 +94,7 @@ namespace Planetside
 
 
 
-            GameManager.Instance.MainCameraController.gameObject.GetOrAddComponent<AudioListener>();
 
-            GameObject partObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("videoplayer"));
-            MeshRenderer rend = partObj.GetComponent<MeshRenderer>();
-            rend.allowOcclusionWhenDynamic = true;
-            partObj.transform.position = user.transform.position;
-            partObj.transform.localScale = Vector3.one;
-            partObj.name = "ShopPortal";
-            VideoPlayer v = partObj.GetComponent<VideoPlayer>();
-            v.controlledAudioTrackCount = 1;
-
-            partObj.GetComponent<AudioSource>();
-
-            /*
-            AudioListener[] a = FindObjectsOfType<AudioListener>();
-            foreach (var j in a)
-            {
-                ETGModConsole.Log(j.name);
-            }
-            */
-
-
-            v.audioOutputMode = VideoAudioOutputMode.AudioSource;
-            //v.EnableAudioTrack(1, true);
-            v.source = VideoSource.VideoClip;
-            
-            v.Play();
-           
-            partObj.transform.localScale *= 8;
-            partObj.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
-
-            var yyy = partObj.transform.localRotation = Quaternion.Euler(0, 180, 0);
 
             RoomHandler roome = user.CurrentRoom;
             ETGModConsole.Log(user.CurrentRoom.GetRoomName());

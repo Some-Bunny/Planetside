@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Planetside
 {
@@ -163,6 +164,62 @@ namespace Planetside
                     var lightObj = UnityEngine.Object.Instantiate(LightningMaker.lightObject);
                     lightObj.transform.position = obj;
                     Destroy(lightObj, 0.25f);
+
+                    for (int i = 0; i < CoinTosser.AllActiveCoins.Count; i++)
+                    {
+                        var coinLocal = CoinTosser.AllActiveCoins[i];
+                        if (coinLocal != null)
+
+                        {
+                            var coinSprite = coinLocal.GetComponentInChildren<tk2dBaseSprite>();
+                            if (Vector2.Distance(coinSprite.WorldCenter, obj) < 3.5f)
+                            {
+                                float angle = BraveUtility.RandomAngle();
+
+                                for (int e = 0; e < 3; e++)
+                                {
+                                    LightningController c2 = new LightningController();
+                                    c2.MajorNodeMaxAngleSpacing = 25;
+                                    c2.MajorNodeMinAngleSpacing = 5;
+                                    c2.MajorNodesCount = UnityEngine.Random.Range(2, 4);
+                                    c2.MajorNodeSplitoffChance = 0;
+
+                                    c2.OnPostStrike += (objLocal) =>
+                                    {
+
+                                        var lightObjlocal = UnityEngine.Object.Instantiate(LightningMaker.lightObject);
+                                        lightObjlocal.transform.position = objLocal;
+                                        Destroy(lightObjlocal, 0.25f);
+
+
+                                        Exploder.Explode(objLocal, lightningData, objLocal);
+                                        AkSoundEngine.PostEvent("Play_Lightning", GameManager.Instance.BestActivePlayer.gameObject);
+
+                                    };
+
+                                    c2.LightningPreDelay = 0f;
+                                    int rayMask = CollisionMask.LayerToMask(CollisionLayer.HighObstacle, CollisionLayer.BulletBlocker, CollisionLayer.EnemyHitBox, CollisionLayer.BulletBreakable);
+
+                                    var result = RaycastToolbox.ReturnRaycast(coinSprite.WorldCenter, MathToolbox.GetUnitOnCircle(angle + (120* e), 1), rayMask);
+                                    //ETGModConsole.Log(result.Distance);
+                                    //ETGModConsole.Log(result.Contact);
+                                    //ETGModConsole.Log(coinSprite.WorldCenter);
+
+
+                                    c2.GenerateLightning(coinSprite.WorldCenter, coinSprite.WorldCenter + MathToolbox.GetUnitOnCircle(angle + (120* e), result.Distance));
+                                    RaycastResult.Pool.Free(ref result);
+
+                                }
+                                AkSoundEngine.PostEvent("Play_perfectshot", GameManager.Instance.BestActivePlayer.gameObject);
+
+                                var coinProj = coinLocal.GetComponent<Projectile>();
+
+                                coinProj.DieInAir();
+                            }
+
+
+                        }
+                    }
                 };
                 c.LightningPreDelay = 0f;
                 c.GenerateLightning(spr.sprite.WorldCenter + new Vector2(UnityEngine.Random.Range(-9, 9), 16), spr.sprite.WorldCenter);

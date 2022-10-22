@@ -109,6 +109,7 @@
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassBloodDecals.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TearInReality.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\MovingFloorTiles\MovingTile1X1.cs" />
+    <Compile Include="DungeonPlaceables\MoneyPots.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassTrollRock.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassTentaclePillar.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassSniperTurrets.cs" />
@@ -262,6 +263,7 @@
     <Compile Include="TheAbyss\AbyssFlows.cs" />
     <Compile Include="TheAbyss\ModPrefabs.cs" />
     <Compile Include="Toolboxes\EnemyToolbox.cs" />
+    <Compile Include="Toolboxes\RaycastToolbox.cs" />
     <Compile Include="Toolboxes\SpapisSuperCoolAdvancedCodeToolbox.cs" />
     <Compile Include="Toolboxes\SpriteTrimmer.cs" />
     <Compile Include="Unsorted Garbage\KnuckleBackerUIController.cs" />
@@ -767,10 +769,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="APIs\SaveAPI\Properties\" />
-    <Folder Include="Resources\DungeonObjects\MoneyPots\Copper\" />
-    <Folder Include="Resources\DungeonObjects\MoneyPots\Gold\" />
     <Folder Include="Resources\DungeonObjects\MoneyPots\Hegemony\" />
-    <Folder Include="Resources\DungeonObjects\MoneyPots\Silver\" />
     <Folder Include="Resources\VFX\EliteCrowns\" />
   </ItemGroup>
   <ItemGroup>
@@ -4423,6 +4422,52 @@
     <EmbeddedResource Include="Resources\RandomDebris\SporeDebris\sporebig.png" />
     <EmbeddedResource Include="Resources\RandomDebris\SporeDebris\sporemedium.png" />
     <EmbeddedResource Include="Resources\RandomDebris\SporeDebris\sporesmall.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\MoneyPots\money_pot_shadow.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\MoneyPots\Copper\copper_pot_break_001.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\MoneyPots\Copper\copper_pot_idle_001.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\MoneyPots\Copper\copper_pot_idle_002.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\MoneyPots\Copper\copper_pot_idle_003.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\MoneyPots\Copper\copper_pot_idle_004.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\MoneyPots\Copper\copper_pot_idle_005.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\MoneyPots\Copper\copper_pot_idle_006.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\MoneyPots\Copper\copper_pot_idle_007.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\MoneyPots\Copper\Debris\copper_debris_1.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\MoneyPots\Copper\Debris\copper_debris_2.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\MoneyPots\Copper\Debris\copper_debris_3.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\MoneyPots\Copper\Debris\copper_debris_4.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\MoneyPots\Copper\Debris\copper_debris_5.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\MoneyPots\Copper\Debris\copper_debris_6.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\MoneyPots\Copper\Debris\copper_debris_7.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\MoneyPots\Gold\Debris\gold_debris_idle_001.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\MoneyPots\Gold\Debris\gold_debris_idle_002.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\MoneyPots\Gold\Debris\gold_debris_idle_003.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\MoneyPots\Gold\Debris\gold_debris_idle_004.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\MoneyPots\Gold\Debris\gold_debris_idle_005.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\MoneyPots\Gold\Debris\gold_debris_idle_006.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\MoneyPots\Gold\Debris\gold_debris_idle_007.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\MoneyPots\Gold\gold_pot_break_001.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\MoneyPots\Gold\gold_pot_idle_001.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\MoneyPots\Gold\gold_pot_idle_002.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\MoneyPots\Gold\gold_pot_idle_003.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\MoneyPots\Gold\gold_pot_idle_004.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\MoneyPots\Gold\gold_pot_idle_005.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\MoneyPots\Gold\gold_pot_idle_006.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\MoneyPots\Gold\gold_pot_idle_007.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\MoneyPots\Silver\Debris\silver_debris_1.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\MoneyPots\Silver\Debris\silver_debris_2.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\MoneyPots\Silver\Debris\silver_debris_3.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\MoneyPots\Silver\Debris\silver_debris_4.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\MoneyPots\Silver\Debris\silver_debris_5.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\MoneyPots\Silver\Debris\silver_debris_6.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\MoneyPots\Silver\Debris\silver_debris_7.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\MoneyPots\Silver\silver_pot_break_001.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\MoneyPots\Silver\silver_pot_idle_001.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\MoneyPots\Silver\silver_pot_idle_002.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\MoneyPots\Silver\silver_pot_idle_003.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\MoneyPots\Silver\silver_pot_idle_004.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\MoneyPots\Silver\silver_pot_idle_005.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\MoneyPots\Silver\silver_pot_idle_006.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\MoneyPots\Silver\silver_pot_idle_007.png" />
     <Content Include="Resources\Shellrax\shellrax_intro_019.png" />
     <EmbeddedResource Include="Resources\VFX\LockOnVFX\lockonvfx1.png" />
     <EmbeddedResource Include="Resources\VFX\LockOnVFX\lockonvfx2.png" />

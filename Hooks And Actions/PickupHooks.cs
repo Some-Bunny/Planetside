@@ -180,7 +180,6 @@ namespace Planetside
 
                     AkSoundEngine.PostEvent("Play_WPN_Life_Orb_Capture_01", player.gameObject);
 
-
                     Gun gungeon = player.CurrentGun;
                     int amo = Mathf.Max((int)(gungeon.AdjustedMaxAmmo * 0.75f), 1);
                     gungeon.SetBaseMaxAmmo(amo);
@@ -212,10 +211,6 @@ namespace Planetside
         public static void InteractHook(Action<Chest, PlayerController> orig, Chest self, PlayerController player)
         {
             orig(self, player);
-            
-
-
-
             CorruptedWealthController cont = player.GetComponent<CorruptedWealthController>();
             if (cont != null)
             {

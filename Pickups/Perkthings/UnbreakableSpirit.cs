@@ -42,10 +42,12 @@ namespace Planetside
                 }
                 float HPtOremove = (player.stats.GetStatValue(PlayerStats.StatType.Health));
                 OtherTools.ApplyStat(player, PlayerStats.StatType.Health, (-HPtOremove) + 1, StatModifier.ModifyMethod.ADDITIVE);
+                
                 GameManager.Instance.MainCameraController.SetManualControl(false, false);
                 player.ToggleGunRenderers(true, "non-death");
                 player.ToggleHandRenderers(true, "non-death");
                 player.CurrentInputState = PlayerInputState.AllInput;
+                
                 OtherTools.Notify("One More Chance!", "Your Spirit Saved You!", "Planetside/Resources/PerkThings/unbreakablespirit", UINotificationController.NotificationColor.PURPLE);
                 player.StartCoroutine(HandleShield(player));
                 GameObject teleportVFX = UnityEngine.Object.Instantiate<GameObject>(StaticVFXStorage.TeleportVFX);
