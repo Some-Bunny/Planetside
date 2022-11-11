@@ -81,16 +81,13 @@ namespace Planetside
                 text = ((aiActor != null) ? aiActor.EnemyGuid : null);
             }
             string value = text;
-            bool flag = !string.IsNullOrEmpty(value);
-            if (flag)
+            if (!string.IsNullOrEmpty(value))
             {
-                bool flag2 = otherRigidbody && otherRigidbody.healthHaver;
-                if (flag2)
+                if (otherRigidbody && otherRigidbody.healthHaver)
                 {
                     foreach (string text2 in ShellsnakeOil.sneks)
                     {
-                        bool flag3 = text2.Equals(value);
-                        if (flag3)
+                        if (text2.Equals(value))
                         {
                             float damage = myRigidbody.projectile.baseData.damage;
                             myRigidbody.projectile.baseData.damage *= 1.5f;
@@ -102,13 +99,9 @@ namespace Planetside
         }
         private void SpawnBall()
         {
-            bool flagA = base.Owner.PlayerHasActiveSynergy("Gun Snek Good Maybe?");
-            if (flagA)
+            if (base.Owner.PlayerHasActiveSynergy("Gun Snek Good Maybe?"))
             {
-                string guid;
-                guid = "f38686671d524feda75261e469f30e0b";
-
-                AIActor orLoadByGuid = EnemyDatabase.GetOrLoadByGuid(guid);
+                AIActor orLoadByGuid = EnemyDatabase.GetOrLoadByGuid("f38686671d524feda75261e469f30e0b");
                 IntVector2? intVector = new IntVector2?(base.Owner.CurrentRoom.GetRandomVisibleClearSpot(2, 2));
                 AIActor aiactor = AIActor.Spawn(orLoadByGuid.aiActor, intVector.Value, GameManager.Instance.Dungeon.data.GetAbsoluteRoomFromPosition(intVector.Value), true, AIActor.AwakenAnimationType.Spawn, true);
                 aiactor.CanTargetEnemies = true;

@@ -87,6 +87,7 @@ namespace Planetside
 				new Hook(typeof(Gun).GetMethod("Awake", BindingFlags.Instance | BindingFlags.Public),
 					typeof(OuroborosController).GetMethod("GunAwakeHook"));
 
+				/*
 				new Hook(typeof(ShopItemController).GetMethods().Single(
 					m =>
 						m.Name == "Initialize" &&
@@ -100,7 +101,7 @@ namespace Planetside
 					   m.GetParameters().Length == 2 &&
 					   m.GetParameters()[1].ParameterType == typeof(ShopController)),
 				   typeof(OuroborosController).GetMethod("InitializeHook", BindingFlags.Static | BindingFlags.Public));
-
+				*/
 
 				new Hook(typeof(Chest).GetMethod("Awake", BindingFlags.Instance | BindingFlags.NonPublic),
 					typeof(OuroborosController).GetMethod("ChestAwakeHook"));

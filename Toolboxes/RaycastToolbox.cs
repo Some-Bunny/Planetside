@@ -30,14 +30,14 @@ namespace Planetside
 
     public static class RaycastToolbox
     {
-        public static RaycastResult ReturnRaycast(Vector2 startPosition, Vector2 angle, int rayCastMask, float overrideDistance = 1000)
+        public static RaycastResult ReturnRaycast(Vector2 startPosition, Vector2 angle, int rayCastMask, float overrideDistance = 1000, SpeculativeRigidbody bodyToIgnore = null)
         {
             //            int rayMask2 = CollisionMask.LayerToMask(collisionLayersToAccount[0], collisionLayersToAccount[1], collisionLayersToAccount[2], collisionLayersToAccount[3]);
 
 
             Func<SpeculativeRigidbody, bool> rigidbodyExcluder = (SpeculativeRigidbody otherRigidbody) => otherRigidbody.minorBreakable && !otherRigidbody.minorBreakable.stopsBullets;
             RaycastResult raycastResult2;
-            PhysicsEngine.Instance.Raycast(startPosition, angle, overrideDistance, out raycastResult2, true, true, rayCastMask, null, false, rigidbodyExcluder, null);
+            PhysicsEngine.Instance.Raycast(startPosition, angle, overrideDistance, out raycastResult2, true, true, rayCastMask, null, false, rigidbodyExcluder, bodyToIgnore);
             return raycastResult2;
         }
         

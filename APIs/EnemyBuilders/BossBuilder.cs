@@ -253,6 +253,7 @@ namespace ItemAPI
             else
             {
                 AIBulletBank aibulletBank = prefab.AddComponent<AIBulletBank>();
+                aibulletBank.Bullets = new List<AIBulletBank.Entry>();
             }
 
             //Add to enemy database

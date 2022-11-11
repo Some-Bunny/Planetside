@@ -444,11 +444,13 @@ public class CustomBeholsterLaserBehavior : BasicAttackBehavior
 		beamCont.OverrideHitChecks = delegate (SpeculativeRigidbody hitRigidbody, Vector2 dirVec)
 		{
 			Projectile currentProjectile = null;
-			if (UsesBeamProjectileWithoutModule)
+			if (UsesBeamProjectileWithoutModule == true)
 			{currentProjectile = aibeamShooter2.beamProjectile;}
 			else
             {currentProjectile = aibeamShooter2.beamModule.GetCurrentProjectile();}
 			HealthHaver healthHaver = (!hitRigidbody) ? null : hitRigidbody.healthHaver;
+
+
 			if (hitRigidbody && hitRigidbody.projectile && hitRigidbody.GetComponent<BeholsterBounceRocket>())
 			{
 				BounceProjModifier component = hitRigidbody.GetComponent<BounceProjModifier>();

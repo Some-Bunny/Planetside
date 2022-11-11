@@ -47,20 +47,23 @@ namespace Planetside
 
         public virtual void Start()
         {
-            this.MainBody = base.transform.parent.GetComponent<AIActor>();
             this.renderer.enabled = Render;
 
             if (!this.ownBody)
             {
                 ownBody = this.gameObject.GetComponent<SpeculativeRigidbody>();
             }
+
             if (!this.ownHealthHaver)
             {
                 ownHealthHaver = this.gameObject.GetComponent<HealthHaver>();
             }
 
+            var animator = this.gameObject.GetComponent<AIAnimator>();
+            if (animator){animator.enabled = true; }
 
             this.m_heightOffBody = base.sprite.HeightOffGround;
+
             if (this.hasOutlines)
             {
                 SpriteOutlineManager.AddOutlineToSprite(base.sprite, Color.black, base.sprite.HeightOffGround + 0.1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
@@ -73,12 +76,16 @@ namespace Planetside
                     }
                 }
             }
+
             if (!base.specRigidbody)
             {
                 base.specRigidbody = this.MainBody.specRigidbody;
             }
 
-            MainBody = this.gameObject.transform.parent.GetComponent<AIActor>();
+            if (this.gameObject.transform.parent != null)
+            {
+                MainBody = this.gameObject.transform.parent.GetComponent<AIActor>();
+            }
 
             if (MainBody != null)
             {
@@ -94,6 +101,7 @@ namespace Planetside
                 ownHealthHaver.OnPreDeath += OwnHealthHaver_OnPreDeath;
                 ownHealthHaver.OnDeath += OwnHealthHaver_OnDeath;
             }
+
 
         }
 
@@ -152,7 +160,7 @@ namespace Planetside
             }
             if (this.autoDepth && base.aiAnimator)
             {
-                float num2 = BraveMathCollege.ClampAngle180(this.MainBody.aiAnimator.FacingDirection);
+                float num2 = BraveMathCollege.ClampAngle180(this.MainBody != null ?  this.MainBody.aiAnimator.FacingDirection : this.ownBody.aiAnimator.FacingDirection);
                 float num3 = BraveMathCollege.ClampAngle180(base.aiAnimator.FacingDirection);
                 bool flag = num2 <= 155f && num2 >= 25f && num3 <= 155f && num3 >= 25f;
                 base.sprite.HeightOffGround = ((!flag) ? this.m_heightOffBody : (-this.m_heightOffBody));
@@ -167,23 +175,38 @@ namespace Planetside
         protected virtual bool TryGetAimAngle(out float angle)
         {
             angle = 0f;
-            if (this.MainBody.TargetRigidbody)
+            if (this.MainBody)
             {
-                Vector2 unitCenter = this.MainBody.TargetRigidbody.GetUnitCenter(ColliderType.HitBox);
+                Vector2 unitCenter = this.MainBody.GetComponent<SpeculativeRigidbody>().GetUnitCenter(ColliderType.HitBox);
                 Vector2 b = base.transform.position.XY();
                 if (this.aimFrom == BodyPartController.AimFromType.ActorHitBoxCenter)
                 {
-                    b = this.MainBody.specRigidbody.GetUnitCenter(ColliderType.HitBox);
+                    b = this.MainBody.GetComponent<SpeculativeRigidbody>().GetUnitCenter(ColliderType.HitBox);
                 }
                 angle = (unitCenter - b).ToAngle();
+                if (this.MainBody.aiAnimator)
+                {
+                    angle = this.MainBody.aiAnimator.FacingDirection;
+                    return true;
+                }
                 return true;
             }
-            if (this.MainBody.aiAnimator)
+            else
             {
-                angle = this.MainBody.aiAnimator.FacingDirection;
+                Vector2 unitCenter = this.ownBody.GetUnitCenter(ColliderType.HitBox);
+                Vector2 b = base.transform.position.XY();
+                if (this.aimFrom == BodyPartController.AimFromType.ActorHitBoxCenter)
+                {
+                    b = this.ownBody.GetUnitCenter(ColliderType.HitBox);
+                }
+                angle = (unitCenter - b).ToAngle();
+                if (this.ownBody.aiAnimator)
+                {
+                    angle = this.ownBody.aiAnimator.FacingDirection;
+                    return true;
+                }
                 return true;
             }
-            return false;
         }
 
 

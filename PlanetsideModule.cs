@@ -391,6 +391,7 @@ namespace Planetside
                 LightningMaker.Init();
                 SurgeGrenade.Init();
                 StormBringer.Add();
+                ImmolationPowder.Init();
             }
 
             //VengefulShell.Init();

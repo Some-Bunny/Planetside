@@ -54,12 +54,7 @@ namespace Planetside
 					PlayerController player = GameManager.Instance.AllPlayers[i];
 					if (player.HasPickupID(GildedPots.GildedPotsID) && player != null && self != null)
 					{
-						float coinchance = 0.04f;
-						bool flagA = player.PlayerHasActiveSynergy("Expert Demolitionist");
-						if (flagA)
-						{
-							coinchance *= 2;
-						}
+						float coinchance = player.PlayerHasActiveSynergy("Expert Demolitionist") ? 0.08f : 0.04f;
 						float num = UnityEngine.Random.Range(0f, 1f);
 						bool flag2 = (double)num < coinchance;
 						if (flag2)

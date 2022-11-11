@@ -12,7 +12,7 @@ using System.Collections;
 using Gungeon;
 using MonoMod.RuntimeDetour;
 using System.Collections.ObjectModel;
-
+using SynergyAPI;
 namespace Planetside
 {
     public class TableTechDevour: PassiveItem
@@ -25,15 +25,15 @@ namespace Planetside
 
             GameObject obj = new GameObject(itemName);
 
-            TableTechDevour minigunrounds = obj.AddComponent<TableTechDevour>();
+            TableTechDevour item = obj.AddComponent<TableTechDevour>();
 
             ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
 
             string shortDesc = "Hungering Flips";
             string longDesc = "This ancient technique allows the user to feed a table flipped, sating it.\n\nChapter 17 of the Table Sutra. Those flipped are sated in their desires.";
 
-            minigunrounds.SetupItem(shortDesc, longDesc, "psog");
-            minigunrounds.quality = PickupObject.ItemQuality.B;
+            item.SetupItem(shortDesc, longDesc, "psog");
+            item.quality = PickupObject.ItemQuality.B;
             List<string> mandatoryConsoleIDs = new List<string>
             {
                 "psog:table_tech_devour",
@@ -53,11 +53,18 @@ namespace Planetside
                 "pink_guon_stone"
             };
             CustomSynergies.Add("Blood For Wood", mandatoryConsoleIDs, optionalConsoleIDs2, true);
-            TableTechDevour.TableTechDevourID = minigunrounds.PickupObjectId;
-            ItemIDs.AddToList(minigunrounds.PickupObjectId);
-            SynergyAPI.SynergyBuilder.AddItemToSynergy(minigunrounds, CustomSynergyType.PAPERWORK);
+            TableTechDevour.TableTechDevourID = item.PickupObjectId;
+            ItemIDs.AddToList(item.PickupObjectId);
 
-            minigunrounds.AddToSubShop(ItemBuilder.ShopType.Goopton, 1f);
+
+            //SynergyAPI.SynergyBuilder.AddItemToSynergy(minigunrounds, CustomSynergyType.PAPERWORK);
+
+
+
+            item.AddItemToSynergy(CustomSynergyType.PAPERWORK);
+
+
+            item.AddToSubShop(ItemBuilder.ShopType.Goopton, 1f);    
 
             Gun gun4 = PickupObjectDatabase.GetById(43) as Gun;
             Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(gun4.DefaultModule.projectiles[0]);

@@ -18,6 +18,7 @@ Event	ID	Name			Wwise Object Path	Notes
 	1648309904	Play_Railgun			\Default Work Unit\Play_Railgun	
 	1648787241	Play_Oppresser_BigHurt			\Default Work Unit\Play_Oppresser_BigHurt	
 	1661444356	Play_ambienthum			\Default Work Unit\Play_ambienthum	
+	1702899100	Play_Immolate			\Default Work Unit\Play_Immolate	
 	1708275573	Play_Burn			\Default Work Unit\Play_Burn	
 	1816174868	Stop_Tear			\Default Work Unit\Stop_Tear	
 	1844824434	Stop_ambienthum			\Default Work Unit\Stop_ambienthum	
@@ -135,6 +136,7 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	798387623	Tear	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Tear_AD29F36A_5EDBE1FA.wem		\Actor-Mixer Hierarchy\Default Work Unit\Tear		147595
 	815791638	FlashTell	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\FlashTell_F7D0E330_756D6989.wem		\Actor-Mixer Hierarchy\Default Work Unit\FlashTell		8446
 	824633122	perfectshot	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\perfectshot_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\perfectshot		14789
+	830780147	Immolate	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Immolate_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\Immolate		20610
 	855731127	Squeal	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Squeal_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\Squeal		23037
 	879238780	PortalOpen	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\PortalOpen_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\PortalOpen		16162
 	901983473	MetalStep1	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\MetalStep1_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\MetalStep\MetalStep1		3799

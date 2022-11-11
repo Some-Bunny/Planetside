@@ -31,17 +31,14 @@ namespace Planetside
 
             foreach (Transform transform in base.transform)
             {
-                if (TransformList.Contains(transform.name))
+                tk2dBaseSprite sproot = transform.GetComponent<tk2dBaseSprite>();
+                if (sproot != null)
                 {
-                    tk2dBaseSprite sproot = transform.GetComponent<tk2dBaseSprite>();
-                    if (sproot != null)
-                    {
-                        sproot.usesOverrideMaterial = true;
-                        sproot.renderer.material.shader = glowshader;
-                        sproot.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
-                        sproot.renderer.material.SetFloat("_EmissivePower", EmissivePower);
-                        sproot.renderer.material.SetFloat("_EmissiveColorPower", EmissiveColorPower);
-                    }
+                    sproot.usesOverrideMaterial = true;
+                    sproot.renderer.material.shader = glowshader;
+                    sproot.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+                    sproot.renderer.material.SetFloat("_EmissivePower", EmissivePower);
+                    sproot.renderer.material.SetFloat("_EmissiveColorPower", EmissiveColorPower);
                 }
             }  
         }

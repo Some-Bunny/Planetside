@@ -89,15 +89,49 @@ namespace Planetside
             portal.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
             portal.transform.position = user.transform.position;
             */
-
+            
             //List<Type> t = UnityEngine.Object.FindObjectsOfType<Component>().GetType().GetBaseType() 
 
 
 
 
 
-            RoomHandler roome = user.CurrentRoom;
+            RoomHandler room = user.CurrentRoom;
             ETGModConsole.Log(user.CurrentRoom.GetRoomName());
+
+            AIActor orLoadByGuid = EnemyDatabase.GetOrLoadByGuid("864ea5a6a9324efc95a0dd2407f42810");
+            IntVector2? intVector = new IntVector2?(user.CurrentRoom.GetRandomVisibleClearSpot(2, 2));
+            AIActor aiactor = AIActor.Spawn(orLoadByGuid.aiActor, intVector.Value, GameManager.Instance.Dungeon.data.GetAbsoluteRoomFromPosition(intVector.Value), true, AIActor.AwakenAnimationType.Spawn, true);
+
+
+            var pp = UnityEngine.Object.Instantiate<GameObject>(Ophanaim.EyeBallMinion, aiactor.transform.position + new Vector3(1.5f, 0), Quaternion.identity, null).GetComponent<AdvancedBodyPartController>();
+            pp.MainBody = aiactor;
+            pp.gameObject.transform.parent = aiactor.transform;
+            pp.healthHaver.SetHealthMaximum(20);
+            pp.healthHaver.ForceSetCurrentHealth(20);
+            pp.OnBodyPartPreDeath += (obj1, obj2, obj3) =>
+            {
+                var onnn = UnityEngine.Object.Instantiate<GameObject>(Ophanaim.SolarClap, obj1.transform.position, Quaternion.identity, null);
+                Destroy(onnn, 2);
+            };
+
+            //var hODC = (PickupObjectDatabase.GetById(515) as Gun).DefaultModule.projectiles[0].bleedEffect.vfxExplosion.GetComponent<HammerOfDawnController>();
+
+            //StaticVFXStorage.MourningStarVFXController.SpawnMourningStar(user.sprite.WorldBottomCenter, 4);
+
+
+            //var h = UnityEngine.Object.Instantiate<GameObject>(StaticVFXStorage.MourningStarLaser, user.transform.position, Quaternion.identity, user.transform).GetComponent<StaticVFXStorage.MourningStarVFXComponent>();
+            //h.Invoke("Dissipate", 5);
+
+            //UnityEngine.Object.Instantiate<GameObject>(hODC.BurstSprite.gameObject, user.transform.position + new Vector3(5,0), Quaternion.identity, user.transform);
+            //UnityEngine.Object.Instantiate<GameObject>(hODC.InitialImpactVFX, user.transform.position - new Vector3(5, 0), Quaternion.identity, user.transform);
+
+            //UnityEngine.Object.Instantiate<GameObject>((PickupObjectDatabase.GetById(515) as Gun).DefaultModule.projectiles[0].bleedEffect.vfxExplosion, user.transform.position + new Vector3(5, 5), Quaternion.identity, user.transform);
+
+            //if (hODC != null) { ETGModConsole.Log("got"); }
+
+
+
 
             //partObj.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
 

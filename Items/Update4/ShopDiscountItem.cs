@@ -28,7 +28,6 @@ namespace Planetside
             {
                 IdentificationKey = "Example_Discount",
                 PriceMultiplier = 0.5f, //Halves the price of selected ids
-                //IDsToReducePriceOf = new List<int>() { 73, 85, 120 }, //These are half-hearts, hearts and armor
                 CanDiscountCondition = Example_CanBuy, // your example condition (required)
                 CustomPriceMultiplier = Example_Multiplier,// your example price multiplier controller (can be left as null and it will just use PriceMultiplier always)
                 ItemToDiscount = Example_Criteria
@@ -104,7 +103,7 @@ namespace Planetside
         public static void OnMyShopItemStartedGlobal(ShopItemController shopItemController)
         {
             ShopDiscountController steamSale = shopItemController.gameObject.AddComponent<ShopDiscountController>();
-            steamSale.discounts = DiscountsToAdd ?? new List<ShopDiscount>();
+            steamSale.discounts = DiscountsToAdd ?? new List<ShopDiscount>() { };
         }
 
 
@@ -124,10 +123,7 @@ namespace Planetside
             {
                 OnShopItemStarted(self);
             }
-        }
-
-
-        
+        }    
     }
     public class ShopDiscount : MonoBehaviour
     {
@@ -224,6 +220,12 @@ namespace Planetside
             }
             DoTotalDiscount(mult);
         }
+
+        public bool ReturnMoneyCurrencyType()
+        {
+            return shopItemSelf.CurrencyType == ShopItemController.ShopCurrencyType.COINS;
+        }
+
         private void DoTotalDiscount(float H)
         {
             if (shopItemSelf == null) { return; }
@@ -231,7 +233,7 @@ namespace Planetside
             if (GameManager.Instance.PrimaryPlayer == null) { return; }
 
             GameLevelDefinition lastLoadedLevelDefinition = GameManager.Instance.GetLastLoadedLevelDefinition();
-            float newCost = shopItemSelf.item.PurchasePrice;
+            float newCost = ReturnMoneyCurrencyType() == false? shopItemSelf.CurrentPrice :shopItemSelf.item.PurchasePrice;
             float num4 = (lastLoadedLevelDefinition == null) ? 1f : lastLoadedLevelDefinition.priceMultiplier;
             float num3 = GameManager.Instance.PrimaryPlayer.stats.GetStatValue(PlayerStats.StatType.GlobalPriceMultiplier);
             if (GameManager.Instance.CurrentGameType == GameManager.GameType.COOP_2_PLAYER && GameManager.Instance.SecondaryPlayer)

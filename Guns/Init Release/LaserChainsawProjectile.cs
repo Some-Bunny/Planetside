@@ -26,13 +26,8 @@ namespace Planetside
 		}
         public void Start()
         {
-			this.beamcont = base.GetComponent<BasicBeamController>();
-			BasicBeamController beam = this.beamcont;
-			beam.sprite.usesOverrideMaterial = true;
-			BasicBeamController component = beam.gameObject.GetComponent<BasicBeamController>();
-			bool flag = component != null;
-			bool flag2 = flag;
-			if (flag2)
+			BasicBeamController component = this.gameObject.GetComponent<BasicBeamController>();;
+			if (component != null)
 			{
 				component.projectile.OnHitEnemy = (Action<Projectile, SpeculativeRigidbody, bool>)Delegate.Combine(component.projectile.OnHitEnemy, new Action<Projectile, SpeculativeRigidbody, bool>(this.HandleHit));
 				component.projectile.OnWillKillEnemy = (Action<Projectile, SpeculativeRigidbody>)Delegate.Combine(component.projectile.OnWillKillEnemy, new Action<Projectile, SpeculativeRigidbody>(this.OnKill));
@@ -86,7 +81,6 @@ namespace Planetside
 			}
 		}
 
-		private BasicBeamController beamcont;
     }
 }
 

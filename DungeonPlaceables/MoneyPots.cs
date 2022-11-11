@@ -16,6 +16,7 @@ using System.Collections;
 using System.ComponentModel;
 using UnityEngine.Video;
 using static ETGMod;
+using PathologicalGames;
 
 namespace Planetside
 {
@@ -34,6 +35,28 @@ namespace Planetside
             };
             DungeonPlaceable placeable = BreakableAPIToolbox.GenerateDungeonPlaceable(dict);
             StaticReferences.StoredDungeonPlaceables.Add("moneyPotRandom", placeable);
+
+            string defaultPath = "Planetside/Resources/DungeonObjects/TutorialNote/";
+            string[] idlePaths = new string[]{defaultPath+"tatterednote.png",};
+
+            ETGMod.Databases.Strings.Core.Set("#TROLL_NOTE_1", "You Lost The Game.");
+            ETGMod.Databases.Strings.Core.Set("#TROLL_NOTE_2", "Download Fiend Folio on the Steam Workshop today! (Let me in I want the fiend folio community clout please please please please please please please please please please please please please please please please please please please please please please please please please please please please please please please please please please please please please please please )");
+            ETGMod.Databases.Strings.Core.Set("#TROLL_NOTE_3", "Lead Maidens are singlehandedly ruining this game. There's no reason an extremely common random enemy should be tons harder than everything else so far including the floor 2 boss even though Lead Maidens started showing up before that fight. It makes every moment not spent fighting a Lead Maiden pointless because whether or not I win depends 99% on whether or not that bullshit miniboss appears. I've never seen one nonboss singlehandedly ruin a game before but this one is doing it extremely efficiently. Beating one Lead Maiden is harder than beating Rabi-Ribi's True Boss Rush. It's fucking unforgivable to have the game change so radically every time that enemy show up. It kills me in like one fucking hit & it has far more health than everything else I've fought before despite also being bigger & faster than everything else too.\r\n\r\nWhomever came up with that enemy needs to go jack off to medieval torture porn & get it out of their system. Jesus Christ!\r\n\r\nI really wish the creators of this game would've just decided whether to make an amazing game or the worst game ever & stuck with it.");
+            ETGMod.Databases.Strings.Core.Set("#TROLL_NOTE_4", "AMONG US (vine boom)");
+            ETGMod.Databases.Strings.Core.Set("#TROLL_NOTE_5", "I Ii\n\nII L");
+            ETGMod.Databases.Strings.Core.Set("#TROLL_NOTE_6", "JUDGEMENT! DIE! DIE! PREPARE THYSELF! DIE! JUDGEMENT! CRUSH! THY END IS NOW! DIE! JUDGEMENT! CRUSH! DIE! THY END IS NOW! PREPARE THYSELF! JUDGMENT! DIE! JUDGEMENT! PREPARE THYSELF! DIE! JUDGEMENT! CRUSH! THY END IS NOW!  CRUSH! THY END IS NOW! DIE! JUDGEMENT! CRUSH! DIE! THY END IS NOW! PREPARE THYSELF! JUDGMENT! DIE!");
+            ETGMod.Databases.Strings.Core.Set("#TROLL_NOTE_7", "Fuck it, we ball\nFuck it, we ball\nFuck it, we ball\nFuck it, we ball\nFuck it, we ball");
+            ETGMod.Databases.Strings.Core.Set("#TROLL_NOTE_8", "i could go for a lasagna right now.");
+            ETGMod.Databases.Strings.Core.Set("#TROLL_NOTE_9", "Behind you.");
+            ETGMod.Databases.Strings.Core.Set("#TROLL_NOTE_10", ":rabbit2:\n\n:skateboard:");
+            ETGMod.Databases.Strings.Core.Set("#TROLL_NOTE_11", "Our mod plans to expand and revamp vanilla content by adding new fun and interesting content! we plan on adding new gimmicks and multiple bosses to flesh out the game. (gif of buzz lightyears in a toy aisle)");
+            ETGMod.Databases.Strings.Core.Set("#TROLL_NOTE_12", "Shit thyself.");
+
+
+            MajorBreakable note1 = BreakableAPIToolbox.GenerateMajorBreakable("trollNote_1", idlePaths, 1, idlePaths, 1, 15000, null, 0f, -0.1875f, true, 0, 0, 0, 0, true, null, null, true, null);
+            NoteDoer finishedNote1 = BreakableAPIToolbox.GenerateNoteDoer(note1, BreakableAPIToolbox.GenerateTransformObject(note1.gameObject, new Vector2(0.25f, 0.25f), "noteattachPoint").transform, "#TROLL_NOTE_01", true);
+            StaticReferences.StoredRoomObjects.Add("trollNote", finishedNote1.gameObject);
+
         }
 
         public static IEnumerator StartHook(Func<MinorBreakable, IEnumerator> orig, MinorBreakable s)
@@ -310,7 +333,7 @@ namespace Planetside
                 mate.SetFloat("_ColorIntensity", 0.1f);
             }
             ShardCluster potShardCluster = BreakableAPIToolbox.GenerateShardCluster(shardObjects, 0.7f, 1.2f, 6, 9, 0.6f);
-            MinorBreakable breakable = BreakableAPIToolbox.GenerateMinorBreakable("Silver_Pot", new string[]
+            MinorBreakable breakable = BreakableAPIToolbox.GenerateMinorBreakable("Glitch_Pot", new string[]
             { defaultPath + "copper_pot_idle_001.png"
             }, 10,
             new string[] { defaultPath + "copper_pot_break_001.png" }, 10,
@@ -337,15 +360,50 @@ namespace Planetside
             sprite.sprite.usesOverrideMaterial = true;
             Material material = sprite.sprite.renderer.material;
             material.shader = ShaderCache.Acquire("Brave/Internal/Glitch");
-            material.SetFloat("_GlitchInterval", 0.2f);
-            material.SetFloat("_DispProbability", 0.5f);
-            material.SetFloat("_DispIntensity", 0.1f);
-            material.SetFloat("_ColorProbability", 0.5f);
-            material.SetFloat("_ColorIntensity", 0.2f);
+            material.SetFloat("_GlitchInterval", 0.05f);
+            material.SetFloat("_DispProbability", 0.1f);
+            material.SetFloat("_DispIntensity", 0.2f);
+            material.SetFloat("_ColorProbability", 0.2f);
+            material.SetFloat("_ColorIntensity", 0.3f);
 
-            StaticReferences.StoredRoomObjects.Add("test", breakable.gameObject);
+            StaticReferences.StoredRoomObjects.Add("glitchPot", breakable.gameObject);
             return breakable.gameObject;
         }
+
+        public class TrollyPickups : MonoBehaviour
+        {
+            public void Start()
+            {
+
+            }
+            public void Update()
+            {
+                T += BraveTime.DeltaTime;
+
+                if (this.gameObject && T > 3)
+                {
+                    foreach (PlayerController p in GameManager.Instance.AllPlayers)
+                    {
+                        if (Vector2.Distance(p.sprite.WorldCenter, this.transform.PositionVector2()) < 4)
+                        {
+                            AkSoundEngine.PostEvent("Play_OBJ_teleport_depart_01", this.gameObject);
+
+                            T = 0;
+                            Vector3 pos = this.gameObject.transform.position.GetAbsoluteRoom().GetRandomAvailableCell().Value.ToCenterVector3(1);
+                            var obj1 = UnityEngine.Object.Instantiate<GameObject>(StaticVFXStorage.TeleportVFX, this.gameObject.transform.position, Quaternion.identity);
+                            Destroy(obj1, 2);
+
+                            var obj = UnityEngine.Object.Instantiate<GameObject>(StaticVFXStorage.TeleportVFX, pos, Quaternion.identity);
+                            Destroy(obj, 2);
+                            this.gameObject.transform.position = pos;
+                            this.gameObject.GetComponent<SpeculativeRigidbody>().Reinitialize();
+                        }
+                    }
+                }
+            }
+            public float T = 2;
+        }
+
         public class GlitchPotBehavior : MonoBehaviour
         {
             public GameObject objectToSpawn = GameManager.Instance.Dungeon.sharedSettingsPrefab.currencyDropSettings.goldCoinPrefab;
@@ -637,19 +695,52 @@ namespace Planetside
                 yield break;
             }
 
+            bool p = false;
+
+            public void Update()
+            {
+                if (p == false)
+                {
+                    if (GameManager.Instance.IsAnyPlayerInRoom(this.gameObject.transform.position.GetAbsoluteRoom()) == true)
+                    {
+                        p = !p;
+                        AkSoundEngine.PostEvent("Play_Glitch", this.gameObject);
+                    }
+                }
+            }
+
+
 
             public void Start()
             {
-                AkSoundEngine.PostEvent("Play_OBJ_chestglitch_loop_01", this.gameObject);
                 var minorbreakable = this.GetComponent<MinorBreakable>();
                 if (minorbreakable != null)
                 {
-
                     minorbreakable.OnBreakContext += (self) =>
                     {
+                        GameObject vfx = UnityEngine.Object.Instantiate<GameObject>(StaticVFXStorage.DragunBoulderLandVFX, self.transform.position, Quaternion.identity);
+                        tk2dBaseSprite component = vfx.GetComponent<tk2dBaseSprite>();
+                        component.PlaceAtPositionByAnchor(self.transform.position, tk2dBaseSprite.Anchor.MiddleCenter);
+                        component.HeightOffGround = 35f;
+                        component.UpdateZDepth();
+                        Destroy(component.gameObject, 2.5f);
+                        component.usesOverrideMaterial = true;
+                        var boomMat = component.renderer.material;
+                        boomMat.shader = ShaderCache.Acquire("Brave/Internal/Glitch");
+                        boomMat.SetFloat("_GlitchInterval", 0.05f);
+                        boomMat.SetFloat("_DispProbability", 0.1f);
+                        boomMat.SetFloat("_DispIntensity", 0.2f);
+                        boomMat.SetFloat("_ColorProbability", 0.2f);
+                        boomMat.SetFloat("_ColorIntensity", 0.3f);
+
+                        AkSoundEngine.PostEvent("Stop_Glitch", this.gameObject);
+
+                        AkSoundEngine.PostEvent("Play_OBJ_teleport_depart_01", this.gameObject);
+
                         IntVector2 intVector = minorbreakable.specRigidbody.UnitCenter.ToIntVector2(VectorConversions.Floor);
                         RoomHandler roomFromPosition2 = GameManager.Instance.Dungeon.GetRoomFromPosition(intVector);
-                        int rng = UnityEngine.Random.Range(7, 8);
+                        int rng = UnityEngine.Random.Range(1, 11);
+                        //Debug.Log("RNG Pot event chosen: " + rng);
                         switch (rng)
                         {
                             case 1:
@@ -659,7 +750,7 @@ namespace Planetside
                                 var fairy = AIActor.Spawn(orLoadByGuid, intVector, roomFromPosition2, true, AIActor.AwakenAnimationType.Default, true);
                                 fairy.BecomeBlackPhantom();
                                 fairy.MovementSpeed *= 0.6f;
-                                fairy.healthHaver.SetHealthMaximum(45, 45, true);
+                                fairy.healthHaver.SetHealthMaximum(65, 65, true);
                                 ExplodeOnDeath explodeVar = fairy.gameObject.AddComponent<ExplodeOnDeath>();
                                 explodeVar.deathType = OnDeathBehavior.DeathType.PreDeath;
                                 explodeVar.LinearChainExplosion = true;
@@ -680,7 +771,7 @@ namespace Planetside
                                 GameManager.Instance.Dungeon.StartCoroutine(SpawnCoins(roomFromPosition2));
                                 break;
                             case 3:
-                                PickupObject byId = PickupObjectDatabase.GetById(328);
+                                PickupObject byId = PickupObjectDatabase.GetById(276);
                                 PlayerItem playerItem = byId as PlayerItem;
                                 playerItem.Use(GameManager.Instance.PrimaryPlayer, out float ImTooTiredToNameVariables);
                                 break;
@@ -731,9 +822,10 @@ namespace Planetside
                             case 7:
 
                                 Chest chest2 = GameManager.Instance.RewardManager.SpawnRewardChestAt(new IntVector2((int)minorbreakable.transform.position.x, (int)minorbreakable.transform.position.y), -1f, PickupObject.ItemQuality.EXCLUDED);
+                                chest2.sprite.renderer.enabled = false;
                                 chest2.RegisterChestOnMinimap(chest2.GetAbsoluteParentRoom());
                                 chest2.sprite.usesOverrideMaterial = true;
-
+                                AkSoundEngine.PostEvent("Play_OBJ_redchest_spawn_01", chest2.gameObject);
                                 chest2.IsLocked = false;
                                 chest2.spawnAnimName = "redgold_chest_appear";
                                 chest2.openAnimName = "redgold_chest_open";
@@ -741,13 +833,49 @@ namespace Planetside
                                 chest2.majorBreakable.spriteNameToUseAtZeroHP = "chest_redgold_break_001";
                                 chest2.sprite.renderer.material.shader = ShaderCache.Acquire("Brave/Internal/RainbowChestShader");
                                 chest2.MaybeBecomeMimic();
-                                
+                                chest2.sprite.renderer.enabled = true;
+
                                 break;
                             case 8:
+                                OtherTools.Notify("Time Shifts A Little...", "", "Planetside/Resources/PerkThings/somethingtoDoWithThrownGuns", UINotificationController.NotificationColor.PURPLE, true);
+                                TimeTraderSpawnController.ShopAllowedToSpawn = true;
                                 break;
                             case 9:
+
+
+                                for (int i = 0; i < 6; i++)
+                                {
+                                    int id = BraveUtility.RandomElement<int>(Shellrax.Lootdrops);
+                                    var pickup = LootEngine.SpawnItem(PickupObjectDatabase.GetById(id).gameObject, minorbreakable.sprite.WorldCenter, MathToolbox.GetUnitOnCircle(60 * i, 2), 2.2f, false, true, false);
+                                    pickup.gameObject.AddComponent<TrollyPickups>();
+                                }
+
                                 break;
                             case 10:
+
+                                string[] array = new string[]
+                                {
+                                    "Global VFX/Confetti_Blue_001",
+                                    "Global VFX/Confetti_Yellow_001",
+                                    "Global VFX/Confetti_Green_001"
+                                };
+                                AkSoundEngine.PostEvent("Play_OBJ_prize_won_01", minorbreakable.gameObject);
+                                for (int i = 0; i < 16; i++)
+                                {
+                                    GameObject original = (GameObject)BraveResources.Load(array[UnityEngine.Random.Range(0, 3)], ".prefab");
+                                    WaftingDebrisObject a = UnityEngine.Object.Instantiate<GameObject>(original).GetComponent<WaftingDebrisObject>();
+                                    a.sprite.PlaceAtPositionByAnchor(minorbreakable.transform.position + new Vector3(0.25f, 0.25f, 2f), tk2dBaseSprite.Anchor.MiddleCenter);
+                                    Vector2 insideUnitCircle = UnityEngine.Random.insideUnitCircle;
+                                    insideUnitCircle.y = -Mathf.Abs(insideUnitCircle.y);
+                                    a.Trigger(insideUnitCircle.ToVector3ZUp(1.5f) * UnityEngine.Random.Range(0.5f, 2f), 0.5f, 0f);
+                                }
+                                LootEngine.DoDefaultItemPoof(minorbreakable.transform.PositionVector2() + new Vector2(0.5f, 0.5f));
+                                GameObject bom = new GameObject();
+                                StaticReferences.StoredRoomObjects.TryGetValue("trollNote", out bom);
+                                var note = DungeonPlaceableUtility.InstantiateDungeonPlaceable(bom, roomFromPosition2, new IntVector2((int)this.gameObject.transform.position.x, (int)this.gameObject.transform.position.y) - roomFromPosition2.area.basePosition, false).GetComponent<NoteDoer>();
+                                note.GetComponent<NoteDoer>().stringKey = "#TROLL_NOTE_" + (UnityEngine.Random.Range(1, 13).ToString());
+                                roomFromPosition2.RegisterInteractable(note);
+
                                 break;
                         }
 

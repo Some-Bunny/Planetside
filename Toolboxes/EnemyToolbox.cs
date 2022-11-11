@@ -64,16 +64,16 @@ namespace Planetside
 				sharedMaterials[sharedMaterials.Length - 1].shader = ShaderCache.Acquire("Brave/Internal/GlitterPassAdditive");
 			}
 		}
-		public static AIBeamShooter2 AddAIBeamShooter(AIActor enemy, Transform transform, string name,Projectile beamProjectile, ProjectileModule beamModule = null ,float angle = 0)
+		public static AIBeamShooter2 AddAIBeamShooter(AIActor enemy, Transform transform, string name, Projectile beamProjectile, ProjectileModule beamModule = null ,float angle = 0)
         {
 			AIBeamShooter2 bholsterbeam1 = enemy.gameObject.AddComponent<AIBeamShooter2>();
-			bholsterbeam1.beamTransform = transform;
-			bholsterbeam1.beamModule = beamModule;
-			bholsterbeam1.beamProjectile = beamProjectile.projectile;
-			bholsterbeam1.firingEllipseCenter = transform.position;
-			bholsterbeam1.name = name;
-			bholsterbeam1.northAngleTolerance = angle;
-			return bholsterbeam1;
+            bholsterbeam1.beamTransform = transform;
+            bholsterbeam1.beamModule = beamModule;
+            bholsterbeam1.beamProjectile = beamProjectile;
+            bholsterbeam1.firingEllipseCenter = transform.position;
+            bholsterbeam1.name = name;
+            bholsterbeam1.northAngleTolerance = angle;
+            return bholsterbeam1;
         }
 
 		public static AIBeamShooter AddAIBeamShooter1(AIActor enemy, Transform transform, string name, Projectile beamProjectile, ProjectileModule beamModule = null, float angle = 0)
@@ -119,6 +119,46 @@ namespace Planetside
 				clip.frames[value.Key].triggerEvent = true;
 			}
 		}
+
+		public static void AddOffsetToFrames(tk2dSpriteAnimator animator, string animationName, Dictionary<int, Vector3> Offset, List<int> idListfallback= null)
+		{
+            tk2dSpriteAnimationClip awakenClip = animator.GetClipByName(animationName);
+			List<int> idsModified = idListfallback ?? new List<int>();
+            foreach (var value in Offset)
+			{
+				int i = value.Key;
+                var Value = value.Value;
+                var s = awakenClip.frames[i];
+                if (s != null)
+                {
+                    int id = s.spriteId;
+					if (!idsModified.Contains(id))
+					{
+						idsModified.Add(id);
+                        awakenClip.frames[i].spriteCollection.spriteDefinitions[id].position0 += Value;
+                        awakenClip.frames[i].spriteCollection.spriteDefinitions[id].position1 += Value;
+                        awakenClip.frames[i].spriteCollection.spriteDefinitions[id].position2 += Value;
+                        awakenClip.frames[i].spriteCollection.spriteDefinitions[id].position3 += Value;
+                    }
+                }
+            }
+
+            
+			/*
+            for (int i = 0; i < awakenClip.frames.Length; i++)
+            {
+                int id = awakenClip.frames[i].spriteId;
+
+                Vector3 v = new Vector3(0, 0);
+                Offset.TryGetValue(i, out v);
+                awakenClip.frames[i].spriteCollection.spriteDefinitions[id].position0 += v;
+                awakenClip.frames[i].spriteCollection.spriteDefinitions[id].position1 += v;
+                awakenClip.frames[i].spriteCollection.spriteDefinitions[id].position2 += v;
+                awakenClip.frames[i].spriteCollection.spriteDefinitions[id].position3 += v;
+            }
+			*/
+        }
+
 		public static void AddSoundsToAnimationFrame(tk2dSpriteAnimator animator, string animationName, Dictionary<int, string> frameAndSoundName)//int frame, string soundName)
 		{
 			foreach (var value in frameAndSoundName)

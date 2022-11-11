@@ -35,9 +35,8 @@ namespace Planetside
             activeitem.AddToSubShop(ItemBuilder.ShopType.Trorc, 1f);
 			GunPrinter.GunPrinterID = activeitem.PickupObjectId;
 			ItemIDs.AddToList(activeitem.PickupObjectId);
-
-
 		}
+
 		public static int GunPrinterID;
 		public override void Pickup(PlayerController player)
         {
@@ -165,7 +164,6 @@ namespace Planetside
 			yield break;
 		}
 
-		// Token: 0x06007627 RID: 30247 RVA: 0x002F0554 File Offset: 0x002EE754
 		private IEnumerator HandleFireShortBeam(Projectile projectileToSpawn, PlayerController source, float targetAngle, float duration, Vector2? overrideSpawnPoint, Vector2? spawnPointOffset = null)
 		{
 			float elapsed = 0f;

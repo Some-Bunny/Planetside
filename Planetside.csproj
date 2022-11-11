@@ -87,6 +87,7 @@
     <Compile Include="Controllers\ContainmentBreach\BossChanges\F2\GorgunChanges.cs" />
     <Compile Include="Controllers\CrossGameDataStorage.cs" />
     <Compile Include="Controllers\HellShrinesController.cs" />
+    <Compile Include="Controllers\GlobalMessageRadio.cs" />
     <Compile Include="Controllers\MasteryTraderSpawnController.cs" />
     <Compile Include="Controllers\PlanetsideCommands.cs" />
     <Compile Include="Controllers\PlanetsideBalanceChanges.cs" />
@@ -207,6 +208,7 @@
     <Compile Include="Hooks And Actions\TitleDioramaHooks.cs" />
     <Compile Include="Items\ItemClasses\MultiCompanionItem.cs" />
     <Compile Include="Items\Test Items\balls - Copy.cs" />
+    <Compile Include="Items\Update5\ImmolationPowder.cs" />
     <Compile Include="Items\Update5\LightningMaker.cs" />
     <Compile Include="Items\Test Items\Flowder.cs" />
     <Compile Include="Items\Test Items\HitBoxShower.cs" />
@@ -262,6 +264,7 @@
     <Compile Include="TheAbyss\AbyssFloorSetup.cs" />
     <Compile Include="TheAbyss\AbyssFlows.cs" />
     <Compile Include="TheAbyss\ModPrefabs.cs" />
+    <Compile Include="Toolboxes\Dictionary.cs" />
     <Compile Include="Toolboxes\EnemyToolbox.cs" />
     <Compile Include="Toolboxes\RaycastToolbox.cs" />
     <Compile Include="Toolboxes\SpapisSuperCoolAdvancedCodeToolbox.cs" />
@@ -2384,6 +2387,37 @@
     <EmbeddedResource Include="Resources\Shellrax\shellrax_fireeye_003.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\VFX\Ophanaim\solarblast_idle_007.png" />
+    <EmbeddedResource Include="Resources\VFX\Ophanaim\Minion\babyeye_idle_front_001.png" />
+    <EmbeddedResource Include="Resources\VFX\Ophanaim\Minion\babyeye_idle_front_002.png" />
+    <EmbeddedResource Include="Resources\VFX\Ophanaim\Minion\babyeye_idle_front_003.png" />
+    <EmbeddedResource Include="Resources\VFX\Ophanaim\Minion\babyeye_idle_front_004.png" />
+    <EmbeddedResource Include="Resources\VFX\Ophanaim\Minion\babyeye_idle_left_001.png" />
+    <EmbeddedResource Include="Resources\VFX\Ophanaim\Minion\babyeye_idle_left_002.png" />
+    <EmbeddedResource Include="Resources\VFX\Ophanaim\Minion\babyeye_idle_left_003.png" />
+    <EmbeddedResource Include="Resources\VFX\Ophanaim\Minion\babyeye_idle_left_004.png" />
+    <EmbeddedResource Include="Resources\VFX\Ophanaim\Minion\babyeye_idle_right_001.png" />
+    <EmbeddedResource Include="Resources\VFX\Ophanaim\Minion\babyeye_idle_right_002.png" />
+    <EmbeddedResource Include="Resources\VFX\Ophanaim\Minion\babyeye_idle_right_003.png" />
+    <EmbeddedResource Include="Resources\VFX\Ophanaim\Minion\babyeye_idle_right_004.png" />
+    <EmbeddedResource Include="Resources\VFX\Ophanaim\Minion\babyeye_idle_spawn_001.png" />
+    <EmbeddedResource Include="Resources\VFX\Ophanaim\Minion\babyeye_idle_spawn_002.png" />
+    <EmbeddedResource Include="Resources\VFX\Ophanaim\Minion\babyeye_idle_spawn_003.png" />
+    <EmbeddedResource Include="Resources\VFX\Ophanaim\Minion\babyeye_idle_spawn_004.png" />
+    <EmbeddedResource Include="Resources\VFX\Ophanaim\Minion\babyeye_idle_spawn_005.png" />
+    <EmbeddedResource Include="Resources\VFX\Ophanaim\Minion\babyeye_idle_spawn_006.png" />
+    <EmbeddedResource Include="Resources\VFX\Ophanaim\warnreticle_idle_006.png" />
+    <EmbeddedResource Include="Resources\VFX\Ophanaim\solarblast_idle_001.png" />
+    <EmbeddedResource Include="Resources\VFX\Ophanaim\solarblast_idle_002.png" />
+    <EmbeddedResource Include="Resources\VFX\Ophanaim\solarblast_idle_003.png" />
+    <EmbeddedResource Include="Resources\VFX\Ophanaim\solarblast_idle_004.png" />
+    <EmbeddedResource Include="Resources\VFX\Ophanaim\solarblast_idle_005.png" />
+    <EmbeddedResource Include="Resources\VFX\Ophanaim\solarblast_idle_006.png" />
+    <EmbeddedResource Include="Resources\VFX\Ophanaim\warnreticle_idle_001.png" />
+    <EmbeddedResource Include="Resources\VFX\Ophanaim\warnreticle_idle_002.png" />
+    <EmbeddedResource Include="Resources\VFX\Ophanaim\warnreticle_idle_003.png" />
+    <EmbeddedResource Include="Resources\VFX\Ophanaim\warnreticle_idle_004.png" />
+    <EmbeddedResource Include="Resources\VFX\Ophanaim\warnreticle_idle_005.png" />
     <EmbeddedResource Include="Resources\Tossables\SurgeGrenade\surge_grenade_boom_001.png" />
     <EmbeddedResource Include="Resources\Tossables\SurgeGrenade\surge_grenade_primed_001.png" />
     <EmbeddedResource Include="Resources\Tossables\SurgeGrenade\surge_grenade_primed_002.png" />
@@ -4468,6 +4502,93 @@
     <EmbeddedResource Include="Resources\DungeonObjects\MoneyPots\Silver\silver_pot_idle_005.png" />
     <EmbeddedResource Include="Resources\DungeonObjects\MoneyPots\Silver\silver_pot_idle_006.png" />
     <EmbeddedResource Include="Resources\DungeonObjects\MoneyPots\Silver\silver_pot_idle_007.png" />
+    <EmbeddedResource Include="PlanetsideBank.txt" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_blast_001.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_blast_002.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_blast_003.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_blast_004.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_blast_005.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_blast_006.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_blast_007.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_blast_008.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_blast_009.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_blast_010.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_blast_011.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_blast_012.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_blast_013.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_blast_014.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_burstshooty_001.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_burstshooty_002.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_burstshooty_003.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_burstshooty_004.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_burstshooty_005.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_burstshooty_006.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_burstshooty_007.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_burstshooty_008.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_burst_001.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_burst_002.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_burst_003.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_burst_004.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_burst_005.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_burst_006.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_burst_007.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_burst_008.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_burst_009.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_chargesmall_001.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_chargesmall_002.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_chargesmall_003.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_chargesmall_004.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_chargesmall_005.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_chargesmall_006.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_chargesmall_007.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_dash_001.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_dash_002.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_dash_003.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_dash_004.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_dash_005.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_dash_006.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_dash_007.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_dash_008.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_fade_001.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_fade_002.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_fade_003.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_fade_004.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_fade_005.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_fade_006.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_fade_007.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_fade_008.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_fade_009.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_firesmall_001.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_firesmall_002.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_firesmall_003.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_firesmall_004.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_firesmall_005.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_firesmall_006.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_idle_001.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_idle_002.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_idle_003.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_idle_004.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_idle_005.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_idle_006.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_idle_007.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_idle_008.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_begincast_001.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_begincast_002.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_begincast_003.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_begincast_004.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_begincast_005.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_begincast_006.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_begincast_007.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_begincast_008.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_cast_001.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_cast_002.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_cast_003.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_cast_004.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_cast_005.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_cast_006.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_cast_007.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_cast_008.png" />
+    <EmbeddedResource Include="Resources\immolationpowder2.png" />
     <Content Include="Resources\Shellrax\shellrax_intro_019.png" />
     <EmbeddedResource Include="Resources\VFX\LockOnVFX\lockonvfx1.png" />
     <EmbeddedResource Include="Resources\VFX\LockOnVFX\lockonvfx2.png" />
@@ -4659,9 +4780,6 @@
     <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\RoomWithExtraSoos.room" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="PlanetsideBank.bnk" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\SmallRoompewPew.room" />
     <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\TunnelWays.room" />
   </ItemGroup>
@@ -4767,6 +4885,9 @@
     <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\good_fucking_luck.room" />
     <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\oppress_this.room" />
     <EmbeddedResource Include="Resources\AbyssRooms\AbyssCombat\very__poqerful.room" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="PlanetsideBank.bnk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1047,7 +1047,7 @@ namespace Planetside
 				}
 			}
 		
-			}
+		}
 
 		public class Force : Script
 		{

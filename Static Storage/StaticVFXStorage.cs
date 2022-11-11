@@ -175,12 +175,153 @@ namespace Planetside
 
             //var relodestone = PickupObjectDatabase.GetById(536) as RelodestoneItem;
             //KnifeShieldKnifeTileImpactVFX = relodestone.ContinuousVFX;
-            
+
             //AIActor GuNut = EnemyDatabase.GetOrLoadByGuid("ec8ea75b557d4e7b8ceeaacdf6f8238c").aiActor;
             //if (GuNut.GetComponentInChildren<GunNutSlamVfx>() != null) { ETGModConsole.Log("fdfdfdaafddffddfadfadfdfa"); }
 
+
+
+
+            MourningStarLaser = FakePrefab.Clone((PickupObjectDatabase.GetById(515) as Gun).DefaultModule.projectiles[0].bleedEffect.vfxExplosion);
+            var mourningStarComp = MourningStarLaser.AddComponent<MourningStarVFXController>();
+            var hODC= MourningStarLaser.GetComponent<HammerOfDawnController>();
+            mourningStarComp.BeamSections = hODC.BeamSections;
+            mourningStarComp.BurstSprite = hODC.BurstSprite;
+            mourningStarComp.SectionStartAnimation = hODC.SectionStartAnimation;
+            mourningStarComp.SectionAnimation = hODC.SectionAnimation;
+            mourningStarComp.SectionEndAnimation = hODC.SectionEndAnimation;
+            mourningStarComp.CapAnimation = hODC.CapAnimation;
+            mourningStarComp.CapEndAnimation = hODC.CapEndAnimation;
+            mourningStarComp.InitialImpactVFX = hODC.InitialImpactVFX;
+            UnityEngine.Object.Destroy(hODC);
         }
 
+        public class MourningStarVFXController : BraveBehaviour
+        {
+            public static MourningStarVFXController SpawnMourningStar(Vector2 position,float lifeTime = -1 ,Transform parent = null)
+            {
+                var h = UnityEngine.Object.Instantiate<GameObject>(StaticVFXStorage.MourningStarLaser, position, Quaternion.identity, parent).GetComponent<StaticVFXStorage.MourningStarVFXController>();
+                if (lifeTime != -1 && lifeTime > 0) { h.Invoke("Dissipate", lifeTime); }
+                return h;
+            }
+
+
+            private void Start()
+            {
+                isbeingTossed = false;
+                TimeExtant = 0;
+                for (int i = 0; i < this.BeamSections.Count; i++)
+                {
+                    tk2dSpriteAnimator spriteAnimator = this.BeamSections[i].spriteAnimator;
+                    if (spriteAnimator)
+                    {
+                        spriteAnimator.alwaysUpdateOffscreen = true;
+                        spriteAnimator.PlayForDuration(this.SectionStartAnimation, -1f, this.SectionAnimation, false);
+                        if (DoesSound == true)
+                        {
+                            AkSoundEngine.PostEvent("Play_WPN_dawnhammer_loop_01", base.gameObject);
+                            AkSoundEngine.PostEvent("Play_State_Volume_Lower_01", base.gameObject);
+                        }
+                    }
+                }
+                if (OnBeamStart != null) { OnBeamStart(this.gameObject); }
+                base.spriteAnimator.alwaysUpdateOffscreen = true;
+                this.BurstSprite.UpdateZDepth();
+                base.sprite.renderer.enabled = false;
+            }
+
+            public void Update()
+            {
+                if (isbeingTossed == true) { return; }
+                TimeExtant += BraveTime.DeltaTime;
+                base.sprite.UpdateZDepth();
+                for (int i = 0; i < this.BeamSections.Count; i++)
+                {
+                    this.BeamSections[i].UpdateZDepth();
+                }
+                this.BurstSprite.UpdateZDepth();
+                if (!this.BurstSprite.renderer.enabled)
+                {
+                    base.sprite.renderer.enabled = true;
+                    base.spriteAnimator.Play(this.CapAnimation);
+                }
+                if (DoesEmbers == true)
+                {
+                    if (GameManager.Options.ShaderQuality == GameOptions.GenericHighMedLowOption.MEDIUM || GameManager.Options.ShaderQuality == GameOptions.GenericHighMedLowOption.HIGH)
+                    {
+                        int num4 = (GameManager.Options.ShaderQuality != GameOptions.GenericHighMedLowOption.HIGH) ? 50 : 125;
+                        this.m_particleCounter += BraveTime.DeltaTime * (float)num4;
+                        if (this.m_particleCounter > 1f)
+                        {
+                            GlobalSparksDoer.DoRadialParticleBurst(Mathf.FloorToInt(this.m_particleCounter), base.sprite.WorldBottomLeft, base.sprite.WorldTopRight, 30f, 2f, 1f, null, null, null, GlobalSparksDoer.SparksType.EMBERS_SWIRLING);
+                            this.m_particleCounter %= 1f;
+                        }
+                    }
+                }
+                
+
+                if (OnBeamUpdate != null) { OnBeamUpdate(this.gameObject, TimeExtant); }
+
+            }
+
+            public void Dissipate()
+            {
+                isbeingTossed = true;
+                if (OnBeamDie != null) { OnBeamDie(this.gameObject); }
+                base.sprite.renderer.enabled = true;
+                ParticleSystem componentInChildren = base.GetComponentInChildren<ParticleSystem>();
+                if (componentInChildren)
+                {
+                    BraveUtility.EnableEmission(componentInChildren, false);
+                }
+                for (int i = 0; i < this.BeamSections.Count; i++)
+                {
+                    this.BeamSections[i].spriteAnimator.Play(this.SectionEndAnimation);
+                }
+                base.spriteAnimator.PlayAndDestroyObject(this.CapEndAnimation, null);
+                UnityEngine.Object.Destroy(base.gameObject, 1f);
+                if (DoesSound == true)
+                {
+                    AkSoundEngine.PostEvent("Stop_WPN_gun_loop_01", base.gameObject);
+                    AkSoundEngine.PostEvent("Stop_State_Volume_Lower_01", base.gameObject);
+                }
+            }
+
+            protected override void OnDestroy()
+            {
+                if (DoesSound == true)
+                {
+                    AkSoundEngine.PostEvent("Stop_WPN_gun_loop_01", base.gameObject);
+                    AkSoundEngine.PostEvent("Stop_State_Volume_Lower_01", base.gameObject);
+                }
+                base.OnDestroy();
+            }
+
+            public Action<GameObject> OnBeamStart;
+            public Action<GameObject, float> OnBeamUpdate;
+            public Action<GameObject> OnBeamDie;
+
+            private float TimeExtant;
+
+            public float TimeAlive(){ return TimeExtant; }
+
+            public bool DoesSound = true;
+            public bool DoesEmbers = true;
+
+            private bool isbeingTossed;
+
+            public List<tk2dSprite> BeamSections;
+            public tk2dSprite BurstSprite;
+            public GameObject InitialImpactVFX;
+
+            public string SectionStartAnimation;
+            public string SectionAnimation;
+            public string SectionEndAnimation;
+            public string CapAnimation;
+            public string CapEndAnimation;
+
+            private float m_particleCounter;
+        }
 
 
         public static VFXObject CopyFields<T>(VFXObject sample2) where T : VFXObject
@@ -200,6 +341,8 @@ namespace Planetside
 
 
         //public static GameObject KnifeShieldKnifeTileImpactVFX;
+
+        public static GameObject MourningStarLaser;
 
         public static GameObject MachoBraceDustupVFX;
         public static GameObject MachoBraceBurstVFX;

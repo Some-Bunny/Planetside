@@ -44,7 +44,7 @@ namespace Planetside
                         requireFlag = true,
                         prerequisiteType = DungeonPrerequisite.PrerequisiteType.FLAG,
                         prerequisiteOperation = DungeonPrerequisite.PrerequisiteOperation.EQUAL_TO,
-                        
+                      
                     }
                 };
                 RoomFactory.AddInjection(RoomFactory.BuildFromResource("Planetside/Resources/OtherSpecialRooms/hmprimeproperroom.room").room, "HM Prime Boss Room", flowModifierPlacementTypes, 0, dungeonPrerequisites, "HM Prime Boss Room", 1f, 0.05f);

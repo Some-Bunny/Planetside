@@ -93,6 +93,9 @@ namespace Planetside
             if (GameStatsManager.Instance.GetSessionStatValue(TrackedStats.TIME_PLAYED) < TimeToBeat) { ShopAllowedToSpawn = true; Debug.Log("Shop allowed to spawn on next possible floor!");}
             else { ShopAllowedToSpawn = false; Debug.Log("Shop not allowed to spawn on next possible floor!"); }
         }
+
+        
+
         private static float TimeToBeat;
         public static bool ShopAllowedToSpawn;
     }

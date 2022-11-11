@@ -690,40 +690,6 @@ namespace Planetside
 
 				shootpoint1 = EnemyToolbox.GenerateShootPoint(companion.gameObject, new Vector2(2.0625f, 2.375f), "Centre");// = new GameObject("Centre");
 
-				/*
-				Laser1 = new GameObject("Laser1"); //240
-				Laser1.transform.parent = companion.transform;
-				Laser1.transform.position = companion.sprite.WorldBottomLeft + new Vector2(0.6875f, 1.5625f);
-				GameObject LaserOne = companion.transform.Find("Laser1").gameObject;
-
-				Laser2 = new GameObject("Laser2"); //300
-				Laser2.transform.parent = companion.transform;
-				Laser2.transform.position = companion.sprite.WorldBottomLeft + new Vector2(0.6875f, 3.0625f);
-				GameObject LaserTwo = companion.transform.Find("Laser2").gameObject;
-
-				Laser3 = new GameObject("Laser3"); //0
-				Laser3.transform.parent = companion.transform;
-				Laser3.transform.position = companion.sprite.WorldBottomLeft + new Vector2(2.0625f, 0.8125f);
-				GameObject LaserThree = companion.transform.Find("Laser3").gameObject;
-
-				Laser4 = new GameObject("Laser4"); //180
-				Laser4.transform.parent = companion.transform;
-				Laser4.transform.position = companion.sprite.WorldBottomLeft + new Vector2(2.0625f, 3.8125f);
-				GameObject LaserFour = companion.transform.Find("Laser4").gameObject;
-
-				Laser5 = new GameObject("Laser5");
-				Laser5.transform.parent = companion.transform;//60
-				Laser5.transform.position = companion.sprite.WorldBottomLeft + new Vector2(3.5625f, 3.0625f);
-				GameObject LaserFive = companion.transform.Find("Laser5").gameObject;
-
-				Laser6 = new GameObject("Laser6");
-				Laser6.transform.parent = companion.transform; //120
-				Laser6.transform.position = companion.sprite.WorldBottomLeft + new Vector2(3.5625f, 1.5625f);
-				GameObject LaserSix = companion.transform.Find("Laser6").gameObject;
-				*/
-
-				
-
 				//======================
 				var enemy = EnemyDatabase.GetOrLoadByGuid("b98b10fca77d469e80fb45f3c5badec5");
 				if (!enemy)

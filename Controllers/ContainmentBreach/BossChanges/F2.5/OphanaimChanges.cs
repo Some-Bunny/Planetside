@@ -26,7 +26,7 @@ namespace Planetside
 			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableFrogger);
 			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableBig);
 
-
+			/*
 			ShootBehavior ShootBehavior1 = behaviorSpec.AttackBehaviorGroup.AttackBehaviors[0].Behavior as ShootBehavior;
 			ShootBehavior1.BulletScript = new CustomBulletScriptSelector(typeof(ModifiedFireCircles));
 
@@ -35,9 +35,10 @@ namespace Planetside
 
 			ShootBehavior ShootBehavior3 = behaviorSpec.AttackBehaviorGroup.AttackBehaviors[1].Behavior as ShootBehavior;
 			ShootBehavior3.BulletScript = new CustomBulletScriptSelector(typeof(ModifiedBouncyCicleTheShoot));
+			*/
 		}
 
-
+		/*
 		public class ModifiedBouncyCicleTheShoot : Script
 		{
 			protected override IEnumerator Top()
@@ -425,5 +426,6 @@ namespace Planetside
 				private Vector2 m_addtionalVelocity;
 			}
 		}
+		*/
 	}
 }

@@ -878,7 +878,7 @@ namespace NpcApi
 
 
 
-        public static void RegisterShopRoom(GameObject shop, PrototypeDungeonRoom protoroom, Vector2 vector)
+        public static void RegisterShopRoom(GameObject shop, PrototypeDungeonRoom protoroom, Vector2 vector, float weight = 1)
         {
             protoroom.category = PrototypeDungeonRoom.RoomCategory.NORMAL;
             DungeonPrerequisite[] array = shop.GetComponent<CustomShopController>()?.prerequisites != null ? shop.GetComponent<CustomShopController>().prerequisites : new DungeonPrerequisite[0];
@@ -911,8 +911,10 @@ namespace NpcApi
             {
                 room = protoroom,
                 isSpecialRoom = true,
+
                 category = "SPECIAL",
-                specialSubCategory = "WEIRD_SHOP"
+                specialSubCategory = "WEIRD_SHOP",
+                weight = weight
             };
             RoomFactory.rooms.Add(shop.name, roomData);
             DungeonHandler.Register(roomData);
