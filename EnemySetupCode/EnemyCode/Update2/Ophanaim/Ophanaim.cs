@@ -17,6 +17,8 @@ using Pathfinding;
 using SaveAPI;
 using HutongGames.PlayMaker.Actions;
 using static Planetside.PrisonerSubPhase2Attacks;
+using static ETGMod;
+using Planetside;
 
 namespace Planetside
 {
@@ -87,7 +89,9 @@ namespace Planetside
                 EnemyToolbox.AddNewDirectionAnimation(enemy.aiAnimator, "uncharge_mithrix", new string[] { "uncharge_mithrix" }, new DirectionalAnimation.FlipType[0]);
                 EnemyToolbox.AddNewDirectionAnimation(enemy.aiAnimator, "charge_mithrix", new string[] { "charge_mithrix" }, new DirectionalAnimation.FlipType[0]);
                 EnemyToolbox.AddNewDirectionAnimation(enemy.aiAnimator, "mithrix", new string[] { "mithrix" }, new DirectionalAnimation.FlipType[0]);
+                EnemyToolbox.AddNewDirectionAnimation(enemy.aiAnimator, "wizardshit", new string[] { "wizardshit" }, new DirectionalAnimation.FlipType[0]);
 
+                //wizardshit
                 //mithrix
                 if (OphanaimCollectiom == null)
 				{
@@ -307,9 +311,13 @@ namespace Planetside
                     61,
                     60
                     }, "fade_in", tk2dSpriteAnimationClip.WrapMode.Once).fps = 15f;
+                    //tp1
                     //m_BOSS_agunim_intro_01
                     EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "fade_out", new Dictionary<int, string> { { 3, "Play_BOSS_agunim_intro_01" } });
                     EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "fade_in", new Dictionary<int, string> { { 1, "Play_ENM_beholster_teleport_02" } });
+
+                    EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "fade_out", new Dictionary<int, string> { { 3, "tp1" } });
+                    EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "fade_in", new Dictionary<int, string> { { 5, "tp2" } });
 
                     SpriteBuilder.AddAnimation(enemy.spriteAnimator, OphanaimCollectiom, new List<int>
                     {
@@ -356,6 +364,94 @@ namespace Planetside
                     83,
                     84
                     }, "cast", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 15f;
+
+
+                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, OphanaimCollectiom, new List<int>
+                    {
+                    69,
+                    70,
+                    71,
+                    72,
+                    73,
+                    74,
+                    75,
+                    76,
+                    77,
+                    78,
+                    79,
+                    80,
+                    81,
+                    82,
+                    83,
+                    84,
+                    77,
+                    78,
+                    79,
+                    80,
+                    81,
+                    82,
+                    83,
+                    84,
+                    77,
+                    78,
+                    79,
+                    80,
+                    81,
+                    82,
+                    83,
+                    84,
+                    77,
+                    78,
+                    79,
+                    80,
+                    81,
+                    82,
+                    83,
+                    84,
+                                        77,
+                    78,
+                    79,
+                    80,
+                    81,
+                    82,
+                    83,
+                    84,
+                                        77,
+                    78,
+                    79,
+                    80,
+                    81,
+                    82,
+                    83,
+                    84,
+                                        77,
+                    78,
+                    79,
+                    80,
+                    81,
+                    82,
+                    83,
+                    84,
+                                        77,
+                    78,
+                    79,
+                    80,
+                    81,
+                    82,
+                    83,
+                    84,
+
+
+                    76,
+                    75,
+                    74,
+                    73,
+                    72,
+                    71,
+                    70,
+                    69
+
+                    }, "wizardshit", tk2dSpriteAnimationClip.WrapMode.Once).fps = 17f;
 
                     SpriteBuilder.AddAnimation(enemy.spriteAnimator, OphanaimCollectiom, new List<int>
 					{
@@ -574,8 +670,26 @@ namespace Planetside
                     },
                     NickName = "endme"
                     },
-
-
+                    new AttackBehaviorGroup.AttackGroupItem()
+                    {
+                    Probability = 0f,
+                    Behavior =new ShootBehavior() {
+                        ShootPoint = mainbeamShootpoint,
+                        BulletScript = new CustomBulletScriptSelector(typeof(MithrixSlamOmega)),
+                        LeadAmount = 0f,
+                        AttackCooldown = 1.5f,
+                        Cooldown = 10f,
+                        InitialCooldown = 0.5f,
+                        RequiresLineOfSight = true,
+                        MultipleFireEvents = false,
+                        Uninterruptible = true,
+                        ChargeAnimation = "charge_mithrix",
+                        FireAnimation = "mithrix",
+                        PostFireAnimation = "uncharge_mithrix"
+                    },
+                    NickName = "mihtrixslam_2"
+                    },
+                    //mihtrixslam_2
 
                     new AttackBehaviorGroup.AttackGroupItem()
                     {
@@ -598,6 +712,7 @@ namespace Planetside
                     ChargeAnimation = "charge_laser",
                     FireAnimation = "laser",
                     PostFireAnimation = "uncharge_laser",
+                    hurtsOtherHealthhavers = false,
                     beamSelection = ShootBeamBehavior.BeamSelection.Specify,
                     specificBeamShooters = new List<AIBeamShooter2>() { beamShooter1 },
 
@@ -729,7 +844,6 @@ namespace Planetside
 						RequiresLineOfSight = false,
 						roomMax = new Vector2(0,0),
 						roomMin = new Vector2(0,0),
-						//teleportInBulletScript = new CustomBulletScriptSelector(typeof(TeleportScript)),
 						teleportOutBulletScript = new CustomBulletScriptSelector(typeof(TeleportAttack)),
 						GlobalCooldown = 0f,
 						Cooldown = 0f,
@@ -766,6 +880,172 @@ namespace Planetside
                         },
                     },
 
+                    new AttackBehaviorGroup.AttackGroupItem()
+                    {
+                        Probability = 0f,
+                        NickName = "phase_2teleport",
+                        Behavior = new SequentialAttackBehaviorGroup() {
+                        RunInClass = false,
+                        AttackBehaviors = new List<AttackBehaviorBase>()
+                        {
+                        new TeleportBehavior{
+                        AttackableDuringAnimation = true,
+                        AllowCrossRoomTeleportation = false,
+                        teleportRequiresTransparency = false,
+                        hasOutlinesDuringAnim = true,
+                        ManuallyDefineRoom = false,
+                        MaxHealthThreshold = 1f,
+                        StayOnScreen = true,
+                        AvoidWalls = true,
+                        GoneTime = 0.25f,
+                        OnlyTeleportIfPlayerUnreachable = false,
+                        MinDistanceFromPlayer = 8f,
+                        MaxDistanceFromPlayer = 13f,
+                        teleportInAnim = "fade_in",
+                        teleportOutAnim = "fade_out",
+                        AttackCooldown = 2.5f,
+                        InitialCooldown = 0.5f,
+                        RequiresLineOfSight = false,
+                        roomMax = new Vector2(0,0),
+                        roomMin = new Vector2(0,0),
+						teleportInBulletScript = new CustomBulletScriptSelector(typeof(Teleport2)),
+                        GlobalCooldown = 0f,
+                        Cooldown = 0f,
+                        CooldownVariance = 0f,
+                        InitialCooldownVariance = 0f,
+                        goneAttackBehavior = null,
+                        IsBlackPhantom = false,
+                        GroupName = null,
+                        GroupCooldown = 0f,
+                        MinRange = 0,
+                        Range = 0,
+                        MinHealthThreshold = 0,
+                        MaxUsages = 0,
+                        AccumulateHealthThresholds = true,
+                        targetAreaStyle = null,
+                        HealthThresholds = new float[0],
+                        MinWallDistance = 0,
+                        },
+                                               new TeleportBehavior{
+                        AttackableDuringAnimation = true,
+                        AllowCrossRoomTeleportation = false,
+                        teleportRequiresTransparency = false,
+                        hasOutlinesDuringAnim = true,
+                        ManuallyDefineRoom = false,
+                        MaxHealthThreshold = 1f,
+                        StayOnScreen = true,
+                        AvoidWalls = true,
+                        GoneTime = 0.25f,
+                        OnlyTeleportIfPlayerUnreachable = false,
+                        MinDistanceFromPlayer = 8f,
+                        MaxDistanceFromPlayer = 13f,
+                        teleportInAnim = "fade_in",
+                        teleportOutAnim = "fade_out",
+                        AttackCooldown = 2.5f,
+                        InitialCooldown = 0.5f,
+                        RequiresLineOfSight = false,
+                        roomMax = new Vector2(0,0),
+                        roomMin = new Vector2(0,0),
+                        teleportInBulletScript = new CustomBulletScriptSelector(typeof(Teleport2)),
+						//teleportOutBulletScript = new CustomBulletScriptSelector(typeof(TeleportAttack)),
+                        GlobalCooldown = 0f,
+                        Cooldown = 0f,
+                        CooldownVariance = 0f,
+                        InitialCooldownVariance = 0f,
+                        goneAttackBehavior = null,
+                        IsBlackPhantom = false,
+                        GroupName = null,
+                        GroupCooldown = 0f,
+                        MinRange = 0,
+                        Range = 0,
+                        MinHealthThreshold = 0,
+                        MaxUsages = 0,
+                        AccumulateHealthThresholds = true,
+                        targetAreaStyle = null,
+                        HealthThresholds = new float[0],
+                        MinWallDistance = 0,
+                        },
+                        new TeleportBehavior{
+                        AttackableDuringAnimation = true,
+                        AllowCrossRoomTeleportation = false,
+                        teleportRequiresTransparency = false,
+                        hasOutlinesDuringAnim = true,
+                        ManuallyDefineRoom = false,
+                        MaxHealthThreshold = 1f,
+                        StayOnScreen = true,
+                        AvoidWalls = true,
+                        GoneTime = 0.25f,
+                        OnlyTeleportIfPlayerUnreachable = false,
+                        MinDistanceFromPlayer = 8f,
+                        MaxDistanceFromPlayer = 13f,
+                        teleportInAnim = "fade_in",
+                        teleportOutAnim = "fade_out",
+                        AttackCooldown = 2.5f,
+                        InitialCooldown = 0.5f,
+                        RequiresLineOfSight = false,
+                        roomMax = new Vector2(0,0),
+                        roomMin = new Vector2(0,0),
+                        teleportInBulletScript = new CustomBulletScriptSelector(typeof(Teleport2)),
+						//teleportOutBulletScript = new CustomBulletScriptSelector(typeof(TeleportAttack)),
+                        GlobalCooldown = 0f,
+                        Cooldown = 0f,
+                        CooldownVariance = 0f,
+                        InitialCooldownVariance = 0f,
+                        goneAttackBehavior = null,
+                        IsBlackPhantom = false,
+                        GroupName = null,
+                        GroupCooldown = 0f,
+                        MinRange = 0,
+                        Range = 0,
+                        MinHealthThreshold = 0,
+                        MaxUsages = 0,
+                        AccumulateHealthThresholds = true,
+                        targetAreaStyle = null,
+                        HealthThresholds = new float[0],
+                        MinWallDistance = 0,
+                        },
+                        new TeleportBehavior{
+                        AttackableDuringAnimation = true,
+                        AllowCrossRoomTeleportation = false,
+                        teleportRequiresTransparency = false,
+                        hasOutlinesDuringAnim = true,
+                        ManuallyDefineRoom = false,
+                        MaxHealthThreshold = 1f,
+                        StayOnScreen = true,
+                        AvoidWalls = true,
+                        GoneTime = 0.25f,
+                        OnlyTeleportIfPlayerUnreachable = false,
+                        MinDistanceFromPlayer = 7f,
+                        MaxDistanceFromPlayer = 12f,
+                        teleportInAnim = "fade_in",
+                        teleportOutAnim = "fade_out",
+                        AttackCooldown = 2f,
+                        InitialCooldown = 0.5f,
+                        RequiresLineOfSight = false,
+                        roomMax = new Vector2(0,0),
+                        roomMin = new Vector2(0,0),
+                        teleportInBulletScript = new CustomBulletScriptSelector(typeof(Teleport2)),
+						//teleportOutBulletScript = new CustomBulletScriptSelector(typeof(TeleportAttack)),
+                        GlobalCooldown = 0f,
+                        Cooldown = 16f,
+                        CooldownVariance = 0f,
+                        InitialCooldownVariance = 0f,
+                        goneAttackBehavior = null,
+                        IsBlackPhantom = false,
+                        GroupName = null,
+                        GroupCooldown = 0f,
+                        MinRange = 0,
+                        Range = 0,
+                        MinHealthThreshold = 0,
+                        MaxUsages = 0,
+                        AccumulateHealthThresholds = true,
+                        targetAreaStyle = null,
+                        HealthThresholds = new float[0],
+                        MinWallDistance = 0,
+                        },
+                        }
+                        },
+                    },
 
 
 
@@ -1288,6 +1568,11 @@ namespace Planetside
                 //==================
 
                 {
+
+
+                    PlanetsideModule.Strings.Enemies.Set("#LENSHOT", "Lenshot");
+
+
                     var blessingObj = SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Ophanaim/solarblast_idle_001", null, false);
                     FakePrefab.MarkAsFakePrefab(blessingObj);
                     UnityEngine.Object.DontDestroyOnLoad(blessingObj);
@@ -1332,7 +1617,6 @@ namespace Planetside
                     tk2dSpriteAnimator eyeAnimator = vfxObj.GetOrAddComponent<tk2dSpriteAnimator>();
                     tk2dSpriteAnimation animation = vfxObj.AddComponent<tk2dSpriteAnimation>();
                     AIAnimator aiAnimatorBody = vfxObj.AddComponent<AIAnimator>();
-
 
                     eyeAnimator.sprite.usesOverrideMaterial = true;
                     Material Handmat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
@@ -1454,7 +1738,7 @@ namespace Planetside
                     bodyPart.faceTargetTurnSpeed = 120;
 
                     //bodyPart.renderer.enabled = false;
-                    ;
+                    
 
                     SpeculativeRigidbody body = vfxObj.AddComponent<SpeculativeRigidbody>();
 
@@ -1490,15 +1774,73 @@ namespace Planetside
                     healthHaver.flashesOnDamage = true;
                     vfxObj.GetOrAddComponent<GameActor>();
 
+
+                    ImprovedAfterImage uhasgd = vfxObj.gameObject.AddComponent<ImprovedAfterImage>();
+                    uhasgd.dashColor = new Color(1, 0.85f, 0.7f);
+                    uhasgd.spawnShadows = true;
+                    uhasgd.shadowTimeDelay = 0.05f;
+                    uhasgd.shadowLifetime = 0.33f;
+
                     bodyPart.ownBody = body;
                     bodyPart.ownHealthHaver = healthHaver;
                     FakePrefab.MarkAsFakePrefab(vfxObj);
                     UnityEngine.Object.DontDestroyOnLoad(vfxObj);
                     vfxObj.SetActive(false);
+                    vfxObj.gameObject.AddComponent<OphanaimMinionController>();
+                    var bulletb = vfxObj.gameObject.AddComponent<AIBulletBank>();
+                    bulletb.Bullets = new List<AIBulletBank.Entry>()
+                    {
+                        EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("frogger")
+                    };
                     EyeBallMinion = vfxObj;
+                }
+
+                {
+                    var blessingObj = SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Ophanaim/ophanaim_wing_left", null, false);
+                    FakePrefab.MarkAsFakePrefab(blessingObj);
+                    UnityEngine.Object.DontDestroyOnLoad(blessingObj);
+                    var spr = blessingObj.GetComponent<tk2dBaseSprite>();
+                    
+                    spr.usesOverrideMaterial = true;
+                    Material spriteMat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+                    spriteMat.mainTexture = spr.renderer.material.mainTexture;
+                    spriteMat.SetColor("_EmissiveColor", new Color32(255, 210, 178, 255));
+                    spriteMat.SetFloat("_EmissiveColorPower", 1.55f);
+                    spriteMat.SetFloat("_EmissivePower", 50);
+                    spr.renderer.material = mat;
+                    ImprovedAfterImage aI = blessingObj.gameObject.AddComponent<ImprovedAfterImage>();
+                    aI.dashColor = new Color(1, 0.85f, 0.7f);
+                    aI.spawnShadows = false;
+                    aI.shadowTimeDelay = 0.033f;
+                    aI.shadowLifetime = 0.5f;
+                    WingLeft = blessingObj;
+                }
+                {
+                    var blessingObj = SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Ophanaim/ophanaim_wing_right", null, false);
+                    FakePrefab.MarkAsFakePrefab(blessingObj);
+                    UnityEngine.Object.DontDestroyOnLoad(blessingObj);
+                    var spr = blessingObj.GetComponent<tk2dBaseSprite>();
+                    spr.usesOverrideMaterial = true;
+                    Material spriteMat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+                    spriteMat.mainTexture = spr.renderer.material.mainTexture;
+                    spriteMat.SetColor("_EmissiveColor", new Color32(255, 210, 178, 255));
+                    spriteMat.SetFloat("_EmissiveColorPower", 1.55f);
+                    spriteMat.SetFloat("_EmissivePower", 50);
+                    spr.renderer.material = mat;
+                    ImprovedAfterImage aI = blessingObj.gameObject.AddComponent<ImprovedAfterImage>();
+                    aI.dashColor = new Color(1, 0.85f, 0.7f);
+                    aI.spawnShadows = false;
+                    aI.shadowTimeDelay = 0.033f;
+                    aI.shadowLifetime = 0.5f;
+                    WingRight = blessingObj;
+
                 }
             }
         }
+        public static GameObject WingLeft;
+        public static GameObject WingRight;
+
+
         public static GameObject EyeBallMinion;
 
         public static GameObject SolarClap;
@@ -1621,25 +1963,124 @@ namespace Planetside
 				}
 				if (base.aiActor && base.aiActor.healthHaver)
 				{
-					
-				}
+                    if (base.aiActor.healthHaver.GetCurrentHealth() == base.aiActor.healthHaver.minimumHealth && Phase2Check != true)
+                    {
+                        Phase2Check = true;
+                        StaticReferenceManager.DestroyAllEnemyProjectiles();
+                        base.aiActor.behaviorSpeculator.InterruptAndDisable();
+                        base.aiActor.StartCoroutine(DoTransition());
+                    }
+                    if (P2 == true && isPissed == false && eyes.Count == 0)
+                    {
+                        isPissed = true;
+                        Exploder.DoDistortionWave(base.aiActor.sprite.WorldCenter, 4, 0.2f, 50, 0.5f);
 
+                        this.AlterAttackProbability("agony", 1f);
+                        this.AlterAttackProbability("LASERZ", 1);
+                        this.AlterAttackProbability("endme", 0.1f);
+                        this.AlterAttackProbability("Def2", 1.33f);
+                        this.AlterAttackProbability("mihtrixslam_2", 0.5f);
+                        this.AlterAttackProbability("phase_2teleport", 0f);
+                    }
+                }
 			}
-			private void ProcessAttackGroup(AttackBehaviorGroup attackGroup)
-			{
-				for (int i = 0; i < attackGroup.AttackBehaviors.Count; i++)
-				{
-					AttackBehaviorGroup.AttackGroupItem attackGroupItem = attackGroup.AttackBehaviors[i];
-					if (attackGroupItem.Behavior is ShootBehavior && attackGroup != null && attackGroupItem.NickName == "TheAttackThatGetsReplacedInPhase2")
-					{
-						attackGroupItem.Probability = 0f;
-					}
-					else if (attackGroupItem.Behavior is ShootBehavior && attackGroup != null && attackGroupItem.NickName == "TheSun")
-					{
-						attackGroupItem.Probability = 7f;
-					}
-				}
-			}
+            private bool P2 = false;
+
+            public List<GameObject> eyes = new List<GameObject>();
+            public bool isPissed = false;
+
+            private IEnumerator DoTransition()
+            {
+                Exploder.DoDistortionWave(base.aiActor.sprite.WorldCenter, 4, 0.2f, 50, 0.5f);
+                base.aiActor.behaviorSpeculator.enabled = false;
+                base.aiActor.aiAnimator.PlayUntilFinished("wizardshit", true, null, -1f, false);
+
+                this.AlterAttackProbability("agony", 0.15f);
+                this.AlterAttackProbability("LASERZ", 0);
+                this.AlterAttackProbability("endme", 0.5f);
+                this.AlterAttackProbability("Def2", 0.7f);
+                this.AlterAttackProbability("mihtrixslam_2", 1.1f);
+                this.AlterAttackProbability("phase_2teleport", 0.9f);
+
+                //                    //phase_2teleport-agony
+
+                //mihtrixslam_2
+
+                List<Vector2> pos = new List<Vector2>()
+                {
+                    new Vector2(2.5f, 1.5f),
+                    new Vector2(-5, 1.5f),
+                    new Vector2(2.5f, -3),
+                    new Vector2(-5, -3),
+                }; 
+               
+                float elaWait = 0f;
+                while (elaWait < 1f)
+                {
+                    elaWait += BraveTime.DeltaTime;
+                    yield return null;
+                }
+                elaWait = 0f;
+                for (int i = 0; i < 4; i++)
+                {
+                    base.aiActor.StartCoroutine(SpawnEyeball(pos[i]));
+                    while (elaWait < 0.5f)
+                    {
+                        elaWait += BraveTime.DeltaTime;
+                        yield return null;
+                    }
+                    elaWait = 0;
+                }
+                elaWait = 0f;
+                while (elaWait < 0.5f)
+                {
+                    elaWait += BraveTime.DeltaTime;
+                    yield return null;
+                }
+                base.aiActor.behaviorSpeculator.enabled = true;
+                base.aiActor.healthHaver.minimumHealth = 0;
+                P2 = true;
+                yield break;
+            }
+            public void AlterAttackProbability(string Name, float Probability)
+            {
+                for (int j = 0; j < base.aiActor.behaviorSpeculator.AttackBehaviors.Count; j++)
+                {
+                    if (base.behaviorSpeculator.AttackBehaviors[j] is AttackBehaviorGroup && base.behaviorSpeculator.AttackBehaviors[j] != null)
+                    {
+                        for (int i = 0; i < (base.behaviorSpeculator.AttackBehaviors[j] as AttackBehaviorGroup).AttackBehaviors.Count; i++)
+                        {
+                            AttackBehaviorGroup.AttackGroupItem attackGroupItem = (base.behaviorSpeculator.AttackBehaviors[j] as AttackBehaviorGroup).AttackBehaviors[i];
+                            if ((base.behaviorSpeculator.AttackBehaviors[j] as AttackBehaviorGroup) != null && attackGroupItem.NickName.Contains(Name))
+                            {
+                                attackGroupItem.Probability = Probability;
+                            }
+                        }
+                    }
+                }
+            }
+
+
+            private IEnumerator SpawnEyeball(Vector2 pos)
+            {
+                float elaWait = 0f;
+                StaticVFXStorage.HighPriestClapVFX.SpawnAtPosition(base.aiActor.sprite.WorldCenter + pos);
+                while (elaWait < 0.875f)
+                {
+                    elaWait += BraveTime.DeltaTime;
+                    yield return null;
+                }
+                AkSoundEngine.PostEvent("Play_NPC_magic_blessing_01", base.aiActor.gameObject);
+                var pp = UnityEngine.Object.Instantiate<GameObject>(Ophanaim.EyeBallMinion, base.aiActor.sprite.WorldCenter + pos, Quaternion.identity, null).GetComponent<AdvancedBodyPartController>();
+                eyes.Add(pp.gameObject);
+                pp.gameObject.GetComponent<OphanaimMinionController>().DoPoof();
+                pp.MainBody = base.aiActor;
+                pp.gameObject.transform.parent = base.aiActor.transform;
+                elaWait = 0;
+                yield break;
+            }
+
+
 			public bool Phase2Check;
 			private void CheckPlayerRoom()
 			{
@@ -1664,13 +2105,27 @@ namespace Planetside
 
 			public void Start()
 			{
-				//Important for not breaking basegame stuff!
-				StaticReferenceManager.AllHealthHavers.Remove(base.aiActor.healthHaver);
+                /*
+                var pp1 = UnityEngine.Object.Instantiate<GameObject>(Ophanaim.WingLeft, base.aiActor.sprite.WorldCenter, Quaternion.identity, null);
+                pp1.transform.parent = base.aiActor.gameObject.transform;
+                pp1.transform.position = base.aiActor.sprite.WorldCenter + new Vector2(-8f, -1.75f);
+
+                var pp2 = UnityEngine.Object.Instantiate<GameObject>(Ophanaim.WingRight, base.aiActor.sprite.WorldCenter, Quaternion.identity, null);
+                pp2.transform.parent = base.aiActor.gameObject.transform;
+                pp2.transform.position = base.aiActor.sprite.WorldCenter + new Vector2(2f, -1.75f);
+                */
+                //Important for not breaking basegame stuff!
+                StaticReferenceManager.AllHealthHavers.Remove(base.aiActor.healthHaver);
 				Phase2Check = false;
 
-				base.aiActor.spriteAnimator.AnimationEventTriggered += this.AnimationEventTriggered; 
+                base.aiActor.healthHaver.minimumHealth = base.aiActor.healthHaver.GetMaxHealth() * 0.5f;
+
+
+                base.aiActor.spriteAnimator.AnimationEventTriggered += this.AnimationEventTriggered; 
 				this.aiActor.knockbackDoer.SetImmobile(true, "nope.");
 				base.aiActor.HasBeenEngaged = false;
+
+
 				base.aiActor.healthHaver.OnPreDeath += (obj) =>
 				{
 					
@@ -1681,19 +2136,33 @@ namespace Planetside
 				};
 			}
 
-			private void AnimationEventTriggered(tk2dSpriteAnimator animator, tk2dSpriteAnimationClip clip, int frameIdx)
+           
+
+            private void AnimationEventTriggered(tk2dSpriteAnimator animator, tk2dSpriteAnimationClip clip, int frameIdx)
 			{
                 //ownAfterImage
                 if (clip.GetFrame(frameIdx).eventInfo == "disableImage")
 				{
 					ownAfterImage.spawnShadows = false;
-                    //AkSoundEngine.PostEvent("Play_Baboom", base.gameObject);
                 }
 
                 if (clip.GetFrame(frameIdx).eventInfo == "enableImage")
                 {
                     ownAfterImage.spawnShadows = true;
                 }
+
+
+                if (clip.GetFrame(frameIdx).eventInfo == "tp1")
+                {
+                    GlobalMessageRadio.BroadcastMessage("eye_shot_hide");
+                }
+
+                if (clip.GetFrame(frameIdx).eventInfo == "tp2")
+                {
+                    GlobalMessageRadio.BroadcastMessage("eye_shot_appear");
+                }
+
+
 
                 if (clip.GetFrame(frameIdx).eventInfo == "Flash")
 				{
@@ -1782,8 +2251,6 @@ namespace Planetside
 
 		}
 		public static Material Sun = new Material(ShaderCache.Acquire("Brave/LitCutoutUber"));
-
-		private static List<GameObject> reticles = new List<GameObject>();
 
         public class SpecialAttack : BasicAttack
         {
@@ -1890,7 +2357,7 @@ namespace Planetside
             {
                 get
                 {
-                    return 720;
+                    return 540;
                 }
             }
         }
@@ -1900,7 +2367,7 @@ namespace Planetside
             {
                 get
                 {
-                    return 540;
+                    return 420;
                 }
             }
         }
@@ -1911,7 +2378,7 @@ namespace Planetside
             {
                 get
                 {
-                    return 900;
+                    return 780;
                 }
             }
 
@@ -1928,7 +2395,10 @@ namespace Planetside
 
 
                 AIBeamShooter2[] beams = this.BulletBank.aiActor.GetComponents<AIBeamShooter2>();
-                yield return this.Wait(120);
+                yield return this.Wait(90);
+                GlobalMessageRadio.BroadcastMessage("eye_gun_predict");
+                yield return this.Wait(30);
+
                 int i = 0;
 				bool b = false;
                 while (beams != null || beams.Length > 0)
@@ -1936,6 +2406,7 @@ namespace Planetside
                     if (b == false)
                     {
                         b = !b;
+
                         foreach (AIBeamShooter2 beam in beams)
                         {
                             if (beam && beam.LaserBeam)
@@ -1956,6 +2427,7 @@ namespace Planetside
                                 }
                                 RaycastResult.Pool.Free(ref raycastResult2);
                                 int num2 = Mathf.Max(Mathf.CeilToInt(Vector2.Distance(vector, vector2)), 1);
+                                num2 /= 2;
                                 for (int e = 0; e < num2; e++)
                                 {
                                     float t = (float)e / (float)num2;
@@ -2083,8 +2555,14 @@ namespace Planetside
                 int i = 0;
                 while (beams != null || beams.Length > 0)
                 {
+                    if (i % 40 == 0)
+                    {
+                        GlobalMessageRadio.BroadcastMessage("eye_gun_simple");
+                    }
                     if (i % 80 == 0)
                     {
+                        GlobalMessageRadio.BroadcastMessage("eye_gun_laser");
+
                         foreach (AIBeamShooter2 beam in beams)
                         {
                             if (beam && beam.LaserBeam)
@@ -2105,6 +2583,7 @@ namespace Planetside
                                 }
                                 RaycastResult.Pool.Free(ref raycastResult2);
                                 int num2 = Mathf.Max(Mathf.CeilToInt(Vector2.Distance(vector, vector2)), 1);
+                                num2 /= 3;
                                 for (int e = 0; e < num2; e++)
                                 {
                                     float t = (float)e / (float)num2;
@@ -2249,9 +2728,13 @@ namespace Planetside
                 yield return this.Wait(Mathf.Max(dur1, dur2) + 20);
                 fire = true;
                 
-                for (int e = 0; e < 50; e++)
+                for (int e = 1; e < 51; e++)
                 {
-                    float spare = 45;
+                    if (e % 10 == 0)
+                    {
+                        GlobalMessageRadio.BroadcastMessage("eye_gun_laser");
+                    }
+                    float spare = 36;
                     float Angle = this.AimDirection;
                     if (Angle.IsBetweenRange(Vector2.left.ToAngle(), Vector2.left.ToAngle() + spare)) { Angle = Vector2.left.ToAngle() + spare; }
                     if (Angle.IsBetweenRange(Vector2.left.ToAngle() - spare , Vector2.left.ToAngle())) { Angle = Vector2.left.ToAngle() - spare; }
@@ -2259,6 +2742,7 @@ namespace Planetside
                     if (Angle.IsBetweenRange(Vector2.right.ToAngle() - spare, Vector2.right.ToAngle())) { Angle = Vector2.right.ToAngle() - spare; }
                     angle = Angle;
                     yield return this.Wait(10);
+
                 }
                 yield break;
             }
@@ -2311,7 +2795,6 @@ namespace Planetside
 
         }
 
-
         public class FireBurst : Script
 		{
 			protected override IEnumerator Top()
@@ -2323,21 +2806,41 @@ namespace Planetside
 				{
 					foreach (AIBeamShooter2 beam in beams)
 					{
-
-
-						if (beam && beam.LaserBeam && i % 60 == 0)
+                        if (beam && beam.LaserBeam )
 						{
-                            float h = BraveUtility.RandomBool() == true ? -60 : 60;
-							float a = this.AimDirection;
-                            base.PostWwiseEvent("Play_BOSS_lichB_charge_01", null);
-                            LinkedList<BasicBeamController.BeamBone> linkedList = PlanetsideReflectionHelper.ReflectGetField<LinkedList<BasicBeamController.BeamBone>>(typeof(BasicBeamController), "m_bones", beam.m_laserBeam);
-							LinkedListNode<BasicBeamController.BeamBone> last = linkedList.Last;
-							Vector2 bonePosition = beam.m_laserBeam.GetBonePosition(last.Value);
-							for (int l = 0; l < 6; l++)
-							{
-								this.Fire(Offset.OverridePosition(bonePosition), new Direction((60 * l)+a, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(3), new FireBeam(h));
-                                this.Fire(new Direction((60 * l) + a, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(3), new FireBeam(-h));
+                            GlobalMessageRadio.BroadcastMessage("eye_gun_predict");
+
+                            List<SpeculativeRigidbody> r = new List<SpeculativeRigidbody>();
+                            for (int h = 0; h < this.BulletBank.aiActor.gameObject.transform.childCount; h++)
+                            {
+                                Transform t = this.BulletBank.aiActor.gameObject.transform.GetChild(h);
+                                if (t != null)
+                                {
+                                    var spc = t.gameObject.GetComponent<SpeculativeRigidbody>();
+                                    if (spc != null)
+                                    {
+                                        r.Add(spc);
+                                    }
+                                }
                             }
+                            beam.LaserBeam.IgnoreRigidbodes = r;
+
+                           if (i % 60 == 0)
+                           {
+                                float h = BraveUtility.RandomBool() == true ? -60 : 60;
+                                float a = this.AimDirection;
+                                base.PostWwiseEvent("Play_BOSS_lichB_charge_01", null);
+                                LinkedList<BasicBeamController.BeamBone> linkedList = PlanetsideReflectionHelper.ReflectGetField<LinkedList<BasicBeamController.BeamBone>>(typeof(BasicBeamController), "m_bones", beam.m_laserBeam);
+                                LinkedListNode<BasicBeamController.BeamBone> last = linkedList.Last;
+                                Vector2 bonePosition = beam.m_laserBeam.GetBonePosition(last.Value);
+                                for (int l = 0; l < 6; l++)
+                                {
+                                    this.Fire(Offset.OverridePosition(bonePosition), new Direction((60 * l) + a, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(3), new FireBeam(h));
+                                    this.Fire(new Direction((60 * l) + a, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(3), new FireBeam(-h));
+                                }
+                           }
+
+                           
                         }
 					}
 					i++;
@@ -2386,6 +2889,31 @@ namespace Planetside
             }
         }
 
+        public class Teleport2 : Script
+        {
+           
+
+            protected override IEnumerator Top()
+            {
+                //base.PostWwiseEvent("Play_ENM_gunknight_shockwave_01", null);
+
+                base.PostWwiseEvent("Play_BOSS_doormimic_blast_01", null);
+                GlobalMessageRadio.BroadcastMessage("eye_gun_laser");
+                float h = BraveUtility.RandomBool() == true ? -120 : 120;
+                float E = BraveUtility.RandomAngle();
+                bool b = BraveUtility.RandomBool();
+
+                for (int n = 0; n < 16; n++)
+                {
+                    base.Fire(new Direction((22.5f * n) + (E), Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(5f, SpeedType.Absolute), new BlastAttack.RotatingBullet(base.Position, !b, (22.5f * n), 0.08f));
+                }
+
+                yield break;
+            }
+        }
+
+
+
 
         public class BlastAttack : Script
         {
@@ -2400,6 +2928,9 @@ namespace Planetside
             protected override IEnumerator Top()
             {
                 //base.PostWwiseEvent("Play_ENM_gunknight_shockwave_01", null);
+
+                GlobalMessageRadio.BroadcastMessage("eye_gun_laser");
+
                 base.PostWwiseEvent("Play_BigSlam", null);
                 base.PostWwiseEvent("Play_BigSlam", null);
 
@@ -2478,6 +3009,8 @@ namespace Planetside
                         base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob((36 * i) + Dir, this, M, 1f, b));
                         b = !b;
                     }
+                    GlobalMessageRadio.BroadcastMessage("eye_gun_simple");
+
                     yield return this.Wait(75);
                 }
                 yield return this.Wait(120);
@@ -2615,6 +3148,148 @@ namespace Planetside
         }
 
 
+        public class MithrixSlamOmega : Script
+        {
+            protected override IEnumerator Top()
+            {
+                for (int q = 0; q < 4; q++)
+                {
+                    base.PostWwiseEvent("Play_ENM_CannonArmor_Charge_01", null);
+                    bool b = true;
+                    float Dir = BraveUtility.RandomAngle();
+                    float M = UnityEngine.Random.value < 0.5f ? 75 : -75;
+                    bool masd = BraveUtility.RandomBool();
+                    for (int i = 0; i < 6; i++)
+                    {
+                        base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob((60 * i) + Dir, this, M, 0.5f, b, masd));
+                        b = !b;
+                    }
+                    yield return this.Wait(75);
+                    GlobalMessageRadio.BroadcastMessage("eye_gun_predict");
+                    yield return this.Wait(75);
+                }
+                yield return this.Wait(120);
+                yield break;
+            }
+
+
+
+
+            private IEnumerator QuickscopeNoob(float aimDir, MithrixSlamOmega parent, float rotSet, float chargeTime = 0.5f, bool PlaysAudio = false, bool fcdfa = true)
+            {
+
+                GameObject gameObject = SpawnManager.SpawnVFX(RandomPiecesOfStuffToInitialise.LaserReticle, false);
+                tk2dTiledSprite component2 = gameObject.GetComponent<tk2dTiledSprite>();
+                component2.transform.position = this.Position;
+                component2.transform.localRotation = Quaternion.Euler(0f, 0f, aimDir);
+                component2.dimensions = new Vector2(1f, 1f);
+                component2.UpdateZDepth();
+                component2.HeightOffGround = -2;
+
+
+                Color laser = new Color(1, 0.85f, 0.7f);
+                component2.sprite.usesOverrideMaterial = true;
+                component2.sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
+                component2.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+                component2.sprite.renderer.material.SetFloat("_EmissivePower", 10);
+                component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f);
+                component2.sprite.renderer.material.SetColor("_OverrideColor", laser);
+                component2.sprite.renderer.material.SetColor("_EmissiveColor", laser);
+
+                float elapsed = 0;
+                float Time = chargeTime;
+                while (elapsed < Time)
+                {
+                    float t = (float)elapsed / (float)Time;
+
+                    if (parent.IsEnded || parent.Destroyed)
+                    {
+                        UnityEngine.Object.Destroy(component2.gameObject);
+                        yield break;
+                    }
+                    if (component2 != null)
+                    {
+                        float throne1 = Mathf.Sin(t * (Mathf.PI / 2));
+                        float Q = Mathf.Lerp(0, rotSet, throne1);
+                        component2.transform.position = this.Position;
+                        component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (75 * t));
+                        component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (10 * t));
+                        component2.transform.localRotation = Quaternion.Euler(0f, 0f, aimDir + Q);
+                        component2.HeightOffGround = -2;
+                        component2.renderer.gameObject.layer = 23;
+                        component2.dimensions = new Vector2(Mathf.Lerp(1, 750, throne1), 1f);
+                        component2.UpdateZDepth();
+                    }
+                    elapsed += BraveTime.DeltaTime;
+                    yield return null;
+                }
+
+                elapsed = 0;
+                Time = 0.75f;
+                StaticVFXStorage.HighPriestClapVFX.SpawnAtPosition(this.Position);
+                while (elapsed < Time)
+                {
+                    if (parent.IsEnded || parent.Destroyed)
+                    {
+                        UnityEngine.Object.Destroy(component2.gameObject);
+                        yield break;
+                    }
+                    if (component2 != null)
+                    {
+                        component2.transform.position = this.Position;
+                        component2.dimensions = new Vector2(1000f, 1f);
+                        component2.HeightOffGround = -2;
+                        component2.renderer.gameObject.layer = 23;
+                        component2.UpdateZDepth();
+
+                        bool enabled = elapsed % 0.25f > 0.125f;
+                        component2.sprite.renderer.enabled = enabled;
+
+                    }
+                    elapsed += BraveTime.DeltaTime;
+                    yield return null;
+                }
+                UnityEngine.Object.Destroy(component2.gameObject);
+                if (PlaysAudio == true) { base.PostWwiseEvent("Play_BOSS_RatMech_Stomp_01", null); }
+
+                base.Fire(new Direction(aimDir + rotSet, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(50f, SpeedType.Absolute), new Spawner(fcdfa));
+                yield break;
+            }
+
+            public class Spawner : Bullet
+            {
+                public Spawner(bool h) : base("bigBullet", false, false, false)
+                {
+                    b = h;
+                }
+
+                protected override IEnumerator Top()
+                {
+                    for (int i = 0; i < 45; i++)
+                    {
+                        base.Fire(new Direction(b == true ? 90 : -90, Brave.BulletScript.DirectionType.Relative, -1f), new Speed(0f, SpeedType.Absolute), new MithrixSlamOmega.BouncyFlame(45 - i));
+                        yield return this.Wait(1f);
+                    }
+                    yield break;
+                }
+                private bool b;
+            }
+            public class BouncyFlame : Bullet
+            {
+                private float wait;
+                public BouncyFlame(float t) : base("frogger", false, false, false)
+                {
+                    wait = t;
+                }
+
+                protected override IEnumerator Top()
+                {
+                    yield return this.Wait(wait);
+                    this.ChangeSpeed(new Brave.BulletScript.Speed(15, SpeedType.Absolute), 120);
+                    yield break;
+                }
+            }
+        }
 
 
 

@@ -29,7 +29,9 @@ namespace Planetside
                 defaultPath+"pillartentacle_idle_005.png",
 
             };
-            MajorBreakable statue = BreakableAPIToolbox.GenerateMajorBreakable("trespass_tentacle_light", idlePaths, 4, null, 1, 15000, "Planetside/Resources/DungeonObjects/TrespassObjects/TrespassContainer/trespassContainer_shadow.png", 0.125f, -0.25f, true, 24, 32, 4, -4, true, null, null, true, null);
+            MajorBreakable statue = BreakableAPIToolbox.GenerateMajorBreakable("trespass_tentacle_light", idlePaths, 4, null, 1, 15000, true, 24, 32, 4, -4, true, null, null, true, null);
+            BreakableAPIToolbox.GenerateShadow("Planetside/Resources/DungeonObjects/TrespassObjects/TrespassContainer/trespassContainer_shadow.png", "trespass_tentacle_light_shadow", statue.gameObject.transform, new Vector3(0.125f, -0.25f));
+
             statue.gameObject.AddComponent<TresspassLightController>();
             statue.DamageReduction = 1000;
 

@@ -58,7 +58,7 @@ namespace ItemAPI
         }
 
 
-        public static GameObject BuildPrefabBundle(string name, string guid, tk2dSpriteCollectionData customCollection, int spriteID, IntVector2 hitboxOffset, IntVector2 hitBoxSize, Vector3 bounds, bool HasAiShooter, bool UsesAttackGroup = false)
+        public static GameObject BuildPrefabBundle(string name, string guid, tk2dSpriteCollectionData customCollection, int spriteID, IntVector2 hitboxOffset, IntVector2 hitBoxSize, bool HasAiShooter, bool UsesAttackGroup = false)
         {
             if (BossBuilder.Dictionary.ContainsKey(guid))
             {
@@ -73,6 +73,7 @@ namespace ItemAPI
             var sprite = prefab.AddComponent<tk2dSprite>();
 
 
+            /*
             for (int i = 0; i < customCollection.spriteDefinitions.Count() - 1; i++)
             {
                 var c = customCollection.spriteDefinitions[i];
@@ -85,6 +86,7 @@ namespace ItemAPI
                 c.untrimmedBoundsDataExtents = new Vector3(bounds.x, bounds.y, 0f);
 
             }
+            */
 
             sprite.Collection = customCollection;
             customCollection.InitDictionary();

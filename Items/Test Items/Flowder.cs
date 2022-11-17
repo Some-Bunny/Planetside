@@ -57,6 +57,7 @@ namespace Planetside
         }
         protected override void DoEffect(PlayerController user)
         {
+            //GlobalMessageRadio.BroadcastMessage("eye_shot_1");
             GameManager.Instance.LoadCustomFlowForDebug("NPCParadise", "Base_Castle", "tt_castle");
         }
     }

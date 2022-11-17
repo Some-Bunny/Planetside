@@ -37,7 +37,7 @@ namespace Planetside
                 tk2dSpriteCollectionData FodderColection = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("FodderCollection").GetComponent<tk2dSpriteCollectionData>();
                 Material mat = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Material>("assets/Enemies/Fodder/FodderCollection Data/atlas0 material.mat");
 
-                prefab = EnemyBuilder.BuildPrefabBundle("Fodder Enemy", guid, FodderColection, 0, new IntVector2(0, 0), new IntVector2(0,0), new Vector3(0.625f, 1f), false);
+                prefab = EnemyBuilder.BuildPrefabBundle("Fodder Enemy", guid, FodderColection, 0, new IntVector2(0, 0), new IntVector2(0,0), false);
 				var companion = prefab.AddComponent<EnemyBehavior>();
                 EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, FodderColection, mat);
 

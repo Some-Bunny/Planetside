@@ -138,7 +138,9 @@ namespace Planetside
                 {60, defaultPath+"kalipedestal_prebreak2.png"},
                 {25, defaultPath+"kalipedestal_prebreak3.png"},
             };
-            MajorBreakable statue = BreakableAPIToolbox.GenerateMajorBreakable("holy_statue", idlePaths, 1, null, 1, 75, defaultPath+ "kalipedestalshadow.png", 0f ,-0.1875f, true, 32, 32, 0 ,-4, true, null, null, true, null, prebreaks);
+            MajorBreakable statue = BreakableAPIToolbox.GenerateMajorBreakable("holy_statue", idlePaths, 1, null, 1, 75, true, 32, 32, 0 ,-4, true, null, null, true, null, prebreaks);
+            BreakableAPIToolbox.GenerateShadow(defaultPath + "kalipedestalshadow.png", "pedestal_shadow", statue.gameObject.transform, new Vector3(0, -0.1875f));
+
             statue.InvulnerableToEnemyBullets = true;
 
             statue.minShardPercentSpeed = 0.5f; 

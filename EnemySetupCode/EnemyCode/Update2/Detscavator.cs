@@ -35,7 +35,7 @@ namespace Planetside
 
             if (prefab == null || !EnemyBuilder.Dictionary.ContainsKey(guid))
 			{
-				prefab = EnemyBuilder.BuildPrefabBundle("Detscavator", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(8, 9), new Vector3(1.75f, 2), false);
+				prefab = EnemyBuilder.BuildPrefabBundle("Detscavator", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(8, 9), false);
 				var companion = prefab.AddComponent<EnemyBehavior>();
 
                 EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, Collection, mat);

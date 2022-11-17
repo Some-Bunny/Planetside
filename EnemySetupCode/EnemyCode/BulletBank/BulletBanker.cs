@@ -39,7 +39,7 @@ namespace Planetside
 
             if (fuckyouprefab == null || !BossBuilder.Dictionary.ContainsKey(guid))
 			{
-				fuckyouprefab = BossBuilder.BuildPrefabBundle("Bullet Banker", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(8, 9), new Vector3(3, 4), false, true);
+				fuckyouprefab = BossBuilder.BuildPrefabBundle("Bullet Banker", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(8, 9), false, true);
 				var companion = fuckyouprefab.AddComponent<BankerEnemyBehavior>();
 
                 EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, Collection, mate);

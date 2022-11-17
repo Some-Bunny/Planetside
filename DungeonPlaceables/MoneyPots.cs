@@ -53,7 +53,8 @@ namespace Planetside
             ETGMod.Databases.Strings.Core.Set("#TROLL_NOTE_12", "Shit thyself.");
 
 
-            MajorBreakable note1 = BreakableAPIToolbox.GenerateMajorBreakable("trollNote_1", idlePaths, 1, idlePaths, 1, 15000, null, 0f, -0.1875f, true, 0, 0, 0, 0, true, null, null, true, null);
+            MajorBreakable note1 = BreakableAPIToolbox.GenerateMajorBreakable("trollNote_1", idlePaths, 1, idlePaths, 1, 15000,true, 0, 0, 0, 0, true, null, null, true, null);
+
             NoteDoer finishedNote1 = BreakableAPIToolbox.GenerateNoteDoer(note1, BreakableAPIToolbox.GenerateTransformObject(note1.gameObject, new Vector2(0.25f, 0.25f), "noteattachPoint").transform, "#TROLL_NOTE_01", true);
             StaticReferences.StoredRoomObjects.Add("trollNote", finishedNote1.gameObject);
 
@@ -137,7 +138,8 @@ namespace Planetside
             defaultPath + "gold_pot_idle_007.png",
             }, 10, 
             new string[] { defaultPath + "gold_pot_break_001.png" }, 10, 
-            "Play_OBJ_pot_shatter_01", shadowPath, 0, -0.125f, true, 14, 18, 1, 0);
+            "Play_OBJ_pot_shatter_01", true, 14, 18, 1, 0);
+            BreakableAPIToolbox.GenerateShadow(shadowPath, "moneyPot_shadow", breakable.gameObject.transform, new Vector3(0, -0.125f));
             breakable.stopsBullets = true;
             breakable.OnlyPlayerProjectilesCanBreak = false;
             breakable.OnlyBreaksOnScreen = false;
@@ -205,7 +207,9 @@ namespace Planetside
             defaultPath + "silver_pot_idle_007.png",
             }, 10,
             new string[] { defaultPath + "silver_pot_break_001.png" }, 10,
-            "Play_OBJ_pot_shatter_01", shadowPath, 0, -0.125f, true, 14, 18, 1, 0);
+            "Play_OBJ_pot_shatter_01", true, 14, 18, 1, 0);
+            BreakableAPIToolbox.GenerateShadow(shadowPath, "moneyPot_shadow", breakable.gameObject.transform, new Vector3(0, -0.125f));
+
             breakable.stopsBullets = true;
             breakable.OnlyPlayerProjectilesCanBreak = false;
             breakable.OnlyBreaksOnScreen = false;
@@ -272,7 +276,9 @@ namespace Planetside
             defaultPath + "copper_pot_idle_007.png",
             }, 10,
             new string[] { defaultPath + "copper_pot_break_001.png" }, 10,
-            "Play_OBJ_pot_shatter_01", shadowPath, 0, -0.125f, true, 14, 18, 1, 0);
+            "Play_OBJ_pot_shatter_01", true, 14, 18, 1, 0);
+            BreakableAPIToolbox.GenerateShadow(shadowPath, "moneyPot_shadow", breakable.gameObject.transform, new Vector3(0, -0.125f));
+
             breakable.stopsBullets = true;
             breakable.OnlyPlayerProjectilesCanBreak = false;
             breakable.OnlyBreaksOnScreen = false;
@@ -337,7 +343,9 @@ namespace Planetside
             { defaultPath + "copper_pot_idle_001.png"
             }, 10,
             new string[] { defaultPath + "copper_pot_break_001.png" }, 10,
-            "Play_OBJ_pot_shatter_01", shadowPath, 0, -0.125f, true, 14, 18, 1, 0);
+            "Play_OBJ_pot_shatter_01", true, 14, 18, 1, 0);
+            BreakableAPIToolbox.GenerateShadow(shadowPath, "moneyPot_shadow", breakable.gameObject.transform, new Vector3(0, -0.125f));
+
             breakable.stopsBullets = true;
             breakable.OnlyPlayerProjectilesCanBreak = false;
             breakable.OnlyBreaksOnScreen = false;

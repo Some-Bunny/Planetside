@@ -80,7 +80,7 @@ namespace Planetside
                 defaultPath+"trespassblocker_destroy_009.png",
                 defaultPath+"trespassblocker_destroy_010.png",
             };
-            MajorBreakable statue = BreakableAPIToolbox.GenerateMajorBreakable("trespass_fadingblocker", idlePaths, 6, breakPaths, 11, 15000, null, 0f, -0.1875f, true, 16, 20, 0, -4, true, null, null, true, null);
+            MajorBreakable statue = BreakableAPIToolbox.GenerateMajorBreakable("trespass_fadingblocker", idlePaths, 6, breakPaths, 11, 15000, true, 16, 20, 0, -4, true, null, null, true, null);
             statue.gameObject.AddComponent<TresspassLightController>();
             statue.gameObject.AddComponent<TrespassFadingBlockerController>();
             statue.DamageReduction = 1000;

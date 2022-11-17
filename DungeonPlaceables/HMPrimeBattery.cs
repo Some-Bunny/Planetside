@@ -180,7 +180,7 @@ namespace Planetside
                 "The object left on the ground looks like a large, volatile battery.\n\nMaybe you should stand back...");
 
 
-            MajorBreakable note3 = BreakableAPIToolbox.GenerateMajorBreakable("hmPrimeBattery", idlePaths, 2, breakPaths, 2, 15000, null, 0f, -0.1875f, true, 10, 16, -1, -4, true, null, null, true, null);
+            MajorBreakable note3 = BreakableAPIToolbox.GenerateMajorBreakable("hmPrimeBattery", idlePaths, 2, breakPaths, 2, 15000, true, 10, 16, -1, -4, true, null, null, true, null);
             NoteDoer finishedNote3 = BreakableAPIToolbox.GenerateNoteDoer(note3, BreakableAPIToolbox.GenerateTransformObject(note3.gameObject, new Vector2(0.25f, 0.25f), "noteattachPoint").transform, "#HM_PRIME_NOTE_TROLL", false, NoteDoer.NoteBackgroundType.LETTER);
             EnemyToolbox.AddSoundsToAnimationFrame(note3.spriteAnimator, "break", new Dictionary<int, string> { { 0, "Play_ENM_hammer_target_01" }, { 2, "Play_ENM_hammer_target_01" }, { 5, "Play_ENM_hammer_target_01" } });
             EnemyToolbox.AddEventTriggersToAnimation(note3.spriteAnimator, "break", new Dictionary<int, string> { { 0, "BigBoomSoon" },{7, "DIE" } });

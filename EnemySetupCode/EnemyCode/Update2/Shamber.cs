@@ -40,7 +40,7 @@ namespace Planetside
             {
 
 
-				prefab = EnemyBuilder.BuildPrefabBundle("Shamber", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(0, 0),new Vector3(2, 2.25f), false, true);
+				prefab = EnemyBuilder.BuildPrefabBundle("Shamber", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(0, 0), false, true);
 				var enemy = prefab.AddComponent<EnemyBehavior>();
 
                 EnemyToolbox.QuickAssetBundleSpriteSetup(enemy.aiActor, Collection, mat);

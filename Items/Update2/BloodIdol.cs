@@ -19,7 +19,6 @@ namespace Planetside
 {
     public class BloodIdol  : PlayerItem
     {
-
         public static void Init()
         {
             string itemName = "Blood Idol";
@@ -84,8 +83,11 @@ namespace Planetside
         protected override void DoEffect(PlayerController user)
         {
             SaveAPIManager.RegisterStatChange(CustomTrackedStats.BLODD_IDOL_KILLS, -250);
-            GameManager.Instance.StartCoroutine(DoWackyStuff(user));           
+            GameManager.Instance.StartCoroutine(DoWackyStuff(user));    
+            
         }
+
+
         private IEnumerator DoWackyStuff(PlayerController user)
         {
             Vector2 pos = user.sprite.WorldCenter;

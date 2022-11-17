@@ -34,7 +34,7 @@ namespace Planetside
 
             if (prefab == null ||!EnemyBuilder.Dictionary.ContainsKey(guid))
 			{
-				prefab = EnemyBuilder.BuildPrefabBundle("Coallet", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(0, 0), new Vector3(1,1) ,false, true);;
+				prefab = EnemyBuilder.BuildPrefabBundle("Coallet", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(0, 0),false, true);;
 				var enemy = prefab.AddComponent<EnemyBehavior>();
 
                 EnemyToolbox.QuickAssetBundleSpriteSetup(enemy.aiActor, Collection, mat, false);

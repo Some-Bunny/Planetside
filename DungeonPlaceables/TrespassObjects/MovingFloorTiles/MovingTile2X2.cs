@@ -47,7 +47,7 @@ namespace Planetside
 
         public static void GenerateCube(string[] idleP, string[] breakP, bool delay, string Name)
         {
-            MajorBreakable statue = BreakableAPIToolbox.GenerateMajorBreakable("trespass_light", idleP, 14, breakP, 13, 15000, null, 0.1875f, -0.1875f, true, 32, 40, 4, -4, true, null, null, true, null);
+            MajorBreakable statue = BreakableAPIToolbox.GenerateMajorBreakable("trespass_light", idleP, 14, breakP, 13, 15000, true, 32, 40, 4, -4, true, null, null, true, null);
             TresspassLightController t = statue.gameObject.AddComponent<TresspassLightController>();
             t.GlowIntensity = 30;
             MovingBlockController cont = statue.gameObject.AddComponent<MovingBlockController>();

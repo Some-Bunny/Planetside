@@ -35,7 +35,7 @@ namespace Planetside
 			bool flag2 = flag;
 			if (!flag2)
 			{
-				prefab = EnemyBuilder.BuildPrefabBundle("Skullvenant", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(8, 9), new Vector3(1, 1), false);
+				prefab = EnemyBuilder.BuildPrefabBundle("Skullvenant", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(8, 9),  false);
 				var companion = prefab.AddComponent<EnemyBehavior>();
                 EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, Collection, mat);
 

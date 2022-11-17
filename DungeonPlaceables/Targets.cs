@@ -57,7 +57,8 @@ namespace Planetside
 
 
             string shadowPath = defaultPath+ "TargetShadow.png";
-            MinorBreakable targetOne = BreakableAPIToolbox.GenerateMinorBreakable("Target_One", idlePaths1, 1, breakPaths1, 10, "Play_obj_box_break_01", shadowPath, 0, -0.125f, true, 14, 14, 1, 0);
+            MinorBreakable targetOne = BreakableAPIToolbox.GenerateMinorBreakable("Target_One", idlePaths1, 1, breakPaths1, 10, "Play_obj_box_break_01", true, 14, 14, 1, 0);
+            BreakableAPIToolbox.GenerateShadow(defaultPath + "TargetShadow.png", "target_shadow", targetOne.gameObject.transform, new Vector3(0, -0.125f));
             targetOne.stopsBullets = true;
             targetOne.OnlyPlayerProjectilesCanBreak = true;
             targetOne.OnlyBreaksOnScreen = false;
@@ -65,21 +66,27 @@ namespace Planetside
             targetOne.canSpawnFairy = false;
             targetOne.breakStyle = MinorBreakable.BreakStyle.CONE;
             
-            MinorBreakable targetTwo = BreakableAPIToolbox.GenerateMinorBreakable("Target_two", idlePaths2, 1, breakPaths2, 10, "Play_obj_box_break_01", shadowPath, 0, -0.125f, true, 14, 14, 1, 0);
+            MinorBreakable targetTwo = BreakableAPIToolbox.GenerateMinorBreakable("Target_two", idlePaths2, 1, breakPaths2, 10, "Play_obj_box_break_01", true, 14, 14, 1, 0);
+            BreakableAPIToolbox.GenerateShadow(defaultPath + "TargetShadow.png", "target_shadow", targetTwo.gameObject.transform, new Vector3(0, -0.125f));
             targetTwo.stopsBullets = true;
             targetTwo.OnlyPlayerProjectilesCanBreak = true;
             targetTwo.OnlyBreaksOnScreen = false;
             targetTwo.resistsExplosions = false;
             targetTwo.canSpawnFairy = false;
             targetTwo.breakStyle = MinorBreakable.BreakStyle.CONE;
-            MinorBreakable targetThree = BreakableAPIToolbox.GenerateMinorBreakable("Target_three", idlePaths3, 1, breakPaths3, 10, "Play_obj_box_break_01", shadowPath, 0, -0.125f, true, 14, 14, 1, 0);
+
+            MinorBreakable targetThree = BreakableAPIToolbox.GenerateMinorBreakable("Target_three", idlePaths3, 1, breakPaths3, 10, "Play_obj_box_break_01", true, 14, 14, 1, 0);
+            BreakableAPIToolbox.GenerateShadow(defaultPath + "TargetShadow.png", "target_shadow", targetThree.gameObject.transform, new Vector3(0, -0.125f));
             targetThree.stopsBullets = true;
             targetThree.OnlyPlayerProjectilesCanBreak = true;
             targetThree.OnlyBreaksOnScreen = false;
             targetThree.resistsExplosions = false;
             targetThree.canSpawnFairy = false;
             targetThree.breakStyle = MinorBreakable.BreakStyle.CONE;
-            MinorBreakable targetFour = BreakableAPIToolbox.GenerateMinorBreakable("Target_four", idlePaths4, 1, breakPaths4, 10, "Play_obj_box_break_01", shadowPath, 0, -0.125f, true, 14, 14, 1, 0);
+
+            MinorBreakable targetFour = BreakableAPIToolbox.GenerateMinorBreakable("Target_four", idlePaths4, 1, breakPaths4, 10, "Play_obj_box_break_01", true, 14, 14, 1, 0);
+            BreakableAPIToolbox.GenerateShadow(defaultPath + "TargetShadow.png", "target_shadow", targetFour.gameObject.transform, new Vector3(0, -125f));
+
             targetFour.stopsBullets = true;
             targetFour.OnlyPlayerProjectilesCanBreak = true;
             targetFour.OnlyBreaksOnScreen = false;

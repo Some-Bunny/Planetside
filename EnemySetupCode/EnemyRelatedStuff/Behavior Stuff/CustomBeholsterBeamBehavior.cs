@@ -20,7 +20,10 @@ public class CustomBeholsterLaserBehavior : BasicAttackBehavior
 		FacesLaserAngle = false;
 		AdditionalHeightOffset = 0;
 		StopDuring = StopType.None;
-	}
+		hurtsOtherHealthhavers = true;
+
+    }
+	public bool hurtsOtherHealthhavers;
 
 	public override void Start()
 	{
@@ -441,6 +444,7 @@ public class CustomBeholsterLaserBehavior : BasicAttackBehavior
 
 		beamCont.ContinueBeamArtToWall = true;
 		float enemyTickCooldown = 0f;
+		
 		beamCont.OverrideHitChecks = delegate (SpeculativeRigidbody hitRigidbody, Vector2 dirVec)
 		{
 			Projectile currentProjectile = null;
@@ -460,21 +464,25 @@ public class CustomBeholsterLaserBehavior : BasicAttackBehavior
 				}
 				hitRigidbody.projectile.DieInAir(false, true, true, false);
 			}
-			if (healthHaver != null)
+			if (hurtsOtherHealthhavers == true)
 			{
-				if (healthHaver.aiActor)
-				{
-					if (enemyTickCooldown <= 0f)
-					{
-						healthHaver.ApplyDamage(ProjectileData.FixedFallbackDamageToEnemies, dirVec, this.m_aiActor.GetActorName(), currentProjectile.damageTypes, DamageCategory.Normal, false, null, false);
-						enemyTickCooldown = 0.1f;
-					}
-				}
-				else
-				{
-					healthHaver.ApplyDamage(currentProjectile.baseData.damage, dirVec, this.m_aiActor.GetActorName(), currentProjectile.damageTypes, DamageCategory.Normal, false, null, false);
-				}
-			}
+                if (healthHaver != null)
+                {
+                    if (healthHaver.aiActor)
+                    {
+                        if (enemyTickCooldown <= 0f)
+                        {
+                            healthHaver.ApplyDamage(ProjectileData.FixedFallbackDamageToEnemies, dirVec, this.m_aiActor.GetActorName(), currentProjectile.damageTypes, DamageCategory.Normal, false, null, false);
+                            enemyTickCooldown = 0.1f;
+                        }
+                    }
+                    else
+                    {
+                        healthHaver.ApplyDamage(currentProjectile.baseData.damage, dirVec, this.m_aiActor.GetActorName(), currentProjectile.damageTypes, DamageCategory.Normal, false, null, false);
+                    }
+                }
+            }
+			
 			if (hitRigidbody.majorBreakable)
 			{
 				hitRigidbody.majorBreakable.ApplyDamage(26f * BraveTime.DeltaTime, dirVec, false, false, false);

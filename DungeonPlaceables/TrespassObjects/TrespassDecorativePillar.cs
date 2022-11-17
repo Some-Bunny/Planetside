@@ -111,7 +111,9 @@ namespace Planetside
                 defaultPath+"vesselLock_use_011.png",
 
             };
-            MajorBreakable statue = BreakableAPIToolbox.GenerateMajorBreakable("trespass_decorative_pillar", idlePaths, 6, breakPaths, 10, 15000, "Planetside/Resources/DungeonObjects/TrespassObjects/TrespassContainer/trespassContainer_shadow.png", 0f, -0.1875f, true, 24, 24, 4, -4, true, null, null, true, null);
+            MajorBreakable statue = BreakableAPIToolbox.GenerateMajorBreakable("trespass_decorative_pillar", idlePaths, 6, breakPaths, 10, 15000, true, 24, 24, 4, -4, true, null, null, true, null);
+            BreakableAPIToolbox.GenerateShadow("Planetside/Resources/DungeonObjects/TrespassObjects/TrespassContainer/trespassContainer_shadow.png", "trespass_decorative_pillar_shadow", statue.gameObject.transform, new Vector3(0, -0.1875f));
+
             statue.gameObject.AddComponent<TresspassLightController>();
             statue.gameObject.AddComponent<TrespassDecorativePillarInetractable>();
             statue.gameObject.AddComponent<DungeonPlaceableBehaviour>();

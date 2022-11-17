@@ -38,7 +38,7 @@ namespace Planetside
 			bool flag2 = flag;
 			if (!flag2)
 			{
-				prefab = EnemyBuilder.BuildPrefabBundle("Cursebulon", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(8, 9), new Vector3(1.4375f, 1.375f), false);
+				prefab = EnemyBuilder.BuildPrefabBundle("Cursebulon", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(8, 9), false);
                 var companion = prefab.AddComponent<EnemyBehavior>();
                 EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, Collection, mat, false);
 

@@ -138,6 +138,8 @@
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassLight.cs" />
     <Compile Include="DungeonPlaceables\TrespassPortalBack.cs" />
     <Compile Include="EnemySetupCode\EnemyAPI %28The one that modifies behaviors%29\OverrideBehavior.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\Update2\Ophanaim\OphanaimFlightBehavior.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\Update2\Ophanaim\OphanaimMinionController.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\Update3\Enemies\Oppressor.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\Update3\Enemies\OppressorController.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\Update3\Enemies\Tower.cs" />
@@ -2387,6 +2389,8 @@
     <EmbeddedResource Include="Resources\Shellrax\shellrax_fireeye_003.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\VFX\Ophanaim\ophanaim_wing_left.png" />
+    <EmbeddedResource Include="Resources\VFX\Ophanaim\ophanaim_wing_right.png" />
     <EmbeddedResource Include="Resources\VFX\Ophanaim\solarblast_idle_007.png" />
     <EmbeddedResource Include="Resources\VFX\Ophanaim\Minion\babyeye_idle_front_001.png" />
     <EmbeddedResource Include="Resources\VFX\Ophanaim\Minion\babyeye_idle_front_002.png" />

@@ -331,7 +331,9 @@ namespace Planetside
                 defaultPath+"pillarsofsalt_break_010.png",
 
             };
-            MajorBreakable statue = BreakableAPIToolbox.GenerateMajorBreakable("trespass_big_light", idlePaths, 5, death, 16, 15000, "Planetside/Resources/DungeonObjects/TrespassObjects/TrespassBigLight/tresspasslightBigShadow.png", 0.125f, -0.25f, true, 26, 30, 3, -4, true, null, null, true, null);
+            MajorBreakable statue = BreakableAPIToolbox.GenerateMajorBreakable("trespass_big_light", idlePaths, 5, death, 16, 15000, true, 26, 30, 3, -4, true, null, null, true, null);
+            BreakableAPIToolbox.GenerateShadow("Planetside/Resources/DungeonObjects/TrespassObjects/TrespassBigLight/tresspasslightBigShadow.png", "trespassPot_shadow", statue.gameObject.transform, new Vector3(0.125f, -0.25f));
+
             statue.gameObject.AddComponent<TearHolderController>();
             statue.gameObject.AddComponent<TresspassLightController>();
 
@@ -377,7 +379,9 @@ namespace Planetside
                 defaultPath+"pillarsofsalt_break_009.png",
                 defaultPath+"pillarsofsalt_break_010.png",
             };
-            MajorBreakable statue = BreakableAPIToolbox.GenerateMajorBreakable("trespass_big_light", idlePaths, 5, death, 16, 15000, "Planetside/Resources/DungeonObjects/TrespassObjects/TrespassBigLight/tresspasslightBigShadow.png", 0.125f, -0.25f, true, 26, 30, 3, -4, true, null, null, true, null);
+            MajorBreakable statue = BreakableAPIToolbox.GenerateMajorBreakable("trespass_big_light", idlePaths, 5, death, 16, 15000, true, 26, 30, 3, -4, true, null, null, true, null);
+            BreakableAPIToolbox.GenerateShadow("Planetside/Resources/DungeonObjects/TrespassObjects/TrespassBigLight/tresspasslightBigShadow.png", "trespassPot_shadow", statue.transform, new Vector3(0.125f, -0.25f));
+
             TearHolderController tearHolderController = statue.gameObject.AddComponent<TearHolderController>();
             tearHolderController.IsRandom = false;
             tearHolderController.assigned = f;

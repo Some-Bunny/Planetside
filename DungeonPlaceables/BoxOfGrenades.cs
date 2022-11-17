@@ -80,7 +80,9 @@ namespace Planetside
             };
           
             string shadowPath = "Planetside/Resources/DungeonObjects/GrenadeBox/grenadeboxshadow.png";
-            MinorBreakable breakable = BreakableAPIToolbox.GenerateMinorBreakable("Box_Of_Grenades", idlePaths, 1, idlePaths, 10, "Play_OBJ_boulder_break_01", shadowPath, 0, -0.125f, true, 28, 14, 0, -4);
+            MinorBreakable breakable = BreakableAPIToolbox.GenerateMinorBreakable("Box_Of_Grenades", idlePaths, 1, idlePaths, 10, "Play_OBJ_boulder_break_01", true, 28, 14, 0, -4);
+            BreakableAPIToolbox.GenerateShadow(shadowPath, "Box_Of_Grenades_shadow", breakable.gameObject.transform, new Vector3(0f, -0.125f));
+
             breakable.stopsBullets = true;
             breakable.OnlyPlayerProjectilesCanBreak = false;
             breakable.OnlyBreaksOnScreen = false;

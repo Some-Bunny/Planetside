@@ -36,7 +36,7 @@ namespace Planetside
 			bool flag2 = flag;
 			if (!flag2)
 			{
-				prefab = EnemyBuilder.BuildPrefabBundle("Barretina", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(8, 9), new Vector3(2.0625f, 2.8125f),false, true);
+				prefab = EnemyBuilder.BuildPrefabBundle("Barretina", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(8, 9), false, true);
 				var companion = prefab.AddComponent<EnemyBehavior>();
 
                 EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, Collection, mat);

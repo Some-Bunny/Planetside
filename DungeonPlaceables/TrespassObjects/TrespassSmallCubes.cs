@@ -21,15 +21,15 @@ namespace Planetside
         {
             string defaultPath = "Planetside/Resources/DungeonObjects/TrespassObjects/SmallCubes/";
 
-            MajorBreakable cube1 = BreakableAPIToolbox.GenerateMajorBreakable("cube1", new string[] { defaultPath + "smallcube1.png" }, 1, new string[] { defaultPath + "smallcube1.png" }, 1, 15000, null, 0, -0.125f, true, 0, 0, 1, -2, true, null, null, true, new List<CollisionLayer>() { CollisionLayer.EnemyBlocker, CollisionLayer.PlayerBlocker });
+            MajorBreakable cube1 = BreakableAPIToolbox.GenerateMajorBreakable("cube1", new string[] { defaultPath + "smallcube1.png" }, 1, new string[] { defaultPath + "smallcube1.png" }, 1, 15000, true, 0, 0, 1, -2, true, null, null, true, new List<CollisionLayer>() { CollisionLayer.EnemyBlocker, CollisionLayer.PlayerBlocker });
 
-            MajorBreakable cube2 = BreakableAPIToolbox.GenerateMajorBreakable("cube2", new string[] { defaultPath + "smallcube2.png" }, 1, new string[] { defaultPath + "smallcube2.png" }, 1, 15000, null, 0, -0.125f, true, 0, 0, 0, -2, true, null, null, true, new List<CollisionLayer>() { CollisionLayer.EnemyBlocker, CollisionLayer.PlayerBlocker });
+            MajorBreakable cube2 = BreakableAPIToolbox.GenerateMajorBreakable("cube2", new string[] { defaultPath + "smallcube2.png" }, 1, new string[] { defaultPath + "smallcube2.png" }, 1, 15000, true, 0, 0, 0, -2, true, null, null, true, new List<CollisionLayer>() { CollisionLayer.EnemyBlocker, CollisionLayer.PlayerBlocker });
 
-            MajorBreakable cube3 = BreakableAPIToolbox.GenerateMajorBreakable("cube3", new string[] { defaultPath + "smallcube3.png" }, 1, new string[] { defaultPath + "smallcube3.png" }, 1, 15000, null, 0, -0.125f, true, 0, 0, 0, -2, true, null, null, true, new List<CollisionLayer>() { CollisionLayer.EnemyBlocker, CollisionLayer.PlayerBlocker });
+            MajorBreakable cube3 = BreakableAPIToolbox.GenerateMajorBreakable("cube3", new string[] { defaultPath + "smallcube3.png" }, 1, new string[] { defaultPath + "smallcube3.png" }, 1, 15000, true, 0, 0, 0, -2, true, null, null, true, new List<CollisionLayer>() { CollisionLayer.EnemyBlocker, CollisionLayer.PlayerBlocker });
 
-            MajorBreakable cube4 = BreakableAPIToolbox.GenerateMajorBreakable("cube4", new string[] { defaultPath + "smallcube4.png" }, 1, new string[] { defaultPath + "smallcube4.png" }, 1, 15000, null, 0, -0.125f, true, 0, 0, 0, -2, true, null, null, true, new List<CollisionLayer>() { CollisionLayer.EnemyBlocker, CollisionLayer.PlayerBlocker });
+            MajorBreakable cube4 = BreakableAPIToolbox.GenerateMajorBreakable("cube4", new string[] { defaultPath + "smallcube4.png" }, 1, new string[] { defaultPath + "smallcube4.png" }, 1, 15000, true, 0, 0, 0, -2, true, null, null, true, new List<CollisionLayer>() { CollisionLayer.EnemyBlocker, CollisionLayer.PlayerBlocker });
 
-            MajorBreakable cube5 = BreakableAPIToolbox.GenerateMajorBreakable("cube5", new string[] { defaultPath + "smallcube5.png" }, 1, new string[] { defaultPath + "smallcube5.png" }, 1, 15000, null, 0f, -0.1875f, true, 0, 0, 0, -2, true, null, null, true, new List<CollisionLayer>() { CollisionLayer.EnemyBlocker, CollisionLayer.PlayerBlocker });
+            MajorBreakable cube5 = BreakableAPIToolbox.GenerateMajorBreakable("cube5", new string[] { defaultPath + "smallcube5.png" }, 1, new string[] { defaultPath + "smallcube5.png" }, 1, 15000, true, 0, 0, 0, -2, true, null, null, true, new List<CollisionLayer>() { CollisionLayer.EnemyBlocker, CollisionLayer.PlayerBlocker });
 
             cube1.gameObject.AddComponent<TresspassUnlitShaderController>();
             cube2.gameObject.AddComponent<TresspassUnlitShaderController>();

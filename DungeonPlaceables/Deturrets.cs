@@ -56,7 +56,8 @@ namespace Planetside
 
             AIBulletBank.Entry entry = StaticUndodgeableBulletEntries.CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("01972dee89fc4404a5c408d50007dad5").bulletBank.GetBullet("default"), "deturretShell");
 
-            MajorBreakable deturretLeft = BreakableAPIToolbox.GenerateMajorBreakable("deturretLeft", idlePaths, 7, idlePaths, 18, 15000, null, 0f, -0.1875f, true, 16, 16, -4, 0, true, null, null, true, null);
+            MajorBreakable deturretLeft = BreakableAPIToolbox.GenerateMajorBreakable("deturretLeft", idlePaths, 7, idlePaths, 18, 15000, true, 16, 16, -4, 0, true, null, null, true, null);
+
 			EnemyToolbox.GenerateShootPoint(deturretLeft.gameObject, new Vector2(0.5f, 0.5f), "attachy");
             AIBulletBank bulletBankLeft = deturretLeft.gameObject.AddComponent<AIBulletBank>();
 			DeturretController deturretC = deturretLeft.gameObject.AddComponent<DeturretController>();
@@ -66,7 +67,7 @@ namespace Planetside
 
 
             StaticReferences.StoredRoomObjects.Add("deturretLeft", deturretLeft.gameObject);
-            MajorBreakable deturretRight = BreakableAPIToolbox.GenerateMajorBreakable("deturretRight", idlePaths.Reverse().ToArray(), 7, idlePaths, 18, 15000, null, 0f, -0.1875f, true, 16, 16, -4, 0, true, null, null, true, null);
+            MajorBreakable deturretRight = BreakableAPIToolbox.GenerateMajorBreakable("deturretRight", idlePaths.Reverse().ToArray(), 7, idlePaths, 18, 15000, true, 16, 16, -4, 0, true, null, null, true, null);
 			EnemyToolbox.GenerateShootPoint(deturretRight.gameObject, new Vector2(0.5f, 0.5f), "attachy");
 			AIBulletBank bulletBankRight = deturretRight.gameObject.AddComponent<AIBulletBank>();
 			DeturretController deturretR = deturretRight.gameObject.AddComponent<DeturretController>();

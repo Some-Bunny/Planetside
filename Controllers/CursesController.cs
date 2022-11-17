@@ -15,6 +15,7 @@ using MonoMod;
 using System.Collections.ObjectModel;
 using GungeonAPI;
 using SaveAPI;
+using SGUI;
 
 namespace Planetside
 {
@@ -31,7 +32,8 @@ namespace Planetside
                 JamnationCurseState = JamnationCurseStates.DISABLED;
                 BolsterCurseState = BolsterCurseStates.DISABLED;
 
-                ETGMod.AIActor.OnPreStart = (Action<AIActor>)Delegate.Combine(ETGMod.AIActor.OnPreStart, new Action<AIActor>(this.CurseAIActorChanges));
+
+                ETGMod.AIActor.OnPreStart += this.CurseAIActorChanges;
 
                 new Hook(
                 typeof(PlayerController).GetMethod("OnRoomCleared", BindingFlags.Instance | BindingFlags.Public),
@@ -51,6 +53,82 @@ namespace Planetside
                 Debug.Log(e);
             }
         }
+
+        public void MyMethod(AIActor ai)
+        {
+            if (ai != null)
+            {
+                if (ai.IsHarmlessEnemy == false)
+                {
+
+                    //if (UnityEngine.Random.value < 0.1f)
+                    {
+                        ai.CustomLootTableMinDrops = 1;
+                        ai.CustomLootTableMaxDrops = 2;
+
+                        GenericLootTable ourLoottable = ScriptableObject.CreateInstance<GenericLootTable>();
+                        ourLoottable.tablePrerequisites = new DungeonPrerequisite[0];
+                        ourLoottable.includedLootTables = new List<GenericLootTable>() { };
+                        ourLoottable.defaultItemDrops = new WeightedGameObjectCollection()
+                        {
+                            elements = new List<WeightedGameObject>()
+                            {
+                                new WeightedGameObject()
+                                {
+                                    pickupId = 276,
+                                    weight = 1,
+                                    additionalPrerequisites = new DungeonPrerequisite[0],
+                                    forceDuplicatesPossible = true,
+                                    rawGameObject = PickupObjectDatabase.GetById(276).gameObject
+                                }
+                            },
+                            
+                        };
+                        ai.CustomLootTable = ourLoottable;
+                    }
+                }
+            }
+        }
+
+        public void CurseAIActorChanges(AIActor target)
+        {
+            if (target != null)
+            {
+                if (JamnationCurseState != JamnationCurseStates.DISABLED)
+                {
+                    float Chance = 0.4f;
+                    if (JamnationCurseState == JamnationCurseStates.UPGRADED_AND_ONEROOMLEFT) { Chance = 1; }
+                    if (target != null && !OtherTools.BossBlackList.Contains(target.aiActor.encounterTrackable.EncounterGuid) && UnityEngine.Random.value <= Chance)
+                    {
+                        if (!target.IsBlackPhantom)
+                        { target.BecomeBlackPhantom(); }
+                        else
+                        { target.gameObject.GetOrAddComponent<UmbraController>(); }
+                    }
+                }
+                if (PetrifyCurseState != PetrifyCurseStates.DISABLED)
+                {
+                    if (target != null && !OtherTools.BossBlackList.Contains(target.aiActor.EnemyGuid) && !target.healthHaver.IsBoss)
+                    {
+                        float Time = PetrifyCurseState == PetrifyCurseStates.UPGRADED_AND_ONEROOMLEFT ? 12f : 7;
+                        PetrifyThing petrifyComponent = target.gameObject.AddComponent<PetrifyThing>();
+                        petrifyComponent.Time = Time;
+                    }
+                }
+                if (BolsterCurseState != BolsterCurseStates.DISABLED)
+                {
+                    if (target != null && !OtherTools.BossBlackList.Contains(target.aiActor.encounterTrackable.EncounterGuid))
+                    {
+                        float CooldownScale = 0.7f;
+                        float MovementSpeed = 1.2f;
+                        if (BolsterCurseState == BolsterCurseStates.UPGRADED_AND_ONEROOMLEFT) { CooldownScale = 0.33f; MovementSpeed = 1.5f; }
+                        if (target.behaviorSpeculator != null) { target.behaviorSpeculator.CooldownScale /= CooldownScale; }
+                        target.MovementSpeed *= MovementSpeed;
+                    }
+                }
+            }
+        }
+
 
         public static void LateUpdateHook(Action<PlayerController> orig, PlayerController self)
         {
@@ -120,7 +198,6 @@ namespace Planetside
             {
                 AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.DECURSE_HELL_SHRINE_UNLOCK, true);
             }
-
         }
         private static void SpawnSpecialChest(PlayerController player)
         {
@@ -151,45 +228,7 @@ namespace Planetside
             return false;
         }
 
-        public void CurseAIActorChanges(AIActor target)
-        {
-            if (target != null)
-            {
-                if (JamnationCurseState != JamnationCurseStates.DISABLED)
-                {
-                    float Chance = 0.4f;
-                    if (JamnationCurseState == JamnationCurseStates.UPGRADED_AND_ONEROOMLEFT) { Chance = 1; }
-                    if (target != null && !OtherTools.BossBlackList.Contains(target.aiActor.encounterTrackable.EncounterGuid) && UnityEngine.Random.value <= Chance)
-                    {
-                        if (!target.IsBlackPhantom)
-                        { target.BecomeBlackPhantom(); }
-                        else
-                        { target.gameObject.GetOrAddComponent<UmbraController>(); }
-                    }
-                }
-                if (PetrifyCurseState != PetrifyCurseStates.DISABLED)
-                {
-                    if (target != null && !OtherTools.BossBlackList.Contains(target.aiActor.EnemyGuid) && !target.healthHaver.IsBoss)
-                    {
-                        float Time = PetrifyCurseState == PetrifyCurseStates.UPGRADED_AND_ONEROOMLEFT ? 12f : 7;
-                        PetrifyThing petrifyComponent = target.gameObject.AddComponent<PetrifyThing>();
-                        petrifyComponent.Time = Time;
-                    }
-                }
-                if (BolsterCurseState != BolsterCurseStates.DISABLED)
-                {
-                    if (target != null && !OtherTools.BossBlackList.Contains(target.aiActor.encounterTrackable.EncounterGuid))
-                    {
-                        float CooldownScale = 0.7f;
-                        float MovementSpeed = 1.2f;
-                        if (BolsterCurseState == BolsterCurseStates.UPGRADED_AND_ONEROOMLEFT) { CooldownScale = 0.33f; MovementSpeed = 1.5f; }
-                        if (target.behaviorSpeculator != null) { target.behaviorSpeculator.CooldownScale /= CooldownScale; }
-                        target.MovementSpeed *= MovementSpeed;
-                    }
-                }
-            }
-           
-        }
+
 
         public static void EnableDarkness(bool IsSuperPowered = false, string OverrideTextLineOne = "You Obtained The", string OverrideTextLineTwo = "Curse Of Darkness.")
         {

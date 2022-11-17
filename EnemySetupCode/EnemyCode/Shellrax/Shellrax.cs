@@ -44,7 +44,7 @@ namespace Planetside
 
             if (fuckyouprefab == null || !BossBuilder.Dictionary.ContainsKey(guid))
 			{
-				fuckyouprefab = BossBuilder.BuildPrefabBundle("Shellrax", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(8, 9), new Vector3(3.125f,3.125f) ,false, true);
+				fuckyouprefab = BossBuilder.BuildPrefabBundle("Shellrax", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(8, 9) ,false, true);
 				var companion = fuckyouprefab.AddComponent<EnemyBehavior>();
                 EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, Collection, mat);
 

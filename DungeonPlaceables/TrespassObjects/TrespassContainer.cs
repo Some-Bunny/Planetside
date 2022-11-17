@@ -143,7 +143,9 @@ namespace Planetside
                 defaultPath+"trespassContainer_break_008.png",
                 defaultPath+"trespassContainer_break_009.png",
             };
-            MajorBreakable statue = BreakableAPIToolbox.GenerateMajorBreakable("trespass_container", idlePaths, 6, breakPaths, 16, 15000, defaultPath + "trespassContainer_shadow.png", 0f, -0.1875f, true, 28, 24, 2, -4, true, null, null, true, null);
+            MajorBreakable statue = BreakableAPIToolbox.GenerateMajorBreakable("trespass_container", idlePaths, 6, breakPaths, 16, 15000, true, 28, 24, 2, -4, true, null, null, true, null);
+            BreakableAPIToolbox.GenerateShadow(defaultPath + "trespassContainer_shadow.png", "trespass_container_shadow", statue.gameObject.transform, new Vector3(0f, -0.1875f));
+
             statue.gameObject.AddComponent<TresspassLightController>();
             statue.gameObject.AddComponent<TrespassContainterInteractable>();
             statue.gameObject.AddComponent<DungeonPlaceableBehaviour>();

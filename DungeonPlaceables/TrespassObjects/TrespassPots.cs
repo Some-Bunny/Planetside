@@ -40,7 +40,9 @@ namespace Planetside
 
             ShardCluster potShardCluster = BreakableAPIToolbox.GenerateShardCluster(shardObjects, 0.7f, 1.2f, 6, 9, 0.6f);
             string shadowPath = "Planetside/Resources/DungeonObjects/EmberPot/emberpotshadow.png";
-            MinorBreakable breakable = BreakableAPIToolbox.GenerateMinorBreakable("TrespassPot1", new string[] {defaultPath+ "trespasspot1_idle.png" }, 2, new string[] { defaultPath + "trespasspot1_break.png" }, 10, "Play_OBJ_pot_shatter_01", shadowPath, 0, -0.125f, true, 13, 14, 1, 1);
+            MinorBreakable breakable = BreakableAPIToolbox.GenerateMinorBreakable("TrespassPot1", new string[] {defaultPath+ "trespasspot1_idle.png" }, 2, new string[] { defaultPath + "trespasspot1_break.png" }, 10, "Play_OBJ_pot_shatter_01", true, 13, 14, 1, 1);
+            BreakableAPIToolbox.GenerateShadow(shadowPath, "trespassPot_shadow", breakable.gameObject.transform, new Vector3(0, -0.125f));
+
             breakable.stopsBullets = true;
             breakable.OnlyPlayerProjectilesCanBreak = false;
             breakable.OnlyBreaksOnScreen = false;
@@ -66,7 +68,9 @@ namespace Planetside
             breakable.MaxParticlesOnBurst = 10;
             breakable.MinParticlesOnBurst = 4;
 
-            MinorBreakable breakable2 = BreakableAPIToolbox.GenerateMinorBreakable("TrespassPot2", new string[] { defaultPath + "trespasspot2_idle.png" }, 2, new string[] { defaultPath + "trespasspot2_break.png" }, 10, "Play_OBJ_pot_shatter_01", shadowPath, 0, -0.125f, true, 13, 14, 1, 1);
+            MinorBreakable breakable2 = BreakableAPIToolbox.GenerateMinorBreakable("TrespassPot2", new string[] { defaultPath + "trespasspot2_idle.png" }, 2, new string[] { defaultPath + "trespasspot2_break.png" }, 10, "Play_OBJ_pot_shatter_01", true, 13, 14, 1, 1);
+            BreakableAPIToolbox.GenerateShadow(shadowPath, "trespassPot_shadow", breakable2.gameObject.transform, new Vector3(0, -0.125f));
+
             breakable2.stopsBullets = true;
             breakable2.OnlyPlayerProjectilesCanBreak = false;
             breakable2.OnlyBreaksOnScreen = false;
@@ -91,7 +95,9 @@ namespace Planetside
             breakable2.gameObject.AddComponent<TresspassUnlitShaderController>();
 
 
-            MinorBreakable breakable3 = BreakableAPIToolbox.GenerateMinorBreakable("TrespassPot3", new string[] { defaultPath + "trespasspot3_idle.png" }, 2, new string[] { defaultPath + "trespasspot3_break.png" }, 10, "Play_OBJ_pot_shatter_01", shadowPath, 0, -0.125f, true, 13, 14, 1, 1);
+            MinorBreakable breakable3 = BreakableAPIToolbox.GenerateMinorBreakable("TrespassPot3", new string[] { defaultPath + "trespasspot3_idle.png" }, 2, new string[] { defaultPath + "trespasspot3_break.png" }, 10, "Play_OBJ_pot_shatter_01", true, 13, 14, 1, 1);
+            BreakableAPIToolbox.GenerateShadow(shadowPath, "trespassPot_shadow", breakable3.gameObject.transform, new Vector3(0, -0.125f));
+
             breakable3.stopsBullets = true;
             breakable3.OnlyPlayerProjectilesCanBreak = false;
             breakable3.OnlyBreaksOnScreen = false;

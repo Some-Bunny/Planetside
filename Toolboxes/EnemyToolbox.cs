@@ -120,7 +120,7 @@ namespace Planetside
 			}
 		}
 
-		public static void AddOffsetToFrames(tk2dSpriteAnimator animator, string animationName, Dictionary<int, Vector3> Offset, List<int> idListfallback= null)
+		public static void AddOffsetToFrames(tk2dSpriteAnimator animator, string animationName, Dictionary<int, Vector3> Offset, List<int> idListfallback = null)
 		{
             tk2dSpriteAnimationClip awakenClip = animator.GetClipByName(animationName);
 			List<int> idsModified = idListfallback ?? new List<int>();
@@ -142,21 +142,6 @@ namespace Planetside
                     }
                 }
             }
-
-            
-			/*
-            for (int i = 0; i < awakenClip.frames.Length; i++)
-            {
-                int id = awakenClip.frames[i].spriteId;
-
-                Vector3 v = new Vector3(0, 0);
-                Offset.TryGetValue(i, out v);
-                awakenClip.frames[i].spriteCollection.spriteDefinitions[id].position0 += v;
-                awakenClip.frames[i].spriteCollection.spriteDefinitions[id].position1 += v;
-                awakenClip.frames[i].spriteCollection.spriteDefinitions[id].position2 += v;
-                awakenClip.frames[i].spriteCollection.spriteDefinitions[id].position3 += v;
-            }
-			*/
         }
 
 		public static void AddSoundsToAnimationFrame(tk2dSpriteAnimator animator, string animationName, Dictionary<int, string> frameAndSoundName)//int frame, string soundName)
@@ -226,7 +211,7 @@ namespace Planetside
 				return null;
 			}
 
-            GameObject prefab = EnemyBuilder.BuildPrefabBundle(guid, guid, collectionData, IdleFrameKeys[0], new IntVector2(0, 0), new IntVector2(8, 9), new Vector3(1.25f, 1.25f), false, false);
+            GameObject prefab = EnemyBuilder.BuildPrefabBundle(guid, guid, collectionData, IdleFrameKeys[0], new IntVector2(0, 0), new IntVector2(8, 9), false, false);
 			StaticInformation.ModderBulletGUIDs.Add(guid);
 			var companion = prefab.AddComponent<BulletEnemyBehavior>();
 			companion.aiActor.knockbackDoer.weight = 800;

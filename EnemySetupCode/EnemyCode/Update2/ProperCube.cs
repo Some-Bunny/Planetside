@@ -33,7 +33,7 @@ namespace Planetside
 
             if (prefab == null || !EnemyBuilder.Dictionary.ContainsKey(guid))
             {
-				prefab = EnemyBuilder.BuildPrefabBundle("Toddy Enemy", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(8, 9), new Vector3(1, 1.375f), false);
+				prefab = EnemyBuilder.BuildPrefabBundle("Toddy Enemy", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(8, 9),  false);
 				var companion = prefab.AddComponent<EnemyBehavior>();
 
                 EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, Collection, mat, false);

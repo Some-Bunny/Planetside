@@ -96,7 +96,6 @@ namespace Planetside
 
 
 
-            RoomHandler room = user.CurrentRoom;
             ETGModConsole.Log(user.CurrentRoom.GetRoomName());
 
             AIActor orLoadByGuid = EnemyDatabase.GetOrLoadByGuid("864ea5a6a9324efc95a0dd2407f42810");
@@ -104,16 +103,14 @@ namespace Planetside
             AIActor aiactor = AIActor.Spawn(orLoadByGuid.aiActor, intVector.Value, GameManager.Instance.Dungeon.data.GetAbsoluteRoomFromPosition(intVector.Value), true, AIActor.AwakenAnimationType.Spawn, true);
 
 
-            var pp = UnityEngine.Object.Instantiate<GameObject>(Ophanaim.EyeBallMinion, aiactor.transform.position + new Vector3(1.5f, 0), Quaternion.identity, null).GetComponent<AdvancedBodyPartController>();
-            pp.MainBody = aiactor;
-            pp.gameObject.transform.parent = aiactor.transform;
-            pp.healthHaver.SetHealthMaximum(20);
-            pp.healthHaver.ForceSetCurrentHealth(20);
-            pp.OnBodyPartPreDeath += (obj1, obj2, obj3) =>
+            for (int i = 0; i < 4; i++)
             {
-                var onnn = UnityEngine.Object.Instantiate<GameObject>(Ophanaim.SolarClap, obj1.transform.position, Quaternion.identity, null);
-                Destroy(onnn, 2);
-            };
+                var pp = UnityEngine.Object.Instantiate<GameObject>(Ophanaim.EyeBallMinion, aiactor.transform.position + MathToolbox.GetUnitOnCircle(90 * i, 2).ToVector3ZisY(), Quaternion.identity, null).GetComponent<AdvancedBodyPartController>();
+                pp.MainBody = aiactor;
+                pp.gameObject.transform.parent = aiactor.transform;
+            }
+
+           
 
             //var hODC = (PickupObjectDatabase.GetById(515) as Gun).DefaultModule.projectiles[0].bleedEffect.vfxExplosion.GetComponent<HammerOfDawnController>();
 

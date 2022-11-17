@@ -34,7 +34,7 @@ namespace Planetside
 			if (prefab == null || !EnemyBuilder.Dictionary.ContainsKey(guid))
 			{
 				AIActor aIActor = EnemyDatabase.GetOrLoadByGuid("01972dee89fc4404a5c408d50007dad5");
-				prefab = EnemyBuilder.BuildPrefabBundle("wailer", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(8, 9), new Vector3(1.5f, 1), true);
+				prefab = EnemyBuilder.BuildPrefabBundle("wailer", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(8, 9), true);
 				var companion = prefab.AddComponent<EnemyBehavior>();
 
                 EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, Collection, mat);

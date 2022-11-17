@@ -660,6 +660,12 @@ namespace Planetside
             string color1 = "9006FF";
             OtherTools.PrintNoID("Unlock List:\n" + a + b + c + d + e + f + g + h + i + j + k + l + m + n + o + p + q, color1);
             OtherTools.Init();
+            new Hook(typeof(ConversationBarController).GetMethod("ShowBar", BindingFlags.Instance | BindingFlags.Public), typeof(PlanetsideModule).GetMethod("HAHA"));
+        }
+
+        public static void HAHA(Action<ConversationBarController, PlayerController, string[]> orig, ConversationBarController self, PlayerController p, string[] r)
+        {
+            orig(self, p, r);
         }
 
        // public override void Start(){}

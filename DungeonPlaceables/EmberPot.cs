@@ -31,7 +31,9 @@ namespace Planetside
                 defaultPath+"Pot/emberpot_break_001.png",
             };
             string shadowPath = "Planetside/Resources/DungeonObjects/EmberPot/emberpotshadow.png";
-            MinorBreakable breakable = BreakableAPIToolbox.GenerateMinorBreakable("Ember_Pot", idlePaths, 2, breakPaths, 4, "Play_OBJ_pot_shatter_01", shadowPath, 0, -0.125f, true, 13, 14, 1, 1);
+            MinorBreakable breakable = BreakableAPIToolbox.GenerateMinorBreakable("Ember_Pot", idlePaths, 2, breakPaths, 4, "Play_OBJ_pot_shatter_01", true, 13, 14, 1, 1);
+            BreakableAPIToolbox.GenerateShadow(shadowPath, "emberpot_shadow", breakable.gameObject.transform, new Vector3(0, -0.125f));
+
             breakable.stopsBullets = true;
             breakable.OnlyPlayerProjectilesCanBreak = false;
             breakable.OnlyBreaksOnScreen = false;

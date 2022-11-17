@@ -239,7 +239,7 @@ namespace ItemAPI
         }
 
 
-        public static GameObject BuildPrefabBundle(string name, string guid, tk2dSpriteCollectionData customCollection, int spriteID, IntVector2 hitboxOffset, IntVector2 hitBoxSize, Vector3 bounds, bool HasAiShooter, bool UsesAttackGroup = false)
+        public static GameObject BuildPrefabBundle(string name, string guid, tk2dSpriteCollectionData customCollection, int spriteID, IntVector2 hitboxOffset, IntVector2 hitBoxSize, bool HasAiShooter, bool UsesAttackGroup = false)
         {
             if (HasAiShooter)
             {
@@ -279,20 +279,44 @@ namespace ItemAPI
             //setup misc components
             var sprite = prefab.AddComponent<tk2dSprite>();
 
-
+            /*
             for (int i = 0; i < customCollection.spriteDefinitions.Count() - 1; i++)
             {
                 var c = customCollection.spriteDefinitions[i];
 
+                if (guid == "arch_gunjurer")
+                {
+                    ETGModConsole.Log(c.boundsDataCenter);
+                    ETGModConsole.Log(c.boundsDataCenter);
+                    ETGModConsole.Log(c.boundsDataCenter);
+                    ETGModConsole.Log(c.boundsDataCenter);
 
-                // ETGModConsole.Log(c.GetBounds());
-                c.boundsDataCenter = new Vector3(bounds.x / 2f, bounds.y / 2f, 0f);
-                c.boundsDataExtents = new Vector3(bounds.x, bounds.y, 0f);
-                c.untrimmedBoundsDataCenter = new Vector3(bounds.x / 2f, bounds.y / 2f, 0f);
-                c.untrimmedBoundsDataExtents = new Vector3(bounds.x, bounds.y, 0f);
+                    /*
+                    var boundsDataCenter = PlanetsideReflectionHelper.ReflectGetField<Vector3>(typeof(tk2dSpriteDefinition), "boundsDataCenter", c);
+                    ETGModConsole.Log(boundsDataCenter);
+                    var boundsDataExtents = PlanetsideReflectionHelper.ReflectGetField<Vector3>(typeof(tk2dSpriteDefinition), "boundsDataExtents", c);
+                    ETGModConsole.Log(boundsDataExtents);
+
+                    var untrimmedBoundsDataCenter = PlanetsideReflectionHelper.ReflectGetField<Vector3>(typeof(tk2dSpriteDefinition), "untrimmedBoundsDataCenter", c);
+                    ETGModConsole.Log(untrimmedBoundsDataCenter);
+
+                    var untrimmedBoundsDataExtents = PlanetsideReflectionHelper.ReflectGetField<Vector3>(typeof(tk2dSpriteDefinition), "untrimmedBoundsDataExtents", c);
+                    ETGModConsole.Log(untrimmedBoundsDataExtents);
+                    */
+            /*
+                }
+
+
+
+
+                //ETGModConsole.Log(c.GetBounds());
+                //c.boundsDataCenter = new Vector3(bounds.x / 2f, bounds.y / 2f, 0f);
+                //c.boundsDataExtents = new Vector3(bounds.x, bounds.y, 0f);
+                //c.untrimmedBoundsDataCenter = new Vector3(bounds.x / 2f, bounds.y / 2f, 0f);
+                //c.untrimmedBoundsDataExtents = new Vector3(bounds.x, bounds.y, 0f);
 
             }
-
+            */
 
             /*
             if (Debug == true)

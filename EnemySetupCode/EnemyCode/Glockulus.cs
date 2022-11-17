@@ -37,7 +37,7 @@ namespace Planetside
 			bool flag2 = flag;
 			if (!flag2)
 			{
-				prefab = EnemyBuilder.BuildPrefabBundle("Glockulus", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(8, 9), new Vector3(0.9375f, 1.1875f), false);
+				prefab = EnemyBuilder.BuildPrefabBundle("Glockulus", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(8, 9), false);
 				var companion = prefab.AddComponent<EnemyBehavior>();
                 EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, Collection, mat);
 

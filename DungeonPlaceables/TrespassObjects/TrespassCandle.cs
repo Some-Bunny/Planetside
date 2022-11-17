@@ -62,7 +62,8 @@ namespace Planetside
         public static MinorBreakable GenerateThing(ShardCluster shardCluster, string[] animPaths,string breakStr, int FPS)
         {
             string shadowPath = "Planetside/Resources/DungeonObjects/EmberPot/emberpotshadow.png";
-            MinorBreakable breakable = BreakableAPIToolbox.GenerateMinorBreakable("TrespassCandle", animPaths, FPS, new string[] { breakStr }, 10, "Play_OBJ_box_cover_01", shadowPath, 0, -0.125f, true, 13, 14, 1, 1);
+            MinorBreakable breakable = BreakableAPIToolbox.GenerateMinorBreakable("TrespassCandle", animPaths, FPS, new string[] { breakStr }, 10, "Play_OBJ_box_cover_01",  true, 13, 14, 1, 1);
+            BreakableAPIToolbox.GenerateShadow(shadowPath, "moneyPot_shadow", breakable.gameObject.transform, new Vector3(0, -0.125f));
             breakable.stopsBullets = true;
             breakable.OnlyPlayerProjectilesCanBreak = false;
             breakable.OnlyBreaksOnScreen = false;

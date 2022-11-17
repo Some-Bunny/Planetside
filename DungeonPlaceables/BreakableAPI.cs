@@ -10,14 +10,17 @@ using GungeonAPI;
 using MonoMod.RuntimeDetour;
 using System.Reflection;
 using Planetside;
+using Gungeon;
+using FullInspector;
+using Brave.BulletScript;
 
 namespace BreakAbleAPI
 {
 
 
-    /// <summary>
-    /// This class is important if youre adding shadows to your breakables.
-    /// </summary>
+
+    /// 
+    /*
     public class ShadowHandler : MonoBehaviour
     {
         public ShadowHandler()
@@ -44,7 +47,7 @@ namespace BreakAbleAPI
         public Vector3 Offset;
         public GameObject shadowObject;
     }
-
+    */
 
 
 
@@ -219,6 +222,30 @@ namespace BreakAbleAPI
             FakePrefab.MarkAsFakePrefab(self);
             UnityEngine.Object.DontDestroyOnLoad(self);
         }
+
+        public static GameObject GenerateShadow(string ShadowSpritePath, string name, Transform parent, Vector3 Offset, tk2dSpriteCollectionData customCollection = null)
+        {
+            GameObject shadowObject = SpriteBuilder.SpriteFromResource(ShadowSpritePath, null, false);
+
+            tk2dSpriteCollectionData ShadowSpriteCollection = customCollection ?? SpriteBuilder.ConstructCollection(shadowObject, (name + "_Collection"));
+            shadowObject.name = name;
+            int newSpriteId2 = SpriteBuilder.AddSpriteToCollection(ShadowSpritePath, ShadowSpriteCollection);
+            tk2dSprite orAddComponent3 = shadowObject.GetOrAddComponent<tk2dSprite>();
+            orAddComponent3.SetSprite(ShadowSpriteCollection, newSpriteId2);
+
+            orAddComponent3.HeightOffGround = parent.gameObject.GetComponent<tk2dSprite>().HeightOffGround - 0.1f;
+            shadowObject.transform.position = parent.gameObject.transform.position + Offset;
+            shadowObject.transform.parent = parent;
+
+            DepthLookupManager.ProcessRenderer(shadowObject.GetComponent<Renderer>(), DepthLookupManager.GungeonSortingLayer.BACKGROUND);
+            orAddComponent3.usesOverrideMaterial = true;
+            orAddComponent3.renderer.material.shader = Shader.Find("Brave/Internal/SimpleAlphaFadeUnlit");
+            orAddComponent3.renderer.material.SetFloat("_Fade", 0.66f);
+
+
+            return shadowObject;
+        }
+
 
 
         public static DungeonDoorSubsidiaryBlocker GenerateDungeonDoorSubsidiaryBlocker(string name, string[] idleSpritePaths, string[] sealSpritePaths, string[] unsealSpritePaths, bool isNorthSouthDoor, string[] playerNearSealedDoorAnimPaths = null, int idleAnimFPS = 5, int sealAnimFPS = 5, int unsealAnimFPS = 5, int playerNearSealedDoorAnimFPS = 5, string[] chainIdleSpritePaths = null, string[] chainSealSpritePaths = null, string[] chainUnsealSpritePaths = null, string[] chainPlayerNearChainPaths = null )
@@ -1164,13 +1191,13 @@ namespace BreakAbleAPI
             gameObject.transform.parent = parent.transform;
             return gameObject;
         }
-        public static SpeculativeRigidbody SetUpEmptySpeculativeRigidbody(this tk2dSprite sprite, IntVector2 offset, IntVector2 dimensions)
+        private static SpeculativeRigidbody SetUpEmptySpeculativeRigidbody(this tk2dSprite sprite, IntVector2 offset, IntVector2 dimensions)
         {
             var body = sprite.gameObject.GetOrAddComponent<SpeculativeRigidbody>();
             body.PixelColliders = new List<PixelCollider>() { };
             return body;
         }
-        public static tk2dSpriteAnimationClip AddTableAnimation(tk2dSpriteAnimator animator, tk2dSpriteCollectionData Tablecollection, string[] spritePaths, string clipName, int FPS, Vector3 colliderSize, Vector3 colliderOffset)
+        private static tk2dSpriteAnimationClip AddTableAnimation(tk2dSpriteAnimator animator, tk2dSpriteCollectionData Tablecollection, string[] spritePaths, string clipName, int FPS, Vector3 colliderSize, Vector3 colliderOffset)
         {
             tk2dSpriteAnimation animation = animator.gameObject.AddComponent<tk2dSpriteAnimation>();
             animation.clips = new tk2dSpriteAnimationClip[0];
@@ -1296,7 +1323,7 @@ namespace BreakAbleAPI
         /// <param name="BlocksPaths">Will act as a blocker and will not let enemies path find through it, I think.</param>
         /// <param name="collisionLayerList">Sets the collision layer/s of the MajorBreakable. leaving this as null will set it to HighObstacle AND BulletBlocker, however basegame MajorBreakables can use different ones, and at times multiple at once.</param>
 
-        public static MajorBreakable GenerateMajorBreakable(string name, string[] idleSpritePaths, int idleAnimFPS = 2, string[] breakSpritePaths = null, int breakAnimFPS = 5, float HP = 100, string ShadowSpritePath = null, float ShadowOffsetX = 0, float ShadowOffsetY = 0, bool UsesCustomColliderValues = false, int ColliderSizeX = 16, int ColliderSizeY = 8, int ColliderOffsetX = 0, int ColliderOffsetY = 8, bool DistribleShards = true, VFXPool breakVFX = null, VFXPool damagedVFX = null, bool BlocksPaths = false, List<CollisionLayer> collisionLayerList = null, Dictionary<float, string> preBreakframesAndHPPercentages = null, bool usesWorldShader = true)
+        public static MajorBreakable GenerateMajorBreakable(string name, string[] idleSpritePaths, int idleAnimFPS = 2, string[] breakSpritePaths = null, int breakAnimFPS = 5, float HP = 100, bool UsesCustomColliderValues = false, int ColliderSizeX = 16, int ColliderSizeY = 8, int ColliderOffsetX = 0, int ColliderOffsetY = 8, bool DistribleShards = true, VFXPool breakVFX = null, VFXPool damagedVFX = null, bool BlocksPaths = false, List<CollisionLayer> collisionLayerList = null, Dictionary<float, string> preBreakframesAndHPPercentages = null, bool usesWorldShader = true)
         {
             Texture2D textureFromResource = ResourceExtractor.GetTextureFromResource(idleSpritePaths[0]);
             GameObject gameObject = SpriteBuilder.SpriteFromResource(idleSpritePaths[0], null, false);
@@ -1442,18 +1469,7 @@ namespace BreakAbleAPI
             breakable.spriteAnimator = animator;
             breakable.HitPoints = HP;
             breakable.HandlePathBlocking = BlocksPaths;
-            if (ShadowSpritePath != null)
-            {
-                GameObject shadowObject = SpriteBuilder.SpriteFromResource(ShadowSpritePath, null, false);
-                shadowObject.name = "Shadow_" + name;
-                int newSpriteId2 = SpriteBuilder.AddSpriteToCollection(ShadowSpritePath, MajorBreakableSpriteCollection);
-                tk2dSprite orAddComponent3 = shadowObject.GetOrAddComponent<tk2dSprite>();
-                orAddComponent3.SetSprite(MajorBreakableSpriteCollection, newSpriteId2);
-                FakePrefab.MarkAsFakePrefab(shadowObject);
-                ShadowHandler orAddComponent4 = breakable.gameObject.GetOrAddComponent<ShadowHandler>();
-                orAddComponent4.shadowObject = orAddComponent3.gameObject;
-                orAddComponent4.Offset = new Vector3(ShadowOffsetX, ShadowOffsetY);
-            }
+           
             if (breakVFX != null) { breakable.breakVfx = breakVFX; }
             if (damagedVFX != null) { breakable.damageVfx = damagedVFX; }
 
@@ -1501,7 +1517,7 @@ namespace BreakAbleAPI
         /// <param name="DestroyVFX">The VFX that plays when your breakable is destroyed.</param>
         /// <param name="collisionLayerList">Sets the collision layer/s of the MinorBreakable. leaving this as null will set it to HighObstacle, however basegame MinorBreakables can use different ones, and at times multiple at once.</param>
 
-        public static MinorBreakable GenerateMinorBreakable(string name, string[] idleSpritePaths, int idleAnimFPS = 1, string[] breakSpritePaths = null, int breakAnimFPS = 5, string breakAudioEvent = "Play_OBJ_pot_shatter_01", string ShadowSpritePath = null, float ShadowOffsetX = 0, float ShadowOffsetY = -1, bool UsesCustomColliderValues = false, int ColliderSizeX = 16, int ColliderSizeY = 8, int ColliderOffsetX = 0, int ColliderOffsetY = 8, GameObject DestroyVFX = null, List<CollisionLayer> collisionLayerList = null, bool usesWorldShader = true)     
+        public static MinorBreakable GenerateMinorBreakable(string name, string[] idleSpritePaths, int idleAnimFPS = 1, string[] breakSpritePaths = null, int breakAnimFPS = 5, string breakAudioEvent = "Play_OBJ_pot_shatter_01", bool UsesCustomColliderValues = false, int ColliderSizeX = 16, int ColliderSizeY = 8, int ColliderOffsetX = 0, int ColliderOffsetY = 8, GameObject DestroyVFX = null, List<CollisionLayer> collisionLayerList = null, bool usesWorldShader = true)     
         {
             Texture2D textureFromResource = ResourceExtractor.GetTextureFromResource(idleSpritePaths[0]);
             GameObject gameObject = SpriteBuilder.SpriteFromResource(idleSpritePaths[0], null, false);
@@ -1571,9 +1587,7 @@ namespace BreakAbleAPI
                 }
             }
 
-           
-           
-
+          
             tk2dSpriteAnimator animator = gameObject.GetOrAddComponent<tk2dSpriteAnimator>();
             tk2dSpriteAnimation animation = gameObject.AddComponent<tk2dSpriteAnimation>();
             animation.clips = new tk2dSpriteAnimationClip[0];
@@ -1627,25 +1641,7 @@ namespace BreakAbleAPI
             breakable.spriteAnimator = animator;
             breakable.breakAudioEventName = breakAudioEvent;
 
-            if (ShadowSpritePath != null)
-            {
-                GameObject ShadowObject = SpriteBuilder.SpriteFromResource(ShadowSpritePath, null, false);
-                FakePrefab.MarkAsFakePrefab(ShadowObject);
-                ShadowObject.name = "Shadow_" + name;
-                int shadowSpriteID = SpriteBuilder.AddSpriteToCollection(ShadowSpritePath, MinorBreakableSpriteCollection);
-                tk2dSprite orAddComponent3 = ShadowObject.GetOrAddComponent<tk2dSprite>();
-                orAddComponent3.SetSprite(MinorBreakableSpriteCollection, shadowSpriteID);
-                ShadowHandler orAddComponent4 = breakable.gameObject.GetOrAddComponent<ShadowHandler>();
-                orAddComponent4.shadowObject = orAddComponent3.gameObject;
-                orAddComponent4.Offset = new Vector3(ShadowOffsetX, ShadowOffsetY);
-            }
-
-            if (usesWorldShader == true)
-            {
-                breakable.sprite.renderer.material.shader = worldShader;
-                breakable.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
-            }
-
+          
             if (DestroyVFX != null) { breakable.AdditionalVFXObject = DestroyVFX; }
             return breakable;
         }
@@ -2310,7 +2306,7 @@ namespace BreakAbleAPI
         //Everything below here is an example of how you would generate your own Minorbreakable
         public static void ExampleMinorBreakableSetup()
         {
-            MinorBreakable breakable = GenerateMinorBreakable("testBreakable", new string[] { "Planetside/Resources/brokenchamberfixed.png", "Planetside/Resources/gunslingersring.png" }, 4, new string[] { "Planetside/Resources/gunslingersring.png", "Planetside/Resources/gunwarrant.png", "Planetside/Resources/plaetunstableteslacoil.png" }, 10, "Play_OBJ_pot_shatter_01", "Planetside/Resources/plaetunstableteslacoil.png", 0, -0.25f, true);
+            MinorBreakable breakable = GenerateMinorBreakable("testBreakable", new string[] { "Planetside/Resources/brokenchamberfixed.png", "Planetside/Resources/gunslingersring.png" }, 4, new string[] { "Planetside/Resources/gunslingersring.png", "Planetside/Resources/gunwarrant.png", "Planetside/Resources/plaetunstableteslacoil.png" }, 10, "Play_OBJ_pot_shatter_01", true);
             //The reason it returns a minorbreakable is so you can set more values here, without adding to the setup method to prevent clutter. this is why i am leaving examples here
 
             breakable.stopsBullets = true; // makes projectiles break when colliding with the breakable
@@ -2387,7 +2383,7 @@ namespace BreakAbleAPI
         //Everything below here is an example of how you would generate your own MajorBreakable
         public static void ExampleMajorBreakableSetup()
         {
-            MajorBreakable breakable = GenerateMajorBreakable("testMajorBreakable", new string[] { "Planetside/Resources/gunslingersring.png", "Planetside/Resources/blashshower.png" }, 5, new string[] { "Planetside/Resources/gunslingersring.png", "Planetside/Resources/gunwarrant.png", "Planetside/Resources/plaetunstableteslacoil.png" }, 10, 30, "Planetside/Resources/brokenchamberfixedtier2.png", 0, -0.25f, true);
+            MajorBreakable breakable = GenerateMajorBreakable("testMajorBreakable", new string[] { "Planetside/Resources/gunslingersring.png", "Planetside/Resources/blashshower.png" }, 5, new string[] { "Planetside/Resources/gunslingersring.png", "Planetside/Resources/gunwarrant.png", "Planetside/Resources/plaetunstableteslacoil.png" }, 10, 30, true);
 
             breakable.GameActorMotionBreaks = false; //Breaks the MajorBreakable if anything move over it
             breakable.damageVfxMinTimeBetween = 0.1f; //the minimum time that the breakable has to wait before playing its damageVFX again
