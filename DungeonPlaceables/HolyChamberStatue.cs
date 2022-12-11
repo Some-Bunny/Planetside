@@ -22,6 +22,7 @@ namespace Planetside
             self = base.gameObject.GetComponent<MajorBreakable>();
             if (base.gameObject != null)
             {
+                self.InvulnerableToEnemyBullets = true;
                 tk2dBaseSprite sprite = base.gameObject.GetComponent<tk2dBaseSprite>();
                 Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
                 sprite.usesOverrideMaterial = true;

@@ -111,7 +111,7 @@ namespace Planetside
             UnityEngine.Object.Destroy(damageLabel.gameObject, 1);
             yield break;
         }
-        public static GameObject CreateVFX(string name, List<string> spritePaths, int fps, IntVector2 Dimensions, tk2dBaseSprite.Anchor anchor, bool usesZHeight, float zHeightOffset, float emissivePower = -1, Color? emissiveColour = null)
+        public static GameObject CreateVFX(string name, List<string> spritePaths, int fps, IntVector2 Dimensions, tk2dBaseSprite.Anchor anchor, bool usesZHeight, float zHeightOffset, float emissivePower = -1, Color? emissiveColour = null, bool DestroysSelf = true, tk2dSpriteAnimationClip.WrapMode wrapMode = tk2dSpriteAnimationClip.WrapMode.Once)
         {
             GameObject Obj = new GameObject(name);
             VFXObject vfObj = new VFXObject();
@@ -155,12 +155,16 @@ namespace Planetside
             if (emissivePower > 0) sprite.renderer.material.SetFloat("_EmissiveColorPower", emissivePower);
             if (emissiveColour != null) sprite.renderer.material.SetColor("_EmissiveColor", (Color)emissiveColour);
             clip.frames = frames.ToArray();
-            clip.wrapMode = tk2dSpriteAnimationClip.WrapMode.Once;
+            clip.wrapMode = wrapMode;
             animation.clips = animation.clips.Concat(new tk2dSpriteAnimationClip[] { clip }).ToArray();
-            SpriteAnimatorKiller kill = animator.gameObject.AddComponent<SpriteAnimatorKiller>();
-            kill.fadeTime = -1f;
-            kill.animator = animator;
-            kill.delayDestructionTime = -1f;
+
+            if (DestroysSelf == true)
+            {
+                SpriteAnimatorKiller kill = animator.gameObject.AddComponent<SpriteAnimatorKiller>();
+                kill.fadeTime = -1f;
+                kill.animator = animator;
+                kill.delayDestructionTime = -1f;
+            }
             animator.playAutomatically = true;
             animator.DefaultClipId = animator.GetClipIdByName("start");
             vfObj.attached = true;

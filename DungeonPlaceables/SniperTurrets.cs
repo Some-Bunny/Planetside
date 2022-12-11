@@ -295,7 +295,7 @@ namespace Planetside
             };
 
             MajorBreakable professionalTurretFront = BreakableAPIToolbox.GenerateMajorBreakable("sniperTurretDefaultaFront", idleProfPaths, 5, idleProfPaths, 18, 15000, true, 0, 0, 0, 0, true, null, null, true, null);
-            EnemyToolbox.GenerateShootPoint(professionalTurretFront.gameObject, new Vector2(0.5f, 0.6875f), "laserPoint");
+            EnemyToolbox.GenerateShootPoint(professionalTurretFront.gameObject, new Vector2(0.5f, 0.875f), "laserPoint");
             AIBulletBank bulletBank = professionalTurretFront.gameObject.AddComponent<AIBulletBank>();
             SniperTurretsController turret = professionalTurretFront.gameObject.AddComponent<SniperTurretsController>();
             turret.isProfessional = true;
@@ -317,7 +317,7 @@ namespace Planetside
                 defaultFrontPath+"sniperturret_right_idle4.png",
             };
             MajorBreakable sniperTurretDefaultaFront = BreakableAPIToolbox.GenerateMajorBreakable("sniperTurretDefaultaFront", idlePaths, 5, idlePaths, 18, 15000, true, 0, 0, 0, 0, true, null, null, true, null);
-            EnemyToolbox.GenerateShootPoint(sniperTurretDefaultaFront.gameObject, new Vector2(0.5f, 0.6875f), "laserPoint");
+            EnemyToolbox.GenerateShootPoint(sniperTurretDefaultaFront.gameObject, new Vector2(0.5f, 0.875f), "laserPoint");
             AIBulletBank bulletBankLeft = sniperTurretDefaultaFront.gameObject.AddComponent<AIBulletBank>();
             SniperTurretsController t = sniperTurretDefaultaFront.gameObject.AddComponent<SniperTurretsController>();
             t.DirectionToFire = Vector2.right.ToAngle();

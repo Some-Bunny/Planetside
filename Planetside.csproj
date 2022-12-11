@@ -88,6 +88,8 @@
     <Compile Include="Controllers\CrossGameDataStorage.cs" />
     <Compile Include="Controllers\HellShrinesController.cs" />
     <Compile Include="Controllers\GlobalMessageRadio.cs" />
+    <Compile Include="Controllers\NemesisSpawnController.cs" />
+    <Compile Include="Controllers\RoomDropModifier.cs" />
     <Compile Include="Controllers\MasteryTraderSpawnController.cs" />
     <Compile Include="Controllers\PlanetsideCommands.cs" />
     <Compile Include="Controllers\PlanetsideBalanceChanges.cs" />
@@ -106,11 +108,13 @@
     <Compile Include="Debuff Stuff\TarnishEffect.cs" />
     <Compile Include="DungeonGenStuff\ExpandTK2DDungeonAssembler.cs" />
     <Compile Include="DungeonPlaceables\AbyssFloorDoor.cs" />
+    <Compile Include="DungeonPlaceables\EnemyBuffShrine.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\MovingFloorTiles\MovingTile2X2.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassBloodDecals.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TearInReality.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\MovingFloorTiles\MovingTile1X1.cs" />
     <Compile Include="DungeonPlaceables\MoneyPots.cs" />
+    <Compile Include="DungeonPlaceables\OphanaimDecals.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassTrollRock.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassTentaclePillar.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassSniperTurrets.cs" />
@@ -239,6 +243,7 @@
     <Compile Include="Items\Update4\Modifiers\ModifierNeedle.cs" />
     <Compile Include="Items\Update5\SurgeGrenade.cs" />
     <Compile Include="Misc Stuff\CustomNotificationHandler.cs" />
+    <Compile Include="Pickups\AllSeeingEyeMiniPickup.cs" />
     <Compile Include="Static Storage\StaticSpriteDefinitions.cs" />
     <Compile Include="Static Storage\StaticInformation.cs" />
     <Compile Include="Static Storage\StaticVFXStorage.cs" />
@@ -4593,6 +4598,57 @@
     <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_cast_007.png" />
     <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_cast_008.png" />
     <EmbeddedResource Include="Resources\immolationpowder2.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\OphanaimDecals\ophanaim_tile_001.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\OphanaimDecals\ophanaim_tile_002.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\OphanaimDecals\ophanaim_tile_003.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\OphanaimDecals\ophanaim_tile_004.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_die_001.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_die_002.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_die_003.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_die_004.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_die_005.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_die_006.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_die_007.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_die_008.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_die_009.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_die_010.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_die_011.png" />
+    <EmbeddedResource Include="Resources\Bosses\OphanaimUltra\ophanaimultra_die_012.png" />
+    <EmbeddedResource Include="Resources\Pickups\eye_pickup.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\EnemyBuffShrine\enemybuffshrine_idle_001.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\EnemyBuffShrine\enemybuffshrine_shadow.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\EnemyBuffShrine\enemybuffshrine_idle_002.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\EnemyBuffShrine\enemybuffshrine_idle_003.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\EnemyBuffShrine\Gems\fire_gem_idle_001.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\EnemyBuffShrine\Gems\fire_gem_idle_002.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\EnemyBuffShrine\Gems\fire_gem_idle_003.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\EnemyBuffShrine\Gems\fire_gem_idle_004.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\EnemyBuffShrine\Gems\fire_gem_idle_005.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\EnemyBuffShrine\Gems\ice_gem_idle_001.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\EnemyBuffShrine\Gems\ice_gem_idle_002.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\EnemyBuffShrine\Gems\ice_gem_idle_003.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\EnemyBuffShrine\Gems\ice_gem_idle_004.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\EnemyBuffShrine\Gems\ice_gem_idle_005.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\EnemyBuffShrine\Gems\poison_gem_idle_001.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\EnemyBuffShrine\Gems\poison_gem_idle_002.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\EnemyBuffShrine\Gems\poison_gem_idle_003.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\EnemyBuffShrine\Gems\poison_gem_idle_004.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\EnemyBuffShrine\Gems\poison_gem_idle_005.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\EnemyBuffShrine\Debris\debris_hand_001.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\EnemyBuffShrine\Debris\debris_normal_001.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\EnemyBuffShrine\Debris\debris_normal_002.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\EnemyBuffShrine\Debris\debris_normal_003.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\EnemyBuffShrine\Debris\debris_normal_004.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\EnemyBuffShrine\Debris\debris_normal_005.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\EnemyBuffShrine\Debris\debris_normal_006.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\EnemyBuffShrine\Debris\debris_normal_007.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\EnemyBuffShrine\Debris\debris_pedestal_001.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\EnemyBuffShrine\Debris\debris_pedestal_002.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\EnemyBuffShrine\Debris\debris_pedestal_003.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\EnemyBuffShrine\Debris\debris_pedestal_004.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\EnemyBuffShrine\Debris\debris_pedestal_005.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\EnemyBuffShrine\Debris\debris_pedestal_006.png" />
+    <EmbeddedResource Include="Resources\DungeonObjects\EnemyBuffShrine\Debris\debris_pedestal_007.png" />
     <Content Include="Resources\Shellrax\shellrax_intro_019.png" />
     <EmbeddedResource Include="Resources\VFX\LockOnVFX\lockonvfx1.png" />
     <EmbeddedResource Include="Resources\VFX\LockOnVFX\lockonvfx2.png" />
@@ -4892,6 +4948,21 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="PlanetsideBank.bnk" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\TrespassRooms\trespassRoom5.room" />
+    <EmbeddedResource Include="Resources\TrespassRooms\trespassRoom6.room" />
+    <EmbeddedResource Include="Resources\TrespassRooms\trespassRoom7.room" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\TrespassRooms\TrespassDeeperRooms\trespassharderroom6.room" />
+    <EmbeddedResource Include="Resources\TrespassRooms\TrespassDeeperRooms\trespassharderroom7.room" />
+    <EmbeddedResource Include="Resources\TrespassRooms\TrespassDeeperRooms\trespassharderroom8.room" />
+    <EmbeddedResource Include="Resources\TrespassRooms\TrespassDeeperRooms\trespassharderroom9.room" />
+    <EmbeddedResource Include="Resources\TrespassRooms\TrespassDeeperRooms\trollface.room" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\OtherSpecialRooms\nemesis_miniboss_room.room" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

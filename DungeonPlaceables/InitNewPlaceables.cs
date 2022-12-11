@@ -37,6 +37,8 @@ namespace Planetside
             MovingTile1X1.Init();
             MovingTile2X2.Init();
             MoneyPots.Init();
+            OphanaimDecals.Init();
+            EnemyBuffShrine.Init();
             //TrespassTrollRock.Init();
         }
     }

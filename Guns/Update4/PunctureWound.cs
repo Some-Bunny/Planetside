@@ -59,7 +59,7 @@ namespace Planetside
             gun.DefaultModule.cooldownTime = 1f;
             gun.DefaultModule.numberOfShotsInClip = 1;
             gun.barrelOffset.transform.localPosition = new Vector3(24f / 16f, 8f / 16f, 0f);
-            gun.SetBaseMaxAmmo(35);
+            gun.SetBaseMaxAmmo(45);
             gun.gunClass = GunClass.CHARGE;
             gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
             gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("PunctureWoundPSOG", "Planetside/Resources/GunClips/PunctureWound/punctureFull", "Planetside/Resources/GunClips/PunctureWound/punctureEmpty");

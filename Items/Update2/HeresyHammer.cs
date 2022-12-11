@@ -245,7 +245,7 @@ namespace Planetside
                 if (death.name == "psog:endofeverythingshrine(Clone)")
                 {
                     base.StartCoroutine(ShrineParticlesOnDestory(death.sprite.WorldBottomLeft, death.sprite.WorldTopRight, PurpleParticles));
-                    Gun gun = PickupObjectDatabase.GetByEncounterName(InitialiseGTEE.GunIDForEOE) as Gun;
+                    Gun gun = PickupObjectDatabase.GetById(InitialiseGTEE.HOneToShootIt) as Gun;
                     int StoredGunID = gun.PickupObjectId;
                     int Item1ID = Game.Items[InitialiseGTEE.HOneToFireIt].PickupObjectId;
                     int Item2ID = Game.Items[InitialiseGTEE.HOneToPrimeIt].PickupObjectId;

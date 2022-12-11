@@ -77,15 +77,13 @@ namespace Planetside
 		private void OnPreCollision(SpeculativeRigidbody myRigidbody, PixelCollider myCollider, SpeculativeRigidbody other, PixelCollider otherCollider)
 		{
 			Hits++;
-			if (Hits == 2)
+			if (Hits == 3)
             {
 				float DmG = (player.stats.GetStatValue(PlayerStats.StatType.Damage));
 				Projectile projectile = ((Gun)ETGMod.Databases.Items[508]).DefaultModule.projectiles[0];
 				GameObject gameObject = SpawnManager.SpawnProjectile(projectile.gameObject, actor.sprite.WorldCenter, Quaternion.Euler(0f, 0f, ((player.CurrentGun == null) ? 1.2f : player.CurrentGun.CurrentAngle)), true);
 				Projectile component = gameObject.GetComponent<Projectile>();
-				bool flag = component != null;
-				bool r = flag;
-				if (r)
+				if (component != null)
 				{
 					component.Owner = player;
 					component.Shooter = player.specRigidbody;
@@ -129,9 +127,7 @@ namespace Planetside
 						Projectile projectile3 = ((Gun)ETGMod.Databases.Items[43]).DefaultModule.projectiles[0];
 						GameObject gameObject3 = SpawnManager.SpawnProjectile(projectile3.gameObject, worldCenter3, Quaternion.Euler(0f, 0f, z3-180), true);
 						Projectile component3 = gameObject3.GetComponent<Projectile>();
-						bool flag15 = component3 != null;
-						bool flag16 = flag15;
-						if (flag16)
+						if (component3 != null)
 						{
 							component3.baseData.damage = 30f * DmG;
 							component3.Owner = player;

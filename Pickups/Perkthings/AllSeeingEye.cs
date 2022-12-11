@@ -3,8 +3,7 @@ using ItemAPI;
 using System;
 using UnityEngine;
 using System.Collections.Generic;
-
-
+using System.Security.Cryptography;
 namespace Planetside
 {
 
@@ -38,7 +37,21 @@ namespace Planetside
 			FakePrefab.MarkAsFakePrefab(AllSeeingEye.itemVFXPrefab);
 			AllSeeingEye.itemVFXPrefab.SetActive(false);
 
-		}
+
+            var a = RoomDropModifier.RoomDropModifierData.CreateDummyTable();
+            a.AddItemToPool(PickupObjectDatabase.GetById(AllSeeingEyeMiniPickup.MiniEye), 1);
+
+
+            RoomDropModifier.roomDropModifierDatas.Add(new RoomDropModifier.RoomDropModifierData()
+            {
+                CanOverrideDropCondition = canOverride,
+                IdentificationKey = "A_S_E",
+                overridePriority = RoomDropModifier.RoomDropModifierData.OverridePriority.FULL_OVERRIDE,
+                OverrideTable = a,
+				
+            });
+
+        }
 		public static GameObject gunVFXPrefab;
 		public static GameObject itemVFXPrefab;
 
@@ -51,19 +64,46 @@ namespace Planetside
         {
             if (m_hasBeenPickedUp)
                 return;
-         
-			PerkParticleSystemController cont = base.GetComponent<PerkParticleSystemController>();
-			if (cont != null) { cont.DoBigBurst(player); }
 
+            AkSoundEngine.PostEvent("Play_OBJ_dice_bless_01", player.gameObject);
+
+            PerkParticleSystemController cont = base.GetComponent<PerkParticleSystemController>();
+            if (cont != null) { cont.DoBigBurst(player); }
+            AllSeeingEyeController chaos = player.gameObject.GetOrAddComponent<AllSeeingEyeController>();
+            //chaos.player = player;
             m_hasBeenPickedUp = true;
-			AkSoundEngine.PostEvent("Play_OBJ_dice_bless_01", player.gameObject);
-			player.gameObject.AddComponent<AllSeeingEyeController>();
-
+            if (chaos.hasBeenPickedup == true)
+            { chaos.IncrementStack(); }
             Exploder.DoDistortionWave(player.sprite.WorldTopCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
             player.BloopItemAboveHead(base.sprite, "");
-            OtherTools.Notify("All Seeing Eye", "Gain Foresight.", "Planetside/Resources/PerkThings/allSeeingEye", UINotificationController.NotificationColor.GOLD);
+            string BlurbText = chaos.hasBeenPickedup == true ? "See More." : "Gain Foresight.";
+            OtherTools.Notify("All Seeing Eye", BlurbText, "Planetside/Resources/PerkThings/allSeeingEye", UINotificationController.NotificationColor.GOLD);
             UnityEngine.Object.Destroy(base.gameObject);
+
         }
+
+        public static bool canOverride()
+		{
+			foreach (PlayerController p in GameManager.Instance.AllPlayers)
+			{
+				var ase = p.GetComponent<AllSeeingEyeController>();
+				ETGModConsole.Log(1);
+                if (ase != null)
+				{
+                    ETGModConsole.Log(2);
+
+                    if (1-1/(1 + 0.17f * ase.Stacks) > UnityEngine.Random.value)
+					{
+                        ETGModConsole.Log(3);
+
+                        return true;
+					}
+				}
+			}
+            ETGModConsole.Log(4);
+
+            return false;
+		}
 
         public float distortionMaxRadius = 30f;
         public float distortionDuration = 2f;
@@ -162,17 +202,45 @@ namespace Planetside
 {
 	public class AllSeeingEyeController : BraveBehaviour
 	{
-		public void Start()
+        public AllSeeingEyeController()
+        {
+            this.Stacks = 1;
+            this.hasBeenPickedup = false;
+        }
+		public bool hasBeenPickedup;
+
+        public void Start()
 		{
-			PlayerController player = GameManager.Instance.PrimaryPlayer;
+            PlayerController player = GameManager.Instance.PrimaryPlayer;
 			this.RevealSecretRooms();
 			GameManager.Instance.OnNewLevelFullyLoaded += this.RevealSecretRooms;
+            this.hasBeenPickedup = true;
 
 
-			player.gameObject.AddComponent<AllSeeingEyeController.AllSeeingEyeChestBehaviour>();
+            player.gameObject.AddComponent<AllSeeingEyeController.AllSeeingEyeChestBehaviour>();
+			player.OnRoomClearEvent += Player_OnRoomClearEvent;
 
+
+
+        }
+
+		private void Player_OnRoomClearEvent(PlayerController obj)
+		{
+			if (1 - 1 / (1 + 0.04f * Stacks) > UnityEngine.Random.value)
+			{
+				IntVector2 bestRewardLocation = obj.CurrentRoom.GetBestRewardLocation(new IntVector2(1, 1), RoomHandler.RewardLocationStyle.CameraCenter, true);
+				LootEngine.SpawnItem(PickupObjectDatabase.GetById(AllSeeingEyeMiniPickup.MiniEye).gameObject, bestRewardLocation.ToVector3(), Vector2.up, 1f, true, true, false);
+			}
 		}
-		public void Update()
+
+
+        public int Stacks;
+        public void IncrementStack()
+        {
+            Stacks++;
+        }
+
+        public void Update()
 		{
 
 		}
@@ -181,20 +249,32 @@ namespace Planetside
 			for (int i = 0; i < GameManager.Instance.Dungeon.data.rooms.Count; i++)
 			{
 				RoomHandler roomHandler = GameManager.Instance.Dungeon.data.rooms[i];
-				bool flag = roomHandler.connectedRooms.Count != 0;
-				bool flag2 = flag;
-				bool flag3 = flag2;
-				if (flag3)
+				if (roomHandler.connectedRooms.Count != 0)
 				{
-					bool flag4 = roomHandler.area.PrototypeRoomCategory == PrototypeDungeonRoom.RoomCategory.SECRET;
-					bool flag5 = flag4;
-					bool flag6 = flag5;
-					if (flag6)
+					if (roomHandler.area.PrototypeRoomCategory == PrototypeDungeonRoom.RoomCategory.SECRET)
 					{
 						roomHandler.RevealedOnMap = true;
 						Minimap.Instance.RevealMinimapRoom(roomHandler, true, true, roomHandler == GameManager.Instance.PrimaryPlayer.CurrentRoom);
 					}
-				}
+                    if (roomHandler.area.PrototypeRoomCategory == PrototypeDungeonRoom.RoomCategory.BOSS)
+                    {
+                        roomHandler.RevealedOnMap = true;
+                        Minimap.Instance.RevealMinimapRoom(roomHandler, true, true, roomHandler == GameManager.Instance.PrimaryPlayer.CurrentRoom);
+                    }
+					if (Stacks > 1)
+					{
+                        if (roomHandler.area.PrototypeRoomCategory == PrototypeDungeonRoom.RoomCategory.REWARD)
+                        {
+                            roomHandler.RevealedOnMap = true;
+                            Minimap.Instance.RevealMinimapRoom(roomHandler, true, true, roomHandler == GameManager.Instance.PrimaryPlayer.CurrentRoom);
+                        }
+                        if (roomHandler.area.PrototypeRoomCategory == PrototypeDungeonRoom.RoomCategory.SPECIAL)
+                        {
+                            roomHandler.RevealedOnMap = true;
+                            Minimap.Instance.RevealMinimapRoom(roomHandler, true, true, roomHandler == GameManager.Instance.PrimaryPlayer.CurrentRoom);
+                        }
+                    }
+                }
 			}
 		}
 		private static string vfxName = "WisperVFX";
@@ -203,8 +283,6 @@ namespace Planetside
 			private void Start()
 			{
 				this.player = base.GetComponent<PlayerController>();
-
-
 			}
 
 			private void FixedUpdate()
@@ -284,7 +362,6 @@ namespace Planetside
 				}
 			}
 
-			// Token: 0x0600065C RID: 1628 RVA: 0x0003FB34 File Offset: 0x0003DD34
 			private void InitializeChest(Chest chest)
 			{
 				int guess = this.GetGuess(chest);
@@ -302,7 +379,14 @@ namespace Planetside
 				component.name = AllSeeingEyeController.vfxName;
 				component.PlaceAtPositionByAnchor(chest.sprite.WorldTopCenter + this.offset, tk2dBaseSprite.Anchor.LowerCenter);
 				component.scale = Vector3.zero;
-				this.nearbyChest = chest;
+
+				if (chest.IsRainbowChest == true | chest.ChestIdentifier == Chest.SpecialChestIdentifier.SECRET_RAINBOW)
+				{
+					component.usesOverrideMaterial = true;
+                    component.renderer.material.shader = ShaderCache.Acquire("Brave/Internal/RainbowChestShader");
+                }
+
+                this.nearbyChest = chest;
 				this.encounteredChests.Add(chest);
 			}
 

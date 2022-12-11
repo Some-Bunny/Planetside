@@ -79,6 +79,7 @@ namespace Planetside
             if (message == "eye_shot_hide")
             {
                 DoPoof();
+                this.gameObject.GetComponent<ImprovedAfterImage>().spawnShadows = false;
                 SpriteOutlineManager.ToggleOutlineRenderers(this.sprite, false);
                 this.specRigidbody.enabled = false;
                 bodyPartController.Render = false;
@@ -86,6 +87,7 @@ namespace Planetside
             if (message == "eye_shot_appear")
             {
                 DoPoof();
+                this.gameObject.GetComponent<ImprovedAfterImage>().spawnShadows = true;
                 SpriteOutlineManager.ToggleOutlineRenderers(this.sprite, true);
                 this.specRigidbody.enabled = true;
                 bodyPartController.Render = true;
@@ -151,17 +153,17 @@ namespace Planetside
             while (elapsed < Time)
             {
                 float t = (float)elapsed / (float)Time;
+                if (parent.IsEnded || parent.Destroyed)
+                {
+                    UnityEngine.Object.Destroy(tiledspriteObject.gameObject);
+                    yield break;
+                }
                 if (this.BulletBank.gameObject == null)
                 {
                     UnityEngine.Object.Destroy(tiledspriteObject.gameObject);
                     yield break;
                 }
 
-                if (parent.IsEnded || parent.Destroyed)
-                {
-                    UnityEngine.Object.Destroy(tiledspriteObject.gameObject);
-                    yield break;
-                }
                 if (tiledspriteObject != null)
                 {
                     tiledsprite.transform.position = this.BulletBank.sprite.WorldCenter;
@@ -182,12 +184,12 @@ namespace Planetside
             Time = 0.5f;
             while (elapsed < Time)
             {
-                if (this.BulletBank.gameObject == null)
+                if (parent.IsEnded || parent.Destroyed)
                 {
                     UnityEngine.Object.Destroy(tiledspriteObject.gameObject);
                     yield break;
                 }
-                if (parent.IsEnded || parent.Destroyed)
+                if (this.BulletBank.gameObject == null)
                 {
                     UnityEngine.Object.Destroy(tiledspriteObject.gameObject);
                     yield break;
@@ -253,18 +255,19 @@ namespace Planetside
 
             while (elapsed < Time)
             {
+
                 float t = (float)elapsed / (float)Time;
+                if (parent.IsEnded || parent.Destroyed)
+                {
+                    UnityEngine.Object.Destroy(tiledspriteObject.gameObject);
+                    yield break;
+                }
                 if (this.BulletBank.gameObject == null)
                 {
                     UnityEngine.Object.Destroy(tiledspriteObject.gameObject);
                     yield break;
                 }
 
-                if (parent.IsEnded || parent.Destroyed)
-                {
-                    UnityEngine.Object.Destroy(tiledspriteObject.gameObject);
-                    yield break;
-                }
                 if (tiledspriteObject != null)
                 {
                     tiledsprite.transform.position = this.BulletBank.sprite.WorldCenter;
@@ -288,16 +291,17 @@ namespace Planetside
             Time = 0.5f;
             while (elapsed < Time)
             {
-                if (this.BulletBank.gameObject == null)
-                {
-                    UnityEngine.Object.Destroy(tiledspriteObject.gameObject);
-                    yield break;
-                }
                 if (parent.IsEnded || parent.Destroyed)
                 {
                     UnityEngine.Object.Destroy(tiledspriteObject.gameObject);
                     yield break;
                 }
+                if (this.BulletBank.gameObject == null)
+                {
+                    UnityEngine.Object.Destroy(tiledspriteObject.gameObject);
+                    yield break;
+                }
+
                 if (tiledspriteObject != null)
                 {
                     tiledsprite.transform.position = this.BulletBank.sprite.WorldCenter;

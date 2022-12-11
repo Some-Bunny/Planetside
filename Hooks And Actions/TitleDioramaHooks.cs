@@ -119,7 +119,6 @@ namespace Planetside
 
             if (mainMenuFoyerController == null)
             {
-                //ETGModConsole.Log(1);
                 mainMenuFoyerController = UnityEngine.Object.FindObjectOfType<MainMenuFoyerController>();
             }
 
@@ -150,19 +149,13 @@ namespace Planetside
                         if (ExtantIcon == null)
                         {
                             ExtantIcon = UnityEngine.Object.Instantiate(SpecialDioramaIcon, self.transform.position, Quaternion.identity, self.transform);
-                            if (ExtantIcon)
-                            {
-                                ExtantIcon.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
-                            }
+                            ExtantIcon.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
                         }
 
                         if (ExtantLogo == null)
                         {
                             ExtantLogo = UnityEngine.Object.Instantiate(Logo, self.transform.position, Quaternion.identity, self.transform);
-                            if (ExtantLogo)
-                            {
-                                ExtantLogo.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
-                            }
+                            ExtantLogo.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
                         }
                     }
                 }

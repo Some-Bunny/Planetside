@@ -1108,8 +1108,7 @@ namespace Planetside
                     tr = tro.AddComponent<TrailRenderer>();
                     tr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
                     tr.receiveShadows = false;
-                    var mat = new Material(Shader.Find("Sprites/Default"));
-                    mat.mainTexture = _gradTexture;
+                    var mat = material ?? new Material(Shader.Find("Sprites/Default"));
                     tr.material = mat;
                     tr.minVertexDistance = 0.1f;
                     //======
@@ -1122,12 +1121,15 @@ namespace Planetside
                     tr.startWidth = StartWidth;
                     tr.endWidth = EndWidth;
                     tr.autodestruct = false;
-                    //tr.
-                }
-                
+                    trail = tr;
+                }                
             }
 
-            public Texture _gradTexture;
+            public TrailRenderer ReturnTrailRenderer()
+            {
+                return trail;
+            }
+
             private GameObject obj;
 
             public Vector2 TrailPos;
@@ -1137,6 +1139,9 @@ namespace Planetside
             public float LifeTime;
             public float StartWidth;
             public float EndWidth;
+            public Material material;
+            public TrailRenderer trail;
+
 
         }
 

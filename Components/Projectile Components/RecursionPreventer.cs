@@ -21,7 +21,10 @@ namespace Planetside
         public RecursionPreventer()
         {
             IsProjectileFiredFromHoveringGun = true;
+            IsProjectileFiredFromTeleportingGunfire = true;
         }
         public bool IsProjectileFiredFromHoveringGun;
+        public bool IsProjectileFiredFromTeleportingGunfire;
+
     }
 }

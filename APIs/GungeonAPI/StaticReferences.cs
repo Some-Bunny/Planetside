@@ -307,7 +307,6 @@ namespace GungeonAPI
                 }
             }
             rngDungeon = null;
-
             var forgeDungeon = DungeonDatabase.GetOrLoadByName("Base_Forge");
 
             /*
@@ -456,6 +455,33 @@ namespace GungeonAPI
                 }
             }
             sewerDungeon = null;
+
+
+            var hellDungeon = DungeonDatabase.GetOrLoadByName("base_bullethell");
+            if (hellDungeon)
+            {
+                foreach (WeightedRoom wRoom in hellDungeon.PatternSettings.flows[0].fallbackRoomTable.includedRooms.elements)
+                {
+
+                    if (wRoom.room != null && !string.IsNullOrEmpty(wRoom.room.name))
+                    {
+                        if (wRoom.room.name.ToLower().StartsWith("hell_connector_pathburst_01"))
+                        {
+                            /*
+                            foreach (var placeable in wRoom.room.placedObjects)
+                            {
+                                Tools.LogPropertiesAndFields(placeable);
+                            }
+                            */
+                            GameObject radialFireTrap = wRoom.room.placedObjects[3].nonenemyBehaviour.gameObject;
+                            StoredRoomObjects.Add("RadialFireTrap", radialFireTrap);
+                        }
+                    }
+                }
+            }
+            hellDungeon = null;
+
+
             PrototypeDungeonRoom asset = null;
             foreach (var bundle in StaticReferences.AssetBundles.Values)
             {

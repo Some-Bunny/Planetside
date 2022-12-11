@@ -49,7 +49,7 @@ namespace Planetside
 				companion.aiActor.aiAnimator.HitReactChance = 0f;
 				companion.aiActor.specRigidbody.CollideWithOthers = true;
 				companion.aiActor.specRigidbody.CollideWithTileMap = true;
-				companion.aiActor.PreventFallingInPitsEver = true;
+				companion.aiActor.PreventFallingInPitsEver = false;
 				companion.aiActor.healthHaver.ForceSetCurrentHealth(35f);
 				companion.aiActor.CollisionKnockbackStrength = 0f;
 				companion.aiActor.procedurallyOutlined = true;

@@ -12,7 +12,7 @@ namespace Planetside
         public GreedController()
         {
             this.LifeTime = 2.5f;
-            this.StatIncrease = 1.10f;
+            this.StatIncrease = 1.2f;
             this.hasBeenPickedup = false;
         }
         public void Start() 
@@ -52,6 +52,8 @@ namespace Planetside
                             boomboom.ignoreList.Add(player.specRigidbody);
                             Exploder.Explode(player.sprite.WorldCenter, boomboom, player.transform.PositionVector2());
                             player.StartCoroutine(GrantTemporaryBoost(player, this.StatIncrease));
+                            AkSoundEngine.PostEvent("Play_OBJ_power_up_01", player.gameObject);
+
                         }
                     }));
                 }));
@@ -84,7 +86,7 @@ namespace Planetside
             user.ownerlessStatModifiers.Add(damage);
             user.stats.RecalculateStats(user, true, true);
             float elapsed = 0f;
-            while (elapsed < 5)
+            while (elapsed < 7)
             {
                 elapsed += BraveTime.DeltaTime;
                 yield return null;
@@ -102,6 +104,10 @@ namespace Planetside
             while (elapsed < lifeTime * 0.75f)
             {
                 elapsed += BraveTime.DeltaTime;
+                if (0.1f % 0.05f == 0)
+                {
+                    DoParticlePoof(coins, elapsed);
+                }
                 yield return null;
             }
             float flickerTimer = 0f;
@@ -112,6 +118,10 @@ namespace Planetside
                 if (coins != null && coins.renderer)
                 {
                     bool enabled = flickerTimer % 0.2f > 0.15f;
+                    if (enabled)
+                    {
+                        DoParticlePoof(coins, elapsed);
+                    }
                     coins.renderer.enabled = enabled;
                 }
                 else if (coins == null)
@@ -123,6 +133,15 @@ namespace Planetside
             UnityEngine.Object.Destroy(coins.gameObject);
             yield break;
         }
+
+        public static void DoParticlePoof(CurrencyPickup c, float m)
+        {
+            Vector3 vector = c.sprite.WorldBottomLeft.ToVector3ZisY(0);
+            Vector3 vector2 = c.sprite.WorldTopRight.ToVector3ZisY(0);
+            Vector3 position = new Vector3(UnityEngine.Random.Range(vector.x, vector2.x), UnityEngine.Random.Range(vector.y, vector2.y), UnityEngine.Random.Range(vector.z, vector2.z));
+            GlobalSparksDoer.DoSingleParticle(position, Vector3.up * (3 * m), null, null, null, GlobalSparksDoer.SparksType.FLOATY_CHAFF);
+        }
+
         public void IncrementStack()
         {
             this.StatIncrease += 0.10f;
@@ -237,13 +256,13 @@ namespace Planetside
             StatModifier speed = new StatModifier
             {
                 statToBoost = PlayerStats.StatType.MovementSpeed,
-                amount = 1.15f,
+                amount = 1.1f,
                 modifyType = StatModifier.ModifyMethod.MULTIPLICATIVE
             };
             StatModifier damage = new StatModifier
             {
                 statToBoost = PlayerStats.StatType.Damage,
-                amount = 1.20f,
+                amount = 1.15f,
                 modifyType = StatModifier.ModifyMethod.MULTIPLICATIVE
             };
             user.ownerlessStatModifiers.Add(speed);

@@ -241,7 +241,7 @@ namespace EnemyBulletBuilder
             return collection;
         }
 
-        public static T CopyFrom<T>(this Component comp, T other) where T : Component
+        public static T CopyComponentFrom<T>(this Component comp, T other) where T : Component
         {
             Type type = comp.GetType();
             if (type != other.GetType()) return null; // type mis-match
@@ -277,7 +277,7 @@ namespace EnemyBulletBuilder
 
         public static T AddComponent<T>(this GameObject go, T toAdd) where T : Component
         {
-            return go.AddComponent<T>().CopyFrom(toAdd) as T;
+            return go.AddComponent<T>().CopyComponentFrom(toAdd) as T;
         }
     }
 }

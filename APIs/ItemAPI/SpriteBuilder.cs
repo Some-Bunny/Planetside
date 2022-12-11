@@ -59,6 +59,7 @@ namespace ItemAPI
             sprite.SetSprite(itemCollection, id);
             sprite.SortingOrder = 0;
             sprite.IsPerpendicular = true;
+           
 
             obj.GetComponent<BraveBehaviour>().sprite = sprite;
 

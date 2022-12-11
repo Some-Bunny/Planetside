@@ -26,6 +26,7 @@ using FullInspector.Internal;
 using UnityEngine.Video;
 using static FullInspector.Internal.fiLateBindings;
 using UnityEngine.Audio;
+using UnityEngine.Playables;
 
 
 namespace Planetside
@@ -89,15 +90,22 @@ namespace Planetside
             portal.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
             portal.transform.position = user.transform.position;
             */
-            
+
             //List<Type> t = UnityEngine.Object.FindObjectsOfType<Component>().GetType().GetBaseType() 
 
 
 
 
+            /*
+            GameObject bom = new GameObject();
+            StaticReferences.StoredRoomObjects.TryGetValue("fire_buffer_statue", out bom);
+            GameObject shopObj = DungeonPlaceableUtility.InstantiateDungeonPlaceable(bom, user.GetAbsoluteParentRoom(), new IntVector2((int)user.sprite.WorldCenter.x + 1, (int)user.sprite.WorldCenter.y) - user.GetAbsoluteParentRoom().area.basePosition, false);
+            */
 
             ETGModConsole.Log(user.CurrentRoom.GetRoomName());
 
+
+            /*
             AIActor orLoadByGuid = EnemyDatabase.GetOrLoadByGuid("864ea5a6a9324efc95a0dd2407f42810");
             IntVector2? intVector = new IntVector2?(user.CurrentRoom.GetRandomVisibleClearSpot(2, 2));
             AIActor aiactor = AIActor.Spawn(orLoadByGuid.aiActor, intVector.Value, GameManager.Instance.Dungeon.data.GetAbsoluteRoomFromPosition(intVector.Value), true, AIActor.AwakenAnimationType.Spawn, true);
@@ -109,7 +117,7 @@ namespace Planetside
                 pp.MainBody = aiactor;
                 pp.gameObject.transform.parent = aiactor.transform;
             }
-
+            */
            
 
             //var hODC = (PickupObjectDatabase.GetById(515) as Gun).DefaultModule.projectiles[0].bleedEffect.vfxExplosion.GetComponent<HammerOfDawnController>();

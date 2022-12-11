@@ -72,6 +72,8 @@ namespace Planetside
 
             Hell_1_Texture = PlanetsideModule.ModAssets.LoadAsset<Texture2D>("hell_1");
             Hell_2_Texture = PlanetsideModule.ModAssets.LoadAsset<Texture2D>("hell_2");
+
+            Gradient_Texture_Trail = EnemyDatabase.GetOrLoadByGuid("465da2bb086a4a88a803f79fe3a27677").bulletBank.GetBullet("homing").BulletObject.GetComponent<Projectile>().gameObject.GetComponentInChildren<CustomTrailRenderer>().material.mainTexture;
         }
         public static Texture AdvancedParticleBlue;
         public static Texture VoidTexture;
@@ -100,6 +102,8 @@ namespace Planetside
 
         public static Texture Hell_1_Texture;
         public static Texture Hell_2_Texture;
+
+        public static Texture Gradient_Texture_Trail;
 
     }
 
@@ -316,16 +320,8 @@ namespace Planetside
                 AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("1a4872dafdb34fd29fe8ac90bd2cea67").bulletBank.Bullets[0], "undodgeableDefaultBouncy");
                 entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
                 ProjectileTrailRendererController projectileTrailRendererController = entry.BulletObject.GetComponent<ProjectileTrailRendererController>();
-                //projectileTrailRendererController.trailRenderer.startColor = Color.cyan;
-                //projectileTrailRendererController.trailRenderer.endColor = Color.white;
                 projectileTrailRendererController.customTrailRenderer.colors = new Color[] { Color.cyan };
                 undodgeableBouncyBatBullet = entry;
-                /*
-                foreach (Component comp in entry.BulletObject.GetComponents(typeof(Component)))
-                {
-                    ETGModConsole.Log(comp.GetType().ToString() ?? "null");
-                }
-                */
             }
 
 

@@ -24,7 +24,7 @@ namespace Planetside
             Game.Items.Rename("outdated_gun_mods:thundershot", "psog:thundershot");
             gun.gameObject.AddComponent<ThunderShot>();
             gun.SetShortDescription("Make It Go Boom!");
-            gun.SetLongDescription("Fires rounds with embedded detonators in them.\n\nSmells of beard shampoo.");
+            gun.SetLongDescription("Fires rounds with embedded detonators in them. Explosives go off on enemy death.\n\nSmells of beard shampoo.");
 
             gun.SetupSprite(null, "bulldog_idle_001", 8);
 
@@ -43,7 +43,7 @@ namespace Planetside
             gun.DefaultModule.cooldownTime = 0.2f;
             gun.DefaultModule.numberOfShotsInClip = 4;
             gun.barrelOffset.transform.localPosition = new Vector3(15f / 16f, 8f / 16f, 0f);
-            gun.SetBaseMaxAmmo(160);
+            gun.SetBaseMaxAmmo(200);
             gun.InfiniteAmmo = false;
             gun.gunClass = GunClass.EXPLOSIVE;
             gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.BLUE_SHOTGUN;

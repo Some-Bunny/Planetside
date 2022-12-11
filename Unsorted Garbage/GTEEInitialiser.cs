@@ -79,27 +79,49 @@ namespace Planetside
 			"bullet",
 			"elimentaler"
 		};
-			Random r4 = new Random();
+
+        List<int> OOTSS = new List<int>
+        {
+         7,
+		 79,
+		 378,
+		 30,
+		 50,
+		 28,
+		 477,
+		 402,
+		 124,
+		 503,
+		 626
+        };
+
+
+            Random r4 = new Random();
 			int index4 = r4.Next(OOTS.Count);
 			string OneToShootIt = OOTS[index4];
+            int OneToShootItID = OOTSS[index4];
 
 
 
-		List<string> eeeee = new List<string>
+
+            List<string> eeeee = new List<string>
 		{
 			OneToHoldIt,
 			OneToFireIt,
 			OneToPrimeIt,
 			OneToShootIt
 		};
-			CustomSynergies.Add("End Of Everything", eeeee, null, true);
-			Gun gun = PickupObjectDatabase.GetByEncounterName(OneToShootIt) as Gun;
-			int StoredGunID = gun.PickupObjectId;
-			InitialiseGTEE.GunIDForEOE = OneToShootIt;
-			AdvancedTransformGunSynergyProcessor advancedTransformGunSynergyProcessor = (PickupObjectDatabase.GetById(StoredGunID) as Gun).gameObject.AddComponent<AdvancedTransformGunSynergyProcessor>();
-			EndOfEverything aaaa = (PickupObjectDatabase.GetById(StoredGunID) as Gun).gameObject.GetOrAddComponent<EndOfEverything>();
 
-			advancedTransformGunSynergyProcessor.NonSynergyGunId = StoredGunID;
+			HOneToShootIt = OneToShootItID;
+
+
+            CustomSynergies.Add("End Of Everything", eeeee, null, true);
+
+
+			AdvancedTransformGunSynergyProcessor advancedTransformGunSynergyProcessor = (PickupObjectDatabase.GetById(OneToShootItID) as Gun).gameObject.AddComponent<AdvancedTransformGunSynergyProcessor>();
+			EndOfEverything aaaa = (PickupObjectDatabase.GetById(OneToShootItID) as Gun).gameObject.GetOrAddComponent<EndOfEverything>();
+
+			advancedTransformGunSynergyProcessor.NonSynergyGunId = OneToShootItID;
 			advancedTransformGunSynergyProcessor.SynergyGunId = GTEE.fuckinGhELL;
 			advancedTransformGunSynergyProcessor.SynergyToCheck = "End Of Everything";
 			ETGModConsole.Commands.AddUnit("gteecomponents", (args) =>
@@ -113,17 +135,11 @@ namespace Planetside
 			HOneToHoldIt = OneToHoldIt;
 			HOneToFireIt = OneToFireIt;
 			HOneToPrimeIt = OneToPrimeIt;
-
-
 		}
-		public static string GunIDForEOE;
-
-		public static string HOneToHoldIt;
+        public static int HOneToShootIt;
+        public static string HOneToHoldIt;
 		public static string HOneToFireIt;
 		public static string HOneToPrimeIt;
-
-
-
 		public static readonly string TEXT_COLOR_GTEE = "#FFe400";
 	}
 }

@@ -55,6 +55,18 @@ namespace Planetside
                         prerequisiteType = DungeonPrerequisite.PrerequisiteType.FLAG,
                         prerequisiteOperation = DungeonPrerequisite.PrerequisiteOperation.EQUAL_TO,
                     },
+                    new CustomDungeonPrerequisite()
+                    {
+                        customStatToCheck = CustomTrackedStats.PERKS_BOUGHT,
+                        comparisonValue = 7,
+                        prerequisiteOperation = DungeonPrerequisite.PrerequisiteOperation.GREATER_THAN,
+                    },
+                    new CustomDungeonPrerequisite()
+                    {
+                        customFlagToCheck = CustomDungeonFlags.HAS_TREADED_DEEPER,
+                        requireCustomFlag = true,
+                        
+                    },
                     new DungeonGenToolbox.AdvancedDungeonPrerequisite
                     {
                         advancedAdvancedPrerequisiteType = DungeonGenToolbox.AdvancedDungeonPrerequisite.AdvancedAdvancedPrerequisiteType.MULTIPLE_FLOORS,
@@ -104,6 +116,8 @@ namespace Planetside
         public static void ForceEnableMixedFloor(string[] s)
         {
             CurrentState = States.ALLOWED;
+            SaveAPIManager.SetStat(CustomTrackedStats.INFECTION_FLOORS_ACTIVATED, 1);
+
         }
 
 
@@ -115,9 +129,9 @@ namespace Planetside
                 dungeon.DungeonFloorLevelTextOverride = "Mixed Chamber";
                 var deco = dungeon.decoSettings;
 
-                float r = 0.6f; // im fucking lazy, okay?
-                float g = 0.6f; // im fucking lazy, okay?
-                float b = 0.35f; // im fucking lazy, okay?
+                float r = 0.05f; // im fucking lazy, okay?
+                float g = 0.08f; // im fucking lazy, okay?
+                float b = 0.2f; // im fucking lazy, okay?
 
                 deco.ambientLightColor = new Color(0.05f / r, 0.15f / g, 0.9f / b);
                 deco.generateLights = true;
@@ -125,9 +139,9 @@ namespace Planetside
                 deco.lowQualityAmbientLightColor = new Color(0.05f / r, 0.15f / g, 0.7f / b);
                 deco.lowQualityAmbientLightColorTwo = new Color(0.05f / r, 0.15f / g, 0.7f / b);
                 dungeon.PlayerIsLight = true;
-                dungeon.PlayerLightColor = Color.cyan;
-                dungeon.PlayerLightIntensity = 4;
-                dungeon.PlayerLightRadius = 7;
+                dungeon.PlayerLightColor = Color.blue;
+                dungeon.PlayerLightIntensity = 2.5f;
+                dungeon.PlayerLightRadius = 6.5f;
             }
         }
   

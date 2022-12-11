@@ -108,10 +108,24 @@ namespace Planetside
             {
                 if (!GameManager.Instance.InTutorial)
                 {
-                    MajorBreakable breakable = self.collider.colliderObject.GetComponent<MajorBreakable>();
-                    breakable.MaxHitPoints = breakable.HitPoints;
-                    breakable.HitPoints = breakable.HitPoints / 2;
-                    breakable.ApplyDamage(1f, Vector2.zero, false, true, true);
+                    var r = self.collider.colliderObject.transform.position.GetAbsoluteRoom();
+                    if (r == null) { return; }
+                    foreach (var room in r.connectedRooms)
+                    {
+                        if (room != null)
+                        {
+                            if (room.GetRoomName() != null)
+                            {
+                                if (room.GetRoomName().ToLower().Contains("hmprime"))
+                                {
+                                    MajorBreakable breakable = self.collider.colliderObject.GetComponent<MajorBreakable>();
+                                    breakable.MaxHitPoints = breakable.HitPoints;
+                                    breakable.HitPoints = breakable.HitPoints / 2;
+                                    breakable.ApplyDamage(1f, Vector2.zero, false, true, true);
+                                }
+                            }
+                        }                        
+                    }
                 }
             }
         }
@@ -149,8 +163,6 @@ namespace Planetside
                 {
                     self.ForceKillFuse();
                     self.StartCoroutine(DelayedDisable(self.gameObject));
-
-
                 }
             }
             else
@@ -215,8 +227,8 @@ namespace Planetside
 
         public static PlanetsideQOL.Configuration QOLConfig = new PlanetsideQOL.Configuration
         {
-            SynergyChestDeWicking = true,
-            RevealSecretRoomWalls = true,
+            SynergyChestDeWicking = false,
+            RevealSecretRoomWalls = false,
             TileScreenModifications = true
 
         };

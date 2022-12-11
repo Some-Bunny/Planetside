@@ -13,6 +13,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using BreakAbleAPI;
 using NpcApi;
+using SaveAPI;
 
 namespace Planetside
 {
@@ -39,9 +40,9 @@ namespace Planetside
 				{
 					return;
 				}
-				this.aiActor.enabled = true;
 				m_isFinished = true;
-				base.aiActor.GetComponent<GenericIntroDoer>().TriggerSequence(GameManager.Instance.BestActivePlayer);
+				//base.aiActor.GetComponent<GenericIntroDoer>().TriggerSequence(GameManager.Instance.BestActivePlayer);
+
 			}
 
 			private IEnumerator PortalDoer(MeshRenderer portal, bool DestroyWhenDone = false)
@@ -67,21 +68,19 @@ namespace Planetside
 
 			private IEnumerator DoIntro()
 			{
+                /*
 				m_isFinished = true;
-				this.aiActor.enabled = false;
 				this.behaviorSpeculator.enabled = false;
-				this.aiActor.ToggleRenderers(false);
+				//this.aiActor.ToggleRenderers(false);
 				this.specRigidbody.enabled = false;
-				this.aiActor.IgnoreForRoomClear = true;
-				this.aiActor.IsGone = true;
-				if (this.aiShooter)
+                //this.aiActor.IgnoreForRoomClear = true;
+                //this.aiActor.IsGone = true;
+                if (this.aiShooter)
 				{
 					this.aiShooter.ToggleGunAndHandRenderers(false, "GuardIsSpawning");
 				}
-				this.aiActor.ToggleRenderers(true);
 				this.aiActor.healthHaver.PreventAllDamage = true;
-				this.aiActor.enabled = true;
-				this.specRigidbody.enabled = true;
+				this.aiActor.specRigidbody.enabled = true;
 				this.aiActor.IsGone = false;
 				this.aiActor.IgnoreForRoomClear = false;
 				this.aiAnimator.PlayDefaultAwakenedState();
@@ -116,26 +115,55 @@ namespace Planetside
 					this.aiShooter.ToggleGunAndHandRenderers(true, "GuardIsSpawning");
 				}
 				AkSoundEngine.PostEvent("Play_OBJ_weapon_pickup_01", base.aiActor.gameObject);
-				GameObject gameObject = SpawnManager.SpawnVFX(StaticVFXStorage.BlueSynergyPoofVFX, false);
+
+                this.aiActor.aiShooter.CurrentGun.renderer.enabled = true;
+                this.aiActor.aiShooter.CurrentGun.ToggleRenderers(true);
+
+
+                GameObject gameObject = SpawnManager.SpawnVFX(StaticVFXStorage.BlueSynergyPoofVFX, false);
 				gameObject.transform.position = base.aiActor.transform.Find("GunAttachPoint").gameObject.transform.position;
 				gameObject.transform.localScale *= 1.5f;
-				Destroy(gameObject, 2);
+                var b = gameObject.GetComponent<tk2dSpriteAnimator>();
+                if (b)
+                {
+                    b.AlwaysIgnoreTimeScale = true;
+					b.playAutomatically = true;
+                    b.AnimateDuringBossIntros = true;
+
+                }
+                Destroy(gameObject, 2);
+
+
+
 
 				GameObject gameObjectTwo = SpawnManager.SpawnVFX(StaticVFXStorage.MachoBraceDustupVFX, false);
 				gameObjectTwo.transform.position = base.aiActor.transform.position - new Vector3(1.25f, 1.25f);
-				Destroy(gameObjectTwo, 2);
+				var a = gameObjectTwo.GetComponent<tk2dSpriteAnimator>();
+				if (a)
+				{
+					a.AlwaysIgnoreTimeScale = true;
+                    a.playAutomatically = true;
+					a.AnimateDuringBossIntros = true;
+
+                }
+
+                Destroy(gameObjectTwo, 2);
 
 				yield return new WaitForSeconds(0.25f);
-				this.aiActor.healthHaver.PreventAllDamage = false;
-				this.behaviorSpeculator.enabled = true;
+
+                this.aiActor.specRigidbody.enabled = true;
+
+                this.aiActor.healthHaver.PreventAllDamage = false;
+				this.aiActor.behaviorSpeculator.enabled = true;
 				this.aiActor.specRigidbody.RemoveCollisionLayerIgnoreOverride(playerMask);
 				this.aiActor.HasBeenEngaged = true;
 				this.aiActor.State = AIActor.ActorState.Normal;
 				this.StartIntro();
 				m_isFinished = true;
-				yield break;
-			}
-			public override bool IsFinished
+				*/
+                yield break;
+            }
+            public override bool IsFinished
 			{
 				get
 				{
@@ -146,16 +174,13 @@ namespace Planetside
 			public float PortalLifeTime;
 			public float PortalSize;
 
-			private bool HasSpawnedPortal;
+			//private bool HasSpawnedPortal;
 			private bool m_isFinished;
 		}
 
 		public static GameObject prefab;
 		public static readonly string guid = "nemesis";
-		private static tk2dSpriteCollectionData nemesisCollection;
 		public static GameObject DummySpriteObject;
-
-		//private static Texture2D BossCardTexture = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside/Resources/BossCards/nemesis_bosscard.png");
 
 		public static void Init()
 		{
@@ -166,10 +191,9 @@ namespace Planetside
 
 		public static void BuildPrefab()
 		{
-			
-			bool flag = prefab != null || EnemyBuilder.Dictionary.ContainsKey(guid);
-			bool flag2 = flag;
-			if (!flag2)
+            tk2dSpriteCollectionData Collection = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("NemesisCollection").GetComponent<tk2dSpriteCollectionData>();
+            Material matNem = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Material>("nemesis material");
+            if (prefab == null || !EnemyBuilder.Dictionary.ContainsKey(guid))
 			{
 
 
@@ -185,12 +209,14 @@ namespace Planetside
 				gameObject.SetActive(false);
 				DummySpriteObject = gameObject;
 
-				prefab = EnemyBuilder.BuildPrefab("nemesis", guid, spritePaths[0], new IntVector2(0, 0), new IntVector2(8, 9), true, true);
+				prefab = EnemyBuilder.BuildPrefabBundle("nemesis", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(8, 9), true, true);
 				var companion = prefab.AddComponent<EnemyBehavior>();
-				prefab.AddComponent<NemesisController>();
+                EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, Collection, matNem, false);
+
+                prefab.AddComponent<NemesisController>();
 				prefab.AddComponent<ForgottenEnemyComponent>();
 				companion.aiActor.knockbackDoer.weight = 120;
-				companion.aiActor.MovementSpeed = 4f;
+				companion.aiActor.MovementSpeed = 2f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
 				companion.aiActor.CollisionDamage = 1f;
 				companion.aiActor.IgnoreForRoomClear = false;
@@ -204,10 +230,10 @@ namespace Planetside
 
 				companion.aiActor.healthHaver.ForceSetCurrentHealth(200f);
 				companion.aiActor.CollisionKnockbackStrength = 0f;
-				companion.aiActor.procedurallyOutlined = true;
+				companion.aiActor.procedurallyOutlined = false;
 				companion.aiActor.CanTargetPlayers = true;
 
-				EnemyToolbox.AddShadowToAIActor(companion.aiActor, StaticEnemyShadows.defaultShadow, new Vector2(0.625f, 0.25f), "shadowPos");
+				EnemyToolbox.AddShadowToAIActor(companion.aiActor, StaticEnemyShadows.defaultShadow, new Vector2(0.625f, -0.25f), "shadowPos");
 
 
 				companion.aiActor.healthHaver.SetHealthMaximum(200f, null, false);
@@ -282,39 +308,32 @@ namespace Planetside
 				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "dodgeroll", new string[] { "dodge_top_left", "dodge_bottom_right", "dodge_bottom_left", "dodge_top_right" }, new DirectionalAnimation.FlipType[4], DirectionalAnimation.DirectionType.FourWay);
 			
 
-				bool flag3 = nemesisCollection == null;
-				if (flag3)
 				{
-					nemesisCollection = SpriteBuilder.ConstructCollection(prefab, "nemesisCollection");
-					UnityEngine.Object.DontDestroyOnLoad(nemesisCollection);
-					for (int i = 0; i < spritePaths.Length; i++)
-					{
-						SpriteBuilder.AddSpriteToCollection(spritePaths[i], nemesisCollection);
-					}
+
 
 					//=======================================================================================================================
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, nemesisCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					0,
 					1,
 					2,
 					3,
 					}, "idle_bottom_left", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 6f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, nemesisCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					4,
 					5,
 					6,
 					7
 					}, "idle_bottom_right", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 6f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, nemesisCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					8,
 					9,
 					10,
 					11,
 					}, "idle_top_left", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 6f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, nemesisCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					12,
 					13,
@@ -325,7 +344,7 @@ namespace Planetside
 
 
 					//=======================================================================================================================
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, nemesisCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					16,
 					17,
@@ -334,7 +353,7 @@ namespace Planetside
 					20,
 					21
 					}, "run_bottom_left", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 6f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, nemesisCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					22,
 					23,
@@ -343,7 +362,7 @@ namespace Planetside
 					26,
 					27
 					}, "run_bottom_right", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 6f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, nemesisCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					28,
 					29,
@@ -352,7 +371,7 @@ namespace Planetside
 					32,
 					33
 					}, "run_top_left", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 6f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, nemesisCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					34,
 					35,
@@ -369,7 +388,7 @@ namespace Planetside
 					EnemyToolbox.AddSoundsToAnimationFrame(companion.spriteAnimator, "run_top_right", new Dictionary<int, string>() { { 2, "Play_NemesisStep" }, { 5, "Play_NemesisStep" } });
 
 					//=======================================================================================================================
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, nemesisCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					40,
 					41,
@@ -381,7 +400,7 @@ namespace Planetside
 					47,
 					48
 					}, "dodge_bottom_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 12f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, nemesisCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					49,
 					50,
@@ -394,7 +413,7 @@ namespace Planetside
 					57,
 				
 					}, "dodge_bottom_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 12f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, nemesisCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					58,
 					59,
@@ -407,7 +426,7 @@ namespace Planetside
 					66,
 					
 					}, "dodge_top_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 12f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, nemesisCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					67,
 					68,
@@ -441,7 +460,7 @@ namespace Planetside
 
 
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, nemesisCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					76,
 					77,
@@ -455,7 +474,7 @@ namespace Planetside
 					companion.spriteAnimator.GetClipByName("death").loopStart = 7;
 					EnemyToolbox.AddEventTriggersToAnimation(companion.spriteAnimator, "death", new Dictionary<int, string>() { { 6, "StartExecute" } });
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, nemesisCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					84,
 					85,
@@ -470,7 +489,7 @@ namespace Planetside
 				
 					
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, nemesisCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 						89,
 					90,
@@ -524,14 +543,14 @@ namespace Planetside
 
 				//EnemyToolbox.AddSoundsToAnimationFrame(companion.spriteAnimator, "awaken", new Dictionary<int, string>() { { 1, "Play_EnergySwirl" } });
 
-				EnemyToolbox.AddEventTriggersToAnimation(companion.spriteAnimator, "intro", new Dictionary<int, string>() { { 37, "EquipSelf" } });
+				EnemyToolbox.AddEventTriggersToAnimation(companion.spriteAnimator, "intro", new Dictionary<int, string>() { { 0, "v_s" }, { 37, "EquipSelf" } });
 				EnemyToolbox.AddSoundsToAnimationFrame(companion.spriteAnimator, "intro", new Dictionary<int, string>() { { 1, "Play_EnergySwirl" }, { 17, "Play_CHR_forever_fall_01" }, { 27, "Play_BOSS_dragun_stomp_01" } });
+                //v_s
+                //NemesisEngageDoer trespassEngager = companion.aiActor.gameObject.AddComponent<NemesisEngageDoer>();
 
-				//NemesisEngageDoer trespassEngager = companion.aiActor.gameObject.AddComponent<NemesisEngageDoer>();
 
 
-
-				GameObject shootpoint = EnemyToolbox.GenerateShootPoint(companion.gameObject, new Vector2(0.5f, 0.5f), "UnwillingShootpoint");
+                GameObject shootpoint = EnemyToolbox.GenerateShootPoint(companion.gameObject, new Vector2(0.5f, 0.5f), "UnwillingShootpoint");
 
 				var bs = prefab.GetComponent<BehaviorSpeculator>();
 				prefab.GetComponent<ObjectVisibilityManager>();
@@ -564,8 +583,27 @@ namespace Planetside
 					SpecifyRange = false,
 					MinActiveRange = 0f,
 					MaxActiveRange = 0f
-				}
-				};
+				},
+
+                    new TakeCoverBehavior()
+                    {
+						/*
+                        FlipCoverDistance = 3f,
+                        InsideCoverTime = 4,
+                        PopInSpeedMultiplier = 3,
+                        PopOutSpeedMultiplier = 1.7f,
+                        RepeatingCoverChance = 1f,
+                        OutsideCoverTime = 1f,
+                        LineOfSightToLeaveCover = true,
+                        InitialCoverChance  = 1f,
+                        MaxCoverDistance = 2,
+                        MaxCoverDistanceToTarget = 2,
+                        PathInterval = 0.25f,
+                        RepeatingCoverInterval = 3,
+						*/
+                    }
+
+                };
 				bs.AttackBehaviorGroup.AttackBehaviors = new List<AttackBehaviorGroup.AttackGroupItem>
 				{
 					
@@ -745,23 +783,45 @@ namespace Planetside
 				{
 					new UseFakeActiveBehavior
 					{
-						timeToHitThreshold = 1f,
-						ChanceTouse = 1,
+						timeToHitThreshold = 2f,
+						ChanceTouse = 0.8f,		
 						Enabled = true,
-					}
+					},
+					
+				
+					
 				};
 
 				bs.OverrideBehaviors = new List<OverrideBehaviorBase>()
 				{
+
+					/*
 					new ModifySpeedBehavior()
 					{
 					minSpeed = 1.2f,
 					minSpeedDistance = 4,
 					maxSpeed = 3.2f,
-					maxSpeedDistance = 9
+					maxSpeedDistance = 9,
+					
 					},
+					*/
+					new SansTeleportBehavior()
+                    {
+                        AvoidWalls = true,
+                        Cooldown = 2,
+                        dodgeChance = 0f,
+                        timeToHitThreshold = 0.3f,
+                        rollDistance = 6,
+                        Enabled = false,
+                        ManuallyDefineRoom = false,
+                        MaxDistanceFromPlayer = 11,
+                        MinDistanceFromPlayer = 6,
+                        StayOnScreen = false
+                    },
 
-					new CustomDodgeRollBehavior
+
+
+                    new CustomDodgeRollBehavior
 					{
 						Cooldown = 3,
 						dodgeChance = 1f,
@@ -872,7 +932,7 @@ namespace Planetside
 				miniBossIntroDoer.restrictPlayerMotionToRoom = false;
 				miniBossIntroDoer.fusebombLock = false;
 				miniBossIntroDoer.AdditionalHeightOffset = 0;
-				miniBossIntroDoer.HideGunAndHand = true;
+				miniBossIntroDoer.HideGunAndHand = false;
 				PlanetsideModule.Strings.Enemies.Set("#QUOTE", "");
 
 				miniBossIntroDoer.portraitSlideSettings = new PortraitSlideSettings()
@@ -998,13 +1058,15 @@ namespace Planetside
 						UnityEngine.Object.Destroy(component2.gameObject);
 						yield break;
 					}
-					elapsed += BraveTime.DeltaTime;
+                    component2.transform.position = new Vector3(CurrentBarrelPosition().x, CurrentBarrelPosition().y, 0);
+                    elapsed += BraveTime.DeltaTime;
 					yield return null;
 				}
 				UnityEngine.Object.Destroy(component2.gameObject);
-				if (Fires == true)
+                if (Fires == true)
                 {
-					base.Fire(Offset.OverridePosition(CurrentBarrelPosition()), new Direction(Ang, DirectionType.Absolute, -1f), new Speed(Speed, SpeedType.Absolute), new UndodgeableBullshit());
+                    base.PostWwiseEvent("Play_Railgun");
+                    base.Fire(Offset.OverridePosition(CurrentBarrelPosition()), new Direction(Ang, DirectionType.Absolute, -1f), new Speed(Speed, SpeedType.Absolute), new UndodgeableBullshit());
 				}
 				base.BulletBank.aiActor.aiAnimator.LockFacingDirection = false;
 				yield break;
@@ -1132,7 +1194,9 @@ namespace Planetside
 						UnityEngine.Object.Destroy(component2.gameObject);
 						yield break;
 					}
-					elapsed += BraveTime.DeltaTime;
+                    component2.transform.position = new Vector3(CurrentBarrelPosition().x, CurrentBarrelPosition().y, 0);
+
+                    elapsed += BraveTime.DeltaTime;
 					yield return null;
 				}
 				UnityEngine.Object.Destroy(component2.gameObject);
@@ -1550,6 +1614,8 @@ namespace Planetside
 				base.aiActor.spriteAnimator.AnimationEventTriggered += this.AnimationEventTriggered;
 				m_StartRoom = aiActor.GetAbsoluteParentRoom();
 				base.aiActor.healthHaver.OnPreDeath += (obj) =>{};
+				base.aiActor.sprite.renderer.enabled = true;
+
 			}
 			private void AnimationEventTriggered(tk2dSpriteAnimator animator, tk2dSpriteAnimationClip clip, int frameIdx)
 			{
@@ -1569,7 +1635,7 @@ namespace Planetside
 				}//ForceIntro
 				if (clip.GetFrame(frameIdx).eventInfo.Contains("ForceIntro"))
                 {
-					base.aiActor.gameObject.GetComponent<GenericIntroDoer>().TriggerSequence(GameManager.Instance.BestActivePlayer);
+					//base.aiActor.gameObject.GetComponent<GenericIntroDoer>().TriggerSequence(GameManager.Instance.BestActivePlayer);
                 }
 			}
 			private IEnumerator CauseDeath(AIActor aiActor)
@@ -1702,9 +1768,25 @@ namespace Planetside
 						player.healthHaver.Die(Vector2.zero);
 					}
 				}
-				aiActor.aiAnimator.PlayUntilFinished("thanosSnap", false, null, -1f, false);
+                AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.NEMESIS_KILLED, true);
 
-				elapsed = 0f;
+                float itemsToSpawn = UnityEngine.Random.Range(4, 7);
+                float spewItemDir = 360 / itemsToSpawn;
+                for (int i = 0; i < itemsToSpawn; i++)
+                {
+                    int id = BraveUtility.RandomElement<int>(Shellrax.Lootdrops);
+                    LootEngine.SpawnItem(PickupObjectDatabase.GetById(id).gameObject, aiActor.sprite.WorldCenter, new Vector2((spewItemDir * itemsToSpawn) * i, spewItemDir * itemsToSpawn), 2.2f, false, true, false);
+                }
+
+                if (UnityEngine.Random.value <= 0.5f)
+                {
+                    Chest chest2 = GameManager.Instance.RewardManager.SpawnTotallyRandomChest(GameManager.Instance.PrimaryPlayer.CurrentRoom.GetRandomVisibleClearSpot(1, 1));
+                    chest2.IsLocked = false;
+                    chest2.RegisterChestOnMinimap(chest2.GetAbsoluteParentRoom());
+                }
+                aiActor.aiAnimator.PlayUntilFinished("thanosSnap", false, null, -1f, false);
+
+                elapsed = 0f;
 				duration = 1f;
 				while (elapsed < duration)
 				{

@@ -52,7 +52,7 @@ namespace Planetside
 				companion.aiActor.SetIsFlying(true, "I can fly", true, true);
 
 
-				companion.aiActor.healthHaver.ForceSetCurrentHealth(22f);
+				companion.aiActor.healthHaver.ForceSetCurrentHealth(12f);
 				companion.aiActor.CollisionKnockbackStrength = 0f;
 				companion.aiActor.procedurallyOutlined = true;
 				companion.aiActor.CanTargetPlayers = true;
@@ -60,7 +60,7 @@ namespace Planetside
 				EnemyToolbox.AddShadowToAIActor(companion.aiActor, StaticEnemyShadows.defaultShadow, new Vector2(0.625f, 0.25f), "shadowPos");
 
 
-				companion.aiActor.healthHaver.SetHealthMaximum(22f, null, false);
+				companion.aiActor.healthHaver.SetHealthMaximum(12f, null, false);
 				companion.aiActor.specRigidbody.PixelColliders.Clear();
 				companion.aiActor.specRigidbody.PixelColliders.Add(new PixelCollider
 				{

@@ -27,12 +27,7 @@ namespace Planetside
 		public static GameObject Cannon3;
 		public static GameObject Cannon4;
 
-		private static tk2dSpriteCollectionData FunganonClooection;
-
-
 		public static List<int> spriteIds2 = new List<int>();
-
-		//private static Texture2D BossCardTexture = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside/Resources/BossCards/fungannon_bosscard.png");
 
 		public static void Init()
 		{
@@ -42,16 +37,18 @@ namespace Planetside
 
 		public static void BuildPrefab()
 		{
-			bool flag = prefab != null || EnemyBuilder.Dictionary.ContainsKey(guid);
+            tk2dSpriteCollectionData Collection = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("FungannonCollection").GetComponent<tk2dSpriteCollectionData>();
+            Material mat = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Material>("fungannon material");
 
-			bool flag2 = flag;
-			if (!flag2)
+            if (prefab == null || !EnemyBuilder.Dictionary.ContainsKey(guid))
 			{
-				prefab = BossBuilder.BuildPrefab("Fungannon", guid, "Planetside/Resources/Fungannon/Fungannon_idle_001.png", new IntVector2(0, 0), new IntVector2(0, 0), false, true);
+				prefab = BossBuilder.BuildPrefabBundle("Fungannon", guid, Collection, 0 ,new IntVector2(0, 0), new IntVector2(0, 0), false, true);
 				var enemy = prefab.AddComponent<EnemyBehavior>();
 				FungannonController pain = prefab.AddComponent<FungannonController>();
+                EnemyToolbox.QuickAssetBundleSpriteSetup(enemy.aiActor, Collection, mat, false);
 
-				AIAnimator aiAnimator = enemy.aiAnimator;
+
+                AIAnimator aiAnimator = enemy.aiAnimator;
 
 				enemy.aiActor.knockbackDoer.weight = 35;
 				enemy.aiActor.MovementSpeed = 1.75f;
@@ -221,314 +218,304 @@ namespace Planetside
 				};
 
 
-				bool flag3 = FunganonClooection == null;
-				if (flag3)
-				{
-					FunganonClooection = SpriteBuilder.ConstructCollection(prefab, "FungalLadCollection");
-					UnityEngine.Object.DontDestroyOnLoad(FunganonClooection);
-					for (int i = 0; i < spritePaths.Length; i++)
-					{
-						SpriteBuilder.AddSpriteToCollection(spritePaths[i], FunganonClooection);
-					}
-					SpriteBuilder.AddAnimation(enemy.spriteAnimator, FunganonClooection, new List<int>
-					{
+                SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
+                    {
 
-					0,
-					1,
-					2,
-					3,
-					4,
-					5,
-					6
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
 
-					}, "idle", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 6f;
+                    }, "idle", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 6f;
 
-					SpriteBuilder.AddAnimation(enemy.spriteAnimator, FunganonClooection, new List<int>
-					{
+                SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
+                    {
 
-					7,
-					8,
-					9,
-					10,
-					11,
-					12,
-					13,
-					14,
-					15
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15
 
-					}, "moveleft", tk2dSpriteAnimationClip.WrapMode.Once).fps = 8f;
-					SpriteBuilder.AddAnimation(enemy.spriteAnimator, FunganonClooection, new List<int>
-					{
+                    }, "moveleft", tk2dSpriteAnimationClip.WrapMode.Once).fps = 8f;
+                SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
+                    {
 
-					16,
-					17,
-					18,
-					19,
-					20,
-					21,
-					22,
-					23,
-					24
+                    16,
+                    17,
+                    18,
+                    19,
+                    20,
+                    21,
+                    22,
+                    23,
+                    24
 
-					}, "moveright", tk2dSpriteAnimationClip.WrapMode.Once).fps = 8f;
+                    }, "moveright", tk2dSpriteAnimationClip.WrapMode.Once).fps = 8f;
 
-					SpriteBuilder.AddAnimation(enemy.spriteAnimator, FunganonClooection, new List<int>
-					{
+                SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
+                    {
 
-					25,
-					26,
-					27,
-					28,
-					29,
-					30,
-					31,
-					32,
-					33,
-					34,
-					35,//
+                    25,
+                    26,
+                    27,
+                    28,
+                    29,
+                    30,
+                    31,
+                    32,
+                    33,
+                    34,
+                    35,//
 					36,
-					37,
-					
-					35,//
+                    37,
+
+                    35,//
 					36,
-					37,
-					
-					35,//
+                    37,
+
+                    35,//
 					36,
-					37,
-					35,//
+                    37,
+                    35,//
 					36,
-					37,
-					38,
-					39,
-					40
+                    37,
+                    38,
+                    39,
+                    40
 
-					}, "roar", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-
-
-					SpriteBuilder.AddAnimation(enemy.spriteAnimator, FunganonClooection, new List<int>
-					{
-
-					41,
-					42,
-					43,
-					44,
-					45,
-					46,
-					47,
-					48,
-					49,
-					50,
-					51,
-					51,
-					52,
-					53,
-
-					}, "jump", tk2dSpriteAnimationClip.WrapMode.Once).fps = 11f;
+                    }, "roar", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
 
 
-					SpriteBuilder.AddAnimation(enemy.spriteAnimator, FunganonClooection, new List<int>
-					{
-					
-					53,
-					53,
-					54,
-					55
+                SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
+                    {
 
-					}, "jumpland", tk2dSpriteAnimationClip.WrapMode.Once).fps =9f;
+                    41,
+                    42,
+                    43,
+                    44,
+                    45,
+                    46,
+                    47,
+                    48,
+                    49,
+                    50,
+                    51,
+                    51,
+                    52,
+                    53,
+
+                    }, "jump", tk2dSpriteAnimationClip.WrapMode.Once).fps = 11f;
+
+
+                SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
+                    {
+
+                    53,
+                    53,
+                    54,
+                    55
+
+                    }, "jumpland", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
 
 
 
-					SpriteBuilder.AddAnimation(enemy.spriteAnimator, FunganonClooection, new List<int>
-					{
+                SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
+                    {
 
-					0,
-					1,
-					2,
-					3,
-					4,
-					5,
-					6,
-					0,
-					1,
-					2,
-					3,
-					4,
-					5,
-					6,
-					0,
-					1,
-					2,
-					3,
-					4,
-					5,
-					6,
-					25,
-					26,
-					27,
-					28,
-					29,
-					30,
-					31,
-					32,
-					33,
-					34,
-					35,//
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    25,
+                    26,
+                    27,
+                    28,
+                    29,
+                    30,
+                    31,
+                    32,
+                    33,
+                    34,
+                    35,//
 					36,
-					37,
+                    37,
 
 
-					}, "intro", tk2dSpriteAnimationClip.WrapMode.Once).fps = 10f;
-					SpriteBuilder.AddAnimation(enemy.spriteAnimator, FunganonClooection, new List<int>
-					{
-				66,
-				67,
-				68,
-				69,
-				70,
-				71,
-				72,
-				73,
-				74,
-				75,
-				76,
-				77,
-				78,
-				76,
-				77,
-				78,
-				76,
-				77,
-				78,
-				76,
-				77,
-				78,
-				76,
-				77,
-				78,
-				76,
-				77,
-				78
-					}, "death", tk2dSpriteAnimationClip.WrapMode.Once).fps = 10f;
+                    }, "intro", tk2dSpriteAnimationClip.WrapMode.Once).fps = 10f;
+                SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
+                    {
+                66,
+                67,
+                68,
+                69,
+                70,
+                71,
+                72,
+                73,
+                74,
+                75,
+                76,
+                77,
+                78,
+                76,
+                77,
+                78,
+                76,
+                77,
+                78,
+                76,
+                77,
+                78,
+                76,
+                77,
+                78,
+                76,
+                77,
+                78
+                    }, "death", tk2dSpriteAnimationClip.WrapMode.Once).fps = 10f;
 
-					SpriteBuilder.AddAnimation(enemy.spriteAnimator, FunganonClooection, new List<int>
-					{
-				    25,
-					26,
-					27,
-					28,
-					27,
-					26,
-					27,
-					28,
-					29,
+                SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
+                    {
+                    25,
+                    26,
+                    27,
+                    28,
+                    27,
+                    26,
+                    27,
+                    28,
+                    29,
 
-					27,
-					26,
-					27,
-					28,
-					29,
+                    27,
+                    26,
+                    27,
+                    28,
+                    29,
 
-					27,
-					26,
-					27,
-					28,
-					29,
+                    27,
+                    26,
+                    27,
+                    28,
+                    29,
 
-					27,
-					26,
-					27,
-					28,
-					29,
+                    27,
+                    26,
+                    27,
+                    28,
+                    29,
 
-					27,
-					26,
-					27,
-					28,
-					29,
+                    27,
+                    26,
+                    27,
+                    28,
+                    29,
 
-					27,
-					26,
-					27,
-					28,
-					29,
+                    27,
+                    26,
+                    27,
+                    28,
+                    29,
 
-					27,
-					26,
-					27,
-					28,
-					29,
+                    27,
+                    26,
+                    27,
+                    28,
+                    29,
 
-					27,
-					26,
-					27,
-					28,
+                    27,
+                    26,
+                    27,
+                    28,
 
-					27,
-					26,
-					27,
-					28,
-					29,
+                    27,
+                    26,
+                    27,
+                    28,
+                    29,
 
-					27,
-					26,
-					27,
-					28,
-					29,
+                    27,
+                    26,
+                    27,
+                    28,
+                    29,
 
-					27,
-					26,
-					27,
-					28,
-					29,
+                    27,
+                    26,
+                    27,
+                    28,
+                    29,
 
-					27,
-					26,
-					27,
-					28,
-					29,
+                    27,
+                    26,
+                    27,
+                    28,
+                    29,
 
-					27,
-					26,
-					27,
-					28,
-					29,
+                    27,
+                    26,
+                    27,
+                    28,
+                    29,
 
-					27,
-					26,
-					27,
-					28,
-					29,
+                    27,
+                    26,
+                    27,
+                    28,
+                    29,
 
-					27,
-					26,
-					27,
-					28,
-					29,
+                    27,
+                    26,
+                    27,
+                    28,
+                    29,
 
-					27,
-					26,
-					25
-					}, "charge", tk2dSpriteAnimationClip.WrapMode.Once).fps = 8f;
+                    27,
+                    26,
+                    25
+                    }, "charge", tk2dSpriteAnimationClip.WrapMode.Once).fps = 8f;
 
-					SpriteBuilder.AddAnimation(enemy.spriteAnimator, FunganonClooection, new List<int>
-					{
-					25,
-					26,
-					27,
-					28,
-					27,
-					26,
-					27,
-					28,
-					29,
-					28,
-					29,
+                SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
+                    {
+                    25,
+                    26,
+                    27,
+                    28,
+                    27,
+                    26,
+                    27,
+                    28,
+                    29,
+                    28,
+                    29,
 
-					}, "chargecannon", tk2dSpriteAnimationClip.WrapMode.Once).fps = 11f;
-				}
+                    }, "chargecannon", tk2dSpriteAnimationClip.WrapMode.Once).fps = 11f;
 
-				prefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("chargecannon").frames[1].eventAudio = "Play_BOSS_dragun_charge_01";
+                prefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("chargecannon").frames[1].eventAudio = "Play_BOSS_dragun_charge_01";
 				prefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("chargecannon").frames[1].triggerEvent = true;
 
 				prefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("jump").frames[4].eventAudio = "Play_ENM_bigshroom_jump_01";

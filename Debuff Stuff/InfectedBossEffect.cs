@@ -15,7 +15,7 @@ using MonoMod;
 using Pathfinding;
 using Brave.BulletScript;
 using GungeonAPI;
-
+using SaveAPI;
 namespace Planetside
 {
 	public class SpawnAdditionalBulletScript : OverrideBehaviorBase
@@ -403,34 +403,15 @@ namespace Planetside
 				base.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableDefault);
 				base.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableBigBullet);
 			}
-			/*
-			if (base.aiActor.behaviorSpeculator.OverrideBehaviors != null)
-            {
-				base.aiActor.behaviorSpeculator.OverrideBehaviors.Add(new SpawnAdditionalBulletScript() 
-				{
-					dodgeChance = 0.4f,
-					timeToHitThreshold = 0.33f,
-				});
-			}
-			else
-            {
-				base.aiActor.behaviorSpeculator.OverrideBehaviors = new List<OverrideBehaviorBase>()
-				{	new SpawnAdditionalBulletScript()
-				{
-					dodgeChance = 0.4f,
-					timeToHitThreshold = 0.33f,
-				}
-				};
 
-			}
-			*/
+			base.aiActor.healthHaver.OnPreDeath += HealthHaver_OnPreDeath;
 		}
-		
 
+		private void HealthHaver_OnPreDeath(Vector2 obj)
+		{
+			SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.INFECTED_FLOOR_COMPLETED, true);
+		}
 
-	
-
-		
 		public void Update()
         {
 			if (this.aiActor != null)

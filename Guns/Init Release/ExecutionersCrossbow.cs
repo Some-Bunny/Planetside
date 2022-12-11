@@ -26,7 +26,7 @@ namespace Planetside
 			Game.Items.Rename("outdated_gun_mods:executioners_crossbow", "psog:executioners_crossbow");
 			var behav = gun.gameObject.AddComponent<ExecutionersCrossbow>();
 			GunExt.SetShortDescription(gun, "Hang In There!");
-			GunExt.SetLongDescription(gun, "This old and slightly worn crossbow still holds the souls on long gone Gundead from when a party of Gungeoneers ran out of ammo and made 'improv weapons'. Hold the arrow long enough and you just may be able to spot a soul enter it.");
+			GunExt.SetLongDescription(gun, "Charging loads a spectral arrow into the slot that marks enemies to be executed.\nOriginally a hunting crossbow made by a desparate team, the remains of the Gundead used in the weapon seek retaliation agasint their killers.");
 			GunExt.SetupSprite(gun, null, "executionerscrossbow_idle_001", 8);
 			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 16);
 			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 3);

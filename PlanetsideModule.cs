@@ -38,7 +38,7 @@ namespace Planetside
     {
         public const string GUID = "somebunny.etg.planetsideofgunymede";
         public const string NAME = "Planetside Of Gunymede Pre-Release";
-        public const string VERSION = "1.3.109";
+        public const string VERSION = "1.3.110";
 
         public static readonly string TEXT_COLOR = "#9006FF";
 
@@ -58,6 +58,7 @@ namespace Planetside
         public static bool PreRelease = true;
 
         public static bool NewContent = true;
+
 
 
         public void Start()
@@ -366,6 +367,7 @@ namespace Planetside
             CoinShot.Add();
 
             //Perks
+            AllSeeingEyeMiniPickup.Init();
             AllStatsUp.Init();
             Greedy.Init();
             AllSeeingEye.Init();
@@ -527,8 +529,10 @@ namespace Planetside
             ETGModMainBehaviour.Instance.gameObject.AddComponent<ContainmentBreachController>();
             ETGModMainBehaviour.Instance.gameObject.AddComponent<ChallengeModeExtraChallenges>();
             ETGModMainBehaviour.Instance.gameObject.AddComponent<HellShrinesController>();
-            
+            ETGModMainBehaviour.Instance.gameObject.AddComponent<NemesisSpawnController>();
 
+
+            //RoomDropModifier
             //HellShrinesController
             PlanetsideQOL.Init();
             PlanetsideBalanceChanges.Init();
@@ -644,7 +648,7 @@ namespace Planetside
             string f = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.BEAT_LOOP_1) ? " Done!\n" : " -Beat The Game On Ouroborous Level 0.\n";
             string g = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.BEAT_A_BOSS_UNDER_A_SECOND) ? " Done!\n" : " -Kill A Boss After Dealing 500 Damage Or More At Once.\n";
             string h = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.DEFEAT_FUNGANNON) ? " Done!\n" : " -Defeat The Fungal Beast Of The Sewers.\n";
-            string i = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.DEFEAT_OPHANAIM) ? " Done!\n" : " -Defeat The Eternal Eye Of The Abbey.\n";
+            string i = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.DEFEAT_OPHANAIM) ? " Done!\n" : " -Defeat The Observant Aimgel Of The Abbey.\n";
             string j = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.DEFEAT_ANNIHICHAMBER) ? " Done!\n" : " -Defeat A Ravenous, Violent Chamber.\n";
             string k = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.DECURSE_HELL_SHRINE_UNLOCK) ? " Done!\n" : " -Remove Each Hell-Bound Curse At Least Once.\n";
             string l = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.HAS_COMPLETED_SOMETHING_WICKED) ? " Done!\n" : " -Survive An Encounter With Something Wicked.\n";
@@ -655,10 +659,12 @@ namespace Planetside
             string p = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.HM_PRIME_DEFEATED) ? " Done!\n" : " -Perform Maintenance On The Damaged Robot.\n";
 
             string q = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.HM_PRIME_DEFEATED_T4) ? " Done!\n" : " -Perform the Highest Level Maintenance On The Damaged Robot.\n";
+            string r1 = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.INFECTED_FLOOR_COMPLETED) ? " Done!\n" : " -Break The Veil and Survive A Mixed Chamber.\n";
+            string s = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.NEMESIS_KILLED) ? " Done!\n" : " -Defeat Your Rival.\n";
 
 
             string color1 = "9006FF";
-            OtherTools.PrintNoID("Unlock List:\n" + a + b + c + d + e + f + g + h + i + j + k + l + m + n + o + p + q, color1);
+            OtherTools.PrintNoID("Unlock List:\n" + a + b + c + d + e + f + g + h + i + j + k + l + m + n + o + p + q + r1 + s, color1);
             OtherTools.Init();
             new Hook(typeof(ConversationBarController).GetMethod("ShowBar", BindingFlags.Instance | BindingFlags.Public), typeof(PlanetsideModule).GetMethod("HAHA"));
         }

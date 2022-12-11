@@ -39,7 +39,7 @@ namespace Planetside
 			try
 			{
 				AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.HAS_FIRED_GTEE, true);
-				Gun gun = PickupObjectDatabase.GetByEncounterName(InitialiseGTEE.GunIDForEOE) as Gun;
+				Gun gun = PickupObjectDatabase.GetById(InitialiseGTEE.HOneToShootIt) as Gun;
 				int StoredGunID = gun.PickupObjectId;
 				PlayerController player = GameManager.Instance.PrimaryPlayer;
 				bool flagA = player.PlayerHasActiveSynergy("End Of Everything") && player.CurrentGun.PickupObjectId == StoredGunID;

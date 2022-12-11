@@ -47,12 +47,12 @@ namespace Planetside
                       
                     }
                 };
-                RoomFactory.AddInjection(RoomFactory.BuildFromResource("Planetside/Resources/OtherSpecialRooms/hmprimeproperroom.room").room, "HM Prime Boss Room", flowModifierPlacementTypes, 0, dungeonPrerequisites, "HM Prime Boss Room", 1f, 0.05f);
-                RoomFactory.AddInjection(RoomFactory.BuildFromResource("Planetside/Resources/OtherSpecialRooms/hmprimeminesroom.room").room, "HM Prime Boss Room", flowModifierPlacementTypes, 0, dungeonPrerequisites, "HM Prime Boss Room", 1f, 0.08f);
-                RoomFactory.AddInjection(RoomFactory.BuildFromResource("Planetside/Resources/OtherSpecialRooms/hmprimehollowroom.room").room, "HM Prime Boss Room", flowModifierPlacementTypes, 0, dungeonPrerequisites, "HM Prime Boss Room", 1f, 0.10f);
-                RoomFactory.AddInjection(RoomFactory.BuildFromResource("Planetside/Resources/OtherSpecialRooms/hmprimeforgeroom.room").room, "HM Prime Boss Room", flowModifierPlacementTypes, 0, dungeonPrerequisites, "HM Prime Boss Room", 1f, 0.13f);
-                RoomFactory.AddInjection(RoomFactory.BuildFromResource("Planetside/Resources/OtherSpecialRooms/hmprimeoublietteroom.room").room, "HM Prime Boss Room", flowModifierPlacementTypes, 0, dungeonPrerequisites, "HM Prime Boss Room", 1f, 0.166f);
-                RoomFactory.AddInjection(RoomFactory.BuildFromResource("Planetside/Resources/OtherSpecialRooms/hmprimeabbeyroom.room").room, "HM Prime Boss Room", flowModifierPlacementTypes, 0, dungeonPrerequisites, "HM Prime Boss Room", 1f, 0.2f);//0.2f
+                RoomFactory.AddInjection(RoomFactory.BuildFromResource("Planetside/Resources/OtherSpecialRooms/hmprimeproperroom.room").room, "HM Prime Boss Room", flowModifierPlacementTypes, 0, dungeonPrerequisites, "HM Prime Boss Room", 1f, 0.07f);
+                RoomFactory.AddInjection(RoomFactory.BuildFromResource("Planetside/Resources/OtherSpecialRooms/hmprimeminesroom.room").room, "HM Prime Boss Room", flowModifierPlacementTypes, 0, dungeonPrerequisites, "HM Prime Boss Room", 1f, 0.1f);
+                RoomFactory.AddInjection(RoomFactory.BuildFromResource("Planetside/Resources/OtherSpecialRooms/hmprimehollowroom.room").room, "HM Prime Boss Room", flowModifierPlacementTypes, 0, dungeonPrerequisites, "HM Prime Boss Room", 1f, 0.12f);
+                RoomFactory.AddInjection(RoomFactory.BuildFromResource("Planetside/Resources/OtherSpecialRooms/hmprimeforgeroom.room").room, "HM Prime Boss Room", flowModifierPlacementTypes, 0, dungeonPrerequisites, "HM Prime Boss Room", 1f, 0.15f);
+                RoomFactory.AddInjection(RoomFactory.BuildFromResource("Planetside/Resources/OtherSpecialRooms/hmprimeoublietteroom.room").room, "HM Prime Boss Room", flowModifierPlacementTypes, 0, dungeonPrerequisites, "HM Prime Boss Room", 1f, 0.18f);
+                RoomFactory.AddInjection(RoomFactory.BuildFromResource("Planetside/Resources/OtherSpecialRooms/hmprimeabbeyroom.room").room, "HM Prime Boss Room", flowModifierPlacementTypes, 0, dungeonPrerequisites, "HM Prime Boss Room", 1f, 0.18f);//0.2f
                 Debug.Log("Finished HMPrimeSpawnController setup without failure!");
             }
             catch (Exception e)

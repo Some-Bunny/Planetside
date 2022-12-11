@@ -720,7 +720,8 @@ namespace Planetside
 {
 	public class StoneEyesElite : BasicEliteType
 	{
-		public override float HealthMultiplier => 1.3f;
+        public override float DamageMultiplier => 1.05f;
+        public override float HealthMultiplier => 1.3f;
 		public override float CooldownMultiplier => 0.9f;
 		public override float MovementSpeedMultiplier => 1.3f;
 		public override Color EliteOutlineColor => Color.blue;
@@ -749,7 +750,7 @@ namespace Planetside
 				}
 			}
 		}
-		private IEnumerator LaunchWave(Vector2 startPoint, float Time = 2.5f)
+		private IEnumerator LaunchWave(Vector2 startPoint, float Time = 3f)
 		{
 			float m_prevWaveDist = 0f;
 			float distortionMaxRadius = 20f;
@@ -793,7 +794,7 @@ namespace Planetside
 								float b = (unitCenter - startPoint).ToAngle();
 								if (BraveMathCollege.AbsAngleBetween(playerController.FacingDirection, b) >= 60f)
 								{									
-                                    playerController.CurrentStoneGunTimer = playerController.CurrentStoneGunTimer + Time;
+                                    playerController.CurrentStoneGunTimer = Time;
 								}
 							}
 						}
@@ -821,7 +822,8 @@ namespace Planetside
 	}
 	public class FrenzyElite : BasicEliteType
 	{
-		public override float HealthMultiplier => 0.5f;
+        public override float DamageMultiplier => 1.66f;
+        public override float HealthMultiplier => 1;
 		public override float CooldownMultiplier => 1.33f;
 		public override float MovementSpeedMultiplier => 1.55f;
 		public override Color EliteOutlineColor => Color.yellow;
@@ -855,7 +857,8 @@ namespace Planetside
 	}
 	public class HealingElite : BasicEliteType
 	{
-		public override float HealthMultiplier => 0.8f;
+        public override float DamageMultiplier => 1.25f;
+        public override float HealthMultiplier => 1f;
 		public override float CooldownMultiplier => 1.1f;
 		public override float MovementSpeedMultiplier => 1.1f;
 		public override Color EliteOutlineColor => Color.green;
@@ -932,7 +935,8 @@ namespace Planetside
 	}
 	public class ResistantElite : BasicEliteType
 	{
-		public override float HealthMultiplier => 1.3f;
+        public override float DamageMultiplier => 1f;
+        public override float HealthMultiplier => 1.3f;
 		public override float CooldownMultiplier => 0.9f;
 		public override float MovementSpeedMultiplier => 1.15f;
 		public override Color EliteOutlineColor => Color.white;
@@ -1017,7 +1021,8 @@ namespace Planetside
     }
 	public class CursedElite : BasicEliteType
 	{
-		public override float HealthMultiplier => 0.9f;
+        public override float DamageMultiplier => 1.1f;
+        public override float HealthMultiplier => 1f;
 		public override float CooldownMultiplier => 1f;
 		public override float MovementSpeedMultiplier => 1.33f;
 		public override Color EliteOutlineColor => new Color(50, 0, 50);
@@ -1075,7 +1080,8 @@ namespace Planetside
 	}
 	public class ReflectiveElite : BasicEliteType
 	{
-		public override float HealthMultiplier => 1.35f;
+        public override float DamageMultiplier => 1;
+        public override float HealthMultiplier => 1.35f;
 		public override float CooldownMultiplier => 1f;
 		public override float MovementSpeedMultiplier => 0.85f;
         public override Color EliteOutlineColor => new Color(0, 10, 50);
@@ -1515,7 +1521,8 @@ namespace Planetside
 {
 	public abstract class BasicEliteType : BraveBehaviour
 	{
-		public abstract float MovementSpeedMultiplier { get; }
+        public abstract float DamageMultiplier { get; }
+        public abstract float MovementSpeedMultiplier { get; }
 		public abstract float CooldownMultiplier { get; }
 		public abstract float HealthMultiplier { get; }
 		public abstract List<ActorEffectResistance> DebuffImmunities { get; }
@@ -1547,6 +1554,10 @@ namespace Planetside
 				}
 				base.aiActor.healthHaver.OnPreDeath += OnPreDeath;
 				base.aiActor.healthHaver.OnDamaged += OnDamaged;
+				if (base.aiActor.healthHaver) 
+				{
+					base.aiActor.healthHaver.AllDamageMultiplier = DamageMultiplier;
+                }
 			}
 			else
 			{ Destroy(this); }
@@ -1757,9 +1768,12 @@ namespace Planetside
 	{
 		public void Start()
 		{
-			base.aiActor.healthHaver.OnPreDeath += HealthHaver_OnPreDeath;
-			m_regenTimer = RegenTimer;
-			this.m_bulletBank = this.aiActor.gameObject.GetComponent<AIBulletBank>();
+			if (base.aiActor != null)
+			{
+                base.aiActor.healthHaver.OnPreDeath += HealthHaver_OnPreDeath;
+            }
+            m_regenTimer = RegenTimer;
+			this.m_bulletBank = this.aiActor != null ? this.aiActor.gameObject.GetComponent<AIBulletBank>() : this.gameObject.GetComponent<AIBulletBank>();
 			float num = float.MaxValue;
 			if (this.aiActor && this.aiActor.TargetRigidbody)
 			{
@@ -1777,8 +1791,9 @@ namespace Planetside
 						{
 							projectile = null,
 							angle = (360f / AmountOFLines) * e,
-							distFromCenter = num2
-						});
+							distFromCenter = num2,
+							ValueOnLine = i
+                        });
 					}
 				}
 				else
@@ -1797,8 +1812,9 @@ namespace Planetside
 						{
 							projectile = component,
 							angle = (360f / AmountOFLines) * e,
-							distFromCenter = num2
-						});
+							distFromCenter = num2,
+                            ValueOnLine = i
+                        });
 					}
 				}
 			}
@@ -1826,6 +1842,9 @@ namespace Planetside
 		{
 			m_regenTimer -= BraveTime.DeltaTime;
 			IsEnabled = true;
+
+
+
 			if (this.aiActor)
 			{
 				bool flag = this.aiActor.CanTargetEnemies && !this.aiActor.CanTargetPlayers;
@@ -1849,7 +1868,16 @@ namespace Planetside
 					this.m_projectiles[j].projectile = null;
 				}
 			}
-			for (int k = 0; k < this.m_projectiles.Count; k++)
+
+
+            for (int i = 0; i < this.m_projectiles.Count; i++)
+            {
+                if (this.m_projectiles[i] != null && this.m_projectiles[i].projectile)
+                {
+					this.m_projectiles[i].distFromCenter = Mathf.Lerp(this.BulletMinRadius, this.BulletMaxRadius, (float)this.m_projectiles[i].ValueOnLine / ((float)this.NumBullets - 1f));      
+                }
+            }
+            for (int k = 0; k < this.m_projectiles.Count; k++)
 			{
 				float angle = this.m_projectiles[k].angle + BraveTime.DeltaTime * (float)this.BulletCircleSpeed;
 				this.m_projectiles[k].angle = angle;
@@ -1918,7 +1946,16 @@ namespace Planetside
 
 		protected override void OnDestroy()
 		{
-			base.OnDestroy();
+            for (int i = 0; i < this.m_projectiles.Count; i++)
+            {
+                if (this.m_projectiles[i] != null && this.m_projectiles[i].projectile && this.m_projectiles[i].projectile.gameObject.activeSelf)
+                {
+                    this.m_projectiles[i].projectile.DieInAir(false, false, true, false);
+                    this.m_projectiles[i].projectile = null;
+                }
+            }
+            base.OnDestroy();
+
 			IsEnabled = false;
 		}
 
@@ -1973,6 +2010,7 @@ namespace Planetside
 			public Projectile projectile;
 			public float angle;
 			public float distFromCenter;
+			public float ValueOnLine;
 		}
 	}
 

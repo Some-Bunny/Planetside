@@ -24,7 +24,6 @@ namespace Planetside
 		{
 
 			this.projectile = base.GetComponent<Projectile>();
-			this.player = (this.projectile.Owner as PlayerController);
 			if (projectile != null)
 			{
 				projectile.statusEffectsToApply = new List<GameActorEffect>()
@@ -33,15 +32,7 @@ namespace Planetside
 				};
 			}
 		}
-
-		public void Update()
-        {
-			
-		}
-		
-
 		private Projectile projectile;
-		private PlayerController player;
 	}
 }
 

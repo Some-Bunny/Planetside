@@ -82,10 +82,10 @@ namespace Planetside
 			}
 			protected override IEnumerator Top()
 			{
-				for (int i = 0; i <= 10; i++)
+				for (int i = 0; i <= 3; i++)
                 {
 					if (FiresBullets == true) { this.Fire(new Direction(0, DirectionType.Aim, -1f), new Speed(0f, SpeedType.Absolute), new Shrapnel(false)); }
-					yield return this.Wait(1f);
+					yield return this.Wait(3f);
 				}
 				base.Vanish(true);
 				yield break;
@@ -107,6 +107,7 @@ namespace Planetside
 		public override void Start()
 		{
 			this.Cooldown = ActiveCooldown();
+			currentContainer = BraveUtility.RandomElement<FakeActiveContainer>(fakeActives);
 			IsActive = false;
 			IsTrulyActive = false;
 			m_cooldownTimer = 8;
@@ -184,46 +185,16 @@ namespace Planetside
 			return BehaviorResult.Continue;
 		}
 
-
-		public Dictionary<string, int> strToID = new Dictionary<string, int>()
-		{
-			{"gun_friendship", 174 },
-			{"fortunes_favor", 105 },
-			{"cluster", 308 },
-			{"blast_shower", BlastShower.BlastShowerID },
-		};
-
 		public float ActiveTime()
         {
-			switch (FakeActiveToUse())
-            {
-                case "gun_friendship":
-					return 10;
-				case "fortunes_favor":
-					return 8;
-				case "cluster":
-					return 1;
-				case "blast_shower":
-					return 8;
-			}
-			return 7;
+            return currentContainer != null ? currentContainer.ActiveTime : 7;
+
         }
 
-		public float ActiveCooldown()
+        public float ActiveCooldown()
 		{
-			switch (FakeActiveToUse())
-			{
-				case "gun_friendship":
-					return 18;
-				case "fortunes_favor":
-					return 20;
-				case "cluster":
-					return 15;
-				case "blast_shower":
-					return 11;
-			}
-			return 11;
-		}
+			return currentContainer != null ? currentContainer.Cooldown : 20;
+        }
 
 		public void SetOutline(Color color)
 		{
@@ -241,8 +212,7 @@ namespace Planetside
 
 		public IEnumerator FakeUseActive()
 		{
-			int ID = 174;
-			strToID.TryGetValue(FakeActiveToUse(), out ID);
+			int ID = currentContainer != null ? currentContainer.item_ID : 174;
 			GameObject obj = ShowSpinDownHologram(ID, base.m_aiActor.gameObject);
 			UnityEngine.Object.Destroy(obj, 3.5f);
 			IsActive = true;
@@ -282,66 +252,21 @@ namespace Planetside
 			yield break;
 		}
 
+
+
+
 		public void DoActiveAbility()
         {
-			switch (FakeActiveToUse())
-			{
-				case "gun_friendship":
-					base.m_aiActor.gameObject.GetComponent<NemesisController>().GunSwitchTimer /= 5;
-					base.m_aiActor.behaviorSpeculator.CooldownScale /= 2;
-					return;
-				case "fortunes_favor":
-					AkSoundEngine.PostEvent("Play_OBJ_fortune_shield_01", base.m_aiActor.gameObject);
-					UltraFortunesFavor fortunes = base.m_aiActor.gameObject.AddComponent<UltraFortunesFavor>();
-					fortunes.bulletRadius = 3;
-					fortunes.beamRadius = 3;
-					fortunes.goopRadius = 3;
-					fortunes.sparkOctantVFX = (PickupObjectDatabase.GetById(105) as FortuneFavorItem).sparkOctantVFX;
-					return;
-				case "cluster":
-					SpawnManager.SpawnBulletScript(base.m_aiActor, base.m_aiActor.sprite.WorldCenter, base.m_aiActor.GetComponent<AIBulletBank>(), new CustomBulletScriptSelector(typeof(Mines)), StringTableManager.GetEnemiesString("#TRAP", -1));
-					return;
-				case "blast_shower":
-					base.m_aiActor.EffectResistances = 
-						(new List<ActorEffectResistance>() 
-						{ 
-							new ActorEffectResistance() { resistAmount = 1, resistType = EffectResistanceType.Freeze },
-							new ActorEffectResistance() { resistAmount = 1, resistType = EffectResistanceType.Charm },
-							new ActorEffectResistance() { resistAmount = 1, resistType = EffectResistanceType.Poison },
-							new ActorEffectResistance() { resistAmount = 1, resistType = EffectResistanceType.Fire },
-
-						}).ToArray();
-					base.m_aiActor.healthHaver.AllDamageMultiplier -= 0.33f;
-
-					return;
-			}
-		}
-		public void RemoveActiveAbility()
+            if (currentContainer.OnActivated != null) currentContainer.OnActivated(this.m_aiActor);
+        }
+        public void RemoveActiveAbility()
 		{
-			switch (FakeActiveToUse())
-			{
-				case "gun_friendship":
-					base.m_aiActor.gameObject.GetComponent<NemesisController>().GunSwitchTimer *= 5;
-					base.m_aiActor.behaviorSpeculator.CooldownScale *= 2;
-					return;
-				case "fortunes_favor":
-					UltraFortunesFavor fortunes = base.m_aiActor.gameObject.GetComponent<UltraFortunesFavor>();
-					UnityEngine.Object.Destroy(fortunes);
-					return;
-				case "cluster":
-					return;
-				case "blast_shower":
-					base.m_aiActor.EffectResistances =
-						(new List<ActorEffectResistance>()
-						{
+            if (currentContainer.OnRemoved != null) currentContainer.OnRemoved(this.m_aiActor);
+        }
 
-						}).ToArray();
-					base.m_aiActor.healthHaver.AllDamageMultiplier += 0.33f;
-					return;
-			}
-		}
 
-		public GameObject ShowSpinDownHologram(int itemId, GameObject obj)
+
+        public GameObject ShowSpinDownHologram(int itemId, GameObject obj)
 		{
 			tk2dSpriteCollectionData collection = AmmonomiconController.ForceInstance.EncounterIconCollection;
 			var pickupObject = PickupObjectDatabase.GetById(itemId);
@@ -405,8 +330,12 @@ namespace Planetside
 				float num = Vector2.Distance(projectile.specRigidbody.UnitCenter, GetOwnBody().UnitCenter) / projectile.Speed;
 				if (num <= this.timeToHitThreshold)
 				{
-					IntVector2 pixelsToMove = PhysicsEngine.UnitToPixel(projectile.specRigidbody.Velocity * this.timeToHitThreshold * 1.1f);
-					CollisionData collisionData;
+					IntVector2 pixelsToMove = PhysicsEngine.UnitToPixel(projectile.specRigidbody.Velocity * this.timeToHitThreshold * 1.15f);
+					pixelsToMove.x = Mathf.Max(pixelsToMove.x, 3);
+                    pixelsToMove.y = Mathf.Max(pixelsToMove.y, 3);
+
+
+                    CollisionData collisionData;
 					PhysicsEngine.Instance.RigidbodyCast(projectile.specRigidbody, pixelsToMove, out collisionData, true, true, null, false);
 					if (collisionData != null)
 					{
@@ -427,10 +356,7 @@ namespace Planetside
 			return false;
 		}
 
-		public string FakeActiveToUse()
-        {
-			return base.m_aiActor.GetComponent<NemesisController>().HeldActive ?? "gun_friendship";
-        }
+
 
 		public bool Enabled;
 		public float Cooldown;
@@ -441,7 +367,110 @@ namespace Planetside
 		private bool IsTrulyActive;
 
 
-	}
+
+        public class FakeActiveContainer
+        {
+            public string name = "DEBUG";
+            public int item_ID = 174;
+            public Action<AIActor> OnActivated;
+            public Action<AIActor> OnRemoved;
+			public float Cooldown = 15;
+			public float ActiveTime = 6;
+        }
+
+		public FakeActiveContainer currentContainer;
+
+		public static List<FakeActiveContainer> fakeActives = new List<FakeActiveContainer>()
+		{
+			new FakeActiveContainer()
+			{
+				name = "gun_friendship",
+				item_ID = 174,
+				OnActivated = (obj) =>
+				{
+				   obj.gameObject.GetComponent<NemesisController>().GunSwitchTimer /= 5;
+				   obj.behaviorSpeculator.CooldownScale /= 2;
+				},
+				OnRemoved =(obj) =>
+				{
+					obj.gameObject.GetComponent<NemesisController>().GunSwitchTimer *= 5;
+					obj.behaviorSpeculator.CooldownScale *= 2;
+				},
+				Cooldown = 15,
+				ActiveTime = 8
+			},
+			new FakeActiveContainer()
+			{
+				name = "fortunes_favor",
+				item_ID = 105,
+				OnActivated = (obj) =>
+				{
+					AkSoundEngine.PostEvent("Play_OBJ_fortune_shield_01", obj.gameObject);
+					UltraFortunesFavor fortunes = obj.gameObject.AddComponent<UltraFortunesFavor>();
+					fortunes.bulletRadius = 3;
+					fortunes.beamRadius = 3;
+					fortunes.goopRadius = 3;
+					fortunes.sparkOctantVFX = (PickupObjectDatabase.GetById(105) as FortuneFavorItem).sparkOctantVFX;
+				},
+				OnRemoved =(obj) =>
+				{
+					UltraFortunesFavor fortunes = obj.gameObject.GetComponent<UltraFortunesFavor>();
+					UnityEngine.Object.Destroy(fortunes);
+				},
+				Cooldown = 21,
+				ActiveTime = 7
+			},
+			new FakeActiveContainer()
+			{
+				name = "cluster",
+				item_ID = 308,
+				OnActivated = (obj) =>
+				{
+					SpawnManager.SpawnBulletScript(obj, obj.sprite.WorldCenter, obj.GetComponent<AIBulletBank>(), new CustomBulletScriptSelector(typeof(Mines)), StringTableManager.GetEnemiesString("#TRAP", -1));
+				},
+				OnRemoved =(obj) =>
+				{
+
+				},
+				Cooldown = 23,
+				ActiveTime = 1,
+
+            },
+			new FakeActiveContainer()
+			{
+				name = "blast_shower",
+				item_ID = BlastShower.BlastShowerID,
+				OnActivated = (obj) =>
+				{
+                   obj.EffectResistances =
+                        (new List<ActorEffectResistance>()
+                        {
+                            new ActorEffectResistance() { resistAmount = 1, resistType = EffectResistanceType.Freeze },
+                            new ActorEffectResistance() { resistAmount = 1, resistType = EffectResistanceType.Charm },
+                            new ActorEffectResistance() { resistAmount = 1, resistType = EffectResistanceType.Poison },
+                            new ActorEffectResistance() { resistAmount = 1, resistType = EffectResistanceType.Fire },
+
+                        }).ToArray();
+                   obj.healthHaver.AllDamageMultiplier -= 0.33f;
+                },
+				OnRemoved =(obj) =>
+				{
+				   obj.EffectResistances =
+				   (new List<ActorEffectResistance>()
+					{
+
+					}).ToArray();
+					obj.healthHaver.AllDamageMultiplier += 0.33f;
+				},
+				Cooldown = 30,
+				ActiveTime = 8,
+            },
+
+        };
+
+
+
+    }
 
 
 	public class CustomDodgeRollBehavior : OverrideBehaviorBase
@@ -476,11 +505,6 @@ namespace Planetside
 		// Token: 0x06004BFB RID: 19451 RVA: 0x00195064 File Offset: 0x00193264
 		public override bool OverrideOtherBehaviors()
 		{
-			if (Enabled == false)
-			{
-				return false;
-			}
-
 			Vector2 vector;
 			return this.m_cooldownTimer <= 0f && this.ShouldDodgeroll(out vector);
 		}
@@ -493,7 +517,9 @@ namespace Planetside
 			{
 				return BehaviorResult.Continue;
 			}
-			Vector2 vector;
+            if (Enabled == false) { return BehaviorResult.Continue; }
+
+            Vector2 vector;
 			if (this.ShouldDodgeroll(out vector) && base.m_aiActor.behaviorSpeculator.AttackCooldown > 0.1f && base.m_aiActor.behaviorSpeculator.IsStunned == false)
 			{
 				m_cooldownTimer = Cooldown;
@@ -577,7 +603,11 @@ namespace Planetside
 				{
 
 					IntVector2 pixelsToMove = PhysicsEngine.UnitToPixel(projectile.specRigidbody.Velocity * this.timeToHitThreshold * 1.1f);
-					CollisionData collisionData;
+					pixelsToMove.x = Mathf.Max(pixelsToMove.x, 3);
+                    pixelsToMove.y = Mathf.Max(pixelsToMove.y, 3);
+
+
+                    CollisionData collisionData;
 
 					PhysicsEngine.Instance.RigidbodyCast(projectile.specRigidbody, pixelsToMove, out collisionData, true, true, null, false);
 
@@ -691,10 +721,6 @@ namespace Planetside
 
 		public override bool OverrideOtherBehaviors()
 		{
-			if (Enabled == false)
-			{
-				return false;
-			}
 			Vector2 vector;
 			return this.m_cooldownTimer <= 0f && this.ShouldDodgeroll(out vector);
 		}
@@ -707,6 +733,7 @@ namespace Planetside
 				return BehaviorResult.Continue;
 			}
 			Vector2 vector;
+			if (Enabled == false) { return BehaviorResult.Continue; }
 
 
 

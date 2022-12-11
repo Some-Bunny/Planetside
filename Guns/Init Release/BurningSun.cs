@@ -28,7 +28,7 @@ namespace Planetside
 			//behav.preventNormalReloadAudio = true;
 			//behav.overrideNormalReloadAudio = "Play_BOSS_doormimic_appear_01";
 			GunExt.SetShortDescription(gun, "Ring Of Fire");
-			GunExt.SetLongDescription(gun, "Despite its looks, this portable weapon can generate, and fire miniature stars. As one would expect from firing a star, it is dangerous to anything near it.");
+			GunExt.SetLongDescription(gun, "Despite its looks, this portable weapon can generate, and fire miniature stars.\n\nServes enemies as medium rare.");
 			GunExt.SetupSprite(gun, null, "burningsun_idle_001", 8);
 			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 8);
 			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 10);

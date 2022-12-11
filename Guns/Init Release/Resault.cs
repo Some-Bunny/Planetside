@@ -30,7 +30,7 @@ namespace Planetside
 			gun.gameObject.AddComponent<Resault>();
 
 			GunExt.SetShortDescription(gun, "Reduce, Reuse, Reload");
-			GunExt.SetLongDescription(gun, "An automatic machine-gun that dispenses ammo capacity when fired, restores a portion of it on killing an enemy. Gungeonoligists still specualte *why* this gun dispenses its ammo capacity. Is it to reduce weight? To increase damage output? No-one really knows.");
+			GunExt.SetLongDescription(gun, "An automatic machine-gun that dispenses ammo capacity when fired, restores a portion of it on killing an enemy. Gungeonoligists still specualte *why* this gun dispenses its ammo capacity. Is it to reduce weight? Some idiot thought it would be an interesting gimmick? No-one really knows.");
 			GunExt.SetupSprite(gun, null, "resault_idle_001", 11);
 			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 36);
 			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 7);

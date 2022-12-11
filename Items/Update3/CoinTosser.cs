@@ -151,18 +151,18 @@ namespace Planetside
                 {
                     foreach (GameObject coin in AllActiveCoins)
                     {
-                        if (coin != null && coin.GetComponent<Projectile>() != null)
+                        var proj = coin.GetComponent<Projectile>();
+                        if (coin != null && proj != null)
                         {
-                            Projectile projectile = coin.GetComponent<Projectile>();
-                            projectile.baseData.damage *= 2;
-                            projectile.baseData.speed *= 2;
-                            projectile.UpdateSpeed();
-                            projectile.baseData.range += 50;
-                            BounceProjModifier bouncy = projectile.gameObject.GetOrAddComponent<BounceProjModifier>();
+                            proj.baseData.damage *= 2;
+                            proj.baseData.speed *= 2;
+                            proj.UpdateSpeed();
+                            proj.baseData.range += 50;
+                            BounceProjModifier bouncy = proj.gameObject.GetOrAddComponent<BounceProjModifier>();
                             bouncy.numberOfBounces += 2;
-                            PierceProjModifier spook = projectile.gameObject.GetOrAddComponent<PierceProjModifier>();
+                            PierceProjModifier spook = proj.gameObject.GetOrAddComponent<PierceProjModifier>();
                             spook.penetration += 1;
-                            CoinComponent coincmp = projectile.gameObject.GetComponent<CoinComponent>();
+                            CoinComponent coincmp = proj.gameObject.GetComponent<CoinComponent>();
                             coincmp.AmountOfBlanksUsedWhileAlive += 1;
                         }
                     }

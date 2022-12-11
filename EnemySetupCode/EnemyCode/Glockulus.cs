@@ -50,8 +50,8 @@ namespace Planetside
 				companion.aiActor.aiAnimator.HitReactChance = 0f;
 				companion.aiActor.specRigidbody.CollideWithOthers = true;
 				companion.aiActor.specRigidbody.CollideWithTileMap = true;
-				companion.aiActor.PreventFallingInPitsEver = true;
-				companion.aiActor.healthHaver.ForceSetCurrentHealth(22.5f);
+				companion.aiActor.PreventFallingInPitsEver = false;
+				companion.aiActor.healthHaver.ForceSetCurrentHealth(25f);
 				companion.aiActor.CollisionKnockbackStrength = 0f;
 				companion.aiActor.procedurallyOutlined = true;
 				companion.aiActor.CanTargetPlayers = true;
@@ -60,7 +60,7 @@ namespace Planetside
 				companion.aiActor.PathableTiles = CellTypes.PIT | CellTypes.FLOOR;
 
 				companion.aiActor.ShadowObject = EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").ShadowObject; 
-				companion.aiActor.healthHaver.SetHealthMaximum(22.5f, null, false);
+				companion.aiActor.healthHaver.SetHealthMaximum(25f, null, false);
 				companion.aiActor.specRigidbody.PixelColliders.Clear();
 				
 				ImprovedAfterImage image = companion.aiActor.gameObject.AddComponent<ImprovedAfterImage>();

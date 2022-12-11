@@ -162,9 +162,11 @@ namespace Planetside
 		}
 		public override bool CanBeUsed(PlayerController user)
 		{
+			if (user.CurrentRoom == null) { return false; }
 			List<AIActor> activeEnemies = user.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
-			float count = activeEnemies.Count;
-			return count >= 2;
+			if (activeEnemies == null) { return false; }
+			if (activeEnemies.Count > 2) { return true; }
+			return false;
 		}
 		public List<string> enemyBlacklist = new List<string>
 		{

@@ -1,5 +1,7 @@
-﻿using FullInspector;
+﻿using Dungeonator;
+using FullInspector;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +10,6 @@ using UnityEngine;
 namespace Planetside
 {
 
-    //TODO
-
     public class OphanaimFlightBehavior : BasicAttackBehavior
     {
         private bool ShowBulletScript()
@@ -17,32 +17,26 @@ namespace Planetside
             return string.IsNullOrEmpty(this.BulletName);
         }
 
-        // Token: 0x060047CA RID: 18378 RVA: 0x0017A0EC File Offset: 0x001782EC
         private bool ShowBulletName()
         {
             return this.BulletScript == null || this.BulletScript.IsNull;
         }
 
-        // Token: 0x060047CB RID: 18379 RVA: 0x0017A108 File Offset: 0x00178308
         private bool ShowImmobileDuringStop()
         {
             return this.StopDuring != OphanaimFlightBehavior.StopType.None;
         }
 
-        // Token: 0x060047CC RID: 18380 RVA: 0x0017A118 File Offset: 0x00178318
         private bool ShowChargeTime()
         {
             return !string.IsNullOrEmpty(this.ChargeAnimation);
         }
 
-        // Token: 0x060047CD RID: 18381 RVA: 0x0017A128 File Offset: 0x00178328
         private bool ShowOverrideFireDirection()
         {
             return this.ShowBulletName() && this.ShouldOverrideFireDirection;
         }
 
-        // Token: 0x17000A65 RID: 2661
-        // (get) Token: 0x060047CE RID: 18382 RVA: 0x0017A140 File Offset: 0x00178340
         public bool IsBulletScript
         {
             get
@@ -51,8 +45,6 @@ namespace Planetside
             }
         }
 
-        // Token: 0x17000A66 RID: 2662
-        // (get) Token: 0x060047CF RID: 18383 RVA: 0x0017A164 File Offset: 0x00178364
         public bool IsSingleBullet
         {
             get
@@ -61,7 +53,6 @@ namespace Planetside
             }
         }
 
-        // Token: 0x060047D0 RID: 18384 RVA: 0x0017A174 File Offset: 0x00178374
         public override void Start()
         {
             base.Start();
@@ -88,6 +79,117 @@ namespace Planetside
             {
                 base.DecrementTimer(ref this.m_chargeTimer, false);
             }
+        }
+
+        public IEnumerator Takeoff()
+        {
+            AkSoundEngine.PostEvent("Play_Conjure", this.m_aiActor.gameObject);
+
+            cached_position = this.m_aiActor.transform.PositionVector2();
+
+            cached_roomHandler = this.m_aiActor.GetAbsoluteParentRoom();
+            if (cached_roomHandler != null)
+            {
+                cached_roomHandler.BecomeTerrifyingDarkRoom(2, 0.33f, 0.5f, null);
+            }
+
+            float elaWait = 0f;
+            float duraWait = 0.5f;
+            while (elaWait < duraWait)
+            {
+                elaWait += BraveTime.DeltaTime;
+                yield return null;
+            }
+            var trails = this.m_aiActor.gameObject.GetComponent<Ophanaim.EyeEnemyBehavior>().trails;
+            foreach (var t in trails)
+            { t.enabled = true;}
+
+            this.m_aiActor.healthHaver.IsVulnerable = false;
+            this.m_aiActor.specRigidbody.enabled = false;
+            this.m_aiActor.behaviorSpeculator.PreventMovement = true;
+
+            this.m_cachedMovementSpeed = this.m_aiActor.MovementSpeed;
+            this.m_aiActor.MovementSpeed = 0;
+
+            elaWait = 0f;
+            duraWait = 3;
+            Vector3 pos = this.m_aiActor.transform.position;
+
+            AkSoundEngine.PostEvent("Play_ENM_Grip_Master_Linger_01", this.m_aiActor.gameObject);
+
+            GlobalMessageRadio.BroadcastMessage("eye_shot_hide");
+
+            while (elaWait < duraWait)
+            {
+
+                float t = Mathf.Min(elaWait / 3, 1);
+                float tRue = MathToolbox.SinLerpTValue(t);
+                this.m_aiActor.transform.position = this.m_aiActor.transform.position + new Vector3(0, tRue / 4);
+                this.m_aiActor.specRigidbody.Reinitialize();
+
+                float t1 = Mathf.Min(elaWait / 1, 1);
+                Vector3 vector = base.m_aiActor.sprite.WorldBottomLeft.ToVector3ZisY(0);
+                Vector3 vector2 = base.m_aiActor.sprite.WorldTopRight.ToVector3ZisY(0);
+                Vector3 position = new Vector3(UnityEngine.Random.Range(vector.x, vector2.x), UnityEngine.Random.Range(vector.y, vector2.y), UnityEngine.Random.Range(vector.z, vector2.z));
+                GlobalSparksDoer.DoSingleParticle(position, Vector3.down * (10 * t1), null, null, null, GlobalSparksDoer.SparksType.FLOATY_CHAFF);
+
+                elaWait += BraveTime.DeltaTime;
+                
+                yield return null;
+            }
+
+            yield break;
+        }
+
+
+        public RoomHandler cached_roomHandler;
+
+        public Vector2 cached_position;
+
+        public IEnumerator TakeOn()
+        {
+            float elaWait = 0f;
+            float duraWait = 3;
+            if (cached_roomHandler != null)
+            {
+                cached_roomHandler.EndTerrifyingDarkRoom(3, 0.66f, 0.66f, null);
+            }
+            AkSoundEngine.PostEvent("Play_ENM_Grip_Master_Linger_01", this.m_aiActor.gameObject);
+
+            Vector3 pos = this.m_aiActor.transform.position;
+            var trails = this.m_aiActor.gameObject.GetComponent<Ophanaim.EyeEnemyBehavior>().trails;
+            while (elaWait < duraWait)
+            {
+                float t = (float)elaWait / (float)duraWait;
+                float throne1 = Mathf.Sin(t * (Mathf.PI / 2));
+                Vector3 vector3 = Vector3.Lerp(pos, cached_position, throne1);
+                this.m_aiActor.transform.position = vector3;
+                this.m_aiActor.specRigidbody.Reinitialize();
+                elaWait += BraveTime.DeltaTime;
+
+                float t1 = Mathf.Min(elaWait / 2.5f, 1);
+                Vector3 vector = base.m_aiActor.sprite.WorldBottomLeft.ToVector3ZisY(0);
+                Vector3 vector2 = base.m_aiActor.sprite.WorldTopRight.ToVector3ZisY(0);
+                Vector3 position = new Vector3(UnityEngine.Random.Range(vector.x, vector2.x), UnityEngine.Random.Range(vector.y, vector2.y), UnityEngine.Random.Range(vector.z, vector2.z));
+                GlobalSparksDoer.DoSingleParticle(position, Vector3.down * Mathf.Lerp(10, 3, t1), null, null, null, GlobalSparksDoer.SparksType.STRAIGHT_UP_FIRE);
+
+                yield return null;
+            }
+            foreach (var t in trails)
+            { t.enabled = false;}
+        GlobalMessageRadio.BroadcastMessage("eye_shot_appear");
+
+        this.m_aiActor.behaviorSpeculator.PreventMovement = false;
+            this.m_aiActor.healthHaver.IsVulnerable = true;
+            this.m_aiActor.specRigidbody.enabled = true;
+            this.m_aiActor.MovementSpeed = m_cachedMovementSpeed;
+            yield break;
+        }
+
+
+        private void M_aiActor_MovementModifiers(ref Vector2 volundaryVel, ref Vector2 involuntaryVel)
+        {
+            throw new NotImplementedException();
         }
 
         public override BehaviorResult Update()
@@ -125,6 +227,8 @@ namespace Planetside
             this.state = OphanaimFlightBehavior.State.Idle;
             if (!string.IsNullOrEmpty(this.ChargeAnimation))
             {
+
+                this.m_aiActor.StartCoroutine(Takeoff());
                 this.m_aiAnimator.PlayUntilFinished(this.ChargeAnimation, true, null, -1f, false);
                 this.state = OphanaimFlightBehavior.State.WaitingForCharge;
             }
@@ -181,7 +285,6 @@ namespace Planetside
             return BehaviorResult.RunContinuous;
         }
 
-        // Token: 0x060047D3 RID: 18387 RVA: 0x0017A53C File Offset: 0x0017873C
         public override ContinuousBehaviorResult ContinuousUpdate()
         {
             base.ContinuousUpdate();
@@ -250,11 +353,12 @@ namespace Planetside
             }
         }
 
-        // Token: 0x060047D4 RID: 18388 RVA: 0x0017A7A8 File Offset: 0x001789A8
         public override void EndContinuousUpdate()
         {
             base.EndContinuousUpdate();
             this.CeaseFire();
+            this.m_aiActor.StartCoroutine(TakeOn());
+
             if (this.ClearGoop)
             {
                 this.SetGoopClearing(false);
@@ -306,10 +410,6 @@ namespace Planetside
             if (this.MoveSpeedModifier != 1f)
             {
                 this.m_aiActor.MovementSpeed = this.m_cachedMovementSpeed;
-            }
-            if (this.StopDuring == OphanaimFlightBehavior.StopType.TellOnly)
-            {
-                this.m_behaviorSpeculator.PreventMovement = false;
             }
             if (this.m_aiActor && this.StopDuring != OphanaimFlightBehavior.StopType.None && this.ImmobileDuringStop)
             {
@@ -379,16 +479,12 @@ namespace Planetside
             }
             if (this.StopDuring == OphanaimFlightBehavior.StopType.TellOnly)
             {
-                this.m_behaviorSpeculator.PreventMovement = false;
                 if (this.m_aiActor && this.ImmobileDuringStop)
                 {
                     this.m_aiActor.knockbackDoer.SetImmobile(false, "ShootBulletScript");
                 }
             }
-            else if (this.StopDuring != OphanaimFlightBehavior.StopType.None)
-            {
-                this.StopMoving();
-            }
+
             this.state = OphanaimFlightBehavior.State.Firing;
             if (this.HideGun && this.m_aiShooter)
             {
@@ -406,21 +502,7 @@ namespace Planetside
         }
 
         // Token: 0x060047D9 RID: 18393 RVA: 0x0017ACAC File Offset: 0x00178EAC
-        private void StopMoving()
-        {
-            if (this.m_aiActor)
-            {
-                this.m_aiActor.ClearPath();
-                if (this.StopDuring == OphanaimFlightBehavior.StopType.TellOnly)
-                {
-                    this.m_behaviorSpeculator.PreventMovement = true;
-                }
-                if (this.ImmobileDuringStop)
-                {
-                    this.m_aiActor.knockbackDoer.SetImmobile(true, "ShootBulletScript");
-                }
-            }
-        }
+
 
         // Token: 0x060047DA RID: 18394 RVA: 0x0017AD10 File Offset: 0x00178F10
         protected override Vector2 GetOrigin(ShootBehavior.TargetAreaOrigin origin)
@@ -550,10 +632,7 @@ namespace Planetside
                 {
                     this.m_aiAnimator.PlayVfx(this.ChargeVfx, null, null, null);
                 }
-                if (this.StopDuring == OphanaimFlightBehavior.StopType.Charge)
-                {
-                    this.StopMoving();
-                }
+
                 this.m_chargeTimer = this.ChargeTime;
             }
             else if (state == OphanaimFlightBehavior.State.WaitingForTell)
@@ -562,10 +641,7 @@ namespace Planetside
                 {
                     this.m_aiAnimator.PlayVfx(this.TellVfx, null, null, null);
                 }
-                if (this.StopDuring == OphanaimFlightBehavior.StopType.Tell || this.StopDuring == OphanaimFlightBehavior.StopType.TellOnly)
-                {
-                    this.StopMoving();
-                }
+
 
                 this.m_isAimLocked = false;
             }

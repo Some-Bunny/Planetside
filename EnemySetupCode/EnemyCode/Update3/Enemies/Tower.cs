@@ -42,7 +42,7 @@ namespace Planetside
 				companion.aiActor.specRigidbody.CollideWithOthers = true;
 				companion.aiActor.specRigidbody.CollideWithTileMap = true;
 				companion.aiActor.PreventFallingInPitsEver = true;
-				companion.aiActor.healthHaver.ForceSetCurrentHealth(15f);
+				companion.aiActor.healthHaver.ForceSetCurrentHealth(12f);
 				companion.aiActor.CollisionKnockbackStrength = 0f;
 				companion.aiActor.procedurallyOutlined = true;
 				companion.aiActor.CanTargetPlayers = true;
@@ -54,7 +54,7 @@ namespace Planetside
                 EnemyToolbox.AddShadowToAIActor(companion.aiActor, StaticEnemyShadows.defaultShadow, new Vector2(0.5f, 0f), "shadowPos");
 
 
-                companion.aiActor.healthHaver.SetHealthMaximum(15f, null, false);
+                companion.aiActor.healthHaver.SetHealthMaximum(12f, null, false);
 				companion.aiActor.specRigidbody.PixelColliders.Clear();
 				companion.aiActor.specRigidbody.PixelColliders.Add(new PixelCollider
 				{

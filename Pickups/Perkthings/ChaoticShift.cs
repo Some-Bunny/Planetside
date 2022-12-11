@@ -264,8 +264,8 @@ namespace Planetside
                 return;    
             m_hasBeenPickedUp = true;
             AkSoundEngine.PostEvent("Play_OBJ_dice_bless_01", player.gameObject);
-            OtherTools.ApplyStat(player, PlayerStats.StatType.Damage, 0.525f, StatModifier.ModifyMethod.MULTIPLICATIVE);
-            OtherTools.ApplyStat(player, PlayerStats.StatType.AmmoCapacityMultiplier, 0.95f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+            OtherTools.ApplyStat(player, PlayerStats.StatType.Damage, 0.6f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+            OtherTools.ApplyStat(player, PlayerStats.StatType.AmmoCapacityMultiplier, 1.05f, StatModifier.ModifyMethod.MULTIPLICATIVE);
 
             PerkParticleSystemController cont = base.GetComponent<PerkParticleSystemController>();
             if (cont != null) { cont.DoBigBurst(player); }

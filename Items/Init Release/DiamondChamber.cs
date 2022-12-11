@@ -20,7 +20,7 @@ namespace Planetside
 			DiamondChamber chamber = gameObject.AddComponent<DiamondChamber>();
 			ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
 			string shortDesc = "Purity";
-			string longDesc = "A chamber made of pure diamond. It glows with a shine unseen.\n\nYou feel at peace.";
+			string longDesc = "Mastery is worth double. A chamber made of pure diamond. It glows with a shine unseen.\n\nYou feel at peace.";
 			ItemBuilder.SetupItem(chamber, shortDesc, longDesc, "psog");
 			chamber.quality = PickupObject.ItemQuality.S;
 			chamber.SetupUnlockOnCustomFlag(CustomDungeonFlags.BROKEN_CHAMBER_RUN_COMPLETED, true);

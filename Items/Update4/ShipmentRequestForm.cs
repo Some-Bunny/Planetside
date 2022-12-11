@@ -30,7 +30,7 @@ namespace Planetside
             ShipmentRequestForm activeitem = obj.AddComponent<ShipmentRequestForm>();
             ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "Oh **** The Shipping and Recieving!";
-            string longDesc = "Hello STRING.EMPTY, we would like you to know that your package is available for collection at these collection stations:\n\nSTRING.EMPTY\n\nSTRING.EMPTY\n\nSTRING.EMPTY\n\nYour package can be retrieved using this ticket as at any date, up to 01/03/XXXX. Your package is also able to be collected past your expiration date, with additional paperwork required to be printed and filled out, and is to be handed in with your ticket.\n\nRegards, Hegemony Shipment Services.";
+            string longDesc = "Hello STRING.EMPTY, we would like you to know that your package is available for collection at these collection stations:\n\nSTRING.EMPTY\n\nSTRING.EMPTY\n\nSTRING.EMPTY\n\nYour package can be retrieved using this ticket as at any date, up to 01/03/XXXX. Your package is also able to be collected past YOUR expiration date, as long as you keep the ticket. Make sure to also fire the additional paperwork requireed.\n\nRegards, Hegemony Shipment Services.";
             activeitem.SetupItem(shortDesc, longDesc, "psog");
             activeitem.SetCooldownType(ItemBuilder.CooldownType.Timed, 1);
             activeitem.consumable = true;

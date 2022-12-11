@@ -119,10 +119,10 @@ namespace Planetside
 
         public static float FloorMultiplier(Dungeon floor)
         {
-            if (floor.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.CASTLEGEON) { return 0.777f; }
-            if (floor.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.GUNGEON) { return 0.825f; }
-            if (floor.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.MINEGEON) { return 0.9f; }
-            if (floor.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.CATACOMBGEON) { return 1; }
+            if (floor.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.CASTLEGEON) { return 0.8f; }
+            if (floor.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.GUNGEON) { return 0.85f; }
+            if (floor.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.MINEGEON) { return 0.925f; }
+            if (floor.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.CATACOMBGEON) { return 0.975f; }
             if (floor.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.FORGEGEON) { return 1; }
             if (floor.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.SEWERGEON) { return 1f; }
             if (floor.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.CATHEDRALGEON) { return 1.1f; }
@@ -229,7 +229,7 @@ namespace Planetside
                         float Total = ChanceMult * Chance;
                         for (int L = 0; L < SaveAPI.AdvancedGameStatsManager.Instance.GetSessionStatValue(SaveAPI.CustomTrackedStats.PERKS_BOUGHT); L++)
                         {
-                            Total *= 0.8f;
+                            Total *= 0.85f;
                         }
                         Total = Mathf.Min(1, Total);
 

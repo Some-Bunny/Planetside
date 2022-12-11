@@ -16,51 +16,15 @@ using Brave.BulletScript;
 
 namespace BreakAbleAPI
 {
-
-
-
-    /// 
-    /*
-    public class ShadowHandler : MonoBehaviour
-    {
-        public ShadowHandler()
-        {
-            this.shadowObject = (GameObject)UnityEngine.Object.Instantiate(ResourceCache.Acquire("DefaultShadowSprite"));
-            this.Offset = new Vector2(0, 0);
-        }
-
-        public void Start()
-        {
-            GameObject shadowObj = (GameObject)UnityEngine.Object.Instantiate(shadowObject);
-            shadowObj.transform.parent = base.gameObject.transform;
-            tk2dSprite shadowSprite = shadowObj.GetComponent<tk2dSprite>();
-            shadowSprite.renderer.enabled = true;
-            shadowSprite.HeightOffGround = base.gameObject.GetComponent<tk2dSprite>().HeightOffGround - 0.1f;
-            shadowObj.transform.position.WithZ(base.gameObject.transform.position.z + 99999f);
-            shadowObj.transform.position = base.gameObject.transform.position + Offset;
-            DepthLookupManager.ProcessRenderer(shadowObj.GetComponent<Renderer>(), DepthLookupManager.GungeonSortingLayer.BACKGROUND);
-            shadowSprite.usesOverrideMaterial = true;
-            shadowSprite.renderer.material.shader = Shader.Find("Brave/Internal/SimpleAlphaFadeUnlit");
-            shadowSprite.renderer.material.SetFloat("_Fade", 0.66f);
-        }
-
-        public Vector3 Offset;
-        public GameObject shadowObject;
-    }
-    */
-
-
-
     public static class BreakableAPIToolbox
     {
 
-        public static Shader worldShader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTiltedCutoutFastPixelShadow");
+        //public static Shader worldShader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTiltedCutoutFastPixelShadow");
 
 
         /// <summary>
         /// Generates, and returns a TeleporterController. This is for generating a Teleporter that you can teleport to from the map. Of note, any of the gameObject stuff at the end of the method is nullable and should use the default teleporter VFX stuff if left as null
         /// </summary>
-        /// <param name="name">The name of your Teleporter object. Keep it simple, no special characters.</param>
         /// <param name="name">The name of your Teleporter object. Keep it simple, no special characters.</param>
         /// <param name="idleSpritePaths">Your idle aniamtion sprite paths. Only insert one path if you don't want it to be animated.</param>
         /// <param name="activationSpritePaths">Your sprite paths for the aniamtion is plays when its activated.</param>
@@ -223,6 +187,15 @@ namespace BreakAbleAPI
             UnityEngine.Object.DontDestroyOnLoad(self);
         }
 
+        /// <summary>
+        /// Generates, and returns a shadow for your breakables. This is a very simple shadow object, so make the sprite completely black for best results!
+        /// </summary>
+        /// <param name="ShadowSpritePath">The sprite path to yoru shadow sprite.</param>
+        /// <param name="name">The object name.</param>
+        /// <param name="parent">The parent objects Transform that your shadow will be parented to.</param>
+        /// <param name="Offset">The offset of the shadow object.</param>
+        /// <param name="customCollection">Leave this as null. Currently for an unfinished idea.</param>
+
         public static GameObject GenerateShadow(string ShadowSpritePath, string name, Transform parent, Vector3 Offset, tk2dSpriteCollectionData customCollection = null)
         {
             GameObject shadowObject = SpriteBuilder.SpriteFromResource(ShadowSpritePath, null, false);
@@ -233,7 +206,7 @@ namespace BreakAbleAPI
             tk2dSprite orAddComponent3 = shadowObject.GetOrAddComponent<tk2dSprite>();
             orAddComponent3.SetSprite(ShadowSpriteCollection, newSpriteId2);
 
-            orAddComponent3.HeightOffGround = parent.gameObject.GetComponent<tk2dSprite>().HeightOffGround - 0.1f;
+            orAddComponent3.HeightOffGround = parent.gameObject.GetComponent<tk2dSprite>() != null ? parent.gameObject.GetComponent<tk2dSprite>().HeightOffGround - 0.1f : 0;
             shadowObject.transform.position = parent.gameObject.transform.position + Offset;
             shadowObject.transform.parent = parent;
 
@@ -242,13 +215,14 @@ namespace BreakAbleAPI
             orAddComponent3.renderer.material.shader = Shader.Find("Brave/Internal/SimpleAlphaFadeUnlit");
             orAddComponent3.renderer.material.SetFloat("_Fade", 0.66f);
 
-
             return shadowObject;
         }
 
 
-
-        public static DungeonDoorSubsidiaryBlocker GenerateDungeonDoorSubsidiaryBlocker(string name, string[] idleSpritePaths, string[] sealSpritePaths, string[] unsealSpritePaths, bool isNorthSouthDoor, string[] playerNearSealedDoorAnimPaths = null, int idleAnimFPS = 5, int sealAnimFPS = 5, int unsealAnimFPS = 5, int playerNearSealedDoorAnimFPS = 5, string[] chainIdleSpritePaths = null, string[] chainSealSpritePaths = null, string[] chainUnsealSpritePaths = null, string[] chainPlayerNearChainPaths = null )
+        /// <summary>
+        /// Unfinished, do not use!
+        /// </summary>
+        private static DungeonDoorSubsidiaryBlocker GenerateDungeonDoorSubsidiaryBlocker(string name, string[] idleSpritePaths, string[] sealSpritePaths, string[] unsealSpritePaths, bool isNorthSouthDoor, string[] playerNearSealedDoorAnimPaths = null, int idleAnimFPS = 5, int sealAnimFPS = 5, int unsealAnimFPS = 5, int playerNearSealedDoorAnimFPS = 5, string[] chainIdleSpritePaths = null, string[] chainSealSpritePaths = null, string[] chainUnsealSpritePaths = null, string[] chainPlayerNearChainPaths = null )
         {
 
             GameObject gameObject = SpriteBuilder.SpriteFromResource(idleSpritePaths[0], null, false);
@@ -495,7 +469,10 @@ namespace BreakAbleAPI
             return animator;
         }
 
-        public static DungeonDoorController GenerateDungeonDoorController(string name, DungeonDoorController.DoorModule[] doorModules, DungeonDoorController.DungeonDoorMode dungeonDoorMode, bool IsNorthSouthDoor, bool hasSubsidiaryDoors, bool hidesSealAnimators, DungeonDoorSubsidiaryBlocker blocker = null, bool isLocked = false)
+        /// <summary>
+        /// Unfinished, do not use!
+        /// </summary>
+        private static DungeonDoorController GenerateDungeonDoorController(string name, DungeonDoorController.DoorModule[] doorModules, DungeonDoorController.DungeonDoorMode dungeonDoorMode, bool IsNorthSouthDoor, bool hasSubsidiaryDoors, bool hidesSealAnimators, DungeonDoorSubsidiaryBlocker blocker = null, bool isLocked = false)
         {
             DungeonDoorController controller = new DungeonDoorController();
             controller.name = name;
@@ -522,7 +499,10 @@ namespace BreakAbleAPI
             return controller;
         }
 
-        public static DungeonDoorController.DoorModule GenerateDoorModule(string name, string[] idleSpritePaths, string[] closeAnimPaths, string[] openAimPaths, int AnimFPS = 5)
+        /// <summary>
+        /// Unfinished, do not use!
+        /// </summary>
+        private static DungeonDoorController.DoorModule GenerateDoorModule(string name, string[] idleSpritePaths, string[] closeAnimPaths, string[] openAimPaths, int AnimFPS = 5)
         {
             GameObject gameObject = SpriteBuilder.SpriteFromResource(idleSpritePaths[0], null, false);
             FakePrefab.MarkAsFakePrefab(gameObject);
@@ -532,7 +512,6 @@ namespace BreakAbleAPI
             int spriteID = SpriteBuilder.AddSpriteToCollection(idleSpritePaths[0], SpriteObjectSpriteCollection);
             tk2dSprite sprite = gameObject.GetOrAddComponent<tk2dSprite>();
             sprite.SetSprite(SpriteObjectSpriteCollection, spriteID);
-
 
             tk2dSpriteAnimator animator = gameObject.GetOrAddComponent<tk2dSpriteAnimator>();
             tk2dSpriteAnimation animation = gameObject.AddComponent<tk2dSpriteAnimation>();
@@ -586,7 +565,18 @@ namespace BreakAbleAPI
             gameObject.AddComponent(mod.GetType());
             return mod;
         }
-        
+
+        /// <summary>
+        /// Generates, and returns a tk2dSpriteAnimationClip. Can be used to add new Tk2daAnimations to an object, as long as it has a tk2dSpriteAnimator.
+        /// </summary>
+        /// <param name="clipName">The name of your animation clip.</param>
+        /// <param name="animator">Your objects tk2dSpriteAnimator.</param>
+        /// <param name="animator">Your objects tk2dSpriteAnimation component.</param>
+        /// <param name="FPS">Your animations FPS.</param>
+        /// <param name="SpritePaths">All the spritepaths to your animation.</param>
+        /// <param name="SpriteObjectSpriteCollection">Your objects SpriteObjectSpriteCollection. Can be gotten by getting the tk2dsprite of the object and accessing the Collection variable. Ex: gameObject.GetComponent<Tk2dBaseSprite>().Collection</param>
+        /// <param name="wrapMode">Your animations wrap mode.</param>
+
         public static tk2dSpriteAnimationClip AddAnimation(string clipName,tk2dSpriteAnimator animator, tk2dSpriteAnimation animation, int FPS, string[] SpritePaths, tk2dSpriteCollectionData SpriteObjectSpriteCollection, tk2dSpriteAnimationClip.WrapMode wrapMode)
         {
             tk2dSpriteAnimationClip clip = new tk2dSpriteAnimationClip() { name = clipName, frames = new tk2dSpriteAnimationFrame[0], fps = FPS };
@@ -605,6 +595,12 @@ namespace BreakAbleAPI
             return clip;
         }
 
+        /// <summary>
+        /// Generates, and returns a simple GameObject with a sprite / animation.
+        /// </summary>
+        /// <param name="name">Your objects name.</param>
+        /// <param name="SpritePaths">Your spritepath(s) to your decal.</param>
+        /// <param name="AnimFPS">The FPS of the animation, if it will have one.</param>
 
         public static GameObject GenerateDecalObject(string name, string[] SpritePaths, int AnimFPS = 5)
         {
@@ -840,13 +836,13 @@ namespace BreakAbleAPI
 
             if (usesWorldShader == true)
             {
-                kickable.sprite.renderer.material.shader = worldShader;
-                kickable.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+                //kickable.sprite.renderer.material.shader = worldShader;
+                //kickable.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
 
             }
             return kickable; 
         }
-        public static tk2dSpriteAnimationClip AddAnimation(tk2dSpriteAnimator animator, tk2dSpriteCollectionData Tablecollection, string[] spritePaths, string clipName, int FPS, tk2dSpriteAnimationClip.WrapMode wrapMode)
+        private static tk2dSpriteAnimationClip AddAnimation(tk2dSpriteAnimator animator, tk2dSpriteCollectionData Tablecollection, string[] spritePaths, string clipName, int FPS, tk2dSpriteAnimationClip.WrapMode wrapMode)
         {
             tk2dSpriteAnimation animation = animator.gameObject.AddComponent<tk2dSpriteAnimation>();
             animation.clips = new tk2dSpriteAnimationClip[0];
@@ -866,7 +862,7 @@ namespace BreakAbleAPI
         }
 
         /// <summary>
-        /// Generates, and returns a FlippableCover. This is for generating a basic one, it returns it so you can additionally modify it without cluttering up the setup method too much. Reminder, FlippableCovers have a MajorBreakable component that you could modify as well!
+        /// (Unstable, no guaranteed good results!) Generates, and returns a FlippableCover. This is for generating a basic one, it returns it so you can additionally modify it without cluttering up the setup method too much. Reminder, FlippableCovers have a MajorBreakable component that you could modify as well!
         /// </summary>
         /// <param name="name">The name of your kickable. Keep it simple, its used in generating your animations, so no special characters.</param>
         /// <param name="idleSpritePaths">Your sprite paths. Only insert one path if you don't want it to be animated.</param>
@@ -1491,8 +1487,8 @@ namespace BreakAbleAPI
 
             if (usesWorldShader == true)
             {
-                breakable.sprite.renderer.material.shader = worldShader;
-                breakable.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+                //breakable.sprite.renderer.material.shader = worldShader;
+                //breakable.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
 
             }
             return breakable;
@@ -1692,8 +1688,8 @@ namespace BreakAbleAPI
             DebrisObj.waftDistance = waftDistance;
             DebrisObj.initialBurstDuration = initialBurstDuration;
 
-            if (usesWorldShader == true){DebrisObj.sprite.renderer.material.shader = worldShader;
-                DebrisObj.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+            if (usesWorldShader == true){//DebrisObj.sprite.renderer.material.shader = worldShader;
+               // DebrisObj.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
             }
             return DebrisObj;
         }
@@ -1769,8 +1765,8 @@ namespace BreakAbleAPI
             DebrisObj.initialBurstDuration = initialBurstDuration;
             if (usesWorldShader == true)
             {
-                DebrisObj.sprite.renderer.material.shader = worldShader;
-                DebrisObj.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+                //DebrisObj.sprite.renderer.material.shader = worldShader;
+                //DebrisObj.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
             }
             return DebrisObj;
         }
@@ -1823,8 +1819,8 @@ namespace BreakAbleAPI
                 DebrisObj.initialBurstDuration = initialBurstDuration;
                 if (usesWorldShader == true)
                 {
-                    DebrisObj.sprite.renderer.material.shader = worldShader;
-                    DebrisObj.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+                   //DebrisObj.sprite.renderer.material.shader = worldShader;
+                   //DebrisObj.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
                 }
                 DebrisObjectList.Add(DebrisObj);
             }
@@ -1906,8 +1902,8 @@ namespace BreakAbleAPI
                     DebrisObj.initialBurstDuration = initialBurstDuration;
                     if (usesWorldShader == true)
                     {
-                        DebrisObj.sprite.renderer.material.shader = worldShader;
-                        DebrisObj.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+                        //DebrisObj.sprite.renderer.material.shader = worldShader;
+                        //DebrisObj.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
                     }
                     DebrisObjectList.Add(DebrisObj);
                 }
@@ -1956,8 +1952,8 @@ namespace BreakAbleAPI
             DebrisObj.inertialMass = Mass;
             if (usesWorldShader == true)
             {
-                DebrisObj.sprite.renderer.material.shader = worldShader;
-                DebrisObj.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+                //DebrisObj.sprite.renderer.material.shader = worldShader;
+                //DebrisObj.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
             }
             return DebrisObj;
         }
@@ -2024,8 +2020,8 @@ namespace BreakAbleAPI
             DebrisObj.inertialMass = Mass;
             if (usesWorldShader == true)
             {
-                DebrisObj.sprite.renderer.material.shader = worldShader;
-                DebrisObj.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+                //DebrisObj.sprite.renderer.material.shader = worldShader;
+                //DebrisObj.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
             }
             return DebrisObj;
         }
@@ -2070,8 +2066,8 @@ namespace BreakAbleAPI
                 DebrisObj.inertialMass = Mass;
                 if (usesWorldShader == true)
                 {
-                    DebrisObj.sprite.renderer.material.shader = worldShader;
-                    DebrisObj.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+                    //DebrisObj.sprite.renderer.material.shader = worldShader;
+                    //DebrisObj.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
                 }
                 DebrisObjectList.Add(DebrisObj);
             }
@@ -2148,8 +2144,8 @@ namespace BreakAbleAPI
                     DebrisObj.inertialMass = Mass;
                     if (usesWorldShader == true)
                     {
-                        DebrisObj.sprite.renderer.material.shader = worldShader;
-                        DebrisObj.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+                        //DebrisObj.sprite.renderer.material.shader = worldShader;
+                        //DebrisObj.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
                     }
                     DebrisObjectList.Add(DebrisObj);
                 }
@@ -2231,280 +2227,5 @@ namespace BreakAbleAPI
             }
             return placeableContents;
         }
-
-
-        //Everything below here is an example of how you would generate your own KickableObject
-        public static void ExampleKickableObjectSetup()
-        {
-            string defaultPath = "Planetside/Resources/DungeonObjects/EmberPot/";
-            string defaultTablePath = "Planetside/Resources/DungeonObjects/testTable/";
-
-            string[] idlePaths = new string[]
-            {
-                defaultPath+"Pot/emberpot_idle_001.png",
-                defaultPath+"Pot/emberpot_idle_002.png",
-            };
-            string[] flipLeftPaths = new string[]
-            {
-                defaultTablePath+"derptable_flip_002.png",
-            };
-            string[] flipRightPaths = new string[]
-            {
-                defaultTablePath+"derptable_flip_right_002.png",
-            };
-            string[] flipUpPaths = new string[]
-            {
-                defaultTablePath+"derptable_flip_up_002.png",
-            };
-            string[] flipDownPaths = new string[]
-            {
-                defaultTablePath+"derptable_flip_down_002.png",
-            };
-
-            string[] breakLeftPaths = new string[]
-            {
-                defaultTablePath+"derptable_break_left_001.png",
-                defaultTablePath+"derptable_break_left_002.png",
-            };
-            string[] breakRightPaths = new string[]
-            {
-                defaultTablePath+"derptable_break_right_001.png",
-                defaultTablePath+"derptable_break_right_002.png",
-            };
-            string[] breakUpPaths = new string[]
-            {
-                defaultTablePath+"derptable_break_up_001.png",
-                defaultTablePath+"derptable_break_up_002.png",
-            };
-            string[] breakDownPaths = new string[]
-            {
-                defaultTablePath+"derptable_break_down_001.png",
-                defaultTablePath+"derptable_break_down_002.png",
-            };
-            string[] breakUnflippedPaths = new string[]
-            {
-                defaultTablePath+"derptable_breakunflipped_001.png",
-                defaultTablePath+"derptable_breakunflipped_002.png",
-                defaultTablePath+"derptable_breakunflipped_003.png",
-            };
-            string[] breakPathsassad = new string[]
-            {
-                defaultPath+"Pot/emberpot_break_001.png",
-            };
-            KickableObject kickable = GenerateKickableObject("test", idlePaths, flipUpPaths, flipDownPaths, flipLeftPaths, flipRightPaths, breakUpPaths, breakDownPaths, breakLeftPaths, breakRightPaths, breakUnflippedPaths, breakPathsassad, 2, 1, 1, 2, 2, false, 16, 16, 0, 0, true);// "Play_OBJ_barrel_break_01", 5);
-            kickable.triggersBreakTimer = false; //If true, your kickable will break after being kicked after a certain amount of time has passed.
-            kickable.breakTimerLength = 10; //The amount of time that your kickable will live for before going bye-bye.
-            kickable.RollingDestroysSafely = true; //if true, allows the player to dodge-roll into it safely to break it regardless of collision? idfk.
-            kickable.timerVFX = null; //if NOT null, enables a gameobject that adds as a VFX for when it is rolling but ONLY if triggersBreakTimer is true.     
-            kickable.leavesGoopTrail = false; //if true, makes your kickable leave a goop trail when it rolls.
-            kickable.goopFrequency = 0.05f; //the time between spawning goop when it is rolling.
-            kickable.goopRadius = 1;//the radius of the goop that spawns.
-            kickable.goopType = null;//the goop that spawns.
-
-        }
-
-        //Everything below here is an example of how you would generate your own Minorbreakable
-        public static void ExampleMinorBreakableSetup()
-        {
-            MinorBreakable breakable = GenerateMinorBreakable("testBreakable", new string[] { "Planetside/Resources/brokenchamberfixed.png", "Planetside/Resources/gunslingersring.png" }, 4, new string[] { "Planetside/Resources/gunslingersring.png", "Planetside/Resources/gunwarrant.png", "Planetside/Resources/plaetunstableteslacoil.png" }, 10, "Play_OBJ_pot_shatter_01", true);
-            //The reason it returns a minorbreakable is so you can set more values here, without adding to the setup method to prevent clutter. this is why i am leaving examples here
-
-            breakable.stopsBullets = true; // makes projectiles break when colliding with the breakable
-            breakable.OnlyPlayerProjectilesCanBreak = true;
-            breakable.OnlyBreaksOnScreen = true;
-            breakable.resistsExplosions = true;
-            breakable.canSpawnFairy = false;
-
-            //Coin Drops
-            breakable.chanceToRain = 1; //The chance for your breakable to drop a casing
-            breakable.dropCoins = false;
-
-            //Explosives
-            breakable.explodesOnBreak = false; //makes it explode when it breaks!
-            breakable.explosionData = null; //the explosion that it uses when it does break and has the above bool set to true
-            //Goops
-            breakable.goopsOnBreak = false; //same as above, but for goops
-            breakable.goopRadius = 1;
-            breakable.goopType = null; //the goop that it uses when it breaks
-
-            //Misc
-            breakable.IgnoredForPotShotsModifier = false; //self explanatory
-            breakable.stainObject = null; //The gameobject that is placed on the ground to act as a stain when the breakable is broken.
-            breakable.CastleReplacedWithWaterDrum = false; //I assume its to prevent it from being replaced with a water barrel in the keep
-
-            breakable.breakStyle = MinorBreakable.BreakStyle.BURST; // the breakstyle that the shards will use. certain ones will only burst shards in certain directions
-
-            //An example for adding shard clusters using the GenerateDebrisObject/GenerateAnimatedDebrisObject and GenerateShardCluster method
-            DebrisObject obj = GenerateDebrisObject("Planetside/Resources/gunslingersring.png");
-            DebrisObject obj2 = GenerateAnimatedDebrisObject(new string[] { "Planetside/Resources/gunslingersring.png", "Planetside/Resources/gunwarrant.png", "Planetside/Resources/plaetunstableteslacoil.png" });
-            //obj2.inertialMass = 1; 
-            //obj2.shadowSprite
-
-            //breakable.ShardSpawnOffset = new Vector2(0, 0); The offset in which shards will spawn
-
-            ShardCluster cluster = GenerateShardCluster(new DebrisObject[] { obj, obj2 });
-            ShardCluster[] array = new ShardCluster[] { cluster };
-            breakable.shardClusters = array;
-
-
-            //An example for adding shard clusters using the GenerateDebrisObjects/GenerateAnimatedDebrisObjects and GenerateShardClustersFromArray method
-            /*
-            DebrisObject[] objs = GenerateDebrisObjects(new string[] { "Planetside/Resources/heresyhammer.png", "Planetside/Resources/injectorrounds.png" });
-            DebrisObject[] objs2 = GenerateAnimatedDebrisObjects(new List<string[]> { new string[] { "Planetside/Resources/bluecasing.png", "Planetside/Resources/bloodidol.png" }, new string[] { "Planetside/Resources/oscillatingbullets.png", "Planetside/Resources/planetsidemedal.png" } });
-            ShardCluster[] clusters = GenerateShardClustersFromArray(new List<DebrisObject[]>() { objs, objs2 } );
-            ShardCluster[] arrays = clusters;
-            breakable.shardClusters = arrays;
-            */
-
-
-            // everything beloew here is for adding particle effects to your breakable when it breaks, tinker with your own caution!
-            //note that you dont necessarily need a custom particle system for it to work
-            /*
-            breakable.breakStyle = BreakStyle.BURST;
-            breakable.amountToRain = 30;
-            breakable.EmitStyle = GlobalSparksDoer.EmitRegionStyle.RANDOM;
-            breakable.ParticleColor = Color.red;
-            breakable.ParticleLifespan = 2;
-            //Attach ParticleSystem component to set particles
-            breakable.ParticleMagnitude = 1;
-            breakable.ParticleMagnitudeVariance = 1;
-            breakable.ParticleSize = 0.1f;
-            breakable.ParticleType = GlobalSparksDoer.SparksType.EMBERS_SWIRLING;
-            breakable.hasParticulates = true;
-            breakable.MaxParticlesOnBurst = 20;
-            breakable.MinParticlesOnBurst = 2;
-            */
-
-        }
-       
-
-
-
-        //Everything below here is an example of how you would generate your own MajorBreakable
-        public static void ExampleMajorBreakableSetup()
-        {
-            MajorBreakable breakable = GenerateMajorBreakable("testMajorBreakable", new string[] { "Planetside/Resources/gunslingersring.png", "Planetside/Resources/blashshower.png" }, 5, new string[] { "Planetside/Resources/gunslingersring.png", "Planetside/Resources/gunwarrant.png", "Planetside/Resources/plaetunstableteslacoil.png" }, 10, 30, true);
-
-            breakable.GameActorMotionBreaks = false; //Breaks the MajorBreakable if anything move over it
-            breakable.damageVfxMinTimeBetween = 0.1f; //the minimum time that the breakable has to wait before playing its damageVFX again
-            breakable.distributeShards = true; // controls the distribultion of the shards? not sure
-            breakable.EnemyDamageOverride = 2; // a value that overrides how much damage the breakable takes *IF* the source of the damage is an enemy
-            breakable.MinHits = 1; //the minimum amount of hits it can take before *actually* taking damage
-            breakable.ScaleWithEnemyHealth = false; //lets the breakables HP scale with the floor HP multiplier
-
-
-            breakable.IgnoreExplosions = true; //not sure, it isnt used at all in the MajorBreakable class
-            breakable.ImmuneToBeastMode = false;//not sure, it isnt used at all in the MajorBreakable class
-
-            breakable.InvulnerableToEnemyBullets = false; //prevents damage from enemy bullets
-            breakable.OnlyExplosions = false;//prevents all damage from alll sources except for explosions
-
-            breakable.SpawnItemOnBreak = true; //enambles/disables whether an item spawns from it
-            breakable.ItemIdToSpawnOnBreak = 73; //the ID of the item it spawns when it is broken. this one is set to spawn half red hearts
-
-            breakable.shardBreakStyle = MinorBreakable.BreakStyle.BURST; // the breakstyle that the shards will use. certain ones will only burst shards in certain directions
-
-            breakable.TemporarilyInvulnerable = false; //seems to prevent all damage, doesnt seem to run on any timer
-            breakable.usesTemporaryZeroHitPointsState = false; // becomes invulnerable when reaches 0 HP, probably for use with spriteNameToUseAtZeroHP
-            //breakable.spriteNameToUseAtZeroHP = null;
-
-            breakable.PlayerRollingBreaks = true; //breaks it instantly if the player dodge rolls into it
-
-            breakable.minShardPercentSpeed = 0.5f; //The minimum multiplier for the shards speed
-            breakable.maxShardPercentSpeed = 3;  //The maximum multiplier for the shards speed
-
-            breakable.destroyedOnBreak = true; //Destroys the object *completely* when its HP reaches 0. having this false will keep the object but remove its collision when its HP reaches 0
-            breakable.handlesOwnBreakAnimation = true;
-
-            //An example for adding shard clusters using the GenerateDebrisObject/GenerateAnimatedDebrisObject and GenerateShardCluster method
-            DebrisObject obj = GenerateDebrisObject("Planetside/Resources/gunslingersring.png");
-            DebrisObject obj2 = GenerateAnimatedDebrisObject(new string[] { "Planetside/Resources/gunslingersring.png", "Planetside/Resources/gunwarrant.png", "Planetside/Resources/plaetunstableteslacoil.png" });
-            ShardCluster cluster = GenerateShardCluster(new DebrisObject[] { obj, obj2 });
-            ShardCluster[] array = new ShardCluster[] { cluster };
-            breakable.shardClusters = array;
-
-
-            //An example for adding shard clusters using the GenerateDebrisObjects/GenerateAnimatedDebrisObjects and GenerateShardClustersFromArray method
-            /*
-            DebrisObject[] objs = GenerateDebrisObjects(new string[] { "Planetside/Resources/heresyhammer.png", "Planetside/Resources/injectorrounds.png" });
-            DebrisObject[] objs2 = GenerateAnimatedDebrisObjects(new List<string[]> { new string[] { "Planetside/Resources/bluecasing.png", "Planetside/Resources/bloodidol.png" }, new string[] { "Planetside/Resources/oscillatingbullets.png", "Planetside/Resources/planetsidemedal.png" } });
-            ShardCluster[] clusters = GenerateShardClustersFromArray(new List<DebrisObject[]>() { objs, objs2 } );
-            ShardCluster[] arrays = clusters;
-            breakable.shardClusters = arrays;
-            */
-
-        }
-
-
-        //An example of how to set uo most of the table stuff you can use
-        public static void ExampleTestTable()
-        {
-            string defaultPath = "Planetside/Resources/DungeonObjects/megaTable/";
-            string[] outlinePaths = new string[]
-            {
-                defaultPath+"megatable_outlineNorth_001.png",
-                defaultPath+"megatable_outlineEast_001.png",
-                defaultPath+"megatable_outlineWest_001.png",
-                defaultPath+"megatable_outlineSouth_001.png"
-            };
-            string[] northFlipPaths = new string[]
-            {
-                defaultPath+"megatable_northflip_001.png",
-                defaultPath+"megatable_northflip_002.png",
-                defaultPath+"megatable_northflip_003.png",
-                defaultPath+"megatable_northflip_004.png",
-                defaultPath+"megatable_northflip_005.png",
-                defaultPath+"megatable_northflip_006.png",
-            };
-            string[] southFlipPaths = new string[]
-            {
-                defaultPath+"megatable_southflip_001.png",
-                defaultPath+"megatable_southflip_002.png",
-                defaultPath+"megatable_southflip_003.png",
-                defaultPath+"megatable_southflip_004.png",
-                defaultPath+"megatable_southflip_005.png",
-                defaultPath+"megatable_southflip_006.png",
-            };
-            string[] northBreakPaths = new string[]
-            {
-                defaultPath+"megatable_northflipbreakdown_001.png",
-                defaultPath+"megatable_northflipbreakdown_002.png",
-                defaultPath+"megatable_northflipbreakdown_001.png",
-            };
-            string[] southBreakPaths = new string[]
-            {
-                defaultPath+"megatable_southflipbreakdown_001.png",
-                defaultPath+"megatable_southflipbreakdown_002.png",
-                defaultPath+"megatable_southflipbreakdown_003.png",
-            };
-            string[] unflippedBreakPaths = new string[]
-            {
-                defaultPath+"megatable_idlebreakdown_001.png",
-                defaultPath+"megatable_idlebreakdown_002.png",
-                defaultPath+"megatable_idlebreakdown_003.png",
-            };
-
-
-
-
-            Dictionary<float, string> north = new Dictionary<float, string>()
-            {
-                {25, defaultPath+"megatable_flipbreak_001_north.png"}
-            };
-            Dictionary<float, string> south = new Dictionary<float, string>()
-            {
-                {25, defaultPath+"megatable_flipbreak_001_south.png"}
-            };
-
-
-            Dictionary<float, string> aTwo = new Dictionary<float, string>()
-            {
-                {25, defaultPath+"megatable_idlebreak_001.png"}
-            };
-            FlippableCover breakable = BreakableAPIToolbox.GenerateTable("Mega_Table", new string[] { defaultPath + "megatable_idle_001.png" }, outlinePaths, northFlipPaths, southFlipPaths, null, null, northBreakPaths, southBreakPaths, null, null, unflippedBreakPaths, 1, 10, 7, 7, true, 64, 30, 0, 8, 64, 5, 64, 5, FlippableCover.FlipStyle.ONLY_FLIPS_UP_DOWN, 300, null, north, south, null, null, aTwo, true, true, 1);
-
-
-        }
-
     }
 }

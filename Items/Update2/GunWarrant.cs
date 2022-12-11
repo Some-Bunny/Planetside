@@ -42,9 +42,37 @@ namespace Planetside
             GunWarrant.GunWarrantID = item.PickupObjectId;
             ItemIDs.AddToList(item.PickupObjectId);
             new Hook(typeof(BaseShopController).GetMethod("DoSetup", BindingFlags.Instance | BindingFlags.NonPublic), typeof(GunWarrant).GetMethod("DoSetupHook"));
-            GameManager.Instance.RainbowRunForceExcludedIDs.Add(item.PickupObjectId);
 
+            ShopDiscountMegaMind.DiscountsToAdd.Add(new ShopDiscount()
+            {
+                IdentificationKey = "Gun_Warrant",
+                PriceMultiplier = 0.5f,
+                CanDiscountCondition = CanBuy,
+                ItemToDiscount = Can
+            });
+
+            GameManager.Instance.RainbowRunForceExcludedIDs.Add(item.PickupObjectId);
         }
+
+        public static bool Can(ShopItemController s)
+        {
+            if (s.item is Gun) { return true; }
+            return false;
+        }
+
+        public static bool CanBuy()
+        {
+            foreach (var p in GameManager.Instance.AllPlayers)
+            {
+                if (p.HasPickupID(GunWarrant.GunWarrantID) == true)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public static int GunWarrantID;
 
         public static void DoSetupHook(Action<BaseShopController> orig, BaseShopController self)
@@ -62,7 +90,6 @@ namespace Planetside
                         Type type = typeof(BaseShopController); FieldInfo _property = type.GetField("m_shopItems", BindingFlags.NonPublic | BindingFlags.Instance); _property.GetValue(self);
                         List<GameObject> uses = (List<GameObject>)_property.GetValue(self);
                         Gun gun = PickupObjectDatabase.GetRandomGun();
-                        float newCost = gun.PurchasePrice;
                         GameObject gunObj = gun.gameObject;
 
                         uses.Add(gunObj);
@@ -83,8 +110,6 @@ namespace Planetside
                         float num4 = (lastLoadedLevelDefinition == null) ? 1f : lastLoadedLevelDefinition.priceMultiplier;
 
                         ShopItemController shopItemController2 = gameObject8.AddComponent<ShopItemController>();
-                        newCost *= num4;
-                        shopItemController2.OverridePrice = (int)(newCost *= 0.5f);
 
                         PlanetsideReflectionHelper.InvokeMethod(typeof(BaseShopController), "AssignItemFacing", self, new object[] { PlanetsideReflectionHelper.ReflectGetField<Transform[]>(typeof(BaseShopController), "spawnPositionsGroup2", self).Last(), shopItemController2 });
 
@@ -117,7 +142,6 @@ namespace Planetside
                         Type type = typeof(BaseShopController); FieldInfo _property = type.GetField("m_shopItems", BindingFlags.NonPublic | BindingFlags.Instance); _property.GetValue(self);
                         List<GameObject> uses = (List<GameObject>)_property.GetValue(self);
                         Gun gun = PickupObjectDatabase.GetRandomGun();
-                        float newCost = gun.PurchasePrice;
                         GameObject gunObj = gun.gameObject;
 
                         uses.Add(gunObj);
@@ -138,8 +162,7 @@ namespace Planetside
                         float num4 = (lastLoadedLevelDefinition == null) ? 1f : lastLoadedLevelDefinition.priceMultiplier;
 
                         ShopItemController shopItemController2 = gameObject8.AddComponent<ShopItemController>();
-                        newCost *= num4;
-                        shopItemController2.OverridePrice = (int)(newCost *= 0.5f);
+
 
                         PlanetsideReflectionHelper.InvokeMethod(typeof(BaseShopController), "AssignItemFacing", self, new object[] { PlanetsideReflectionHelper.ReflectGetField<Transform[]>(typeof(BaseShopController), "spawnPositionsGroup2", self).Last(), shopItemController2 });
 

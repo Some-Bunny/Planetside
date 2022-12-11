@@ -26,7 +26,10 @@ namespace Planetside
       
         public override void PlayerWalkedIn(PlayerController player, List<tk2dSpriteAnimator> animators)
         {
-            
+            this.aiShooter.ToggleGunAndHandRenderers(false, "GuardIsSpawning");
+            this.aiActor.renderer.enabled = false;
+
+
         }
 
         public void Start()
@@ -41,6 +44,13 @@ namespace Planetside
 
         private void AnimationEventTriggered(tk2dSpriteAnimator animator, tk2dSpriteAnimationClip clip, int frameIdx)
         {
+            if (clip.GetFrame(frameIdx).eventInfo.Contains("v_s"))
+            {
+                this.aiActor.renderer.enabled = true;
+
+
+            }
+
             if (clip.GetFrame(frameIdx).eventInfo.Contains("EquipSelf"))
             {
                 if (Nemesis.aiShooter)
@@ -73,7 +83,6 @@ namespace Planetside
                     component2.alwaysUpdateOffscreen = true;
                     component2.playAutomatically = true;
                 }
-
                 Destroy(gameObjectTwo, 2);
             }
         }
@@ -95,6 +104,27 @@ namespace Planetside
             {
                 Nemesis.aiShooter.ToggleGunAndHandRenderers(true, "GuardIsSpawning");
             }
+            AkSoundEngine.PostEvent("Play_OBJ_weapon_pickup_01", base.aiActor.gameObject);
+            GameObject gameObject = SpawnManager.SpawnVFX(StaticVFXStorage.BlueSynergyPoofVFX, false);
+            gameObject.transform.position = base.aiActor.transform.Find("GunAttachPoint").gameObject.transform.position;
+            gameObject.transform.localScale *= 1.5f;
+            Destroy(gameObject, 2);
+
+            GameObject gameObjectTwo = SpawnManager.SpawnVFX(StaticVFXStorage.MachoBraceDustupVFX, false);
+            gameObjectTwo.transform.position = base.aiActor.transform.position - new Vector3(1.25f, 1.25f);
+            Destroy(gameObjectTwo, 2);
+            int playerMask = CollisionMask.LayerToMask(CollisionLayer.PlayerCollider, CollisionLayer.PlayerHitBox);
+
+            this.aiActor.behaviorSpeculator.enabled = true;
+            this.aiActor.specRigidbody.enabled = true;
+
+            
+
+            this.aiActor.healthHaver.PreventAllDamage = false;
+            this.aiActor.specRigidbody.RemoveCollisionLayerIgnoreOverride(playerMask);
+            this.aiActor.HasBeenEngaged = true;
+            this.aiActor.State = AIActor.ActorState.Normal;
+
         }
 
         public AIActor Nemesis;

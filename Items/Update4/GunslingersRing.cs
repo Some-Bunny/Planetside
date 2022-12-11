@@ -29,7 +29,7 @@ namespace Planetside
 			var item = obj.AddComponent<GunslingersRing>();
 			ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
 			string shortDesc = "Left Hand Man";
-			string longDesc = "An old ring worn by a gunslinger unlike the Lich.\n\nIts gem glows a different color when the bearer wields different weapons.";
+			string longDesc = "An old ring worn by a gunslinger similar to the Lich.\n\nThe gem on the ring glows a different color when the bearer wields different weapons, and strengthens the wearer based off of it.";
 			ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
 			item.quality = PickupObject.ItemQuality.A;
 			GunslingersRing.GunslingersRingID = item.PickupObjectId;

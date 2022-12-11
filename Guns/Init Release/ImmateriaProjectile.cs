@@ -15,6 +15,7 @@ using MonoMod;
 using System.Collections.ObjectModel;
 
 using UnityEngine.Serialization;
+using HutongGames.PlayMaker.Actions;
 
 namespace Planetside
 {
@@ -22,110 +23,181 @@ namespace Planetside
 	{
 		public ImmateriaProjectile()
 		{
-			this.Pulses = 1;
-		}
+            this.damageMultiplierPerFrame = 1.01f;
+            this.gravitationalForce = 10;
+            this.radius = 10;
+            this.radiusSquared = radius * radius;
+            this.MinimumSpeed = 13;
+            this.Duration = 5;
+        }
 		public void Start()
 		{
 			this.projectile = base.GetComponent<Projectile>();
-			this.player = (this.projectile.Owner as PlayerController);
 			if (this.projectile != null)
 			{
-				var texture = StaticTextures.NebulaTexture;
 
-				Material material = this.projectile.sprite.renderer.material;
-				material.shader = Shader.Find("Brave/PlayerShaderEevee");
+                this.m_distortMaterial = new Material(ShaderCache.Acquire("Brave/Internal/DistortionRadius"));
+                this.m_distortMaterial.SetFloat("_Strength", 300f);
+                this.m_distortMaterial.SetFloat("_TimePulse", 0.15f);
+                this.m_distortMaterial.SetFloat("_RadiusFactor", 0.15f);
+                this.m_distortMaterial.SetVector("_WaveCenter", this.GetCenterPointInScreenUV(projectile.sprite.WorldCenter));
+                Pixelator.Instance.RegisterAdditionalRenderPass(this.m_distortMaterial);
 
-				material.SetTexture("_EeveeTex", texture);
-				material.SetFloat("_StencilVal", 10000);
-				material.SetFloat("_FlatColor", 100000f);
-				material.SetFloat("_Perpendicular", 0);
-
-				material.DisableKeyword("BRIGHTNESS_CLAMP_ON");
-				material.EnableKeyword("BRIGHTNESS_CLAMP_OFF");
-				GameManager.Instance.StartCoroutine(this.EndTime(this.projectile));
-				this.projectile.StartCoroutine(this.Speed(this.projectile));
-
+                this.Invoke("Die", Duration);
 			}
 		}
-		public IEnumerator Speed(Projectile projectile)
-		{
-			if (projectile != null)
-			{
-				float speed = projectile.baseData.speed / 15;
-				for (int i = 0; i < 15; i++)
-				{
-					projectile.baseData.speed -= speed;
-					projectile.UpdateSpeed();
-					yield return new WaitForSeconds(0.05f);
-				}
-			}
-			yield break;
-		}
-		private IEnumerator EndTime(Projectile position)
-		{
-			float DamageScalar = 0f;
-			float Scaler = 1f;
-			Vector2 centerPosition = position.sprite.WorldCenter;
-			yield return new WaitForSeconds(2f);
-			for (int i = 0; i < Pulses; i++)
-			{
-				GameManager.Instance.StartCoroutine(fuck.DoReverseDistortionWaveLocal(position.transform.position, 5+(i*0.5f), 0.5f-(i/3), 3f+(i*.5f), 0.4f+(i/10)));
-				AkSoundEngine.PostEvent("Play_BOSS_omegaBeam_charge_01", position.gameObject);
-				List<AIActor> activeEnemies = player.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
-				bool flag = activeEnemies != null;
-				if (flag)
-				{
-					foreach (AIActor aiactor in activeEnemies)
+        private Vector4 GetCenterPointInScreenUV(Vector2 centerPoint)
+        {
+            Vector3 vector = GameManager.Instance.MainCameraController.Camera.WorldToViewportPoint(centerPoint.ToVector3ZUp(0f));
+            return new Vector4(vector.x, vector.y, 0f, 0f);
+        }
+        private Material m_distortMaterial;
+
+
+        public void OnDestroy()
+        {
+            if (Pixelator.Instance != null && this.m_distortMaterial != null)
+            {
+                Pixelator.Instance.DeregisterAdditionalRenderPass(this.m_distortMaterial);
+            }
+        }
+
+        public void Die()
+        {
+            if (projectile != null) {
+                Exploder.DoDistortionWave(projectile.sprite.WorldTopCenter, gravitationalForce, 0.25f, 30, 0.5f);
+                AkSoundEngine.PostEvent("Play_BOSS_queenship_explode_01", projectile.gameObject);
+                this.projectile.DieInAir(false);
+                {
+                    Pixelator.Instance.DeregisterAdditionalRenderPass(this.m_distortMaterial);
+                }
+
+            }
+        }
+
+
+        public void Update()
+        {
+            if (this.projectile != null)
+            {
+                if (this.m_distortMaterial != null)
+                {
+                    this.m_distortMaterial.SetVector("_WaveCenter", this.GetCenterPointInScreenUV(projectile.sprite.WorldCenter));
+                }
+
+                for (int i = 0; i < StaticReferenceManager.AllProjectiles.Count; i++)
+                {
+                    if (StaticReferenceManager.AllProjectiles[i].gameObject.activeSelf)
                     {
-						if (aiactor != null)
+                        if (StaticReferenceManager.AllProjectiles[i].enabled)
                         {
-							bool ae = Vector2.Distance(aiactor.CenterPosition, centerPosition) < 4.5f && aiactor.healthHaver.GetMaxHealth() > 0f && aiactor != null && aiactor.specRigidbody != null && player != null;
-							if (ae)
-							{
-								if (aiactor.healthHaver.IsBoss)
-								{
-									Scaler = 5f * Pulses;
-								}
-								DamageScalar += ((40 - (Pulses * 3.33f)) + (i * 2)) * Scaler;
-							}
-							if (aiactor.healthHaver.IsBoss)
-							{
-								Scaler = 5f * Pulses;
-							}
-							DamageScalar += ((40 - (Pulses * 3.33f)) + (i * 2)) * Scaler;
-						}
-					}
-				}
-				yield return new WaitForSeconds(2f);
-			}
-			Exploder.DoDistortionWave(position.sprite.WorldTopCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
-			AkSoundEngine.PostEvent("Play_BOSS_queenship_explode_01", position.gameObject);
-			List<AIActor> activeEnemies1 = player.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
-			if (activeEnemies1 != null)
-			{
-				foreach (AIActor aiactor in activeEnemies1)
-				{
-					aiactor.healthHaver.ApplyDamage(DamageScalar, Vector2.zero, "fuck you", CoreDamageTypes.Electric, DamageCategory.Normal, false, null, false);
-				}
-			}
-			position.ForceDestruction();
-			yield break;
-		}
-		public float distortionMaxRadius = 30f;
-		public float distortionDuration = 0.5f;
-		public float distortionIntensity = 2f;
-		public float distortionThickness = 1f;
+                            this.AdjustRigidbodyVelocity(StaticReferenceManager.AllProjectiles[i].specRigidbody);
+                        }
+                    }
+                }
+            }
+        }
 
+        public float MinimumSpeed;
 
-		private Vector4 GetCenterPointInScreenUV(Vector2 centerPoint)
-		{
-			Vector3 vector = GameManager.Instance.MainCameraController.Camera.WorldToViewportPoint(centerPoint.ToVector3ZUp(0f));
-			return new Vector4(vector.x, vector.y, 0f, 0f);
-		}
+        public float damageMultiplierPerFrame;
+        public float gravitationalForce;
+        public float radius;
+        private float radiusSquared;
+        public float Duration;
 
-		private Projectile projectile;
-		private PlayerController player;
-		public int Pulses;
+        private bool AdjustRigidbodyVelocity(SpeculativeRigidbody other)
+        {
+            Vector2 a = other.UnitCenter - this.projectile.specRigidbody.UnitCenter;
+            float num = Vector2.SqrMagnitude(a);
+            if (num < this.radiusSquared)
+            {
+                float g = this.gravitationalForce;
+                Vector2 velocity = other.Velocity;
+                Projectile projectile = other.projectile;
+                if (projectile)
+                {
+                    projectile.collidesWithPlayer = false;
+                    if (other.GetComponent<BlackHoleDoer>() != null)
+                    {
+                        return false;
+                    }
+                    if (other.GetComponent<ParticleCollapserLargeProjectile>() != null)
+                    {
+                        return false;
+                    }
+                    if (other.GetComponent<ImmateriaProjectile>() != null)
+                    {
+                        return false;
+                    }
+                    if (velocity == Vector2.zero)
+                    {
+                        return false;
+                    }
+                    g = this.gravitationalForce;
+                }
+
+                Vector2 frameAccelerationForRigidbody = this.GetFrameAccelerationForRigidbody(other.UnitCenter, Mathf.Sqrt(num), g);
+                float d = Mathf.Clamp(BraveTime.DeltaTime, 0f, 0.02f);
+                Vector2 b = frameAccelerationForRigidbody * d;
+                Vector2 vector = velocity + b;
+                if (BraveTime.DeltaTime > 0.02f)
+                {
+                    vector *= 0.02f / BraveTime.DeltaTime;
+                }
+                other.Velocity = vector;
+                if (projectile != null)
+                {
+                    projectile.collidesWithPlayer = false;
+                    if (projectile.IsBulletScript)
+                    {
+                        projectile.RemoveBulletScriptControl();
+                    }
+                    if (vector != Vector2.zero)
+                    {
+                        projectile.baseData.damage *= damageMultiplierPerFrame;
+                        projectile.baseData.range += 1f;
+                        BounceProjModifier BpM= projectile.gameObject.GetOrAddComponent<BounceProjModifier>();
+                        BpM.numberOfBounces += Mathf.Max(10 - BpM.numberOfBounces, 0);
+
+                        PierceProjModifier spookCollapse = projectile.gameObject.GetOrAddComponent<PierceProjModifier>();
+                        spookCollapse.penetration = 10;
+                        spookCollapse.penetratesBreakables = true;
+                        MaintainDamageOnPierce noDamageLossCollapse = projectile.gameObject.GetOrAddComponent<MaintainDamageOnPierce>();
+                        noDamageLossCollapse.damageMultOnPierce = 1f;
+
+                        projectile.Direction = vector.normalized;
+                        projectile.Speed = Mathf.Max(MinimumSpeed, vector.magnitude);
+                        projectile.Speed *= 0.995f;
+                        other.Velocity = projectile.Direction * projectile.Speed;
+                        if (projectile.shouldRotate && (vector.x != 0f || vector.y != 0f))
+                        {
+                            float num2 = BraveMathCollege.Atan2Degrees(projectile.Direction);
+                            if (!float.IsNaN(num2) && !float.IsInfinity(num2))
+                            {
+                                Quaternion rotation = Quaternion.Euler(0f, 0f, num2);
+                                if (!float.IsNaN(rotation.x) && !float.IsNaN(rotation.y))
+                                {
+                                    projectile.transform.rotation = rotation;
+                                }
+                            }
+                        }
+                    }
+                }
+                return true;
+            }
+            return false;
+        }
+        private Vector2 GetFrameAccelerationForRigidbody(Vector2 unitCenter, float currentDistance, float g)
+        {
+            Vector2 zero = Vector2.zero;
+            float num = Mathf.Clamp01(1f - currentDistance / this.radius);
+            float d = g * num * num;
+            Vector2 normalized = (this.projectile.specRigidbody.UnitCenter - unitCenter).normalized;
+            return (normalized * d) * 9;
+        }
+
+        private Projectile projectile;
 	}
 }
 

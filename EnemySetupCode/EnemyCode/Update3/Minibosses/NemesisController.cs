@@ -14,6 +14,7 @@ using UnityEngine.Serialization;
 using BreakAbleAPI;
 using MonoMod.RuntimeDetour;
 using System.Reflection;
+using SaveAPI;
 
 namespace Planetside
 {
@@ -47,10 +48,16 @@ namespace Planetside
             base.aiActor.healthHaver.OnPreDeath += OnPreDeathCleanup;
             PostProcessMovementOverride();
 
+
+
         }
+
+        public bool HasBeenEngaged = false;
 
         public void DoEngagePostProcess()
         {
+            if (HasBeenEngaged == true) { return; }
+            HasBeenEngaged = true;
             switch (HeldSecondaryPassive)
             {
                 case "bloodied_scarf":
@@ -166,22 +173,14 @@ namespace Planetside
             switch (HeldSecondaryPassive)
             {
                 case "bloodied_scarf":
-                    base.aiActor.behaviorSpeculator.OverrideBehaviors = new List<OverrideBehaviorBase>()
+                    var l = base.aiActor.behaviorSpeculator.OverrideBehaviors;
+                    foreach (var b in l)
                     {
-                    new SansTeleportBehavior()
-                    {
-                        AvoidWalls = true,
-                        Cooldown = 4,
-                        dodgeChance = 0.6f,
-                        timeToHitThreshold = 0.3f,
-                        rollDistance = 6,
-                        Enabled = true,
-                        ManuallyDefineRoom = false,
-                        MaxDistanceFromPlayer = 17,
-                        MinDistanceFromPlayer = 4,
-                        StayOnScreen = false
-                    },           
-                    };
+                        if (b is SansTeleportBehavior a) 
+                        {a.Enabled = true; a.dodgeChance = 0.5f; }
+                        if (b is CustomDodgeRollBehavior c)
+                        { c.Enabled = false;}
+                    }
 
 
                     return;

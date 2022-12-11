@@ -145,7 +145,16 @@ namespace Planetside
 					   requiredTileset = GlobalDungeonData.ValidTilesets.FORGEGEON,
 					   requireTileset = true
 					},
-				},
+                    new DungeonGenToolbox.AdvancedDungeonPrerequisite
+                    {
+                       advancedAdvancedPrerequisiteType = DungeonGenToolbox.AdvancedDungeonPrerequisite.AdvancedAdvancedPrerequisiteType.UNLOCK,
+                       UnlockFlag = CustomDungeonFlags.NEMESIS_KILLED,
+                       UnlockRequirement = true,
+
+                       requiredTileset = GlobalDungeonData.ValidTilesets.FORGEGEON,
+                       requireTileset = true
+                    },
+                },
 				CanBeForcedSecret = false,
 				RandomNodeChildMinDistanceFromEntrance = 0,
 				exactSecondaryRoom = null,

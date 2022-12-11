@@ -19,7 +19,6 @@ namespace Planetside
 	{
 		public static GameObject fuckyouprefab;
 		public static readonly string guid = "annihichamber";
-		private static tk2dSpriteCollectionData AnnihichamberCollection;
 		public static GameObject shootpoint;
 		public static GameObject shootpoint1;
 
@@ -49,14 +48,16 @@ namespace Planetside
 
 		public static void BuildPrefab()
 		{
-			// source = EnemyDatabase.GetOrLoadByGuid("c50a862d19fc4d30baeba54795e8cb93");
-			bool flag = fuckyouprefab != null || BossBuilder.Dictionary.ContainsKey(guid);
-			bool flag2 = flag;
-			if (!flag2)
+            tk2dSpriteCollectionData Collection = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("AnnihiChamberCollection").GetComponent<tk2dSpriteCollectionData>();
+            Material mat = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Material>("annihichamber material");
+            if (fuckyouprefab == null || !BossBuilder.Dictionary.ContainsKey(guid))
 			{
-				fuckyouprefab = BossBuilder.BuildPrefab("Annihi-Chamber", guid, spritePaths[0], new IntVector2(0, 0), new IntVector2(8, 9), false, true);
+				fuckyouprefab = BossBuilder.BuildPrefabBundle("Annihi-Chamber", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(8, 9), false, true);
+
 				var companion = fuckyouprefab.AddComponent<AnnihiChamberBehavior>();
-				companion.aiActor.knockbackDoer.weight = 200;
+                EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, Collection, mat, false);
+
+                companion.aiActor.knockbackDoer.weight = 200;
 				companion.aiActor.MovementSpeed = 1f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
 				companion.aiActor.CollisionDamage = 1f;
@@ -242,16 +243,10 @@ namespace Planetside
 				EnemyToolbox.AddNewDirectionAnimation(companion.aiAnimator, "death", new string[] { "death" }, new DirectionalAnimation.FlipType[0]);
 
 
-				bool flag3 = AnnihichamberCollection == null;
-				if (flag3)
+
 				{
-					AnnihichamberCollection = SpriteBuilder.ConstructCollection(fuckyouprefab, "AnnihichamberCollection");
-					UnityEngine.Object.DontDestroyOnLoad(AnnihichamberCollection);
-					for (int i = 0; i < spritePaths.Length; i++)
-					{
-						SpriteBuilder.AddSpriteToCollection(spritePaths[i], AnnihichamberCollection);
-					}
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, AnnihichamberCollection, new List<int>
+
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 					0,
@@ -263,7 +258,7 @@ namespace Planetside
 					6
 
 					}, "idle_left", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 8f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, AnnihichamberCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 					0,
@@ -275,7 +270,7 @@ namespace Planetside
 					6
 
 					}, "idle", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 8f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, AnnihichamberCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 
@@ -290,7 +285,7 @@ namespace Planetside
 
 
 					}, "burp", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, AnnihichamberCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					7,
 					8,
@@ -299,7 +294,7 @@ namespace Planetside
 					9,
 					10,
 					}, "dashprime", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, AnnihichamberCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					7,
 					8,
@@ -313,7 +308,7 @@ namespace Planetside
 					10,
 					}, "dashdash", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, AnnihichamberCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					7,
 					8,
@@ -324,7 +319,7 @@ namespace Planetside
 					9,
 					10,
 					}, "vomitprime", tk2dSpriteAnimationClip.WrapMode.Once).fps = 8f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, AnnihichamberCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					7,
 					7,
@@ -337,7 +332,7 @@ namespace Planetside
 					9,
 					10,
 					}, "vomit", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, AnnihichamberCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					10,
 					10,
@@ -347,7 +342,7 @@ namespace Planetside
 					7
 					}, "unvomit", tk2dSpriteAnimationClip.WrapMode.Once).fps = 8f;
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, AnnihichamberCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 					15,
@@ -358,21 +353,21 @@ namespace Planetside
 
 					}, "charge1", tk2dSpriteAnimationClip.WrapMode.Once).fps = 3.5f;
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, AnnihichamberCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 					19,
 					20
 
 					}, "attack1_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 8f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, AnnihichamberCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 					19,
 					20
 
 					}, "attack1_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 8f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, AnnihichamberCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 					18,
@@ -382,7 +377,7 @@ namespace Planetside
 
 
 					}, "uncharge1_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 3.5f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, AnnihichamberCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 						18,
@@ -393,7 +388,7 @@ namespace Planetside
 
 					}, "uncharge1_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 3.5f;
 					//=======================================================================================================================
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, AnnihichamberCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 					21,
@@ -406,7 +401,7 @@ namespace Planetside
 
 
 					}, "cloak_left", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 7f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, AnnihichamberCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					21,
 					22,
@@ -419,7 +414,7 @@ namespace Planetside
 
 					}, "cloak_right", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 7f;
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, AnnihichamberCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 					21,
@@ -435,7 +430,7 @@ namespace Planetside
 
 
 					}, "cloakdash_prime", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, AnnihichamberCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 						83,
 						83,
@@ -463,7 +458,7 @@ namespace Planetside
 
 					}, "cloakdash_charge", tk2dSpriteAnimationClip.WrapMode.Once).fps = 2f;
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, AnnihichamberCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					0,
 					1,
@@ -480,7 +475,7 @@ namespace Planetside
 					33,
 					34
 					}, "cloakidle_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 11f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, AnnihichamberCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					0,
 					1,
@@ -498,7 +493,7 @@ namespace Planetside
 					34
 					}, "cloakidle_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 11f;
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, AnnihichamberCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					35,
 					36,
@@ -510,7 +505,7 @@ namespace Planetside
 					}, "TeleportOut", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
 
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, AnnihichamberCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					41,
 					42,
@@ -520,7 +515,7 @@ namespace Planetside
 					}, "TeleportIn", tk2dSpriteAnimationClip.WrapMode.Once).fps = 8f;
 
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, AnnihichamberCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 				46,
 				47,
@@ -554,7 +549,7 @@ namespace Planetside
 
 
 					}, "intro", tk2dSpriteAnimationClip.WrapMode.Once).fps = 11f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, AnnihichamberCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 				68,
 				69,
@@ -2099,8 +2094,8 @@ namespace Planetside
 					float t = Mathf.PingPong((float)i / 45f, 1f);
 					Bullet bullet;
 					bullet = new VomitsGutsAndShit.FirehoseBullet((float)((t >= 0.1f) ? 1 : -1));
-					base.Fire(new Offset(MathToolbox.GetUnitOnCircle(UnityEngine.Random.Range(-180, 180), UnityEngine.Random.Range(0.125f, 0.75f)), 0f, string.Empty, DirectionType.Absolute), new Direction(aim + Mathf.SmoothStep(-60f, 60f, t), DirectionType.Absolute, -1f), new Speed(8f, SpeedType.Absolute), bullet);
-					base.Fire(new Offset(MathToolbox.GetUnitOnCircle(UnityEngine.Random.Range(-180, 180), UnityEngine.Random.Range(0f, 0.25f)), 0f, string.Empty, DirectionType.Absolute), new Direction(aim + Mathf.SmoothStep(-60f, 60f, t), DirectionType.Absolute, -1f), new Speed(8f, SpeedType.Absolute), bullet);
+					base.Fire(new Offset(MathToolbox.GetUnitOnCircle(UnityEngine.Random.Range(-180, 180), UnityEngine.Random.Range(0.125f, 0.75f)), 0f, string.Empty, DirectionType.Absolute), new Direction(aim + Mathf.SmoothStep(-50f, 50f, t), DirectionType.Absolute, -1f), new Speed(6.5f, SpeedType.Absolute), bullet);
+					base.Fire(new Offset(MathToolbox.GetUnitOnCircle(UnityEngine.Random.Range(-180, 180), UnityEngine.Random.Range(0f, 0.25f)), 0f, string.Empty, DirectionType.Absolute), new Direction(aim + Mathf.SmoothStep(-50f, 50f, t), DirectionType.Absolute, -1f), new Speed(6.5f, SpeedType.Absolute), bullet);
 
 					if (i % 10 == 0)
 					{

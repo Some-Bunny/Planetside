@@ -359,11 +359,12 @@ namespace Planetside
         {
             Vector2 sourcePos = Vector2.zero;
             SpeculativeRigidbody rigidBod = null;
-            if (usesFixedPosition) { sourcePos = fixedPosition; }
+            bool HasSpecrigidBody = false;
+            if (usesFixedPosition == true) { sourcePos = fixedPosition; }
             else
             {
-                if (otherShooter.GetComponent<SpeculativeRigidbody>()) rigidBod = otherShooter.GetComponent<SpeculativeRigidbody>();
-                else if (otherShooter.GetComponentInChildren<SpeculativeRigidbody>()) rigidBod = otherShooter.GetComponentInChildren<SpeculativeRigidbody>();
+                if (otherShooter.GetComponent<SpeculativeRigidbody>()){ rigidBod = otherShooter.GetComponent<SpeculativeRigidbody>(); HasSpecrigidBody = true;}
+                else if (otherShooter.GetComponentInChildren<SpeculativeRigidbody>()) { rigidBod = otherShooter.GetComponentInChildren<SpeculativeRigidbody>(); HasSpecrigidBody = true; }
 
                 if (rigidBod) { sourcePos = rigidBod.UnitCenter; }
                 
@@ -373,33 +374,34 @@ namespace Planetside
 
             }
 
-            if (otherShooter.gameObject != null && sourcePos == Vector2.zero)
+            if (otherShooter != null && sourcePos == Vector2.zero)
             {
                 sourcePos = otherShooter.transform.PositionVector2();
             }
-
             if (sourcePos != Vector2.zero)
             {
-
                 BasicBeamController basicBeam = projectileToSpawn.gameObject.GetComponent<BasicBeamController>();
                 if (basicBeam) { basicBeam.SkipPostProcessing = DoPostProcess; }
 
                 GameObject gameObject = SpawnManager.SpawnProjectile(projectileToSpawn.gameObject, sourcePos, Quaternion.identity, true);
                 Projectile component = gameObject.GetComponent<Projectile>();
+
                 component.Owner = owner;
                 BeamController component2 = gameObject.GetComponent<BeamController>();
+
                 if (skipChargeTime)
                 {
                     component2.chargeDelay = 0f;
                     component2.usesChargeDelay = false;
                 }
+
                 component2.Owner = owner;
                 component2.HitsPlayers = false;
                 component2.HitsEnemies = true;
                 Vector3 vector = BraveMathCollege.DegreesToVector(targetAngle, 1f);
                 component2.Direction = vector;
                 component2.Origin = sourcePos;
-                component.StartCoroutine(BeamToolbox.HandleFreeFiringBeam(component2, rigidBod, fixedPosition, usesFixedPosition, targetAngle, duration, CanRotate, RotationSpeedperSecond));
+                component.StartCoroutine(BeamToolbox.HandleFreeFiringBeam(component2, rigidBod, fixedPosition, usesFixedPosition, targetAngle, duration, HasSpecrigidBody ,CanRotate, RotationSpeedperSecond));
 
               
 
@@ -413,14 +415,14 @@ namespace Planetside
                 return null;
             }
         }
-        private static IEnumerator HandleFreeFiringBeam(BeamController beam, SpeculativeRigidbody otherShooter, Vector2 fixedPosition, bool usesFixedPosition, float targetAngle, float duration, bool CanRotate = false, float RotationSpeedPerSecond = 60)
+        private static IEnumerator HandleFreeFiringBeam(BeamController beam, SpeculativeRigidbody otherShooter, Vector2 fixedPosition, bool usesFixedPosition, float targetAngle, float duration, bool evenHasBody, bool CanRotate = false, float RotationSpeedPerSecond = 60)
         {
             float elapsed = 0f;
             yield return null;
             while (elapsed < duration)
             {
                 Vector2 sourcePos;
-                if (otherShooter == null) {  break; }
+                if (otherShooter == null && evenHasBody == true) { break; }
                 if (beam == null) { break; }
                 if (usesFixedPosition) sourcePos = fixedPosition;
                 else sourcePos = otherShooter.UnitCenter;

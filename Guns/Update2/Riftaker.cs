@@ -16,7 +16,7 @@ namespace Planetside
             Game.Items.Rename("outdated_gun_mods:riftaker", "psog:riftaker");
             gun.gameObject.AddComponent<Riftaker>();
             gun.SetShortDescription("Breaking the 3rd Wall");
-            gun.SetLongDescription("A common theme with mad scientists is inventing some form of weapon that would be able to hear holes in reality to time travel, which ends up killing the creator.\n\nThis gun is no exception.");
+            gun.SetLongDescription("A common theme with mad scientists is inventing some form of weapon that would be able to tear holes in reality to time travel, which ends up killing the creator.\n\nThis gun is no exception.");
             gun.SetupSprite(null, "riftaker_idle_001", 8);
             gun.SetAnimationFPS(gun.shootAnimation, 25);
             gun.SetAnimationFPS(gun.idleAnimation, 7);

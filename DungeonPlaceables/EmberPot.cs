@@ -44,7 +44,7 @@ namespace Planetside
             breakable.goopsOnBreak = true;
             breakable.goopRadius = 2.5f;
             breakable.goopType = EasyGoopDefinitions.FireDef;
-            breakable.breakStyle = MinorBreakable.BreakStyle.BURST;
+
             string shardDefaultPath = "Planetside/Resources/DungeonObjects/EmberPot/";
             string[] shardPaths = new string[]
             {
@@ -94,6 +94,7 @@ namespace Planetside
             breakable.EmitStyle = GlobalSparksDoer.EmitRegionStyle.RANDOM;
             breakable.ParticleColor = Color.red;
             breakable.ParticleLifespan = 2;
+            breakable.breakStyle = MinorBreakable.BreakStyle.BURST;
             //Attach ParticleSystem component to set particles
             breakable.ParticleMagnitude = 1;
             breakable.ParticleMagnitudeVariance = 1;

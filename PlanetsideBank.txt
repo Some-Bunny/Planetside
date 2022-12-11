@@ -1,6 +1,7 @@
 Event	ID	Name			Wwise Object Path	Notes
 	20337155	Stop_BigBeam			\Default Work Unit\Stop_BigBeam	
 	83107013	Play_FlashTell			\Default Work Unit\Play_FlashTell	
+	85705207	Play_Grippy			\Default Work Unit\Play_Grippy	
 	126163728	Play_PSOG_MUS_DEEP_01_Intro_Secret			\Default Work Unit\Play_PSOG_MUS_DEEP_01_Intro_Secret	
 	171788890	Play_RockBreaking			\Default Work Unit\Play_RockBreaking	
 	419484741	Play_Oppressor_Laugh			\Default Work Unit\Play_Oppressor_Laugh	
@@ -58,6 +59,7 @@ Event	ID	Name			Wwise Object Path	Notes
 	3765695918	Play_Heartbeat			\Default Work Unit\Play_Heartbeat	
 	3841265863	Stop_EyeRoar			\Default Work Unit\Stop_EyeRoar	
 	3944849761	Play_perfectshot			\Default Work Unit\Play_perfectshot	
+	3946206498	Play_Conjure			\Default Work Unit\Play_Conjure	
 	3989373337	Play_PSOG_MUS_DEEP_01_Intro			\Default Work Unit\Play_PSOG_MUS_DEEP_01_Intro	
 	4084283492	Play_CoinFlip			\Default Work Unit\Play_CoinFlip	
 	4129383554	Play_DistressSiren			\Default Work Unit\Play_DistressSiren	
@@ -73,6 +75,7 @@ Effect plug-ins	ID	Name	Type				Notes
 	350469619	Wwise Time Stretch (Custom)	Wwise Time Stretch			
 	573081716	Wwise Time Stretch (Custom)	Wwise Time Stretch			
 	701863527	Inside_My_Head	Wwise RoomVerb			
+	702543456	Tunnel1	Wwise Matrix Reverb			
 	786117557	Not_A_Yellow_Submarine (Custom)	Wwise RoomVerb			
 	802545870	Wwise Gain (Custom)	Wwise Gain			
 	1588715066	Echoes_Linear	Wwise Delay			
@@ -95,6 +98,7 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	250665413	PSOG_MUS_DEEP_01_LoopD	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\PSOG_MUS_DEEP_01_LoopD_AD29F36A.wem		\Actor-Mixer Hierarchy\Default Work Unit\PSOG_MUS_DEEP_01_LoopD		3570178
 	262136903	Grenade_shot_01	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Grenade_shot_01_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\Grenade_shot_01		11637
 	262352992	Yari3	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Yari3_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\Yari\Yari3		12622
+	296664152	Conjure	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Conjure_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\Conjure		38769
 	297267472	BigGuyGrowl	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\BigGuyGrowl_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\BigGuyGrowl		35626
 	318799545	PrisonerCough	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\PrisonerCough_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\PrisonerCough		17962
 	344675446	VesselDeath	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\VesselDeath_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\VesselDeath		63903
@@ -114,6 +118,7 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	477315112	PSOG_MUS_DEEP_01_Intro	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\PSOG_MUS_DEEP_01_Intro_AD29F36A.wem		\Actor-Mixer Hierarchy\Default Work Unit\PSOG_MUS_DEEP_01_Intro		1156236
 	486037238	PSOG_MUS_DEEP_01_Intro_Shop	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\PSOG_MUS_DEEP_01_Intro_Shop_AD29F36A.wem		\Actor-Mixer Hierarchy\Default Work Unit\PSOG_MUS_DEEP_01_Intro_Shop		1156236
 	498331868	Stomp	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Stomp_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\Stomp		147642
+	510484114	Grippy	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Grippy_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\Grippy		9884
 	515989585	BigGuyDeath	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\BigGuyDeath_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\BigGuyDeath		32173
 	516849312	PSOG_MUS_DEEP_01_LoopC	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\PSOG_MUS_DEEP_01_LoopC_AD29F36A.wem		\Actor-Mixer Hierarchy\Default Work Unit\PSOG_MUS_DEEP_01_LoopC		3594841
 	530905431	GuardDie	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\GuardDie_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\GuardDie		28119

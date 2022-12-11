@@ -88,7 +88,7 @@ namespace Planetside
             }
             public static void Accept(PlayerController player, GameObject shrine)
             {
-                Gun gun = PickupObjectDatabase.GetByEncounterName(InitialiseGTEE.GunIDForEOE) as Gun;
+                Gun gun = PickupObjectDatabase.GetById(InitialiseGTEE.HOneToShootIt) as Gun;
                 int StoredGunID = gun.PickupObjectId;
 
                 //PickupObject Item1 = PickupObjectDatabase.GetByName(InitialiseGTEE.HOneToFireIt);

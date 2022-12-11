@@ -20,13 +20,8 @@ namespace Planetside
 {
 	internal class GunknownProjectile : MonoBehaviour
 	{
-		public GunknownProjectile()
-		{
-		}
-
         public void Start()
         {
-            //GameObject original;
             this.projectile = base.GetComponent<Projectile>();
             PlayerController playerController = projectile.Owner as PlayerController;
             if (this.projectile)

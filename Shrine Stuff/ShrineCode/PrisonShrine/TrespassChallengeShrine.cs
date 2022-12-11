@@ -83,7 +83,6 @@ namespace Planetside
 				GenerateQuickWeightedString(new List<string>(){Collective.guid, Collective.guid, Unwilling.guid,  Unwilling.guid}, 0.5f),
 				GenerateQuickWeightedString(new List<string>(){Observant.guid, Observant.guid, Observant.guid, Observant.guid, Observant.guid } , 0.5f),
 				GenerateQuickWeightedString(new List<string>(){Vessel.guid, Stagnant.guid, Stagnant.guid, Stagnant.guid, Stagnant.guid,Stagnant.guid} , 0.5f),
-				GenerateQuickWeightedString(new List<string>(){Unwilling.guid, Unwilling.guid, Unwilling.guid, Unwilling.guid, Unwilling.guid, Unwilling.guid, Unwilling.guid, Unwilling.guid, Unwilling.guid, Unwilling.guid, Unwilling.guid, Unwilling.guid } , 0.5f),
 				GenerateQuickWeightedString(new List<string>(){Inquisitor.guid, Observant.guid, Observant.guid}, 0.626f),
 				GenerateQuickWeightedString(new List<string>(){Inquisitor.guid, Creationist.guid, Observant.guid}, 0.625f),
 				GenerateQuickWeightedString(new List<string>(){Stagnant.guid, Stagnant.guid, Stagnant.guid,Stagnant.guid,Stagnant.guid, Observant.guid,Observant.guid}, 0.75f),
@@ -119,25 +118,31 @@ namespace Planetside
 			tk2dSpriteAnimator animator = shrine.GetComponent<tk2dSpriteAnimator>();
 			animator.Play("use");
 			GameManager.Instance.StartCoroutine(DoDelayStuff(shrine, user));
-		}
+			shrine.GetComponent<SimpleShrine>().instanceRoom.DeregisterInteractable(shrine.GetComponent<SimpleShrine>());
+
+        }
 
 
 		public static IEnumerator VoidHoleShrinkage(VoidHoleController voidHoleController, GameObject partObj)
         {
 			float elaWait = 0;
+			if (voidHoleController.gameObject == null) { yield break; }
 			voidHoleController.CanHurt = false;
 			while (elaWait < 2f)
             {
-				elaWait += BraveTime.DeltaTime;
+                if (voidHoleController.gameObject == null) { yield break; }
+                elaWait += BraveTime.DeltaTime;
 				float t = Mathf.Min((elaWait/1.5f), 1);
 				partObj.transform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one * 6.25f, t);
 				yield return null;
 			}
 			elaWait = 0;
-			voidHoleController.CanHurt = true;
+            if (voidHoleController.gameObject == null) { yield break; }
+            voidHoleController.CanHurt = true;
 			while (elaWait < 15f)
 			{
-				elaWait += BraveTime.DeltaTime;
+                if (voidHoleController.gameObject == null) { yield break; }
+                elaWait += BraveTime.DeltaTime;
 				float t = Mathf.Min((elaWait / 20), 1);
 				voidHoleController.Radius = Mathf.Lerp(28.5f, 8.75f, t);
 				partObj.transform.localScale = Vector3.Lerp(Vector3.one * 6.25f, Vector3.one * 2, t);
@@ -406,8 +411,10 @@ namespace Planetside
 			while (elaWait < duraWait)
 			{
 				elaWait += BraveTime.DeltaTime;
-				float t = elaWait / duraWait;
-				if (gameObject == null) { yield break; }
+                if (this == null) { yield break; }
+                if (gameObject == null) { yield break; }
+
+                float t = elaWait / duraWait;
 				if (gameObject != null)
 				{
 					gameObject.GetComponent<MeshRenderer>().material.SetFloat(KeyWord, Mathf.Lerp(prevSize, afterSize, t));
@@ -431,16 +438,23 @@ namespace Planetside
 
 		private IEnumerator LerpToSize(Vector3 prevSize, Vector3 afterSize, float duration)
 		{
-			if (gameObject != null)
+
+            if (this == null) { yield break; }
+            if (gameObject == null) { yield break; }
+            if (gameObject != null)
 			{
 				gameObject.transform.localScale = prevSize;
-				float elaWait = 0f;
+                if (this == null) { yield break; }
+
+                float elaWait = 0f;
 				float duraWait = duration;
 				while (elaWait < duraWait)
 				{
 					elaWait += BraveTime.DeltaTime;
 					float t = elaWait / duraWait;
-					if (gameObject == null) { yield break; }
+                    if (this == null) { yield break; }
+
+                    if (gameObject == null) { yield break; }
 					if (gameObject != null)
 					{
 						gameObject.transform.localScale = Vector3.Lerp(prevSize, afterSize, t);

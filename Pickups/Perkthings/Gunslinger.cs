@@ -21,7 +21,6 @@ namespace Planetside
         private Projectile projectile;
         public ProjectileAndBeamMotionModule Module;
     }
-
     class SpawnDebrisObject : MonoBehaviour
     {
         public void OnDestroy()
@@ -155,7 +154,7 @@ namespace Planetside
         public DebrisObject self;
         public PlayerController player;
     }
-    class  CharmController : MonoBehaviour
+    class CharmController : MonoBehaviour
     {
         public void Start()
         {

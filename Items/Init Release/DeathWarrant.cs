@@ -44,12 +44,12 @@ namespace Planetside
 			if (player)
             {
 				List<AIActor> randomActiveEnemy = player.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.RoomClear);
-                if (randomActiveEnemy == null || randomActiveEnemy.Count == 0)
+                if (randomActiveEnemy == null | randomActiveEnemy.Count == 0)
                 {
                     Destroy(base.gameObject, 0.25f);
                     return;
                 }
-                else if (RemoveInvalidEnemies(randomActiveEnemy) != null || RemoveInvalidEnemies(randomActiveEnemy).Count > 0)
+                else if (RemoveInvalidEnemies(randomActiveEnemy) != null && RemoveInvalidEnemies(randomActiveEnemy).Count > 0)
                 { 
 					if (State == States.NONE)
                     {
@@ -137,7 +137,7 @@ namespace Planetside
 			while (elapsed < duration)
 			{
 				if (base.gameObject == null) { break; }
-				if (newTarget == null) { base.Invoke("MoveToDifferentTarget", 0f); break; }
+				if (newTarget == null) { base.Invoke("MoveToDifferentTarget", 0f); State = States.NONE;  break; }
 				elapsed += BraveTime.DeltaTime;
 				yield return null;
 			}
@@ -153,7 +153,7 @@ namespace Planetside
 			while (elapsed < duration)
 			{
 				if (base.gameObject == null) {break;}
-				if (newTarget == null) { base.Invoke("MoveToDifferentTarget", 0f); break; }
+				if (newTarget == null) { base.Invoke("MoveToDifferentTarget", 0f); State = States.NONE; break; }
 
 				elapsed += BraveTime.DeltaTime;
 				float t = elapsed / duration * (elapsed / duration);
@@ -200,7 +200,8 @@ namespace Planetside
 				State = States.NONE;
 				if (Target != null && !targetableButWontIncreaseKillCount.Contains(Target.EnemyGuid)) { Kills++; }
 				Target = null;
-				base.Invoke("MoveToDifferentTarget", 0f);
+                State = States.NONE;
+                base.Invoke("MoveToDifferentTarget", 0f);
 			}
 		}
 
@@ -242,11 +243,11 @@ namespace Planetside
 
 		private GenericLootTable GetRewardValue()
 		{
-			if (Kills >= 15)
+			if (Kills > 13)
             {return DeathWarrant.largeKillsTable;}
-			else if (Kills >= 9)
+			else if (Kills > 8)
 			{return DeathWarrant.mediumKillsTable;}
-			else if (Kills >= 3)
+			else if (Kills > 3)
 			{return DeathWarrant.smallKillsTable;}
 			return null;
 		}
