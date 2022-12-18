@@ -57,10 +57,10 @@ namespace Planetside
                 Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(gun.DefaultModule.projectiles[0]);
                 projectile.gameObject.SetActive(false);
                 projectileModule.projectiles[0] = projectile;
-                projectile.baseData.damage = 20f;
+                projectile.baseData.damage = 45f;
                 projectile.AdditionalScaleMultiplier = 1.5f;
                 projectile.shouldRotate = true;
-                projectile.baseData.range = 14f;
+                projectile.baseData.range = 17f;
                 projectile.baseData.speed *= 1.66f;
 
                 
@@ -186,6 +186,8 @@ namespace Planetside
                 ProjectileModule mod = ProjectileModule.CreateClone(gun.DefaultModule);
                 mod.projectiles = new List<Projectile>() { gun.DefaultModule.projectiles[0] };
                 mod.chargeProjectiles = new List<ProjectileModule.ChargeProjectile>() { gun.DefaultModule.chargeProjectiles[0] };
+                mod.chargeProjectiles[0].Projectile.baseData.damage = Mathf.Max(20, 45 - (tripleDeckerStorages.Count * 10) );
+
                 projectileVolleyData.projectiles.Add(mod);
                 tripleDeckerStorages[i].module = mod;
             }

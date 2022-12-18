@@ -23,7 +23,7 @@ namespace Planetside
 			Game.Items.Rename("outdated_gun_mods:nemesisrailgun", "psog:nemesisrailgun");
 			gun.gameObject.AddComponent<NemesisGun>();
 			gun.SetShortDescription("Reaped By Death");
-			gun.SetLongDescription("A simple, elegant and powerful revolver, capable of killing even behind cover.\n\nWielded by a particularly regretful undead Gungeoneer seeking an old friend...");
+			gun.SetLongDescription("A simple, elegant and powerful revolver, capable of killing foes behind cover.\n\nWielded by a particularly regretful undead Gungeoneer seeking an old friend...");
 			GunExt.SetupSprite(gun, null, "nemesisrailgun_idle_001", 11);
 
 			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 20);

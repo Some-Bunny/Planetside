@@ -405,7 +405,7 @@ namespace Planetside
 					73,
 					74,
 					75
-					}, "awaken", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6;
+					}, "awaken", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7;
 
 				}
 

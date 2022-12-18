@@ -1,0 +1,10 @@
+ManifestFileVersion: 0
+CRC: 3051387889
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: fucktilesets
+      Dependencies: {}
+    Info_1:
+      Name: planetsidesprites
+      Dependencies: {}

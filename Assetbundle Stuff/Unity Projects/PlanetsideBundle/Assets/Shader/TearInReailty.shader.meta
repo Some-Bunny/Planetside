@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 95405428d090f7a4584b223d1df3fe93
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures:
+  - _Nebula: {fileID: 2800000, guid: 6e3ff783bb8d205488f3af1b4723c401, type: 3}
+  - _Floor_Tex: {fileID: 2800000, guid: b0651448fe30ada41826fe99e5e24059, type: 3}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

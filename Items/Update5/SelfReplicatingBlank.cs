@@ -29,6 +29,20 @@ namespace Planetside
             SelfReplicatingBlank.SelfReplicatingBlankID = warVase.PickupObjectId;
 			warVase.BlanksUsed = 0;
             warVase.CanRefundBlanks = false;
+            warVase.associatedItemChanceMods = new LootModData[]
+            {
+                LootTableTools.GenerateLootModData(EcholocationAmmolet.EcholocationAmmoletID, 3),
+                LootTableTools.GenerateLootModData(FrailtyAmmolet.FrailtyAmmoletID, 3),
+                LootTableTools.GenerateLootModData(TarnishedAmmolet.TarnishedAmmoletID, 3),
+
+                LootTableTools.GenerateLootModData(321, 3),
+                LootTableTools.GenerateLootModData(325, 3),
+                LootTableTools.GenerateLootModData(322, 3),
+                LootTableTools.GenerateLootModData(342, 3),
+                LootTableTools.GenerateLootModData(343, 3),
+                LootTableTools.GenerateLootModData(344, 3),
+            };
+
 
             string shardDefaultPath = "Planetside/Resources/RandomDebris/SporeDebris/";
             string[] shardPaths1 = new string[]

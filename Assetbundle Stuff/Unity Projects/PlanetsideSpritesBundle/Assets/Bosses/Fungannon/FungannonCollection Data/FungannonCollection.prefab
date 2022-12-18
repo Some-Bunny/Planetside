@@ -1,0 +1,5768 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1879235126095044}
+  m_IsPrefabParent: 1
+--- !u!1 &1879235126095044
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4054220005563750}
+  - component: {fileID: 114457794757274116}
+  m_Layer: 0
+  m_Name: FungannonCollection
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4054220005563750
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1879235126095044}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114457794757274116
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1879235126095044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b03b1445062e71c4ca60f92cbd330aff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 3
+  materialIdsValid: 1
+  needMaterialInstance: 0
+  spriteDefinitions:
+  - name: Fungannon_idle_001
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.0019541015, y: 0.0019541015}
+    - {x: 0.08788965, y: 0.0019541015}
+    - {x: 0.0019541015, y: 0.08886621}
+    - {x: 0.08788965, y: 0.08886621}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 3e392b8c5860edd4aa029cd8316d9c0c
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_idle_002
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.0019541015, y: 0.09277441}
+    - {x: 0.08788965, y: 0.09277441}
+    - {x: 0.0019541015, y: 0.17968652}
+    - {x: 0.08788965, y: 0.17968652}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: aacc17f145054e141a21864a8d1df264
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_idle_003
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.0019541015, y: 0.18359473}
+    - {x: 0.08788965, y: 0.18359473}
+    - {x: 0.0019541015, y: 0.27050683}
+    - {x: 0.08788965, y: 0.27050683}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 45de5d11bf54c3745b3e9d54f29e78e6
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_idle_004
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.0019541015, y: 0.27441505}
+    - {x: 0.08788965, y: 0.27441505}
+    - {x: 0.0019541015, y: 0.36132714}
+    - {x: 0.08788965, y: 0.36132714}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 04166014c3ea0dd4d80a4203ccc5a2a6
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_idle_005
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.0019541015, y: 0.36523536}
+    - {x: 0.08788965, y: 0.36523536}
+    - {x: 0.0019541015, y: 0.45214745}
+    - {x: 0.08788965, y: 0.45214745}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 7922792b55feb6544a6ecc1b02e180ef
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_idle_006
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.0019541015, y: 0.45605567}
+    - {x: 0.08788965, y: 0.45605567}
+    - {x: 0.0019541015, y: 0.5429678}
+    - {x: 0.08788965, y: 0.5429678}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: b70464a08d1f9d04b9ac7a06d669d1b7
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_idle_007
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.0019541015, y: 0.54687595}
+    - {x: 0.08788965, y: 0.54687595}
+    - {x: 0.0019541015, y: 0.6337881}
+    - {x: 0.08788965, y: 0.6337881}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: e5fc45d5bc6c70b4aad0e97bb42ab7b7
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_move_001
+    boundsData:
+    - {x: 2.625, y: 2.78125, z: 0}
+    - {x: 5.25, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.625, y: 2.78125, z: 0}
+    - {x: 5.25, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.625, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.25, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.625, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.25, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.25, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.25, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.25, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.25, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.27148536, y: 0.45312598}
+    - {x: 0.35351464, y: 0.45312598}
+    - {x: 0.27148536, y: 0.5400381}
+    - {x: 0.35351464, y: 0.5400381}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 6c06327259c1d354dab53ae0d9cbb816
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_move_002
+    boundsData:
+    - {x: 2.625, y: 2.78125, z: 0}
+    - {x: 5.25, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.625, y: 2.78125, z: 0}
+    - {x: 5.25, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.625, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.25, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.625, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.25, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.25, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.25, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.25, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.25, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.27148536, y: 0.54394627}
+    - {x: 0.35351464, y: 0.54394627}
+    - {x: 0.27148536, y: 0.6308584}
+    - {x: 0.35351464, y: 0.6308584}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 8f4b16da066b4494e810251a4b0d23e8
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_move_003
+    boundsData:
+    - {x: 2.625, y: 2.78125, z: 0}
+    - {x: 5.25, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.625, y: 2.78125, z: 0}
+    - {x: 5.25, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.625, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.25, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.625, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.25, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.25, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.25, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.25, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.25, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.27148536, y: 0.6347666}
+    - {x: 0.35351464, y: 0.6347666}
+    - {x: 0.27148536, y: 0.72167873}
+    - {x: 0.35351464, y: 0.72167873}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 3e0781306e94b2a41977d4cca1d984e1
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_move_004
+    boundsData:
+    - {x: 2.625, y: 2.78125, z: 0}
+    - {x: 5.25, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.625, y: 2.78125, z: 0}
+    - {x: 5.25, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.625, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.25, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.625, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.25, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.25, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.25, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.25, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.25, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.27148536, y: 0.7255869}
+    - {x: 0.35351464, y: 0.7255869}
+    - {x: 0.27148536, y: 0.81249905}
+    - {x: 0.35351464, y: 0.81249905}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 56441400d4dc5f14e98622da8471835f
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_move_005
+    boundsData:
+    - {x: 2.625, y: 2.78125, z: 0}
+    - {x: 5.25, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.625, y: 2.78125, z: 0}
+    - {x: 5.25, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.625, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.25, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.625, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.25, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.25, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.25, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.25, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.25, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.27148536, y: 0.8164072}
+    - {x: 0.35351464, y: 0.8164072}
+    - {x: 0.27148536, y: 0.90331936}
+    - {x: 0.35351464, y: 0.90331936}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 8762888e561f1664d894408a1d8135b8
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_move_006
+    boundsData:
+    - {x: 2.625, y: 2.78125, z: 0}
+    - {x: 5.25, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.625, y: 2.78125, z: 0}
+    - {x: 5.25, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.625, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.25, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.625, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.25, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.25, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.25, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.25, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.25, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.27148536, y: 0.9072275}
+    - {x: 0.35351464, y: 0.9072275}
+    - {x: 0.27148536, y: 0.9941397}
+    - {x: 0.35351464, y: 0.9941397}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 060cc04e3d96e1a41911608ba2370762
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_move_007
+    boundsData:
+    - {x: 2.625, y: 2.78125, z: 0}
+    - {x: 5.25, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.625, y: 2.78125, z: 0}
+    - {x: 5.25, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.625, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.25, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.625, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.25, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.25, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.25, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.25, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.25, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.35742286, y: 0.45312598}
+    - {x: 0.43945214, y: 0.45312598}
+    - {x: 0.35742286, y: 0.5400381}
+    - {x: 0.43945214, y: 0.5400381}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: d170fd077c5ee354f9fcdd40e8499916
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_move_008
+    boundsData:
+    - {x: 2.625, y: 2.78125, z: 0}
+    - {x: 5.25, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.625, y: 2.78125, z: 0}
+    - {x: 5.25, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.625, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.25, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.625, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.25, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.25, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.25, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.25, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.25, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.3613291, y: 0.27148536}
+    - {x: 0.4433584, y: 0.27148536}
+    - {x: 0.3613291, y: 0.35839745}
+    - {x: 0.4433584, y: 0.35839745}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 8bf76902d0dc7274889cbdeb72e67900
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_move_009
+    boundsData:
+    - {x: 2.625, y: 2.78125, z: 0}
+    - {x: 5.25, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.625, y: 2.78125, z: 0}
+    - {x: 5.25, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.625, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.25, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.625, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.25, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.25, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.25, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.25, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.25, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.3613291, y: 0.36230567}
+    - {x: 0.4433584, y: 0.36230567}
+    - {x: 0.3613291, y: 0.44921777}
+    - {x: 0.4433584, y: 0.44921777}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 6430ea92845a0ff47b58f58bd38eb6c3
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_moveright_001
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.0019541015, y: 0.63769627}
+    - {x: 0.08788965, y: 0.63769627}
+    - {x: 0.0019541015, y: 0.7246084}
+    - {x: 0.08788965, y: 0.7246084}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 208f5ab47fd0916419ca705bba6a2841
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_moveright_002
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.0019541015, y: 0.7285166}
+    - {x: 0.08788965, y: 0.7285166}
+    - {x: 0.0019541015, y: 0.81542873}
+    - {x: 0.08788965, y: 0.81542873}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: e7eb9b27eb755f6488a48e9c6a5b58be
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_moveright_003
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.0019541015, y: 0.8193369}
+    - {x: 0.08788965, y: 0.8193369}
+    - {x: 0.0019541015, y: 0.90624905}
+    - {x: 0.08788965, y: 0.90624905}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 83d7a52bd4af1a44285b1964323d04f1
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_moveright_004
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.0019541015, y: 0.9101572}
+    - {x: 0.08788965, y: 0.9101572}
+    - {x: 0.0019541015, y: 0.99706936}
+    - {x: 0.08788965, y: 0.99706936}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 66cc40b6f5573634492e60edcf8f01e4
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_moveright_005
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.09179785, y: 0.0019541015}
+    - {x: 0.09179785, y: 0.08788965}
+    - {x: 0.17870995, y: 0.0019541015}
+    - {x: 0.17870995, y: 0.08788965}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: b630abea14573fe43bd150e3fd5209d3
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_moveright_006
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.18261817, y: 0.0019541015}
+    - {x: 0.18261817, y: 0.08788965}
+    - {x: 0.26953027, y: 0.0019541015}
+    - {x: 0.26953027, y: 0.08788965}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 27e129714c7283244a22cf86832f4542
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_moveright_007
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.27343848, y: 0.0019541015}
+    - {x: 0.27343848, y: 0.08788965}
+    - {x: 0.36035058, y: 0.0019541015}
+    - {x: 0.36035058, y: 0.08788965}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: d13ee300829f48d41a28573863f4e144
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_moveright_008
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.3642588, y: 0.0019541015}
+    - {x: 0.3642588, y: 0.08788965}
+    - {x: 0.4511709, y: 0.0019541015}
+    - {x: 0.4511709, y: 0.08788965}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 407f2b95104cae94dbc5868a8fbf0f9f
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_moveright_009
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.4550791, y: 0.0019541015}
+    - {x: 0.4550791, y: 0.08788965}
+    - {x: 0.54199123, y: 0.0019541015}
+    - {x: 0.54199123, y: 0.08788965}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: bd698dda0f3d7914bb34aa2eb6c6b3a0
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_roar_001
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.5458994, y: 0.0019541015}
+    - {x: 0.5458994, y: 0.08788965}
+    - {x: 0.63281155, y: 0.0019541015}
+    - {x: 0.63281155, y: 0.08788965}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 7edc93387643f1e43a207ae14ff25486
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_roar_002
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.6367197, y: 0.0019541015}
+    - {x: 0.6367197, y: 0.08788965}
+    - {x: 0.72363186, y: 0.0019541015}
+    - {x: 0.72363186, y: 0.08788965}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: c90b5c03411ebf949977c991dc0ca348
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_roar_003
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.72754, y: 0.0019541015}
+    - {x: 0.72754, y: 0.08788965}
+    - {x: 0.8144522, y: 0.0019541015}
+    - {x: 0.8144522, y: 0.08788965}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 43354104ff5f9344cb8eea51c957c698
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_roar_004
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.8183603, y: 0.0019541015}
+    - {x: 0.8183603, y: 0.08788965}
+    - {x: 0.9052725, y: 0.0019541015}
+    - {x: 0.9052725, y: 0.08788965}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 4c50a87fc0747ad4087465bcb3428f42
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_roar_005
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.90918064, y: 0.0019541015}
+    - {x: 0.90918064, y: 0.08788965}
+    - {x: 0.9960928, y: 0.0019541015}
+    - {x: 0.9960928, y: 0.08788965}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 5ff147931065b9f42a97605e95181b0c
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_roar_006
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.09179785, y: 0.09179785}
+    - {x: 0.17773339, y: 0.09179785}
+    - {x: 0.09179785, y: 0.17870995}
+    - {x: 0.17773339, y: 0.17870995}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 7f59c0ffd221c6947a7d8d57669ccbff
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_roar_007
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.09179785, y: 0.18261817}
+    - {x: 0.17773339, y: 0.18261817}
+    - {x: 0.09179785, y: 0.26953027}
+    - {x: 0.17773339, y: 0.26953027}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: b59c808952ca11542b020c9ddf1db103
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_roar_008
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.09179785, y: 0.27343848}
+    - {x: 0.17773339, y: 0.27343848}
+    - {x: 0.09179785, y: 0.36035058}
+    - {x: 0.17773339, y: 0.36035058}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 135927c229296e34f8067fd50e20c586
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_roar_009
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.09179785, y: 0.3642588}
+    - {x: 0.17773339, y: 0.3642588}
+    - {x: 0.09179785, y: 0.4511709}
+    - {x: 0.17773339, y: 0.4511709}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 0a1aa714dc786864e8d963d6058841d9
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_roar_010
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.09179785, y: 0.4550791}
+    - {x: 0.17773339, y: 0.4550791}
+    - {x: 0.09179785, y: 0.54199123}
+    - {x: 0.17773339, y: 0.54199123}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 4659504798b20bc41b9fa4f7a6f0ff4c
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_roar_011
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.09179785, y: 0.3642588}
+    - {x: 0.17773339, y: 0.3642588}
+    - {x: 0.09179785, y: 0.4511709}
+    - {x: 0.17773339, y: 0.4511709}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 5ddaa1d24a739dc4fb87ffb60fc6c4f8
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_roar_012
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.09179785, y: 0.27343848}
+    - {x: 0.17773339, y: 0.27343848}
+    - {x: 0.09179785, y: 0.36035058}
+    - {x: 0.17773339, y: 0.36035058}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: f53e3c05bf5c8c9488d3e7cb2662d5ef
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_roar_013
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.09179785, y: 0.3642588}
+    - {x: 0.17773339, y: 0.3642588}
+    - {x: 0.09179785, y: 0.4511709}
+    - {x: 0.17773339, y: 0.4511709}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 3d203fd60b789e24887357b50c9c6239
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_roar_014
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.09179785, y: 0.5458994}
+    - {x: 0.17773339, y: 0.5458994}
+    - {x: 0.09179785, y: 0.63281155}
+    - {x: 0.17773339, y: 0.63281155}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 122702e4b35200c418cb1b6ef5063f67
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_roar_015
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.09179785, y: 0.6367197}
+    - {x: 0.17773339, y: 0.6367197}
+    - {x: 0.09179785, y: 0.72363186}
+    - {x: 0.17773339, y: 0.72363186}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 6f18fdb84390c594d8674dbefc710203
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_roar_016
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.09179785, y: 0.72754}
+    - {x: 0.17773339, y: 0.72754}
+    - {x: 0.09179785, y: 0.8144522}
+    - {x: 0.17773339, y: 0.8144522}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 1a329bc542abe944687e10af245fa901
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_jump_001
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.0019541015, y: 0.0019541015}
+    - {x: 0.08788965, y: 0.0019541015}
+    - {x: 0.0019541015, y: 0.08886621}
+    - {x: 0.08788965, y: 0.08886621}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 6a48ed3bcdf7b454dacb6e9025303ad3
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_jump_002
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.09179785, y: 0.8183603}
+    - {x: 0.17773339, y: 0.8183603}
+    - {x: 0.09179785, y: 0.9052725}
+    - {x: 0.17773339, y: 0.9052725}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: a297fa8ec2e6b554aa8a2738abd4232d
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_jump_003
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.09179785, y: 0.90918064}
+    - {x: 0.17773339, y: 0.90918064}
+    - {x: 0.09179785, y: 0.9960928}
+    - {x: 0.17773339, y: 0.9960928}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 01bbd6fdc0be6204f86c6345f2c0c0f2
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_jump_004
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.18164161, y: 0.09179785}
+    - {x: 0.18164161, y: 0.17773339}
+    - {x: 0.2685537, y: 0.09179785}
+    - {x: 0.2685537, y: 0.17773339}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: c28b910ad0a78f74aab8af2206a780d7
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_jump_005
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.27246192, y: 0.09179785}
+    - {x: 0.27246192, y: 0.17773339}
+    - {x: 0.35937402, y: 0.09179785}
+    - {x: 0.35937402, y: 0.17773339}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: e7b1515cd00ef5c499f705d21979e893
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_jump_006
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.36328223, y: 0.09179785}
+    - {x: 0.36328223, y: 0.17773339}
+    - {x: 0.45019433, y: 0.09179785}
+    - {x: 0.45019433, y: 0.17773339}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: d41c9bd7afb554e4c991749f888ba77d
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_jump_007
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.45410255, y: 0.09179785}
+    - {x: 0.45410255, y: 0.17773339}
+    - {x: 0.5410147, y: 0.09179785}
+    - {x: 0.5410147, y: 0.17773339}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 5337c6734250ad24b901db5d83668596
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_jump_008
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.5449228, y: 0.09179785}
+    - {x: 0.5449228, y: 0.17773339}
+    - {x: 0.631835, y: 0.09179785}
+    - {x: 0.631835, y: 0.17773339}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 92fa76f822edf8548b42f5cf3468b4af
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_jump_009
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.63574314, y: 0.09179785}
+    - {x: 0.63574314, y: 0.17773339}
+    - {x: 0.7226553, y: 0.09179785}
+    - {x: 0.7226553, y: 0.17773339}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: dab32c27d1247d54688910aad030ecdb
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_jump_010
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.72656345, y: 0.09179785}
+    - {x: 0.72656345, y: 0.17773339}
+    - {x: 0.8134756, y: 0.09179785}
+    - {x: 0.8134756, y: 0.17773339}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 847ae3068c4a12444a77cb6001ac7362
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_jump_011
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.81738377, y: 0.09179785}
+    - {x: 0.81738377, y: 0.17773339}
+    - {x: 0.9042959, y: 0.09179785}
+    - {x: 0.9042959, y: 0.17773339}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 219e780d83b5300449afa87c00d9ae42
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_jump_012
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.9082041, y: 0.09179785}
+    - {x: 0.9082041, y: 0.17773339}
+    - {x: 0.99511623, y: 0.09179785}
+    - {x: 0.99511623, y: 0.17773339}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: fbb7da2130fb5134db53cb558dabe3fe
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_jumpland_001
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.18164161, y: 0.18164161}
+    - {x: 0.26757714, y: 0.18164161}
+    - {x: 0.18164161, y: 0.2685537}
+    - {x: 0.26757714, y: 0.2685537}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: c18ba2e1809f7a1449ac44fe002093cb
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_jumpland_002
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.18164161, y: 0.27246192}
+    - {x: 0.26757714, y: 0.27246192}
+    - {x: 0.18164161, y: 0.35937402}
+    - {x: 0.26757714, y: 0.35937402}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: ac112060bdee22d4896cfdb947e3e5bf
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_jumpland_003
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.18164161, y: 0.36328223}
+    - {x: 0.26757714, y: 0.36328223}
+    - {x: 0.18164161, y: 0.45019433}
+    - {x: 0.26757714, y: 0.45019433}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: ce73fa0a148ae6e48a73697b6d61a180
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_spawn_001
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.18164161, y: 0.45410255}
+    - {x: 0.26757714, y: 0.45410255}
+    - {x: 0.18164161, y: 0.5410147}
+    - {x: 0.26757714, y: 0.5410147}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 1c3240d075b114b4cbda6233335e6351
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_spawn_002
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.18164161, y: 0.5449228}
+    - {x: 0.26757714, y: 0.5449228}
+    - {x: 0.18164161, y: 0.631835}
+    - {x: 0.26757714, y: 0.631835}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 1eb2ef6386dfd324f996da21ddd8498a
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_spawn_003
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.18164161, y: 0.63574314}
+    - {x: 0.26757714, y: 0.63574314}
+    - {x: 0.18164161, y: 0.7226553}
+    - {x: 0.26757714, y: 0.7226553}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 432cbe5a8a004c5468af84936601a9f0
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_spawn_004
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.18164161, y: 0.72656345}
+    - {x: 0.26757714, y: 0.72656345}
+    - {x: 0.18164161, y: 0.8134756}
+    - {x: 0.26757714, y: 0.8134756}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: fb8ae04d4bd4f57428507fe943648b8b
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_spawn_005
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.0019541015, y: 0.0019541015}
+    - {x: 0.08788965, y: 0.0019541015}
+    - {x: 0.0019541015, y: 0.08886621}
+    - {x: 0.08788965, y: 0.08886621}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: cec6610166185814a9412f97c15b45b9
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_spawn_006
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.0019541015, y: 0.0019541015}
+    - {x: 0.08788965, y: 0.0019541015}
+    - {x: 0.0019541015, y: 0.08886621}
+    - {x: 0.08788965, y: 0.08886621}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 7c8a6399810a9894699c337f05603e70
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_spawn_007
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.0019541015, y: 0.0019541015}
+    - {x: 0.08788965, y: 0.0019541015}
+    - {x: 0.0019541015, y: 0.08886621}
+    - {x: 0.08788965, y: 0.08886621}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 8bfc00fe986f24c45a4bb870c153ef11
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_spawn_008
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.0019541015, y: 0.0019541015}
+    - {x: 0.08788965, y: 0.0019541015}
+    - {x: 0.0019541015, y: 0.08886621}
+    - {x: 0.08788965, y: 0.08886621}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 291e0f871f0c94d4491a08ba8a1fef99
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_spawn_009
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.0019541015, y: 0.0019541015}
+    - {x: 0.08788965, y: 0.0019541015}
+    - {x: 0.0019541015, y: 0.08886621}
+    - {x: 0.08788965, y: 0.08886621}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 9bad9eaca6ddb3e45a253bc176e405c1
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_spawn_010
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.0019541015, y: 0.0019541015}
+    - {x: 0.08788965, y: 0.0019541015}
+    - {x: 0.0019541015, y: 0.08886621}
+    - {x: 0.08788965, y: 0.08886621}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 2b205e8e8aa47ab4c9d5efe4bcde90f8
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_death_001
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.0019541015, y: 0.0019541015}
+    - {x: 0.08788965, y: 0.0019541015}
+    - {x: 0.0019541015, y: 0.08886621}
+    - {x: 0.08788965, y: 0.08886621}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: ba3e7f40d2c3b93439ada1d65eec7356
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_death_002
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.18164161, y: 0.81738377}
+    - {x: 0.26757714, y: 0.81738377}
+    - {x: 0.18164161, y: 0.9042959}
+    - {x: 0.26757714, y: 0.9042959}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 32b429c5f22169244bf36fa2df5e47b9
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_death_003
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.18164161, y: 0.9082041}
+    - {x: 0.26757714, y: 0.9082041}
+    - {x: 0.18164161, y: 0.99511623}
+    - {x: 0.26757714, y: 0.99511623}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: b6308dc495839674b90557dd59a313e5
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_death_004
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.27148536, y: 0.18164161}
+    - {x: 0.27148536, y: 0.26757714}
+    - {x: 0.35839745, y: 0.18164161}
+    - {x: 0.35839745, y: 0.26757714}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: d72ca7c0be3187645ab0874d7f104447
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_death_005
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.36230567, y: 0.18164161}
+    - {x: 0.36230567, y: 0.26757714}
+    - {x: 0.44921777, y: 0.18164161}
+    - {x: 0.44921777, y: 0.26757714}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 963e2e9d07896ad40a44d83de7d0a612
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_death_006
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.45312598, y: 0.18164161}
+    - {x: 0.45312598, y: 0.26757714}
+    - {x: 0.5400381, y: 0.18164161}
+    - {x: 0.5400381, y: 0.26757714}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 86204d0739094ab40b261c9bc4245ffa
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_death_007
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.54394627, y: 0.18164161}
+    - {x: 0.54394627, y: 0.26757714}
+    - {x: 0.6308584, y: 0.18164161}
+    - {x: 0.6308584, y: 0.26757714}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 731887e201c648c43b03092291e2801d
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_death_008
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.6347666, y: 0.18164161}
+    - {x: 0.6347666, y: 0.26757714}
+    - {x: 0.72167873, y: 0.18164161}
+    - {x: 0.72167873, y: 0.26757714}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: ef334be9e5f211a45b901765606d39fa
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_death_009
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.7255869, y: 0.18164161}
+    - {x: 0.7255869, y: 0.26757714}
+    - {x: 0.81249905, y: 0.18164161}
+    - {x: 0.81249905, y: 0.26757714}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: b5fe9512f607a33409e7b4240ba83f1e
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_death_010
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.8164072, y: 0.18164161}
+    - {x: 0.8164072, y: 0.26757714}
+    - {x: 0.90331936, y: 0.18164161}
+    - {x: 0.90331936, y: 0.26757714}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: ef5a710dcb90efa4286ccc2ddb5b8354
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_death_011
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.9072275, y: 0.18164161}
+    - {x: 0.9072275, y: 0.26757714}
+    - {x: 0.9941397, y: 0.18164161}
+    - {x: 0.9941397, y: 0.26757714}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 2742dd36741aebd4aa4946578003053e
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_death_012
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.27148536, y: 0.27148536}
+    - {x: 0.3574209, y: 0.27148536}
+    - {x: 0.27148536, y: 0.35839745}
+    - {x: 0.3574209, y: 0.35839745}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: 56a1b3752d745fb4a8f7ab038b79a7a7
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: Fungannon_death_013
+    boundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 2.75, y: 2.78125, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    boundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    boundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 2.75, y: 2.78125, z: 0}
+    untrimmedBoundsDataExtents: {x: 5.5, y: 5.5625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 5.5, y: 0, z: 0}
+    - {x: 0, y: 5.5625, z: 0}
+    - {x: 5.5, y: 5.5625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 5.5, y: 0, z: 0}
+    position2: {x: 0, y: 5.5625, z: 0}
+    position3: {x: 5.5, y: 5.5625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.27148536, y: 0.36230567}
+    - {x: 0.3574209, y: 0.36230567}
+    - {x: 0.27148536, y: 0.44921777}
+    - {x: 0.3574209, y: 0.44921777}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+    materialId: 0
+    sourceTextureGUID: bc57790c18ec9704292a97a1a5f4f658
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  premultipliedAlpha: 0
+  material: {fileID: 0}
+  materials:
+  - {fileID: 2100000, guid: d2edbb983a384d94da4cd142ed692d16, type: 2}
+  textures:
+  - {fileID: 2800000, guid: f6b09e5a62903ca4bbdb836fa7e1b6b8, type: 3}
+  pngTextures: []
+  materialPngTextureId: 00000000
+  textureFilterMode: 1
+  textureMipMaps: 0
+  allowMultipleAtlases: 0
+  spriteCollectionGUID: 0069ae252ce4c134c97a0b16b8193034
+  spriteCollectionName: FungannonCollection
+  assetName: 
+  loadable: 0
+  invOrthoSize: 2
+  halfTargetHeight: 8
+  buildKey: 1856873170
+  dataGuid: 3093912b59766504189d22e245494d20
+  managedSpriteCollection: 0
+  hasPlatformData: 0
+  spriteCollectionPlatforms: []
+  spriteCollectionPlatformGUIDs: []

@@ -38,7 +38,7 @@ namespace Planetside
             HeresyHammer activeitem = obj.AddComponent<HeresyHammer>();
             ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "BLASPHEMER";
-            string longDesc = "A large hammer, originally used by protesters off-world to destroy monuments of the corrupt in power. It found new life in here after many of said protestors were shipped to the Gungeon.";
+            string longDesc = "Allows for destruction of monuments.\n\nA large hammer, originally used by protesters off-world to destroy monuments of the corrupt in power. It found new life in here after many of said protestors were shipped to the Gungeon.";
             activeitem.SetupItem(shortDesc, longDesc, "psog");
             activeitem.SetCooldownType(ItemBuilder.CooldownType.Timed, 1f);
             activeitem.consumable = false;
@@ -95,8 +95,7 @@ namespace Planetside
             try
             {
                 IPlayerInteractable nearestInteractable = user.CurrentRoom.GetNearestInteractable(user.sprite.WorldCenter, 2.5f, user);
-                bool flag2 = nearestInteractable != null && nearestInteractable is SimpleShrine;
-                if (flag2)
+                if (nearestInteractable != null && nearestInteractable is SimpleShrine)
                 {
                     SimpleShrine simp = nearestInteractable as SimpleShrine;
                     Func<PlayerController, GameObject, bool> aaa = simp.CanUse;
@@ -129,8 +128,7 @@ namespace Planetside
                 else
                 {
                     List<AdvancedShrineController> allDebris = StaticReferenceManager.AllAdvancedShrineControllers;
-                    bool flag3 = allDebris != null;
-                    if (flag3)
+                    if (allDebris != null)
                     {
                         for (int i = 0; i < allDebris.Count; i++)
                         {
@@ -144,12 +142,10 @@ namespace Planetside
                                 if (uses < 1 && !debrisObject.CanBeReused)
                                 {
                                     float sqrMagnitude = (user.CenterPosition - debrisObject.transform.position.XY()).sqrMagnitude;
-                                    bool flag5 = sqrMagnitude <= 25f;
-                                    if (flag5)
+                                    if (sqrMagnitude <= 25f)
                                     {
                                         float num = Mathf.Sqrt(sqrMagnitude);
-                                        bool flag7 = num < 2.4f;
-                                        if (flag7)
+                                        if (num < 2.4f)
                                         {
                                             return true;
                                         }
@@ -158,12 +154,10 @@ namespace Planetside
                                 else if (debrisObject.CanBeReused)
                                 {
                                     float sqrMagnitude = (user.CenterPosition - debrisObject.transform.position.XY()).sqrMagnitude;
-                                    bool flag5 = sqrMagnitude <= 25f;
-                                    if (flag5)
+                                    if (sqrMagnitude <= 25f)
                                     {
                                         float num = Mathf.Sqrt(sqrMagnitude);
-                                        bool flag7 = num < 2.4f;
-                                        if (flag7)
+                                        if (num < 2.4f)
                                         {
                                             return true;
                                         }
@@ -187,8 +181,7 @@ namespace Planetside
             bool PurpleParticles = false;
             AkSoundEngine.PostEvent("Play_RockBreaking", base.gameObject);            
             IPlayerInteractable nearestInteractable = user.CurrentRoom.GetNearestInteractable(user.sprite.WorldCenter, 2.5f, user);
-            bool flag2 = nearestInteractable != null && nearestInteractable is SimpleShrine;
-            if (flag2)
+            if (nearestInteractable != null && nearestInteractable is SimpleShrine)
             {
                 SimpleShrine death = nearestInteractable as SimpleShrine;
                 if (death.name == "psog:nullshrine(Clone)")
@@ -537,7 +530,7 @@ namespace Planetside
                                         if (UnityEngine.Random.value <= 0.4f)
                                         {
                                             AkSoundEngine.PostEvent("Play_BOSS_lichB_grab_01", base.gameObject);
-                                            GameObject hand = UnityEngine.Object.Instantiate<GameObject>(PlanetsideModule.hellDrag.HellDragVFX);
+                                            GameObject hand = UnityEngine.Object.Instantiate<GameObject>(StaticVFXStorage.hellDragController.HellDragVFX);
                                             tk2dBaseSprite component1 = hand.GetComponent<tk2dBaseSprite>();
                                             component1.usesOverrideMaterial = true;
                                             component1.PlaceAtLocalPositionByAnchor(debrisObject.specRigidbody.UnitCenter, tk2dBaseSprite.Anchor.LowerCenter);

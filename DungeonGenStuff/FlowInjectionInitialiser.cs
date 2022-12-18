@@ -190,7 +190,16 @@ namespace Planetside
 					   requiredTileset = GlobalDungeonData.ValidTilesets.FORGEGEON,
 					   requireTileset = true
 					},
-				},
+                    new DungeonGenToolbox.AdvancedDungeonPrerequisite
+                    {
+                       advancedAdvancedPrerequisiteType = DungeonGenToolbox.AdvancedDungeonPrerequisite.AdvancedAdvancedPrerequisiteType.UNLOCK,
+                       UnlockFlag = CustomDungeonFlags.NEMESIS_KILLED,
+                       UnlockRequirement = true,
+
+                       requiredTileset = GlobalDungeonData.ValidTilesets.FORGEGEON,
+                       requireTileset = true
+                    },
+                },
 				CanBeForcedSecret = false,
 				RandomNodeChildMinDistanceFromEntrance = 0,
 				exactSecondaryRoom = null,
@@ -204,7 +213,7 @@ namespace Planetside
 
         public static void AddVrokenChamberRoom(bool refreshFlows = false)
 		{
-			float Weight = 0.75f;
+			float Weight = 1f;
 			if (SaveAPIManager.GetFlag(CustomDungeonFlags.BROKEN_CHAMBER_RUN_COMPLETED) == true)
             {
 				Weight = 0.05f;
@@ -264,6 +273,7 @@ namespace Planetside
 				chanceToSpawn = Weight,
 				RequiredValidPlaceable = null,
 				prerequisites = new DungeonPrerequisite[] {
+
 					new DungeonPrerequisite
 					{
 						prerequisiteOperation = DungeonPrerequisite.PrerequisiteOperation.EQUAL_TO,
@@ -284,9 +294,21 @@ namespace Planetside
 						statToCheck = TrackedStats.GUNBERS_MUNCHED,
 						
 						
-					}
+					},
+					new DungeonPrerequisite
+                    {
+                        prerequisiteOperation = DungeonPrerequisite.PrerequisiteOperation.EQUAL_TO,
+                        prerequisiteType = DungeonPrerequisite.PrerequisiteType.FLAG,
+                        encounteredObjectGuid = string.Empty,
+                        requireFlag = true,
+                        useSessionStatValue = false,
+                        encounteredRoom = null,
+                        requiredNumberOfEncounters = -1,
+                        saveFlagToCheck = GungeonFlags.BOSSKILLED_LICH,
 					
-				},
+                    },
+
+                },
 				CanBeForcedSecret = true,
 				RandomNodeChildMinDistanceFromEntrance = 0,
 				exactSecondaryRoom = null,

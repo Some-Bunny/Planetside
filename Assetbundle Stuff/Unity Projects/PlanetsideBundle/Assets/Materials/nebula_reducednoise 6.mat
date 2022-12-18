@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: nebula_reducednoise 6
+  m_Shader: {fileID: 4800000, guid: ba6c2d23b2b5a8f4a8f860b51c2bf19b, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _ColorMap:
+        m_Texture: {fileID: 2800000, guid: ae9befa7c76985041a98c095f99a89d6, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: ff30ad2400a3a8842bb170ff2a31bf5d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OverlayTexture:
+        m_Texture: {fileID: 2800000, guid: 6a985dfcd1d3ca94e9753748ed65c697, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture:
+        m_Texture: {fileID: 2800000, guid: 6e3ff783bb8d205488f3af1b4723c401, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _node_5132:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _node_8861:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - PixelSnap: 0
+    - _ColorMultiplier: 4.700855
+    - _Cutoff: 0.5
+    - _EmissionMultiplier: 1.86873
+    - _HoleSize: 0
+    - _IsColorOverride: 0
+    - _Light: 1
+    - _No: 1
+    - _ScaleAdjustment: 1
+    - _ScrollSpeed: 2.045288
+    - _Spinspeed: 0.15
+    - _Stencil: 0
+    - _StencilComp: 8
+    - _StencilOp: 0
+    - _StencilOpFail: 0
+    - _StencilOpZFail: 0
+    - _StencilReadMask: 255
+    - _StencilWriteMask: 255
+    - _TextureCellRotation: 0
+    - _TextureCellRotationTime: 0
+    - _Tiles: 3
+    m_Colors:
+    - _Bluue: {r: 0, g: 1, b: 1, a: 1}
+    - _OverrideColor: {r: 1, g: 0, b: 0, a: 1}
+    - _node_4282: {r: 0, g: 0, b: 1, a: 1}

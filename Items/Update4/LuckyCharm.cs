@@ -31,7 +31,7 @@ namespace Planetside
 			var item = obj.AddComponent<LuckyCharm>();
 			ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
 			string shortDesc = "You feelin' lucky punk?";
-			string longDesc = "Tips the scales of fortune *slightly* in your favor in many, fairly unnoticable ways.\n\nA charm with a 4 leaf clover attached to it. Unsurprisingly not affiliated with the cereal brand.";
+			string longDesc = "Tips the scales of fortune *slightly* in your favor in many, yet fairly small ways.\n\nA charm with a 4 leaf clover attached to it. Unsurprisingly not affiliated with the cereal brand.";
 			ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
 			item.quality = PickupObject.ItemQuality.C;
 			new Hook(typeof(RewardManager).GetMethod("GetDaveStyleItemQuality", BindingFlags.Instance | BindingFlags.NonPublic), typeof(LuckyCharm).GetMethod("DreamLuck"));

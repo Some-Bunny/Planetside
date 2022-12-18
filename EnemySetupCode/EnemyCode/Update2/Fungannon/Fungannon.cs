@@ -1117,7 +1117,6 @@ namespace Planetside
 				base.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("41ee1c8538e8474a82a74c4aff99c712").bulletBank.GetBullet("big"));
 				base.aiActor.HasBeenEngaged = false;
 				//Important for not breaking basegame stuff!
-				StaticReferenceManager.AllHealthHavers.Remove(base.aiActor.healthHaver);
 
 
 				base.aiActor.healthHaver.OnPreDeath += (obj) =>

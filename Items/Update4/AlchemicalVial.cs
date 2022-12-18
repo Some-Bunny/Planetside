@@ -27,7 +27,7 @@ namespace Planetside
             AlchemicalVial activeitem = obj.AddComponent<AlchemicalVial>();
             ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "Completely Stable";
-            string longDesc = "Transmutes all of your projectiles, reload on a full clip to change transmutation.\n\nDespite what the label says, this is actually a bottle of lead paint. Don't drink it...";
+            string longDesc = "Transmutes all of your projectiles, reload on a full clip to change transmutation type.\n\nDespite what the label says, this is actually a bottle of lead paint. Don't drink it...";
             activeitem.SetupItem(shortDesc, longDesc, "psog");
             activeitem.SetCooldownType(ItemBuilder.CooldownType.Timed, 10f);
             activeitem.quality = PickupObject.ItemQuality.D;

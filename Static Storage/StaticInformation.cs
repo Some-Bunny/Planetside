@@ -74,6 +74,8 @@ namespace Planetside
             Hell_2_Texture = PlanetsideModule.ModAssets.LoadAsset<Texture2D>("hell_2");
 
             Gradient_Texture_Trail = EnemyDatabase.GetOrLoadByGuid("465da2bb086a4a88a803f79fe3a27677").bulletBank.GetBullet("homing").BulletObject.GetComponent<Projectile>().gameObject.GetComponentInChildren<CustomTrailRenderer>().material.mainTexture;
+
+            Hell_Drag_Zone_Texture = StaticVFXStorage.hellDragController.HoleObject.GetComponent<MeshRenderer>().material.GetTexture("_PortalTex");
         }
         public static Texture AdvancedParticleBlue;
         public static Texture VoidTexture;
@@ -104,6 +106,8 @@ namespace Planetside
         public static Texture Hell_2_Texture;
 
         public static Texture Gradient_Texture_Trail;
+
+        public static Texture Hell_Drag_Zone_Texture;
 
     }
 

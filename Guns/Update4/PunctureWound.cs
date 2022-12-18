@@ -22,7 +22,7 @@ namespace Planetside
             Game.Items.Rename("outdated_gun_mods:puncture_wound", "psog:puncture_wound");
             PunctureWound wound = gun.gameObject.AddComponent<PunctureWound>();
             gun.SetShortDescription("Aging Agent");
-            gun.SetLongDescription("Fires vials of tarnishing liquid.\n\nDO NOT HANDLE THE VIALS WITHOUT GLOVES OR PROPER PROTECTIVE EQUIPMENT.");
+            gun.SetLongDescription("Fires vials of tarnishing liquid, making your foes tarnished.\n\nDO NOT HANDLE THE VIALS WITHOUT GLOVES OR PROPER PROTECTIVE EQUIPMENT.");
 
             gun.SetupSprite(null, "puncturewound_idle_001", 8);
 

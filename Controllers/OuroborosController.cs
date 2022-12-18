@@ -385,8 +385,8 @@ namespace Planetside
             {
                 if (self.aiActor != null)
 				{
-                    if (!enemiesNotAffectedByBehaviorSpecMultiplier.Contains(self.EnemyGuid)) { self.MovementSpeed *= ChanceAccordingToGivenValues(1f, 2f, 250); }
-                    if (!enemiesNotAffectedByBehaviorSpecMultiplier.Contains(self.EnemyGuid) && self.behaviorSpeculator != null) { self.behaviorSpeculator.CooldownScale *= ChanceAccordingToGivenValues(1f, 0.4f, 250); }
+                    if (!enemiesNotAffectedByBehaviorSpecMultiplier.Contains(self.EnemyGuid)) { self.MovementSpeed *= ChanceAccordingToGivenValues(1f, 1.5f, 250); }
+                    if (!enemiesNotAffectedByBehaviorSpecMultiplier.Contains(self.EnemyGuid) && self.behaviorSpeculator != null) { self.behaviorSpeculator.CooldownScale *= ChanceAccordingToGivenValues(1f, 0.66f, 250); }
                     if (!enemiesNotAffectedByBehaviorSpecMultiplier.Contains(self.EnemyGuid)) { self.healthHaver.SetHealthMaximum(self.healthHaver.GetCurrentHealth() * ChanceAccordingToGivenValues(1f, 1.3f, 250)); }
                     if (self != null && self.aiActor != null && RoomSuitable(self.aiActor) == true && EnemyIsValid(self.aiActor) == true && !bannedEnemiesForOrbitingSkulls.Contains(self.aiActor.EnemyGuid) && UnityEngine.Random.value <= ChanceAccordingToGivenValues(0.0075f, 0.45f, 75) && !enemiesNotAffectedByBehaviorSpecMultiplier.Contains(self.EnemyGuid))
                     {

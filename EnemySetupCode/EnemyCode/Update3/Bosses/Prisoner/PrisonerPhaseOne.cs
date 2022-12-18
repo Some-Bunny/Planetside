@@ -2429,7 +2429,6 @@ namespace Planetside
 			{
 				base.aiActor.spriteAnimator.AnimationEventTriggered += this.AnimationEventTriggered;
 				//Important for not breaking basegame stuff!
-				StaticReferenceManager.AllHealthHavers.Remove(base.aiActor.healthHaver);
 				CurrentSubPhase = SubPhases.PHASE_1;
 
 

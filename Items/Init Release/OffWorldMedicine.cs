@@ -27,7 +27,7 @@ namespace Planetside
             OffWorldMedicine activeitem = obj.AddComponent<OffWorldMedicine>();
             ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "I'll Show You Off-World";
-            string longDesc = "An off-world medicine from a hi-tech civilzation, capable of curing even the most sturdiest addictions and festering wounds.";
+            string longDesc = "An off-world medicine from a high-tech civilzation, capable of curing even the most sturdiest addictions and festering wounds.";
             activeitem.SetupItem(shortDesc, longDesc, "psog");
             activeitem.SetCooldownType(ItemBuilder.CooldownType.Timed, 5f);
             activeitem.consumable = true;
@@ -51,7 +51,7 @@ namespace Planetside
             AkSoundEngine.PostEvent("Play_OBJ_dice_bless_01", base.gameObject);
             user.PlayEffectOnActor(ResourceCache.Acquire("Global VFX/VFX_Healing_Sparkles_001") as GameObject, Vector3.zero, true, false, false);
             user.healthHaver.FullHeal();
-            user.spiceCount = 0;
+            user.spiceCount = 0;       
         }
     }
 }

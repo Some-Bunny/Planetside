@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68b998c438618a74d8a65c68d9b3ff8c, type: 3}
+  m_Name: TileIndexGrid
+  m_EditorClassIdentifier: 
+  roomTypeRestriction: 0
+  extendedSet: 0
+  CenterCheckerboard: 0
+  CheckerboardDimension: 0
+  CenterIndicesAreStrata: 0
+  PitInternalSquareGrids: []
+  PitBorderIsInternal: 0
+  PitBorderOverridesFloorTile: 0
+  CeilingBorderUsesDistancedCenters: 0
+  UsesRatChunkBorders: 0
+  PathFacewallStamp: {fileID: 0}
+  PathSidewallStamp: {fileID: 0}
+  PathStubNorth: {fileID: 0}
+  PathStubEast: {fileID: 0}
+  PathStubSouth: {fileID: 0}
+  PathStubWest: {fileID: 0}

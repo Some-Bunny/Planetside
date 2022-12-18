@@ -51,11 +51,11 @@ namespace Planetside
 				companion.aiActor.specRigidbody.CollideWithOthers = true;
 				companion.aiActor.specRigidbody.CollideWithTileMap = true;
 				companion.aiActor.PreventFallingInPitsEver = true;
-				companion.aiActor.healthHaver.ForceSetCurrentHealth(42f);
+				companion.aiActor.healthHaver.ForceSetCurrentHealth(40f);
 				companion.aiActor.CollisionKnockbackStrength = 0f;
 				companion.aiActor.procedurallyOutlined = true;
 				companion.aiActor.CanTargetPlayers = true;
-				companion.aiActor.healthHaver.SetHealthMaximum(42f, null, false);
+				companion.aiActor.healthHaver.SetHealthMaximum(40f, null, false);
 				companion.aiActor.specRigidbody.PixelColliders.Clear();
 				AIActor orLoadByGuid = EnemyDatabase.GetOrLoadByGuid("4d37ce3d666b4ddda8039929225b7ede");
 				ExplodeOnDeath explodeOnDeath = companion.gameObject.AddComponent<ExplodeOnDeath>();

@@ -29,7 +29,7 @@ namespace Planetside
             KineticStrike activeitem = obj.AddComponent<KineticStrike>();
             ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "KA-BEWWWWMMM!";
-            string longDesc = "Calls in an incredibly powerful, yet delayed kinetic strike on your cursor.\n\nHow did one of these end up inside the Gungeon? No one knows.\n\nHow does one of these even *land* inside the Gungeon? No one knows either.";
+            string longDesc = "Call in an incredibly powerful, yet delayed kinetic strike on your cursor.\n\nHow did one of these end up inside the Gungeon? No one knows.\n\nHow does one of these even *land* inside the Gungeon? No one knows either.";
             activeitem.SetupItem(shortDesc, longDesc, "psog");
             activeitem.SetCooldownType(ItemBuilder.CooldownType.Damage, 1250f);
             activeitem.consumable = false;

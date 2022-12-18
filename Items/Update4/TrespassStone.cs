@@ -55,7 +55,7 @@ namespace Planetside
                 new CustomDungeonPrerequisite()
                 {
                     customStatToCheck = CustomTrackedStats.PERKS_BOUGHT,
-                    comparisonValue = 3,
+                    comparisonValue = 5,
                     prerequisiteOperation = DungeonPrerequisite.PrerequisiteOperation.GREATER_THAN,
                 }
             };

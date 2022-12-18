@@ -45,7 +45,7 @@ namespace Planetside
             if (player.GetComponent<HERETIC>() != null)
             {
                 AkSoundEngine.PostEvent("Play_BOSS_lichB_grab_01", base.gameObject);
-                GameObject hand = UnityEngine.Object.Instantiate<GameObject>(PlanetsideModule.hellDrag.HellDragVFX);
+                GameObject hand = UnityEngine.Object.Instantiate<GameObject>(StaticVFXStorage.hellDragController.HellDragVFX);
                 tk2dBaseSprite component1 = hand.GetComponent<tk2dBaseSprite>();
                 component1.usesOverrideMaterial = true;
                 component1.PlaceAtLocalPositionByAnchor(player.specRigidbody.UnitCenter, tk2dBaseSprite.Anchor.LowerCenter);

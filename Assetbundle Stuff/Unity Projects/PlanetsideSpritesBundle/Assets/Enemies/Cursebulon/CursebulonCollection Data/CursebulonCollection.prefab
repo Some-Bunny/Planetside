@@ -1,0 +1,3320 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1593058474904662}
+  m_IsPrefabParent: 1
+--- !u!1 &1593058474904662
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4055093408111746}
+  - component: {fileID: 114208788609949606}
+  m_Layer: 0
+  m_Name: CursebulonCollection
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4055093408111746
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1593058474904662}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114208788609949606
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1593058474904662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b03b1445062e71c4ca60f92cbd330aff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 3
+  materialIdsValid: 1
+  needMaterialInstance: 0
+  spriteDefinitions:
+  - name: cursebulon_idle_back_left_001
+    boundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    boundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.4375, y: 0, z: 0}
+    - {x: 0, y: 1.375, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.4375, y: 0, z: 0}
+    position2: {x: 0, y: 1.375, z: 0}
+    position3: {x: 1.4375, y: 1.375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.007816406, y: 0.007816406}
+    - {x: 0.097652346, y: 0.007816406}
+    - {x: 0.007816406, y: 0.093746096}
+    - {x: 0.097652346, y: 0.093746096}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6842b7323929a34da9091fb3503e042, type: 2}
+    materialId: 0
+    sourceTextureGUID: eee9d0b3673023f4a93b0f89e2877594
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: cursebulon_idle_back_left_002
+    boundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    boundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.4375, y: 0, z: 0}
+    - {x: 0, y: 1.375, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.4375, y: 0, z: 0}
+    position2: {x: 0, y: 1.375, z: 0}
+    position3: {x: 1.4375, y: 1.375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.113285154, y: 0.007816406}
+    - {x: 0.2031211, y: 0.007816406}
+    - {x: 0.113285154, y: 0.093746096}
+    - {x: 0.2031211, y: 0.093746096}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6842b7323929a34da9091fb3503e042, type: 2}
+    materialId: 0
+    sourceTextureGUID: 4109148afd9dce649b0176bd2aadcdb5
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: cursebulon_idle_back_left_003
+    boundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    boundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.4375, y: 0, z: 0}
+    - {x: 0, y: 1.375, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.4375, y: 0, z: 0}
+    position2: {x: 0, y: 1.375, z: 0}
+    position3: {x: 1.4375, y: 1.375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.2187539, y: 0.007816406}
+    - {x: 0.30858985, y: 0.007816406}
+    - {x: 0.2187539, y: 0.093746096}
+    - {x: 0.30858985, y: 0.093746096}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6842b7323929a34da9091fb3503e042, type: 2}
+    materialId: 0
+    sourceTextureGUID: 3e794a581b444514ea2d6ade7f720704
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: cursebulon_idle_back_left_004
+    boundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    boundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.4375, y: 0, z: 0}
+    - {x: 0, y: 1.375, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.4375, y: 0, z: 0}
+    position2: {x: 0, y: 1.375, z: 0}
+    position3: {x: 1.4375, y: 1.375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.32422265, y: 0.007816406}
+    - {x: 0.4140586, y: 0.007816406}
+    - {x: 0.32422265, y: 0.093746096}
+    - {x: 0.4140586, y: 0.093746096}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6842b7323929a34da9091fb3503e042, type: 2}
+    materialId: 0
+    sourceTextureGUID: 4cb5b6f2127218048bd2a00761e2c55c
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: cursebulon_idle_back_left_005
+    boundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    boundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.4375, y: 0, z: 0}
+    - {x: 0, y: 1.375, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.4375, y: 0, z: 0}
+    position2: {x: 0, y: 1.375, z: 0}
+    position3: {x: 1.4375, y: 1.375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.4296914, y: 0.007816406}
+    - {x: 0.5195273, y: 0.007816406}
+    - {x: 0.4296914, y: 0.093746096}
+    - {x: 0.5195273, y: 0.093746096}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6842b7323929a34da9091fb3503e042, type: 2}
+    materialId: 0
+    sourceTextureGUID: 51f2b7a422d749b4d8144c8a88777b45
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: cursebulon_idle_back_left_006
+    boundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    boundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.4375, y: 0, z: 0}
+    - {x: 0, y: 1.375, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.4375, y: 0, z: 0}
+    position2: {x: 0, y: 1.375, z: 0}
+    position3: {x: 1.4375, y: 1.375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.5351602, y: 0.007816406}
+    - {x: 0.62499607, y: 0.007816406}
+    - {x: 0.5351602, y: 0.093746096}
+    - {x: 0.62499607, y: 0.093746096}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6842b7323929a34da9091fb3503e042, type: 2}
+    materialId: 0
+    sourceTextureGUID: 2f691170e8e724644bf4f58ee876d549
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: cursebulon_idle_back_right_001
+    boundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    boundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.4375, y: 0, z: 0}
+    - {x: 0, y: 1.375, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.4375, y: 0, z: 0}
+    position2: {x: 0, y: 1.375, z: 0}
+    position3: {x: 1.4375, y: 1.375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.64062893, y: 0.007816406}
+    - {x: 0.7304648, y: 0.007816406}
+    - {x: 0.64062893, y: 0.093746096}
+    - {x: 0.7304648, y: 0.093746096}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6842b7323929a34da9091fb3503e042, type: 2}
+    materialId: 0
+    sourceTextureGUID: 22d595f5b52fcbe439aa022327a64d6e
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: cursebulon_idle_back_right_002
+    boundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    boundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.4375, y: 0, z: 0}
+    - {x: 0, y: 1.375, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.4375, y: 0, z: 0}
+    position2: {x: 0, y: 1.375, z: 0}
+    position3: {x: 1.4375, y: 1.375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.7460977, y: 0.007816406}
+    - {x: 0.83593357, y: 0.007816406}
+    - {x: 0.7460977, y: 0.093746096}
+    - {x: 0.83593357, y: 0.093746096}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6842b7323929a34da9091fb3503e042, type: 2}
+    materialId: 0
+    sourceTextureGUID: def4431579f960840ab5e73864051ccc
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: cursebulon_idle_back_right_003
+    boundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    boundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.4375, y: 0, z: 0}
+    - {x: 0, y: 1.375, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.4375, y: 0, z: 0}
+    position2: {x: 0, y: 1.375, z: 0}
+    position3: {x: 1.4375, y: 1.375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.85156643, y: 0.007816406}
+    - {x: 0.9414023, y: 0.007816406}
+    - {x: 0.85156643, y: 0.093746096}
+    - {x: 0.9414023, y: 0.093746096}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6842b7323929a34da9091fb3503e042, type: 2}
+    materialId: 0
+    sourceTextureGUID: 068f662df94a8b543bca1c94320efb1b
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: cursebulon_idle_back_right_004
+    boundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    boundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.4375, y: 0, z: 0}
+    - {x: 0, y: 1.375, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.4375, y: 0, z: 0}
+    position2: {x: 0, y: 1.375, z: 0}
+    position3: {x: 1.4375, y: 1.375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.007816406, y: 0.109378904}
+    - {x: 0.007816406, y: 0.19921485}
+    - {x: 0.093746096, y: 0.109378904}
+    - {x: 0.093746096, y: 0.19921485}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6842b7323929a34da9091fb3503e042, type: 2}
+    materialId: 0
+    sourceTextureGUID: 8dc2059d0db21624baca9a09b9e61f39
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: cursebulon_idle_back_right_005
+    boundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    boundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.4375, y: 0, z: 0}
+    - {x: 0, y: 1.375, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.4375, y: 0, z: 0}
+    position2: {x: 0, y: 1.375, z: 0}
+    position3: {x: 1.4375, y: 1.375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.007816406, y: 0.21484765}
+    - {x: 0.007816406, y: 0.3046836}
+    - {x: 0.093746096, y: 0.21484765}
+    - {x: 0.093746096, y: 0.3046836}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6842b7323929a34da9091fb3503e042, type: 2}
+    materialId: 0
+    sourceTextureGUID: ea5d431690803794db10ca5467e3fd15
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: cursebulon_idle_back_right_005 1
+    boundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    boundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.4375, y: 0, z: 0}
+    - {x: 0, y: 1.375, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.4375, y: 0, z: 0}
+    position2: {x: 0, y: 1.375, z: 0}
+    position3: {x: 1.4375, y: 1.375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.007816406, y: 0.21484765}
+    - {x: 0.007816406, y: 0.3046836}
+    - {x: 0.093746096, y: 0.21484765}
+    - {x: 0.093746096, y: 0.3046836}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6842b7323929a34da9091fb3503e042, type: 2}
+    materialId: 0
+    sourceTextureGUID: ea5d431690803794db10ca5467e3fd15
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: cursebulon_idle_front_left_001
+    boundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    boundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.4375, y: 0, z: 0}
+    - {x: 0, y: 1.375, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.4375, y: 0, z: 0}
+    position2: {x: 0, y: 1.375, z: 0}
+    position3: {x: 1.4375, y: 1.375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.007816406, y: 0.3203164}
+    - {x: 0.007816406, y: 0.41015235}
+    - {x: 0.093746096, y: 0.3203164}
+    - {x: 0.093746096, y: 0.41015235}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6842b7323929a34da9091fb3503e042, type: 2}
+    materialId: 0
+    sourceTextureGUID: 40599ec0058112f4d88a45a3f9c1e88d
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: cursebulon_idle_front_left_002
+    boundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    boundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.4375, y: 0, z: 0}
+    - {x: 0, y: 1.375, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.4375, y: 0, z: 0}
+    position2: {x: 0, y: 1.375, z: 0}
+    position3: {x: 1.4375, y: 1.375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.007816406, y: 0.42578515}
+    - {x: 0.007816406, y: 0.51562107}
+    - {x: 0.093746096, y: 0.42578515}
+    - {x: 0.093746096, y: 0.51562107}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6842b7323929a34da9091fb3503e042, type: 2}
+    materialId: 0
+    sourceTextureGUID: d313e90d1e7bc124d8769005e63a10ce
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: cursebulon_idle_front_left_003
+    boundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    boundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.4375, y: 0, z: 0}
+    - {x: 0, y: 1.375, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.4375, y: 0, z: 0}
+    position2: {x: 0, y: 1.375, z: 0}
+    position3: {x: 1.4375, y: 1.375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.007816406, y: 0.53125393}
+    - {x: 0.007816406, y: 0.6210898}
+    - {x: 0.093746096, y: 0.53125393}
+    - {x: 0.093746096, y: 0.6210898}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6842b7323929a34da9091fb3503e042, type: 2}
+    materialId: 0
+    sourceTextureGUID: ef53ca5040baa384a9a9061f105ce2aa
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: cursebulon_idle_front_left_004
+    boundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    boundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.4375, y: 0, z: 0}
+    - {x: 0, y: 1.375, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.4375, y: 0, z: 0}
+    position2: {x: 0, y: 1.375, z: 0}
+    position3: {x: 1.4375, y: 1.375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.007816406, y: 0.6367227}
+    - {x: 0.007816406, y: 0.72655857}
+    - {x: 0.093746096, y: 0.6367227}
+    - {x: 0.093746096, y: 0.72655857}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6842b7323929a34da9091fb3503e042, type: 2}
+    materialId: 0
+    sourceTextureGUID: f9889a1ae8e853841b8a7bf8eef71d92
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: cursebulon_idle_front_left_005
+    boundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    boundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.4375, y: 0, z: 0}
+    - {x: 0, y: 1.375, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.4375, y: 0, z: 0}
+    position2: {x: 0, y: 1.375, z: 0}
+    position3: {x: 1.4375, y: 1.375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.007816406, y: 0.74219143}
+    - {x: 0.007816406, y: 0.8320273}
+    - {x: 0.093746096, y: 0.74219143}
+    - {x: 0.093746096, y: 0.8320273}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6842b7323929a34da9091fb3503e042, type: 2}
+    materialId: 0
+    sourceTextureGUID: 625551393dfaebf46944e28e0e4d7e8a
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: cursebulon_idle_front_left_006
+    boundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    boundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.4375, y: 0, z: 0}
+    - {x: 0, y: 1.375, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.4375, y: 0, z: 0}
+    position2: {x: 0, y: 1.375, z: 0}
+    position3: {x: 1.4375, y: 1.375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.007816406, y: 0.8476602}
+    - {x: 0.007816406, y: 0.93749607}
+    - {x: 0.093746096, y: 0.8476602}
+    - {x: 0.093746096, y: 0.93749607}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6842b7323929a34da9091fb3503e042, type: 2}
+    materialId: 0
+    sourceTextureGUID: 5c201f8b2145d1343939822f3c760e76
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: cursebulon_idle_front_right_001
+    boundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    boundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.4375, y: 0, z: 0}
+    - {x: 0, y: 1.375, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.4375, y: 0, z: 0}
+    position2: {x: 0, y: 1.375, z: 0}
+    position3: {x: 1.4375, y: 1.375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.109378904, y: 0.109378904}
+    - {x: 0.19921485, y: 0.109378904}
+    - {x: 0.109378904, y: 0.1953086}
+    - {x: 0.19921485, y: 0.1953086}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6842b7323929a34da9091fb3503e042, type: 2}
+    materialId: 0
+    sourceTextureGUID: f2567947d6ffc1443ae4f4a31f7fcb21
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: cursebulon_idle_front_right_002
+    boundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    boundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.4375, y: 0, z: 0}
+    - {x: 0, y: 1.375, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.4375, y: 0, z: 0}
+    position2: {x: 0, y: 1.375, z: 0}
+    position3: {x: 1.4375, y: 1.375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.21484765, y: 0.109378904}
+    - {x: 0.3046836, y: 0.109378904}
+    - {x: 0.21484765, y: 0.1953086}
+    - {x: 0.3046836, y: 0.1953086}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6842b7323929a34da9091fb3503e042, type: 2}
+    materialId: 0
+    sourceTextureGUID: a385e0004c58954499a2bfd9413c59d3
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: cursebulon_idle_front_right_003
+    boundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    boundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.4375, y: 0, z: 0}
+    - {x: 0, y: 1.375, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.4375, y: 0, z: 0}
+    position2: {x: 0, y: 1.375, z: 0}
+    position3: {x: 1.4375, y: 1.375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.3203164, y: 0.109378904}
+    - {x: 0.41015235, y: 0.109378904}
+    - {x: 0.3203164, y: 0.1953086}
+    - {x: 0.41015235, y: 0.1953086}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6842b7323929a34da9091fb3503e042, type: 2}
+    materialId: 0
+    sourceTextureGUID: 9873b947fc2d42d45af14ae6409e2c9c
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: cursebulon_idle_front_right_004
+    boundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    boundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.4375, y: 0, z: 0}
+    - {x: 0, y: 1.375, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.4375, y: 0, z: 0}
+    position2: {x: 0, y: 1.375, z: 0}
+    position3: {x: 1.4375, y: 1.375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.42578515, y: 0.109378904}
+    - {x: 0.51562107, y: 0.109378904}
+    - {x: 0.42578515, y: 0.1953086}
+    - {x: 0.51562107, y: 0.1953086}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6842b7323929a34da9091fb3503e042, type: 2}
+    materialId: 0
+    sourceTextureGUID: 4d7fd07d0c63029498e5b93ccb912f94
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: cursebulon_idle_front_right_005
+    boundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    boundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.4375, y: 0, z: 0}
+    - {x: 0, y: 1.375, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.4375, y: 0, z: 0}
+    position2: {x: 0, y: 1.375, z: 0}
+    position3: {x: 1.4375, y: 1.375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.53125393, y: 0.109378904}
+    - {x: 0.6210898, y: 0.109378904}
+    - {x: 0.53125393, y: 0.1953086}
+    - {x: 0.6210898, y: 0.1953086}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6842b7323929a34da9091fb3503e042, type: 2}
+    materialId: 0
+    sourceTextureGUID: 1d1540dbc1ad66e429221227c6d9973b
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: cursebulon_idle_front_right_006
+    boundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    boundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.4375, y: 0, z: 0}
+    - {x: 0, y: 1.375, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.4375, y: 0, z: 0}
+    position2: {x: 0, y: 1.375, z: 0}
+    position3: {x: 1.4375, y: 1.375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.6367227, y: 0.109378904}
+    - {x: 0.72655857, y: 0.109378904}
+    - {x: 0.6367227, y: 0.1953086}
+    - {x: 0.72655857, y: 0.1953086}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6842b7323929a34da9091fb3503e042, type: 2}
+    materialId: 0
+    sourceTextureGUID: a535963887e6d254683fa7413a965009
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: cursebulon_die_left_001
+    boundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    boundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.4375, y: 0, z: 0}
+    - {x: 0, y: 1.375, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.4375, y: 0, z: 0}
+    position2: {x: 0, y: 1.375, z: 0}
+    position3: {x: 1.4375, y: 1.375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.74219143, y: 0.109378904}
+    - {x: 0.8320273, y: 0.109378904}
+    - {x: 0.74219143, y: 0.1953086}
+    - {x: 0.8320273, y: 0.1953086}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6842b7323929a34da9091fb3503e042, type: 2}
+    materialId: 0
+    sourceTextureGUID: 1c1547304e09240408e03eb7c7b21b91
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: cursebulon_die_left_002
+    boundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    boundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.4375, y: 0, z: 0}
+    - {x: 0, y: 1.375, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.4375, y: 0, z: 0}
+    position2: {x: 0, y: 1.375, z: 0}
+    position3: {x: 1.4375, y: 1.375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.8476602, y: 0.109378904}
+    - {x: 0.93749607, y: 0.109378904}
+    - {x: 0.8476602, y: 0.1953086}
+    - {x: 0.93749607, y: 0.1953086}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6842b7323929a34da9091fb3503e042, type: 2}
+    materialId: 0
+    sourceTextureGUID: 31a5800f6950e6945a593efec9bca44a
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: cursebulon_die_left_003
+    boundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    boundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.4375, y: 0, z: 0}
+    - {x: 0, y: 1.375, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.4375, y: 0, z: 0}
+    position2: {x: 0, y: 1.375, z: 0}
+    position3: {x: 1.4375, y: 1.375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.109378904, y: 0.2109414}
+    - {x: 0.109378904, y: 0.30077735}
+    - {x: 0.1953086, y: 0.2109414}
+    - {x: 0.1953086, y: 0.30077735}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6842b7323929a34da9091fb3503e042, type: 2}
+    materialId: 0
+    sourceTextureGUID: 7d171dda98e7f5b449c63bad11fc7cd4
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: cursebulon_die_left_004
+    boundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    boundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.4375, y: 0, z: 0}
+    - {x: 0, y: 1.375, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.4375, y: 0, z: 0}
+    position2: {x: 0, y: 1.375, z: 0}
+    position3: {x: 1.4375, y: 1.375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.109378904, y: 0.31641015}
+    - {x: 0.109378904, y: 0.4062461}
+    - {x: 0.1953086, y: 0.31641015}
+    - {x: 0.1953086, y: 0.4062461}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6842b7323929a34da9091fb3503e042, type: 2}
+    materialId: 0
+    sourceTextureGUID: 352a154240101fa408bdb36592d26956
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: cursebulon_die_left_005
+    boundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    boundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.4375, y: 0, z: 0}
+    - {x: 0, y: 1.375, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.4375, y: 0, z: 0}
+    position2: {x: 0, y: 1.375, z: 0}
+    position3: {x: 1.4375, y: 1.375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.109378904, y: 0.4218789}
+    - {x: 0.109378904, y: 0.5117148}
+    - {x: 0.1953086, y: 0.4218789}
+    - {x: 0.1953086, y: 0.5117148}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6842b7323929a34da9091fb3503e042, type: 2}
+    materialId: 0
+    sourceTextureGUID: e1fdc781b144f8b428ea17d7ce52ce61
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: cursebulon_die_left_006
+    boundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    boundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.4375, y: 0, z: 0}
+    - {x: 0, y: 1.375, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.4375, y: 0, z: 0}
+    position2: {x: 0, y: 1.375, z: 0}
+    position3: {x: 1.4375, y: 1.375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.109378904, y: 0.5273477}
+    - {x: 0.109378904, y: 0.61718357}
+    - {x: 0.1953086, y: 0.5273477}
+    - {x: 0.1953086, y: 0.61718357}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6842b7323929a34da9091fb3503e042, type: 2}
+    materialId: 0
+    sourceTextureGUID: 2c79d01d027e3854083becbf6165c994
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: cursebulon_die_left_007
+    boundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    boundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.4375, y: 0, z: 0}
+    - {x: 0, y: 1.375, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.4375, y: 0, z: 0}
+    position2: {x: 0, y: 1.375, z: 0}
+    position3: {x: 1.4375, y: 1.375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.109378904, y: 0.63281643}
+    - {x: 0.109378904, y: 0.7226523}
+    - {x: 0.1953086, y: 0.63281643}
+    - {x: 0.1953086, y: 0.7226523}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6842b7323929a34da9091fb3503e042, type: 2}
+    materialId: 0
+    sourceTextureGUID: 692787aba452b3d438b53782949f9ffe
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: cursebulon_die_left_008
+    boundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    boundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.4375, y: 0, z: 0}
+    - {x: 0, y: 1.375, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.4375, y: 0, z: 0}
+    position2: {x: 0, y: 1.375, z: 0}
+    position3: {x: 1.4375, y: 1.375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.109378904, y: 0.7382852}
+    - {x: 0.109378904, y: 0.82812107}
+    - {x: 0.1953086, y: 0.7382852}
+    - {x: 0.1953086, y: 0.82812107}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6842b7323929a34da9091fb3503e042, type: 2}
+    materialId: 0
+    sourceTextureGUID: 38a074f161e726f4494446129015335c
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: cursebulon_die_right_001
+    boundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    boundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.4375, y: 0, z: 0}
+    - {x: 0, y: 1.375, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.4375, y: 0, z: 0}
+    position2: {x: 0, y: 1.375, z: 0}
+    position3: {x: 1.4375, y: 1.375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.109378904, y: 0.84375393}
+    - {x: 0.109378904, y: 0.9335898}
+    - {x: 0.1953086, y: 0.84375393}
+    - {x: 0.1953086, y: 0.9335898}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6842b7323929a34da9091fb3503e042, type: 2}
+    materialId: 0
+    sourceTextureGUID: 7965d2fe13f02134ba391878dc236b78
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: cursebulon_die_right_002
+    boundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    boundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.4375, y: 0, z: 0}
+    - {x: 0, y: 1.375, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.4375, y: 0, z: 0}
+    position2: {x: 0, y: 1.375, z: 0}
+    position3: {x: 1.4375, y: 1.375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.2109414, y: 0.2109414}
+    - {x: 0.30077735, y: 0.2109414}
+    - {x: 0.2109414, y: 0.2968711}
+    - {x: 0.30077735, y: 0.2968711}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6842b7323929a34da9091fb3503e042, type: 2}
+    materialId: 0
+    sourceTextureGUID: 536ae2fd4d17d0a4a9c7378d96cae396
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: cursebulon_die_right_003
+    boundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    boundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.4375, y: 0, z: 0}
+    - {x: 0, y: 1.375, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.4375, y: 0, z: 0}
+    position2: {x: 0, y: 1.375, z: 0}
+    position3: {x: 1.4375, y: 1.375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.31641015, y: 0.2109414}
+    - {x: 0.4062461, y: 0.2109414}
+    - {x: 0.31641015, y: 0.2968711}
+    - {x: 0.4062461, y: 0.2968711}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6842b7323929a34da9091fb3503e042, type: 2}
+    materialId: 0
+    sourceTextureGUID: 04064873a33e35746978952c766e219a
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: cursebulon_die_right_004
+    boundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    boundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.4375, y: 0, z: 0}
+    - {x: 0, y: 1.375, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.4375, y: 0, z: 0}
+    position2: {x: 0, y: 1.375, z: 0}
+    position3: {x: 1.4375, y: 1.375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.4218789, y: 0.2109414}
+    - {x: 0.5117148, y: 0.2109414}
+    - {x: 0.4218789, y: 0.2968711}
+    - {x: 0.5117148, y: 0.2968711}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6842b7323929a34da9091fb3503e042, type: 2}
+    materialId: 0
+    sourceTextureGUID: 2ad9dbc49bc5eae46a2ac695e721fea5
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: cursebulon_die_right_005
+    boundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    boundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.4375, y: 0, z: 0}
+    - {x: 0, y: 1.375, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.4375, y: 0, z: 0}
+    position2: {x: 0, y: 1.375, z: 0}
+    position3: {x: 1.4375, y: 1.375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.5273477, y: 0.2109414}
+    - {x: 0.61718357, y: 0.2109414}
+    - {x: 0.5273477, y: 0.2968711}
+    - {x: 0.61718357, y: 0.2968711}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6842b7323929a34da9091fb3503e042, type: 2}
+    materialId: 0
+    sourceTextureGUID: e06a68b4c99ccdd43b1db2d6e8223e89
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: cursebulon_die_right_006
+    boundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    boundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.4375, y: 0, z: 0}
+    - {x: 0, y: 1.375, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.4375, y: 0, z: 0}
+    position2: {x: 0, y: 1.375, z: 0}
+    position3: {x: 1.4375, y: 1.375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.63281643, y: 0.2109414}
+    - {x: 0.7226523, y: 0.2109414}
+    - {x: 0.63281643, y: 0.2968711}
+    - {x: 0.7226523, y: 0.2968711}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6842b7323929a34da9091fb3503e042, type: 2}
+    materialId: 0
+    sourceTextureGUID: b193b8ebfc39e0e4f9bf7d5e2081b0ff
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: cursebulon_die_right_007
+    boundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    boundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.4375, y: 0, z: 0}
+    - {x: 0, y: 1.375, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.4375, y: 0, z: 0}
+    position2: {x: 0, y: 1.375, z: 0}
+    position3: {x: 1.4375, y: 1.375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.7382852, y: 0.2109414}
+    - {x: 0.82812107, y: 0.2109414}
+    - {x: 0.7382852, y: 0.2968711}
+    - {x: 0.82812107, y: 0.2968711}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6842b7323929a34da9091fb3503e042, type: 2}
+    materialId: 0
+    sourceTextureGUID: 7e91d4bc6ef3cef4f819317ed34f9f28
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: cursebulon_die_right_008
+    boundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    boundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.4375, y: 0, z: 0}
+    - {x: 0, y: 1.375, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.4375, y: 0, z: 0}
+    position2: {x: 0, y: 1.375, z: 0}
+    position3: {x: 1.4375, y: 1.375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.84375393, y: 0.2109414}
+    - {x: 0.9335898, y: 0.2109414}
+    - {x: 0.84375393, y: 0.2968711}
+    - {x: 0.9335898, y: 0.2968711}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6842b7323929a34da9091fb3503e042, type: 2}
+    materialId: 0
+    sourceTextureGUID: cc58cb2c05161cc4e88f74a07d09c8ed
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: cursebulon_pitfall_001
+    boundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    boundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.4375, y: 0, z: 0}
+    - {x: 0, y: 1.375, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.4375, y: 0, z: 0}
+    position2: {x: 0, y: 1.375, z: 0}
+    position3: {x: 1.4375, y: 1.375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.2109414, y: 0.3125039}
+    - {x: 0.2109414, y: 0.40233985}
+    - {x: 0.2968711, y: 0.3125039}
+    - {x: 0.2968711, y: 0.40233985}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6842b7323929a34da9091fb3503e042, type: 2}
+    materialId: 0
+    sourceTextureGUID: c6ef3e49c141b7949ab799b92382a2cb
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: cursebulon_pitfall_002
+    boundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    boundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.4375, y: 0, z: 0}
+    - {x: 0, y: 1.375, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.4375, y: 0, z: 0}
+    position2: {x: 0, y: 1.375, z: 0}
+    position3: {x: 1.4375, y: 1.375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.2109414, y: 0.41797265}
+    - {x: 0.2109414, y: 0.50780857}
+    - {x: 0.2968711, y: 0.41797265}
+    - {x: 0.2968711, y: 0.50780857}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6842b7323929a34da9091fb3503e042, type: 2}
+    materialId: 0
+    sourceTextureGUID: afb1dc0484a5af14484225abb63be3b2
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: cursebulon_pitfall_003
+    boundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    boundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.4375, y: 0, z: 0}
+    - {x: 0, y: 1.375, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.4375, y: 0, z: 0}
+    position2: {x: 0, y: 1.375, z: 0}
+    position3: {x: 1.4375, y: 1.375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.2109414, y: 0.52344143}
+    - {x: 0.2109414, y: 0.6132773}
+    - {x: 0.2968711, y: 0.52344143}
+    - {x: 0.2968711, y: 0.6132773}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6842b7323929a34da9091fb3503e042, type: 2}
+    materialId: 0
+    sourceTextureGUID: 044fc34d0c503a54d96f3372898778df
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: cursebulon_pitfall_004
+    boundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    boundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.4375, y: 0, z: 0}
+    - {x: 0, y: 1.375, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.4375, y: 0, z: 0}
+    position2: {x: 0, y: 1.375, z: 0}
+    position3: {x: 1.4375, y: 1.375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.2109414, y: 0.6289102}
+    - {x: 0.2109414, y: 0.71874607}
+    - {x: 0.2968711, y: 0.6289102}
+    - {x: 0.2968711, y: 0.71874607}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6842b7323929a34da9091fb3503e042, type: 2}
+    materialId: 0
+    sourceTextureGUID: 67dd216e996b8ee4892ea47f67fd0ccf
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: cursebulon_pitfall_005
+    boundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.71875, y: 0.6875, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    boundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.71875, y: 0.6875, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 1.375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.4375, y: 0, z: 0}
+    - {x: 0, y: 1.375, z: 0}
+    - {x: 1.4375, y: 1.375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.4375, y: 0, z: 0}
+    position2: {x: 0, y: 1.375, z: 0}
+    position3: {x: 1.4375, y: 1.375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.2109414, y: 0.73437893}
+    - {x: 0.2109414, y: 0.8242148}
+    - {x: 0.2968711, y: 0.73437893}
+    - {x: 0.2968711, y: 0.8242148}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6842b7323929a34da9091fb3503e042, type: 2}
+    materialId: 0
+    sourceTextureGUID: 4245acdd99c6bfa4f909306bc4b34f61
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  premultipliedAlpha: 0
+  material: {fileID: 0}
+  materials:
+  - {fileID: 2100000, guid: c6842b7323929a34da9091fb3503e042, type: 2}
+  textures:
+  - {fileID: 2800000, guid: 3484992b1e0d5d640bcbf1ef3e8c954a, type: 3}
+  pngTextures: []
+  materialPngTextureId: 00000000
+  textureFilterMode: 1
+  textureMipMaps: 0
+  allowMultipleAtlases: 0
+  spriteCollectionGUID: 5c2538d9a518b4443bf9bbf5e4dc4e7b
+  spriteCollectionName: CursebulonCollection
+  assetName: 
+  loadable: 0
+  invOrthoSize: 2
+  halfTargetHeight: 8
+  buildKey: 395353043
+  dataGuid: ff9c8478f774b254b865095df6324fe3
+  managedSpriteCollection: 0
+  hasPlatformData: 0
+  spriteCollectionPlatforms: []
+  spriteCollectionPlatformGUIDs: []

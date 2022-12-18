@@ -453,9 +453,12 @@ public class CustomBeholsterLaserBehavior : BasicAttackBehavior
 			else
             {currentProjectile = aibeamShooter2.beamModule.GetCurrentProjectile();}
 			HealthHaver healthHaver = (!hitRigidbody) ? null : hitRigidbody.healthHaver;
+            
 
 
-			if (hitRigidbody && hitRigidbody.projectile && hitRigidbody.GetComponent<BeholsterBounceRocket>())
+
+
+            if (hitRigidbody && hitRigidbody.projectile && hitRigidbody.GetComponent<BeholsterBounceRocket>())
 			{
 				BounceProjModifier component = hitRigidbody.GetComponent<BounceProjModifier>();
 				if (component)
@@ -464,7 +467,9 @@ public class CustomBeholsterLaserBehavior : BasicAttackBehavior
 				}
 				hitRigidbody.projectile.DieInAir(false, true, true, false);
 			}
-			if (hurtsOtherHealthhavers == true)
+			bool abc = hitRigidbody.GetComponent<PlayerController>() != null && beamCont.HitsPlayers == true;
+
+            if (hurtsOtherHealthhavers == true |beamCont == true)
 			{
                 if (healthHaver != null)
                 {

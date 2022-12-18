@@ -194,7 +194,15 @@ namespace Planetside
             mourningStarComp.CapEndAnimation = hODC.CapEndAnimation;
             mourningStarComp.InitialImpactVFX = hODC.InitialImpactVFX;
             UnityEngine.Object.Destroy(hODC);
+
+
+            var forgeDungeon = DungeonDatabase.GetOrLoadByName("Base_Forge");
+            hellDragController = forgeDungeon.PatternSettings.flows[0].AllNodes.Where(node => node.overrideExactRoom != null && node.overrideExactRoom.name.Contains("EndTimes")).First().overrideExactRoom.placedObjects.Where(ppod => ppod != null && ppod.nonenemyBehaviour != null).First().nonenemyBehaviour.gameObject.GetComponentsInChildren<HellDragZoneController>()[0];
+            forgeDungeon = null;
+
         }
+
+
 
         public class MourningStarVFXController : BraveBehaviour
         {
@@ -402,7 +410,8 @@ namespace Planetside
 
 
         public static GameObject JammedDeathVFX;
-        
+
+        public static HellDragZoneController hellDragController;
 
     }
 }

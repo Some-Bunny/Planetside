@@ -181,8 +181,10 @@ namespace Planetside
                     AkSoundEngine.PostEvent("Play_WPN_Life_Orb_Capture_01", player.gameObject);
 
                     Gun gungeon = player.CurrentGun;
-                    int amo = Mathf.Max((int)(gungeon.AdjustedMaxAmmo * 0.75f), 1);
-                    gungeon.SetBaseMaxAmmo(amo);
+
+                    //int amo = Mathf.Max((int)(gungeon.AdjustedMaxAmmo * 0.75f), 1);
+                    //gungeon.SetBaseMaxAmmo(amo);
+
                     AdvancedHoveringGunProcessor DroneHover = gungeon.gameObject.AddComponent<AdvancedHoveringGunProcessor>();
                     DroneHover.Activate = true;
                     DroneHover.ConsumesTargetGunAmmo = true;
@@ -194,7 +196,7 @@ namespace Planetside
                     DroneHover.FireCooldown = player.CurrentGun.DefaultModule != null ? player.CurrentGun.DefaultModule.cooldownTime * 0.85f : 0.1f;
                     DroneHover.FireDuration = 0.1f;
                     DroneHover.NumToTrigger = 1;
-                    gungeon.ammo = Mathf.Max(gungeon.ammo, gungeon.AdjustedMaxAmmo);
+                    //gungeon.ammo = Mathf.Max(gungeon.ammo, gungeon.AdjustedMaxAmmo);
                     b = true;
                 }
             }

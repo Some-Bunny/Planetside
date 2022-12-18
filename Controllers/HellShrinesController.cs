@@ -66,6 +66,7 @@ namespace Planetside
 
         private void StartHandleShrineSpawns()
         {
+            if (GameStatsManager.Instance.GetFlag(GungeonFlags.BOSSKILLED_LICH) == false) { return; }
             if (GameManager.Instance.Dungeon.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.HELLGEON)
             {
                 try

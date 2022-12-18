@@ -18,8 +18,8 @@ namespace Planetside
         public void Start()
         {
             bodyPartController = this.GetComponent<AdvancedBodyPartController>();
-            bodyPartController.healthHaver.SetHealthMaximum(45);
-            bodyPartController.healthHaver.ForceSetCurrentHealth(45);
+            bodyPartController.healthHaver.SetHealthMaximum(50);
+            bodyPartController.healthHaver.ForceSetCurrentHealth(50);
             bodyPartController.OnBodyPartPreDeath += (obj1, obj2, obj3) =>
             {
                 var l = bodyPartController.MainBody.gameObject.GetComponent<Ophanaim.EyeEnemyBehavior>().eyes;
@@ -29,7 +29,7 @@ namespace Planetside
                 Destroy(onnn, 1.5f);
             };
 
-            GlobalMessageRadio.RegisterObjectToRadio(this.gameObject, new List<string>() { "eye_gun_laser", "eye_gun_simple", "eye_gun_predict", "eye_shot_hide", "eye_shot_appear" }, OnMessageRecieved);
+            GlobalMessageRadio.RegisterObjectToRadio(this.gameObject, new List<string>() { "eye_gun_laser", "eye_gun_simple", "eye_gun_predict", "eye_shot_hide", "eye_shot_appear", "eye_gun_laser_blue", "eye_gun_simple_blue", "eye_gun_predict_blue" }, OnMessageRecieved);
             SpriteOutlineManager.AddOutlineToSprite(this.sprite, new Color(10f, 10f, 10f), 0.1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
         }
 
@@ -68,7 +68,7 @@ namespace Planetside
         }
         public void OnMessageRecieved(GameObject obj, string message)
         {
-            if (message.Contains("eye_gun_"))
+           if (message.Contains("eye_gun_"))
             {
                 base.sprite.IsOutlineSprite = false;
                 BulletScriptSource bulletScriptSource = gameObject.GetOrAddComponent<BulletScriptSource>();
@@ -76,6 +76,8 @@ namespace Planetside
                 bulletScriptSource.BulletScript = ReturnScript(message);
                 bulletScriptSource.Initialize();
             }
+
+
             if (message == "eye_shot_hide")
             {
                 DoPoof();
@@ -97,30 +99,74 @@ namespace Planetside
 
         public static CustomBulletScriptSelector ReturnScript(string s)
         {
-            if (s == "eye_gun_laser") { return new CustomBulletScriptSelector(typeof(MinionShot)); }
-            if (s == "eye_gun_simple") { return new CustomBulletScriptSelector(typeof(Shot)); }
-            if (s == "eye_gun_predict") { return new CustomBulletScriptSelector(typeof(MinionShotPredictive)); }
+
+            if (s == "eye_gun_laser_blue") { return new CustomBulletScriptSelector(typeof(MinionShotBlue)); }
+            if (s == ("eye_gun_simple_blue")) { return new CustomBulletScriptSelector(typeof(ShotBlue)); }
+            if (s == ("eye_gun_predict_blue")) { return new CustomBulletScriptSelector(typeof(MinionShotPredictiveBlue)); }
+
+            if (s == ("eye_gun_laser")) { return new CustomBulletScriptSelector(typeof(MinionShot)); }
+            if (s == ("eye_gun_simple")) { return  new CustomBulletScriptSelector(typeof(Shot)); }
+            if (s == ("eye_gun_predict")) { return new CustomBulletScriptSelector(typeof(MinionShotPredictive)); }
 
             return new CustomBulletScriptSelector(typeof(MinionShot));
         }
         public AdvancedBodyPartController bodyPartController;
     }
 
+
+    public class ShotBlue : Shot {
+        public override bool IsBlue
+        {
+            get
+            {
+                return true;
+            }
+        }
+    }
+
     public class Shot : Script
     {
+        public virtual bool IsBlue
+        {
+            get
+            {
+                return false;
+            }
+        }
         protected override IEnumerator Top()
         {
             float r = BraveUtility.RandomAngle();
             for (int i =0; i < 4;i++)
             {
-                base.Fire(Offset.OverridePosition(this.BulletBank.GetComponent<tk2dBaseSprite>().WorldCenter), new Direction(r + (90*i), DirectionType.Absolute, -1f), new Speed(3f, SpeedType.Absolute), new SpeedChangingBullet("frogger", 15, 120));
+                string s = IsBlue == true ? StaticUndodgeableBulletEntries.UndodgeableFrogger.Name : "frogger";
+
+                base.Fire(Offset.OverridePosition(this.BulletBank.GetComponent<tk2dBaseSprite>().WorldCenter), new Direction(r + (90*i), DirectionType.Absolute, -1f), new Speed(3f, SpeedType.Absolute), new SpeedChangingBullet(s, 15, 120));
             }
             yield break;
         }
     }
 
+    public class MinionShotBlue : MinionShot
+    {
+        public override bool IsBlue
+        {
+            get
+            {
+                return true;
+            }
+        }
+    }
+
     public class MinionShot : Script
     {
+        public virtual bool IsBlue
+        {
+            get
+            {
+                return false;
+            }
+        }
+
         protected override IEnumerator Top()
         {
             float Angle = base.AimDirection;
@@ -132,7 +178,7 @@ namespace Planetside
             component2.dimensions = new Vector2(1000f, 1f);
             component2.UpdateZDepth();
             component2.HeightOffGround = -2;
-            Color laser = new Color(1, 0.85f, 0.7f);
+            Color laser = IsBlue == true ? new Color(0, 0.25f, 1f) : new Color(1, 0.85f, 0.7f);
             component2.sprite.usesOverrideMaterial = true;
             component2.sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
             component2.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
@@ -153,6 +199,16 @@ namespace Planetside
             while (elapsed < Time)
             {
                 float t = (float)elapsed / (float)Time;
+                if (this == null)
+                {
+                    UnityEngine.Object.Destroy(tiledspriteObject.gameObject);
+                    yield break;
+                }
+                if (this.BulletBank == null)
+                {
+                    UnityEngine.Object.Destroy(tiledspriteObject.gameObject);
+                    yield break; 
+                }
                 if (parent.IsEnded || parent.Destroyed)
                 {
                     UnityEngine.Object.Destroy(tiledspriteObject.gameObject);
@@ -184,6 +240,16 @@ namespace Planetside
             Time = 0.5f;
             while (elapsed < Time)
             {
+                if (this == null)
+                {
+                    UnityEngine.Object.Destroy(tiledspriteObject.gameObject);
+                    yield break;
+                }
+                if (this.BulletBank == null)
+                {
+                    UnityEngine.Object.Destroy(tiledspriteObject.gameObject);
+                    yield break;
+                }
                 if (parent.IsEnded || parent.Destroyed)
                 {
                     UnityEngine.Object.Destroy(tiledspriteObject.gameObject);
@@ -211,17 +277,37 @@ namespace Planetside
 
             if (base.BulletBank != null)
             {
+                string s = IsBlue == true ? StaticUndodgeableBulletEntries.UndodgeableFrogger.Name : "frogger";
+
                 base.PostWwiseEvent("Play_BOSS_doormimic_blast_01", null);
-                base.Fire(Offset.OverridePosition(this.BulletBank.sprite.WorldCenter), new Direction(Angle, DirectionType.Absolute, -1f), new Speed(5f, SpeedType.Absolute), new SpeedChangingBullet("frogger", 25, 90));
-                base.Fire(Offset.OverridePosition(this.BulletBank.sprite.WorldCenter), new Direction(Angle, DirectionType.Absolute, -1f), new Speed(7f, SpeedType.Absolute), new SpeedChangingBullet("frogger", 25, 90));
-                base.Fire(Offset.OverridePosition(this.BulletBank.sprite.WorldCenter),new Direction(Angle, DirectionType.Absolute, -1f), new Speed(9f, SpeedType.Absolute), new SpeedChangingBullet("frogger", 25, 90));
+                base.Fire(Offset.OverridePosition(this.BulletBank.sprite.WorldCenter), new Direction(Angle, DirectionType.Absolute, -1f), new Speed(5f, SpeedType.Absolute), new SpeedChangingBullet(s, 25, 90));
+                base.Fire(Offset.OverridePosition(this.BulletBank.sprite.WorldCenter), new Direction(Angle, DirectionType.Absolute, -1f), new Speed(7f, SpeedType.Absolute), new SpeedChangingBullet(s, 25, 90));
+                base.Fire(Offset.OverridePosition(this.BulletBank.sprite.WorldCenter),new Direction(Angle, DirectionType.Absolute, -1f), new Speed(9f, SpeedType.Absolute), new SpeedChangingBullet(s, 25, 90));
             }
             yield break;
         }
     }
 
+    public class MinionShotPredictiveBlue : MinionShotPredictive {
+        public override bool IsBlue
+        {
+            get
+            {
+                return true;
+            }
+        }
+    }
+
     public class MinionShotPredictive : Script
     {
+        public virtual bool IsBlue
+        {
+            get
+            {
+                return false;
+            }
+        }
+
         protected override IEnumerator Top()
         {
             float Angle = base.AimDirection;
@@ -233,7 +319,7 @@ namespace Planetside
             component2.dimensions = new Vector2(1000f, 1f);
             component2.UpdateZDepth();
             component2.HeightOffGround = -2;
-            Color laser = new Color(1, 0.85f, 0.7f);
+            Color laser =  IsBlue == true ? new Color(0, 0.25f, 1f) : new Color(1, 0.85f, 0.7f);
             component2.sprite.usesOverrideMaterial = true;
             component2.sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
             component2.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
@@ -257,6 +343,16 @@ namespace Planetside
             {
 
                 float t = (float)elapsed / (float)Time;
+                if (this == null)
+                {
+                    UnityEngine.Object.Destroy(tiledspriteObject.gameObject);
+                    yield break;
+                }
+                if (this.BulletBank == null)
+                {
+                    UnityEngine.Object.Destroy(tiledspriteObject.gameObject);
+                    yield break;
+                }
                 if (parent.IsEnded || parent.Destroyed)
                 {
                     UnityEngine.Object.Destroy(tiledspriteObject.gameObject);
@@ -291,6 +387,16 @@ namespace Planetside
             Time = 0.5f;
             while (elapsed < Time)
             {
+                if (this == null)
+                {
+                    UnityEngine.Object.Destroy(tiledspriteObject.gameObject);
+                    yield break;
+                }
+                if (this.BulletBank == null)
+                {
+                    UnityEngine.Object.Destroy(tiledspriteObject.gameObject);
+                    yield break;
+                }
                 if (parent.IsEnded || parent.Destroyed)
                 {
                     UnityEngine.Object.Destroy(tiledspriteObject.gameObject);
@@ -320,9 +426,11 @@ namespace Planetside
             if (base.BulletBank != null)
             {
                 base.PostWwiseEvent("Play_BOSS_doormimic_blast_01", null);
-                base.Fire(Offset.OverridePosition(this.BulletBank.sprite.WorldCenter), new Direction(f, DirectionType.Absolute, -1f), new Speed(7f, SpeedType.Absolute), new SpeedChangingBullet("frogger", 25, 60));
-                base.Fire(Offset.OverridePosition(this.BulletBank.sprite.WorldCenter), new Direction(f, DirectionType.Absolute, -1f), new Speed(8f, SpeedType.Absolute), new SpeedChangingBullet("frogger", 25, 60));
-                base.Fire(Offset.OverridePosition(this.BulletBank.sprite.WorldCenter), new Direction(f, DirectionType.Absolute, -1f), new Speed(9f, SpeedType.Absolute), new SpeedChangingBullet("frogger", 25, 60));
+                string s = IsBlue == true ? StaticUndodgeableBulletEntries.UndodgeableFrogger.Name : "frogger";
+
+                base.Fire(Offset.OverridePosition(this.BulletBank.sprite.WorldCenter), new Direction(f, DirectionType.Absolute, -1f), new Speed(7f, SpeedType.Absolute), new SpeedChangingBullet(s, 25, 60));
+                base.Fire(Offset.OverridePosition(this.BulletBank.sprite.WorldCenter), new Direction(f, DirectionType.Absolute, -1f), new Speed(8f, SpeedType.Absolute), new SpeedChangingBullet(s, 25, 60));
+                base.Fire(Offset.OverridePosition(this.BulletBank.sprite.WorldCenter), new Direction(f, DirectionType.Absolute, -1f), new Speed(9f, SpeedType.Absolute), new SpeedChangingBullet(s, 25, 60));
             }
             yield break;
         }

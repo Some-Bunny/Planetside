@@ -1,0 +1,5552 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1682162639088562}
+  m_IsPrefabParent: 1
+--- !u!1 &1682162639088562
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4225978142000292}
+  - component: {fileID: 114088018437002736}
+  m_Layer: 0
+  m_Name: JammedGuardianCollection
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4225978142000292
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1682162639088562}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114088018437002736
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1682162639088562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b03b1445062e71c4ca60f92cbd330aff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 3
+  materialIdsValid: 1
+  needMaterialInstance: 0
+  spriteDefinitions:
+  - name: stevelord_idle_left_001
+    boundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    boundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    boundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.75, y: 0, z: 0}
+    - {x: 0, y: 2.625, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.75, y: 0, z: 0}
+    position2: {x: 0, y: 2.625, z: 0}
+    position3: {x: 2.75, y: 2.625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.70117384, y: 0.20312695}
+    - {x: 0.7871074, y: 0.20312695}
+    - {x: 0.70117384, y: 0.28515428}
+    - {x: 0.7871074, y: 0.28515428}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 429a359991570b141999a0a1fe8f3bbb
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_idle_left_002
+    boundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    boundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    boundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.75, y: 0, z: 0}
+    - {x: 0, y: 2.625, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.75, y: 0, z: 0}
+    position2: {x: 0, y: 2.625, z: 0}
+    position3: {x: 2.75, y: 2.625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.79492384, y: 0.20312695}
+    - {x: 0.8808574, y: 0.20312695}
+    - {x: 0.79492384, y: 0.28515428}
+    - {x: 0.8808574, y: 0.28515428}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: e1c623b741f136345855f914609d718d
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_idle_left_003
+    boundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    boundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    boundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.75, y: 0, z: 0}
+    - {x: 0, y: 2.625, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.75, y: 0, z: 0}
+    position2: {x: 0, y: 2.625, z: 0}
+    position3: {x: 2.75, y: 2.625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.88867384, y: 0.20312695}
+    - {x: 0.9746074, y: 0.20312695}
+    - {x: 0.88867384, y: 0.28515428}
+    - {x: 0.9746074, y: 0.28515428}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 7a25fe9cf61ac9f408a2f7378c084e95
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_idle_left_004
+    boundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    boundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    boundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.75, y: 0, z: 0}
+    - {x: 0, y: 2.625, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.75, y: 0, z: 0}
+    position2: {x: 0, y: 2.625, z: 0}
+    position3: {x: 2.75, y: 2.625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.70117384, y: 0.29297072}
+    - {x: 0.7871074, y: 0.29297072}
+    - {x: 0.70117384, y: 0.37499803}
+    - {x: 0.7871074, y: 0.37499803}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: ea7c4cabac4f23649835f2e75e8e261e
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_idle_left_005
+    boundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    boundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    boundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.75, y: 0, z: 0}
+    - {x: 0, y: 2.625, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.75, y: 0, z: 0}
+    position2: {x: 0, y: 2.625, z: 0}
+    position3: {x: 2.75, y: 2.625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.79492384, y: 0.29297072}
+    - {x: 0.8808574, y: 0.29297072}
+    - {x: 0.79492384, y: 0.37499803}
+    - {x: 0.8808574, y: 0.37499803}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: bd8fea9521ef6414b8d4fe3def44fb12
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_idle_left_006
+    boundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    boundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    boundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.75, y: 0, z: 0}
+    - {x: 0, y: 2.625, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.75, y: 0, z: 0}
+    position2: {x: 0, y: 2.625, z: 0}
+    position3: {x: 2.75, y: 2.625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.88867384, y: 0.29297072}
+    - {x: 0.9746074, y: 0.29297072}
+    - {x: 0.88867384, y: 0.37499803}
+    - {x: 0.9746074, y: 0.37499803}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: ca8f9d3bf48d7ee4a9b91a4e5429abbc
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_idle_right_001
+    boundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    boundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    boundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.75, y: 0, z: 0}
+    - {x: 0, y: 2.625, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.75, y: 0, z: 0}
+    position2: {x: 0, y: 2.625, z: 0}
+    position3: {x: 2.75, y: 2.625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.30273634, y: 0.30273634}
+    - {x: 0.3886699, y: 0.30273634}
+    - {x: 0.30273634, y: 0.38476366}
+    - {x: 0.3886699, y: 0.38476366}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: d18c13fde10059845a16e68518dbe223
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_idle_right_002
+    boundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    boundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    boundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.75, y: 0, z: 0}
+    - {x: 0, y: 2.625, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.75, y: 0, z: 0}
+    position2: {x: 0, y: 2.625, z: 0}
+    position3: {x: 2.75, y: 2.625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.39648634, y: 0.30273634}
+    - {x: 0.4824199, y: 0.30273634}
+    - {x: 0.39648634, y: 0.38476366}
+    - {x: 0.4824199, y: 0.38476366}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 0a02dfb8dd9370f43940a8f6d1f9a27c
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_idle_right_003
+    boundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    boundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    boundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.75, y: 0, z: 0}
+    - {x: 0, y: 2.625, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.75, y: 0, z: 0}
+    position2: {x: 0, y: 2.625, z: 0}
+    position3: {x: 2.75, y: 2.625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.49023634, y: 0.30273634}
+    - {x: 0.5761699, y: 0.30273634}
+    - {x: 0.49023634, y: 0.38476366}
+    - {x: 0.5761699, y: 0.38476366}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 246ce0f1ccdcc8942a19febb8511c4f4
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_idle_right_004
+    boundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    boundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    boundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.75, y: 0, z: 0}
+    - {x: 0, y: 2.625, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.75, y: 0, z: 0}
+    position2: {x: 0, y: 2.625, z: 0}
+    position3: {x: 2.75, y: 2.625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.58398634, y: 0.30273634}
+    - {x: 0.6699199, y: 0.30273634}
+    - {x: 0.58398634, y: 0.38476366}
+    - {x: 0.6699199, y: 0.38476366}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: cac742ab887bd054fbb167b3d4ba21e0
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_idle_right_005
+    boundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    boundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    boundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.75, y: 0, z: 0}
+    - {x: 0, y: 2.625, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.75, y: 0, z: 0}
+    position2: {x: 0, y: 2.625, z: 0}
+    position3: {x: 2.75, y: 2.625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.67773634, y: 0.38281447}
+    - {x: 0.7636699, y: 0.38281447}
+    - {x: 0.67773634, y: 0.46484178}
+    - {x: 0.7636699, y: 0.46484178}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: bd33fd2449d926d408c5563d2f4e6119
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_idle_right_006
+    boundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    boundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    boundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.75, y: 0, z: 0}
+    - {x: 0, y: 2.625, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.75, y: 0, z: 0}
+    position2: {x: 0, y: 2.625, z: 0}
+    position3: {x: 2.75, y: 2.625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.77148634, y: 0.38281447}
+    - {x: 0.8574199, y: 0.38281447}
+    - {x: 0.77148634, y: 0.46484178}
+    - {x: 0.8574199, y: 0.46484178}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 1c95358cc9f91cf488c7e5fc01155a94
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_attack_left_001
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.003908203, y: 0.003908203}
+    - {x: 0.09570117, y: 0.003908203}
+    - {x: 0.003908203, y: 0.09570117}
+    - {x: 0.09570117, y: 0.09570117}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: cc87f98002bd0c34b9b4df50647fecc3
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_attack_left_002
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.003908203, y: 0.10351758}
+    - {x: 0.09570117, y: 0.10351758}
+    - {x: 0.003908203, y: 0.19531055}
+    - {x: 0.09570117, y: 0.19531055}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: c2c054cb48beb884aa4c12d5571effe9
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_attack_left_003
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.003908203, y: 0.20312695}
+    - {x: 0.09570117, y: 0.20312695}
+    - {x: 0.003908203, y: 0.2949199}
+    - {x: 0.09570117, y: 0.2949199}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 70aa990fd2326d942bce805dc3358528
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_attack_left_004
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.003908203, y: 0.30273634}
+    - {x: 0.09570117, y: 0.30273634}
+    - {x: 0.003908203, y: 0.39452928}
+    - {x: 0.09570117, y: 0.39452928}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: c172d0713c9f1644eb7cc6eea63c57fe
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_attack_left_005
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.003908203, y: 0.40234572}
+    - {x: 0.09570117, y: 0.40234572}
+    - {x: 0.003908203, y: 0.49413866}
+    - {x: 0.09570117, y: 0.49413866}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 625be5de57d9dcf448a0b756234d020a
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_attack_left_006
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.003908203, y: 0.5019551}
+    - {x: 0.09570117, y: 0.5019551}
+    - {x: 0.003908203, y: 0.59374803}
+    - {x: 0.09570117, y: 0.59374803}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 2f2185ab971137842bc2951fa1960275
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_attack_left_007
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.003908203, y: 0.60156447}
+    - {x: 0.09570117, y: 0.60156447}
+    - {x: 0.003908203, y: 0.6933574}
+    - {x: 0.09570117, y: 0.6933574}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 08505207ea2f68f4c98be73563bc11c4
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_attack_right_001
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.003908203, y: 0.70117384}
+    - {x: 0.09570117, y: 0.70117384}
+    - {x: 0.003908203, y: 0.7929668}
+    - {x: 0.09570117, y: 0.7929668}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 957e1670b45cd3b41a2126d1c671c642
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_attack_right_002
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.003908203, y: 0.8007832}
+    - {x: 0.09570117, y: 0.8007832}
+    - {x: 0.003908203, y: 0.89257616}
+    - {x: 0.09570117, y: 0.89257616}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 79bcb83b06aad1547ba71299c4530ce9
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_attack_right_003
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.003908203, y: 0.9003926}
+    - {x: 0.09570117, y: 0.9003926}
+    - {x: 0.003908203, y: 0.99218553}
+    - {x: 0.09570117, y: 0.99218553}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: df37be9dff76fcf46880125450deea95
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_attack_right_004
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.10351758, y: 0.003908203}
+    - {x: 0.19531055, y: 0.003908203}
+    - {x: 0.10351758, y: 0.09570117}
+    - {x: 0.19531055, y: 0.09570117}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 710e78bd97e8836468f066d0f571d068
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_attack_right_005
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.20312695, y: 0.003908203}
+    - {x: 0.2949199, y: 0.003908203}
+    - {x: 0.20312695, y: 0.09570117}
+    - {x: 0.2949199, y: 0.09570117}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 115370692bfccd74aa02056d6b22d22b
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_attack_right_006
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.30273634, y: 0.003908203}
+    - {x: 0.39452928, y: 0.003908203}
+    - {x: 0.30273634, y: 0.09570117}
+    - {x: 0.39452928, y: 0.09570117}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 182d34437a876264986df317dd6fd35f
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_attack_right_007
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.40234572, y: 0.003908203}
+    - {x: 0.49413866, y: 0.003908203}
+    - {x: 0.40234572, y: 0.09570117}
+    - {x: 0.49413866, y: 0.09570117}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 9179c6cc7f01db546ab3eec2ac107767
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_death_left_001
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.003908203, y: 0.003908203}
+    - {x: 0.09570117, y: 0.003908203}
+    - {x: 0.003908203, y: 0.09570117}
+    - {x: 0.09570117, y: 0.09570117}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: f6612eff94e5a4240b2544a3e7d80b06
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_death_left_002
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.5019551, y: 0.003908203}
+    - {x: 0.59374803, y: 0.003908203}
+    - {x: 0.5019551, y: 0.09570117}
+    - {x: 0.59374803, y: 0.09570117}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 674528650d583944585864e0b0d1107e
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_death_left_003
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.60156447, y: 0.003908203}
+    - {x: 0.6933574, y: 0.003908203}
+    - {x: 0.60156447, y: 0.09570117}
+    - {x: 0.6933574, y: 0.09570117}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 80d62a43a36076a4db5c619d91ca6b00
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_death_left_004
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.70117384, y: 0.003908203}
+    - {x: 0.7929668, y: 0.003908203}
+    - {x: 0.70117384, y: 0.09570117}
+    - {x: 0.7929668, y: 0.09570117}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: ddf80b3de192b824296ad4e03b4e7e18
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_death_left_005
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.8007832, y: 0.003908203}
+    - {x: 0.89257616, y: 0.003908203}
+    - {x: 0.8007832, y: 0.09570117}
+    - {x: 0.89257616, y: 0.09570117}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: efd44b163f82277468d28f3b29a7ab78
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_death_left_006
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.9003926, y: 0.003908203}
+    - {x: 0.99218553, y: 0.003908203}
+    - {x: 0.9003926, y: 0.09570117}
+    - {x: 0.99218553, y: 0.09570117}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 0c11b42740e3159428b0abcb2901a2ec
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_death_left_007
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.10351758, y: 0.10351758}
+    - {x: 0.19531055, y: 0.10351758}
+    - {x: 0.10351758, y: 0.19531055}
+    - {x: 0.19531055, y: 0.19531055}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: f087ec11a8a24b94480eb1901f80dc2b
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_death_left_008
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.10351758, y: 0.20312695}
+    - {x: 0.19531055, y: 0.20312695}
+    - {x: 0.10351758, y: 0.2949199}
+    - {x: 0.19531055, y: 0.2949199}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 1438b3e5041483440b991afb6bea35d0
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_death_right_001
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.003908203, y: 0.70117384}
+    - {x: 0.09570117, y: 0.70117384}
+    - {x: 0.003908203, y: 0.7929668}
+    - {x: 0.09570117, y: 0.7929668}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 66be12e5a87e69f4a8e1675413ce79ea
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_death_right_002
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.10351758, y: 0.30273634}
+    - {x: 0.19531055, y: 0.30273634}
+    - {x: 0.10351758, y: 0.39452928}
+    - {x: 0.19531055, y: 0.39452928}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 58161737ee0e5f1489d3fe08efac54cb
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_death_right_003
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.10351758, y: 0.40234572}
+    - {x: 0.19531055, y: 0.40234572}
+    - {x: 0.10351758, y: 0.49413866}
+    - {x: 0.19531055, y: 0.49413866}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 60c0b99858748b346beab28fd033572a
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_death_right_004
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.10351758, y: 0.5019551}
+    - {x: 0.19531055, y: 0.5019551}
+    - {x: 0.10351758, y: 0.59374803}
+    - {x: 0.19531055, y: 0.59374803}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 5c2c6a770ecfb0746a8cd483a655c3a8
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_death_right_005
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.10351758, y: 0.60156447}
+    - {x: 0.19531055, y: 0.60156447}
+    - {x: 0.10351758, y: 0.6933574}
+    - {x: 0.19531055, y: 0.6933574}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 73d78b48c8c0207448c072535ef99095
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_death_right_006
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.10351758, y: 0.70117384}
+    - {x: 0.19531055, y: 0.70117384}
+    - {x: 0.10351758, y: 0.7929668}
+    - {x: 0.19531055, y: 0.7929668}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 3411d880e0d7c4943973eceda890f756
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_death_right_007
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.10351758, y: 0.8007832}
+    - {x: 0.19531055, y: 0.8007832}
+    - {x: 0.10351758, y: 0.89257616}
+    - {x: 0.19531055, y: 0.89257616}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 95c028680741c3e43935722eb7a6a7e1
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_death_right_008
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.10351758, y: 0.9003926}
+    - {x: 0.19531055, y: 0.9003926}
+    - {x: 0.10351758, y: 0.99218553}
+    - {x: 0.19531055, y: 0.99218553}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: cdf6d8e26e24def449bd041484f84716
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_shootwitharm_left_001
+    boundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    boundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    boundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.75, y: 0, z: 0}
+    - {x: 0, y: 2.625, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.75, y: 0, z: 0}
+    position2: {x: 0, y: 2.625, z: 0}
+    position3: {x: 2.75, y: 2.625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.70117384, y: 0.20312695}
+    - {x: 0.7871074, y: 0.20312695}
+    - {x: 0.70117384, y: 0.28515428}
+    - {x: 0.7871074, y: 0.28515428}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 407c586572d5ba04894d8e5ff8579841
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_shootwitharm_left_002
+    boundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    boundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    boundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.75, y: 0, z: 0}
+    - {x: 0, y: 2.625, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.75, y: 0, z: 0}
+    position2: {x: 0, y: 2.625, z: 0}
+    position3: {x: 2.75, y: 2.625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.86523634, y: 0.38281447}
+    - {x: 0.9511699, y: 0.38281447}
+    - {x: 0.86523634, y: 0.46484178}
+    - {x: 0.9511699, y: 0.46484178}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 6e7510fb12ed91849b830d1de658a2d5
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_shootwitharm_left_003
+    boundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    boundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    boundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.75, y: 0, z: 0}
+    - {x: 0, y: 2.625, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.75, y: 0, z: 0}
+    position2: {x: 0, y: 2.625, z: 0}
+    position3: {x: 2.75, y: 2.625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.30273634, y: 0.3925801}
+    - {x: 0.3886699, y: 0.3925801}
+    - {x: 0.30273634, y: 0.4746074}
+    - {x: 0.3886699, y: 0.4746074}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: b6363a1eda952804c933a36ec75cc13f
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_shootwitharm_left_004
+    boundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    boundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    boundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.75, y: 0, z: 0}
+    - {x: 0, y: 2.625, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.75, y: 0, z: 0}
+    position2: {x: 0, y: 2.625, z: 0}
+    position3: {x: 2.75, y: 2.625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.39648634, y: 0.3925801}
+    - {x: 0.4824199, y: 0.3925801}
+    - {x: 0.39648634, y: 0.4746074}
+    - {x: 0.4824199, y: 0.4746074}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: eae6da0d2dbc8264aa23bbbec28b4867
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_shootwitharm_right_001
+    boundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    boundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    boundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.75, y: 0, z: 0}
+    - {x: 0, y: 2.625, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.75, y: 0, z: 0}
+    position2: {x: 0, y: 2.625, z: 0}
+    position3: {x: 2.75, y: 2.625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.30273634, y: 0.30273634}
+    - {x: 0.3886699, y: 0.30273634}
+    - {x: 0.30273634, y: 0.38476366}
+    - {x: 0.3886699, y: 0.38476366}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: a4d7e695a337fce44a0e194b2a499ac7
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_shootwitharm_right_002
+    boundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    boundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    boundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.75, y: 0, z: 0}
+    - {x: 0, y: 2.625, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.75, y: 0, z: 0}
+    position2: {x: 0, y: 2.625, z: 0}
+    position3: {x: 2.75, y: 2.625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.49023634, y: 0.3925801}
+    - {x: 0.5761699, y: 0.3925801}
+    - {x: 0.49023634, y: 0.4746074}
+    - {x: 0.5761699, y: 0.4746074}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 433e5cbfc72b31443b7da751d4e611f6
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_shootwitharm_right_003
+    boundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    boundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    boundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.75, y: 0, z: 0}
+    - {x: 0, y: 2.625, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.75, y: 0, z: 0}
+    position2: {x: 0, y: 2.625, z: 0}
+    position3: {x: 2.75, y: 2.625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.58398634, y: 0.3925801}
+    - {x: 0.6699199, y: 0.3925801}
+    - {x: 0.58398634, y: 0.4746074}
+    - {x: 0.6699199, y: 0.4746074}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 0a511c936bc60b741ad10cd39943097e
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_shootwitharm_right_004
+    boundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    boundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    boundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.75, y: 0, z: 0}
+    - {x: 0, y: 2.625, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.75, y: 0, z: 0}
+    position2: {x: 0, y: 2.625, z: 0}
+    position3: {x: 2.75, y: 2.625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.67773634, y: 0.47265822}
+    - {x: 0.7636699, y: 0.47265822}
+    - {x: 0.67773634, y: 0.55468553}
+    - {x: 0.7636699, y: 0.55468553}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 8432cc3e78561c741a59184ec6f133e2
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_shooty_left_001
+    boundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    boundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    boundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.75, y: 0, z: 0}
+    - {x: 0, y: 2.625, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.75, y: 0, z: 0}
+    position2: {x: 0, y: 2.625, z: 0}
+    position3: {x: 2.75, y: 2.625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.77148634, y: 0.47265822}
+    - {x: 0.8574199, y: 0.47265822}
+    - {x: 0.77148634, y: 0.55468553}
+    - {x: 0.8574199, y: 0.55468553}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: fd647d070de941a449e98456a9ce0a16
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_shooty_left_002
+    boundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    boundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    boundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.75, y: 0, z: 0}
+    - {x: 0, y: 2.625, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.75, y: 0, z: 0}
+    position2: {x: 0, y: 2.625, z: 0}
+    position3: {x: 2.75, y: 2.625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.86523634, y: 0.47265822}
+    - {x: 0.9511699, y: 0.47265822}
+    - {x: 0.86523634, y: 0.55468553}
+    - {x: 0.9511699, y: 0.55468553}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: f18d5f1a8f1eea74dab0b67482ab81af
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_shooty_left_003
+    boundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    boundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    boundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.75, y: 0, z: 0}
+    - {x: 0, y: 2.625, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.75, y: 0, z: 0}
+    position2: {x: 0, y: 2.625, z: 0}
+    position3: {x: 2.75, y: 2.625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.30273634, y: 0.48242384}
+    - {x: 0.3886699, y: 0.48242384}
+    - {x: 0.30273634, y: 0.56445116}
+    - {x: 0.3886699, y: 0.56445116}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: cde896a4b3f3a004d9366e5e3c231b70
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_shooty_right_001
+    boundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    boundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    boundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.75, y: 0, z: 0}
+    - {x: 0, y: 2.625, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.75, y: 0, z: 0}
+    position2: {x: 0, y: 2.625, z: 0}
+    position3: {x: 2.75, y: 2.625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.39648634, y: 0.48242384}
+    - {x: 0.4824199, y: 0.48242384}
+    - {x: 0.39648634, y: 0.56445116}
+    - {x: 0.4824199, y: 0.56445116}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: ffcbaa40afac78542ad1a9dbbeced610
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_shooty_right_002
+    boundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    boundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    boundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.75, y: 0, z: 0}
+    - {x: 0, y: 2.625, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.75, y: 0, z: 0}
+    position2: {x: 0, y: 2.625, z: 0}
+    position3: {x: 2.75, y: 2.625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.49023634, y: 0.48242384}
+    - {x: 0.5761699, y: 0.48242384}
+    - {x: 0.49023634, y: 0.56445116}
+    - {x: 0.5761699, y: 0.56445116}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: f899ac63abd11294c8a4874533f579d6
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_shooty_right_003
+    boundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.375, y: 1.3125, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    boundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    boundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.375, y: 1.3125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.75, y: 2.625, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.75, y: 0, z: 0}
+    - {x: 0, y: 2.625, z: 0}
+    - {x: 2.75, y: 2.625, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.75, y: 0, z: 0}
+    position2: {x: 0, y: 2.625, z: 0}
+    position3: {x: 2.75, y: 2.625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.58398634, y: 0.48242384}
+    - {x: 0.6699199, y: 0.48242384}
+    - {x: 0.58398634, y: 0.56445116}
+    - {x: 0.6699199, y: 0.56445116}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: edb27e3ec13249047906383c4b710dcd
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_spawn_right_001
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.20312695, y: 0.10351758}
+    - {x: 0.2949199, y: 0.10351758}
+    - {x: 0.20312695, y: 0.19531055}
+    - {x: 0.2949199, y: 0.19531055}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 7dd3c9f540e11dc44867ae24e8e6daa1
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_spawn_right_002
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.30273634, y: 0.10351758}
+    - {x: 0.39452928, y: 0.10351758}
+    - {x: 0.30273634, y: 0.19531055}
+    - {x: 0.39452928, y: 0.19531055}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 2d2c9f021efe98f41b6ba7e466fe5372
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_spawn_right_003
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.40234572, y: 0.10351758}
+    - {x: 0.49413866, y: 0.10351758}
+    - {x: 0.40234572, y: 0.19531055}
+    - {x: 0.49413866, y: 0.19531055}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 3198815b07b92774aa32f677cb9c680c
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_spawn_right_004
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.5019551, y: 0.10351758}
+    - {x: 0.59374803, y: 0.10351758}
+    - {x: 0.5019551, y: 0.19531055}
+    - {x: 0.59374803, y: 0.19531055}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 9b4906848c1695141893857096f56f04
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_spawn_right_005
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.60156447, y: 0.10351758}
+    - {x: 0.6933574, y: 0.10351758}
+    - {x: 0.60156447, y: 0.19531055}
+    - {x: 0.6933574, y: 0.19531055}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: df8106904cd1bd647a04ac5c528bb398
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_spawn_right_006
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.70117384, y: 0.10351758}
+    - {x: 0.7929668, y: 0.10351758}
+    - {x: 0.70117384, y: 0.19531055}
+    - {x: 0.7929668, y: 0.19531055}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: efcd851009bd53d49991fdb305cd861a
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_spawn_right_007
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.8007832, y: 0.10351758}
+    - {x: 0.89257616, y: 0.10351758}
+    - {x: 0.8007832, y: 0.19531055}
+    - {x: 0.89257616, y: 0.19531055}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 73110dd5d7c1a5f48aeba63c255a0895
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_spawn_right_008
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.9003926, y: 0.10351758}
+    - {x: 0.99218553, y: 0.10351758}
+    - {x: 0.9003926, y: 0.19531055}
+    - {x: 0.99218553, y: 0.19531055}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 6ca69ee452844f746880c1c65d076649
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_spawn_right_009
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.20312695, y: 0.20312695}
+    - {x: 0.2949199, y: 0.20312695}
+    - {x: 0.20312695, y: 0.2949199}
+    - {x: 0.2949199, y: 0.2949199}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 1e986f5fa5c00b14d94e7fdf87ac023e
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_spawn_right_010
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.20312695, y: 0.30273634}
+    - {x: 0.2949199, y: 0.30273634}
+    - {x: 0.20312695, y: 0.39452928}
+    - {x: 0.2949199, y: 0.39452928}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: db5f637a238fc1f4db0a25c8b30e8e76
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_spawn_right_011
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.20312695, y: 0.40234572}
+    - {x: 0.2949199, y: 0.40234572}
+    - {x: 0.20312695, y: 0.49413866}
+    - {x: 0.2949199, y: 0.49413866}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: e8ff2d9e42daac74e95824bedc919dfb
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_spawn_right_012
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.20312695, y: 0.5019551}
+    - {x: 0.2949199, y: 0.5019551}
+    - {x: 0.20312695, y: 0.59374803}
+    - {x: 0.2949199, y: 0.59374803}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 7c50c56b95ab959408820a9372445b5b
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_spawn_right_013
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.20312695, y: 0.60156447}
+    - {x: 0.2949199, y: 0.60156447}
+    - {x: 0.20312695, y: 0.6933574}
+    - {x: 0.2949199, y: 0.6933574}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 446dc4ea404cfc74ebe0cbb3eca8132b
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_spawn_right_014
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.20312695, y: 0.70117384}
+    - {x: 0.2949199, y: 0.70117384}
+    - {x: 0.20312695, y: 0.7929668}
+    - {x: 0.2949199, y: 0.7929668}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 7c1818ab813d8e84e838a1487a83573c
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_spawn_right_015
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.20312695, y: 0.8007832}
+    - {x: 0.2949199, y: 0.8007832}
+    - {x: 0.20312695, y: 0.89257616}
+    - {x: 0.2949199, y: 0.89257616}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 06e218f5fea498247b994ac8c4306724
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_spawn_right_016
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.20312695, y: 0.9003926}
+    - {x: 0.2949199, y: 0.9003926}
+    - {x: 0.20312695, y: 0.99218553}
+    - {x: 0.2949199, y: 0.99218553}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: d20993d5c70c1bc4aa5ca504607c7940
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_spawn_right_017
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.30273634, y: 0.20312695}
+    - {x: 0.39452928, y: 0.20312695}
+    - {x: 0.30273634, y: 0.2949199}
+    - {x: 0.39452928, y: 0.2949199}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 20a6b62d0d1f7f1429c8bb0af3de81fe
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_spawn_right_018
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.40234572, y: 0.20312695}
+    - {x: 0.49413866, y: 0.20312695}
+    - {x: 0.40234572, y: 0.2949199}
+    - {x: 0.49413866, y: 0.2949199}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 0a4212098f4d3c24fa4e35482826ef87
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_spawn_right_019
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.5019551, y: 0.20312695}
+    - {x: 0.59374803, y: 0.20312695}
+    - {x: 0.5019551, y: 0.2949199}
+    - {x: 0.59374803, y: 0.2949199}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 8e66525a32305a64aba7ba7026c45ba2
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: stevelord_spawn_right_020
+    boundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.46875, y: 1.46875, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    boundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    boundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.46875, y: 1.46875, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.9375, y: 2.9375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.9375, y: 0, z: 0}
+    - {x: 0, y: 2.9375, z: 0}
+    - {x: 2.9375, y: 2.9375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.9375, y: 0, z: 0}
+    position2: {x: 0, y: 2.9375, z: 0}
+    position3: {x: 2.9375, y: 2.9375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.60156447, y: 0.20312695}
+    - {x: 0.6933574, y: 0.20312695}
+    - {x: 0.60156447, y: 0.2949199}
+    - {x: 0.6933574, y: 0.2949199}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+    materialId: 0
+    sourceTextureGUID: 9a69b51e057a9f94ea182512c468774c
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  premultipliedAlpha: 0
+  material: {fileID: 0}
+  materials:
+  - {fileID: 2100000, guid: c6d69fae0600da94ab772c7fecc0fa6f, type: 2}
+  textures:
+  - {fileID: 2800000, guid: a453fd2c0c71cf049b977d1cf75550d0, type: 3}
+  pngTextures: []
+  materialPngTextureId: 00000000
+  textureFilterMode: 0
+  textureMipMaps: 0
+  allowMultipleAtlases: 0
+  spriteCollectionGUID: 3b9e0b577066b824480401e6ce1b8bb4
+  spriteCollectionName: JammedGuardianCollection
+  assetName: JammedGuardianCollection
+  loadable: 1
+  invOrthoSize: 2
+  halfTargetHeight: 8
+  buildKey: 562986659
+  dataGuid: 3f5b458ab466b6f4baa580d2d852457d
+  managedSpriteCollection: 0
+  hasPlatformData: 0
+  spriteCollectionPlatforms: []
+  spriteCollectionPlatformGUIDs: []

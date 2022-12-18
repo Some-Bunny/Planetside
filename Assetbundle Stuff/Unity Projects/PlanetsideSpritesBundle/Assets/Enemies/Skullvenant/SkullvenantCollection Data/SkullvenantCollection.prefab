@@ -1,0 +1,728 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1775393797503832}
+  m_IsPrefabParent: 1
+--- !u!1 &1775393797503832
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4303547315793118}
+  - component: {fileID: 114798426565894050}
+  m_Layer: 0
+  m_Name: SkullvenantCollection
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4303547315793118
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1775393797503832}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114798426565894050
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1775393797503832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b03b1445062e71c4ca60f92cbd330aff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 3
+  materialIdsValid: 1
+  needMaterialInstance: 0
+  spriteDefinitions:
+  - name: revolverskull_idle_back_001
+    boundsData:
+    - {x: 0.53125, y: 0.5, z: 0}
+    - {x: 1.0625, y: 1, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.53125, y: 0.5, z: 0}
+    - {x: 1.0625, y: 1, z: 0}
+    boundsDataCenter: {x: 0.53125, y: 0.5, z: 0}
+    boundsDataExtents: {x: 1.0625, y: 1, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.53125, y: 0.5, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.0625, y: 1, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.0625, y: 0, z: 0}
+    - {x: 0, y: 1, z: 0}
+    - {x: 1.0625, y: 1, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.0625, y: 0, z: 0}
+    position2: {x: 0, y: 1, z: 0}
+    position3: {x: 1.0625, y: 1, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.35939062, y: 0.5234453}
+    - {x: 0.6249844, y: 0.5234453}
+    - {x: 0.35939062, y: 0.6484297}
+    - {x: 0.6249844, y: 0.6484297}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a8e5085f95274fa42941a92bc03689ba, type: 2}
+    materialId: 0
+    sourceTextureGUID: baeb1020b5906ea4687d61118a5bdece
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: revolverskull_idle_back_left_001
+    boundsData:
+    - {x: 0.53125, y: 0.5, z: 0}
+    - {x: 1.0625, y: 1, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.53125, y: 0.5, z: 0}
+    - {x: 1.0625, y: 1, z: 0}
+    boundsDataCenter: {x: 0.53125, y: 0.5, z: 0}
+    boundsDataExtents: {x: 1.0625, y: 1, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.53125, y: 0.5, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.0625, y: 1, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.0625, y: 0, z: 0}
+    - {x: 0, y: 1, z: 0}
+    - {x: 1.0625, y: 1, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.0625, y: 0, z: 0}
+    position2: {x: 0, y: 1, z: 0}
+    position3: {x: 1.0625, y: 1, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.031265624, y: 0.5546953}
+    - {x: 0.29685938, y: 0.5546953}
+    - {x: 0.031265624, y: 0.6796797}
+    - {x: 0.29685938, y: 0.6796797}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a8e5085f95274fa42941a92bc03689ba, type: 2}
+    materialId: 0
+    sourceTextureGUID: eba326697805b0a439d98a2f8792a95f
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: revolverskull_idle_back_right_001
+    boundsData:
+    - {x: 0.53125, y: 0.5, z: 0}
+    - {x: 1.0625, y: 1, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.53125, y: 0.5, z: 0}
+    - {x: 1.0625, y: 1, z: 0}
+    boundsDataCenter: {x: 0.53125, y: 0.5, z: 0}
+    boundsDataExtents: {x: 1.0625, y: 1, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.53125, y: 0.5, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.0625, y: 1, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.0625, y: 0, z: 0}
+    - {x: 0, y: 1, z: 0}
+    - {x: 1.0625, y: 1, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.0625, y: 0, z: 0}
+    position2: {x: 0, y: 1, z: 0}
+    position3: {x: 1.0625, y: 1, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.6875156, y: 0.5234453}
+    - {x: 0.9531094, y: 0.5234453}
+    - {x: 0.6875156, y: 0.6484297}
+    - {x: 0.9531094, y: 0.6484297}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a8e5085f95274fa42941a92bc03689ba, type: 2}
+    materialId: 0
+    sourceTextureGUID: 4b7e0047a1179c64c9d09fa2c3cddf9c
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: revolverskull_idle_front_001
+    boundsData:
+    - {x: 0.59375, y: 0.6875, z: 0}
+    - {x: 1.1875, y: 1.375, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.59375, y: 0.6875, z: 0}
+    - {x: 1.1875, y: 1.375, z: 0}
+    boundsDataCenter: {x: 0.59375, y: 0.6875, z: 0}
+    boundsDataExtents: {x: 1.1875, y: 1.375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.59375, y: 0.6875, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.1875, y: 1.375, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.1875, y: 0, z: 0}
+    - {x: 0, y: 1.375, z: 0}
+    - {x: 1.1875, y: 1.375, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.1875, y: 0, z: 0}
+    position2: {x: 0, y: 1.375, z: 0}
+    position3: {x: 1.1875, y: 1.375, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.031265624, y: 0.015632812}
+    - {x: 0.031265624, y: 0.16405469}
+    - {x: 0.37498438, y: 0.015632812}
+    - {x: 0.37498438, y: 0.16405469}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a8e5085f95274fa42941a92bc03689ba, type: 2}
+    materialId: 0
+    sourceTextureGUID: 16dfaec426e55a24cb3518526fa90c43
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: revolverskull_idle_front_left_001
+    boundsData:
+    - {x: 0.5625, y: 0.625, z: 0}
+    - {x: 1.125, y: 1.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.5625, y: 0.625, z: 0}
+    - {x: 1.125, y: 1.25, z: 0}
+    boundsDataCenter: {x: 0.5625, y: 0.625, z: 0}
+    boundsDataExtents: {x: 1.125, y: 1.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.5625, y: 0.625, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.125, y: 1.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.125, y: 0, z: 0}
+    - {x: 0, y: 1.25, z: 0}
+    - {x: 1.125, y: 1.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.125, y: 0, z: 0}
+    position2: {x: 0, y: 1.25, z: 0}
+    position3: {x: 1.125, y: 1.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.43751562, y: 0.015632812}
+    - {x: 0.43751562, y: 0.15624219}
+    - {x: 0.7499844, y: 0.015632812}
+    - {x: 0.7499844, y: 0.15624219}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a8e5085f95274fa42941a92bc03689ba, type: 2}
+    materialId: 0
+    sourceTextureGUID: 4825341e22e86244893035f3115b0a88
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: revolverskull_idle_front_right_001
+    boundsData:
+    - {x: 0.5625, y: 0.625, z: 0}
+    - {x: 1.125, y: 1.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.5625, y: 0.625, z: 0}
+    - {x: 1.125, y: 1.25, z: 0}
+    boundsDataCenter: {x: 0.5625, y: 0.625, z: 0}
+    boundsDataExtents: {x: 1.125, y: 1.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.5625, y: 0.625, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.125, y: 1.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.125, y: 0, z: 0}
+    - {x: 0, y: 1.25, z: 0}
+    - {x: 1.125, y: 1.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.125, y: 0, z: 0}
+    position2: {x: 0, y: 1.25, z: 0}
+    position3: {x: 1.125, y: 1.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.43751562, y: 0.18750781}
+    - {x: 0.43751562, y: 0.3281172}
+    - {x: 0.7499844, y: 0.18750781}
+    - {x: 0.7499844, y: 0.3281172}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a8e5085f95274fa42941a92bc03689ba, type: 2}
+    materialId: 0
+    sourceTextureGUID: 4842265fe3ef1bd43967e5effce96129
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: revolverskull_idle_left_001
+    boundsData:
+    - {x: 0.53125, y: 0.625, z: 0}
+    - {x: 1.0625, y: 1.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.53125, y: 0.625, z: 0}
+    - {x: 1.0625, y: 1.25, z: 0}
+    boundsDataCenter: {x: 0.53125, y: 0.625, z: 0}
+    boundsDataExtents: {x: 1.0625, y: 1.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.53125, y: 0.625, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.0625, y: 1.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.0625, y: 0, z: 0}
+    - {x: 0, y: 1.25, z: 0}
+    - {x: 1.0625, y: 1.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.0625, y: 0, z: 0}
+    position2: {x: 0, y: 1.25, z: 0}
+    position3: {x: 1.0625, y: 1.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.39064062, y: 0.3593828}
+    - {x: 0.39064062, y: 0.4921797}
+    - {x: 0.7031094, y: 0.3593828}
+    - {x: 0.7031094, y: 0.4921797}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a8e5085f95274fa42941a92bc03689ba, type: 2}
+    materialId: 0
+    sourceTextureGUID: 59a23da120a618d4f9503f64b4652bbc
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: revolverskull_idle_right_001
+    boundsData:
+    - {x: 0.53125, y: 0.625, z: 0}
+    - {x: 1.0625, y: 1.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.53125, y: 0.625, z: 0}
+    - {x: 1.0625, y: 1.25, z: 0}
+    boundsDataCenter: {x: 0.53125, y: 0.625, z: 0}
+    boundsDataExtents: {x: 1.0625, y: 1.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.53125, y: 0.625, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.0625, y: 1.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.0625, y: 0, z: 0}
+    - {x: 0, y: 1.25, z: 0}
+    - {x: 1.0625, y: 1.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.0625, y: 0, z: 0}
+    position2: {x: 0, y: 1.25, z: 0}
+    position3: {x: 1.0625, y: 1.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.031265624, y: 0.3671953}
+    - {x: 0.29685938, y: 0.3671953}
+    - {x: 0.031265624, y: 0.5234297}
+    - {x: 0.29685938, y: 0.5234297}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a8e5085f95274fa42941a92bc03689ba, type: 2}
+    materialId: 0
+    sourceTextureGUID: 22e29c9d1ce83884aad3cbad9fcbb1fb
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: revolverskull_die_001
+    boundsData:
+    - {x: 0.59375, y: 0.5625, z: 0}
+    - {x: 1.1875, y: 1.125, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.59375, y: 0.5625, z: 0}
+    - {x: 1.1875, y: 1.125, z: 0}
+    boundsDataCenter: {x: 0.59375, y: 0.5625, z: 0}
+    boundsDataExtents: {x: 1.1875, y: 1.125, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.59375, y: 0.5625, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.1875, y: 1.125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.1875, y: 0, z: 0}
+    - {x: 0, y: 1.125, z: 0}
+    - {x: 1.1875, y: 1.125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.1875, y: 0, z: 0}
+    position2: {x: 0, y: 1.125, z: 0}
+    position3: {x: 1.1875, y: 1.125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.031265624, y: 0.19532031}
+    - {x: 0.32810938, y: 0.19532031}
+    - {x: 0.031265624, y: 0.3359297}
+    - {x: 0.32810938, y: 0.3359297}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a8e5085f95274fa42941a92bc03689ba, type: 2}
+    materialId: 0
+    sourceTextureGUID: d407d7a224726d04b9f47b7a5e41d083
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  premultipliedAlpha: 0
+  material: {fileID: 0}
+  materials:
+  - {fileID: 2100000, guid: a8e5085f95274fa42941a92bc03689ba, type: 2}
+  textures:
+  - {fileID: 2800000, guid: 812c5f1edc5c155458089326579ed21d, type: 3}
+  pngTextures: []
+  materialPngTextureId: 00000000
+  textureFilterMode: 1
+  textureMipMaps: 0
+  allowMultipleAtlases: 0
+  spriteCollectionGUID: 7605fda4754a4fe4fb2d6c08cd828ff2
+  spriteCollectionName: SkullvenantCollection
+  assetName: 
+  loadable: 0
+  invOrthoSize: 2
+  halfTargetHeight: 8
+  buildKey: 730651457
+  dataGuid: b932aca01fbb8c244bb59b8d9a293e7b
+  managedSpriteCollection: 0
+  hasPlatformData: 0
+  spriteCollectionPlatforms: []
+  spriteCollectionPlatformGUIDs: []

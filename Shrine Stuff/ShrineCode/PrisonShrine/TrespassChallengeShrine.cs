@@ -82,13 +82,15 @@ namespace Planetside
 				GenerateQuickWeightedString(new List<string>(){Creationist.guid, Creationist.guid, Creationist.guid, Creationist.guid, Observant.guid}, 0.875f),
 				GenerateQuickWeightedString(new List<string>(){Collective.guid, Collective.guid, Unwilling.guid,  Unwilling.guid}, 0.5f),
 				GenerateQuickWeightedString(new List<string>(){Observant.guid, Observant.guid, Observant.guid, Observant.guid, Observant.guid } , 0.5f),
-				GenerateQuickWeightedString(new List<string>(){Vessel.guid, Stagnant.guid, Stagnant.guid, Stagnant.guid, Stagnant.guid,Stagnant.guid} , 0.5f),
+				GenerateQuickWeightedString(new List<string>(){Vessel.guid, Observant.guid, Observant.guid, Creationist.guid, Creationist.guid} , 0.5f),
 				GenerateQuickWeightedString(new List<string>(){Inquisitor.guid, Observant.guid, Observant.guid}, 0.626f),
 				GenerateQuickWeightedString(new List<string>(){Inquisitor.guid, Creationist.guid, Observant.guid}, 0.625f),
-				GenerateQuickWeightedString(new List<string>(){Stagnant.guid, Stagnant.guid, Stagnant.guid,Stagnant.guid,Stagnant.guid, Observant.guid,Observant.guid}, 0.75f),
 				GenerateQuickWeightedString(new List<string>(){Vessel.guid, Observant.guid, Observant.guid,Observant.guid}, 0.375f),
-				GenerateQuickWeightedString(new List<string>(){Vessel.guid, Unwilling.guid, Unwilling.guid, Unwilling.guid, Unwilling.guid, Unwilling.guid}, 0.33f),
-			};		
+				GenerateQuickWeightedString(new List<string>(){Vessel.guid, Unwilling.guid, Unwilling.guid, Unwilling.guid, Unwilling.guid}, 0.33f),
+                GenerateQuickWeightedString(new List<string>(){Creationist.guid, Creationist.guid, Creationist.guid, Creationist.guid, Creationist.guid, Creationist.guid, Creationist.guid}, 0.5f),
+                GenerateQuickWeightedString(new List<string>(){Inquisitor.guid, Vessel.guid}, 0.2f),
+                GenerateQuickWeightedString(new List<string>(){ Vessel.guid, Vessel.guid, Creationist.guid, Creationist.guid}, 0.2f),
+            };		
 		}
 
 

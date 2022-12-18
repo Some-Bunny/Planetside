@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: 0be24d5cbb836e0448884df3b0b28f72
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures:
+  - _MainTex: {fileID: 2800000, guid: fe33c54468a51af4b8b70ea84487e1c0, type: 3}
+  userData: 
+  assetBundleName: planetsidebundle
+  assetBundleVariant: 

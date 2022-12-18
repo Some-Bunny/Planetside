@@ -7,6 +7,15 @@ namespace Planetside
     static class LootTableTools
     {
 
+        public static LootModData GenerateLootModData(int ID, float newWeight)
+        {
+            var lmd = new LootModData();
+            lmd.AssociatedPickupId = ID;
+            lmd.DropRateMultiplier = newWeight;
+            return lmd;
+        }
+
+
         public static GameObject SelectByWeightNoExclusions(this GenericLootTable table, bool useSeedRandom = false)
         {
             int outIndex = -1;

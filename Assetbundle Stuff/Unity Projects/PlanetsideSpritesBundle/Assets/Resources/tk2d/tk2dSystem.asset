@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72fb5480ea3af70458d43df8464b132e, type: 3}
+  m_Name: tk2dSystem
+  m_EditorClassIdentifier: 
+  allResourceEntries:
+  - resourceGUID: d0084eb287cd59846acb741a4fa5dce0
+    assetName: FodderCollection
+    assetGUID: d26d1c7644b4bc1468b46a183415c142
+  - resourceGUID: f33f3e789253abb4da92f7f7b0a9c9df
+    assetName: ArchGunjurerCollection
+    assetGUID: 6940b0b961f68e748826e6e760c539f9
+  - resourceGUID: 508c65bc045d39348872da6fd8b7c946
+    assetName: JammedGuardianCollection
+    assetGUID: 3f5b458ab466b6f4baa580d2d852457d

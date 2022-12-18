@@ -39,7 +39,7 @@ namespace Planetside
 			ammolet.SetupUnlockOnCustomFlag(CustomDungeonFlags.HIGHER_CURSE_DRAGUN_KILLED, true);
 		}
 
-		private static int FrailtyAmmoletID;
+		public static int FrailtyAmmoletID;
 		private static Hook BlankHook = new Hook(typeof(SilencerInstance).GetMethod("ProcessBlankModificationItemAdditionalEffects", BindingFlags.Instance | BindingFlags.NonPublic), typeof(FrailtyAmmolet).GetMethod("BlankModHook", BindingFlags.Instance | BindingFlags.Public), typeof(SilencerInstance));
 
 	

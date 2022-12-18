@@ -32,12 +32,30 @@ namespace Planetside
 	{
 		public BrokenChamberComponent()
 		{
-			this.TimeBetweenRockFalls = 7.5f;
+			this.TimeBetweenRockFalls = 9f;
 		}
 
-		private void Awake()
+		private void Start()
 		{
+			if (player)
+			{
+				player.OnNewFloorLoaded += ONFL;
+			}
 		}
+
+		public void ONFL(PlayerController p)
+		{
+			TimeBetweenRockFalls = Mathf.Max(6, TimeBetweenRockFalls - 0.75f);
+		}
+
+		public void OnDestroy()
+		{
+			if (player)
+			{
+                player.OnNewFloorLoaded -= ONFL;
+            }
+		}
+
 
 		private void Update()
 		{
@@ -48,11 +66,26 @@ namespace Planetside
                 {
 					Destroy(this);
 				}
-				if (!GameManager.Instance.IsPaused || !GameManager.Instance.IsLoadingLevel)
+
+				if (player.CurrentRoom != null)
 				{
-					this.elapsed += BraveTime.DeltaTime;
-				}
-				if (this.elapsed > TimeBetweenRockFalls)
+					var s = player.CurrentRoom.GetRoomName();
+					if (s != null)
+					{
+						if (s == "tutorialblueroom.room")
+						{
+							return;
+						}
+					}
+
+                }
+                if (!GameManager.Instance.IsPaused || !GameManager.Instance.IsLoadingLevel)
+                {
+                    this.elapsed += BraveTime.DeltaTime;
+                }
+
+
+                if (this.elapsed > TimeBetweenRockFalls)
 				{
 					this.elapsed = 0f;
 					if (this.player != null && GameManager.Instance.IsLoadingLevel == false)// && GameManager.Instance.Lev)
@@ -75,7 +108,7 @@ namespace Planetside
 			tk2dSprite componentInChildren = component.GetComponentInChildren<tk2dSprite>();
 			component.transform.position = component.transform.position.WithY(component.transform.position.y - componentInChildren.transform.localPosition.y);
 			component.ExplosionData.ignoreList.Add(player.specRigidbody);
-		}
+        }
 		public PlayerController player;
 
 		public float TimeBetweenRockFalls;

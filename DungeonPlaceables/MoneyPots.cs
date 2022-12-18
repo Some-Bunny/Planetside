@@ -51,6 +51,7 @@ namespace Planetside
             ETGMod.Databases.Strings.Core.Set("#TROLL_NOTE_10", ":rabbit2:\n\n:skateboard:");
             ETGMod.Databases.Strings.Core.Set("#TROLL_NOTE_11", "Our mod plans to expand and revamp vanilla content by adding new fun and interesting content! we plan on adding new gimmicks and multiple bosses to flesh out the game. (gif of buzz lightyears in a toy aisle)");
             ETGMod.Databases.Strings.Core.Set("#TROLL_NOTE_12", "Shit thyself.");
+            ETGMod.Databases.Strings.Core.Set("#TROLL_NOTE_12", "Subscribe to Agod on Youtube! I think.");
 
 
             MajorBreakable note1 = BreakableAPIToolbox.GenerateMajorBreakable("trollNote_1", idlePaths, 1, idlePaths, 1, 15000,true, 0, 0, 0, 0, true, null, null, true, null);
@@ -881,7 +882,7 @@ namespace Planetside
                                 GameObject bom = new GameObject();
                                 StaticReferences.StoredRoomObjects.TryGetValue("trollNote", out bom);
                                 var note = DungeonPlaceableUtility.InstantiateDungeonPlaceable(bom, roomFromPosition2, new IntVector2((int)this.gameObject.transform.position.x, (int)this.gameObject.transform.position.y) - roomFromPosition2.area.basePosition, false).GetComponent<NoteDoer>();
-                                note.GetComponent<NoteDoer>().stringKey = "#TROLL_NOTE_" + (UnityEngine.Random.Range(1, 13).ToString());
+                                note.GetComponent<NoteDoer>().stringKey = "#TROLL_NOTE_" + (UnityEngine.Random.Range(1, 14).ToString());
                                 roomFromPosition2.RegisterInteractable(note);
 
                                 break;

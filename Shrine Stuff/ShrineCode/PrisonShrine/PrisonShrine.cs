@@ -225,10 +225,6 @@ namespace Planetside
 
 	public static class PrisonShrine
 	{
-
-
-
-
 		public static void Add()
 		{
 			string basePath = "Planetside/Resources/Shrines/PrisonShrine/";

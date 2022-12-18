@@ -54,11 +54,11 @@ namespace Planetside
 				enemy.aiActor.specRigidbody.CollideWithOthers = true;
 				enemy.aiActor.specRigidbody.CollideWithTileMap = true;
 				enemy.aiActor.PreventFallingInPitsEver = false;
-				enemy.aiActor.healthHaver.ForceSetCurrentHealth(1200f);
+				enemy.aiActor.healthHaver.ForceSetCurrentHealth(1150f);
 				enemy.aiActor.SetIsFlying(true, "Gamemode: Creative", true, true);
 				enemy.aiActor.CollisionKnockbackStrength = 10f;
 				enemy.aiActor.CanTargetPlayers = true;
-				enemy.aiActor.healthHaver.SetHealthMaximum(1200f, null, false);
+				enemy.aiActor.healthHaver.SetHealthMaximum(1150f, null, false);
 
                 EnemyToolbox.AddShadowToAIActor(enemy.aiActor, StaticEnemyShadows.massiveShadow, new Vector2(4f, 0.25f), "shadowPos");
 
@@ -788,8 +788,7 @@ namespace Planetside
                         MaxUsages = 1
                         },
                     NickName = "supermegacoolattack"
-                    },
-                    
+                    },//0       
                     new AttackBehaviorGroup.AttackGroupItem()
                     {
                     Probability = 0.8f,
@@ -808,8 +807,7 @@ namespace Planetside
                         PostFireAnimation = "un_cast"
                         },
                     NickName = "endme"
-                    },
-
+                    },//1
                     new AttackBehaviorGroup.AttackGroupItem()
                     {
                     Probability = 1.1f,
@@ -828,11 +826,11 @@ namespace Planetside
                         PostFireAnimation = "uncharge_mithrix"
                     },
                     NickName = "endme"
-                    },
+                    },//2
                     new AttackBehaviorGroup.AttackGroupItem()
                     {
-                    Probability = 0f,
-                    Behavior =new ShootBehavior() {
+                        Probability = 0f,
+                        Behavior =new ShootBehavior() {
                         ShootPoint = mainbeamShootpoint,
                         BulletScript = new CustomBulletScriptSelector(typeof(MithrixSlamOmega)),
                         LeadAmount = 0f,
@@ -847,9 +845,8 @@ namespace Planetside
                         PostFireAnimation = "uncharge_mithrix"
                     },
                     NickName = "mihtrixslam_2"
-                    },
+                    },//3
                     //mihtrixslam_2
-
                     new AttackBehaviorGroup.AttackGroupItem()
                     {
                     Probability = 1f,
@@ -907,8 +904,8 @@ namespace Planetside
 
 					},
                     NickName = "LASERZ"
-                    },
-                    new AttackBehaviorGroup.AttackGroupItem()
+                    },//4
+                    new AttackBehaviorGroup.AttackGroupItem()//5
                     {
                         Probability = 1f,
                         NickName = "Def2",
@@ -974,7 +971,7 @@ namespace Planetside
                         },
                         }
                         },
-                    },
+                    },//5
                     new AttackBehaviorGroup.AttackGroupItem()
                     {
                         Probability = 1f,
@@ -1037,8 +1034,7 @@ namespace Planetside
                         },
                         }
                         },
-                    },
-
+                    },//6
                     new AttackBehaviorGroup.AttackGroupItem()
                     {
                         Probability = 0f,
@@ -1204,10 +1200,7 @@ namespace Planetside
                         },
                         }
                         },
-                    },
-
-
-
+                    },//7
                     new AttackBehaviorGroup.AttackGroupItem()
                     {
                         Probability = 0.8f,
@@ -1237,7 +1230,6 @@ namespace Planetside
                         RequiresLineOfSight = false,
                         roomMax = new Vector2(0,0),
                         roomMin = new Vector2(0,0),
-						//teleportInBulletScript = new CustomBulletScriptSelector(typeof(TeleportScript)),
                         GlobalCooldown = 0f,
                         Cooldown = 0f,
                         CooldownVariance = 0f,
@@ -1565,7 +1557,7 @@ namespace Planetside
                         },
                         }
                         },
-                    },
+                    },//8
                     
 
                 };
@@ -1726,6 +1718,7 @@ namespace Planetside
                 suckLessEntry = StaticUndodgeableBulletEntries.CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("5729c8b5ffa7415bb3d01205663a33ef").bulletBank.GetBullet("suck"), "suck_more");
                 enemy.aiActor.bulletBank.Bullets.Add(suckLessEntry);
                 //==================
+
 
                 var fuckOff = EnemyDatabase.GetOrLoadByGuid("1a4872dafdb34fd29fe8ac90bd2cea67").bulletBank.Bullets[0].BulletObject.GetComponent<ProjectileTrailRendererController>().customTrailRenderer;
 
@@ -2010,11 +2003,11 @@ namespace Planetside
                     var bulletb = vfxObj.gameObject.AddComponent<AIBulletBank>();
                     bulletb.Bullets = new List<AIBulletBank.Entry>()
                     {
-                        EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("frogger")
+                        EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("frogger"),
+                        StaticUndodgeableBulletEntries.UndodgeableFrogger
                     };
                     EyeBallMinion = vfxObj;
                 }
-
                 {
                     var blessingObj = SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Ophanaim/ophanaim_wing_left", null, false);
                     FakePrefab.MarkAsFakePrefab(blessingObj);
@@ -2357,7 +2350,6 @@ namespace Planetside
 
 
                 //Important for not breaking basegame stuff!
-                StaticReferenceManager.AllHealthHavers.Remove(base.aiActor.healthHaver);
 				Phase2Check = false;
 
                 base.aiActor.healthHaver.minimumHealth = base.aiActor.healthHaver.GetMaxHealth() * 0.6f;
@@ -2454,16 +2446,6 @@ namespace Planetside
 					float FlashFadetime = 0.375f;
 					Pixelator.Instance.FadeToColor(FlashFadetime, Color.white, true, FlashTime);
 					StickyFrictionManager.Instance.RegisterCustomStickyFriction(0.15f, 1f, false, false); FlashTime = 0.1f;
-				}
-				if (clip.GetFrame(frameIdx).eventInfo == "StartSun")
-				{
-					base.aiActor.healthHaver.AllDamageMultiplier = 0.5f;
-					base.StartCoroutine(this.unmatchedpowerofthesun());
-
-				}
-				if (clip.GetFrame(frameIdx).eventInfo == "EndSun")
-				{
-					base.aiActor.healthHaver.AllDamageMultiplier = 1f;
 				}
 			}
 			private IEnumerator unmatchedpowerofthesun()
@@ -2937,6 +2919,7 @@ namespace Planetside
 
                 float dur1 = 0;
                 float dur2 = 0;
+                this.EndOnBlank = false;
                 fire = false;
                 {
                     Vector2 vector2 = new Vector2();
@@ -2981,6 +2964,7 @@ namespace Planetside
                     {
                         GlobalMessageRadio.BroadcastMessage("eye_gun_laser");
                     }
+                    this.EndOnBlank = true;
                     float spare = 36;
                     float Angle = this.AimDirection;
                     if (Angle.IsBetweenRange(Vector2.left.ToAngle(), Vector2.left.ToAngle() + spare)) { Angle = Vector2.left.ToAngle() + spare; }
@@ -3071,8 +3055,7 @@ namespace Planetside
                                 }
                             }
                             beam.LaserBeam.IgnoreRigidbodes = r;
-
-                           if (i % 60 == 0)
+                            if (i % 60 == 0)
                            {
                                 float h = BraveUtility.RandomBool() == true ? -60 : 60;
                                 float a = this.AimDirection;

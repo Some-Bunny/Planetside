@@ -228,7 +228,7 @@ namespace Planetside
 
 
 
-				companion.aiActor.healthHaver.ForceSetCurrentHealth(200f);
+				companion.aiActor.healthHaver.ForceSetCurrentHealth(240f);
 				companion.aiActor.CollisionKnockbackStrength = 0f;
 				companion.aiActor.procedurallyOutlined = false;
 				companion.aiActor.CanTargetPlayers = true;
@@ -236,7 +236,7 @@ namespace Planetside
 				EnemyToolbox.AddShadowToAIActor(companion.aiActor, StaticEnemyShadows.defaultShadow, new Vector2(0.625f, -0.25f), "shadowPos");
 
 
-				companion.aiActor.healthHaver.SetHealthMaximum(200f, null, false);
+				companion.aiActor.healthHaver.SetHealthMaximum(240f, null, false);
 				companion.aiActor.specRigidbody.PixelColliders.Clear();
 				companion.aiActor.specRigidbody.PixelColliders.Add(new PixelCollider
 				{

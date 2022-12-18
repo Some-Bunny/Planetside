@@ -28,9 +28,9 @@ namespace Planetside
 			var item = obj.AddComponent<InjectorRounds>();
 			ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
 			string shortDesc = "Now To Practice Medicine";
-			string longDesc = "These rounds are custom-made to inject any ailments of an enemy deeper into it, causing it to burst when killed.\n\nAn experimental ammo type that would allow the storage of nutrients for ease of use, they fell out of sight quickly when people realised you literally had to shoot yourself in the foot to gain their benefit. Some crafty adventurers, however, improvised.";
+			string longDesc = "These custom-made rounds pump in any ailments or debuffs into your enemies, causing it to burst into a pool when killed. Is also pointer and aerodynamic!\n\nAn experimental ammo type that would allow the storage of nutrients for ease of use, they fell out of sight quickly when people realised you literally had to shoot yourself in the foot to gain their benefit. Some crafty adventurers, however, improvised.";
 			ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
-			ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.ProjectileSpeed, 1.1f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+			ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.ProjectileSpeed, 1.15f, StatModifier.ModifyMethod.MULTIPLICATIVE);
 			ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.Damage, 1.1f, StatModifier.ModifyMethod.MULTIPLICATIVE);
 
 			item.quality = PickupObject.ItemQuality.C;

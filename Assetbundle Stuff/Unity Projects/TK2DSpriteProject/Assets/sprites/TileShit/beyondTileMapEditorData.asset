@@ -1,0 +1,3586 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55b78d6060eadde4394ed1d0ba2b8c97, type: 3}
+  m_Name: beyondTileMapEditorData
+  m_EditorClassIdentifier: 
+  editMode: 3
+  brushColor: {r: 1, g: 1, b: 1, a: 1}
+  brushRadius: 1
+  blendStrength: 1
+  blendMode: 0
+  brushDisplayScale: 2.94
+  defaultBrush:
+    name: 
+    type: 0
+    paintMode: 0
+    tiles:
+    - x: 0
+      y: 0
+      layer: 0
+      spriteId: 0
+      blendAmount: 0
+    multiSelectTiles: 
+    edgeMode: 0
+    multiLayer: 0
+    overrideWithSpriteBounds: 0
+    brushHash: -1600377536
+  activeBrush:
+    name: 
+    type: 0
+    paintMode: 0
+    tiles:
+    - x: 0
+      y: 0
+      layer: 0
+      spriteId: 67
+      blendAmount: 0
+    multiSelectTiles: 43000000
+    edgeMode: 0
+    multiLayer: 0
+    overrideWithSpriteBounds: 0
+    brushHash: 2046196096
+  brushes: []
+  paletteBrush:
+    name: 
+    type: 0
+    paintMode: 0
+    tiles:
+    - x: 0
+      y: 43
+      layer: 0
+      spriteId: 0
+      blendAmount: 0
+    - x: 1
+      y: 43
+      layer: 0
+      spriteId: 1
+      blendAmount: 0
+    - x: 2
+      y: 43
+      layer: 0
+      spriteId: 2
+      blendAmount: 0
+    - x: 3
+      y: 43
+      layer: 0
+      spriteId: 3
+      blendAmount: 0
+    - x: 4
+      y: 43
+      layer: 0
+      spriteId: 4
+      blendAmount: 0
+    - x: 5
+      y: 43
+      layer: 0
+      spriteId: 5
+      blendAmount: 0
+    - x: 6
+      y: 43
+      layer: 0
+      spriteId: 6
+      blendAmount: 0
+    - x: 7
+      y: 43
+      layer: 0
+      spriteId: 7
+      blendAmount: 0
+    - x: 8
+      y: 43
+      layer: 0
+      spriteId: 8
+      blendAmount: 0
+    - x: 9
+      y: 43
+      layer: 0
+      spriteId: 9
+      blendAmount: 0
+    - x: 10
+      y: 43
+      layer: 0
+      spriteId: 10
+      blendAmount: 0
+    - x: 11
+      y: 43
+      layer: 0
+      spriteId: 11
+      blendAmount: 0
+    - x: 12
+      y: 43
+      layer: 0
+      spriteId: 12
+      blendAmount: 0
+    - x: 13
+      y: 43
+      layer: 0
+      spriteId: 13
+      blendAmount: 0
+    - x: 14
+      y: 43
+      layer: 0
+      spriteId: 14
+      blendAmount: 0
+    - x: 15
+      y: 43
+      layer: 0
+      spriteId: 15
+      blendAmount: 0
+    - x: 0
+      y: 42
+      layer: 0
+      spriteId: 16
+      blendAmount: 0
+    - x: 1
+      y: 42
+      layer: 0
+      spriteId: 17
+      blendAmount: 0
+    - x: 2
+      y: 42
+      layer: 0
+      spriteId: 18
+      blendAmount: 0
+    - x: 3
+      y: 42
+      layer: 0
+      spriteId: 19
+      blendAmount: 0
+    - x: 4
+      y: 42
+      layer: 0
+      spriteId: 20
+      blendAmount: 0
+    - x: 5
+      y: 42
+      layer: 0
+      spriteId: 21
+      blendAmount: 0
+    - x: 6
+      y: 42
+      layer: 0
+      spriteId: 22
+      blendAmount: 0
+    - x: 7
+      y: 42
+      layer: 0
+      spriteId: 23
+      blendAmount: 0
+    - x: 8
+      y: 42
+      layer: 0
+      spriteId: 24
+      blendAmount: 0
+    - x: 9
+      y: 42
+      layer: 0
+      spriteId: 25
+      blendAmount: 0
+    - x: 10
+      y: 42
+      layer: 0
+      spriteId: 26
+      blendAmount: 0
+    - x: 11
+      y: 42
+      layer: 0
+      spriteId: 27
+      blendAmount: 0
+    - x: 12
+      y: 42
+      layer: 0
+      spriteId: 28
+      blendAmount: 0
+    - x: 13
+      y: 42
+      layer: 0
+      spriteId: 29
+      blendAmount: 0
+    - x: 14
+      y: 42
+      layer: 0
+      spriteId: 30
+      blendAmount: 0
+    - x: 15
+      y: 42
+      layer: 0
+      spriteId: 31
+      blendAmount: 0
+    - x: 0
+      y: 41
+      layer: 0
+      spriteId: 32
+      blendAmount: 0
+    - x: 1
+      y: 41
+      layer: 0
+      spriteId: 33
+      blendAmount: 0
+    - x: 2
+      y: 41
+      layer: 0
+      spriteId: 34
+      blendAmount: 0
+    - x: 3
+      y: 41
+      layer: 0
+      spriteId: 35
+      blendAmount: 0
+    - x: 4
+      y: 41
+      layer: 0
+      spriteId: 36
+      blendAmount: 0
+    - x: 5
+      y: 41
+      layer: 0
+      spriteId: 37
+      blendAmount: 0
+    - x: 6
+      y: 41
+      layer: 0
+      spriteId: 38
+      blendAmount: 0
+    - x: 7
+      y: 41
+      layer: 0
+      spriteId: 39
+      blendAmount: 0
+    - x: 8
+      y: 41
+      layer: 0
+      spriteId: 40
+      blendAmount: 0
+    - x: 9
+      y: 41
+      layer: 0
+      spriteId: 41
+      blendAmount: 0
+    - x: 10
+      y: 41
+      layer: 0
+      spriteId: 42
+      blendAmount: 0
+    - x: 11
+      y: 41
+      layer: 0
+      spriteId: 43
+      blendAmount: 0
+    - x: 12
+      y: 41
+      layer: 0
+      spriteId: 44
+      blendAmount: 0
+    - x: 13
+      y: 41
+      layer: 0
+      spriteId: 45
+      blendAmount: 0
+    - x: 14
+      y: 41
+      layer: 0
+      spriteId: 46
+      blendAmount: 0
+    - x: 15
+      y: 41
+      layer: 0
+      spriteId: 47
+      blendAmount: 0
+    - x: 0
+      y: 40
+      layer: 0
+      spriteId: 48
+      blendAmount: 0
+    - x: 1
+      y: 40
+      layer: 0
+      spriteId: 49
+      blendAmount: 0
+    - x: 2
+      y: 40
+      layer: 0
+      spriteId: 50
+      blendAmount: 0
+    - x: 3
+      y: 40
+      layer: 0
+      spriteId: 51
+      blendAmount: 0
+    - x: 4
+      y: 40
+      layer: 0
+      spriteId: 52
+      blendAmount: 0
+    - x: 5
+      y: 40
+      layer: 0
+      spriteId: 53
+      blendAmount: 0
+    - x: 6
+      y: 40
+      layer: 0
+      spriteId: 54
+      blendAmount: 0
+    - x: 7
+      y: 40
+      layer: 0
+      spriteId: 55
+      blendAmount: 0
+    - x: 8
+      y: 40
+      layer: 0
+      spriteId: 56
+      blendAmount: 0
+    - x: 9
+      y: 40
+      layer: 0
+      spriteId: 57
+      blendAmount: 0
+    - x: 10
+      y: 40
+      layer: 0
+      spriteId: 58
+      blendAmount: 0
+    - x: 11
+      y: 40
+      layer: 0
+      spriteId: 59
+      blendAmount: 0
+    - x: 12
+      y: 40
+      layer: 0
+      spriteId: 60
+      blendAmount: 0
+    - x: 13
+      y: 40
+      layer: 0
+      spriteId: 61
+      blendAmount: 0
+    - x: 14
+      y: 40
+      layer: 0
+      spriteId: 62
+      blendAmount: 0
+    - x: 15
+      y: 40
+      layer: 0
+      spriteId: 63
+      blendAmount: 0
+    - x: 0
+      y: 39
+      layer: 0
+      spriteId: 64
+      blendAmount: 0
+    - x: 1
+      y: 39
+      layer: 0
+      spriteId: 65
+      blendAmount: 0
+    - x: 2
+      y: 39
+      layer: 0
+      spriteId: 66
+      blendAmount: 0
+    - x: 3
+      y: 39
+      layer: 0
+      spriteId: 67
+      blendAmount: 0
+    - x: 4
+      y: 39
+      layer: 0
+      spriteId: 68
+      blendAmount: 0
+    - x: 5
+      y: 39
+      layer: 0
+      spriteId: 69
+      blendAmount: 0
+    - x: 6
+      y: 39
+      layer: 0
+      spriteId: 70
+      blendAmount: 0
+    - x: 7
+      y: 39
+      layer: 0
+      spriteId: 71
+      blendAmount: 0
+    - x: 8
+      y: 39
+      layer: 0
+      spriteId: 72
+      blendAmount: 0
+    - x: 9
+      y: 39
+      layer: 0
+      spriteId: 73
+      blendAmount: 0
+    - x: 10
+      y: 39
+      layer: 0
+      spriteId: 74
+      blendAmount: 0
+    - x: 11
+      y: 39
+      layer: 0
+      spriteId: 75
+      blendAmount: 0
+    - x: 12
+      y: 39
+      layer: 0
+      spriteId: 76
+      blendAmount: 0
+    - x: 13
+      y: 39
+      layer: 0
+      spriteId: 77
+      blendAmount: 0
+    - x: 14
+      y: 39
+      layer: 0
+      spriteId: 78
+      blendAmount: 0
+    - x: 15
+      y: 39
+      layer: 0
+      spriteId: 79
+      blendAmount: 0
+    - x: 0
+      y: 38
+      layer: 0
+      spriteId: 80
+      blendAmount: 0
+    - x: 1
+      y: 38
+      layer: 0
+      spriteId: 81
+      blendAmount: 0
+    - x: 2
+      y: 38
+      layer: 0
+      spriteId: 82
+      blendAmount: 0
+    - x: 3
+      y: 38
+      layer: 0
+      spriteId: 83
+      blendAmount: 0
+    - x: 4
+      y: 38
+      layer: 0
+      spriteId: 84
+      blendAmount: 0
+    - x: 5
+      y: 38
+      layer: 0
+      spriteId: 85
+      blendAmount: 0
+    - x: 6
+      y: 38
+      layer: 0
+      spriteId: 86
+      blendAmount: 0
+    - x: 7
+      y: 38
+      layer: 0
+      spriteId: 87
+      blendAmount: 0
+    - x: 8
+      y: 38
+      layer: 0
+      spriteId: 88
+      blendAmount: 0
+    - x: 9
+      y: 38
+      layer: 0
+      spriteId: 89
+      blendAmount: 0
+    - x: 10
+      y: 38
+      layer: 0
+      spriteId: 90
+      blendAmount: 0
+    - x: 11
+      y: 38
+      layer: 0
+      spriteId: 91
+      blendAmount: 0
+    - x: 12
+      y: 38
+      layer: 0
+      spriteId: 92
+      blendAmount: 0
+    - x: 13
+      y: 38
+      layer: 0
+      spriteId: 93
+      blendAmount: 0
+    - x: 14
+      y: 38
+      layer: 0
+      spriteId: 94
+      blendAmount: 0
+    - x: 15
+      y: 38
+      layer: 0
+      spriteId: 95
+      blendAmount: 0
+    - x: 0
+      y: 37
+      layer: 0
+      spriteId: 96
+      blendAmount: 0
+    - x: 1
+      y: 37
+      layer: 0
+      spriteId: 97
+      blendAmount: 0
+    - x: 2
+      y: 37
+      layer: 0
+      spriteId: 98
+      blendAmount: 0
+    - x: 3
+      y: 37
+      layer: 0
+      spriteId: 99
+      blendAmount: 0
+    - x: 4
+      y: 37
+      layer: 0
+      spriteId: 100
+      blendAmount: 0
+    - x: 5
+      y: 37
+      layer: 0
+      spriteId: 101
+      blendAmount: 0
+    - x: 6
+      y: 37
+      layer: 0
+      spriteId: 102
+      blendAmount: 0
+    - x: 7
+      y: 37
+      layer: 0
+      spriteId: 103
+      blendAmount: 0
+    - x: 8
+      y: 37
+      layer: 0
+      spriteId: 104
+      blendAmount: 0
+    - x: 9
+      y: 37
+      layer: 0
+      spriteId: 105
+      blendAmount: 0
+    - x: 10
+      y: 37
+      layer: 0
+      spriteId: 106
+      blendAmount: 0
+    - x: 11
+      y: 37
+      layer: 0
+      spriteId: 107
+      blendAmount: 0
+    - x: 12
+      y: 37
+      layer: 0
+      spriteId: 108
+      blendAmount: 0
+    - x: 13
+      y: 37
+      layer: 0
+      spriteId: 109
+      blendAmount: 0
+    - x: 14
+      y: 37
+      layer: 0
+      spriteId: 110
+      blendAmount: 0
+    - x: 15
+      y: 37
+      layer: 0
+      spriteId: 111
+      blendAmount: 0
+    - x: 0
+      y: 36
+      layer: 0
+      spriteId: 112
+      blendAmount: 0
+    - x: 1
+      y: 36
+      layer: 0
+      spriteId: 113
+      blendAmount: 0
+    - x: 2
+      y: 36
+      layer: 0
+      spriteId: 114
+      blendAmount: 0
+    - x: 3
+      y: 36
+      layer: 0
+      spriteId: 115
+      blendAmount: 0
+    - x: 4
+      y: 36
+      layer: 0
+      spriteId: 116
+      blendAmount: 0
+    - x: 5
+      y: 36
+      layer: 0
+      spriteId: 117
+      blendAmount: 0
+    - x: 6
+      y: 36
+      layer: 0
+      spriteId: 118
+      blendAmount: 0
+    - x: 7
+      y: 36
+      layer: 0
+      spriteId: 119
+      blendAmount: 0
+    - x: 8
+      y: 36
+      layer: 0
+      spriteId: 120
+      blendAmount: 0
+    - x: 9
+      y: 36
+      layer: 0
+      spriteId: 121
+      blendAmount: 0
+    - x: 10
+      y: 36
+      layer: 0
+      spriteId: 122
+      blendAmount: 0
+    - x: 11
+      y: 36
+      layer: 0
+      spriteId: 123
+      blendAmount: 0
+    - x: 12
+      y: 36
+      layer: 0
+      spriteId: 124
+      blendAmount: 0
+    - x: 13
+      y: 36
+      layer: 0
+      spriteId: 125
+      blendAmount: 0
+    - x: 14
+      y: 36
+      layer: 0
+      spriteId: 126
+      blendAmount: 0
+    - x: 15
+      y: 36
+      layer: 0
+      spriteId: 127
+      blendAmount: 0
+    - x: 0
+      y: 35
+      layer: 0
+      spriteId: 128
+      blendAmount: 0
+    - x: 1
+      y: 35
+      layer: 0
+      spriteId: 129
+      blendAmount: 0
+    - x: 2
+      y: 35
+      layer: 0
+      spriteId: 130
+      blendAmount: 0
+    - x: 3
+      y: 35
+      layer: 0
+      spriteId: 131
+      blendAmount: 0
+    - x: 4
+      y: 35
+      layer: 0
+      spriteId: 132
+      blendAmount: 0
+    - x: 5
+      y: 35
+      layer: 0
+      spriteId: 133
+      blendAmount: 0
+    - x: 6
+      y: 35
+      layer: 0
+      spriteId: 134
+      blendAmount: 0
+    - x: 7
+      y: 35
+      layer: 0
+      spriteId: 135
+      blendAmount: 0
+    - x: 8
+      y: 35
+      layer: 0
+      spriteId: 136
+      blendAmount: 0
+    - x: 9
+      y: 35
+      layer: 0
+      spriteId: 137
+      blendAmount: 0
+    - x: 10
+      y: 35
+      layer: 0
+      spriteId: 138
+      blendAmount: 0
+    - x: 11
+      y: 35
+      layer: 0
+      spriteId: 139
+      blendAmount: 0
+    - x: 12
+      y: 35
+      layer: 0
+      spriteId: 140
+      blendAmount: 0
+    - x: 13
+      y: 35
+      layer: 0
+      spriteId: 141
+      blendAmount: 0
+    - x: 14
+      y: 35
+      layer: 0
+      spriteId: 142
+      blendAmount: 0
+    - x: 15
+      y: 35
+      layer: 0
+      spriteId: 143
+      blendAmount: 0
+    - x: 0
+      y: 34
+      layer: 0
+      spriteId: 144
+      blendAmount: 0
+    - x: 1
+      y: 34
+      layer: 0
+      spriteId: 145
+      blendAmount: 0
+    - x: 2
+      y: 34
+      layer: 0
+      spriteId: 146
+      blendAmount: 0
+    - x: 3
+      y: 34
+      layer: 0
+      spriteId: 147
+      blendAmount: 0
+    - x: 4
+      y: 34
+      layer: 0
+      spriteId: 148
+      blendAmount: 0
+    - x: 5
+      y: 34
+      layer: 0
+      spriteId: 149
+      blendAmount: 0
+    - x: 6
+      y: 34
+      layer: 0
+      spriteId: 150
+      blendAmount: 0
+    - x: 7
+      y: 34
+      layer: 0
+      spriteId: 151
+      blendAmount: 0
+    - x: 8
+      y: 34
+      layer: 0
+      spriteId: 152
+      blendAmount: 0
+    - x: 9
+      y: 34
+      layer: 0
+      spriteId: 153
+      blendAmount: 0
+    - x: 10
+      y: 34
+      layer: 0
+      spriteId: 154
+      blendAmount: 0
+    - x: 11
+      y: 34
+      layer: 0
+      spriteId: 155
+      blendAmount: 0
+    - x: 12
+      y: 34
+      layer: 0
+      spriteId: 156
+      blendAmount: 0
+    - x: 13
+      y: 34
+      layer: 0
+      spriteId: 157
+      blendAmount: 0
+    - x: 14
+      y: 34
+      layer: 0
+      spriteId: 158
+      blendAmount: 0
+    - x: 15
+      y: 34
+      layer: 0
+      spriteId: 159
+      blendAmount: 0
+    - x: 0
+      y: 33
+      layer: 0
+      spriteId: 160
+      blendAmount: 0
+    - x: 1
+      y: 33
+      layer: 0
+      spriteId: 161
+      blendAmount: 0
+    - x: 2
+      y: 33
+      layer: 0
+      spriteId: 162
+      blendAmount: 0
+    - x: 3
+      y: 33
+      layer: 0
+      spriteId: 163
+      blendAmount: 0
+    - x: 4
+      y: 33
+      layer: 0
+      spriteId: 164
+      blendAmount: 0
+    - x: 5
+      y: 33
+      layer: 0
+      spriteId: 165
+      blendAmount: 0
+    - x: 6
+      y: 33
+      layer: 0
+      spriteId: 166
+      blendAmount: 0
+    - x: 7
+      y: 33
+      layer: 0
+      spriteId: 167
+      blendAmount: 0
+    - x: 8
+      y: 33
+      layer: 0
+      spriteId: 168
+      blendAmount: 0
+    - x: 9
+      y: 33
+      layer: 0
+      spriteId: 169
+      blendAmount: 0
+    - x: 10
+      y: 33
+      layer: 0
+      spriteId: 170
+      blendAmount: 0
+    - x: 11
+      y: 33
+      layer: 0
+      spriteId: 171
+      blendAmount: 0
+    - x: 12
+      y: 33
+      layer: 0
+      spriteId: 172
+      blendAmount: 0
+    - x: 13
+      y: 33
+      layer: 0
+      spriteId: 173
+      blendAmount: 0
+    - x: 14
+      y: 33
+      layer: 0
+      spriteId: 174
+      blendAmount: 0
+    - x: 15
+      y: 33
+      layer: 0
+      spriteId: 175
+      blendAmount: 0
+    - x: 0
+      y: 32
+      layer: 0
+      spriteId: 176
+      blendAmount: 0
+    - x: 1
+      y: 32
+      layer: 0
+      spriteId: 177
+      blendAmount: 0
+    - x: 2
+      y: 32
+      layer: 0
+      spriteId: 178
+      blendAmount: 0
+    - x: 3
+      y: 32
+      layer: 0
+      spriteId: 179
+      blendAmount: 0
+    - x: 4
+      y: 32
+      layer: 0
+      spriteId: 180
+      blendAmount: 0
+    - x: 5
+      y: 32
+      layer: 0
+      spriteId: 181
+      blendAmount: 0
+    - x: 6
+      y: 32
+      layer: 0
+      spriteId: 182
+      blendAmount: 0
+    - x: 7
+      y: 32
+      layer: 0
+      spriteId: 183
+      blendAmount: 0
+    - x: 8
+      y: 32
+      layer: 0
+      spriteId: 184
+      blendAmount: 0
+    - x: 9
+      y: 32
+      layer: 0
+      spriteId: 185
+      blendAmount: 0
+    - x: 10
+      y: 32
+      layer: 0
+      spriteId: 186
+      blendAmount: 0
+    - x: 11
+      y: 32
+      layer: 0
+      spriteId: 187
+      blendAmount: 0
+    - x: 12
+      y: 32
+      layer: 0
+      spriteId: 188
+      blendAmount: 0
+    - x: 13
+      y: 32
+      layer: 0
+      spriteId: 189
+      blendAmount: 0
+    - x: 14
+      y: 32
+      layer: 0
+      spriteId: 190
+      blendAmount: 0
+    - x: 15
+      y: 32
+      layer: 0
+      spriteId: 191
+      blendAmount: 0
+    - x: 0
+      y: 31
+      layer: 0
+      spriteId: 192
+      blendAmount: 0
+    - x: 1
+      y: 31
+      layer: 0
+      spriteId: 193
+      blendAmount: 0
+    - x: 2
+      y: 31
+      layer: 0
+      spriteId: 194
+      blendAmount: 0
+    - x: 3
+      y: 31
+      layer: 0
+      spriteId: 195
+      blendAmount: 0
+    - x: 4
+      y: 31
+      layer: 0
+      spriteId: 196
+      blendAmount: 0
+    - x: 5
+      y: 31
+      layer: 0
+      spriteId: 197
+      blendAmount: 0
+    - x: 6
+      y: 31
+      layer: 0
+      spriteId: 198
+      blendAmount: 0
+    - x: 7
+      y: 31
+      layer: 0
+      spriteId: 199
+      blendAmount: 0
+    - x: 8
+      y: 31
+      layer: 0
+      spriteId: 200
+      blendAmount: 0
+    - x: 9
+      y: 31
+      layer: 0
+      spriteId: 201
+      blendAmount: 0
+    - x: 10
+      y: 31
+      layer: 0
+      spriteId: 202
+      blendAmount: 0
+    - x: 11
+      y: 31
+      layer: 0
+      spriteId: 203
+      blendAmount: 0
+    - x: 12
+      y: 31
+      layer: 0
+      spriteId: 204
+      blendAmount: 0
+    - x: 13
+      y: 31
+      layer: 0
+      spriteId: 205
+      blendAmount: 0
+    - x: 14
+      y: 31
+      layer: 0
+      spriteId: 206
+      blendAmount: 0
+    - x: 15
+      y: 31
+      layer: 0
+      spriteId: 207
+      blendAmount: 0
+    - x: 0
+      y: 30
+      layer: 0
+      spriteId: 208
+      blendAmount: 0
+    - x: 1
+      y: 30
+      layer: 0
+      spriteId: 209
+      blendAmount: 0
+    - x: 2
+      y: 30
+      layer: 0
+      spriteId: 210
+      blendAmount: 0
+    - x: 3
+      y: 30
+      layer: 0
+      spriteId: 211
+      blendAmount: 0
+    - x: 4
+      y: 30
+      layer: 0
+      spriteId: 212
+      blendAmount: 0
+    - x: 5
+      y: 30
+      layer: 0
+      spriteId: 213
+      blendAmount: 0
+    - x: 6
+      y: 30
+      layer: 0
+      spriteId: 214
+      blendAmount: 0
+    - x: 7
+      y: 30
+      layer: 0
+      spriteId: 215
+      blendAmount: 0
+    - x: 8
+      y: 30
+      layer: 0
+      spriteId: 216
+      blendAmount: 0
+    - x: 9
+      y: 30
+      layer: 0
+      spriteId: 217
+      blendAmount: 0
+    - x: 10
+      y: 30
+      layer: 0
+      spriteId: 218
+      blendAmount: 0
+    - x: 11
+      y: 30
+      layer: 0
+      spriteId: 219
+      blendAmount: 0
+    - x: 12
+      y: 30
+      layer: 0
+      spriteId: 220
+      blendAmount: 0
+    - x: 13
+      y: 30
+      layer: 0
+      spriteId: 221
+      blendAmount: 0
+    - x: 14
+      y: 30
+      layer: 0
+      spriteId: 222
+      blendAmount: 0
+    - x: 15
+      y: 30
+      layer: 0
+      spriteId: 223
+      blendAmount: 0
+    - x: 0
+      y: 29
+      layer: 0
+      spriteId: 224
+      blendAmount: 0
+    - x: 1
+      y: 29
+      layer: 0
+      spriteId: 225
+      blendAmount: 0
+    - x: 2
+      y: 29
+      layer: 0
+      spriteId: 226
+      blendAmount: 0
+    - x: 3
+      y: 29
+      layer: 0
+      spriteId: 227
+      blendAmount: 0
+    - x: 4
+      y: 29
+      layer: 0
+      spriteId: 228
+      blendAmount: 0
+    - x: 5
+      y: 29
+      layer: 0
+      spriteId: 229
+      blendAmount: 0
+    - x: 6
+      y: 29
+      layer: 0
+      spriteId: 230
+      blendAmount: 0
+    - x: 7
+      y: 29
+      layer: 0
+      spriteId: 231
+      blendAmount: 0
+    - x: 8
+      y: 29
+      layer: 0
+      spriteId: 232
+      blendAmount: 0
+    - x: 9
+      y: 29
+      layer: 0
+      spriteId: 233
+      blendAmount: 0
+    - x: 10
+      y: 29
+      layer: 0
+      spriteId: 234
+      blendAmount: 0
+    - x: 11
+      y: 29
+      layer: 0
+      spriteId: 235
+      blendAmount: 0
+    - x: 12
+      y: 29
+      layer: 0
+      spriteId: 236
+      blendAmount: 0
+    - x: 13
+      y: 29
+      layer: 0
+      spriteId: 237
+      blendAmount: 0
+    - x: 14
+      y: 29
+      layer: 0
+      spriteId: 238
+      blendAmount: 0
+    - x: 15
+      y: 29
+      layer: 0
+      spriteId: 239
+      blendAmount: 0
+    - x: 0
+      y: 28
+      layer: 0
+      spriteId: 240
+      blendAmount: 0
+    - x: 1
+      y: 28
+      layer: 0
+      spriteId: 241
+      blendAmount: 0
+    - x: 2
+      y: 28
+      layer: 0
+      spriteId: 242
+      blendAmount: 0
+    - x: 3
+      y: 28
+      layer: 0
+      spriteId: 243
+      blendAmount: 0
+    - x: 4
+      y: 28
+      layer: 0
+      spriteId: 244
+      blendAmount: 0
+    - x: 5
+      y: 28
+      layer: 0
+      spriteId: 245
+      blendAmount: 0
+    - x: 6
+      y: 28
+      layer: 0
+      spriteId: 246
+      blendAmount: 0
+    - x: 7
+      y: 28
+      layer: 0
+      spriteId: 247
+      blendAmount: 0
+    - x: 8
+      y: 28
+      layer: 0
+      spriteId: 248
+      blendAmount: 0
+    - x: 9
+      y: 28
+      layer: 0
+      spriteId: 249
+      blendAmount: 0
+    - x: 10
+      y: 28
+      layer: 0
+      spriteId: 250
+      blendAmount: 0
+    - x: 11
+      y: 28
+      layer: 0
+      spriteId: 251
+      blendAmount: 0
+    - x: 12
+      y: 28
+      layer: 0
+      spriteId: 252
+      blendAmount: 0
+    - x: 13
+      y: 28
+      layer: 0
+      spriteId: 253
+      blendAmount: 0
+    - x: 14
+      y: 28
+      layer: 0
+      spriteId: 254
+      blendAmount: 0
+    - x: 15
+      y: 28
+      layer: 0
+      spriteId: 255
+      blendAmount: 0
+    - x: 0
+      y: 27
+      layer: 0
+      spriteId: 256
+      blendAmount: 0
+    - x: 1
+      y: 27
+      layer: 0
+      spriteId: 257
+      blendAmount: 0
+    - x: 2
+      y: 27
+      layer: 0
+      spriteId: 258
+      blendAmount: 0
+    - x: 3
+      y: 27
+      layer: 0
+      spriteId: 259
+      blendAmount: 0
+    - x: 4
+      y: 27
+      layer: 0
+      spriteId: 260
+      blendAmount: 0
+    - x: 5
+      y: 27
+      layer: 0
+      spriteId: 261
+      blendAmount: 0
+    - x: 6
+      y: 27
+      layer: 0
+      spriteId: 262
+      blendAmount: 0
+    - x: 7
+      y: 27
+      layer: 0
+      spriteId: 263
+      blendAmount: 0
+    - x: 8
+      y: 27
+      layer: 0
+      spriteId: 264
+      blendAmount: 0
+    - x: 9
+      y: 27
+      layer: 0
+      spriteId: 265
+      blendAmount: 0
+    - x: 10
+      y: 27
+      layer: 0
+      spriteId: 266
+      blendAmount: 0
+    - x: 11
+      y: 27
+      layer: 0
+      spriteId: 267
+      blendAmount: 0
+    - x: 12
+      y: 27
+      layer: 0
+      spriteId: 268
+      blendAmount: 0
+    - x: 13
+      y: 27
+      layer: 0
+      spriteId: 269
+      blendAmount: 0
+    - x: 14
+      y: 27
+      layer: 0
+      spriteId: 270
+      blendAmount: 0
+    - x: 15
+      y: 27
+      layer: 0
+      spriteId: 271
+      blendAmount: 0
+    - x: 0
+      y: 26
+      layer: 0
+      spriteId: 272
+      blendAmount: 0
+    - x: 1
+      y: 26
+      layer: 0
+      spriteId: 273
+      blendAmount: 0
+    - x: 2
+      y: 26
+      layer: 0
+      spriteId: 274
+      blendAmount: 0
+    - x: 3
+      y: 26
+      layer: 0
+      spriteId: 275
+      blendAmount: 0
+    - x: 4
+      y: 26
+      layer: 0
+      spriteId: 276
+      blendAmount: 0
+    - x: 5
+      y: 26
+      layer: 0
+      spriteId: 277
+      blendAmount: 0
+    - x: 6
+      y: 26
+      layer: 0
+      spriteId: 278
+      blendAmount: 0
+    - x: 7
+      y: 26
+      layer: 0
+      spriteId: 279
+      blendAmount: 0
+    - x: 8
+      y: 26
+      layer: 0
+      spriteId: 280
+      blendAmount: 0
+    - x: 9
+      y: 26
+      layer: 0
+      spriteId: 281
+      blendAmount: 0
+    - x: 10
+      y: 26
+      layer: 0
+      spriteId: 282
+      blendAmount: 0
+    - x: 11
+      y: 26
+      layer: 0
+      spriteId: 283
+      blendAmount: 0
+    - x: 12
+      y: 26
+      layer: 0
+      spriteId: 284
+      blendAmount: 0
+    - x: 13
+      y: 26
+      layer: 0
+      spriteId: 285
+      blendAmount: 0
+    - x: 14
+      y: 26
+      layer: 0
+      spriteId: 286
+      blendAmount: 0
+    - x: 15
+      y: 26
+      layer: 0
+      spriteId: 287
+      blendAmount: 0
+    - x: 0
+      y: 25
+      layer: 0
+      spriteId: 288
+      blendAmount: 0
+    - x: 1
+      y: 25
+      layer: 0
+      spriteId: 289
+      blendAmount: 0
+    - x: 2
+      y: 25
+      layer: 0
+      spriteId: 290
+      blendAmount: 0
+    - x: 3
+      y: 25
+      layer: 0
+      spriteId: 291
+      blendAmount: 0
+    - x: 4
+      y: 25
+      layer: 0
+      spriteId: 292
+      blendAmount: 0
+    - x: 5
+      y: 25
+      layer: 0
+      spriteId: 293
+      blendAmount: 0
+    - x: 6
+      y: 25
+      layer: 0
+      spriteId: 294
+      blendAmount: 0
+    - x: 7
+      y: 25
+      layer: 0
+      spriteId: 295
+      blendAmount: 0
+    - x: 8
+      y: 25
+      layer: 0
+      spriteId: 296
+      blendAmount: 0
+    - x: 9
+      y: 25
+      layer: 0
+      spriteId: 297
+      blendAmount: 0
+    - x: 10
+      y: 25
+      layer: 0
+      spriteId: 298
+      blendAmount: 0
+    - x: 11
+      y: 25
+      layer: 0
+      spriteId: 299
+      blendAmount: 0
+    - x: 12
+      y: 25
+      layer: 0
+      spriteId: 300
+      blendAmount: 0
+    - x: 13
+      y: 25
+      layer: 0
+      spriteId: 301
+      blendAmount: 0
+    - x: 14
+      y: 25
+      layer: 0
+      spriteId: 302
+      blendAmount: 0
+    - x: 15
+      y: 25
+      layer: 0
+      spriteId: 303
+      blendAmount: 0
+    - x: 0
+      y: 24
+      layer: 0
+      spriteId: 304
+      blendAmount: 0
+    - x: 1
+      y: 24
+      layer: 0
+      spriteId: 305
+      blendAmount: 0
+    - x: 2
+      y: 24
+      layer: 0
+      spriteId: 306
+      blendAmount: 0
+    - x: 3
+      y: 24
+      layer: 0
+      spriteId: 307
+      blendAmount: 0
+    - x: 4
+      y: 24
+      layer: 0
+      spriteId: 308
+      blendAmount: 0
+    - x: 5
+      y: 24
+      layer: 0
+      spriteId: 309
+      blendAmount: 0
+    - x: 6
+      y: 24
+      layer: 0
+      spriteId: 310
+      blendAmount: 0
+    - x: 7
+      y: 24
+      layer: 0
+      spriteId: 311
+      blendAmount: 0
+    - x: 8
+      y: 24
+      layer: 0
+      spriteId: 312
+      blendAmount: 0
+    - x: 9
+      y: 24
+      layer: 0
+      spriteId: 313
+      blendAmount: 0
+    - x: 10
+      y: 24
+      layer: 0
+      spriteId: 314
+      blendAmount: 0
+    - x: 11
+      y: 24
+      layer: 0
+      spriteId: 315
+      blendAmount: 0
+    - x: 12
+      y: 24
+      layer: 0
+      spriteId: 316
+      blendAmount: 0
+    - x: 13
+      y: 24
+      layer: 0
+      spriteId: 317
+      blendAmount: 0
+    - x: 14
+      y: 24
+      layer: 0
+      spriteId: 318
+      blendAmount: 0
+    - x: 15
+      y: 24
+      layer: 0
+      spriteId: 319
+      blendAmount: 0
+    - x: 0
+      y: 23
+      layer: 0
+      spriteId: 320
+      blendAmount: 0
+    - x: 1
+      y: 23
+      layer: 0
+      spriteId: 321
+      blendAmount: 0
+    - x: 2
+      y: 23
+      layer: 0
+      spriteId: 322
+      blendAmount: 0
+    - x: 3
+      y: 23
+      layer: 0
+      spriteId: 323
+      blendAmount: 0
+    - x: 4
+      y: 23
+      layer: 0
+      spriteId: 324
+      blendAmount: 0
+    - x: 5
+      y: 23
+      layer: 0
+      spriteId: 325
+      blendAmount: 0
+    - x: 6
+      y: 23
+      layer: 0
+      spriteId: 326
+      blendAmount: 0
+    - x: 7
+      y: 23
+      layer: 0
+      spriteId: 327
+      blendAmount: 0
+    - x: 8
+      y: 23
+      layer: 0
+      spriteId: 328
+      blendAmount: 0
+    - x: 9
+      y: 23
+      layer: 0
+      spriteId: 329
+      blendAmount: 0
+    - x: 10
+      y: 23
+      layer: 0
+      spriteId: 330
+      blendAmount: 0
+    - x: 11
+      y: 23
+      layer: 0
+      spriteId: 331
+      blendAmount: 0
+    - x: 12
+      y: 23
+      layer: 0
+      spriteId: 332
+      blendAmount: 0
+    - x: 13
+      y: 23
+      layer: 0
+      spriteId: 333
+      blendAmount: 0
+    - x: 14
+      y: 23
+      layer: 0
+      spriteId: 334
+      blendAmount: 0
+    - x: 15
+      y: 23
+      layer: 0
+      spriteId: 335
+      blendAmount: 0
+    - x: 0
+      y: 22
+      layer: 0
+      spriteId: 336
+      blendAmount: 0
+    - x: 1
+      y: 22
+      layer: 0
+      spriteId: 337
+      blendAmount: 0
+    - x: 2
+      y: 22
+      layer: 0
+      spriteId: 338
+      blendAmount: 0
+    - x: 3
+      y: 22
+      layer: 0
+      spriteId: 339
+      blendAmount: 0
+    - x: 4
+      y: 22
+      layer: 0
+      spriteId: 340
+      blendAmount: 0
+    - x: 5
+      y: 22
+      layer: 0
+      spriteId: 341
+      blendAmount: 0
+    - x: 6
+      y: 22
+      layer: 0
+      spriteId: 342
+      blendAmount: 0
+    - x: 7
+      y: 22
+      layer: 0
+      spriteId: 343
+      blendAmount: 0
+    - x: 8
+      y: 22
+      layer: 0
+      spriteId: 344
+      blendAmount: 0
+    - x: 9
+      y: 22
+      layer: 0
+      spriteId: 345
+      blendAmount: 0
+    - x: 10
+      y: 22
+      layer: 0
+      spriteId: 346
+      blendAmount: 0
+    - x: 11
+      y: 22
+      layer: 0
+      spriteId: 347
+      blendAmount: 0
+    - x: 12
+      y: 22
+      layer: 0
+      spriteId: 348
+      blendAmount: 0
+    - x: 13
+      y: 22
+      layer: 0
+      spriteId: 349
+      blendAmount: 0
+    - x: 14
+      y: 22
+      layer: 0
+      spriteId: 350
+      blendAmount: 0
+    - x: 15
+      y: 22
+      layer: 0
+      spriteId: 351
+      blendAmount: 0
+    - x: 0
+      y: 21
+      layer: 0
+      spriteId: 352
+      blendAmount: 0
+    - x: 1
+      y: 21
+      layer: 0
+      spriteId: 353
+      blendAmount: 0
+    - x: 2
+      y: 21
+      layer: 0
+      spriteId: 354
+      blendAmount: 0
+    - x: 3
+      y: 21
+      layer: 0
+      spriteId: 355
+      blendAmount: 0
+    - x: 4
+      y: 21
+      layer: 0
+      spriteId: 356
+      blendAmount: 0
+    - x: 5
+      y: 21
+      layer: 0
+      spriteId: 357
+      blendAmount: 0
+    - x: 6
+      y: 21
+      layer: 0
+      spriteId: 358
+      blendAmount: 0
+    - x: 7
+      y: 21
+      layer: 0
+      spriteId: 359
+      blendAmount: 0
+    - x: 8
+      y: 21
+      layer: 0
+      spriteId: 360
+      blendAmount: 0
+    - x: 9
+      y: 21
+      layer: 0
+      spriteId: 361
+      blendAmount: 0
+    - x: 10
+      y: 21
+      layer: 0
+      spriteId: 362
+      blendAmount: 0
+    - x: 11
+      y: 21
+      layer: 0
+      spriteId: 363
+      blendAmount: 0
+    - x: 12
+      y: 21
+      layer: 0
+      spriteId: 364
+      blendAmount: 0
+    - x: 13
+      y: 21
+      layer: 0
+      spriteId: 365
+      blendAmount: 0
+    - x: 14
+      y: 21
+      layer: 0
+      spriteId: 366
+      blendAmount: 0
+    - x: 15
+      y: 21
+      layer: 0
+      spriteId: 367
+      blendAmount: 0
+    - x: 0
+      y: 20
+      layer: 0
+      spriteId: 368
+      blendAmount: 0
+    - x: 1
+      y: 20
+      layer: 0
+      spriteId: 369
+      blendAmount: 0
+    - x: 2
+      y: 20
+      layer: 0
+      spriteId: 370
+      blendAmount: 0
+    - x: 3
+      y: 20
+      layer: 0
+      spriteId: 371
+      blendAmount: 0
+    - x: 4
+      y: 20
+      layer: 0
+      spriteId: 372
+      blendAmount: 0
+    - x: 5
+      y: 20
+      layer: 0
+      spriteId: 373
+      blendAmount: 0
+    - x: 6
+      y: 20
+      layer: 0
+      spriteId: 374
+      blendAmount: 0
+    - x: 7
+      y: 20
+      layer: 0
+      spriteId: 375
+      blendAmount: 0
+    - x: 8
+      y: 20
+      layer: 0
+      spriteId: 376
+      blendAmount: 0
+    - x: 9
+      y: 20
+      layer: 0
+      spriteId: 377
+      blendAmount: 0
+    - x: 10
+      y: 20
+      layer: 0
+      spriteId: 378
+      blendAmount: 0
+    - x: 11
+      y: 20
+      layer: 0
+      spriteId: 379
+      blendAmount: 0
+    - x: 12
+      y: 20
+      layer: 0
+      spriteId: 380
+      blendAmount: 0
+    - x: 13
+      y: 20
+      layer: 0
+      spriteId: 381
+      blendAmount: 0
+    - x: 14
+      y: 20
+      layer: 0
+      spriteId: 382
+      blendAmount: 0
+    - x: 15
+      y: 20
+      layer: 0
+      spriteId: 383
+      blendAmount: 0
+    - x: 0
+      y: 19
+      layer: 0
+      spriteId: 384
+      blendAmount: 0
+    - x: 1
+      y: 19
+      layer: 0
+      spriteId: 385
+      blendAmount: 0
+    - x: 2
+      y: 19
+      layer: 0
+      spriteId: 386
+      blendAmount: 0
+    - x: 3
+      y: 19
+      layer: 0
+      spriteId: 387
+      blendAmount: 0
+    - x: 4
+      y: 19
+      layer: 0
+      spriteId: 388
+      blendAmount: 0
+    - x: 5
+      y: 19
+      layer: 0
+      spriteId: 389
+      blendAmount: 0
+    - x: 6
+      y: 19
+      layer: 0
+      spriteId: 390
+      blendAmount: 0
+    - x: 7
+      y: 19
+      layer: 0
+      spriteId: 391
+      blendAmount: 0
+    - x: 8
+      y: 19
+      layer: 0
+      spriteId: 392
+      blendAmount: 0
+    - x: 9
+      y: 19
+      layer: 0
+      spriteId: 393
+      blendAmount: 0
+    - x: 10
+      y: 19
+      layer: 0
+      spriteId: 394
+      blendAmount: 0
+    - x: 11
+      y: 19
+      layer: 0
+      spriteId: 395
+      blendAmount: 0
+    - x: 12
+      y: 19
+      layer: 0
+      spriteId: 396
+      blendAmount: 0
+    - x: 13
+      y: 19
+      layer: 0
+      spriteId: 397
+      blendAmount: 0
+    - x: 14
+      y: 19
+      layer: 0
+      spriteId: 398
+      blendAmount: 0
+    - x: 15
+      y: 19
+      layer: 0
+      spriteId: 399
+      blendAmount: 0
+    - x: 0
+      y: 18
+      layer: 0
+      spriteId: 400
+      blendAmount: 0
+    - x: 1
+      y: 18
+      layer: 0
+      spriteId: 401
+      blendAmount: 0
+    - x: 2
+      y: 18
+      layer: 0
+      spriteId: 402
+      blendAmount: 0
+    - x: 3
+      y: 18
+      layer: 0
+      spriteId: 403
+      blendAmount: 0
+    - x: 4
+      y: 18
+      layer: 0
+      spriteId: 404
+      blendAmount: 0
+    - x: 5
+      y: 18
+      layer: 0
+      spriteId: 405
+      blendAmount: 0
+    - x: 6
+      y: 18
+      layer: 0
+      spriteId: 406
+      blendAmount: 0
+    - x: 7
+      y: 18
+      layer: 0
+      spriteId: 407
+      blendAmount: 0
+    - x: 8
+      y: 18
+      layer: 0
+      spriteId: 408
+      blendAmount: 0
+    - x: 9
+      y: 18
+      layer: 0
+      spriteId: 409
+      blendAmount: 0
+    - x: 10
+      y: 18
+      layer: 0
+      spriteId: 410
+      blendAmount: 0
+    - x: 11
+      y: 18
+      layer: 0
+      spriteId: 411
+      blendAmount: 0
+    - x: 12
+      y: 18
+      layer: 0
+      spriteId: 412
+      blendAmount: 0
+    - x: 13
+      y: 18
+      layer: 0
+      spriteId: 413
+      blendAmount: 0
+    - x: 14
+      y: 18
+      layer: 0
+      spriteId: 414
+      blendAmount: 0
+    - x: 15
+      y: 18
+      layer: 0
+      spriteId: 415
+      blendAmount: 0
+    - x: 0
+      y: 17
+      layer: 0
+      spriteId: 416
+      blendAmount: 0
+    - x: 1
+      y: 17
+      layer: 0
+      spriteId: 417
+      blendAmount: 0
+    - x: 2
+      y: 17
+      layer: 0
+      spriteId: 418
+      blendAmount: 0
+    - x: 3
+      y: 17
+      layer: 0
+      spriteId: 419
+      blendAmount: 0
+    - x: 4
+      y: 17
+      layer: 0
+      spriteId: 420
+      blendAmount: 0
+    - x: 5
+      y: 17
+      layer: 0
+      spriteId: 421
+      blendAmount: 0
+    - x: 6
+      y: 17
+      layer: 0
+      spriteId: 422
+      blendAmount: 0
+    - x: 7
+      y: 17
+      layer: 0
+      spriteId: 423
+      blendAmount: 0
+    - x: 8
+      y: 17
+      layer: 0
+      spriteId: 424
+      blendAmount: 0
+    - x: 9
+      y: 17
+      layer: 0
+      spriteId: 425
+      blendAmount: 0
+    - x: 10
+      y: 17
+      layer: 0
+      spriteId: 426
+      blendAmount: 0
+    - x: 11
+      y: 17
+      layer: 0
+      spriteId: 427
+      blendAmount: 0
+    - x: 12
+      y: 17
+      layer: 0
+      spriteId: 428
+      blendAmount: 0
+    - x: 13
+      y: 17
+      layer: 0
+      spriteId: 429
+      blendAmount: 0
+    - x: 14
+      y: 17
+      layer: 0
+      spriteId: 430
+      blendAmount: 0
+    - x: 15
+      y: 17
+      layer: 0
+      spriteId: 431
+      blendAmount: 0
+    - x: 0
+      y: 16
+      layer: 0
+      spriteId: 432
+      blendAmount: 0
+    - x: 1
+      y: 16
+      layer: 0
+      spriteId: 433
+      blendAmount: 0
+    - x: 2
+      y: 16
+      layer: 0
+      spriteId: 434
+      blendAmount: 0
+    - x: 3
+      y: 16
+      layer: 0
+      spriteId: 435
+      blendAmount: 0
+    - x: 4
+      y: 16
+      layer: 0
+      spriteId: 436
+      blendAmount: 0
+    - x: 5
+      y: 16
+      layer: 0
+      spriteId: 437
+      blendAmount: 0
+    - x: 6
+      y: 16
+      layer: 0
+      spriteId: 438
+      blendAmount: 0
+    - x: 7
+      y: 16
+      layer: 0
+      spriteId: 439
+      blendAmount: 0
+    - x: 8
+      y: 16
+      layer: 0
+      spriteId: 440
+      blendAmount: 0
+    - x: 9
+      y: 16
+      layer: 0
+      spriteId: 441
+      blendAmount: 0
+    - x: 10
+      y: 16
+      layer: 0
+      spriteId: 442
+      blendAmount: 0
+    - x: 11
+      y: 16
+      layer: 0
+      spriteId: 443
+      blendAmount: 0
+    - x: 12
+      y: 16
+      layer: 0
+      spriteId: 444
+      blendAmount: 0
+    - x: 13
+      y: 16
+      layer: 0
+      spriteId: 445
+      blendAmount: 0
+    - x: 14
+      y: 16
+      layer: 0
+      spriteId: 446
+      blendAmount: 0
+    - x: 15
+      y: 16
+      layer: 0
+      spriteId: 447
+      blendAmount: 0
+    - x: 0
+      y: 15
+      layer: 0
+      spriteId: 448
+      blendAmount: 0
+    - x: 1
+      y: 15
+      layer: 0
+      spriteId: 449
+      blendAmount: 0
+    - x: 2
+      y: 15
+      layer: 0
+      spriteId: 450
+      blendAmount: 0
+    - x: 3
+      y: 15
+      layer: 0
+      spriteId: 451
+      blendAmount: 0
+    - x: 4
+      y: 15
+      layer: 0
+      spriteId: 452
+      blendAmount: 0
+    - x: 5
+      y: 15
+      layer: 0
+      spriteId: 453
+      blendAmount: 0
+    - x: 6
+      y: 15
+      layer: 0
+      spriteId: 454
+      blendAmount: 0
+    - x: 7
+      y: 15
+      layer: 0
+      spriteId: 455
+      blendAmount: 0
+    - x: 8
+      y: 15
+      layer: 0
+      spriteId: 456
+      blendAmount: 0
+    - x: 9
+      y: 15
+      layer: 0
+      spriteId: 457
+      blendAmount: 0
+    - x: 10
+      y: 15
+      layer: 0
+      spriteId: 458
+      blendAmount: 0
+    - x: 11
+      y: 15
+      layer: 0
+      spriteId: 459
+      blendAmount: 0
+    - x: 12
+      y: 15
+      layer: 0
+      spriteId: 460
+      blendAmount: 0
+    - x: 13
+      y: 15
+      layer: 0
+      spriteId: 461
+      blendAmount: 0
+    - x: 14
+      y: 15
+      layer: 0
+      spriteId: 462
+      blendAmount: 0
+    - x: 15
+      y: 15
+      layer: 0
+      spriteId: 463
+      blendAmount: 0
+    - x: 0
+      y: 14
+      layer: 0
+      spriteId: 464
+      blendAmount: 0
+    - x: 1
+      y: 14
+      layer: 0
+      spriteId: 465
+      blendAmount: 0
+    - x: 2
+      y: 14
+      layer: 0
+      spriteId: 466
+      blendAmount: 0
+    - x: 3
+      y: 14
+      layer: 0
+      spriteId: 467
+      blendAmount: 0
+    - x: 4
+      y: 14
+      layer: 0
+      spriteId: 468
+      blendAmount: 0
+    - x: 5
+      y: 14
+      layer: 0
+      spriteId: 469
+      blendAmount: 0
+    - x: 6
+      y: 14
+      layer: 0
+      spriteId: 470
+      blendAmount: 0
+    - x: 7
+      y: 14
+      layer: 0
+      spriteId: 471
+      blendAmount: 0
+    - x: 8
+      y: 14
+      layer: 0
+      spriteId: 472
+      blendAmount: 0
+    - x: 9
+      y: 14
+      layer: 0
+      spriteId: 473
+      blendAmount: 0
+    - x: 10
+      y: 14
+      layer: 0
+      spriteId: 474
+      blendAmount: 0
+    - x: 11
+      y: 14
+      layer: 0
+      spriteId: 475
+      blendAmount: 0
+    - x: 12
+      y: 14
+      layer: 0
+      spriteId: 476
+      blendAmount: 0
+    - x: 13
+      y: 14
+      layer: 0
+      spriteId: 477
+      blendAmount: 0
+    - x: 14
+      y: 14
+      layer: 0
+      spriteId: 478
+      blendAmount: 0
+    - x: 15
+      y: 14
+      layer: 0
+      spriteId: 479
+      blendAmount: 0
+    - x: 0
+      y: 13
+      layer: 0
+      spriteId: 480
+      blendAmount: 0
+    - x: 1
+      y: 13
+      layer: 0
+      spriteId: 481
+      blendAmount: 0
+    - x: 2
+      y: 13
+      layer: 0
+      spriteId: 482
+      blendAmount: 0
+    - x: 3
+      y: 13
+      layer: 0
+      spriteId: 483
+      blendAmount: 0
+    - x: 4
+      y: 13
+      layer: 0
+      spriteId: 484
+      blendAmount: 0
+    - x: 5
+      y: 13
+      layer: 0
+      spriteId: 485
+      blendAmount: 0
+    - x: 6
+      y: 13
+      layer: 0
+      spriteId: 486
+      blendAmount: 0
+    - x: 7
+      y: 13
+      layer: 0
+      spriteId: 487
+      blendAmount: 0
+    - x: 8
+      y: 13
+      layer: 0
+      spriteId: 488
+      blendAmount: 0
+    - x: 9
+      y: 13
+      layer: 0
+      spriteId: 489
+      blendAmount: 0
+    - x: 10
+      y: 13
+      layer: 0
+      spriteId: 490
+      blendAmount: 0
+    - x: 11
+      y: 13
+      layer: 0
+      spriteId: 491
+      blendAmount: 0
+    - x: 12
+      y: 13
+      layer: 0
+      spriteId: 492
+      blendAmount: 0
+    - x: 13
+      y: 13
+      layer: 0
+      spriteId: 493
+      blendAmount: 0
+    - x: 14
+      y: 13
+      layer: 0
+      spriteId: 494
+      blendAmount: 0
+    - x: 15
+      y: 13
+      layer: 0
+      spriteId: 495
+      blendAmount: 0
+    - x: 0
+      y: 12
+      layer: 0
+      spriteId: 496
+      blendAmount: 0
+    - x: 1
+      y: 12
+      layer: 0
+      spriteId: 497
+      blendAmount: 0
+    - x: 2
+      y: 12
+      layer: 0
+      spriteId: 498
+      blendAmount: 0
+    - x: 3
+      y: 12
+      layer: 0
+      spriteId: 499
+      blendAmount: 0
+    - x: 4
+      y: 12
+      layer: 0
+      spriteId: 500
+      blendAmount: 0
+    - x: 5
+      y: 12
+      layer: 0
+      spriteId: 501
+      blendAmount: 0
+    - x: 6
+      y: 12
+      layer: 0
+      spriteId: 502
+      blendAmount: 0
+    - x: 7
+      y: 12
+      layer: 0
+      spriteId: 503
+      blendAmount: 0
+    - x: 8
+      y: 12
+      layer: 0
+      spriteId: 504
+      blendAmount: 0
+    - x: 9
+      y: 12
+      layer: 0
+      spriteId: 505
+      blendAmount: 0
+    - x: 10
+      y: 12
+      layer: 0
+      spriteId: 506
+      blendAmount: 0
+    - x: 11
+      y: 12
+      layer: 0
+      spriteId: 507
+      blendAmount: 0
+    - x: 12
+      y: 12
+      layer: 0
+      spriteId: 508
+      blendAmount: 0
+    - x: 13
+      y: 12
+      layer: 0
+      spriteId: 509
+      blendAmount: 0
+    - x: 14
+      y: 12
+      layer: 0
+      spriteId: 510
+      blendAmount: 0
+    - x: 15
+      y: 12
+      layer: 0
+      spriteId: 511
+      blendAmount: 0
+    - x: 0
+      y: 11
+      layer: 0
+      spriteId: 512
+      blendAmount: 0
+    - x: 1
+      y: 11
+      layer: 0
+      spriteId: 513
+      blendAmount: 0
+    - x: 2
+      y: 11
+      layer: 0
+      spriteId: 514
+      blendAmount: 0
+    - x: 3
+      y: 11
+      layer: 0
+      spriteId: 515
+      blendAmount: 0
+    - x: 4
+      y: 11
+      layer: 0
+      spriteId: 516
+      blendAmount: 0
+    - x: 5
+      y: 11
+      layer: 0
+      spriteId: 517
+      blendAmount: 0
+    - x: 6
+      y: 11
+      layer: 0
+      spriteId: 518
+      blendAmount: 0
+    - x: 7
+      y: 11
+      layer: 0
+      spriteId: 519
+      blendAmount: 0
+    - x: 8
+      y: 11
+      layer: 0
+      spriteId: 520
+      blendAmount: 0
+    - x: 9
+      y: 11
+      layer: 0
+      spriteId: 521
+      blendAmount: 0
+    - x: 10
+      y: 11
+      layer: 0
+      spriteId: 522
+      blendAmount: 0
+    - x: 11
+      y: 11
+      layer: 0
+      spriteId: 523
+      blendAmount: 0
+    - x: 12
+      y: 11
+      layer: 0
+      spriteId: 524
+      blendAmount: 0
+    - x: 13
+      y: 11
+      layer: 0
+      spriteId: 525
+      blendAmount: 0
+    - x: 14
+      y: 11
+      layer: 0
+      spriteId: 526
+      blendAmount: 0
+    - x: 15
+      y: 11
+      layer: 0
+      spriteId: 527
+      blendAmount: 0
+    - x: 0
+      y: 10
+      layer: 0
+      spriteId: 528
+      blendAmount: 0
+    - x: 1
+      y: 10
+      layer: 0
+      spriteId: 529
+      blendAmount: 0
+    - x: 2
+      y: 10
+      layer: 0
+      spriteId: 530
+      blendAmount: 0
+    - x: 3
+      y: 10
+      layer: 0
+      spriteId: 531
+      blendAmount: 0
+    - x: 4
+      y: 10
+      layer: 0
+      spriteId: 532
+      blendAmount: 0
+    - x: 5
+      y: 10
+      layer: 0
+      spriteId: 533
+      blendAmount: 0
+    - x: 6
+      y: 10
+      layer: 0
+      spriteId: 534
+      blendAmount: 0
+    - x: 7
+      y: 10
+      layer: 0
+      spriteId: 535
+      blendAmount: 0
+    - x: 8
+      y: 10
+      layer: 0
+      spriteId: 536
+      blendAmount: 0
+    - x: 9
+      y: 10
+      layer: 0
+      spriteId: 537
+      blendAmount: 0
+    - x: 10
+      y: 10
+      layer: 0
+      spriteId: 538
+      blendAmount: 0
+    - x: 11
+      y: 10
+      layer: 0
+      spriteId: 539
+      blendAmount: 0
+    - x: 12
+      y: 10
+      layer: 0
+      spriteId: 540
+      blendAmount: 0
+    - x: 13
+      y: 10
+      layer: 0
+      spriteId: 541
+      blendAmount: 0
+    - x: 14
+      y: 10
+      layer: 0
+      spriteId: 542
+      blendAmount: 0
+    - x: 15
+      y: 10
+      layer: 0
+      spriteId: 543
+      blendAmount: 0
+    - x: 0
+      y: 9
+      layer: 0
+      spriteId: 544
+      blendAmount: 0
+    - x: 1
+      y: 9
+      layer: 0
+      spriteId: 545
+      blendAmount: 0
+    - x: 2
+      y: 9
+      layer: 0
+      spriteId: 546
+      blendAmount: 0
+    - x: 3
+      y: 9
+      layer: 0
+      spriteId: 547
+      blendAmount: 0
+    - x: 4
+      y: 9
+      layer: 0
+      spriteId: 548
+      blendAmount: 0
+    - x: 5
+      y: 9
+      layer: 0
+      spriteId: 549
+      blendAmount: 0
+    - x: 6
+      y: 9
+      layer: 0
+      spriteId: 550
+      blendAmount: 0
+    - x: 7
+      y: 9
+      layer: 0
+      spriteId: 551
+      blendAmount: 0
+    - x: 8
+      y: 9
+      layer: 0
+      spriteId: 552
+      blendAmount: 0
+    - x: 9
+      y: 9
+      layer: 0
+      spriteId: 553
+      blendAmount: 0
+    - x: 10
+      y: 9
+      layer: 0
+      spriteId: 554
+      blendAmount: 0
+    - x: 11
+      y: 9
+      layer: 0
+      spriteId: 555
+      blendAmount: 0
+    - x: 12
+      y: 9
+      layer: 0
+      spriteId: 556
+      blendAmount: 0
+    - x: 13
+      y: 9
+      layer: 0
+      spriteId: 557
+      blendAmount: 0
+    - x: 14
+      y: 9
+      layer: 0
+      spriteId: 558
+      blendAmount: 0
+    - x: 15
+      y: 9
+      layer: 0
+      spriteId: 559
+      blendAmount: 0
+    - x: 0
+      y: 8
+      layer: 0
+      spriteId: 560
+      blendAmount: 0
+    - x: 1
+      y: 8
+      layer: 0
+      spriteId: 561
+      blendAmount: 0
+    - x: 2
+      y: 8
+      layer: 0
+      spriteId: 562
+      blendAmount: 0
+    - x: 3
+      y: 8
+      layer: 0
+      spriteId: 563
+      blendAmount: 0
+    - x: 4
+      y: 8
+      layer: 0
+      spriteId: 564
+      blendAmount: 0
+    - x: 5
+      y: 8
+      layer: 0
+      spriteId: 565
+      blendAmount: 0
+    - x: 6
+      y: 8
+      layer: 0
+      spriteId: 566
+      blendAmount: 0
+    - x: 7
+      y: 8
+      layer: 0
+      spriteId: 567
+      blendAmount: 0
+    - x: 8
+      y: 8
+      layer: 0
+      spriteId: 568
+      blendAmount: 0
+    - x: 9
+      y: 8
+      layer: 0
+      spriteId: 569
+      blendAmount: 0
+    - x: 10
+      y: 8
+      layer: 0
+      spriteId: 570
+      blendAmount: 0
+    - x: 11
+      y: 8
+      layer: 0
+      spriteId: 571
+      blendAmount: 0
+    - x: 12
+      y: 8
+      layer: 0
+      spriteId: 572
+      blendAmount: 0
+    - x: 13
+      y: 8
+      layer: 0
+      spriteId: 573
+      blendAmount: 0
+    - x: 14
+      y: 8
+      layer: 0
+      spriteId: 574
+      blendAmount: 0
+    - x: 15
+      y: 8
+      layer: 0
+      spriteId: 575
+      blendAmount: 0
+    - x: 0
+      y: 7
+      layer: 0
+      spriteId: 576
+      blendAmount: 0
+    - x: 1
+      y: 7
+      layer: 0
+      spriteId: 577
+      blendAmount: 0
+    - x: 2
+      y: 7
+      layer: 0
+      spriteId: 578
+      blendAmount: 0
+    - x: 3
+      y: 7
+      layer: 0
+      spriteId: 579
+      blendAmount: 0
+    - x: 4
+      y: 7
+      layer: 0
+      spriteId: 580
+      blendAmount: 0
+    - x: 5
+      y: 7
+      layer: 0
+      spriteId: 581
+      blendAmount: 0
+    - x: 6
+      y: 7
+      layer: 0
+      spriteId: 582
+      blendAmount: 0
+    - x: 7
+      y: 7
+      layer: 0
+      spriteId: 583
+      blendAmount: 0
+    - x: 8
+      y: 7
+      layer: 0
+      spriteId: 584
+      blendAmount: 0
+    - x: 9
+      y: 7
+      layer: 0
+      spriteId: 585
+      blendAmount: 0
+    - x: 10
+      y: 7
+      layer: 0
+      spriteId: 586
+      blendAmount: 0
+    - x: 11
+      y: 7
+      layer: 0
+      spriteId: 587
+      blendAmount: 0
+    - x: 12
+      y: 7
+      layer: 0
+      spriteId: 588
+      blendAmount: 0
+    - x: 13
+      y: 7
+      layer: 0
+      spriteId: 589
+      blendAmount: 0
+    - x: 14
+      y: 7
+      layer: 0
+      spriteId: 590
+      blendAmount: 0
+    - x: 15
+      y: 7
+      layer: 0
+      spriteId: 591
+      blendAmount: 0
+    - x: 0
+      y: 6
+      layer: 0
+      spriteId: 592
+      blendAmount: 0
+    - x: 1
+      y: 6
+      layer: 0
+      spriteId: 593
+      blendAmount: 0
+    - x: 2
+      y: 6
+      layer: 0
+      spriteId: 594
+      blendAmount: 0
+    - x: 3
+      y: 6
+      layer: 0
+      spriteId: 595
+      blendAmount: 0
+    - x: 4
+      y: 6
+      layer: 0
+      spriteId: 596
+      blendAmount: 0
+    - x: 5
+      y: 6
+      layer: 0
+      spriteId: 597
+      blendAmount: 0
+    - x: 6
+      y: 6
+      layer: 0
+      spriteId: 598
+      blendAmount: 0
+    - x: 7
+      y: 6
+      layer: 0
+      spriteId: 599
+      blendAmount: 0
+    - x: 8
+      y: 6
+      layer: 0
+      spriteId: 600
+      blendAmount: 0
+    - x: 9
+      y: 6
+      layer: 0
+      spriteId: 601
+      blendAmount: 0
+    - x: 10
+      y: 6
+      layer: 0
+      spriteId: 602
+      blendAmount: 0
+    - x: 11
+      y: 6
+      layer: 0
+      spriteId: 603
+      blendAmount: 0
+    - x: 12
+      y: 6
+      layer: 0
+      spriteId: 604
+      blendAmount: 0
+    - x: 13
+      y: 6
+      layer: 0
+      spriteId: 605
+      blendAmount: 0
+    - x: 14
+      y: 6
+      layer: 0
+      spriteId: 606
+      blendAmount: 0
+    - x: 15
+      y: 6
+      layer: 0
+      spriteId: 607
+      blendAmount: 0
+    - x: 0
+      y: 5
+      layer: 0
+      spriteId: 608
+      blendAmount: 0
+    - x: 1
+      y: 5
+      layer: 0
+      spriteId: 609
+      blendAmount: 0
+    - x: 2
+      y: 5
+      layer: 0
+      spriteId: 610
+      blendAmount: 0
+    - x: 3
+      y: 5
+      layer: 0
+      spriteId: 611
+      blendAmount: 0
+    - x: 4
+      y: 5
+      layer: 0
+      spriteId: 612
+      blendAmount: 0
+    - x: 5
+      y: 5
+      layer: 0
+      spriteId: 613
+      blendAmount: 0
+    - x: 6
+      y: 5
+      layer: 0
+      spriteId: 614
+      blendAmount: 0
+    - x: 7
+      y: 5
+      layer: 0
+      spriteId: 615
+      blendAmount: 0
+    - x: 8
+      y: 5
+      layer: 0
+      spriteId: 616
+      blendAmount: 0
+    - x: 9
+      y: 5
+      layer: 0
+      spriteId: 617
+      blendAmount: 0
+    - x: 10
+      y: 5
+      layer: 0
+      spriteId: 618
+      blendAmount: 0
+    - x: 11
+      y: 5
+      layer: 0
+      spriteId: 619
+      blendAmount: 0
+    - x: 12
+      y: 5
+      layer: 0
+      spriteId: 620
+      blendAmount: 0
+    - x: 13
+      y: 5
+      layer: 0
+      spriteId: 621
+      blendAmount: 0
+    - x: 14
+      y: 5
+      layer: 0
+      spriteId: 622
+      blendAmount: 0
+    - x: 15
+      y: 5
+      layer: 0
+      spriteId: 623
+      blendAmount: 0
+    - x: 0
+      y: 4
+      layer: 0
+      spriteId: 624
+      blendAmount: 0
+    - x: 1
+      y: 4
+      layer: 0
+      spriteId: 625
+      blendAmount: 0
+    - x: 2
+      y: 4
+      layer: 0
+      spriteId: 626
+      blendAmount: 0
+    - x: 3
+      y: 4
+      layer: 0
+      spriteId: 627
+      blendAmount: 0
+    - x: 4
+      y: 4
+      layer: 0
+      spriteId: 628
+      blendAmount: 0
+    - x: 5
+      y: 4
+      layer: 0
+      spriteId: 629
+      blendAmount: 0
+    - x: 6
+      y: 4
+      layer: 0
+      spriteId: 630
+      blendAmount: 0
+    - x: 7
+      y: 4
+      layer: 0
+      spriteId: 631
+      blendAmount: 0
+    - x: 8
+      y: 4
+      layer: 0
+      spriteId: 632
+      blendAmount: 0
+    - x: 9
+      y: 4
+      layer: 0
+      spriteId: 633
+      blendAmount: 0
+    - x: 10
+      y: 4
+      layer: 0
+      spriteId: 634
+      blendAmount: 0
+    - x: 11
+      y: 4
+      layer: 0
+      spriteId: 635
+      blendAmount: 0
+    - x: 12
+      y: 4
+      layer: 0
+      spriteId: 636
+      blendAmount: 0
+    - x: 13
+      y: 4
+      layer: 0
+      spriteId: 637
+      blendAmount: 0
+    - x: 14
+      y: 4
+      layer: 0
+      spriteId: 638
+      blendAmount: 0
+    - x: 15
+      y: 4
+      layer: 0
+      spriteId: 639
+      blendAmount: 0
+    - x: 0
+      y: 3
+      layer: 0
+      spriteId: 640
+      blendAmount: 0
+    - x: 1
+      y: 3
+      layer: 0
+      spriteId: 641
+      blendAmount: 0
+    - x: 2
+      y: 3
+      layer: 0
+      spriteId: 642
+      blendAmount: 0
+    - x: 3
+      y: 3
+      layer: 0
+      spriteId: 643
+      blendAmount: 0
+    - x: 4
+      y: 3
+      layer: 0
+      spriteId: 644
+      blendAmount: 0
+    - x: 5
+      y: 3
+      layer: 0
+      spriteId: 645
+      blendAmount: 0
+    - x: 6
+      y: 3
+      layer: 0
+      spriteId: 646
+      blendAmount: 0
+    - x: 7
+      y: 3
+      layer: 0
+      spriteId: 647
+      blendAmount: 0
+    - x: 8
+      y: 3
+      layer: 0
+      spriteId: 648
+      blendAmount: 0
+    - x: 9
+      y: 3
+      layer: 0
+      spriteId: 649
+      blendAmount: 0
+    - x: 10
+      y: 3
+      layer: 0
+      spriteId: 650
+      blendAmount: 0
+    - x: 11
+      y: 3
+      layer: 0
+      spriteId: 651
+      blendAmount: 0
+    - x: 12
+      y: 3
+      layer: 0
+      spriteId: 652
+      blendAmount: 0
+    - x: 13
+      y: 3
+      layer: 0
+      spriteId: 653
+      blendAmount: 0
+    - x: 14
+      y: 3
+      layer: 0
+      spriteId: 654
+      blendAmount: 0
+    - x: 15
+      y: 3
+      layer: 0
+      spriteId: 655
+      blendAmount: 0
+    - x: 0
+      y: 2
+      layer: 0
+      spriteId: 656
+      blendAmount: 0
+    - x: 1
+      y: 2
+      layer: 0
+      spriteId: 657
+      blendAmount: 0
+    - x: 2
+      y: 2
+      layer: 0
+      spriteId: 658
+      blendAmount: 0
+    - x: 3
+      y: 2
+      layer: 0
+      spriteId: 659
+      blendAmount: 0
+    - x: 4
+      y: 2
+      layer: 0
+      spriteId: 660
+      blendAmount: 0
+    - x: 5
+      y: 2
+      layer: 0
+      spriteId: 661
+      blendAmount: 0
+    - x: 6
+      y: 2
+      layer: 0
+      spriteId: 662
+      blendAmount: 0
+    - x: 7
+      y: 2
+      layer: 0
+      spriteId: 663
+      blendAmount: 0
+    - x: 8
+      y: 2
+      layer: 0
+      spriteId: 664
+      blendAmount: 0
+    - x: 9
+      y: 2
+      layer: 0
+      spriteId: 665
+      blendAmount: 0
+    - x: 10
+      y: 2
+      layer: 0
+      spriteId: 666
+      blendAmount: 0
+    - x: 11
+      y: 2
+      layer: 0
+      spriteId: 667
+      blendAmount: 0
+    - x: 12
+      y: 2
+      layer: 0
+      spriteId: 668
+      blendAmount: 0
+    - x: 13
+      y: 2
+      layer: 0
+      spriteId: 669
+      blendAmount: 0
+    - x: 14
+      y: 2
+      layer: 0
+      spriteId: 670
+      blendAmount: 0
+    - x: 15
+      y: 2
+      layer: 0
+      spriteId: 671
+      blendAmount: 0
+    - x: 0
+      y: 1
+      layer: 0
+      spriteId: 672
+      blendAmount: 0
+    - x: 1
+      y: 1
+      layer: 0
+      spriteId: 673
+      blendAmount: 0
+    - x: 2
+      y: 1
+      layer: 0
+      spriteId: 674
+      blendAmount: 0
+    - x: 3
+      y: 1
+      layer: 0
+      spriteId: 675
+      blendAmount: 0
+    - x: 4
+      y: 1
+      layer: 0
+      spriteId: 676
+      blendAmount: 0
+    - x: 5
+      y: 1
+      layer: 0
+      spriteId: 677
+      blendAmount: 0
+    - x: 6
+      y: 1
+      layer: 0
+      spriteId: 678
+      blendAmount: 0
+    - x: 7
+      y: 1
+      layer: 0
+      spriteId: 679
+      blendAmount: 0
+    - x: 8
+      y: 1
+      layer: 0
+      spriteId: 680
+      blendAmount: 0
+    - x: 9
+      y: 1
+      layer: 0
+      spriteId: 681
+      blendAmount: 0
+    - x: 10
+      y: 1
+      layer: 0
+      spriteId: 682
+      blendAmount: 0
+    - x: 11
+      y: 1
+      layer: 0
+      spriteId: 683
+      blendAmount: 0
+    - x: 12
+      y: 1
+      layer: 0
+      spriteId: 684
+      blendAmount: 0
+    - x: 13
+      y: 1
+      layer: 0
+      spriteId: 685
+      blendAmount: 0
+    - x: 14
+      y: 1
+      layer: 0
+      spriteId: 686
+      blendAmount: 0
+    - x: 15
+      y: 1
+      layer: 0
+      spriteId: 687
+      blendAmount: 0
+    - x: 0
+      y: 0
+      layer: 0
+      spriteId: 688
+      blendAmount: 0
+    - x: 1
+      y: 0
+      layer: 0
+      spriteId: 689
+      blendAmount: 0
+    - x: 2
+      y: 0
+      layer: 0
+      spriteId: 690
+      blendAmount: 0
+    - x: 3
+      y: 0
+      layer: 0
+      spriteId: 691
+      blendAmount: 0
+    - x: 4
+      y: 0
+      layer: 0
+      spriteId: 692
+      blendAmount: 0
+    - x: 5
+      y: 0
+      layer: 0
+      spriteId: 693
+      blendAmount: 0
+    - x: 6
+      y: 0
+      layer: 0
+      spriteId: 694
+      blendAmount: 0
+    - x: 7
+      y: 0
+      layer: 0
+      spriteId: 695
+      blendAmount: 0
+    - x: 8
+      y: 0
+      layer: 0
+      spriteId: 696
+      blendAmount: 0
+    - x: 9
+      y: 0
+      layer: 0
+      spriteId: 697
+      blendAmount: 0
+    - x: 10
+      y: 0
+      layer: 0
+      spriteId: 698
+      blendAmount: 0
+    - x: 11
+      y: 0
+      layer: 0
+      spriteId: 699
+      blendAmount: 0
+    - x: 12
+      y: 0
+      layer: 0
+      spriteId: 700
+      blendAmount: 0
+    - x: 13
+      y: 0
+      layer: 0
+      spriteId: 701
+      blendAmount: 0
+    - x: 14
+      y: 0
+      layer: 0
+      spriteId: 702
+      blendAmount: 0
+    - x: 15
+      y: 0
+      layer: 0
+      spriteId: 703
+      blendAmount: 0
+    multiSelectTiles: 
+    edgeMode: 0
+    multiLayer: 0
+    overrideWithSpriteBounds: 1
+    brushHash: 477537920
+  paletteTilesPerRow: 16
+  setupMode: 2
+  showBrush: 1
+  showPalette: 1
+  layer: 0
+  scratchpads: []

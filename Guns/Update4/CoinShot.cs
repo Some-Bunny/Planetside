@@ -22,7 +22,7 @@ namespace Planetside
             Game.Items.Rename("outdated_gun_mods:deadeyes_handgun", "psog:deadeyes_handgun");
             gun.gameObject.AddComponent<CoinShot>();
             gun.SetShortDescription("Accuracy Brings Power");
-            gun.SetLongDescription("A weak handgun fitted with a small printer for coins. Charge up to expel a coin, at a high cost.\n\nOnce carried by a Gungeoneer with no name, despite never aiming for their target, would always walk out unscathed, their foes with lead between their eyes.");
+            gun.SetLongDescription("A weak handgun fitted with a small coin printer. Charge up to expel a shootable coin, at a high cost.\n\nOnce carried by a Gungeoneer with no name, despite never aiming for their target, would always walk out unscathed, their foes with lead between their eyes.");
 
             gun.SetupSprite(null, "coinshot_idle_001", 8);
 

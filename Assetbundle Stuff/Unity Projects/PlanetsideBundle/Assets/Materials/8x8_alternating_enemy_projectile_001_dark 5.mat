@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 8x8_alternating_enemy_projectile_001_dark 5
+  m_Shader: {fileID: 4800000, guid: fa06b7b6a30e3ba43919150176218f13, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _ColorMap:
+        m_Texture: {fileID: 2800000, guid: ae9befa7c76985041a98c095f99a89d6, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 69e1494bf9c84a24abf1253a95a6652d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OverlayTexture:
+        m_Texture: {fileID: 2800000, guid: 6a985dfcd1d3ca94e9753748ed65c697, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - PixelSnap: 0
+    - _Cutoff: 0.5
+    - _InnerOrbPower: 0.03
+    - _IsColorOverride: 0
+    - _No: 1
+    - _OutlinePower: 8
+    - _OutlineWidth: 0.081
+    - _Power: 4.66
+    - _ScaleAdjustment: 1
+    - _ScrollSpeed: 1.69
+    - _SecondaryPower: 15
+    - _Stencil: 0
+    - _StencilComp: 8
+    - _StencilOp: 0
+    - _StencilOpFail: 0
+    - _StencilOpZFail: 0
+    - _StencilReadMask: 255
+    - _StencilWriteMask: 255
+    - _TextureCellRotation: 0
+    - _TextureCellRotationTime: 0
+    m_Colors:
+    - _ColorMin: {r: 0, g: 1, b: 1, a: 1}
+    - _OverrideColor: {r: 1, g: 0, b: 0, a: 1}
+    - _node_4282: {r: 0, g: 0, b: 1, a: 1}

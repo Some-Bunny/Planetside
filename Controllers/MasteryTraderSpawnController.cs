@@ -158,6 +158,15 @@ namespace Planetside
             return false;
         }
 
+        public static float ProgressionMultiplier(float chance)
+        {
+            if (GameStatsManager.Instance.GetFlag(GungeonFlags.ACHIEVEMENT_LEAD_GOD) == true) { chance *= 1.15f; }
+            if (GameStatsManager.Instance.GetPlayerStatValue(TrackedStats.TIMES_CLEARED_FORGE) == 0) { return Mathf.Min(0.05f, chance); }
+            if (GameStatsManager.Instance.GetFlag(GungeonFlags.BOSSKILLED_LICH) == false) { return Mathf.Min(0.75f, chance); }
+            return chance;
+        }
+
+
         public static void HandleBossClearRewardHook(Action<RoomHandler> orig, RoomHandler self)
         {
             orig(self);
@@ -231,12 +240,21 @@ namespace Planetside
                         {
                             Total *= 0.85f;
                         }
-                        Total = Mathf.Min(1, Total);
 
-                        Debug.Log("Total Chance: " + Total.ToString());
-                        if (UnityEngine.Random.value < Total)
+                        if (ContainmentBreachController.CurrentState == ContainmentBreachController.States.ENABLED) { Total *= 1.5f; }
+
+                        float finalTotal = ProgressionMultiplier(Total);
+
+
+                        finalTotal = Mathf.Min(1, finalTotal);
+
+
+
+
+                        Debug.Log("Total Chance: " + finalTotal.ToString());
+                        if (UnityEngine.Random.value < finalTotal)
                         {
-                            Debug.Log("Opnening Portal with " + Total + " Chance!");
+                            Debug.Log("Opnening Portal with " + finalTotal + " Chance!");
                             RoomHandler currentRoom = self;
                             GameObject partObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("Portal"));
                             MeshRenderer rend = partObj.GetComponent<MeshRenderer>();

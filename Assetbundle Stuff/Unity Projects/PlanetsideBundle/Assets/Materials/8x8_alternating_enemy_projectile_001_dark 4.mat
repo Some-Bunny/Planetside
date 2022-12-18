@@ -1,0 +1,82 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 8x8_alternating_enemy_projectile_001_dark 4
+  m_Shader: {fileID: 4800000, guid: 95405428d090f7a4584b223d1df3fe93, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _ColorMap:
+        m_Texture: {fileID: 2800000, guid: ae9befa7c76985041a98c095f99a89d6, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Floor_Tex:
+        m_Texture: {fileID: 2800000, guid: b0651448fe30ada41826fe99e5e24059, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 6a985dfcd1d3ca94e9753748ed65c697, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Nebula:
+        m_Texture: {fileID: 2800000, guid: 6e3ff783bb8d205488f3af1b4723c401, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OverlayTexture:
+        m_Texture: {fileID: 2800000, guid: fe33c54468a51af4b8b70ea84487e1c0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _WarpTex:
+        m_Texture: {fileID: 2800000, guid: fe33c54468a51af4b8b70ea84487e1c0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _node_5132:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _node_8861:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - PixelSnap: 0
+    - _BlackBullet: 0
+    - _Cutoff: 0.5
+    - _EmissiveColorPower: 7
+    - _EmissivePower: 0
+    - _IsColorOverride: 0
+    - _No: 1
+    - _OutlineWidth: 4
+    - _ScaleAdjustment: 1
+    - _ScrollSpeed: 2.32
+    - _Speed: 184.7946
+    - _Stencil: 0
+    - _StencilComp: 8
+    - _StencilOp: 0
+    - _StencilOpFail: 0
+    - _StencilOpZFail: 0
+    - _StencilReadMask: 255
+    - _StencilWriteMask: 255
+    - _TextureCellRotation: 0
+    - _TextureCellRotationTime: 0
+    - _Tiles: 1
+    - _fuzziness: -0.4
+    - _node_1998: 0
+    - _node_7141: 0.4
+    - _node_7286: 100
+    m_Colors:
+    - _C: {r: 0.5, g: 0.2, b: 1, a: 1}
+    - _OverrideColor: {r: 1, g: 0, b: 0, a: 1}
+    - _node_4282: {r: 0, g: 0, b: 1, a: 1}

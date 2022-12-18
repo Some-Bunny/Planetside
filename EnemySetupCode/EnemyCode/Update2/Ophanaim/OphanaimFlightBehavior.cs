@@ -171,7 +171,7 @@ namespace Planetside
                 Vector3 vector = base.m_aiActor.sprite.WorldBottomLeft.ToVector3ZisY(0);
                 Vector3 vector2 = base.m_aiActor.sprite.WorldTopRight.ToVector3ZisY(0);
                 Vector3 position = new Vector3(UnityEngine.Random.Range(vector.x, vector2.x), UnityEngine.Random.Range(vector.y, vector2.y), UnityEngine.Random.Range(vector.z, vector2.z));
-                GlobalSparksDoer.DoSingleParticle(position, Vector3.down * Mathf.Lerp(10, 3, t1), null, null, null, GlobalSparksDoer.SparksType.STRAIGHT_UP_FIRE);
+                GlobalSparksDoer.DoSingleParticle(position, Vector3.down * Mathf.Lerp(10, 3, t1), null, null, null, GlobalSparksDoer.SparksType.FLOATY_CHAFF);
 
                 yield return null;
             }

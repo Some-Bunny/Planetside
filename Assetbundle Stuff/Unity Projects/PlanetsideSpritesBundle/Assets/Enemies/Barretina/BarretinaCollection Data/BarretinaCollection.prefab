@@ -1,0 +1,4544 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1981353769378656}
+  m_IsPrefabParent: 1
+--- !u!1 &1981353769378656
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4191285864898456}
+  - component: {fileID: 114295595633628782}
+  m_Layer: 0
+  m_Name: BarretinaCollection
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4191285864898456
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1981353769378656}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114295595633628782
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1981353769378656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b03b1445062e71c4ca60f92cbd330aff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 3
+  materialIdsValid: 1
+  needMaterialInstance: 0
+  spriteDefinitions:
+  - name: berretina_idle_south_001
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.007816406, y: 0.003908203}
+    - {x: 0.007816406, y: 0.06835742}
+    - {x: 0.18358985, y: 0.003908203}
+    - {x: 0.18358985, y: 0.06835742}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: cffd849fab407744fbb0b47c57f7329c
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_idle_south_002
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.19922265, y: 0.003908203}
+    - {x: 0.19922265, y: 0.06835742}
+    - {x: 0.3749961, y: 0.003908203}
+    - {x: 0.3749961, y: 0.06835742}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: f222a505cf08d3d40b8c1c845e6efebc
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_idle_south_003
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.3906289, y: 0.003908203}
+    - {x: 0.3906289, y: 0.06835742}
+    - {x: 0.5664023, y: 0.003908203}
+    - {x: 0.5664023, y: 0.06835742}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 6389a0e5e6885db409637268db4a9ff8
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_idle_south_004
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.5820352, y: 0.003908203}
+    - {x: 0.5820352, y: 0.06835742}
+    - {x: 0.75780857, y: 0.003908203}
+    - {x: 0.75780857, y: 0.06835742}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: bc89284fb1336a94ba9edade9b619f3b
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_idle_south_005
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.77344143, y: 0.003908203}
+    - {x: 0.77344143, y: 0.06835742}
+    - {x: 0.9492148, y: 0.003908203}
+    - {x: 0.9492148, y: 0.06835742}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: c7ce075042170f044ac3babfa0ade5e9
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_idle_south_006
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.007816406, y: 0.07617383}
+    - {x: 0.007816406, y: 0.14062305}
+    - {x: 0.18358985, y: 0.07617383}
+    - {x: 0.18358985, y: 0.14062305}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 27b44cd4108a908459a6cfd31821606d
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_idle_south_007
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.19922265, y: 0.07617383}
+    - {x: 0.19922265, y: 0.14062305}
+    - {x: 0.3749961, y: 0.07617383}
+    - {x: 0.3749961, y: 0.14062305}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 43a5d9cb2b7b4db4baeb917ace4caac9
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_idle_south_008
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.3906289, y: 0.07617383}
+    - {x: 0.3906289, y: 0.14062305}
+    - {x: 0.5664023, y: 0.07617383}
+    - {x: 0.5664023, y: 0.14062305}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 7f67c8424899c6b42be6ae2d37399b5e
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_idle_southleft_001
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.5820352, y: 0.07617383}
+    - {x: 0.5820352, y: 0.14062305}
+    - {x: 0.75780857, y: 0.07617383}
+    - {x: 0.75780857, y: 0.14062305}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 5e076b4f30826ca4e8a36adf21f296dd
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_idle_southleft_002
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.77344143, y: 0.07617383}
+    - {x: 0.77344143, y: 0.14062305}
+    - {x: 0.9492148, y: 0.07617383}
+    - {x: 0.9492148, y: 0.14062305}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 561b9a13c4591ed4ab40bf60fa8dc012
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_idle_southleft_003
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.007816406, y: 0.14843945}
+    - {x: 0.007816406, y: 0.21288867}
+    - {x: 0.18358985, y: 0.14843945}
+    - {x: 0.18358985, y: 0.21288867}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 688267d7559bfbd409beaf2b94326da7
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_idle_southleft_004
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.19922265, y: 0.14843945}
+    - {x: 0.19922265, y: 0.21288867}
+    - {x: 0.3749961, y: 0.14843945}
+    - {x: 0.3749961, y: 0.21288867}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 13ff9b8e92e2e8a43abf819ab3d2c9ef
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_idle_southleft_005
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.3906289, y: 0.14843945}
+    - {x: 0.3906289, y: 0.21288867}
+    - {x: 0.5664023, y: 0.14843945}
+    - {x: 0.5664023, y: 0.21288867}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: f5223cb8f222db046bfc0fc8c3fab4cb
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_idle_southleft_006
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.5820352, y: 0.14843945}
+    - {x: 0.5820352, y: 0.21288867}
+    - {x: 0.75780857, y: 0.14843945}
+    - {x: 0.75780857, y: 0.21288867}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: d657b8aaf4d915645bf4bf8d50e035e6
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_idle_southleft_007
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.77344143, y: 0.14843945}
+    - {x: 0.77344143, y: 0.21288867}
+    - {x: 0.9492148, y: 0.14843945}
+    - {x: 0.9492148, y: 0.21288867}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: b5ec1e66fcd862845b94ba1d64a06296
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_idle_southleft_008
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.007816406, y: 0.22070508}
+    - {x: 0.007816406, y: 0.28515428}
+    - {x: 0.18358985, y: 0.22070508}
+    - {x: 0.18358985, y: 0.28515428}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: cd65cddcfabd5b14b8045a34e8a57591
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_idle_southright_001
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.19922265, y: 0.22070508}
+    - {x: 0.19922265, y: 0.28515428}
+    - {x: 0.3749961, y: 0.22070508}
+    - {x: 0.3749961, y: 0.28515428}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: bada225315e099a419fa4c28ded48723
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_idle_southright_002
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.3906289, y: 0.22070508}
+    - {x: 0.3906289, y: 0.28515428}
+    - {x: 0.5664023, y: 0.22070508}
+    - {x: 0.5664023, y: 0.28515428}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 5aa0bd97e7941d6478937eb815feb93c
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_idle_southright_003
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.5820352, y: 0.22070508}
+    - {x: 0.5820352, y: 0.28515428}
+    - {x: 0.75780857, y: 0.22070508}
+    - {x: 0.75780857, y: 0.28515428}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 9e665ae6ad8e06349a44b34b3e55147d
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_idle_southright_004
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.77344143, y: 0.22070508}
+    - {x: 0.77344143, y: 0.28515428}
+    - {x: 0.9492148, y: 0.22070508}
+    - {x: 0.9492148, y: 0.28515428}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 57f1bc8a84d149248a740c73dea5951f
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_idle_southright_005
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.007816406, y: 0.29297072}
+    - {x: 0.007816406, y: 0.3574199}
+    - {x: 0.18358985, y: 0.29297072}
+    - {x: 0.18358985, y: 0.3574199}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: eb2d6c0879fbdec499068104f0cb3169
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_idle_southright_006
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.19922265, y: 0.29297072}
+    - {x: 0.19922265, y: 0.3574199}
+    - {x: 0.3749961, y: 0.29297072}
+    - {x: 0.3749961, y: 0.3574199}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 59d0190ab3baace49b6d81088b9dcf55
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_idle_southright_007
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.3906289, y: 0.29297072}
+    - {x: 0.3906289, y: 0.3574199}
+    - {x: 0.5664023, y: 0.29297072}
+    - {x: 0.5664023, y: 0.3574199}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 216333f741a9ad3409636c8064baae02
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_idle_southright_008
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.5820352, y: 0.29297072}
+    - {x: 0.5820352, y: 0.3574199}
+    - {x: 0.75780857, y: 0.29297072}
+    - {x: 0.75780857, y: 0.3574199}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 32466f401762feb44be1bd182207d4f7
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_idle_north_001
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.77344143, y: 0.29297072}
+    - {x: 0.77344143, y: 0.3574199}
+    - {x: 0.9492148, y: 0.29297072}
+    - {x: 0.9492148, y: 0.3574199}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: d09559310170f834181c70c8954ed20e
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_idle_north_002
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.007816406, y: 0.36523634}
+    - {x: 0.007816406, y: 0.42968553}
+    - {x: 0.18358985, y: 0.36523634}
+    - {x: 0.18358985, y: 0.42968553}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 5e2d46f6ba3166347963864a681f638e
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_idle_north_003
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.19922265, y: 0.36523634}
+    - {x: 0.19922265, y: 0.42968553}
+    - {x: 0.3749961, y: 0.36523634}
+    - {x: 0.3749961, y: 0.42968553}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: ba1abe6fab9d7bc4cb4560455c364f1a
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_idle_north_004
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.3906289, y: 0.36523634}
+    - {x: 0.3906289, y: 0.42968553}
+    - {x: 0.5664023, y: 0.36523634}
+    - {x: 0.5664023, y: 0.42968553}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 2b133ab63193bfe498fdb82fb2732d97
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_idle_north_005
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.5820352, y: 0.36523634}
+    - {x: 0.5820352, y: 0.42968553}
+    - {x: 0.75780857, y: 0.36523634}
+    - {x: 0.75780857, y: 0.42968553}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 17cfeb918a45c2f4d88f2235d6600e7d
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_idle_north_006
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.77344143, y: 0.36523634}
+    - {x: 0.77344143, y: 0.42968553}
+    - {x: 0.9492148, y: 0.36523634}
+    - {x: 0.9492148, y: 0.42968553}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 58e62b219edada24ba5f18ff1ef0c823
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_idle_north_007
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.007816406, y: 0.43750197}
+    - {x: 0.007816406, y: 0.50195116}
+    - {x: 0.18358985, y: 0.43750197}
+    - {x: 0.18358985, y: 0.50195116}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 55c2c6ad2515a5d48a1ef8c2dc5ba1ac
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_idle_north_008
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.19922265, y: 0.43750197}
+    - {x: 0.19922265, y: 0.50195116}
+    - {x: 0.3749961, y: 0.43750197}
+    - {x: 0.3749961, y: 0.50195116}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: cc7ef1df4fe110048ba154c7ba3aa8a3
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_idle_northleft_001
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.3906289, y: 0.43750197}
+    - {x: 0.3906289, y: 0.50195116}
+    - {x: 0.5664023, y: 0.43750197}
+    - {x: 0.5664023, y: 0.50195116}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 1e02e02e6f8b772439d7ac86d969a08e
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_idle_northleft_002
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.5820352, y: 0.43750197}
+    - {x: 0.5820352, y: 0.50195116}
+    - {x: 0.75780857, y: 0.43750197}
+    - {x: 0.75780857, y: 0.50195116}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 5c052ab47e74a1347a58a969e613957c
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_idle_northleft_003
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.77344143, y: 0.43750197}
+    - {x: 0.77344143, y: 0.50195116}
+    - {x: 0.9492148, y: 0.43750197}
+    - {x: 0.9492148, y: 0.50195116}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 61afc09a3244aed41bbb6a05cd4298ef
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_idle_northleft_004
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.007816406, y: 0.5097676}
+    - {x: 0.13671485, y: 0.5097676}
+    - {x: 0.007816406, y: 0.5976543}
+    - {x: 0.13671485, y: 0.5976543}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 8bc02e7c0a3f8f540ad3756bd3fc6bbc
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_idle_northleft_005
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.007816406, y: 0.6054707}
+    - {x: 0.13671485, y: 0.6054707}
+    - {x: 0.007816406, y: 0.6933574}
+    - {x: 0.13671485, y: 0.6933574}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: b1218bbc86039a546b603a6ff404fda6
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_idle_northleft_006
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.007816406, y: 0.70117384}
+    - {x: 0.13671485, y: 0.70117384}
+    - {x: 0.007816406, y: 0.78906053}
+    - {x: 0.13671485, y: 0.78906053}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: a244ea51c805ab243875a2dff4b2dbf0
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_idle_northleft_007
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.007816406, y: 0.79687697}
+    - {x: 0.13671485, y: 0.79687697}
+    - {x: 0.007816406, y: 0.88476366}
+    - {x: 0.13671485, y: 0.88476366}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 0c6a72279e6b0ee4f97550e9d5744f09
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_idle_northleft_008
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.007816406, y: 0.8925801}
+    - {x: 0.13671485, y: 0.8925801}
+    - {x: 0.007816406, y: 0.9804668}
+    - {x: 0.13671485, y: 0.9804668}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: e2cabcc384ea4f44a9e03f55bbb3cd24
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_idle_northright_001
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.15234765, y: 0.5097676}
+    - {x: 0.15234765, y: 0.5742168}
+    - {x: 0.3281211, y: 0.5097676}
+    - {x: 0.3281211, y: 0.5742168}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: dd4af11fd36355c41986be2f6dc8d19e
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_idle_northright_002
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.3437539, y: 0.5097676}
+    - {x: 0.3437539, y: 0.5742168}
+    - {x: 0.5195273, y: 0.5097676}
+    - {x: 0.5195273, y: 0.5742168}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: e0845c42f2de5ae42b0a59b81f7d9ae5
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_idle_northright_003
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.5351602, y: 0.5097676}
+    - {x: 0.5351602, y: 0.5742168}
+    - {x: 0.71093357, y: 0.5097676}
+    - {x: 0.71093357, y: 0.5742168}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 02a387e3495329148b4bd89686648d55
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_idle_northright_004
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.72656643, y: 0.5097676}
+    - {x: 0.72656643, y: 0.5742168}
+    - {x: 0.9023398, y: 0.5097676}
+    - {x: 0.9023398, y: 0.5742168}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: a568e11c97431264f915921a4186ecaf
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_idle_northright_005
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.15234765, y: 0.5820332}
+    - {x: 0.2812461, y: 0.5820332}
+    - {x: 0.15234765, y: 0.6699199}
+    - {x: 0.2812461, y: 0.6699199}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 51fb00d4c9b8f8140bd0f95db10551c4
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_idle_northright_006
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.15234765, y: 0.67773634}
+    - {x: 0.2812461, y: 0.67773634}
+    - {x: 0.15234765, y: 0.76562303}
+    - {x: 0.2812461, y: 0.76562303}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 6408c28d6ea1c654fb63ee7510a90bc4
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_idle_northright_007
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.15234765, y: 0.77343947}
+    - {x: 0.2812461, y: 0.77343947}
+    - {x: 0.15234765, y: 0.86132616}
+    - {x: 0.2812461, y: 0.86132616}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 38af4c3d1ecd09b40be7af89f6b3652a
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_idle_northright_008
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.15234765, y: 0.8691426}
+    - {x: 0.2812461, y: 0.8691426}
+    - {x: 0.15234765, y: 0.9570293}
+    - {x: 0.2812461, y: 0.9570293}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 99785bd1b7bdc0843ac9274d8eae9a04
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_die_001
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.007816406, y: 0.003908203}
+    - {x: 0.007816406, y: 0.06835742}
+    - {x: 0.18358985, y: 0.003908203}
+    - {x: 0.18358985, y: 0.06835742}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 12362757922a1374ab41bdfd188b4b71
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_die_002
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.2968789, y: 0.5820332}
+    - {x: 0.2968789, y: 0.6464824}
+    - {x: 0.47265235, y: 0.5820332}
+    - {x: 0.47265235, y: 0.6464824}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: ddeec72ef377efc4c8e079c06c8bc9e6
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_die_003
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.48828515, y: 0.5820332}
+    - {x: 0.48828515, y: 0.6464824}
+    - {x: 0.66405857, y: 0.5820332}
+    - {x: 0.66405857, y: 0.6464824}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 7fa82888eab44cd44b1477d006fa37b8
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_die_004
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.67969143, y: 0.5820332}
+    - {x: 0.67969143, y: 0.6464824}
+    - {x: 0.8554648, y: 0.5820332}
+    - {x: 0.8554648, y: 0.6464824}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 32ba1d2055acd7a4fb3a4bd59094c627
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_die_005
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.2968789, y: 0.65429884}
+    - {x: 0.42577735, y: 0.65429884}
+    - {x: 0.2968789, y: 0.74218553}
+    - {x: 0.42577735, y: 0.74218553}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 855cd6a415aceab409460effea92dc49
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_die_006
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.2968789, y: 0.75000197}
+    - {x: 0.42577735, y: 0.75000197}
+    - {x: 0.2968789, y: 0.83788866}
+    - {x: 0.42577735, y: 0.83788866}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 736b512f9d4b47743abef6750d66499a
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_die_007
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.2968789, y: 0.8457051}
+    - {x: 0.42577735, y: 0.8457051}
+    - {x: 0.2968789, y: 0.9335918}
+    - {x: 0.42577735, y: 0.9335918}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 7ccb865d9ba56c54884c09c13a3109f3
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_die_008
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.44141015, y: 0.65429884}
+    - {x: 0.44141015, y: 0.71874803}
+    - {x: 0.61718357, y: 0.65429884}
+    - {x: 0.61718357, y: 0.71874803}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: c9be17e268649b544b2ede21657946bd
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_die_009
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.63281643, y: 0.65429884}
+    - {x: 0.63281643, y: 0.71874803}
+    - {x: 0.8085898, y: 0.65429884}
+    - {x: 0.8085898, y: 0.71874803}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 821abc53c6dda984c9e65fdc3c3142fe
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_die_010
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.8242227, y: 0.65429884}
+    - {x: 0.95312107, y: 0.65429884}
+    - {x: 0.8242227, y: 0.74218553}
+    - {x: 0.95312107, y: 0.74218553}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 1cf351558fcc4744d90b8e2b0ad14f2d
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_die_011
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.44141015, y: 0.72656447}
+    - {x: 0.44141015, y: 0.79101366}
+    - {x: 0.61718357, y: 0.72656447}
+    - {x: 0.61718357, y: 0.79101366}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: f12b51e761b80b14c98429002994cb02
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_die_012
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.63281643, y: 0.72656447}
+    - {x: 0.63281643, y: 0.79101366}
+    - {x: 0.8085898, y: 0.72656447}
+    - {x: 0.8085898, y: 0.79101366}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 0f57573a3ea54e342be511b52b1ce25c
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_die_013
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.8242227, y: 0.75000197}
+    - {x: 0.95312107, y: 0.75000197}
+    - {x: 0.8242227, y: 0.83788866}
+    - {x: 0.95312107, y: 0.83788866}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: f1d6a486fd88ebb41a7387b6bc00cc44
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: berretina_die_014
+    boundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.03125, y: 1.40625, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    boundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    boundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.03125, y: 1.40625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.0625, y: 2.8125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.0625, y: 0, z: 0}
+    - {x: 0, y: 2.8125, z: 0}
+    - {x: 2.0625, y: 2.8125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.0625, y: 0, z: 0}
+    position2: {x: 0, y: 2.8125, z: 0}
+    position3: {x: 2.0625, y: 2.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.44141015, y: 0.7988301}
+    - {x: 0.44141015, y: 0.8632793}
+    - {x: 0.61718357, y: 0.7988301}
+    - {x: 0.61718357, y: 0.8632793}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 686fa07c164dc2f4e8acd874c4b459ad
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  premultipliedAlpha: 0
+  material: {fileID: 0}
+  materials:
+  - {fileID: 2100000, guid: a9028ee5e0dbf424a8aea88b223208f4, type: 2}
+  textures:
+  - {fileID: 2800000, guid: 6f996e54f9655a64bb663c01c5840890, type: 3}
+  pngTextures: []
+  materialPngTextureId: 00000000
+  textureFilterMode: 1
+  textureMipMaps: 0
+  allowMultipleAtlases: 0
+  spriteCollectionGUID: 5f78b34605fc18f44b28b7b4a00726ff
+  spriteCollectionName: BarretinaCollection
+  assetName: 
+  loadable: 0
+  invOrthoSize: 2
+  halfTargetHeight: 8
+  buildKey: 1734298286
+  dataGuid: cb2fec59ccc5d4a499ac2d071811cb8c
+  managedSpriteCollection: 0
+  hasPlatformData: 0
+  spriteCollectionPlatforms: []
+  spriteCollectionPlatformGUIDs: []

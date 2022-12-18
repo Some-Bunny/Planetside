@@ -38,7 +38,7 @@ namespace Planetside
     {
         public const string GUID = "somebunny.etg.planetsideofgunymede";
         public const string NAME = "Planetside Of Gunymede Pre-Release";
-        public const string VERSION = "1.3.110";
+        public const string VERSION = "1.3.112";
 
         public static readonly string TEXT_COLOR = "#9006FF";
 
@@ -46,7 +46,6 @@ namespace Planetside
         public static string FilePathFolder;
 
         public static AdvancedStringDB Strings;
-        public static HellDragZoneController hellDrag;
 
         public static AssetBundle ModAssets;
         public static AssetBundle TilesetAssets;
@@ -68,9 +67,7 @@ namespace Planetside
 
         public void GameManagerStart(GameManager gameManager)
         {
-            var forgeDungeon = DungeonDatabase.GetOrLoadByName("Base_Forge");
-            PlanetsideModule.hellDrag = forgeDungeon.PatternSettings.flows[0].AllNodes.Where(node => node.overrideExactRoom != null && node.overrideExactRoom.name.Contains("EndTimes")).First().overrideExactRoom.placedObjects.Where(ppod => ppod != null && ppod.nonenemyBehaviour != null).First().nonenemyBehaviour.gameObject.GetComponentsInChildren<HellDragZoneController>()[0];
-            forgeDungeon = null;
+
 
             ETGMod.Assets.SetupSpritesFromFolder(this.FolderPath()+"/sprites");
 
@@ -102,6 +99,8 @@ namespace Planetside
             {
                 //ETGModConsole.Log(PlanetsideModule.TilesetAssets.name + ": " + str, false);
             }
+            StaticVFXStorage.Init();
+
             StaticInformation.Init();
 
             ShopDiscountMegaMind.Init();
@@ -110,7 +109,6 @@ namespace Planetside
             InverseGlowShader = PlanetsideModule.ModAssets.LoadAsset<Shader>("inverseglowshader");
 
             //Initialise Statically Stored Stuff Here
-            StaticVFXStorage.Init();
 
             EasyGoopDefinitions.DefineDefaultGoops();
 

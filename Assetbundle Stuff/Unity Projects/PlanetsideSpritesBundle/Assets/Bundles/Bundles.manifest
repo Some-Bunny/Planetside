@@ -1,0 +1,7 @@
+ManifestFileVersion: 0
+CRC: 4078654553
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: bottk2dsprites
+      Dependencies: {}
