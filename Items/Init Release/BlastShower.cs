@@ -107,7 +107,7 @@ namespace Planetside
             {
                 if (target != null)
                 {
-                    float MaxHP = user.PlayerHasActiveSynergy("Watered Down") == true ? target.healthHaver.GetMaxHealth() / 5:0;
+                    float MaxHP = user.PlayerHasActiveSynergy("Watered Down") == true ? target.healthHaver.GetMaxHealth() / 20:0;
                     target.healthHaver.ApplyDamage(30f + MaxHP, Vector2.zero, "Take a bath, nerd.", CoreDamageTypes.None, DamageCategory.Normal, false, null, false);
 
                     if (willBurn)

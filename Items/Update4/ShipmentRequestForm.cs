@@ -25,10 +25,12 @@ namespace Planetside
         public static void Init()
         {
             string itemName = "Hegemony Shipment Ticket";
-            string resourceName = "Planetside/Resources/shormActual.png";
+            //string resourceName = "Planetside/Resources/shormActual.png";
             GameObject obj = new GameObject(itemName);
             ShipmentRequestForm activeitem = obj.AddComponent<ShipmentRequestForm>();
-            ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            var data = StaticSpriteDefinitions.Active_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("shormActual"), data, obj);
+            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "Oh **** The Shipping and Recieving!";
             string longDesc = "Hello STRING.EMPTY, we would like you to know that your package is available for collection at these collection stations:\n\nSTRING.EMPTY\n\nSTRING.EMPTY\n\nSTRING.EMPTY\n\nYour package can be retrieved using this ticket as at any date, up to 01/03/XXXX. Your package is also able to be collected past YOUR expiration date, as long as you keep the ticket. Make sure to also fire the additional paperwork requireed.\n\nRegards, Hegemony Shipment Services.";
             activeitem.SetupItem(shortDesc, longDesc, "psog");

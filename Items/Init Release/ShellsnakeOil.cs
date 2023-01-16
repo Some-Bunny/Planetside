@@ -24,10 +24,12 @@ namespace Planetside
         public static void Init()
         {
             string itemName = "Shell-snake Oil";
-            string resourceName = "Planetside/Resources/gunsnakeoil.png";
+            //string resourceName = "Planetside/Resources/gunsnakeoil.png";
             GameObject obj = new GameObject(itemName);
             var item = obj.AddComponent<ShellsnakeOil>();
-            ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("gunsnakeoil"), data, obj);
+            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "Works 103%!";
             string longDesc = "Harvested from elusive shell-snakes, This wonderful elixir is SURE to boost your firepower and strength in combat." +
                 "\n\nSource: Trust us! We're completely honest!";

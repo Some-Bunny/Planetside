@@ -21,11 +21,14 @@ namespace Planetside
 		public static void Init()
 		{
 			string name = "Frailty Ammolet";
-			string resourcePath = "Planetside/Resources/frailtyammolet.png";
+			//string resourcePath = "Planetside/Resources/frailtyammolet.png";
 			GameObject gameObject = new GameObject(name);
 			FrailtyAmmolet ammolet = gameObject.AddComponent<FrailtyAmmolet>();
-			ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
-			string shortDesc = "Untempered";
+            //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
+            var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("frailtyammolet"), data, gameObject);
+
+            string shortDesc = "Untempered";
 			string longDesc = "An ammolet that has been soaked with an exotic toxin. The energy released by blanks causes it to expel some of its toxins in a gaseous form.";
 			ammolet.SetupItem(shortDesc, longDesc, "psog");
 			ammolet.quality = PickupObject.ItemQuality.B;

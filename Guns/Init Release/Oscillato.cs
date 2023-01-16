@@ -94,7 +94,6 @@ namespace Planetside
 
 			PierceProjModifier spook = projectile.gameObject.AddComponent<PierceProjModifier>();
 			spook.penetration = 1;
-			projectile.OverrideMotionModule = new OscillatingeMotionModule();
 			spook.penetratesBreakables = true;
 			gun.encounterTrackable.EncounterGuid = "https://www.youtube.com/watch?v=P5ChKb_9JoY";
 			ETGMod.Databases.Items.Add(gun, false, "ANY");

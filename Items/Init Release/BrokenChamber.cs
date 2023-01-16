@@ -16,10 +16,11 @@ namespace Planetside
 		public static void Init()
 		{
 			string name = "Broken Chamber";
-			string resourcePath = "Planetside/Resources/brokenchamber.png";
 			GameObject gameObject = new GameObject(name);
 			BrokenChamber warVase = gameObject.AddComponent<BrokenChamber>();
-			ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
+            var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("brokenchamber"), data, gameObject); 
+			
 			string shortDesc = "A bad omen looms...";
 			string longDesc = "A broken, forgotten chamber. Dark power seeps from it.\n\nYou feel uneasy carrying it, yet you feel like you must keep it, and take it very, very far.";
 			ItemBuilder.SetupItem(warVase, shortDesc, longDesc, "psog");
@@ -31,7 +32,7 @@ namespace Planetside
 		public override void Pickup(PlayerController player)
 		{
 			BrokenChamberComponent Values = player.gameObject.AddComponent<BrokenChamberComponent>();
-			Values.TimeBetweenRockFalls = 7.5f;
+			Values.TimeBetweenRockFalls =9f;
 			Values.player = player;
 			base.Pickup(player);
 		}

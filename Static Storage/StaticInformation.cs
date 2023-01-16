@@ -76,6 +76,10 @@ namespace Planetside
             Gradient_Texture_Trail = EnemyDatabase.GetOrLoadByGuid("465da2bb086a4a88a803f79fe3a27677").bulletBank.GetBullet("homing").BulletObject.GetComponent<Projectile>().gameObject.GetComponentInChildren<CustomTrailRenderer>().material.mainTexture;
 
             Hell_Drag_Zone_Texture = StaticVFXStorage.hellDragController.HoleObject.GetComponent<MeshRenderer>().material.GetTexture("_PortalTex");
+
+            Ouroborous_Medal_Main = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("ouroborosmedal");
+            Ouroborous_Medal_Left = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("ouroborosMedal2Left");
+            Ouroborous_Medal_Right = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("ouroborosMedal2Right");
         }
         public static Texture AdvancedParticleBlue;
         public static Texture VoidTexture;
@@ -108,6 +112,10 @@ namespace Planetside
         public static Texture Gradient_Texture_Trail;
 
         public static Texture Hell_Drag_Zone_Texture;
+
+        public static Texture2D Ouroborous_Medal_Main;
+        public static Texture2D Ouroborous_Medal_Left;
+        public static Texture2D Ouroborous_Medal_Right;
 
     }
 

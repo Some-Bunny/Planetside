@@ -12,11 +12,13 @@ namespace Planetside
         public static void Init()
         {
             string name = "All-Seeing Eye";
-            string resourcePath = "Planetside/Resources/PerkThings/allSeeingEye.png";
+            //string resourcePath = "Planetside/Resources/PerkThings/allSeeingEye.png";
             GameObject gameObject = new GameObject(name);
             AllSeeingEye item = gameObject.AddComponent<AllSeeingEye>();
-          
-            ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
+
+            var data = StaticSpriteDefinitions.Pickup_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("allSeeingEye"), data, gameObject);
+            //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
             string shortDesc = "All-Seeing eye.";
             string longDesc = "yep.";
             item.SetupItem(shortDesc, longDesc, "psog");
@@ -28,14 +30,16 @@ namespace Planetside
 			OutlineColor = new Color(0.9f, 0.52f, 0.9f);
 
 
-			AllSeeingEye.gunVFXPrefab = SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/AllSeeingEye/gunicon.png", null, false);
-			AllSeeingEye.itemVFXPrefab = SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/AllSeeingEye/itemicon.png", null, false);
-			UnityEngine.Object.DontDestroyOnLoad(AllSeeingEye.gunVFXPrefab);
-			FakePrefab.MarkAsFakePrefab(AllSeeingEye.gunVFXPrefab);
-			AllSeeingEye.gunVFXPrefab.SetActive(false);
-			UnityEngine.Object.DontDestroyOnLoad(AllSeeingEye.itemVFXPrefab);
-			FakePrefab.MarkAsFakePrefab(AllSeeingEye.itemVFXPrefab);
-			AllSeeingEye.itemVFXPrefab.SetActive(false);
+            var Collection = StaticSpriteDefinitions.Oddments_Sheet_Data;
+            var GunIcon = ItemBuilder.AddSpriteToObjectAssetbundle("All Seeing Eye Gun", Collection.GetSpriteIdByName("gunicon"), Collection);
+            FakePrefab.MarkAsFakePrefab(GunIcon);
+            UnityEngine.Object.DontDestroyOnLoad(GunIcon);
+			gunVFXPrefab = GunIcon;
+
+            var ItemIcon = ItemBuilder.AddSpriteToObjectAssetbundle("All Seeing Eye Item", Collection.GetSpriteIdByName("itemicon"), Collection);
+            FakePrefab.MarkAsFakePrefab(ItemIcon);
+            UnityEngine.Object.DontDestroyOnLoad(ItemIcon);
+            itemVFXPrefab = ItemIcon;
 
 
             var a = RoomDropModifier.RoomDropModifierData.CreateDummyTable();
@@ -77,7 +81,7 @@ namespace Planetside
             Exploder.DoDistortionWave(player.sprite.WorldTopCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
             player.BloopItemAboveHead(base.sprite, "");
             string BlurbText = chaos.hasBeenPickedup == true ? "See More." : "Gain Foresight.";
-            OtherTools.Notify("All Seeing Eye", BlurbText, "Planetside/Resources/PerkThings/allSeeingEye", UINotificationController.NotificationColor.GOLD);
+            OtherTools.NotifyCustom("All Seeing Eye", BlurbText, "allSeeingEye", StaticSpriteDefinitions.Pickup_Sheet_Data ,UINotificationController.NotificationColor.GOLD);
             UnityEngine.Object.Destroy(base.gameObject);
 
         }

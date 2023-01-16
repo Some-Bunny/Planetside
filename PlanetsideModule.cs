@@ -18,7 +18,7 @@ using SaveAPI;
 using Planetside;
 using EnemyBulletBuilder;
 using NpcApi;
-using SoundAPI;
+using Planetside.SoundAPI;
 using BreakAbleAPI;
 using BepInEx;
 using HarmonyLib;
@@ -38,7 +38,7 @@ namespace Planetside
     {
         public const string GUID = "somebunny.etg.planetsideofgunymede";
         public const string NAME = "Planetside Of Gunymede Pre-Release";
-        public const string VERSION = "1.3.112";
+        public const string VERSION = "1.3.121";
 
         public static readonly string TEXT_COLOR = "#9006FF";
 
@@ -258,21 +258,16 @@ namespace Planetside
             ForgiveMePlease.Init();
             ForgiveMePlease.BuildPrefab();
             PortablePylon.Init();
-            LoaderPylonController.Init();
-            LoaderPylonSynergyFormeController.Init();
+            
+            //LoaderPylonController.Init();
+            //LoaderPylonSynergyFormeController.Init();
+            
             DeadKingsDesparation.Init();
             DeadKingsDesparation.BuildPrefab();
 
             //Debuff Icons
-            BrokenArmorEffect.Init();
-            FrailtyHealthEffect.Init();
-            PossessedEffect.Init();
+
             HolyBlessingEffect.Init();
-            HeatStrokeEffect.Init();
-            TarnishEffect.Init();
-            BrainHostDummyBuff.Init();
-            InfectedEnemyEffect.Init();
-            InfectedBossEffect.Init();
             ExecuteDebuff.Init();
 
             DebuffLibrary.Init();
@@ -564,7 +559,6 @@ namespace Planetside
                 "You Lost The Game.",
                 "WEAK.",
                 "Bullet Banks are not to rob!",
-                "Art By SirWow!",
                 "*Don't Download Some Bunnys Content Pack, you can't even have it on Bepinex anyway :D",
                 "weeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "If you see this, you owe me 10 bucks you nerd.",
@@ -582,7 +576,6 @@ namespace Planetside
                 "Hey VSauce!",
                 "Yo Mama!",
                 "NullReferenceException: Object Reference not set to an instance of an object.",
-                "I stole this one from Nevernamed.",
                 "Nuh uh, yr'oue.",
                 "._.",
                 "mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm",
@@ -629,7 +622,8 @@ namespace Planetside
                 "Powered by MTGAPI!",
                 "Now with 100% more Bepinex!",
                 "I once sneezed a pasta noodle out through my nose -- back when I had a nose, on Earth.",
-                "You shouldn't read too much anyway. It's bad for your teeth."
+                "You shouldn't read too much anyway. It's bad for your teeth.",
+                "This cats name is Humongous Honkers look him up on your computer."
             };
             Random r = new Random();
             int index = r.Next(RandomFunnys.Count);
@@ -729,7 +723,7 @@ namespace Planetside
 
         public void Awake() 
         {
-            //new Harmony(GUID).PatchAll();
+            new Harmony(GUID).PatchAll();
             SaveAPIManager.Setup("psog");
         }
         /*

@@ -47,8 +47,7 @@ namespace Planetside
 			{
 				this.timer -= BraveTime.DeltaTime;
 			}
-			bool flag2 = this.timer <= 0f;
-			if (flag2)
+			if (this.timer <= 0f)
 			{
 				this.DoTick();
 				this.timer = this.tickDelay;
@@ -58,27 +57,21 @@ namespace Planetside
 		private void DoTick()
 		{
 			LinkedList<BasicBeamController.BeamBone> linkedList = PlanetsideReflectionHelper.ReflectGetField<LinkedList<BasicBeamController.BeamBone>>(typeof(BasicBeamController), "m_bones", this.basicBeamController);
-			for (int k = 0; k < linkedList.Count; k++)
+			Vector2 bonePosition = this.basicBeamController.GetBonePosition(linkedList.ElementAt(UnityEngine.Random.Range(0, linkedList.Count())));
+            ParticleSystem particleSystem = UnityEngine.Object.Instantiate(StaticVFXStorage.PerfectedParticleSystem).GetComponent<ParticleSystem>();
+            particleSystem.gameObject.transform.parent = this.projectile.transform;
+            var trails = particleSystem.trails;
+            trails.worldSpace = false;
+            ParticleSystem.EmitParams emitParams = new ParticleSystem.EmitParams
             {
-				if (UnityEngine.Random.value > 0.33f)
-                {
-					Vector2 bonePosition = this.basicBeamController.GetBonePosition(linkedList.ElementAt(k));
-					ParticleSystem particleSystem = UnityEngine.Object.Instantiate(StaticVFXStorage.PerfectedParticleSystem).GetComponent<ParticleSystem>();
-					particleSystem.gameObject.transform.parent = this.projectile.transform;
-					var trails = particleSystem.trails;
-					trails.worldSpace = false;
-					ParticleSystem.EmitParams emitParams = new ParticleSystem.EmitParams
-					{
-						position = bonePosition,
-						randomSeed = (uint)UnityEngine.Random.Range(1, 1000)
-					};
-					var emission = particleSystem.emission;
-					emission.enabled = false;
-					particleSystem.gameObject.SetActive(true);
-					particleSystem.Emit(emitParams, 1);
-				}
-			}
-		}
+                position = bonePosition,
+                randomSeed = (uint)UnityEngine.Random.Range(1, 1000)
+            };
+            var emission = particleSystem.emission;
+            emission.enabled = false;
+            particleSystem.gameObject.SetActive(true);
+            particleSystem.Emit(emitParams, 1);
+        }
 
 
 
@@ -103,10 +96,12 @@ namespace Planetside
         public static void Init()
         {
             string itemName = "Spinning Death";
-            string resourceName = "Planetside/Resources/spinningDeath.png";
+            //string resourceName = "Planetside/Resources/spinningDeath.png";
             GameObject obj = new GameObject(itemName);
             var item = obj.AddComponent<SpinningDeath>();
-            ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("spinningDeath"), data, obj);
+            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "LET IT RIP!";
 			string longDesc = "Embeds laser-cutters into some of your projectiles. \n\nThe remnants of a crowdfunded laser blender that ended up very, VERY horribly. Keep your fingers away...";
             ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
@@ -209,8 +204,8 @@ namespace Planetside
 			float procChance = 0.25f;
 			procChance *= effectChanceScalar;
 			SpinningDeathController cont = sourceProjectile.gameObject.GetComponent<SpinningDeathController>();
-			bool SynergyCheck = Owner.CurrentGun != PickupObjectDatabase.GetById(514) as Gun && Owner.PlayerHasActiveSynergy("D-rectional");
-			if (UnityEngine.Random.value <= procChance && cont == null && SynergyCheck == false)
+			//bool SynergyCheck = Owner.CurrentGun != PickupObjectDatabase.GetById(514) as Gun && Owner.PlayerHasActiveSynergy("D-rectional");
+			if (UnityEngine.Random.value <= procChance && cont == null)// && SynergyCheck == false)
 			{
 				try
 				{
@@ -229,9 +224,9 @@ namespace Planetside
 						float FlippedORama = UnityEngine.Random.value > 0.5f ? 45 : 0;
 						for (int i = 0; i < 4; i++)
 						{
-							BeamController beamController3 = BeamToolbox.FreeFireBeamFromAnywhere(SpinningDeath.SpinningDeathBeam, Owner, projectile.gameObject, projectile.gameObject.transform.PositionVector2(), false, (90f * i) + FlippedORama, 30f, true, true, Flipped ? 360 : -360);
+							BeamController beamController3 = BeamToolbox.FreeFireBeamFromAnywhere(SpinningDeath.SpinningDeathBeam, Owner, sourceProjectile.gameObject, sourceProjectile.gameObject.transform.PositionVector2(), false, (90f * i) + FlippedORama, 30f, true, true, Flipped ? 360 : -360);
 							Projectile component3 = beamController3.GetComponent<Projectile>();
-							float Dmg = projectile.baseData.damage *= Owner != null ? Owner.stats.GetStatValue(PlayerStats.StatType.Damage) : 1;
+							float Dmg = sourceProjectile.baseData.damage *= Owner != null ? Owner.stats.GetStatValue(PlayerStats.StatType.Damage) : 1;
 							component3.baseData.damage = Dmg * 3f;
 							component3.AdditionalScaleMultiplier *= 0.66f;
 						}
@@ -279,16 +274,33 @@ namespace Planetside
 				LinkedList<BasicBeamController.BeamBone> linkedList = PlanetsideReflectionHelper.ReflectGetField<LinkedList<BasicBeamController.BeamBone>>(typeof(BasicBeamController), "m_bones", basicBeam);
 				LinkedListNode<BasicBeamController.BeamBone> last = linkedList.Last;
 				Vector2 bonePosition = basicBeam.GetBonePosition(last.Value);
-
-				for (int i = 0; i < 2; i++)
+                if (Owner.PlayerHasActiveSynergy("D-rectional"))
 				{
-					BeamController beamController3 = BeamToolbox.FreeFireBeamFromPosition(SpinningDeath.SpinningDeathBeam, GameManager.Instance.PrimaryPlayer, bonePosition, 180f*i, 4f, true, true, Flipped ? -720 : 720);
-					
-					Projectile component3 = beamController3.GetComponent<Projectile>();
-					float Dmg = beam.projectile.baseData.damage *= base.Owner != null ? base.Owner.stats.GetStatValue(PlayerStats.StatType.Damage) : 1;
-					component3.baseData.damage = Dmg * 0.85f;
-					component3.AdditionalScaleMultiplier *= 0.66f;
-				}
+                    for (int i = 0; i < 4; i++)
+                    {
+                        BeamController beamController3 = BeamToolbox.FreeFireBeamFromPosition(SpinningDeath.SpinningDeathBeam, GameManager.Instance.PrimaryPlayer, bonePosition, 90f * i, 4f, true, true, Flipped ? -360 : 360);
+
+                        Projectile component3 = beamController3.GetComponent<Projectile>();
+                        float Dmg = beam.projectile.baseData.damage *= base.Owner != null ? base.Owner.stats.GetStatValue(PlayerStats.StatType.Damage) : 1;
+                        component3.baseData.damage = Dmg * 0.66f;
+                        component3.AdditionalScaleMultiplier *= 0.66f;
+                    }
+                }
+				else
+				{
+                    for (int i = 0; i < 2; i++)
+                    {
+                        BeamController beamController3 = BeamToolbox.FreeFireBeamFromPosition(SpinningDeath.SpinningDeathBeam, GameManager.Instance.PrimaryPlayer, bonePosition, 180f * i, 4f, true, true, Flipped ? -720 : 720);
+
+                        Projectile component3 = beamController3.GetComponent<Projectile>();
+                        float Dmg = beam.projectile.baseData.damage *= base.Owner != null ? base.Owner.stats.GetStatValue(PlayerStats.StatType.Damage) : 1;
+                        component3.baseData.damage = Dmg * 0.85f;
+                        component3.AdditionalScaleMultiplier *= 0.66f;
+                    }
+                }
+
+
+                    
 
 			}
 		}

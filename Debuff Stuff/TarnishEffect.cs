@@ -23,35 +23,51 @@ namespace Planetside
 		public static GameObject TarnishVFXObject;
 		public Color TintColorFrailty = new Color(0.8f, 0.7f, 0f, 0.7f);
 		public Color ClearUp = new Color(0f, 0f, 0f, 0f);
-		public static void Init()
+
+
+        public static GameObject BuildVFX()
         {
-            GameObject blessingObj = ItemBuilder.AddSpriteToObject("TarnishVFX", "Planetside/Resources/VFX/Tarnish/TarnishEffect_idle_001", null);
-            FakePrefab.MarkAsFakePrefab(blessingObj);
-            UnityEngine.Object.DontDestroyOnLoad(blessingObj);
-            tk2dSpriteAnimator animator = blessingObj.GetOrAddComponent<tk2dSpriteAnimator>();
-            tk2dSpriteAnimation animation = blessingObj.AddComponent<tk2dSpriteAnimation>();
-
-            tk2dSpriteCollectionData DeathMarkcollection = SpriteBuilder.ConstructCollection(blessingObj, ("Tarnish_Collection"));
-
-            tk2dSpriteAnimationClip idleClip = new tk2dSpriteAnimationClip() { name = "idle", frames = new tk2dSpriteAnimationFrame[0], fps = 7 };
-            List<tk2dSpriteAnimationFrame> frames = new List<tk2dSpriteAnimationFrame>();
-
-            for (int i = 1; i < 5; i++)
+            var debuffCollection = StaticSpriteDefinitions.Debuff_Sheet_Data;
+            var BrokenArmorVFXObject = ItemBuilder.AddSpriteToObjectAssetbundle("Broken Armor", debuffCollection.GetSpriteIdByName("TarnishEffect_idle_001"), debuffCollection);//new GameObject("Broken Armor");//SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Debuffs/brokenarmor", new GameObject("BrokenArmorEffect"));
+            FakePrefab.MarkAsFakePrefab(BrokenArmorVFXObject);
+            UnityEngine.Object.DontDestroyOnLoad(BrokenArmorVFXObject);
+            BrokenArmorVFXObject.GetOrAddComponent<tk2dBaseSprite>();
+            tk2dSpriteAnimator animator = BrokenArmorVFXObject.GetOrAddComponent<tk2dSpriteAnimator>();
+            var clip = SpriteBuilder.AddAnimation(animator, debuffCollection, new List<int>()
             {
-                tk2dSpriteCollectionData collection = DeathMarkcollection;
-                int frameSpriteId = SpriteBuilder.AddSpriteToCollection($"Planetside/Resources/VFX/Tarnish/TarnishEffect_idle_00{i}", collection);
-                tk2dSpriteDefinition frameDef = collection.spriteDefinitions[frameSpriteId];
-                frameDef.ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.MiddleCenter);
-                frames.Add(new tk2dSpriteAnimationFrame { spriteId = frameSpriteId, spriteCollection = collection });
-            }
-            idleClip.frames = frames.ToArray();
-            idleClip.wrapMode = tk2dSpriteAnimationClip.WrapMode.Loop;
-            animator.Library = animation;
-            animator.Library.clips = new tk2dSpriteAnimationClip[] { idleClip };
-            animator.DefaultClipId = animator.GetClipIdByName("idle");
+                debuffCollection.GetSpriteIdByName("TarnishEffect_start_001"),
+                debuffCollection.GetSpriteIdByName("TarnishEffect_start_002"),
+                debuffCollection.GetSpriteIdByName("TarnishEffect_start_003"),
+                debuffCollection.GetSpriteIdByName("TarnishEffect_start_003"),
+
+                debuffCollection.GetSpriteIdByName("TarnishEffect_start_004"),
+                debuffCollection.GetSpriteIdByName("TarnishEffect_start_004"),
+                debuffCollection.GetSpriteIdByName("TarnishEffect_start_004"),
+
+                debuffCollection.GetSpriteIdByName("TarnishEffect_start_005"),
+                debuffCollection.GetSpriteIdByName("TarnishEffect_start_005"),
+
+                debuffCollection.GetSpriteIdByName("TarnishEffect_start_006"),
+                debuffCollection.GetSpriteIdByName("TarnishEffect_start_006"),
+
+                debuffCollection.GetSpriteIdByName("TarnishEffect_start_007"),
+                debuffCollection.GetSpriteIdByName("TarnishEffect_start_008"),
+                debuffCollection.GetSpriteIdByName("TarnishEffect_start_009"),
+
+                debuffCollection.GetSpriteIdByName("TarnishEffect_idle_001"),
+                debuffCollection.GetSpriteIdByName("TarnishEffect_idle_002"),
+                debuffCollection.GetSpriteIdByName("TarnishEffect_idle_003"),
+                debuffCollection.GetSpriteIdByName("TarnishEffect_idle_004"),
+
+            }, "start", tk2dSpriteAnimationClip.WrapMode.LoopSection, 9);
+
+            animator.DefaultClipId = animator.GetClipIdByName("start");
             animator.playAutomatically = true;
-			TarnishVFXObject = blessingObj;
+            clip.loopStart = 14;
+            TarnishVFXObject = BrokenArmorVFXObject;
+            return TarnishVFXObject;
         }
+
 		public override void ApplyTint(GameActor actor)
         {
 			actor.RegisterOverrideColor(TintColorFrailty, "Tarnish");

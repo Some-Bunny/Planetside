@@ -24,10 +24,12 @@ namespace Planetside
         public static void Init()
         {
             string itemName = "Tarnished Rounds";
-            string resourceName = "Planetside/Resources/tarnishedRounds.png";
+            //string resourceName = "Planetside/Resources/tarnishedRounds.png";
             GameObject obj = new GameObject(itemName);
             var item = obj.AddComponent<TarnishedRounds>();
-            ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("tarnishedRounds"), data, obj);
+            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "Old With Age";
             string longDesc = "These bullets have been subjected to the effects of aging, a rare occurance in the Gungeon." +
                 "\n\nAny foe hit with these rounds will be tarnished just as they are.";

@@ -20,10 +20,11 @@ namespace Planetside
         {
             string itemName = "Echolocation Ammolet";
 
-            string resourceName = "Planetside/Resources/echolcationammolet.png";
             GameObject obj = new GameObject(itemName);
             var item = obj.AddComponent<EcholocationAmmolet>();
-            ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("echolcationammolet"), data, obj);
+            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "Bat-lanks";
             string longDesc = "Using blanks uncovers the map." +
                 "\n\nOriginally an Ammolet wrapped in copper, this friendly Bullat offers assistance via echolocation in exchange for the Ammolets heat.";

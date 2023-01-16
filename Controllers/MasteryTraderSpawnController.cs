@@ -160,9 +160,17 @@ namespace Planetside
 
         public static float ProgressionMultiplier(float chance)
         {
-            if (GameStatsManager.Instance.GetFlag(GungeonFlags.ACHIEVEMENT_LEAD_GOD) == true) { chance *= 1.15f; }
-            if (GameStatsManager.Instance.GetPlayerStatValue(TrackedStats.TIMES_CLEARED_FORGE) == 0) { return Mathf.Min(0.05f, chance); }
-            if (GameStatsManager.Instance.GetFlag(GungeonFlags.BOSSKILLED_LICH) == false) { return Mathf.Min(0.75f, chance); }
+            Debug.Log("Progression Chance Multiplier: " + chance);
+            float f = chance;
+
+            if (GameStatsManager.Instance.GetFlag(GungeonFlags.ACHIEVEMENT_LEAD_GOD) == true) { chance *= 1.15f; Debug.Log("Lead God achieved, changing chance from " + f + " to " + chance); }
+            f = chance;
+            if (GameStatsManager.Instance.GetPlayerStatValue(TrackedStats.TIMES_CLEARED_FORGE) == 0) { chance =  Mathf.Min(0.05f, chance); Debug.Log("Forge NOT cleaed, changing chance from " + f + " to " + chance); }
+            f = chance;
+            if (GameStatsManager.Instance.GetFlag(GungeonFlags.BOSSKILLED_LICH) == false) { chance = Mathf.Min(0.75f, chance); Debug.Log("Hell NOT cleaed, changing chance from " + f + " to " + chance); }
+
+            Debug.Log("Post Process Progression Chance Multiplier: " + chance);
+
             return chance;
         }
 
@@ -268,7 +276,7 @@ namespace Planetside
                         }
                         else
                         {
-                            Debug.Log("Portal failed to open with " + Total + " Chance!");
+                            Debug.Log("Portal failed to open with " + finalTotal + " Chance!");
                         }
                         Debug.Log("Ending Portal Chance Calculation! =======\n");
                     }             

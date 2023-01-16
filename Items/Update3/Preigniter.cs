@@ -21,10 +21,12 @@ namespace Planetside
         public static void Init()
         {
             string itemName = "Weapon Pre-Igniter";
-            string resourceName = "Planetside/Resources/preigniter.png";
+            //string resourceName = "Planetside/Resources/preigniter.png";
             GameObject obj = new GameObject(itemName);
             var item = obj.AddComponent<Preigniter>();
-            ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("preigniter"), data, obj);
+            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "They Never Saw It Coming";
             string longDesc = "Grants 3 instant reloads on room entry." +
                 "\n\nBrought to the Gungeon, and clumsily lost here by the Pilot, this pre-igniter would keep any weapon system plugged into it hot and ready for action at a moments notice.";

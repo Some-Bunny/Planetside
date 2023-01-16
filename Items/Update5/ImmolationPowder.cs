@@ -25,10 +25,12 @@ namespace Planetside
         public static void Init()
         {
             string itemName = "Immolation Powder";
-            string resourceName = "Planetside/Resources/immolationpowder2.png";
+            //string resourceName = "Planetside/Resources/immolationpowder2.png";
             GameObject obj = new GameObject(itemName);
             ImmolationPowder activeitem = obj.AddComponent<ImmolationPowder>();
-            ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            var data = StaticSpriteDefinitions.Active_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("immolationpowder2"), data, obj);
+            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "Cannot Live With Me";
             string longDesc = "Passively reduces the rate at which you burn, and grants great power when burning. Immolates the player on use. \n\nA bag of chilli powder made from the hottest Gungeon Peppers. Occasionally used in pagan Gundead rituals where the gunpowder would be replaced with this and set alight.";
             activeitem.SetupItem(shortDesc, longDesc, "psog");

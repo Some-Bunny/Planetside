@@ -17,10 +17,12 @@ namespace Planetside
         public static void Init()
         {
             string name = "Volatile Tesla-Pack";
-            string resourcePath = "Planetside/Resources/plaetunstableteslacoil.png";
+            //string resourcePath = "Planetside/Resources/plaetunstableteslacoil.png";
             GameObject gameObject = new GameObject(name);
             UnstableTeslaCoil item = gameObject.AddComponent<UnstableTeslaCoil>();
-            ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
+            var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("plaetunstableteslacoil"), data, gameObject);
+            //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
             string shortDesc = "Hair-Raising Experience";
             string longDesc = "A very volatile tesla-pack that's been hidden away in a chest to prevent harm. The arcs connect to nearby things and can erupt powerfully enough to confuse enemies.";
             ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");

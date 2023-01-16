@@ -31,10 +31,12 @@ namespace Planetside
         public static void Init()
         {
             string itemName = "Scroll Of Guonification";
-            string resourceName = "Planetside/Resources/scrollofguon.png";
+            //string resourceName = "Planetside/Resources/scrollofguon.png";
             GameObject obj = new GameObject(itemName);
 			ResourceGuonMaker activeitem = obj.AddComponent<ResourceGuonMaker>();
-            ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            var data = StaticSpriteDefinitions.Active_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("scrollofguon"), data, obj);
+            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "Protection Potential";
             string longDesc = "Imbues objects with orbiting, protective powers.\n\nA scroll written by a long-dead Guonmancer. Small pieces of paper that have torn off of the scroll due to age float around it passively.";
 			activeitem.SetupItem(shortDesc, longDesc, "psog");

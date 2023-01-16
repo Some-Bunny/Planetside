@@ -16,11 +16,13 @@ namespace Planetside
 		public static void Init()
 		{
 			string name = "Self-Replicating Blank";
-			string resourcePath = "Planetside/Resources/selfreplicatingblank.png";
+			//string resourcePath = "Planetside/Resources/selfreplicatingblank.png";
 			GameObject gameObject = new GameObject(name);
             SelfReplicatingBlank warVase = gameObject.AddComponent<SelfReplicatingBlank>();
-			ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
-			string shortDesc = "Osis";
+            var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("selfreplicatingblank"), data, gameObject);
+            //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
+            string shortDesc = "Osis";
 			string longDesc = "Blanks used in combat will be refunded, as long as you don't get hit. Consecutive blanks have a lower chance to be refunded.\n\nThis blank is actually an extremely rare fungus, which is able to spread and multiply as long as its left to its own devices.";
 			ItemBuilder.SetupItem(warVase, shortDesc, longDesc, "psog");
 			warVase.quality = PickupObject.ItemQuality.A;
@@ -67,6 +69,13 @@ namespace Planetside
             shardObject3.name = "Spore_Debris_Small";
 
             cluster = BreakableAPIToolbox.GenerateShardCluster(new DebrisObject[] { shardObject, shardObject , shardObject, shardObject2, shardObject3 }, 0.35f, 1.2f, 8, 12, 0.8f);
+
+            //List<string> mandatoryConsoleIDs = new List<string>
+            //{
+                //"psog:immolation_powder",
+              //  "psog:revenant"
+            //};
+            //CustomSynergies.Add("Ashes To Ashes, To Ashes", mandatoryConsoleIDs, null, false);
         }
 
         public static ShardCluster cluster;

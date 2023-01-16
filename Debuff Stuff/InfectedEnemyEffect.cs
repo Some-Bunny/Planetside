@@ -55,9 +55,9 @@ namespace Planetside
                     //bulletBank.ActorName = "Toddy";
                     //bulletBank.transforms = new List<Transform>() { base.aiActor.transform };
 
-                    b = bullet;
                     bullet.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableLargeSpore);
                     bullet.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
+                    b = bullet;
 
                     /*
 					GameObject ob = new GameObject();
@@ -81,9 +81,9 @@ namespace Planetside
                     Destroy(ob, 3);
 					*/
                 }
-				if (base.aiActor.GetComponent<AIBulletBank>() != null)
+                if (b != null)
 				{
-                    SpawnManager.SpawnBulletScript(base.aiActor, base.aiActor.sprite.WorldCenter, base.aiActor.GetComponent<AIBulletBank>(), new CustomBulletScriptSelector(typeof(Splat)), StringTableManager.GetEnemiesString("#TRAP", -1));
+                    SpawnManager.SpawnBulletScript(base.aiActor, base.aiActor.sprite.WorldCenter, b, new CustomBulletScriptSelector(typeof(Splat)), StringTableManager.GetEnemiesString("#TRAP", -1));
                 }
 
 
@@ -102,11 +102,11 @@ namespace Planetside
 		{
 			public static float ReturnBulletAmount(AIActor ai)
 			{
-				float HP = ai != null ? ai.healthHaver.GetMaxHealth() : 36;
-				float Bullets = 1;
+				float HP = ai != null ? ai.healthHaver.GetMaxHealth() : 60;
+				float Bullets = 4;
 				for (int i = 0; i < HP; i++)
 				{
-					if (i % 12 == 0)
+					if (i % 15 == 0)
 					{ Bullets++; }
 				}
 				return (int)Bullets;
@@ -143,19 +143,42 @@ namespace Planetside
 
 		public Color TintColorInfection= new Color(0.05f, 0.3f, 0.9f, 0.7f);
 
-		public static void Init()
-        {
-			GeneratedInfectionCrystals = new List<GameObject>();
-			GeneratedInfectionCrystals.Add(GenerateInfectionCrystalFromPath("Blob1", "Planetside/Resources/VFX/Infection/blob_1.png"));
-			GeneratedInfectionCrystals.Add(GenerateInfectionCrystalFromPath("Blob2", "Planetside/Resources/VFX/Infection/blob_2.png"));
-			GeneratedInfectionCrystals.Add(GenerateInfectionCrystalFromPath("Blob3", "Planetside/Resources/VFX/Infection/blob_3.png"));
-			GeneratedInfectionCrystals.Add(GenerateInfectionCrystalFromPath("Blob4", "Planetside/Resources/VFX/Infection/blob_4.png"));
-			GeneratedInfectionCrystals.Add(GenerateInfectionCrystalFromPath("Blob5", "Planetside/Resources/VFX/Infection/blob_5.png"));
-			GeneratedInfectionCrystals.Add(GenerateInfectionCrystalFromPath("Blob6", "Planetside/Resources/VFX/Infection/blob_6.png"));
-			GeneratedInfectionCrystals.Add(GenerateInfectionCrystalFromPath("Blob7", "Planetside/Resources/VFX/Infection/blob_7.png"));
+		public static List<GameObject> BuildVFX()
+		{
+            GeneratedInfectionCrystals = new List<GameObject>();
+            GeneratedInfectionCrystals.Add(GenerateInfectionCrystalFromPath("Blob1", "blob_1"));
+            GeneratedInfectionCrystals.Add(GenerateInfectionCrystalFromPath("Blob2", "blob_2"));
+            GeneratedInfectionCrystals.Add(GenerateInfectionCrystalFromPath("Blob3", "blob_3"));
+            GeneratedInfectionCrystals.Add(GenerateInfectionCrystalFromPath("Blob4", "blob_4"));
+            GeneratedInfectionCrystals.Add(GenerateInfectionCrystalFromPath("Blob5", "blob_5"));
+            GeneratedInfectionCrystals.Add(GenerateInfectionCrystalFromPath("Blob6", "blob_6"));
+            GeneratedInfectionCrystals.Add(GenerateInfectionCrystalFromPath("Blob7", "blob_7"));
+            return GeneratedInfectionCrystals;
+        }
 
-		}
-		public override void EffectTick(GameActor actor, RuntimeGameActorEffectData effectData)
+
+
+        private static GameObject GenerateInfectionCrystalFromPath(string name, string fileName)
+        {
+            var debuffCollection = StaticSpriteDefinitions.Debuff_Sheet_Data;
+            var BrokenArmorVFXObject = ItemBuilder.AddSpriteToObjectAssetbundle(name, debuffCollection.GetSpriteIdByName(fileName), debuffCollection);//new GameObject("Broken Armor");//SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Debuffs/brokenarmor", new GameObject("BrokenArmorEffect"));
+            FakePrefab.MarkAsFakePrefab(BrokenArmorVFXObject);
+            UnityEngine.Object.DontDestroyOnLoad(BrokenArmorVFXObject);
+			var sprite = BrokenArmorVFXObject.GetComponent<tk2dBaseSprite>();
+            sprite.usesOverrideMaterial = true;
+            Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+            mat.mainTexture = sprite.renderer.material.mainTexture;
+            mat.SetColor("_EmissiveColor", new Color32(0, 255, 255, 255));
+            mat.SetFloat("_EmissiveColorPower", 2f);
+            mat.SetFloat("_EmissivePower", 35);
+            sprite.renderer.material = mat;
+            return BrokenArmorVFXObject;
+        }
+
+        public static List<GameObject> GeneratedInfectionCrystals;
+
+
+        public override void EffectTick(GameActor actor, RuntimeGameActorEffectData effectData)
         {
 			foreach (Tuple<GameObject, float> tuple in effectData.vfxObjects)
 			{
@@ -167,12 +190,12 @@ namespace Planetside
 			if (actor != null)
             {
 				Elasped += BraveTime.DeltaTime;
-				if (Elasped > 1)
+				if (Elasped > Duration)
                 {
 					Elasped = 0;
 					if (EnemyIsVisible(actor.aiActor) == true)
                     {
-						if (actor.GetComponent<AIBulletBank>() == null && actor.transform.Find("tempObjInfection").GetComponent<AIBulletBank>() == null) { return; }
+						if (actor.GetComponent<AIBulletBank>() == null || actor.transform.Find("tempObjInfection").GetComponent<AIBulletBank>() == null) { return; }
                             SpawnManager.SpawnBulletScript(actor, actor.sprite.WorldCenter, actor.GetComponent<AIBulletBank>() ?? actor.transform.Find("tempObjInfection").GetComponent<AIBulletBank>(), new CustomBulletScriptSelector(typeof(SplatWeak)), StringTableManager.GetEnemiesString("#TRAP", -1));
 					}
 				}
@@ -180,6 +203,7 @@ namespace Planetside
 		}
 
 		public float Elasped;
+        public float Duration = 1;
 
 
         public override void OnEffectApplied(GameActor actor, RuntimeGameActorEffectData effectData, float partialAmount = 1)
@@ -340,25 +364,5 @@ namespace Planetside
 			return false;
 		}
 
-
-
-		private static GameObject GenerateInfectionCrystalFromPath(string name, string spritePath)
-        {
-			GameObject vfxObj = ItemBuilder.AddSpriteToObject(name, spritePath, null);
-			FakePrefab.MarkAsFakePrefab(vfxObj);
-			UnityEngine.Object.DontDestroyOnLoad(vfxObj);
-			tk2dSprite sprite = vfxObj.GetComponent<tk2dSprite>();
-			sprite.usesOverrideMaterial = true;
-			
-			Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
-			mat.mainTexture = sprite.renderer.material.mainTexture;
-			mat.SetColor("_EmissiveColor", new Color32(0, 255, 255, 255));
-			mat.SetFloat("_EmissiveColorPower", 2f);
-			mat.SetFloat("_EmissivePower", 35);
-			sprite.renderer.material = mat;
-			return vfxObj;
-		}
-
-		public static List<GameObject> GeneratedInfectionCrystals;
 	}
 }

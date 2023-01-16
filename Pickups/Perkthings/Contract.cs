@@ -86,11 +86,13 @@ namespace Planetside
         public static void Init()
         {
             string name = "Contractual Obligation";
-            string resourcePath = "Planetside/Resources/PerkThings/contract.png";
+            //string resourcePath = "Planetside/Resources/PerkThings/contract.png";
             GameObject gameObject = new GameObject(name);
             Contract item = gameObject.AddComponent<Contract>();
-          
-            ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
+
+            var data = StaticSpriteDefinitions.Pickup_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("contract"), data, gameObject);
+            //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
             string shortDesc = "Literally just an all stats up.";
             string longDesc = "yep.";
             item.SetupItem(shortDesc, longDesc, "psog");
@@ -268,7 +270,9 @@ namespace Planetside
 
             string BlurbText = contract.hasBeenPickedup == true ? "Hire an Additional Killer.": "Hire a Friendly Contract Killer.";
             Exploder.DoDistortionWave(player.sprite.WorldTopCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
-            OtherTools.Notify("Contract", BlurbText, "Planetside/Resources/PerkThings/contract", UINotificationController.NotificationColor.GOLD);
+            //OtherTools.Notify("Contract", BlurbText, "Planetside/Resources/PerkThings/contract", UINotificationController.NotificationColor.GOLD);
+            OtherTools.NotifyCustom("Contract", BlurbText, "contract", StaticSpriteDefinitions.Pickup_Sheet_Data, UINotificationController.NotificationColor.GOLD);
+
             player.BloopItemAboveHead(base.sprite, "");
             UnityEngine.Object.Destroy(base.gameObject);
         }

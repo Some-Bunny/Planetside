@@ -97,6 +97,17 @@ namespace Planetside
                         orAddComponent.Priority = EphemeralObject.EphemeralPriority.Critical;
                         orAddComponent.Trigger(vector.WithZ(4f), 0.05f, 1f);
                         orAddComponent.canRotate = false;
+                        for (int i = 0; i < GameManager.Instance.AllPlayers.Length; i++)
+                        {
+                            PlayerController player = GameManager.Instance.AllPlayers[i];
+                            bool Synergy = player.PlayerHasActiveSynergy("Expert Demolitionist");
+                            if (Synergy)
+                            {
+                                ExplosionData ex = StaticExplosionDatas.genericLargeExplosion.CopyExplosionData();
+                                ex.ignoreList.Add(player.specRigidbody);
+                                Exploder.Explode(self.transform.position, ex, self.transform.position);
+                            }
+                        }
                     };
                 }
             }

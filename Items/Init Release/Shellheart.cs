@@ -21,11 +21,13 @@ namespace Planetside
 		public static void Init()
 		{
 			string itemName = "Shell-Heart";
-			string resourceName = "Planetside/Resources/shellheart.png";
+			//string resourceName = "Planetside/Resources/shellheart.png";
 			GameObject obj = new GameObject(itemName);
 			Shellheart counterChamber = obj.AddComponent<Shellheart>();
-			ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
-			string shortDesc = "Lead-Lining";
+            var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("shellheart"), data, obj);
+            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            string shortDesc = "Lead-Lining";
 			string longDesc = "Armor damage no longer prevents Mastery.\n\nA hollow heart decorated with hundreds of spent shells. A guarding presence surrounds you.";
 			counterChamber.SetupItem(shortDesc, longDesc, "psog");
 			counterChamber.quality = PickupObject.ItemQuality.B;

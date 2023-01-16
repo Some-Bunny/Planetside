@@ -238,6 +238,7 @@ namespace Planetside
             SniperTurretsController  t = sniperTurretDefaultaFront.gameObject.AddComponent<SniperTurretsController>();
             t.DirectionToFire = Vector2.down.ToAngle();
             t.muzzleFlashPrefab = (PickupObjectDatabase.GetById(370) as Gun).muzzleFlashEffects.effects[0].effects[0].effect;
+            sniperTurretDefaultaFront.gameObject.AddComponent<PushImmunity>();
 
             bulletBankLeft.Bullets = new List<AIBulletBank.Entry>();
 			bulletBankLeft.Bullets.Add(entrySniper);
@@ -259,6 +260,7 @@ namespace Planetside
             turret.isProfessional = true;
             turret.DirectionToFire = Vector2.down.ToAngle();
             turret.muzzleFlashPrefab = (PickupObjectDatabase.GetById(370) as Gun).muzzleFlashEffects.effects[0].effects[0].effect;
+            turret.gameObject.AddComponent<PushImmunity>();
 
             bulletBank.Bullets = new List<AIBulletBank.Entry>();
             bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("31a3ea0c54a745e182e22ea54844a82d").bulletBank.GetBullet("sniper"));
@@ -283,6 +285,7 @@ namespace Planetside
             SniperTurretsController t = sniperTurretDefaultaFront.gameObject.AddComponent<SniperTurretsController>();
             t.DirectionToFire = Vector2.left.ToAngle();
             t.muzzleFlashPrefab = (PickupObjectDatabase.GetById(370) as Gun).muzzleFlashEffects.effects[0].effects[0].effect;
+            sniperTurretDefaultaFront.gameObject.AddComponent<PushImmunity>();
 
             bulletBankLeft.Bullets = new List<AIBulletBank.Entry>();
             bulletBankLeft.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("31a3ea0c54a745e182e22ea54844a82d").bulletBank.GetBullet("sniper"));
@@ -301,6 +304,8 @@ namespace Planetside
             turret.isProfessional = true;
             turret.DirectionToFire = Vector2.left.ToAngle();
             turret.muzzleFlashPrefab = (PickupObjectDatabase.GetById(370) as Gun).muzzleFlashEffects.effects[0].effects[0].effect;
+
+            turret.gameObject.AddComponent<PushImmunity>();
 
             bulletBank.Bullets = new List<AIBulletBank.Entry>();
             bulletBank.Bullets.Add(entry);
@@ -322,6 +327,8 @@ namespace Planetside
             SniperTurretsController t = sniperTurretDefaultaFront.gameObject.AddComponent<SniperTurretsController>();
             t.DirectionToFire = Vector2.right.ToAngle();
             t.muzzleFlashPrefab = (PickupObjectDatabase.GetById(370) as Gun).muzzleFlashEffects.effects[0].effects[0].effect;
+            sniperTurretDefaultaFront.gameObject.AddComponent<PushImmunity>();
+
 
             bulletBankLeft.Bullets = new List<AIBulletBank.Entry>();
             bulletBankLeft.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("31a3ea0c54a745e182e22ea54844a82d").bulletBank.GetBullet("sniper"));
@@ -344,6 +351,7 @@ namespace Planetside
             turret.isProfessional = true;
             turret.DirectionToFire = Vector2.right.ToAngle();
             turret.muzzleFlashPrefab = (PickupObjectDatabase.GetById(370) as Gun).muzzleFlashEffects.effects[0].effects[0].effect;
+            turret.gameObject.AddComponent<PushImmunity>();
 
             bulletBank.Bullets = new List<AIBulletBank.Entry>();
             bulletBank.Bullets.Add(entry);

@@ -34,6 +34,7 @@ namespace Planetside
             {
                 currentSWState = States.DISABLED;
                 GameManager.Instance.OnNewLevelFullyLoaded += this.DoEventChecks;
+                Actions.PostDungeonTrueStart += PostFloorgen;
                 Debug.Log("Finished SomethingWickedEventManager setup without failure!");
 
             }
@@ -43,6 +44,19 @@ namespace Planetside
                 Debug.Log(e);
             }
         }
+
+        public static void PostFloorgen(Dungeon dungeon)
+        {
+            if (currentSWState == States.ALLOWED)
+            {
+                dungeon.DungeonFloorName = GameUIRoot.Instance.GetComponent<dfLanguageManager>().GetValue(dungeon.DungeonFloorName) + "";
+                dungeon.DungeonFloorLevelTextOverride = "Silenced Chamber";
+                var deco = dungeon.decoSettings;
+                deco.generateLights = false;
+            }
+            
+        }
+
         void DoEventChecks()
         {
             if (GameManager.Instance.Dungeon.tileIndices.tilesetId != GlobalDungeonData.ValidTilesets.RATGEON || GameManager.Instance.Dungeon.tileIndices.tilesetId != GlobalDungeonData.ValidTilesets.HELLGEON)
@@ -71,12 +85,14 @@ namespace Planetside
                     NevernamedsDarknessHandler.DisableDarkness(0);
                     Minimap.Instance.TemporarilyPreventMinimap = false;
                     TrapDefusalKit.RemoveTrapDefuseOverride("somethingwicked");
+                    ResetMusic(GameManager.Instance.Dungeon);
 
                 }
                 else if (currentSWState == States.DISABLED)
                 {
                     NevernamedsDarknessHandler.DisableDarkness(0);
                     TrapDefusalKit.RemoveTrapDefuseOverride("somethingwicked");
+                    ResetMusic(GameManager.Instance.Dungeon);
 
                 }
             }
@@ -85,7 +101,7 @@ namespace Planetside
                 NevernamedsDarknessHandler.DisableDarkness(0);
                 currentSWState = States.DISABLED;
                 TrapDefusalKit.RemoveTrapDefuseOverride("somethingwicked");
-
+                ResetMusic(GameManager.Instance.Dungeon);
             }
         }
 
@@ -267,6 +283,8 @@ namespace Planetside
             {
                 this.m_cachedMusicEventCore = "Play_MUS_Dungeon_Theme_01";
             }
+            AkSoundEngine.PostEvent(m_cachedMusicEventCore, GameManager.Instance.gameObject);
+
         }
         private string m_cachedMusicEventCore;
 

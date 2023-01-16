@@ -21,10 +21,13 @@ namespace Planetside
         public static void Init()
         {
             string itemName = "Hull-Breaker Bullets";
-            string resourceName = "Planetside/Resources/hullbreaker.png";
+            //string resourceName = "Planetside/Resources/hullbreaker.png";
             GameObject obj = new GameObject(itemName);
             var item = obj.AddComponent<HullBreakerBullets>();
-            ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("hullbreaker"), data, obj);
+
             string shortDesc = "Once More Into The Breach";
             string longDesc = "Deal greater damage to yet undamaged enemies." +
                 "\n\nThese bullets were initially forged to blast holes into the sides of spaceships, but in violation of the Guneva convention, are now used in the Gungeon.";
@@ -68,39 +71,47 @@ namespace Planetside
 		private void HandlePreCollision(SpeculativeRigidbody myRigidbody, PixelCollider myPixelCollider, SpeculativeRigidbody otherRigidbody, PixelCollider otherPixelCollider)
 		{
 			
-			bool flag = otherRigidbody && otherRigidbody.healthHaver;
-			if (flag)
+			if (otherRigidbody != null&& otherRigidbody.healthHaver != null)
 			{
 				float maxHealth = otherRigidbody.healthHaver.GetMaxHealth();
 				float num = maxHealth * 0.99f;
 				float currentHealth = otherRigidbody.healthHaver.GetCurrentHealth();
-				bool flag2 = currentHealth > num;
-				if (flag2)
+				if (currentHealth > num)
 				{
 					float damage = myRigidbody.projectile.baseData.damage;
 					myRigidbody.projectile.baseData.damage *= 2.5f;
 					GameManager.Instance.StartCoroutine(this.ChangeProjectileDamage(myRigidbody.projectile, damage));
-					bool flagA = base.Owner.PlayerHasActiveSynergy("Shattering Justice");
-					if (flagA)
+					myRigidbody.projectile.OnHitEnemy += OHE;
+                    AkSoundEngine.PostEvent("Play_ITM_Crisis_Stone_Impact_01", myRigidbody.gameObject);
+                    AkSoundEngine.PostEvent("Play_obj_vent_break_01", myRigidbody.gameObject);
+
+                    if (base.Owner.PlayerHasActiveSynergy("Shattering Justice"))
 					{
-						if (otherRigidbody != null)
-                        {
-							AkSoundEngine.PostEvent("Play_obj_vent_break_01", base.gameObject);
-							otherRigidbody.aiActor.ApplyEffect(DebuffLibrary.brokenArmor, 1f, null);
-						}
-					}
+                        AkSoundEngine.PostEvent("Play_obj_vent_break_01", myRigidbody.gameObject);
+                        otherRigidbody.aiActor.ApplyEffect(DebuffLibrary.brokenArmor, 1f, null);
+                    }
 				}
 			}
 		}
-		private IEnumerator ChangeProjectileDamage(Projectile bullet, float oldDamage)
+
+		public void OHE(Projectile p, SpeculativeRigidbody b, bool boo) 
+		{
+			if (b.aiActor) 
+			{
+				b.aiActor.PlayEffectOnActor((PickupObjectDatabase.GetById(37) as Gun).DefaultModule.chargeProjectiles[0].Projectile.hitEffects.tileMapHorizontal.effects.First().effects.First().effect, new Vector2(0, 0));
+			}
+		}
+
+        private IEnumerator ChangeProjectileDamage(Projectile bullet, float oldDamage)
 		{
 			yield return new WaitForSeconds(0.1f);
-			bool flag = bullet != null;
-			if (flag)
+			if (bullet != null)
 			{
 				bullet.baseData.damage = oldDamage;
-			}
-			yield break;
+                bullet.projectile.OnHitEnemy -= OHE;
+
+            }
+            yield break;
 		}
 		public override DebrisObject Drop(PlayerController player)
 		{

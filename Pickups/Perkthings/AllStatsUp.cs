@@ -10,11 +10,13 @@ namespace Planetside
         public static void Init()
         {
             string name = "All Stats Up";
-            string resourcePath = "Planetside/Resources/PerkThings/lazyAllstatsUp.png";
+           //string resourcePath = "Planetside/Resources/PerkThings/lazyAllstatsUp.png";
             GameObject gameObject = new GameObject(name);
             AllStatsUp item = gameObject.AddComponent<AllStatsUp>();
-          
-            ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
+
+            var data = StaticSpriteDefinitions.Pickup_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("lazyAllstatsUp"), data, gameObject);
+            //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
             string shortDesc = "Literally just an all stats up.";
             string longDesc = "yep.";
             item.SetupItem(shortDesc, longDesc, "psog");
@@ -52,7 +54,9 @@ namespace Planetside
             Exploder.DoDistortionWave(player.sprite.WorldTopCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
             player.BloopItemAboveHead(base.sprite, "");
 
-            OtherTools.Notify("All Stats Up", "Grants a boost to most stats!","Planetside/Resources/PerkThings/lazyAllstatsUp", UINotificationController.NotificationColor.GOLD);
+            OtherTools.NotifyCustom("All Stats Up", "Grants a boost to most stats!", "lazyAllstatsUp", StaticSpriteDefinitions.Pickup_Sheet_Data, UINotificationController.NotificationColor.GOLD);
+
+            //OtherTools.Notify("All Stats Up", "Grants a boost to most stats!","Planetside/Resources/PerkThings/lazyAllstatsUp", UINotificationController.NotificationColor.GOLD);
             UnityEngine.Object.Destroy(base.gameObject);
         }
 

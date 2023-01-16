@@ -21,7 +21,8 @@ namespace Planetside
         public static void Init()
         {
 
-            GameObject logoObj = ItemBuilder.AddSpriteToObject("TitleDioramaFX", "Planetside/Resources/VFX/logo", null);
+            var Collection = StaticSpriteDefinitions.Oddments_Sheet_Data;
+            var logoObj = ItemBuilder.AddSpriteToObjectAssetbundle("Big Ass Logo", Collection.GetSpriteIdByName("logo"), Collection);
             FakePrefab.MarkAsFakePrefab(logoObj);
             UnityEngine.Object.DontDestroyOnLoad(logoObj);
             logoObj.transform.position = logoObj.transform.position.WithZ(1);
@@ -113,43 +114,70 @@ namespace Planetside
 
 
         public static MainMenuFoyerController mainMenuFoyerController;
+        public static MainMenuFoyerController storedMainMenuFoyerController;
+
         public static void UpdateHook(Action<TitleDioramaController> orig, TitleDioramaController self)
         {
             orig(self);
 
             if (mainMenuFoyerController == null)
             {
-                mainMenuFoyerController = UnityEngine.Object.FindObjectOfType<MainMenuFoyerController>();
+                var ff = UnityEngine.Object.FindObjectOfType<MainMenuFoyerController>();
+                mainMenuFoyerController = ff;
+                storedMainMenuFoyerController = ff;
             }
+            //ETGModConsole.Log(1);
 
 
 
             //var thing = UnityEngine.Object.FindObjectOfType<MainMenuFoyerController>();
             {
+
                 if (mainMenuFoyerController != null)
                 {
-                    if (mainMenuFoyerController != UnityEngine.Object.FindObjectOfType<MainMenuFoyerController>())
+                    //ETGModConsole.Log(3);
+
+                    if (storedMainMenuFoyerController != mainMenuFoyerController)
                     {
-                        mainMenuFoyerController = UnityEngine.Object.FindObjectOfType<MainMenuFoyerController>();
+                        var ff = UnityEngine.Object.FindObjectOfType<MainMenuFoyerController>();
+                        mainMenuFoyerController = ff;
+                        storedMainMenuFoyerController = ff;
                     }
+                    //ETGModConsole.Log(4);
 
                     var referencedController = mainMenuFoyerController.TitleCard;
+                  //  ETGModConsole.Log(5);
+
                     if (referencedController != null && referencedController.enabled == true)
                     {
+                       // ETGModConsole.Log(6);
+
                         if (ExtantIcon != null && self != null)
                         {
+                            //ETGModConsole.Log(7);
+
                             ExtantIcon.transform.position = self.transform.position.WithZ(0) + new Vector3(15f, 8.5f).WithZ(10);
+                            //ETGModConsole.Log(8);
+
 
                         }
                         if (ExtantLogo != null && self != null)
                         {
+                            //ETGModConsole.Log(9);
+
                             ExtantLogo.transform.position = self.transform.position.WithZ(0) + new Vector3(-6.9375f, -6f).WithZ(10);
                             ExtantLogo.GetComponent<tk2dBaseSprite>().renderer.material.SetFloat("_Fade", referencedController != null ? referencedController.Opacity : 0);
+                            //ETGModConsole.Log(10);
+
                         }
                         if (ExtantIcon == null)
                         {
+                           // ETGModConsole.Log(11);
+
                             ExtantIcon = UnityEngine.Object.Instantiate(SpecialDioramaIcon, self.transform.position, Quaternion.identity, self.transform);
                             ExtantIcon.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
+                            //ETGModConsole.Log(12);
+
                         }
 
                         if (ExtantLogo == null)

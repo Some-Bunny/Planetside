@@ -22,11 +22,9 @@ namespace Planetside
 	{
         public void Start()
         {
-            this.projectile = base.GetComponent<Projectile>();
-            if (this.projectile != null)
-            {projectile.OverrideMotionModule = new OscillatingeMotionModule();}
+            var projectile = base.GetComponent<Projectile>();
+            if (projectile != null){ projectile.StartCoroutine(OscilaltingBullets.DoOscillate(projectile)); }
         }
-        private Projectile projectile;
 	}
 }
 

@@ -77,14 +77,17 @@ namespace Planetside
 
             MajorBreakable note1 = BreakableAPIToolbox.GenerateMajorBreakable("tutorialNote_1", idlePaths, 1, idlePaths, 1, 15000, true, 0, 0, 0, 0, true, null, null, true, null);
             NoteDoer finishedNote1 = BreakableAPIToolbox.GenerateNoteDoer(note1, BreakableAPIToolbox.GenerateTransformObject(note1.gameObject, new Vector2(0.25f, 0.25f), "noteattachPoint").transform, "#TUTORIAL_NODODGE_NOTE_1");
+            note1.gameObject.AddComponent<PushImmunity>();
 
             MajorBreakable note2 = BreakableAPIToolbox.GenerateMajorBreakable("tutorialNote_2", idlePaths, 1, idlePaths, 1, 15000, true, 0, 0, 0, 0, true, null, null, true, null);
             NoteDoer finishedNote2 = BreakableAPIToolbox.GenerateNoteDoer(note2, BreakableAPIToolbox.GenerateTransformObject(note2.gameObject, new Vector2(0.25f, 0.25f), "noteattachPoint").transform, "#TUTORIAL_NODODGE_NOTE_2");
+            note2.gameObject.AddComponent<PushImmunity>();
 
             MajorBreakable note3 = BreakableAPIToolbox.GenerateMajorBreakable("tutorialNote_3", idlePaths, 1, idlePaths, 1, 15000, true, 0, 0, 0, 0, true, null, null, true, null);
             NoteDoer finishedNote3 = BreakableAPIToolbox.GenerateNoteDoer(note3, BreakableAPIToolbox.GenerateTransformObject(note3.gameObject, new Vector2(0.25f, 0.25f), "noteattachPoint").transform, "#TUTORIAL_NODODGE_NOTE_3", true);
-            
-            
+
+            note3.gameObject.AddComponent<PushImmunity>();
+
             finishedNote3.gameObject.AddComponent<NoteTriggerEnemiesController>();
 
 
@@ -93,6 +96,7 @@ namespace Planetside
 
             MajorBreakable note4 = BreakableAPIToolbox.GenerateMajorBreakable("prisonerNote_1", idlePaths, 1, idlePaths, 1, 15000, true, 0, 0, 0, 0, true, null, null, true, null);
             NoteDoer PrisonerNote1 = BreakableAPIToolbox.GenerateNoteDoer(note4, BreakableAPIToolbox.GenerateTransformObject(note4.gameObject, new Vector2(0.25f, 0.25f), "noteattachPoint").transform, "#PRERELEASE_NOTE_1");
+            note4.gameObject.AddComponent<PushImmunity>();
 
 
             StaticReferences.StoredRoomObjects.Add("note1", finishedNote1.gameObject);

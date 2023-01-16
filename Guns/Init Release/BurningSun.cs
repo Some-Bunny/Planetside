@@ -95,33 +95,18 @@ namespace Planetside
 			Values.DealsDamage = true;
 			Values.DamageperDamageEvent = 5;
 			Values.DamageValuesAlsoScalesWithDamageStat = true;
-			Values.InflictsFire = true;
-			Values.HeatStrokeSynergy = true;
-			Values.EffectProcChance = 1;
-			projectile2.gameObject.AddComponent<BurningSunProjectile>();
-
-
-
-			/*
-			OtherTools.EasyTrailComponent trail = projectile2.gameObject.AddComponent<OtherTools.EasyTrailComponent>();
-			trail.TrailPos = projectile2.transform.position;
-			trail.StartColor = Color.white;
-			trail.StartWidth = 0.7f;
-			trail.EndWidth = 0;
-			trail.LifeTime = 1f;
-			trail.BaseColor = new Color(5f, 1f, 0f, 2f);
-			trail.EndColor = new Color(5f, 1f, 1f, 0f);
-			*/
-
-			/*
-			foreach (ProjectileModule.ChargeProjectile chargeProj in (PickupObjectDatabase.GetById(390) as Gun).DefaultModule.chargeProjectiles)
+			Values.debuffs = new Dictionary<GameActorEffect, float>()
 			{
-				gun.DefaultModule.chargeProjectiles.Add(new ProjectileModule.ChargeProjectile
-				{
-					VfxPool = chargeProj.VfxPool
-				});
-			}
-			*/
+				{DebuffStatics.hotLeadEffect, 0.5f }
+			};
+            Values.conditionalDebuffs = new Dictionary<GameActorEffect, Func<bool>>()
+            {
+                {DebuffLibrary.HeatStroke, CanSynergy }
+            };
+
+            projectile2.gameObject.AddComponent<BurningSunProjectile>();
+
+
 			ProjectileModule.ChargeProjectile item2 = new ProjectileModule.ChargeProjectile
 			{
 				Projectile = projectile2,
@@ -154,6 +139,15 @@ namespace Planetside
 			ItemIDs.AddToList(gun.PickupObjectId);
 		}
 		public static int BurningSunId;
+
+		private static bool CanSynergy()
+		{
+			foreach (PlayerController p in GameManager.Instance.AllPlayers) 
+			{
+				if (p.PlayerHasActiveSynergy("Praise The Gun!")) { return true; }
+			}
+			return false;
+		}
 
 
 		private bool HasReloaded;

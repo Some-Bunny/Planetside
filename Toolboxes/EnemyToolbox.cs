@@ -18,7 +18,42 @@ namespace Planetside
 	internal static class EnemyToolbox
     {
 
-		public static void QuickAssetBundleSpriteSetup(AIActor actorObject, tk2dSpriteCollectionData bundleData, Material mat, bool changesSortingLayer = true)
+        public static AIActor GetNearestEnemy(this RoomHandler room, Vector2 position, out float nearestDistance, List<AIActor> excludedActors, bool includeBosses = true, bool excludeDying = false)
+        {
+            AIActor aiactor = null;
+            nearestDistance = float.MaxValue;
+            List<AIActor> activeEnemies = room.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
+            bool flag = activeEnemies == null;
+            AIActor result;
+            if (flag)
+            {
+                result = null;
+            }
+            else
+            {
+                for (int i = 0; i < activeEnemies.Count; i++)
+                {
+                    if (includeBosses || !activeEnemies[i].healthHaver.IsBoss)
+                    {
+                        if (!excludeDying || !activeEnemies[i].healthHaver.IsDead)
+                        {
+                            float num = Vector2.Distance(position, activeEnemies[i].CenterPosition);
+                            bool flag4 = num < nearestDistance && !excludedActors.Contains(activeEnemies[i]);
+                            if (flag4)
+                            {
+                                nearestDistance = num;
+                                aiactor = activeEnemies[i];
+                            }
+                        }
+                    }
+                }
+                result = aiactor;
+            }
+            return result;
+        }
+
+
+        public static void QuickAssetBundleSpriteSetup(AIActor actorObject, tk2dSpriteCollectionData bundleData, Material mat, bool changesSortingLayer = true)
 		{
             Texture texture = mat.GetTexture("_MainTex");
             texture.filterMode = FilterMode.Point;
@@ -39,7 +74,7 @@ namespace Planetside
                 c.materialInst = bundleData.materials[0];
                 c.materialId = 0;
             }
-			if (changesSortingLayer == true)
+			if (changesSortingLayer == true && actorObject != null)
 			{
                 actorObject.gameObject.layer = 28;
                 actorObject.sprite.SortingOrder = -2;

@@ -39,7 +39,8 @@ namespace Planetside
 
 		public static void BuildChain()
         {
-			GameObject prisonerChain = OtherTools.MakeLine("Planetside/Resources/Bosses/Prisoner/chain", new Vector2(10, 8), new Vector2(0, 0), new List<string> { "Planetside/Resources/Bosses/Prisoner/chain"});
+			var Collection = StaticSpriteDefinitions.Oddments_Sheet_Data;
+			GameObject prisonerChain = OtherTools.MakeLineBundle("Prisoner Chain", Collection.GetSpriteIdByName("chain"), Collection, new Vector2(10, 8), new Vector2(0, 0));
 			prisonerChain.SetActive(false);
 			FakePrefab.MarkAsFakePrefab(prisonerChain);
 			UnityEngine.Object.DontDestroyOnLoad(prisonerChain);

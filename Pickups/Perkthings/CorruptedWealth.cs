@@ -308,11 +308,14 @@ namespace Planetside
         public static void Init()
         {
             string name = "Corrupted Wealth";
-            string resourcePath = "Planetside/Resources/PerkThings/corrputed_wealth.png";
+            //string resourcePath = "Planetside/Resources/PerkThings/corrputed_wealth.png";
             GameObject gameObject = new GameObject(name);
             CorruptedWealth item = gameObject.AddComponent<CorruptedWealth>();
-          
-            ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
+
+
+            var data = StaticSpriteDefinitions.Pickup_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("corrputed_wealth"), data, gameObject);
+            //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
             string shortDesc = "Corrupts all pickups.";
             string longDesc = "yep.";
             item.SetupItem(shortDesc, longDesc, "psog");
@@ -504,12 +507,14 @@ namespace Planetside
             if (blast.hasBeenPickedup == true)
             { blast.IncrementStack(); }
 
-            //player.healthHaver.OnH
+            AkSoundEngine.PostEvent("Play_OBJ_dice_bless_01", player.gameObject);
 
             Exploder.DoDistortionWave(player.sprite.WorldTopCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
             player.BloopItemAboveHead(base.sprite, "");
             string BlurbText = blast.hasBeenPickedup == true ? "More pain, more gain." : "All pickups become corrupted.";
-            OtherTools.Notify("Corrupted Wealth", BlurbText, "Planetside/Resources/PerkThings/corrputed_wealth", UINotificationController.NotificationColor.GOLD);
+            OtherTools.NotifyCustom("Corrupted Wealth", BlurbText, "corrputed_wealth", StaticSpriteDefinitions.Pickup_Sheet_Data, UINotificationController.NotificationColor.GOLD);
+
+            //OtherTools.Notify("Corrupted Wealth", BlurbText, "Planetside/Resources/PerkThings/corrputed_wealth", UINotificationController.NotificationColor.GOLD);
             UnityEngine.Object.Destroy(base.gameObject);
         }
 

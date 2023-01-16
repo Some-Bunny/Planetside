@@ -403,6 +403,9 @@ namespace Planetside
 				}
 			}
 
+
+
+
 			Pathfinder.Instance.InitializeRegion(dungeon.data, targetRoom.area.basePosition + new IntVector2(-3, -3), targetRoom.area.dimensions + new IntVector2(3, 3));
 
 			if (prototype.usesProceduralDecoration && prototype.allowFloorDecoration && allowProceduralDecoration)
@@ -422,7 +425,34 @@ namespace Planetside
 
 			targetRoom.PostGenerationCleanup();
 
-			if (addRoomToMinimap)
+            GameObject m_CollisionObject = new GameObject(component.renderData.name + "_CollisionObject");
+            IntVector2 targetRoomPosition = targetRoom.area.basePosition;
+            m_CollisionObject.transform.parent = targetRoom.hierarchyParent;
+            IntVector2 targetRoomSize = targetRoom.area.dimensions;
+            m_CollisionObject.transform.position = targetRoomPosition.ToVector3();
+
+            for (int width = -2; width < targetRoomSize.x + 2; width++)
+            {
+                for (int height = -2; height < targetRoomSize.y + 2; height++)
+                {
+                    int X = targetRoomPosition.x + width;
+                    int Y = targetRoomPosition.y + height;
+                    if (dungeon.data.isWall(X, Y))
+                    {
+                        IntVector2 positionOffset = new IntVector2(width, height);
+                        if (dungeon.data.isFaceWallLower(X, Y))
+                        {
+                            GenerateOrAddToRigidBody(m_CollisionObject, CollisionLayer.LowObstacle, PixelCollider.PixelColliderGeneration.Manual, dimensions: IntVector2.One, offset: positionOffset);
+                        }
+                        else
+                        {
+                            GenerateOrAddToRigidBody(m_CollisionObject, CollisionLayer.HighObstacle, PixelCollider.PixelColliderGeneration.Manual, dimensions: IntVector2.One, offset: positionOffset);
+                        }
+                    }
+                }
+            }
+
+            if (addRoomToMinimap)
 			{
 				targetRoom.visibility = RoomHandler.VisibilityStatus.VISITED;
 				GameManager.Instance.StartCoroutine(Minimap.Instance.RevealMinimapRoomInternal(targetRoom, true, true, false));
@@ -434,7 +464,124 @@ namespace Planetside
 			return targetRoom;
 		}
 
-		public static void GenerateLightsForRoomFromOtherTileset(TilemapDecoSettings decoSettings, RoomHandler rh, Transform lightParent, Dungeon dungeon, Dungeon dungeon2, DungeonData.LightGenerationStyle style = DungeonData.LightGenerationStyle.STANDARD)
+
+        public static SpeculativeRigidbody GenerateOrAddToRigidBody(GameObject targetObject, CollisionLayer collisionLayer, PixelCollider.PixelColliderGeneration colliderGenerationMode = PixelCollider.PixelColliderGeneration.Tk2dPolygon, bool collideWithTileMap = false, bool CollideWithOthers = true, bool CanBeCarried = true, bool CanBePushed = false, bool RecheckTriggers = false, bool IsTrigger = false, bool replaceExistingColliders = false, bool UsesPixelsAsUnitSize = false, IntVector2? dimensions = null, IntVector2? offset = null)
+        {
+            SpeculativeRigidbody m_CachedRigidBody = GameObjectExtensions.GetOrAddComponent<SpeculativeRigidbody>(targetObject);
+            m_CachedRigidBody.CollideWithOthers = CollideWithOthers;
+            m_CachedRigidBody.CollideWithTileMap = collideWithTileMap;
+            m_CachedRigidBody.Velocity = Vector2.zero;
+            m_CachedRigidBody.MaxVelocity = Vector2.zero;
+            m_CachedRigidBody.ForceAlwaysUpdate = false;
+            m_CachedRigidBody.CanPush = false;
+            m_CachedRigidBody.CanBePushed = CanBePushed;
+            m_CachedRigidBody.PushSpeedModifier = 1f;
+            m_CachedRigidBody.CanCarry = false;
+            m_CachedRigidBody.CanBeCarried = CanBeCarried;
+            m_CachedRigidBody.PreventPiercing = false;
+            m_CachedRigidBody.SkipEmptyColliders = false;
+            m_CachedRigidBody.RecheckTriggers = RecheckTriggers;
+            m_CachedRigidBody.UpdateCollidersOnRotation = false;
+            m_CachedRigidBody.UpdateCollidersOnScale = false;
+
+            IntVector2 Offset = IntVector2.Zero;
+            IntVector2 Dimensions = IntVector2.Zero;
+            if (colliderGenerationMode != PixelCollider.PixelColliderGeneration.Tk2dPolygon)
+            {
+                if (dimensions.HasValue)
+                {
+                    Dimensions = dimensions.Value;
+                    if (!UsesPixelsAsUnitSize)
+                    {
+                        Dimensions = (new IntVector2(Dimensions.x * 16, Dimensions.y * 16));
+                    }
+                }
+                if (offset.HasValue)
+                {
+                    Offset = offset.Value;
+                    if (!UsesPixelsAsUnitSize)
+                    {
+                        Offset = (new IntVector2(Offset.x * 16, Offset.y * 16));
+                    }
+                }
+            }
+            PixelCollider m_CachedCollider = new PixelCollider()
+            {
+                ColliderGenerationMode = colliderGenerationMode,
+                CollisionLayer = collisionLayer,
+                IsTrigger = IsTrigger,
+                BagleUseFirstFrameOnly = (colliderGenerationMode == PixelCollider.PixelColliderGeneration.Tk2dPolygon),
+                SpecifyBagelFrame = string.Empty,
+                BagelColliderNumber = 0,
+                ManualOffsetX = Offset.x,
+                ManualOffsetY = Offset.y,
+                ManualWidth = Dimensions.x,
+                ManualHeight = Dimensions.y,
+                ManualDiameter = 0,
+                ManualLeftX = 0,
+                ManualLeftY = 0,
+                ManualRightX = 0,
+                ManualRightY = 0
+            };
+
+            if (replaceExistingColliders | m_CachedRigidBody.PixelColliders == null)
+            {
+                m_CachedRigidBody.PixelColliders = new List<PixelCollider> { m_CachedCollider };
+            }
+            else
+            {
+                m_CachedRigidBody.PixelColliders.Add(m_CachedCollider);
+            }
+
+            if (m_CachedRigidBody.sprite && colliderGenerationMode == PixelCollider.PixelColliderGeneration.Tk2dPolygon)
+            {
+                Bounds bounds = m_CachedRigidBody.sprite.GetBounds();
+                m_CachedRigidBody.sprite.GetTrueCurrentSpriteDef().colliderVertices = new Vector3[] { bounds.center - bounds.extents, bounds.center + bounds.extents };
+                // m_CachedRigidBody.ForceRegenerate();
+                // m_CachedRigidBody.RegenerateCache();
+            }
+
+            return m_CachedRigidBody;
+        }
+
+        private static HashSet<IntVector2> GetCeilingTileSet(IntVector2 pos1, IntVector2 pos2, DungeonData.Direction facingDirection)
+        {
+            IntVector2 intVector;
+            IntVector2 intVector2;
+            if (facingDirection == DungeonData.Direction.NORTH)
+            {
+                intVector = pos1 + new IntVector2(-1, 0);
+                intVector2 = pos2 + new IntVector2(1, 1);
+            }
+            else if (facingDirection == DungeonData.Direction.SOUTH)
+            {
+                intVector = pos1 + new IntVector2(-1, 2);
+                intVector2 = pos2 + new IntVector2(1, 3);
+            }
+            else if (facingDirection == DungeonData.Direction.EAST)
+            {
+                intVector = pos1 + new IntVector2(-1, 0);
+                intVector2 = pos2 + new IntVector2(0, 3);
+            }
+            else
+            {
+                if (facingDirection != DungeonData.Direction.WEST) { return null; }
+                intVector = pos1 + new IntVector2(0, 0);
+                intVector2 = pos2 + new IntVector2(1, 3);
+            }
+            HashSet<IntVector2> hashSet = new HashSet<IntVector2>();
+            for (int i = intVector.x; i <= intVector2.x; i++)
+            {
+                for (int j = intVector.y; j <= intVector2.y; j++)
+                {
+                    IntVector2 item = new IntVector2(i, j);
+                    hashSet.Add(item);
+                }
+            }
+            return hashSet;
+        }
+
+        public static void GenerateLightsForRoomFromOtherTileset(TilemapDecoSettings decoSettings, RoomHandler rh, Transform lightParent, Dungeon dungeon, Dungeon dungeon2, DungeonData.LightGenerationStyle style = DungeonData.LightGenerationStyle.STANDARD)
 		{
 			if (!dungeon2.roomMaterialDefinitions[rh.RoomVisualSubtype].useLighting) { return; }
 

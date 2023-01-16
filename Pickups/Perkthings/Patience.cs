@@ -34,11 +34,14 @@ namespace Planetside
         public static void Init()
         {
             string name = "Patience";
-            string resourcePath = "Planetside/Resources/PerkThings/patience.png";
+           // string resourcePath = "Planetside/Resources/PerkThings/patience.png";
             GameObject gameObject = new GameObject(name);
             Patience item = gameObject.AddComponent<Patience>();
-          
-            ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
+
+
+            var data = StaticSpriteDefinitions.Pickup_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("patience"), data, gameObject);
+            //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
             string shortDesc = "Does nothing... But...";
             string longDesc = "yea";
             item.SetupItem(shortDesc, longDesc, "psog");
@@ -164,7 +167,9 @@ namespace Planetside
             Exploder.DoDistortionWave(player.sprite.WorldTopCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
             player.BloopItemAboveHead(base.sprite, "");
             string BlurbText = blast.hasBeenPickedup == true ? "But more..." : "Does nothing... But...";
-            OtherTools.Notify("Patience", BlurbText, "Planetside/Resources/PerkThings/patience", UINotificationController.NotificationColor.GOLD);
+            OtherTools.NotifyCustom("Patience", BlurbText, "patience", StaticSpriteDefinitions.Pickup_Sheet_Data, UINotificationController.NotificationColor.GOLD);
+
+            //OtherTools.Notify("Patience", BlurbText, "Planetside/Resources/PerkThings/patience", UINotificationController.NotificationColor.GOLD);
             UnityEngine.Object.Destroy(base.gameObject);
         }
 

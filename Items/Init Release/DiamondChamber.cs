@@ -15,11 +15,13 @@ namespace Planetside
 		public static void Init()
 		{
 			string name = "Diamond Chamber";
-			string resourcePath = "Planetside/Resources/brokenchamberfixed.png";
+			//string resourcePath = "Planetside/Resources/brokenchamberfixed.png";
 			GameObject gameObject = new GameObject(name);
 			DiamondChamber chamber = gameObject.AddComponent<DiamondChamber>();
-			ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
-			string shortDesc = "Purity";
+            //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
+            var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("brokenchamberfixed"), data, gameObject);
+            string shortDesc = "Purity";
 			string longDesc = "Mastery is worth double. A chamber made of pure diamond. It glows with a shine unseen.\n\nYou feel at peace.";
 			ItemBuilder.SetupItem(chamber, shortDesc, longDesc, "psog");
 			chamber.quality = PickupObject.ItemQuality.S;
@@ -42,8 +44,7 @@ namespace Planetside
 		protected override void Update()
 		{
 			base.Update();
-			bool flag = base.Owner != null;
-			if (flag)
+			if (base.Owner != null)
 			{
 				this.CalculateStats(base.Owner);
 				bool Q = SaveAPIManager.GetFlag(CustomDungeonFlags.BROKEN_CHAMBER_RUN_COMPLETED);
@@ -66,34 +67,30 @@ namespace Planetside
                 {
 					AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.PLATE_DIAMOND_CHAMBER, true);
 					base.Owner.RemovePassiveItem(DiamondChamber.DiamondChamberID);
-					LootEngine.TryGivePrefabToPlayer(ETGMod.Databases.Items["Netherite Chamber"].gameObject, base.Owner, true);
+					LootEngine.TryGivePrefabToPlayer(PickupObjectDatabase.GetById(NetheriteChamber.ChaamberID).gameObject, base.Owner, true);
 				}
 			}
 		}
 		private void CalculateStats(PlayerController player)
 		{
 			this.currentItems = player.passiveItems.Count;
-			bool flag = this.currentItems != this.lastItems;
-			if (flag)
+			if (this.currentItems != this.lastItems)
 			{
 				this.RemoveStat(PlayerStats.StatType.Health);
 				this.RemoveStat(PlayerStats.StatType.Damage);
 				foreach (PassiveItem passiveItem in player.passiveItems)
 				{
-					bool flag2 = passiveItem is BasicStatPickup && (passiveItem as BasicStatPickup).IsMasteryToken;
-					if (flag2)
+					if (passiveItem is BasicStatPickup && (passiveItem as BasicStatPickup).IsMasteryToken)
 					{
 						this.AddStat(PlayerStats.StatType.Health, 1f, StatModifier.ModifyMethod.ADDITIVE);
 					}
 					string encounterNameOrDisplayName = passiveItem.EncounterNameOrDisplayName;
-					bool fucker = encounterNameOrDisplayName.Contains("Chamber") || encounterNameOrDisplayName.Contains("chamber");
-					if (fucker)
+					if (encounterNameOrDisplayName.Contains("Chamber") || encounterNameOrDisplayName.Contains("chamber"))
 					{
 						this.AddStat(PlayerStats.StatType.Damage, .2f, StatModifier.ModifyMethod.ADDITIVE);
 					}
 				}
-
-					this.lastItems = this.currentItems;
+				this.lastItems = this.currentItems;
 				player.stats.RecalculateStats(player, true, false);
 			}
 		}

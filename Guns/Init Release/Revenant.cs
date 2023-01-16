@@ -27,8 +27,8 @@ namespace Planetside
 			GunExt.SetupSprite(gun, null, "revenant_idle_001", 11);
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_WPN_golddoublebarrelshotgun_shot_01";
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].triggerEvent = true;
-			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 15);
-			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 7);
+			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 30);
+			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 15);
 			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 1);
 			GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(56) as Gun, true, false);
 			gun.gunSwitchGroup = (PickupObjectDatabase.GetById(387) as Gun).gunSwitchGroup;

@@ -88,11 +88,13 @@ namespace Planetside
         public static void Init()
         {
             string name = "Glass";
-            string resourcePath = "Planetside/Resources/PerkThings/glass.png";
+            //string resourcePath = "Planetside/Resources/PerkThings/glass.png";
             GameObject gameObject = new GameObject(name);
             Glass item = gameObject.AddComponent<Glass>();
-          
-            ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
+
+            var data = StaticSpriteDefinitions.Pickup_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("glass"), data, gameObject);
+            //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
             string shortDesc = "Literally just an all stats up.";
             string longDesc = "yep.";
             item.SetupItem(shortDesc, longDesc, "psog");
@@ -129,7 +131,9 @@ namespace Planetside
             Exploder.DoDistortionWave(player.sprite.WorldTopCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
             player.BloopItemAboveHead(base.sprite, "");
             string BlurbText = glass.hasBeenPickedup == true ? "Even More Fatal." : "Fragile, yet Fatal.";
-            OtherTools.Notify("Glass", BlurbText, "Planetside/Resources/PerkThings/glass", UINotificationController.NotificationColor.GOLD);
+            OtherTools.NotifyCustom("Glass", BlurbText, "glass", StaticSpriteDefinitions.Pickup_Sheet_Data, UINotificationController.NotificationColor.GOLD);
+
+            //OtherTools.Notify("Glass", BlurbText, "Planetside/Resources/PerkThings/glass", UINotificationController.NotificationColor.GOLD);
             UnityEngine.Object.Destroy(base.gameObject);
         }
 

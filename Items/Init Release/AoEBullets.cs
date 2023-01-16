@@ -25,10 +25,11 @@ namespace Planetside
         public static void Init()
         {
             string itemName = "Aura Bullets";
-            string resourceName = "Planetside/Resources/aurabullets.png";
             GameObject obj = new GameObject(itemName);
             var item = obj.AddComponent<AoEBullets>();
-            ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("aurabullets"), data, obj);
+            
             string shortDesc = "Radiant";
             string longDesc = "Makes bullets deal damage to enemies near them." +
                 "\n\nThese bullets contain a very rare and powerful radioactive isotope. Don't lick them!";
@@ -92,21 +93,19 @@ namespace Planetside
 					Values.DealsDamage = true;
 					Values.AreaIncreasesWithProjectileSizeStat = true;
 					Values.DamageValuesAlsoScalesWithDamageStat = true;
-					Values.EffectProcChance = 0.05f;
-					
 					if (player.PlayerHasActiveSynergy("Khh..k k k k"))
 					{
-						Values.InflictsPoison = true;
-					}
+                        Values.debuffs.Add(DebuffStatics.irradiatedLeadEffect, 0.07f);
+                    }
 					if (player.PlayerHasActiveSynergy("Handle The Heat"))
 					{
-						Values.InflictsFire = true;
-					}
-					if (player.PlayerHasActiveSynergy("Below Zero"))
+                        Values.debuffs.Add(DebuffStatics.hotLeadEffect, 0.07f);
+                    }
+                    if (player.PlayerHasActiveSynergy("Below Zero"))
 					{
-						Values.InflictsFreeze = true;
-					}
-					this.ShockRing(sourceProjectile, player.PlayerHasActiveSynergy("Handle The Heat") == true);
+                        Values.debuffs.Add(DebuffStatics.frostBulletsEffect, 0.5f);
+                    }
+                    this.ShockRing(sourceProjectile, player.PlayerHasActiveSynergy("Handle The Heat") == true);
 				}
 			}
 			catch (Exception ex)
@@ -120,24 +119,22 @@ namespace Planetside
             PlayerController player = base.Owner;
             AOEBeamTipController Values = beamC.gameObject.GetOrAddComponent<AOEBeamTipController>();
             Values.DamageperDamageEvent = ((beamC.projectile.baseData.damage * 0.15f) + 0.5f);
-            Values.radiusValue = 2.2f;
+            Values.radiusValue = 2.75f;
             Values.TimeBetweenDamageEvents = 0.2f;
             Values.DealsDamage = true;
             Values.AreaIncreasesWithProjectileSizeStat = true;
             Values.DamageValuesAlsoScalesWithDamageStat = true;
-            Values.EffectProcChance = 0.05f;
-
             if (player.PlayerHasActiveSynergy("Khh..k k k k"))
             {
-                Values.InflictsPoison = true;
+                Values.debuffs.Add(DebuffStatics.irradiatedLeadEffect, 0.1f);
             }
             if (player.PlayerHasActiveSynergy("Handle The Heat"))
             {
-                Values.InflictsFire = true;
+                Values.debuffs.Add(DebuffStatics.hotLeadEffect, 0.1f);
             }
             if (player.PlayerHasActiveSynergy("Below Zero"))
             {
-                Values.InflictsFreeze = true;
+                Values.debuffs.Add(DebuffStatics.frostBulletsEffect, 1f);
             }
         }
 
@@ -155,8 +152,10 @@ namespace Planetside
 			m_radialIndicator.CurrentRadius = 1.75f* num;
 			m_radialIndicator.IsFire = f;
 			m_radialIndicator.gameObject.transform.parent = projectile.transform;
+            var material = m_radialIndicator.GetComponent<MeshRenderer>().material;
+            material.SetFloat("_PxWidth", 0.35f);
         }
-		public override DebrisObject Drop(PlayerController player)
+        public override DebrisObject Drop(PlayerController player)
 		{
 			DebrisObject result = base.Drop(player);
 			player.PostProcessProjectile -= this.PostProcessProjectile;
@@ -192,14 +191,11 @@ namespace Planetside
             public float DamageperDamageEvent;
             public float TimeBetweenDamageEvents;
             public bool DealsDamage;
-            public bool InflictsFire;
-            public bool InflictsPoison;
-            public bool InflictsFreeze;
-            public bool InflictsCharm;
             public bool AreaIncreasesWithProjectileSizeStat;
             public bool DamageValuesAlsoScalesWithDamageStat;
-            public bool HeatStrokeSynergy;
-            public float EffectProcChance;
+
+            public Dictionary<GameActorEffect, float> debuffs = new Dictionary<GameActorEffect, float>();
+            public Dictionary<GameActorEffect, Func<bool>> conditionalDebuffs = new Dictionary<GameActorEffect, Func<bool>>();
 
             private float elapsed;
 
@@ -213,28 +209,35 @@ namespace Planetside
             private void Start()
             {
                 radialIndicator = ((GameObject)UnityEngine.Object.Instantiate(ResourceCache.Acquire("Global VFX/HeatIndicator"), base.transform.position, Quaternion.identity)).GetComponent<HeatIndicatorController>();
-                radialIndicator.CurrentColor = new Color(255, 255, 255).WithAlpha(4);
+                radialIndicator.CurrentColor = Color.white.WithAlpha(4f);
                 radialIndicator.IsFire = false;
-                radialIndicator.CurrentRadius = 3f;
+                radialIndicator.CurrentRadius = 2.75f;
+                var material = radialIndicator.GetComponent<MeshRenderer>().material;
+                material.SetFloat("_PxWidth", 0.35f);
+
                 radiusValue = radialIndicator.CurrentRadius;
                 this.projectile = base.GetComponent<Projectile>();
                 this.basicBeamController = base.GetComponent<BasicBeamController>();
-                bool flag = this.projectile.Owner is PlayerController;
-                if (flag)
+                if (this.projectile.Owner is PlayerController)
                 {
                     this.owner = (this.projectile.Owner as PlayerController);
+                    if (owner)
+                    {
+                        MultiplierScale = AreaIncreasesWithProjectileSizeStat == true && owner ? owner.stats.GetStatValue(PlayerStats.StatType.PlayerBulletScale) : 1;
+                        MultiplierDamage = DamageValuesAlsoScalesWithDamageStat == true && owner ? owner.stats.GetStatValue(PlayerStats.StatType.Damage) : 1;
+                    }
                 }
             }
+            private float MultiplierScale = 1;
+            private float MultiplierDamage = 1;
             private void Update()
             {
                 this.DoTick();
                 this.elapsed += BraveTime.DeltaTime;
                 if (this.elapsed > TimeBetweenDamageEvents)
                 {
-                    float num = AreaIncreasesWithProjectileSizeStat == true ? owner.stats.GetStatValue(PlayerStats.StatType.PlayerBulletScale) : 1;
-                    float dmg = DamageValuesAlsoScalesWithDamageStat == true ? owner.stats.GetStatValue(PlayerStats.StatType.Damage) : 1;
-
-                    List<AIActor> activeEnemies = owner.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
+                    elapsed = 0;
+                    List<AIActor> activeEnemies = StoredBlastPosition.GetAbsoluteRoom().GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
                     Vector2 centerPosition = StoredBlastPosition;
                     if (activeEnemies != null)
                     {
@@ -243,87 +246,41 @@ namespace Planetside
                             AIActor aiactor = activeEnemies[em];
                             if (aiactor != null)
                             {
-                                if (DealsDamage == true)
+                                if (Vector2.Distance(aiactor.CenterPosition, centerPosition) < radiusValue * MultiplierScale)
                                 {
-                                    bool ae = Vector2.Distance(aiactor.CenterPosition, centerPosition) < radiusValue * num && aiactor.healthHaver.GetMaxHealth() > 0f && aiactor != null;
-                                    if (ae)
+                                    if (DealsDamage == true)
                                     {
-                                        aiactor.healthHaver.ApplyDamage(DamageperDamageEvent * dmg, Vector2.zero, "fuckigjmnkbjnbbnjbnjnjbnjbnjbnjbjn", CoreDamageTypes.Electric, DamageCategory.Normal, false, null, false);
-                                    }
-                                }
-
-                                if (InflictsFreeze == true)
-                                {
-                                    float RNG = UnityEngine.Random.Range(0.00f, 1.00f);
-                                    if (RNG <= EffectProcChance)
-                                    {
-                                        BulletStatusEffectItem Freezzecomponent = PickupObjectDatabase.GetById(278).GetComponent<BulletStatusEffectItem>();
-                                        GameActorFreezeEffect gameActorFreeze = Freezzecomponent.FreezeModifierEffect;
-                                        bool peep = Vector2.Distance(aiactor.CenterPosition, centerPosition) < radiusValue * num && aiactor.healthHaver.GetMaxHealth() > 0f && aiactor != null;
-                                        if (peep)
+                                        if (aiactor.healthHaver.GetMaxHealth() > 0f && aiactor != null && aiactor.specRigidbody != null)
                                         {
-                                            aiactor.ApplyEffect(gameActorFreeze, 0.5f, null);
+                                            aiactor.healthHaver.ApplyDamage(DamageperDamageEvent * MultiplierDamage, Vector2.zero, "Aura", CoreDamageTypes.Electric, DamageCategory.Normal, false, null, false);
                                         }
                                     }
-                                }
-
-                                if (InflictsCharm == true)
-                                {
-                                    float RNG = UnityEngine.Random.Range(0.00f, 1.00f);
-                                    if (RNG <= EffectProcChance)
+                                    foreach (var Entry in debuffs)
                                     {
-                                        BulletStatusEffectItem Freezzecomponent = PickupObjectDatabase.GetById(527).GetComponent<BulletStatusEffectItem>();
-                                        GameActorCharmEffect gameActorFreeze = Freezzecomponent.CharmModifierEffect;
-                                        bool peep = Vector2.Distance(aiactor.CenterPosition, centerPosition) < radiusValue * num && aiactor.healthHaver.GetMaxHealth() > 0f && aiactor != null;
-                                        if (peep)
+                                        if (UnityEngine.Random.value < Entry.Value)
                                         {
-                                            aiactor.ApplyEffect(gameActorFreeze, 1f, null);
+                                            aiactor.ApplyEffect(Entry.Key, 1, null);
                                         }
                                     }
-                                }
-                                if (InflictsPoison == true)
-                                {
-                                    float RNG = UnityEngine.Random.Range(0.00f, 1.00f);
-                                    if (RNG <= EffectProcChance)
+                                    foreach (var Entry in conditionalDebuffs)
                                     {
-                                        BulletStatusEffectItem Poisoncomponent = PickupObjectDatabase.GetById(204).GetComponent<BulletStatusEffectItem>();
-                                        GameActorHealthEffect gameActorPoison = Poisoncomponent.HealthModifierEffect;
-                                        bool kenki = Vector2.Distance(aiactor.CenterPosition, centerPosition) < radiusValue * num && aiactor.healthHaver.GetMaxHealth() > 0f && aiactor != null;
-                                        if (kenki)
+                                        if (Entry.Value != null)
                                         {
-                                            aiactor.ApplyEffect(gameActorPoison, 1f, null);
-                                        }
-                                    }
-
-                                }
-                                if (InflictsFire == true)
-                                {
-                                    float RNG = UnityEngine.Random.Range(0.00f, 1.00f);
-                                    if (RNG <= EffectProcChance)
-                                    {
-                                        BulletStatusEffectItem Firecomponent = PickupObjectDatabase.GetById(295).GetComponent<BulletStatusEffectItem>();
-                                        GameActorFireEffect gameActorFire = Firecomponent.FireModifierEffect;
-                                        bool banko = Vector2.Distance(aiactor.CenterPosition, centerPosition) < radiusValue * num && aiactor.healthHaver.GetMaxHealth() > 0f && aiactor != null;
-                                        if (banko)
-                                        {
-                                            aiactor.ApplyEffect(gameActorFire, 1f, null);
-                                            if (HeatStrokeSynergy == true)
+                                            if (Entry.Value() == true)
                                             {
-                                                if (owner.PlayerHasActiveSynergy("Praise The Gun!"))
-                                                {
-                                                    aiactor.ApplyEffect(DebuffLibrary.HeatStroke, 1f, null);
-                                                }
+                                                aiactor.ApplyEffect(Entry.Key, 1, null);
                                             }
                                         }
                                     }
                                 }
                             }
-
                         }
                     }
                     this.elapsed = 0f;
                 }
             }
+
+
             private void DoTick()
             {
                 LinkedList<BasicBeamController.BeamBone> linkedList = PlanetsideReflectionHelper.ReflectGetField<LinkedList<BasicBeamController.BeamBone>>(typeof(BasicBeamController), "m_bones", this.basicBeamController);

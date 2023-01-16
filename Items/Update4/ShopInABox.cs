@@ -24,10 +24,12 @@ namespace Planetside
         public static void Init()
         {
             string itemName = "Shop-In-A-Box";
-            string resourceName = "Planetside/Resources/keepersBox2.png";
+            //string resourceName = "Planetside/Resources/keepersBox2.png";
             GameObject obj = new GameObject(itemName);
             ShopInABox activeitem = obj.AddComponent<ShopInABox>();
-            ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            var data = StaticSpriteDefinitions.Active_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("keepersBox2"), data, obj);
+            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "Faster Than Prime Shipping!";
             string longDesc = "Creates a small, purhasable item. \n\nThis this new-fangled box technology, you too, can support local bullet kin in their business endavours!";
             activeitem.SetupItem(shortDesc, longDesc, "psog");

@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3842822076
+CRC: 534833577
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 1f0445e91f4b1fa9143d5e54c3965d48
+    Hash: 7f22c7f39c8e3d6b14a9c33a941cac52
   TypeTreeHash:
     serializedVersion: 2
     Hash: e1b00e39eac32980962ad6e2d24f0a2b
@@ -28,11 +28,14 @@ ClassTypes:
 Assets:
 - Assets/Minibosses/Bullet Banker/BulletBankerCollection Data/BulletBankerCollection.prefab
 - Assets/Ammonomicon/Ammonomicon Icons/shellraxicon.png
+- Assets/Enemies/Inquisitor/InquisitorCollection Data/InquisitorCollection.prefab
 - Assets/Ammonomicon/Ammonomicon Icons/ammoentryshrrom.png
 - Assets/Minibosses/AnnihiChamber/AnnihiChamberCollection Data/annihichamber material.mat
 - Assets/Enemies/Skullvenant/SkullvenantCollection Data/SkullvenantCollection.prefab
+- Assets/VFX/Effects/DebuffCollection Data/debuff material.mat
 - Assets/Enemies/Fodder/FodderCollection Data/atlas0.png
 - Assets/Enemies/Fodder/fodder_die_004.png
+- Assets/Pickups/PickupCollection Data/pickup material.mat
 - Assets/Enemies/ModderBullets/ModderBulletCollection Data/modderbullet material.mat
 - Assets/Ammonomicon/Ammonomicon Icons/glockulussheet.png
 - Assets/Ammonomicon/Ammonomicon Icons/ophanaimsheetrt.png
@@ -43,6 +46,7 @@ Assets:
 - Assets/Enemies/Fodder/fodder_die_006.png
 - Assets/Enemies/Fodder/fodder_idle_005.png
 - Assets/Ammonomicon/Ammonomicon Icons/annihichamberSheet.png
+- Assets/Items/Passive Items/Item_Collection Data/Item_Collection.prefab
 - Assets/Enemies/Glockulus/GlockulusCollection Data/glockulus material.mat
 - Assets/Enemies/Coallet/CoalletCollection Data/CoalletCollection.prefab
 - Assets/Enemies/Fodder/fodder_idle_004.png
@@ -53,12 +57,14 @@ Assets:
 - Assets/BossCards/fungannon_bosscard.png
 - Assets/Ammonomicon/Ammonomicon Icons/skullvenanticonaoo.png
 - Assets/Enemies/Fodder/fodder_idle_002.png
+- Assets/Items/Active Items/Active_Collection Data/Active_Collection.prefab
 - Assets/BossCards/shellrax_bosscard.png
 - Assets/Ammonomicon/Ammonomicon Icons/stagnantTrespass.png
 - Assets/Ammonomicon/Ammonomicon Icons/detscavatorivonammo.png
 - Assets/Enemies/Fodder/fodder_die_001.png
 - Assets/Ammonomicon/Ammonomicon Icons/sheetcollectiveTrespass.png
 - Assets/Enemies/Barretina/BarretinaCollection Data/barretina material.mat
+- Assets/Bosses/Ophanaim/OphanaimCollection Data/ophanaim material.mat
 - Assets/Enemies/Shamber/ShamberCollection Data/shamber material.mat
 - Assets/Enemies/Fodder/fodder_die_009.png
 - Assets/Enemies/Fodder/fodder_die_010.png
@@ -67,11 +73,13 @@ Assets:
 - Assets/Ammonomicon/Ammonomicon Icons/bankericon.png
 - Assets/Enemies/Fodder/FodderCollection Data/FodderCollection.prefab
 - Assets/Minibosses/Shellrax/ShellraxCollection Data/ShellraxCollection.prefab
+- Assets/Items/Passive Items/Item_Collection Data/item_collection material.mat
 - Assets/Minibosses/Bullet Banker/BulletBankerCollection Data/bulletbanker material.mat
 - Assets/Ammonomicon/Ammonomicon Icons/observantsheetTrespass.png
 - Assets/BossCards/bulletbanker_bosscard.png
 - Assets/Enemies/Detscavator/DetscavatorCollection Data/DetscavatorCollection.prefab
 - Assets/Ammonomicon/Ammonomicon Icons/sheetBolatTrespass.png
+- Assets/VFX/Random Bits/OddmentsCollection Data/oddments material.mat
 - Assets/Enemies/Cursebulon/CursebulonCollection Data/CursebulonCollection.prefab
 - Assets/Enemies/Fodder/fodder_idle_008.png
 - Assets/Bosses/Fungannon/FungannonCollection Data/fungannon material.mat
@@ -84,8 +92,10 @@ Assets:
 - Assets/Ammonomicon/Ammonomicon Icons/cursebulonsmmonomiconportrait.png
 - Assets/Minibosses/Nemesis/NemesisCollection Data/nemesis material.mat
 - Assets/BossCards/annihichamber_bosscard.png
+- Assets/VFX/Random Bits/OddmentsCollection Data/OddmentsCollection.prefab
 - Assets/Enemies/Jammed Guardian/JammedGuardianCollection Data/JammedGuardianCollection.prefab
 - Assets/Enemies/Fodder/FodderCollection Data/atlas0 material.mat
+- Assets/Pickups/PickupCollection Data/PickupCollection.prefab
 - Assets/Ammonomicon/Ammonomicon Icons/fodderammonomiconentry.png
 - Assets/Ammonomicon/Ammonomicon Icons/blockadesheetTrespass.png
 - Assets/Bosses/Fungannon/FungannonCollection Data/FungannonCollection.prefab
@@ -99,12 +109,15 @@ Assets:
 - Assets/Ammonomicon/Ammonomicon Icons/sheetUnwillingTrespass.png
 - Assets/Ammonomicon/Ammonomicon Icons/sheetInquisitorTrespass.png
 - Assets/Enemies/ProperCube/ProperCubeCollection Data/ProperCubeCollection.prefab
+- Assets/Bosses/Ophanaim/OphanaimCollection Data/OphanaimCollection.prefab
 - Assets/BossCards/nemesis_bosscard.png
 - Assets/Enemies/Wailer/WailerCollection Data/WailerCollection.prefab
 - Assets/Enemies/Arch Gunjurer/ArchGunjurerCollection Data/archgunjurer material.mat
 - Assets/Enemies/Fodder/fodder_idle_001.png
 - Assets/Enemies/Fodder/fodder_die_002.png
 - Assets/Enemies/Wailer/WailerCollection Data/wailer material.mat
+- Assets/Bosses/HM Prime/HMPrimeCollection Data/HMPrimeCollection.prefab
+- Assets/Enemies/Inquisitor/InquisitorCollection Data/inquisitor material.mat
 - Assets/Enemies/Detscavator/DetscavatorCollection Data/detscavator material.mat
 - Assets/BossCards/ophanaim_bosscard.png
 - Assets/Ammonomicon/Ammonomicon Icons/hmprimesheet.png
@@ -112,8 +125,11 @@ Assets:
 - Assets/Enemies/Fodder/fodder_die_008.png
 - Assets/Enemies/Fodder/fodder_idle_006.png
 - Assets/BossCards/hmprime_bosscard.png
+- Assets/Bosses/HM Prime/HMPrimeCollection Data/hmprime material.mat
+- Assets/VFX/Effects/DebuffCollection Data/DebuffCollection.prefab
 - Assets/Enemies/Fodder/fodder_die_003.png
 - Assets/Enemies/Skullvenant/SkullvenantCollection Data/skullvenant material.mat
+- Assets/Items/Active Items/Active_Collection Data/active_item material.mat
 - Assets/Enemies/ModderBullets/ModderBulletCollection Data/ModderBulletCollection.prefab
 - Assets/Enemies/Shamber/ShamberCollection Data/ShamberCollection.prefab
 - Assets/Ammonomicon/Ammonomicon Icons/shamberammonomicoenrtytab.png

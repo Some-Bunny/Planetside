@@ -23,10 +23,12 @@ namespace Planetside
         public static void Init()
         {
             string itemName = "Blue Casing";
-            string resourceName = "Planetside/Resources/bluecasing.png";
+            //string resourceName = "Planetside/Resources/bluecasing.png";
             GameObject obj = new GameObject(itemName);
             var item = obj.AddComponent<Thing>();
-            ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("bluecasing"), data, obj);
+            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "Used For... Something?";
             string longDesc = "An unusually blue casing." +
                 "\n\nMaybe something might want it?";

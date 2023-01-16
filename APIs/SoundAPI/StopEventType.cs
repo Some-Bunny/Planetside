@@ -1,4 +1,4 @@
-﻿namespace SoundAPI
+﻿namespace Planetside.SoundAPI
 {
     /// <summary>
     /// Type of event a custom stop audio event will be added to.

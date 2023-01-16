@@ -94,6 +94,26 @@ namespace NpcApi
 			return false;
 		}
 
+		public void UpdatePrice()
+		{
+            for (int i = 0; i < this.m_itemControllers.Count; i++)
+            {
+                if (this.m_itemControllers[i] && this.m_itemControllers[i] is CustomShopItemController csi)
+                {
+					csi.UpdatePrice();
+                }
+            }
+            for (int j = 0; j < GameManager.Instance.AllPlayers.Length; j++)
+            {
+                PlayerController playerController = GameManager.Instance.AllPlayers[j];
+                if (playerController && playerController.healthHaver.IsAlive)
+                {
+                    playerController.ForceRefreshInteractable = true;
+                }
+            }
+        }
+
+
 		public void LockItems()
 		{
 			for (int i = 0; i < this.m_itemControllers.Count; i++)

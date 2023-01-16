@@ -12,11 +12,13 @@ namespace Planetside
 		public static void Init()
 		{
 			string name = "Lost Potential";
-			string resourcePath = "Planetside/Resources/LostVoidPotential.png";
+			//string resourcePath = "Planetside/Resources/LostVoidPotential.png";
 			GameObject gameObject = new GameObject(name);
 			LostVoidPotential warVase = gameObject.AddComponent<LostVoidPotential>();
-			ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
-			string shortDesc = "A Moment, Forgotten";
+            var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("resourcePath"), data, gameObject);
+            //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
+            string shortDesc = "A Moment, Forgotten";
 			string longDesc = "A shard of dimmed energy from a collapsed portal.\n\nMaybe it still has some value.";
 			ItemBuilder.SetupItem(warVase, shortDesc, longDesc, "psog");
 

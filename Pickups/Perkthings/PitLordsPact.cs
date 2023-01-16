@@ -124,11 +124,14 @@ namespace Planetside
 
 
             string name = "Pit Lords Pact";
-            string resourcePath = "Planetside/Resources/PerkThings/pitLordsPact.png";
+            //string resourcePath = "Planetside/Resources/PerkThings/pitLordsPact.png";
             GameObject gameObject = new GameObject(name);
             PitLordsPact item = gameObject.AddComponent<PitLordsPact>();
-          
-            ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
+
+
+            var data = StaticSpriteDefinitions.Pickup_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("pitLordsPact"), data, gameObject);
+            //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
             string shortDesc = "Literally just an all stats up.";
             string longDesc = "yep.";
             item.SetupItem(shortDesc, longDesc, "psog");
@@ -294,19 +297,25 @@ namespace Planetside
                 boomboom.playDefaultSFX = false;
                 boomboom.doExplosionRing = false;
                 Exploder.Explode(self.sprite.WorldCenter, boomboom, self.transform.PositionVector2());
-                if (UnityEngine.Random.value < 1 - (self.healthHaver.GetCurrentHealthPercentage()) || self.ForceZeroHealthState == true)
+
+                if (GameManager.Instance.Dungeon.IsEndTimes == false)
                 {
-                    PickupObject pickupObject = LootEngine.GetItemOfTypeAndQuality<PickupObject>(PickupObject.ItemQuality.COMMON, PitLordsPact.PitLordsPactTableNoHP, false);
-                    DebrisObject debrisObject = LootEngine.SpawnItem(pickupObject.gameObject, self.transform.position, Vector2.up, 0f, true, false, false);
-                    Vector2 v = (!debrisObject.sprite) ? (debrisObject.transform.position.XY() + new Vector2(0.5f, 0.5f)) : debrisObject.sprite.WorldCenter;
-                    GameObject gameObject2 = SpawnManager.SpawnVFX(StaticVFXStorage.JammedDeathVFX, v, Quaternion.identity, false);
-                    if (gameObject2 && gameObject2.GetComponent<tk2dSprite>())
+                    if (UnityEngine.Random.value < 1 - (self.healthHaver.GetCurrentHealthPercentage()) || self.ForceZeroHealthState == true)
                     {
-                        tk2dSprite component2 = gameObject2.GetComponent<tk2dSprite>();
-                        component2.HeightOffGround = 5f;
-                        component2.UpdateZDepth();
+                        PickupObject pickupObject = LootEngine.GetItemOfTypeAndQuality<PickupObject>(PickupObject.ItemQuality.COMMON, PitLordsPact.PitLordsPactTableNoHP, false);
+                        DebrisObject debrisObject = LootEngine.SpawnItem(pickupObject.gameObject, self.transform.position, Vector2.up, 0f, true, false, false);
+                        Vector2 v = (!debrisObject.sprite) ? (debrisObject.transform.position.XY() + new Vector2(0.5f, 0.5f)) : debrisObject.sprite.WorldCenter;
+                        GameObject gameObject2 = SpawnManager.SpawnVFX(StaticVFXStorage.JammedDeathVFX, v, Quaternion.identity, false);
+                        if (gameObject2 && gameObject2.GetComponent<tk2dSprite>())
+                        {
+                            tk2dSprite component2 = gameObject2.GetComponent<tk2dSprite>();
+                            component2.HeightOffGround = 5f;
+                            component2.UpdateZDepth();
+                        }
                     }
                 }
+
+                
             }
             IEnumerator origEnum = orig(self, splashPoint);
             while (origEnum.MoveNext())
@@ -448,7 +457,7 @@ namespace Planetside
                     PitLordsPactController pact = player.GetComponent<PitLordsPactController>();
                     if (pact != null)
                     {
-                        if (pact.AmountOfItemsSacrificed <= pact.ItemSacrificablePerFloor)
+                        if (pact.AmountOfItemsSacrificed < pact.ItemSacrificablePerFloor)
                         {
                             pact.AmountOfItemsSacrificed++;
                             PickupObject.ItemQuality quality = droppedGun.quality;
@@ -486,19 +495,19 @@ namespace Planetside
                                 switch (quality)
                                 {
                                     case PickupObject.ItemQuality.D:
-                                        moneyTogive = 12;
+                                        moneyTogive = 10;
                                         break;
                                     case PickupObject.ItemQuality.C:
-                                        moneyTogive = 24;
+                                        moneyTogive = 16;
                                         break;
                                     case PickupObject.ItemQuality.B:
-                                        moneyTogive = 36;
+                                        moneyTogive = 24;
                                         break;
                                     case PickupObject.ItemQuality.A:
-                                        moneyTogive = 48;
+                                        moneyTogive = 32;
                                         break;
                                     case PickupObject.ItemQuality.S:
-                                        moneyTogive = 60;
+                                        moneyTogive = 40;
                                         break;
                                 }
                                 AkSoundEngine.PostEvent("Play_OBJ_coin_medium_01", self.gameObject);
@@ -570,19 +579,19 @@ namespace Planetside
                                 switch (quality)
                                 {
                                     case PickupObject.ItemQuality.D:
-                                        moneyTogive = 12;
+                                        moneyTogive = 10;
                                         break;
                                     case PickupObject.ItemQuality.C:
-                                        moneyTogive = 24;
+                                        moneyTogive = 16;
                                         break;
                                     case PickupObject.ItemQuality.B:
-                                        moneyTogive = 36;
+                                        moneyTogive = 24;
                                         break;
                                     case PickupObject.ItemQuality.A:
-                                        moneyTogive = 48;
+                                        moneyTogive = 32;
                                         break;
                                     case PickupObject.ItemQuality.S:
-                                        moneyTogive = 60;
+                                        moneyTogive = 40;
                                         break;
                                 }
                                 AkSoundEngine.PostEvent("Play_OBJ_coin_medium_01", self.gameObject);
@@ -636,7 +645,8 @@ namespace Planetside
             Exploder.DoDistortionWave(player.sprite.WorldTopCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
             player.BloopItemAboveHead(base.sprite, "");
             string BlurbText = pact.hasBeenPickedup == true ? "Offerings Yield More." : "The Abyss demands all offerings.";
-            OtherTools.Notify("Pit Lords Pact.", BlurbText, "Planetside/Resources/PerkThings/pitLordsPact", UINotificationController.NotificationColor.GOLD);
+            //OtherTools.Notify("Pit Lords Pact.", BlurbText, "Planetside/Resources/PerkThings/pitLordsPact", UINotificationController.NotificationColor.GOLD);
+            OtherTools.NotifyCustom("Pit Lords Pact", BlurbText, "pitLordsPact", StaticSpriteDefinitions.Pickup_Sheet_Data, UINotificationController.NotificationColor.GOLD);
 
             UnityEngine.Object.Destroy(base.gameObject);
         }

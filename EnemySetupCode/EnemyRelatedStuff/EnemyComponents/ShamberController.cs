@@ -112,11 +112,12 @@ public class ShamberController : BraveBehaviour
 	}
 	private IEnumerator HandleBulletSuck(Projectile target)
 	{
-		if (BulletsEaten <= 249)
-        {this.BulletsEaten++;}
+		if (BulletsEaten < 250){this.BulletsEaten++;}
 		
+
+
 		Transform copySprite = this.CreateEmptySprite(target);
-		Destroy(target.gameObject);
+		target.DieInAir(true);
 		Vector3 startPosition = copySprite.transform.position;
 		float elapsed = 0f;
 		float duration = 0.666f;

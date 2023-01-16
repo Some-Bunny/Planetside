@@ -10,11 +10,13 @@ namespace Planetside
         public static void Init()
         {
             string name = "Null Pickup Interactable";
-            string resourcePath = "Planetside/Resources/Pickups/NullPickup.png";
+            //string resourcePath = "Planetside/Resources/Pickups/NullPickup.png";
             GameObject gameObject = new GameObject(name);
             NullPickupInteractable item = gameObject.AddComponent<NullPickupInteractable>();
-          
-            ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
+
+            var data = StaticSpriteDefinitions.Pickup_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("NullPickup"), data, gameObject);
+            //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
             string shortDesc = "Nolla.";
             string longDesc = "Nullifies you, for an inner reward.";
             item.SetupItem(shortDesc, longDesc, "psog");
@@ -50,7 +52,9 @@ namespace Planetside
             player.Blanks = 0;
             player.BloopItemAboveHead(base.sprite, "");
             AkSoundEngine.PostEvent("Play_ENM_critter_poof_01", base.gameObject);
-            OtherTools.Notify("Nullified:", keys.ToString() + CheckIfMultiple(" Key", keys) + Money.ToString() + CheckIfMultiple(" Casing", Money) + Blank.ToString() + CheckIfMultiple(" Blank", Blank), "Planetside/Resources/Pickups/NullPickup");
+            OtherTools.NotifyCustom("Nullified:", keys.ToString() + CheckIfMultiple(" Key", keys) + Money.ToString() + CheckIfMultiple(" Casing", Money) + Blank.ToString() + CheckIfMultiple(" Blank", Blank), "NullPickup", StaticSpriteDefinitions.Pickup_Sheet_Data, UINotificationController.NotificationColor.GOLD);
+
+            //OtherTools.Notify("Nullified:", keys.ToString() + CheckIfMultiple(" Key", keys) + Money.ToString() + CheckIfMultiple(" Casing", Money) + Blank.ToString() + CheckIfMultiple(" Blank", Blank), "Planetside/Resources/Pickups/NullPickup");
             UnityEngine.Object.Destroy(base.gameObject);
         }
 

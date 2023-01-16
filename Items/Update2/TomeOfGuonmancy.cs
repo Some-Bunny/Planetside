@@ -27,10 +27,12 @@ namespace Planetside
         public static void Init()
         {
             string itemName = "Tome Of Guonmancy";
-            string resourceName = "Planetside/Resources/tomeofguonmancy.png";
+            //string resourceName = "Planetside/Resources/tomeofguonmancy.png";
             GameObject obj = new GameObject(itemName);
             BulletGuonMaker activeitem = obj.AddComponent<BulletGuonMaker>();
-            ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            var data = StaticSpriteDefinitions.Active_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("tomeofguonmancy"), data, obj);
+            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "Irony On Another Level";
             string longDesc = "Captures nearby bullets and turns them into defensive orbitals. Despite being long forgotten and Guonmancy virtually dying out, the tome still holds up.\n\nSome say that Guonmancy still lives on and is secretly practiced by some.";
             activeitem.SetupItem(shortDesc, longDesc, "psog");

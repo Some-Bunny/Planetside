@@ -25,11 +25,13 @@ namespace Planetside
         public static void Init()
         {
             string itemName = "Connoisseurs Robes";
-            string resourceName = "Planetside/Resources/connosouiersRobes.png";
+            //string resourceName = "Planetside/Resources/connosouiersRobes.png";
             GameObject obj = new GameObject(itemName);
             var item = obj.AddComponent<ConnoisseursRobes>();
-            ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
-			string shortDesc = "From A Grotto";
+            var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("connosouiersRobes"), data, obj);
+            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            string shortDesc = "From A Grotto";
 			string longDesc = "Despite looking like a robe, this is actually a pocket worn by a Glocktopus who *really* liked guns. However, its life was ended short after a small encounter with a gun-witch wielding a giga disc gun.";
             ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
 			item.quality = PickupObject.ItemQuality.S;

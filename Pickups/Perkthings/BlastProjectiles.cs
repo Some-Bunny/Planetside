@@ -29,11 +29,12 @@ namespace Planetside
         public static void Init()
         {
             string name = "Explosive Birth";
-            string resourcePath = "Planetside/Resources/PerkThings/projectileboom.png";
+            //string resourcePath = "Planetside/Resources/PerkThings/projectileboom.png";
             GameObject gameObject = new GameObject(name);
             BlastProjectiles item = gameObject.AddComponent<BlastProjectiles>();
-          
-            ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
+            var data = StaticSpriteDefinitions.Pickup_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("projectileboom"), data, gameObject);
+            //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
             string shortDesc = "Literally just an all stats up.";
             string longDesc = "yep.";
             item.SetupItem(shortDesc, longDesc, "psog");
@@ -95,7 +96,9 @@ namespace Planetside
             Exploder.DoDistortionWave(player.sprite.WorldTopCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
             player.BloopItemAboveHead(base.sprite, "");
             string BlurbText = blast.hasBeenPickedup == true ? "More Projectiles Birthed." : "All Explosions birth vengeful shells.";
-            OtherTools.Notify("Explosive Birth", BlurbText, "Planetside/Resources/PerkThings/projectileboom", UINotificationController.NotificationColor.GOLD);
+            OtherTools.NotifyCustom("Explosive Birth", BlurbText, "projectileboom", StaticSpriteDefinitions.Pickup_Sheet_Data, UINotificationController.NotificationColor.GOLD);
+
+            //OtherTools.Notify("Explosive Birth", BlurbText, "Planetside/Resources/PerkThings/projectileboom", UINotificationController.NotificationColor.GOLD);
             UnityEngine.Object.Destroy(base.gameObject);
         }
 

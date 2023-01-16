@@ -156,7 +156,7 @@ namespace Planetside
 				float Fard = 1f * (aaaa) * 2;
 				float x = Mathf.Cos(0.0174532924f * num2) * Fard;
 				float y = Mathf.Sin(0.0174532924f * num2) * Fard;
-				bone.RotationAngle = num2 + 36f;
+				bone.RotationAngle = num2 + 72f;
 				vector2 = new Vector2(x, y) - b;
 			}
 			

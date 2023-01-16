@@ -33,10 +33,12 @@ namespace Planetside
         public static void Init()
         {
             string itemName = "Heresy Breaker";
-            string resourceName = "Planetside/Resources/heresyhammer.png";
+            //string resourceName = "Planetside/Resources/heresyhammer.png";
             GameObject obj = new GameObject(itemName);
             HeresyHammer activeitem = obj.AddComponent<HeresyHammer>();
-            ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            var data = StaticSpriteDefinitions.Active_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("heresyhammer"), data, obj);
+            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "BLASPHEMER";
             string longDesc = "Allows for destruction of monuments.\n\nA large hammer, originally used by protesters off-world to destroy monuments of the corrupt in power. It found new life in here after many of said protestors were shipped to the Gungeon.";
             activeitem.SetupItem(shortDesc, longDesc, "psog");

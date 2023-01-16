@@ -106,39 +106,40 @@ namespace Planetside
 				new Hook(typeof(Chest).GetMethod("Awake", BindingFlags.Instance | BindingFlags.NonPublic),
 					typeof(OuroborosController).GetMethod("ChestAwakeHook"));
 
-                GameObject logoObj = ItemBuilder.AddSpriteToObject("OuroborosWinIcon", "Planetside/Resources/VFX/ouroborosmedal", null);
+                var Collection = StaticSpriteDefinitions.Oddments_Sheet_Data;
+                GameObject logoObj = ItemBuilder.AddSpriteToObjectAssetbundle("Big Piece Bottom", Collection.GetSpriteIdByName("ouroborosmedal"), Collection);
                 FakePrefab.MarkAsFakePrefab(logoObj);
                 UnityEngine.Object.DontDestroyOnLoad(logoObj);
                 logoObj.transform.position = logoObj.transform.position.WithZ(0);
                 dfSprite df = logoObj.AddComponent<dfSprite>();
                 df.Atlas = GameUIRoot.Instance.FoyerAmmonomiconLabel.Atlas;
-                string t = GameUIRoot.Instance.FoyerAmmonomiconLabel.Atlas.AddNewItemToAtlas(NpcTools.GetTextureFromResource("Planetside/Resources/VFX/ouroborosmedal.png"), "OuroborosWinIcon").name;
+                string t = GameUIRoot.Instance.FoyerAmmonomiconLabel.Atlas.AddNewItemToAtlas(Collection.GetSpriteDefinition("ouroborosmedal").DesheetTexture(), "OuroborosWinIcon").name;
                 df.name = t;
                 df.SpriteName = t;
 				logoObj.transform.localScale *= 4;
                 WinIcon = logoObj;
 
 				{
-                    GameObject logoObj2 = ItemBuilder.AddSpriteToObject("OuroborosWinIconSideLeft", "Planetside/Resources/VFX/ouroborosMedal2Left", null);
+                    GameObject logoObj2 = ItemBuilder.AddSpriteToObjectAssetbundle("Big Piece Left", Collection.GetSpriteIdByName("ouroborosMedal2Left"), Collection);
                     FakePrefab.MarkAsFakePrefab(logoObj2);
                     UnityEngine.Object.DontDestroyOnLoad(logoObj2);
                     logoObj2.transform.position = logoObj2.transform.position.WithZ(0);
                     dfSprite df2 = logoObj2.AddComponent<dfSprite>();
                     df2.Atlas = GameUIRoot.Instance.FoyerAmmonomiconLabel.Atlas;
-                    string t2 = GameUIRoot.Instance.FoyerAmmonomiconLabel.Atlas.AddNewItemToAtlas(NpcTools.GetTextureFromResource("Planetside/Resources/VFX/ouroborosMedal2Left.png"), "OuroborosWinIconTwoLeft").name;
+                    string t2 = GameUIRoot.Instance.FoyerAmmonomiconLabel.Atlas.AddNewItemToAtlas(Collection.GetSpriteDefinition("ouroborosMedal2Left").DesheetTexture(), "OuroborosWinIconTwoLeft").name;
                     df2.name = t2;
                     df2.SpriteName = t2;
                     logoObj2.transform.localScale *= 4;
                     WinIconTwoLeft = logoObj2;
                 }
 				{
-                    GameObject logoObj2 = ItemBuilder.AddSpriteToObject("OuroborosWinIconSideRight", "Planetside/Resources/VFX/ouroborosMedal2Right", null);
+                    GameObject logoObj2 = ItemBuilder.AddSpriteToObjectAssetbundle("Big Piece Right", Collection.GetSpriteIdByName("ouroborosMedal2Right"), Collection);
                     FakePrefab.MarkAsFakePrefab(logoObj2);
                     UnityEngine.Object.DontDestroyOnLoad(logoObj2);
                     logoObj2.transform.position = logoObj2.transform.position.WithZ(0);
                     dfSprite df2 = logoObj2.AddComponent<dfSprite>();
                     df2.Atlas = GameUIRoot.Instance.FoyerAmmonomiconLabel.Atlas;
-                    string t2 = GameUIRoot.Instance.FoyerAmmonomiconLabel.Atlas.AddNewItemToAtlas(NpcTools.GetTextureFromResource("Planetside/Resources/VFX/ouroborosMedal2Right.png"), "OuroborosWinIconTwoRight").name;
+                    string t2 = GameUIRoot.Instance.FoyerAmmonomiconLabel.Atlas.AddNewItemToAtlas(Collection.GetSpriteDefinition("ouroborosMedal2Right").DesheetTexture(), "OuroborosWinIconTwoRight").name;
                     df2.name = t2;
                     df2.SpriteName = t2;
                     logoObj2.transform.localScale *= 4;
@@ -212,11 +213,11 @@ namespace Planetside
 			orig(self);
             if (ExtantWinIcon == null)
             {
-                ExtantWinIcon = UnityEngine.Object.Instantiate(WinIcon, self.transform.position, Quaternion.identity, self.transform);
+                ExtantWinIcon = UnityEngine.Object.Instantiate(WinIcon, self.transform.position, Quaternion.Euler(0 ,0 , 90), self.transform);
             }
             if (ExtantWinIcon)
             {
-                ExtantWinIcon.transform.position = self.transform.position.WithZ(0) + new Vector3(-0.5631f, 0.128f, 0);
+                ExtantWinIcon.transform.position = self.transform.position.WithZ(0) + new Vector3(-0.5631f, -0.161f, 0);
                 ExtantWinIcon.GetComponent<dfSprite>().enabled = true;
                 ExtantWinIcon.GetComponent<dfSprite>().Opacity = OuroborosMode() == true ? 1 : 0;
             }
@@ -822,10 +823,10 @@ namespace Planetside
 	}
 	public class FrenzyElite : BasicEliteType
 	{
-        public override float DamageMultiplier => 1.66f;
+        public override float DamageMultiplier => 1.7f;
         public override float HealthMultiplier => 1;
 		public override float CooldownMultiplier => 1.33f;
-		public override float MovementSpeedMultiplier => 1.55f;
+		public override float MovementSpeedMultiplier => 1.3f;
 		public override Color EliteOutlineColor => Color.yellow;
 		public override Color EliteParticleColor => Color.yellow;
 		public override Color SecondaryEliteParticleColor => Color.yellow;
@@ -833,6 +834,13 @@ namespace Planetside
 		public override List<ActorEffectResistance> DebuffImmunities => new List<ActorEffectResistance> { new ActorEffectResistance() { resistAmount = 1, resistType = EffectResistanceType.Freeze } };
 		public override void Start()
 		{
+			if (aiActor) 
+			{
+				if (aiActor.behaviorSpeculator) 
+				{
+					aiActor.behaviorSpeculator.LocalTimeScale *= 1.2f;
+                }
+			}
 			base.Start();
 		}
 		public override void OnPreDeath(Vector2 obj)
@@ -867,6 +875,9 @@ namespace Planetside
 		public override List<string> EnemyBlackList => new List<string>()
 		{
 		};
+
+		private bool hasProccedHeal = false;
+
 		public override List<ActorEffectResistance> DebuffImmunities => new List<ActorEffectResistance> {
 			new ActorEffectResistance() { resistAmount = 1, resistType = EffectResistanceType.None },
 		};
@@ -877,19 +888,26 @@ namespace Planetside
 
         public override void OnPreDeath(Vector2 obj)
         {
+			if (hasProccedHeal == true) { return; }
 			GameManager.Instance.StartCoroutine(SpawnRadialPoofs(base.aiActor.CenterPosition, base.aiActor.GetAbsoluteParentRoom()));
 		}
 		private void ProcessEnemy(AIActor target, float distance)
 		{
-			if (target != null)
+			bool doCheck = false;
+			if (this != null) { doCheck = true; }
+			
+			if (target != null && doCheck == false)
             {
+				
 				target.PlayEffectOnActor(StaticVFXStorage.HealingSparklesVFX, Vector3.zero, true, false, false);
 				target.healthHaver.FullHeal();
 			}
 		}
 		private IEnumerator SpawnRadialPoofs(Vector2 centre, RoomHandler room)
 		{
-			float elapsed = 0f;
+			hasProccedHeal = true;
+
+            float elapsed = 0f;
 			float duration = 1.33f;
 			HeatIndicatorController radialIndicator = ((GameObject)UnityEngine.Object.Instantiate(ResourceCache.Acquire("Global VFX/HeatIndicator"), centre, Quaternion.identity)).GetComponent<HeatIndicatorController>();
 			radialIndicator.CurrentColor = Color.green.WithAlpha(50);
@@ -1543,13 +1561,15 @@ namespace Planetside
 					base.aiActor.behaviorSpeculator.CooldownScale *= CooldownMultiplier;
 					if (!base.aiActor.healthHaver.IsBoss || !base.aiActor.healthHaver.IsSubboss) { base.aiActor.healthHaver.SetHealthMaximum(base.aiActor.healthHaver.GetCurrentHealth() * HealthMultiplier); }
 
-					if (DebuffImmunities != null)
+					if (DebuffImmunities != null && DebuffImmunities.Count > 0)
 					{
 						if (base.aiActor.EffectResistances == null)
 						{
 							base.aiActor.EffectResistances = new ActorEffectResistance[0];
 						}
-						base.aiActor.EffectResistances = DebuffImmunities.ToArray();
+						List<ActorEffectResistance> l = base.aiActor.EffectResistances.ToList();
+						l.AddRange(DebuffImmunities);
+                        base.aiActor.EffectResistances = l.ToArray();
 					}
 				}
 				base.aiActor.healthHaver.OnPreDeath += OnPreDeath;
@@ -1567,10 +1587,11 @@ namespace Planetside
 		public virtual void OnPreDeath(Vector2 obj) { }
 		public virtual void Update()
         {
+			if (aiActor == null) { return; }
 			if (!EnemyBlackList.Contains(base.aiActor.EnemyGuid) && EnemyBlackList != null)
 			{
 				Material outlineMaterial1 = SpriteOutlineManager.GetOutlineMaterial(base.aiActor.sprite);
-				if (base.aiActor.healthHaver != null && base.aiActor != null)
+				if (base.aiActor.healthHaver != null && base.aiActor != null && outlineMaterial1)
 				{
 					if (!base.aiActor.healthHaver.IsDead && outlineMaterial1 != null)
 					{
@@ -1589,8 +1610,9 @@ namespace Planetside
 					main.startColor = new ParticleSystem.MinMaxGradient(EliteParticleColor != null ? EliteParticleColor : Color.white, SecondaryEliteParticleColor != null ? SecondaryEliteParticleColor : Color.white);
 					ParticleSystem.EmitParams emitParams = new ParticleSystem.EmitParams
 					{
-						position = position,
-						randomSeed = (uint)UnityEngine.Random.Range(1, 1000)
+						position = position.WithZ(150),
+						randomSeed = (uint)UnityEngine.Random.Range(1, 1000),
+						
 					};
 					var emission = particleSystem.emission;
 					emission.enabled = false;
@@ -1628,12 +1650,14 @@ namespace Planetside
 
 					if (DebuffImmunities != null)
 					{
-						if (base.aiActor.EffectResistances == null)
-						{
-							base.aiActor.EffectResistances = new ActorEffectResistance[0];
-						}
-						base.aiActor.EffectResistances = DebuffImmunities.ToArray();
-					}
+                        if (base.aiActor.EffectResistances == null)
+                        {
+                            base.aiActor.EffectResistances = new ActorEffectResistance[0];
+                        }
+                        List<ActorEffectResistance> l = base.aiActor.EffectResistances.ToList();
+                        l.AddRange(DebuffImmunities);
+                        base.aiActor.EffectResistances = l.ToArray();
+                    }
 				}
 				base.aiActor.healthHaver.OnPreDeath += OnPreDeath;
 				base.aiActor.healthHaver.OnDamaged += OnDamaged;

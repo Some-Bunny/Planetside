@@ -78,6 +78,7 @@ namespace Planetside
 
             statue.gameObject.AddComponent<TresspassLightController>();
             statue.DamageReduction = 1000;
+            statue.gameObject.AddComponent<PushImmunity>();
 
             Dictionary<GameObject, float> dict = new Dictionary<GameObject, float>()
             {

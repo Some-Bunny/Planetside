@@ -120,11 +120,13 @@ namespace Planetside
         public static void Init()
         {
             string name = " Unbreakable Spirit";
-            string resourcePath = "Planetside/Resources/PerkThings/unbreakablespirit.png";
+            //string resourcePath = "Planetside/Resources/PerkThings/unbreakablespirit.png";
             GameObject gameObject = new GameObject(name);
             UnbreakableSpirit item = gameObject.AddComponent<UnbreakableSpirit>();
-          
-            ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
+
+            var data = StaticSpriteDefinitions.Pickup_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("unbreakablespirit"), data, gameObject);
+            //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
             string shortDesc = "Literally just an all stats up.";
             string longDesc = "yep.";
             item.SetupItem(shortDesc, longDesc, "psog");
@@ -156,7 +158,9 @@ namespace Planetside
             if (spirit.hasBeenPickedup == true)
             { spirit.IncrementStack(); }
             string BlurbText = spirit.hasBeenPickedup == true ? "Another Chance." : "Come Back Stronger.";
-            OtherTools.Notify("Unbreakable Spirit", BlurbText, "Planetside/Resources/PerkThings/unbreakablespirit", UINotificationController.NotificationColor.GOLD); 
+            OtherTools.NotifyCustom("Unbreakable Spirit", BlurbText, "unbreakablespirit", StaticSpriteDefinitions.Pickup_Sheet_Data, UINotificationController.NotificationColor.GOLD);
+
+            //OtherTools.Notify("Unbreakable Spirit", BlurbText, "Planetside/Resources/PerkThings/unbreakablespirit", UINotificationController.NotificationColor.GOLD); 
             UnityEngine.Object.Destroy(base.gameObject);
         }
 

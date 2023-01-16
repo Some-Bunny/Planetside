@@ -22,10 +22,12 @@ namespace Planetside
         public static void Init()
         {
             string itemName = "Gun-Printer";
-            string resourceName = "Planetside/Resources/portablegunprinter.png";
+            //string resourceName = "Planetside/Resources/portablegunprinter.png";
             GameObject obj = new GameObject(itemName);
             GunPrinter activeitem = obj.AddComponent<GunPrinter>();
-            ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            var data = StaticSpriteDefinitions.Active_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("portablegunprinter"), data, obj);
+            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "Infinite Ammo?";
             string longDesc = "A small machine that prints out and fires a shot from the currently held gun, free of charge!\n\nA failed attempt at the creation of limitless ammunition, the energy required to power one of these exceeds just manufacturing more bullets.";
             activeitem.SetupItem(shortDesc, longDesc, "psog");

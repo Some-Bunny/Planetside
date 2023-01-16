@@ -18,14 +18,16 @@ namespace Planetside
 		public static void Init()
 		{
 			string name = "Prayer Amulet";
-			string resourcePath = "Planetside/Resources/prayeramulet.png";
+			//string resourcePath = "Planetside/Resources/prayeramulet.png";
 			GameObject gameObject = new GameObject(name);
 			PrayerAmulet warVase = gameObject.AddComponent<PrayerAmulet>();
-			ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
+			//ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
 			string shortDesc = "Vow To The Cult";
 			string longDesc = "Adds a shrine room to every floor.\n\nAn amulet similar to that worn by the High Priest, embedded with perfectly cut bullets.";
-			ItemBuilder.SetupItem(warVase, shortDesc, longDesc, "psog");
-			warVase.quality = PickupObject.ItemQuality.C;
+            var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("prayeramulet"), data, gameObject);
+            ItemBuilder.SetupItem(warVase, shortDesc, longDesc, "psog");
+            warVase.quality = PickupObject.ItemQuality.C;
 			PrayerAmulet.PrayerAmuletID = warVase.PickupObjectId;
 			ItemIDs.AddToList(warVase.PickupObjectId);
 

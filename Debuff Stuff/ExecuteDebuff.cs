@@ -24,43 +24,44 @@ namespace Planetside
 		public Color TintColorPosessed = new Color(0f, 1f, 0.1f, 0.5f);
 		public Color ClearUp = new Color(0f, 0f, 0f, 0f);
 
+
+        public static GameObject BuildVFX()
+        {
+            var debuffCollection = StaticSpriteDefinitions.Debuff_Sheet_Data;
+            var BrokenArmorVFXObject = ItemBuilder.AddSpriteToObjectAssetbundle("Execute", debuffCollection.GetSpriteIdByName("lockedin1"), debuffCollection);//new GameObject("Broken Armor");//SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Debuffs/brokenarmor", new GameObject("BrokenArmorEffect"));
+            FakePrefab.MarkAsFakePrefab(BrokenArmorVFXObject);
+            UnityEngine.Object.DontDestroyOnLoad(BrokenArmorVFXObject);
+
+
+            BrokenArmorVFXObject.GetOrAddComponent<tk2dBaseSprite>();
+            tk2dSpriteAnimator animator = BrokenArmorVFXObject.GetOrAddComponent<tk2dSpriteAnimator>();
+            var clip = SpriteBuilder.AddAnimation(animator, debuffCollection, new List<int>()
+            {
+                debuffCollection.GetSpriteIdByName("lockedin_start_1"),
+                debuffCollection.GetSpriteIdByName("lockedin_start_2"),
+                debuffCollection.GetSpriteIdByName("lockedin_start_3"),
+                debuffCollection.GetSpriteIdByName("lockedin_start_4"),
+
+                debuffCollection.GetSpriteIdByName("lockedin1"),
+                debuffCollection.GetSpriteIdByName("lockedin2"),
+                debuffCollection.GetSpriteIdByName("lockedin3"),
+                debuffCollection.GetSpriteIdByName("lockedin4"),
+                debuffCollection.GetSpriteIdByName("lockedin5"),
+                debuffCollection.GetSpriteIdByName("lockedin6"),
+                debuffCollection.GetSpriteIdByName("lockedin7"),
+                debuffCollection.GetSpriteIdByName("lockedin8"),
+            }, "start", tk2dSpriteAnimationClip.WrapMode.LoopSection, 9);
+
+            animator.DefaultClipId = animator.GetClipIdByName("start");
+            animator.playAutomatically = true;
+            clip.loopStart = 3;
+            LockInVFXPrefab = BrokenArmorVFXObject;
+            return LockInVFXPrefab;
+        }
+
 		public static void Init()
         {
-            var blessingObj = SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/LockedIn/lockedin", null, false);
-            FakePrefab.MarkAsFakePrefab(blessingObj);
-            UnityEngine.Object.DontDestroyOnLoad(blessingObj);
-            tk2dSpriteAnimator animator = blessingObj.GetOrAddComponent<tk2dSpriteAnimator>();
-            tk2dSpriteAnimation animation = blessingObj.AddComponent<tk2dSpriteAnimation>();
 
-            tk2dSpriteCollectionData DeathMarkcollection = SpriteBuilder.ConstructCollection(blessingObj, ("Tarnish_Collection"));
-
-            tk2dSpriteAnimationClip idleClip = new tk2dSpriteAnimationClip() { name = "idle", frames = new tk2dSpriteAnimationFrame[0], fps = 10 };
-            List<tk2dSpriteAnimationFrame> frames = new List<tk2dSpriteAnimationFrame>();
-
-            for (int i = 1; i < 9; i++)
-            {
-                tk2dSpriteCollectionData collection = DeathMarkcollection;
-                int frameSpriteId = SpriteBuilder.AddSpriteToCollection($"Planetside/Resources/VFX/LockedIn/lockedin{i}", collection);
-                tk2dSpriteDefinition frameDef = collection.spriteDefinitions[frameSpriteId];
-                frameDef.ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.MiddleCenter);
-                frames.Add(new tk2dSpriteAnimationFrame { spriteId = frameSpriteId, spriteCollection = collection });
-            }
-            idleClip.frames = frames.ToArray();
-            idleClip.wrapMode = tk2dSpriteAnimationClip.WrapMode.Loop;
-            animator.Library = animation;
-            animator.Library.clips = new tk2dSpriteAnimationClip[] { idleClip };
-            animator.DefaultClipId = animator.GetClipIdByName("idle");
-            animator.playAutomatically = true;
-
-            animator.sprite.usesOverrideMaterial = true;
-            Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
-            mat.mainTexture = animator.sprite.renderer.material.mainTexture;
-            mat.SetColor("_EmissiveColor", new Color32(208, 255, 223, 255));
-            mat.SetFloat("_EmissiveColorPower", 1.55f);
-            mat.SetFloat("_EmissivePower", 100);
-            animator.sprite.renderer.material = mat;
-
-            LockInVFXPrefab = blessingObj;
 
             data = StaticExplosionDatas.CopyFields(StaticExplosionDatas.genericLargeExplosion);
             data.breakSecretWalls = false;

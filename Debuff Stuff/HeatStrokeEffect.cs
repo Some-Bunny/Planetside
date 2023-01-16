@@ -23,15 +23,38 @@ namespace Planetside
 		public static GameObject heatstrokeVFXObject;
 		public float Time;
 
-		public static void Init()
+
+        public static GameObject BuildVFX()
         {
-			heatstrokeVFXObject = SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Debuffs/heatstrokeicon", new GameObject("heatstrokeIcon"));
-			heatstrokeVFXObject.SetActive(false);
-			tk2dBaseSprite vfxSprite = heatstrokeVFXObject.GetComponent<tk2dBaseSprite>();
-			vfxSprite.GetCurrentSpriteDef().ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.LowerCenter, vfxSprite.GetCurrentSpriteDef().position3);
-			FakePrefab.MarkAsFakePrefab(heatstrokeVFXObject);
-			UnityEngine.Object.DontDestroyOnLoad(heatstrokeVFXObject);
-		}
+            var debuffCollection = StaticSpriteDefinitions.Debuff_Sheet_Data;
+            var BrokenArmorVFXObject = ItemBuilder.AddSpriteToObjectAssetbundle("Heat Stroke", debuffCollection.GetSpriteIdByName("heatstrokeicon7"), debuffCollection);//new GameObject("Broken Armor");//SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Debuffs/brokenarmor", new GameObject("BrokenArmorEffect"));
+            FakePrefab.MarkAsFakePrefab(BrokenArmorVFXObject);
+            UnityEngine.Object.DontDestroyOnLoad(BrokenArmorVFXObject);
+            tk2dBaseSprite vfxSprite = BrokenArmorVFXObject.GetComponent<tk2dBaseSprite>();
+            vfxSprite.GetCurrentSpriteDef().ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.LowerCenter, vfxSprite.GetCurrentSpriteDef().position3);
+
+            BrokenArmorVFXObject.GetOrAddComponent<tk2dBaseSprite>();
+            tk2dSpriteAnimator animator = BrokenArmorVFXObject.GetOrAddComponent<tk2dSpriteAnimator>();
+            var clip = SpriteBuilder.AddAnimation(animator, debuffCollection, new List<int>()
+            {
+                debuffCollection.GetSpriteIdByName("heatstrokeicon1"),
+                debuffCollection.GetSpriteIdByName("heatstrokeicon1"),
+                debuffCollection.GetSpriteIdByName("heatstrokeicon2"),
+                debuffCollection.GetSpriteIdByName("heatstrokeicon3"),
+                debuffCollection.GetSpriteIdByName("heatstrokeicon4"),
+                debuffCollection.GetSpriteIdByName("heatstrokeicon5"),
+                debuffCollection.GetSpriteIdByName("heatstrokeicon6"),
+                debuffCollection.GetSpriteIdByName("heatstrokeicon7"),
+            }, "start", tk2dSpriteAnimationClip.WrapMode.LoopSection, 5);
+
+            animator.DefaultClipId = animator.GetClipIdByName("start");
+            animator.playAutomatically = true;
+            clip.loopStart = 6;
+            heatstrokeVFXObject = BrokenArmorVFXObject;
+            return heatstrokeVFXObject;
+        }
+
+       
 
         public override void OnEffectApplied(GameActor actor, RuntimeGameActorEffectData effectData, float partialAmount = 1)
         {

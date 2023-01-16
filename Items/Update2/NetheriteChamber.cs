@@ -15,11 +15,14 @@ namespace Planetside
 		public static void Init()
 		{
 			string name = "Netherite Chamber";
-			string resourcePath = "Planetside/Resources/brokenchamberfixedtier2.png";
+			//string resourcePath = "Planetside/Resources/brokenchamberfixedtier2.png";
 			GameObject gameObject = new GameObject(name);
 			NetheriteChamber chamber = gameObject.AddComponent<NetheriteChamber>();
-			ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
-			string shortDesc = "Forged From Bullet Hells Metals";
+            var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("brokenchamberfixedtier2"), data, gameObject);
+
+            //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
+            string shortDesc = "Forged From Bullet Hells Metals";
 			string longDesc = "A diamond-encrusted chamber plated with a metal unique to Bullet Hell. Its reinforced power calls upon the artifacts from planetside to reveal themselves.";
 			ItemBuilder.SetupItem(chamber, shortDesc, longDesc, "psog");
 			chamber.quality = PickupObject.ItemQuality.EXCLUDED;

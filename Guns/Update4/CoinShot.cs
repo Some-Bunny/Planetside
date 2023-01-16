@@ -9,7 +9,6 @@ using MonoMod;
 using UnityEngine;
 using ItemAPI;
 using MonoMod.RuntimeDetour;
-using HarmonyLib;
 
 namespace Planetside
 {

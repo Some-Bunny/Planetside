@@ -22,10 +22,12 @@ namespace Planetside
         public static void Init()
         {
             string itemName = "Off-World Medicine";
-            string resourceName = "Planetside/Resources/offworldmedicine.png";
+            //string resourceName = "Planetside/Resources/offworldmedicine.png";
             GameObject obj = new GameObject(itemName);
             OffWorldMedicine activeitem = obj.AddComponent<OffWorldMedicine>();
-            ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            var data = StaticSpriteDefinitions.Active_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("offworldmedicine"), data, obj);
+            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "I'll Show You Off-World";
             string longDesc = "An off-world medicine from a high-tech civilzation, capable of curing even the most sturdiest addictions and festering wounds.";
             activeitem.SetupItem(shortDesc, longDesc, "psog");

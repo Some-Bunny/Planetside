@@ -82,30 +82,19 @@ namespace Planetside
 			
 			ETGMod.Databases.Items.Add(gun, false, "ANY");
 
-			GameObject gameObject = SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/CapacitorVFX/chargeupnonsyn", null, true);
-			gameObject.SetActive(false);
-			FakePrefab.MarkAsFakePrefab(gameObject);
-			UnityEngine.Object.DontDestroyOnLoad(gameObject);
-			GameObject gameObject2 = new GameObject("CapactiorStuff");
-			tk2dSprite tk2dSprite = gameObject2.AddComponent<tk2dSprite>();
-			tk2dSprite.SetSprite(gameObject.GetComponent<tk2dBaseSprite>().Collection, gameObject.GetComponent<tk2dBaseSprite>().spriteId);
-
-			Capactior.spriteIds.Add(SpriteBuilder.AddSpriteToCollection("Planetside/Resources/VFX/CapacitorVFX/chargeupnonsyn", tk2dSprite.Collection));
-			Capactior.spriteIds.Add(SpriteBuilder.AddSpriteToCollection("Planetside/Resources/VFX/CapacitorVFX/chargeupsyn", tk2dSprite.Collection));
-
-			tk2dSprite.GetCurrentSpriteDef().material.shader = ShaderCache.Acquire("Brave/PlayerShader");
-			ForgiveMePlease.spriteIds.Add(tk2dSprite.spriteId);
-			gameObject2.SetActive(false);
-
-			tk2dSprite.SetSprite(Capactior.spriteIds[0]); //Non Synergy
-			tk2dSprite.SetSprite(Capactior.spriteIds[1]); //Synergy
-
-			FakePrefab.MarkAsFakePrefab(gameObject2);
-			UnityEngine.Object.DontDestroyOnLoad(gameObject2);
-			Capactior.ChargeUpPrefab = gameObject2;
+            var Collection = StaticSpriteDefinitions.Oddments_Sheet_Data;
+            var ChargeUp = ItemBuilder.AddSpriteToObjectAssetbundle("Charge Up", Collection.GetSpriteIdByName("chargeupnonsyn"), Collection);
+            FakePrefab.MarkAsFakePrefab(ChargeUp);
+            UnityEngine.Object.DontDestroyOnLoad(ChargeUp);
+            Capactior.ChargeUpPrefab = ChargeUp;
+            var ChargeUpSynergy = ItemBuilder.AddSpriteToObjectAssetbundle("Charge Up Synergy", Collection.GetSpriteIdByName("chargeupsyn"), Collection);
+            FakePrefab.MarkAsFakePrefab(ChargeUpSynergy);
+            UnityEngine.Object.DontDestroyOnLoad(ChargeUpSynergy);
+            Capactior.ChargeUpSynergyPrefab = ChargeUpSynergy;
 
 
-			List<string> AAA = new List<string>
+
+            List<string> AAA = new List<string>
 			{
 				"psog:capacitor"
 			};
@@ -125,7 +114,8 @@ namespace Planetside
 		public static int CapacitorID;
 
 		public static GameObject ChargeUpPrefab;
-		public static List<int> spriteIds = new List<int>();
+        public static GameObject ChargeUpSynergyPrefab;
+
 
 		public override void OnPostFired(PlayerController player, Gun gun)
 		{
@@ -149,27 +139,30 @@ namespace Planetside
 								bool flag3 = eee <= 0f || eee <= 0f;
 								if (!flag3)
 								{
-									GameObject original = Capactior.ChargeUpPrefab;
-									tk2dSprite ahfuck = original.GetComponent<tk2dSprite>();
+									bool b = false;
 									if (player.PlayerHasActiveSynergy("Back For Seconds"))
 									{
 										if (UnityEngine.Random.value < 0.5f)
                                         {
-											original.GetComponent<tk2dBaseSprite>().SetSprite(Capactior.spriteIds[1]);
 											SetCharge(false);
+											b = true;
 										}
 										else
                                         {
 											SetCharge(true);
-											original.GetComponent<tk2dBaseSprite>().SetSprite(Capactior.spriteIds[0]);
-										}
-									}
+                                            b = false;
+
+                                        }
+                                    }
 									else
 									{
 										SetCharge(true);
-										original.GetComponent<tk2dBaseSprite>().SetSprite(Capactior.spriteIds[0]);
-									}
-									player.BloopItemAboveHead(ahfuck, "");
+                                        b = false;
+                                    }
+
+                                    tk2dSprite ahfuck = b == false ? ChargeUpPrefab.GetComponent<tk2dSprite>() : ChargeUpSynergyPrefab.GetComponent<tk2dSprite>();
+
+                                    player.BloopItemAboveHead(ahfuck, "");
 									this.remainingTimeCooldown.SetValue(playerItem, noom- timeCooldown);
 									this.remainingDamageCooldown.SetValue(playerItem, eee-damageCooldown);
 									AkSoundEngine.PostEvent("Play_BOSS_RatPunchout_Player_Charge_01", base.gameObject);

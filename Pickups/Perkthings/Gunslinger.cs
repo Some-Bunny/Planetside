@@ -410,8 +410,8 @@ namespace Planetside
                         AoEDamageComponent AoE = obj.gameObject.GetOrAddComponent<AoEDamageComponent>();
                         AoE.AreaIncreasesWithProjectileSizeStat = true;
                         AoE.DealsDamage = false;
-                        AoE.EffectProcChance = 1;
-                        AoE.InflictsFreeze = true;
+                        AoE.debuffs.Add(DebuffStatics.frostBulletsEffect, 1f);
+
                         AoE.DealsDamage = false;
                         AoE.Radius = 4;
                         AoE.TimeBetweenDamageEvents = 0.33f;
@@ -762,11 +762,13 @@ namespace Planetside
         public static void Init()
         {
             string name = "Gunslinger";
-            string resourcePath = "Planetside/Resources/PerkThings/somethingtoDoWithThrownGuns.png";
+            //string resourcePath = "Planetside/Resources/PerkThings/somethingtoDoWithThrownGuns.png";
             GameObject gameObject = new GameObject(name);
             Gunslinger item = gameObject.AddComponent<Gunslinger>();
-          
-            ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
+
+            var data = StaticSpriteDefinitions.Pickup_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("somethingtoDoWithThrownGuns"), data, gameObject);
+            //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
             string shortDesc = "Literally just an all stats up.";
             string longDesc = "yep.";
             item.SetupItem(shortDesc, longDesc, "psog");
@@ -803,7 +805,8 @@ namespace Planetside
             Exploder.DoDistortionWave(player.sprite.WorldTopCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
             player.BloopItemAboveHead(base.sprite, "");
             string BlurbText = slinger.hasBeenPickedup == true ? "Thrown Weapons Are Even Stronger." : "Massive Boost To Thrown Weapons.";
-            OtherTools.Notify("Gunslinger", BlurbText, "Planetside/Resources/PerkThings/somethingtoDoWithThrownGuns", UINotificationController.NotificationColor.GOLD);
+            //OtherTools.Notify("Gunslinger", BlurbText, "Planetside/Resources/PerkThings/somethingtoDoWithThrownGuns", UINotificationController.NotificationColor.GOLD);
+            OtherTools.NotifyCustom("Gunslinger", BlurbText, "somethingtoDoWithThrownGuns", StaticSpriteDefinitions.Pickup_Sheet_Data, UINotificationController.NotificationColor.GOLD);
 
             UnityEngine.Object.Destroy(base.gameObject);
         }

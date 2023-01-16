@@ -28,8 +28,8 @@ namespace Planetside
 			{
 				projectile.statusEffectsToApply = new List<GameActorEffect>()
 				{
-					DebuffLibrary.executeDebuff
-				};
+                    DebuffLibrary.executeDebuff
+                };
 			}
 		}
 		private Projectile projectile;

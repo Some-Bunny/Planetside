@@ -22,10 +22,13 @@ namespace Planetside
         public static void Init()
         {
             string itemName = "Jammed Jar";
-            string resourceName = "Planetside/Resources/JammedJarIDK/cursejar_001.png";
+            //string resourceName = "Planetside/Resources/JammedJarIDK/cursejar_001.png";
             GameObject obj = new GameObject(itemName);
             JammedJar activeitem = obj.AddComponent<JammedJar>();
-            ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            var data = StaticSpriteDefinitions.Active_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("cursejar_001"), data, obj);
+
             string shortDesc = "Jar Full Of The Jammed";
             string longDesc = "A jar full of Jammed protective relics. Do you dare sink your hand into it?";
             activeitem.SetupItem(shortDesc, longDesc, "psog");
@@ -34,10 +37,10 @@ namespace Planetside
             activeitem.numberOfUses = 3;
             activeitem.quality = PickupObject.ItemQuality.C;
             JammedJar.spriteIDs = new int[JammedJar.spritePaths.Length];
-            JammedJar.spriteIDs[3] = ItemAPI.SpriteBuilder.AddSpriteToCollection(JammedJar.spritePaths[0], activeitem.sprite.Collection);
-            JammedJar.spriteIDs[2] = SpriteBuilder.AddSpriteToCollection(JammedJar.spritePaths[1], activeitem.sprite.Collection);
-            JammedJar.spriteIDs[1] = SpriteBuilder.AddSpriteToCollection(JammedJar.spritePaths[2], activeitem.sprite.Collection);
-            JammedJar.spriteIDs[0] = SpriteBuilder.AddSpriteToCollection(JammedJar.spritePaths[3], activeitem.sprite.Collection);
+            JammedJar.spriteIDs[3] = data.GetSpriteIdByName("cursejar_001");//ItemAPI.SpriteBuilder.AddSpriteToCollection(JammedJar.spritePaths[0], activeitem.sprite.Collection);
+            JammedJar.spriteIDs[2] = data.GetSpriteIdByName("cursejar_002");//SpriteBuilder.AddSpriteToCollection(JammedJar.spritePaths[1], activeitem.sprite.Collection);
+            JammedJar.spriteIDs[1] = data.GetSpriteIdByName("cursejar_003");//SpriteBuilder.AddSpriteToCollection(JammedJar.spritePaths[2], activeitem.sprite.Collection);
+            JammedJar.spriteIDs[0] = data.GetSpriteIdByName("cursejar_004");//SpriteBuilder.AddSpriteToCollection(JammedJar.spritePaths[3], activeitem.sprite.Collection);
             activeitem.AddToSubShop(ItemBuilder.ShopType.Cursula, 1f);
 
             JammedJar.JammedJarID = activeitem.PickupObjectId;

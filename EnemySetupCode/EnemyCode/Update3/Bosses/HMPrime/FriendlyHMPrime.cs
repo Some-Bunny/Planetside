@@ -214,7 +214,7 @@ namespace Planetside
 	{
 		public static GameObject robotShopkeeperprefab;
 		public static readonly string guid = "RobotShopkeeperBoss_friendly";
-		private static tk2dSpriteCollectionData RobotShopkeeperCollection;
+		//private static tk2dSpriteCollectionData RobotShopkeeperCollection;
 
 		public static void Init()
 		{
@@ -290,16 +290,19 @@ namespace Planetside
 
 		public static void BuildPrefab()
 		{
-			bool flag = robotShopkeeperprefab != null || BossBuilder.Dictionary.ContainsKey(guid);
-			bool flag2 = flag;
-			if (!flag2)
+
+            tk2dSpriteCollectionData Collection = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("HMPrimeCollection").GetComponent<tk2dSpriteCollectionData>();
+            Material matRobot = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Material>("hmprime material");
+
+            if (robotShopkeeperprefab == null || !BossBuilder.Dictionary.ContainsKey(guid))
 			{
 				robotShopkeeperprefab = BossBuilder.BuildPrefab("Friendly_HMPrime", guid, spritePaths[0], new IntVector2(0, 0), new IntVector2(8, 9), false, true);
 				var companion = robotShopkeeperprefab.AddComponent<FriendlyHMPrimeController>();
 				CompanionController yup = companion.gameObject.AddComponent<CompanionController>();
 				yup.companionID = CompanionController.CompanionIdentifier.NONE;
+                EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, Collection, matRobot, false);
 
-				companion.aiActor.knockbackDoer.weight = 10000;
+                companion.aiActor.knockbackDoer.weight = 10000;
 				companion.aiActor.MovementSpeed = 2.4f;
 				companion.aiActor.healthHaver.PreventAllDamage = true;
 				companion.aiActor.CollisionDamage = 0f;
@@ -457,16 +460,18 @@ namespace Planetside
 
 				//companion.aiActor.AwakenAnimType = AwakenAnimationType.Awaken;
 
-				bool flag3 = RobotShopkeeperCollection == null;
-				if (flag3)
+				//bool flag3 = RobotShopkeeperCollection == null;
+				//if (flag3)
 				{
+					/*
 					RobotShopkeeperCollection = SpriteBuilder.ConstructCollection(robotShopkeeperprefab, "RobotShopkeeperCollection");
 					UnityEngine.Object.DontDestroyOnLoad(RobotShopkeeperCollection);
 					for (int i = 0; i < spritePaths.Length; i++)
 					{
 						SpriteBuilder.AddSpriteToCollection(spritePaths[i], RobotShopkeeperCollection);
 					}
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					*/
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 					0,
@@ -480,7 +485,7 @@ namespace Planetside
 					8,
 					9
 					}, "broken_left", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 2.8f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 					0,
@@ -494,7 +499,7 @@ namespace Planetside
 					8,
 					9
 					}, "broken_right", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 2.8f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 					0,
@@ -508,7 +513,7 @@ namespace Planetside
 					8,
 					9
 					}, "broken", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 2.8f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 					65,
@@ -516,28 +521,28 @@ namespace Planetside
 					67,
 					68,
 					}, "active_bottom_left", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 8f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					69,
 					70,
 					71,
 					72,
 					}, "active_bottom_right", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 8f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					73,
 					74,
 					75,
 					76,
 					}, "active_top_left", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 8f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					77,
 					78,
 					79,
 					80,
 					}, "active_top_right", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 8f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					81,
 					81,
@@ -550,7 +555,7 @@ namespace Planetside
 					85,
 					86,
 					}, "move_bottom_left", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 6.66f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					87,
 					87,
@@ -563,7 +568,7 @@ namespace Planetside
 					91,
 					92,
 					}, "move_bottom_right", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 6.66f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					93,
 					93,
@@ -576,7 +581,7 @@ namespace Planetside
 					97,
 					98,
 					}, "move_top_left", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 6.66f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					99,
 					99,
@@ -589,7 +594,7 @@ namespace Planetside
 					104,
 					104
 					}, "move_top_right", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 6.66f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					196,
 					197,
@@ -610,7 +615,7 @@ namespace Planetside
 					204,
 					205,
 					}, "death_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					196,//0
 					197,
@@ -632,7 +637,7 @@ namespace Planetside
 					204,
 					205,
 					}, "death_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					206,//0
 					207,
@@ -690,7 +695,7 @@ namespace Planetside
 					225,
 					225,
 					}, "death", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					160,//0
 					161,//1
@@ -734,39 +739,39 @@ namespace Planetside
 					173,
 					174
 					}, "primelaser", tk2dSpriteAnimationClip.WrapMode.Once).fps = 14f;			
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					175,
 					}, "laserSpeenDown", tk2dSpriteAnimationClip.WrapMode.Once).fps = 2f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					176,
 					}, "laserSpeenDownRight", tk2dSpriteAnimationClip.WrapMode.Once).fps = 2f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					177,
 					}, "laserSpeenRight", tk2dSpriteAnimationClip.WrapMode.Once).fps = 2f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					178,
 					}, "laserSpeenUpRight", tk2dSpriteAnimationClip.WrapMode.Once).fps = 2f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					179,
 					}, "laserSpeenUp", tk2dSpriteAnimationClip.WrapMode.Once).fps = 2f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					180,
 					}, "laserSpeenUpLeft", tk2dSpriteAnimationClip.WrapMode.Once).fps = 2f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					181,
 					}, "laserSpeenLeft", tk2dSpriteAnimationClip.WrapMode.Once).fps = 2f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					182,
 					}, "laserSpeenDownLeft", tk2dSpriteAnimationClip.WrapMode.Once).fps = 2f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					179,
 					179,
@@ -810,7 +815,7 @@ namespace Planetside
 					194,
 					195
 					}, "cooldownlaser", tk2dSpriteAnimationClip.WrapMode.Once).fps = 12f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					128,
 					129,
@@ -825,7 +830,7 @@ namespace Planetside
 					135,
 					135
 					}, "chargeball_down_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 8f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					135,
 					134,
@@ -834,7 +839,7 @@ namespace Planetside
 					130,
 					128
 					}, "fireball_down_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 8f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					136,
 					137,
@@ -849,7 +854,7 @@ namespace Planetside
 					143,
 					143
 					}, "chargeball_down_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 8f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					143,
 					142,
@@ -858,7 +863,7 @@ namespace Planetside
 					138,
 					136
 					}, "fireball_down_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 8f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					144,
 					145,
@@ -873,7 +878,7 @@ namespace Planetside
 					151,
 					151
 					}, "chargeball_up_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 8f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					151,
 					150,
@@ -882,7 +887,7 @@ namespace Planetside
 					146,
 					144
 					}, "fireball_up_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 8f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					152,
 					153,
@@ -897,7 +902,7 @@ namespace Planetside
 					159,
 					159
 					}, "chargeball_up_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 8f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					159,
 					158,
@@ -906,7 +911,7 @@ namespace Planetside
 					154,
 					152
 					}, "fireball_up_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 8f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					105,//0
 					105,
@@ -933,7 +938,7 @@ namespace Planetside
 					110,
 					111,//22
 					}, "ubercharge", tk2dSpriteAnimationClip.WrapMode.Once).fps = 10f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					112,//0
 					113,
@@ -975,7 +980,7 @@ namespace Planetside
 					126,
 					127//36
 					}, "overcharged", tk2dSpriteAnimationClip.WrapMode.Once).fps = 11f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
 					0,
@@ -989,7 +994,7 @@ namespace Planetside
 					8,
 					9
 					}, "talk", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 2.8f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, RobotShopkeeperCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					10,//0
 					10,

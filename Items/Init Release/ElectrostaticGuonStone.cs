@@ -20,10 +20,13 @@ namespace Planetside
         public static void Init()
         {
             string name = "Electro-Static Guon Stone";
-            string resourcePath = "Planetside/Resources/Guons/ElectroGuon/electrostaticguonitem.png";
+            //string resourcePath = "Planetside/Resources/Guons/ElectroGuon/electrostaticguonitem.png";
             GameObject gameObject = new GameObject();
+            
             ElectrostaticGuonStone item = gameObject.AddComponent<ElectrostaticGuonStone>();
-            ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
+            var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("electrostaticguonitem"), data, gameObject);
+            
             string shortDesc = "Batteries Included";
             string longDesc = "This enchanted battery releases bursts of power on collision." + "\n\nOriginally stuffed into an old battery-powered device, a bored gunjurer made it float for the kicks.";
 
@@ -96,10 +99,7 @@ namespace Planetside
 
         private void FixGuon()
         {
-            bool flag = base.Owner && base.Owner.GetComponent<ElectrostaticGuonStone.ElectricGuonbehavior>() != null;
-            bool flag2 = flag;
-            bool flag3 = flag2;
-            if (flag3)
+            if (base.Owner && base.Owner.GetComponent<ElectrostaticGuonStone.ElectricGuonbehavior>() != null)
             {
                 base.Owner.GetComponent<ElectrostaticGuonStone.ElectricGuonbehavior>().Destroy();
             }
@@ -125,35 +125,21 @@ namespace Planetside
                     SpawnManager.Despawn(extantLink.gameObject);
                 }
                 ElectrostaticGuonStone.guonHook.Dispose();
-                /*
-                bool flag = base.Owner && base.Owner.GetComponent<ElectrostaticGuonStone.ElectricGuonbehavior>() != null;
-                bool flag2 = flag;
-                bool flag3 = flag2;
-                if (flag3)
-                {
-                    base.Owner.GetComponent<ElectrostaticGuonStone.ElectricGuonbehavior>().Destroy();
-                }
-                */
+            
                 GameManager.Instance.OnNewLevelFullyLoaded -= this.FixGuon;
                 base.OnDestroy();
             }
         }
 
-        private GameObject LinkVFXPrefab;
         private tk2dTiledSprite extantLink;
         protected override void Update()
         {
             base.Update();
-            bool flag = this.m_extantOrbital != null;
-            if (flag)
+            if (this.m_extantOrbital != null)
             {
-                if (this.LinkVFXPrefab == null)
-                {
-                    this.LinkVFXPrefab = FakePrefab.Clone(Game.Items["shock_rounds"].GetComponent<ComplexProjectileModifier>().ChainLightningVFX);
-                }
                 if (base.Owner && this.extantLink == null)
                 {
-                    tk2dTiledSprite component = SpawnManager.SpawnVFX(this.LinkVFXPrefab, false).GetComponent<tk2dTiledSprite>();
+                    tk2dTiledSprite component = SpawnManager.SpawnVFX(StaticVFXStorage.FriendlyElectricLinkVFX, false).GetComponent<tk2dTiledSprite>();
                     this.extantLink = component;
                 }
                 else if (base.Owner && this.extantLink != null)
@@ -188,12 +174,6 @@ namespace Planetside
         }
         private void ApplyLinearDamage(Vector2 p1, Vector2 p2)
         {
-            float num = 5;
-            bool flagA = base.Owner.PlayerHasActiveSynergy("Shocker");
-            if (flagA)
-            {
-                num *= 3;
-            }
             for (int i = 0; i < StaticReferenceManager.AllEnemies.Count; i++)
             {
                 AIActor aiactor = StaticReferenceManager.AllEnemies[i];
@@ -204,7 +184,7 @@ namespace Planetside
                         Vector2 zero = Vector2.zero;
                         if (BraveUtility.LineIntersectsAABB(p1, p2, aiactor.specRigidbody.HitboxPixelCollider.UnitBottomLeft, aiactor.specRigidbody.HitboxPixelCollider.UnitDimensions, out zero))
                         {
-                            aiactor.healthHaver.ApplyDamage(num, Vector2.zero, "Chain Lightning", CoreDamageTypes.Electric, DamageCategory.Normal, false, null, false);
+                            aiactor.healthHaver.ApplyDamage(base.Owner.PlayerHasActiveSynergy("Shocker") == true ? 15 : 5, Vector2.zero, "Chain Lightning", CoreDamageTypes.Electric, DamageCategory.Normal, false, null, false);
                             GameManager.Instance.StartCoroutine(this.HandleDamageCooldown(aiactor));
                         }
                     }
@@ -243,32 +223,23 @@ namespace Planetside
           
             
             private PlayerController owner;
-
+            private void ReturnOffCooldown()
+            {this.onCooldown = false; }
             private void OnPreCollision(SpeculativeRigidbody myRigidbody, PixelCollider myCollider, SpeculativeRigidbody other, PixelCollider otherCollider)
             {
                 Projectile component = other.GetComponent<Projectile>();
-                bool flag = component != null && !(component.Owner is PlayerController);
-                if (flag)
+                if (component != null && !(component.Owner is PlayerController))
                 {
-                    bool iei = !ElectricGuonbehavior.onCooldown;
-                    if (iei)
+                    if (this.onCooldown == false)
                     {
-                        float Lines = 2;
-                        bool flagA = owner.PlayerHasActiveSynergy("Flip-Side");
-                        if (flagA)
-                        {
-                            Lines = 4;
-                        }
-                        ElectricGuonbehavior.onCooldown = true;
-                        GameManager.Instance.StartCoroutine(ElectricGuonbehavior.StartCooldown());
+                        float Lines = owner.PlayerHasActiveSynergy("Flip-Side") == true ? 4 :2;
+                        this.onCooldown = true;
+                        this.Invoke("ReturnOffCooldown", 0.2f);
                         for (int counter = 0; counter < Lines; counter++)
                         {
                             Vector3 position = myRigidbody.sprite.WorldCenter;
-                            GameObject gameObject = SpawnManager.SpawnProjectile((PickupObjectDatabase.GetById(153) as Gun).DefaultModule.projectiles[0].gameObject, position, Quaternion.Euler(0f, 0f, BraveMathCollege.Atan2Degrees(owner.sprite.WorldCenter - myRigidbody.sprite.WorldCenter) + (counter * (360/Lines)+90)), true);
-                            Projectile eatfarts = gameObject.GetComponent<Projectile>();
-                            bool flag12 = eatfarts != null;
-                            bool flag2 = flag12;
-                            if (flag2)
+                            Projectile eatfarts = SpawnManager.SpawnProjectile((PickupObjectDatabase.GetById(153) as Gun).DefaultModule.projectiles[0].gameObject, position, Quaternion.Euler(0f, 0f, BraveMathCollege.Atan2Degrees(owner.sprite.WorldCenter - myRigidbody.sprite.WorldCenter) + (counter * (360/Lines)+90)), true).GetComponent<Projectile>();
+                            if (eatfarts != null)
                             {
                                 PierceProjModifier spook = eatfarts.gameObject.AddComponent<PierceProjModifier>();
                                 spook.penetration = 10;
@@ -276,31 +247,23 @@ namespace Planetside
                                 eatfarts.SpawnedFromOtherPlayerProjectile = true;
                                 eatfarts.Shooter = myRigidbody.specRigidbody;
                                 eatfarts.Owner = owner;
-                                eatfarts.baseData.damage = 5f;
+                                eatfarts.baseData.damage = 7f;
                                 eatfarts.AdditionalScaleMultiplier = 0.66f;
-                                eatfarts.baseData.range = 5f;
+                                eatfarts.baseData.range = owner.PlayerHasActiveSynergy("Flip-Side") == true ? 9 : 6;
                                 eatfarts.SetOwnerSafe(owner, "Player");
                                 eatfarts.ignoreDamageCaps = true;
                                 eatfarts.PenetratesInternalWalls = true;
-
                             }
-                            // base.StartCoroutine(this.Speed(component));
                         }
-                    }
-                    
+                    }                    
                 }
             }
             public void Destroy()
             {
                 UnityEngine.Object.Destroy(this);
             }
-            private static IEnumerator StartCooldown()
-            {
-                yield return new WaitForSeconds(0.2f);
-                ElectricGuonbehavior.onCooldown = false;
-                yield break;
-            }
-            private static bool onCooldown;
+            
+            private bool onCooldown;
         }
     }
 }

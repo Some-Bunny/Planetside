@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Planetside.SoundAPI;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace SoundAPI
+namespace Planetside.SoundAPI
 {
     /// <summary>
     /// Represents a custom switch.
@@ -17,17 +18,28 @@ namespace SoundAPI
         /// <returns></returns>
         public uint Play(GameObject go, Func<SwitchedEvent, GameObject, uint> playFunc)
         {
-            uint? id = null;
-            foreach(SwitchedEvent replacement in ReplacementEvents)
+            try
             {
-                uint newId = playFunc(replacement, go);
-                id = id ?? newId;
+                if (ReplacementEvents != null)
+                {
+                    uint? id = null;
+                    foreach (SwitchedEvent replacement in ReplacementEvents)
+                    {
+                        uint newId = playFunc(replacement, go);
+                        id = id ?? newId;
+                    }
+                    if (id == null)
+                    {
+                        id = 0u;
+                    }
+                    return id.GetValueOrDefault();
+                }
+                return 0u;
             }
-            if (id == null)
+            catch
             {
-                id = 0u;
+                return 0u;
             }
-            return id.Value;
         }
 
         /// <summary>

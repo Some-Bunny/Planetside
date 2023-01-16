@@ -97,12 +97,15 @@ namespace Planetside
 			ETGMod.Databases.Items.Add(gun, false, "ANY");
 			RebarPuncher.RebarerID = gun.PickupObjectId;
 
-			RebarPuncher.PlusNailsPrefab = SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Rebar/plusnails", null, false);
-			RebarPuncher.PlusNailsPrefab.name = "PlusNailsVFX";
-			UnityEngine.Object.DontDestroyOnLoad(RebarPuncher.PlusNailsPrefab);
-			FakePrefab.MarkAsFakePrefab(RebarPuncher.PlusNailsPrefab);
-			RebarPuncher.PlusNailsPrefab.SetActive(false);
-			gun.AddToSubShop(ItemBuilder.ShopType.Trorc	, 1f);
+
+            var Collection = StaticSpriteDefinitions.Oddments_Sheet_Data;
+            var NailsUp = ItemBuilder.AddSpriteToObjectAssetbundle("Nails Up", Collection.GetSpriteIdByName("plusnails"), Collection);
+            FakePrefab.MarkAsFakePrefab(NailsUp);
+            UnityEngine.Object.DontDestroyOnLoad(NailsUp);
+            RebarPuncher.PlusNailsPrefab = NailsUp;
+
+
+            gun.AddToSubShop(ItemBuilder.ShopType.Trorc	, 1f);
 			SynergyAPI.SynergyBuilder.AddItemToSynergy(gun, CustomSynergyType.THORNPRICK);
 
 			ItemIDs.AddToList(gun.PickupObjectId);

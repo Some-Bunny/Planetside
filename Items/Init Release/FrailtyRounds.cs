@@ -25,10 +25,12 @@ namespace Planetside
         public static void Init()
         {
             string itemName = "Frailty Rounds";
-            string resourceName = "Planetside/Resources/frailtyrounds.png";
+            //string resourceName = "Planetside/Resources/frailtyrounds.png";
             GameObject obj = new GameObject(itemName);
             var item = obj.AddComponent<FrailtyRounds>();
-            ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("frailtyrounds"), data, obj);
             string shortDesc = "Annealling";
             string longDesc = "These bullets have been tipped with a very exotic toxin that erodes at the enemies resistance to damage." +
                 "\n\nHarvested from cute, but rare species of poison round frogs that reside in a hidden chamber of the Gungeon.";

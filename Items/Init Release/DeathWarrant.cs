@@ -294,10 +294,11 @@ namespace Planetside
         public static void Init()
         {
             string itemName = "Death Warrant";
-            string resourceName = "Planetside/Resources/gundeathwarrant.png";
             GameObject obj = new GameObject(itemName);
             var item = obj.AddComponent<DeathWarrant>();
-            ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("gundeathwarrant"), data, obj);
             string shortDesc = "Sign It For Everyone";
             string longDesc = "A death warrant granted to you by law." +
                 "\n\nOn it are the 10 billion signatures of all the Gundead that roam in the Gungeon.";

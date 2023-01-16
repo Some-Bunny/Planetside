@@ -65,45 +65,40 @@ namespace Planetside
 			gun.AddToSubShop(ItemBuilder.ShopType.Trorc, 1f);
 			gun.gunClass = GunClass.RIFLE;
 
-			//+10
-			Resault.Plus10AMMOVFXPrefab = SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Resault/plus10ammo", null, false);
-			Resault.Plus10AMMOVFXPrefab.name = "plus10ammo";
-			UnityEngine.Object.DontDestroyOnLoad(Resault.Plus10AMMOVFXPrefab);
-			FakePrefab.MarkAsFakePrefab(Resault.Plus10AMMOVFXPrefab);
-			Resault.Plus10AMMOVFXPrefab.SetActive(false);
-			//+20
-			Resault.Plus20AMMOVFXPrefab = SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Resault/plus20ammo", null, false);
-			Resault.Plus20AMMOVFXPrefab.name = "plus20ammo";
-            UnityEngine.Object.DontDestroyOnLoad(Resault.Plus20AMMOVFXPrefab);
-			FakePrefab.MarkAsFakePrefab(Resault.Plus20AMMOVFXPrefab);
-			Resault.Plus20AMMOVFXPrefab.SetActive(false);
-			//+4
-			Resault.Plus4AMMOVFXPrefab = SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Resault/plus4ammo", null, false);
-			Resault.Plus4AMMOVFXPrefab.name = "plus4ammo";
-			UnityEngine.Object.DontDestroyOnLoad(Resault.Plus4AMMOVFXPrefab);
-			FakePrefab.MarkAsFakePrefab(Resault.Plus4AMMOVFXPrefab);
-			Resault.Plus4AMMOVFXPrefab.SetActive(false);
+            //+10
+            var Collection = StaticSpriteDefinitions.Oddments_Sheet_Data;
+            var Plus10 = ItemBuilder.AddSpriteToObjectAssetbundle("Plus 10", Collection.GetSpriteIdByName("plus10ammo"), Collection);
+            FakePrefab.MarkAsFakePrefab(Plus10);
+            UnityEngine.Object.DontDestroyOnLoad(Plus10);
+            Resault.Plus10AMMOVFXPrefab = Plus10;
+            //+20
+            var Plus20 = ItemBuilder.AddSpriteToObjectAssetbundle("Plus 20", Collection.GetSpriteIdByName("plus20ammo"), Collection);
+            FakePrefab.MarkAsFakePrefab(Plus20);
+            UnityEngine.Object.DontDestroyOnLoad(Plus20);
+            Resault.Plus20AMMOVFXPrefab = Plus20;
+            //+4
+            var Plus4 = ItemBuilder.AddSpriteToObjectAssetbundle("Plus 4", Collection.GetSpriteIdByName("plus4ammo"), Collection);
+            FakePrefab.MarkAsFakePrefab(Plus4);
+            UnityEngine.Object.DontDestroyOnLoad(Plus4);
+            Resault.Plus4AMMOVFXPrefab = Plus4;
 
-			//+16
-			Resault.Plus16AMMOVFXPrefab = SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Resault/plus16ammosyn", null, false);
-			Resault.Plus16AMMOVFXPrefab.name = "plus16ammosyn";
-			UnityEngine.Object.DontDestroyOnLoad(Resault.Plus16AMMOVFXPrefab);
-			FakePrefab.MarkAsFakePrefab(Resault.Plus16AMMOVFXPrefab);
-			Resault.Plus16AMMOVFXPrefab.SetActive(false);
-			//+40
-			Resault.Plus40AMMOVFXPrefab = SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Resault/plus40ammosyn", null, false);
-			Resault.Plus40AMMOVFXPrefab.name = "plus40ammosyn";
-			UnityEngine.Object.DontDestroyOnLoad(Resault.Plus40AMMOVFXPrefab);
-			FakePrefab.MarkAsFakePrefab(Resault.Plus40AMMOVFXPrefab);
-			Resault.Plus40AMMOVFXPrefab.SetActive(false);
-			//+80
-			Resault.Plus80AMMOVFXPrefab = SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Resault/plus80ammosyn", null, false);
-			Resault.Plus80AMMOVFXPrefab.name = "plus80ammosyn";
-			UnityEngine.Object.DontDestroyOnLoad(Resault.Plus80AMMOVFXPrefab);
-			FakePrefab.MarkAsFakePrefab(Resault.Plus80AMMOVFXPrefab);
-			Resault.Plus80AMMOVFXPrefab.SetActive(false);
+            //+16
+            var Plus16 = ItemBuilder.AddSpriteToObjectAssetbundle("Plus 16", Collection.GetSpriteIdByName("plus16ammosyn"), Collection);
+            FakePrefab.MarkAsFakePrefab(Plus16);
+            UnityEngine.Object.DontDestroyOnLoad(Plus16);
+            Resault.Plus16AMMOVFXPrefab = Plus16;
+            //+40
+            var Plus40 = ItemBuilder.AddSpriteToObjectAssetbundle("Plus 40", Collection.GetSpriteIdByName("plus40ammosyn"), Collection);
+            FakePrefab.MarkAsFakePrefab(Plus40);
+            UnityEngine.Object.DontDestroyOnLoad(Plus40);
+            Resault.Plus40AMMOVFXPrefab = Plus40;
+            //+80
+            var Plus80 = ItemBuilder.AddSpriteToObjectAssetbundle("Plus 80", Collection.GetSpriteIdByName("plus80ammosyn"), Collection);
+            FakePrefab.MarkAsFakePrefab(Plus80);
+            UnityEngine.Object.DontDestroyOnLoad(Plus80);
+            Resault.Plus80AMMOVFXPrefab = Plus80;
 
-			Resault.ResaultID = gun.PickupObjectId;
+            Resault.ResaultID = gun.PickupObjectId;
 			List<string> yah = new List<string>
 			{
 				"psog:resault",

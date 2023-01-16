@@ -24,10 +24,12 @@ namespace Planetside
         public static void Init()
         {
             string itemName = "Trespass Stone";
-            string resourceName = "Planetside/Resources/trespassStone.png";
+            //string resourceName = "Planetside/Resources/trespassStone.png";
             GameObject obj = new GameObject(itemName);
             TrespassStone activeitem = obj.AddComponent<TrespassStone>();
-            ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            var data = StaticSpriteDefinitions.Active_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("trespassStone"), data, obj);
+            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "See Another Dimension";
             string longDesc = "Opens a gateway to forgotten places.\n\nLocked away by Kaliber herself, these places may still contain something of value, if you're not being watched...";
             activeitem.SetupItem(shortDesc, longDesc, "psog");
@@ -57,6 +59,7 @@ namespace Planetside
                     customStatToCheck = CustomTrackedStats.PERKS_BOUGHT,
                     comparisonValue = 5,
                     prerequisiteOperation = DungeonPrerequisite.PrerequisiteOperation.GREATER_THAN,
+                    useSessionStatValue = false,
                 }
             };
 

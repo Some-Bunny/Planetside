@@ -11,6 +11,7 @@ using System.Reflection;
 using Planetside;
 using BreakAbleAPI;
 using System.Collections;
+using HutongGames.PlayMaker;
 
 
 namespace Planetside
@@ -45,6 +46,8 @@ namespace Planetside
             statue.gameObject.AddComponent<TrollRockStickOn>();
             statue.gameObject.AddComponent<TresspassLightController>();
             statue.DamageReduction = 1000;
+            statue.gameObject.AddComponent<PushImmunity>();
+
             Dictionary<GameObject, float> dict = new Dictionary<GameObject, float>()
             {
                 { statue.gameObject, 1f },

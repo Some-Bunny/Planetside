@@ -16,10 +16,12 @@ namespace Planetside
         {
             string itemName = "Surge Grenade";
 
-            string resourceName = "Planetside/Resources/surge_grenade.png";
+            //string resourceName = "Planetside/Resources/surge_grenade.png";
             GameObject obj = new GameObject(itemName);
             var item = obj.AddComponent<SurgeGrenade>();
-            ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            var data = StaticSpriteDefinitions.Active_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("surge_grenade"), data, obj);
+            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "Better Than Carpets";
             string longDesc = "A breakthrough in climate control technology, this grenade is capable of building up massive amounts of positive charge to release as a lightning strike.";
             ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");

@@ -122,10 +122,12 @@ namespace Planetside
         public static void Init()
         {
             string itemName = "Spore Shot";
-            string resourceName = "Planetside/Resources/sporebullets.png";
+            //string resourceName = "Planetside/Resources/sporebullets.png";
             GameObject obj = new GameObject(itemName);
             var item = obj.AddComponent<SporeBullets>();
-            ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("sporebullets"), data, obj);
+            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "Mushroom!";
             string longDesc = "Chance to fire out infective spores." +
                 "\n\nThese rounds are covered in an infectious fungus, how did it even get to that point?\n\nHow does a fungus get to the point of spreading onto lead???";

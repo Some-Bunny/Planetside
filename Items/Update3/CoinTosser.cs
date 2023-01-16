@@ -24,10 +24,12 @@ namespace Planetside
         public static void Init()
         {
             string itemName = "Coin Tosser";
-            string resourceName = "Planetside/Resources/cointosser.png";
+            //string resourceName = "Planetside/Resources/cointosser.png";
             GameObject obj = new GameObject(itemName);
             CoinTosser activeitem = obj.AddComponent<CoinTosser>();
-            ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            var data = StaticSpriteDefinitions.Active_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("cointosser"), data, obj);
+            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "Version One";
             string longDesc = "Toss a coin out of your own pocket. Thrown coins can be interracted with in many ways (such as shooting them) to greatly increase damage output!\n\nOriginally carried by a robot seeking to find Bullet Hell to fuel itself for all of eternity.";
             activeitem.SetupItem(shortDesc, longDesc, "psog");

@@ -4,11 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Reflection;
 using System.IO;
-using Ionic.Zip;
 using System.Runtime.InteropServices;
 using BepInEx;
 
-namespace SoundAPI
+namespace Planetside.SoundAPI
 {
     /// <summary>
     /// Core class of SoundAPI. Manages custom switch groups and other sound manipulation stuff.
@@ -30,7 +29,7 @@ namespace SoundAPI
             StopEventsMusic = new List<string>();
             StopEventsObjects = new List<string>();
             StopEventsWeapons = new List<string>();
-            if(SetSwitchHook == null)
+            if (SetSwitchHook == null)
             {
                 SetSwitchHook = new Hook(typeof(AkSoundEngine).GetMethod("SetSwitch", new Type[] { typeof(string), typeof(string), typeof(GameObject) }), typeof(SoundManager).GetMethod("SetSwitch", BindingFlags.NonPublic | BindingFlags.Static));
             }
@@ -86,30 +85,7 @@ namespace SoundAPI
             {
                 fileName += ".bnk";
             }
-            int FilesLoaded = 0;
-            if (File.Exists(Planetside.PlanetsideModule.FilePathFolder))
-            {
-                ZipFile ModZIP = ZipFile.Read(Planetside.PlanetsideModule.FilePathFolder);
-                if (ModZIP != null && ModZIP.Entries.Count > 0)
-                {
-                    foreach (ZipEntry entry in ModZIP.Entries)
-                    {
-                        if (entry.FileName == fileName)
-                        {
-                            using (MemoryStream ms = new MemoryStream())
-                            {
-                                entry.Extract(ms);
-                                ms.Seek(0, SeekOrigin.Begin);
-                                LoadSoundbankFromStream(ms, entry.FileName);
-                                FilesLoaded++;
-                                break;
-                            }
-                        }
-                    }
-                    if (FilesLoaded > 0) { return; }
-                }
-            }
-            LoadFromPath(Planetside.PlanetsideModule.FilePathFolder, fileName);
+            LoadFromPath(mod.FolderPath(), fileName);
         }
 
         /// <summary>
@@ -118,29 +94,7 @@ namespace SoundAPI
         /// <param name="mod">The mod's <see cref="ETGModule"/>.</param>
         public static void LoadBanksFromModFolderOrZip(this BaseUnityPlugin mod)
         {
-            int FilesLoaded = 0;
-            if (File.Exists(Planetside.PlanetsideModule.FilePathFolder))
-            {
-                ZipFile ModZIP = ZipFile.Read(Planetside.PlanetsideModule.FilePathFolder);
-                if (ModZIP != null && ModZIP.Entries.Count > 0)
-                {
-                    foreach (ZipEntry entry in ModZIP.Entries)
-                    {
-                        if (entry.FileName.EndsWith(".bnk"))
-                        {
-                            using (MemoryStream ms = new MemoryStream())
-                            {
-                                entry.Extract(ms);
-                                ms.Seek(0, SeekOrigin.Begin);
-                                LoadSoundbankFromStream(ms, entry.FileName);
-                                FilesLoaded++;
-                            }
-                        }
-                    }
-                    if (FilesLoaded > 0) { return; }
-                }
-            }
-            AutoloadFromPath(Planetside.PlanetsideModule.FilePathFolder);
+            AutoloadFromPath(mod.FolderPath());
         }
 
         /// <summary>
@@ -155,9 +109,9 @@ namespace SoundAPI
                 path += ".bnk";
             }
             Assembly assembly = Assembly.GetCallingAssembly();
-            using(Stream s = assembly.GetManifestResourceStream(path))
+            using (Stream s = assembly.GetManifestResourceStream(path))
             {
-                if(s != null)
+                if (s != null)
                 {
                     string name = path.Substring(0, path.LastIndexOf('.'));
                     string actualname = path;
@@ -169,18 +123,18 @@ namespace SoundAPI
                 }
             }
         }
-        
+
         /// <summary>
         /// Loads all soundbanks from the mod project. The soundbanks must all be Embedded Resources otherwise they won't load.
         /// </summary>
         public static void LoadBanksFromModProject()
         {
             Assembly assembly = Assembly.GetCallingAssembly();
-            foreach(string path in assembly.GetManifestResourceNames())
+            foreach (string path in assembly.GetManifestResourceNames())
             {
                 using (Stream s = assembly.GetManifestResourceStream(path))
                 {
-                    if(s != null && path.EndsWith(".bnk"))
+                    if (s != null && path.EndsWith(".bnk"))
                     {
                         string name = path.Substring(0, path.LastIndexOf('.'));
                         string actualname = path;
@@ -211,7 +165,7 @@ namespace SoundAPI
                     using (FileStream fileStream = File.OpenRead(text))
                     {
                         string actualname = Path.GetFileName(path);
-                        if(actualname == filename)
+                        if (actualname == filename)
                         {
                             LoadSoundbankFromStream(fileStream, actualname);
                             break;
@@ -282,7 +236,7 @@ namespace SoundAPI
         /// <returns></returns>
         public static CustomSwitchData AddCustomSwitchData(string switchGroup, string switchValue, string originalEventName, params SwitchedEvent[] replacementEvents)
         {
-            if(CustomSwitchDatas == null)
+            if (CustomSwitchDatas == null)
             {
                 Init();
             }
@@ -299,12 +253,12 @@ namespace SoundAPI
         /// "Stop_SND_OBJ"</param>
         public static void RegisterStopEvent(string eventName, params StopEventType[] types)
         {
-            if(StopEvents == null)
+            if (StopEvents == null)
             {
                 Init();
             }
             StopEvents.Add(eventName);
-            foreach(StopEventType type in types)
+            foreach (StopEventType type in types)
             {
                 switch (type)
                 {
@@ -321,7 +275,7 @@ namespace SoundAPI
             }
         }
 
-        private static uint PostEventPlayingId(Func<string, GameObject, uint, AkCallbackManager.EventCallback, object, uint, AkExternalSourceInfo, uint, uint> orig, string eventName, GameObject gameObject, uint flags, 
+        private static uint PostEventPlayingId(Func<string, GameObject, uint, AkCallbackManager.EventCallback, object, uint, AkExternalSourceInfo, uint, uint> orig, string eventName, GameObject gameObject, uint flags,
             AkCallbackManager.EventCallback callback, object cookie, uint externals, AkExternalSourceInfo externalSources, uint playingId)
         {
             return ProcessEvent(eventName, gameObject, (string s, GameObject g) => orig(s, g, flags, callback, cookie, externals, externalSources, playingId));
@@ -357,77 +311,114 @@ namespace SoundAPI
 
         private static uint ProcessEvent(string eventName, GameObject go, Func<string, GameObject, uint> orig)
         {
-            if(go != null && !string.IsNullOrEmpty(eventName))
+            try
             {
-                CustomSwitchData data = GetCustomSwitchData(go, eventName);
-                if(data != null)
+                if (go != null && !string.IsNullOrEmpty(eventName))
                 {
-                    Func<SwitchedEvent, GameObject, uint> playData = delegate (SwitchedEvent switched, GameObject go2)
+                    CustomSwitchData data = GetCustomSwitchData(go, eventName);
+                    if (data != null)
                     {
-                        bool returnValue = false;
-                        if(switched.switchGroup != null && switched.switchValue != null)
+                        Func<SwitchedEvent, GameObject, uint> playData = (SwitchedEvent switched, GameObject go2) =>
                         {
-                            SetSwitchOrig(switched.switchGroup, switched.switchValue, go2);
-                            returnValue = true;
-                        }
-                        uint u = orig(switched.eventName, go2);
-                        if (returnValue)
+                            if (!string.IsNullOrEmpty(switched.eventName))
+                            {
+                                bool returnValue = false;
+                                if (!string.IsNullOrEmpty(switched.switchGroup) && switched.switchValue != null)
+                                {
+                                    SetSwitchOrig(switched.switchGroup, switched.switchValue, go2);
+                                    returnValue = true;
+                                }
+                                uint u = orig(switched.eventName, go2);
+                                if (returnValue)
+                                {
+                                    ReturnSwitch(switched.switchGroup, go2);
+                                }
+                                return u;
+                            }
+                            return 0u;
+                        };
+                        return data.Play(go, playData);
+                    }
+                    if (eventName.ToLowerInvariant() == "stop_snd_all")
+                    {
+                        foreach (string stop in StopEvents)
                         {
-                            ReturnSwitch(switched.switchGroup, go2);
+                            if (!string.IsNullOrEmpty(stop))
+                            {
+                                orig(stop, go);
+                            }
                         }
-                        return u;
-                    };
-                    return data.Play(go, playData);
-                }
-                if(eventName.ToLower() == "stop_snd_all")
-                {
-                    foreach(string stop in StopEvents)
+                    }
+                    if (eventName.ToLowerInvariant() == "stop_mus_all")
                     {
-                        orig(stop, go);
+                        foreach (string stop in StopEventsMusic)
+                        {
+                            if (!string.IsNullOrEmpty(stop))
+                            {
+                                orig(stop, go);
+                            }
+                        }
+                    }
+                    if (eventName.ToLowerInvariant() == "stop_wpn_all")
+                    {
+                        foreach (string stop in StopEventsWeapons)
+                        {
+                            if (!string.IsNullOrEmpty(stop))
+                            {
+                                orig(stop, go);
+                            }
+                        }
+                    }
+                    if (eventName.ToLowerInvariant() == "stop_snd_obj")
+                    {
+                        foreach (string stop in StopEventsObjects)
+                        {
+                            if (!string.IsNullOrEmpty(stop))
+                            {
+                                orig(stop, go);
+                            }
+                        }
                     }
                 }
-                if (eventName.ToLower() == "stop_mus_all" | eventName.ToLower() == "stop_mus_boss_theme")
+                if (eventName == null)
                 {
-                    foreach (string stop in StopEventsMusic)
-                    {
-                        orig(stop, go);
-                    }
+                    return 0u;
                 }
-                if (eventName.ToLower() == "stop_wpn_all")
-                {
-                    foreach (string stop in StopEventsWeapons)
-                    {
-                        orig(stop, go);
-                    }
-                }
-                if (eventName.ToLower() == "stop_snd_obj")
-                {
-                    foreach (string stop in StopEventsObjects)
-                    {
-                        orig(stop, go);
-                    }
-                }
+                return orig(eventName, go);
             }
-            return orig(eventName, go);
+            catch
+            {
+                return 0u;
+            }
         }
 
         private static CustomSwitchData GetCustomSwitchData(GameObject go, string eventName)
         {
-            if (string.IsNullOrEmpty(eventName))
+            try
+            {
+                if (string.IsNullOrEmpty(eventName))
+                {
+                    return null;
+                }
+                if (go != null && Switches.ContainsKey(go) && Switches[go] != null)
+                {
+                    foreach (CustomSwitchData data in CustomSwitchDatas)
+                    {
+                        if (
+                            !string.IsNullOrEmpty(data.OriginalEventName) && data.OriginalEventName.ToLowerInvariant() == eventName.ToLowerInvariant() &&
+                            !string.IsNullOrEmpty(data.SwitchGroup) && Switches != null && Switches.ContainsKey(go) && Switches[go].ContainsKey(data.SwitchGroup.ToLowerInvariant()) &&
+                            !string.IsNullOrEmpty(data.RequiredSwitch) && Switches[go][data.SwitchGroup.ToLowerInvariant()] == data.RequiredSwitch.ToLowerInvariant())
+                        {
+                            return data;
+                        }
+                    }
+                }
+                return null;
+            }
+            catch
             {
                 return null;
             }
-            if(go != null && Switches.ContainsKey(go) && Switches[go] != null)
-            {
-                foreach(CustomSwitchData data in CustomSwitchDatas)
-                {
-                    if(data.OriginalEventName.ToLower() == eventName.ToLower() && Switches[go].ContainsKey(data.SwitchGroup.ToLower()) && Switches[go][data.SwitchGroup.ToLower()] == data.RequiredSwitch.ToLower())
-                    {
-                        return data;
-                    }
-                }
-            }
-            return null;
         }
 
         private delegate TResult Func<T1, T2, T3, T4, T5, TResult>(T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5);
@@ -437,7 +428,7 @@ namespace SoundAPI
 
         private static AKRESULT SetSwitch(Func<string, string, GameObject, AKRESULT> orig, string switchGroup, string switchValue, GameObject gameObject)
         {
-            if(gameObject != null && !origSetSwitch)
+            if (gameObject != null && Switches != null && !origSetSwitch)
             {
                 if (!Switches.ContainsKey(gameObject))
                 {
@@ -445,7 +436,7 @@ namespace SoundAPI
                 }
                 else
                 {
-                    if(Switches[gameObject] == null)
+                    if (Switches[gameObject] == null)
                     {
                         Switches[gameObject] = new Dictionary<string, string> { { switchGroup.ToLower(), switchValue.ToLower() } };
                     }
@@ -474,7 +465,7 @@ namespace SoundAPI
 
         private static void ReturnSwitch(string switchGroup, GameObject go)
         {
-            if(Switches.ContainsKey(go) && Switches[go] != null && Switches[go].ContainsKey(switchGroup))
+            if (Switches != null && Switches.ContainsKey(go) && Switches[go] != null && Switches[go].ContainsKey(switchGroup))
             {
                 origSetSwitch = true;
                 AkSoundEngine.SetSwitch(switchGroup, Switches[go][switchGroup], go);

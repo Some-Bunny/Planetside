@@ -8,9 +8,288 @@ using UnityEngine;
 namespace Planetside
 {
 
-    //Thank you Apache for absically just writing this for everyone
     public class ExpandTK2DDungeonAssembler
     {
+
+        public static void RuntimeResizeTileMap(tk2dTileMap tileMap, int w, int h, int partitionSizeX, int partitionSizeY)
+        {
+            foreach (Layer layer in tileMap.Layers)
+            {
+                layer.DestroyGameData(tileMap);
+                if (layer.gameObject != null)
+                {
+                    tk2dUtil.DestroyImmediate(layer.gameObject);
+                    layer.gameObject = null;
+                }
+            }
+            Layer[] array = new Layer[tileMap.Layers.Length];
+            for (int j = 0; j < tileMap.Layers.Length; j++)
+            {
+                Layer layer2 = tileMap.Layers[j];
+                array[j] = new Layer(layer2.hash, w, h, partitionSizeX, partitionSizeY);
+                Layer layer3 = array[j];
+                if (!layer2.IsEmpty)
+                {
+                    int num = Mathf.Min(tileMap.height, h);
+                    int num2 = Mathf.Min(tileMap.width, w);
+                    for (int k = 0; k < num; k++)
+                    {
+                        for (int l = 0; l < num2; l++) { layer3.SetRawTile(l, k, layer2.GetRawTile(l, k)); }
+                    }
+                    layer3.Optimize();
+                }
+            }
+            bool flag = tileMap.ColorChannel != null && !tileMap.ColorChannel.IsEmpty;
+            ColorChannel colorChannel = new ColorChannel(w, h, partitionSizeX, partitionSizeY);
+            if (flag)
+            {
+                int num3 = Mathf.Min(tileMap.height, h) + 1;
+                int num4 = Mathf.Min(tileMap.width, w) + 1;
+                for (int m = 0; m < num3; m++)
+                {
+                    for (int n = 0; n < num4; n++) { colorChannel.SetColor(n, m, tileMap.ColorChannel.GetColor(n, m)); }
+                }
+                colorChannel.Optimize();
+            }
+            tileMap.ColorChannel = colorChannel;
+            tileMap.Layers = array;
+            tileMap.width = w;
+            tileMap.height = h;
+            tileMap.partitionSizeX = partitionSizeX;
+            tileMap.partitionSizeY = partitionSizeY;
+            tileMap.ForceBuild();
+        }
+
+        // Modified for future use but not currently required for Runtime room generation as nothing else in this class uses this as is.
+        public static GameObject ApplyObjectStamp(int ix, int iy, ObjectStampData osd, Dungeon d, tk2dTileMap map, bool flipX = false, bool isLightStamp = false)
+        {
+            try
+            {
+                DungeonTileStampData.StampSpace occupySpace = osd.occupySpace;
+                for (int i = 0; i < osd.width; i++)
+                {
+                    for (int j = 0; j < osd.height; j++)
+                    {
+                        CellData cellData = d.data.cellData[ix + i][iy + j];
+                        CellVisualData cellVisualData = cellData.cellVisualData;
+                        if (cellVisualData.forcedMatchingStyle != DungeonTileStampData.IntermediaryMatchingStyle.ANY && cellVisualData.forcedMatchingStyle != osd.intermediaryMatchingStyle)
+                        {
+                            return null;
+                        }
+                        if (osd.placementRule != DungeonTileStampData.StampPlacementRule.ALONG_LEFT_WALLS || !isLightStamp)
+                        {
+                            bool flag = cellVisualData.containsWallSpaceStamp;
+                            if (cellVisualData.facewallGridPreventsWallSpaceStamp && isLightStamp) { flag = false; }
+                            if (occupySpace == DungeonTileStampData.StampSpace.BOTH_SPACES)
+                            {
+                                if (cellVisualData.containsObjectSpaceStamp || flag || (!isLightStamp && cellVisualData.containsLight)) { return null; }
+                                if (cellData.type == CellType.PIT) { return null; }
+                            }
+                            else if (occupySpace == DungeonTileStampData.StampSpace.OBJECT_SPACE)
+                            {
+                                if (cellVisualData.containsObjectSpaceStamp) { return null; }
+                                if (cellData.type == CellType.PIT) { return null; }
+                            }
+                            else if (occupySpace == DungeonTileStampData.StampSpace.WALL_SPACE && (flag || (!isLightStamp && cellVisualData.containsLight)))
+                            {
+                                return null;
+                            }
+                        }
+                    }
+                }
+                int num = (occupySpace != DungeonTileStampData.StampSpace.OBJECT_SPACE) ? GlobalDungeonData.wallStampLayerIndex : GlobalDungeonData.objectStampLayerIndex;
+                float z = map.data.Layers[num].z;
+                if (!osd.objectReference) { return null; }
+                Vector3 vector = osd.objectReference.transform.position;
+                ObjectStampOptions component = osd.objectReference.GetComponent<ObjectStampOptions>();
+                if (component != null) { vector = component.GetPositionOffset(); }
+                GameObject gameObject = UnityEngine.Object.Instantiate(osd.objectReference);
+                gameObject.transform.position = new Vector3(ix, iy, z) + vector;
+                if (!isLightStamp && osd.placementRule == DungeonTileStampData.StampPlacementRule.ALONG_LEFT_WALLS)
+                {
+                    gameObject.transform.position = new Vector3((ix + 1), iy, z) + vector.WithX(-vector.x);
+                }
+                tk2dSprite component2 = gameObject.GetComponent<tk2dSprite>();
+                RoomHandler absoluteRoomFromPosition = GameManager.Instance.Dungeon.data.GetAbsoluteRoomFromPosition(new IntVector2(ix, iy));
+                MinorBreakable componentInChildren = gameObject.GetComponentInChildren<MinorBreakable>();
+                if (componentInChildren)
+                {
+                    if (osd.placementRule == DungeonTileStampData.StampPlacementRule.ON_ANY_FLOOR)
+                    {
+                        componentInChildren.IgnoredForPotShotsModifier = true;
+                    }
+                    componentInChildren.IsDecorativeOnly = true;
+                }
+                IPlaceConfigurable @interface = gameObject.GetInterface<IPlaceConfigurable>();
+                if (@interface != null) { @interface.ConfigureOnPlacement(absoluteRoomFromPosition); }
+                SurfaceDecorator component3 = gameObject.GetComponent<SurfaceDecorator>();
+                if (component3 != null) { component3.Decorate(absoluteRoomFromPosition); }
+                if (flipX)
+                {
+                    if (component2 != null)
+                    {
+                        component2.FlipX = true;
+                        float x = Mathf.Ceil(component2.GetBounds().size.x);
+                        gameObject.transform.position = gameObject.transform.position + new Vector3(x, 0f, 0f);
+                    }
+                    else
+                    {
+                        gameObject.transform.localScale = Vector3.Scale(gameObject.transform.localScale, new Vector3(-1f, 1f, 1f));
+                    }
+                }
+                gameObject.transform.parent = ((absoluteRoomFromPosition == null) ? null : absoluteRoomFromPosition.hierarchyParent);
+                DepthLookupManager.ProcessRenderer(gameObject.GetComponentInChildren<Renderer>());
+                if (component2 != null) { component2.UpdateZDepth(); }
+                for (int k = 0; k < osd.width; k++)
+                {
+                    for (int l = 0; l < osd.height; l++)
+                    {
+                        CellVisualData cellVisualData2 = d.data.cellData[ix + k][iy + l].cellVisualData;
+                        if (occupySpace == DungeonTileStampData.StampSpace.OBJECT_SPACE)
+                        {
+                            cellVisualData2.containsObjectSpaceStamp = true;
+                        }
+                        if (occupySpace == DungeonTileStampData.StampSpace.WALL_SPACE)
+                        {
+                            cellVisualData2.containsWallSpaceStamp = true;
+                        }
+                        if (occupySpace == DungeonTileStampData.StampSpace.BOTH_SPACES)
+                        {
+                            cellVisualData2.containsObjectSpaceStamp = true;
+                            cellVisualData2.containsWallSpaceStamp = true;
+                        }
+                    }
+                }
+                return gameObject;
+            }
+            catch (Exception ex)
+            {
+                Debug.LogException(ex);
+
+                return null;
+            }
+        }
+
+        public void ApplyTileStamp(int ix, int iy, TileStampData tsd, Dungeon d, Dungeon d2, tk2dTileMap map, int overrideTileLayerIndex = -1)
+        {
+            DungeonTileStampData.StampSpace occupySpace = tsd.occupySpace;
+            for (int i = 0; i < tsd.width; i++)
+            {
+                for (int j = 0; j < tsd.height; j++)
+                {
+                    CellVisualData cellVisualData = d.data.cellData[ix + i][iy + j].cellVisualData;
+                    if (occupySpace == DungeonTileStampData.StampSpace.BOTH_SPACES)
+                    {
+                        if (cellVisualData.containsObjectSpaceStamp || cellVisualData.containsWallSpaceStamp || cellVisualData.containsLight) { return; }
+                    }
+                    else if (occupySpace == DungeonTileStampData.StampSpace.OBJECT_SPACE)
+                    {
+                        if (d2.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.FORGEGEON)
+                        {
+                            if (cellVisualData.containsObjectSpaceStamp || cellVisualData.containsLight) { return; }
+                        }
+                        else if (cellVisualData.containsObjectSpaceStamp)
+                        {
+                            return;
+                        }
+                    }
+                    else if (occupySpace == DungeonTileStampData.StampSpace.WALL_SPACE && (cellVisualData.containsWallSpaceStamp || cellVisualData.containsLight))
+                    {
+                        return;
+                    }
+                }
+            }
+            for (int k = 0; k < tsd.width; k++)
+            {
+                for (int l = 0; l < tsd.height; l++)
+                {
+                    CellData cellData = d.data.cellData[ix + k][iy + l];
+                    CellVisualData cellVisualData2 = cellData.cellVisualData;
+                    int num = (occupySpace != DungeonTileStampData.StampSpace.OBJECT_SPACE) ? GlobalDungeonData.wallStampLayerIndex : GlobalDungeonData.objectStampLayerIndex;
+                    if (d.data.isFaceWallHigher(ix + k, iy + l - 1)) { num = GlobalDungeonData.aboveBorderLayerIndex; }
+                    if (!d.data.isAnyFaceWall(ix + k, iy + l) && d.data.cellData[ix + k][iy + l].type == CellType.WALL)
+                    {
+                        num = GlobalDungeonData.aboveBorderLayerIndex;
+                    }
+                    if (overrideTileLayerIndex != -1) { num = overrideTileLayerIndex; }
+                    map.Layers[num].SetTile(cellData.positionInTilemap.x, cellData.positionInTilemap.y, tsd.stampTileIndices[(tsd.height - 1 - l) * tsd.width + k]);
+                    if (occupySpace == DungeonTileStampData.StampSpace.OBJECT_SPACE) { cellVisualData2.containsObjectSpaceStamp = true; }
+                    if (occupySpace == DungeonTileStampData.StampSpace.WALL_SPACE) { cellVisualData2.containsWallSpaceStamp = true; }
+                    if (occupySpace == DungeonTileStampData.StampSpace.BOTH_SPACES)
+                    {
+                        cellVisualData2.containsObjectSpaceStamp = true;
+                        cellVisualData2.containsWallSpaceStamp = true;
+                    }
+                }
+            }
+        }
+
+        public void ApplyStampGeneric(int ix, int iy, StampDataBase sd, Dungeon d, Dungeon d2, tk2dTileMap map, bool flipX = false, int overrideTileLayerIndex = -1)
+        {
+            if (sd is TileStampData)
+            {
+                ApplyTileStamp(ix, iy, sd as TileStampData, d, d2, map, overrideTileLayerIndex);
+            }
+            else if (sd is SpriteStampData)
+            {
+                ApplySpriteStamp(ix, iy, sd as SpriteStampData, d, map);
+            }
+            else if (sd is ObjectStampData)
+            {
+                ApplyObjectStamp(ix, iy, sd as ObjectStampData, d, map, flipX, false);
+            }
+        }
+
+        public void ApplySpriteStamp(int ix, int iy, SpriteStampData ssd, Dungeon d, tk2dTileMap map)
+        {
+            DungeonTileStampData.StampSpace occupySpace = ssd.occupySpace;
+            for (int i = 0; i < ssd.width; i++)
+            {
+                for (int j = 0; j < ssd.height; j++)
+                {
+                    CellVisualData cellVisualData = d.data.cellData[ix + i][iy + j].cellVisualData;
+                    if (occupySpace == DungeonTileStampData.StampSpace.BOTH_SPACES)
+                    {
+                        if (cellVisualData.containsObjectSpaceStamp || cellVisualData.containsWallSpaceStamp) { return; }
+                    }
+                    else if (occupySpace == DungeonTileStampData.StampSpace.OBJECT_SPACE)
+                    {
+                        if (cellVisualData.containsObjectSpaceStamp) { return; }
+                    }
+                    else if (occupySpace == DungeonTileStampData.StampSpace.WALL_SPACE && cellVisualData.containsWallSpaceStamp)
+                    {
+                        return;
+                    }
+                }
+            }
+            int num = (occupySpace != DungeonTileStampData.StampSpace.OBJECT_SPACE) ? GlobalDungeonData.wallStampLayerIndex : GlobalDungeonData.objectStampLayerIndex;
+            float z = map.data.Layers[num].z;
+            SpriteRenderer spriteRenderer = new GameObject(ssd.spriteReference.name) { transform = { position = new Vector3(ix, iy, z) } }.AddComponent<SpriteRenderer>();
+            spriteRenderer.sprite = ssd.spriteReference;
+            DepthLookupManager.ProcessRenderer(spriteRenderer);
+            for (int k = 0; k < ssd.width; k++)
+            {
+                for (int l = 0; l < ssd.height; l++)
+                {
+                    CellVisualData cellVisualData2 = d.data.cellData[ix + k][iy + l].cellVisualData;
+                    if (occupySpace == DungeonTileStampData.StampSpace.OBJECT_SPACE)
+                    {
+                        cellVisualData2.containsObjectSpaceStamp = true;
+                    }
+                    if (occupySpace == DungeonTileStampData.StampSpace.WALL_SPACE)
+                    {
+                        cellVisualData2.containsWallSpaceStamp = true;
+                    }
+                    if (occupySpace == DungeonTileStampData.StampSpace.BOTH_SPACES)
+                    {
+                        cellVisualData2.containsObjectSpaceStamp = true;
+                        cellVisualData2.containsWallSpaceStamp = true;
+                    }
+                }
+            }
+        }
+
+
 
         public TileIndices m_tileIndices;
 
@@ -24,9 +303,9 @@ namespace Planetside
         {
             if (m_metadataLookupTable[flagType] == null) { return false; }
             List<Tuple<int, TilesetIndexMetadata>> list = m_metadataLookupTable[flagType];
-            for (int i = 0; i < list.Count; i++)
+            foreach (Tuple<int, TilesetIndexMetadata> Metadata in list)
             {
-                if (list[i].Second.dungeonRoomSubType == roomType || list[i].Second.secondRoomSubType == roomType || list[i].Second.thirdRoomSubType == roomType)
+                if (Metadata.Second.dungeonRoomSubType == roomType || Metadata.Second.secondRoomSubType == roomType || Metadata.Second.thirdRoomSubType == roomType)
                 {
                     return true;
                 }
@@ -38,13 +317,14 @@ namespace Planetside
         {
             m_metadataLookupTable = new Dictionary<TilesetIndexMetadata.TilesetFlagType, List<Tuple<int, TilesetIndexMetadata>>>();
             TilesetIndexMetadata.TilesetFlagType[] array = (TilesetIndexMetadata.TilesetFlagType[])Enum.GetValues(typeof(TilesetIndexMetadata.TilesetFlagType));
-            for (int i = 0; i < array.Length; i++)
+            foreach (TilesetIndexMetadata.TilesetFlagType flagType in array)
             {
-                m_metadataLookupTable.Add(array[i], indices.dungeonCollection.GetIndicesForTileType(array[i]));
+                m_metadataLookupTable.Add(flagType, indices.dungeonCollection.GetIndicesForTileType(flagType));
             }
             SecretRoomUtility.metadataLookupTableRef = m_metadataLookupTable;
             m_tileIndices = indices;
         }
+
 
         public void BuildTileIndicesForCell(Dungeon d, Dungeon d2, tk2dTileMap map, int ix, int iy)
         {
@@ -61,7 +341,7 @@ namespace Planetside
             {
                 if (cellData.nearestRoom.DrawPrecludedCeilingTiles)
                 {
-                    BuildCollisionIndex(cellData, d, d, map, ix, iy);
+                    BuildCollisionIndex(cellData, d, d2, map, ix, iy);
                     BuildBorderIndicesForCell(cellData, d, d2, map, ix, iy);
                 }
                 cellData.cellVisualData.precludeAllTileDrawing = true;
@@ -71,7 +351,7 @@ namespace Planetside
             {
                 if (cellData.parentRoom.DrawPrecludedCeilingTiles)
                 {
-                    BuildCollisionIndex(cellData, d, d, map, ix, iy);
+                    BuildCollisionIndex(cellData, d, d2, map, ix, iy);
                     BuildBorderIndicesForCell(cellData, d, d2, map, ix, iy);
                 }
                 cellData.cellVisualData.precludeAllTileDrawing = true;
@@ -88,7 +368,9 @@ namespace Planetside
             BuildDecoIndices(cellData, d, d2, map, ix, iy);
             if (flag2) { BuildFloorEdgeBorderTiles(cellData, d, d2, map, ix, iy); }
             BuildFeatureEdgeBorderTiles(cellData, d, d2, map, ix, iy);
-            BuildCollisionIndex(cellData, d, d, map, ix, iy);
+
+            BuildCollisionIndex(cellData, d, d2, map, ix, iy);
+
             if (BCheck(d, ix, iy, -2)) { ProcessFacewallIndices(cellData, d, d2, map, ix, iy); }
             BuildBorderIndicesForCell(cellData, d, d2, map, ix, iy);
 
@@ -107,7 +389,7 @@ namespace Planetside
 
             int num = (pitBorderType != PrototypeRoomPitEntry.PitBorderType.RAISED) ? GlobalDungeonData.patternLayerIndex : GlobalDungeonData.actorCollisionLayerIndex;
             int num2 = num;
-            bool walls_ARE_PITS = GameManager.Instance.Dungeon.debugSettings.WALLS_ARE_PITS;
+            bool walls_ARE_PITS = d.debugSettings.WALLS_ARE_PITS;
             if (cellData.type == CellType.FLOOR)
             {
                 if (d2.tileIndices.tilesetId != GlobalDungeonData.ValidTilesets.WESTGEON && d2.tileIndices.tilesetId != GlobalDungeonData.ValidTilesets.FINALGEON)
@@ -160,12 +442,20 @@ namespace Planetside
             }
             if (d2.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.JUNGLEGEON)
             {
-                BuildOcclusionLayerCenterJungle(cellData, d, map, ix, iy);
+                try
+                {
+                    BuildOcclusionLayerCenterJungle(cellData, d, map, ix, iy);
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogException(ex);
+                }
             }
             if (cellData.distanceFromNearestRoom < 4f && cellData.nearestRoom.area.PrototypeLostWoodsRoom)
             {
                 HandleLostWoodsMirroring(cellData, d, map, ix, iy);
             }
+
             cellData.hasBeenGenerated = true;
         }
 
@@ -212,10 +502,7 @@ namespace Planetside
 
         private void BuildFloorEdgeBorderTiles(CellData current, Dungeon d, Dungeon d2, tk2dTileMap map, int ix, int iy)
         {
-            if (current.type != CellType.FLOOR && !d.data.isFaceWallLower(ix, iy))
-            {
-                return;
-            }
+            if (current.type != CellType.FLOOR && !d.data.isFaceWallLower(ix, iy)) { return; }
             TileIndexGrid tileIndexGrid = d2.roomMaterialDefinitions[current.cellVisualData.roomVisualTypeIndex].roomFloorBorderGrid;
             if (d2.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.WESTGEON && current.cellVisualData.IsFacewallForInteriorTransition)
             {
@@ -273,14 +560,8 @@ namespace Planetside
 
         private void BuildOcclusionPartitionIndex(CellData current, Dungeon d, Dungeon d2, tk2dTileMap map, int ix, int iy)
         {
-            if (current == null)
-            {
-                return;
-            }
-            if (current.cellVisualData.ceilingHasBeenProcessed || current.cellVisualData.occlusionHasBeenProcessed)
-            {
-                return;
-            }
+            if (current == null) { return; }
+            if (current.cellVisualData.ceilingHasBeenProcessed || current.cellVisualData.occlusionHasBeenProcessed) { return; }
             int num = -1;
             TileIndexGrid typeBorderGridForBorderIndex = GetTypeBorderGridForBorderIndex(current, d, d2, out num);
             if (typeBorderGridForBorderIndex != null)
@@ -293,27 +574,18 @@ namespace Planetside
                     if (cellNeighbors[i] != null)
                     {
                         GetTypeBorderGridForBorderIndex(cellNeighbors[i], d, d2, out num2);
-                        if (d2.tileIndices.tilesetId != GlobalDungeonData.ValidTilesets.WESTGEON || num2 == 0 || num == 0)
-                        {
-                            array[i] = (num != num2);
-                        }
+                        if (d2.tileIndices.tilesetId != GlobalDungeonData.ValidTilesets.WESTGEON || num2 == 0 || num == 0) { array[i] = (num != num2); }
                     }
                 }
                 int num3 = typeBorderGridForBorderIndex.GetIndexGivenEightSides(array);
-                if (num3 == -1)
-                {
-                    num3 = typeBorderGridForBorderIndex.centerIndices.GetIndexByWeight();
-                }
+                if (num3 == -1) { num3 = typeBorderGridForBorderIndex.centerIndices.GetIndexByWeight(); }
                 map.SetTile(current.positionInTilemap.x, current.positionInTilemap.y, GlobalDungeonData.occlusionPartitionIndex, num3);
             }
         }
 
         private void BuildBorderIndex(CellData current, Dungeon d, Dungeon d2, tk2dTileMap map, int ix, int iy)
         {
-            if (current.cellVisualData.ceilingHasBeenProcessed)
-            {
-                return;
-            }
+            if (current.cellVisualData.ceilingHasBeenProcessed) { return; }
             bool flag = d.data[ix, iy + 1] != null && d.data[ix, iy + 1].diagonalWallType != DiagonalWallType.NONE && (d.data[ix, iy + 1].IsTopWall() || d.data[ix, iy + 1].type == CellType.WALL);
             bool flag2 = d.data[ix + 1, iy] != null && d.data[ix + 1, iy].diagonalWallType != DiagonalWallType.NONE && (d.data[ix + 1, iy].IsTopWall() || d.data[ix + 1, iy].type == CellType.WALL);
             bool flag3 = d.data[ix, iy - 1] != null && d.data[ix, iy - 1].diagonalWallType != DiagonalWallType.NONE && (d.data[ix, iy - 1].IsTopWall() || d.data[ix, iy - 1].type == CellType.WALL);
@@ -400,10 +672,7 @@ namespace Planetside
                 else if (typeBorderGridForBorderIndex.UsesRatChunkBorders)
                 {
                     bool flag13 = iy > 3;
-                    if (flag13)
-                    {
-                        flag13 = !d.data[ix, iy - 1].HasFloorNeighbor(d.data, false, true);
-                    }
+                    if (flag13) { flag13 = !d.data[ix, iy - 1].HasFloorNeighbor(d.data, false, true); }
                     TileIndexGrid.RatChunkResult ratChunkResult = TileIndexGrid.RatChunkResult.NONE;
                     if (d.data[ix, iy].nearestRoom.area.PrototypeLostWoodsRoom)
                     {
@@ -413,10 +682,7 @@ namespace Planetside
                     {
                         num = typeBorderGridForBorderIndex.GetRatChunkIndexGivenSides(flag5, flag9, flag6, flag11, flag7, flag12, flag8, flag10, flag13, out ratChunkResult);
                     }
-                    if (ratChunkResult == TileIndexGrid.RatChunkResult.CORNER)
-                    {
-                        HandleRatChunkOverhangs(d, ix, iy, map);
-                    }
+                    if (ratChunkResult == TileIndexGrid.RatChunkResult.CORNER) { HandleRatChunkOverhangs(d, ix, iy, map); }
                 }
                 else
                 {
@@ -428,10 +694,7 @@ namespace Planetside
                 switch (current.diagonalWallType)
                 {
                     case DiagonalWallType.NORTHEAST:
-                        if (flag7 && flag8)
-                        {
-                            num = typeBorderGridForBorderIndex.diagonalBorderNE.GetIndexByWeight();
-                        }
+                        if (flag7 && flag8) { num = typeBorderGridForBorderIndex.diagonalBorderNE.GetIndexByWeight(); }
                         break;
                     case DiagonalWallType.SOUTHEAST:
                         if (flag5 && flag8)
@@ -454,10 +717,7 @@ namespace Planetside
                         }
                         break;
                     case DiagonalWallType.NORTHWEST:
-                        if (flag7 && flag6)
-                        {
-                            num = typeBorderGridForBorderIndex.diagonalBorderNW.GetIndexByWeight();
-                        }
+                        if (flag7 && flag6) { num = typeBorderGridForBorderIndex.diagonalBorderNW.GetIndexByWeight(); }
                         break;
                 }
             }
@@ -508,10 +768,7 @@ namespace Planetside
                     DiagonalWallType diagonalWallType2 = current.diagonalWallType;
                     if (diagonalWallType2 != DiagonalWallType.NORTHEAST)
                     {
-                        if (diagonalWallType2 == DiagonalWallType.NORTHWEST)
-                        {
-                            num5 = typeBorderGridForBorderIndex2.diagonalCeilingNW.GetIndexByWeight();
-                        }
+                        if (diagonalWallType2 == DiagonalWallType.NORTHWEST) { num5 = typeBorderGridForBorderIndex2.diagonalCeilingNW.GetIndexByWeight(); }
                     }
                     else
                     {
@@ -540,30 +797,24 @@ namespace Planetside
             }
         }
 
-        private void BuildCollisionIndex(CellData current, Dungeon d, Dungeon d2, tk2dTileMap map, int ix, int iy)
+        public void BuildCollisionIndex(CellData current, Dungeon d, Dungeon d2, tk2dTileMap map, int ix, int iy)
         {
             if (current.type == CellType.WALL && (iy < 2 || !d.data.isFaceWallLower(ix, iy)) && !d.data.isTopDiagonalWall(ix, iy))
             {
-                TileIndexGrid roomCeilingBorderGrid = d2.roomMaterialDefinitions[current.cellVisualData.roomVisualTypeIndex].roomCeilingBorderGrid;
-                if ((d2.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.WESTGEON || d2.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.OFFICEGEON) && current.nearestRoom != null)
+                TileIndexGrid roomCeilingBorderGrid = d.roomMaterialDefinitions[current.cellVisualData.roomVisualTypeIndex].roomCeilingBorderGrid;
+                if ((d.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.WESTGEON || d.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.OFFICEGEON) && current.nearestRoom != null)
                 {
-                    roomCeilingBorderGrid = d2.roomMaterialDefinitions[current.nearestRoom.RoomVisualSubtype].roomCeilingBorderGrid;
+                    roomCeilingBorderGrid = d.roomMaterialDefinitions[current.nearestRoom.RoomVisualSubtype].roomCeilingBorderGrid;
                 }
-                if (roomCeilingBorderGrid == null) { roomCeilingBorderGrid = d2.roomMaterialDefinitions[0].roomCeilingBorderGrid; }
+                if (roomCeilingBorderGrid == null) { roomCeilingBorderGrid = d.roomMaterialDefinitions[0].roomCeilingBorderGrid; }
                 map.Layers[GlobalDungeonData.collisionLayerIndex].SetTile(current.positionInTilemap.x, current.positionInTilemap.y, roomCeilingBorderGrid.centerIndices.indices[0]);
             }
         }
 
         private void BuildPitShadowIndex(CellData current, Dungeon d, Dungeon d2, tk2dTileMap map, int ix, int iy)
         {
-            if (!d2.roomMaterialDefinitions[current.cellVisualData.roomVisualTypeIndex].doPitAO)
-            {
-                return;
-            }
-            if (current != null && current.cellVisualData.hasStampedPath)
-            {
-                return;
-            }
+            if (!d2.roomMaterialDefinitions[current.cellVisualData.roomVisualTypeIndex].doPitAO) { return; }
+            if (current != null && current.cellVisualData.hasStampedPath) { return; }
             int floorLayerIndex = GlobalDungeonData.floorLayerIndex;
             if (BCheck(d, ix, iy, -2))
             {
@@ -674,7 +925,21 @@ namespace Planetside
 
         private TileIndexGrid GetTypeBorderGridForBorderIndex(CellData current, Dungeon d, Dungeon d2, out int usedVisualType)
         {
-            TileIndexGrid roomCeilingBorderGrid = d2.roomMaterialDefinitions[current.cellVisualData.roomVisualTypeIndex].roomCeilingBorderGrid;
+            TileIndexGrid roomCeilingBorderGrid;
+
+            try
+            {
+                roomCeilingBorderGrid = d2.roomMaterialDefinitions[current.cellVisualData.roomVisualTypeIndex].roomCeilingBorderGrid;
+            }
+            catch (Exception ex)
+            {
+                Debug.Log("[Planetside] [WARNING] Exception caught in ExpandTK2DDungeonAssembler.GetTypeBorderGridForBorderIndex !");
+                Debug.LogException(ex);
+                roomCeilingBorderGrid = null;
+                usedVisualType = 0;
+                return null;
+            }
+
             usedVisualType = current.cellVisualData.roomVisualTypeIndex;
             if (d2.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.WESTGEON)
             {
@@ -715,64 +980,31 @@ namespace Planetside
             {
                 bool flag = true;
                 TileIndexGrid randomGridFromArray = d2.roomMaterialDefinitions[current.cellVisualData.roomVisualTypeIndex].GetRandomGridFromArray(d2.roomMaterialDefinitions[current.cellVisualData.roomVisualTypeIndex].floorSquares);
-                if (randomGridFromArray == null)
-                {
-                    flag = false;
-                }
+                if (randomGridFromArray == null) { flag = false; }
                 if (flag)
                 {
                     for (int i = 0; i < 3; i++)
                     {
                         for (int j = 0; j < 3; j++)
                         {
-                            if (!BCheck(d, ix + i, iy + j))
-                            {
-                                flag = false;
-                            }
-                            if (d.data.isWall(ix + i, iy + j) || d.data.isAnyFaceWall(ix + i, iy + j))
-                            {
-                                flag = false;
-                            }
+                            if (!BCheck(d, ix + i, iy + j)) { flag = false; }
+                            if (d.data.isWall(ix + i, iy + j) || d.data.isAnyFaceWall(ix + i, iy + j)) { flag = false; }
                             CellData cellData = d.data.cellData[ix + i][iy + j];
-                            if (cellData.HasWallNeighbor(true, false) || cellData.HasPitNeighbor(d.data))
-                            {
-                                flag = false;
-                            }
-                            if (cellData.cellVisualData.roomVisualTypeIndex != current.cellVisualData.roomVisualTypeIndex)
-                            {
-                                flag = false;
-                            }
-                            if (cellData.cellVisualData.inheritedOverrideIndex != -1)
-                            {
-                                flag = false;
-                            }
-                            if (cellData.cellVisualData.floorType == CellVisualData.CellFloorType.Ice)
-                            {
-                                flag = false;
-                            }
-                            if (cellData.doesDamage)
-                            {
-                                flag = false;
-                            }
-                            if (!flag)
-                            {
-                                break;
-                            }
+                            if (cellData.HasWallNeighbor(true, false) || cellData.HasPitNeighbor(d.data)) { flag = false; }
+                            if (cellData.cellVisualData.roomVisualTypeIndex != current.cellVisualData.roomVisualTypeIndex) { flag = false; }
+                            if (cellData.cellVisualData.inheritedOverrideIndex != -1) { flag = false; }
+                            if (cellData.cellVisualData.floorType == CellVisualData.CellFloorType.Ice) { flag = false; }
+                            if (cellData.doesDamage) { flag = false; }
+                            if (!flag) { break; }
                         }
-                        if (!flag)
-                        {
-                            break;
-                        }
+                        if (!flag) { break; }
                     }
                 }
                 if (flag && current.UniqueHash < d2.roomMaterialDefinitions[current.cellVisualData.roomVisualTypeIndex].floorSquareDensity)
                 {
                     TileIndexGrid tileIndexGrid = randomGridFromArray;
                     int num = (current.UniqueHash >= 0.025f) ? 3 : 2;
-                    if (tileIndexGrid.topIndices.indices[0] == -1)
-                    {
-                        num = 2;
-                    }
+                    if (tileIndexGrid.topIndices.indices[0] == -1) { num = 2; }
                     for (int k = 0; k < num; k++)
                     {
                         for (int l = 0; l < num; l++)
@@ -863,10 +1095,7 @@ namespace Planetside
             {
                 DungeonDoorController dungeonDoorController = null;
                 IntVector2 key = new IntVector2(ix, iy);
-                if (d.data.doors.ContainsKey(key))
-                {
-                    dungeonDoorController = d.data.doors[key];
-                }
+                if (d.data.doors.ContainsKey(key)) { dungeonDoorController = d.data.doors[key]; }
                 if (d.data[ix, iy].cellVisualData.doorFeetOverrideMode == 1 || (dungeonDoorController != null && dungeonDoorController.northSouth))
                 {
                     int tile2 = -1;
@@ -889,10 +1118,7 @@ namespace Planetside
             if ((current.type == CellType.FLOOR || current.IsLowerFaceWall()) && !d.data.isTopWall(ix, iy) && !current.cellVisualData.floorTileOverridden && current.cellVisualData.inheritedOverrideIndex == -1)
             {
                 DungeonMaterial dungeonMaterial = d2.roomMaterialDefinitions[current.cellVisualData.roomVisualTypeIndex];
-                if (current.HasPitNeighbor(d.data))
-                {
-                    return;
-                }
+                if (current.HasPitNeighbor(d.data)) { return; }
                 if (current.cellVisualData.isPattern)
                 {
                     List<CellData> cellNeighbors = d.data.GetCellNeighbors(current, true);
@@ -1049,10 +1275,7 @@ namespace Planetside
                 bool flag14 = cellNeighbors3[5] != null && (cellNeighbors3[5].type == CellType.PIT || cellNeighbors3[5].cellVisualData.RequiresPitBordering);
                 bool flag15 = cellNeighbors3[6] != null && (cellNeighbors3[6].type == CellType.PIT || cellNeighbors3[6].cellVisualData.RequiresPitBordering);
                 bool flag16 = cellNeighbors3[7] != null && (cellNeighbors3[7].type == CellType.PIT || cellNeighbors3[7].cellVisualData.RequiresPitBordering);
-                if (!flag9 && !flag10 && !flag11 && !flag12 && !flag13 && !flag14 && !flag15 && !flag16)
-                {
-                    return;
-                }
+                if (!flag9 && !flag10 && !flag11 && !flag12 && !flag13 && !flag14 && !flag15 && !flag16) { return; }
                 int indexGivenSides2 = borderGrid.GetIndexGivenSides(flag9, flag10, flag11, flag12, flag13, flag14, flag15, flag16);
                 if (borderGrid.PitBorderOverridesFloorTile)
                 {
@@ -1065,10 +1288,7 @@ namespace Planetside
                 if (borderGrid.PitBorderOverridesFloorTile)
                 {
                     TileIndexGrid pitLayoutGrid = d2.roomMaterialDefinitions[cell.cellVisualData.roomVisualTypeIndex].pitLayoutGrid;
-                    if (pitLayoutGrid == null)
-                    {
-                        pitLayoutGrid = d2.roomMaterialDefinitions[0].pitLayoutGrid;
-                    }
+                    if (pitLayoutGrid == null) { pitLayoutGrid = d2.roomMaterialDefinitions[0].pitLayoutGrid; }
                     tileMap.Layers[GlobalDungeonData.pitLayerIndex].SetTile(cell.positionInTilemap.x, cell.positionInTilemap.y, pitLayoutGrid.centerIndices.GetIndexByWeight());
                 }
             }
@@ -1133,15 +1353,22 @@ namespace Planetside
                 List<IndexNeighborDependency> dependencies = d2.tileIndices.dungeonCollection.GetDependencies(current.cellVisualData.faceWallOverrideIndex);
                 if (dependencies != null && dependencies.Count > 0 && current.IsUpperFacewall())
                 {
-                    for (int j = 0; j < dependencies.Count; j++)
+                    foreach (IndexNeighborDependency dependency in dependencies)
                     {
-                        if (dependencies[j].neighborDirection == DungeonData.Direction.NORTH)
+                        if (dependency.neighborDirection == DungeonData.Direction.NORTH)
                         {
+                            d.data.cellData[ix][iy + 1].cellVisualData.UsesCustomIndexOverride01 = true;
+                            d.data.cellData[ix][iy + 1].cellVisualData.CustomIndexOverride01 = dependency.neighborIndex;
+                            d.data.cellData[ix][iy + 1].cellVisualData.CustomIndexOverride01Layer = GlobalDungeonData.borderLayerIndex;
+                        }
+                    }
+                    /*for (int j = 0; j < dependencies.Count; j++) {
+                        if (dependencies[j].neighborDirection == DungeonData.Direction.NORTH) {
                             d.data.cellData[ix][iy + 1].cellVisualData.UsesCustomIndexOverride01 = true;
                             d.data.cellData[ix][iy + 1].cellVisualData.CustomIndexOverride01 = dependencies[j].neighborIndex;
                             d.data.cellData[ix][iy + 1].cellVisualData.CustomIndexOverride01Layer = GlobalDungeonData.borderLayerIndex;
                         }
-                    }
+                    }*/
                 }
                 map.Layers[GlobalDungeonData.collisionLayerIndex].SetTile(current.positionInTilemap.x, current.positionInTilemap.y, current.cellVisualData.faceWallOverrideIndex);
             }
@@ -1260,226 +1487,192 @@ namespace Planetside
             }
         }
 
-
-
-        // Modified for future use but not currently required for Runtime room generation as nothing else in this class uses this as is.
-        public void ApplyTileStamp(int ix, int iy, TileStampData tsd, Dungeon d, Dungeon d2, tk2dTileMap map, int overrideTileLayerIndex = -1)
+        private void BuildOcclusionLayerCenterJungle(CellData current, Dungeon d, tk2dTileMap map, int ix, int iy)
         {
-            DungeonTileStampData.StampSpace occupySpace = tsd.occupySpace;
-            for (int i = 0; i < tsd.width; i++)
+            if (!IsValidJungleOcclusionCell(current, d, ix, iy)) { return; }
+
+            bool flag = true;
+            bool flag2 = true;
+            if (!BCheck(d, ix, iy))
             {
-                for (int j = 0; j < tsd.height; j++)
-                {
-                    CellVisualData cellVisualData = d.data.cellData[ix + i][iy + j].cellVisualData;
-                    if (occupySpace == DungeonTileStampData.StampSpace.BOTH_SPACES)
-                    {
-                        if (cellVisualData.containsObjectSpaceStamp || cellVisualData.containsWallSpaceStamp || cellVisualData.containsLight)
-                        {
-                            return;
-                        }
-                    }
-                    else if (occupySpace == DungeonTileStampData.StampSpace.OBJECT_SPACE)
-                    {
-                        if (d2.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.FORGEGEON)
-                        {
-                            if (cellVisualData.containsObjectSpaceStamp || cellVisualData.containsLight) { return; }
-                        }
-                        else if (cellVisualData.containsObjectSpaceStamp)
-                        {
-                            return;
-                        }
-                    }
-                    else if (occupySpace == DungeonTileStampData.StampSpace.WALL_SPACE && (cellVisualData.containsWallSpaceStamp || cellVisualData.containsLight))
-                    {
-                        return;
-                    }
-                }
+                flag = false;
+                flag2 = false;
             }
-            for (int k = 0; k < tsd.width; k++)
+            if (current.UniqueHash < 0.05f)
             {
-                for (int l = 0; l < tsd.height; l++)
-                {
-                    CellData cellData = d.data.cellData[ix + k][iy + l];
-                    CellVisualData cellVisualData2 = cellData.cellVisualData;
-                    int num = (occupySpace != DungeonTileStampData.StampSpace.OBJECT_SPACE) ? GlobalDungeonData.wallStampLayerIndex : GlobalDungeonData.objectStampLayerIndex;
-                    if (d.data.isFaceWallHigher(ix + k, iy + l - 1)) { num = GlobalDungeonData.aboveBorderLayerIndex; }
-                    if (!d.data.isAnyFaceWall(ix + k, iy + l) && d.data.cellData[ix + k][iy + l].type == CellType.WALL)
-                    {
-                        num = GlobalDungeonData.aboveBorderLayerIndex;
-                    }
-                    if (overrideTileLayerIndex != -1) { num = overrideTileLayerIndex; }
-                    map.Layers[num].SetTile(cellData.positionInTilemap.x, cellData.positionInTilemap.y, tsd.stampTileIndices[(tsd.height - 1 - l) * tsd.width + k]);
-                    if (occupySpace == DungeonTileStampData.StampSpace.OBJECT_SPACE) { cellVisualData2.containsObjectSpaceStamp = true; }
-                    if (occupySpace == DungeonTileStampData.StampSpace.WALL_SPACE) { cellVisualData2.containsWallSpaceStamp = true; }
-                    if (occupySpace == DungeonTileStampData.StampSpace.BOTH_SPACES)
-                    {
-                        cellVisualData2.containsObjectSpaceStamp = true;
-                        cellVisualData2.containsWallSpaceStamp = true;
-                    }
-                }
+                flag = false;
+                flag2 = false;
             }
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    if (!IsValidJungleOcclusionCell(d.data[ix + i, iy + j], d, ix + i, iy + j))
+                    {
+                        flag2 = false;
+                        if (i < 2 || j < 2) { flag = false; }
+                    }
+                    if (!flag2 && !flag) { break; }
+                }
+                if (!flag2 && !flag) { break; }
+            }
+            if (flag2 && current.UniqueHash < 0.75f)
+            {
+                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x, current.positionInTilemap.y, 352);
+                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x + 1, current.positionInTilemap.y, 353);
+                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x + 2, current.positionInTilemap.y, 354);
+                d.data[ix + 1, iy].cellVisualData.occlusionHasBeenProcessed = true;
+                d.data[ix + 2, iy].cellVisualData.occlusionHasBeenProcessed = true;
+                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x, current.positionInTilemap.y + 1, 330);
+                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x + 1, current.positionInTilemap.y + 1, 331);
+                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x + 2, current.positionInTilemap.y + 1, 332);
+                d.data[ix, iy + 1].cellVisualData.occlusionHasBeenProcessed = true;
+                d.data[ix + 1, iy + 1].cellVisualData.occlusionHasBeenProcessed = true;
+                d.data[ix + 2, iy + 1].cellVisualData.occlusionHasBeenProcessed = true;
+                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x, current.positionInTilemap.y + 2, 308);
+                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x + 1, current.positionInTilemap.y + 2, 309);
+                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x + 2, current.positionInTilemap.y + 2, 310);
+                d.data[ix, iy + 2].cellVisualData.occlusionHasBeenProcessed = true;
+                d.data[ix + 1, iy + 2].cellVisualData.occlusionHasBeenProcessed = true;
+                d.data[ix + 2, iy + 2].cellVisualData.occlusionHasBeenProcessed = true;
+            }
+            else if (flag)
+            {
+                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x, current.positionInTilemap.y, 418);
+                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x + 1, current.positionInTilemap.y, 419);
+                d.data[ix + 1, iy].cellVisualData.occlusionHasBeenProcessed = true;
+                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x, current.positionInTilemap.y + 1, 396);
+                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x + 1, current.positionInTilemap.y + 1, 397);
+                d.data[ix, iy + 1].cellVisualData.occlusionHasBeenProcessed = true;
+                d.data[ix + 1, iy + 1].cellVisualData.occlusionHasBeenProcessed = true;
+            }
+            else
+            {
+                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x, current.positionInTilemap.y, 374);
+            }
+            d.data[ix, iy].cellVisualData.occlusionHasBeenProcessed = true;
         }
 
-        public void ApplyStampGeneric(int ix, int iy, StampDataBase sd, Dungeon d, Dungeon d2, tk2dTileMap map, bool flipX = false, int overrideTileLayerIndex = -1)
+        private void BuildBorderLayerCenterJungle(CellData current, Dungeon d, tk2dTileMap map, int ix, int iy)
         {
-            if (sd is TileStampData)
+            if (!IsValidJungleBorderCell(current, d, ix, iy)) { return; }
+
+            bool flag = true;
+            bool flag2 = true;
+            if (!BCheck(d, ix, iy))
             {
-                ApplyTileStamp(ix, iy, sd as TileStampData, d, d2, map, overrideTileLayerIndex);
+                flag = false;
+                flag2 = false;
             }
-            else if (sd is SpriteStampData)
+            if (current.UniqueHash < 0.05f)
             {
-                ApplySpriteStamp(ix, iy, sd as SpriteStampData, d, map);
+                flag = false;
+                flag2 = false;
             }
-            else if (sd is ObjectStampData)
+            for (int i = 0; i < 3; i++)
             {
-                TK2DDungeonAssembler.ApplyObjectStamp(ix, iy, sd as ObjectStampData, d, map, flipX, false);
+                for (int j = 0; j < 3; j++)
+                {
+                    if (!IsValidJungleBorderCell(d.data[ix + i, iy + j], d, ix + i, iy + j))
+                    {
+                        flag2 = false;
+                        if (i < 2 || j < 2) { flag = false; }
+                    }
+                    if (!flag2 && !flag) { break; }
+                }
+                if (!flag2 && !flag) { break; }
             }
+            if (flag2 && current.UniqueHash < 0.75f)
+            {
+                map.Layers[GlobalDungeonData.borderLayerIndex].SetTile(current.positionInTilemap.x, current.positionInTilemap.y, 352);
+                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x, current.positionInTilemap.y, 352);
+                map.Layers[GlobalDungeonData.borderLayerIndex].SetTile(current.positionInTilemap.x + 1, current.positionInTilemap.y, 353);
+                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x + 1, current.positionInTilemap.y, 353);
+                map.Layers[GlobalDungeonData.borderLayerIndex].SetTile(current.positionInTilemap.x + 2, current.positionInTilemap.y, 354);
+                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x + 2, current.positionInTilemap.y, 354);
+                d.data[ix + 1, iy].cellVisualData.ceilingHasBeenProcessed = true;
+                d.data[ix + 2, iy].cellVisualData.ceilingHasBeenProcessed = true;
+                map.Layers[GlobalDungeonData.borderLayerIndex].SetTile(current.positionInTilemap.x, current.positionInTilemap.y + 1, 330);
+                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x, current.positionInTilemap.y + 1, 330);
+                map.Layers[GlobalDungeonData.borderLayerIndex].SetTile(current.positionInTilemap.x + 1, current.positionInTilemap.y + 1, 331);
+                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x + 1, current.positionInTilemap.y + 1, 331);
+                map.Layers[GlobalDungeonData.borderLayerIndex].SetTile(current.positionInTilemap.x + 2, current.positionInTilemap.y + 1, 332);
+                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x + 2, current.positionInTilemap.y + 1, 332);
+                d.data[ix, iy + 1].cellVisualData.ceilingHasBeenProcessed = true;
+                d.data[ix + 1, iy + 1].cellVisualData.ceilingHasBeenProcessed = true;
+                d.data[ix + 2, iy + 1].cellVisualData.ceilingHasBeenProcessed = true;
+                map.Layers[GlobalDungeonData.borderLayerIndex].SetTile(current.positionInTilemap.x, current.positionInTilemap.y + 2, 308);
+                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x, current.positionInTilemap.y + 2, 308);
+                map.Layers[GlobalDungeonData.borderLayerIndex].SetTile(current.positionInTilemap.x + 1, current.positionInTilemap.y + 2, 309);
+                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x + 1, current.positionInTilemap.y + 2, 309);
+                map.Layers[GlobalDungeonData.borderLayerIndex].SetTile(current.positionInTilemap.x + 2, current.positionInTilemap.y + 2, 310);
+                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x + 2, current.positionInTilemap.y + 2, 310);
+                d.data[ix, iy + 2].cellVisualData.ceilingHasBeenProcessed = true;
+                d.data[ix + 1, iy + 2].cellVisualData.ceilingHasBeenProcessed = true;
+                d.data[ix + 2, iy + 2].cellVisualData.ceilingHasBeenProcessed = true;
+            }
+            else if (flag)
+            {
+                map.Layers[GlobalDungeonData.borderLayerIndex].SetTile(current.positionInTilemap.x, current.positionInTilemap.y, 418);
+                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x, current.positionInTilemap.y, 418);
+                map.Layers[GlobalDungeonData.borderLayerIndex].SetTile(current.positionInTilemap.x + 1, current.positionInTilemap.y, 419);
+                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x + 1, current.positionInTilemap.y, 419);
+                d.data[ix + 1, iy].cellVisualData.ceilingHasBeenProcessed = true;
+                map.Layers[GlobalDungeonData.borderLayerIndex].SetTile(current.positionInTilemap.x, current.positionInTilemap.y + 1, 396);
+                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x, current.positionInTilemap.y + 1, 396);
+                map.Layers[GlobalDungeonData.borderLayerIndex].SetTile(current.positionInTilemap.x + 1, current.positionInTilemap.y + 1, 397);
+                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x + 1, current.positionInTilemap.y + 1, 397);
+                d.data[ix, iy + 1].cellVisualData.ceilingHasBeenProcessed = true;
+                d.data[ix + 1, iy + 1].cellVisualData.ceilingHasBeenProcessed = true;
+            }
+            else
+            {
+                map.Layers[GlobalDungeonData.borderLayerIndex].SetTile(current.positionInTilemap.x, current.positionInTilemap.y, 374);
+                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x, current.positionInTilemap.y, 374);
+            }
+            d.data[ix, iy].cellVisualData.ceilingHasBeenProcessed = true;
         }
 
-        public static GameObject ApplyObjectStamp(int ix, int iy, ObjectStampData osd, Dungeon d, tk2dTileMap map, bool flipX = false, bool isLightStamp = false)
+        private bool IsValidJungleBorderCell(CellData current, Dungeon d, int ix, int iy)
         {
-            DungeonTileStampData.StampSpace occupySpace = osd.occupySpace;
-            for (int i = 0; i < osd.width; i++)
+            bool IsValid = false;
+            try
             {
-                for (int j = 0; j < osd.height; j++)
-                {
-                    CellData cellData = d.data.cellData[ix + i][iy + j];
-                    CellVisualData cellVisualData = cellData.cellVisualData;
-                    if (cellVisualData.forcedMatchingStyle != DungeonTileStampData.IntermediaryMatchingStyle.ANY && cellVisualData.forcedMatchingStyle != osd.intermediaryMatchingStyle)
-                    {
-                        return null;
-                    }
-                    if (osd.placementRule != DungeonTileStampData.StampPlacementRule.ALONG_LEFT_WALLS || !isLightStamp)
-                    {
-                        bool flag = cellVisualData.containsWallSpaceStamp;
-                        if (cellVisualData.facewallGridPreventsWallSpaceStamp && isLightStamp)
-                        {
-                            flag = false;
-                        }
-                        if (occupySpace == DungeonTileStampData.StampSpace.BOTH_SPACES)
-                        {
-                            if (cellVisualData.containsObjectSpaceStamp || flag || (!isLightStamp && cellVisualData.containsLight))
-                            {
-                                return null;
-                            }
-                            if (cellData.type == CellType.PIT)
-                            {
-                                return null;
-                            }
-                        }
-                        else if (occupySpace == DungeonTileStampData.StampSpace.OBJECT_SPACE)
-                        {
-                            if (cellVisualData.containsObjectSpaceStamp)
-                            {
-                                return null;
-                            }
-                            if (cellData.type == CellType.PIT)
-                            {
-                                return null;
-                            }
-                        }
-                        else if (occupySpace == DungeonTileStampData.StampSpace.WALL_SPACE && (flag || (!isLightStamp && cellVisualData.containsLight)))
-                        {
-                            return null;
-                        }
-                    }
-                }
+                IsValid = !current.cellVisualData.ceilingHasBeenProcessed && !IsCardinalBorder(current, d, ix, iy) && current.type == CellType.WALL && (iy < 2 || !d.data.isFaceWallLower(ix, iy)) && !d.data.isTopDiagonalWall(ix, iy);
             }
-            int num = (occupySpace != DungeonTileStampData.StampSpace.OBJECT_SPACE) ? GlobalDungeonData.wallStampLayerIndex : GlobalDungeonData.objectStampLayerIndex;
-            float z = map.data.Layers[num].z;
-            Vector3 vector = osd.objectReference.transform.position;
-            ObjectStampOptions component = osd.objectReference.GetComponent<ObjectStampOptions>();
-            if (component != null)
+            catch (Exception ex)
             {
-                vector = component.GetPositionOffset();
+                Debug.Log("[Planetside] Excpetion caught in ExpandTK2DDungeonAssembler.IsValidJungleBorderCell!");
+                Debug.LogException(ex);
             }
-            GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(osd.objectReference);
-            gameObject.transform.position = new Vector3((float)ix, (float)iy, z) + vector;
-            if (!isLightStamp && osd.placementRule == DungeonTileStampData.StampPlacementRule.ALONG_LEFT_WALLS)
-            {
-                gameObject.transform.position = new Vector3((float)(ix + 1), (float)iy, z) + vector.WithX(-vector.x);
-            }
-            tk2dSprite component2 = gameObject.GetComponent<tk2dSprite>();
-            RoomHandler absoluteRoomFromPosition = GameManager.Instance.Dungeon.data.GetAbsoluteRoomFromPosition(new IntVector2(ix, iy));
-            MinorBreakable componentInChildren = gameObject.GetComponentInChildren<MinorBreakable>();
-            if (componentInChildren)
-            {
-                if (osd.placementRule == DungeonTileStampData.StampPlacementRule.ON_ANY_FLOOR)
-                {
-                    componentInChildren.IgnoredForPotShotsModifier = true;
-                }
-                componentInChildren.IsDecorativeOnly = true;
-            }
-            IPlaceConfigurable @interface = gameObject.GetInterface<IPlaceConfigurable>();
-            if (@interface != null)
-            {
-                @interface.ConfigureOnPlacement(absoluteRoomFromPosition);
-            }
-            SurfaceDecorator component3 = gameObject.GetComponent<SurfaceDecorator>();
-            if (component3 != null)
-            {
-                component3.Decorate(absoluteRoomFromPosition);
-            }
-            if (flipX)
-            {
-                if (component2 != null)
-                {
-                    component2.FlipX = true;
-                    float x = Mathf.Ceil(component2.GetBounds().size.x);
-                    gameObject.transform.position = gameObject.transform.position + new Vector3(x, 0f, 0f);
-                }
-                else
-                {
-                    gameObject.transform.localScale = Vector3.Scale(gameObject.transform.localScale, new Vector3(-1f, 1f, 1f));
-                }
-            }
-            gameObject.transform.parent = ((absoluteRoomFromPosition == null) ? null : absoluteRoomFromPosition.hierarchyParent);
-            DepthLookupManager.ProcessRenderer(gameObject.GetComponentInChildren<Renderer>());
-            if (component2 != null)
-            {
-                component2.UpdateZDepth();
-            }
-            for (int k = 0; k < osd.width; k++)
-            {
-                for (int l = 0; l < osd.height; l++)
-                {
-                    CellVisualData cellVisualData2 = d.data.cellData[ix + k][iy + l].cellVisualData;
-                    if (occupySpace == DungeonTileStampData.StampSpace.OBJECT_SPACE)
-                    {
-                        cellVisualData2.containsObjectSpaceStamp = true;
-                    }
-                    if (occupySpace == DungeonTileStampData.StampSpace.WALL_SPACE)
-                    {
-                        cellVisualData2.containsWallSpaceStamp = true;
-                    }
-                    if (occupySpace == DungeonTileStampData.StampSpace.BOTH_SPACES)
-                    {
-                        cellVisualData2.containsObjectSpaceStamp = true;
-                        cellVisualData2.containsWallSpaceStamp = true;
-                    }
-                }
-            }
-            return gameObject;
+            return IsValid;
         }
+
+        private bool IsValidJungleOcclusionCell(CellData current, Dungeon d, int ix, int iy)
+        {
+            bool IsValid = false;
+            try
+            {
+                IsValid = BCheck(d, ix, iy, 1) && (!current.cellVisualData.ceilingHasBeenProcessed && !current.cellVisualData.occlusionHasBeenProcessed) && (current.type != CellType.WALL || IsCardinalBorder(current, d, ix, iy) || (iy > 2 && (d.data.isFaceWallLower(ix, iy) || d.data.isFaceWallHigher(ix, iy))));
+            }
+            catch (Exception ex)
+            {
+                Debug.Log("[Planetside] Excpetion caught in ExpandTK2DDungeonAssembler.IsValidJungleOcclusionCell!");
+                Debug.LogException(ex);
+            }
+            return IsValid;
+        }
+
 
         // Everything here is unmodified (aside from formatting changes)
 
         private RoomInternalMaterialTransition GetMaterialTransitionFromSubtypes(Dungeon d, int roomType, int cellType)
         {
-            if (!d.roomMaterialDefinitions[roomType].usesInternalMaterialTransitions)
+            if (!d.roomMaterialDefinitions[roomType].usesInternalMaterialTransitions) { return null; }
+            if (roomType == cellType) { return null; }
+            foreach (RoomInternalMaterialTransition materialTransition in d.roomMaterialDefinitions[roomType].internalMaterialTransitions)
             {
-                return null;
-            }
-            if (roomType == cellType)
-            {
-                return null;
-            }
-            for (int i = 0; i < d.roomMaterialDefinitions[roomType].internalMaterialTransitions.Length; i++)
-            {
-                if (d.roomMaterialDefinitions[roomType].internalMaterialTransitions[i].materialTransition == cellType)
-                {
-                    return d.roomMaterialDefinitions[roomType].internalMaterialTransitions[i];
-                }
+                if (materialTransition.materialTransition == cellType) { return materialTransition; }
             }
             return null;
         }
@@ -1585,190 +1778,16 @@ namespace Planetside
             }
         }
 
-        private void BuildOcclusionLayerCenterJungle(CellData current, Dungeon d, tk2dTileMap map, int ix, int iy)
-        {
-            if (!IsValidJungleOcclusionCell(current, d, ix, iy))
-            {
-                return;
-            }
-            bool flag = true;
-            bool flag2 = true;
-            if (!BCheck(d, ix, iy))
-            {
-                flag = false;
-                flag2 = false;
-            }
-            if (current.UniqueHash < 0.05f)
-            {
-                flag = false;
-                flag2 = false;
-            }
-            for (int i = 0; i < 3; i++)
-            {
-                for (int j = 0; j < 3; j++)
-                {
-                    if (!IsValidJungleOcclusionCell(d.data[ix + i, iy + j], d, ix + i, iy + j))
-                    {
-                        flag2 = false;
-                        if (i < 2 || j < 2)
-                        {
-                            flag = false;
-                        }
-                    }
-                    if (!flag2 && !flag)
-                    {
-                        break;
-                    }
-                }
-                if (!flag2 && !flag)
-                {
-                    break;
-                }
-            }
-            if (flag2 && current.UniqueHash < 0.75f)
-            {
-                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x, current.positionInTilemap.y, 352);
-                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x + 1, current.positionInTilemap.y, 353);
-                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x + 2, current.positionInTilemap.y, 354);
-                d.data[ix + 1, iy].cellVisualData.occlusionHasBeenProcessed = true;
-                d.data[ix + 2, iy].cellVisualData.occlusionHasBeenProcessed = true;
-                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x, current.positionInTilemap.y + 1, 330);
-                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x + 1, current.positionInTilemap.y + 1, 331);
-                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x + 2, current.positionInTilemap.y + 1, 332);
-                d.data[ix, iy + 1].cellVisualData.occlusionHasBeenProcessed = true;
-                d.data[ix + 1, iy + 1].cellVisualData.occlusionHasBeenProcessed = true;
-                d.data[ix + 2, iy + 1].cellVisualData.occlusionHasBeenProcessed = true;
-                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x, current.positionInTilemap.y + 2, 308);
-                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x + 1, current.positionInTilemap.y + 2, 309);
-                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x + 2, current.positionInTilemap.y + 2, 310);
-                d.data[ix, iy + 2].cellVisualData.occlusionHasBeenProcessed = true;
-                d.data[ix + 1, iy + 2].cellVisualData.occlusionHasBeenProcessed = true;
-                d.data[ix + 2, iy + 2].cellVisualData.occlusionHasBeenProcessed = true;
-            }
-            else if (flag)
-            {
-                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x, current.positionInTilemap.y, 418);
-                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x + 1, current.positionInTilemap.y, 419);
-                d.data[ix + 1, iy].cellVisualData.occlusionHasBeenProcessed = true;
-                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x, current.positionInTilemap.y + 1, 396);
-                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x + 1, current.positionInTilemap.y + 1, 397);
-                d.data[ix, iy + 1].cellVisualData.occlusionHasBeenProcessed = true;
-                d.data[ix + 1, iy + 1].cellVisualData.occlusionHasBeenProcessed = true;
-            }
-            else
-            {
-                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x, current.positionInTilemap.y, 374);
-            }
-            d.data[ix, iy].cellVisualData.occlusionHasBeenProcessed = true;
-        }
-
-        private void BuildBorderLayerCenterJungle(CellData current, Dungeon d, tk2dTileMap map, int ix, int iy)
-        {
-            if (!IsValidJungleBorderCell(current, d, ix, iy))
-            {
-                return;
-            }
-            bool flag = true;
-            bool flag2 = true;
-            if (!BCheck(d, ix, iy))
-            {
-                flag = false;
-                flag2 = false;
-            }
-            if (current.UniqueHash < 0.05f)
-            {
-                flag = false;
-                flag2 = false;
-            }
-            for (int i = 0; i < 3; i++)
-            {
-                for (int j = 0; j < 3; j++)
-                {
-                    if (!IsValidJungleBorderCell(d.data[ix + i, iy + j], d, ix + i, iy + j))
-                    {
-                        flag2 = false;
-                        if (i < 2 || j < 2)
-                        {
-                            flag = false;
-                        }
-                    }
-                    if (!flag2 && !flag)
-                    {
-                        break;
-                    }
-                }
-                if (!flag2 && !flag)
-                {
-                    break;
-                }
-            }
-            if (flag2 && current.UniqueHash < 0.75f)
-            {
-                map.Layers[GlobalDungeonData.borderLayerIndex].SetTile(current.positionInTilemap.x, current.positionInTilemap.y, 352);
-                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x, current.positionInTilemap.y, 352);
-                map.Layers[GlobalDungeonData.borderLayerIndex].SetTile(current.positionInTilemap.x + 1, current.positionInTilemap.y, 353);
-                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x + 1, current.positionInTilemap.y, 353);
-                map.Layers[GlobalDungeonData.borderLayerIndex].SetTile(current.positionInTilemap.x + 2, current.positionInTilemap.y, 354);
-                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x + 2, current.positionInTilemap.y, 354);
-                d.data[ix + 1, iy].cellVisualData.ceilingHasBeenProcessed = true;
-                d.data[ix + 2, iy].cellVisualData.ceilingHasBeenProcessed = true;
-                map.Layers[GlobalDungeonData.borderLayerIndex].SetTile(current.positionInTilemap.x, current.positionInTilemap.y + 1, 330);
-                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x, current.positionInTilemap.y + 1, 330);
-                map.Layers[GlobalDungeonData.borderLayerIndex].SetTile(current.positionInTilemap.x + 1, current.positionInTilemap.y + 1, 331);
-                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x + 1, current.positionInTilemap.y + 1, 331);
-                map.Layers[GlobalDungeonData.borderLayerIndex].SetTile(current.positionInTilemap.x + 2, current.positionInTilemap.y + 1, 332);
-                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x + 2, current.positionInTilemap.y + 1, 332);
-                d.data[ix, iy + 1].cellVisualData.ceilingHasBeenProcessed = true;
-                d.data[ix + 1, iy + 1].cellVisualData.ceilingHasBeenProcessed = true;
-                d.data[ix + 2, iy + 1].cellVisualData.ceilingHasBeenProcessed = true;
-                map.Layers[GlobalDungeonData.borderLayerIndex].SetTile(current.positionInTilemap.x, current.positionInTilemap.y + 2, 308);
-                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x, current.positionInTilemap.y + 2, 308);
-                map.Layers[GlobalDungeonData.borderLayerIndex].SetTile(current.positionInTilemap.x + 1, current.positionInTilemap.y + 2, 309);
-                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x + 1, current.positionInTilemap.y + 2, 309);
-                map.Layers[GlobalDungeonData.borderLayerIndex].SetTile(current.positionInTilemap.x + 2, current.positionInTilemap.y + 2, 310);
-                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x + 2, current.positionInTilemap.y + 2, 310);
-                d.data[ix, iy + 2].cellVisualData.ceilingHasBeenProcessed = true;
-                d.data[ix + 1, iy + 2].cellVisualData.ceilingHasBeenProcessed = true;
-                d.data[ix + 2, iy + 2].cellVisualData.ceilingHasBeenProcessed = true;
-            }
-            else if (flag)
-            {
-                map.Layers[GlobalDungeonData.borderLayerIndex].SetTile(current.positionInTilemap.x, current.positionInTilemap.y, 418);
-                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x, current.positionInTilemap.y, 418);
-                map.Layers[GlobalDungeonData.borderLayerIndex].SetTile(current.positionInTilemap.x + 1, current.positionInTilemap.y, 419);
-                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x + 1, current.positionInTilemap.y, 419);
-                d.data[ix + 1, iy].cellVisualData.ceilingHasBeenProcessed = true;
-                map.Layers[GlobalDungeonData.borderLayerIndex].SetTile(current.positionInTilemap.x, current.positionInTilemap.y + 1, 396);
-                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x, current.positionInTilemap.y + 1, 396);
-                map.Layers[GlobalDungeonData.borderLayerIndex].SetTile(current.positionInTilemap.x + 1, current.positionInTilemap.y + 1, 397);
-                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x + 1, current.positionInTilemap.y + 1, 397);
-                d.data[ix, iy + 1].cellVisualData.ceilingHasBeenProcessed = true;
-                d.data[ix + 1, iy + 1].cellVisualData.ceilingHasBeenProcessed = true;
-            }
-            else
-            {
-                map.Layers[GlobalDungeonData.borderLayerIndex].SetTile(current.positionInTilemap.x, current.positionInTilemap.y, 374);
-                map.Layers[GlobalDungeonData.occlusionPartitionIndex].SetTile(current.positionInTilemap.x, current.positionInTilemap.y, 374);
-            }
-            d.data[ix, iy].cellVisualData.ceilingHasBeenProcessed = true;
-        }
-
         private TileIndexVariant GetIndexFromTileArray(CellData current, List<TileIndexVariant> list)
         {
             float uniqueHash = current.UniqueHash;
             float num = 0f;
-            for (int i = 0; i < list.Count; i++)
-            {
-                num += list[i].likelihood;
-            }
+            foreach (TileIndexVariant variant in list) { num += variant.likelihood; }
             float num2 = uniqueHash * num;
-            for (int j = 0; j < list.Count; j++)
+            foreach (TileIndexVariant variant in list)
             {
-                num2 -= list[j].likelihood;
-                if (num2 <= 0f)
-                {
-                    return list[j];
-                }
+                num2 -= variant.likelihood;
+                if (num2 <= 0f) { return variant; }
             }
             return list[0];
         }
@@ -1777,23 +1796,20 @@ namespace Planetside
         {
             float uniqueHash = current.UniqueHash;
             float num = 0f;
-            for (int i = 0; i < list.Count; i++)
+            foreach (Tuple<int, TilesetIndexMetadata> MetadataTuple in list)
             {
-                if (list[i].Second.dungeonRoomSubType == roomTypeIndex || list[i].Second.secondRoomSubType == roomTypeIndex || list[i].Second.thirdRoomSubType == roomTypeIndex)
+                if (MetadataTuple.Second.dungeonRoomSubType == roomTypeIndex || MetadataTuple.Second.secondRoomSubType == roomTypeIndex || MetadataTuple.Second.thirdRoomSubType == roomTypeIndex)
                 {
-                    num += list[i].Second.weight;
+                    num += MetadataTuple.Second.weight;
                 }
             }
             float num2 = uniqueHash * num;
-            for (int j = 0; j < list.Count; j++)
+            foreach (Tuple<int, TilesetIndexMetadata> MetadataTuple in list)
             {
-                if (list[j].Second.dungeonRoomSubType == roomTypeIndex || list[j].Second.secondRoomSubType == roomTypeIndex || list[j].Second.thirdRoomSubType == roomTypeIndex)
+                if (MetadataTuple.Second.dungeonRoomSubType == roomTypeIndex || MetadataTuple.Second.secondRoomSubType == roomTypeIndex || MetadataTuple.Second.thirdRoomSubType == roomTypeIndex)
                 {
-                    num2 -= list[j].Second.weight;
-                    if (num2 <= 0f)
-                    {
-                        return list[j].First;
-                    }
+                    num2 -= MetadataTuple.Second.weight;
+                    if (num2 <= 0f) { return MetadataTuple.First; }
                 }
             }
             return list[0].First;
@@ -1807,25 +1823,23 @@ namespace Planetside
                 return null;
             }
             float num = 0f;
-            for (int i = 0; i < list.Count; i++)
+            foreach (Tuple<int, TilesetIndexMetadata> MetadataTuple in list)
             {
-                Tuple<int, TilesetIndexMetadata> tuple = list[i];
-                if (tuple.Second.dungeonRoomSubType == -1 || tuple.Second.dungeonRoomSubType == roomTypeIndex || tuple.Second.secondRoomSubType == roomTypeIndex || tuple.Second.thirdRoomSubType == roomTypeIndex)
+                if (MetadataTuple.Second.dungeonRoomSubType == -1 || MetadataTuple.Second.dungeonRoomSubType == roomTypeIndex || MetadataTuple.Second.secondRoomSubType == roomTypeIndex || MetadataTuple.Second.thirdRoomSubType == roomTypeIndex)
                 {
-                    num += tuple.Second.weight;
+                    num += MetadataTuple.Second.weight;
                 }
             }
             float num2 = UnityEngine.Random.value * num;
-            for (int j = 0; j < list.Count; j++)
+            foreach (Tuple<int, TilesetIndexMetadata> MetadataTuple in list)
             {
-                Tuple<int, TilesetIndexMetadata> tuple2 = list[j];
-                if (tuple2.Second.dungeonRoomSubType == -1 || tuple2.Second.dungeonRoomSubType == roomTypeIndex || tuple2.Second.secondRoomSubType == roomTypeIndex || tuple2.Second.thirdRoomSubType == roomTypeIndex)
+                if (MetadataTuple.Second.dungeonRoomSubType == -1 || MetadataTuple.Second.dungeonRoomSubType == roomTypeIndex || MetadataTuple.Second.secondRoomSubType == roomTypeIndex || MetadataTuple.Second.thirdRoomSubType == roomTypeIndex)
                 {
-                    num2 -= tuple2.Second.weight;
+                    num2 -= MetadataTuple.Second.weight;
                     if (num2 <= 0f)
                     {
-                        index = tuple2.First;
-                        return tuple2.Second;
+                        index = MetadataTuple.First;
+                        return MetadataTuple.Second;
                     }
                 }
             }
@@ -1835,10 +1849,7 @@ namespace Planetside
 
         public void ClearData(tk2dTileMap map)
         {
-            for (int i = 0; i < map.Layers.Length; i++)
-            {
-                map.DeleteSprites(i, 0, 0, map.width - 1, map.height - 1);
-            }
+            for (int i = 0; i < map.Layers.Length; i++) { map.DeleteSprites(i, 0, 0, map.width - 1, map.height - 1); }
         }
 
         public void ClearTileIndicesForCell(Dungeon d, tk2dTileMap map, int ix, int iy)
@@ -1846,10 +1857,7 @@ namespace Planetside
             CellData cellData = (!d.data.CheckInBoundsAndValid(ix, iy)) ? null : d.data[ix, iy];
             int x = (cellData == null) ? ix : cellData.positionInTilemap.x;
             int y = (cellData == null) ? iy : cellData.positionInTilemap.y;
-            for (int i = 0; i < map.Layers.Length; i++)
-            {
-                map.Layers[i].SetTile(x, y, -1);
-            }
+            for (int i = 0; i < map.Layers.Length; i++) { map.Layers[i].SetTile(x, y, -1); }
             if (TK2DTilemapChunkAnimator.PositionToAnimatorMap.ContainsKey(cellData.positionInTilemap))
             {
                 for (int j = 0; j < TK2DTilemapChunkAnimator.PositionToAnimatorMap[cellData.positionInTilemap].Count; j++)
@@ -1877,9 +1885,8 @@ namespace Planetside
         {
             RoomHandler nearestRoom = current.nearestRoom;
             IntVector2 a = new IntVector2(ix - current.nearestRoom.area.basePosition.x, iy - current.nearestRoom.area.basePosition.y);
-            for (int i = 0; i < d.data.rooms.Count; i++)
+            foreach (RoomHandler roomHandler in d.data.rooms)
             {
-                RoomHandler roomHandler = d.data.rooms[i];
                 if (roomHandler != nearestRoom && roomHandler.area.PrototypeLostWoodsRoom)
                 {
                     CellData cellData = d.data[a + roomHandler.area.basePosition];
@@ -1924,10 +1931,7 @@ namespace Planetside
 
         private void AssignSpecificColorsToTile(int ix, int iy, int layer, Color32 bottomLeft, Color32 bottomRight, Color32 topLeft, Color32 topRight, tk2dTileMap map)
         {
-            if (!map.HasColorChannel())
-            {
-                map.CreateColorChannel();
-            }
+            if (!map.HasColorChannel()) { map.CreateColorChannel(); }
             ColorChannel colorChannel = map.ColorChannel;
             map.data.Layers[layer].useColor = true;
             colorChannel.SetTileColorGradient(ix, iy, bottomLeft, bottomRight, topLeft, topRight);
@@ -1935,10 +1939,7 @@ namespace Planetside
 
         private void AssignColorGradientToTile(int ix, int iy, int layer, Color32 bottom, Color32 top, tk2dTileMap map)
         {
-            if (!map.HasColorChannel())
-            {
-                map.CreateColorChannel();
-            }
+            if (!map.HasColorChannel()) { map.CreateColorChannel(); }
             ColorChannel colorChannel = map.ColorChannel;
             map.data.Layers[layer].useColor = true;
             colorChannel.SetTileColorGradient(ix, iy, bottom, bottom, top, top);
@@ -1946,10 +1947,7 @@ namespace Planetside
 
         private void AssignColorOverrideToTile(int ix, int iy, int layer, Color32 color, tk2dTileMap map)
         {
-            if (!map.HasColorChannel())
-            {
-                map.CreateColorChannel();
-            }
+            if (!map.HasColorChannel()) { map.CreateColorChannel(); }
             ColorChannel colorChannel = map.ColorChannel;
             map.data.Layers[layer].useColor = true;
             colorChannel.SetTileColorOverride(ix, iy, color);
@@ -1965,79 +1963,11 @@ namespace Planetside
 
         private bool CheckHasValidFloorGridForRoomSubType(List<TileIndexGrid> indexGrids, int roomType)
         {
-            for (int i = 0; i < indexGrids.Count; i++)
+            foreach (TileIndexGrid indexGrid in indexGrids)
             {
-                if (indexGrids[i].roomTypeRestriction == -1 || indexGrids[i].roomTypeRestriction == roomType)
-                {
-                    return true;
-                }
+                if (indexGrid.roomTypeRestriction == -1 || indexGrid.roomTypeRestriction == roomType) { return true; }
             }
             return false;
-        }
-
-        private bool IsValidJungleBorderCell(CellData current, Dungeon d, int ix, int iy)
-        {
-            return !current.cellVisualData.ceilingHasBeenProcessed && !IsCardinalBorder(current, d, ix, iy) && current.type == CellType.WALL && (iy < 2 || !d.data.isFaceWallLower(ix, iy)) && !d.data.isTopDiagonalWall(ix, iy);
-        }
-
-        private bool IsValidJungleOcclusionCell(CellData current, Dungeon d, int ix, int iy)
-        {
-            return BCheck(d, ix, iy, 1) && (!current.cellVisualData.ceilingHasBeenProcessed && !current.cellVisualData.occlusionHasBeenProcessed) && (current.type != CellType.WALL || IsCardinalBorder(current, d, ix, iy) || (iy > 2 && (d.data.isFaceWallLower(ix, iy) || d.data.isFaceWallHigher(ix, iy))));
-        }
-
-        public void ApplySpriteStamp(int ix, int iy, SpriteStampData ssd, Dungeon d, tk2dTileMap map)
-        {
-            DungeonTileStampData.StampSpace occupySpace = ssd.occupySpace;
-            for (int i = 0; i < ssd.width; i++)
-            {
-                for (int j = 0; j < ssd.height; j++)
-                {
-                    CellVisualData cellVisualData = d.data.cellData[ix + i][iy + j].cellVisualData;
-                    if (occupySpace == DungeonTileStampData.StampSpace.BOTH_SPACES)
-                    {
-                        if (cellVisualData.containsObjectSpaceStamp || cellVisualData.containsWallSpaceStamp)
-                        {
-                            return;
-                        }
-                    }
-                    else if (occupySpace == DungeonTileStampData.StampSpace.OBJECT_SPACE)
-                    {
-                        if (cellVisualData.containsObjectSpaceStamp)
-                        {
-                            return;
-                        }
-                    }
-                    else if (occupySpace == DungeonTileStampData.StampSpace.WALL_SPACE && cellVisualData.containsWallSpaceStamp)
-                    {
-                        return;
-                    }
-                }
-            }
-            int num = (occupySpace != DungeonTileStampData.StampSpace.OBJECT_SPACE) ? GlobalDungeonData.wallStampLayerIndex : GlobalDungeonData.objectStampLayerIndex;
-            float z = map.data.Layers[num].z;
-            SpriteRenderer spriteRenderer = new GameObject(ssd.spriteReference.name) { transform = { position = new Vector3((float)ix, (float)iy, z) } }.AddComponent<SpriteRenderer>();
-            spriteRenderer.sprite = ssd.spriteReference;
-            DepthLookupManager.ProcessRenderer(spriteRenderer);
-            for (int k = 0; k < ssd.width; k++)
-            {
-                for (int l = 0; l < ssd.height; l++)
-                {
-                    CellVisualData cellVisualData2 = d.data.cellData[ix + k][iy + l].cellVisualData;
-                    if (occupySpace == DungeonTileStampData.StampSpace.OBJECT_SPACE)
-                    {
-                        cellVisualData2.containsObjectSpaceStamp = true;
-                    }
-                    if (occupySpace == DungeonTileStampData.StampSpace.WALL_SPACE)
-                    {
-                        cellVisualData2.containsWallSpaceStamp = true;
-                    }
-                    if (occupySpace == DungeonTileStampData.StampSpace.BOTH_SPACES)
-                    {
-                        cellVisualData2.containsObjectSpaceStamp = true;
-                        cellVisualData2.containsWallSpaceStamp = true;
-                    }
-                }
-            }
         }
 
         private int GetCeilingCenterIndex(CellData current, TileIndexGrid gridToUse)
@@ -2126,9 +2056,9 @@ namespace Planetside
             cellData.cellVisualData.containsWallSpaceStamp = (cellData.cellVisualData.containsWallSpaceStamp || preventWallStamping);
             bool flag2 = true;
             List<CellData> list = new List<CellData>();
-            for (int i = 0; i < neighborDependencies.Count; i++)
+            foreach (IndexNeighborDependency dependency in neighborDependencies)
             {
-                CellData cellData2 = d.data[new IntVector2(ix, iy) + DungeonData.GetIntVector2FromDirection(neighborDependencies[i].neighborDirection)];
+                CellData cellData2 = d.data[new IntVector2(ix, iy) + DungeonData.GetIntVector2FromDirection(dependency.neighborDirection)];
                 if (cellData2.cellVisualData.faceWallOverrideIndex != -1 || !cellData2.IsAnyFaceWall())
                 {
                     flag2 = false;
@@ -2147,15 +2077,11 @@ namespace Planetside
                 list.Add(cellData2);
                 CellData cellData3 = cellData2;
                 cellData3.cellVisualData.containsWallSpaceStamp = (cellData3.cellVisualData.containsWallSpaceStamp || preventWallStamping);
-                cellData2.cellVisualData.faceWallOverrideIndex = neighborDependencies[i].neighborIndex;
+                cellData2.cellVisualData.faceWallOverrideIndex = dependency.neighborIndex;
             }
             if (!flag2)
             {
-                for (int j = 0; j < list.Count; j++)
-                {
-                    CellData cellData4 = list[j];
-                    cellData4.cellVisualData.faceWallOverrideIndex = -1;
-                }
+                foreach (CellData celldata in list) { celldata.cellVisualData.faceWallOverrideIndex = -1; }
             }
             return flag2;
         }
@@ -2169,18 +2095,9 @@ namespace Planetside
         {
             for (CellData cellData = d.data[ix, iy + 1]; cellData != null; cellData = d.data[cellData.position.x, cellData.position.y + 1])
             {
-                if (cellData.nearestRoom != current.nearestRoom)
-                {
-                    return true;
-                }
-                if (cellData.type == CellType.FLOOR)
-                {
-                    return false;
-                }
-                if (!d.data.CheckInBounds(cellData.position.x, cellData.position.y + 1))
-                {
-                    return true;
-                }
+                if (cellData.nearestRoom != current.nearestRoom) { return true; }
+                if (cellData.type == CellType.FLOOR) { return false; }
+                if (!d.data.CheckInBounds(cellData.position.x, cellData.position.y + 1)) { return true; }
             }
             return true;
         }
@@ -2192,24 +2109,12 @@ namespace Planetside
             while (d.data.isFaceWallLower(ix, iy) && d.data[ix, iy].cellVisualData.faceWallOverrideIndex == -1 && d.data[ix, iy].cellVisualData.roomVisualTypeIndex == roomVisualTypeIndex)
             {
                 bool flag = !d.data.isFaceWallLeft(ix, iy) || !d.data.isFaceWallRight(ix, iy);
-                if (!gridDefinition.canExistInCorners && flag)
-                {
-                    break;
-                }
-                if (d.data[ix, iy - 2].isExitCell && !gridDefinition.canBePlacedInExits)
-                {
-                    break;
-                }
+                if (!gridDefinition.canExistInCorners && flag) { break; }
+                if (d.data[ix, iy - 2].isExitCell && !gridDefinition.canBePlacedInExits) { break; }
                 ix++;
                 num++;
-                if (num >= gridDefinition.maxWidth)
-                {
-                    break;
-                }
-                if (num > gridDefinition.minWidth && UnityEngine.Random.value < gridDefinition.perTileFailureRate)
-                {
-                    break;
-                }
+                if (num >= gridDefinition.maxWidth) { break; }
+                if (num > gridDefinition.minWidth && UnityEngine.Random.value < gridDefinition.perTileFailureRate) { break; }
             }
             return num;
         }
@@ -2217,10 +2122,7 @@ namespace Planetside
         private bool AssignFacewallGrid(CellData current, Dungeon d, tk2dTileMap map, int ix, int iy, FacewallIndexGridDefinition gridDefinition)
         {
             int num = FindValidFacewallExpanse(ix, iy, d, gridDefinition);
-            if (num < gridDefinition.minWidth)
-            {
-                return false;
-            }
+            if (num < gridDefinition.minWidth) { return false; }
             TileIndexGrid grid = gridDefinition.grid;
             int num2 = 0;
             int i = num;
@@ -2309,10 +2211,7 @@ namespace Planetside
 
         private void HandlePitTilePlacement(CellData cell, TileIndexGrid pitGrid, Layer tileMapLayer, Dungeon d)
         {
-            if (pitGrid == null)
-            {
-                return;
-            }
+            if (pitGrid == null) { return; }
             List<CellData> cellNeighbors = d.data.GetCellNeighbors(cell, false);
             bool flag = cellNeighbors[0] != null && cellNeighbors[0].type == CellType.PIT;
             bool flag2 = cellNeighbors[1] != null && cellNeighbors[1].type == CellType.PIT;
@@ -2326,24 +2225,12 @@ namespace Planetside
             }
             else
             {
-                if (GameManager.Instance.Dungeon.debugSettings.WALLS_ARE_PITS)
+                if (d.debugSettings.WALLS_ARE_PITS)
                 {
-                    if (cellNeighbors[2] != null && cellNeighbors[2].isExitCell)
-                    {
-                        flag3 = true;
-                    }
-                    if (cellNeighbors[0] != null && cellNeighbors[0].isExitCell)
-                    {
-                        flag = true;
-                    }
-                    if (BCheck(d, cell.position.x, cell.position.y + 2) && d.data.cellData[cell.position.x][cell.position.y + 2].isExitCell)
-                    {
-                        flag5 = true;
-                    }
-                    if (BCheck(d, cell.position.x, cell.position.y + 3) && d.data.cellData[cell.position.x][cell.position.y + 3].isExitCell)
-                    {
-                        flag6 = true;
-                    }
+                    if (cellNeighbors[2] != null && cellNeighbors[2].isExitCell) { flag3 = true; }
+                    if (cellNeighbors[0] != null && cellNeighbors[0].isExitCell) { flag = true; }
+                    if (BCheck(d, cell.position.x, cell.position.y + 2) && d.data.cellData[cell.position.x][cell.position.y + 2].isExitCell) { flag5 = true; }
+                    if (BCheck(d, cell.position.x, cell.position.y + 3) && d.data.cellData[cell.position.x][cell.position.y + 3].isExitCell) { flag6 = true; }
                 }
                 int tile = pitGrid.GetIndexGivenSides(!flag, !flag5, !flag6, !flag2, !flag3, !flag4);
                 if (pitGrid.PitInternalSquareGrids.Count > 0 && UnityEngine.Random.value < pitGrid.PitInternalSquareOptions.PitSquareChance && (pitGrid.PitInternalSquareOptions.CanBeFlushLeft || flag4) && (pitGrid.PitInternalSquareOptions.CanBeFlushBottom || flag3) && flag2 && flag && flag5 && flag6)
@@ -2378,13 +2265,16 @@ namespace Planetside
             roomUsedStamps = new List<StampDataBase>();
             expanseUsedStamps = new List<StampDataBase>();
             m_assembler = assembler;
+            DEBUG_DRAW = false;
         }
+
+        public bool DEBUG_DRAW;
 
         private ExpandTK2DDungeonAssembler m_assembler;
 
         private Dictionary<DungeonTileStampData.StampPlacementRule, IntVector2> wallPlacementOffsets;
 
-        private List<ExpandTK2DInteriorDecorator.ViableStampCategorySet> viableCategorySets;
+        private List<ViableStampCategorySet> viableCategorySets;
 
         private List<DungeonTileStampData.StampPlacementRule> validNorthernPlacements;
 
@@ -2393,8 +2283,6 @@ namespace Planetside
         private List<DungeonTileStampData.StampPlacementRule> validWesternPlacements;
 
         private List<DungeonTileStampData.StampPlacementRule> validSouthernPlacements;
-
-        private bool DEBUG_DRAW = false;
 
         private List<StampDataBase> roomUsedStamps;
 
@@ -2416,9 +2304,9 @@ namespace Planetside
 
             public override bool Equals(object obj)
             {
-                if (obj is ExpandTK2DInteriorDecorator.ViableStampCategorySet)
+                if (obj is ViableStampCategorySet)
                 {
-                    ExpandTK2DInteriorDecorator.ViableStampCategorySet viableStampCategorySet = obj as ExpandTK2DInteriorDecorator.ViableStampCategorySet;
+                    ViableStampCategorySet viableStampCategorySet = obj as ViableStampCategorySet;
                     return viableStampCategorySet.category == category && viableStampCategorySet.space == space && viableStampCategorySet.placement == placement;
                 }
                 return false;
@@ -2466,6 +2354,46 @@ namespace Planetside
             public int mirroredExpanseWidth;
         }
 
+        public static void PlaceLightDecorationForCell(Dungeon d, tk2dTileMap map, CellData currentCell, IntVector2 currentPosition)
+        {
+            if (currentCell.cellVisualData.containsLight && currentCell.cellVisualData.lightDirection != DungeonData.Direction.SOUTH && currentCell.cellVisualData.lightDirection != (DungeonData.Direction)(-1))
+            {
+                DungeonTileStampData.StampPlacementRule stampPlacementRule = DungeonTileStampData.StampPlacementRule.ON_LOWER_FACEWALL;
+                bool flipX = false;
+                if (currentCell.cellVisualData.lightDirection == DungeonData.Direction.EAST)
+                {
+                    stampPlacementRule = DungeonTileStampData.StampPlacementRule.ALONG_LEFT_WALLS;
+                    flipX = true;
+                }
+                else if (currentCell.cellVisualData.lightDirection == DungeonData.Direction.WEST)
+                {
+                    stampPlacementRule = DungeonTileStampData.StampPlacementRule.ALONG_LEFT_WALLS;
+                }
+                LightStampData lightStampData = (stampPlacementRule != DungeonTileStampData.StampPlacementRule.ALONG_LEFT_WALLS) ? currentCell.cellVisualData.facewallLightStampData : currentCell.cellVisualData.sidewallLightStampData;
+                if (lightStampData != null)
+                {
+                    GameObject gameObject = ExpandTK2DDungeonAssembler.ApplyObjectStamp(currentPosition.x, currentPosition.y, lightStampData, d, map, flipX, true);
+                    if (gameObject)
+                    {
+                        TorchController component = gameObject.GetComponent<TorchController>();
+                        if (component) { component.Cell = currentCell; }
+                    }
+                    else if (currentCell.cellVisualData.lightObject != null)
+                    {
+                        ShadowSystem componentInChildren = currentCell.cellVisualData.lightObject.GetComponentInChildren<ShadowSystem>();
+                        if (componentInChildren)
+                        {
+                            for (int i = 0; i < componentInChildren.PersonalCookies.Count; i++)
+                            {
+                                componentInChildren.PersonalCookies[i].enabled = false;
+                                componentInChildren.PersonalCookies.RemoveAt(i);
+                                i--;
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         private void DecorateRoomExit(RoomHandler r, RuntimeRoomExitData usedExit, Dungeon d, Dungeon d2, tk2dTileMap map)
         {
@@ -2474,15 +2402,9 @@ namespace Planetside
             {
                 IntVector2 a = r.area.basePosition + usedExit.ExitOrigin - IntVector2.One;
                 int num = 0;
-                while (d.data.isFaceWallLower(a.x - num - 1, a.y))
-                {
-                    num++;
-                }
+                while (d.data.isFaceWallLower(a.x - num - 1, a.y)) { num++; }
                 int num2 = 0;
-                while (d.data.isFaceWallLower(a.x + usedExit.referencedExit.ExitCellCount + num2, a.y))
-                {
-                    num2++;
-                }
+                while (d.data.isFaceWallLower(a.x + usedExit.referencedExit.ExitCellCount + num2, a.y)) { num2++; }
                 int num3 = Math.Min(num, num2);
                 int num4 = 0;
                 if (num3 > 0)
@@ -2515,59 +2437,12 @@ namespace Planetside
                         else if (stampDataComplex is ObjectStampData)
                         {
                             Debug.Log("object instantiate");
-                            TK2DDungeonAssembler.ApplyObjectStamp(intVector.x, intVector.y, stampDataComplex as ObjectStampData, d, map, false, false);
-                            TK2DDungeonAssembler.ApplyObjectStamp(intVector2.x, intVector2.y, stampDataComplex as ObjectStampData, d, map, false, false);
+                            ExpandTK2DDungeonAssembler.ApplyObjectStamp(intVector.x, intVector.y, stampDataComplex as ObjectStampData, d, map, false, false);
+                            ExpandTK2DDungeonAssembler.ApplyObjectStamp(intVector2.x, intVector2.y, stampDataComplex as ObjectStampData, d, map, false, false);
                         }
                         num3 -= stampDataComplex.width;
                         num4 += stampDataComplex.width;
-                        if (num3 <= 0)
-                        {
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-
-        public static void PlaceLightDecorationForCell(Dungeon d, tk2dTileMap map, CellData currentCell, IntVector2 currentPosition)
-        {
-            if (currentCell.cellVisualData.containsLight && currentCell.cellVisualData.lightDirection != DungeonData.Direction.SOUTH && currentCell.cellVisualData.lightDirection != (DungeonData.Direction)(-1))
-            {
-                DungeonTileStampData.StampPlacementRule stampPlacementRule = DungeonTileStampData.StampPlacementRule.ON_LOWER_FACEWALL;
-                bool flipX = false;
-                if (currentCell.cellVisualData.lightDirection == DungeonData.Direction.EAST)
-                {
-                    stampPlacementRule = DungeonTileStampData.StampPlacementRule.ALONG_LEFT_WALLS;
-                    flipX = true;
-                }
-                else if (currentCell.cellVisualData.lightDirection == DungeonData.Direction.WEST)
-                {
-                    stampPlacementRule = DungeonTileStampData.StampPlacementRule.ALONG_LEFT_WALLS;
-                }
-                LightStampData lightStampData = (stampPlacementRule != DungeonTileStampData.StampPlacementRule.ALONG_LEFT_WALLS) ? currentCell.cellVisualData.facewallLightStampData : currentCell.cellVisualData.sidewallLightStampData;
-                if (lightStampData != null)
-                {
-                    GameObject gameObject = ExpandTK2DDungeonAssembler.ApplyObjectStamp(currentPosition.x, currentPosition.y, lightStampData, d, map, flipX, true);
-                    if (gameObject)
-                    {
-                        TorchController component = gameObject.GetComponent<TorchController>();
-                        if (component)
-                        {
-                            component.Cell = currentCell;
-                        }
-                    }
-                    else if (currentCell.cellVisualData.lightObject != null)
-                    {
-                        ShadowSystem componentInChildren = currentCell.cellVisualData.lightObject.GetComponentInChildren<ShadowSystem>();
-                        if (componentInChildren)
-                        {
-                            for (int i = 0; i < componentInChildren.PersonalCookies.Count; i++)
-                            {
-                                componentInChildren.PersonalCookies[i].enabled = false;
-                                componentInChildren.PersonalCookies.RemoveAt(i);
-                                i--;
-                            }
-                        }
+                        if (num3 <= 0) { break; }
                     }
                 }
             }
@@ -2581,10 +2456,7 @@ namespace Planetside
                 {
                     IntVector2 intVector = new IntVector2(i, j);
                     CellData cellData = d.data[intVector];
-                    if (cellData != null)
-                    {
-                        ExpandTK2DInteriorDecorator.PlaceLightDecorationForCell(d, map, cellData, intVector);
-                    }
+                    if (cellData != null) { PlaceLightDecorationForCell(d, map, cellData, intVector); }
                 }
             }
         }
@@ -2601,20 +2473,11 @@ namespace Planetside
 
         public void DigChannels(RoomHandler r, Dungeon d, Dungeon d2, tk2dTileMap map)
         {
-            if (!d2.roomMaterialDefinitions[r.RoomVisualSubtype].supportsChannels)
-            {
-                return;
-            }
-            if (d2.roomMaterialDefinitions[r.RoomVisualSubtype].channelGrids.Length == 0)
-            {
-                return;
-            }
+            if (!d2.roomMaterialDefinitions[r.RoomVisualSubtype].supportsChannels) { return; }
+            if (d2.roomMaterialDefinitions[r.RoomVisualSubtype].channelGrids.Length == 0) { return; }
             DungeonMaterial dungeonMaterial = d2.roomMaterialDefinitions[r.RoomVisualSubtype];
             TileIndexGrid tileIndexGrid = dungeonMaterial.channelGrids[UnityEngine.Random.Range(0, d2.roomMaterialDefinitions[r.RoomVisualSubtype].channelGrids.Length)];
-            if (tileIndexGrid == null)
-            {
-                return;
-            }
+            if (tileIndexGrid == null) { return; }
             int num = UnityEngine.Random.Range(dungeonMaterial.minChannelPools, dungeonMaterial.maxChannelPools);
             List<IntVector2> list = new List<IntVector2>();
             HashSet<IntVector2> hashSet = new HashSet<IntVector2>();
@@ -2648,10 +2511,7 @@ namespace Planetside
                 if (!flag && hashSet2.Count > 5)
                 {
                     list.Add(item);
-                    foreach (IntVector2 item2 in hashSet2)
-                    {
-                        hashSet.Add(item2);
-                    }
+                    foreach (IntVector2 item2 in hashSet2) { hashSet.Add(item2); }
                 }
                 else if (UnityEngine.Random.value < dungeonMaterial.channelTenacity)
                 {
@@ -2720,10 +2580,7 @@ namespace Planetside
                 for (int num9 = 0; num9 < array.Length; num9++)
                 {
                     array[num9] = !hashSet.Contains(intVector5 + cardinalsAndOrdinals[num9]);
-                    if (array[num9])
-                    {
-                        num8++;
-                    }
+                    if (array[num9]) { num8++; }
                 }
                 if (num8 == 1)
                 {
@@ -2746,10 +2603,7 @@ namespace Planetside
         public void ProcessHardcodedUpholstery(RoomHandler r, Dungeon d, Dungeon d2, tk2dTileMap map)
         {
             DungeonMaterial dungeonMaterial = d2.roomMaterialDefinitions[r.RoomVisualSubtype];
-            if (dungeonMaterial.carpetGrids.Length == 0)
-            {
-                return;
-            }
+            if (dungeonMaterial.carpetGrids.Length == 0) { return; }
             HashSet<IntVector2> hashSet = new HashSet<IntVector2>();
             TileIndexGrid carpetGrid = dungeonMaterial.carpetGrids[UnityEngine.Random.Range(0, dungeonMaterial.carpetGrids.Length)];
             for (int i = 0; i < r.area.dimensions.x; i++)
@@ -2768,25 +2622,17 @@ namespace Planetside
                     }
                 }
             }
-            ApplyCarpetedHashset(hashSet, carpetGrid, d, map);
+            try { ApplyCarpetedHashset(hashSet, carpetGrid, d, map); } catch (Exception) { }
         }
 
+        // Fixed
         public void UpholsterRoom(RoomHandler r, Dungeon d, Dungeon d2, tk2dTileMap map)
         {
             DungeonMaterial dungeonMaterial = d2.roomMaterialDefinitions[r.RoomVisualSubtype];
-            if (!dungeonMaterial.supportsUpholstery)
-            {
-                return;
-            }
-            if (dungeonMaterial.carpetGrids.Length == 0)
-            {
-                return;
-            }
-            TileIndexGrid tileIndexGrid = d2.roomMaterialDefinitions[r.RoomVisualSubtype].carpetGrids[UnityEngine.Random.Range(0, d.roomMaterialDefinitions[r.RoomVisualSubtype].carpetGrids.Length)];
-            if (tileIndexGrid == null)
-            {
-                return;
-            }
+            if (!dungeonMaterial.supportsUpholstery) { return; }
+            if (dungeonMaterial.carpetGrids.Length == 0) { return; }
+            TileIndexGrid tileIndexGrid = d2.roomMaterialDefinitions[r.RoomVisualSubtype].carpetGrids[UnityEngine.Random.Range(0, d2.roomMaterialDefinitions[r.RoomVisualSubtype].carpetGrids.Length)];
+            if (tileIndexGrid == null) { return; }
             HashSet<IntVector2> hashSet = new HashSet<IntVector2>();
             if (dungeonMaterial.carpetIsMainFloor)
             {
@@ -2800,10 +2646,7 @@ namespace Planetside
                         {
                             bool flag = cellData.HasWallNeighbor(true, false) || cellData.HasPitNeighbor(d.data);
                             bool flag2 = cellData.HasPhantomCarpetNeighbor(true);
-                            if (!flag && !flag2)
-                            {
-                                hashSet.Add(intVector);
-                            }
+                            if (!flag && !flag2) { hashSet.Add(intVector); }
                         }
                     }
                 }
@@ -2815,29 +2658,20 @@ namespace Planetside
                 List<Tuple<IntVector2, IntVector2>> list = new List<Tuple<IntVector2, IntVector2>>();
                 Tuple<IntVector2, IntVector2> tuple = null;
                 int num = 1;
-                if (GameManager.Instance.Dungeon.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.CASTLEGEON)
-                {
-                    num = 2;
-                }
+                if (d2.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.CASTLEGEON) { num = 2; }
                 while (flag3)
                 {
                     Tuple<IntVector2, IntVector2> tuple2 = Carpetron.MaxSubmatrix(d.data.cellData, r.area.basePosition, r.area.dimensions, false, false, false, r.RoomVisualSubtype);
                     IntVector2 b = tuple2.Second + IntVector2.One - tuple2.First;
                     int num2 = b.x * b.y;
-                    if (num2 < 15 || b.x < 3 || b.y < 3)
-                    {
-                        break;
-                    }
+                    if (num2 < 15 || b.x < 3 || b.y < 3) { break; }
                     if (tuple != null)
                     {
                         IntVector2 a = tuple.Second + IntVector2.One - tuple.First;
                         if (a != b)
                         {
                             num--;
-                            if (num <= 0)
-                            {
-                                break;
-                            }
+                            if (num <= 0) { break; }
                         }
                     }
                     for (int k = tuple2.First.x; k < tuple2.Second.x + 1; k++)
@@ -2855,10 +2689,7 @@ namespace Planetside
                 {
                     Tuple<IntVector2, IntVector2> tuple3 = null;
                     list[0] = Carpetron.PostprocessSubmatrix(list[0], out tuple3);
-                    if (tuple3 != null)
-                    {
-                        list.Add(tuple3);
-                    }
+                    if (tuple3 != null) { list.Add(tuple3); }
                 }
                 for (int m = 0; m < list.Count; m++)
                 {
@@ -2873,7 +2704,7 @@ namespace Planetside
                     }
                 }
             }
-            ApplyCarpetedHashset(hashSet, tileIndexGrid, d, map);
+            try { ApplyCarpetedHashset(hashSet, tileIndexGrid, d, map); } catch (Exception) { return; }
         }
 
         private void ApplyCarpetedHashset(HashSet<IntVector2> cellsToEncarpet, TileIndexGrid carpetGrid, Dungeon d, tk2dTileMap map)
@@ -2888,14 +2719,8 @@ namespace Planetside
                 foreach (IntVector2 intVector in cellsToEncarpet)
                 {
                     bool[] array = new bool[8];
-                    for (int i = 0; i < array.Length; i++)
-                    {
-                        array[i] = !cellsToEncarpet.Contains(intVector + cardinalsAndOrdinals[i]);
-                    }
-                    if (array[0] || array[1] || array[2] || array[3] || array[4] || array[5] || array[6] || array[7])
-                    {
-                        hashSet2.Add(intVector);
-                    }
+                    for (int i = 0; i < array.Length; i++) { array[i] = !cellsToEncarpet.Contains(intVector + cardinalsAndOrdinals[i]); }
+                    if (array[0] || array[1] || array[2] || array[3] || array[4] || array[5] || array[6] || array[7]) { hashSet2.Add(intVector); }
                 }
                 int num = 0;
                 while (hashSet2.Count > 0)
@@ -2917,10 +2742,7 @@ namespace Planetside
                     hashSet3 = new HashSet<IntVector2>();
                     num++;
                 }
-                if (num < 3)
-                {
-                    dictionary.Clear();
-                }
+                if (num < 3) { dictionary.Clear(); }
             }
             foreach (IntVector2 intVector4 in cellsToEncarpet)
             {
@@ -2952,30 +2774,24 @@ namespace Planetside
         public void HandleRoomDecorationMinimal(RoomHandler r, Dungeon d, Dungeon d2, tk2dTileMap map)
         {
             roomUsedStamps.Clear();
-            if (r.area.prototypeRoom == null)
-            {
-                return;
-            }
+            if (r.area.prototypeRoom == null) { return; }
             if (viableCategorySets == null)
             {
                 BuildStampLookupTable(d2);
                 BuildValidPlacementLists();
             }
-            ProcessHardcodedUpholstery(r, d, d2, map);
+            try { ProcessHardcodedUpholstery(r, d, d2, map); } catch (Exception) { }
             roomUsedStamps.Clear();
         }
 
         public void HandleRoomDecoration(RoomHandler r, Dungeon d, Dungeon d2, tk2dTileMap map)
         {
             roomUsedStamps.Clear();
-            ProcessHardcodedUpholstery(r, d, d2, map);
+            try { ProcessHardcodedUpholstery(r, d, d2, map); } catch (Exception) { }
             if (r.area.prototypeRoom == null || !r.area.prototypeRoom.preventAddedDecoLayering)
             {
-                UpholsterRoom(r, d, d2, map);
-                if (!r.ForcePreventChannels)
-                {
-                    DigChannels(r, d, d2, map);
-                }
+                try { UpholsterRoom(r, d, d2, map); } catch (Exception) { }
+                if (!r.ForcePreventChannels) { try { DigChannels(r, d, d2, map); } catch (Exception) { } }
             }
             if (viableCategorySets == null)
             {
@@ -3125,18 +2941,12 @@ namespace Planetside
                 for (; ; )
                 {
                     int num7 = expanse2.width - num6;
-                    if (num7 == 0)
-                    {
-                        break;
-                    }
+                    if (num7 == 0) { break; }
                     IntVector2 basePosition = r.area.basePosition + expanse2.basePosition + num6 * IntVector2.Up;
                     StampDataBase stampDataBase = null;
-                    ExpandTK2DInteriorDecorator.DecorateErrorCode decorateErrorCode = DecorateWallSection(basePosition, num7, r, d, d2, map, validEasternPlacements, expanse2, out stampDataBase, Mathf.Max(0.55f, r.RoomMaterial.stampFailChance), true);
-                    if (decorateErrorCode == ExpandTK2DInteriorDecorator.DecorateErrorCode.FAILED_SPACE)
-                    {
-                        break;
-                    }
-                    if (stampDataBase == null || decorateErrorCode == ExpandTK2DInteriorDecorator.DecorateErrorCode.FAILED_CHANCE)
+                    DecorateErrorCode decorateErrorCode = DecorateWallSection(basePosition, num7, r, d, d2, map, validEasternPlacements, expanse2, out stampDataBase, Mathf.Max(0.55f, r.RoomMaterial.stampFailChance), true);
+                    if (decorateErrorCode == DecorateErrorCode.FAILED_SPACE) { break; }
+                    if (stampDataBase == null || decorateErrorCode == DecorateErrorCode.FAILED_CHANCE)
                     {
                         num6++;
                     }
@@ -3151,10 +2961,10 @@ namespace Planetside
                         num6 += stampDataBase.height;
                     }
                 }
-            //IL_75E:
+                // IL_75E:
                 num4++;
                 continue;
-                //goto IL_75E;
+                // goto IL_75E;
             }
             int num8 = 0;
             while (num8 < list3.Count)
@@ -3165,18 +2975,12 @@ namespace Planetside
                 for (; ; )
                 {
                     int num10 = expanse3.width - num9;
-                    if (num10 == 0)
-                    {
-                        break;
-                    }
+                    if (num10 == 0) { break; }
                     IntVector2 basePosition3 = r.area.basePosition + expanse3.basePosition + num9 * IntVector2.Up;
                     StampDataBase stampDataBase3 = null;
-                    ExpandTK2DInteriorDecorator.DecorateErrorCode decorateErrorCode2 = DecorateWallSection(basePosition3, num10, r, d, d2, map, validWesternPlacements, expanse3, out stampDataBase3, Mathf.Max(0.55f, r.RoomMaterial.stampFailChance), true);
-                    if (decorateErrorCode2 == ExpandTK2DInteriorDecorator.DecorateErrorCode.FAILED_SPACE)
-                    {
-                        break;
-                    }
-                    if (stampDataBase3 == null || decorateErrorCode2 == ExpandTK2DInteriorDecorator.DecorateErrorCode.FAILED_CHANCE)
+                    DecorateErrorCode decorateErrorCode2 = DecorateWallSection(basePosition3, num10, r, d, d2, map, validWesternPlacements, expanse3, out stampDataBase3, Mathf.Max(0.55f, r.RoomMaterial.stampFailChance), true);
+                    if (decorateErrorCode2 == DecorateErrorCode.FAILED_SPACE) { break; }
+                    if (stampDataBase3 == null || decorateErrorCode2 == DecorateErrorCode.FAILED_CHANCE)
                     {
                         num9++;
                     }
@@ -3185,10 +2989,10 @@ namespace Planetside
                         num9 += stampDataBase3.height;
                     }
                 }
-            //IL_83F:
+                // IL_83F:
                 num8++;
                 continue;
-               // goto IL_83F;
+                // goto IL_83F;
             }
             List<TK2DInteriorDecorator.WallExpanse> list4 = r.GatherExpanses(DungeonData.Direction.SOUTH, true, false, false);
             int num11 = 0;
@@ -3199,19 +3003,13 @@ namespace Planetside
                 int num12 = 1;
                 for (; ; )
                 {
-                    int num13 = Mathf.FloorToInt((float)(expanse4.width - 2 * num12) / 2f);
-                    if (num13 == 0)
-                    {
-                        break;
-                    }
+                    int num13 = Mathf.FloorToInt((expanse4.width - 2 * num12) / 2f);
+                    if (num13 == 0) { break; }
                     IntVector2 basePosition4 = r.area.basePosition + expanse4.basePosition + num12 * IntVector2.Right;
                     StampDataBase stampDataBase4 = null;
-                    ExpandTK2DInteriorDecorator.DecorateErrorCode decorateErrorCode3 = DecorateWallSection(basePosition4, num13, r, d, d2, map, validSouthernPlacements, expanse4, out stampDataBase4, 0.5f, false);
-                    if (decorateErrorCode3 == ExpandTK2DInteriorDecorator.DecorateErrorCode.FAILED_SPACE)
-                    {
-                        break;
-                    }
-                    if (stampDataBase4 == null || decorateErrorCode3 == ExpandTK2DInteriorDecorator.DecorateErrorCode.FAILED_CHANCE)
+                    DecorateErrorCode decorateErrorCode3 = DecorateWallSection(basePosition4, num13, r, d, d2, map, validSouthernPlacements, expanse4, out stampDataBase4, 0.5f, false);
+                    if (decorateErrorCode3 == DecorateErrorCode.FAILED_SPACE) { break; }
+                    if (stampDataBase4 == null || decorateErrorCode3 == DecorateErrorCode.FAILED_CHANCE)
                     {
                         num12++;
                     }
@@ -3220,16 +3018,13 @@ namespace Planetside
                         IntVector2 intVector = r.area.basePosition + expanse4.basePosition + (expanse4.width - num12 - stampDataBase4.width) * IntVector2.Right + wallPlacementOffsets[stampDataBase4.placementRule];
                         m_assembler.ApplyStampGeneric(intVector.x, intVector.y, stampDataBase4, d, d2, map, false, GlobalDungeonData.aboveBorderLayerIndex);
                         num12 += stampDataBase4.width;
-                        if (stampDataBase4.width == 1)
-                        {
-                            num12 += 2;
-                        }
+                        if (stampDataBase4.width == 1) { num12 += 2; }
                     }
                 }
-            //IL_9B1:
+                // IL_9B1:
                 num11++;
                 continue;
-                //goto IL_9B1;
+                // goto IL_9B1;
             }
             for (int num14 = 2; num14 < r.area.dimensions.x - 2; num14++)
             {
@@ -3247,10 +3042,7 @@ namespace Planetside
                                 {
                                     StampDataBase stampDataBase5 = null;
                                     float failChance = 0.8f;
-                                    if (d2.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.OFFICEGEON)
-                                    {
-                                        failChance = 0.99f;
-                                    }
+                                    if (d2.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.OFFICEGEON) { failChance = 0.99f; }
                                     DecorateFloorSquare(basePosition5, r, d, d2, map, out stampDataBase5, failChance);
                                 }
                             }
@@ -3263,18 +3055,9 @@ namespace Planetside
 
         private void DecorateCeilingCorners(RoomHandler r, Dungeon d, Dungeon d2, tk2dTileMap map)
         {
-            if (d2.tileIndices.edgeDecorationTiles == null)
-            {
-                return;
-            }
-            if (r == d.data.Entrance)
-            {
-                return;
-            }
-            if (r == d.data.Exit)
-            {
-                return;
-            }
+            if (d2.tileIndices.edgeDecorationTiles == null) { return; }
+            if (r == d.data.Entrance) { return; }
+            if (r == d.data.Exit) { return; }
             CellArea area = r.area;
             for (int i = 0; i < area.dimensions.x; i++)
             {
@@ -3309,19 +3092,13 @@ namespace Planetside
             int num = 0;
             for (int i = 0; i < frameIterations; i++)
             {
-                int num2 = Mathf.FloorToInt((float)(expanse.width - 2 * num) / 2f);
-                if (num2 == 0)
-                {
-                    break;
-                }
+                int num2 = Mathf.FloorToInt((expanse.width - 2 * num) / 2f);
+                if (num2 == 0) { break; }
                 IntVector2 intVector = r.area.basePosition + expanse.basePosition + num * IntVector2.Right;
                 StampDataBase stampDataBase = null;
-                ExpandTK2DInteriorDecorator.DecorateErrorCode decorateErrorCode = DecorateWallSection(intVector, num2, r, d, d2, map, validNorthernPlacements, expanse, out stampDataBase, r.RoomMaterial.stampFailChance, false);
-                if (decorateErrorCode == ExpandTK2DInteriorDecorator.DecorateErrorCode.FAILED_SPACE)
-                {
-                    break;
-                }
-                if (stampDataBase == null || decorateErrorCode == ExpandTK2DInteriorDecorator.DecorateErrorCode.FAILED_CHANCE)
+                DecorateErrorCode decorateErrorCode = DecorateWallSection(intVector, num2, r, d, d2, map, validNorthernPlacements, expanse, out stampDataBase, r.RoomMaterial.stampFailChance, false);
+                if (decorateErrorCode == DecorateErrorCode.FAILED_SPACE) { break; }
+                if (stampDataBase == null || decorateErrorCode == DecorateErrorCode.FAILED_CHANCE)
                 {
                     num++;
                 }
@@ -3366,19 +3143,13 @@ namespace Planetside
             int num = 0;
             for (; ; )
             {
-                int num2 = Mathf.FloorToInt((float)(expanse.width - 2 * num) / 2f);
-                if (num2 == 0)
-                {
-                    break;
-                }
+                int num2 = Mathf.FloorToInt((expanse.width - 2 * num) / 2f);
+                if (num2 == 0) { break; }
                 IntVector2 intVector = r.area.basePosition + expanse.basePosition + num * IntVector2.Right;
                 StampDataBase stampDataBase = null;
-                ExpandTK2DInteriorDecorator.DecorateErrorCode decorateErrorCode = DecorateWallSection(intVector, num2, r, d, d2, map, validNorthernPlacements, expanse, out stampDataBase, r.RoomMaterial.stampFailChance, false);
-                if (decorateErrorCode == ExpandTK2DInteriorDecorator.DecorateErrorCode.FAILED_SPACE)
-                {
-                    break;
-                }
-                if (stampDataBase == null || decorateErrorCode == ExpandTK2DInteriorDecorator.DecorateErrorCode.FAILED_CHANCE)
+                DecorateErrorCode decorateErrorCode = DecorateWallSection(intVector, num2, r, d, d2, map, validNorthernPlacements, expanse, out stampDataBase, r.RoomMaterial.stampFailChance, false);
+                if (decorateErrorCode == DecorateErrorCode.FAILED_SPACE) { break; }
+                if (stampDataBase == null || decorateErrorCode == DecorateErrorCode.FAILED_CHANCE)
                 {
                     num++;
                 }
@@ -3418,18 +3189,12 @@ namespace Planetside
             for (; ; )
             {
                 int num2 = expanse.width - num;
-                if (num2 == 0)
-                {
-                    break;
-                }
+                if (num2 == 0) { break; }
                 IntVector2 intVector = r.area.basePosition + expanse.basePosition + num * IntVector2.Right;
                 StampDataBase stampDataBase = null;
-                ExpandTK2DInteriorDecorator.DecorateErrorCode decorateErrorCode = DecorateWallSection(intVector, num2, r, d, d2, map, validNorthernPlacements, expanse, out stampDataBase, r.RoomMaterial.stampFailChance, false);
-                if (decorateErrorCode == ExpandTK2DInteriorDecorator.DecorateErrorCode.FAILED_SPACE)
-                {
-                    break;
-                }
-                if (stampDataBase == null || decorateErrorCode == ExpandTK2DInteriorDecorator.DecorateErrorCode.FAILED_CHANCE)
+                DecorateErrorCode decorateErrorCode = DecorateWallSection(intVector, num2, r, d, d2, map, validNorthernPlacements, expanse, out stampDataBase, r.RoomMaterial.stampFailChance, false);
+                if (decorateErrorCode == DecorateErrorCode.FAILED_SPACE) { break; }
+                if (stampDataBase == null || decorateErrorCode == DecorateErrorCode.FAILED_CHANCE)
                 {
                     num++;
                 }
@@ -3516,73 +3281,49 @@ namespace Planetside
 
         private void BuildStampLookupTable(Dungeon d)
         {
-            viableCategorySets = new List<ExpandTK2DInteriorDecorator.ViableStampCategorySet>();
+            viableCategorySets = new List<ViableStampCategorySet>();
             for (int i = 0; i < d.stampData.stamps.Length; i++)
             {
                 StampDataBase stampDataBase = d.stampData.stamps[i];
-                ExpandTK2DInteriorDecorator.ViableStampCategorySet item = new ExpandTK2DInteriorDecorator.ViableStampCategorySet(stampDataBase.stampCategory, stampDataBase.placementRule, stampDataBase.occupySpace);
-                if (!viableCategorySets.Contains(item))
-                {
-                    viableCategorySets.Add(item);
-                }
+                ViableStampCategorySet item = new ViableStampCategorySet(stampDataBase.stampCategory, stampDataBase.placementRule, stampDataBase.occupySpace);
+                if (!viableCategorySets.Contains(item)) { viableCategorySets.Add(item); }
             }
             for (int j = 0; j < d.stampData.spriteStamps.Length; j++)
             {
                 StampDataBase stampDataBase2 = d.stampData.spriteStamps[j];
-                ExpandTK2DInteriorDecorator.ViableStampCategorySet item2 = new ExpandTK2DInteriorDecorator.ViableStampCategorySet(stampDataBase2.stampCategory, stampDataBase2.placementRule, stampDataBase2.occupySpace);
-                if (!viableCategorySets.Contains(item2))
-                {
-                    viableCategorySets.Add(item2);
-                }
+                ViableStampCategorySet item2 = new ViableStampCategorySet(stampDataBase2.stampCategory, stampDataBase2.placementRule, stampDataBase2.occupySpace);
+                if (!viableCategorySets.Contains(item2)) { viableCategorySets.Add(item2); }
             }
             for (int k = 0; k < d.stampData.objectStamps.Length; k++)
             {
                 StampDataBase stampDataBase3 = d.stampData.objectStamps[k];
-                ExpandTK2DInteriorDecorator.ViableStampCategorySet item3 = new ExpandTK2DInteriorDecorator.ViableStampCategorySet(stampDataBase3.stampCategory, stampDataBase3.placementRule, stampDataBase3.occupySpace);
-                if (!viableCategorySets.Contains(item3))
-                {
-                    viableCategorySets.Add(item3);
-                }
+                ViableStampCategorySet item3 = new ViableStampCategorySet(stampDataBase3.stampCategory, stampDataBase3.placementRule, stampDataBase3.occupySpace);
+                if (!viableCategorySets.Contains(item3)) { viableCategorySets.Add(item3); }
             }
         }
 
-        private ExpandTK2DInteriorDecorator.ViableStampCategorySet GetCategorySet(List<DungeonTileStampData.StampPlacementRule> validRules)
+        private ViableStampCategorySet GetCategorySet(List<DungeonTileStampData.StampPlacementRule> validRules)
         {
-            List<ExpandTK2DInteriorDecorator.ViableStampCategorySet> list = new List<ExpandTK2DInteriorDecorator.ViableStampCategorySet>();
+            List<ViableStampCategorySet> list = new List<ViableStampCategorySet>();
             for (int i = 0; i < viableCategorySets.Count; i++)
             {
-                if (validRules.Contains(viableCategorySets[i].placement))
-                {
-                    list.Add(viableCategorySets[i]);
-                }
+                if (validRules.Contains(viableCategorySets[i].placement)) { list.Add(viableCategorySets[i]); }
             }
-            if (list.Count == 0)
-            {
-                return null;
-            }
+            if (list.Count == 0) { return null; }
             return list[UnityEngine.Random.Range(0, list.Count)];
         }
 
         private bool CheckExpanseStampValidity(TK2DInteriorDecorator.WallExpanse expanse, StampDataBase stamp)
         {
-            if (stamp.preventRoomRepeats && roomUsedStamps.Contains(stamp))
-            {
-                return false;
-            }
+            if (stamp.preventRoomRepeats && roomUsedStamps.Contains(stamp)) { return false; }
             int preferredIntermediaryStamps = stamp.preferredIntermediaryStamps;
             for (int i = 0; i < preferredIntermediaryStamps; i++)
             {
                 int num = expanseUsedStamps.Count - (1 + i);
-                if (num < 0)
-                {
-                    break;
-                }
+                if (num < 0) { break; }
                 if (stamp.intermediaryMatchingStyle == DungeonTileStampData.IntermediaryMatchingStyle.ANY)
                 {
-                    if (expanseUsedStamps[num] == stamp)
-                    {
-                        return false;
-                    }
+                    if (expanseUsedStamps[num] == stamp) { return false; }
                 }
                 else if (expanseUsedStamps[num].intermediaryMatchingStyle == stamp.intermediaryMatchingStyle)
                 {
@@ -3602,32 +3343,23 @@ namespace Planetside
             placedStamp = null;
             List<DungeonTileStampData.StampPlacementRule> list = new List<DungeonTileStampData.StampPlacementRule>();
             list.Add(DungeonTileStampData.StampPlacementRule.ON_ANY_FLOOR);
-            ExpandTK2DInteriorDecorator.ViableStampCategorySet categorySet = GetCategorySet(list);
-            if (categorySet == null)
-            {
-                return false;
-            }
+            ViableStampCategorySet categorySet = GetCategorySet(list);
+            if (categorySet == null) { return false; }
             StampDataBase stampDataComplex = d2.stampData.GetStampDataComplex(list, categorySet.space, categorySet.category, r.opulence, r.RoomVisualSubtype, 1);
-            if (stampDataComplex == null)
-            {
-                return false;
-            }
+            if (stampDataComplex == null) { return false; }
             IntVector2 intVector = basePosition + wallPlacementOffsets[stampDataComplex.placementRule];
             m_assembler.ApplyStampGeneric(intVector.x, intVector.y, stampDataComplex, d, d2, map, false, -1);
             placedStamp = stampDataComplex;
             return true;
         }
 
-        private ExpandTK2DInteriorDecorator.DecorateErrorCode DecorateWallSection(IntVector2 basePosition, int viableWidth, RoomHandler r, Dungeon d, Dungeon d2, tk2dTileMap map, List<DungeonTileStampData.StampPlacementRule> validRules, TK2DInteriorDecorator.WallExpanse expanse, out StampDataBase placedStamp, float failChance = 0.2f, bool excludeWallSpace = false)
+        private DecorateErrorCode DecorateWallSection(IntVector2 basePosition, int viableWidth, RoomHandler r, Dungeon d, Dungeon d2, tk2dTileMap map, List<DungeonTileStampData.StampPlacementRule> validRules, TK2DInteriorDecorator.WallExpanse expanse, out StampDataBase placedStamp, float failChance = 0.2f, bool excludeWallSpace = false)
         {
-            if (GameManager.Options.DebrisQuantity == GameOptions.GenericHighMedLowOption.VERY_LOW)
-            {
-                failChance = Mathf.Min(failChance * 2f, 0.75f);
-            }
+            if (GameManager.Options.DebrisQuantity == GameOptions.GenericHighMedLowOption.VERY_LOW) { failChance = Mathf.Min(failChance * 2f, 0.75f); }
             if (UnityEngine.Random.value < failChance)
             {
                 placedStamp = null;
-                return ExpandTK2DInteriorDecorator.DecorateErrorCode.FAILED_CHANCE;
+                return DecorateErrorCode.FAILED_CHANCE;
             }
             StampDataBase stampDataBase = null;
             if (validRules.Contains(DungeonTileStampData.StampPlacementRule.BELOW_LOWER_FACEWALL))
@@ -3652,10 +3384,7 @@ namespace Planetside
                 if (d.data[basePosition + IntVector2.Up].cellVisualData.forcedMatchingStyle == DungeonTileStampData.IntermediaryMatchingStyle.ANY)
                 {
                     stampDataBase = d2.stampData.GetStampDataSimple(validRules, r.opulence, r.RoomVisualSubtype, viableWidth, excludeWallSpace, roomUsedStamps);
-                    if (stampDataBase == null || !stampDataBase.requiresForcedMatchingStyle)
-                    {
-                        goto IL_20F;
-                    }
+                    if (stampDataBase == null || !stampDataBase.requiresForcedMatchingStyle) { goto IL_20F; }
                 }
                 else
                 {
@@ -3671,18 +3400,9 @@ namespace Planetside
                 i++;
                 continue;
             IL_20F:
-                if (stampDataBase == null)
-                {
-                    break;
-                }
-                if (excludeWallSpace && stampDataBase.width > 1)
-                {
-                    goto IL_247;
-                }
-                if (CheckExpanseStampValidity(expanse, stampDataBase))
-                {
-                    break;
-                }
+                if (stampDataBase == null) { break; }
+                if (excludeWallSpace && stampDataBase.width > 1) { goto IL_247; }
+                if (CheckExpanseStampValidity(expanse, stampDataBase)) { break; }
                 stampDataBase = null;
                 goto IL_247;
             }
@@ -3691,7 +3411,7 @@ namespace Planetside
             if (stampDataBase == null)
             {
                 placedStamp = null;
-                return ExpandTK2DInteriorDecorator.DecorateErrorCode.FAILED_SPACE;
+                return DecorateErrorCode.FAILED_SPACE;
             }
             expanseUsedStamps.Add(stampDataBase);
             roomUsedStamps.Add(stampDataBase);
@@ -3700,8 +3420,7 @@ namespace Planetside
             int overrideTileLayerIndex = (!flag) ? -1 : GlobalDungeonData.aboveBorderLayerIndex;
             m_assembler.ApplyStampGeneric(intVector.x, intVector.y, stampDataBase, d, d2, map, false, overrideTileLayerIndex);
             placedStamp = stampDataBase;
-            return ExpandTK2DInteriorDecorator.DecorateErrorCode.ALL_OK;
+            return DecorateErrorCode.ALL_OK;
         }
     }
 }
-

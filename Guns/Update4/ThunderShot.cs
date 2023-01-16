@@ -99,7 +99,7 @@ namespace Planetside
                 "psog:thundershot",
                 "double_vision"
             };
-            CustomSynergies.Add("ROCK, AAAAND, STOOOOONE!", eee, null, true);
+            CustomSynergies.Add("   a", eee, null, true);
             
             ThunderShot.ThunderShotID = gun.PickupObjectId;
             ItemIDs.AddToList(gun.PickupObjectId);

@@ -24,11 +24,13 @@ namespace Planetside
 		public static void Init()
 		{
 			string itemName = "Gunslingers Ring";
-			string resourceName = "Planetside/Resources/gunslingersring.png";
+			//string resourceName = "Planetside/Resources/gunslingersring.png";
 			GameObject obj = new GameObject(itemName);
 			var item = obj.AddComponent<GunslingersRing>();
-			ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
-			string shortDesc = "Left Hand Man";
+            var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("gunslingersring"), data, obj);
+            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            string shortDesc = "Left Hand Man";
 			string longDesc = "An old ring worn by a gunslinger similar to the Lich.\n\nThe gem on the ring glows a different color when the bearer wields different weapons, and strengthens the wearer based off of it.";
 			ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
 			item.quality = PickupObject.ItemQuality.A;
@@ -73,11 +75,23 @@ namespace Planetside
 					Values.DealsDamage = false;
 					Values.AreaIncreasesWithProjectileSizeStat = true;
 					Values.DamageValuesAlsoScalesWithDamageStat = false;
-					Values.EffectProcChance = 0.33f;
-					if (sourceProjectile.PossibleSourceGun.gunClass == GunClass.POISON) {Values.InflictsPoison = true;}
-					if (sourceProjectile.PossibleSourceGun.gunClass == GunClass.FIRE) {Values.InflictsFire = true;}
-					if (sourceProjectile.PossibleSourceGun.gunClass == GunClass.CHARM) { Values.InflictsCharm = true; }
-                    if (sourceProjectile.PossibleSourceGun.gunClass == GunClass.ICE) { Values.InflictsFreeze = true; }
+
+                    if (sourceProjectile.PossibleSourceGun.gunClass == GunClass.POISON)
+                    {
+                        Values.debuffs.Add(DebuffStatics.irradiatedLeadEffect, 0.2f);
+                    }
+                    if (sourceProjectile.PossibleSourceGun.gunClass == GunClass.FIRE)
+                    {
+                        Values.debuffs.Add(DebuffStatics.hotLeadEffect, 0.2f);
+                    }
+                    if (sourceProjectile.PossibleSourceGun.gunClass == GunClass.CHARM)
+                    {
+                        Values.debuffs.Add(DebuffStatics.charmingRoundsEffect, 0.2f);
+                    }
+                    if (sourceProjectile.PossibleSourceGun.gunClass == GunClass.ICE)
+                    {
+                        Values.debuffs.Add(DebuffStatics.frostBulletsEffect, 0.5f);
+                    }
                 }
             }
         }

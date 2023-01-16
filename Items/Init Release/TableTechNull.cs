@@ -21,13 +21,15 @@ namespace Planetside
         {
             string itemName = "Table Tech Null";
 
-            string resourceName = "Planetside/Resources/tabletechnull.png";
+            //string resourceName = "Planetside/Resources/tabletechnull.png";
 
             GameObject obj = new GameObject(itemName);
 
             TableTechNullReferenceException minigunrounds = obj.AddComponent<TableTechNullReferenceException>();
 
-            ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("tabletechnull"), data, obj);
+            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
 
             string shortDesc = "Undefined Flips";
             string longDesc = "This ancient technique allows the user to vaporize enemy bullets from thin air, as if they never existed.\n\nChapter 17 of the Table Sutra. Nolla.";

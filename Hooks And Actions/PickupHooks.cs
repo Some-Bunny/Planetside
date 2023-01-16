@@ -37,20 +37,66 @@ namespace Planetside
 
 
             //may god have mercy on my soul
-            new Hook(typeof(GameUIRoot).GetMethod("UpdatePlayerBlankUI", BindingFlags.Instance | BindingFlags.Public), typeof(PickupHooks).GetMethod("UpdateBlanksHook"));
-
+            new Hook(typeof(GameUIRoot).GetMethod("UpdatePlayerBlankUI", BindingFlags.Instance | BindingFlags.Public), typeof(PickupHooks).GetMethod("UpdateBlanksHook"));  
             new Hook(typeof(Chest).GetMethod("Interact", BindingFlags.Instance | BindingFlags.Public), typeof(PickupHooks).GetMethod("InteractHook"));
-
             new Hook(typeof(AmmoPickup).GetMethod("Pickup", BindingFlags.Instance | BindingFlags.Public), typeof(PickupHooks).GetMethod("CanINotHaveTwoHookMethodsWithTheSameName"));
-
             new Hook(typeof(GameUIHeartController).GetMethod("UpdateHealth", BindingFlags.Instance | BindingFlags.Public), typeof(PickupHooks).GetMethod("UpdateHealthHook"));
-
             new Hook(typeof(ShopItemController).GetMethod("Update", BindingFlags.Instance | BindingFlags.NonPublic), typeof(PickupHooks).GetMethod("UpdateShopItemHook"));
-
             new Hook(typeof(IounStoneOrbitalItem).GetMethod("Pickup", BindingFlags.Instance | BindingFlags.Public), typeof(PickupHooks).GetMethod("PickupGuonStoneHook"));
-
             new Hook(typeof(EscapeRopeItem).GetMethod("DoEffect", BindingFlags.Instance | BindingFlags.NonPublic), typeof(PickupHooks).GetMethod("DoEffectHook"));
+
+            new Hook(typeof(PassiveReflectItem).GetMethod("OnPreCollision", BindingFlags.Instance | BindingFlags.NonPublic), typeof(PickupHooks).GetMethod("OnPreCollisionHook"));
+            new Hook(typeof(RatPackItem).GetMethod("EatBullet", BindingFlags.Instance | BindingFlags.NonPublic), typeof(PickupHooks).GetMethod("EatBulletHook"));
+
         }
+
+        public static void EatBulletHook(Action<RatPackItem, Projectile> orig, RatPackItem self, Projectile p) 
+        {
+            var un = p.GetComponent<MarkForUndodgeAbleBullet>();
+            if (p.Owner is AIActor && un != null)
+            {
+                un.ForceHurtPlayer(self.LastOwner, p);
+                p.DieInAir(false, true, true, false);
+                PlanetsideReflectionHelper.ReflectSetField<int>(typeof(RatPackItem), "m_containedBullets", PlanetsideReflectionHelper.ReflectGetField<int>(typeof(RatPackItem), "m_containedBullets", self)+1, self);
+                PlanetsideReflectionHelper.ReflectSetField<int>(typeof(RatPackItem), "m_containedBullets", Mathf.Clamp(PlanetsideReflectionHelper.ReflectGetField<int>(typeof(RatPackItem), "m_containedBullets", self), 0, PlanetsideReflectionHelper.ReflectGetField<int>(typeof(RatPackItem), "MaxContainedBullets", self)), self);
+            }
+            else
+            { orig(self, p); }
+        }
+
+        public static void OnPreCollisionHook(Action<PassiveReflectItem, SpeculativeRigidbody, PixelCollider, SpeculativeRigidbody, PixelCollider> orig, PassiveReflectItem self, SpeculativeRigidbody myRigidbody, PixelCollider myCollider, SpeculativeRigidbody otherRigidbody, PixelCollider otherCollider)
+        {
+            if (otherRigidbody.GetComponent<Projectile>() && otherRigidbody.GetComponent<MarkForUndodgeAbleBullet>())
+            {
+                if (self.condition == PassiveReflectItem.Condition.WhileDodgeRolling && !self.Owner.spriteAnimator.QueryInvulnerabilityFrame())
+                {
+                    return;
+                }
+                Projectile component = otherRigidbody.GetComponent<Projectile>();
+                if (component != null)
+                {
+                    otherRigidbody.GetComponent<MarkForUndodgeAbleBullet>().ForceHurtPlayer(self.Owner, component);
+                    PassiveReflectItem.ReflectBullet(component, self.retargetReflectedBullet, self.Owner, self.minReflectedBulletSpeed, 1f, 1f, 0f);
+                    if (self.AmmoGainedOnReflection > 0)
+                    {
+                        Gun currentGun = self.Owner.CurrentGun;
+                        if (currentGun && currentGun.CanGainAmmo)
+                        {
+                            currentGun.GainAmmo(self.AmmoGainedOnReflection);
+                        }
+                    }
+                    AkSoundEngine.PostEvent("Play_OBJ_metalskin_deflect_01", component.gameObject);
+                    otherRigidbody.transform.position += component.Direction.ToVector3ZUp(0f) * 0.5f;
+                    otherRigidbody.Reinitialize();
+                    PhysicsEngine.SkipCollision = true;
+                }
+            }
+            else
+            {
+                orig(self, myRigidbody, myCollider, otherRigidbody, otherCollider);
+            }
+        }
+
 
         public static void DoEffectHook(Action<EscapeRopeItem, PlayerController> orig, EscapeRopeItem self, PlayerController user)
         {

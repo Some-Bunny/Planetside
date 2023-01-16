@@ -304,8 +304,10 @@ namespace Planetside
 				targetLabel.Opacity = this.Opacity;
 			}
 			targetLabel.TextScale = this.TextSize;
+            
 
-			targetLabel.transform.position = dfFollowObject.ConvertWorldSpaces(worldPosition, GameManager.Instance.MainCameraController.Camera, GameUIRoot.Instance.Manager.RenderCamera).WithZ(0f);
+
+            targetLabel.transform.position = dfFollowObject.ConvertWorldSpaces(worldPosition, GameManager.Instance.MainCameraController.Camera, GameUIRoot.Instance.Manager.RenderCamera).WithZ(0f);
 			targetLabel.transform.position = targetLabel.transform.position.QuantizeFloor(targetLabel.PixelsToUnits() / (Pixelator.Instance.ScaleTileScale / Pixelator.Instance.CurrentTileScale));
 			xOffSet = CalculateCenterXoffset(targetLabel);
 			

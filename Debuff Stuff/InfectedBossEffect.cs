@@ -427,99 +427,76 @@ namespace Planetside
 
 		public Color TintColorInfection = new Color(0.05f, 0.3f, 0.9f, 0.7f);
 
-		public static void Init()
+		public static List<GameObject> BuildVFX()
 		{
-			GeneratedInfectionCrystals = new List<GameObject>();
-			string defPath = "Planetside/Resources/VFX/InfectionBoss/";
-			GeneratedInfectionCrystals.Add(GenerateInfectionCrystalFromPath("Blob1", new string[] 
-			{
-				defPath +"bigblob1_001.png",
-				defPath +"bigblob1_002.png",
-				defPath +"bigblob1_003.png",
-				defPath +"bigblob1_004.png"
-			}, 6));
-			GeneratedInfectionCrystals.Add(GenerateInfectionCrystalFromPath("Blob2", new string[]
-			{
-				defPath +"bigblob1_001.png",
-				defPath +"bigblob1_002.png",
-				defPath +"bigblob1_003.png",
-				defPath +"bigblob1_004.png"
-			}, 3));
+            GeneratedInfectionCrystals = new List<GameObject>();
+            GeneratedInfectionCrystals.Add(GenerateInfectionCrystalFromPath("Blob1", new List<string>()
+            {
+                "bigblob1_001",
+                "bigblob1_002",
+                "bigblob1_003",
+                "bigblob1_004",
 
-			GeneratedInfectionCrystals.Add(GenerateInfectionCrystalFromPath("Blob3", new string[]
-			{
-				defPath +"bigblob2_001.png",
-				defPath +"bigblob2_002.png",
-				defPath +"bigblob2_003.png",
-				defPath +"bigblob2_004.png",
-			}, 4));
-			GeneratedInfectionCrystals.Add(GenerateInfectionCrystalFromPath("Blob4", new string[]
-			{
-				defPath +"bigblob2_001.png",
-				defPath +"bigblob2_002.png",
-				defPath +"bigblob2_003.png",
-				defPath +"bigblob2_004.png",
-			}, 7));
-			GeneratedInfectionCrystals.Add(GenerateInfectionCrystalFromPath("Blob5", new string[]
-			{
-				defPath +"bigblob3_001.png",
-				defPath +"bigblob3_002.png",
-				defPath +"bigblob3_003.png",
-				defPath +"bigblob3_004.png",
-			}, 5));
-		}
-		private static GameObject GenerateInfectionCrystalFromPath(string name, string[] spritePaths, int FPS)
+            }, 6));
+            GeneratedInfectionCrystals.Add(GenerateInfectionCrystalFromPath("Blob2", new List<string>()
+            {
+                "bigblob1_001",
+                "bigblob1_002",
+                "bigblob1_003",
+                "bigblob1_004",
+
+            }, 3));
+
+            GeneratedInfectionCrystals.Add(GenerateInfectionCrystalFromPath("Blob3", new List<string>()
+            {
+                "bigblob2_001",
+                "bigblob2_002",
+                "bigblob2_003",
+                "bigblob2_004",
+
+            }, 4));
+            GeneratedInfectionCrystals.Add(GenerateInfectionCrystalFromPath("Blob4", new List<string>()
+            {
+                "bigblob2_001",
+                "bigblob2_002",
+                "bigblob2_003",
+                "bigblob2_004",
+
+            }, 7));
+            GeneratedInfectionCrystals.Add(GenerateInfectionCrystalFromPath("Blob5", new List<string>()
+            {
+                "bigblob3_001",
+                "bigblob3_002",
+                "bigblob3_003",
+                "bigblob3_004",
+            }, 5));
+			return GeneratedInfectionCrystals;
+        }
+
+
+		private static GameObject GenerateInfectionCrystalFromPath(string name, List<string> spritePaths, int FPS)
 		{
-			GameObject gameObject = ItemBuilder.AddSpriteToObject(name, spritePaths[0], null);
-			FakePrefab.MarkAsFakePrefab(gameObject);
-			UnityEngine.Object.DontDestroyOnLoad(gameObject);
+            var debuffCollection = StaticSpriteDefinitions.Debuff_Sheet_Data;
+            var BrokenArmorVFXObject = ItemBuilder.AddSpriteToObjectAssetbundle(name, debuffCollection.GetSpriteIdByName(spritePaths.First()), debuffCollection);//new GameObject("Broken Armor");//SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Debuffs/brokenarmor", new GameObject("BrokenArmorEffect"));
+            FakePrefab.MarkAsFakePrefab(BrokenArmorVFXObject);
+            UnityEngine.Object.DontDestroyOnLoad(BrokenArmorVFXObject);
+            tk2dBaseSprite vfxSprite = BrokenArmorVFXObject.GetComponent<tk2dBaseSprite>();
+            vfxSprite.GetCurrentSpriteDef().ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.LowerCenter, vfxSprite.GetCurrentSpriteDef().position3);
 
-			tk2dSpriteCollectionData SpriteObjectSpriteCollection = SpriteBuilder.ConstructCollection(gameObject, (name + "_Collection"));
-			int spriteID = SpriteBuilder.AddSpriteToCollection(spritePaths[0], SpriteObjectSpriteCollection);
-			tk2dSprite sprite = gameObject.GetOrAddComponent<tk2dSprite>();
-			sprite.SetSprite(SpriteObjectSpriteCollection, spriteID);
+            BrokenArmorVFXObject.GetOrAddComponent<tk2dBaseSprite>();
+            tk2dSpriteAnimator animator = BrokenArmorVFXObject.GetOrAddComponent<tk2dSpriteAnimator>();
+            var clip = SpriteBuilder.AddAnimation(animator, debuffCollection, new List<int>()
+            {
+				debuffCollection.GetSpriteIdByName(spritePaths[0]),
+                debuffCollection.GetSpriteIdByName(spritePaths[1]),
+                debuffCollection.GetSpriteIdByName(spritePaths[2]),
+                debuffCollection.GetSpriteIdByName(spritePaths[3]),
+            }, "start", tk2dSpriteAnimationClip.WrapMode.Loop, FPS);
 
-			tk2dSpriteAnimator animator = gameObject.GetOrAddComponent<tk2dSpriteAnimator>();
-			tk2dSpriteAnimation animation = gameObject.AddComponent<tk2dSpriteAnimation>();
-			animation.clips = new tk2dSpriteAnimationClip[0];
-			animator.Library = animation;
-
-			List<tk2dSpriteAnimationClip> clips = new List<tk2dSpriteAnimationClip>();
-			if (spritePaths.Length >= 1)
-			{
-				tk2dSpriteAnimationClip idleClip = new tk2dSpriteAnimationClip() { name = "idle", frames = new tk2dSpriteAnimationFrame[0], fps = FPS };
-				List<tk2dSpriteAnimationFrame> frames = new List<tk2dSpriteAnimationFrame>();
-				for (int i = 0; i < spritePaths.Length; i++)
-				{
-					tk2dSpriteCollectionData collection = SpriteObjectSpriteCollection;
-					int frameSpriteId = SpriteBuilder.AddSpriteToCollection(spritePaths[i], collection);
-					tk2dSpriteDefinition frameDef = collection.spriteDefinitions[frameSpriteId];
-					frames.Add(new tk2dSpriteAnimationFrame { spriteId = frameSpriteId, spriteCollection = collection });
-					frameDef.ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.LowerLeft);
-				}
-				idleClip.frames = frames.ToArray();
-				idleClip.wrapMode = tk2dSpriteAnimationClip.WrapMode.Loop;
-				animator.Library.clips = animation.clips.Concat(new tk2dSpriteAnimationClip[] { idleClip }).ToArray();
-				animator.playAutomatically = true;
-				animator.DefaultClipId = animator.GetClipIdByName("idle");
-				clips.Add(idleClip);
-				tk2dSpriteAnimationClip[] array = clips.ToArray();
-				animator.Library.clips = array;
-				animator.playAutomatically = true;
-				animator.DefaultClipId = animator.GetClipIdByName("idle");
-			}
-
-
-			sprite.usesOverrideMaterial = true;
-
-			Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
-			mat.mainTexture = sprite.renderer.material.mainTexture;
-			mat.SetColor("_EmissiveColor", new Color32(0, 255, 255, 255));
-			mat.SetFloat("_EmissiveColorPower", 2f);
-			mat.SetFloat("_EmissivePower", 35);
-			sprite.renderer.material = mat;
-			return gameObject;
-		}
+            animator.DefaultClipId = animator.GetClipIdByName("start");
+            animator.playAutomatically = true;
+            return BrokenArmorVFXObject;
+        }
 
 		public static List<GameObject> GeneratedInfectionCrystals;
 

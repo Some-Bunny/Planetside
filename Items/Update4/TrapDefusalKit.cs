@@ -24,11 +24,13 @@ namespace Planetside
 		public static void Init()
 		{
 			string itemName = "Trap Defusal Kit";
-			string resourceName = "Planetside/Resources/trapdefusalkit.png";
+			//string resourceName = "Planetside/Resources/trapdefusalkit.png";
 			GameObject obj = new GameObject(itemName);
 			var item = obj.AddComponent<TrapDefusalKit>();
-			ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
-			string shortDesc = "Red Or Blue?";
+            var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("trapdefusalkit"), data, obj);
+            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            string shortDesc = "Red Or Blue?";
 			string longDesc = "Masterfully disables all sorts of traps.\n\nHolds a screwdriver, a pair of pliers, a wire-cutter, a booklet on bomb defusal and a half-full bottle of vodka.";
 			ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
 			item.quality = PickupObject.ItemQuality.B;

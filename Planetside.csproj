@@ -109,6 +109,7 @@
     <Compile Include="DungeonGenStuff\ExpandTK2DDungeonAssembler.cs" />
     <Compile Include="DungeonPlaceables\AbyssFloorDoor.cs" />
     <Compile Include="DungeonPlaceables\EnemyBuffShrine.cs" />
+    <Compile Include="DungeonPlaceables\NoTeleporterPlaceable.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\MovingFloorTiles\MovingTile2X2.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassBloodDecals.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TearInReality.cs" />
@@ -431,8 +432,6 @@
     <Compile Include="EnemySetupCode\EnemyRelatedStuff\Behavior Stuff\CustomSpinBulletsBehavior.cs" />
     <Compile Include="Code That IDK When I%27ll Use.cs" />
     <Compile Include="Unsorted Garbage\GunPieces.cs" />
-    <Compile Include="Components\Item Components\LoaderPylonSynergyFormeController.cs" />
-    <Compile Include="Components\Item Components\LoaderPylonController.cs" />
     <Compile Include="Unsorted Garbage\BloodbathOnKill.cs" />
     <Compile Include="Components\Projectile Components\TinyPlanetMovementModule.cs" />
     <Compile Include="Components\Projectile Components\OscillatingBulletsMovementModule.cs" />
@@ -779,6 +778,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="APIs\SaveAPI\Properties\" />
+    <Folder Include="Assetbundle Stuff\Unity Projects\" />
     <Folder Include="Resources\DungeonObjects\MoneyPots\Hegemony\" />
     <Folder Include="Resources\VFX\EliteCrowns\" />
   </ItemGroup>

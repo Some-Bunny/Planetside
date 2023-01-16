@@ -25,11 +25,13 @@ namespace Planetside
 		public static void Init()
 		{
 			string itemName = "The Anchor";
-			string resourceName = "Planetside/Resources/stableVector.png";
+			//string resourceName = "Planetside/Resources/stableVector.png";
 			GameObject obj = new GameObject(itemName);
 			var item = obj.AddComponent<StableVector>();
-			ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
-			string shortDesc = "See Beyond";
+            var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("stableVector"), data, obj);
+            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            string shortDesc = "See Beyond";
 			string longDesc = "Certain entrances appear consistently.\n\nContains a very small blue orb.";
 			ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
 			item.quality = PickupObject.ItemQuality.A;

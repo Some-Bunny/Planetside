@@ -38,6 +38,8 @@ namespace Planetside
             foreach (var variable in decal2x2List)
             {
                 variable.Key.gameObject.AddComponent<TresspassUnlitShaderController>();
+                variable.Key.gameObject.SetLayerRecursively(LayerMask.NameToLayer("BG_Nonsense"));
+
             }
 
 

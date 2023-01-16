@@ -253,6 +253,7 @@ namespace Planetside
             TrespassSniperTurretsController t = sniperTurretDefaultaFront.gameObject.AddComponent<TrespassSniperTurretsController>();
             sniperTurretDefaultaFront.gameObject.AddComponent<TresspassLightController>();
             t.muzzleFlashPrefab = (PickupObjectDatabase.GetById(576) as Gun).muzzleFlashEffects.effects[0].effects[0].effect;
+            sniperTurretDefaultaFront.gameObject.AddComponent<PushImmunity>();
 
             t.DirectionToFire = Vector2.down.ToAngle();
             bulletBankLeft.Bullets = new List<AIBulletBank.Entry>();
@@ -291,6 +292,8 @@ namespace Planetside
             bulletBankLeft.Bullets.Add(entry1);
             bulletBankLeft.Bullets.Add(entry2);
             bulletBankLeft.Bullets.Add(entry3);
+            sniperTurretDefaultaFront.gameObject.AddComponent<PushImmunity>();
+
             StaticReferences.StoredRoomObjects.Add("TrespassSniperTurretLeft", sniperTurretDefaultaFront.gameObject);
         }
         public static void MakeRight(AIBulletBank.Entry entry1, AIBulletBank.Entry entry2, AIBulletBank.Entry entry3)
@@ -316,6 +319,8 @@ namespace Planetside
             bulletBankLeft.Bullets.Add(entry1);
             bulletBankLeft.Bullets.Add(entry2);
             bulletBankLeft.Bullets.Add(entry3);
+            sniperTurretDefaultaFront.gameObject.AddComponent<PushImmunity>();
+
             StaticReferences.StoredRoomObjects.Add("TrespassSniperTurretRight", sniperTurretDefaultaFront.gameObject);
         }
     }

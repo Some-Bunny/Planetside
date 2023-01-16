@@ -23,11 +23,13 @@ namespace Planetside
 		public static void Init()
 		{
 			string itemName = "Unsta-bullets";
-			string resourceName = "Planetside/Resources/unstab-ullets.png";
+			//string resourceName = "Planetside/Resources/unstab-ullets.png";
 			GameObject obj = new GameObject(itemName);
 			var item = obj.AddComponent<Unstabullets>();
-			ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
-			string shortDesc = "Quantum Mechanics";
+            var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("unstab-ullets"), data, obj);
+            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            string shortDesc = "Quantum Mechanics";
 			string longDesc = "These bullets were forged with lead from beyond the Curtain." +
 				"\n\nThey seem to shift their positions fairly unpredictably.";
 			ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
@@ -35,7 +37,6 @@ namespace Planetside
 			item.quality = PickupObject.ItemQuality.B;
 			item.AddToSubShop(ItemBuilder.ShopType.Trorc, 1f);
 			item.AddToSubShop(ItemBuilder.ShopType.Goopton, 1f);
-
 
 			Unstabullets.UnstabulletsID = item.PickupObjectId;
 			ItemIDs.AddToList(item.PickupObjectId);
@@ -48,35 +49,34 @@ namespace Planetside
 			try
 			{
 				
-				Unstabullets.Char = UnityEngine.Random.Range(0, 5);
-				switch (Unstabullets.Char)
+				int c = UnityEngine.Random.Range(0, 7);
+				switch (c)
 				{
 					case 1:
 						float num2 = 10f;
 						{
-							bool isInCombat = owner.IsInCombat;
-							if (isInCombat)
+							if (owner.IsInCombat)
 							{
-								{
-									List<AIActor> activeEnemies = owner.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
-									bool flag5 = activeEnemies == null | activeEnemies.Count <= 0;
-									{
-										AIActor nearestEnemy = this.GetNearestEnemy(activeEnemies, owner.sprite.WorldCenter, out num2, null);
-										bool flag8 = nearestEnemy && nearestEnemy != null;
-										if (flag8)
-										{
-											Vector2 unitCenter3 = nearestEnemy.specRigidbody.HitboxPixelCollider.UnitCenter;
-											sourceProjectile.transform.position = unitCenter3;
-											sourceProjectile.baseData.damage *= 0.75f;
-										}
-									}
-								}
-							}
+                                List<AIActor> activeEnemies = owner.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
+                                if (activeEnemies == null | activeEnemies.Count < 0)
+                                {
+                                    AIActor nearestEnemy = this.GetNearestEnemy(activeEnemies, owner.sprite.WorldCenter, out num2, null);
+                                    if (nearestEnemy != null)
+                                    {
+										StaticVFXStorage.SpiratTeleportVFX.SpawnAtPosition(sourceProjectile.transform.position);
+                                        Vector2 unitCenter3 = nearestEnemy.specRigidbody.HitboxPixelCollider.UnitCenter;
+                                        sourceProjectile.transform.position = unitCenter3;
+                                        sourceProjectile.baseData.damage *= 0.6f;
+                                        StaticVFXStorage.SpiratTeleportVFX.SpawnAtPosition(sourceProjectile.transform.position);
+
+                                    }
+                                }
+                            }
 						}
 						break;
 					case 2:
-						bool flag = BraveInput.GetInstanceForPlayer(owner.PlayerIDX).IsKeyboardAndMouse(false);
-						if (flag)
+                        StaticVFXStorage.SpiratTeleportVFX.SpawnAtPosition(sourceProjectile.transform.position);
+                        if (BraveInput.GetInstanceForPlayer(owner.PlayerIDX).IsKeyboardAndMouse(false))
 						{
 							this.aimpoint = owner.unadjustedAimPoint.XY();
 						}
@@ -91,7 +91,8 @@ namespace Planetside
 							this.aimpoint = owner.CenterPosition + (Quaternion.Euler(0f, 0f, this.m_currentAngle) * Vector2.right).XY() * this.m_currentDistance;
 						}
 						sourceProjectile.transform.position = aimpoint;
-						break;
+                        StaticVFXStorage.SpiratTeleportVFX.SpawnAtPosition(sourceProjectile.transform.position);
+                        break;
 				}
 			
 			}
@@ -115,18 +116,12 @@ namespace Planetside
 				for (int i = 0; i < activeEnemies.Count; i++)
 				{
 					AIActor aiactor2 = activeEnemies[i];
-					bool flag6 = !aiactor2.healthHaver.IsDead && aiactor2.healthHaver.IsVulnerable;
-					bool flag7 = flag6;
-					if (flag7)
+					if (!aiactor2.healthHaver.IsDead && aiactor2.healthHaver.IsVulnerable)
 					{
-						bool flag8 = filter == null || !filter.Contains(aiactor2.EnemyGuid);
-						bool flag9 = flag8;
-						if (flag9)
+						if (filter == null || !filter.Contains(aiactor2.EnemyGuid))
 						{
 							float num = Vector2.Distance(position, aiactor2.CenterPosition);
-							bool flag10 = num < nearestDistance;
-							bool flag11 = flag10;
-							if (flag11)
+							if (num < nearestDistance)
 							{
 								nearestDistance = num;
 								aiactor = aiactor2;
@@ -159,7 +154,6 @@ namespace Planetside
 			}
 			base.OnDestroy();
 		}
-		public static int Char = 0;
 		private float m_currentAngle;
 		private float m_currentDistance;
 		private Vector2 aimpoint;

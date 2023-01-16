@@ -21,10 +21,12 @@ namespace Planetside
         public static void Init()
         {
             string itemName = "Soul-Bound Skull";
-            string resourceName = "Planetside/Resources/soulboundskull.png";
+            //string resourceName = "Planetside/Resources/soulboundskull.png";
             GameObject obj = new GameObject(itemName);
             var item = obj.AddComponent<SoulboundSkull>();
-            ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("soulboundskull"), data, obj);
+            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "Spirit Vessel";
             string longDesc = "A skull of lead, wrapped in old prayer beads." +
                 "\n\nIt seems to absorb souls only to shortly release them...\n\n LIII : XIX";
@@ -33,63 +35,35 @@ namespace Planetside
             SoulboundSkull.SoulboundSkullID = item.PickupObjectId;
             ItemIDs.AddToList(item.PickupObjectId);
 
-        }
-        public static int SoulboundSkullID;
-        private void OnEnemyDamaged(float damage, bool fatal, HealthHaver enemy)
-        {
-            if (base.Owner != null)
-            {
-                if (enemy.specRigidbody != null)
-                {
-                    bool flag = enemy.aiActor && fatal;
-                    if (flag)
-                    {
-                        this.Spited(enemy.sprite.WorldCenter);
 
-                    }
-                    else if (enemy.aiActor && UnityEngine.Random.value <= 0.05f)
-                    {
-                        this.Spited(base.Owner.sprite.WorldCenter);
-                    }
-                }
-            }
-        }
-        public void Spited(Vector3 position)
-        {
-            Projectile projectile = ((Gun)ETGMod.Databases.Items[378]).DefaultModule.projectiles[0];
-            GameObject gameObject = SpawnManager.SpawnProjectile(projectile.gameObject, position, Quaternion.Euler(0, 0, UnityEngine.Random.Range(0, 359)));
-            Projectile component2 = gameObject.GetComponent<Projectile>();
-            component2.Owner = base.Owner;
-            component2.Shooter = base.Owner.specRigidbody;
-            component2.baseData.damage = 7.5f;
-            component2.baseData.speed = 1f;
-            component2.sprite.renderer.enabled = false;
-            PierceProjModifier spook = component2.gameObject.AddComponent<PierceProjModifier>();
+            Gun gun4 = PickupObjectDatabase.GetById(43) as Gun;
+            Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(gun4.DefaultModule.projectiles[0]);
+            projectile.gameObject.SetActive(false);
+            FakePrefab.MarkAsFakePrefab(projectile.gameObject);
+            UnityEngine.Object.DontDestroyOnLoad(projectile);
+            projectile.baseData.damage = 7.5f;
+            projectile.baseData.speed = 18f;
+            projectile.sprite.renderer.enabled = false;
+            PierceProjModifier spook = projectile.gameObject.AddComponent<PierceProjModifier>();
             spook.penetration = 1;
-            HomingModifier homing = component2.gameObject.AddComponent<HomingModifier>();
+            HomingModifier homing = projectile.gameObject.AddComponent<HomingModifier>();
             homing.HomingRadius = 250f;
             homing.AngularVelocity = 120f;
 
-            /*
-            OtherTools.EasyTrailBullet trail = projectile.gameObject.AddComponent<OtherTools.EasyTrailBullet>();
-            trail.TrailPos = component2.transform.position;
-            trail.StartColor = Color.white;
-            trail.StartWidth = 0.1f;
-            trail.EndWidth = 0;
-            trail.LifeTime = 1f;
-            trail.BaseColor = new Color(0f, 1f, 3f, 1f);
-            trail.EndColor = new Color(0f, 1f, 3f, 0f);
-            */
-            
+            projectile.baseData.UsesCustomAccelerationCurve = true;
+            projectile.baseData.AccelerationCurve = AnimationCurve.EaseInOut(0, 0, 1.5f, 1);
+
+            projectile.hitEffects.overrideMidairDeathVFX = StaticVFXStorage.SpookySkullVFX;
+
+
             TrailRenderer tr;
-            var tro = component2.gameObject.AddChild("trail object");
-            tro.transform.position = component2.transform.position;
+            var tro = projectile.gameObject.AddChild("trail object");
+            tro.transform.position = projectile.transform.position;
             tro.transform.localPosition = new Vector3(0f, 0f, 0f);
             tr = tro.AddComponent<TrailRenderer>();
             tr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             tr.receiveShadows = false;
             var mat = new Material(Shader.Find("Sprites/Default"));
-            mat.mainTexture = _gradTexture;
             mat.SetColor("_Color", new Color(0f, 1f, 3f, 0.7f));
             tr.material = mat;
             tr.time = 0.3f;
@@ -98,24 +72,43 @@ namespace Planetside
             tr.endWidth = 0f;
             tr.startColor = Color.white;
             tr.endColor = new Color(0f, 1f, 3f, 0f);
-            
-            component2.specRigidbody.OnPreRigidbodyCollision = (SpeculativeRigidbody.OnPreRigidbodyCollisionDelegate)Delegate.Combine(projectile.specRigidbody.OnPreRigidbodyCollision, new SpeculativeRigidbody.OnPreRigidbodyCollisionDelegate(this.HandlePreCollision));
-            base.StartCoroutine(this.Speed(component2));
 
+            wispProjectile = projectile;
         }
-        public Texture _gradTexture;
+        public static Projectile wispProjectile;
 
+        public static int SoulboundSkullID;
+        private void OnEnemyDamaged(float damage, bool fatal, HealthHaver enemy)
+        {
+            if (enemy.aiActor)
+            {
+                if (fatal == true) { this.Spited(enemy.sprite.WorldCenter); enemy.aiActor.PlayEffectOnActor(StaticVFXStorage.SpookySkullVFX, new Vector3());}
+                else if (UnityEngine.Random.value <= 0.06f && base.Owner)
+                {
+                    base.Owner.PlayEffectOnActor(StaticVFXStorage.SpookySkullVFX, new Vector3()); this.Spited(base.Owner.sprite.WorldCenter);
+                }        
+            }
+        }
+        public void Spited(Vector3 position)
+        {
+            GameObject spawnedBulletOBJ = SpawnManager.SpawnProjectile(wispProjectile.gameObject, position, Quaternion.Euler(0f, 0f, BraveUtility.RandomAngle()), true);
+            Projectile component = spawnedBulletOBJ.GetComponent<Projectile>();
+            if (component != null)
+            {
+                component.Owner = base.Owner;
+                component.Shooter = base.Owner.specRigidbody;
+                component.specRigidbody.OnPreRigidbodyCollision = (SpeculativeRigidbody.OnPreRigidbodyCollisionDelegate)Delegate.Combine(projectile.specRigidbody.OnPreRigidbodyCollision, new SpeculativeRigidbody.OnPreRigidbodyCollisionDelegate(this.HandlePreCollision));
+            }
+        }
         private void HandlePreCollision(SpeculativeRigidbody myRigidbody, PixelCollider myPixelCollider, SpeculativeRigidbody otherRigidbody, PixelCollider otherPixelCollider)
         {
-            bool flag = otherRigidbody && otherRigidbody.healthHaver && otherRigidbody != null;
-            if (flag)
+            if (otherRigidbody && otherRigidbody.healthHaver && otherRigidbody != null)
             {
                
                 float maxHealth = otherRigidbody.healthHaver.GetMaxHealth();
                 float num = maxHealth * 0.50f;
                 float currentHealth = otherRigidbody.healthHaver.GetCurrentHealth();
-                bool flag2 = currentHealth < num;
-                if (flag2)
+                if (currentHealth < num)
                 {
                     float damage = myRigidbody.projectile.baseData.damage;
                     myRigidbody.projectile.baseData.damage *= 2f;
@@ -162,28 +155,13 @@ namespace Planetside
         private IEnumerator ChangeProjectileDamage(Projectile bullet, float oldDamage)
         {
             yield return new WaitForSeconds(0.1f);
-            bool flag = bullet != null;
-            if (flag)
+            if (bullet != null)
             {
                 bullet.baseData.damage = oldDamage;
             }
             yield break;
         }
-        public IEnumerator Speed(Projectile projectile)
-        {
-            bool flag = base.Owner != null;
-            bool flag3 = flag;
-            if (flag3)
-            {
-                for (int i = 0; i < 15; i++)
-                {
-                    projectile.baseData.speed += 1f;
-                    projectile.UpdateSpeed();
-                    yield return new WaitForSeconds(0.1f);
-                }
-            }
-            yield break;
-        }
+
         public override DebrisObject Drop(PlayerController player)
 		{
             player.OnAnyEnemyReceivedDamage = (Action<float, bool, HealthHaver>)Delegate.Remove(player.OnAnyEnemyReceivedDamage, new Action<float, bool, HealthHaver>(this.OnEnemyDamaged));

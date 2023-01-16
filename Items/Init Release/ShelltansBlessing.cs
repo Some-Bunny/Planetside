@@ -21,10 +21,12 @@ namespace Planetside
         public static void Init()
         {
             string itemName = "Shelltans Blessing";
-            string resourceName = "Planetside/Resources/shelltansblessing.png";
+            //string resourceName = "Planetside/Resources/shelltansblessing.png";
             GameObject obj = new GameObject(itemName);
             var item = obj.AddComponent<ShelltansBlessing>();
-            ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("shelltansblessing"), data, obj);
+            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "Defiled";
             string longDesc = "A piece of a long-defiled Shelltan shrine." +
                 "\n\nAlthough its power is weak, the power originally found within still lingers, waiting...";

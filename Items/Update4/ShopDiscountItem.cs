@@ -16,6 +16,7 @@ using System.Collections.ObjectModel;
 
 using UnityEngine.Serialization;
 using SaveAPI;
+using NpcApi;
 
 namespace Planetside
 {   
@@ -24,6 +25,7 @@ namespace Planetside
     {
         public static void Init()
         {
+            /*
             ShopDiscountMegaMind.DiscountsToAdd.Add(new ShopDiscount()
             {
                 IdentificationKey = "Example_Discount",
@@ -32,6 +34,7 @@ namespace Planetside
                 CustomPriceMultiplier = Example_Multiplier,// your example price multiplier controller (can be left as null and it will just use PriceMultiplier always)
                 ItemToDiscount = Example_Criteria
             });
+            */
         }
 
         public static bool Example_Criteria(ShopItemController shopItemController)//this will be ran to see if your shop item even has the right criteria for being discounted. if returns TRUE, will be able to be discounted (if there is disocunt conditions in the first place), else will not be
@@ -190,8 +193,39 @@ namespace Planetside
         public ShopDiscountController()
         {
             shopItemSelf = this.GetComponent<ShopItemController>();
+            if (shopItemSelf != null)
+            {
+                if (DoManyChecks() == true)
+                {
+                    if (shopItemSelf is CustomShopItemController)
+                    {
+                        StartPrice = shopItemSelf.OverridePrice ?? (shopItemSelf as CustomShopItemController).ModifiedPrice;//shopItemSelf.ModifiedPrice;
+
+                    }
+                    else
+                    {
+                        StartPrice = shopItemSelf.OverridePrice ?? shopItemSelf.ModifiedPrice;
+                    }
+                }      
+            }
         }
 
+        private bool DoManyChecks()
+        {
+            if (GameManager.Instance == null) { return false; }
+            if (GameManager.Instance.PrimaryPlayer == null) { return false; }
+            return true;
+
+        }
+
+
+        /*
+         *             if (self is CustomShopItemController)
+            {
+                return (self as CustomShopItemController).ModifiedPrice;
+            }
+        */
+        private float StartPrice = -1;
         public void Update()
         {
             DoPriceReduction();
@@ -206,7 +240,6 @@ namespace Planetside
                 if (shopItemSelf.item is BankMaskItem && GameStatsManager.Instance.GetFlag(GungeonFlags.ITEMSPECIFIC_STOLE_BANKMASK) == false) { return; }
                 if (shopItemSelf.item is BankBagItem && GameStatsManager.Instance.GetFlag(GungeonFlags.ITEMSPECIFIC_STOLE_BANKBAG) == false) { return; }
             }
-
             float mult = 1;
             foreach (var DiscountVar in discounts)
             {
@@ -228,19 +261,21 @@ namespace Planetside
 
         private void DoTotalDiscount(float H)
         {
-            if (shopItemSelf == null) { return; }
+            if (shopItemSelf == null) { return; }   
             if (GameManager.Instance == null) { return; }
             if (GameManager.Instance.PrimaryPlayer == null) { return; }
 
-            GameLevelDefinition lastLoadedLevelDefinition = GameManager.Instance.GetLastLoadedLevelDefinition();
-            float newCost = ReturnMoneyCurrencyType() == false? shopItemSelf.CurrentPrice :shopItemSelf.item.PurchasePrice;
-            float num4 = (lastLoadedLevelDefinition == null) ? 1f : lastLoadedLevelDefinition.priceMultiplier;
+            //GameLevelDefinition lastLoadedLevelDefinition = GameManager.Instance.GetLastLoadedLevelDefinition();
+            float newCost = StartPrice != -1 ? StartPrice : ReturnMoneyCurrencyType() == false ? shopItemSelf.CurrentPrice : shopItemSelf.ModifiedPrice;
+            //float num4 = (lastLoadedLevelDefinition == null) ? 1f : lastLoadedLevelDefinition.priceMultiplier;
+            
             float num3 = GameManager.Instance.PrimaryPlayer.stats.GetStatValue(PlayerStats.StatType.GlobalPriceMultiplier);
+            
             if (GameManager.Instance.CurrentGameType == GameManager.GameType.COOP_2_PLAYER && GameManager.Instance.SecondaryPlayer)
             {
                 num3 *= GameManager.Instance.SecondaryPlayer.stats.GetStatValue(PlayerStats.StatType.GlobalPriceMultiplier);
             }
-            newCost *= num4 * num3;
+            newCost *= num3;
             shopItemSelf.OverridePrice = (int)(newCost *= H);
         }
 
@@ -248,7 +283,7 @@ namespace Planetside
         {
             if (shopItemSelf == null) { return; }
             GameLevelDefinition lastLoadedLevelDefinition = GameManager.Instance != null ? GameManager.Instance.GetLastLoadedLevelDefinition() : null;
-            float newCost = shopItemSelf.item.PurchasePrice;
+            float newCost = StartPrice != -1 ? StartPrice : shopItemSelf.item.PurchasePrice;
             float num4 = (lastLoadedLevelDefinition == null) ? 1f : lastLoadedLevelDefinition.priceMultiplier;
 
             float num3 = GameManager.Instance.PrimaryPlayer != null ? GameManager.Instance.PrimaryPlayer.stats.GetStatValue(PlayerStats.StatType.GlobalPriceMultiplier) : 1;
@@ -327,10 +362,12 @@ namespace Planetside
         public static void Init()
         {
             string itemName = "testPriceItem";
-            string resourceName = "Planetside/Resources/gunwarrant.png";
+            //string resourceName = "Planetside/Resources/gunwarrant.png";
             GameObject obj = new GameObject(itemName);
             var item = obj.AddComponent<ShopDiscountItem>();
-            ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("gunwarrant"), data, obj);
+            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "The Buy To Carry";
             string longDesc = "Although being a Gungeoneer doesn't require a warrant, the benefits of having one is hard to pass by, especially for Gungeoneers that enjoy a steady supply of new weaponry.";
             ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");

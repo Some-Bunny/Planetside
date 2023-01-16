@@ -24,11 +24,14 @@ namespace Planetside
 		public static void Init()
 		{
 			string itemName = "Teleporting Gunfire";
-			string resourceName = "Planetside/Resources/telecast.png";
+			//string resourceName = "Planetside/Resources/telecast.png";
 			GameObject obj = new GameObject(itemName);
 			var item = obj.AddComponent<LDCBullets>();
-			ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
-			string shortDesc = "I Cast Gun!";
+            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("telecast"), data, obj);
+
+            string shortDesc = "I Cast Gun!";
 			string longDesc = "Creates copies of themselves from beyond the Curtain." +
 				"\n\nOriginally carried by an alchenmist seeking the gun, they met their quick end here due to accidental, and literal, backfire of several hundred explosives at once.";
 			ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");

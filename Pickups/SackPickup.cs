@@ -10,7 +10,7 @@ namespace Planetside
 		public static void Init()
 		{
 			string name = "Sack Of Pickups";
-			string resourcePath = "Planetside/Resources/Pickups/sackofstuff.png";
+			//string resourcePath = "Planetside/Resources/Pickups/sackofstuff.png";
 			GameObject gameObject = new GameObject(name);
 			LeSackPickup pickup = gameObject.AddComponent<LeSackPickup>();
 			SpeculativeRigidbody speculativeRigidbody = gameObject.AddComponent<SpeculativeRigidbody>();
@@ -29,9 +29,10 @@ namespace Planetside
 				item
 			};
 
-
-			ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
-			string shortDesc = "Goodie Bag";
+            var data = StaticSpriteDefinitions.Pickup_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("sackofstuff"), data, gameObject);
+            //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
+            string shortDesc = "Goodie Bag";
 			string longDesc = "A pre-packed sack filled with pickups. I wonder what's inside?";
 			pickup.SetupItem(shortDesc, longDesc, "psog");
 			pickup.quality = PickupObject.ItemQuality.COMMON;

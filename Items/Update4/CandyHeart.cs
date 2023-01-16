@@ -23,10 +23,12 @@ namespace Planetside
         public static void Init()
         {
             string itemName = "Candy Heart";
-            string resourceName = "Planetside/Resources/candyheart.png";
+            //string resourceName = "Planetside/Resources/candyheart.png";
             GameObject obj = new GameObject(itemName);
             var item = obj.AddComponent<CandyHeart>();
-            ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("candyheart"), data, obj);
+            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "My Sweet Heart";
             string longDesc = "Hearts and armor are cheaper.\n\nA tacky heart-shaped candy with 'You're sweet <3' written on it.\n\nSadly, like most Gungeoneers, you have no one to give it to.";
             ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");

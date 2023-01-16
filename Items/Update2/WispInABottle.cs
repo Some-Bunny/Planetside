@@ -27,10 +27,12 @@ namespace Planetside
         public static void Init()
         {
             string itemName = "Wisp In A Bottle";
-            string resourceName = "Planetside/Resources/WispInABottle.png";
+            //string resourceName = "Planetside/Resources/WispInABottle.png";
             GameObject obj = new GameObject(itemName);
             WispInABottle testActive = obj.AddComponent<WispInABottle>();
-            ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            var data = StaticSpriteDefinitions.Active_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("WispInABottle"), data, obj);
+            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "Unmatched Power";
             string longDesc = "A bottle that contains a whole living star inside of it.\n\nUse with caution.";
             testActive.SetupItem(shortDesc, longDesc, "psog");

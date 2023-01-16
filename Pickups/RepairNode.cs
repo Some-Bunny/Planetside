@@ -10,7 +10,7 @@ namespace Planetside
 		public static void Init()
 		{
 			string name = "Hegemony Repair Node";
-			string resourcePath = "Planetside/Resources/repairNode.png";
+			//string resourcePath = "Planetside/Resources/repairNode.png";
 			GameObject gameObject = new GameObject(name);
 			RepairNode pickup = gameObject.AddComponent<RepairNode>();
 			SpeculativeRigidbody speculativeRigidbody = gameObject.AddComponent<SpeculativeRigidbody>();
@@ -28,8 +28,10 @@ namespace Planetside
 			{
 				item
 			};
-			ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
-			string shortDesc = "I Will Put You Back Together";
+            var data = StaticSpriteDefinitions.Pickup_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("repairNode"), data, gameObject);
+            //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
+            string shortDesc = "I Will Put You Back Together";
 			string longDesc = "Does nothing.\n\nUsed to repair the broken Hegemony Device.";
 			pickup.SetupItem(shortDesc, longDesc, "psog");
 			pickup.quality = PickupObject.ItemQuality.EXCLUDED;

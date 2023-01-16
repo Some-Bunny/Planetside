@@ -316,8 +316,42 @@ namespace Planetside
 namespace Planetside
 {
 
+
+    /*
+    */
+
     public static class OtherTools
     {
+
+        public static GameObject MakeLineBundle(string name, int ID, tk2dSpriteCollectionData data, Vector2 colliderDimensions, Vector2 colliderOffsets)
+        {
+            try
+            {
+                GameObject line = new GameObject(name);
+                float convertedColliderX = colliderDimensions.x / 16f;
+                float convertedColliderY = colliderDimensions.y / 16f;
+                float convertedOffsetX = colliderOffsets.x / 16f;
+                float convertedOffsetY = colliderOffsets.y / 16f;
+
+                tk2dTiledSprite tiledSprite = line.GetOrAddComponent<tk2dTiledSprite>();
+                tiledSprite.SetSprite(data, ID);
+                tk2dSpriteDefinition def = tiledSprite.GetCurrentSpriteDef();
+                def.colliderVertices = new Vector3[]{
+                    new Vector3(convertedOffsetX, convertedOffsetY, 0f),
+                    new Vector3(convertedColliderX, convertedColliderY, 0f)
+                };
+
+                def.ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.MiddleLeft);
+
+                return line;
+            }
+            catch (Exception e)
+            {
+                ETGModConsole.Log(e.ToString());
+                return null;
+            }
+        }
+
         public static GameObject MakeLine(string spritePath, Vector2 colliderDimensions, Vector2 colliderOffsets, List<string> beamAnimationPaths = null, int beamFPS = -1)
         {
             try
@@ -341,32 +375,7 @@ namespace Planetside
                 };
 
                 def.ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.MiddleLeft);
-                /*
-                tk2dSpriteAnimator animator = line.GetOrAddComponent<tk2dSpriteAnimator>();
-                tk2dSpriteAnimation animation = line.GetOrAddComponent<tk2dSpriteAnimation>();
-                animation.clips = new tk2dSpriteAnimationClip[0];
-                animator.Library = animation;
-                animator.sprite.SetSprite(spriteID); 
-
-                if (beamAnimationPaths != null)
-                {
-                    tk2dSpriteAnimationClip clip = new tk2dSpriteAnimationClip() { name = "line_idle_thing", frames = new tk2dSpriteAnimationFrame[0], fps = beamFPS };
-                    List<string> spritePaths = beamAnimationPaths;
-
-                    List<tk2dSpriteAnimationFrame> frames = new List<tk2dSpriteAnimationFrame>();
-                    foreach (string path in spritePaths)
-                    {
-                        tk2dSpriteCollectionData collection = ETGMod.Databases.Items.ProjectileCollection;
-                        int frameSpriteId = SpriteBuilder.AddSpriteToCollection(path, collection);
-                        tk2dSpriteDefinition frameDef = collection.spriteDefinitions[frameSpriteId];
-                        frameDef.ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.MiddleLeft);
-                        frameDef.colliderVertices = def.colliderVertices;
-                        frames.Add(new tk2dSpriteAnimationFrame { spriteId = frameSpriteId, spriteCollection = collection });
-                    }
-                    clip.frames = frames.ToArray();
-                    animation.clips = animation.clips.Concat(new tk2dSpriteAnimationClip[] { clip }).ToArray();
-                }
-                */
+               
                 return line;
             }
             catch (Exception e)
@@ -816,6 +825,12 @@ namespace Planetside
             int spriteIdByName = encounterIconCollection.GetSpriteIdByName(spriteID);
             GameUIRoot.Instance.notificationController.DoCustomNotification(header, text, encounterIconCollection, spriteIdByName, color, false, forceSingleLine);
         }
+
+        public static void NotifyCustom(string header, string text, string spriteName, tk2dSpriteCollectionData CollectionData, UINotificationController.NotificationColor color = UINotificationController.NotificationColor.SILVER, bool forceSingleLine = false)
+        {
+            GameUIRoot.Instance.notificationController.DoCustomNotification(header, text, CollectionData, CollectionData.GetSpriteIdByName(spriteName), color, false, forceSingleLine);
+        }
+
         public static void ApplyStat(PlayerController player, PlayerStats.StatType statType, float amountToApply, StatModifier.ModifyMethod modifyMethod)
         {
             player.stats.RecalculateStats(player, false, false);

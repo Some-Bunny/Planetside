@@ -39,6 +39,7 @@ namespace Planetside
             MoneyPots.Init();
             OphanaimDecals.Init();
             EnemyBuffShrine.Init();
+            NoTeleporterPlaceable.Init();
             //TrespassTrollRock.Init();
         }
     }

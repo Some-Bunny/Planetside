@@ -38,6 +38,41 @@ namespace Planetside
                 if (base.gameObject.GetComponent<Projectile>().IsBlackBullet) { base.gameObject.GetComponent<Projectile>().sprite.renderer.material.SetFloat("_BlackBullet", -1); }
             }
         }
+        public void ForceHurtPlayer(PlayerController p, Projectile projectile) 
+        {
+            float num = projectile.ModifiedDamage;
+
+            HealthHaver healthHaver = p.healthHaver;
+            float damage = num;
+            Vector2 velocity = projectile.specRigidbody.Velocity;
+            string ownerName = projectile.OwnerName;
+            CoreDamageTypes coreDamageTypes = projectile.damageTypes;
+            DamageCategory damageCategory = (!projectile.IsBlackBullet) ? DamageCategory.Normal : DamageCategory.BlackBullet;
+            GameObject vfx = UnityEngine.Object.Instantiate<GameObject>((PickupObjectDatabase.GetById(228) as Gun).DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX);
+            tk2dBaseSprite component = vfx.GetComponent<tk2dBaseSprite>();
+            component.PlaceAtPositionByAnchor(p.transform.position + new Vector3(0.375f, 0.375f), tk2dBaseSprite.Anchor.MiddleCenter);
+            component.HeightOffGround = 35f;
+            component.UpdateZDepth();
+            tk2dSpriteAnimator component2 = component.GetComponent<tk2dSpriteAnimator>();
+            if (component2 != null)
+            {
+                component2.ignoreTimeScale = true;
+                component2.AlwaysIgnoreTimeScale = true;
+                component2.AnimateDuringBossIntros = true;
+                component2.alwaysUpdateOffscreen = true;
+                component2.playAutomatically = true;
+            }
+            healthHaver.ApplyDamage(damage, velocity, ownerName, coreDamageTypes, damageCategory, true, null, projectile.ignoreDamageCaps);
+            if (p && p.OnHitByProjectile != null)
+            {
+                p.OnHitByProjectile(projectile, p);
+            }
+            if (projectile.Owner && projectile.Owner is AIActor && p)
+            {
+                AkSoundEngine.PostEvent("Play_OBJ_key_impact_01", p.gameObject);
+                (projectile.Owner as AIActor).HasDamagedPlayer = true;
+            }
+        }
      
     }
 

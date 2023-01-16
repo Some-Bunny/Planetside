@@ -61,8 +61,12 @@ namespace Planetside
 
             var EliteVariantEnemyParticlesObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("EliteVariantEnemy"));
             EliteParticleSystemGameObject = EliteVariantEnemyParticlesObj;
+            EliteParticleSystemGameObject.SetLayerRecursively(LayerMask.NameToLayer("FG_Reflection"));
+
+
             FakePrefab.MarkAsFakePrefab(EliteVariantEnemyParticlesObj);
             EliteParticleSystem = EliteVariantEnemyParticlesObj.GetComponent<ParticleSystem>();
+
             FakePrefab.MarkAsFakePrefab(EliteParticleSystem.gameObject);
 
 
@@ -200,6 +204,11 @@ namespace Planetside
             hellDragController = forgeDungeon.PatternSettings.flows[0].AllNodes.Where(node => node.overrideExactRoom != null && node.overrideExactRoom.name.Contains("EndTimes")).First().overrideExactRoom.placedObjects.Where(ppod => ppod != null && ppod.nonenemyBehaviour != null).First().nonenemyBehaviour.gameObject.GetComponentsInChildren<HellDragZoneController>()[0];
             forgeDungeon = null;
 
+            SpiratTeleportVFX = EnemyDatabase.GetOrLoadByGuid("56fb939a434140308b8f257f0f447829").bulletBank.GetBullet("rogue").BulletObject.GetComponent<TeleportProjModifier>().teleportVfx;
+
+            FearVFX = ResourceCache.Acquire("Global VFX/VFX_Fear") as GameObject;
+
+            SpookySkullVFX = (PickupObjectDatabase.GetById(45) as Gun).DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX;
         }
 
 
@@ -349,6 +358,13 @@ namespace Planetside
 
 
         //public static GameObject KnifeShieldKnifeTileImpactVFX;
+
+        public static GameObject SpookySkullVFX;
+
+        public static GameObject FearVFX;
+
+        public static VFXPool SpiratTeleportVFX;
+
 
         public static GameObject MourningStarLaser;
 

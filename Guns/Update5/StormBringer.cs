@@ -81,7 +81,7 @@ namespace Planetside
             smallLightning.pierceMinorBreakables = true;
 
             smallLightning.baseData.UsesCustomAccelerationCurve = true;
-            smallLightning.baseData.AccelerationCurve = AnimationCurve.Linear(0.25f, 1, 0.25f, 1.5f);
+            smallLightning.baseData.AccelerationCurve = AnimationCurve.Linear(0f, 1, 0.25f, 1.5f);
 
             defaultLightningExplosion = lightningData1;
 
@@ -115,7 +115,7 @@ namespace Planetside
 			largeLightningController.splitoffChance = 0.5f;
 
             largeLightning.baseData.UsesCustomAccelerationCurve = true;
-            largeLightning.baseData.AccelerationCurve = AnimationCurve.Linear(0.25f, 1, 0.25f, 1.5f);
+            largeLightning.baseData.AccelerationCurve = AnimationCurve.Linear(0f, 1, 0.25f, 1.5f);
 
             ImprovedAfterImage afterImage2 = largeLightning.gameObject.AddComponent<ImprovedAfterImage>();
             afterImage2.spawnShadows = true;

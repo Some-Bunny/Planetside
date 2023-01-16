@@ -23,11 +23,13 @@ namespace Planetside
 		public static void Init()
 		{
 			string itemName = "Corrupt Bullets";
-			string resourceName = "Planetside/Resources/sirpaler.png";
+			//string resourceName = "Planetside/Resources/sirpaler.png";
 			GameObject obj = new GameObject(itemName);
 			var item = obj.AddComponent<TinyPlanetBullets>();
-			ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
-			string shortDesc = "Downwards Spiral, Downwards Spiral...";
+            var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("sirpaler"), data, obj);
+            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            string shortDesc = "Downwards Spiral, Downwards Spiral...";
 			string longDesc = "Warped by a fracture in reality, these bullets no longer adhere to normal standards of movement.\n\nWarped by a fracture in reality, these bullets no longer adhere to normal standards of movement.\n\nWarped by a fracture in reality, these bullets no longer adhere to normal standards of movement.\n\nWarped by a fracture in reality, these bullets no longer adhere to normal standards of movement.\n\nWarped by a fracture in reality, these bullets no longer adhere to normal standards of movement.\n\nWarped by a fracture in reality, these bullets no longer adhere to normal standards of movement.\n\nWarped by a fracture in reality, these bullets no longer adhere to normal standards of movement.\n\nWarped by a fracture in reality, these bullets no longer adhere to normal standards of movement.\n\n." +
 				"Warped by a fracture in reality, these bullets no longer adhere to normal standards of movement.\n\n";
 			ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");

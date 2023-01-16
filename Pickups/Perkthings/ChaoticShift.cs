@@ -234,11 +234,13 @@ namespace Planetside
         public static void Init()
         {
             string name = "Chaotic Shift";
-            string resourcePath = "Planetside/Resources/PerkThings/chaoticShift.png";
+            //string resourcePath = "Planetside/Resources/PerkThings/chaoticShift.png";
             GameObject gameObject = new GameObject(name);
             ChaoticShift item = gameObject.AddComponent<ChaoticShift>();
-          
-            ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
+
+            var data = StaticSpriteDefinitions.Pickup_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("chaoticShift"), data, gameObject);
+            //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
             string shortDesc = "Literally just an all stats up.";
             string longDesc = "yep.";
             item.SetupItem(shortDesc, longDesc, "psog");
@@ -276,7 +278,9 @@ namespace Planetside
             Exploder.DoDistortionWave(player.sprite.WorldTopCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
             player.BloopItemAboveHead(base.sprite, "");
             string BlurbText = chaos.hasBeenPickedup == true ? "Another Gun Added." : "All Weapons are Doubled.";
-            OtherTools.Notify("Chaotic Shift", BlurbText, "Planetside/Resources/PerkThings/chaoticShift", UINotificationController.NotificationColor.GOLD);
+            //OtherTools.Notify("Chaotic Shift", BlurbText, "Planetside/Resources/PerkThings/chaoticShift", UINotificationController.NotificationColor.GOLD);
+            OtherTools.NotifyCustom("Chaotic Shift", BlurbText, "chaoticShift", StaticSpriteDefinitions.Pickup_Sheet_Data, UINotificationController.NotificationColor.GOLD);
+
 
             UnityEngine.Object.Destroy(base.gameObject);
         }

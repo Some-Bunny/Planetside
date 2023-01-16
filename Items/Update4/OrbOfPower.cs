@@ -12,11 +12,13 @@ namespace Planetside
 		public static void Init()
 		{
 			string name = "The Prison";
-			string resourcePath = "Planetside/Resources/orbofpower.png";
+			//string resourcePath = "Planetside/Resources/orbofpower.png";
 			GameObject gameObject = new GameObject(name);
 			OrbOfPower warVase = gameObject.AddComponent<OrbOfPower>();
-			ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
-			string shortDesc = "Banishment";
+            var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("orbofpower"), data, gameObject);
+            //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
+            string shortDesc = "Banishment";
 			string longDesc = "A reminder of those you banished from the Gungeon, for the rest of eternity.";
 			ItemBuilder.SetupItem(warVase, shortDesc, longDesc, "psog");
 			warVase.quality = PickupObject.ItemQuality.EXCLUDED;

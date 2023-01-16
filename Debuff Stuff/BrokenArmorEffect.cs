@@ -20,34 +20,76 @@ namespace Planetside
 {
 	public class BrokenArmorEffect : GameActorHealthEffect
 	{
-		public static string VFXNameBrokenAArmor = "brokenArmorVFX";
-		public static GameObject BrokenArmorVFXObject;
+		
+        public static GameObject BrokenArmorVFX;
 
-		public static void Init()
+        public static GameObject BuildVFX()
         {
-			BrokenArmorVFXObject = SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Debuffs/brokenarmor", new GameObject("BrokenArmorEffect"));
-			BrokenArmorVFXObject.SetActive(false);
-			tk2dBaseSprite vfxSprite = BrokenArmorVFXObject.GetComponent<tk2dBaseSprite>();
-			vfxSprite.GetCurrentSpriteDef().ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.LowerCenter, vfxSprite.GetCurrentSpriteDef().position3);
-			FakePrefab.MarkAsFakePrefab(BrokenArmorVFXObject);
-			UnityEngine.Object.DontDestroyOnLoad(BrokenArmorVFXObject);
-		}
-
-		public override void ApplyTint(GameActor actor)
-        {
-			for (int k = 0; k < 1; k++)
+            var debuffCollection = StaticSpriteDefinitions.Debuff_Sheet_Data;
+            var BrokenArmorVFXObject = ItemBuilder.AddSpriteToObjectAssetbundle("Broken Armor", debuffCollection.GetSpriteIdByName("brokenarmor1"), debuffCollection);//new GameObject("Broken Armor");//SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Debuffs/brokenarmor", new GameObject("BrokenArmorEffect"));
+            FakePrefab.MarkAsFakePrefab(BrokenArmorVFXObject);
+            UnityEngine.Object.DontDestroyOnLoad(BrokenArmorVFXObject);
+            BrokenArmorVFXObject.GetOrAddComponent<tk2dBaseSprite>();
+            tk2dSpriteAnimator animator = BrokenArmorVFXObject.GetOrAddComponent<tk2dSpriteAnimator>();
+            var clip = SpriteBuilder.AddAnimation(animator, debuffCollection, new List<int>()
             {
-				GameObject original;
-				original = BrokenArmorEffect.BrokenArmorVFXObject;
-				tk2dSprite component = GameObject.Instantiate(original, actor.specRigidbody.UnitTopCenter, Quaternion.identity, actor.transform).GetComponent<tk2dSprite>();
-				component.transform.position.WithZ(component.transform.position.z + 99999);
-				component.GetComponent<tk2dBaseSprite>().PlaceAtPositionByAnchor(actor.CenterPosition, tk2dBaseSprite.Anchor.MiddleCenter);
-				actor.sprite.AttachRenderer(component.GetComponent<tk2dBaseSprite>());
-				component.name = BrokenArmorEffect.VFXNameBrokenAArmor;
+                debuffCollection.GetSpriteIdByName("brokenarmor_start_1"),
+                debuffCollection.GetSpriteIdByName("brokenarmor_start_2"),
+                debuffCollection.GetSpriteIdByName("brokenarmor_start_2"),
+                debuffCollection.GetSpriteIdByName("brokenarmor_start_3"),
+                debuffCollection.GetSpriteIdByName("brokenarmor_start_3"),
+                debuffCollection.GetSpriteIdByName("brokenarmor1"),
+                debuffCollection.GetSpriteIdByName("brokenarmor1"),
+                debuffCollection.GetSpriteIdByName("brokenarmor1"),
+                debuffCollection.GetSpriteIdByName("brokenarmor1"),
+                debuffCollection.GetSpriteIdByName("brokenarmor2"),
+                debuffCollection.GetSpriteIdByName("brokenarmor2"),
+                debuffCollection.GetSpriteIdByName("brokenarmor3"),
+                debuffCollection.GetSpriteIdByName("brokenarmor4"),
+                debuffCollection.GetSpriteIdByName("brokenarmor5"),
+                debuffCollection.GetSpriteIdByName("brokenarmor6"),
+            }, "start", tk2dSpriteAnimationClip.WrapMode.LoopSection, 10);
 
-				component.PlaceAtPositionByAnchor(actor.sprite.WorldTopCenter, tk2dBaseSprite.Anchor.LowerCenter);
-				component.scale = Vector3.Lerp(component.scale, Vector3.one, 0.25f);
-			}
+            animator.DefaultClipId = animator.GetClipIdByName("start");
+            animator.playAutomatically = true;
+            clip.loopStart = 11;
+            BrokenArmorVFX = BrokenArmorVFXObject;
+            return BrokenArmorVFX;
+        }
+
+
+        /*
+		            var debuffCollection = StaticSpriteDefinitions.Debuff_Sheet_Data;
+            var BrokenArmorVFXObject = ItemBuilder.AddSpriteToObjectAssetbundle("Broken Armor", debuffCollection.GetSpriteIdByName("brokenarmor1"), debuffCollection);//new GameObject("Broken Armor");//SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Debuffs/brokenarmor", new GameObject("BrokenArmorEffect"));
+            FakePrefab.MarkAsFakePrefab(BrokenArmorVFXObject);
+            UnityEngine.Object.DontDestroyOnLoad(BrokenArmorVFXObject);
+            tk2dBaseSprite vfxSprite = BrokenArmorVFXObject.GetComponent<tk2dBaseSprite>();
+            vfxSprite.GetCurrentSpriteDef().ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.LowerCenter, vfxSprite.GetCurrentSpriteDef().position3);
+
+            BrokenArmorVFXObject.GetOrAddComponent<tk2dBaseSprite>();
+            tk2dSpriteAnimator animator = BrokenArmorVFXObject.GetOrAddComponent<tk2dSpriteAnimator>();
+			var clip = SpriteBuilder.AddAnimation(animator, debuffCollection, new List<int>()
+			{
+                debuffCollection.GetSpriteIdByName("brokenarmor1"),
+                debuffCollection.GetSpriteIdByName("brokenarmor1"),
+                debuffCollection.GetSpriteIdByName("brokenarmor1"),
+                debuffCollection.GetSpriteIdByName("brokenarmor2"),
+                debuffCollection.GetSpriteIdByName("brokenarmor2"),
+                debuffCollection.GetSpriteIdByName("brokenarmor3"),
+                debuffCollection.GetSpriteIdByName("brokenarmor4"),
+                debuffCollection.GetSpriteIdByName("brokenarmor5"),
+                debuffCollection.GetSpriteIdByName("brokenarmor5"),
+                debuffCollection.GetSpriteIdByName("brokenarmor6"),
+            }, "start", tk2dSpriteAnimationClip.WrapMode.LoopSection);
+
+            animator.DefaultClipId = animator.GetClipIdByName("start");
+            animator.playAutomatically = true;
+			clip.loopStart = 8;
+            BrokenArmorVFX = BrokenArmorVFXObject;
+		*/
+        public override void ApplyTint(GameActor actor)
+        {
+			
 		}
 		public override void OnEffectApplied(GameActor actor, RuntimeGameActorEffectData effectData, float partialAmount = 1f)
 		{
@@ -57,8 +99,6 @@ namespace Planetside
 
 		public override void OnEffectRemoved(GameActor actor, RuntimeGameActorEffectData effectData)
 		{
-			var hand = actor.transform.Find("brokenArmorVFX").gameObject;
-			UnityEngine.Object.Destroy(hand);
 			actor.healthHaver.AllDamageMultiplier -= 0.35f;
 
 			base.OnEffectRemoved(actor, effectData);

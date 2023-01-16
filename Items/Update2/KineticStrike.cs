@@ -24,10 +24,12 @@ namespace Planetside
         public static void Init()
         {
             string itemName = "Kinetic Bombardment";
-            string resourceName = "Planetside/Resources/kinetisstrikeitem.png";
+            //string resourceName = "Planetside/Resources/kinetisstrikeitem.png";
             GameObject obj = new GameObject(itemName);
             KineticStrike activeitem = obj.AddComponent<KineticStrike>();
-            ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            var data = StaticSpriteDefinitions.Active_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("kinetisstrikeitem"), data, obj);
+            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "KA-BEWWWWMMM!";
             string longDesc = "Call in an incredibly powerful, yet delayed kinetic strike on your cursor.\n\nHow did one of these end up inside the Gungeon? No one knows.\n\nHow does one of these even *land* inside the Gungeon? No one knows either.";
             activeitem.SetupItem(shortDesc, longDesc, "psog");
@@ -38,29 +40,15 @@ namespace Planetside
 
             activeitem.gameObject.AddComponent<BoomhildrItemPool>();
 
-            GameObject gameObject = SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/KineticStrike/redmarksthespot", null, true);
-            gameObject.SetActive(false);
-            FakePrefab.MarkAsFakePrefab(gameObject);
-            UnityEngine.Object.DontDestroyOnLoad(gameObject);
-            GameObject gameObject2 = new GameObject("Kinetic Strike Stuff");
+            var Collection = StaticSpriteDefinitions.Oddments_Sheet_Data;
+            var Kinetic = ItemBuilder.AddSpriteToObjectAssetbundle("Kinetic Strike Stuff", Collection.GetSpriteIdByName("redmarksthespot"), Collection);
+            FakePrefab.MarkAsFakePrefab(Kinetic);
+            UnityEngine.Object.DontDestroyOnLoad(Kinetic);
 
+            KineticStrike.spriteIds.Add(Collection.GetSpriteIdByName("redmarksthespot"));
+            KineticStrike.spriteIds.Add(Collection.GetSpriteIdByName("kineticstrike"));
+            KineticStrike.StrikePrefab = Kinetic;
 
-            tk2dSprite tk2dSprite = gameObject2.AddComponent<tk2dSprite>();
-            tk2dSprite.SetSprite(gameObject.GetComponent<tk2dBaseSprite>().Collection, gameObject.GetComponent<tk2dBaseSprite>().spriteId);
-
-            KineticStrike.spriteIds.Add(SpriteBuilder.AddSpriteToCollection("Planetside/Resources/VFX/KineticStrike/redmarksthespot", tk2dSprite.Collection));
-            KineticStrike.spriteIds.Add(SpriteBuilder.AddSpriteToCollection("Planetside/Resources/VFX/KineticStrike/kineticstrike", tk2dSprite.Collection));
-
-            tk2dSprite.GetCurrentSpriteDef().material.shader = ShaderCache.Acquire("Brave/PlayerShader");
-            ForgiveMePlease.spriteIds.Add(tk2dSprite.spriteId);
-            gameObject2.SetActive(false);
-
-            tk2dSprite.SetSprite(KineticStrike.spriteIds[0]); //Marker
-            tk2dSprite.SetSprite(KineticStrike.spriteIds[1]); //The Actual Strike
-
-            FakePrefab.MarkAsFakePrefab(gameObject2);
-            UnityEngine.Object.DontDestroyOnLoad(gameObject2);
-            KineticStrike.StrikePrefab = gameObject2;
             activeitem.AddToSubShop(ItemBuilder.ShopType.Trorc, 1f);
             SynergyAPI.SynergyBuilder.AddItemToSynergy(activeitem, CustomSynergyType.MISSILE_BOW);
 

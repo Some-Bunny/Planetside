@@ -39,36 +39,32 @@ namespace Planetside
             activeitem.consumable = false;
             activeitem.quality = PickupObject.ItemQuality.A;
 
-            GameObject gameObject = SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/FalseStrengths/falsestrengthpoison", null, true);
-            gameObject.SetActive(false);
-            FakePrefab.MarkAsFakePrefab(gameObject);
-            UnityEngine.Object.DontDestroyOnLoad(gameObject);
-            GameObject gameObject2 = new GameObject("False Strengths");
-            tk2dSprite tk2dSprite = gameObject2.AddComponent<tk2dSprite>();
-            tk2dSprite.SetSprite(gameObject.GetComponent<tk2dBaseSprite>().Collection, gameObject.GetComponent<tk2dBaseSprite>().spriteId);
 
-            DeadKingsDesparation.spriteIds2.Add(SpriteBuilder.AddSpriteToCollection("Planetside/Resources/VFX/FalseStrengths/falsestrengthpoison", tk2dSprite.Collection));
-            DeadKingsDesparation.spriteIds2.Add(SpriteBuilder.AddSpriteToCollection("Planetside/Resources/VFX/FalseStrengths/falsestrengthfire", tk2dSprite.Collection));
 
-            Material mat = tk2dSprite.GetCurrentSpriteDef().material = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
-            mat.mainTexture = tk2dSprite.sprite.renderer.material.mainTexture;
+            var Collection = StaticSpriteDefinitions.Oddments_Sheet_Data;
+            var FalseStrengthsFire = ItemBuilder.AddSpriteToObjectAssetbundle("False Strengths Fire", Collection.GetSpriteIdByName("falsestrengthfire"), Collection);
+            FakePrefab.MarkAsFakePrefab(FalseStrengthsFire);
+            UnityEngine.Object.DontDestroyOnLoad(FalseStrengthsFire);
+            var tk2dSprite1 = FalseStrengthsFire.GetComponent<tk2dSprite>();
+            Material mat = tk2dSprite1.GetCurrentSpriteDef().material = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+            mat.mainTexture = tk2dSprite1.sprite.renderer.material.mainTexture;
             mat.SetColor("_EmissiveColor", new Color32(104, 182, 255, 255));
             mat.SetFloat("_EmissiveColorPower", 1.55f);
             mat.SetFloat("_EmissivePower", 100);
-            tk2dSprite.sprite.renderer.material = mat;
+            tk2dSprite1.sprite.renderer.material = mat;
+            FalseStrengthsPrefabFire = FalseStrengthsFire;
 
-            DeadKingsDesparation.spriteIds2.Add(tk2dSprite.spriteId);
-            gameObject2.SetActive(false);
-
-
-            tk2dSprite.SetSprite(DeadKingsDesparation.spriteIds2[0]); //Mithrix Fall
-            tk2dSprite.SetSprite(DeadKingsDesparation.spriteIds2[1]); //Mithrix Land
-
-
-            FakePrefab.MarkAsFakePrefab(gameObject2);
-            UnityEngine.Object.DontDestroyOnLoad(gameObject2);
-            DeadKingsDesparation.FalseStrengthsPrefab = gameObject2;
-
+            var FalseStrengthsPoison = ItemBuilder.AddSpriteToObjectAssetbundle("False Strengths Poison", Collection.GetSpriteIdByName("falsestrengthpoison"), Collection);
+            FakePrefab.MarkAsFakePrefab(FalseStrengthsPoison);
+            UnityEngine.Object.DontDestroyOnLoad(FalseStrengthsPoison);
+            var tk2dSprite2 = FalseStrengthsPoison.GetComponent<tk2dSprite>();
+            Material mat1 = tk2dSprite2.GetCurrentSpriteDef().material = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+            mat.mainTexture = tk2dSprite2.sprite.renderer.material.mainTexture;
+            mat.SetColor("_EmissiveColor", new Color32(104, 182, 255, 255));
+            mat.SetFloat("_EmissiveColorPower", 1.55f);
+            mat.SetFloat("_EmissivePower", 100);
+            tk2dSprite1.sprite.renderer.material = mat1;
+            FalseStrengthsPrefabPoison = FalseStrengthsPoison;
 
 
             List<string> mandatoryConsoleIDs = new List<string>
@@ -138,19 +134,27 @@ namespace Planetside
 
         public static GameObject CalldownPrefab;
         public static List<int> spriteIds1 = new List<int>();
-        public GameObject objectToSpawn;
-        public GameObject spawnedPlayerObject;
 
-        private static GameObject FalseStrengthsPrefab;
-        public static List<int> spriteIds2 = new List<int>();
+        private static GameObject FalseStrengthsPrefabFire;
+        private static GameObject FalseStrengthsPrefabPoison;
 
 
         public override void Pickup(PlayerController player)
         {
             base.Pickup(player);
         }
+
+
+        protected override void OnPreDrop(PlayerController user)
+        {
+            TrinketingAndBaubling = false;
+            base.OnPreDrop(user);
+        }
+
+
         public override bool CanBeUsed(PlayerController user)
         {
+            if (user == null) { return false; }
             List<AIActor> activeEnemies = user.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
             return activeEnemies != null && this.TrinketingAndBaubling != true && user.IsInCombat;
         }
@@ -175,31 +179,27 @@ namespace Planetside
             user.OnRoomClearEvent += this.onRoomCleared;
             RoomHandler absoluteRoom = base.transform.position.GetAbsoluteRoom();
             List<AIActor> activeEnemies = absoluteRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
-            bool flag = activeEnemies != null;
-            bool flag2 = flag;
-            if (flag2)
+            if (activeEnemies != null)
             {
                 for (int i = 0; i < activeEnemies.Count; i++)
                 {
                     this.AffectEnemy(activeEnemies[i], user);
                 }
-            }
-            bool flagA = user.PlayerHasActiveSynergy("Vermincide.");
-            if (flagA)
-            {
-                base.StartCoroutine(this.HandlePlaceDoll(user.CurrentRoom, user));
+                if (user.PlayerHasActiveSynergy("Vermincide."))
+                {
+                    base.StartCoroutine(this.HandlePlaceDoll(user.CurrentRoom, user));
+                }
             }
         }
         private IEnumerator HandlePlaceDoll(RoomHandler room, PlayerController player)
         {
             List<AIActor> activeEnemies1 = player.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
-            bool ee = activeEnemies1 != null;
-            if (ee)
+            if (activeEnemies1 != null)
             {
                 AIActor randomActiveEnemy1 = player.CurrentRoom.GetRandomActiveEnemy(true);
                 Vector2 targetPoint = randomActiveEnemy1.sprite.WorldBottomCenter;
                 {
-                    GameObject fuck = UnityEngine.Object.Instantiate<GameObject>(DeadKingsDesparation.CalldownPrefab, targetPoint, Quaternion.identity);
+                    GameObject fuck = UnityEngine.Object.Instantiate<GameObject>(DeadKingsDesparation.CalldownPrefab, targetPoint + new Vector2(0, 30), Quaternion.identity);
                     fuck.GetComponent<tk2dBaseSprite>().PlaceAtLocalPositionByAnchor(targetPoint + new Vector2(0f, 30f), tk2dBaseSprite.Anchor.LowerCenter);
 
                     AkSoundEngine.PostEvent("Play_BOSS_doormimic_land_01", base.gameObject);
@@ -210,9 +210,11 @@ namespace Planetside
                     float elapsed = 0;
                     while (elapsed < Time)
                     {
+                        elapsed += BraveTime.DeltaTime;
                         float t = (float)elapsed / (float)Time;
                         Vector3 pos = Vector3.Lerp(targetPoint + new Vector2(0f, 30f), targetPoint, t);
                         fuck.GetComponent<tk2dBaseSprite>().PlaceAtPositionByAnchor(pos, tk2dBaseSprite.Anchor.LowerCenter);
+                        yield return null;
                     }
 
                     {
@@ -225,22 +227,34 @@ namespace Planetside
                         }
                         for (int q = 0; q < 5; q++)
                         {
+
                             fuck.GetComponent<tk2dBaseSprite>().SetSprite(DeadKingsDesparation.spriteIds1[q]);
-                            yield return new WaitForSeconds(0.25f*q);
+                            Time = 0.35f;
+                            elapsed = 0;
+                            while (elapsed < Time)
+                            {
+                                elapsed += BraveTime.DeltaTime;
+                                float t = (float)elapsed / (float)Time;
+                                //Vector3 pos = Vector3.Lerp(targetPoint + new Vector2(0f, 30f), targetPoint, t);
+                                fuck.GetComponent<tk2dBaseSprite>().PlaceAtPositionByAnchor(targetPoint, tk2dBaseSprite.Anchor.LowerCenter);
+                                yield return null;
+                            }
                         }
                         fuck.GetComponent<tk2dBaseSprite>().SetSprite(DeadKingsDesparation.spriteIds1[6]);
                         Exploder.DoDistortionWave(targetPoint, 6f, 0.6f, 0.2f, 0.1f);
                         AkSoundEngine.PostEvent("Play_BOSS_doormimic_land_01", base.gameObject);
                         fuck.GetComponent<tk2dBaseSprite>().SetSprite(DeadKingsDesparation.spriteIds1[7]);
 
-                        Time = 0.8f;
+                        Time = 1.5f;
                         elapsed = 0;
                         while (elapsed < Time)
                         {
+                            elapsed += BraveTime.DeltaTime;
                             float t = (float)elapsed / (float)Time;
                             Vector3 pos = Vector3.Lerp(targetPoint, targetPoint + new Vector2(0f, 50f), t);
                             fuck.GetComponent<tk2dBaseSprite>().PlaceAtPositionByAnchor(pos, tk2dBaseSprite.Anchor.LowerCenter);
-                        }             
+                            yield return null;
+                        }
                     }
                     UnityEngine.Object.Destroy(fuck);
                 }
@@ -266,17 +280,14 @@ namespace Planetside
         {
             if (this.TrinketingAndBaubling)
             {
-                bool flag = target && target.aiActor && target.aiActor.EnemyGuid != null && base.LastOwner != null;
-                if (flag)
+                if (target && target.aiActor && target.aiActor.EnemyGuid != null && base.LastOwner != null)
                 {this.AffectEnemy(target, base.LastOwner); }
             }
         }
 
         protected void AffectEnemy(AIActor target, PlayerController user)
         {
-            bool flag = target.IsNormalEnemy || !target.IsHarmlessEnemy;
-            bool flag2 = flag;
-            if (flag2)
+            if (target.IsNormalEnemy || !target.IsHarmlessEnemy)
             {
                 if (target != null && base.LastOwner != null)
                 {
@@ -323,12 +334,12 @@ namespace Planetside
             {
                 PlayerController player = GameManager.Instance.PrimaryPlayer;
                 yield return new WaitForSeconds(UnityEngine.Random.Range(0.5f, 2.5f));
+
+                if (target == null) { yield break; }
                 Exploder.DoDistortionWave(target.sprite.WorldCenter, 1f, 0.25f, 3, 0.066f);
                 AkSoundEngine.PostEvent("Play_ENM_beholster_teleport_01", base.gameObject);
 
-                tk2dSprite component = UnityEngine.Object.Instantiate<GameObject>(DeadKingsDesparation.FalseStrengthsPrefab, target.sprite.WorldCenter, Quaternion.identity).GetComponent<tk2dSprite>();
-                component.GetComponent<tk2dBaseSprite>().SetSprite(DeadKingsDesparation.spriteIds2[UsesOneOrAnother]);
-
+                tk2dSprite component = UnityEngine.Object.Instantiate<GameObject>(UsesOneOrAnother == 0 ? DeadKingsDesparation.FalseStrengthsPrefabFire : DeadKingsDesparation.FalseStrengthsPrefabPoison, target.sprite.WorldCenter, Quaternion.identity).GetComponent<tk2dSprite>();
 
                 component.transform.parent = SpawnManager.Instance.VFX;
                 GameObject gameObject2 = new GameObject("image parent");
@@ -336,6 +347,8 @@ namespace Planetside
                 component.transform.parent = gameObject2.transform;
 
                 Transform copySprite = gameObject2.transform;
+                if (target == null) { yield break; }
+
 
                 Vector3 startPosition = target.transform.position;
                 float elapsed = 0f;
@@ -355,13 +368,12 @@ namespace Planetside
                     }
                     yield return null;
                 }
-                if (player == null && copySprite)
+                if (player == null && copySprite.gameObject != null)
                 {
                     UnityEngine.Object.Destroy(copySprite.gameObject);
                     yield break;
                 }
-                bool flag4 = copySprite;
-                if (flag4)
+                if (copySprite.gameObject != null)
                 {
                     UnityEngine.Object.Destroy(copySprite.gameObject);
                     yield break;

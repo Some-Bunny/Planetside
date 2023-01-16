@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using UnityEngine;
 using static NpcApi.CustomShopController;
@@ -38,7 +39,7 @@ namespace NpcApi
 		public new int ModifiedPrice
 		{
 			get
-			{				
+			{
 				if (this.CurrencyType == CustomShopItemController.ShopCurrencyType.META_CURRENCY)
 				{
 					return this.CurrentPrice;
@@ -82,7 +83,19 @@ namespace NpcApi
 				return Mathf.RoundToInt((float)this.CurrentPrice * num3 * num4 * num5);
 			}
 		}
-		public new bool Acquired
+
+		public void UpdatePrice()
+		{
+			if (this == null) { return; }
+            if (this.item == null) { return; }
+            if (this.sprite == null) { return; }
+            if (customPrice == null) { return; }
+            if (m_baseParentShop == null) { return; }
+            if (!this.m_baseParentShop.GetAbsoluteParentRoom().GetRoomInteractables().Contains(this)) { return; }
+            this.CurrentPrice = customPrice(this.m_baseParentShop, this, this.item);
+        }
+
+        public new bool Acquired
 		{
 			get
 			{

@@ -21,13 +21,16 @@ namespace Planetside
         {
             string itemName = "Table Tech Devour";
 
-            string resourceName = "Planetside/Resources/tabletechdevour.png";
+            //string resourceName = "Planetside/Resources/tabletechdevour.png";
 
             GameObject obj = new GameObject(itemName);
 
             TableTechDevour item = obj.AddComponent<TableTechDevour>();
 
-            ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("tabletechdevour"), data, obj);
+
+            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
 
             string shortDesc = "Hungering Flips";
             string longDesc = "This ancient technique allows the user to feed a table flipped, sating it.\n\nChapter 17 of the Table Sutra. Those flipped are sated in their desires.";

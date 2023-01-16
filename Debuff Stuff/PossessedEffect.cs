@@ -25,16 +25,18 @@ namespace Planetside
 		public Color TintColorPosessed = new Color(3f, 2f, 0f, 0.75f);
 		public Color ClearUp = new Color(0f, 0f, 0f, 0f);
 
-		public static void Init()
-        {
-			posessedVFXObject = SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Debuffs/possesedeffecticon", new GameObject("PosessedIcon"));
-			posessedVFXObject.SetActive(false);
-			tk2dBaseSprite vfxSprite = posessedVFXObject.GetComponent<tk2dBaseSprite>();
-			vfxSprite.GetCurrentSpriteDef().ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.LowerCenter, vfxSprite.GetCurrentSpriteDef().position3);
-			FakePrefab.MarkAsFakePrefab(posessedVFXObject);
-			UnityEngine.Object.DontDestroyOnLoad(posessedVFXObject);
-		}
 
+        public static GameObject BuildVFX()
+        {
+            var debuffCollection = StaticSpriteDefinitions.Debuff_Sheet_Data;
+            var BrokenArmorVFXObject = ItemBuilder.AddSpriteToObjectAssetbundle("Possessed", debuffCollection.GetSpriteIdByName("possesedeffecticon"), debuffCollection);//new GameObject("Broken Armor");//SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Debuffs/brokenarmor", new GameObject("BrokenArmorEffect"));
+            FakePrefab.MarkAsFakePrefab(BrokenArmorVFXObject);
+            UnityEngine.Object.DontDestroyOnLoad(BrokenArmorVFXObject);
+            posessedVFXObject = BrokenArmorVFXObject;
+            return posessedVFXObject;
+        }
+
+    
 		public override void ApplyTint(GameActor actor)
 		{
 			actor.RegisterOverrideColor(TintColorPosessed, vfxNameposessed);

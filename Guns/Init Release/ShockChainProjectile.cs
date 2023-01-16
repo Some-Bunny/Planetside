@@ -45,12 +45,11 @@ namespace Planetside
                 {
 
                     List<Projectile> activeProjectiles = StaticReferenceManager.AllProjectiles.ToList<Projectile>();
-                    bool flag5 = activeProjectiles != null && activeProjectiles.Count > 0;
-                    if (flag5)
+                    if (activeProjectiles != null && activeProjectiles.Count > 0)
                     {
                         foreach (Projectile ai in activeProjectiles)
                         {
-                            bool flag8 = ai && ai != null && Vector2.Distance(ai.transform.PositionVector2(), this.projectile.sprite.WorldCenter) < 35f && ai.gameObject.GetComponent<ShockChainProjectile>() != null && ai != this.projectile;
+                            bool flag8 = ai && ai != null && Vector2.Distance(ai.transform.PositionVector2(), this.projectile.sprite.WorldCenter) < 8f && ai.gameObject.GetComponent<ShockChainProjectile>() != null && ai != this.projectile;
                             if (flag8)
                             {
                                 if (!ExtantTethers.ContainsKey(ai))
@@ -59,7 +58,7 @@ namespace Planetside
                                     ExtantTethers.Add(ai, obj);
                                 }
                             }
-                            bool fuckoff = ai && ai != null && Vector2.Distance(ai.transform.PositionVector2(), this.projectile.sprite.WorldCenter) > 35f;
+                            bool fuckoff = ai && ai != null && Vector2.Distance(ai.transform.PositionVector2(), this.projectile.sprite.WorldCenter) > 8f;
                             if (fuckoff)
                             {
                                 if (ExtantTethers.ContainsKey(ai))

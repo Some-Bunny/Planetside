@@ -22,10 +22,12 @@ namespace Planetside
         public static void Init()
         {
             string itemName = "Knuckle-Backer";
-            string resourceName = "Planetside/Resources/VFX/KnuckleBlaster/fistboth.png";
+            //string resourceName = "Planetside/Resources/VFX/KnuckleBlaster/fistboth.png";
             GameObject obj = new GameObject(itemName);
             KnuckleBlaster activeitem = obj.AddComponent<KnuckleBlaster>();
-            ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            var data = StaticSpriteDefinitions.Active_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("fistboth"), data, obj);
+            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "Ska-Doosh!";
             string longDesc = "Grants the player 2 hydraulic fists that they can alternate between. (X for Keyboard, Reload on full clip for Controller).\n\nThe Feedbacker is faster, weaker, uses 1 Charge and can directly parry *any* projectile, while the Knuckle-Blaster is stronger, slower, uses 3 Charges and releases a powerful shockwave on use.";
             activeitem.SetupItem(shortDesc, longDesc, "psog");
@@ -38,19 +40,21 @@ namespace Planetside
             activeitem.SetupUnlockOnCustomFlag(CustomDungeonFlags.HAS_COMPLETED_SOMETHING_WICKED, true);
 
             KnuckleBlaster.ItemspriteIDs = new int[KnuckleBlaster.itemspritepaths.Length];
-            KnuckleBlaster.ItemspriteIDs[0] = SpriteBuilder.AddSpriteToCollection(KnuckleBlaster.itemspritepaths[0], activeitem.sprite.Collection);
-            KnuckleBlaster.ItemspriteIDs[1] = SpriteBuilder.AddSpriteToCollection(KnuckleBlaster.itemspritepaths[1], activeitem.sprite.Collection);
-            KnuckleBlaster.ItemspriteIDs[2] = SpriteBuilder.AddSpriteToCollection(KnuckleBlaster.itemspritepaths[2], activeitem.sprite.Collection);
+            KnuckleBlaster.ItemspriteIDs[0] = data.GetSpriteIdByName("fistbluechosen");//SpriteBuilder.AddSpriteToCollection(KnuckleBlaster.itemspritepaths[0], activeitem.sprite.Collection);
+            KnuckleBlaster.ItemspriteIDs[1] = data.GetSpriteIdByName("fistredchosen"); //SpriteBuilder.AddSpriteToCollection(KnuckleBlaster.itemspritepaths[1], activeitem.sprite.Collection);
+            KnuckleBlaster.ItemspriteIDs[2] = data.GetSpriteIdByName("fistboth"); //SpriteBuilder.AddSpriteToCollection(KnuckleBlaster.itemspritepaths[2], activeitem.sprite.Collection);
 
 
-            GameObject feedbackertether = OtherTools.MakeLine("Planetside/Resources/VFX/KnuckleBlaster/feedbackerchain", new Vector2(10, 10), new Vector2(0, 0), new List<string> { "Planetside/Resources/VFX/KnuckleBlaster/feedbackerchain", "Planetside/Resources/VFX/KnuckleBlaster/feedbackerchain" });
+            var Collection = StaticSpriteDefinitions.Oddments_Sheet_Data;
+
+            GameObject feedbackertether = OtherTools.MakeLineBundle("Feedbacker Chain", Collection.GetSpriteIdByName("feedbackerchain"), Collection, new Vector2(10, 10), new Vector2(0, 0));
             feedbackertether.SetActive(false);
             FakePrefab.MarkAsFakePrefab(feedbackertether);
             UnityEngine.Object.DontDestroyOnLoad(feedbackertether);
             KnuckleBlaster.FeedbackerChainVFX = feedbackertether;
 
 
-            GameObject knuckleblastertether = OtherTools.MakeLine("Planetside/Resources/VFX/KnuckleBlaster/knuckleblasterchain", new Vector2(10, 10), new Vector2(0, 0), new List<string> { "Planetside/Resources/VFX/KnuckleBlaster/knuckleblasterchain", "Planetside/Resources/VFX/KnuckleBlaster/knuckleblasterchain" });
+            GameObject knuckleblastertether = OtherTools.MakeLineBundle("KnuckleBlaster Chain", Collection.GetSpriteIdByName("knuckleblasterchain"), Collection, new Vector2(10, 10), new Vector2(0, 0));
             knuckleblastertether.SetActive(false);
             FakePrefab.MarkAsFakePrefab(knuckleblastertether);
             UnityEngine.Object.DontDestroyOnLoad(knuckleblastertether);
@@ -58,54 +62,24 @@ namespace Planetside
 
 
 
-            GameObject iconObject = SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/KnuckleBlaster/feedbackerenabled", null, true);
-            iconObject.SetActive(false);
-            FakePrefab.MarkAsFakePrefab(iconObject);
-            UnityEngine.Object.DontDestroyOnLoad(iconObject);
-            GameObject iconObject2 = new GameObject("Icon");
-            tk2dSprite icontk2dSprite = iconObject2.AddComponent<tk2dSprite>();
-            icontk2dSprite.SetSprite(iconObject.GetComponent<tk2dBaseSprite>().Collection, iconObject.GetComponent<tk2dBaseSprite>().spriteId);
 
-            KnuckleBlaster.spriteIds.Add(SpriteBuilder.AddSpriteToCollection("Planetside/Resources/VFX/KnuckleBlaster/feedbackerenabled", icontk2dSprite.Collection));
-            KnuckleBlaster.spriteIds.Add(SpriteBuilder.AddSpriteToCollection("Planetside/Resources/VFX/KnuckleBlaster/knuckleblasterenabled", icontk2dSprite.Collection));
+            var Icon = ItemBuilder.AddSpriteToObjectAssetbundle("Display Icon", Collection.GetSpriteIdByName("plus10ammo"), Collection);
+            FakePrefab.MarkAsFakePrefab(Icon);
+            UnityEngine.Object.DontDestroyOnLoad(Icon);
 
-            
-            icontk2dSprite.GetCurrentSpriteDef().material.shader = ShaderCache.Acquire("Brave/PlayerShader");
-            KnuckleBlaster.spriteIds.Add(icontk2dSprite.spriteId);
-            iconObject2.SetActive(false);
+            KnuckleBlaster.spriteIds.Add(Collection.GetSpriteIdByName("feedbackerenabled"));
+            KnuckleBlaster.spriteIds.Add(Collection.GetSpriteIdByName("knuckleblasterenabled"));
 
-            icontk2dSprite.SetSprite(KnuckleBlaster.spriteIds[0]); //Non Synergy
-            icontk2dSprite.SetSprite(KnuckleBlaster.spriteIds[1]); //Synergy
+            KnuckleBlaster.IconPrefab = Icon;
 
-            FakePrefab.MarkAsFakePrefab(iconObject2);
-            UnityEngine.Object.DontDestroyOnLoad(iconObject2);
-            KnuckleBlaster.IconPrefab = iconObject2;
+       
 
-
-
-            GameObject FistObject2 = SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/KnuckleBlaster/feedbackerfist", null, true);
-            tk2dSprite fisttk2dSprite = FistObject2.AddComponent<tk2dSprite>();
-            fisttk2dSprite.SetSprite(FistObject2.GetComponent<tk2dBaseSprite>().Collection, FistObject2.GetComponent<tk2dBaseSprite>().spriteId);
-
-            KnuckleBlaster.FistspriteIds.Add(SpriteBuilder.AddSpriteToCollection("Planetside/Resources/VFX/KnuckleBlaster/feedbackerfist", fisttk2dSprite.Collection));
-            KnuckleBlaster.FistspriteIds.Add(SpriteBuilder.AddSpriteToCollection("Planetside/Resources/VFX/KnuckleBlaster/knuckleblasterfist", fisttk2dSprite.Collection));
-
-
-            fisttk2dSprite.GetCurrentSpriteDef().material.shader = ShaderCache.Acquire("Brave/PlayerShader");
-            KnuckleBlaster.spriteIds.Add(fisttk2dSprite.spriteId);
-            FistObject2.SetActive(false);
-
-            fisttk2dSprite.SetSprite(KnuckleBlaster.FistspriteIds[0]); //Non Synergy
-            fisttk2dSprite.SetSprite(KnuckleBlaster.FistspriteIds[1]); //Synergy
-
-
-
-            FakePrefab.MarkAsFakePrefab(FistObject2);
-            UnityEngine.Object.DontDestroyOnLoad(FistObject2);
-
-            
-            KnuckleBlaster.FistPrefab = FistObject2;
-            KnuckleBlaster.FuckYouFistPrefab = FistObject2;
+            var Fist = ItemBuilder.AddSpriteToObjectAssetbundle("Fist Object", Collection.GetSpriteIdByName("feedbackerfist"), Collection);
+            FakePrefab.MarkAsFakePrefab(Fist);
+            UnityEngine.Object.DontDestroyOnLoad(Fist);
+            KnuckleBlaster.FistspriteIds.Add(Collection.GetSpriteIdByName("feedbackerfist"));
+            KnuckleBlaster.FistspriteIds.Add(Collection.GetSpriteIdByName("knuckleblasterfist"));
+            KnuckleBlaster.FistPrefab = Fist;
 
         }
         public static GameObject KnuckleBlasterChainVFX;
@@ -116,7 +90,6 @@ namespace Planetside
         public static List<int> spriteIds = new List<int>();
 
         public static GameObject FistPrefab;
-        public static GameObject FuckYouFistPrefab;
 
         public static List<int> FistspriteIds = new List<int>();
 

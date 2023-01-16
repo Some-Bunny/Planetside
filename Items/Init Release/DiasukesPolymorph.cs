@@ -22,10 +22,12 @@ namespace Planetside
         public static void Init()
         {
             string itemName = "Daisukes Polymorphine";
-            string resourceName = "Planetside/Resources/daisukespolymorph.png";
+            //string resourceName = "Planetside/Resources/daisukespolymorph.png";
             GameObject obj = new GameObject(itemName);
             DiasukesPolymorphine activeitem = obj.AddComponent<DiasukesPolymorphine>();
-            ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            var data = StaticSpriteDefinitions.Active_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("daisukespolymorph"), data, obj);
+            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "Chaos! Chaos!";
             string longDesc = "An incredibly volatile potion capable of transmogrifying enemies on a whim, with incredibly unpredictable results. A note reads on the back: 'Getting any on your skin will result in near guaranteed death.'";
             activeitem.SetupItem(shortDesc, longDesc, "psog");
@@ -38,14 +40,14 @@ namespace Planetside
             activeitem.quality = PickupObject.ItemQuality.D;
             activeitem.AddToSubShop(ItemBuilder.ShopType.Cursula, 1f);
 
-			DiasukesPolymorphine.PolyFailVFXPrefab = SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/PolymorphFail/daisukespolymorphfailvfx", null, false);
-			DiasukesPolymorphine.PolyFailVFXPrefab.name = "PolyFailVFX";
-			UnityEngine.Object.DontDestroyOnLoad(DiasukesPolymorphine.PolyFailVFXPrefab);
-			FakePrefab.MarkAsFakePrefab(DiasukesPolymorphine.PolyFailVFXPrefab);
-			DiasukesPolymorphine.PolyFailVFXPrefab.SetActive(false);
+            var Collection = StaticSpriteDefinitions.Oddments_Sheet_Data;
+            var ChargeUpSynergy = ItemBuilder.AddSpriteToObjectAssetbundle("Polymorph Fail", Collection.GetSpriteIdByName("daisukespolymorphfailvfx"), Collection);
+            FakePrefab.MarkAsFakePrefab(ChargeUpSynergy);
+            UnityEngine.Object.DontDestroyOnLoad(ChargeUpSynergy);
+            DiasukesPolymorphine.PolyFailVFXPrefab = ChargeUpSynergy;
 
 
-			DiasukesPolymorphine.DiasukesPolymorphineID = activeitem.PickupObjectId;
+            DiasukesPolymorphine.DiasukesPolymorphineID = activeitem.PickupObjectId;
 			ItemIDs.AddToList(activeitem.PickupObjectId);
 
 		}

@@ -35,10 +35,12 @@ namespace Planetside
         public static void Init()
         {
             string itemName = "Never Forgive Me";
-            string resourceName = "Planetside/Resources/forgivemeplease.png";
+            //string resourceName = "Planetside/Resources/forgivemeplease.png";
             GameObject obj = new GameObject(itemName);
             ForgiveMePlease activeitem = obj.AddComponent<ForgiveMePlease>();
-            ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            var data = StaticSpriteDefinitions.Active_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("forgivemeplease"), data, obj);
+            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "Oh How They Fall!";
             string longDesc = "Imitates a hurt and slain foe, and imitates the users harm on the end of its lifespan.\n\nA sown, battered doll of a bullet kin with several voodoo pins on it. Its warm to the touch, as if it's alive...";
             activeitem.SetupItem(shortDesc, longDesc, "psog");

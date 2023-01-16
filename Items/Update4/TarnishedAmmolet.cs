@@ -22,11 +22,13 @@ namespace Planetside
 		public static void Init()
 		{
 			string name = "Tarnished Ammolet";
-			string resourcePath = "Planetside/Resources/tarnishedammolet.png";
+			//string resourcePath = "Planetside/Resources/tarnishedammolet.png";
 			GameObject gameObject = new GameObject(name);
 			TarnishedAmmolet ammolet = gameObject.AddComponent<TarnishedAmmolet>();
-			ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
-			string shortDesc = "Eroded With Time";
+            var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("tarnishedammolet"), data, gameObject);
+            //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
+            string shortDesc = "Eroded With Time";
 			string longDesc = "This ammolet has been subjected to the rare effects of time, and has completely tarnished.\n\nDespite this, its ability to affect enemies has only gotten stronger.";
 			ammolet.SetupItem(shortDesc, longDesc, "psog");
 			ammolet.quality = PickupObject.ItemQuality.A;

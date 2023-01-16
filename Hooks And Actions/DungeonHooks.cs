@@ -25,7 +25,25 @@ namespace Planetside
 
         public static void AddProceduralTeleporterToRoomHook(Action<RoomHandler> orig, RoomHandler roomHandler)
         {
-            //yes, this is a really cheap way of preventing teleporters on **specificaly** my floor but it should work
+
+            if (roomHandler != null)
+            {
+                if (roomHandler.hierarchyParent != null)
+                {
+                    int ChildCount = roomHandler.hierarchyParent.childCount;
+
+                    for (int i = 0; i < ChildCount; i++)
+                    {
+                        Transform childTransform = roomHandler.hierarchyParent.GetChild(i);
+                        if (childTransform?.gameObject)
+                        {
+                            if (childTransform?.gameObject.GetComponent<NoTeleporterPlaceable.NoTeleporterPlaceableComponent>() != null) { return; }
+                        }
+                    }
+                }
+                
+            }          
+            //yes, this is a really cheap and shit way of preventing teleporters on **specificaly** my floor but it should work
             if (GameManager.Instance.Dungeon.BossMasteryTokenItemId == NetheriteChamber.ChaamberID) { return; }
             orig(roomHandler);
         }

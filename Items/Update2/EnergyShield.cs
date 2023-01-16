@@ -12,10 +12,12 @@ namespace Planetside
         public static void Init()
         {
             string name = "Energy-Plated Shield";
-            string resourcePath = "Planetside/Resources/energyshield.png";
+            //string resourcePath = "Planetside/Resources/energyshield.png";
             GameObject gameObject = new GameObject();
             EnergyShield item = gameObject.AddComponent<EnergyShield>();
-            ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
+            var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("energyshield"), data, gameObject);
+            //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
             string shortDesc = "Thunk";
             string longDesc = "4 Plates of protective shields.\n\nOriginally banned by the Guneva Convention for its use in torture methods, it was disguised as a defensive item when being smuggled around the Hegemony. In a hilarious twist, it proved to function better as a defensive shield than a torture device.";
 
@@ -37,10 +39,7 @@ namespace Planetside
 
         public static void BuildPrefab()
         {
-            string value = "AWESOME";
-            string.IsNullOrEmpty(value);
-            bool flag = EnergyShield.orbitalPrefab != null;
-            if (!flag)
+            if (EnergyShield.orbitalPrefab == null)
             {
                 GameObject gameObject = SpriteBuilder.SpriteFromResource("Planetside/Resources/Guons/EnergyPlatedGuon/energyshiledguon.png");
                 gameObject.name = "Energy Shield Orbital";

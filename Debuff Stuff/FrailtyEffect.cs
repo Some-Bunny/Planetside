@@ -24,15 +24,32 @@ namespace Planetside
 		public static GameObject frailtyVFXObject;
 		public Color TintColorFrailty = new Color(2f, 0f, 2f, 0.75f);
 		public Color ClearUp = new Color(0f, 0f, 0f, 0f);
-		public static void Init()
+
+        public static GameObject BuildVFX()
         {
-			frailtyVFXObject = SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Debuffs/frailtyeffecticon", new GameObject("FrailtyIcon"));
-			frailtyVFXObject.SetActive(false);
-			tk2dBaseSprite vfxSprite = frailtyVFXObject.GetComponent<tk2dBaseSprite>();
-			vfxSprite.GetCurrentSpriteDef().ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.LowerCenter, vfxSprite.GetCurrentSpriteDef().position3);
-			FakePrefab.MarkAsFakePrefab(frailtyVFXObject);
-			UnityEngine.Object.DontDestroyOnLoad(frailtyVFXObject);
-		}
+            var debuffCollection = StaticSpriteDefinitions.Debuff_Sheet_Data;
+            var BrokenArmorVFXObject = ItemBuilder.AddSpriteToObjectAssetbundle("Frailty", debuffCollection.GetSpriteIdByName("frailtyeffecticon6"), debuffCollection);//new GameObject("Broken Armor");//SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Debuffs/brokenarmor", new GameObject("BrokenArmorEffect"));
+            FakePrefab.MarkAsFakePrefab(BrokenArmorVFXObject);
+            UnityEngine.Object.DontDestroyOnLoad(BrokenArmorVFXObject);
+
+            BrokenArmorVFXObject.GetOrAddComponent<tk2dBaseSprite>();
+            tk2dSpriteAnimator animator = BrokenArmorVFXObject.GetOrAddComponent<tk2dSpriteAnimator>();
+            var clip = SpriteBuilder.AddAnimation(animator, debuffCollection, new List<int>()
+            {
+                debuffCollection.GetSpriteIdByName("frailtyeffecticon1"),
+                debuffCollection.GetSpriteIdByName("frailtyeffecticon2"),
+                debuffCollection.GetSpriteIdByName("frailtyeffecticon3"),
+                debuffCollection.GetSpriteIdByName("frailtyeffecticon4"),
+                debuffCollection.GetSpriteIdByName("frailtyeffecticon5"),
+                debuffCollection.GetSpriteIdByName("frailtyeffecticon6"),
+
+            }, "start", tk2dSpriteAnimationClip.WrapMode.Once, 7);
+
+            animator.DefaultClipId = animator.GetClipIdByName("start");
+            animator.playAutomatically = true;
+            frailtyVFXObject = BrokenArmorVFXObject;
+            return frailtyVFXObject;
+        }
 
 
 		public override void ApplyTint(GameActor actor)

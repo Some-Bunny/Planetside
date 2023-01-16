@@ -23,11 +23,14 @@ namespace Planetside
 		public static void Init()
 		{
 			string itemName = "Shells Of The Mountain";
-			string resourceName = "Planetside/Resources/bulletofthemountain.png";
+			//string resourceName = "Planetside/Resources/bulletofthemountain.png";
 			GameObject obj = new GameObject(itemName);
 			var item = obj.AddComponent<ShellsOfTheMountain>();
-			ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
-			string shortDesc = "Forged For The Mountain King";
+
+            var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("bulletofthemountain"), data, obj);
+            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            string shortDesc = "Forged For The Mountain King";
 			string longDesc = "No matter how steep it is, the bullets climb to the top to stay level with their foes.";
 			ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
 			item.quality = PickupObject.ItemQuality.A;
@@ -47,7 +50,8 @@ namespace Planetside
 					num = lastLoadedLevelDefinition.enemyHealthMultiplier - 1;
 				}
 				sourceProjectile.baseData.damage = sourceProjectile.baseData.damage*((num/3)+1);
-			}
+
+            }
 			catch (Exception ex)
 			{
 				ETGModConsole.Log(ex.Message, false);

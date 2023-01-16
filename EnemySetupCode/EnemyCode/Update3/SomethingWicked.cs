@@ -412,6 +412,26 @@ namespace Planetside
 			{ Hunt(); }
 		}
 
+
+		public void RollBreakableBreak()
+		{
+            if (UnityEngine.Random.value < 0.005)
+            {
+				if (StaticReferenceManager.AllMinorBreakables == null | StaticReferenceManager.AllMinorBreakables.Count == 0) { return; }
+                var breakable = StaticReferenceManager.AllMinorBreakables[UnityEngine.Random.Range(0, StaticReferenceManager.AllMinorBreakables.Count)];
+                if (breakable)
+                {
+                    foreach (PlayerController player in GameManager.Instance.AllPlayers)
+                    {
+                        if (Vector2.Distance(breakable.transform.PositionVector2(), player.transform.PositionVector2()) > 6 && Vector2.Distance(breakable.transform.PositionVector2(), player.transform.PositionVector2()) < 14)
+						{
+                            breakable.Break();
+                        }
+                    }
+                }
+            }
+        }
+
 		private void StartLurk()
         {
 			currentState = States.LURK;
@@ -422,7 +442,11 @@ namespace Planetside
 				IntVector2? positionSelected = roomSelected.GetRandomAvailableCell();
 				if (roomSelected != null)
                 {
-					foreach (PlayerController player in GameManager.Instance.AllPlayers)
+					RollBreakableBreak();
+
+
+
+                    foreach (PlayerController player in GameManager.Instance.AllPlayers)
 					{
 						if (player.CurrentRoom != null && player.CurrentRoom != roomSelected && Vector2.Distance(positionSelected.Value.ToCenterVector2(), player.transform.position) > 35 && Vector2.Distance(positionSelected.Value.ToCenterVector2(), player.transform.position) < 50)
 						{
@@ -445,7 +469,9 @@ namespace Planetside
 
 		private void Watch()
         {
-			if (Vector2.Distance(base.transform.position, PlayerToTrack.transform.position) < 14)
+            RollBreakableBreak();
+
+            if (Vector2.Distance(base.transform.position, PlayerToTrack.transform.position) < 14)
             {
 				currentState = States.PRE_HUNT;
 				base.StartCoroutine(LerpGlowToValue(glowMaterial.GetFloat("_EmissivePower"), 70, 1f));

@@ -1,0 +1,5120 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1461854359655314}
+  m_IsPrefabParent: 1
+--- !u!1 &1461854359655314
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4119015163026342}
+  - component: {fileID: 114706276581206486}
+  m_Layer: 0
+  m_Name: InquisitorCollection
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4119015163026342
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1461854359655314}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114706276581206486
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1461854359655314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b03b1445062e71c4ca60f92cbd330aff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 3
+  materialIdsValid: 1
+  needMaterialInstance: 0
+  spriteDefinitions:
+  - name: inquisitor_idle_left_001
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.003908203, y: 0.0019541015}
+    - {x: 0.003908203, y: 0.06445215}
+    - {x: 0.1445293, y: 0.0019541015}
+    - {x: 0.1445293, y: 0.06445215}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: 8ee4458c972519b42a4fb59c29571a5e
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_idle_left_002
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.1523457, y: 0.0019541015}
+    - {x: 0.1523457, y: 0.06445215}
+    - {x: 0.29296678, y: 0.0019541015}
+    - {x: 0.29296678, y: 0.06445215}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: 0e6bd2fd3079a7d45aa92e5fece11454
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_idle_left_003
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.30078322, y: 0.0019541015}
+    - {x: 0.30078322, y: 0.06445215}
+    - {x: 0.44140428, y: 0.0019541015}
+    - {x: 0.44140428, y: 0.06445215}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: a72bc93cae9ec71448a3632450ee8180
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_idle_left_004
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.44922072, y: 0.0019541015}
+    - {x: 0.44922072, y: 0.06445215}
+    - {x: 0.5898418, y: 0.0019541015}
+    - {x: 0.5898418, y: 0.06445215}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: bbb7d19d77f6d344481b4f0e1fab0447
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_idle_left_005
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.5976582, y: 0.0019541015}
+    - {x: 0.5976582, y: 0.06445215}
+    - {x: 0.7382793, y: 0.0019541015}
+    - {x: 0.7382793, y: 0.06445215}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: 5bee428a1aebf4040b45f85eb68880b0
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_idle_right_001
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.7460957, y: 0.0019541015}
+    - {x: 0.7460957, y: 0.06445215}
+    - {x: 0.8867168, y: 0.0019541015}
+    - {x: 0.8867168, y: 0.06445215}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: 601e54e947203904d908bdeaab3095a5
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_idle_right_002
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.003908203, y: 0.06836035}
+    - {x: 0.003908203, y: 0.13085839}
+    - {x: 0.1445293, y: 0.06836035}
+    - {x: 0.1445293, y: 0.13085839}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: 74727d3c25d8cca479751a964274cad8
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_idle_right_003
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.1523457, y: 0.06836035}
+    - {x: 0.1523457, y: 0.13085839}
+    - {x: 0.29296678, y: 0.06836035}
+    - {x: 0.29296678, y: 0.13085839}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: 69f7a9d6e47fce84a813b39293fe66de
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_idle_right_004
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.30078322, y: 0.06836035}
+    - {x: 0.30078322, y: 0.13085839}
+    - {x: 0.44140428, y: 0.06836035}
+    - {x: 0.44140428, y: 0.13085839}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: 431beed942be8694897f0b63b6b95755
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_idle_right_005
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.44922072, y: 0.06836035}
+    - {x: 0.44922072, y: 0.13085839}
+    - {x: 0.5898418, y: 0.06836035}
+    - {x: 0.5898418, y: 0.13085839}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: b2007ee42ff0c1440b32b68d7de66661
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_death_001
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.5976582, y: 0.06836035}
+    - {x: 0.5976582, y: 0.13085839}
+    - {x: 0.7382793, y: 0.06836035}
+    - {x: 0.7382793, y: 0.13085839}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: 1b334ec78f781f248b50e87a3c733aa1
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_death_002
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.7460957, y: 0.06836035}
+    - {x: 0.7460957, y: 0.13085839}
+    - {x: 0.8867168, y: 0.06836035}
+    - {x: 0.8867168, y: 0.13085839}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: 9017dabe0c4258b438d468fa84bf3154
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_death_003
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.003908203, y: 0.13476661}
+    - {x: 0.003908203, y: 0.19726464}
+    - {x: 0.1445293, y: 0.13476661}
+    - {x: 0.1445293, y: 0.19726464}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: a67350a3ce3b3f049b09d5a389d79c4b
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_death_004
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.1523457, y: 0.13476661}
+    - {x: 0.1523457, y: 0.19726464}
+    - {x: 0.29296678, y: 0.13476661}
+    - {x: 0.29296678, y: 0.19726464}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: 9edb6f66e00156c4a8ee6253aca62298
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_death_005
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.30078322, y: 0.13476661}
+    - {x: 0.30078322, y: 0.19726464}
+    - {x: 0.44140428, y: 0.13476661}
+    - {x: 0.44140428, y: 0.19726464}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: 5f5d1dbffcf5f1048b0737f199f40cc2
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_death_006
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.44922072, y: 0.13476661}
+    - {x: 0.44922072, y: 0.19726464}
+    - {x: 0.5898418, y: 0.13476661}
+    - {x: 0.5898418, y: 0.19726464}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: 95a691bc28b3723479c7062d985cce70
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_death_007
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.5976582, y: 0.13476661}
+    - {x: 0.5976582, y: 0.19726464}
+    - {x: 0.7382793, y: 0.13476661}
+    - {x: 0.7382793, y: 0.19726464}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: 8493c66c516074848b89931c5bce4317
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_death_008
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.7460957, y: 0.13476661}
+    - {x: 0.7460957, y: 0.19726464}
+    - {x: 0.8867168, y: 0.13476661}
+    - {x: 0.8867168, y: 0.19726464}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: 02d9f7f260394704cb66ca87ba1a670c
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_death_009
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.003908203, y: 0.20117286}
+    - {x: 0.003908203, y: 0.2636709}
+    - {x: 0.1445293, y: 0.20117286}
+    - {x: 0.1445293, y: 0.2636709}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: f809f331a2aca4240ab7b18902791fab
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_death_010
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.1523457, y: 0.20117286}
+    - {x: 0.1523457, y: 0.2636709}
+    - {x: 0.29296678, y: 0.20117286}
+    - {x: 0.29296678, y: 0.2636709}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: c10cfabba81cacb4b86bb6f0d5037b79
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_death_011
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.30078322, y: 0.20117286}
+    - {x: 0.30078322, y: 0.2636709}
+    - {x: 0.44140428, y: 0.20117286}
+    - {x: 0.44140428, y: 0.2636709}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: b3620947f0779cf49a977caaad4c30e5
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_death_012
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.44922072, y: 0.20117286}
+    - {x: 0.44922072, y: 0.2636709}
+    - {x: 0.5898418, y: 0.20117286}
+    - {x: 0.5898418, y: 0.2636709}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: 81596415130ed2f45be8b58396ae5b3f
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_death_013
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.5976582, y: 0.20117286}
+    - {x: 0.5976582, y: 0.2636709}
+    - {x: 0.7382793, y: 0.20117286}
+    - {x: 0.7382793, y: 0.2636709}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: 0d5a1cd38de315845ada72c7e781a132
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_death_014
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.7460957, y: 0.20117286}
+    - {x: 0.7460957, y: 0.2636709}
+    - {x: 0.8867168, y: 0.20117286}
+    - {x: 0.8867168, y: 0.2636709}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: 7171d675f0346544787981b66c9bd32b
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_death_015
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.003908203, y: 0.2675791}
+    - {x: 0.003908203, y: 0.33007714}
+    - {x: 0.1445293, y: 0.2675791}
+    - {x: 0.1445293, y: 0.33007714}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: fcbbf703a67187748bb7045a7163f935
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_awaken_001
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.1523457, y: 0.2675791}
+    - {x: 0.1523457, y: 0.33007714}
+    - {x: 0.29296678, y: 0.2675791}
+    - {x: 0.29296678, y: 0.33007714}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: 98c6add2d5c035b468fed33bc519d8c9
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_awaken_002
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.30078322, y: 0.2675791}
+    - {x: 0.30078322, y: 0.33007714}
+    - {x: 0.44140428, y: 0.2675791}
+    - {x: 0.44140428, y: 0.33007714}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: f183d3666af49c54b89dc5bb977178c8
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_awaken_003
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.44922072, y: 0.2675791}
+    - {x: 0.44922072, y: 0.33007714}
+    - {x: 0.5898418, y: 0.2675791}
+    - {x: 0.5898418, y: 0.33007714}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: 9410649d8e3a2c549b4cf9ab0ce57fc1
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_awaken_004
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.5976582, y: 0.2675791}
+    - {x: 0.5976582, y: 0.33007714}
+    - {x: 0.7382793, y: 0.2675791}
+    - {x: 0.7382793, y: 0.33007714}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: b2b75fcd5fbd04f459914c2f8a70f0a2
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_awaken_005
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.7460957, y: 0.2675791}
+    - {x: 0.7460957, y: 0.33007714}
+    - {x: 0.8867168, y: 0.2675791}
+    - {x: 0.8867168, y: 0.33007714}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: f87f20588dfa7c447a336479f0334999
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_awaken_006
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.003908203, y: 0.33398536}
+    - {x: 0.003908203, y: 0.3964834}
+    - {x: 0.1445293, y: 0.33398536}
+    - {x: 0.1445293, y: 0.3964834}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: b3264285428f9444eb51af12a7446251
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_awaken_007
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.1523457, y: 0.33398536}
+    - {x: 0.1523457, y: 0.3964834}
+    - {x: 0.29296678, y: 0.33398536}
+    - {x: 0.29296678, y: 0.3964834}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: db6325fde3c92434fadb9a9504e13bd8
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_awaken_008
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.30078322, y: 0.33398536}
+    - {x: 0.30078322, y: 0.3964834}
+    - {x: 0.44140428, y: 0.33398536}
+    - {x: 0.44140428, y: 0.3964834}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: 52beaf67d2058e74581d44274716e5e1
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_awaken_009
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.44922072, y: 0.33398536}
+    - {x: 0.44922072, y: 0.3964834}
+    - {x: 0.5898418, y: 0.33398536}
+    - {x: 0.5898418, y: 0.3964834}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: d2a54af19534e9a4ab22ce865879754c
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_awaken_010
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.5976582, y: 0.33398536}
+    - {x: 0.5976582, y: 0.3964834}
+    - {x: 0.7382793, y: 0.33398536}
+    - {x: 0.7382793, y: 0.3964834}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: 95945e9391b6ea04a9a38e7120c5d960
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_awaken_011
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.7460957, y: 0.33398536}
+    - {x: 0.7460957, y: 0.3964834}
+    - {x: 0.8867168, y: 0.33398536}
+    - {x: 0.8867168, y: 0.3964834}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: db88084c800be1c4bb4fb6826862337e
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_awaken_012
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.003908203, y: 0.4003916}
+    - {x: 0.003908203, y: 0.46288964}
+    - {x: 0.1445293, y: 0.4003916}
+    - {x: 0.1445293, y: 0.46288964}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: e81e538b3b67e694588b771ad12631f5
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_awaken_013
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.1523457, y: 0.4003916}
+    - {x: 0.1523457, y: 0.46288964}
+    - {x: 0.29296678, y: 0.4003916}
+    - {x: 0.29296678, y: 0.46288964}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: 31d16d366e8b9e94e8f615f54d2e3873
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_awaken_014
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.30078322, y: 0.4003916}
+    - {x: 0.30078322, y: 0.46288964}
+    - {x: 0.44140428, y: 0.4003916}
+    - {x: 0.44140428, y: 0.46288964}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: 4ddcc4a99662df344b5f15bf15f97bda
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_awaken_015
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.44922072, y: 0.4003916}
+    - {x: 0.44922072, y: 0.46288964}
+    - {x: 0.5898418, y: 0.4003916}
+    - {x: 0.5898418, y: 0.46288964}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: a72fa977e06ce504c9a248e33cd3cce4
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_awaken_016
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.5976582, y: 0.4003916}
+    - {x: 0.5976582, y: 0.46288964}
+    - {x: 0.7382793, y: 0.4003916}
+    - {x: 0.7382793, y: 0.46288964}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: 0440c9cdd2939174ab178ad3030f7b7b
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_awaken_017
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.7460957, y: 0.4003916}
+    - {x: 0.7460957, y: 0.46288964}
+    - {x: 0.8867168, y: 0.4003916}
+    - {x: 0.8867168, y: 0.46288964}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: 8d16d67fd40ffa345ab79d6dc41dda82
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_chargeleft_001
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.003908203, y: 0.0019541015}
+    - {x: 0.003908203, y: 0.06445215}
+    - {x: 0.1445293, y: 0.0019541015}
+    - {x: 0.1445293, y: 0.06445215}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: 6afc2c6710903984c9c1a50bd9e1947c
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_chargeleft_002
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.003908203, y: 0.46679786}
+    - {x: 0.003908203, y: 0.5292959}
+    - {x: 0.1445293, y: 0.46679786}
+    - {x: 0.1445293, y: 0.5292959}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: f33871c27f0e03844b646a5094921129
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_chargeleft_003
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.1523457, y: 0.46679786}
+    - {x: 0.1523457, y: 0.5292959}
+    - {x: 0.29296678, y: 0.46679786}
+    - {x: 0.29296678, y: 0.5292959}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: 33ab4ba583bfbe647abccedf7b4b58e2
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_chargeleft_004
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.30078322, y: 0.46679786}
+    - {x: 0.30078322, y: 0.5292959}
+    - {x: 0.44140428, y: 0.46679786}
+    - {x: 0.44140428, y: 0.5292959}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: 17ec5ce48ae594643bd0b1fa3161960e
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_chargeleft_005
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.44922072, y: 0.46679786}
+    - {x: 0.44922072, y: 0.5292959}
+    - {x: 0.5898418, y: 0.46679786}
+    - {x: 0.5898418, y: 0.5292959}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: 9f507652cf20f7748a6a45b792b433cc
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_chargeleft_006
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.5976582, y: 0.46679786}
+    - {x: 0.5976582, y: 0.5292959}
+    - {x: 0.7382793, y: 0.46679786}
+    - {x: 0.7382793, y: 0.5292959}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: c2c66ae3c22e8544e88227fa10159c6f
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_chargeright_001
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.003908203, y: 0.06836035}
+    - {x: 0.003908203, y: 0.13085839}
+    - {x: 0.1445293, y: 0.06836035}
+    - {x: 0.1445293, y: 0.13085839}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: ee5a6615686cf024d99a67cfe8664961
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_chargeright_002
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.7460957, y: 0.46679786}
+    - {x: 0.7460957, y: 0.5292959}
+    - {x: 0.8867168, y: 0.46679786}
+    - {x: 0.8867168, y: 0.5292959}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: 4370093f8b5d50a45a8a202f90b87bab
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_chargeright_003
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.003908203, y: 0.5332041}
+    - {x: 0.1289043, y: 0.5332041}
+    - {x: 0.003908203, y: 0.6035147}
+    - {x: 0.1289043, y: 0.6035147}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: adc8742d5d1e3074cbc325e2fc5be2ed
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_chargeright_004
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.003908203, y: 0.6074228}
+    - {x: 0.1289043, y: 0.6074228}
+    - {x: 0.003908203, y: 0.6777334}
+    - {x: 0.1289043, y: 0.6777334}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: 73c7eb8a83dc22349aae187c16ca9b53
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_chargeright_005
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.003908203, y: 0.6816416}
+    - {x: 0.1289043, y: 0.6816416}
+    - {x: 0.003908203, y: 0.7519522}
+    - {x: 0.1289043, y: 0.7519522}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: 065250eb8cabb2041a4d90ca8d7ea595
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_chargeright_006
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.003908203, y: 0.7558603}
+    - {x: 0.1289043, y: 0.7558603}
+    - {x: 0.003908203, y: 0.8261709}
+    - {x: 0.1289043, y: 0.8261709}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: 3baca38d608538c4687932a1f7da76d0
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_lasahleft_001
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.003908203, y: 0.0019541015}
+    - {x: 0.003908203, y: 0.06445215}
+    - {x: 0.1445293, y: 0.0019541015}
+    - {x: 0.1445293, y: 0.06445215}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: f4488c962c7062e4ba612fe8c12c261c
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_lasahleft_002
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.003908203, y: 0.8300791}
+    - {x: 0.1289043, y: 0.8300791}
+    - {x: 0.003908203, y: 0.9003897}
+    - {x: 0.1289043, y: 0.9003897}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: 1ac3f8caa129bd3449fa1a68fe78aeef
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_lasahleft_003
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.003908203, y: 0.9042978}
+    - {x: 0.1289043, y: 0.9042978}
+    - {x: 0.003908203, y: 0.9746084}
+    - {x: 0.1289043, y: 0.9746084}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: 9a16298f508b7ea43b12ec3a6452f738
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_lasahleft_004
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.1367207, y: 0.5332041}
+    - {x: 0.1367207, y: 0.5957022}
+    - {x: 0.27734178, y: 0.5332041}
+    - {x: 0.27734178, y: 0.5957022}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: ecfaf3ebe91e57848b056f318007dffe
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_lasahright_001
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.28515822, y: 0.5332041}
+    - {x: 0.28515822, y: 0.5957022}
+    - {x: 0.42577928, y: 0.5332041}
+    - {x: 0.42577928, y: 0.5957022}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: accc63baee007594393cc70e122c97e9
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_lasahright_002
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.43359572, y: 0.5332041}
+    - {x: 0.43359572, y: 0.5957022}
+    - {x: 0.5742168, y: 0.5332041}
+    - {x: 0.5742168, y: 0.5957022}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: c6bc0202661f5af449cceeda53635026
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_lasahright_003
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.5820332, y: 0.5332041}
+    - {x: 0.5820332, y: 0.5957022}
+    - {x: 0.7226543, y: 0.5332041}
+    - {x: 0.7226543, y: 0.5957022}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: c2bd2c518056c9b44b3a9e003593aae4
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_lasahright_004
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.7304707, y: 0.5332041}
+    - {x: 0.7304707, y: 0.5957022}
+    - {x: 0.8710918, y: 0.5332041}
+    - {x: 0.8710918, y: 0.5957022}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: 33debe6e5dbdfd344bc159ba7b5fa1be
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_lasahpewleft_001
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.1367207, y: 0.5996103}
+    - {x: 0.26171678, y: 0.5996103}
+    - {x: 0.1367207, y: 0.6699209}
+    - {x: 0.26171678, y: 0.6699209}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: 313d2142c1d7f6a4dbcc5865cd243b0b
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_lasahpewleft_002
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.1367207, y: 0.6738291}
+    - {x: 0.26171678, y: 0.6738291}
+    - {x: 0.1367207, y: 0.7441397}
+    - {x: 0.26171678, y: 0.7441397}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: a994136c2ab4fa54e9f005cc2b865705
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_lasahpewleft_003
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.1367207, y: 0.7480478}
+    - {x: 0.26171678, y: 0.7480478}
+    - {x: 0.1367207, y: 0.8183584}
+    - {x: 0.26171678, y: 0.8183584}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: de4e62fec7cd4f44abfe3da9607628cc
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_lasahpewleft_004
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.1367207, y: 0.8222666}
+    - {x: 0.26171678, y: 0.8222666}
+    - {x: 0.1367207, y: 0.8925772}
+    - {x: 0.26171678, y: 0.8925772}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: 237f6e2ea1e4ed4468f130345cfd9bd0
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_lasahpewright_001
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.1367207, y: 0.8964853}
+    - {x: 0.26171678, y: 0.8964853}
+    - {x: 0.1367207, y: 0.9667959}
+    - {x: 0.26171678, y: 0.9667959}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: cd294b80457843349aa91486f878b600
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_lasahpewright_002
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.26953322, y: 0.5996103}
+    - {x: 0.26953322, y: 0.6621084}
+    - {x: 0.41015428, y: 0.5996103}
+    - {x: 0.41015428, y: 0.6621084}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: 48ca9003d3dac5a439620b9bcfe3d92e
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_lasahpewright_003
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.41797072, y: 0.5996103}
+    - {x: 0.41797072, y: 0.6621084}
+    - {x: 0.5585918, y: 0.5996103}
+    - {x: 0.5585918, y: 0.6621084}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: dec5a513fabbd964387c04a04c24dbbd
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: inquisitor_lasahpewright_004
+    boundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.25, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    boundsDataCenter: {x: 2, y: 2.25, z: 0}
+    boundsDataExtents: {x: 4, y: 4.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.5, z: 0}
+    - {x: 4, y: 4.5, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.5, z: 0}
+    position3: {x: 4, y: 4.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.5664082, y: 0.5996103}
+    - {x: 0.5664082, y: 0.6621084}
+    - {x: 0.7070293, y: 0.5996103}
+    - {x: 0.7070293, y: 0.6621084}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+    materialId: 0
+    sourceTextureGUID: 32de0f57e0d4a114da150c7902dc6f7a
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  premultipliedAlpha: 0
+  material: {fileID: 0}
+  materials:
+  - {fileID: 2100000, guid: 7131a4edc506e3947bcaa31dc5d88545, type: 2}
+  textures:
+  - {fileID: 2800000, guid: d7260e96bcfe10442a91d409b6619a53, type: 3}
+  pngTextures: []
+  materialPngTextureId: 00000000
+  textureFilterMode: 1
+  textureMipMaps: 0
+  allowMultipleAtlases: 0
+  spriteCollectionGUID: 6c8b8fe5f31c8984fa7183d059f2162f
+  spriteCollectionName: InquisitorCollection
+  assetName: 
+  loadable: 0
+  invOrthoSize: 2
+  halfTargetHeight: 8
+  buildKey: 1073940063
+  dataGuid: 0f2f0970540542f43b3d01763f833e91
+  managedSpriteCollection: 0
+  hasPlatformData: 0
+  spriteCollectionPlatforms: []
+  spriteCollectionPlatformGUIDs: []

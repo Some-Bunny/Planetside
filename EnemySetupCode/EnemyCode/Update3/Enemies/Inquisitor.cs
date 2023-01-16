@@ -19,7 +19,7 @@ namespace Planetside
 	{
 		public static GameObject prefab;
 		public static readonly string guid = "inquisitor";
-		private static tk2dSpriteCollectionData InquisitorCollection;
+		//private static tk2dSpriteCollectionData InquisitorCollection;
 
 		public static void Init()
 		{
@@ -28,14 +28,14 @@ namespace Planetside
 
 		public static void BuildPrefab()
 		{
-			
-			bool flag = prefab != null || EnemyBuilder.Dictionary.ContainsKey(guid);
-			bool flag2 = flag;
-			if (!flag2)
+            tk2dSpriteCollectionData Collection = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("InquisitorCollection").GetComponent<tk2dSpriteCollectionData>();
+            Material matEye = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Material>("inquisitor material");
+            if (prefab == null || !EnemyBuilder.Dictionary.ContainsKey(guid))
 			{
-				prefab = EnemyBuilder.BuildPrefab("Inquisitor", guid, spritePaths[0], new IntVector2(0, 0), new IntVector2(8, 9), false, true);
-				var companion = prefab.AddComponent<EnemyBehavior>();
-				prefab.AddComponent<ForgottenEnemyComponent>();
+				prefab = EnemyBuilder.BuildPrefabBundle("Inquisitor", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(8, 9), false, true);
+                var companion = prefab.AddComponent<EnemyBehavior>();
+                EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, Collection, matEye, false);
+                prefab.AddComponent<ForgottenEnemyComponent>();
 				companion.aiActor.knockbackDoer.weight = 1000;
 				companion.aiActor.MovementSpeed = 1.6f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
@@ -291,16 +291,18 @@ namespace Planetside
 				trespassEngager.PortalLifeTime = 5;
 				trespassEngager.PortalSize = 0.3f;
 
-				bool flag3 = InquisitorCollection == null;
-				if (flag3)
+				//bool flag3 = InquisitorCollection == null;
+				//if (flag3)
 				{
+					/*
 					InquisitorCollection = SpriteBuilder.ConstructCollection(prefab, "InquisitorCollection");
 					UnityEngine.Object.DontDestroyOnLoad(InquisitorCollection);
 					for (int i = 0; i < spritePaths.Length; i++)
 					{
 						SpriteBuilder.AddSpriteToCollection(spritePaths[i], InquisitorCollection);
 					}
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, InquisitorCollection, new List<int>
+					*/
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					0,
 					1,
@@ -316,7 +318,7 @@ namespace Planetside
 					1,
 					0,
 					}, "idle_left", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 7f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, InquisitorCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					5,
 					6,
@@ -333,7 +335,7 @@ namespace Planetside
 					5,				
 					}, "idle_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, InquisitorCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					10,
 					11,
@@ -357,7 +359,7 @@ namespace Planetside
 					EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "death", new Dictionary<int, string> { { 0, "Play_BigGuyDeath" }, { 8, "Play_BiGGuyDethAgain" } });
 					EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "death", new Dictionary<int, string> { { 3, "SpawnDeathPortal" } });
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, InquisitorCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					25,
 					26,
@@ -414,20 +416,20 @@ namespace Planetside
 					};
 
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, InquisitorCollection, chargeUpLeft, "chargeup_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, chargeUpLeft, "chargeup_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
 					//EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "chargeup_left", new Dictionary<int, string> { { 0, "Blast" } });
 					EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "chargeup_left", new Dictionary<int, string> { { 0, "Play_ENM_blobulord_charge_01" }, { 9, "Play_ENM_mummy_cast_01" } });
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, InquisitorCollection, chargeUpRight, "chargeup_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, chargeUpRight, "chargeup_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
 					EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "chargeup_right", new Dictionary<int, string> { { 0, "Play_ENM_blobulord_charge_01" }, { 9, "Play_ENM_mummy_cast_01" } });
 
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, InquisitorCollection, chargeUpRight, "chargeupslow_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, InquisitorCollection, chargeUpLeft, "chargeupslow_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5f;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, chargeUpRight, "chargeupslow_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5f;
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, chargeUpLeft, "chargeupslow_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5f;
 					EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "chargeupslow_left", new Dictionary<int, string> { { 0, "Play_ENM_blobulord_intro_01" }, { 6, "Play_BOSS_dragun_charge_01" } });
 					EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "chargeupslow_right", new Dictionary<int, string> { { 0, "Play_ENM_blobulord_intro_01" }, { 6, "Play_BOSS_dragun_charge_01" } });
 
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, InquisitorCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					47,
 					47,
@@ -444,7 +446,7 @@ namespace Planetside
 					EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "chargefire_left", new Dictionary<int, string> { { 0, "Stompy" } });
 
 					EnemyToolbox.GenerateShootPoint(companion.gameObject, new Vector2(2.125f, 3.3125f), "LeftHandFire");
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, InquisitorCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					53,
 					53,
@@ -462,7 +464,7 @@ namespace Planetside
 
 					EnemyToolbox.GenerateShootPoint(companion.gameObject, new Vector2(2.875f, 3.3125f), "RightHandFire");
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, InquisitorCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					54,
 					55,
@@ -474,7 +476,7 @@ namespace Planetside
 					EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "lasercharge_left", new Dictionary<int, string> { { 0, "Play_ENM_squidface_illusion_01" }, {5, "Play_BOSS_omegaBeam_charge_01" } });
 					EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "lasercharge_left", new Dictionary<int, string> { { 3, "LaserCharge" }});
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, InquisitorCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					58,
 					59,
@@ -486,7 +488,7 @@ namespace Planetside
 					EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "lasercharge_right", new Dictionary<int, string> { { 0, "Play_ENM_squidface_illusion_01" }, { 5, "Play_BOSS_omegaBeam_charge_01" } });
 					EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "lasercharge_right", new Dictionary<int, string> { { 3, "LaserCharge" } });
 					//pewGobrr
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, InquisitorCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					62,
 					63,
@@ -495,7 +497,7 @@ namespace Planetside
 					}, "laser_left", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 6f;
 					EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "laser_left", new Dictionary<int, string> { { 2, "pewGobrr" } });
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, InquisitorCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					66,
 					67,
@@ -504,7 +506,7 @@ namespace Planetside
 					}, "laser_right", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 6f;
 					EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "laser_right", new Dictionary<int, string> { { 2, "pewGobrr" } });
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, InquisitorCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					57,
 					56,
@@ -514,7 +516,7 @@ namespace Planetside
 					54
 					}, "unlaser_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, InquisitorCollection, new List<int>
+					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					61,
 					60,

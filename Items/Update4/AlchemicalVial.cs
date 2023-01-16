@@ -22,10 +22,12 @@ namespace Planetside
         public static void Init()
         {
             string itemName = "Projectile Transmutator";
-            string resourceName = "Planetside/Resources/precursor1.png";
+            //string resourceName = "Planetside/Resources/precursor1.png";
             GameObject obj = new GameObject(itemName);
             AlchemicalVial activeitem = obj.AddComponent<AlchemicalVial>();
-            ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            var data = StaticSpriteDefinitions.Active_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("precursor1"), data, obj);
+            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "Completely Stable";
             string longDesc = "Transmutes all of your projectiles, reload on a full clip to change transmutation type.\n\nDespite what the label says, this is actually a bottle of lead paint. Don't drink it...";
             activeitem.SetupItem(shortDesc, longDesc, "psog");
@@ -34,15 +36,15 @@ namespace Planetside
             activeitem.AddToSubShop(ItemBuilder.ShopType.Goopton, 1f);
             AlchemicalVial.AlchemicalVialID = activeitem.PickupObjectId;
             ItemIDs.AddToList(activeitem.PickupObjectId);
-            
 
-            AlchemicalVial.spriteIDs.Add("nAn", SpriteBuilder.AddSpriteToCollection(AlchemicalVial.spritePaths[0], activeitem.sprite.Collection));
-            AlchemicalVial.spriteIDs.Add("fire", SpriteBuilder.AddSpriteToCollection(AlchemicalVial.spritePaths[1], activeitem.sprite.Collection));
-            AlchemicalVial.spriteIDs.Add("poison", SpriteBuilder.AddSpriteToCollection(AlchemicalVial.spritePaths[2], activeitem.sprite.Collection));
 
-            AlchemicalVial.spriteIDs.Add("frail", SpriteBuilder.AddSpriteToCollection(AlchemicalVial.spritePaths[3], activeitem.sprite.Collection));
-            AlchemicalVial.spriteIDs.Add("cheese", SpriteBuilder.AddSpriteToCollection(AlchemicalVial.spritePaths[4], activeitem.sprite.Collection));
-            AlchemicalVial.spriteIDs.Add("tarnish", SpriteBuilder.AddSpriteToCollection(AlchemicalVial.spritePaths[5], activeitem.sprite.Collection));
+            AlchemicalVial.spriteIDs.Add("nAn", data.GetSpriteIdByName("precursor1"));//SpriteBuilder.AddSpriteToCollection(AlchemicalVial.spritePaths[0], activeitem.sprite.Collection));
+            AlchemicalVial.spriteIDs.Add("fire", data.GetSpriteIdByName("precursor2"));//SpriteBuilder.AddSpriteToCollection(AlchemicalVial.spritePaths[1], activeitem.sprite.Collection));
+            AlchemicalVial.spriteIDs.Add("poison", data.GetSpriteIdByName("precursor3"));//SpriteBuilder.AddSpriteToCollection(AlchemicalVial.spritePaths[2], activeitem.sprite.Collection));
+
+            AlchemicalVial.spriteIDs.Add("frail", data.GetSpriteIdByName("precursor4"));//SpriteBuilder.AddSpriteToCollection(AlchemicalVial.spritePaths[3], activeitem.sprite.Collection));
+            AlchemicalVial.spriteIDs.Add("cheese", data.GetSpriteIdByName("precursor5"));//SpriteBuilder.AddSpriteToCollection(AlchemicalVial.spritePaths[4], activeitem.sprite.Collection));
+            AlchemicalVial.spriteIDs.Add("tarnish", data.GetSpriteIdByName("precursor6"));//SpriteBuilder.AddSpriteToCollection(AlchemicalVial.spritePaths[5], activeitem.sprite.Collection));
 
 
             AlchemicalVial.ActiveIDS.Add("fire");

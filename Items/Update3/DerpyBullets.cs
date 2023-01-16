@@ -23,11 +23,13 @@ namespace Planetside
 		public static void Init()
 		{
 			string itemName = "Derpy Bullets";
-			string resourceName = "Planetside/Resources/derpybullets.png";
+			//string resourceName = "Planetside/Resources/derpybullets.png";
 			GameObject obj = new GameObject(itemName);
 			var item = obj.AddComponent<DerpyBullets>();
-			ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
-			string shortDesc = "Zig Zaggy";
+            var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("derpybullets"), data, obj);
+            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            string shortDesc = "Zig Zaggy";
 			string longDesc = "These unusual bullets had an excess amount of rubber added to them to create incredibly bouncy bullets, however the end result ended up with the poor things unable to stand up straight and end up just flopping from left to right.";
 			ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
 			ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.Damage, 1.4f, StatModifier.ModifyMethod.MULTIPLICATIVE);

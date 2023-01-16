@@ -22,10 +22,12 @@ namespace Planetside
         public static void Init()
         {
             string itemName = "Blood Idol";
-            string resourceName = "Planetside/Resources/bloodidol.png";
+            //string resourceName = "Planetside/Resources/bloodidol.png";
             GameObject obj = new GameObject(itemName);
             BloodIdol activeitem = obj.AddComponent<BloodIdol>();
-            ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            var data = StaticSpriteDefinitions.Active_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("bloodidol"), data, obj);
+            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "The Work Never Stops";
             string longDesc = "An 1dol dedicated to Kaliber, demanding the blood of slain Gundead.\n\nThough you may not complete her quest in this lifetime, she is faithful and will keep watch for many lifetimes.";
             activeitem.SetupItem(shortDesc, longDesc, "psog");

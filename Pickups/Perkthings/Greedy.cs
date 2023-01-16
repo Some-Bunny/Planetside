@@ -11,8 +11,9 @@ namespace Planetside
     {
         public GreedController()
         {
-            this.LifeTime = 2.5f;
+            this.LifeTime = 3.5f;
             this.StatIncrease = 1.2f;
+            this.StatIncreaseFlat = 0.2f;
             this.hasBeenPickedup = false;
         }
         public void Start() 
@@ -23,6 +24,8 @@ namespace Planetside
                 player.OnKilledEnemyContext += this.OnKilledEnemy;
             }
         }
+
+
         public void OnKilledEnemy(PlayerController source, HealthHaver enemy)
         {
             if (enemy.aiActor != null && enemy.aiActor.IsHarmlessEnemy == false)
@@ -66,36 +69,52 @@ namespace Planetside
             }
         }
 
-
-
-        private static IEnumerator GrantTemporaryBoost(PlayerController user, float StatIncreaseValue)
+        private float Timer;
+        private bool BuffsActive= false;
+        private int ActiveBuffs = 0;
+        private IEnumerator GrantTemporaryBoost(PlayerController user, float StatIncreaseValue)
         {
-            StatModifier speed = new StatModifier
+            Timer = 0;
+            ActiveBuffs++;
+            if (user.ownerlessStatModifiers.Contains(Speed))
+            { user.ownerlessStatModifiers.Remove(Speed); }
+            if (user.ownerlessStatModifiers.Contains(Damage))
+            {user.ownerlessStatModifiers.Remove(Damage);}
+            Speed = new StatModifier
             {
                 statToBoost = PlayerStats.StatType.MovementSpeed,
-                amount = StatIncreaseValue,
-                modifyType = StatModifier.ModifyMethod.MULTIPLICATIVE
+                amount = ((StatIncreaseValue-1) * ActiveBuffs)+1,
+                modifyType = StatModifier.ModifyMethod.ADDITIVE
             };
-            StatModifier damage = new StatModifier
+            Damage = new StatModifier
             {
                 statToBoost = PlayerStats.StatType.Damage,
-                amount = StatIncreaseValue,
+                amount = ((StatIncreaseValue - 1) * ActiveBuffs) + 1,
                 modifyType = StatModifier.ModifyMethod.MULTIPLICATIVE
             };
-            user.ownerlessStatModifiers.Add(speed);
-            user.ownerlessStatModifiers.Add(damage);
+            user.ownerlessStatModifiers.Add(Speed);
+            user.ownerlessStatModifiers.Add(Damage);
             user.stats.RecalculateStats(user, true, true);
-            float elapsed = 0f;
-            while (elapsed < 7)
+
+            if (BuffsActive == true) { yield break; }
+            BuffsActive = true;
+            while (Timer < 8)
             {
-                elapsed += BraveTime.DeltaTime;
+                Timer += BraveTime.DeltaTime;
                 yield return null;
             }
-            user.ownerlessStatModifiers.Remove(speed);
-            user.ownerlessStatModifiers.Remove(damage);
+            user.ownerlessStatModifiers.Remove(Speed);
+            user.ownerlessStatModifiers.Remove(Damage);
             user.stats.RecalculateStats(user, true, true);
+            BuffsActive = false;
+            ActiveBuffs = 0;
+            user.PlayEffectOnActor(StaticVFXStorage.MachoBraceBurstVFX, new Vector3(0, 0.25f));
+            AkSoundEngine.PostEvent("Play_WPN_Life_Orb_Fade_01", user.gameObject);
             yield break;
         }
+
+        public StatModifier Damage;
+        public StatModifier Speed;
 
 
         private static IEnumerator HandleManualCoinSpawnLifespan(CurrencyPickup coins, float lifeTime)
@@ -136,17 +155,22 @@ namespace Planetside
 
         public static void DoParticlePoof(CurrencyPickup c, float m)
         {
+            if (c == null) { return; }
+            if (c.sprite == null) { return; }
             Vector3 vector = c.sprite.WorldBottomLeft.ToVector3ZisY(0);
             Vector3 vector2 = c.sprite.WorldTopRight.ToVector3ZisY(0);
             Vector3 position = new Vector3(UnityEngine.Random.Range(vector.x, vector2.x), UnityEngine.Random.Range(vector.y, vector2.y), UnityEngine.Random.Range(vector.z, vector2.z));
-            GlobalSparksDoer.DoSingleParticle(position, Vector3.up * (3 * m), null, null, null, GlobalSparksDoer.SparksType.FLOATY_CHAFF);
+            GlobalSparksDoer.DoSingleParticle(position, Vector3.up * (3 * m) * 2, null, null, null, GlobalSparksDoer.SparksType.FLOATY_CHAFF);
         }
 
         public void IncrementStack()
         {
             this.StatIncrease += 0.10f;
+            this.StatIncreaseFlat += 0.10f;
             this.LifeTime += 0.5f;
         }
+
+        private float StatIncreaseFlat;
 
         private float LifeTime;
         private float StatIncrease;
@@ -158,11 +182,13 @@ namespace Planetside
         public static void Init()
         {
             string name = "Greed";
-            string resourcePath = "Planetside/Resources/PerkThings/Greedy.png";
+            //string resourcePath = "Planetside/Resources/PerkThings/Greedy.png";
             GameObject gameObject = new GameObject(name);
             Greedy item = gameObject.AddComponent<Greedy>();
-          
-            ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
+
+            var data = StaticSpriteDefinitions.Pickup_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("Greedy"), data, gameObject);
+            //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
             string shortDesc = "Makes you greedier.";
             string longDesc = "yep.";
             item.SetupItem(shortDesc, longDesc, "psog");
@@ -200,7 +226,9 @@ namespace Planetside
             Exploder.DoDistortionWave(player.sprite.WorldTopCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
             player.BloopItemAboveHead(base.sprite, "");
             string BlurbText = greed.hasBeenPickedup == true ? "Greed Is Even Better." : "Greed Is Good.";
-            OtherTools.Notify("Greedy", BlurbText, "Planetside/Resources/PerkThings/Greedy", UINotificationController.NotificationColor.GOLD);
+            //OtherTools.Notify("Greedy", BlurbText, "Planetside/Resources/PerkThings/Greedy", UINotificationController.NotificationColor.GOLD);
+            OtherTools.NotifyCustom("Greedy", BlurbText, "Greedy", StaticSpriteDefinitions.Pickup_Sheet_Data, UINotificationController.NotificationColor.GOLD);
+
             /*
             Exploder.DoDistortionWave(player.sprite.WorldTopCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
             player.BloopItemAboveHead(base.sprite, "");
@@ -256,7 +284,7 @@ namespace Planetside
             StatModifier speed = new StatModifier
             {
                 statToBoost = PlayerStats.StatType.MovementSpeed,
-                amount = 1.1f,
+                amount = 1.025f,
                 modifyType = StatModifier.ModifyMethod.MULTIPLICATIVE
             };
             StatModifier damage = new StatModifier

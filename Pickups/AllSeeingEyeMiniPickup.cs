@@ -13,11 +13,13 @@ namespace Planetside
         public static void Init()
         {
             string name = "All Seeing Interactable";
-            string resourcePath = "Planetside/Resources/Pickups/eye_pickup.png";
+            //string resourcePath = "Planetside/Resources/Pickups/eye_pickup.png";
             GameObject gameObject = new GameObject(name);
             AllSeeingEyeMiniPickup item = gameObject.AddComponent<AllSeeingEyeMiniPickup>();
-          
-            ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
+
+            var data = StaticSpriteDefinitions.Pickup_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("eye_pickup"), data, gameObject);
+            //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
             string shortDesc = "Nolla.";
             string longDesc = "Nullifies you, for an inner reward.";
             item.SetupItem(shortDesc, longDesc, "psog");
@@ -52,7 +54,9 @@ namespace Planetside
             {
                 GameManager.Instance.Dungeon.StartCoroutine(ItemChoiceCoroutine(perksThatExist));
             }
-            OtherTools.Notify("Choose One.", "You Foresee What You Desire.", "Planetside/Resources/Pickups/eye_pickup", UINotificationController.NotificationColor.GOLD);
+            OtherTools.NotifyCustom("Choose One.", "You Foresee What You Desire", "eye_pickup", StaticSpriteDefinitions.Pickup_Sheet_Data, UINotificationController.NotificationColor.GOLD);
+
+            //OtherTools.Notify("Choose One.", "You Foresee What You Desire.", "Planetside/Resources/Pickups/eye_pickup", UINotificationController.NotificationColor.GOLD);
 
             player.BloopItemAboveHead(base.sprite, "");
             UnityEngine.Object.Destroy(base.gameObject);

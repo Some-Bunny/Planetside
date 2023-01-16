@@ -13,11 +13,14 @@ namespace Planetside
 		public static void Init()
 		{
 			string name = "Damned Guon Stone";
-			string resourcePath = "Planetside/Resources/Guons/DamnedGuon/damnedstone.png";
+			//string resourcePath = "Planetside/Resources/Guons/DamnedGuon/damnedstone.png";
 			GameObject gameObject = new GameObject();
 			DamnedGuonStone woodGuonStone = gameObject.AddComponent<DamnedGuonStone>();
-			ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
-			string shortDesc = "Laced With Curse";
+            var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("damnedstone"), data, gameObject);
+
+            //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
+            string shortDesc = "Laced With Curse";
 			string longDesc = "A guon stone bathed in the cursed pots scattered around the Gungeon. They reek of evils.";
 			woodGuonStone.SetupItem(shortDesc, longDesc, "psog");
 			woodGuonStone.quality = PickupObject.ItemQuality.EXCLUDED;

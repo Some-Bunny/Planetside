@@ -26,11 +26,13 @@ namespace Planetside
 		public static void Init()
 		{
 			string itemName = "Lucky Charm";
-			string resourceName = "Planetside/Resources/luckycharm.png";
+			//string resourceName = "Planetside/Resources/luckycharm.png";
 			GameObject obj = new GameObject(itemName);
 			var item = obj.AddComponent<LuckyCharm>();
-			ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
-			string shortDesc = "You feelin' lucky punk?";
+            var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("luckycharm"), data, obj);
+            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            string shortDesc = "You feelin' lucky punk?";
 			string longDesc = "Tips the scales of fortune *slightly* in your favor in many, yet fairly small ways.\n\nA charm with a 4 leaf clover attached to it. Unsurprisingly not affiliated with the cereal brand.";
 			ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
 			item.quality = PickupObject.ItemQuality.C;

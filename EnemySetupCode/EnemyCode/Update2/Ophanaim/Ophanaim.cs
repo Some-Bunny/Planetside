@@ -27,7 +27,7 @@ namespace Planetside
 	{
 		public static GameObject prefab;
 		public static readonly string guid = "Ophanaim";
-		private static tk2dSpriteCollectionData OphanaimCollectiom;
+		//private static tk2dSpriteCollectionData OphanaimCollectiom;
 
 		public static void Init()
 		{
@@ -35,16 +35,18 @@ namespace Planetside
 		}
 		public static void BuildPrefab()
 		{
-			bool flag = prefab != null || EnemyBuilder.Dictionary.ContainsKey(guid);
+            tk2dSpriteCollectionData Collection = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("OphanaimCollection").GetComponent<tk2dSpriteCollectionData>();
+            Material matEye = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Material>("ophanaim material");
 
-			bool flag2 = flag;
-			if (!flag2)
+            if (prefab == null || !EnemyBuilder.Dictionary.ContainsKey(guid))
 			{
-				prefab = BossBuilder.BuildPrefab("Ophanaim", guid, "Planetside/Resources/Bosses/OphanaimUltra/ophanaimultra_idle_001.png", new IntVector2(0, 0), new IntVector2(0, 0), false, true);
+				prefab = BossBuilder.BuildPrefabBundle("Ophanaim", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(0, 0), false, true);
 				var enemy = prefab.AddComponent<EyeEnemyBehavior>();
 				AIAnimator aiAnimator = enemy.aiAnimator;
+                EnemyToolbox.QuickAssetBundleSpriteSetup(enemy.aiActor, Collection, matEye, false);
 
-				enemy.aiActor.knockbackDoer.weight = 35;
+
+                enemy.aiActor.knockbackDoer.weight = 35;
 				enemy.aiActor.MovementSpeed = 0.5f;
 				enemy.aiActor.healthHaver.PreventAllDamage = false;
 				enemy.aiActor.CollisionDamage = 1f;
@@ -95,15 +97,17 @@ namespace Planetside
 
 
 
-                if (OphanaimCollectiom == null)
+                //if (OphanaimCollectiom == null)
 				{
+                    /*
 					OphanaimCollectiom = SpriteBuilder.ConstructCollection(prefab, "OphanaimCollection");
 					UnityEngine.Object.DontDestroyOnLoad(OphanaimCollectiom);
 					for (int i = 0; i < spritePaths.Length; i++)
 					{
 						SpriteBuilder.AddSpriteToCollection(spritePaths[i], OphanaimCollectiom);
 					}
-					SpriteBuilder.AddAnimation(enemy.spriteAnimator, OphanaimCollectiom, new List<int>
+                    */
+					SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
 					{
 					0,
 					1,
@@ -116,7 +120,7 @@ namespace Planetside
 					}, "idle", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 10f;
 
 
-                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, OphanaimCollectiom, new List<int>
+                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
                     {
                     8,
 					9,
@@ -143,7 +147,7 @@ namespace Planetside
                     EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "dash", new Dictionary<int, string> { { 2, "Play_ENM_highpriest_dash_01" } });
                     EnemyToolbox.AddEventTriggersToAnimation(enemy.spriteAnimator, "dash", new Dictionary<int, string>() { { 4, "enableImage" }, { 17, "disableImage" } });
 
-                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, OphanaimCollectiom, new List<int>
+                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
                     {
                     16,
 					17,
@@ -164,7 +168,7 @@ namespace Planetside
                     EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "blast_charge", new Dictionary<int, string> { { 1, "Play_BOSS_agunim_charge_03" } });
 
 
-                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, OphanaimCollectiom, new List<int>
+                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
                     {
                     21,
                     21,
@@ -178,7 +182,7 @@ namespace Planetside
 				    28,
 				    29
                     }, "blast", tk2dSpriteAnimationClip.WrapMode.Once).fps = 10f;
-                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, OphanaimCollectiom, new List<int>
+                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
                     {
                     47,
 					48,
@@ -194,7 +198,7 @@ namespace Planetside
 					53
                     }, "charge_laser", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6f;
 
-                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, OphanaimCollectiom, new List<int>
+                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
                     {
                     54,
 					55,
@@ -203,7 +207,7 @@ namespace Planetside
 					58,
 					59
                     }, "laser", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 10f;
-                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, OphanaimCollectiom, new List<int>
+                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
                     {
                     53,
 					52,
@@ -215,7 +219,7 @@ namespace Planetside
                     }, "uncharge_laser", tk2dSpriteAnimationClip.WrapMode.Once).fps = 10f;
 
 
-                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, OphanaimCollectiom, new List<int>
+                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
                     {
                     47,
                     48,
@@ -231,7 +235,7 @@ namespace Planetside
                     53
                     }, "charge_mithrix", tk2dSpriteAnimationClip.WrapMode.Once).fps = 10f;
 
-                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, OphanaimCollectiom, new List<int>
+                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
                     {
                     47,
                     48,
@@ -257,7 +261,7 @@ namespace Planetside
                     }, "charge_s", tk2dSpriteAnimationClip.WrapMode.Once).fps = 4f;
 
 
-                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, OphanaimCollectiom, new List<int>
+                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
                     {
                     54,
                     55,
@@ -267,7 +271,7 @@ namespace Planetside
                     59
                     }, "mithrix", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 10f;
 
-                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, OphanaimCollectiom, new List<int>
+                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
                     {
                     53,
                     52,
@@ -278,7 +282,7 @@ namespace Planetside
                     47
                     }, "uncharge_mithrix", tk2dSpriteAnimationClip.WrapMode.Once).fps = 10f;
 
-                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, OphanaimCollectiom, new List<int>
+                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
                     {
                     47,
                     48,
@@ -320,7 +324,7 @@ namespace Planetside
                     }, "superlaser", tk2dSpriteAnimationClip.WrapMode.Once).fps = 12f;
 
 
-                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, OphanaimCollectiom, new List<int>
+                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
                     {
                     60,
 					61,
@@ -332,7 +336,7 @@ namespace Planetside
 					67,
 					68
                     }, "fade_out", tk2dSpriteAnimationClip.WrapMode.Once).fps = 15f;
-                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, OphanaimCollectiom, new List<int>
+                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
                     {
                     68,
                     67,
@@ -353,7 +357,7 @@ namespace Planetside
                     EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "fade_out", new Dictionary<int, string> { { 3, "tp1" } });
                     EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "fade_in", new Dictionary<int, string> { { 5, "tp2" } });
 
-                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, OphanaimCollectiom, new List<int>
+                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
                     {
                     69,
                     70,
@@ -375,7 +379,7 @@ namespace Planetside
                     EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "begin_cast", new Dictionary<int, string> { { 4, "Play_BOSS_agunim_charge_02" }, { 14, "Play_BOSS_agunim_volley_01" } });
 
                     //m_BOSS_agunim_charge_02
-                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, OphanaimCollectiom, new List<int>
+                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
                     {
                     76,
                     75,
@@ -387,7 +391,7 @@ namespace Planetside
                     69
                     }, "un_cast", tk2dSpriteAnimationClip.WrapMode.Once).fps = 11f;
 
-                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, OphanaimCollectiom, new List<int>
+                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
                     {
                     77,
                     78,
@@ -399,7 +403,7 @@ namespace Planetside
                     84
                     }, "cast", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 15f;
 
-                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, OphanaimCollectiom, new List<int>
+                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
                     {
                     69,
                     70,
@@ -486,7 +490,7 @@ namespace Planetside
 
                     }, "wizardshit", tk2dSpriteAnimationClip.WrapMode.Once).fps = 17f;
 
-                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, OphanaimCollectiom, new List<int>
+                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
                     {
                     47,
                     48,
@@ -525,7 +529,7 @@ namespace Planetside
                     58,
                     59
                     }, "begin_flight", tk2dSpriteAnimationClip.WrapMode.Once).fps = 10f;
-                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, OphanaimCollectiom, new List<int>
+                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
                     {
                     54,
                     55,
@@ -539,7 +543,7 @@ namespace Planetside
 
 
 
-                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, OphanaimCollectiom, new List<int>
+                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
 					{
                     68,
                     67,
@@ -578,7 +582,7 @@ namespace Planetside
                     }, "intro", tk2dSpriteAnimationClip.WrapMode.Once).fps = 12f;
                     EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "intro", new Dictionary<int, string> { { 0, "fuck_me" } });
 
-                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, OphanaimCollectiom, new List<int>
+                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
 					{
 					85,
                     85,
@@ -1825,10 +1829,9 @@ namespace Planetside
                     SolarClap = blessingObj;
                 }
                 {
-                    string eyeDefString = "Planetside/Resources/VFX/Ophanaim/Minion/";
-                    GameObject vfxObj = ItemBuilder.AddSpriteToObject("EyeballMinion", eyeDefString + "babyeye_idle_front_001", null);
+                    //string eyeDefString = "Planetside/Resources/VFX/Ophanaim/Minion/";
+                    GameObject vfxObj = ItemBuilder.SpriteFromBundle("EyeballMinion", Collection.GetSpriteIdByName("babyeye_idle_front_001"), Collection);//ItemBuilder.AddSpriteToObject("EyeballMinion", eyeDefString + "babyeye_idle_front_001", null);
                     tk2dSpriteAnimator eyeAnimator = vfxObj.GetOrAddComponent<tk2dSpriteAnimator>();
-                    tk2dSpriteAnimation animation = vfxObj.AddComponent<tk2dSpriteAnimation>();
                     AIAnimator aiAnimatorBody = vfxObj.AddComponent<AIAnimator>();
 
                     eyeAnimator.sprite.usesOverrideMaterial = true;
@@ -1867,81 +1870,43 @@ namespace Planetside
                     vfxObj.AddComponent<MeshFilter>();
                     vfxObj.AddComponent<MeshRenderer>();
 
-
-                    tk2dSpriteCollectionData DeathMarkcollection = SpriteBuilder.ConstructCollection(vfxObj, ("eyeballMinion"));
-
-                    tk2dSpriteAnimationClip idleFrontClip = new tk2dSpriteAnimationClip() { name = "idle_front", frames = new tk2dSpriteAnimationFrame[0], fps = 7 };
-                    List<tk2dSpriteAnimationFrame> frames = new List<tk2dSpriteAnimationFrame>();
-                    for (int i = 1; i < 5; i++)
+                    SpriteBuilder.AddAnimation(eyeAnimator, Collection, new List<int>()
                     {
-                        tk2dSpriteCollectionData collection = DeathMarkcollection;
-                        int frameSpriteId = SpriteBuilder.AddSpriteToCollection(eyeDefString + $"babyeye_idle_front_00{i}", collection);
-                        tk2dSpriteDefinition frameDef = collection.spriteDefinitions[frameSpriteId];
-                        frameDef.materialInst = Handmat;
-                        frameDef.material = Handmat;
-                        frameDef.materialId = 0;
-                        frameDef.ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.LowerLeft);
-                        frames.Add(new tk2dSpriteAnimationFrame { spriteId = frameSpriteId, spriteCollection = collection });
-                    }
-                    idleFrontClip.frames = frames.ToArray();
-                    idleFrontClip.wrapMode = tk2dSpriteAnimationClip.WrapMode.Loop;
+                        Collection.GetSpriteIdByName("babyeye_idle_front_001"),
+                        Collection.GetSpriteIdByName("babyeye_idle_front_002"),
+                        Collection.GetSpriteIdByName("babyeye_idle_front_003"),
+                        Collection.GetSpriteIdByName("babyeye_idle_front_004"),
 
-                    tk2dSpriteAnimationClip idleLeftClip = new tk2dSpriteAnimationClip() { name = "idle_left", frames = new tk2dSpriteAnimationFrame[0], fps = 7 };
-                    List<tk2dSpriteAnimationFrame> frames1 = new List<tk2dSpriteAnimationFrame>();
-                    for (int i = 1; i < 5; i++)
+                    }, "idle_front", tk2dSpriteAnimationClip.WrapMode.Loop, 7);
+
+                    SpriteBuilder.AddAnimation(eyeAnimator, Collection, new List<int>()
                     {
-                        tk2dSpriteCollectionData collection = DeathMarkcollection;
-                        int frameSpriteId = SpriteBuilder.AddSpriteToCollection(eyeDefString + $"babyeye_idle_left_00{i}", collection);
-                        tk2dSpriteDefinition frameDef = collection.spriteDefinitions[frameSpriteId];
-                        frameDef.materialInst = Handmat;
-                        frameDef.material = Handmat;
-                        frameDef.materialId = 0;
-                        frameDef.ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.LowerLeft);
-                        frames1.Add(new tk2dSpriteAnimationFrame { spriteId = frameSpriteId, spriteCollection = collection });
-                    }
-                    idleLeftClip.frames = frames1.ToArray();
-                    idleLeftClip.wrapMode = tk2dSpriteAnimationClip.WrapMode.Loop;
+                        Collection.GetSpriteIdByName("babyeye_idle_left_001"),
+                        Collection.GetSpriteIdByName("babyeye_idle_left_002"),
+                        Collection.GetSpriteIdByName("babyeye_idle_left_003"),
+                        Collection.GetSpriteIdByName("babyeye_idle_left_004"),
 
-                    tk2dSpriteAnimationClip idleRightClip = new tk2dSpriteAnimationClip() { name = "idle_right", frames = new tk2dSpriteAnimationFrame[0], fps = 7 };
-                    List<tk2dSpriteAnimationFrame> frames2 = new List<tk2dSpriteAnimationFrame>();
-                    for (int i = 1; i < 5; i++)
+                    }, "idle_left", tk2dSpriteAnimationClip.WrapMode.Loop, 7);
+
+                    SpriteBuilder.AddAnimation(eyeAnimator, Collection, new List<int>()
                     {
-                        tk2dSpriteCollectionData collection = DeathMarkcollection;
-                        int frameSpriteId = SpriteBuilder.AddSpriteToCollection(eyeDefString + $"babyeye_idle_right_00{i}", collection);
-                        tk2dSpriteDefinition frameDef = collection.spriteDefinitions[frameSpriteId];
-                        frameDef.materialInst = Handmat;
-                        frameDef.material = Handmat;
-                        frameDef.materialId = 0;
-                        frameDef.ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.LowerLeft);
-                        frames2.Add(new tk2dSpriteAnimationFrame { spriteId = frameSpriteId, spriteCollection = collection });
-                    }
-                    idleRightClip.frames = frames2.ToArray();
-                    idleRightClip.wrapMode = tk2dSpriteAnimationClip.WrapMode.Loop;
+                        Collection.GetSpriteIdByName("babyeye_idle_right_001"),
+                        Collection.GetSpriteIdByName("babyeye_idle_right_002"),
+                        Collection.GetSpriteIdByName("babyeye_idle_right_003"),
+                        Collection.GetSpriteIdByName("babyeye_idle_right_004"),
 
+                    }, "idle_right", tk2dSpriteAnimationClip.WrapMode.Loop, 7);
 
-
-                    tk2dSpriteAnimationClip spawnClip = new tk2dSpriteAnimationClip() { name = "spawn", frames = new tk2dSpriteAnimationFrame[0], fps = 7 };
-                    List<tk2dSpriteAnimationFrame> spawnFrames = new List<tk2dSpriteAnimationFrame>();
-                    for (int i = 1; i < 7; i++)
+                    SpriteBuilder.AddAnimation(eyeAnimator, Collection, new List<int>()
                     {
-                        tk2dSpriteCollectionData collection = DeathMarkcollection;
-
-                        int frameSpriteId = SpriteBuilder.AddSpriteToCollection(eyeDefString + $"babyeye_idle_spawn_00{i}", collection);
-                        tk2dSpriteDefinition frameDef = collection.spriteDefinitions[frameSpriteId];
-                        frameDef.materialInst = Handmat;
-                        frameDef.material = Handmat;
-                        frameDef.materialId = 0;
-                        frameDef.ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.LowerLeft);
-                        spawnFrames.Add(new tk2dSpriteAnimationFrame { spriteId = frameSpriteId, spriteCollection = collection });
-                    }
-
-                    spawnClip.frames = spawnFrames.ToArray();
-                    spawnClip.wrapMode = tk2dSpriteAnimationClip.WrapMode.Once;
-
-
-
-                    eyeAnimator.Library = animation;
-                    eyeAnimator.Library.clips = new tk2dSpriteAnimationClip[] { idleFrontClip, idleLeftClip, idleRightClip, spawnClip };
+                        Collection.GetSpriteIdByName("babyeye_idle_spawn_001"),
+                        Collection.GetSpriteIdByName("babyeye_idle_spawn_002"),
+                        Collection.GetSpriteIdByName("babyeye_idle_spawn_003"),
+                        Collection.GetSpriteIdByName("babyeye_idle_spawn_004"),
+                        Collection.GetSpriteIdByName("babyeye_idle_spawn_005"),
+                        Collection.GetSpriteIdByName("babyeye_idle_spawn_006"),
+                    }, "spawn", tk2dSpriteAnimationClip.WrapMode.Once, 7);
+                    
 
                     AdvancedBodyPartController bodyPart = vfxObj.AddComponent<AdvancedBodyPartController>();
                     bodyPart.Name = "eye";

@@ -6,6 +6,7 @@ using ItemAPI;
 using UnityEngine;
 using System.Reflection;
 using MonoMod.RuntimeDetour;
+using GungeonAPI;
 
 namespace Planetside
 {
@@ -14,12 +15,14 @@ namespace Planetside
 		public static void Init()
 		{
 			string name = "Gilded Pot";
-			string resourcePath = "Planetside/Resources/gildedceramic.png";
+			//string resourcePath = "Planetside/Resources/gildedceramic.png";
 			GameObject gameObject = new GameObject(name);
 			GildedPots warVase = gameObject.AddComponent<GildedPots>();
-			ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
-			string shortDesc = "Destruction Therapy";
-			string longDesc = "Decorative breakables have a chance to drop a casing.\n\nOriginally a trinket carried around by the Lost Adventurer, he lost it while traversing the halls of the Gungeon.";
+            var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("gildedceramic"), data, gameObject);
+            //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
+            string shortDesc = "Destruction Therapy";
+			string longDesc = "Decorative breakables have a chance to be replaced by a special coin-plated pot.\n\nOriginally a trinket carried around by the Lost Adventurer, he lost it while traversing the halls of the Gungeon.";
 			ItemBuilder.SetupItem(warVase, shortDesc, longDesc, "psog");
 			warVase.quality = PickupObject.ItemQuality.D;
 			List<string> mandatoryConsoleIDs = new List<string>
@@ -30,43 +33,103 @@ namespace Planetside
 			{
 				"coin_crown",
 				"gold_ammolet",
-				"gilded_bullets"
+				"gilded_bullets",
+				"bomb",
+				"c4",
+				"cluster_mine",
+				"proximity_mine",
+				"blast_helmet"
 			};
-			CustomSynergies.Add("Expert Demolitionist", mandatoryConsoleIDs, optionalConsoleIDs, true);
+
+
+            CustomSynergies.Add("Expert Demolitionist", mandatoryConsoleIDs, optionalConsoleIDs, true);
 			GildedPots.GildedPotsID = warVase.PickupObjectId;
 			ItemIDs.AddToList(warVase.PickupObjectId);
 			warVase.gameObject.AddComponent<RustyItemPool>();
-			new Hook(typeof(MinorBreakable).GetMethod("OnBreakAnimationComplete", BindingFlags.Instance | BindingFlags.NonPublic), typeof(GildedPots).GetMethod("CoinChance"));
-			GameManager.Instance.RainbowRunForceExcludedIDs.Add(warVase.PickupObjectId);
+			new Hook(typeof(MinorBreakable).GetMethod("Awake", BindingFlags.Instance | BindingFlags.NonPublic), typeof(GildedPots).GetMethod("CoinChance"));
+            //new Hook(typeof(MinorBreakable).GetMethod("Break", BindingFlags.Instance | BindingFlags.Public), typeof(GildedPots).GetMethod("BoomChance"));
+
+            GameManager.Instance.RainbowRunForceExcludedIDs.Add(warVase.PickupObjectId);
 
 		}
 		public static int GildedPotsID;
 
+     
 
 
 		public static void CoinChance(Action<MinorBreakable> orig, MinorBreakable self)
 		{
 			orig(self);
-			if (self != null)
+
+			for (int i = 0; i < GameManager.Instance.AllPlayers.Length; i++)
 			{
-				for (int i = 0; i < GameManager.Instance.AllPlayers.Length; i++)
+				PlayerController player = GameManager.Instance.AllPlayers[i];
+				if (player != null && player.inventory != null && player.passiveItems.Count >= 0)
 				{
-					PlayerController player = GameManager.Instance.AllPlayers[i];
-					if (player.HasPickupID(GildedPots.GildedPotsID) && player != null && self != null)
-					{
-						float coinchance = player.PlayerHasActiveSynergy("Expert Demolitionist") ? 0.08f : 0.04f;
-						float num = UnityEngine.Random.Range(0f, 1f);
-						bool flag2 = (double)num < coinchance;
-						if (flag2)
-						{
-							LootEngine.SpawnItem(PickupObjectDatabase.GetById(68).gameObject, self.transform.PositionVector2(), Vector2.zero, 1f, false, false, false);
-						}
-					}
-				}
+                    if (player.HasPickupID(GildedPots.GildedPotsID) && self != null)
+                    {
+                        if (self.transform?.parent?.gameObject?.GetComponent<MirrorController>() != null) { return; }
+
+                        bool Synergy = player.PlayerHasActiveSynergy("Expert Demolitionist");
+                        float coinchance = Synergy ? 0.05f : 0.035f;
+                        if (self.GetComponent<MoneyPots.MoneyPotBehavior>() == null && UnityEngine.Random.value < coinchance)
+                        {
+                            Vector2 position = self.transform.position;
+                            DungeonPlaceable bom = ScriptableObject.CreateInstance<DungeonPlaceable>();
+                            StaticReferences.StoredDungeonPlaceables.TryGetValue("moneyPotRandom", out bom);
+                            bom.InstantiateObject(position.GetAbsoluteRoom(), position.ToIntVector2() - position.GetAbsoluteRoom().area.basePosition);
+                            Destroy(self.gameObject);
+                        }
+                    }
+                }
+				
 			}
-		}
-		public override void Pickup(PlayerController player)
+			self.OnBreak = () =>
+			{
+                for (int i = 0; i < GameManager.Instance.AllPlayers.Length; i++)
+                {
+                    PlayerController player = GameManager.Instance.AllPlayers[i];
+					if (player != null)
+					{
+                        bool Synergy = player.PlayerHasActiveSynergy("Expert Demolitionist");
+                        if (Synergy && self.GetComponent<MoneyPots.MoneyPotBehavior>() == null && UnityEngine.Random.value < 0.2f)
+                        {
+                            ExplosionData ex = StaticExplosionDatas.genericLargeExplosion.CopyExplosionData();
+                            ex.ignoreList.Add(player.specRigidbody);
+                            Exploder.Explode(self.transform.position, ex, self.transform.position);
+                        }
+                    }
+                   
+                }
+            };
+        }
+        public override void Pickup(PlayerController player)
 		{
+			if (m_pickedUpThisRun == false)
+			{
+				for (int i = 0; i < StaticReferenceManager.AllMinorBreakables.Count; i++)
+				{
+					MinorBreakable self = StaticReferenceManager.AllMinorBreakables[i];
+					{
+						if (self)
+						{
+                            if (self.transform?.parent?.gameObject?.GetComponent<MirrorController>() != null) { return; }
+                            bool Synergy = player.PlayerHasActiveSynergy("Expert Demolitionist");
+                            float coinchance = Synergy ? 0.05f : 0.035f;
+                            if (self.GetComponent<MoneyPots.MoneyPotBehavior>() == null && UnityEngine.Random.value < coinchance)
+                            {
+                                Vector2 position = self.transform.position;
+                                DungeonPlaceable bom = ScriptableObject.CreateInstance<DungeonPlaceable>();
+                                StaticReferences.StoredDungeonPlaceables.TryGetValue("moneyPotRandom", out bom);
+                                bom.InstantiateObject(position.GetAbsoluteRoom(), position.ToIntVector2() - position.GetAbsoluteRoom().area.basePosition);
+                                Destroy(self.gameObject);
+								LootEngine.DoDefaultItemPoof(position, true, true);
+                            }
+                        }
+					}       
+                }
+			}
+
 			//player.ReceivesTouchDamage = false;
 			/*
 			TrailRenderer tr;
@@ -89,75 +152,13 @@ namespace Planetside
 			tr.endColor = new Color(7f, 0f, 1f, 0f);
 			*/
 			base.Pickup(player);
-			//player.OnEnteredCombat = (Action)Delegate.Combine(player.OnEnteredCombat, new Action(this.EnterRoom));
 		}
 		public Texture _gradTexture;
 
-		// Token: 0x06000199 RID: 409 RVA: 0x00010168 File Offset: 0x0000E368
 		public override DebrisObject Drop(PlayerController player)
 		{
 			DebrisObject result = base.Drop(player);
-			//player.OnEnteredCombat = (Action)Delegate.Remove(player.OnEnteredCombat, new Action(this.EnterRoom));
 			return result;
-		}
-
-		// Token: 0x0600019A RID: 410 RVA: 0x000101A8 File Offset: 0x0000E3A8
-		private void EnterRoom()
-		{
-			RoomHandler currentRoom = GameManager.Instance.PrimaryPlayer.CurrentRoom;
-			for (int i = 0; i < StaticReferenceManager.AllMinorBreakables.Count; i++)
-			{
-				MinorBreakable minorBreakable = StaticReferenceManager.AllMinorBreakables[i];
-				bool flag = minorBreakable && !minorBreakable.IsBroken && minorBreakable.CenterPoint.GetAbsoluteRoom() == currentRoom && !minorBreakable.IgnoredForPotShotsModifier;
-				if (flag)
-				{
-					MinorBreakable minorBreakable2 = minorBreakable;
-					minorBreakable2.OnBreakContext = (Action<MinorBreakable>)Delegate.Combine(minorBreakable2.OnBreakContext, new Action<MinorBreakable>(this.HandleBroken));
-				}
-			}
-		}
-
-	
-		private void HandleBroken(MinorBreakable mb)
-		{
-			float coinchance = 0.04f;
-			PlayerController player = base.Owner;
-			bool flagA = player.PlayerHasActiveSynergy("Expert Demolitionist");
-			if (flagA)
-            {
-				coinchance *= 2;
-            }
-				PlayerController owner = base.Owner;
-			float num = UnityEngine.Random.Range(0f, 1f);
-			bool flag2 = (double)num < coinchance;
-			if (flag2)
-			{
-				LootEngine.SpawnItem(PickupObjectDatabase.GetById(68).gameObject, mb.sprite.WorldCenter, Vector2.zero, 1f, false, false, false);
-			}
-		}
-		public void PostProcessProjectile(Projectile proj, float f)
-		{
-			proj.collidesWithProjectiles = true;
-			SpeculativeRigidbody specRigidbody = proj.specRigidbody;
-
-			specRigidbody.OnPreRigidbodyCollision += this.HandlePreCollision;
-		}
-		private void HandlePreCollision(SpeculativeRigidbody myRigidbody, PixelCollider myPixelCollider, SpeculativeRigidbody otherRigidbody, PixelCollider otherPixelCollider)
-		{
-			bool flag = otherRigidbody && otherRigidbody.projectile;
-			if (flag)
-			{
-				bool flag2 = otherRigidbody.projectile.Owner is AIActor;
-				if (flag2)
-				{
-					bool isBlackBullet = otherRigidbody.projectile.IsBlackBullet;
-					if (isBlackBullet)
-					{
-						otherRigidbody.projectile.BecomeBlackBullet();
-					}
-				}
-				PhysicsEngine.SkipCollision = true;
-			}
 		}
 	}
 }

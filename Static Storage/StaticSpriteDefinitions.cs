@@ -9,11 +9,28 @@ namespace Planetside
     public static class StaticSpriteDefinitions 
     {
         public static tk2dSpriteCollectionData Modder_Bullet_Sheet_Data;
+        public static tk2dSpriteCollectionData Passive_Item_Sheet_Data;
+        public static tk2dSpriteCollectionData Active_Item_Sheet_Data;
+        public static tk2dSpriteCollectionData Debuff_Sheet_Data;
+        public static tk2dSpriteCollectionData Oddments_Sheet_Data;
+        public static tk2dSpriteCollectionData Pickup_Sheet_Data;
+
+
 
         public static void Init()
         {
             Modder_Bullet_Sheet_Data = DoFastSetup("ModderBulletCollection", "modderbullet material.mat");
             if (Modder_Bullet_Sheet_Data == null) { ETGModConsole.Log("Modder_Bullet_Sheet_Data is NULL"); }
+            Passive_Item_Sheet_Data = DoFastSetup("Item_Collection", "item_collection material.mat");
+            if (Passive_Item_Sheet_Data == null) { ETGModConsole.Log("Passive_Item_Sheet_Data is NULL"); }
+            Active_Item_Sheet_Data = DoFastSetup("Active_Collection", "active_item material.mat");
+            if (Active_Item_Sheet_Data == null) { ETGModConsole.Log("Active_Item_Sheet_Data is NULL"); }
+            Debuff_Sheet_Data = DoFastSetup("DebuffCollection", "debuff material.mat");
+            if (Debuff_Sheet_Data == null) { ETGModConsole.Log("Debuff_Sheet_Data is NULL"); }
+            Oddments_Sheet_Data = DoFastSetup("OddmentsCollection", "oddments material.mat");
+            if (Oddments_Sheet_Data == null) { ETGModConsole.Log("Oddments_Sheet_Data is NULL"); }
+            Pickup_Sheet_Data = DoFastSetup("PickupCollection", "pickup material.mat");
+            if (Pickup_Sheet_Data == null) { ETGModConsole.Log("Pickup_Sheet_Data is NULL"); }
         }
 
         public static tk2dSpriteCollectionData DoFastSetup(string CollectionName, string MaterialName)

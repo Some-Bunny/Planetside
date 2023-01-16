@@ -58,7 +58,7 @@ namespace Planetside
 
 		public static ExecuteDebuff executeDebuff = new ExecuteDebuff
 		{
-			OverheadVFX = ExecuteDebuff.LockInVFXPrefab,
+			OverheadVFX = ExecuteDebuff.BuildVFX(),
 			stackMode = GameActorEffect.EffectStackingMode.Refresh,
             effectIdentifier = "Execute",
             AppliesTint = true,
@@ -69,9 +69,9 @@ namespace Planetside
             AppliesOutlineTint = false,
             OutlineTintColor = new Color32(10, 201, 40, 60),
             PlaysVFXOnActor = false,
-			duration = 4
-        };
+			duration = 4,
 
+        };
 
 		public static GameActorSpeedEffect MopWebEffect = new GameActorSpeedEffect
 		{
@@ -88,7 +88,8 @@ namespace Planetside
             AffectsPlayers = false,
             AppliesOutlineTint = false,
             OutlineTintColor = new Color32(184, 181, 147, 255),
-            PlaysVFXOnActor = false
+            PlaysVFXOnActor = true,
+
         };
 
         public static GameActorSpeedEffect MopBlobEffect = new GameActorSpeedEffect
@@ -106,7 +107,8 @@ namespace Planetside
             AffectsPlayers = false,
             AppliesOutlineTint = false,
             OutlineTintColor = new Color32(213, 77, 77, 255),
-            PlaysVFXOnActor = false
+            PlaysVFXOnActor = true,
+
         };
 
 
@@ -116,8 +118,7 @@ namespace Planetside
 			debrisAngleVariance = 30,
 			AffectsPlayers = false,
 			crystalRot = 4,
-			
-
+		
 			AffectsEnemies = true,
 			stackMode = GameActorEffect.EffectStackingMode.Stack,
 			duration = 3600,
@@ -126,11 +127,13 @@ namespace Planetside
 			UnfreezeDamagePercent = 1,
 			debrisMaxForce = 1,
 			effectIdentifier = "Infection",
-			FreezeCrystals = InfectedEnemyEffect.GeneratedInfectionCrystals,
+			FreezeCrystals = InfectedEnemyEffect.BuildVFX(),
 			TintColor = new Color(0.01f, 0.5f, 0.5f),
 			AppliesTint = true,
-			
-		};
+            PlaysVFXOnActor = false,
+
+
+        };
 
 		public static InfectedBossEffect InfectedBossEffect = new InfectedBossEffect
 		{
@@ -146,10 +149,12 @@ namespace Planetside
 			UnfreezeDamagePercent = 1,
 			debrisMaxForce = 1,
 			effectIdentifier = "InfectionBoss",
-			FreezeCrystals = InfectedBossEffect.GeneratedInfectionCrystals,
+			FreezeCrystals = InfectedBossEffect.BuildVFX(),
 			TintColor = new Color(0.01f, 0.5f, 0.5f),
 			AppliesTint = true,
-		};
+            PlaysVFXOnActor = false,
+
+        };
 
 		public static BrainHostDummyBuff BrainHostBuff = new BrainHostDummyBuff
 		{
@@ -159,10 +164,10 @@ namespace Planetside
 			duration = 1f,
 			AppliesTint = true,
 			AppliesDeathTint = true,
-			OverheadVFX = BrainHostDummyBuff.BrainHostVFX,
+			OverheadVFX = BrainHostDummyBuff.BuildVFX(),
 			AffectsPlayers = false,
-			stackMode = GameActorEffect.EffectStackingMode.Refresh
-		};
+			stackMode = GameActorEffect.EffectStackingMode.Refresh,
+        };
 
 
 		public static TarnishEffect Corrosion = new TarnishEffect
@@ -175,10 +180,11 @@ namespace Planetside
 			//TintColor = new Color(0.2f, 3f, 0.05f),
 			AppliesTint = true,
 			AppliesDeathTint = true,
-			PlaysVFXOnActor = false,
-			OverheadVFX = TarnishEffect.TarnishVFXObject,
+            PlaysVFXOnActor = false,
+            OverheadVFX = TarnishEffect.BuildVFX(),
 			AffectsPlayers = false,
-			stackMode = GameActorEffect.EffectStackingMode.Refresh
+
+            stackMode = GameActorEffect.EffectStackingMode.Refresh
 		};
 
 
@@ -192,9 +198,12 @@ namespace Planetside
 			TintColor = new Color(3f, 3f, 3f),
 			AppliesTint = true,
 			AppliesDeathTint = true,
-			//PlaysVFXOnActor = true
-			OverheadVFX = FrailtyHealthEffect.frailtyVFXObject
-		};
+            //PlaysVFXOnActor = true
+            PlaysVFXOnActor = false,
+
+            OverheadVFX = FrailtyHealthEffect.BuildVFX()
+        };
+
 		public static PossessedEffect Possessed = new PossessedEffect
 		{
 			DamagePerSecondToEnemies = 0f,
@@ -205,10 +214,13 @@ namespace Planetside
 			TintColor = new Color(3f, 2f, 0f),
 			AppliesTint = true,
 			AppliesDeathTint = false,
-			OverheadVFX = PossessedEffect.posessedVFXObject
+            PlaysVFXOnActor = false,
+
+            OverheadVFX = PossessedEffect.BuildVFX()
 
 
-		};
+        };
+
 		public static HeatStrokeEffect HeatStroke = new HeatStrokeEffect
 		{
 			DamagePerSecondToEnemies = 0f,
@@ -219,10 +231,11 @@ namespace Planetside
 			TintColor = new Color(0, 0, 0, 0),
 			AppliesTint = true,
 			AppliesDeathTint = false,
-			OverheadVFX = HeatStrokeEffect.heatstrokeVFXObject,
+            PlaysVFXOnActor = false,
+            OverheadVFX = HeatStrokeEffect.BuildVFX(),
 			maxStackedDuration = 1,
 			
-			stackMode = GameActorEffect.EffectStackingMode.Refresh
+			stackMode = GameActorEffect.EffectStackingMode.Stack
         };
 		public static BrokenArmorEffect brokenArmor = new BrokenArmorEffect
 		{
@@ -231,11 +244,11 @@ namespace Planetside
 			AffectsEnemies = true,
 			resistanceType = EffectResistanceType.None,
 			duration = 6f,
-			//TintColor = new Color(3f, 2f, 0f),
-			AppliesTint = false,
-			AppliesDeathTint = false,
+            OverheadVFX = BrokenArmorEffect.BuildVFX(),
+            AppliesTint = true,
+            AppliesDeathTint = false,
 
-		};
+        };
 
 		public static HolyBlessingEffect Holy = new HolyBlessingEffect
 		{
