@@ -105,7 +105,8 @@ namespace Planetside
 
         public static void OnMyShopItemStartedGlobal(ShopItemController shopItemController)
         {
-            ShopDiscountController steamSale = shopItemController.gameObject.AddComponent<ShopDiscountController>();
+            ShopDiscountController steamSale = shopItemController.gameObject.GetOrAddComponent<ShopDiscountController>();
+            steamSale.UpdatePlacement();
             steamSale.discounts = DiscountsToAdd ?? new List<ShopDiscount>() { };
         }
 
@@ -114,14 +115,25 @@ namespace Planetside
         public static void InitializeViaBaseShopController(Action<ShopItemController, PickupObject, BaseShopController> orig, ShopItemController self, PickupObject i, BaseShopController parent)
         {
             orig(self, i, parent);
+            var a = self.gameObject.GetComponent<ShopDiscountController>();
+            if (a != null)
+            {
+                a.ResetPrice(self.OverridePrice);
+            }
             if (OnShopItemStarted != null)
             {
                 OnShopItemStarted(self);
             }
+
         }
         public static void InitializeViaShopController(Action<ShopItemController, PickupObject, ShopController> orig, ShopItemController self, PickupObject i, ShopController parent)
         {
             orig(self, i, parent);
+            var a = self.gameObject.GetComponent<ShopDiscountController>();
+            if (a != null)
+            {
+                a.ResetPrice(self.OverridePrice);
+            }
             if (OnShopItemStarted != null)
             {
                 OnShopItemStarted(self);
@@ -192,42 +204,58 @@ namespace Planetside
     {
         public ShopDiscountController()
         {
+        }
+
+        public void UpdatePlacement()
+        {
             shopItemSelf = this.GetComponent<ShopItemController>();
             if (shopItemSelf != null)
             {
-                if (DoManyChecks() == true)
-                {
-                    if (shopItemSelf is CustomShopItemController)
-                    {
-                        StartPrice = shopItemSelf.OverridePrice ?? (shopItemSelf as CustomShopItemController).ModifiedPrice;//shopItemSelf.ModifiedPrice;
-
-                    }
-                    else
-                    {
-                        StartPrice = shopItemSelf.OverridePrice ?? shopItemSelf.ModifiedPrice;
-                    }
-                }      
+                shopItemSelf.StartCoroutine(FrameDelay());
             }
         }
+        public IEnumerator FrameDelay()
+        {
+            yield return null;
+            if (DoManyChecks() == true)
+            {
+                if (shopItemSelf is CustomShopItemController)
+                {
+                    StartPrice = shopItemSelf.OverridePrice ?? (shopItemSelf as CustomShopItemController).ModifiedPrice;//shopItemSelf.ModifiedPrice;
+                }
+                else
+                {
+                    StartPrice = shopItemSelf.OverridePrice ?? shopItemSelf.ModifiedPrice;
+                }
+            }
+            FullyInited = true;
+            yield break;
+        }
+
+        public void ResetPrice(int? currentOverridePrice)
+        {
+            if (shopItemSelf is CustomShopItemController)
+            {
+                StartPrice = currentOverridePrice ?? (shopItemSelf as CustomShopItemController).ModifiedPrice;//shopItemSelf.ModifiedPrice;
+            }
+            else
+            {
+                StartPrice = currentOverridePrice ?? shopItemSelf.ModifiedPrice;
+            }
+        }
+        private bool FullyInited = false;
 
         private bool DoManyChecks()
         {
             if (GameManager.Instance == null) { return false; }
             if (GameManager.Instance.PrimaryPlayer == null) { return false; }
             return true;
-
         }
 
-
-        /*
-         *             if (self is CustomShopItemController)
-            {
-                return (self as CustomShopItemController).ModifiedPrice;
-            }
-        */
         private float StartPrice = -1;
         public void Update()
         {
+            if (FullyInited == false) { return; }
             DoPriceReduction();
         }
         private void DoPriceReduction()
@@ -240,6 +268,7 @@ namespace Planetside
                 if (shopItemSelf.item is BankMaskItem && GameStatsManager.Instance.GetFlag(GungeonFlags.ITEMSPECIFIC_STOLE_BANKMASK) == false) { return; }
                 if (shopItemSelf.item is BankBagItem && GameStatsManager.Instance.GetFlag(GungeonFlags.ITEMSPECIFIC_STOLE_BANKBAG) == false) { return; }
             }
+
             float mult = 1;
             foreach (var DiscountVar in discounts)
             {
@@ -266,15 +295,18 @@ namespace Planetside
             if (GameManager.Instance.PrimaryPlayer == null) { return; }
 
             //GameLevelDefinition lastLoadedLevelDefinition = GameManager.Instance.GetLastLoadedLevelDefinition();
+
+
             float newCost = StartPrice != -1 ? StartPrice : ReturnMoneyCurrencyType() == false ? shopItemSelf.CurrentPrice : shopItemSelf.ModifiedPrice;
             //float num4 = (lastLoadedLevelDefinition == null) ? 1f : lastLoadedLevelDefinition.priceMultiplier;
             
             float num3 = GameManager.Instance.PrimaryPlayer.stats.GetStatValue(PlayerStats.StatType.GlobalPriceMultiplier);
-            
+           
             if (GameManager.Instance.CurrentGameType == GameManager.GameType.COOP_2_PLAYER && GameManager.Instance.SecondaryPlayer)
             {
                 num3 *= GameManager.Instance.SecondaryPlayer.stats.GetStatValue(PlayerStats.StatType.GlobalPriceMultiplier);
             }
+      
             newCost *= num3;
             shopItemSelf.OverridePrice = (int)(newCost *= H);
         }

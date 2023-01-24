@@ -101,13 +101,11 @@ namespace Planetside
 
         protected void AffectEnemy(AIActor target, PlayerController user, bool willBurn, bool willPoison)
         {
-            bool flag = target.IsNormalEnemy || (target.healthHaver.IsBoss && !target.IsHarmlessEnemy);
-            bool flag2 = flag;
-            if (flag2)
+            if (target.IsNormalEnemy || (target.healthHaver.IsBoss && !target.IsHarmlessEnemy))
             {
                 if (target != null)
                 {
-                    float MaxHP = user.PlayerHasActiveSynergy("Watered Down") == true ? target.healthHaver.GetMaxHealth() / 20:0;
+                    float MaxHP = user.PlayerHasActiveSynergy("Watered Down") == true ? target.healthHaver.GetMaxHealth() / (target.healthHaver.IsBoss == true ? 100 : 20) :0;
                     target.healthHaver.ApplyDamage(30f + MaxHP, Vector2.zero, "Take a bath, nerd.", CoreDamageTypes.None, DamageCategory.Normal, false, null, false);
 
                     if (willBurn)

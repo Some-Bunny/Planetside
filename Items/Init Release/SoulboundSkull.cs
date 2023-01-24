@@ -41,11 +41,14 @@ namespace Planetside
             projectile.gameObject.SetActive(false);
             FakePrefab.MarkAsFakePrefab(projectile.gameObject);
             UnityEngine.Object.DontDestroyOnLoad(projectile);
-            projectile.baseData.damage = 7.5f;
+            projectile.baseData.damage = 8f;
             projectile.baseData.speed = 18f;
             projectile.sprite.renderer.enabled = false;
             PierceProjModifier spook = projectile.gameObject.AddComponent<PierceProjModifier>();
-            spook.penetration = 1;
+            spook.penetration = 2;
+
+            projectile.gameObject.AddComponent<PierceDeadActors>();
+
             HomingModifier homing = projectile.gameObject.AddComponent<HomingModifier>();
             homing.HomingRadius = 250f;
             homing.AngularVelocity = 120f;
@@ -83,7 +86,7 @@ namespace Planetside
             if (enemy.aiActor)
             {
                 if (fatal == true) { this.Spited(enemy.sprite.WorldCenter); enemy.aiActor.PlayEffectOnActor(StaticVFXStorage.SpookySkullVFX, new Vector3());}
-                else if (UnityEngine.Random.value <= 0.06f && base.Owner)
+                else if (UnityEngine.Random.value <= 0.0625f && base.Owner)
                 {
                     base.Owner.PlayEffectOnActor(StaticVFXStorage.SpookySkullVFX, new Vector3()); this.Spited(base.Owner.sprite.WorldCenter);
                 }        
@@ -97,18 +100,14 @@ namespace Planetside
             {
                 component.Owner = base.Owner;
                 component.Shooter = base.Owner.specRigidbody;
-                component.specRigidbody.OnPreRigidbodyCollision = (SpeculativeRigidbody.OnPreRigidbodyCollisionDelegate)Delegate.Combine(projectile.specRigidbody.OnPreRigidbodyCollision, new SpeculativeRigidbody.OnPreRigidbodyCollisionDelegate(this.HandlePreCollision));
+                component.specRigidbody.OnPreRigidbodyCollision = (SpeculativeRigidbody.OnPreRigidbodyCollisionDelegate)Delegate.Combine(component.specRigidbody.OnPreRigidbodyCollision, new SpeculativeRigidbody.OnPreRigidbodyCollisionDelegate(this.HandlePreCollision));
             }
         }
         private void HandlePreCollision(SpeculativeRigidbody myRigidbody, PixelCollider myPixelCollider, SpeculativeRigidbody otherRigidbody, PixelCollider otherPixelCollider)
         {
             if (otherRigidbody && otherRigidbody.healthHaver && otherRigidbody != null)
-            {
-               
-                float maxHealth = otherRigidbody.healthHaver.GetMaxHealth();
-                float num = maxHealth * 0.50f;
-                float currentHealth = otherRigidbody.healthHaver.GetCurrentHealth();
-                if (currentHealth < num)
+            {     
+                if (otherRigidbody.healthHaver.GetCurrentHealth() < otherRigidbody.healthHaver.GetMaxHealth() * 0.50f)
                 {
                     float damage = myRigidbody.projectile.baseData.damage;
                     myRigidbody.projectile.baseData.damage *= 2f;
@@ -116,14 +115,12 @@ namespace Planetside
                 }
                 if (base.Owner != null)
                 {
-                    bool ee = base.Owner.activeItems == null;
-                    if (!ee)
+                    if (base.Owner.activeItems != null)
                     {
 
                         foreach (PlayerItem playerItem in base.Owner.activeItems)
                         {
-                            bool aa = playerItem == null;
-                            if (!aa)
+                            if (playerItem != null)
                             {
                                 float timeCooldown = playerItem.timeCooldown;
                                 float damageCooldown = playerItem.damageCooldown;

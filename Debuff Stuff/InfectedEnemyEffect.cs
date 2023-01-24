@@ -192,11 +192,12 @@ namespace Planetside
 				Elasped += BraveTime.DeltaTime;
 				if (Elasped > Duration)
                 {
-					Elasped = 0;
+
+                    Elasped = 0;
 					if (EnemyIsVisible(actor.aiActor) == true)
                     {
-						if (actor.GetComponent<AIBulletBank>() == null || actor.transform.Find("tempObjInfection").GetComponent<AIBulletBank>() == null) { return; }
-                            SpawnManager.SpawnBulletScript(actor, actor.sprite.WorldCenter, actor.GetComponent<AIBulletBank>() ?? actor.transform.Find("tempObjInfection").GetComponent<AIBulletBank>(), new CustomBulletScriptSelector(typeof(SplatWeak)), StringTableManager.GetEnemiesString("#TRAP", -1));
+						if (actor.GetComponent<AIBulletBank>() == null && actor.transform?.Find("tempObjInfection")?.GetComponent<AIBulletBank>() == null) { return; }
+                            SpawnManager.SpawnBulletScript(actor, actor.sprite.WorldCenter, actor.GetComponent<AIBulletBank>() ?? actor.transform?.Find("tempObjInfection")?.GetComponent<AIBulletBank>(), new CustomBulletScriptSelector(typeof(SplatWeak)), StringTableManager.GetEnemiesString("#TRAP", -1));
 					}
 				}
             }

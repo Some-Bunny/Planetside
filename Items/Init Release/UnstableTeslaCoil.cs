@@ -198,8 +198,7 @@ namespace Planetside
         private void ProcessEnemy(AIActor target, float distance)
         {
             float StunTime = 3f;
-            bool flagA = base.Owner.PlayerHasActiveSynergy("Heavy Metals");
-            if (flagA)
+            if (base.Owner.PlayerHasActiveSynergy("Heavy Metals"))
             {
                 StunTime = 5f;
             }
