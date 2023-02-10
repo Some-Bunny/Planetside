@@ -20,29 +20,14 @@ namespace Planetside
 {
 	internal class SoulLanternProjectile : MonoBehaviour
 	{
-		public SoulLanternProjectile()
-		{
-		}
         public void Start()
         {
-            this.projectile = base.GetComponent<Projectile>();
-            if (this.projectile)
+            var projectile = base.GetComponent<Projectile>();
+            if (projectile)
             {
 				projectile.statusEffectsToApply = new List<GameActorEffect> { DebuffLibrary.Possessed };
-				projectile.OnHitEnemy = (Action<Projectile, SpeculativeRigidbody, bool>)Delegate.Combine(projectile.OnHitEnemy, new Action<Projectile, SpeculativeRigidbody, bool>(this.HandleHit));
             }
         }
-		
-		private void HandleHit(Projectile projectile, SpeculativeRigidbody arg2, bool arg3)
-		{
-			if (arg2.aiActor != null && !arg2.healthHaver.IsDead && arg2.aiActor.behaviorSpeculator && !arg2.aiActor.IsHarmlessEnemy && arg2.aiActor != null)
-			{
-				projectile.AppliesPoison = true;
-				projectile.PoisonApplyChance = 1f;
-				projectile.healthEffect = DebuffLibrary.Possessed;
-			}
-		}
-		private Projectile projectile;
 	}
 }
 

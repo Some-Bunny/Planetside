@@ -24,23 +24,23 @@ namespace Planetside
             else{
                 float HPtOremove = (player.stats.GetStatValue(PlayerStats.StatType.Health));
                 OtherTools.ApplyStat(player, PlayerStats.StatType.Health, (-HPtOremove) + 1, StatModifier.ModifyMethod.ADDITIVE);
-                if (player.healthHaver.Armor >= 1) { player.healthHaver.Armor = 1; }
+                if (player.healthHaver.Armor > 1) { player.healthHaver.Armor = 1; }
             }
         }
         public void Update()
         {
-            int ArmorAllowed = player.ForceZeroHealthState == true ? 5 : 3;
+            int ArmorAllowed = player.ForceZeroHealthState == true ? 4 : 2;
             ArmorAllowed -= LeniencyProtection;
-            if (player.healthHaver.Armor >= ArmorAllowed){
+            if (player.healthHaver.Armor > ArmorAllowed){
                 DoHurty();
-                OtherTools.Notify("A Glass Curse", "Prevented Armor Increase!", "Planetside/Resources/PerkThings/glass", UINotificationController.NotificationColor.GOLD);
+                OtherTools.NotifyCustom("A Glass Curse", "Prevented Armor Increase!", "glass", StaticSpriteDefinitions.Pickup_Sheet_Data, UINotificationController.NotificationColor.GOLD);
                 player.healthHaver.Armor = ArmorAllowed-1; 
             }
             if ((player.stats.GetStatValue(PlayerStats.StatType.Health) != 1 && player.stats.GetStatValue(PlayerStats.StatType.Health) >= 1)){
                 DoHurty();
                 float HPtOremove = (player.stats.GetStatValue(PlayerStats.StatType.Health));
                 OtherTools.ApplyStat(player, PlayerStats.StatType.Health, (-HPtOremove) + 1, StatModifier.ModifyMethod.ADDITIVE);
-                OtherTools.Notify("A Glass Curse", "Prevented Health Increase!", "Planetside/Resources/PerkThings/glass", UINotificationController.NotificationColor.GOLD);
+                OtherTools.NotifyCustom("A Glass Curse", "Prevented Health Increase!", "glass", StaticSpriteDefinitions.Pickup_Sheet_Data, UINotificationController.NotificationColor.GOLD);
             }
         }
 

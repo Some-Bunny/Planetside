@@ -47,8 +47,11 @@ namespace Planetside
                 player.ToggleGunRenderers(true, "non-death");
                 player.ToggleHandRenderers(true, "non-death");
                 player.CurrentInputState = PlayerInputState.AllInput;
-                
-                OtherTools.Notify("One More Chance!", "Your Spirit Saved You!", "Planetside/Resources/PerkThings/unbreakablespirit", UINotificationController.NotificationColor.PURPLE);
+                player.spriteAnimator.enabled = true;
+
+                OtherTools.NotifyCustom("One More Chance!", "Your Spirit Saved You!", "unbreakablespirit", StaticSpriteDefinitions.Pickup_Sheet_Data, UINotificationController.NotificationColor.GOLD);
+
+                //OtherTools.Notify("One More Chance!", "Your Spirit Saved You!", "Planetside/Resources/PerkThings/unbreakablespirit", UINotificationController.NotificationColor.PURPLE);
                 player.StartCoroutine(HandleShield(player));
                 GameObject teleportVFX = UnityEngine.Object.Instantiate<GameObject>(StaticVFXStorage.TeleportVFX);
                 teleportVFX.GetComponent<tk2dBaseSprite>().PlaceAtLocalPositionByAnchor(player.transform.PositionVector2() + new Vector2(0f, -0.5f), tk2dBaseSprite.Anchor.LowerCenter);

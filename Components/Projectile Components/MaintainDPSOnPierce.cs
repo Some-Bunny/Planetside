@@ -31,8 +31,7 @@ namespace Planetside
 		public void Start()
 		{
 			this.m_projectile = base.GetComponent<Projectile>();
-			bool flag = this.m_projectile;
-			if (flag)
+			if (this.m_projectile)
 			{
 				SpeculativeRigidbody specRigidbody = this.m_projectile.specRigidbody;
 				specRigidbody.OnPreRigidbodyCollision = (SpeculativeRigidbody.OnPreRigidbodyCollisionDelegate)Delegate.Combine(specRigidbody.OnPreRigidbodyCollision, new SpeculativeRigidbody.OnPreRigidbodyCollisionDelegate(this.HandlePierce));

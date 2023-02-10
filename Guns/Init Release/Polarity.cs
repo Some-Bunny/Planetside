@@ -50,7 +50,7 @@ namespace Planetside
 			Projectile replacementProjectile = component.projectile;
 			gun.DefaultModule.usesOptionalFinalProjectile = true;
 			PolarityProjectile pol1 = replacementProjectile.gameObject.AddComponent<PolarityProjectile>();
-			pol1.IsDown = true;
+			pol1.IsUp = true;
 
 
 			gun.DefaultModule.numberOfFinalProjectiles = 15;

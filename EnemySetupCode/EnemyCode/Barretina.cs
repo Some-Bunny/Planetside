@@ -50,14 +50,14 @@ namespace Planetside
 				companion.aiActor.specRigidbody.CollideWithOthers = true;
 				companion.aiActor.specRigidbody.CollideWithTileMap = true;
 				companion.aiActor.PreventFallingInPitsEver = false;
-				companion.aiActor.healthHaver.ForceSetCurrentHealth(60f);
+				companion.aiActor.healthHaver.ForceSetCurrentHealth(75f);
 				companion.aiActor.CollisionKnockbackStrength = 0f;
 				companion.aiActor.procedurallyOutlined = true;
 				companion.aiActor.CanTargetPlayers = true;
 				companion.aiActor.SetIsFlying(true, "Gamemode: Creative");
 				EnemyToolbox.AddShadowToAIActor(companion.aiActor, StaticEnemyShadows.largeShadow, new Vector2(1f, 0.25f), "shadowPos");
 
-				companion.aiActor.healthHaver.SetHealthMaximum(60f, null, false);
+				companion.aiActor.healthHaver.SetHealthMaximum(75f, null, false);
 				companion.aiActor.PathableTiles = CellTypes.PIT | CellTypes.FLOOR;
 
 				ImprovedAfterImage image = companion.aiActor.gameObject.AddComponent<ImprovedAfterImage>();
@@ -350,9 +350,9 @@ namespace Planetside
                     ShootPoint = m_CachedGunAttachPoint,
                     BulletScript = new CustomBulletScriptSelector(typeof(SpecialAttack)),
                     LeadAmount = 0f,
-                    AttackCooldown = 1.5f,
+                    AttackCooldown = 1f,
                     Cooldown = 6f,
-                    InitialCooldown = 2f,
+                    InitialCooldown = 1f,
                     RequiresLineOfSight = true,
                     MultipleFireEvents = false,
                     Uninterruptible = true,
@@ -367,7 +367,7 @@ namespace Planetside
                     ShootPoint = m_CachedGunAttachPoint,
                     BulletScript = new CustomBulletScriptSelector(typeof(NormalAttack)),
                     LeadAmount = 0f,
-                    AttackCooldown = 1.5f,
+                    AttackCooldown = 1f,
                     Cooldown = 3f,
                     InitialCooldown = 0.5f,
                     RequiresLineOfSight = true,
@@ -383,8 +383,8 @@ namespace Planetside
                     Behavior =    new CustomDashBehavior()
                 {
                     ShootPoint = m_CachedGunAttachPoint,
-                    dashDistance = 8f,
-                    dashTime = 0.75f,
+                    dashDistance = 10f,
+                    dashTime = 0.5f,
                     AmountOfDashes = 2,
                     enableShadowTrail = false,
                     Cooldown = 4f,

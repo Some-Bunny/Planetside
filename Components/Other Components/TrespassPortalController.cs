@@ -28,6 +28,7 @@ namespace Planetside
             var partObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("PortalClose"));
             partObj.transform.position = gameObject.transform.position;
             //partObj.transform.parent = gameObject.transform;
+            partObj.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
             partObj.transform.localScale *= 6f;
             ParticleSystem particleSystem = partObj.GetComponent<ParticleSystem>();
             Destroy(partObj, 3.4f);
@@ -57,6 +58,8 @@ namespace Planetside
             var partObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("PortalClose"));
             partObj.transform.position = gameObject.transform.position;
             //partObj.transform.parent = gameObject.transform;
+            partObj.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
+
             Destroy(partObj, 3.4f);
             partObj.transform.localScale *= 5f;
             base.Invoke("DeregisterInteractable", 0f);
@@ -94,8 +97,10 @@ namespace Planetside
                 var partObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("PortalClose"));
                 partObj.transform.position = gameObject.transform.position;
                 partObj.transform.localScale *= 7f;
+                partObj.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
+
                 Destroy(partObj, 3.4f);
-                DebrisObject debrisSpawned = LootEngine.SpawnItem(PickupObjectDatabase.GetById(LostVoidPotential.LostVoidPotentialID).gameObject, gameObject.transform.position, Vector2.zero, 0).GetComponent<DebrisObject>();
+                LootEngine.SpawnItem(PickupObjectDatabase.GetById(LostVoidPotential.LostVoidPotentialID).gameObject, gameObject.transform.position, Vector2.zero, 0).GetComponent<DebrisObject>();
                 Destroy(gameObject);
             }
             else

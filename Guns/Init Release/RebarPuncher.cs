@@ -175,10 +175,7 @@ namespace Planetside
 				if (newGun == this.gun && HasCommitedWeaponSwitch != true)
 				{
 					AkSoundEngine.PostEvent("Play_OBJ_spears_clank_01", gun.gameObject);
-					GameObject original;
-					original = RebarPuncher.PlusNailsPrefab;
-					tk2dSprite ahfuck = original.GetComponent<tk2dSprite>();
-					player.BloopItemAboveHead(ahfuck, "");
+					player.BloopItemAboveHead(RebarPuncher.PlusNailsPrefab.GetComponent<tk2dSprite>(), "");
 					HasCommitedWeaponSwitch = true;
 				}
 				else if (HasCommitedWeaponSwitch != true)
@@ -206,7 +203,6 @@ namespace Planetside
 			}
 		}
 		public bool HasCommitedWeaponSwitch;
-
 		private static GameObject PlusNailsPrefab;
 	}
 }

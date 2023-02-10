@@ -32,7 +32,7 @@ namespace Planetside
 		public override void Pickup(PlayerController player)
 		{
 			BrokenChamberComponent Values = player.gameObject.AddComponent<BrokenChamberComponent>();
-			Values.TimeBetweenRockFalls =9f;
+			Values.TimeBetweenRockFalls = 9f;
 			Values.player = player;
 			base.Pickup(player);
 		}

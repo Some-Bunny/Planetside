@@ -433,7 +433,7 @@ namespace Planetside
                 }
 				*/
 
-                EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awaken" }, new DirectionalAnimation.FlipType[0]);
+                EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awake", "awake" }, new DirectionalAnimation.FlipType[2], DirectionalAnimation.DirectionType.TwoWayHorizontal);
 				companion.aiActor.AwakenAnimType = AwakenAnimationType.Awaken;
 				//bool flag3 = CurseblobCollection == null;
 				//if (flag3)
@@ -584,9 +584,8 @@ namespace Planetside
 				SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 				{
 					18,
-				}, "awaken", tk2dSpriteAnimationClip.WrapMode.Once).fps = 4f;
+				}, "awake", tk2dSpriteAnimationClip.WrapMode.Once).fps = 4f;
 				var bs = prefab.GetComponent<BehaviorSpeculator>();
-				prefab.GetComponent<ObjectVisibilityManager>();
 				BehaviorSpeculator behaviorSpeculator = EnemyDatabase.GetOrLoadByGuid("01972dee89fc4404a5c408d50007dad5").behaviorSpeculator;
 				bs.OverrideBehaviors = behaviorSpeculator.OverrideBehaviors;
 				bs.OtherBehaviors = behaviorSpeculator.OtherBehaviors;

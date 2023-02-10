@@ -27,12 +27,10 @@ namespace Planetside
         public static void Init()
         {
             string itemName = "Tome Of Guonmancy";
-            //string resourceName = "Planetside/Resources/tomeofguonmancy.png";
             GameObject obj = new GameObject(itemName);
             BulletGuonMaker activeitem = obj.AddComponent<BulletGuonMaker>();
             var data = StaticSpriteDefinitions.Active_Item_Sheet_Data;
             ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("tomeofguonmancy"), data, obj);
-            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "Irony On Another Level";
             string longDesc = "Captures nearby bullets and turns them into defensive orbitals. Despite being long forgotten and Guonmancy virtually dying out, the tome still holds up.\n\nSome say that Guonmancy still lives on and is secretly practiced by some.";
             activeitem.SetupItem(shortDesc, longDesc, "psog");
@@ -148,53 +146,39 @@ namespace Planetside
         protected override void DoEffect(PlayerController user)
         {
 
-            bool flag3 = user.CurrentRoom != null;
-            if (flag3)
-            {
-
-                
+            if (user.CurrentRoom != null)
+            {        
                 ReadOnlyCollection<Projectile> allProjectiles = StaticReferenceManager.AllProjectiles;
                 if (allProjectiles != null)
                 {
-                    AkSoundEngine.PostEvent("Play_ENM_wizardred_appear_01", base.gameObject);
-                    if (base.LastOwner.PlayerHasActiveSynergy("Chapter Of Restoration"))
+                    AkSoundEngine.PostEvent("Play_ENM_wizardred_appear_01", user.gameObject);
+                    if (user.PlayerHasActiveSynergy("Chapter Of Restoration"))
                     {
-                        //this.random = UnityEngine.Random.Range(0.0f, 1.0f);
                         if (UnityEngine.Random.Range(0.0f, 1.0f) < 0.07f)
                         {
-                            PlayableCharacters characterIdentity = user.characterIdentity;
-                            bool flag = characterIdentity != PlayableCharacters.Robot;
-                            if (flag)
+                            if (user.characterIdentity != PlayableCharacters.Robot)
                             {
                                 user.PlayEffectOnActor(ResourceCache.Acquire("Global VFX/VFX_Healing_Sparkles_001") as GameObject, Vector3.zero, true, false, false);
                                 user.healthHaver.ApplyHealing(0.5f);
                             }
                             else
                             {
-                                bool flag2 = characterIdentity == PlayableCharacters.Robot;
-                                if (flag2)
-                                {
-                                    user.PlayEffectOnActor(ResourceCache.Acquire("Global VFX/VFX_Healing_Sparkles_001") as GameObject, Vector3.zero, true, false, false);
-                                    user.healthHaver.Armor = user.healthHaver.Armor + 1f;
-                                }
+                                user.PlayEffectOnActor(ResourceCache.Acquire("Global VFX/VFX_Healing_Sparkles_001") as GameObject, Vector3.zero, true, false, false);
+                                user.healthHaver.Armor++;
                             }
                         }
                     }
-                    if (base.LastOwner.PlayerHasActiveSynergy("Chapter Of Glass"))
+                    if (user.PlayerHasActiveSynergy("Chapter Of Glass"))
                     {
-                        //this.random = UnityEngine.Random.Range(0.0f, 1.0f);
                         if (UnityEngine.Random.Range(0.0f, 1.0f) < 0.1f)
                         {
                             LootEngine.GivePrefabToPlayer(PickupObjectDatabase.GetById(565).gameObject, user);
                         }
                     }
-                    GameManager.Instance.Dungeon.StartCoroutine(this.HandleBulletDeletionFrames(user.sprite.WorldCenter, 3.25f, 0.5f));
-                    
-                }
-                
+                    user.StartCoroutine(this.HandleBulletDeletionFrames(user.sprite.WorldCenter, 3.25f, 0.5f));   
+                }         
             }
         }
-        public float random;
         private IEnumerator HandleBulletDeletionFrames(Vector3 centerPosition, float bulletDeletionSqrRadius, float duration)
         {
             float elapsed = 0f;
@@ -235,41 +219,22 @@ namespace Planetside
         }
         public GameObject BuildPrefab(tk2dSprite sprite, PlayerController User)
         {
-            float speed = 60f;
-            if (base.LastOwner.PlayerHasActiveSynergy("Chapter Of Time"))
-            {
-                speed *= 2;
-            }
             GameObject gameobject2 = PlayerOrbitalItem.CreateOrbital(User, BaseBulletGuon, false);
             PlayerOrbital orb = gameobject2.GetComponent<PlayerOrbital>();
-            orb.orbitDegreesPerSecond = speed;
+            orb.orbitDegreesPerSecond = base.LastOwner.PlayerHasActiveSynergy("Chapter Of Time") == true ? 120 : 60;
 
             tk2dSprite tk2dSprite = gameobject2.GetOrAddComponent<tk2dSprite>();
             tk2dSprite.SetSprite(sprite.sprite.Collection, sprite.sprite.spriteId);
 
             CreatedGuonBulletsController yes = gameobject2.AddComponent<CreatedGuonBulletsController>();
             yes.maxDuration = 15f;
-            
-            if (base.LastOwner.PlayerHasActiveSynergy("Chapter Of Love"))
-            {
-                yes.SpawnsCharmGoop = true;
-            }
-            if (base.LastOwner.PlayerHasActiveSynergy("Chapter Of Purity"))
-            {
-                yes.ClearsGoop = true;
-            }
-            if (base.LastOwner.PlayerHasActiveSynergy("Chapter Of War"))
-            {
-                yes.ShootsOnDestruction = true;
-            }
-            if (base.LastOwner.PlayerHasActiveSynergy("Chapter Of Silence"))
-            {
-                yes.ChanceToBlank = true;
-            }
-            if (base.LastOwner.PlayerHasActiveSynergy("Chapter Of Speed"))
-            {
-                yes.AddSpeed = true;
-            }
+
+            yes.SpawnsCharmGoop = User.PlayerHasActiveSynergy("Chapter Of Love");
+            yes.ClearsGoop = User.PlayerHasActiveSynergy("Chapter Of Purity");
+            yes.ShootsOnDestruction = User.PlayerHasActiveSynergy("Chapter Of War");
+            yes.ChanceToBlank = User.PlayerHasActiveSynergy("Chapter Of Silence");
+            yes.AddSpeed = User.PlayerHasActiveSynergy("Chapter Of Speed");
+
             return gameobject2;
         }
     }

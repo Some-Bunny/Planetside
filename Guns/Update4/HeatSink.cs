@@ -209,7 +209,6 @@ namespace Planetside
             radialIndicator.IsFire = true;
             radialIndicator.CurrentRadius = 1;
             radiusValue = radialIndicator.CurrentRadius;
-            this.timer = this.tickDelay;
             this.projectile = base.GetComponent<Projectile>();
             this.basicBeamController = base.GetComponent<BasicBeamController>();
             bool flag = this.projectile.Owner is PlayerController;
@@ -284,7 +283,6 @@ namespace Planetside
         public float radiusIncreasePerSecond;
         public float tickDelay;
         public ExplosionData explosionData;
-        private float timer;
 
         private Projectile projectile;
 

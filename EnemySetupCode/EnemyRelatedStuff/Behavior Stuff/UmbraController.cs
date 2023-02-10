@@ -22,14 +22,13 @@ public class UmbraController : BraveBehaviour
 		base.aiActor.sprite.renderer.material.SetFloat("_StencilVal", 0);
 		base.aiActor.sprite.renderer.material.SetFloat("_FlatColor", 0f);
 		base.aiActor.sprite.renderer.material.SetFloat("_Perpendicular", 0);
-		base.aiActor.behaviorSpeculator.CooldownScale *= 0.5f;
-		base.aiActor.MovementSpeed *= 1.3f; 
+		base.aiActor.behaviorSpeculator.CooldownScale *= 0.7f;
+		base.aiActor.MovementSpeed *= 1.15f; 
 		ImprovedAfterImage yeah = base.aiActor.gameObject.GetOrAddComponent<ImprovedAfterImage>();
 		yeah.dashColor = Color.black;
 		yeah.spawnShadows = true;
-		yeah.shadowTimeDelay = 0.01f;
-		yeah.shadowLifetime = 2.5f;
-		base.healthHaver.OnPreDeath += this.OnPreDeath;
+		yeah.shadowTimeDelay = 0.025f;
+		yeah.shadowLifetime = 1.5f;
 	}
 
 	public void Update()
@@ -46,18 +45,15 @@ public class UmbraController : BraveBehaviour
     }
 	protected override void OnDestroy()
 	{
-		if (base.healthHaver)
+		if (base.aiActor)
 		{
-			base.healthHaver.OnPreDeath -= this.OnPreDeath;
-		}
-		base.OnDestroy();
+            base.aiActor.PlayEffectOnActor(ResourceCache.Acquire("Global VFX/VFX_Curse") as GameObject, Vector3.zero, false, false, false);
+            SpawnManager.SpawnBulletScript(base.aiActor.gameActor, new CustomBulletScriptSelector(typeof(Baboomer)));
+        }
+
+        base.OnDestroy();
 	}
 
-	private void OnPreDeath(Vector2 obj)
-	{
-		base.aiActor.PlayEffectOnActor(ResourceCache.Acquire("Global VFX/VFX_Curse") as GameObject, Vector3.zero, false, false, false);
-		SpawnManager.SpawnBulletScript(base.aiActor.gameActor, new CustomBulletScriptSelector(typeof(Baboomer)));
-	}
 	public class Baboomer : Script
 	{
 		protected override IEnumerator Top()
@@ -100,33 +96,23 @@ public class UmbraController : BraveBehaviour
 					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("1bc2a07ef87741be90c37096910843ab").bulletBank.GetBullet("reversible"));
 					
 					float num = base.RandomAngle();
-					float Amount = 20;
+					float Amount = 16;
 					float Angle = 360 / Amount;
 					for (int i = 0; i < Amount; i++)
 					{
-						base.Fire(new Direction(num + Angle * (float)i + 10, DirectionType.Absolute, -1f), new Speed(6f, SpeedType.Absolute), new BurstBullet());
-					}
+						base.Fire(new Direction((Angle * i) + num, DirectionType.Absolute, -1f), new Speed(7f, SpeedType.Absolute), new SpeedChangingBullet(14, 180));
+                    }
 					num = base.RandomAngle();
 					for (int i = 0; i < Amount; i++)
 					{
-						base.Fire(new Direction(num + Angle * (float)i + 10, DirectionType.Absolute, -1f), new Speed(4f, SpeedType.Absolute), new BurstBullet());
+						base.Fire(new Direction((Angle * i) + num, DirectionType.Absolute, -1f), new Speed(3f, SpeedType.Absolute), new SpeedChangingBullet(12, 120));
 					}
 					num = base.RandomAngle();
 					base.PostWwiseEvent("Play_ENM_bulletking_slam_01", null);
 					return;
 				}
 			}
-			public class BurstBullet : Bullet
-			{
-				public BurstBullet() : base("reversible", false, false, false)
-				{
-				}
-				protected override IEnumerator Top()
-				{
-					base.ChangeSpeed(new Speed(base.Speed+6, SpeedType.Absolute), 120);
-					yield break;
-				}
-			}
+			
 
 		}
 	}

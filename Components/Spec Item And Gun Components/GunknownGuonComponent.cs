@@ -36,43 +36,21 @@ namespace Planetside
 		public void Awake()
 		{
 			this.actor = base.GetComponent<PlayerOrbital>();
-			this.player = base.GetComponent<PlayerController>();
-
 		}
 
 		public void Start()
 		{
-			actor.sprite.usesOverrideMaterial = true;
-			actor.sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitCutoutUber");
-			CanFire = false;
-			Material mat = actor.sprite.GetCurrentSpriteDef().material = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
-			mat.mainTexture = actor.sprite.renderer.material.mainTexture;
-			mat.SetColor("_EmissiveColor", new Color32(255, 177, 56, 255));
-			mat.SetFloat("_EmissiveColorPower", 1.55f);
-			mat.SetFloat("_EmissivePower", 100);
-			actor.sprite.renderer.material = mat;
-			GunknownGuonComponent.guonHook = new Hook(typeof(PlayerOrbital).GetMethod("Initialize"), typeof(GunknownGuonComponent).GetMethod("GuonInit"));
-			PlayerController player = GameManager.Instance.PrimaryPlayer;
+            CanFire = false;
+
 			if (this.actor == null)
             {
 				this.actor = base.GetComponent<PlayerOrbital>();
 			}
-			if (this.player == null)
-			{
-				this.player = base.GetComponent<PlayerController>();
-			}
 			actor.StartCoroutine(this.HandleTimedDestroy());
 			actor.StartCoroutine(this.ShiftIntoPlace());
 
-			PlayerOrbital playerOrbital2 = actor;
-			SpeculativeRigidbody specRigidbody = playerOrbital2.specRigidbody;
+			SpeculativeRigidbody specRigidbody = actor.specRigidbody;
 			specRigidbody.OnPreRigidbodyCollision = (SpeculativeRigidbody.OnPreRigidbodyCollisionDelegate)Delegate.Combine(specRigidbody.OnPreRigidbodyCollision, new SpeculativeRigidbody.OnPreRigidbodyCollisionDelegate(this.OnPreCollision));
-
-			ImprovedAfterImage fuck = actor.gameObject.AddComponent<ImprovedAfterImage>();
-			fuck.spawnShadows = true;
-			fuck.shadowLifetime = 0.5f;
-			fuck.shadowTimeDelay = 0.001f;
-			fuck.dashColor = new Color(1, 0.5f, 0);
 		}
 		private void OnPreCollision(SpeculativeRigidbody myRigidbody, PixelCollider myCollider, SpeculativeRigidbody other, PixelCollider otherCollider)
 		{
@@ -95,20 +73,13 @@ namespace Planetside
 				UnityEngine.Object.Destroy(base.gameObject);
 			}
 		}
-		public static void GuonInit(Action<PlayerOrbital, PlayerController> orig, PlayerOrbital self, PlayerController player)
-		{
-			orig(self, player);
-		}
+
 
 		public void Update()
 		{
 			if (this.actor == null)
 			{
 				this.actor = base.GetComponent<PlayerOrbital>();
-			}
-			if (this.player == null)
-			{
-				this.player = base.GetComponent<PlayerController>();
 			}
 			if (CanFire == true && actor != null)
             {
@@ -160,8 +131,7 @@ namespace Planetside
 			while (elapsed < duration)
 			{
 				elapsed += BraveTime.DeltaTime;
-				bool flag3 = actor;
-				if (flag3)
+				if (actor)
 				{
 					actor.SetOrbitalTier(0);
 					actor.orbitRadius = elapsed*3f;
@@ -197,9 +167,7 @@ namespace Planetside
 			Projectile projectile = ((Gun)ETGMod.Databases.Items[508]).DefaultModule.projectiles[0];
 			GameObject gameObject = SpawnManager.SpawnProjectile(projectile.gameObject, actor.sprite.WorldCenter, Quaternion.Euler(0f, 0f, ((player.CurrentGun == null) ? 1.2f : player.CurrentGun.CurrentAngle)), true);
 			Projectile component = gameObject.GetComponent<Projectile>();
-			bool flag = component != null;
-			bool r = flag;
-			if (r)
+			if (component != null)
 			{
 				component.Owner = player;
 				component.Shooter = player.specRigidbody;

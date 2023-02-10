@@ -46,24 +46,19 @@ namespace Planetside
 
         private void HandleHit(Projectile arg1, SpeculativeRigidbody arg2, bool arg3)
 		{
-			bool flag = arg2.aiActor != null && !arg2.healthHaver.IsBoss && !arg2.healthHaver.IsDead && arg2.aiActor.behaviorSpeculator && !arg2.aiActor.IsHarmlessEnemy && arg2.aiActor != null && UnityEngine.Random.value <= 0.11f;
-			if (flag)
+			if (arg2.aiActor != null && !arg2.healthHaver.IsBoss && !arg2.healthHaver.IsDead && arg2.aiActor.behaviorSpeculator && !arg2.aiActor.IsHarmlessEnemy && arg2.aiActor != null && UnityEngine.Random.value <= 0.11f)
 			{
 				arg2.aiActor.behaviorSpeculator.Stun(0.25f, true);
-				this.teleporter = PickupObjectDatabase.GetById(449).GetComponent<TeleporterPrototypeItem>();
-				UnityEngine.Object.Instantiate<GameObject>(this.teleporter.TelefragVFXPrefab, arg2.specRigidbody.UnitCenter, Quaternion.identity);
+				UnityEngine.Object.Instantiate<GameObject>(PickupObjectDatabase.GetById(449).GetComponent<TeleporterPrototypeItem>().TelefragVFXPrefab, arg2.specRigidbody.UnitCenter, Quaternion.identity);
 			}
 		}
-		private TeleporterPrototypeItem teleporter;
 
 		private void OnKill(Projectile arg1, SpeculativeRigidbody arg2)
 		{
-			bool flag = !arg2.aiActor.healthHaver.IsDead;
-			if (flag)
+			if (!arg2.aiActor.healthHaver.IsDead)
 			{
 				PlayerController player = arg1.PossibleSourceGun.CurrentOwner as PlayerController;
-				this.teleporter = PickupObjectDatabase.GetById(449).GetComponent<TeleporterPrototypeItem>();
-				UnityEngine.Object.Instantiate<GameObject>(this.teleporter.TelefragVFXPrefab, arg2.specRigidbody.UnitCenter, Quaternion.identity);
+				UnityEngine.Object.Instantiate<GameObject>(PickupObjectDatabase.GetById(449).GetComponent<TeleporterPrototypeItem>().TelefragVFXPrefab, arg2.specRigidbody.UnitCenter, Quaternion.identity);
 				
 				List<AIActor> activeEnemies = player.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
 				Vector2 centerPosition = arg1.sprite.WorldCenter;
@@ -71,8 +66,7 @@ namespace Planetside
 				{
 					foreach (AIActor aiactor in activeEnemies)
 					{
-						bool ae = Vector2.Distance(aiactor.CenterPosition, centerPosition) < 4 && aiactor.healthHaver.GetMaxHealth() > 0f && aiactor != null && aiactor.specRigidbody != null && player != null;
-						if (ae)
+						if (Vector2.Distance(aiactor.CenterPosition, centerPosition) < 4 && aiactor.healthHaver.GetMaxHealth() > 0f && aiactor != null && aiactor.specRigidbody != null && player != null)
 						{
 							arg2.aiActor.behaviorSpeculator.Stun(1, true);
 						}
@@ -80,7 +74,6 @@ namespace Planetside
 				}
 			}
 		}
-
     }
 }
 

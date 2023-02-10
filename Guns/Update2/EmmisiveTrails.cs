@@ -42,10 +42,7 @@ namespace Planetside
                 }
             }  
         }
-        private List<string> TransformList = new List<string>()
-        {
-            "trailObject",
-        };
+
         public float EmissivePower;
         public float EmissiveColorPower;
     }

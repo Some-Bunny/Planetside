@@ -356,8 +356,7 @@ namespace Planetside
                 while (elapsed < duration)
                 {
                     elapsed += BraveTime.DeltaTime;
-                    bool flag3 = player && copySprite && player != null;
-                    if (flag3)
+                    if (player && copySprite && player != null)
                     {
                         Vector3 position = player.sprite.WorldCenter;
                         float t = elapsed / duration * (elapsed / duration);

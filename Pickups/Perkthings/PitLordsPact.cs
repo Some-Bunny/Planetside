@@ -53,7 +53,7 @@ namespace Planetside
                         {
                             if (ai.specRigidbody != null && ai != null)
                             {
-                                if (EnemyIsOverPit(ai) == true && ai != null && !ai.healthHaver.IsDead && !ai.IsFalling && ai.healthHaver != null)
+                                if (EnemyIsOverPit(ai) == true && ai != null && !ai.healthHaver.IsDead && !ai.IsFalling && ai.healthHaver != null && ai.isActiveAndEnabled == true)
                                 {
                                     ai.healthHaver.ApplyDamage(EnemyAbovePitDamage * BraveTime.DeltaTime, Vector2.zero, "Pit Lords Wrath", CoreDamageTypes.None, DamageCategory.Environment, false, null, false);
                                 }

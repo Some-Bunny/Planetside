@@ -96,7 +96,23 @@ namespace Planetside
 			orbitalPrefab.orbitDegreesPerSecond = 0;
 			orbitalPrefab.perfectOrbitalFactor = 1000f;
 			orbitalPrefab.SetOrbitalTier(0);
-			UnityEngine.Object.DontDestroyOnLoad(gameObject);
+
+
+            ImprovedAfterImage fuck = orbitalPrefab.gameObject.AddComponent<ImprovedAfterImage>();
+            fuck.spawnShadows = true;
+            fuck.shadowLifetime = 0.5f;
+            fuck.shadowTimeDelay = 0.001f;
+            fuck.dashColor = new Color(1, 0.5f, 0);
+
+            orbitalPrefab.sprite.usesOverrideMaterial = true;
+            Material mater = orbitalPrefab.sprite.GetCurrentSpriteDef().material = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+            mater.mainTexture = orbitalPrefab.sprite.renderer.material.mainTexture;
+            mater.SetColor("_EmissiveColor", new Color32(255, 177, 56, 255));
+            mater.SetFloat("_EmissiveColorPower", 1.55f);
+            mater.SetFloat("_EmissivePower", 100);
+            orbitalPrefab.sprite.renderer.material = mater;
+
+            UnityEngine.Object.DontDestroyOnLoad(gameObject);
 			FakePrefab.MarkAsFakePrefab(gameObject);
 			gameObject.SetActive(false);
 			GunknownGuon = gameObject;

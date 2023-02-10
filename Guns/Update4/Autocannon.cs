@@ -177,20 +177,6 @@ namespace Planetside
 
         }
         public static int AutoCannonID;
-
-
-        protected override void OnPickup(PlayerController player)
-        {
-            base.OnPickup(player);
-        }
-
-        protected override void OnPostDrop(PlayerController player)
-        {
-            base.OnPostDrop(player);  
-        }
-        public void OnDestroy()
-        {
-        }       
     }
 }
 

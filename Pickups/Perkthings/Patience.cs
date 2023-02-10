@@ -90,13 +90,31 @@ namespace Planetside
                 PitLordsPact.PitLordsPactID,
                 UnbreakableSpirit.UnbreakableSpiritID,
                 Gunslinger.GunslingerID
-                };
+            };
 
             Exploder.DoDistortionWave(player.sprite.WorldTopCenter, 30, 0.5f, 50, 1);
 
             for (int e = 0; e < perkCount; e++)
             {
+                if (IDsUsed.Count == 0 | IDsUsed == null)
+                {
+                    IDsUsed = new List<int>()
+                    {
+                    Contract.ContractID,
+                    Greedy.GreedyID,
+                    AllStatsUp.AllStatsUpID,
+                    AllSeeingEye.AllSeeingEyeID,
+                    BlastProjectiles.BlastProjectilesID,
+                    Glass.GlassID,
+                    ChaoticShift.ChaoticShiftID,
+                    PitLordsPact.PitLordsPactID,
+                    UnbreakableSpirit.UnbreakableSpiritID,
+                    Gunslinger.GunslingerID
+                    };
+                }
+
                 int IDtoUse = BraveUtility.RandomElement<int>(IDsUsed);
+                IDsUsed.Remove(IDtoUse);
                 DebrisObject debrisSpawned = LootEngine.SpawnItem(PickupObjectDatabase.GetById(IDtoUse).gameObject, player.sprite.WorldCenter.ToVector3ZisY() + MathToolbox.GetUnitOnCircle(((360 / perkCount) * e) + RNGOffset, 1.25f).ToVector3ZisY() + new Vector3(-0.5f, offset), MathToolbox.GetUnitOnCircle(((360 / perkCount) * e) + RNGOffset, 5), 2);
                 if (debrisSpawned == null) { ETGModConsole.Log("bastard"); }
 

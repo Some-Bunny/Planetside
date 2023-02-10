@@ -327,7 +327,7 @@ namespace Planetside
             this.hasBeenPickedup = true; 
             if (player != null)
             {
-                OtherTools.ApplyStat(player, PlayerStats.StatType.AmmoCapacityMultiplier, 0.4f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+                OtherTools.ApplyStat(player, PlayerStats.StatType.AmmoCapacityMultiplier, 0.55f, StatModifier.ModifyMethod.MULTIPLICATIVE);
                 player.PostProcessThrownGun += ThrownGunModifier;
                 player.OnReloadPressed += MagDump;
             }
@@ -444,7 +444,7 @@ namespace Planetside
                                     BeamController beamController3 = BeamToolbox.FreeFireBeamFromAnywhere(currentProjectile, player, obj.gameObject, Vector2.zero, false, 120f * i, 6f, true, true, Flipped ? -180 : 180);
                                     Projectile component3 = beamController3.GetComponent<Projectile>();
                                     float Dmg = component3.baseData.damage *= player != null ? player.stats.GetStatValue(PlayerStats.StatType.Damage) : 1;
-                                    component3.baseData.damage = Dmg / 7;
+                                    component3.baseData.damage = Dmg / 6;
                                 }
                             }                  
                         }
@@ -507,7 +507,7 @@ namespace Planetside
                         hover1.Position = CustomHoveringGunController.HoverPosition.OVERHEAD;
                         hover1.Aim = CustomHoveringGunController.AimType.PLAYER_AIM;
                         hover1.Trigger = CustomHoveringGunController.FireType.ON_COOLDOWN;
-                        hover1.CooldownTime = 0.4f;
+                        hover1.CooldownTime = obj.GetComponentInChildren<Gun>().DefaultModule.cooldownTime;
                         hover1.ShootDuration = 0.1f;
                         hover1.OnlyOnEmptyReload = false;
                         hover1.Initialize(gunComp, player);

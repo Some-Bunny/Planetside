@@ -72,17 +72,7 @@ namespace Planetside
         }
         private void HandlePreCollision(SpeculativeRigidbody myRigidbody, PixelCollider myPixelCollider, SpeculativeRigidbody otherRigidbody, PixelCollider otherPixelCollider)
         {
-            string text;
-            if (otherRigidbody == null)
-            {
-                text = null;
-            }
-            else
-            {
-                AIActor aiActor = otherRigidbody.aiActor;
-                text = ((aiActor != null) ? aiActor.EnemyGuid : null);
-            }
-            string value = text;
+            string value = otherRigidbody.aiActor != null ? aiActor.EnemyGuid : null;
             if (!string.IsNullOrEmpty(value))
             {
                 if (otherRigidbody && otherRigidbody.healthHaver)
@@ -123,8 +113,7 @@ namespace Planetside
         private IEnumerator ChangeProjectileDamage(Projectile bullet, float oldDamage)
         {
             yield return new WaitForSeconds(0.1f);
-            bool flag = bullet != null;
-            if (flag)
+            if (bullet != null)
             {
                 bullet.baseData.damage = oldDamage;
             }

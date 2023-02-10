@@ -43,13 +43,11 @@ namespace Planetside
                     float Mult = player.PlayerHasActiveSynergy("Big Shocking Gun 9000") ? 2.5f : 1;
 
                     List<AIActor> activeEnemies = player.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
-                    bool flag5 = activeEnemies != null && activeEnemies.Count >= 0;
-                    if (flag5)
+                    if (activeEnemies != null && activeEnemies.Count > 0)
                     {
                         foreach (AIActor ai in activeEnemies)
                         {
-                            bool flag8 = ai && ai != null && Vector2.Distance(ai.CenterPosition, this.projectile.sprite.WorldCenter) < 3.5f * Mult;
-                            if (flag8)
+                            if (ai && ai != null && Vector2.Distance(ai.CenterPosition, this.projectile.sprite.WorldCenter) < 3.5f * Mult)
                             {
                                 if (!ExtantTethers.ContainsKey(ai))
                                 {
@@ -57,8 +55,7 @@ namespace Planetside
                                     ExtantTethers.Add(ai, obj);
                                 }
                             }
-                            bool fuckoff = ai && ai != null && Vector2.Distance(ai.CenterPosition, this.projectile.sprite.WorldCenter) > 3.5f * Mult;
-                            if (fuckoff)
+                            if (ai && ai != null && Vector2.Distance(ai.CenterPosition, this.projectile.sprite.WorldCenter) > 3.5f * Mult)
                             {
                                 if (ExtantTethers.ContainsKey(ai))
                                 {

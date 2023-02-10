@@ -30,7 +30,7 @@ namespace Planetside
             GameObject obj = new GameObject(itemName);
 			PsychicBlank activeitem = obj.AddComponent<PsychicBlank>();
             var data = StaticSpriteDefinitions.Active_Item_Sheet_Data;
-            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("psychicblank"), data, obj);
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("psychicdust"), data, obj);
             //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "Not What It Looks Like...";
             string longDesc = "Gives very mild, yet still useful psychic abilities.\n\nDespite its very uncanny resemblance to something else, this dust IS actually magical, so totally nothing wrong with injesting some of it.";

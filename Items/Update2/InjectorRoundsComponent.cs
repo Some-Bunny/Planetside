@@ -63,11 +63,11 @@ public class InjectorRoundsComponent : BraveBehaviour
 			}
 			else if (!gameActorEffect.GetType().IsSubclassOf(typeof(GameActorDecorationEffect)))
             {
-				ETGModConsole.Log("starting logging of effect storage");
+				//ETGModConsole.Log("starting logging of effect storage");
                 string LocalValue = gameActorEffect.effectIdentifier != null ? gameActorEffect.effectIdentifier : UnityEngine.Random.Range(1, 1000).ToString();
 				if (gameActorEffect.effectIdentifier != null && !InjectorRounds.BlacklistedNames.Contains(gameActorEffect.effectIdentifier))
 				{
-                    ETGModConsole.Log("name of key: " + LocalValue);
+                    //ETGModConsole.Log("name of key: " + LocalValue);
                     Keys.Add(LocalValue);
                     effectKeys.Add(LocalValue, gameActorEffect);
 

@@ -128,16 +128,7 @@ namespace Planetside
 
                         FieldInfo leEnabler = typeof(BaseShopController).GetField("m_shopItems", BindingFlags.Instance | BindingFlags.NonPublic);
                         leEnabler.SetValue(self, uses);
-                        /*
-                        List<ShopSubsidiaryZone> componentsInRoom = theRoom.GetComponentsInRoom<ShopSubsidiaryZone>();
-                        for (int num5 = 0; num5 < componentsInRoom.Count; num5++)
-                        {
-                            if (!componentsInRoom[num5].IsShopRoundTable == false && self.cat == true)
-                            {
-                                componentsInRoom[num5].HandleSetup(self, theRoom, uses, listOCont);
-                            }
-                        }
-                        */
+
                     }
                     if (self.baseShopType == BaseShopController.AdditionalShopType.BLACKSMITH)
                     {

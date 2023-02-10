@@ -218,7 +218,7 @@ namespace Planetside
                         GameObject partObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("Portal"));
                         MeshRenderer rend = partObj.GetComponent<MeshRenderer>();
                         rend.allowOcclusionWhenDynamic = true;
-                        partObj.transform.position = currentRoom.area.Center - new Vector2(0, 2);
+                        partObj.transform.position = currentRoom.area.Center - new Vector2(0, 3.5f);
                         partObj.transform.localScale = Vector3.one;
                         partObj.name = "ShopPortal";
                         partObj.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));

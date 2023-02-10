@@ -19,53 +19,27 @@ namespace Planetside
     {
         public PolarityProjectile()
         {
-			IsDown = false;
 			IsUp = false;
         }
-
-
 
         public void Start()
         {
             //GameObject original;
-            this.projectile = base.GetComponent<Projectile>();
-
-			Projectile projectile = this.projectile;
-			PlayerController playerController = projectile.Owner as PlayerController;
             Projectile component = base.gameObject.GetComponent<Projectile>();
-            bool flag = component != null;
-            bool flag2 = flag;
-            if (flag2)
+            PlayerController playerController = component.Owner as PlayerController;
+            if (component != null)
             {
-				//PlayerController player = playerController as PlayerController;
-				bool flagA = playerController.PlayerHasActiveSynergy("Refridgeration") && playerController != null;
-				if (flagA)
+				if (playerController.PlayerHasActiveSynergy("Refridgeration") && playerController != null)
 				{
-					bool flag6 = IsUp == true;
-					if (flag6)
-					{
-						projectile.OverrideMotionModule = new HelixProjectileMotionModule
-						{
-							helixAmplitude = 2f,
-							helixWavelength = 8f,
-							ForceInvert = false
-						};
-					}
-					bool flag7 = IsDown == true;
-					if (flag7)
-					{
-						projectile.OverrideMotionModule = new HelixProjectileMotionModule
-						{
-							helixAmplitude = 2f,
-							helixWavelength = 8f,
-							ForceInvert = true
-						};
-					}
-				}
+                    component.OverrideMotionModule = new HelixProjectileMotionModule
+                    {
+                        helixAmplitude = 2f,
+                        helixWavelength = 8f,
+                        ForceInvert = IsUp
+                    };
+                }
 			}
         }
 		public bool IsUp;
-		public bool IsDown;
-		private Projectile projectile;
     }
 }

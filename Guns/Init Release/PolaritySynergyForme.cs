@@ -53,13 +53,12 @@ namespace Planetside
 			gun.Volley.projectiles[0].projectiles[0] = projectile;
 			projectile.baseData.damage = 5f;
 			PolarityProjectile pol1 = projectile.gameObject.AddComponent<PolarityProjectile>();
-			pol1.IsDown = true;
+			pol1.IsUp = false;
 
 			FakePrefab.MarkAsFakePrefab(projectile.gameObject);
 			UnityEngine.Object.DontDestroyOnLoad(projectile);
 			gun.DefaultModule.projectiles[0] = projectile;
-			bool flag = gun.Volley.projectiles[0] != gun.DefaultModule;
-			if (flag)
+			if (gun.Volley.projectiles[0] != gun.DefaultModule)
 			{
 				gun.Volley.projectiles[0].ammoCost = 0;
 			}

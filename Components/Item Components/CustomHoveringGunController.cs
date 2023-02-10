@@ -29,9 +29,11 @@ namespace Planetside
 		{
 			this.m_targetGun = targetGun;
 			this.m_owner = owner;
+
 			this.m_parentTransform = new GameObject("hover rotator").transform;
 			this.m_parentTransform.parent = base.transform.parent;
 			base.transform.parent = this.m_parentTransform;
+
 			base.sprite.PlaceAtLocalPositionByAnchor(Vector3.zero, tk2dBaseSprite.Anchor.MiddleCenter);
 			base.sprite.SetSprite(targetGun.sprite.Collection, targetGun.sprite.spriteId);
 			SpriteOutlineManager.AddOutlineToSprite(base.sprite, Color.black);
@@ -100,9 +102,8 @@ namespace Planetside
 
 		private void AimAt(Vector2 point, bool instant = false)
 		{
-			Vector2 v = point - base.sprite.WorldCenter;
-			float currentAimTarget = BraveMathCollege.Atan2Degrees(v);
-			this.m_currentAimTarget = currentAimTarget;
+			float v = (point - base.sprite.WorldCenter).ToAngle();
+			this.m_currentAimTarget = v - m_parentTransform.transform.localRotation.eulerAngles.z;
 			if (instant)
 			{
 				this.m_parentTransform.localRotation = Quaternion.Euler(0f, 0f, this.m_currentAimTarget);
@@ -125,7 +126,7 @@ namespace Planetside
 				if (this.m_owner && this.m_owner.CurrentRoom != null)
 				{
 					float num = -1f;
-					AIActor nearestEnemy = this.m_owner.CurrentRoom.GetNearestEnemy(this.m_owner.CenterPosition, out num, true, false);
+					AIActor nearestEnemy = this.m_owner.CurrentRoom.GetNearestEnemy(this.transform.PositionVector2(), out num, true, true);
 					if (nearestEnemy)
 					{
 						this.m_hasEnemyTarget = true;
@@ -319,9 +320,9 @@ namespace Planetside
 		private IEnumerator HandleFireShortBeam(Projectile projectileToSpawn, PlayerController source, float duration)
 		{
 			float elapsed = 0f;
-			if (projectileToSpawn != null) { projectileToSpawn.baseData.damage *= DamageMultiplier; }
 			BeamController beam = this.BeginFiringBeam(projectileToSpawn, source, this.m_parentTransform.eulerAngles.z, new Vector2?(this.ShootPoint));
-			RecursionPreventer recursion = beam.projectile.gameObject.AddComponent<RecursionPreventer>();
+            if (beam != null) { beam.projectile.baseData.damage *= DamageMultiplier; }
+            RecursionPreventer recursion = beam.projectile.gameObject.AddComponent<RecursionPreventer>();
 			recursion.IsProjectileFiredFromHoveringGun = true;
 			yield return null;
 			while (elapsed < duration)
@@ -416,12 +417,13 @@ namespace Planetside
 					this.m_targetGun.LoseAmmo(1);
 				}
 			}
-			if (projectileToSpawn != null) { projectileToSpawn.baseData.damage *= DamageMultiplier; }
 
 			Vector2 v = (overrideSpawnPoint == null) ? source.specRigidbody.UnitCenter : overrideSpawnPoint.Value;
 			GameObject gameObject = SpawnManager.SpawnProjectile(projectileToSpawn.gameObject, v, Quaternion.Euler(0f, 0f, targetAngle), true);
 			Projectile component = gameObject.GetComponent<Projectile>();
-			component.Owner = source;
+            if (component != null) { component.baseData.damage *= DamageMultiplier; }
+
+            component.Owner = source;
 			component.Shooter = source.specRigidbody;
 			RecursionPreventer recursion = gameObject.AddComponent<RecursionPreventer>();
 			recursion.IsProjectileFiredFromHoveringGun = true; 
