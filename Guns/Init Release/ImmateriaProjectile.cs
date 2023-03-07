@@ -16,188 +16,177 @@ using System.Collections.ObjectModel;
 
 using UnityEngine.Serialization;
 using HutongGames.PlayMaker.Actions;
+using static tk2dSpriteCollectionDefinition;
 
 namespace Planetside
 {
 	internal class ImmateriaProjectile : MonoBehaviour
 	{
-		public ImmateriaProjectile()
-		{
-            this.damageMultiplierPerFrame = 1.01f;
-            this.gravitationalForce = 10;
-            this.radius = 10;
-            this.radiusSquared = radius * radius;
-            this.MinimumSpeed = 13;
-            this.Duration = 5;
-        }
-		public void Start()
-		{
-			this.projectile = base.GetComponent<Projectile>();
-			if (this.projectile != null)
-			{
-
-                this.m_distortMaterial = new Material(ShaderCache.Acquire("Brave/Internal/DistortionRadius"));
-                this.m_distortMaterial.SetFloat("_Strength", 300f);
-                this.m_distortMaterial.SetFloat("_TimePulse", 0.15f);
-                this.m_distortMaterial.SetFloat("_RadiusFactor", 0.15f);
-                this.m_distortMaterial.SetVector("_WaveCenter", this.GetCenterPointInScreenUV(projectile.sprite.WorldCenter));
-                Pixelator.Instance.RegisterAdditionalRenderPass(this.m_distortMaterial);
-
-                this.Invoke("Die", Duration);
-			}
-		}
-        private Vector4 GetCenterPointInScreenUV(Vector2 centerPoint)
+        public void Start()
         {
-            Vector3 vector = GameManager.Instance.MainCameraController.Camera.WorldToViewportPoint(centerPoint.ToVector3ZUp(0f));
-            return new Vector4(vector.x, vector.y, 0f, 0f);
-        }
-        private Material m_distortMaterial;
-
-
-        public void OnDestroy()
-        {
-            if (Pixelator.Instance != null && this.m_distortMaterial != null)
+            this.projectile = base.GetComponent<Projectile>();
+            var wraps = this.projectile.GetOrAddComponent<WraparoundProjectile>();
+            PlayerController player = this.projectile.Owner as PlayerController;
+            wraps.OnWrappedAround = (proj, pos1, pos2) =>
             {
-                Pixelator.Instance.DeregisterAdditionalRenderPass(this.m_distortMaterial);
-            }
-        }
-
-        public void Die()
-        {
-            if (projectile != null) {
-                Exploder.DoDistortionWave(projectile.sprite.WorldTopCenter, gravitationalForce, 0.25f, 30, 0.5f);
-                AkSoundEngine.PostEvent("Play_BOSS_queenship_explode_01", projectile.gameObject);
-                this.projectile.DieInAir(false);
+                //GameObject gameObject1 = UnityEngine.Object.Instantiate<GameObject>((PickupObjectDatabase.GetById(169) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapHorizontal.effects.First().effects.First().effect, pos1, Quaternion.identity);
+                //GameObject gameObject2 = UnityEngine.Object.Instantiate<GameObject>((PickupObjectDatabase.GetById(169) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapHorizontal.effects.First().effects.First().effect, pos2, Quaternion.identity);
+                //Destroy(gameObject1, 2);
+                //Destroy(gameObject2, 2);
+                Exploder.Explode(pos2, Immateria.ExplosionData, Vector2.zero, null, true);
+                Exploder.Explode(pos1, Immateria.ExplosionData, Vector2.zero, null, true);
+                AkSoundEngine.PostEvent("Play_WPN_grasshopper_impact_01", proj.gameObject);
+                AkSoundEngine.PostEvent("Play_WPN_" + WrapaRounds.SFX + "_impact_01", projectile.gameObject);
+                if (player)
                 {
-                    Pixelator.Instance.DeregisterAdditionalRenderPass(this.m_distortMaterial);
+                    if (player.PlayerHasActiveSynergy("Continuum"))
+                    {
+                        int Dist = (int)Vector2.Distance(pos1, pos2);
+                        Dist = Mathf.Min(Dist, 4);
+                        for (int i = 0; i < Dist; i++)
+                        {
+                            float t = (float)i / (float)Dist;
+                            Vector3 vector3 = Vector3.Lerp(pos1, pos2, t);
+                            GameObject portalObj = UnityEngine.Object.Instantiate<GameObject>(PickupObjectDatabase.GetById(155).GetComponent<SpawnObjectPlayerItem>().objectToSpawn.GetComponent<BlackHoleDoer>().HellSynergyVFX, vector3, Quaternion.Euler(0f, 0f, 0f));                            
+                            portalObj.gameObject.SetLayerRecursively(LayerMask.NameToLayer("BG_Critical"));
+                            portalObj.gameObject.transform.position = vector3;
+                            MeshRenderer mesh = portalObj.GetComponent<MeshRenderer>();
+                            mesh.material.SetTexture("_PortalTex", StaticTextures.NebulaTexture);
+                            mesh.material.SetFloat("_UVDistCutoff", 0f);
+                            GameManager.Instance.StartCoroutine(HoldPortalOpen(mesh));
+                        }
+                    }
+                }
+            };
+        }
+        private IEnumerator HoldPortalOpen(MeshRenderer portal)
+        {
+            float elapsed = 0f;
+            float duration = 2;
+            while (elapsed < duration)
+            {
+                elapsed += BraveTime.DeltaTime;
+                float t = Mathf.Sin(elapsed * 0.67f);
+                if (portal == null) { yield break; }
+                if (portal.gameObject == null) { yield break; }
+
+                List<AIActor> activeEnemies = portal.transform.position.GetAbsoluteRoom().GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
+                if (activeEnemies != null && activeEnemies.Count >= 0)
+                {
+                    for (int i = 0; i < activeEnemies.Count; i++)
+                    {
+                        AIActor aiactor = activeEnemies[i];
+                        bool ae = Vector2.Distance(aiactor.CenterPosition, portal.transform.position) < portal.material.GetFloat("_UVDistCutoff") * 16 && aiactor.healthHaver.GetMaxHealth() > 0f && aiactor != null && aiactor.specRigidbody != null;
+                        if (ae)
+                        {
+                            aiactor.healthHaver.ApplyDamage(3 * BraveTime.DeltaTime, Vector2.zero, "fwomp", CoreDamageTypes.Electric, DamageCategory.Normal, false, null, false);           
+                        }
+                    }
                 }
 
+                portal.material.SetFloat("_UVDistCutoff", Mathf.Lerp(elapsed / 5f, 0, t));
+                portal.material.SetFloat("_HoleEdgeDepth", Mathf.Lerp(12, 2, t));
+                yield return null;
             }
+            AkSoundEngine.PostEvent("Play_WPN_blackhole_impact_01", portal.gameObject);
+            if (portal.gameObject != null) { Destroy(portal.gameObject); }
+
+            yield break;
         }
+
+
+        private Projectile projectile;
+	}
+
+
+    public class WraparoundProjectile : MonoBehaviour
+    {
+        public void Start()
+        {
+            this.projectile = base.GetComponent<Projectile>();
+            projectile.baseData.range *= RangeMultiplier;
+            this.projectile.BulletScriptSettings = new BulletScriptSettings()
+            {
+                surviveTileCollisions = true
+            };
+            SpeculativeRigidbody specRigidbody = this.projectile.specRigidbody;
+            specRigidbody.OnPreTileCollision = (SpeculativeRigidbody.OnPreTileCollisionDelegate)Delegate.Combine(specRigidbody.OnPreTileCollision, new SpeculativeRigidbody.OnPreTileCollisionDelegate(delegate (SpeculativeRigidbody myRigidbody, PixelCollider myPixelCollider, PhysicsEngine.Tile tile, PixelCollider tilePixelCollider)
+            {
+
+                projectile.IgnoreTileCollisionsFor(3f / projectile.baseData.speed);
+                projectile.UpdateCollisionMask();
+                if (Warps < Cap)
+                {
+                    var dungeonData = GameManager.Instance.Dungeon.data;
+                    CellData cell = dungeonData.cellData[tile.X][tile.Y];
+                    if (cell.type == CellType.WALL)
+                    {
+                        if (dungeonData.isLeftSideWall(tile.X, tile.Y))
+                        {
+                            WoopShoop(this.projectile, Vector2.right);
+                            return;
+                        }
+                        if (dungeonData.isRightSideWall(tile.X, tile.Y))
+                        {
+                            WoopShoop(this.projectile, Vector2.left);
+                            return;
+                        }
+                        if (dungeonData.isFaceWallLower(tile.X, tile.Y) | dungeonData.isFaceWallHigher(tile.X, tile.Y))
+                        {
+                            WoopShoop(this.projectile, Vector2.down);
+                            return;
+                        }
+                        if (dungeonData.isFaceWallLower(tile.X, tile.Y) | dungeonData.isWallDownRight(tile.X, tile.Y))
+                        {
+                            WoopShoop(this.projectile, Vector2.up);
+                            return;
+                        }
+                    }
+                }
+            }));
+        }
+
+
+        private int Warps = 0;
+        private float RangeMultiplier = 4;
+
+        public void WoopShoop(Projectile p, Vector2 direction)
+        {
+            Warps++;
+            int rayMask = CollisionMask.LayerToMask(CollisionLayer.HighObstacle);
+            if (p == null) { return; }
+            var cast = RaycastToolbox.ReturnRaycast(p.sprite.WorldCenter + (direction * 0.5f), direction, rayMask, 1000, null);
+            var Position = cast.Contact;
+            if (p && Position != null)
+            {
+                if (OnWrappedAround != null)
+                {
+                    OnWrappedAround(p, p.transform.PositionVector2(), Position);
+                }
+                p.transform.position = Position;
+                p.specRigidbody.Reinitialize();
+            }      
+        }
+
+
 
 
         public void Update()
         {
-            if (this.projectile != null)
+            if (Warps >= Cap && this.projectile)
             {
-                if (this.m_distortMaterial != null)
+                if (this.projectile.BulletScriptSettings != null)
                 {
-                    this.m_distortMaterial.SetVector("_WaveCenter", this.GetCenterPointInScreenUV(projectile.sprite.WorldCenter));
-                }
-
-                for (int i = 0; i < StaticReferenceManager.AllProjectiles.Count; i++)
-                {
-                    if (StaticReferenceManager.AllProjectiles[i].gameObject.activeSelf)
-                    {
-                        if (StaticReferenceManager.AllProjectiles[i].enabled)
-                        {
-                            this.AdjustRigidbodyVelocity(StaticReferenceManager.AllProjectiles[i].specRigidbody);
-                        }
-                    }
+                    this.projectile.BulletScriptSettings.surviveTileCollisions = false;
                 }
             }
         }
+        public Action<Projectile, Vector2, Vector2> OnWrappedAround;
 
-        public float MinimumSpeed;
 
-        public float damageMultiplierPerFrame;
-        public float gravitationalForce;
-        public float radius;
-        private float radiusSquared;
-        public float Duration;
-
-        private bool AdjustRigidbodyVelocity(SpeculativeRigidbody other)
-        {
-            Vector2 a = other.UnitCenter - this.projectile.specRigidbody.UnitCenter;
-            float num = Vector2.SqrMagnitude(a);
-            if (num < this.radiusSquared)
-            {
-                float g = this.gravitationalForce;
-                Vector2 velocity = other.Velocity;
-                Projectile projectile = other.projectile;
-                if (projectile)
-                {
-                    projectile.collidesWithPlayer = false;
-                    if (other.GetComponent<BlackHoleDoer>() != null)
-                    {
-                        return false;
-                    }
-                    if (other.GetComponent<ParticleCollapserLargeProjectile>() != null)
-                    {
-                        return false;
-                    }
-                    if (other.GetComponent<ImmateriaProjectile>() != null)
-                    {
-                        return false;
-                    }
-                    if (velocity == Vector2.zero)
-                    {
-                        return false;
-                    }
-                    g = this.gravitationalForce;
-                }
-
-                Vector2 frameAccelerationForRigidbody = this.GetFrameAccelerationForRigidbody(other.UnitCenter, Mathf.Sqrt(num), g);
-                float d = Mathf.Clamp(BraveTime.DeltaTime, 0f, 0.02f);
-                Vector2 b = frameAccelerationForRigidbody * d;
-                Vector2 vector = velocity + b;
-                if (BraveTime.DeltaTime > 0.02f)
-                {
-                    vector *= 0.02f / BraveTime.DeltaTime;
-                }
-                other.Velocity = vector;
-                if (projectile != null)
-                {
-                    projectile.collidesWithPlayer = false;
-                    if (projectile.IsBulletScript)
-                    {
-                        projectile.RemoveBulletScriptControl();
-                    }
-                    if (vector != Vector2.zero)
-                    {
-                        projectile.baseData.damage *= damageMultiplierPerFrame;
-                        projectile.baseData.range += 1f;
-                        BounceProjModifier BpM= projectile.gameObject.GetOrAddComponent<BounceProjModifier>();
-                        BpM.numberOfBounces += Mathf.Max(10 - BpM.numberOfBounces, 0);
-
-                        PierceProjModifier spookCollapse = projectile.gameObject.GetOrAddComponent<PierceProjModifier>();
-                        spookCollapse.penetration = 10;
-                        spookCollapse.penetratesBreakables = true;
-                        MaintainDamageOnPierce noDamageLossCollapse = projectile.gameObject.GetOrAddComponent<MaintainDamageOnPierce>();
-                        noDamageLossCollapse.damageMultOnPierce = 1f;
-
-                        projectile.Direction = vector.normalized;
-                        projectile.Speed = Mathf.Max(MinimumSpeed, vector.magnitude);
-                        projectile.Speed *= 0.995f;
-                        other.Velocity = projectile.Direction * projectile.Speed;
-                        if (projectile.shouldRotate && (vector.x != 0f || vector.y != 0f))
-                        {
-                            float num2 = BraveMathCollege.Atan2Degrees(projectile.Direction);
-                            if (!float.IsNaN(num2) && !float.IsInfinity(num2))
-                            {
-                                Quaternion rotation = Quaternion.Euler(0f, 0f, num2);
-                                if (!float.IsNaN(rotation.x) && !float.IsNaN(rotation.y))
-                                {
-                                    projectile.transform.rotation = rotation;
-                                }
-                            }
-                        }
-                    }
-                }
-                return true;
-            }
-            return false;
-        }
-        private Vector2 GetFrameAccelerationForRigidbody(Vector2 unitCenter, float currentDistance, float g)
-        {
-            Vector2 zero = Vector2.zero;
-            float num = Mathf.Clamp01(1f - currentDistance / this.radius);
-            float d = g * num * num;
-            Vector2 normalized = (this.projectile.specRigidbody.UnitCenter - unitCenter).normalized;
-            return (normalized * d) * 9;
-        }
+        public int Cap = 1;
 
         private Projectile projectile;
-	}
+    }
 }
 

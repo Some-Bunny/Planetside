@@ -175,7 +175,7 @@ namespace Planetside
 		}
 
 
-        protected override void Update()
+        public override void Update()
         {
             if (base.Owner)
             {
@@ -276,7 +276,7 @@ namespace Planetside
         }
 
 
-        protected override void OnDestroy()
+        public override void OnDestroy()
 		{
             if (base.Owner != null)
             {

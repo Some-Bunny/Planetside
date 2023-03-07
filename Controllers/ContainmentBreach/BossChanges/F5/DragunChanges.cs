@@ -374,14 +374,14 @@ namespace Planetside
 
 		public class ModifiedDraGunGlockDirected1Right1 : ModifiedDraGunGlockDirected1
 		{
-			protected override string BulletName
+			public override string BulletName
 			{
 				get
 				{
 					return "glockRight";
 				}
 			}
-			protected override bool IsHard
+			public override bool IsHard
 			{
 				get
 				{
@@ -392,14 +392,14 @@ namespace Planetside
 		public class ModifiedDraGunGlockDirected1Left1 : ModifiedDraGunGlockDirected1
 		{
 
-			protected override string BulletName
+			public override string BulletName
 			{
 				get
 				{
 					return "glockLeft";
 				}
 			}
-			protected override bool IsHard
+			public override bool IsHard
 			{
 				get
 				{
@@ -411,7 +411,7 @@ namespace Planetside
 
 		public class ModifiedDraGunGlockDirected1 : Script
 		{
-			protected virtual string BulletName
+			public virtual string BulletName
 			{
 				get
 				{
@@ -419,7 +419,7 @@ namespace Planetside
 				}
 			}
 
-			protected virtual bool IsHard
+			public virtual bool IsHard
 			{
 				get
 				{
@@ -427,7 +427,7 @@ namespace Planetside
 				}
 			}
 
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				float num = BraveMathCollege.ClampAngle180(this.Direction);
 				if (num > -91f && num < -89f)
@@ -486,7 +486,7 @@ namespace Planetside
 
 		public class ModifiedDraGunMac10Burst1 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				int i = 0;
 				for (; ; )
@@ -504,7 +504,7 @@ namespace Planetside
 
 		public class ModifiedDraGunSweepFlameBreath1 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				int i =0;
 				for (; ; )
@@ -521,7 +521,7 @@ namespace Planetside
 		}
 		public class ModifiedDraGunWingFlap1 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				this.EndOnBlank = true;
 				for (int i = 0; i < 24; i++)
@@ -549,7 +549,7 @@ namespace Planetside
 					this.m_sign = sign;
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					yield return this.Wait(UnityEngine.Random.Range(60, 126));
 					this.ChangeDirection(new Direction(-90f + this.m_sign * 90f, DirectionType.Absolute, -1f), 30);
@@ -566,7 +566,7 @@ namespace Planetside
 					this.WaitTime = wait;
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					yield return this.Wait(WaitTime);
 					this.ChangeDirection(new Direction(-90f + this.m_sign * 90f, DirectionType.Absolute, -1f), 30);
@@ -582,7 +582,7 @@ namespace Planetside
 
 		public class ModifiedDraGunBigNoseShot : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				base.Fire(new Direction(-90f, DirectionType.Absolute, -1f), new Speed(6f, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.undodgeableSkullAudio.Name, false, false, false));
 				base.Fire(new Direction(-110f, DirectionType.Absolute, -1f), new Speed(6f, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.undodgeableSkullAudio.Name, false, false, false));
@@ -602,7 +602,7 @@ namespace Planetside
 
 		public class ModifiedDraGunFlameBreath1 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				bool q = true;
 				for (int i = 0; i < 120; i++)
@@ -633,7 +633,7 @@ namespace Planetside
 
 		public class ModifiedDraGunRocket1 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				if (ChallengeManager.CHALLENGE_MODE_ACTIVE)
 				{
@@ -663,7 +663,7 @@ namespace Planetside
 				{
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					return null;
 				}
@@ -698,7 +698,7 @@ namespace Planetside
 				{
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					this.ManualControl = true;
 					yield return this.Wait(UnityEngine.Random.Range(0, 10));

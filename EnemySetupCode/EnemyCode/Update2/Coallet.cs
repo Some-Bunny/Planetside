@@ -446,7 +446,7 @@ namespace Planetside
 
 		public class BurnScript : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody) { base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("05891b158cd542b1a5f3df30fb67a7ff").bulletBank.GetBullet("default")); }
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("frogger"));
@@ -467,7 +467,7 @@ namespace Planetside
 
 			}
 
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				float speed = base.Speed;
 				base.ChangeSpeed(new Speed(speed * 1.5f, SpeedType.Absolute), 60);

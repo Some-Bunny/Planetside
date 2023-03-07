@@ -51,7 +51,62 @@ namespace Planetside
 				AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.HM_PRIME_DEFEATED, false);
 
 			});
-			global::ETGModConsole.Commands.GetGroup("psog").AddUnit("surface", delegate (string[] args)
+
+            global::ETGModConsole.Commands.GetGroup("psog").AddUnit("perks_desc_reset", delegate (string[] args)
+            {
+                ETGModConsole.Log("<size=100><color=#ff0000ff>*Rewinding Descriptions*</color></size>", false);
+                AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.ALLSEEINGEYE_FLAG_CHEST_STACK, false);
+                AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.ALLSEEINGEYE_FLAG_ROOMDROP, false);
+
+                AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.EXPLOSIVEBIRTH_FLAG_STACK, false);
+
+                AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.CHAOTICSHIFT_FLAG_STACK, false);
+
+                AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.CONTRACT_FLAG_STACK, false);
+
+                AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.CORRUPTEDWEALTH_FLAG_AMMO, false);
+                AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.CORRUPTEDWEALTH_FLAG_ARMOR, false);
+                AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.CORRUPTEDWEALTH_FLAG_BLANK, false);
+                AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.CORRUPTEDWEALTH_FLAG_GUON, false);
+                AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.CORRUPTEDWEALTH_FLAG_HP, false);
+                AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.CORRUPTEDWEALTH_FLAG_KEY, false);
+                AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.CORRUPTEDWEALTH_FLAG_STACK, false);
+
+                AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.GLASS_FLAG_OVERHEAL, false);
+                AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.GLASS_FLAG_STACK, false);
+
+                AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.GREEDY_FLAG_STACK, false);
+
+                AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.GUNSLINGER_FLAG_MAGDUMP, false);
+                AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.GUNSLINGER_FLAG_STACK, false);
+
+                AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.PATIENCE_FLAG_STACK, false);
+
+                AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.PITLORDPACT_FLAG_FALLLIVING, false);
+                AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.PITLORDPACT_FLAG_FALLPLAYER_AMULET, false);
+                AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.PITLORDPACT_FLAG_ITEM, false);
+                AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.PITLORDPACT_FLAG_STACK, false);
+                AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.PITLORDPACT_FLAG_TABLE, false);
+
+                AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.UNBREAKABLESPIRIT_FLAG_STACK, false);
+
+                AdvancedGameStatsManager.Instance.SetStat(CustomTrackedStats.AMOUNT_BOUGHT_ALLSEEINGEYE, -AdvancedGameStatsManager.Instance.GetPlayerStatValue(CustomTrackedStats.AMOUNT_BOUGHT_ALLSEEINGEYE));
+                AdvancedGameStatsManager.Instance.SetStat(CustomTrackedStats.AMOUNT_BOUGHT_ALLSTATUP, -AdvancedGameStatsManager.Instance.GetPlayerStatValue(CustomTrackedStats.AMOUNT_BOUGHT_ALLSTATUP));
+                AdvancedGameStatsManager.Instance.SetStat(CustomTrackedStats.AMOUNT_BOUGHT_EXPLOSIVEBIRTH, -AdvancedGameStatsManager.Instance.GetPlayerStatValue(CustomTrackedStats.AMOUNT_BOUGHT_EXPLOSIVEBIRTH));
+                AdvancedGameStatsManager.Instance.SetStat(CustomTrackedStats.AMOUNT_BOUGHT_CHAOTICSHIFT, -AdvancedGameStatsManager.Instance.GetPlayerStatValue(CustomTrackedStats.AMOUNT_BOUGHT_CHAOTICSHIFT));
+                AdvancedGameStatsManager.Instance.SetStat(CustomTrackedStats.AMOUNT_BOUGHT_CONTRACT, -AdvancedGameStatsManager.Instance.GetPlayerStatValue(CustomTrackedStats.AMOUNT_BOUGHT_CONTRACT));
+                AdvancedGameStatsManager.Instance.SetStat(CustomTrackedStats.AMOUNT_BOUGHT_CORRUPTEDWEALTH, -AdvancedGameStatsManager.Instance.GetPlayerStatValue(CustomTrackedStats.AMOUNT_BOUGHT_CORRUPTEDWEALTH));
+                AdvancedGameStatsManager.Instance.SetStat(CustomTrackedStats.AMOUNT_BOUGHT_GLASS, -AdvancedGameStatsManager.Instance.GetPlayerStatValue(CustomTrackedStats.AMOUNT_BOUGHT_GLASS));
+                AdvancedGameStatsManager.Instance.SetStat(CustomTrackedStats.AMOUNT_BOUGHT_GREEDY, -AdvancedGameStatsManager.Instance.GetPlayerStatValue(CustomTrackedStats.AMOUNT_BOUGHT_GREEDY));
+                AdvancedGameStatsManager.Instance.SetStat(CustomTrackedStats.AMOUNT_BOUGHT_GUNSLINGER, -AdvancedGameStatsManager.Instance.GetPlayerStatValue(CustomTrackedStats.AMOUNT_BOUGHT_GUNSLINGER));
+                AdvancedGameStatsManager.Instance.SetStat(CustomTrackedStats.AMOUNT_BOUGHT_PATIENCE, -AdvancedGameStatsManager.Instance.GetPlayerStatValue(CustomTrackedStats.AMOUNT_BOUGHT_PATIENCE));
+                AdvancedGameStatsManager.Instance.SetStat(CustomTrackedStats.AMOUNT_BOUGHT_PITLORDPACT, -AdvancedGameStatsManager.Instance.GetPlayerStatValue(CustomTrackedStats.AMOUNT_BOUGHT_PITLORDPACT));
+                AdvancedGameStatsManager.Instance.SetStat(CustomTrackedStats.AMOUNT_BOUGHT_UNBREAKABLESPIRIT, -AdvancedGameStatsManager.Instance.GetPlayerStatValue(CustomTrackedStats.AMOUNT_BOUGHT_UNBREAKABLESPIRIT));
+
+
+            });
+
+            global::ETGModConsole.Commands.GetGroup("psog").AddUnit("surface", delegate (string[] args)
 			{
 				ETGModConsole.Log("<size=100><color=#ff0000ff>*Resurfacing...*</color></size>", false);
 				AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.HAS_TREADED_DEEPER, false);

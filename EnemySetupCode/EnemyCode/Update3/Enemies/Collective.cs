@@ -430,7 +430,7 @@ namespace Planetside
 		{
 			public List<Spore> list = new List<Spore>();
 
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				list = new List<Spore>();
 				for (int e = 0; e < 30; e++)
@@ -457,7 +457,7 @@ namespace Planetside
 				{
 					this.parent = parent;
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					hasTriggeredMove = false;
 					parent.list.Add(this);
@@ -493,7 +493,7 @@ namespace Planetside
 
 		public class BasicCreationistAttack : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				float aimDirection = base.GetAimDirection((float)((UnityEngine.Random.value >= 0.25f) ? 0 : 1), 10f);
 				for (int e = 0; e < 5; e++)
@@ -514,7 +514,7 @@ namespace Planetside
 				{
 
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					base.ChangeSpeed(new Speed(20f, SpeedType.Absolute), 120);
 					yield break;
@@ -530,7 +530,7 @@ namespace Planetside
 					this.m_setupTime = setupTime;
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					this.ManualControl = true;
 					this.m_offset = this.m_offset.Rotate(this.Direction);

@@ -314,7 +314,7 @@ namespace Planetside
         }
 
 
-        protected override void Update()
+        public override void Update()
         {
             base.Update();
             if (gun.CurrentOwner != null)
@@ -454,14 +454,14 @@ namespace Planetside
                 base.OnReloadPressed(player, gun, bSOMETHING);
             }
         }
-        protected override void OnPickup(PlayerController player)
+        public override void OnPickup(PlayerController player)
         {
             player.GunChanged += this.OnGunChanged;
             base.OnPickup(player);
             CleanupReticles();
         }
 
-        protected override void OnPostDrop(PlayerController player)
+        public override void OnPostDrop(PlayerController player)
         {
             player.GunChanged -= this.OnGunChanged;
             base.OnPostDrop(player);

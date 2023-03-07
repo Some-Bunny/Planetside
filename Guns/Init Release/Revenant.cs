@@ -82,7 +82,7 @@ namespace Planetside
 				"skull_spitter",
 				"vertebraek47"
 			};
-			CustomSynergies.Add("Boring Eternity", mandatoryConsoleIDs, optionalConsoleIDs, true);
+			CustomSynergies.Add("Boring Eternity", mandatoryConsoleIDs, optionalConsoleIDs, false);
 
 
 

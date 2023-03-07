@@ -37,7 +37,7 @@ namespace Planetside
 			expandWeatherController.isSecretFloor = this.isSecretFloor;
 		}
 
-		protected override void OnDestroy()
+		public override void OnDestroy()
 		{
 			base.OnDestroy();
 		}
@@ -225,7 +225,7 @@ namespace Planetside
 		}
 
 		// Token: 0x060004D1 RID: 1233 RVA: 0x000B2621 File Offset: 0x000B0821
-		protected IEnumerator HandleLightningAmbientBoost()
+		public IEnumerator HandleLightningAmbientBoost()
 		{
 			Color cachedAmbient = RenderSettings.ambientLight;
 			Color modAmbient = new Color(cachedAmbient.r + this.AmbientBoost, cachedAmbient.g + this.AmbientBoost, cachedAmbient.b + this.AmbientBoost);
@@ -250,7 +250,7 @@ namespace Planetside
 		}
 
 		// Token: 0x060004D2 RID: 1234 RVA: 0x000B2630 File Offset: 0x000B0830
-		protected IEnumerator ProcessLightningRenderer(Renderer target)
+		public IEnumerator ProcessLightningRenderer(Renderer target)
 		{
 			target.enabled = true;
 			yield return this.StartCoroutine(this.InvariantWait(0.05f));
@@ -263,7 +263,7 @@ namespace Planetside
 		}
 
 		// Token: 0x060004D3 RID: 1235 RVA: 0x000B2646 File Offset: 0x000B0846
-		protected IEnumerator InvariantWait(float duration)
+		public IEnumerator InvariantWait(float duration)
 		{
 			float elapsed = 0f;
 			while (elapsed < duration)
@@ -275,7 +275,7 @@ namespace Planetside
 		}
 
 		// Token: 0x060004D4 RID: 1236 RVA: 0x000B2655 File Offset: 0x000B0855
-		protected IEnumerator DoLightningStrike()
+		public IEnumerator DoLightningStrike()
 		{
 			AkSoundEngine.PostEvent("Play_ENV_thunder_flash_01", GameManager.Instance.PrimaryPlayer.gameObject);
 			PlatformInterface.SetAlienFXColor(new Color(1f, 1f, 1f, 1f), 0.25f);
@@ -285,7 +285,7 @@ namespace Planetside
 		}
 
 		// Token: 0x060004D5 RID: 1237 RVA: 0x0000C31A File Offset: 0x0000A51A
-		protected override void OnDestroy()
+		public override void OnDestroy()
 		{
 			base.OnDestroy();
 		}

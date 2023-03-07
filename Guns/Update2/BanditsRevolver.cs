@@ -122,7 +122,7 @@ namespace Planetside
 
 		public Vector3 projectilePos;
 
-		protected override void OnPickup(PlayerController player)
+		public override void OnPickup(PlayerController player)
 		{
 			//player.inventory.CurrentGun.LoseAmmo(-100	);
 			//gun.
@@ -132,7 +132,7 @@ namespace Planetside
 			CanMark = true;
 		}
 
-		protected override void OnPostDrop(PlayerController player)
+		public override void OnPostDrop(PlayerController player)
 		{
 			CanMark = true;
 			player.GunChanged -= this.OnGunChanged;
@@ -179,7 +179,7 @@ namespace Planetside
 			}
 		}
 		public bool CanMark;
-		protected override void Update()
+		public override void Update()
 		{
 			base.Update();
 		//	gun.gameObject.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));

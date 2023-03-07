@@ -71,7 +71,7 @@ namespace Planetside
 
 		public class ModifiedShootWave : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				int q = -1;
 				bool Flip = true;

@@ -91,7 +91,7 @@ namespace Planetside
 
 		public class ModifiedMeduziUziFire1 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				Animation animation = this.BulletManager.GetUnityAnimation();
 				AnimationClip clip = animation.GetClip("MeduziFireDown");
@@ -114,7 +114,7 @@ namespace Planetside
 
 		public class ModifiedMeduziUziFire2 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				Animation animation = this.BulletManager.GetUnityAnimation();
 				AnimationClip clip = animation.GetClip("MeduziFireLeft");
@@ -137,7 +137,7 @@ namespace Planetside
 		}
 		public class ModifiedMeduziUziFire3 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				Animation animation = this.BulletManager.GetUnityAnimation();
 				AnimationClip clip = animation.GetClip("MeduziFireRight");
@@ -161,7 +161,7 @@ namespace Planetside
 
 		public class ModifiedSpin : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				float F = 11;
 				for (int i = 0; i < 30; i++)
@@ -181,7 +181,7 @@ namespace Planetside
 
 		public class ModifiedMeduziScream1 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				bool isCoop = GameManager.Instance.CurrentGameType == GameManager.GameType.COOP_2_PLAYER;
 				SpeculativeRigidbody target = GameManager.Instance.PrimaryPlayer.specRigidbody;
@@ -312,7 +312,7 @@ namespace Planetside
 					this.m_direction = direction;
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					if (this.m_bulletsFromSafeDir == 4)
 					{

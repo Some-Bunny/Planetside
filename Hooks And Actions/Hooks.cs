@@ -43,7 +43,7 @@ namespace Planetside
                 new Hook(typeof(Chest).GetMethod("Initialize", BindingFlags.Instance | BindingFlags.NonPublic), typeof(Hooks).GetMethod("GalaxyChestPls"));
 
                 new Hook(typeof(PlayerController).GetMethod("OnDidDamage", BindingFlags.Instance | BindingFlags.Public), typeof(Hooks).GetMethod("DamageHook"));
-                
+
                 Hook h = new Hook(
                     typeof(Projectile).GetMethod("OnPreCollision", BindingFlags.NonPublic | BindingFlags.Instance),
                     typeof(Hooks).GetMethod("PreCollisionHook")
@@ -51,8 +51,9 @@ namespace Planetside
 
                 Hook h2 = new Hook(
                     typeof(Projectile).GetMethod("HandleDamage", BindingFlags.NonPublic | BindingFlags.Instance),
-                    typeof(UndodgeableProjectile).GetMethod("HandleDamageHook", BindingFlags.NonPublic | BindingFlags.Static)
+                    typeof(UndodgeableProjectile).GetMethod("HandleDamageHook", BindingFlags.Public    | BindingFlags.Static)
                 );
+
                 Hook ffasdafsdsf = new Hook(
                  typeof(PlayerController).GetMethod("HandleDodgedBeam", BindingFlags.Public | BindingFlags.Instance),
                  typeof(Hooks).GetMethod("HandleDodgedBeamHook", BindingFlags.Public | BindingFlags.Static)
@@ -67,12 +68,24 @@ namespace Planetside
                 typeof(Hooks).GetMethod("ReturnFromBlackBulletHook"));
 
                 new Hook(typeof(AIActor).GetMethod("TeleportSomewhere", BindingFlags.Instance | BindingFlags.Public), typeof(Hooks).GetMethod("TeleportationImmunity"));
+
+                //new Hook(typeof(AkSoundEngine).GetMethods().Single((MethodInfo m) => m.Name == "PostEvent" && m.GetParameters().Length == 2 && m.GetParameters()[0].ParameterType == typeof(string)), typeof(Hooks).GetMethod("PostEventHook", BindingFlags.Static | BindingFlags.Public));
             }
             catch (Exception e)
             {
                 ItemAPI.Tools.PrintException(e, "FF0000");
             }
         }
+
+        public static uint PostEventHook(Func<string, GameObject, uint> orig, string name, GameObject obj)
+        {
+            if (name != null)
+            {
+                ETGModConsole.Log(name, true);
+            }
+            return orig(name, obj);
+        }
+
 
         public static void TeleportationImmunity(Action<AIActor, IntVector2?, bool> orig, AIActor self, IntVector2? overrideClearance = null, bool keepClose = false)
         {
@@ -271,14 +284,7 @@ namespace Planetside
             }
         }
 
-            public static uint PostEventHook(Func<string, GameObject, uint> orig, string name, GameObject obj)
-            {
-            if (name != null)
-            {
-                //ETGModConsole.Log(name, true);
-            }
-            return orig(name, obj);
-            }
+
 
         public static Vector2 Hook_PlayerController_HandlePlayerInput(Func<PlayerController, Vector2> orig, PlayerController self)
         {

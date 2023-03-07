@@ -38,12 +38,13 @@ namespace Planetside
     {
         public const string GUID = "somebunny.etg.planetsideofgunymede";
         public const string NAME = "Planetside Of Gunymede Pre-Release";
-        public const string VERSION = "1.3.127";
+        public const string VERSION = "1.3.128";
 
         public static readonly string TEXT_COLOR = "#9006FF";
 
         public static string RoomFilePath;
         public static string FilePathFolder;
+        public static string GunFilePath;
 
         public static AdvancedStringDB Strings;
 
@@ -68,8 +69,8 @@ namespace Planetside
         public void GameManagerStart(GameManager gameManager)
         {
 
-
-            ETGMod.Assets.SetupSpritesFromFolder(this.FolderPath()+"/sprites");
+            GunFilePath = this.FolderPath() + "/sprites";
+            ETGMod.Assets.SetupSpritesFromFolder(GunFilePath);
 
             
             //ZipFilePath = this.Metadata.Archive;
@@ -94,11 +95,17 @@ namespace Planetside
             AssetBundle spriteCollections = AssetBundleLoader.LoadAssetBundleFromLiterallyAnywhere("planetsidesprites");
             if (spriteCollections != null) { SpriteCollectionAssets = spriteCollections; }
             StaticSpriteDefinitions.Init();
+            AlphabetController.InitialiseAlphabet();
 
             foreach (string str in PlanetsideModule.TilesetAssets.GetAllAssetNames())
             {
                 //ETGModConsole.Log(PlanetsideModule.TilesetAssets.name + ": " + str, false);
             }
+
+            //StaticSpriteDefinitions.SetupSpritesFromAssembly(Assembly.GetExecutingAssembly(), "Planetside/Guns/Jsons");
+            StaticSpriteDefinitions.SetupSpritesFromAssembly(Assembly.GetExecutingAssembly(), "Planetside/Guns");
+
+
             StaticVFXStorage.Init();
 
             StaticInformation.Init();
@@ -387,7 +394,10 @@ namespace Planetside
                 SurgeGrenade.Init();
                 StormBringer.Add();
                 ImmolationPowder.Init();
+                WrapaRounds.Init();
             }
+
+
 
             //VengefulShell.Init();
             //LaserWelder.Add();
@@ -434,7 +444,7 @@ namespace Planetside
             HunterBullet.Init();
             NevernamedBullet.Init();
             SkilotarBullet.Init();
-            BlazeyBullet.Init();
+            JuneBullet.Init();
             SpapiBullet.Init();
             GlaurBullet.Init();
             ApacheBullet.Init();
@@ -454,6 +464,8 @@ namespace Planetside
             NotSoAIBullet.Init();
             CortifyBullet.Init();
             ShotzerBullet.Init();
+            LynceusBullet.Init();
+            DallanBullet.Init();
 
             BulletBankMan.Init();
 
@@ -461,6 +473,8 @@ namespace Planetside
             Wailer.Init();
 
             CelBullet.Init();
+            QadayBullet.Init();
+
             Nemesis.Init();
 
 

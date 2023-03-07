@@ -29,7 +29,7 @@ namespace Planetside
 				text = "The Shrine of the Holy Chamber. Seems like it's missing something...",
 				spritePath = "Planetside/Resources/Shrines/HolyChamberShrine.png",
 				room = RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/HolyChamberRoom.room").room,
-				RoomWeight = 1.5f,
+				RoomWeight = 0.5f,
 				acceptText = "Grant one sign of mastery.",
 				declineText = "Leave.",
 				OnAccept = Accept,

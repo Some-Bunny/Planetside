@@ -60,7 +60,7 @@ namespace Planetside
 			}
 
 		}
-		protected override void OnDestroy()
+		public override void OnDestroy()
 		{
 			Material outlineMaterial1 = SpriteOutlineManager.GetOutlineMaterial(ai.sprite);
 			if (ai.aiActor != null && !ai.healthHaver.IsDead && outlineMaterial1 != null)

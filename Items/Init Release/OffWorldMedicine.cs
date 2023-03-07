@@ -48,7 +48,7 @@ namespace Planetside
             base.Pickup(player);
         }
 
-        protected override void DoEffect(PlayerController user)
+        public override void DoEffect(PlayerController user)
         {
             AkSoundEngine.PostEvent("Play_OBJ_dice_bless_01", base.gameObject);
             user.PlayEffectOnActor(ResourceCache.Acquire("Global VFX/VFX_Healing_Sparkles_001") as GameObject, Vector3.zero, true, false, false);

@@ -171,7 +171,7 @@ namespace Planetside
         private void OnNewFloor() { VFXActive = false; CleanupReticles();   }
 
 
-        protected override void Update()
+        public override void Update()
 		{
             base.Update();
             PlayerController player = gun.CurrentOwner as PlayerController;
@@ -273,7 +273,7 @@ namespace Planetside
 
 		}
         
-        protected override void OnPickup(PlayerController player)
+        public override void OnPickup(PlayerController player)
         {
             GameManager.Instance.OnNewLevelFullyLoaded += this.OnNewFloor;
             ETGMod.AIActor.OnPreStart = (Action<AIActor>)Delegate.Combine(ETGMod.AIActor.OnPreStart, new Action<AIActor>(this.AIActorMods));
@@ -283,7 +283,7 @@ namespace Planetside
             CleanupReticles();
         }
 
-        protected override void OnPostDrop(PlayerController player)
+        public override void OnPostDrop(PlayerController player)
         {
             GameManager.Instance.OnNewLevelFullyLoaded -= this.OnNewFloor;
             ETGMod.AIActor.OnPreStart = (Action<AIActor>)Delegate.Remove(ETGMod.AIActor.OnPreStart, new Action<AIActor>(this.AIActorMods));

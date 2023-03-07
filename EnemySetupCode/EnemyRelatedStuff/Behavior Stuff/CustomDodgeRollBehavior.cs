@@ -14,7 +14,7 @@ namespace Planetside
 
 	public class Mines : Script
 	{
-		protected override IEnumerator Top()
+		public override IEnumerator Top()
 		{
 			float f = UnityEngine.Random.Range(0, 72);
 			for (int i = 0; i <= 5; i++)
@@ -30,7 +30,7 @@ namespace Planetside
 			{
 
 			}
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				HasDetonated = false;
 				HeatIndicatorController radialIndicator = ((GameObject)UnityEngine.Object.Instantiate(StaticVFXStorage.RadialRing, this.Projectile.sprite.WorldCenter, Quaternion.identity, this.Projectile.transform)).GetComponent<HeatIndicatorController>();
@@ -80,7 +80,7 @@ namespace Planetside
 			{
 				FiresBullets = fires;
 			}
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				for (int i = 0; i <= 3; i++)
                 {
@@ -94,8 +94,25 @@ namespace Planetside
 		}
 	}
 
+    public class Bomb : Script
+    {
+        public override IEnumerator Top()
+        {
 
-	public class UseFakeActiveBehavior : BehaviorBase
+            float airTime = base.BulletBank.GetBullet(StaticUndodgeableBulletEntries.undodgeableGrenade.Name).BulletObject.GetComponent<ArcProjectile>().GetTimeInFlight();
+            Vector2 vector = this.BulletManager.PlayerPosition();
+            Bullet bullet2 = new Bullet(StaticUndodgeableBulletEntries.undodgeableGrenade.Name, false, false, false);
+            float direction2 = (vector - base.Position).ToAngle();
+            base.Fire(new Direction(direction2, DirectionType.Absolute, -1f), new Speed(1f, SpeedType.Absolute), bullet2);
+            (bullet2.Projectile as ArcProjectile).AdjustSpeedToHit(vector);
+            bullet2.Projectile.ImmuneToSustainedBlanks = true;
+            yield break;
+        }
+    }
+
+
+
+    public class UseFakeActiveBehavior : BehaviorBase
 	{
 		public UseFakeActiveBehavior()
 		{
@@ -106,7 +123,15 @@ namespace Planetside
 
 		public override void Start()
 		{
-			this.Cooldown = ActiveCooldown();
+			var nem = base.m_aiActor.healthHaver.GetComponent<NemesisController>();
+            this.Cooldown = ActiveCooldown();
+			if (nem)
+			{
+				if (nem.HeldPrimaryPassive == "ice_cube")
+				{
+					this.Cooldown *= 0.7f;
+                }
+			}
 			currentContainer = BraveUtility.RandomElement<FakeActiveContainer>(fakeActives);
 			IsActive = false;
 			IsTrulyActive = false;
@@ -434,7 +459,6 @@ namespace Planetside
 				},
 				Cooldown = 23,
 				ActiveTime = 1,
-
             },
 			new FakeActiveContainer()
 			{
@@ -465,7 +489,21 @@ namespace Planetside
 				Cooldown = 30,
 				ActiveTime = 8,
             },
+            new FakeActiveContainer()
+            {
+                name = "bomb",
+                item_ID = 108,
+                OnActivated = (obj) =>
+                {
+                    SpawnManager.SpawnBulletScript(obj, obj.sprite.WorldCenter, obj.GetComponent<AIBulletBank>(), new CustomBulletScriptSelector(typeof(Bomb)), StringTableManager.GetEnemiesString("#TRAP", -1));
+                },
+                OnRemoved =(obj) =>
+                {
 
+                },
+                Cooldown = 15,
+                ActiveTime = 1,
+            },
         };
 
 
@@ -839,146 +877,162 @@ namespace Planetside
 
 		private void DoTeleport()
 		{
-			float minDistanceFromPlayerSquared = this.MinDistanceFromPlayer * this.MinDistanceFromPlayer;
-			float maxDistanceFromPlayerSquared = this.MaxDistanceFromPlayer * this.MaxDistanceFromPlayer;
-			Vector2 playerLowerLeft = Vector2.zero;
-			Vector2 playerUpperRight = Vector2.zero;
-			bool hasOtherPlayer = false;
-			Vector2 otherPlayerLowerLeft = Vector2.zero;
-			Vector2 otherPlayerUpperRight = Vector2.zero;
-			bool hasDistChecks = (this.MinDistanceFromPlayer > 0f || this.MaxDistanceFromPlayer > 0f) && this.m_aiActor.TargetRigidbody;
-			if (hasDistChecks)
-			{
-				playerLowerLeft = this.m_aiActor.TargetRigidbody.HitboxPixelCollider.UnitBottomLeft;
-				playerUpperRight = this.m_aiActor.TargetRigidbody.HitboxPixelCollider.UnitTopRight;
-				PlayerController playerController = GetOwnBody().behaviorSpeculator.PlayerTarget as PlayerController;
-				if (GameManager.Instance.CurrentGameType == GameManager.GameType.COOP_2_PLAYER && playerController)
-				{
-					PlayerController otherPlayer = GameManager.Instance.GetOtherPlayer(playerController);
-					if (otherPlayer && otherPlayer.healthHaver.IsAlive)
-					{
-						hasOtherPlayer = true;
-						otherPlayerLowerLeft = otherPlayer.specRigidbody.HitboxPixelCollider.UnitBottomLeft;
-						otherPlayerUpperRight = otherPlayer.specRigidbody.HitboxPixelCollider.UnitTopRight;
-					}
-				}
-			}
-			IntVector2 bottomLeft = IntVector2.Zero;
-			IntVector2 topRight = IntVector2.Zero;
-			if (this.StayOnScreen)
-			{
-				bottomLeft = new IntVector2((int)BraveUtility.ViewportToWorldpoint(new Vector2(0f, 0f), ViewportType.Gameplay).RoundToInt().x, (int)BraveUtility.ViewportToWorldpoint(new Vector2(0f, 0f), ViewportType.Gameplay).RoundToInt().y);
-				topRight = new IntVector2((int)BraveUtility.ViewportToWorldpoint(new Vector2(1f, 1f), ViewportType.Gameplay).x, (int)BraveUtility.ViewportToWorldpoint(new Vector2(1f, 1f), ViewportType.Gameplay).y) - IntVector2.One;
-			}
-			CellValidator cellValidator = delegate (IntVector2 c)
-			{
-				for (int i = 0; i < this.m_aiActor.Clearance.x; i++)
-				{
-					int num = c.x + i;
-					for (int j = 0; j < this.m_aiActor.Clearance.y; j++)
-					{
-						int num2 = c.y + j;
-						if (GameManager.Instance.Dungeon.data.isTopWall(num, num2))
-						{
-							return false;
-						}
-						if (this.ManuallyDefineRoom && ((float)num < this.roomMin.x || (float)num > this.roomMax.x || (float)num2 < this.roomMin.y || (float)num2 > this.roomMax.y))
-						{
-							return false;
-						}
-					}
-				}
-				if (hasDistChecks)
-				{
-					PixelCollider hitboxPixelCollider = GetOwnBody().HitboxPixelCollider;
-					Vector2 vector = new Vector2((float)c.x + 0.5f * ((float)this.m_aiActor.Clearance.x - hitboxPixelCollider.UnitWidth), (float)c.y);
-					Vector2 aMax = vector + hitboxPixelCollider.UnitDimensions;
-					if (this.MinDistanceFromPlayer > 0f)
-					{
-						if (BraveMathCollege.AABBDistanceSquared(vector, aMax, playerLowerLeft, playerUpperRight) < minDistanceFromPlayerSquared)
-						{
-							return false;
-						}
-						if (hasOtherPlayer && BraveMathCollege.AABBDistanceSquared(vector, aMax, otherPlayerLowerLeft, otherPlayerUpperRight) < minDistanceFromPlayerSquared)
-						{
-							return false;
-						}
-					}
-					if (this.MaxDistanceFromPlayer > 0f)
-					{
-						if (BraveMathCollege.AABBDistanceSquared(vector, aMax, playerLowerLeft, playerUpperRight) > maxDistanceFromPlayerSquared)
-						{
-							return false;
-						}
-						if (hasOtherPlayer && BraveMathCollege.AABBDistanceSquared(vector, aMax, otherPlayerLowerLeft, otherPlayerUpperRight) > maxDistanceFromPlayerSquared)
-						{
-							return false;
-						}
-					}
-				}
-				if (this.StayOnScreen && (c.x < bottomLeft.x || c.y < bottomLeft.y || c.x + this.m_aiActor.Clearance.x - 1 > topRight.x || c.y + this.m_aiActor.Clearance.y - 1 > topRight.y))
-				{
-					return false;
-				}
-				if (this.AvoidWalls)
-				{
-					int k = -1;
-					int l;
-					for (l = -1; l < this.m_aiActor.Clearance.y + 1; l++)
-					{
-						if (GameManager.Instance.Dungeon.data.isWall(c.x + k, c.y + l))
-						{
-							return false;
-						}
-					}
-					k = this.m_aiActor.Clearance.x;
-					for (l = -1; l < this.m_aiActor.Clearance.y + 1; l++)
-					{
-						if (GameManager.Instance.Dungeon.data.isWall(c.x + k, c.y + l))
-						{
-							return false;
-						}
-					}
-					l = -1;
-					for (k = -1; k < this.m_aiActor.Clearance.x + 1; k++)
-					{
-						if (GameManager.Instance.Dungeon.data.isWall(c.x + k, c.y + l))
-						{
-							return false;
-						}
-					}
-					l = this.m_aiActor.Clearance.y;
-					for (k = -1; k < this.m_aiActor.Clearance.x + 1; k++)
-					{
-						if (GameManager.Instance.Dungeon.data.isWall(c.x + k, c.y + l))
-						{
-							return false;
-						}
-					}
-				}
-				return true;
-			};
-			Vector2 b = GetOwnBody().UnitBottomCenter - this.m_aiActor.transform.position.XY();
-			//IntVector2? intVector = null;
-			IntVector2? randomAvailableCell;
-			randomAvailableCell = this.m_aiActor.ParentRoom.GetRandomAvailableCell(new IntVector2?(this.m_aiActor.Clearance), new CellTypes?(this.m_aiActor.PathableTiles), false, cellValidator);
-
-			if (randomAvailableCell != null)
-			{
-				GameObject gameObject = SpawnManager.SpawnVFX(StaticVFXStorage.BlueSynergyPoofVFX, false);
-				gameObject.transform.position = randomAvailableCell.Value.ToCenterVector3(99);
-				gameObject.transform.localScale = Vector3.one * 2;
-				UnityEngine.Object.Destroy(gameObject, 2);
-
-				GetOwnBody().transform.position = Pathfinder.GetClearanceOffset(randomAvailableCell.Value, this.m_aiActor.Clearance).WithY((float)randomAvailableCell.Value.y) - b;
-				GetOwnBody().Reinitialize();
-				GetOwnBody().behaviorSpeculator.Stun(0.66f, false);
-			}
-			else
-			{
-				Debug.LogWarning("TELEPORT FAILED!", this.m_aiActor);
-			}
+			this.m_aiActor.StartCoroutine(DoTeleportDelay());
 		}
+
+		public IEnumerator DoTeleportDelay()
+		{
+            float minDistanceFromPlayerSquared = this.MinDistanceFromPlayer * this.MinDistanceFromPlayer;
+            float maxDistanceFromPlayerSquared = this.MaxDistanceFromPlayer * this.MaxDistanceFromPlayer;
+            Vector2 playerLowerLeft = Vector2.zero;
+            Vector2 playerUpperRight = Vector2.zero;
+            bool hasOtherPlayer = false;
+            Vector2 otherPlayerLowerLeft = Vector2.zero;
+            Vector2 otherPlayerUpperRight = Vector2.zero;
+            bool hasDistChecks = (this.MinDistanceFromPlayer > 0f || this.MaxDistanceFromPlayer > 0f) && this.m_aiActor.TargetRigidbody;
+            if (hasDistChecks)
+            {
+                playerLowerLeft = this.m_aiActor.TargetRigidbody.HitboxPixelCollider.UnitBottomLeft;
+                playerUpperRight = this.m_aiActor.TargetRigidbody.HitboxPixelCollider.UnitTopRight;
+                PlayerController playerController = GetOwnBody().behaviorSpeculator.PlayerTarget as PlayerController;
+                if (GameManager.Instance.CurrentGameType == GameManager.GameType.COOP_2_PLAYER && playerController)
+                {
+                    PlayerController otherPlayer = GameManager.Instance.GetOtherPlayer(playerController);
+                    if (otherPlayer && otherPlayer.healthHaver.IsAlive)
+                    {
+                        hasOtherPlayer = true;
+                        otherPlayerLowerLeft = otherPlayer.specRigidbody.HitboxPixelCollider.UnitBottomLeft;
+                        otherPlayerUpperRight = otherPlayer.specRigidbody.HitboxPixelCollider.UnitTopRight;
+                    }
+                }
+            }
+            IntVector2 bottomLeft = IntVector2.Zero;
+            IntVector2 topRight = IntVector2.Zero;
+            if (this.StayOnScreen)
+            {
+                bottomLeft = new IntVector2((int)BraveUtility.ViewportToWorldpoint(new Vector2(0f, 0f), ViewportType.Gameplay).RoundToInt().x, (int)BraveUtility.ViewportToWorldpoint(new Vector2(0f, 0f), ViewportType.Gameplay).RoundToInt().y);
+                topRight = new IntVector2((int)BraveUtility.ViewportToWorldpoint(new Vector2(1f, 1f), ViewportType.Gameplay).x, (int)BraveUtility.ViewportToWorldpoint(new Vector2(1f, 1f), ViewportType.Gameplay).y) - IntVector2.One;
+            }
+            CellValidator cellValidator = delegate (IntVector2 c)
+            {
+                for (int i = 0; i < this.m_aiActor.Clearance.x; i++)
+                {
+                    int num = c.x + i;
+                    for (int j = 0; j < this.m_aiActor.Clearance.y; j++)
+                    {
+                        int num2 = c.y + j;
+                        if (GameManager.Instance.Dungeon.data.isTopWall(num, num2))
+                        {
+                            return false;
+                        }
+                        if (this.ManuallyDefineRoom && ((float)num < this.roomMin.x || (float)num > this.roomMax.x || (float)num2 < this.roomMin.y || (float)num2 > this.roomMax.y))
+                        {
+                            return false;
+                        }
+                    }
+                }
+                if (hasDistChecks)
+                {
+                    PixelCollider hitboxPixelCollider = GetOwnBody().HitboxPixelCollider;
+                    Vector2 vector = new Vector2((float)c.x + 0.5f * ((float)this.m_aiActor.Clearance.x - hitboxPixelCollider.UnitWidth), (float)c.y);
+                    Vector2 aMax = vector + hitboxPixelCollider.UnitDimensions;
+                    if (this.MinDistanceFromPlayer > 0f)
+                    {
+                        if (BraveMathCollege.AABBDistanceSquared(vector, aMax, playerLowerLeft, playerUpperRight) < minDistanceFromPlayerSquared)
+                        {
+                            return false;
+                        }
+                        if (hasOtherPlayer && BraveMathCollege.AABBDistanceSquared(vector, aMax, otherPlayerLowerLeft, otherPlayerUpperRight) < minDistanceFromPlayerSquared)
+                        {
+                            return false;
+                        }
+                    }
+                    if (this.MaxDistanceFromPlayer > 0f)
+                    {
+                        if (BraveMathCollege.AABBDistanceSquared(vector, aMax, playerLowerLeft, playerUpperRight) > maxDistanceFromPlayerSquared)
+                        {
+                            return false;
+                        }
+                        if (hasOtherPlayer && BraveMathCollege.AABBDistanceSquared(vector, aMax, otherPlayerLowerLeft, otherPlayerUpperRight) > maxDistanceFromPlayerSquared)
+                        {
+                            return false;
+                        }
+                    }
+                }
+                if (this.StayOnScreen && (c.x < bottomLeft.x || c.y < bottomLeft.y || c.x + this.m_aiActor.Clearance.x - 1 > topRight.x || c.y + this.m_aiActor.Clearance.y - 1 > topRight.y))
+                {
+                    return false;
+                }
+                if (this.AvoidWalls)
+                {
+                    int k = -1;
+                    int l;
+                    for (l = -1; l < this.m_aiActor.Clearance.y + 1; l++)
+                    {
+                        if (GameManager.Instance.Dungeon.data.isWall(c.x + k, c.y + l))
+                        {
+                            return false;
+                        }
+                    }
+                    k = this.m_aiActor.Clearance.x;
+                    for (l = -1; l < this.m_aiActor.Clearance.y + 1; l++)
+                    {
+                        if (GameManager.Instance.Dungeon.data.isWall(c.x + k, c.y + l))
+                        {
+                            return false;
+                        }
+                    }
+                    l = -1;
+                    for (k = -1; k < this.m_aiActor.Clearance.x + 1; k++)
+                    {
+                        if (GameManager.Instance.Dungeon.data.isWall(c.x + k, c.y + l))
+                        {
+                            return false;
+                        }
+                    }
+                    l = this.m_aiActor.Clearance.y;
+                    for (k = -1; k < this.m_aiActor.Clearance.x + 1; k++)
+                    {
+                        if (GameManager.Instance.Dungeon.data.isWall(c.x + k, c.y + l))
+                        {
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            };
+            Vector2 b = GetOwnBody().UnitBottomCenter - this.m_aiActor.transform.position.XY();
+            //IntVector2? intVector = null;
+            IntVector2? randomAvailableCell;
+            randomAvailableCell = this.m_aiActor.ParentRoom.GetRandomAvailableCell(new IntVector2?(this.m_aiActor.Clearance), new CellTypes?(this.m_aiActor.PathableTiles), false, cellValidator);
+			StaticVFXStorage.HighPriestClapVFXInverse.SpawnAtPosition(randomAvailableCell.Value.ToCenterVector3(1));
+			float gg = 0;
+			while (gg < 1)
+			{
+				if (m_aiActor.healthHaver.IsDead == true) { yield break; }
+				gg += BraveTime.DeltaTime;
+				yield return null;
+			}
+            if (randomAvailableCell != null)
+            {
+                GameObject gameObject = SpawnManager.SpawnVFX(StaticVFXStorage.BlueSynergyPoofVFX, false);
+                gameObject.transform.position = randomAvailableCell.Value.ToCenterVector3(99);
+                gameObject.transform.localScale = Vector3.one * 2;
+                UnityEngine.Object.Destroy(gameObject, 2);
+
+                GetOwnBody().transform.position = Pathfinder.GetClearanceOffset(randomAvailableCell.Value, this.m_aiActor.Clearance).WithY((float)randomAvailableCell.Value.y) - b;
+                GetOwnBody().Reinitialize();
+                GetOwnBody().behaviorSpeculator.Stun(1f, false);
+            }
+            else
+            {
+                Debug.LogWarning("TELEPORT FAILED!", this.m_aiActor);
+            }
+			yield break;
+        }
+
+
+
 		public bool ManuallyDefineRoom;
 
 		[InspectorShowIf("ManuallyDefineRoom")]

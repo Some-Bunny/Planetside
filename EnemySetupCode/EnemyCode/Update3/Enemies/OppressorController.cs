@@ -101,7 +101,7 @@ namespace Planetside
             return true;
         }
 
-        protected override void OnDestroy()
+        public override void OnDestroy()
         {
             if (base.healthHaver)
             {

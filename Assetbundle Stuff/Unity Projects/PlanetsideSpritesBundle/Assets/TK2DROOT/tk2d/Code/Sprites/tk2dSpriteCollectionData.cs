@@ -281,8 +281,23 @@ public class tk2dSpriteDefinition
 /// <summary>
 /// Sprite Collection Data.
 /// </summary>
+/// 
+public class AttachPointData
+{
+	// Token: 0x06004016 RID: 16406 RVA: 0x001457F8 File Offset: 0x001439F8
+	public AttachPointData(tk2dSpriteDefinition.AttachPoint[] bcs)
+	{
+		this.attachPoints = bcs;
+	}
+
+	// Token: 0x04003310 RID: 13072
+	public tk2dSpriteDefinition.AttachPoint[] attachPoints;
+}
+
 public class tk2dSpriteCollectionData : MonoBehaviour 
 {
+
+
 	public const int CURRENT_VERSION = 3;
 	
 	public int version;
@@ -294,7 +309,14 @@ public class tk2dSpriteCollectionData : MonoBehaviour
 	/// An array of sprite definitions.
 	/// </summary>
     public tk2dSpriteDefinition[] spriteDefinitions;
-	
+
+
+	[SerializeField]
+	public List<int> SpriteIDsWithAttachPoints = new List<int>();
+
+	[SerializeField]
+	public List<AttachPointData> SpriteDefinedAttachPoints = new List<AttachPointData>();
+
 	/// <summary>
 	/// Dictionary to look up sprite names. This will be initialized on first call to GetSpriteIdByName.
 	/// </summary>

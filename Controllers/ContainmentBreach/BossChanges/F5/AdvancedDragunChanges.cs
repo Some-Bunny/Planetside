@@ -423,7 +423,7 @@ namespace Planetside
 
 		public class ModifiedDraGunGlockDirectedRight2 : ModifiedDraGunGlockDirected2
 		{
-			protected override string BulletName
+			public override string BulletName
 			{
 				get
 				{
@@ -436,7 +436,7 @@ namespace Planetside
 		public class ModifiedDraGunGlockDirectedLeft2 : ModifiedDraGunGlockDirected2
 		{
 			// Token: 0x1700013E RID: 318
-			protected override string BulletName
+			public override string BulletName
 			{
 				get
 				{
@@ -449,7 +449,7 @@ namespace Planetside
 		public class ModifiedDraGunGlockDirectedHardRight2 : ModifiedDraGunGlockDirected2
 		{
 
-			protected override string BulletName
+			public override string BulletName
 			{
 				get
 				{
@@ -457,7 +457,7 @@ namespace Planetside
 				}
 			}
 
-			protected override bool IsHard
+			public override bool IsHard
 			{
 				get
 				{
@@ -468,7 +468,7 @@ namespace Planetside
 
 		public class ModifiedDraGunGlockDirectedHardLeft2 : ModifiedDraGunGlockDirected2
 		{
-			protected override string BulletName
+			public override string BulletName
 			{
 				get
 				{
@@ -476,7 +476,7 @@ namespace Planetside
 				}
 			}
 
-			protected override bool IsHard
+			public override bool IsHard
 			{
 				get
 				{
@@ -488,7 +488,7 @@ namespace Planetside
 
 		public class ModifiedDraGunGlockDirected2 : Script
 		{
-			protected virtual string BulletName
+			public virtual string BulletName
 			{
 				get
 				{
@@ -496,7 +496,7 @@ namespace Planetside
 				}
 			}
 
-			protected virtual bool IsHard
+			public virtual bool IsHard
 			{
 				get
 				{
@@ -504,7 +504,7 @@ namespace Planetside
 				}
 			}
 
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 
 
@@ -530,7 +530,7 @@ namespace Planetside
 
 		public class ModifiedDraGunMac10Burst2 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				yield return this.Wait(1);
 				Vector2 lastPosition = this.Position;
@@ -561,7 +561,7 @@ namespace Planetside
 					Shoot = s;
 				}
 				private bool Shoot;
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					yield return this.Wait(60);
 					if (Shoot == true) 
@@ -590,7 +590,7 @@ namespace Planetside
 
 		public class ModifiedDraGunSweepFlameBreath2 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				int r = 0;
 				bool i = BraveUtility.RandomBool();
@@ -610,7 +610,7 @@ namespace Planetside
 					die = dies;
 				}
 				private bool die;
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					this.ChangeSpeed(new Brave.BulletScript.Speed(8), 150);
 					if (die == true)
@@ -626,7 +626,7 @@ namespace Planetside
 
 		public class ModifiedDraGunSpotlight1 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				GameManager.Instance.Dungeon.PreventPlayerLightInDarkTerrifyingRooms = true;
 				DraGunController dragunController = this.BulletBank.GetComponent<DraGunController>();
@@ -703,7 +703,7 @@ namespace Planetside
 					this.m_t = t;
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					Vector2 toTarget = this.m_target - this.Position;
 					float travelTime = toTarget.magnitude / this.Speed * 60f - 1f;
@@ -738,7 +738,7 @@ namespace Planetside
 
 		public class ModifiedDraGunFlameBreath2 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				ModifiedDraGunFlameBreath2.StopYHeight = this.BulletBank.aiActor.ParentRoom.area.UnitBottomLeft.y + 21f;
 				int pocketResetTimer = 0;
@@ -793,7 +793,7 @@ namespace Planetside
 			private const float Spread = 30f;
 			private const int PocketResetTime = 30;
 			private const float PocketWidth = 5f;
-			protected static float StopYHeight;
+			public static float StopYHeight;
 
 			public class FlameBullet : Bullet
 			{
@@ -801,7 +801,7 @@ namespace Planetside
 				{
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					
 					this.ChangeSpeed(new Speed(5f, SpeedType.Absolute), 180);
@@ -815,7 +815,7 @@ namespace Planetside
 
 		public class ModifiedDraGunRocket1 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				base.Fire(new Direction(-90f, DirectionType.Absolute, -1f), new Speed(50f, SpeedType.Absolute), new ModifiedDraGunRocket1.Rocket());
 
@@ -830,7 +830,7 @@ namespace Planetside
 				{
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					return null;
 				}
@@ -884,7 +884,7 @@ namespace Planetside
 				{
 					WaitTime = W;
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					yield return this.Wait(WaitTime);
 					this.ChangeSpeed(new Brave.BulletScript.Speed(7), 90);
@@ -898,7 +898,7 @@ namespace Planetside
 				{
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					this.ManualControl = true;
 					yield return this.Wait(UnityEngine.Random.Range(0, 10));

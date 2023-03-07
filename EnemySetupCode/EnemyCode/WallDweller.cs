@@ -339,7 +339,7 @@ namespace Planetside
 
 		public class SalamanderScript : Script // This BulletScript is just a modified version of the script BulletManShroomed, which you can find with dnSpy.
 		{
-			protected override IEnumerator Top() // This is just a simple example, but bullet scripts can do so much more.
+			public override IEnumerator Top() // This is just a simple example, but bullet scripts can do so much more.
 			{
 				if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
 				{

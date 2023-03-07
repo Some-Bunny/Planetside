@@ -43,7 +43,7 @@ namespace Planetside
 
 		public class ModifeidGatlingGullFanBursts1 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				float startAngle = this.AimDirection - 84f;
 				float deltaAngle = 7;

@@ -30,7 +30,25 @@ namespace Planetside
 
     public class UIToolbox : TimeInvariantMonoBehaviour
     {
-		public IEnumerator WriteTextABovePlayer(Color color, string customKey, GameObject attachobject, dfPivotPoint abchor, Vector3 offset, float customDuration = -1f, float TextScale = 1, float FadeInTime = 0, float FadeOutTime = 0, float DelayOnDisplay = 0)
+        public static ModifiedDefaultLabelManager GenerateText(Transform trans, Vector2 offset, float time, string Text, Color32 color, bool Autotrigger = true)
+        {
+            var labelToSet = UnityEngine.Object.Instantiate(CustomShopInitialiser.PerkLabel).gameObject.GetComponent<ModifiedDefaultLabelManager>();
+            labelToSet.label.Text = Text;
+            if (Autotrigger == true)
+            {
+                labelToSet.Trigger_CustomTime(trans, offset, time);
+            }
+            labelToSet.label.backgroundColor = color;
+
+            GameUIRoot.Instance.m_manager.AddControl(labelToSet.panel);
+            dfLabel componentInChildren = labelToSet.gameObject.GetComponentInChildren<dfLabel>();
+            componentInChildren.ColorizeSymbols = false;
+            componentInChildren.ProcessMarkup = true;
+            return labelToSet;
+        }
+
+
+        public IEnumerator WriteTextABovePlayer(Color color, string customKey, GameObject attachobject, dfPivotPoint abchor, Vector3 offset, float customDuration = -1f, float TextScale = 1, float FadeInTime = 0, float FadeOutTime = 0, float DelayOnDisplay = 0)
 		{
 			yield return new WaitForSeconds(DelayOnDisplay);
 			UIToolbox foo = new UIToolbox();

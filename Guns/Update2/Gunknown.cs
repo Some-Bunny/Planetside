@@ -159,7 +159,7 @@ namespace Planetside
 			gun.PreventNormalFireAudio = true;
 		}
 		private bool HasReloaded;
-		protected override void Update()
+		public override void Update()
 		{
 			base.Update();
 			if (gun.CurrentOwner)
@@ -185,7 +185,7 @@ namespace Planetside
 				base.OnReloadPressed(player, gun, bSOMETHING);
 			}
 		}
-		protected override void OnPickup(PlayerController player)
+		public override void OnPickup(PlayerController player)
 		{
 			Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
 			mat.SetColor("_EmissiveColor", new Color32(255, 255, 255, 255));
@@ -217,7 +217,7 @@ namespace Planetside
 			player.OnAnyEnemyReceivedDamage = (Action<float, bool, HealthHaver>)Delegate.Combine(player.OnAnyEnemyReceivedDamage, new Action<float, bool, HealthHaver>(this.OnEnemyDamaged));
 		}
 
-		protected override void OnPostDrop(PlayerController player)
+		public override void OnPostDrop(PlayerController player)
 		{
 			player.OnAnyEnemyReceivedDamage = (Action<float, bool, HealthHaver>)Delegate.Remove(player.OnAnyEnemyReceivedDamage, new Action<float, bool, HealthHaver>(this.OnEnemyDamaged));
 			base.OnPostDrop(player);

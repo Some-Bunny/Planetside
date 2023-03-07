@@ -97,14 +97,14 @@ namespace Planetside
             return true;
         }
 
-        protected override void DoEffect(PlayerController user)
+        public override void DoEffect(PlayerController user)
         {
             LootEngine.DoDefaultItemPoof(user.sprite.WorldBottomCenter);
             SaveAPIManager.SetFlag(CustomDungeonFlags.SHIPMENT_TICKET_HAD, false);
             GameManager.Instance.StartCoroutine(SpawnCrates(false, user, new Vector2(0,0)));
         }
 
-        protected override void OnPreDrop(PlayerController user)
+        public override void OnPreDrop(PlayerController user)
         {
             SaveAPIManager.SetFlag(CustomDungeonFlags.SHIPMENT_TICKET_HAD, false);
             base.OnPreDrop(user);
@@ -196,7 +196,7 @@ namespace Planetside
                 base.sprite.UpdateZDepth();
             }
         }
-        protected override void OnDestroy()
+        public override void OnDestroy()
         {
             base.OnDestroy();
         }

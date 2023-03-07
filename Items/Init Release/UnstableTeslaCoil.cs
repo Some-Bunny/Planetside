@@ -66,7 +66,7 @@ namespace Planetside
             enemyList.Clear();
         }
         private static Dictionary<AIActor, GameObject> Shit = new Dictionary<AIActor, GameObject>();
-        protected override void Update()
+        public override void Update()
 		{
 			base.Update();
             foreach (var si in Shit)

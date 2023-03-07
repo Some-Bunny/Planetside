@@ -1,6 +1,10 @@
-﻿using System;
+﻿using BepInEx;
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using UnityEngine;
 
@@ -14,7 +18,12 @@ namespace Planetside
         public static tk2dSpriteCollectionData Debuff_Sheet_Data;
         public static tk2dSpriteCollectionData Oddments_Sheet_Data;
         public static tk2dSpriteCollectionData Pickup_Sheet_Data;
+        public static tk2dSpriteCollectionData Gun_Sheet_Data;
+        public static tk2dSpriteCollectionData Projectile_Sheet_Data;
 
+
+        public static tk2dSpriteAnimation Gun_Animation_Data;
+        public static tk2dSpriteAnimation Projectile_Animation_Data;
 
 
         public static void Init()
@@ -31,7 +40,89 @@ namespace Planetside
             if (Oddments_Sheet_Data == null) { ETGModConsole.Log("Oddments_Sheet_Data is NULL"); }
             Pickup_Sheet_Data = DoFastSetup("PickupCollection", "pickup material.mat");
             if (Pickup_Sheet_Data == null) { ETGModConsole.Log("Pickup_Sheet_Data is NULL"); }
+
+            Gun_Sheet_Data = DoFastSetup("PlanetsideGunCollection", "psoggun material.mat");
+            if (Gun_Sheet_Data == null) { ETGModConsole.Log("Gun_Sheet_Data is NULL"); }
+
+            Projectile_Sheet_Data = DoFastSetup("PlanetsideProjectileCollection", "projectile material.mat");
+            if (Projectile_Sheet_Data == null) { ETGModConsole.Log("Projectile_Sheet_Data is NULL"); }
+
+            Gun_Animation_Data = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("PlanetsideGunAnimation").GetComponent<tk2dSpriteAnimation>();
+
+            Projectile_Animation_Data = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("PlanetsideProjectileAnimation").GetComponent<tk2dSpriteAnimation>();
+
         }
+
+        public static void SetupSpritesFromAssembly(Assembly asmb, string path)
+        {
+            if (asmb != null)
+            {
+                path = path.Replace("/", ".").Replace("\\", ".");
+                if (!path.EndsWith("."))
+                {
+                    path += ".";
+                }
+
+                tk2dSpriteCollectionData tk2dSpriteCollectionData = Gun_Sheet_Data;
+                List<string> list5 = new List<string>();
+                string[] manifestResourceNames = asmb.GetManifestResourceNames();
+
+                foreach (string text in manifestResourceNames)
+                {
+                    if (text.StartsWith(path) && text.Length > path.Length)
+                    {
+
+                        string[] array2 = text.Substring(path.LastIndexOf(".") + 1).Split(new char[]
+                        {
+                            '.'
+                        });
+
+                        if (array2.Length == 3)
+                        {
+                            string text2 = array2[2];
+                            if (text2.ToLowerInvariant() == "json" || text2.ToLowerInvariant() == "jtk2d")
+                            {
+                                list5.Add(text);
+                            }
+                        }         
+                    }
+                }
+                foreach (string text5 in list5)
+                {
+                    string[] array5 = text5.Substring(path.LastIndexOf(".") + 1).Split(new char[]
+                    {
+                        '.'
+                    });
+                    string collection = array5[0];
+                    string text6 = array5[1];
+
+                    if (((tk2dSpriteCollectionData != null) ? tk2dSpriteCollectionData.spriteDefinitions : null) != null && tk2dSpriteCollectionData.Count > 0)
+                    {
+                        int spriteIdByName = tk2dSpriteCollectionData.GetSpriteIdByName(text6, -1);
+
+                        if (spriteIdByName > -1)
+                        {
+                            using (Stream manifestResourceStream2 = asmb.GetManifestResourceStream(text5))
+                            {
+                                AssetSpriteData assetSpriteData = default(AssetSpriteData);
+                                try
+                                {
+                                    assetSpriteData = JSONHelper.ReadJSON<AssetSpriteData>(manifestResourceStream2);
+                                }
+                                catch
+                                {
+                                    ETGModConsole.Log("Error: invalid json at project path " + text5, false);
+                                    continue;
+                                }
+                                tk2dSpriteCollectionData.SetAttachPoints(spriteIdByName, assetSpriteData.attachPoints);
+                                //tk2dSpriteCollectionData.inst.SetAttachPoints(spriteIdByName, assetSpriteData.attachPoints);
+                            }
+                        }
+                    }            
+                }                
+            }
+        }
+
 
         public static tk2dSpriteCollectionData DoFastSetup(string CollectionName, string MaterialName)
         {

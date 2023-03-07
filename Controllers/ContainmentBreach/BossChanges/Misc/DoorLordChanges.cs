@@ -49,7 +49,7 @@ namespace Planetside
 
 		public class ModifiedBossDoorMimicPuke1 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				float pulseStartAngle = this.RandomAngle();
 				for (int j = 0; j < 16; j++)
@@ -112,7 +112,7 @@ namespace Planetside
 					this.m_initialOffest = initialOffest;
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					this.ManualControl = true;
 					Vector2 truePosition = this.Position;
@@ -149,7 +149,7 @@ namespace Planetside
 					this.m_shouldHome = shouldHome;
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					this.ManualControl = true;
 					yield return this.Wait(this.m_delay);
@@ -183,7 +183,7 @@ namespace Planetside
 
 		public class ModifiedBossDoorMimicWaves1 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				for (int i = 0; i < 9; i++)
 				{
@@ -213,7 +213,7 @@ namespace Planetside
 
 		public class ModifiedBossDoorMimicFlames1 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				for (int i = 0; i < 60; i++)
 				{
@@ -227,7 +227,7 @@ namespace Planetside
 
 		public class ModifiedBossDoorMimicBurst2 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				float floatDirection = this.RandomAngle();
 				for (int i = 0; i < 4; i++)
@@ -256,7 +256,7 @@ namespace Planetside
 					this.m_addtionalVelocity = additionalVelocity;
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					this.ManualControl = true;
 					for (int i = 0; i < 300; i++)

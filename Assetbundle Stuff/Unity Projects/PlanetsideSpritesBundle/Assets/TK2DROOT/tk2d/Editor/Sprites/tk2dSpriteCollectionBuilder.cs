@@ -843,6 +843,8 @@ public class tk2dSpriteCollectionBuilder
 				gen.textureParams[i].name = "";
 				gen.textureParams[i].extractRegion = false;
 				gen.textureParams[i].fromSpriteSheet = false;
+				gen.textureParams[i].attachPoints = new List<tk2dSpriteDefinition.AttachPoint>();
+
 
 				currentTexture = blankTexture;
 			}

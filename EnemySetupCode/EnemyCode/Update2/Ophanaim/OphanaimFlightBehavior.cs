@@ -505,7 +505,7 @@ namespace Planetside
 
 
         // Token: 0x060047DA RID: 18394 RVA: 0x0017AD10 File Offset: 0x00178F10
-        protected override Vector2 GetOrigin(ShootBehavior.TargetAreaOrigin origin)
+        public override Vector2 GetOrigin(ShootBehavior.TargetAreaOrigin origin)
         {
             if (origin == ShootBehavior.TargetAreaOrigin.ShootPoint)
             {

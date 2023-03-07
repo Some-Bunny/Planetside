@@ -145,7 +145,7 @@ namespace Planetside
         }
 
 
-        protected override void OnPreDrop(PlayerController user)
+        public override void OnPreDrop(PlayerController user)
         {
             TrinketingAndBaubling = false;
             base.OnPreDrop(user);
@@ -161,7 +161,7 @@ namespace Planetside
 
 
 
-        protected override void DoEffect(PlayerController user)
+        public override void DoEffect(PlayerController user)
         {
             base.CanBeDropped = false;
             ETGMod.AIActor.OnPreStart = (Action<AIActor>)Delegate.Combine(ETGMod.AIActor.OnPreStart, new Action<AIActor>(this.AIActorMods));
@@ -285,7 +285,7 @@ namespace Planetside
             }
         }
 
-        protected void AffectEnemy(AIActor target, PlayerController user)
+        public void AffectEnemy(AIActor target, PlayerController user)
         {
             if (target.IsNormalEnemy || !target.IsHarmlessEnemy)
             {

@@ -62,7 +62,7 @@ namespace Planetside
                 Vector3 vector = this.projectile.sprite.WorldBottomLeft.ToVector3ZisY(0);
                 Vector3 vector2 = this.projectile.sprite.WorldTopRight.ToVector3ZisY(0);
                 Vector3 position = new Vector3(UnityEngine.Random.Range(vector.x, vector2.x), UnityEngine.Random.Range(vector.y, vector2.y), UnityEngine.Random.Range(vector.z, vector2.z));
-                ParticleSystem particleSystem = UnityEngine.Object.Instantiate(StaticVFXStorage.PerfectedParticleSystem).GetComponent<ParticleSystem>();
+                ParticleSystem particleSystem = StaticVFXStorage.PerfectedParticleSystem.GetComponent<ParticleSystem>();
                 var trails = particleSystem.trails;
                 trails.worldSpace = false;
                 var main = particleSystem.main;

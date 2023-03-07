@@ -79,7 +79,7 @@ namespace Planetside
 				this.m_reticles = new List<LineReticleController>();
 			}
 
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				float[] angles = new float[12];
 				CellArea area = this.BulletBank.aiActor.ParentRoom.area;

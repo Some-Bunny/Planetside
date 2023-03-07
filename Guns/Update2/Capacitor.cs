@@ -19,65 +19,96 @@ namespace Planetside
 	{
 		public static void Add()
 		{
-			Gun gun = ETGMod.Databases.Items.NewGun("Capacitor", "capacitorpsog");
+			Gun gun = ETGMod.Databases.Items.NewGun("Capacitor", "capacitornew");
 			Game.Items.Rename("outdated_gun_mods:capacitor", "psog:capacitor");
 			gun.gameObject.AddComponent<Capactior>();
 			gun.SetShortDescription("Overload");
-			gun.SetLongDescription("A large battery pack given the ability to shoot. Can be rerouted into carried items to charge them up!\n\nStill, very, very dangerous though.");
-			GunExt.SetupSprite(gun, null, "capacitorpsog_idle_001", 11);
-			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_BOSS_lichC_zap_01";
-			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].triggerEvent = true;
-			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 15);
-			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 7);
-			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 1);
-			GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(390) as Gun, true, false);
+			gun.SetLongDescription("A large battery pack given the ability to shoot. Hold fire to reroute charge into your held active item!\n\nStill, very, very dangerous though.");
+            
+            GunExt.SetupSprite(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "capacitornew_idle_001", 11);
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
+            gun.sprite.SortingOrder = 1;
+
+            gun.shootAnimation = "capacitornew_fire";
+            gun.idleAnimation = "capacitornew_idle";
+            gun.reloadAnimation = "capacitornew_reload";
+            gun.chargeAnimation = "capacitornew_charge";
+
+            gun.carryPixelOffset += new IntVector2(-2, -2);
+
+            //GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(390) as Gun, true, false);			
+            //GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(13) as Gun, true, false);
+
+            for (int i = 0; i < 3; i++)
+            {
+                gun.AddProjectileModuleFrom(PickupObjectDatabase.GetById(13) as Gun, true, true);
+            }
+
+            gun.DefaultModule.chargeProjectiles = new List<ProjectileModule.ChargeProjectile>();
+			int p = 1;
+            foreach (ProjectileModule projectileModule in gun.Volley.projectiles)
+            {
+                projectileModule.ammoCost = p == 1 ? 1 : 0;
+                projectileModule.shootStyle = ProjectileModule.ShootStyle.Charged;
+                projectileModule.sequenceStyle = ProjectileModule.ProjectileSequenceStyle.Random;
+                projectileModule.cooldownTime = 0.4f;
+                projectileModule.angleVariance = p == 1 ? 3 : 13;
+                projectileModule.numberOfShotsInClip = 30;
+
+                Projectile projectile = UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(13) as Gun).DefaultModule.projectiles[0]);
+                projectile.gameObject.SetActive(false);
+                projectile.baseData.damage = p == 1 ? 11 : 2.5f;
+                projectile.baseData.speed = p == 1 ? 25 : 19f;
+
+                projectile.AdditionalScaleMultiplier = p == 1 ? 1.3f : 0.9f;
+                projectile.shouldRotate = true;
+                projectile.baseData.range = p == 1 ? 25 : 20;
+                if (p > 1)
+                {
+                    PierceProjModifier spook = projectile.gameObject.AddComponent<PierceProjModifier>();
+                    spook.penetration = 2;
+                    spook.penetratesBreakables = true;
+                }
+
+                projectileModule.projectiles[0] = projectile;
+                FakePrefab.MarkAsFakePrefab(projectile.gameObject);
+                UnityEngine.Object.DontDestroyOnLoad(projectile);
+                if (projectileModule != gun.DefaultModule)
+                {
+                    projectileModule.ammoCost = 0;
+                }
+
+                ProjectileModule.ChargeProjectile item2 = new ProjectileModule.ChargeProjectile
+                {
+                    Projectile = projectile,
+                    ChargeTime = 0f
+                };
+                ProjectileModule.ChargeProjectile item3 = new ProjectileModule.ChargeProjectile
+                {
+                    Projectile = projectile,
+                    AdditionalWwiseEvent = "Play_BOSS_lichC_zap_01",
+                    ChargeTime = 0.5f,
+					VfxPool = (PickupObjectDatabase.GetById(390) as Gun).DefaultModule.chargeProjectiles[1].VfxPool,
+                    UsedProperties = ProjectileModule.ChargeProjectileProperties.vfx | ProjectileModule.ChargeProjectileProperties.additionalWwiseEvent
+                };
+                projectileModule.chargeProjectiles = new List<ProjectileModule.ChargeProjectile>() { item2, item3 };
+				p++;
+            }
 
 
-			//gun.gunSwitchGroup = (PickupObjectDatabase.GetById(390) as Gun).gunSwitchGroup;
-			gun.DefaultModule.ammoCost = 1;
-			gun.DefaultModule.shootStyle = ProjectileModule.ShootStyle.Automatic;
-			gun.DefaultModule.sequenceStyle = ProjectileModule.ProjectileSequenceStyle.Random;
-			gun.reloadTime = 0f;
-			gun.DefaultModule.cooldownTime = .333f;
-			gun.DefaultModule.numberOfShotsInClip = -1;
-			gun.SetBaseMaxAmmo(3);
-			gun.quality = PickupObject.ItemQuality.B;
-			gun.DefaultModule.angleVariance = 11f;
-			gun.DefaultModule.burstShotCount = 1;
-			Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(gun.DefaultModule.projectiles[0]);
-			projectile.gameObject.SetActive(false);
-			FakePrefab.MarkAsFakePrefab(projectile.gameObject);
-			UnityEngine.Object.DontDestroyOnLoad(projectile);
-			gun.DefaultModule.projectiles[0] = projectile;
-			projectile.baseData.damage = 200f;
-			projectile.baseData.speed *= 1f;
-			projectile.AdditionalScaleMultiplier *= 0.75f;
-			projectile.shouldRotate = true;
-			projectile.pierceMinorBreakables = true;
-			projectile.PenetratesInternalWalls = true;
+            gun.SetBaseMaxAmmo(300);
+            gun.quality = PickupObject.ItemQuality.B;
+            gun.PreventNormalFireAudio = true;
+            gun.gunSwitchGroup = (PickupObjectDatabase.GetById(156) as Gun).gunSwitchGroup;
+            gun.reloadTime = 1.2f;
 
-			/*
-			tk2dTiledSprite tiledSprite = projectile.gameObject.GetComponentInChildren<tk2dTiledSprite>();
-			tiledSprite.sprite.usesOverrideMaterial = true;
-			Material material = new Material(ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive"));
-			Material sharedMaterial = tiledSprite.sprite.renderer.sharedMaterial;
-			material.SetTexture("_MainTex", sharedMaterial.GetTexture("_MainTex"));
-			material.SetColor("_OverrideColor", new Color(1f, 0f, 0f, 1f));
-			material.SetFloat("_EmissivePower", 4);
-			material.SetFloat("_EmissiveColorPower", 2f);
 
-			tiledSprite.sprite.renderer.material = material;
-			*/
-			PierceProjModifier spook = projectile.gameObject.AddComponent<PierceProjModifier>();
-			spook.penetration = 3;
-			spook.penetratesBreakables = true;
-			CapacitorProjectile yah = projectile.gameObject.AddComponent<CapacitorProjectile>();
-			gun.gunClass = GunClass.NONE;
+            gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
+            gun.DefaultModule.customAmmoType = (PickupObjectDatabase.GetById(13) as Gun).DefaultModule.customAmmoType;//CustomClipAmmoTypeToolbox.AddCustomAmmoType("Battery", "Planetside/Resources/GunClips/Capacitor/capacitirfull", "Planetside/Resources/GunClips/Capacitor/capacitirempty");
+            gun.gunClass = GunClass.CHARGE;
 
-			gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
-			gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Battery", "Planetside/Resources/GunClips/Capacitor/capacitirfull", "Planetside/Resources/GunClips/Capacitor/capacitirempty");
 
-			gun.encounterTrackable.EncounterGuid = "https://www.youtube.com/watch?v=_VF7G8T1Ajs";
+            gun.encounterTrackable.EncounterGuid = "https://www.youtube.com/watch?v=_VF7G8T1Ajs";
 			
 			
 			ETGMod.Databases.Items.Add(gun, false, "ANY");
@@ -91,8 +122,6 @@ namespace Planetside
             FakePrefab.MarkAsFakePrefab(ChargeUpSynergy);
             UnityEngine.Object.DontDestroyOnLoad(ChargeUpSynergy);
             Capactior.ChargeUpSynergyPrefab = ChargeUpSynergy;
-
-
 
             List<string> AAA = new List<string>
 			{
@@ -116,102 +145,64 @@ namespace Planetside
 		public static GameObject ChargeUpPrefab;
         public static GameObject ChargeUpSynergyPrefab;
 
-
-		public override void OnPostFired(PlayerController player, Gun gun)
-		{
-
-			if (player != null)
-			{
-				bool ee = player.activeItems == null;
-				if (!ee)
-				{
-					foreach (PlayerItem playerItem in player.activeItems)
-					{
-						bool aa = playerItem == null;
-						if (!aa)
-						{
-							float timeCooldown = playerItem.timeCooldown;
-							float damageCooldown = playerItem.damageCooldown;
-							try
-							{
-								float noom = (float)this.remainingTimeCooldown.GetValue(playerItem);
-								float eee = (float)this.remainingDamageCooldown.GetValue(playerItem);
-								bool flag3 = eee <= 0f || eee <= 0f;
-								if (!flag3)
-								{
-									bool b = false;
-									if (player.PlayerHasActiveSynergy("Back For Seconds"))
-									{
-										if (UnityEngine.Random.value < 0.5f)
-                                        {
-											SetCharge(false);
-											b = true;
-										}
-										else
-                                        {
-											SetCharge(true);
-                                            b = false;
-
-                                        }
-                                    }
-									else
-									{
-										SetCharge(true);
-                                        b = false;
-                                    }
-
-                                    tk2dSprite ahfuck = b == false ? ChargeUpPrefab.GetComponent<tk2dSprite>() : ChargeUpSynergyPrefab.GetComponent<tk2dSprite>();
-
-                                    player.BloopItemAboveHead(ahfuck, "");
-									this.remainingTimeCooldown.SetValue(playerItem, noom- timeCooldown);
-									this.remainingDamageCooldown.SetValue(playerItem, eee-damageCooldown);
-									AkSoundEngine.PostEvent("Play_BOSS_RatPunchout_Player_Charge_01", base.gameObject);
-								}
-								else
-                                {
-									SetCharge(false);
-								}
-							}
-							catch (Exception ex)
-							{
-								ETGModConsole.Log(ex.Message + ": " + ex.StackTrace, false);
-							}
-						}
-					}
-				}
-			}
-		}
-		public bool Charger;
 		public GameObject ChargeUpVFX;
 		private FieldInfo remainingTimeCooldown = typeof(PlayerItem).GetField("remainingTimeCooldown", BindingFlags.Instance | BindingFlags.NonPublic);
 		private FieldInfo remainingDamageCooldown = typeof(PlayerItem).GetField("remainingDamageCooldown", BindingFlags.Instance | BindingFlags.NonPublic);
 		private bool HasReloaded;
 
-		public bool IsChargeUp()
-        {
-			return Charger;
-		}
-		public void SetCharge(bool b)
-		{
-			Charger = b;
-		}
+		
+		
 
 		public override void Update()
 		{
 			if (gun.CurrentOwner)
 			{
-
-				if (!gun.PreventNormalFireAudio)
+				if (gun.CurrentOwner != null)
 				{
-					this.gun.PreventNormalFireAudio = true;
-				}
-				if (!gun.IsReloading && !HasReloaded)
-				{
-					this.HasReloaded = true;
+					PlayerController player = gun.CurrentOwner as PlayerController;
+					if (player != null)
+					{
+                        if (player.CurrentItem != null)
+                        {
+                            if (player.CurrentItem.IsOnCooldown == true)
+                            {
+                                if (gun.IsCharging && gun.CurrentAmmo > 0)
+                                {
+                                    TickRate -= BraveTime.DeltaTime * player.stats.GetStatValue(PlayerStats.StatType.ChargeAmountMultiplier);
+                                    if (TickRate < ActivationTick)
+                                    {
+                                        gun.CurrentAmmo--;
+                                        TickRate = 1;
+                                        ActivationTick = Mathf.Min(ActivationTick + 0.1f, 0.95f);
+                                        float noom = (float)this.remainingTimeCooldown.GetValue(player.CurrentItem);
+                                        float eee = (float)this.remainingDamageCooldown.GetValue(player.CurrentItem);
+                                        if (eee > 0f || eee > 0f)
+                                        {
+                                            this.remainingDamageCooldown.SetValue(player.CurrentItem, eee - Mathf.Max(player.PlayerHasActiveSynergy("Back For Seconds") ? 20 : 15f, (player.CurrentItem.damageCooldown * 0.01f)));
+                                        }
+                                        if (noom > 0f || noom > 0f)
+                                        {
+                                            this.remainingTimeCooldown.SetValue(player.CurrentItem, noom - Mathf.Max(player.PlayerHasActiveSynergy("Back For Seconds") ? 20 : 15f, (player.CurrentItem.timeCooldown * 0.01f)));
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    ActivationTick = 0;
+                                    TickRate = player.PlayerHasActiveSynergy("Back For Seconds") ? cachedTickRate - 0.2f : cachedTickRate;
+                                }
+                            }             
+                        }
+					}
 				}
 			}
-		}
-		public override void OnReloadPressed(PlayerController player, Gun bruhgun, bool bSOMETHING)
+        }
+        private float ActivationTick = 0f;
+        private float TickRate = 0.5f;
+        private float cachedTickRate = 0.5f;
+
+
+        public override void OnReloadPressed(PlayerController player, Gun bruhgun, bool bSOMETHING)
 		{
 			if (gun.IsReloading && this.HasReloaded)
 			{
@@ -221,5 +212,4 @@ namespace Planetside
 			}
 		}
 	}
-
 }

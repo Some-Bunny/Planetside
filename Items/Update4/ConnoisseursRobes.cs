@@ -143,7 +143,7 @@ namespace Planetside
 
 		
 
-		protected override void OnDestroy()
+		public override void OnDestroy()
 		{
 			if (base.Owner != null)
             {

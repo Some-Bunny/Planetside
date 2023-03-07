@@ -7,6 +7,7 @@ using System.Collections;
 using MonoMod.RuntimeDetour;
 using System.Reflection;
 using System.Linq;
+using SaveAPI;
 
 namespace Planetside
 {
@@ -210,7 +211,6 @@ namespace Planetside
                     Projectile currentProjectile = defaultModule.GetCurrentProjectile();
                     if (currentProjectile)
                     {
-                        currentProjectile.baseData.damage *= 0.3f;
                         float angleForShot = defaultModule.GetAngleForShot(1f, 1f, null);
                         bool flag = currentProjectile.GetComponent<BeamController>() != null;
                         if (!flag)
@@ -339,6 +339,7 @@ namespace Planetside
             {
                 if (g.ClipShotsRemaining == g.ClipCapacity | g.ClipCapacity > g.CurrentAmmo)
                 {
+                    SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.GUNSLINGER_FLAG_MAGDUMP, true);
                     g.ammo -= g.ClipShotsRemaining;
                     g.ClipShotsRemaining -= g.ClipShotsRemaining;
                     GameObject vfx = SpawnManager.SpawnVFX((PickupObjectDatabase.GetById(365) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapVertical.effects.First().effects.First().effect, true);
@@ -757,7 +758,7 @@ namespace Planetside
         public PlayerController player;
         public bool hasBeenPickedup;
     }
-    class Gunslinger : PickupObject, IPlayerInteractable
+    class Gunslinger : PerkPickupObject, IPlayerInteractable
     {
         public static void Init()
         {
@@ -777,11 +778,54 @@ namespace Planetside
             PerkParticleSystemController particles = gameObject.AddComponent<PerkParticleSystemController>();
             particles.ParticleSystemColor = Color.green;
             particles.ParticleSystemColor2 = Color.white;
-            OutlineColor = new Color(0f, 1f, 0f);
+            item.OutlineColor = new Color(0f, 1f, 0f);
+
+
             //new Hook(typeof(HoveringGunController).GetMethod("UpdatePosition", BindingFlags.Instance | BindingFlags.NonPublic), typeof(Gunslinger).GetMethod("DisableFuses"));
         }
+        public override List<PerkDisplayContainer> perkDisplayContainers => new List<PerkDisplayContainer>()
+        {
+                new PerkDisplayContainer()
+                {
+                    AmountToBuyBeforeReveal = 1,
+                    LockedString = AlphabetController.ConvertString("THROWN GUNS GOOD"),
+                    UnlockedString = "Massively Increases the potential power of thrown guns.",
+                    requiresFlag = false
+                },
+                new PerkDisplayContainer()
+                {
+                    AmountToBuyBeforeReveal = 2,
+                    LockedString = AlphabetController.ConvertString("MANY EFFECTS"),
+                    UnlockedString = "Thrown Guns can have one of 14 different unique effects, based on their Gun Class.",
+                    requiresFlag = false
+                },
+                 new PerkDisplayContainer()
+                {
+                    AmountToBuyBeforeReveal = 3,
+                    LockedString = AlphabetController.ConvertString("THROW THEM"),
+                    UnlockedString = "Decreases Max Ammo, but triples thrown gun damage.",
+                    requiresFlag = false
+                },
+                new PerkDisplayContainer()
+                {
+                    AmountToBuyBeforeReveal = 4,
+                    LockedString = AlphabetController.ConvertString("MAGAZINE DUMP"),
+                    UnlockedString = "Reloading On A Full Clip removes a clips worth of ammo.",
+                    FlagToTrack = SaveAPI.CustomDungeonFlags.GUNSLINGER_FLAG_MAGDUMP
+                },
+
+                new PerkDisplayContainer()
+                {
+                    AmountToBuyBeforeReveal = 5,
+                    LockedString = AlphabetController.ConvertString("Stack Increases Yeets"),
+                    UnlockedString = "Stacking increases thrown gun damage even more.",
+                    FlagToTrack = SaveAPI.CustomDungeonFlags.GUNSLINGER_FLAG_STACK
+                },
+        };
+        public override CustomTrackedStats StatToIncreaseOnPickup => SaveAPI.CustomTrackedStats.AMOUNT_BOUGHT_GUNSLINGER;
+
+
         public static int GunslingerID;
-        private static Color OutlineColor;
 
         public new bool PrerequisitesMet()
         {
@@ -801,7 +845,7 @@ namespace Planetside
             GunslingerController slinger = player.gameObject.GetOrAddComponent<GunslingerController>();
             slinger.player = player;
             if (slinger.hasBeenPickedup == true)
-            { slinger.IncrementStack(); }
+            { slinger.IncrementStack(); SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.GUNSLINGER_FLAG_STACK, true); }
             Exploder.DoDistortionWave(player.sprite.WorldTopCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
             player.BloopItemAboveHead(base.sprite, "");
             string BlurbText = slinger.hasBeenPickedup == true ? "Thrown Weapons Are Even Stronger." : "Massive Boost To Thrown Weapons.";
@@ -811,11 +855,7 @@ namespace Planetside
             UnityEngine.Object.Destroy(base.gameObject);
         }
 
-        public float distortionMaxRadius = 30f;
-        public float distortionDuration = 2f;
-        public float distortionIntensity = 0.7f;
-        public float distortionThickness = 0.1f;
-        protected void Start()
+        public void Start()
         {
             try
             {
@@ -828,49 +868,7 @@ namespace Planetside
             }
         }
 
-        public float GetDistanceToPoint(Vector2 point)
-        {
-            if (!base.sprite)
-            {
-                return 1000f;
-            }
-            Bounds bounds = base.sprite.GetBounds();
-            bounds.SetMinMax(bounds.min + base.transform.position, bounds.max + base.transform.position);
-            float num = Mathf.Max(Mathf.Min(point.x, bounds.max.x), bounds.min.x);
-            float num2 = Mathf.Max(Mathf.Min(point.y, bounds.max.y), bounds.min.y);
-            return Mathf.Sqrt((point.x - num) * (point.x - num) + (point.y - num2) * (point.y - num2)) / 1.5f;
-        }
-
-        public float GetOverrideMaxDistance()
-        {
-            return 1f;
-        }
-
-        public void OnEnteredRange(PlayerController interactor)
-        {
-            if (!this)
-            {
-                return;
-            }
-            if (!interactor.CurrentRoom.IsRegistered(this) && !RoomHandler.unassignedInteractableObjects.Contains(this))
-            {
-                return;
-            }
-            SpriteOutlineManager.RemoveOutlineFromSprite(base.sprite, false);
-            SpriteOutlineManager.AddOutlineToSprite(base.sprite, Color.white, 0.1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
-            base.sprite.UpdateZDepth();
-        }
-
-        public void OnExitRange(PlayerController interactor)
-        {
-            if (!this)
-            {
-                return;
-            }
-            SpriteOutlineManager.RemoveOutlineFromSprite(base.sprite, true);
-            SpriteOutlineManager.AddOutlineToSprite(base.sprite, OutlineColor, 0.1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
-            base.sprite.UpdateZDepth();
-        }
+      
 
         private void Update()
         {
@@ -880,25 +878,7 @@ namespace Planetside
             }
         }
 
-        public void Interact(PlayerController interactor)
-        {
-            if (!this)
-            {
-                return;
-            }
-            if (RoomHandler.unassignedInteractableObjects.Contains(this))
-            {
-                RoomHandler.unassignedInteractableObjects.Remove(this);
-            }
-            SpriteOutlineManager.RemoveOutlineFromSprite(base.sprite, true);
-            this.Pickup(interactor);
-        }
-
-        public string GetAnimationState(PlayerController interactor, out bool shouldBeFlipped)
-        {
-            shouldBeFlipped = false;
-            return string.Empty;
-        }
+      
 
         private bool m_hasBeenPickedUp;
     }

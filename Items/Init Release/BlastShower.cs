@@ -50,7 +50,6 @@ namespace Planetside
             CustomSynergies.Add("Watered Down", mandatoryConsoleIDs, optionalConsoleIDs, true);
             BlastShower.BlastShowerID = activeitem.PickupObjectId;
             ItemIDs.AddToList(activeitem.PickupObjectId);
-
         }
         public static int BlastShowerID;
         public override void Pickup(PlayerController player)
@@ -58,7 +57,7 @@ namespace Planetside
             base.Pickup(player);
         }
 
-        protected override void DoEffect(PlayerController user)
+        public override void DoEffect(PlayerController user)
         {
             SpawnManager.SpawnVFX((PickupObjectDatabase.GetById(538) as SilverBulletsPassiveItem).SynergyPowerVFX, user.sprite.WorldBottomCenter, Quaternion.identity).GetComponent<tk2dBaseSprite>().PlaceAtPositionByAnchor(user.sprite.WorldCenter.ToVector3ZisY(0f), tk2dBaseSprite.Anchor.MiddleCenter);
             AkSoundEngine.PostEvent("Play_ENV_water_splash_01", base.gameObject);
@@ -99,7 +98,7 @@ namespace Planetside
             return immunity;
         }
 
-        protected void AffectEnemy(AIActor target, PlayerController user, bool willBurn, bool willPoison)
+        public void AffectEnemy(AIActor target, PlayerController user, bool willBurn, bool willPoison)
         {
             if (target.IsNormalEnemy || (target.healthHaver.IsBoss && !target.IsHarmlessEnemy))
             {

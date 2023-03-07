@@ -160,7 +160,7 @@ using System.Collections;
 
                 return prefab;
             }
-            protected override void DoEffect(PlayerController user)
+            public override void DoEffect(PlayerController user)
             {
                     Vector2 position = user.sprite.WorldCenter;
                 ///Vector2 position = user.PositionInDistanceFromAimDir(1);

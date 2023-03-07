@@ -236,7 +236,7 @@ namespace Planetside
         public class SubphaseOneAttack : Script
         {
             public static float CurrentRingRadius;
-            protected override IEnumerator Top()
+            public override IEnumerator Top()
             {
                 
                 WeightedIntCollection attackWeights = new WeightedIntCollection();
@@ -593,7 +593,7 @@ namespace Planetside
                 public WallBulletNoDodge(string BulletType) : base(BulletType, false, false, false)
                 {
                 }
-                protected override IEnumerator Top()
+                public override IEnumerator Top()
                 {
                     this.Projectile.IgnoreTileCollisionsFor(300f);
                     this.Projectile.specRigidbody.AddCollisionLayerIgnoreOverride(CollisionMask.LayerToMask(CollisionLayer.HighObstacle, CollisionLayer.LowObstacle));
@@ -621,7 +621,7 @@ namespace Planetside
                     this.SuppressVfx = true;
                 }
 
-                protected override IEnumerator Top()
+                public override IEnumerator Top()
                 {
                     base.ManualControl = true;
                     this.Projectile.collidesOnlyWithPlayerProjectiles = true;
@@ -673,7 +673,7 @@ namespace Planetside
                     this.IsEarliestRing = IsEarliestRing;
                 }
 
-                protected override IEnumerator Top()
+                public override IEnumerator Top()
                 {
                     this.Projectile.IgnoreTileCollisionsFor(6000f);
                     this.Projectile.specRigidbody.AddCollisionLayerIgnoreOverride(CollisionMask.LayerToMask(CollisionLayer.HighObstacle, CollisionLayer.LowObstacle));

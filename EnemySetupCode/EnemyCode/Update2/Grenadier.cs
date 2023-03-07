@@ -264,7 +264,7 @@ namespace Planetside
 		}	
 		public class HunterKinScript : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 
 				if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)

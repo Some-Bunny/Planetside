@@ -519,7 +519,7 @@ namespace Planetside
 
         public class TelegraphAttack : Script
         {
-            protected override IEnumerator Top()
+            public override IEnumerator Top()
             {
                 float Angle = base.AimDirection;
                 GameObject gameObject = SpawnManager.SpawnVFX(RandomPiecesOfStuffToInitialise.LaserReticle, false);
@@ -616,7 +616,7 @@ namespace Planetside
                 {
 
                 }
-                protected override IEnumerator Top()
+                public override IEnumerator Top()
                 {
                     SpawnManager.PoolManager.Remove(this.Projectile.gameObject.transform);
                     this.Projectile.BulletScriptSettings.preventPooling = true;
@@ -628,7 +628,7 @@ namespace Planetside
 
         public class TurretAttack : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				float aimDirection = base.GetAimDirection((float)((UnityEngine.Random.value >= 0.25f) ? 0 : 1), 10f);
                 float h = BraveUtility.RandomBool() == true ? 30 : -30;

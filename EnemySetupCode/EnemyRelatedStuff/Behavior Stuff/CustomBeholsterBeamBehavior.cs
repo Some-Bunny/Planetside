@@ -298,12 +298,11 @@ public class CustomBeholsterLaserBehavior : BasicAttackBehavior
 							}
 							if (DoesReverseSpeedLerp == true)
                             {
-								float stir = firingTime - (TimeToReachEndingSpeed + TimeToStayAtZeroSpeedAt);
-								if (m_timer > stir)
+								float StartTime = firingTime - TimeToStayAtZeroSpeedAt - TimeToReachEndingSpeed;
+                                float EndTime = firingTime - TimeToStayAtZeroSpeedAt;
+								if (m_timer > StartTime)
 								{
-									float t2 = (m_timer - stir / firingTime- TimeToStayAtZeroSpeedAt);
-									t2 = Mathf.Max(t2, 0);
-									Mhm = Mathf.Lerp(EndingSpeed, maxTurnRate, t2);
+                                    Mhm = Mathf.Lerp(EndingSpeed, maxTurnRate, (EndTime - m_timer));
 								}
 							}
 
@@ -402,7 +401,7 @@ public class CustomBeholsterLaserBehavior : BasicAttackBehavior
 		this.m_currentBeamShooters.Clear();
 	}
 
-	protected IEnumerator FireBeam(AIBeamShooter2 aibeamShooter2)
+	public IEnumerator FireBeam(AIBeamShooter2 aibeamShooter2)
 	{
 		GameObject beamObject = null;
 		if (UsesBeamProjectileWithoutModule == true)

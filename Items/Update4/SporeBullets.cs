@@ -103,13 +103,59 @@ namespace Planetside
 						component.Owner = player;
 						component.Shooter = player.specRigidbody;
 						component.specRigidbody.RegisterTemporaryCollisionException(parent.specRigidbody, 0.5f);
-					}
+
+                     
+
+                    }
 				}
+				if (player.PlayerHasActiveSynergy("Big Fungus"))
+				{
+                    for (int i = 0; i < UnityEngine.Random.Range(4, 7); i++)
+                    {
+                        GameObject spawnedBulletOBJ = SpawnManager.SpawnProjectile((PickupObjectDatabase.GetById(197) as Gun).DefaultModule.projectiles[0].gameObject, objectToLookOutFor.transform.position, Quaternion.Euler(0f, 0f, UnityEngine.Random.Range(-180, 180)), true);
+                        Projectile component = spawnedBulletOBJ.GetComponent<Projectile>();
+                        if (component != null)
+                        {
+                            component.Owner = player;
+                            component.Shooter = player.specRigidbody;
+                            component.specRigidbody.RegisterTemporaryCollisionException(parent.specRigidbody, 0.5f);
+                            component.SpawnedFromOtherPlayerProjectile = true;
+                            component.gameObject.AddComponent<RecursionPreventer>();
+                            component.baseData.damage *= player.stats.GetStatValue(PlayerStats.StatType.Damage);
+                            component.baseData.speed *= .300f;
+                            player.DoPostProcessProjectile(component);
+                            component.AdditionalScaleMultiplier = 0.8f;
+                            component.baseData.range = 100f;
+                            component.AdditionalScaleMultiplier *= UnityEngine.Random.Range(0.5f, 1.5f);
+                            component.StartCoroutine(this.Speed(component, UnityEngine.Random.Range(8, 30), UnityEngine.Random.Range(4, 20), UnityEngine.Random.Range(0.03f, 0.1f)));
+                            HomingModifier homing = component.gameObject.AddComponent<HomingModifier>();
+                            homing.HomingRadius = 10f;
+                            homing.AngularVelocity = 60;
+                        }
+                    }
+                }
 				Destroy(objectToLookOutFor);
 			}
 			yield break;
 		}
-		public PlayerController player;
+        public IEnumerator Speed(Projectile projectile, int speeddown, float lifetime, float Speeddowndelay)
+        {
+            if (projectile != null)
+            {
+                float speed = projectile.baseData.speed / speeddown;
+                for (int i = 0; i < speeddown - 1; i++)
+                {
+                    projectile.baseData.speed -= speed;
+                    projectile.UpdateSpeed();
+                    yield return new WaitForSeconds(Speeddowndelay);
+                }
+                yield return new WaitForSeconds(lifetime);
+                projectile.DieInAir();
+            }
+            yield break;
+        }
+
+        public PlayerController player;
 		public Projectile currentObject;
 		public GameObject objectToLookOutFor;
 		public Material materialToCopy;
@@ -146,8 +192,14 @@ namespace Planetside
 			projectile.pierceMinorBreakables = true;
 			projectile.baseData.range = 1000f;
 
+            List<string> mandatoryConsoleIDs = new List<string>
+            {
+                "psog:spore_shot",
+				"psog:funcannon"
+            };
+            CustomSynergies.Add("Big Fungus", mandatoryConsoleIDs, null, true);
 
-			BounceProjModifier bouncy = projectile.gameObject.AddComponent<BounceProjModifier>();
+            BounceProjModifier bouncy = projectile.gameObject.AddComponent<BounceProjModifier>();
 			bouncy.numberOfBounces = 1;
 			bouncy.bouncesTrackEnemies = true;
 			bouncy.bounceTrackRadius = 5;
@@ -195,7 +247,9 @@ namespace Planetside
 				float procChance = 0.22f;
 				procChance *= effectChanceScalar;
 				SporeBulletsComponent cont = sourceProjectile.gameObject.GetComponent<SporeBulletsComponent>();
-				if (UnityEngine.Random.value <= procChance && cont == null)
+                RecursionPreventer rec = sourceProjectile.gameObject.GetComponent<RecursionPreventer>();
+
+                if (UnityEngine.Random.value <= procChance && cont == null && rec == null)
                 {
 					GameObject spawnedBulletOBJ = SpawnManager.SpawnProjectile(sporeProjectile.gameObject, sourceProjectile.transform.position, Quaternion.Euler(0f, 0f, base.Owner.FacingDirection + UnityEngine.Random.Range(-10, 10)), true);
 					Projectile component = spawnedBulletOBJ.GetComponent<Projectile>();
@@ -247,7 +301,7 @@ namespace Planetside
 
 			return result;
 		}
-		protected override void OnDestroy()
+		public override void OnDestroy()
 		{
 			if (Owner != null)
 			{

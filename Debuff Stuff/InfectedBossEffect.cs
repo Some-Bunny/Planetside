@@ -207,7 +207,7 @@ namespace Planetside
 
 		public class Retaliation : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				WeightedIntCollection attackWeights = new WeightedIntCollection();
 				attackWeights.elements = new WeightedInt[]
@@ -263,7 +263,7 @@ namespace Planetside
 					this.SuppressVfx = true;
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					base.ManualControl = true;
 					Vector2 centerPosition = base.Position;
@@ -304,7 +304,7 @@ namespace Planetside
 					this.m_setupDelay = setupDelay;
 					this.m_setupTime = setupTime;
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					this.ManualControl = true;
 					this.m_offset = this.m_offset.Rotate(this.Direction);
@@ -328,7 +328,7 @@ namespace Planetside
 			public class WeakSpore : Bullet
 			{
 				public WeakSpore() : base(StaticUndodgeableBulletEntries.undodgeableSmallSpore.Name, false, false, false) { }
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					yield return this.Wait(90);
 					base.Vanish(false);
@@ -339,7 +339,7 @@ namespace Planetside
 			public class Spore : Bullet
 			{
 				public Spore() : base(UnityEngine.Random.value > 0.33f ? StaticUndodgeableBulletEntries.undodgeableSmallSpore.Name : StaticUndodgeableBulletEntries.undodgeableLargeSpore.Name, false, false, false) { }
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), UnityEngine.Random.Range(60, 150));
 					yield return this.Wait(360);
@@ -493,6 +493,15 @@ namespace Planetside
                 debuffCollection.GetSpriteIdByName(spritePaths[3]),
             }, "start", tk2dSpriteAnimationClip.WrapMode.Loop, FPS);
 
+
+            vfxSprite.usesOverrideMaterial = true;
+            Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+            mat.mainTexture = vfxSprite.renderer.material.mainTexture;
+            mat.SetColor("_EmissiveColor", new Color32(0, 255, 255, 255));
+            mat.SetFloat("_EmissiveColorPower", 2f);
+            mat.SetFloat("_EmissivePower", 35);
+            vfxSprite.renderer.material = mat;
+
             animator.DefaultClipId = animator.GetClipIdByName("start");
             animator.playAutomatically = true;
             return BrokenArmorVFXObject;
@@ -626,7 +635,7 @@ namespace Planetside
 
 		public class SplatWeak : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				this.Fire(new Direction(UnityEngine.Random.Range(-180, 180), DirectionType.Aim, -1f), new Speed(UnityEngine.Random.Range(1f, 4), SpeedType.Absolute), new Spore());
 				yield break;
@@ -634,7 +643,7 @@ namespace Planetside
 			public class Spore : Bullet
 			{
 				public Spore() : base(UnityEngine.Random.value > 0.33f ? StaticUndodgeableBulletEntries.undodgeableSmallSpore.Name : StaticUndodgeableBulletEntries.undodgeableLargeSpore.Name, false, false, false) { }
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), UnityEngine.Random.Range(60, 180));
 					yield return this.Wait(300);

@@ -62,7 +62,7 @@ namespace Planetside
             return base.CanBeUsed(user);
         }
 
-        protected override void DoEffect(PlayerController user)
+        public override void DoEffect(PlayerController user)
         {
             Gun heldGun = user.CurrentGun;
             foreach (ProjectileModule module in heldGun.Volley.projectiles)

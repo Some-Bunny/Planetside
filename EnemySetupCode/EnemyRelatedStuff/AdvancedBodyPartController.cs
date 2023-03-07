@@ -167,12 +167,12 @@ namespace Planetside
             }
         }
 
-        protected override void OnDestroy()
+        public override void OnDestroy()
         {
             base.OnDestroy();
         }
 
-        protected virtual bool TryGetAimAngle(out float angle)
+        public virtual bool TryGetAimAngle(out float angle)
         {
             angle = 0f;
             if (this.MainBody)

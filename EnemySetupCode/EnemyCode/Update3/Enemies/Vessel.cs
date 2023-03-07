@@ -47,7 +47,7 @@ namespace Planetside
 			base.aiActor.healthHaver.OnPreDeath -= HealthHaver_OnPreDeath;
 		}
 
-		protected override void OnDestroy()
+		public override void OnDestroy()
         {
 			if (base.aiActor)
             {base.aiActor.healthHaver.OnPreDeath -= HealthHaver_OnPreDeath;}
@@ -758,7 +758,7 @@ namespace Planetside
 		public class Splat : Script
         {
 
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
 				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableLargeSpore);
@@ -775,7 +775,7 @@ namespace Planetside
 			public class Spore : Bullet
 			{
 				public Spore() : base(UnityEngine.Random.value > 0.33f ? StaticUndodgeableBulletEntries.undodgeableSmallSpore.Name : StaticUndodgeableBulletEntries.undodgeableLargeSpore.Name, false, false, false) { }
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{		
 					base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), UnityEngine.Random.Range(60, 150));
 					yield return this.Wait(600);
@@ -787,7 +787,7 @@ namespace Planetside
 
 		public class Thump : Script 
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
 				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableLargeSpore);
@@ -968,7 +968,7 @@ namespace Planetside
 				{
 
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					for (int i = 0; i < 100; i++)
 					{
@@ -982,7 +982,7 @@ namespace Planetside
 			public class Spore : Bullet
 			{
 				public Spore() : base(UnityEngine.Random.value > 0.33f ? StaticUndodgeableBulletEntries.undodgeableSmallSpore.Name : StaticUndodgeableBulletEntries.undodgeableLargeSpore.Name, false, false, false) { }
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					base.ChangeSpeed(new Speed(12f, SpeedType.Absolute), 90);
 					yield break;

@@ -4,15 +4,16 @@ using System;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using SaveAPI;
+
 namespace Planetside
 {
 
-    public class AllSeeingEye : PickupObject, IPlayerInteractable
+    public class AllSeeingEye : PerkPickupObject, IPlayerInteractable
     {
         public static void Init()
         {
             string name = "All-Seeing Eye";
-            //string resourcePath = "Planetside/Resources/PerkThings/allSeeingEye.png";
             GameObject gameObject = new GameObject(name);
             AllSeeingEye item = gameObject.AddComponent<AllSeeingEye>();
 
@@ -27,7 +28,7 @@ namespace Planetside
 			PerkParticleSystemController particles = gameObject.AddComponent<PerkParticleSystemController>();
 			particles.ParticleSystemColor = new Color(230, 230, 250);
 			particles.ParticleSystemColor2 = new Color(255, 53, 184);
-			OutlineColor = new Color(0.9f, 0.52f, 0.9f);
+            item.OutlineColor = new Color(0.9f, 0.52f, 0.9f);
 
 
             var Collection = StaticSpriteDefinitions.Oddments_Sheet_Data;
@@ -45,6 +46,7 @@ namespace Planetside
             var a = RoomDropModifier.RoomDropModifierData.CreateDummyTable();
             a.AddItemToPool(PickupObjectDatabase.GetById(AllSeeingEyeMiniPickup.MiniEye), 1);
 
+			
 
             RoomDropModifier.roomDropModifierDatas.Add(new RoomDropModifier.RoomDropModifierData()
             {
@@ -54,15 +56,42 @@ namespace Planetside
                 OverrideTable = a,
 				
             });
-
         }
-		public static GameObject gunVFXPrefab;
+
+
+        public override CustomTrackedStats StatToIncreaseOnPickup => SaveAPI.CustomTrackedStats.AMOUNT_BOUGHT_ALLSEEINGEYE;
+        public override List<PerkDisplayContainer> perkDisplayContainers => new List<PerkDisplayContainer>()
+        {
+				new PerkDisplayContainer()
+                {
+                    AmountToBuyBeforeReveal = 1,
+                    LockedString = AlphabetController.ConvertString("Reveals Secrets"),
+                    UnlockedString = "Reveals Secret Rooms And Boss Rooms, and potential chest contents.",
+                    requiresFlag = false
+                },
+                new PerkDisplayContainer()
+                {
+                    AmountToBuyBeforeReveal = 4,
+                    LockedString = AlphabetController.ConvertString("Gain Pickup Foresight"),
+                    UnlockedString = "Room drops can occasionally be Foresight pickups.",
+                    FlagToTrack = SaveAPI.CustomDungeonFlags.ALLSEEINGEYE_FLAG_ROOMDROP
+                },
+                new PerkDisplayContainer()
+                {
+                    AmountToBuyBeforeReveal = 7,
+                    LockedString = AlphabetController.ConvertString("Stack Increases Foresight"),
+                    UnlockedString = "Stacking Grants More Vision, and pickups.",
+                    FlagToTrack = SaveAPI.CustomDungeonFlags.ALLSEEINGEYE_FLAG_CHEST_STACK
+                },
+        };
+
+        public static GameObject gunVFXPrefab;
 		public static GameObject itemVFXPrefab;
 
 		public static int AllSeeingEyeID;
-		private static Color OutlineColor;
-
 	
+
+
 
 		public override void Pickup(PlayerController player)
         {
@@ -81,6 +110,10 @@ namespace Planetside
             Exploder.DoDistortionWave(player.sprite.WorldTopCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
             player.BloopItemAboveHead(base.sprite, "");
             string BlurbText = chaos.hasBeenPickedup == true ? "See More." : "Gain Foresight.";
+			if (chaos.hasBeenPickedup == true)
+			{
+                SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.ALLSEEINGEYE_FLAG_CHEST_STACK, true);
+            }
             OtherTools.NotifyCustom("All Seeing Eye", BlurbText, "allSeeingEye", StaticSpriteDefinitions.Pickup_Sheet_Data ,UINotificationController.NotificationColor.GOLD);
             UnityEngine.Object.Destroy(base.gameObject);
 
@@ -91,29 +124,18 @@ namespace Planetside
 			foreach (PlayerController p in GameManager.Instance.AllPlayers)
 			{
 				var ase = p.GetComponent<AllSeeingEyeController>();
-				ETGModConsole.Log(1);
                 if (ase != null)
 				{
-                    ETGModConsole.Log(2);
-
                     if (1-1/(1 + 0.17f * ase.Stacks) > UnityEngine.Random.value)
 					{
-                        ETGModConsole.Log(3);
-
                         return true;
 					}
 				}
 			}
-            ETGModConsole.Log(4);
-
             return false;
 		}
 
-        public float distortionMaxRadius = 30f;
-        public float distortionDuration = 2f;
-        public float distortionIntensity = 0.7f;
-        public float distortionThickness = 0.1f;
-        protected void Start()
+        public void Start()
         {
             try
             {
@@ -126,49 +148,7 @@ namespace Planetside
             }
         }
 
-        public float GetDistanceToPoint(Vector2 point)
-        {
-            if (!base.sprite)
-            {
-                return 1000f;
-            }
-            Bounds bounds = base.sprite.GetBounds();
-            bounds.SetMinMax(bounds.min + base.transform.position, bounds.max + base.transform.position);
-            float num = Mathf.Max(Mathf.Min(point.x, bounds.max.x), bounds.min.x);
-            float num2 = Mathf.Max(Mathf.Min(point.y, bounds.max.y), bounds.min.y);
-            return Mathf.Sqrt((point.x - num) * (point.x - num) + (point.y - num2) * (point.y - num2)) / 1.5f;
-        }
 
-        public float GetOverrideMaxDistance()
-        {
-            return 1f;
-        }
-
-        public void OnEnteredRange(PlayerController interactor)
-        {
-            if (!this)
-            {
-                return;
-            }
-            if (!interactor.CurrentRoom.IsRegistered(this) && !RoomHandler.unassignedInteractableObjects.Contains(this))
-            {
-                return;
-            }
-            SpriteOutlineManager.RemoveOutlineFromSprite(base.sprite, false);
-            SpriteOutlineManager.AddOutlineToSprite(base.sprite, Color.white, 0.1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
-            base.sprite.UpdateZDepth();
-        }
-
-        public void OnExitRange(PlayerController interactor)
-        {
-            if (!this)
-            {
-                return;
-            }
-            SpriteOutlineManager.RemoveOutlineFromSprite(base.sprite, true);
-			SpriteOutlineManager.AddOutlineToSprite(base.sprite, OutlineColor, 0.1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
-			base.sprite.UpdateZDepth();
-        }
 
         private void Update()
         {
@@ -178,25 +158,6 @@ namespace Planetside
             }
         }
 
-		public void Interact(PlayerController interactor)
-		{
-			if (!this)
-			{
-				return;
-			}
-			if (RoomHandler.unassignedInteractableObjects.Contains(this))
-			{
-				RoomHandler.unassignedInteractableObjects.Remove(this);
-			}
-			SpriteOutlineManager.RemoveOutlineFromSprite(base.sprite, true);
-			this.Pickup(interactor);
-		}
-
-		public string GetAnimationState(PlayerController interactor, out bool shouldBeFlipped)
-        {
-            shouldBeFlipped = false;
-            return string.Empty;
-        }
 
         private bool m_hasBeenPickedUp;
     }
@@ -232,6 +193,7 @@ namespace Planetside
 		{
 			if (1 - 1 / (1 + 0.04f * Stacks) > UnityEngine.Random.value)
 			{
+				SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.ALLSEEINGEYE_FLAG_ROOMDROP, true);
 				IntVector2 bestRewardLocation = obj.CurrentRoom.GetBestRewardLocation(new IntVector2(1, 1), RoomHandler.RewardLocationStyle.CameraCenter, true);
 				LootEngine.SpawnItem(PickupObjectDatabase.GetById(AllSeeingEyeMiniPickup.MiniEye).gameObject, bestRewardLocation.ToVector3(), Vector2.up, 1f, true, true, false);
 			}

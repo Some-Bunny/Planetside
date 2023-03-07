@@ -53,7 +53,7 @@ namespace Planetside
             base.Pickup(player);
         }
 
-        protected override void DoEffect(PlayerController user)
+        public override void DoEffect(PlayerController user)
         {
            base.sprite.SetSprite(JammedJar.spriteIDs[base.numberOfUses]);
            AkSoundEngine.PostEvent("Play_OBJ_cursepot_shatter_01", base.gameObject);

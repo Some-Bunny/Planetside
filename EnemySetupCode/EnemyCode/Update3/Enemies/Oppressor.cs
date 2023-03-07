@@ -890,7 +890,7 @@ namespace Planetside
 
         public class Obliterate : Script
         {
-            protected override IEnumerator Top()
+            public override IEnumerator Top()
             {
                 for (int i = 0; i < 15; i++)
                 {
@@ -908,7 +908,7 @@ namespace Planetside
                 public Creep() : base(StaticUndodgeableBulletEntries.undodgeableMineflayerBounce.Name, false, false, false)
                 {
                 }
-                protected override IEnumerator Top()
+                public override IEnumerator Top()
                 {
                     base.ChangeSpeed(new Brave.BulletScript.Speed(11, SpeedType.Absolute), 180);
                     for (int i = 0; i < 120; i++)
@@ -928,7 +928,7 @@ namespace Planetside
         public class HeartBurnOne : Script
         {
           
-            protected override IEnumerator Top()
+            public override IEnumerator Top()
             {
                 bool b = BraveUtility.RandomBool();
                 for (int e = 0; e < 8; e++)
@@ -955,7 +955,7 @@ namespace Planetside
                 {
                     b = a;
                 }
-                protected override IEnumerator Top()
+                public override IEnumerator Top()
                 {
                     base.ChangeSpeed(new Speed(25f, SpeedType.Absolute), 600);
                     base.ChangeDirection(new Direction(b == true ? 300 : -300, DirectionType.Relative), 90);
@@ -971,7 +971,7 @@ namespace Planetside
 
         public class HeartBurn : Script
         {
-            protected override IEnumerator Top()
+            public override IEnumerator Top()
             {
                 for (int i = 0; i < 15; i++)
                 {
@@ -995,7 +995,7 @@ namespace Planetside
 
         public class HeartBurnTwo : Script
         {
-            protected override IEnumerator Top()
+            public override IEnumerator Top()
             {
                 for (int i = 0; i < 24; i++)
                 {
@@ -1017,7 +1017,7 @@ namespace Planetside
                 public Creep() : base(StaticUndodgeableBulletEntries.undodgeableMineflayerBounce.Name, false, false, false)
                 {
                 }
-                protected override IEnumerator Top()
+                public override IEnumerator Top()
                 {
                     base.ChangeSpeed(new Brave.BulletScript.Speed(11, SpeedType.Absolute), 180);
                     for (int i = 0; i < 120; i++)
@@ -1063,7 +1063,7 @@ namespace Planetside
 
 
 
-            protected override IEnumerator Top()
+            public override IEnumerator Top()
 			{
 				float h = 16;
                 float f = 7.5f;
@@ -1121,7 +1121,7 @@ namespace Planetside
                 {
 
                 }
-                protected override IEnumerator Top()
+                public override IEnumerator Top()
                 {
                     base.ChangeSpeed(new Speed(12f, SpeedType.Absolute), 120);
                     yield break;
@@ -1269,7 +1269,7 @@ namespace Planetside
                 }
             }
 
-            protected override IEnumerator Top()
+            public override IEnumerator Top()
             {
                 float f = IsHard == true ? 40 : 20;
                 if (ShootPosition != new Vector2(-1, -1))
@@ -1310,7 +1310,7 @@ namespace Planetside
                 {
 
                 }
-                protected override IEnumerator Top()
+                public override IEnumerator Top()
                 {
                     base.ChangeSpeed(new Speed(5f, SpeedType.Absolute), 90);
                     yield break;
@@ -1345,7 +1345,7 @@ namespace Planetside
                 }
             }
 
-            protected override IEnumerator Top()
+            public override IEnumerator Top()
             {
                 if (ShootPositionLeft != new Vector2(-1,-1))
                 {
@@ -1381,7 +1381,7 @@ namespace Planetside
                 {
 
                 }
-                protected override IEnumerator Top()
+                public override IEnumerator Top()
                 {
                     base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 150);
                     yield return this.Wait(360);
@@ -1407,7 +1407,7 @@ namespace Planetside
                 {
                     speedUp = s;
                 }
-                protected override IEnumerator Top()
+                public override IEnumerator Top()
                 {
                     base.ChangeSpeed(new Speed(25f, SpeedType.Absolute), speedUp);
                     base.ChangeDirection(new Brave.BulletScript.Direction(UnityEngine.Random.Range(-10, 10), DirectionType.Relative), 120);
@@ -1426,7 +1426,7 @@ namespace Planetside
                 {
 
                 }
-                protected override IEnumerator Top()
+                public override IEnumerator Top()
                 {
                     base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 90);
                     yield return this.Wait(210);

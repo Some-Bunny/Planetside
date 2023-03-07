@@ -21,7 +21,7 @@ namespace Planetside
 		}
 		public class SalamanderScript : Script 
 		{
-			protected override IEnumerator Top() 
+			public override IEnumerator Top() 
 			{
 				if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
 				{

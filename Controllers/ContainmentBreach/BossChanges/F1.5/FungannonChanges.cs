@@ -39,7 +39,7 @@ namespace Planetside
 
 		public class ModifiedBigEverywhereAttack : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				CellArea area = base.BulletBank.aiActor.ParentRoom.area;
 				float delta = 36f;
@@ -133,7 +133,7 @@ namespace Planetside
 
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					for (int i = 0; i < 600; i++)
 					{
@@ -153,7 +153,7 @@ namespace Planetside
 					this.AirTime = Airtime;
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					if (this.BulletName == "spore2")
 					{
@@ -199,7 +199,7 @@ namespace Planetside
 					this.SuppressVfx = true;
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					base.ManualControl = true;
 					this.Projectile.collidesOnlyWithPlayerProjectiles = true;
@@ -258,7 +258,7 @@ namespace Planetside
 				public Superball() : base(StaticUndodgeableBulletEntries.undodgeableBig.Name, false, false, false)
 				{
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					for (int i = 0; i < 90; i++)
 					{
@@ -311,7 +311,7 @@ namespace Planetside
 					this.BulletName = bulletname;
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					if (this.BulletName == StaticUndodgeableBulletEntries.undodgeableLargeSpore.Name)
 					{
@@ -330,7 +330,7 @@ namespace Planetside
 
 		public class ModifiedPrimaryCannonScript : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				base.PostWwiseEvent("Play_BOSS_RatMech_Stomp_01", null);
 				ExplosionData aww = GameManager.Instance.Dungeon.sharedSettingsPrefab.DefaultExplosionData;
@@ -351,7 +351,7 @@ namespace Planetside
 
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					base.ChangeSpeed(new Speed(22f, SpeedType.Absolute), 60);
 					for (int i = 0; i < 600; i++)
@@ -372,7 +372,7 @@ namespace Planetside
 					this.AirTime = Airtime;
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					if (this.BulletName == StaticUndodgeableBulletEntries.undodgeableLargeSpore.Name)
 					{
@@ -397,7 +397,7 @@ namespace Planetside
 
 		public class ModifiedMegaCannon : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				float ANim = base.AimDirection;
 				base.PostWwiseEvent("Play_ENM_hammer_target_01", null);
@@ -420,7 +420,7 @@ namespace Planetside
 				public Superball() : base(StaticUndodgeableBulletEntries.undodgeableBig.Name, false, false, false)
 				{
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					for (int i = 0; i < 100; i++)
 					{
@@ -451,7 +451,7 @@ namespace Planetside
 
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					yield return this.Wait(180f);
 					for (int i = 0; i < 4; i++)
@@ -471,7 +471,7 @@ namespace Planetside
 					this.AirTime = Airtime;
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					if (this.BulletName == StaticUndodgeableBulletEntries.undodgeableLargeSpore.Name)
 					{

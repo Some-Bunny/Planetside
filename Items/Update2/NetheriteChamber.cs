@@ -31,7 +31,7 @@ namespace Planetside
 		}
 		public static int ChaamberID;
 
-		protected override void OnDestroy()
+		public override void OnDestroy()
         {
 			base.OnDestroy();
 			if (IsHoldingNetheriteChamber == true)
@@ -106,7 +106,7 @@ namespace Planetside
 		public bool IsHoldingNetheriteChamber;	
 			
 		
-		protected override void Update()
+		public override void Update()
 		{
 			base.Update();
 			bool flag = base.Owner != null;

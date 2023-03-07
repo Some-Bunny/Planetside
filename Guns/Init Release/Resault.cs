@@ -28,15 +28,21 @@ namespace Planetside
 			Gun gun = ETGMod.Databases.Items.NewGun("Re-Sault", "resault");
 			Game.Items.Rename("outdated_gun_mods:resault", "psog:resault");
 			gun.gameObject.AddComponent<Resault>();
-
 			GunExt.SetShortDescription(gun, "Reduce, Reuse, Reload");
 			GunExt.SetLongDescription(gun, "An automatic machine-gun that dispenses ammo capacity when fired, restores a portion of it on killing an enemy. Gungeonoligists still specualte *why* this gun dispenses its ammo capacity. Is it to reduce weight? Some idiot thought it would be an interesting gimmick? No-one really knows.");
-			GunExt.SetupSprite(gun, null, "resault_idle_001", 11);
-			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 36);
+
+            GunExt.SetupSprite(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "resault_idle_001", 11);
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
+            gun.sprite.SortingOrder = 1;
+            //GunExt.SetupSprite(gun, null, "resault_idle_001", 8);
+
+            GunExt.SetAnimationFPS(gun, gun.shootAnimation, 36);
 			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 7);
 			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 4);
 			GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(96) as Gun, true, false);
-			gun.gunSwitchGroup = (PickupObjectDatabase.GetById(2) as Gun).gunSwitchGroup;
+
+
+            gun.gunSwitchGroup = (PickupObjectDatabase.GetById(2) as Gun).gunSwitchGroup;
 			gun.DefaultModule.ammoCost = 1;
 			gun.DefaultModule.shootStyle = ProjectileModule.ShootStyle.Automatic;
 			gun.DefaultModule.sequenceStyle = ProjectileModule.ProjectileSequenceStyle.Random;
@@ -71,7 +77,8 @@ namespace Planetside
             FakePrefab.MarkAsFakePrefab(Plus10);
             UnityEngine.Object.DontDestroyOnLoad(Plus10);
             Resault.Plus10AMMOVFXPrefab = Plus10;
-            //+20
+            /*
+			//+20
             var Plus20 = ItemBuilder.AddSpriteToObjectAssetbundle("Plus 20", Collection.GetSpriteIdByName("plus20ammo"), Collection);
             FakePrefab.MarkAsFakePrefab(Plus20);
             UnityEngine.Object.DontDestroyOnLoad(Plus20);
@@ -97,6 +104,7 @@ namespace Planetside
             FakePrefab.MarkAsFakePrefab(Plus80);
             UnityEngine.Object.DontDestroyOnLoad(Plus80);
             Resault.Plus80AMMOVFXPrefab = Plus80;
+			*/
 
             Resault.ResaultID = gun.PickupObjectId;
 			List<string> yah = new List<string>
@@ -142,18 +150,18 @@ namespace Planetside
                         {
                             if (self.mode == AmmoPickup.AmmoPickupMode.FULL_AMMO && player.CurrentGun != null && player.CurrentGun == g)
                             {
-                                DoVFX(g, 20, Resault.Plus20AMMOVFXPrefab, Resault.Plus80AMMOVFXPrefab, player);
+                                DoVFX(g, 20, "plus20ammo", "plus80ammosyn", player);
 
                             }
                             else if (self.mode == AmmoPickup.AmmoPickupMode.SPREAD_AMMO && player.CurrentGun != null)
                             {
                                 if (player.CurrentGun == g)
                                 {
-                                    DoVFX(g, 10, Resault.Plus10AMMOVFXPrefab, Resault.Plus40AMMOVFXPrefab, player);
+                                    DoVFX(g, 10, "plus10ammo", "plus40ammosyn", player);
                                 }
                                 else
                                 {
-                                    DoVFX(g, 4, Resault.Plus4AMMOVFXPrefab, Resault.Plus16AMMOVFXPrefab, player);
+                                    DoVFX(g, 4, "plus10ammo", "plus16ammosyn", player);
                                 }
                             }
                             canAmmo = false;
@@ -167,11 +175,11 @@ namespace Planetside
 			}
 		}
 
-		public static void DoVFX(Gun g, int ammoAmount, GameObject VFX, GameObject SynergyVFX, PlayerController player)
+		public static void DoVFX(Gun g, int ammoAmount, string VFX, string SynergyVFX, PlayerController player)
 		{
             AkSoundEngine.PostEvent("Play_OBJ_spears_clank_01", g.gameObject);
             player.CurrentGun.SetBaseMaxAmmo(player.CurrentGun.GetBaseMaxAmmo() + ammoAmount);
-            player.BloopItemAboveHead(player.PlayerHasActiveSynergy("Infinite Ammo?") == false ? VFX.GetComponent<tk2dBaseSprite>() : SynergyVFX.GetComponent<tk2dBaseSprite>(), "");
+            player.BloopItemAboveHead(Resault.Plus10AMMOVFXPrefab.GetComponent<tk2dBaseSprite>() ,player.PlayerHasActiveSynergy("Infinite Ammo?") == false ? VFX : SynergyVFX);
         }
 
 		public override void OnReloadPressed(PlayerController player, Gun gun, bool bSOMETHING)
@@ -208,27 +216,15 @@ namespace Planetside
 			{
 				arg2.aiActor.gameObject.AddComponent<MarkResault>();
 				int AmmoRegained = 10;
-				int ae = 5;
+				int ae = player.PlayerHasActiveSynergy("Infinite Ammo?") ? 20 : 5;
 				AkSoundEngine.PostEvent("Play_OBJ_spears_clank_01", base.gameObject);
 				GameObject original = Resault.Plus10AMMOVFXPrefab;
-				if (player.PlayerHasActiveSynergy("Infinite Ammo?"))
-                {
-					original = Resault.Plus40AMMOVFXPrefab;
-					ae *= 4;
-				}
-
-				tk2dSprite ahfuck = original.GetComponent<tk2dSprite>();
-
-
+				
+				var spr = original.GetComponent<tk2dSprite>();
 				this.gun.SetBaseMaxAmmo(gun.GetBaseMaxAmmo() + AmmoRegained);
-                this.gun.ammo += ae;
+                this.gun.ammo += player.PlayerHasActiveSynergy("Recycling") ? ae * 2 : ae;
+                player.BloopItemAboveHead(spr, player.PlayerHasActiveSynergy("Infinite Ammo?") ? "plus40ammosyn" : "plus10ammo");
 
-                player.BloopItemAboveHead(ahfuck, "");
-
-                if (player.PlayerHasActiveSynergy("Recycling"))
-                {
-					this.gun.ammo += ae;
-				}
 			}
 		}
 		public override void MidGameDeserialize(List<object> data, ref int i)
@@ -240,12 +236,12 @@ namespace Planetside
 
 
 		private static GameObject Plus10AMMOVFXPrefab;
-		private static GameObject Plus20AMMOVFXPrefab;
-		private static GameObject Plus4AMMOVFXPrefab;
+		//private static GameObject Plus20AMMOVFXPrefab;
+		//private static GameObject Plus4AMMOVFXPrefab;
 
-		private static GameObject Plus16AMMOVFXPrefab;
-		private static GameObject Plus40AMMOVFXPrefab;
-		private static GameObject Plus80AMMOVFXPrefab;
+		//private static GameObject Plus16AMMOVFXPrefab;
+		//private static GameObject Plus40AMMOVFXPrefab;
+		//private static GameObject Plus80AMMOVFXPrefab;
 
 	}
 	public class MarkResault : BraveBehaviour{}

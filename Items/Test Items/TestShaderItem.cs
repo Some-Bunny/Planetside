@@ -123,7 +123,7 @@ namespace Planetside
             sharedMaterials[sharedMaterials.Length - 1] = material;
             component.sharedMaterials = sharedMaterials;
         }
-        protected override void Update()
+        public override void Update()
         {
             if (m_glintShader != null)
             {
@@ -141,7 +141,7 @@ namespace Planetside
 			base.Pickup(player);
 		}
 
-		protected override void OnDestroy()
+		public override void OnDestroy()
 		{
 			base.Owner.GunChanged += this.HandleGunChanged;
 			base.OnDestroy();

@@ -52,7 +52,7 @@ namespace Planetside
 
 		public class ModifiedHighPriestMergoWave1 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				float startAngle = -60f;
 				float deltaAngle = 30;
@@ -82,7 +82,7 @@ namespace Planetside
 
 		public class ModifiedHighPriestCrossSprinkler1 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				for (int i = 0; i < 105; i++)
 				{
@@ -137,7 +137,7 @@ namespace Planetside
 				this.m_shootRight = shootRight;
 			}
 
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				float angleDelta = 9f;
 				bool T = false;
@@ -171,7 +171,7 @@ namespace Planetside
 					S = Speed;
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					yield return this.Wait(45 - this.m_delay);
 					

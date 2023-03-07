@@ -199,7 +199,7 @@ namespace Planetside
             return string.Empty;
         }
 
-        protected override void OnDestroy()
+        public override void OnDestroy()
         {
             if (m_room.IsRegistered(this))
             {

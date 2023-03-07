@@ -60,7 +60,7 @@ namespace Planetside
 
 
 
-			protected override void DoEffect(PlayerController user)
+			public override void DoEffect(PlayerController user)
 			{			
 			try
 			{

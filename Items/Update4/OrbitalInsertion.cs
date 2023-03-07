@@ -78,7 +78,7 @@ namespace Planetside
 		};
 
 
-		protected override void DoEffect(PlayerController user)
+		public override void DoEffect(PlayerController user)
         {
             AkSoundEngine.PostEvent("Play_OBJ_supplydrop_activate_01", user.gameObject);
             GameManager.Instance.StartCoroutine(DeployRobot(user.CurrentRoom, user));

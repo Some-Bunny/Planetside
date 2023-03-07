@@ -550,7 +550,7 @@ namespace Planetside
 
 		public class Wail : Script 
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				AkSoundEngine.PostEvent("Play_BOSS_Rat_Kunai_Prep_01", this.BulletBank.aiActor.gameObject);
 				for (int k = 0; k < 12; k++)
@@ -567,7 +567,7 @@ namespace Planetside
 				base.SuppressVfx = true;
 			}
 
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				float speed = this.Speed;
 				yield return this.Wait(30);
@@ -584,7 +584,7 @@ namespace Planetside
 
 		public class SalamanderScript : Script
 		{
-			protected override IEnumerator Top() 
+			public override IEnumerator Top() 
 			{
 				base.PostWwiseEvent("Play_BOSS_RatMech_Wizard_Cast_01", null);
 				yield return this.Wait(60);
@@ -604,7 +604,7 @@ namespace Planetside
 			public WallBullet() : base("bigBullet", false, false, false)
 			{
 			}
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 60);
 				yield return this.Wait(90);

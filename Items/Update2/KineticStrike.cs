@@ -96,7 +96,7 @@ namespace Planetside
             return false;
         }
 
-        protected override void DoEffect(PlayerController user)
+        public override void DoEffect(PlayerController user)
         {
             if (HasTriggeredCrossHair != true)
             {
@@ -292,7 +292,7 @@ namespace Planetside
             playDefaultSFX = false
         };
 
-        protected override void OnPreDrop(PlayerController user)
+        public override void OnPreDrop(PlayerController user)
         {
             HasTriggeredCrossHair = false;
             base.OnPreDrop(user);
@@ -302,7 +302,7 @@ namespace Planetside
             }
         }
 
-        protected override void OnDestroy()
+        public override void OnDestroy()
         {
             HasTriggeredCrossHair = false;
             if (CrossHair != null)

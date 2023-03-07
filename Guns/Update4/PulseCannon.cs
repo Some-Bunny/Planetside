@@ -122,12 +122,12 @@ namespace Planetside
             { mod.angleFromAim += AddOn;}
         }
 
-        protected override void OnPickup(PlayerController player)
+        public override void OnPickup(PlayerController player)
         {
             base.OnPickup(player);
         }
 
-        protected override void OnPostDrop(PlayerController player)
+        public override void OnPostDrop(PlayerController player)
         {
             base.OnPostDrop(player);  
         }

@@ -78,7 +78,7 @@ namespace Planetside
         {
 			FreeReloadsLeft = 2;
         }
-		protected override void OnDestroy()
+		public override void OnDestroy()
 		{
 			if (base.Owner != null)
             {

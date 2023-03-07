@@ -40,7 +40,6 @@ namespace Planetside
 
 			LDCBullets.TeleportingGunfireID = item.PickupObjectId;
 			ItemIDs.AddToList(item.PickupObjectId);
-
 		}
 		public static int TeleportingGunfireID;
 		private void PostProcessProjectile(Projectile sourceProjectile, float effectChanceScalar)
@@ -156,7 +155,7 @@ namespace Planetside
 
         }
 
-        protected override void OnDestroy()
+        public override void OnDestroy()
 		{
 			if (base.Owner != null)
             {

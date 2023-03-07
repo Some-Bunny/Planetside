@@ -173,7 +173,7 @@ namespace Planetside
             return c;
         }
 
-        protected override void OnDestroy()
+        public override void OnDestroy()
         {
 
         }

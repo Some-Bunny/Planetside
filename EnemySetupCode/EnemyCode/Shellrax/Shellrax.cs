@@ -1075,13 +1075,10 @@ namespace Planetside
 
 	public class DropDownScript : Script 
 	{
-		protected override IEnumerator Top()
+		public override IEnumerator Top()
 		{
-			Exploder.DoDistortionWave(base.BulletBank.sprite.WorldCenter, 2, 0.1f, 6, 0.3f);
 			base.PostWwiseEvent("Play_BOSS_doormimic_blast_01", null);
-			//base.PostWwiseEvent("Play_BOSS_RatMech_Stomp_01", null);
 			base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("da797878d215453abba824ff902e21b4").bulletBank.GetBullet("snakeBullet"));
-
 			RoomHandler room = this.BulletBank.aiActor.ParentRoom;
 			for (int i = 0; i < 2; i++)
             {
@@ -1136,7 +1133,7 @@ namespace Planetside
 				this.drops = drop;
 				this.Waittime = time;
 			}
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("4d164ba3f62648809a4a82c90fc22cae").bulletBank.GetBullet("big_one"));
 				this.ManualControl = true;
@@ -1179,7 +1176,7 @@ namespace Planetside
 				base.Initialize();
 			}
 
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("1bc2a07ef87741be90c37096910843ab").bulletBank.GetBullet("reversible"));
 				this.Projectile.specRigidbody.CollideWithTileMap = false;
@@ -1218,7 +1215,7 @@ namespace Planetside
 				public BurstBullet() : base("reversible", false, false, false)
 				{
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 60);
 					yield return base.Wait(60);
@@ -1233,7 +1230,7 @@ namespace Planetside
 
 	public class ShellRaxDropCursedAreas : Script
 	{
-		protected override IEnumerator Top()
+		public override IEnumerator Top()
 		{
 			DraGunController dragunController = EnemyDatabase.GetOrLoadByGuid("05b8afe0b6cc4fffa9dc6036fa24c8ec").GetComponent<DraGunController>();
 			AkSoundEngine.PostEvent("Play_BOSS_wall_slam_01", base.BulletBank.aiActor.gameObject);
@@ -1277,7 +1274,7 @@ namespace Planetside
 
 	public class SemiCirclesOfDoom : Script 
 	{
-		protected override IEnumerator Top()
+		public override IEnumerator Top()
 		{
 			if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
 			{
@@ -1322,7 +1319,7 @@ namespace Planetside
 				this.m_spinSpeed = spinspeed;
 			}
 
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				base.ManualControl = true;
 				Vector2 centerPosition = base.Position;
@@ -1382,7 +1379,7 @@ namespace Planetside
 	}
 	public class Slammo : Script
 	{
-		protected override IEnumerator Top()
+		public override IEnumerator Top()
 		{
 			base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("poundSmall"));
 			base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("da797878d215453abba824ff902e21b4").bulletBank.GetBullet("snakeBullet"));
@@ -1419,7 +1416,7 @@ namespace Planetside
 				this.target = target;
 			}
 
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				base.ManualControl = true;
 				yield return base.Wait(this.delay);
@@ -1452,7 +1449,7 @@ namespace Planetside
 				base.SuppressVfx = true;
 
 			}
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				
 				float speed = base.Speed;
@@ -1468,7 +1465,7 @@ namespace Planetside
 				base.SuppressVfx = true;
 
 			}
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				float speed = base.Speed;
 				base.ChangeSpeed(new Speed(speed * 1.5f, SpeedType.Absolute), 45);
@@ -1480,7 +1477,7 @@ namespace Planetside
 
 	public class CirclesWithOpenings : Script
 	{
-		protected override IEnumerator Top()
+		public override IEnumerator Top()
 		{
 			base.PostWwiseEvent("Play_BOSS_lichB_spew_01", null);
 			base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("465da2bb086a4a88a803f79fe3a27677").bulletBank.GetBullet("homing"));
@@ -1521,7 +1518,7 @@ namespace Planetside
 				base.SuppressVfx = true;
 				this.Waittime = Wait;
 			}
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				float speed = base.Speed;
 				base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 30);
@@ -1539,7 +1536,7 @@ namespace Planetside
 			{
 				this.delay = delay;
 			}
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				base.ManualControl = true;
 				yield return base.Wait(this.delay);
@@ -1562,7 +1559,7 @@ namespace Planetside
 
 	public class OMEGADEATHSCRIPTOFDOOM : Script
 	{
-		protected override IEnumerator Top()
+		public override IEnumerator Top()
 		{
 			base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("da797878d215453abba824ff902e21b4").bulletBank.GetBullet("snakeBullet"));
 			base.PostWwiseEvent("Play_BOSS_lichB_spew_01", null);
@@ -1610,7 +1607,7 @@ namespace Planetside
 				base.SuppressVfx = true;
 				this.Waittime = Wait;
 			}
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				float speed = base.Speed;
 				base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 30);

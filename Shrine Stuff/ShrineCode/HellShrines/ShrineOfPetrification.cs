@@ -76,7 +76,7 @@ namespace Planetside
 			{
 				Destroy(this);
 			}
-			protected override void OnDestroy()
+			public override void OnDestroy()
 			{
 				if (player != null)
 				{player.OnRoomClearEvent -= this.RoomCleared;}

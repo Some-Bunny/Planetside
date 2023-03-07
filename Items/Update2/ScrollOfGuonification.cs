@@ -184,7 +184,7 @@ namespace Planetside
 			}
 		}
 
-        protected override void DoEffect(PlayerController user)
+        public override void DoEffect(PlayerController user)
         {
 			AkSoundEngine.PostEvent("Play_ENM_wizardred_vanish_01", base.gameObject);
 			IPlayerInteractable lastInteractable = user.GetLastInteractable();

@@ -102,7 +102,7 @@ namespace Planetside
 				"psog:oscillator",
 				"psog:oscillating_bullets",
 			};
-			CustomSynergies.Add("Reverberation", AAA, null, true);
+			CustomSynergies.Add("Reverberation", AAA, null, false);
 			GameObject lightObj = new GameObject("LightObj");
 			FakePrefab.MarkAsFakePrefab(lightObj);
 			lightObj.transform.parent = gun.transform;

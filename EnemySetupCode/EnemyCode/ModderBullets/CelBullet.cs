@@ -20,7 +20,7 @@ namespace Planetside
 
 		public static void Init()
 		{
-			AIActor cel = EnemyToolbox.CreateNewBulletBankerEnemy("cel_bullet", "Cel", 18, 22, new List<int> { 53, 54, 55, 56 }, new List<int> { 57, 58, 59, 60, 61, 62 }, null, null, 4f, 20, 5, 10, 10);
+			AIActor cel = EnemyToolbox.CreateNewBulletBankerEnemy("unstablestrafe_bullet", "UnstableStrafe", 18, 22, new List<int> { 53, 54, 55, 56 }, new List<int> { 57, 58, 59, 60, 61, 62 }, null, null, 4f, 20, 5, 10, 10);
 			var bs = cel.gameObject.GetComponent<BehaviorSpeculator>();
 			bs.AttackBehaviors = new List<AttackBehaviorBase>() {
 				new ShootGunBehavior() {
@@ -93,7 +93,7 @@ namespace Planetside
 		}
 		public class SkellScript : Script
 		{
-			protected override IEnumerator Top() 
+			public override IEnumerator Top() 
 			{
 				AkSoundEngine.PostEvent("Play_WPN_magnum_shot_01", this.BulletBank.aiActor.gameObject);
 				if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
@@ -115,7 +115,7 @@ namespace Planetside
 			{
 
 			}
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				base.ChangeSpeed(new Speed(20f, SpeedType.Absolute), 90);
 				yield break;

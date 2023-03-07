@@ -74,7 +74,7 @@ namespace Planetside
 
 		public class ModifiedDraGunFlameKnifeSpray1 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				float deltaAngle = 18f;
 				float sign = BraveUtility.RandomSign();

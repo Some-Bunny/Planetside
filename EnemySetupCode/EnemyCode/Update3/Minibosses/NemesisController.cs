@@ -32,7 +32,7 @@ namespace Planetside
             SpeedMultiplier = 1;
             IsPreDeath = false;
             elapsed = 0;
-            GunSwitchTimer = UnityEngine.Random.Range(8, 12);
+            GunSwitchTimer = UnityEngine.Random.Range(8, 10);
             AIShooterSelf = base.aiShooter;
             GunInventorySelf = AIShooterSelf.Inventory;
             if (GunInventorySelf != null)
@@ -41,15 +41,13 @@ namespace Planetside
             }
             HeldPrimaryPassive = PrimaryPassivesList[UnityEngine.Random.Range(0, PrimaryPassivesList.Count)];
             HeldSecondaryPassive = SecondaryPassivesList[UnityEngine.Random.Range(0, SecondaryPassivesList.Count)];
+            PreferredWeapon = Weapons[UnityEngine.Random.Range(0, SecondaryPassivesList.Count)];
             HeldActive = ActiveList[UnityEngine.Random.Range(0, ActiveList.Count)];
             ProcessPrimaryFakeItems();
             ProcessSecondaryFakeItems();
 
             base.aiActor.healthHaver.OnPreDeath += OnPreDeathCleanup;
             PostProcessMovementOverride();
-
-
-
         }
 
         public bool HasBeenEngaged = false;
@@ -114,7 +112,6 @@ namespace Planetside
      
 
         private bool IsPreDeath;
-
         public void ProcessPrimaryFakeItems()
         {
             switch (HeldPrimaryPassive)
@@ -138,6 +135,8 @@ namespace Planetside
                     return;
                 case "trigger_finger":
                     base.aiActor.behaviorSpeculator.CooldownScale *= 0.75f;
+                    return;
+                case "ice_cube":
                     return;
             }            
         }
@@ -211,26 +210,56 @@ namespace Planetside
             {
                 if (BoolCanSwitch() == true)
                 {
+                    if (UnityEngine.Random.value < 0.15f && CurrentWeapon != PreferredWeapon)
+                    {
+                        switch (PreferredWeapon)
+                        {
+                            case "Railgun":
+                                ProcessMovementBehavior(10, 8, 13, true);
+                                GunInventorySelf.AddGunToInventory(PickupObjectDatabase.GetById(NemesisRailgun.NemesisRailgunID) as Gun, true);
+                                ResetCachedGuneness(PickupObjectDatabase.GetById(NemesisRailgun.NemesisRailgunID) as Gun, "Railgun");
+                                return;
+                            case "Revolver":
+                                ProcessMovementBehavior(6, 4, 9, false);
+                                GunInventorySelf.AddGunToInventory(PickupObjectDatabase.GetById(NemesisGun.NemesisGunID) as Gun, true);
+                                ResetCachedGuneness(PickupObjectDatabase.GetById(NemesisGun.NemesisGunID) as Gun, "Revolver");
+                                return;
+                            case "Shotgun":
+                                ProcessMovementBehavior(3.5f, 2, 5, false);
+                                GunInventorySelf.AddGunToInventory(PickupObjectDatabase.GetById(NemesisShotgun.NemesisGunID) as Gun, true);
+                                ResetCachedGuneness(PickupObjectDatabase.GetById(NemesisShotgun.NemesisGunID) as Gun, "Shotgun");
+                                return;
+                            default:
+                                ProcessMovementBehavior(6, 4, 9, false);
+                                GunInventorySelf.AddGunToInventory(PickupObjectDatabase.GetById(NemesisGun.NemesisGunID) as Gun, true);
+                                ResetCachedGuneness(PickupObjectDatabase.GetById(NemesisGun.NemesisGunID) as Gun, "Revolver");
+                                return;
+                        }
+                    }
+                    else
+                    {
+                        if (Vector2.Distance(base.aiActor.sprite.WorldCenter, GameManager.Instance.PrimaryPlayer.sprite.WorldCenter) < 6 && GunDesiredToSwitchToIsntCurrentGun(NemesisShotgun.NemesisGunID) == true)
+                        {
+                            ProcessMovementBehavior(3.5f, 2, 5, false);
 
-                    if (Vector2.Distance(base.aiActor.sprite.WorldCenter, GameManager.Instance.PrimaryPlayer.sprite.WorldCenter) < 6 && GunDesiredToSwitchToIsntCurrentGun(NemesisShotgun.NemesisGunID) == true)
-                    {
-                        ProcessMovementBehavior(3.5f, 2, 5, false);
+                            GunInventorySelf.AddGunToInventory(PickupObjectDatabase.GetById(NemesisShotgun.NemesisGunID) as Gun, true);
+                            ResetCachedGuneness(PickupObjectDatabase.GetById(NemesisShotgun.NemesisGunID) as Gun, "Shotgun");
+                        }
+                        else if (Vector2.Distance(base.aiActor.sprite.WorldCenter, GameManager.Instance.PrimaryPlayer.sprite.WorldCenter) > 9.5f && GunDesiredToSwitchToIsntCurrentGun(NemesisRailgun.NemesisRailgunID) == true)
+                        {
+                            ProcessMovementBehavior(10, 8, 13, true);
+                            GunInventorySelf.AddGunToInventory(PickupObjectDatabase.GetById(NemesisRailgun.NemesisRailgunID) as Gun, true);
+                            ResetCachedGuneness(PickupObjectDatabase.GetById(NemesisRailgun.NemesisRailgunID) as Gun, "Railgun");
+                        }
+                        else if (AIShooterSelf.equippedGunId != NemesisGun.NemesisGunID && GunDesiredToSwitchToIsntCurrentGun(NemesisGun.NemesisGunID) == true)
+                        {
+                            ProcessMovementBehavior(6, 4, 9, false);
+                            GunInventorySelf.AddGunToInventory(PickupObjectDatabase.GetById(NemesisGun.NemesisGunID) as Gun, true);
+                            ResetCachedGuneness(PickupObjectDatabase.GetById(NemesisGun.NemesisGunID) as Gun, "Revolver");
+                        }
+                    }
 
-                        GunInventorySelf.AddGunToInventory(PickupObjectDatabase.GetById(NemesisShotgun.NemesisGunID) as Gun, true);
-                        ResetCachedGuneness(PickupObjectDatabase.GetById(NemesisShotgun.NemesisGunID) as Gun, "Shotgun");
-                    }
-                    else if (Vector2.Distance(base.aiActor.sprite.WorldCenter, GameManager.Instance.PrimaryPlayer.sprite.WorldCenter) > 9.5f && GunDesiredToSwitchToIsntCurrentGun(NemesisRailgun.NemesisRailgunID) == true)
-                    {
-                        ProcessMovementBehavior(10, 8, 13, true);
-                        GunInventorySelf.AddGunToInventory(PickupObjectDatabase.GetById(NemesisRailgun.NemesisRailgunID) as Gun, true);
-                        ResetCachedGuneness(PickupObjectDatabase.GetById(NemesisRailgun.NemesisRailgunID) as Gun, "Railgun");
-                    }
-                    else if (AIShooterSelf.equippedGunId != NemesisGun.NemesisGunID && GunDesiredToSwitchToIsntCurrentGun(NemesisGun.NemesisGunID) == true)
-                    {
-                        ProcessMovementBehavior(6, 4, 9, false);
-                        GunInventorySelf.AddGunToInventory(PickupObjectDatabase.GetById(NemesisGun.NemesisGunID) as Gun, true);
-                        ResetCachedGuneness(PickupObjectDatabase.GetById(NemesisGun.NemesisGunID) as Gun, "Revolver");
-                    }
+                    
                 }     
             }
         }
@@ -267,6 +296,9 @@ namespace Planetside
         public void ResetCachedGuneness(Gun gun, string Name)
         {
             elapsed = 0;
+            CurrentWeapon = Name;
+            GunSwitchTimer = UnityEngine.Random.Range(5, 8);
+            if (Name == PreferredWeapon) { elapsed -= 6; }
             for (int j = 0; j < base.aiActor.behaviorSpeculator.AttackBehaviors.Count; j++)
             {
                 if (base.behaviorSpeculator.AttackBehaviors[j] is AttackBehaviorGroup && base.behaviorSpeculator.AttackBehaviors[j] != null)
@@ -327,13 +359,22 @@ namespace Planetside
         public string HeldPrimaryPassive;
         public string HeldSecondaryPassive;
         public string HeldActive;
+        public string PreferredWeapon;
+        public string CurrentWeapon = "Revolver";
 
+        public List<string> Weapons = new List<string>()
+        {
+            "Shotgun",
+            "Railgun",
+            "Revolver",
+        };
 
         public List<string> PrimaryPassivesList = new List<string>()
         {
             "cloranthy",
             "bionic_leg",
-            "trigger_finger"
+            "trigger_finger",
+            "ice_cube"
         };
 
         public List<string> SecondaryPassivesList = new List<string>()

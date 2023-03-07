@@ -15,6 +15,8 @@ using MonoMod;
 using System.Collections.ObjectModel;
 
 using UnityEngine.Serialization;
+using static HutongGames.Extensions.TextureExtensions;
+using static tk2dSpriteCollectionDefinition;
 
 namespace Planetside
 {
@@ -29,9 +31,54 @@ namespace Planetside
             player = projectile.Owner as PlayerController;      
             if (this.projectile != null)
 			{
-
-			}
+                this.projectile.StartCoroutine(Rotate(this.projectile));
+                var player = projectile.Owner as PlayerController;
+                if (player != null)
+                {
+                    if (player.PlayerHasActiveSynergy("Overclocked"))
+                    {
+                        projectile.baseData.speed *= 0.7f;
+                        projectile.UpdateSpeed();
+                    }
+                }
+            }
         }
+
+        public IEnumerator Rotate(Projectile p)
+        {
+            float e = 0f;
+            var d = p.Direction;
+            while (e < 0.4f) 
+            {       
+                e += BraveTime.DeltaTime;
+                if (p == null) { yield break; }
+                p.Direction = MathToolbox.GetUnitOnCircle(d.ToAngle() + (IsLeft == true ? Mathf.Lerp(0, 30, e / 0.4f) : Mathf.Lerp(0, -30, e / 0.4f)), 1f);
+                yield return null;
+            }
+            e = 0;
+            var player = p.Owner as PlayerController;
+            float s = p.baseData.speed;
+            if (player != null)
+            {
+                if (player.PlayerHasActiveSynergy("Overclocked"))
+                {
+                    while (e < 0.4f)
+                    {
+
+                        e += BraveTime.DeltaTime;
+                        if (p == null) { yield break; }
+                        p.baseData.speed = Mathf.Lerp(s, s * 0.3f, e / 0.4f);
+                        p.UpdateSpeed();
+                        yield return null;
+                    }
+                }
+            }
+
+            yield break;
+        }
+
+        public bool IsLeft;
+
 
         private Dictionary<Projectile, GameObject> ExtantTethers = new Dictionary<Projectile, GameObject>();
         private HashSet<AIActor> m_damagedEnemies = new HashSet<AIActor>();

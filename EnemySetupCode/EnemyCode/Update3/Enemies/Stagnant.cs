@@ -458,7 +458,7 @@ namespace Planetside
 
 		public class DeathSpore : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
 				for (int i = 0; i < 12; i++)
@@ -473,7 +473,7 @@ namespace Planetside
 				{
 
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), UnityEngine.Random.Range(10, 90));
 					yield return this.Wait(300);
@@ -486,7 +486,7 @@ namespace Planetside
 
 		public class BasicStagnantAttack : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableQuickHoming);
 				this.Fire(new Direction(0, DirectionType.Aim, -1f), new Speed(0f, SpeedType.Absolute), new BasicBigBall());
@@ -498,7 +498,7 @@ namespace Planetside
 				{
 
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					this.ChangeSpeed(new Speed(11f, SpeedType.Absolute), 90);
 					for (int i = 0; i < 90; i++)

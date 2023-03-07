@@ -553,7 +553,7 @@ namespace Planetside
 
 		public class NormalAttack : Script 
 		{
-			protected override IEnumerator Top() 
+			public override IEnumerator Top() 
 			{
 				base.PostWwiseEvent("Play_WPN_eyeballgun_shot_01", null);
 				base.PostWwiseEvent("Play_WPN_eyeballgun_impact_01", null);
@@ -576,7 +576,7 @@ namespace Planetside
 		}
 		public class DashAttack : Script 
 		{
-			protected override IEnumerator Top() 
+			public override IEnumerator Top() 
 			{
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("796a7ed4ad804984859088fc91672c7f").bulletBank.bulletBank.GetBullet("default"));
 				base.PostWwiseEvent("Play_WPN_eyeballgun_shot_01", null);
@@ -590,7 +590,7 @@ namespace Planetside
 			{
 
 			}
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 
 				base.ChangeSpeed(new Speed(13f, SpeedType.Absolute), 30);

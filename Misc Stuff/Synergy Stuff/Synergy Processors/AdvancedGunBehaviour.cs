@@ -13,7 +13,7 @@ namespace ItemAPI
         /// <summary>
         /// Update() is called every tick when the gun is the player's current gun or is dropped.
         /// </summary>
-        protected virtual void Update()
+        public virtual void Update()
         {
             if (this.Player != null)
             {
@@ -157,7 +157,7 @@ namespace ItemAPI
         /// <summary>
         /// NonCurrentGunUpdate() is called every tick EVEN IF THE GUN ISN'T ENABLED. That means it's able to run even if the player's current gun isn't this behaviour's gun.
         /// </summary>
-        protected virtual void NonCurrentGunUpdate()
+        public virtual void NonCurrentGunUpdate()
         {
         }
 
@@ -431,7 +431,7 @@ namespace ItemAPI
         /// OnPickup() is called when an actor picks the gun up.
         /// </summary>
         /// <param name="owner">The actor that picked up the gun.</param>
-        protected virtual void OnPickup(GameActor owner)
+        public virtual void OnPickup(GameActor owner)
         {
             if (owner is PlayerController)
             {
@@ -447,7 +447,7 @@ namespace ItemAPI
         /// OnPostDrop() is called AFTER the owner drops the gun.
         /// </summary>
         /// <param name="owner">The actor that dropped the gun.</param>
-        protected virtual void OnPostDrop(GameActor owner)
+        public virtual void OnPostDrop(GameActor owner)
         {
             if (owner is PlayerController)
             {
@@ -463,7 +463,7 @@ namespace ItemAPI
         /// OnPickup() is called when a player picks the gun up.
         /// </summary>
         /// <param name="player">The player that picked up the gun.</param>
-        protected virtual void OnPickedUpByPlayer(PlayerController player)
+        public virtual void OnPickedUpByPlayer(PlayerController player)
         {
             player.GunChanged += this.OnGunsChanged;
         }
@@ -472,7 +472,7 @@ namespace ItemAPI
         /// OnPostDrop() is called AFTER the player drops the gun. If you modify player's stats here, don't forget to call player.stats.RecalculateStats()!
         /// </summary>
         /// <param name="player">The player that dropped the gun.</param>
-        protected virtual void OnPostDroppedByPlayer(PlayerController player)
+        public virtual void OnPostDroppedByPlayer(PlayerController player)
         {
         }
 
@@ -480,7 +480,7 @@ namespace ItemAPI
         /// OnPickup() is called when an enemy picks the gun up.
         /// </summary>
         /// <param name="enemy">The enemy that picked up the gun.</param>
-        protected virtual void OnPickedUpByEnemy(AIActor enemy)
+        public virtual void OnPickedUpByEnemy(AIActor enemy)
         {
         }
 
@@ -488,7 +488,7 @@ namespace ItemAPI
         /// OnPostDrop() is called AFTER the enemy drops the gun.
         /// </summary>
         /// <param name="enemy">The enemy that dropped the gun.</param>
-        protected virtual void OnPostDroppedByEnemy(AIActor enemy)
+        public virtual void OnPostDroppedByEnemy(AIActor enemy)
         {
         }
 
@@ -575,7 +575,7 @@ namespace ItemAPI
         /// <summary>
         /// Returns the gun this behaviour is applied to.
         /// </summary>
-        protected Gun gun;
+        public Gun gun;
         private bool hasReloaded = true;
         /// <summary>
         /// If true, prevents the gun's normal fire audio.
@@ -603,7 +603,7 @@ namespace ItemAPI
 
     public class AdvancedGunBehavior : MonoBehaviour
     {
-        protected virtual void Update()
+        public virtual void Update()
         {
             bool flag = this.Player != null;
             if (flag)
@@ -761,12 +761,12 @@ namespace ItemAPI
         }
 
         // Token: 0x060000C4 RID: 196 RVA: 0x000086C5 File Offset: 0x000068C5
-        protected virtual void OnPickup(PlayerController player)
+        public virtual void OnPickup(PlayerController player)
         {
         }
 
         // Token: 0x060000C5 RID: 197 RVA: 0x000086C8 File Offset: 0x000068C8
-        protected virtual void OnPostDrop(PlayerController player)
+        public virtual void OnPostDrop(PlayerController player)
         {
         }
 
@@ -856,19 +856,19 @@ namespace ItemAPI
         public bool everPickedUpByPlayer = false;
 
         // Token: 0x04000066 RID: 102
-        protected Gun gun;
+        public Gun gun;
 
         // Token: 0x04000067 RID: 103
         private bool hasReloaded = true;
 
         // Token: 0x04000068 RID: 104
-        protected bool preventNormalFireAudio;
+        public bool preventNormalFireAudio;
 
-        protected bool preventNormalReloadAudio;
+        public bool preventNormalReloadAudio;
 
-        protected string overrrideNormalFireAudio;
+        public string overrrideNormalFireAudio;
 
-        protected string overrideNormalReloadAudio;
+        public string overrideNormalReloadAudio;
 
         private static FieldInfo heroSwordCooldown = typeof(Gun).GetField("HeroSwordCooldown", BindingFlags.Instance | BindingFlags.NonPublic);
     }

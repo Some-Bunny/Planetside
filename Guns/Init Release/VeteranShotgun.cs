@@ -83,7 +83,7 @@ namespace Planetside
 				"air_strike",
 				"napalm_strike"
 			};
-			CustomSynergies.Add("Old War", mandatoryConsoleIDs1, optionalConsoleIDs, true);
+			CustomSynergies.Add("Old War", mandatoryConsoleIDs1, optionalConsoleIDs, false);
 			VeteranShotgun.VeteranID = gun.PickupObjectId;
 			ItemIDs.AddToList(gun.PickupObjectId);
 		}

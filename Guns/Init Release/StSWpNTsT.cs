@@ -182,7 +182,7 @@ namespace Knives
         }
         private bool HasReloaded;
         //This block of code allows us to change the reload sounds.
-        protected override void Update()
+        public override void Update()
         {
             if (gun.CurrentOwner)
             {
@@ -265,7 +265,7 @@ namespace Knives
             yield break;
         }
 
-        protected SpeculativeRigidbody IterativeRaycast(Vector2 rayOrigin, Vector2 rayDirection, float rayDistance, int collisionMask, SpeculativeRigidbody ignoreRigidbody)
+        public SpeculativeRigidbody IterativeRaycast(Vector2 rayOrigin, Vector2 rayDirection, float rayDistance, int collisionMask, SpeculativeRigidbody ignoreRigidbody)
         {
             int num = 0;
             RaycastResult raycastResult;
@@ -344,7 +344,7 @@ namespace Items
 
         private bool HasReloaded;
         private float Tracker = 0;
-        protected override void Update()
+        public override void Update()
         {
             base.Update();
             if (gun.CurrentOwner)
@@ -360,12 +360,12 @@ namespace Items
                 }
             }
         }
-        protected override void OnPickup(GameActor owner)
+        public override void OnPickup(GameActor owner)
         {
             base.OnPickup(owner);
             (owner as PlayerController).OnKilledEnemy += this.Transforming;
         }
-        protected override void OnPostDrop(GameActor owner)
+        public override void OnPostDrop(GameActor owner)
         {
             base.OnPostDrop(owner);
             (owner as PlayerController).OnKilledEnemy -= this.Transforming;
@@ -470,7 +470,7 @@ namespace Items
         private bool HasReloaded;
         public static int AK141ID;
 
-        protected override void Update()
+        public override void Update()
         {
             base.Update();
             if (gun.CurrentOwner)
@@ -487,7 +487,7 @@ namespace Items
             }
         }
         private float Tracker = 0;
-        protected override void OnPickup(GameActor owner)
+        public override void OnPickup(GameActor owner)
         {
             base.OnPickup(owner);
             (owner as PlayerController).OnKilledEnemy += this.Transforming;
@@ -500,7 +500,7 @@ namespace Items
                 (owner as PlayerController).inventory.DestroyGun(ak94);
             }
         }
-        protected override void OnPostDrop(GameActor owner)
+        public override void OnPostDrop(GameActor owner)
         {
             base.OnPostDrop(owner);
             (owner as PlayerController).OnKilledEnemy -= this.Transforming;
@@ -610,7 +610,7 @@ namespace Items
         public static int AK188ID;
         private bool HasReloaded;
 
-        protected override void Update()
+        public override void Update()
         {
             base.Update();
             if (gun.CurrentOwner)
@@ -627,7 +627,7 @@ namespace Items
             }
         }
         private float Tracker = 0;
-        protected override void OnPickup(GameActor owner)
+        public override void OnPickup(GameActor owner)
         {
             base.OnPickup(owner);
 
@@ -639,7 +639,7 @@ namespace Items
                 (owner as PlayerController).inventory.DestroyGun(ak141);
             }
         }
-        protected override void OnPostDrop(GameActor owner)
+        public override void OnPostDrop(GameActor owner)
         {
             base.OnPostDrop(owner);
             (owner as PlayerController).OnKilledEnemy -= this.Transforming;
@@ -768,7 +768,7 @@ namespace Items
         public static int AKINFID;
         private bool HasReloaded;
 
-        protected override void Update()
+        public override void Update()
         {
             base.Update();
             if (gun.CurrentOwner)
@@ -789,7 +789,7 @@ namespace Items
             base.PostProcessProjectile(projectile);
 
         }
-        protected override void OnPickup(GameActor owner)
+        public override void OnPickup(GameActor owner)
         {
             base.OnPickup(owner);
 

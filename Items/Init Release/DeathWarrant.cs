@@ -109,8 +109,7 @@ namespace Planetside
 			"deturretleft_enemy",
 			"deturret_enemy",
 			"fodder_enemy",
-			"shamber_psog",
-			
+			"shamber_psog",		
 		};
 
 		public static List<string> targetableButWontIncreaseKillCount = new List<string>()
@@ -137,27 +136,22 @@ namespace Planetside
 			while (elapsed < duration)
 			{
 				if (base.gameObject == null) { break; }
-				if (newTarget == null) { base.Invoke("MoveToDifferentTarget", 0f); State = States.NONE;  break; }
+				if (newTarget == null) { base.Invoke("MoveToDifferentTarget", 0.1f); State = States.NONE; yield break; }
 				elapsed += BraveTime.DeltaTime;
 				yield return null;
 			}
 			AkSoundEngine.PostEvent("Play_BOSS_dragun_throw_01", player.gameObject);
 
-			Vector3 a = Vector3.zero;
-			if (newTarget != null)
-            {
-				a = (newTarget.specRigidbody.HitboxPixelCollider == null) ? newTarget.sprite.WorldCenter.ToVector3ZUp(0f) : newTarget.specRigidbody.HitboxPixelCollider.UnitCenter.ToVector3ZUp(0f);
-			}
 			elapsed = 0f;
 			duration = 0.5f;
 			while (elapsed < duration)
 			{
 				if (base.gameObject == null) {break;}
-				if (newTarget == null) { base.Invoke("MoveToDifferentTarget", 0f); State = States.NONE; break; }
+				if (newTarget == null) { base.Invoke("MoveToDifferentTarget", 0.1f); State = States.NONE; yield break; }
 
 				elapsed += BraveTime.DeltaTime;
 				float t = elapsed / duration * (elapsed / duration);
-				base.gameObject.transform.position = Vector3.Lerp(oldPos, a + new Vector3(-0.375f, 1.25f), t);
+				base.gameObject.transform.position = Vector3.Lerp(oldPos, (newTarget.specRigidbody.HitboxPixelCollider == null) ? newTarget.sprite.WorldCenter.ToVector3ZUp(0f) : newTarget.specRigidbody.HitboxPixelCollider.UnitCenter.ToVector3ZUp(0f) + new Vector3(-0.375f, 1.25f), t);
 				yield return null;
 			}
 			if (newTarget != null)
@@ -201,7 +195,7 @@ namespace Planetside
 				if (Target != null && !targetableButWontIncreaseKillCount.Contains(Target.EnemyGuid)) { Kills++; }
 				Target = null;
                 State = States.NONE;
-                base.Invoke("MoveToDifferentTarget", 0f);
+                base.Invoke("MoveToDifferentTarget", 0.1f);
 			}
 		}
 
@@ -217,9 +211,15 @@ namespace Planetside
 				}
 				else if (Target == null && State == States.NONE)
                 {
-					base.Invoke("MoveToDifferentTarget", 0f);
+					base.Invoke("MoveToDifferentTarget", 0.1f);
 				}
-			}
+
+				if (Target == null && State == States.LOCKED_ON) 
+				{
+                    State = States.NONE;
+                    base.Invoke("MoveToDifferentTarget", 0.1f);
+                }
+            }
 			tk2dSpriteAnimator animator = base.gameObject.GetComponent<tk2dSpriteAnimator>();
 			if (Target != null)
             {
@@ -431,7 +431,7 @@ namespace Planetside
             base.Pickup(player);
 		}
 
-		protected override void OnDestroy()
+		public override void OnDestroy()
         {
 			base.OnDestroy();
 			if (base.Owner != null)

@@ -241,7 +241,7 @@ namespace Planetside
         {
             base.Pickup(player);
         }
-        protected override void DoEffect(PlayerController user)
+        public override void DoEffect(PlayerController user)
         {
             user.carriedConsumables.Currency -= 1;
             float finaldir = ProjSpawnHelper.GetAccuracyAngled(user.CurrentGun.CurrentAngle, 3, user);
@@ -930,7 +930,7 @@ namespace Planetside
             return 1 + (AmountOfCoinBounces/5f);
         }
 
-        protected override void OnDestroy()
+        public override void OnDestroy()
         {
             if (this.m_room.GetRoomInteractables().Contains(this))
             {

@@ -1,6 +1,8 @@
 ﻿using Dungeonator;
 using ItemAPI;
+using SaveAPI;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Planetside
@@ -47,13 +49,14 @@ namespace Planetside
         public void DoHurty(bool IsBigHeart = false)
         {
             if (player){
+                SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.GLASS_FLAG_OVERHEAL, true);
                 //if (IsBigHeart == true) { DamageMult += DamageToGetFromOverHeal*2; } else { DamageMult += DamageToGetFromOverHeal; }
                 AkSoundEngine.PostEvent("Play_OBJ_key_impact_01", player.gameObject);
                 GameObject vfx = UnityEngine.Object.Instantiate<GameObject>((PickupObjectDatabase.GetById(228) as Gun).DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX);
                 tk2dBaseSprite component = vfx.GetComponent<tk2dBaseSprite>();
                 component.PlaceAtPositionByAnchor(player.transform.position + new Vector3(0.375f, 0.375f), tk2dBaseSprite.Anchor.MiddleCenter);
                 //player.ownerlessStatModifiers.Remove(this.DamageStat);
-                //GiveDamage();
+                GiveDamage();
             }
         }
         public void GiveDamage()
@@ -72,7 +75,7 @@ namespace Planetside
         
         public void IncrementStack()
         {
-            this.DamageToGetFromOverHeal += 0.25f;
+            this.DamageToGetFromOverHeal += 0.125f;
             this.DamageMult += 0.5f;
             if (LeniencyProtection != -1) {LeniencyProtection = -1;}
         }
@@ -83,8 +86,41 @@ namespace Planetside
         public int LeniencyProtection;
         public float DamageToGetFromOverHeal;
     }
-    class Glass : PickupObject, IPlayerInteractable
+    class Glass : PerkPickupObject, IPlayerInteractable
     {
+
+        public override List<PerkDisplayContainer> perkDisplayContainers => new List<PerkDisplayContainer>()
+        {
+                new PerkDisplayContainer()
+                {
+                    AmountToBuyBeforeReveal = 1,
+                    LockedString = AlphabetController.ConvertString("Glass Cannon"),
+                    UnlockedString = "Very Low Health, Much Higher Damage.",
+                    requiresFlag = false
+                },
+                new PerkDisplayContainer()
+                {
+                    AmountToBuyBeforeReveal = 3,
+                    LockedString = AlphabetController.ConvertString("Health Cap"),
+                    UnlockedString = "Amount Of Health is capped to 4 hits maximum.",
+                    requiresFlag = false
+                },
+                new PerkDisplayContainer()
+                {
+                    AmountToBuyBeforeReveal = 5,
+                    LockedString = AlphabetController.ConvertString("Overheal Good"),
+                    UnlockedString = "Overhealing slightly increases Damage.",
+                    FlagToTrack = SaveAPI.CustomDungeonFlags.GLASS_FLAG_OVERHEAL
+                },
+                new PerkDisplayContainer()
+                {
+                    AmountToBuyBeforeReveal = 6,
+                    LockedString = AlphabetController.ConvertString("Stacking Adds Effectiveness"),
+                    UnlockedString = "Stacking increases damage, but reduces the HP cap to 3 hits.",
+                    FlagToTrack = SaveAPI.CustomDungeonFlags.GLASS_FLAG_STACK
+                },
+        };
+        public override CustomTrackedStats StatToIncreaseOnPickup => SaveAPI.CustomTrackedStats.AMOUNT_BOUGHT_GLASS;
         public static void Init()
         {
             string name = "Glass";
@@ -104,11 +140,13 @@ namespace Planetside
             particles.ParticleSystemColor = Color.cyan;
             particles.ParticleSystemColor2 = Color.blue;
 
-            OutlineColor = new Color(0, 0.045f, 0.9f);
+           
+
+
+            item.OutlineColor = new Color(0, 0.045f, 0.9f);
         }
         public static int GlassID;
 
-        private static Color OutlineColor;
 
         public new bool PrerequisitesMet()
         {
@@ -125,9 +163,9 @@ namespace Planetside
             if (cont != null) { cont.DoBigBurst(player); }
             AkSoundEngine.PostEvent("Play_OBJ_dice_bless_01", player.gameObject);
             GlassComponent glass = player.gameObject.GetOrAddComponent<GlassComponent>();
-            glass.player = player;
+            glass.player = player;  
             if (glass.hasBeenPickedup == true)
-            { glass.IncrementStack(); }
+            { glass.IncrementStack(); SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.GLASS_FLAG_STACK, true); }
             Exploder.DoDistortionWave(player.sprite.WorldTopCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
             player.BloopItemAboveHead(base.sprite, "");
             string BlurbText = glass.hasBeenPickedup == true ? "Even More Fatal." : "Fragile, yet Fatal.";
@@ -137,11 +175,7 @@ namespace Planetside
             UnityEngine.Object.Destroy(base.gameObject);
         }
 
-        public float distortionMaxRadius = 30f;
-        public float distortionDuration = 2f;
-        public float distortionIntensity = 0.7f;
-        public float distortionThickness = 0.1f;
-        protected void Start()
+        public void Start()
         {
             try
             {
@@ -154,49 +188,7 @@ namespace Planetside
             }
         }
 
-        public float GetDistanceToPoint(Vector2 point)
-        {
-            if (!base.sprite)
-            {
-                return 1000f;
-            }
-            Bounds bounds = base.sprite.GetBounds();
-            bounds.SetMinMax(bounds.min + base.transform.position, bounds.max + base.transform.position);
-            float num = Mathf.Max(Mathf.Min(point.x, bounds.max.x), bounds.min.x);
-            float num2 = Mathf.Max(Mathf.Min(point.y, bounds.max.y), bounds.min.y);
-            return Mathf.Sqrt((point.x - num) * (point.x - num) + (point.y - num2) * (point.y - num2)) / 1.5f;
-        }
-
-        public float GetOverrideMaxDistance()
-        {
-            return 1f;
-        }
-
-        public void OnEnteredRange(PlayerController interactor)
-        {
-            if (!this)
-            {
-                return;
-            }
-            if (!interactor.CurrentRoom.IsRegistered(this) && !RoomHandler.unassignedInteractableObjects.Contains(this))
-            {
-                return;
-            }
-            SpriteOutlineManager.RemoveOutlineFromSprite(base.sprite, false);
-            SpriteOutlineManager.AddOutlineToSprite(base.sprite, Color.white, 0.1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
-            base.sprite.UpdateZDepth();
-        }
-
-        public void OnExitRange(PlayerController interactor)
-        {
-            if (!this)
-            {
-                return;
-            }
-            SpriteOutlineManager.RemoveOutlineFromSprite(base.sprite, true);
-            SpriteOutlineManager.AddOutlineToSprite(base.sprite, OutlineColor, 0.1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
-            base.sprite.UpdateZDepth();
-        }
+      
 
         private void Update()
         {
@@ -206,25 +198,6 @@ namespace Planetside
             }
         }
 
-        public void Interact(PlayerController interactor)
-        {
-            if (!this)
-            {
-                return;
-            }
-            if (RoomHandler.unassignedInteractableObjects.Contains(this))
-            {
-                RoomHandler.unassignedInteractableObjects.Remove(this);
-            }
-            SpriteOutlineManager.RemoveOutlineFromSprite(base.sprite, true);
-            this.Pickup(interactor);
-        }
-
-        public string GetAnimationState(PlayerController interactor, out bool shouldBeFlipped)
-        {
-            shouldBeFlipped = false;
-            return string.Empty;
-        }
 
         private bool m_hasBeenPickedUp;
     }

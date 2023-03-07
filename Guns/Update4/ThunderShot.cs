@@ -112,13 +112,13 @@ namespace Planetside
 
         private static FleePlayerData fleeData;
 
-        protected override void OnPickup(PlayerController player)
+        public override void OnPickup(PlayerController player)
         {
             base.OnPickup(player);
             ETGMod.AIActor.OnPreStart += AIActorMods;
         }
 
-        protected override void OnPostDrop(PlayerController player)
+        public override void OnPostDrop(PlayerController player)
         {
             ETGMod.AIActor.OnPreStart -= AIActorMods;
             base.OnPostDrop(player);  

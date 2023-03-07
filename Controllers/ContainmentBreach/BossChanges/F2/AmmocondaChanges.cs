@@ -93,7 +93,7 @@ namespace Planetside
 				this.NumBullets = 3;
 				this.BulletSpeed = 8.5f;
 			}
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				for (int i = 0; i < this.NumBullets; i++)
 				{
@@ -107,7 +107,7 @@ namespace Planetside
 		}
 		public class ModifiedBashelliskSideWave1 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				base.Fire(new Direction(-90f, DirectionType.Relative, -1f), new Speed(8f, SpeedType.Absolute), new ModifiedBashelliskSideWave1.WaveBullet());
 				base.Fire(new Direction(-180f, DirectionType.Relative, -1f), new Speed(8f, SpeedType.Absolute), new ModifiedBashelliskSideWave1.WaveBullet());
@@ -122,7 +122,7 @@ namespace Planetside
 				{
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					yield return this.Wait(60);
 					for (int i = 0; i < 3; i++)
@@ -140,7 +140,7 @@ namespace Planetside
 
 		public class ModifiedCircle: Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				bool LeftOrRight = (UnityEngine.Random.value > 0.5f) ? false : true;
 				float RNGSPIN = LeftOrRight == true ? 18 : -18;
@@ -165,7 +165,7 @@ namespace Planetside
 					this.SuppressVfx = true;
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					base.ManualControl = true;
 					Vector2 centerPosition = base.Position;
@@ -200,7 +200,7 @@ namespace Planetside
 			public class WeakSpore : Bullet
 			{
 				public WeakSpore() : base(StaticUndodgeableBulletEntries.undodgeableSmallSpore.Name, false, false, false) { }
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					yield return this.Wait(30);
 					base.Vanish(false);

@@ -61,19 +61,20 @@ namespace Planetside
                         comparisonValue = 11,
                         prerequisiteOperation = DungeonPrerequisite.PrerequisiteOperation.GREATER_THAN,
                         useSessionStatValue = false,
+                        advancedPrerequisiteType = CustomDungeonPrerequisite.AdvancedPrerequisiteType.CUSTOM_STAT_COMPARISION
                     },
                     new CustomDungeonPrerequisite()
                     {
                         customFlagToCheck = CustomDungeonFlags.HAS_TREADED_DEEPER,
                         requireCustomFlag = true,
-                        
+                        advancedPrerequisiteType = CustomDungeonPrerequisite.AdvancedPrerequisiteType.CUSTOM_FLAG
+
                     },
                     new DungeonGenToolbox.AdvancedDungeonPrerequisite
                     {
                         advancedAdvancedPrerequisiteType = DungeonGenToolbox.AdvancedDungeonPrerequisite.AdvancedAdvancedPrerequisiteType.MULTIPLE_FLOORS,
                         validTilesets = new List<GlobalDungeonData.ValidTilesets>() {GlobalDungeonData.ValidTilesets.CASTLEGEON, GlobalDungeonData.ValidTilesets.GUNGEON, GlobalDungeonData.ValidTilesets.SEWERGEON, GlobalDungeonData.ValidTilesets.CATHEDRALGEON, GlobalDungeonData.ValidTilesets.MINEGEON, GlobalDungeonData.ValidTilesets.CATACOMBGEON}
                     },
-
                 };
                 RoomFactory.AddInjection(RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/PrisonUnlockRoom.room").room, "Prison Containment Shrine", flowModifierPlacementTypes, 0, dungeonPrerequisites, "Prison Containment Shrine", 1f, 0.1f);
 
@@ -99,6 +100,8 @@ namespace Planetside
                 });
                 ETGModConsole.Commands.GetGroup("psog_void").AddUnit("enable_mixed_floor", ForceEnableMixedFloor);
 
+                //GameStatsManager.m_instance.IsInSession;
+                //GameManager.Instance.
 
                 Debug.Log("Finished ContainmentBreachController setup without failure!");
             }
@@ -124,15 +127,15 @@ namespace Planetside
 
         public static void PostFloorgen(Dungeon dungeon)
         {
-            if (CurrentState == States.ALLOWED)
+            if (CurrentState == States.ALLOWED && AdvancedGameStatsManager.Instance.GetSessionStatValue(CustomTrackedStats.INFECTION_FLOORS_ACTIVATED) == 1)
             {                
                 dungeon.DungeonFloorName = GameUIRoot.Instance.GetComponent<dfLanguageManager>().GetValue(dungeon.DungeonFloorName) + "?";
                 dungeon.DungeonFloorLevelTextOverride = "Mixed Chamber";
                 var deco = dungeon.decoSettings;
 
-                float r = 0.05f; // im fucking lazy, okay?
-                float g = 0.08f; // im fucking lazy, okay?
-                float b = 0.2f; // im fucking lazy, okay?
+                float r = 0.03f; // im fucking lazy, okay?
+                float g = 0.05f; // im fucking lazy, okay?
+                float b = 0.17f; // im fucking lazy, okay?
 
                 deco.ambientLightColor = new Color(0.05f / r, 0.15f / g, 0.9f / b);
                 deco.generateLights = true;
@@ -230,9 +233,51 @@ namespace Planetside
             ENABLED,
             DISABLED
         };
+
+
+        public static int MasterTraderCustomPriceOverride(CustomShopController shop, CustomShopItemController itemCont, PickupObject item)
+        {
+            return 60;
+        }
+
+        public static bool MasterTraderCustomCanBuyOverride(CustomShopController shop, PlayerController player, int cost)
+        {
+            return player.carriedConsumables.Currency >= 60;
+        }
+
+        public static int MasterTraderRemoveCurrency(CustomShopController shop, PlayerController player, int cost)
+        {
+            player.carriedConsumables.Currency -= 60;
+            SaveAPI.AdvancedGameStatsManager.Instance.RegisterStatChange(SaveAPI.CustomTrackedStats.PERKS_BOUGHT, 1);
+            return 1;
+        }
+
+        public IEnumerator Delay(CustomShopController shop)
+        {
+            yield return null;
+            var list = shop.m_itemControllers;
+            foreach (var item in list)
+            {
+                if (item is CustomShopItemController customShopItem)
+                {
+
+                    customShopItem.customCanBuy = MasterTraderCustomCanBuyOverride;
+                    customShopItem.customPrice = MasterTraderCustomPriceOverride;
+                    customShopItem.removeCurrency = MasterTraderRemoveCurrency;
+                    customShopItem.CurrencyType = CustomShopItemController.ShopCurrencyType.CUSTOM;
+                    customShopItem.customPriceSprite = "ui_coin";
+                    customShopItem.Initialize(customShopItem.item, shop);
+
+
+                }
+            }
+            yield break;
+        }
+
+
         private void ResetFloorSpecificData()
         {
-            if (CurrentState == States.ALLOWED)
+            if (CurrentState == States.ALLOWED && AdvancedGameStatsManager.Instance.GetSessionStatValue(CustomTrackedStats.INFECTION_FLOORS_ACTIVATED) == 1)
             {
                 SaveAPIManager.RegisterStatChange(CustomTrackedStats.INFECTION_FLOORS_ACTIVATED, 1);
 
@@ -267,7 +312,7 @@ namespace Planetside
                                 StaticReferences.StoredRoomObjects.TryGetValue("masteryRewardTrader", out obj);
 
                                 bool b = GameManager.Instance.Dungeon.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.FORGEGEON;
-                                IntVector2 offset = b == true ? new IntVector2(1, -2) : new IntVector2(7, 0);
+                                IntVector2 offset = b == true ? new IntVector2(1, -2) : new IntVector2(6, -2);
 
 
 
@@ -288,17 +333,43 @@ namespace Planetside
                                     {
                                         var ItemPoint = new GameObject("ItemPoint" + i);
                                         ItemPoint.transform.position = itemPositions[i];
-                                        FakePrefab.MarkAsFakePrefab(ItemPoint);
-                                        UnityEngine.Object.DontDestroyOnLoad(ItemPoint);
                                         ItemPoint.SetActive(true);
                                         posList.Add(ItemPoint.transform);
                                     }
                                     shopCont.spawnPositions = posList.ToArray();
-
+                                    shopCont.currencyType = CustomShopItemController.ShopCurrencyType.COINS;
+                                    shopCont.customCanBuy = MasterTraderCustomCanBuyOverride;
+                                    shopCont.customPrice = MasterTraderCustomPriceOverride;
+                                    shopCont.removeCurrency = MasterTraderRemoveCurrency;
+                                    //shopCont.
                                     foreach (var pos in shopCont.spawnPositions)
                                     {
                                         pos.parent = shopObj.gameObject.transform;
                                     }
+
+                                    GameManager.Instance.StartCoroutine(Delay(shopCont));
+
+                                    //var list = shopCont.m_itemControllers;
+                                    /*
+                                    foreach (var item in list)
+                                    {
+                                        ETGModConsole.Log(5);
+
+                                        if (item is CustomShopItemController customShopItem)
+                                        {
+                                            customShopItem.customCanBuy = null;
+                                            customShopItem.customPrice = null;
+                                            customShopItem.removeCurrency = null;
+                                            ETGModConsole.Log(6);
+
+                                            customShopItem.customCanBuy = MasterTraderCustomCanBuyOverride;
+                                            customShopItem.customPrice = MasterTraderCustomPriceOverride;
+                                            customShopItem.removeCurrency = MasterTraderRemoveCurrency;
+                                        }
+                                        ETGModConsole.Log(7);
+
+                                    }
+                                    */
                                 }
                             }
                             if (shope.OptionalMinimapIcon)
@@ -381,8 +452,11 @@ namespace Planetside
                     }
                 }
             }
-
             else if (CurrentState == States.ENABLED)
+            {
+                CurrentState = States.DISABLED;
+            }
+            else
             {
                 CurrentState = States.DISABLED;
             }

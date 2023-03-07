@@ -49,7 +49,7 @@ namespace Planetside
 				Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(projectileModule.projectiles[0]);
 				projectile.gameObject.SetActive(false);
 				projectileModule.projectiles[0] = projectile;
-				projectile.baseData.damage = 11f;
+				projectile.baseData.damage = 10f;
 				projectile.AdditionalScaleMultiplier = 1f;
 				projectile.baseData.range *= 10;
 				projectile.baseData.speed *= 2.5f;
@@ -220,7 +220,7 @@ namespace Planetside
 				AIActor target =  PlanetsideReflectionHelper.ReflectGetField<AIActor>(typeof(CerebralBoreProjectile), "m_targetEnemy", self);
 				if (target)
 				{
-                    target.healthHaver.ApplyDamage(20 * BraveTime.DeltaTime, self.transform.PositionVector2(), "Bored");
+                    target.healthHaver.ApplyDamage(16 * BraveTime.DeltaTime, self.transform.PositionVector2(), "Bored");
                     GlobalSparksDoer.DoSingleParticle(self.GetComponentInChildren<tk2dBaseSprite>().WorldCenter, UnityEngine.Random.insideUnitCircle * 3, null, null, null, GlobalSparksDoer.SparksType.BLOODY_BLOOD);
                 }
             }

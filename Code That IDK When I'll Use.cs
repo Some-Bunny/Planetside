@@ -210,7 +210,7 @@ item.CustomCost = 30;
 		}
 		private float random;
 
-		protected void Start()
+		public void Start()
 		{
 			try
 			{

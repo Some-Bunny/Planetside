@@ -130,7 +130,7 @@ namespace Planetside
 
 			public class ModifiedBossStatuesDirectionalWaveAllSimple : Script
 			{
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					this.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableOldKingHomingRingBullet);
 
@@ -154,7 +154,7 @@ namespace Planetside
 					{
 					}
 
-					protected override IEnumerator Top()
+					public override IEnumerator Top()
 					{
 						yield return this.Wait(300);
 						this.Vanish(false);
@@ -168,7 +168,7 @@ namespace Planetside
 					{
 					}
 
-					protected override IEnumerator Top()
+					public override IEnumerator Top()
 					{
 						this.ChangeSpeed(new Speed(9f, SpeedType.Absolute), 120);
 						yield return this.Wait(600);
@@ -181,7 +181,7 @@ namespace Planetside
 
 			public class ModifiedBossStatuesKaliSlam1 : Script
 			{
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					this.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableQuickHoming);
 					Vector2 fixedPosition = this.Position;
@@ -210,7 +210,7 @@ namespace Planetside
 						H = flip;
 					}
 
-					protected override IEnumerator Top()
+					public override IEnumerator Top()
 					{
 						this.ChangeDirection(new Direction(H, DirectionType.Sequence, -1f), 1);
 						this.ChangeSpeed(new Speed(12f, SpeedType.Absolute), 180);
@@ -233,15 +233,15 @@ namespace Planetside
 				this.DoOverride();
 			}
 
-			protected BossStatueController controller;
-			protected BossStatuesController allcontroller;
+			public BossStatueController controller;
+			public BossStatuesController allcontroller;
 
 
 
 
 			public class ModifiedBossStatuesCrosshair : Script
 			{
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					//this.EndOnBlank = true;
 					this.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableFrogger);
@@ -339,7 +339,7 @@ namespace Planetside
 						this.spawnTime = spawnTime;
 					}
 
-					protected override IEnumerator Top()
+					public override IEnumerator Top()
 					{
 						this.Projectile.ImmuneToSustainedBlanks = true;
 						this.Projectile.ImmuneToBlanks = true;
@@ -364,7 +364,7 @@ namespace Planetside
 					{
 						this.spawnTime = spawnTime;
 					}
-					protected override IEnumerator Top()
+					public override IEnumerator Top()
 					{
 						this.Projectile.ImmuneToSustainedBlanks = true;
 						this.Projectile.ImmuneToBlanks = true;
@@ -396,7 +396,7 @@ namespace Planetside
 					{
 						this.spawnTime = spawnTime;
 					}
-					protected override IEnumerator Top()
+					public override IEnumerator Top()
 					{
 						this.Projectile.ImmuneToSustainedBlanks = true;
 						this.Projectile.ImmuneToBlanks = true;

@@ -127,7 +127,9 @@ namespace Planetside
 			bool flag = component;
 			if (flag)
 			{
-				component.SpawnedFromOtherPlayerProjectile = true;
+				component.gameObject.AddComponent<RecursionPreventer>();
+
+                component.SpawnedFromOtherPlayerProjectile = true;
 				PlayerController playerController = this.m_projectile.Owner as PlayerController;
 				component.gameObject.AddComponent<RecursionPreventer>();
 				component.baseData.damage *= playerController.stats.GetStatValue(PlayerStats.StatType.Damage);
@@ -146,9 +148,7 @@ namespace Planetside
 		}
 		public IEnumerator Speed(Projectile projectile, int speeddown, float lifetime, float Speeddowndelay)
 		{
-			bool flag = projectile != null;
-			bool flag3 = flag;
-			if (flag3)
+			if (projectile != null)
 			{
 				float speed = projectile.baseData.speed / speeddown;
 				for (int i = 0; i < speeddown-1; i++)

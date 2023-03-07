@@ -10,10 +10,10 @@ namespace Planetside
     {
         public abstract string OverrideAIActorGUID { get; }
 
-        protected AIActor actor;
-        protected BehaviorSpeculator behaviorSpec;
-        protected AIBulletBank bulletBank;
-        protected HealthHaver healthHaver;
+        public AIActor actor;
+        public BehaviorSpeculator behaviorSpec;
+        public AIBulletBank bulletBank;
+        public HealthHaver healthHaver;
 
         public void SetupOB(AIActor actor)
         {
@@ -31,14 +31,14 @@ namespace Planetside
 
         public abstract void DoOverride();
 
-        protected void SetupBehavior(AttackBehaviorBase behavior)
+        public void SetupBehavior(AttackBehaviorBase behavior)
         {
             behavior.Init(behaviorSpec.gameObject, actor, behaviorSpec.aiShooter);
             behaviorSpec.AttackBehaviors.Add(behavior);
             behavior.Start();
         }
 
-        protected void SetupBehaviorABG(AttackBehaviorBase behavior, string name = "N/A", int probability = 1)
+        public void SetupBehaviorABG(AttackBehaviorBase behavior, string name = "N/A", int probability = 1)
         {
             behavior.Init(behaviorSpec.gameObject, actor, behaviorSpec.aiShooter);
             behaviorSpec.AttackBehaviorGroup.AttackBehaviors.Add(new AttackBehaviorGroup.AttackGroupItem

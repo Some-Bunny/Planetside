@@ -98,7 +98,7 @@ namespace Planetside
 			DebrisObject result = base.Drop(player);
 			return result;
 		}
-		protected override void OnDestroy()
+		public override void OnDestroy()
 		{
             if (base.Owner != null)
             {

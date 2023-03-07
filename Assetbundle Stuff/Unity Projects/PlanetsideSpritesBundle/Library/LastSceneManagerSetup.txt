@@ -1,1 +1,4 @@
-sceneSetups: []
+sceneSetups:
+- path: Assets/TK2DROOT/tk2d_demo/13 - runtime sprite collection & texturepacker.unity
+  isLoaded: 1
+  isActive: 1

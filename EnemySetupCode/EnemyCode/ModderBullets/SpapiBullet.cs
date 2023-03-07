@@ -20,7 +20,7 @@ namespace Planetside
 		}
 		public class SalamanderScript : Script 
 		{
-			protected override IEnumerator Top() 
+			public override IEnumerator Top() 
 			{
 				if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
 				{
@@ -41,7 +41,7 @@ namespace Planetside
 			public WallBullet() : base("bigBullet", false, false, false)
 			{
 			}
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				yield return this.Wait(60);
 				base.ChangeSpeed(new Speed(16f, SpeedType.Absolute), 60);

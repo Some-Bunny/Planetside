@@ -350,7 +350,7 @@ namespace Planetside
 
 		public class EatPants : Script 
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				for (int i = 0; i <= 12; i++)
 				{
@@ -364,7 +364,7 @@ namespace Planetside
 		public class SkellBullet : Bullet
 		{
 			public SkellBullet() : base("sweep", false, false, false){}
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				base.ChangeSpeed(new Speed(20f, SpeedType.Absolute), 60);
 				yield break;

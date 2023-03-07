@@ -22,7 +22,7 @@ namespace Planetside
 
 		public class SkellScript : Script 
 		{
-			protected override IEnumerator Top() 
+			public override IEnumerator Top() 
 			{
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("ffca09398635467da3b1f4a54bcfda80").bulletBank.GetBullet("directedfire"));
 				float aim = base.AimDirection;

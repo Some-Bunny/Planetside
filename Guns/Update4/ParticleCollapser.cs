@@ -180,7 +180,7 @@ namespace Planetside
 		}
 		public static int ParticleCollapserID;
 
-		protected override void Update()
+		public override void Update()
 		{
 			base.Update();
 			

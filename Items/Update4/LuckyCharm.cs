@@ -194,7 +194,7 @@ namespace Planetside
 
 
 
-		protected override void Update()
+		public override void Update()
         {
 			base.Update();
 			if (base.Owner != null && base.Owner.CurrentRoom != null)
@@ -221,7 +221,7 @@ namespace Planetside
 			base.Pickup(player);
 		}
 
-		protected override void OnDestroy()
+		public override void OnDestroy()
 		{
 			IsLucky = false;
 			if (base.Owner != null)

@@ -849,7 +849,7 @@ namespace Planetside
 
 		public class Crosslads : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
                 base.PostWwiseEvent("Play_EnergySwirl", null);
 
@@ -888,7 +888,7 @@ namespace Planetside
 					this.radiusCap = radiuscap;
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					this.ManualControl = true;
 					Vector2 centerPosition = this.Position;
@@ -946,7 +946,7 @@ namespace Planetside
 				}
 			}
 
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				if (IsHard == true)
 				{
@@ -985,7 +985,7 @@ namespace Planetside
 					Term = term;
                 }
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					this.ChangeSpeed(new Speed(PostSpeed, SpeedType.Absolute), Term);
 					for (int i = 0; i < 30; i++)
@@ -1010,7 +1010,7 @@ namespace Planetside
 
 		public class BigBallAttack : Script
 		{
-			protected override IEnumerator Top() 
+			public override IEnumerator Top() 
 			{
 				if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
 				{
@@ -1027,7 +1027,7 @@ namespace Planetside
 				{
 
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					this.Projectile.specRigidbody.CollideWithOthers = false;
 					base.ChangeSpeed(new Speed(12f, SpeedType.Absolute), 25);
@@ -1039,7 +1039,7 @@ namespace Planetside
 				public Superball() : base("big", false, false, false)
 				{
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					base.ChangeSpeed(new Speed(40f, SpeedType.Absolute), 180);
 					yield break;

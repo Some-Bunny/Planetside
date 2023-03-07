@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -143,6 +144,9 @@
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassLight.cs" />
     <Compile Include="DungeonPlaceables\TrespassPortalBack.cs" />
     <Compile Include="EnemySetupCode\EnemyAPI %28The one that modifies behaviors%29\OverrideBehavior.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\DallanBullet.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\QadayBullet.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\LynceusBullet.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\Update2\Ophanaim\OphanaimFlightBehavior.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\Update2\Ophanaim\OphanaimMinionController.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\Update3\Enemies\Oppressor.cs" />
@@ -213,6 +217,7 @@
     <Compile Include="Hooks And Actions\PickupHooks.cs" />
     <Compile Include="Hooks And Actions\ExplosionHooks.cs" />
     <Compile Include="Hooks And Actions\TitleDioramaHooks.cs" />
+    <Compile Include="Items\Update5\WrapaRounds.cs" />
     <Compile Include="Items\ItemClasses\MultiCompanionItem.cs" />
     <Compile Include="Items\Test Items\balls - Copy.cs" />
     <Compile Include="Items\Update5\ImmolationPowder.cs" />
@@ -244,6 +249,7 @@
     <Compile Include="Items\Update4\Modifiers\ModifierNeedle.cs" />
     <Compile Include="Items\Update5\SurgeGrenade.cs" />
     <Compile Include="Misc Stuff\CustomNotificationHandler.cs" />
+    <Compile Include="NPC Stuff\AlphabetLauncher.cs" />
     <Compile Include="Pickups\AllSeeingEyeMiniPickup.cs" />
     <Compile Include="Static Storage\StaticSpriteDefinitions.cs" />
     <Compile Include="Static Storage\StaticInformation.cs" />
@@ -474,7 +480,7 @@
     <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\SkilotarBullet.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\NevernamedBullet.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\SpapiBullet.cs" />
-    <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\BlazeyBullet.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\JuneBullet.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\CelBullet.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\BulletBank\BulletBankIntro.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\Shellrax\ShellraxIntro.cs" />
@@ -490,7 +496,6 @@
     <Compile Include="Static Storage\EnemyGUIDs.cs" />
     <Compile Include="Guns\Init Release\ExecutionersCrossbow.cs" />
     <Compile Include="Guns\Init Release\ExecutionersCrossbowSpecial.cs" />
-    <Compile Include="Guns\Update2\CapacitorProjectile.cs" />
     <Compile Include="Guns\Init Release\RebarPuncher.cs" />
     <Compile Include="Guns\Init Release\ImmateriaProjectile.cs" />
     <Compile Include="Guns\Init Release\Immateria.cs" />
@@ -4760,7 +4765,11 @@
     </Reference>
     <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Enter the Gungeon\EtG_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\Modular\packages\EtG.GameLibs.2.1.9.1\lib\net35\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Assembly-CSharp-firstpass, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Modular\packages\EtG.GameLibs.2.1.9.1\lib\net35\Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
     <Reference Include="BepInEx">
       <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Enter the Gungeon\BepInEx\core\BepInEx.dll</HintPath>
@@ -4786,7 +4795,7 @@
     </Reference>
     <Reference Include="PlayMaker, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\PlayMaker.dll</HintPath>
+      <HintPath>..\Modular\packages\EtG.GameLibs.2.1.9.1\lib\net35\PlayMaker.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -4963,6 +4972,129 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\OtherSpecialRooms\nemesis_miniboss_room.room" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Guns\Jsons\resault_fire_001.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\resault_fire_002.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\resault_fire_003.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\resault_idle_001.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\resault_reload_001.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\resault_reload_002.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\resault_reload_003.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\resault_reload_004.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\resault_reload_005.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\resault_reload_006.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\resault_reload_007.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\resault_reload_008.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\resault_reload_009.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\resault_reload_010.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\resault_reload_011.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\resault_reload_012.jtk2d" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Guns\Jsons\autocannon_fire_001.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\autocannon_fire_002.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\autocannon_fire_003.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\autocannon_fire_004.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\autocannon_fire_005.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\autocannon_fire_006.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\autocannon_fire_007.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\autocannon_idle_001.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\autocannon_idle_002.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\autocannon_idle_003.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\autocannon_idle_004.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\autocannon_idle_005.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\autocannon_idle_006.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\autocannon_idle_007.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\autocannon_idle_008.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\autocannon_idle_009.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\autocannon_reload_001.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\autocannon_reload_002.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\autocannon_reload_003.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\autocannon_reload_004.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\autocannon_reload_005.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\autocannon_reload_006.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\autocannon_reload_007.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\autocannon_reload_008.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\autocannon_reload_009.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\autocannon_reload_010.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\autocannon_reload_011.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\autocannon_reload_012.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\autocannon_reload_013.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\autocannon_reload_014.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\autocannon_reload_015.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\autocannon_reload_016.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\autocannon_reload_017.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\autocannon_reload_018.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\autocannon_reload_019.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\autocannon_reload_020.jtk2d" />
+    <EmbeddedResource Include="Guns\Jsons\autocannon_reload_021.jtk2d" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Guns\Jsons\capacitornew_charge_001.json" />
+    <EmbeddedResource Include="Guns\Jsons\capacitornew_charge_002.json" />
+    <EmbeddedResource Include="Guns\Jsons\capacitornew_charge_003.json" />
+    <EmbeddedResource Include="Guns\Jsons\capacitornew_charge_004.json" />
+    <EmbeddedResource Include="Guns\Jsons\capacitornew_charge_005.json" />
+    <EmbeddedResource Include="Guns\Jsons\capacitornew_charge_006.json" />
+    <EmbeddedResource Include="Guns\Jsons\capacitornew_charge_007.json" />
+    <EmbeddedResource Include="Guns\Jsons\capacitornew_fire_001.json" />
+    <EmbeddedResource Include="Guns\Jsons\capacitornew_fire_002.json" />
+    <EmbeddedResource Include="Guns\Jsons\capacitornew_fire_003.json" />
+    <EmbeddedResource Include="Guns\Jsons\capacitornew_fire_004.json" />
+    <EmbeddedResource Include="Guns\Jsons\capacitornew_idle_001.json" />
+    <EmbeddedResource Include="Guns\Jsons\capacitornew_idle_002.json" />
+    <EmbeddedResource Include="Guns\Jsons\capacitornew_idle_003.json" />
+    <EmbeddedResource Include="Guns\Jsons\capacitornew_idle_004.json" />
+    <EmbeddedResource Include="Guns\Jsons\capacitornew_reload_001.json" />
+    <EmbeddedResource Include="Guns\Jsons\capacitornew_reload_002.json" />
+    <EmbeddedResource Include="Guns\Jsons\capacitornew_reload_003.json" />
+    <EmbeddedResource Include="Guns\Jsons\capacitornew_reload_004.json" />
+    <EmbeddedResource Include="Guns\Jsons\capacitornew_reload_005.json" />
+    <EmbeddedResource Include="Guns\Jsons\capacitornew_reload_006.json" />
+    <EmbeddedResource Include="Guns\Jsons\capacitornew_reload_007.json" />
+    <EmbeddedResource Include="Guns\Jsons\capacitornew_reload_008.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Guns\Jsons\immateria_idle_001.json" />
+    <EmbeddedResource Include="Guns\Jsons\immateria_idle_002.json" />
+    <EmbeddedResource Include="Guns\Jsons\immateria_idle_003.json" />
+    <EmbeddedResource Include="Guns\Jsons\immateria_idle_004.json" />
+    <EmbeddedResource Include="Guns\Jsons\immateria_idle_005.json" />
+    <EmbeddedResource Include="Guns\Jsons\immateria_idle_006.json" />
+    <EmbeddedResource Include="Guns\Jsons\immateria_reload_001.json" />
+    <EmbeddedResource Include="Guns\Jsons\immateria_reload_002.json" />
+    <EmbeddedResource Include="Guns\Jsons\immateria_reload_003.json" />
+    <EmbeddedResource Include="Guns\Jsons\immateria_reload_004.json" />
+    <EmbeddedResource Include="Guns\Jsons\immateria_reload_005.json" />
+    <EmbeddedResource Include="Guns\Jsons\immateria_reload_006.json" />
+    <EmbeddedResource Include="Guns\Jsons\immateria_reload_007.json" />
+    <EmbeddedResource Include="Guns\Jsons\immateria_reload_008.json" />
+    <EmbeddedResource Include="Guns\Jsons\immateria_reload_009.json" />
+    <EmbeddedResource Include="Guns\Jsons\immateria_reload_010.json" />
+    <EmbeddedResource Include="Guns\Jsons\immateria_reload_011.json" />
+    <EmbeddedResource Include="Guns\Jsons\immateria_reload_012.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Guns\Jsons\immateria_fire_001.json" />
+    <EmbeddedResource Include="Guns\Jsons\immateria_fire_002.json" />
+    <EmbeddedResource Include="Guns\Jsons\immateria_fire_003.json" />
+    <EmbeddedResource Include="Guns\Jsons\immateria_fire_004.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Guns\Jsons\magicstaffofpower_fire_001.json" />
+    <EmbeddedResource Include="Guns\Jsons\magicstaffofpower_fire_002.json" />
+    <EmbeddedResource Include="Guns\Jsons\magicstaffofpower_fire_003.json" />
+    <EmbeddedResource Include="Guns\Jsons\magicstaffofpower_fire_004.json" />
+    <EmbeddedResource Include="Guns\Jsons\magicstaffofpower_idle_001.json" />
+    <EmbeddedResource Include="Guns\Jsons\magicstaffofpower_idle_002.json" />
+    <EmbeddedResource Include="Guns\Jsons\magicstaffofpower_idle_003.json" />
+    <EmbeddedResource Include="Guns\Jsons\magicstaffofpower_reload_001.json" />
+    <EmbeddedResource Include="Guns\Jsons\magicstaffofpower_reload_002.json" />
+    <EmbeddedResource Include="Guns\Jsons\magicstaffofpower_reload_003.json" />
+    <EmbeddedResource Include="Guns\Jsons\magicstaffofpower_reload_004.json" />
+    <EmbeddedResource Include="Guns\Jsons\magicstaffofpower_reload_005.json" />
+    <EmbeddedResource Include="Guns\Jsons\magicstaffofpower_reload_006.json" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -75,7 +75,7 @@ namespace Planetside
             GameManager.Instance.OnNewLevelFullyLoaded += this.FixGuon;
         }
 
-        protected override void Update()
+        public override void Update()
         {
            
         }
@@ -108,7 +108,7 @@ namespace Planetside
             return base.Drop(player);
         }
 
-        protected override void OnDestroy()
+        public override void OnDestroy()
         {
             if (base.Owner != null)
             {

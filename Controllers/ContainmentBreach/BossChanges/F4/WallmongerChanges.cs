@@ -82,7 +82,7 @@ namespace Planetside
 
 		public class ModifiedDemonWallBasicWaves1 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				int group = 1;
 				for (int i = 0; i < 12; i++)
@@ -166,7 +166,7 @@ namespace Planetside
 
 		public class ModifiedDemonWallLeapLine1 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				float num = 1f;
 				int randomizer = UnityEngine.Random.Range(6, 18);
@@ -196,7 +196,7 @@ namespace Planetside
 				{
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					this.ManualControl = true;
 					Vector2 truePosition = this.Position;
@@ -218,7 +218,7 @@ namespace Planetside
 
 		public class ModifiedDemonWallSpew1 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				for (int i = 0; i < 4; i++)
 				{

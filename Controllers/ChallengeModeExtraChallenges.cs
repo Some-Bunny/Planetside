@@ -128,7 +128,7 @@ namespace Planetside
 
         public class Skyfall : Script
         {
-            protected override IEnumerator Top()
+            public override IEnumerator Top()
             {
                 base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("4d164ba3f62648809a4a82c90fc22cae").bulletBank.GetBullet("big_one"));
                 GameObject dragunRocket = EnemyDatabase.GetOrLoadByGuid("05b8afe0b6cc4fffa9dc6036fa24c8ec").GetComponent<DraGunController>().skyRocket;
@@ -160,7 +160,7 @@ namespace Planetside
                     base.Initialize();
                 }
 
-                protected override IEnumerator Top()
+                public override IEnumerator Top()
                 {
                   
                     base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("1bc2a07ef87741be90c37096910843ab").bulletBank.GetBullet("reversible"));
@@ -194,7 +194,7 @@ namespace Planetside
                     public BurstBullet() : base("reversible", false, false, false)
                     {
                     }
-                    protected override IEnumerator Top()
+                    public override IEnumerator Top()
                     {
                         base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 60);
                         yield return base.Wait(60);

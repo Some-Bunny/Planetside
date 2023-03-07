@@ -29,70 +29,74 @@ namespace Planetside
 		{
 			if (base.aiActor != null)
 			{
-				if (base.aiActor.bulletBank == null)
+				if (!InfectedEnemyEffect.InfectedEnemyBurstBlacklist.Contains(base.aiActor.EnemyGuid))
 				{
-					return;
-				}
-				else
-				{
-					if (base.aiActor.bulletBank.Bullets == null) 
-					{ 
-						base.aiActor.bulletBank.Bullets = new List<AIBulletBank.Entry>(); 
-					}
 
-					base.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableLargeSpore);
-					base.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
-				}
-				AIBulletBank b = null;
-				b = base.aiActor.GetComponent<AIBulletBank>() ?? base.aiActor.transform.Find("tempObjInfection").GetOrAddComponent<AIBulletBank>();
-				if (b == null)
-				{
-					var bullet = base.aiActor.AddComponent<AIBulletBank>();
-                    bullet.Bullets = new List<AIBulletBank.Entry>();
+                    if (base.aiActor.bulletBank == null)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        if (base.aiActor.bulletBank.Bullets == null)
+                        {
+                            base.aiActor.bulletBank.Bullets = new List<AIBulletBank.Entry>();
+                        }
 
-
-                    //bulletBank.FixedPlayerRigidbody = null;
-                    //bulletBank.ActorName = "Toddy";
-                    //bulletBank.transforms = new List<Transform>() { base.aiActor.transform };
-
-                    bullet.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableLargeSpore);
-                    bullet.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
-                    b = bullet;
-
-                    /*
-					GameObject ob = new GameObject();
+                        base.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableLargeSpore);
+                        base.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
+                    }
+                    AIBulletBank b = null;
+                    b = base.aiActor.GetComponent<AIBulletBank>() ?? base.aiActor.transform.Find("tempObjInfection").GetOrAddComponent<AIBulletBank>();
+                    if (b == null)
+                    {
+                        var bullet = base.aiActor.AddComponent<AIBulletBank>();
+                        bullet.Bullets = new List<AIBulletBank.Entry>();
 
 
-                    AIBulletBank bulletBank = new AIBulletBank();
-                    bulletBank.Bullets = new List<AIBulletBank.Entry>();
+                        //bulletBank.FixedPlayerRigidbody = null;
+                        //bulletBank.ActorName = "Toddy";
+                        //bulletBank.transforms = new List<Transform>() { base.aiActor.transform };
+
+                        bullet.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableLargeSpore);
+                        bullet.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
+                        b = bullet;
+
+                        /*
+                        GameObject ob = new GameObject();
 
 
-                    bulletBank.FixedPlayerRigidbody = null;
-                    bulletBank.ActorName = "Toddy";
-                    bulletBank.transforms = new List<Transform>() { ob.transform };
-                    ob.AddComponent(bulletBank);
+                        AIBulletBank bulletBank = new AIBulletBank();
+                        bulletBank.Bullets = new List<AIBulletBank.Entry>();
 
 
-                    bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableLargeSpore);
-                    bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
+                        bulletBank.FixedPlayerRigidbody = null;
+                        bulletBank.ActorName = "Toddy";
+                        bulletBank.transforms = new List<Transform>() { ob.transform };
+                        ob.AddComponent(bulletBank);
 
-                    b = bulletBank;
 
-                    Destroy(ob, 3);
-					*/
+                        bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableLargeSpore);
+                        bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
+
+                        b = bulletBank;
+
+                        Destroy(ob, 3);
+                        */
+                    }
+                    if (b != null)
+                    {
+                        SpawnManager.SpawnBulletScript(base.aiActor, base.aiActor.sprite.WorldCenter, b, new CustomBulletScriptSelector(typeof(Splat)), StringTableManager.GetEnemiesString("#TRAP", -1));
+                    }
+
+
+                    AkSoundEngine.PostEvent("Play_ENM_blobulord_bubble_01", base.aiActor.gameObject);
+                    GameObject gameObject = SpawnManager.SpawnVFX(StaticVFXStorage.BlueSynergyPoofVFX, false);
+
+                    gameObject.transform.position = base.aiActor.sprite.WorldCenter;
+                    gameObject.transform.localScale = Vector3.one * 2;
+                    UnityEngine.Object.Destroy(gameObject, 2);
                 }
-                if (b != null)
-				{
-                    SpawnManager.SpawnBulletScript(base.aiActor, base.aiActor.sprite.WorldCenter, b, new CustomBulletScriptSelector(typeof(Splat)), StringTableManager.GetEnemiesString("#TRAP", -1));
-                }
-
-
-                AkSoundEngine.PostEvent("Play_ENM_blobulord_bubble_01", base.aiActor.gameObject);
-				GameObject gameObject = SpawnManager.SpawnVFX(StaticVFXStorage.BlueSynergyPoofVFX, false);
-
-				gameObject.transform.position = base.aiActor.sprite.WorldCenter;
-				gameObject.transform.localScale = Vector3.one * 2;
-				UnityEngine.Object.Destroy(gameObject, 2);
 			}
 		}
 
@@ -106,7 +110,7 @@ namespace Planetside
 				float Bullets = 4;
 				for (int i = 0; i < HP; i++)
 				{
-					if (i % 15 == 0)
+					if (i % 30 == 0)
 					{ Bullets++; }
 				}
 				return (int)Bullets;
@@ -115,7 +119,7 @@ namespace Planetside
 
 			public int AmountOFBullets;
 
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				for (int e = 0; e < (int)ReturnBulletAmount(base.BulletBank.aiActor); e++)
 				{
@@ -127,7 +131,7 @@ namespace Planetside
 			public class Spore : Bullet
 			{
 				public Spore() : base(UnityEngine.Random.value > 0.33f ? StaticUndodgeableBulletEntries.undodgeableSmallSpore.Name : StaticUndodgeableBulletEntries.undodgeableLargeSpore.Name, false, false, false) { }
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), UnityEngine.Random.Range(60, 150));
 					yield return this.Wait(450);
@@ -192,19 +196,88 @@ namespace Planetside
 				Elasped += BraveTime.DeltaTime;
 				if (Elasped > Duration)
                 {
-
-                    Elasped = 0;
-					if (EnemyIsVisible(actor.aiActor) == true)
-                    {
-						if (actor.GetComponent<AIBulletBank>() == null && actor.transform?.Find("tempObjInfection")?.GetComponent<AIBulletBank>() == null) { return; }
+					if (actor.aiActor == null) { return; }
+                    if (!InfectedEnemyEffect.InfectedEnemyParticleBlacklist.Contains(actor.aiActor.EnemyGuid))
+					{
+                        Elasped = 0;
+                        if (EnemyIsVisible(actor.aiActor) == true)
+                        {
+                            if (actor.GetComponent<AIBulletBank>() == null && actor.transform?.Find("tempObjInfection")?.GetComponent<AIBulletBank>() == null) { return; }
                             SpawnManager.SpawnBulletScript(actor, actor.sprite.WorldCenter, actor.GetComponent<AIBulletBank>() ?? actor.transform?.Find("tempObjInfection")?.GetComponent<AIBulletBank>(), new CustomBulletScriptSelector(typeof(SplatWeak)), StringTableManager.GetEnemiesString("#TRAP", -1));
-					}
+                        }
+                    }
+                        
 				}
             }
 		}
 
 		public float Elasped;
         public float Duration = 1;
+
+
+        public static List<string> InfectedEnemyBurstBlacklist => new List<string>()
+        {
+            EnemyGuidDatabase.Entries["blobulon"],
+            EnemyGuidDatabase.Entries["blobuloid"],
+            EnemyGuidDatabase.Entries["poisbulon"],
+            EnemyGuidDatabase.Entries["poisbuloid"],
+            EnemyGuidDatabase.Entries["mountain_cube"],
+            EnemyGuidDatabase.Entries["lead_cube"],
+            EnemyGuidDatabase.Entries["flesh_cube"],
+            EnemyGuidDatabase.Entries["spent"],
+            EnemyGuidDatabase.Entries["bullat"],
+            EnemyGuidDatabase.Entries["shotgat"],
+            EnemyGuidDatabase.Entries["grenat"],
+            EnemyGuidDatabase.Entries["spirat"],
+            EnemyGuidDatabase.Entries["wall_mimic"],
+            EnemyGuidDatabase.Entries["bullet_shark"],
+            EnemyGuidDatabase.Entries["tarnisher"],
+            EnemyGuidDatabase.Entries["grip_master"],
+            EnemyGuidDatabase.Entries["great_bullet_shark"],
+            EnemyGuidDatabase.Entries["mine_flayers_bell"],
+            EnemyGuidDatabase.Entries["candle_guy"],
+            EnemyGuidDatabase.Entries["fusebot"],
+            EnemyGuidDatabase.Entries["mouser"],
+            EnemyGuidDatabase.Entries["poopulons_corn"],
+            EnemyGuidDatabase.Entries["chicken"],
+            EnemyGuidDatabase.Entries["snake"],
+            EnemyGuidDatabase.Entries["tiny_blobulord"],
+            EnemyGuidDatabase.Entries["rat"],
+            EnemyGuidDatabase.Entries["rat_candle"],
+        };
+
+        public static List<string> InfectedEnemyParticleBlacklist => new List<string>()
+        {
+            EnemyGuidDatabase.Entries["blobulin"],
+            EnemyGuidDatabase.Entries["poisbulin"],
+            EnemyGuidDatabase.Entries["mountain_cube"],
+            EnemyGuidDatabase.Entries["lead_cube"],
+            EnemyGuidDatabase.Entries["flesh_cube"],
+            EnemyGuidDatabase.Entries["misfire_beast"],
+            EnemyGuidDatabase.Entries["killithid"],
+            EnemyGuidDatabase.Entries["leadbulon"],
+            EnemyGuidDatabase.Entries["wall_mimic"],
+            EnemyGuidDatabase.Entries["gun_cultist"],
+            EnemyGuidDatabase.Entries["rubber_kin"],
+            EnemyGuidDatabase.Entries["pot_fairy"],
+            EnemyGuidDatabase.Entries["musketball"],
+            EnemyGuidDatabase.Entries["tarnisher"],
+            EnemyGuidDatabase.Entries["grip_master"],
+            EnemyGuidDatabase.Entries["beadie"],
+            EnemyGuidDatabase.Entries["mine_flayers_claymore"],
+            EnemyGuidDatabase.Entries["mine_flayers_bell"],
+            EnemyGuidDatabase.Entries["summoned_treadnaughts_bullet_kin"],
+            EnemyGuidDatabase.Entries["candle_guy"],
+            EnemyGuidDatabase.Entries["fusebot"],
+            EnemyGuidDatabase.Entries["mouser"],
+            EnemyGuidDatabase.Entries["poopulons_corn"],
+            EnemyGuidDatabase.Entries["chicken"],
+            EnemyGuidDatabase.Entries["snake"],
+            EnemyGuidDatabase.Entries["tiny_blobulord"],
+            EnemyGuidDatabase.Entries["rat_candle"],
+            EnemyGuidDatabase.Entries["rat"],
+
+        };
 
 
         public override void OnEffectApplied(GameActor actor, RuntimeGameActorEffectData effectData, float partialAmount = 1)
@@ -329,7 +402,7 @@ namespace Planetside
 
 		public class SplatWeak : Script
         {
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				for (int e = 0; e < 1; e++)
 				{
@@ -341,7 +414,7 @@ namespace Planetside
 			public class Spore : Bullet
 			{
 				public Spore() : base(UnityEngine.Random.value > 0.33f ? StaticUndodgeableBulletEntries.undodgeableSmallSpore.Name : StaticUndodgeableBulletEntries.undodgeableLargeSpore.Name, false, false, false) { }
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), UnityEngine.Random.Range(30, 120));
 					yield return this.Wait(450);

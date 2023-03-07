@@ -88,14 +88,14 @@ namespace Planetside
             }
         }
 
-        protected override void OnPreDrop(PlayerController user)
+        public override void OnPreDrop(PlayerController user)
         {
             user.PostProcessProjectile -= this.PostProcessProjectile;
             user.PostProcessBeam -= this.PostProcessBeam;
             base.OnPreDrop(user);
         }
 
-        protected override void OnDestroy()
+        public override void OnDestroy()
         {
             if (base.LastOwner != null) 
             {
@@ -139,7 +139,7 @@ namespace Planetside
         }
 
 
-        protected override void DoEffect(PlayerController user)
+        public override void DoEffect(PlayerController user)
         {
             var currentRoom = user.CurrentRoom;
             if (currentRoom != null)

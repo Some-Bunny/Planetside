@@ -67,9 +67,9 @@ namespace Planetside
 			List<string> mandatoryConsoleIDs = new List<string>
 			{
 				"psog:statiblast",
-				"bsg"
+				"bsg"	
 			};
-			CustomSynergies.Add("Big Shocking Gun 9000", mandatoryConsoleIDs, null, true);
+			CustomSynergies.Add("Big Shocking Gun 9000", mandatoryConsoleIDs, null, false);
 
 		}
 		public static int StatiBlastID;

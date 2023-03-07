@@ -20,7 +20,7 @@ namespace Planetside
 		}
 		public class SkellScript : Script 
 		{
-			protected override IEnumerator Top() 
+			public override IEnumerator Top() 
 			{
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("frogger"));
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("1bc2a07ef87741be90c37096910843ab").bulletBank.GetBullet("icicle"));

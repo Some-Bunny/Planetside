@@ -51,7 +51,7 @@ namespace Planetside
 
 		public class ModifiedBulletBrosJumpBurst2 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				float num = base.RandomAngle();
 				for (int i = 0; i < 18; i++)
@@ -73,7 +73,7 @@ namespace Planetside
 
 		public class ModifiedBulletBrosJumpBurst1 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				float num = base.RandomAngle();
 				float num2 = 45f;
@@ -90,7 +90,7 @@ namespace Planetside
 
 		public class BulletBrosSweepAttack1 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				float sign = 1f;
 				if (this.BulletManager.PlayerVelocity() != Vector2.zero)
@@ -155,7 +155,7 @@ namespace Planetside
 
 		public class ModifiedBulletBrosTridentAttack1 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				for (int i = 0; i < 3; i++)
 				{
@@ -171,7 +171,7 @@ namespace Planetside
 
 		public class ModifiedBulletBrosAngryAttack1 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				for (float num = -2f; num <= 2f; num += 1f)
 				{

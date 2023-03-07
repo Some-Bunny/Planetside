@@ -52,7 +52,7 @@ namespace Planetside
             SomethingWickedEventManager.currentSWState = SomethingWickedEventManager.States.ALLOWED;
         }
 
-        protected override void OnDestroy()
+        public override void OnDestroy()
 		{
             base.OnDestroy();
 		}        
@@ -90,7 +90,7 @@ namespace Planetside
         {
             base.Pickup(player);
         }
-        protected override void OnDestroy()
+        public override void OnDestroy()
         {
             base.OnDestroy();
         }

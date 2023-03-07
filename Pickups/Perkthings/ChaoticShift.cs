@@ -3,6 +3,7 @@ using ItemAPI;
 using System;
 using UnityEngine;
 using System.Collections.Generic;
+using SaveAPI;
 
 namespace Planetside
 {
@@ -16,16 +17,36 @@ namespace Planetside
         public void AddModule()
         {
             AmountOfModulesCurrently++;
-            Gun randomGun = GetRandomGunOfQualitiesAndShootStyle(new System.Random(UnityEngine.Random.Range(1, 1000)), BannedIDs, self.DefaultModule.shootStyle, new PickupObject.ItemQuality[] { self.quality });
+            Gun randomGun = GetRandomGunOfQualitiesAndShootStyle(new System.Random(UnityEngine.Random.Range(1, 1000)), BannedIDs, self.DefaultModule.shootStyle, ReturnQualities(self.quality));
             BannedIDs.Add(randomGun.PickupObjectId);
             ProjectileVolleyData projectileVolleyData = CombineVolleys(self, randomGun);
             ReconfigureVolley(projectileVolleyData);
             self.RawSourceVolley = projectileVolleyData;
-            //self.SetBaseMaxAmmo(self.GetBaseMaxAmmo() + randomGun.GetBaseMaxAmmo());
-            //self.GainAmmo(randomGun.CurrentAmmo);
+            self.SetBaseMaxAmmo(self.GetBaseMaxAmmo() + (int)(randomGun.GetBaseMaxAmmo() / 0.25f));
+            self.GainAmmo((int)(randomGun.CurrentAmmo / 0.25f));
             self.OnPrePlayerChange();
             player.inventory.ChangeGun(0, false, false);
         }
+
+        public PickupObject.ItemQuality[] ReturnQualities(PickupObject.ItemQuality itemQuality)
+        {
+            switch(itemQuality)
+            {
+                case PickupObject.ItemQuality.D:
+                    return new PickupObject.ItemQuality[] { PickupObject.ItemQuality.D };
+                case PickupObject.ItemQuality.C:
+                    return new PickupObject.ItemQuality[] { PickupObject.ItemQuality.D, PickupObject.ItemQuality.C };
+                case PickupObject.ItemQuality.B:
+                    return new PickupObject.ItemQuality[] { PickupObject.ItemQuality.D, PickupObject.ItemQuality.C, PickupObject.ItemQuality.B };
+                case PickupObject.ItemQuality.A:
+                    return new PickupObject.ItemQuality[] { PickupObject.ItemQuality.D, PickupObject.ItemQuality.C, PickupObject.ItemQuality.B, PickupObject.ItemQuality.A };
+                case PickupObject.ItemQuality.S:
+                    return new PickupObject.ItemQuality[] { PickupObject.ItemQuality.D, PickupObject.ItemQuality.C, PickupObject.ItemQuality.B, PickupObject.ItemQuality.A, PickupObject.ItemQuality.S };
+                default:
+                    return new PickupObject.ItemQuality[] { PickupObject.ItemQuality.D };
+            }
+        }
+
 
         public static Gun GetRandomGunOfQualitiesAndShootStyle(System.Random usedRandom, List<int> excludedIDs, ProjectileModule.ShootStyle shootStyle , params PickupObject.ItemQuality[] qualities )
         {
@@ -68,7 +89,7 @@ namespace Planetside
         }
 
         private List<int> BannedIDs = new List<int>();
-        protected static void ReconfigureVolley(ProjectileVolleyData newVolley)
+        public static void ReconfigureVolley(ProjectileVolleyData newVolley)
         {
             bool flag = false;
             bool flag2 = false;
@@ -219,7 +240,7 @@ namespace Planetside
                
             }
         }
-        protected bool IsGunValid(Gun g)
+        public bool IsGunValid(Gun g)
         {
             return !g.InfiniteAmmo && g.CanActuallyBeDropped(g.CurrentOwner as PlayerController);
         }
@@ -229,7 +250,7 @@ namespace Planetside
         public PlayerController player;
     }
 
-    class ChaoticShift : PickupObject, IPlayerInteractable
+    class ChaoticShift : PerkPickupObject, IPlayerInteractable
     {
         public static void Init()
         {
@@ -249,11 +270,39 @@ namespace Planetside
             PerkParticleSystemController particles = gameObject.AddComponent<PerkParticleSystemController>();
             particles.ParticleSystemColor = new Color(0, 255, 0);
             particles.ParticleSystemColor2 = new Color(216, 191, 216);
-            OutlineColor = new Color(0f, 0.2f, 0f);
+            item.OutlineColor = new Color(0f, 0.2f, 0f);
 
+          
         }
+        public override CustomTrackedStats StatToIncreaseOnPickup => SaveAPI.CustomTrackedStats.AMOUNT_BOUGHT_CHAOTICSHIFT;
+        public override List<PerkDisplayContainer> perkDisplayContainers => new List<PerkDisplayContainer>()
+        {
+                new PerkDisplayContainer()
+                {
+                    AmountToBuyBeforeReveal = 1,
+                    LockedString = AlphabetController.ConvertString("Increased Guns"),
+                    UnlockedString = "All guns are doubled, in spirit.",
+                    requiresFlag = false
+                },
+                new PerkDisplayContainer()
+                {
+                    AmountToBuyBeforeReveal = 3,
+                    LockedString = AlphabetController.ConvertString("Stat Change Damage Ammo"),
+                    UnlockedString = "Reduces your damage, but increases your ammo.",
+                    requiresFlag = false
+                },
+                new PerkDisplayContainer()
+                {
+                    AmountToBuyBeforeReveal = 4,
+                    LockedString = AlphabetController.ConvertString("Stacking Adds Guns"),
+                    UnlockedString = "Stacking adds another gun, increases ammo and decreases damage more.",
+                    FlagToTrack = SaveAPI.CustomDungeonFlags.CHAOTICSHIFT_FLAG_STACK
+                },
+        };
+
+
         public static int ChaoticShiftID;
-        private static Color OutlineColor;
+
 
         public new bool PrerequisitesMet()
         {
@@ -266,15 +315,15 @@ namespace Planetside
                 return;    
             m_hasBeenPickedUp = true;
             AkSoundEngine.PostEvent("Play_OBJ_dice_bless_01", player.gameObject);
-            OtherTools.ApplyStat(player, PlayerStats.StatType.Damage, 0.6f, StatModifier.ModifyMethod.MULTIPLICATIVE);
-            OtherTools.ApplyStat(player, PlayerStats.StatType.AmmoCapacityMultiplier, 1.05f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+            OtherTools.ApplyStat(player, PlayerStats.StatType.Damage, 0.65f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+            //OtherTools.ApplyStat(player, PlayerStats.StatType.AmmoCapacityMultiplier, 1.05f, StatModifier.ModifyMethod.MULTIPLICATIVE);
 
             PerkParticleSystemController cont = base.GetComponent<PerkParticleSystemController>();
             if (cont != null) { cont.DoBigBurst(player); }
             ChaoticShiftController chaos = player.gameObject.GetOrAddComponent<ChaoticShiftController>();
             chaos.player = player;
             if (chaos.hasBeenPickedup == true)
-            { chaos.IncrementStack(); }
+            { chaos.IncrementStack(); SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.CHAOTICSHIFT_FLAG_STACK, true); }
             Exploder.DoDistortionWave(player.sprite.WorldTopCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
             player.BloopItemAboveHead(base.sprite, "");
             string BlurbText = chaos.hasBeenPickedup == true ? "Another Gun Added." : "All Weapons are Doubled.";
@@ -285,11 +334,7 @@ namespace Planetside
             UnityEngine.Object.Destroy(base.gameObject);
         }
 
-        public float distortionMaxRadius = 30f;
-        public float distortionDuration = 2f;
-        public float distortionIntensity = 0.7f;
-        public float distortionThickness = 0.1f;
-        protected void Start()
+        public void Start()
         {
             try
             {
@@ -302,50 +347,7 @@ namespace Planetside
             }
         }
 
-        public float GetDistanceToPoint(Vector2 point)
-        {
-            if (!base.sprite)
-            {
-                return 1000f;
-            }
-            Bounds bounds = base.sprite.GetBounds();
-            bounds.SetMinMax(bounds.min + base.transform.position, bounds.max + base.transform.position);
-            float num = Mathf.Max(Mathf.Min(point.x, bounds.max.x), bounds.min.x);
-            float num2 = Mathf.Max(Mathf.Min(point.y, bounds.max.y), bounds.min.y);
-            return Mathf.Sqrt((point.x - num) * (point.x - num) + (point.y - num2) * (point.y - num2)) / 1.5f;
-        }
-
-        public float GetOverrideMaxDistance()
-        {
-            return 1f;
-        }
-
-        public void OnEnteredRange(PlayerController interactor)
-        {
-            if (!this)
-            {
-                return;
-            }
-            if (!interactor.CurrentRoom.IsRegistered(this) && !RoomHandler.unassignedInteractableObjects.Contains(this))
-            {
-                return;
-            }
-            SpriteOutlineManager.RemoveOutlineFromSprite(base.sprite, false);
-            SpriteOutlineManager.AddOutlineToSprite(base.sprite, OutlineColor, 0.1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
-            base.sprite.UpdateZDepth();
-        }
-
-        public void OnExitRange(PlayerController interactor)
-        {
-            if (!this)
-            {
-                return;
-            }
-            SpriteOutlineManager.RemoveOutlineFromSprite(base.sprite, true);
-            SpriteOutlineManager.AddOutlineToSprite(base.sprite, Color.black, 0.1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
-            base.sprite.UpdateZDepth();
-        }
-
+      
         private void Update()
         {
             if (!this.m_hasBeenPickedUp && !this.m_isBeingEyedByRat && base.ShouldBeTakenByRat(base.sprite.WorldCenter))
@@ -354,25 +356,7 @@ namespace Planetside
             }
         }
 
-        public void Interact(PlayerController interactor)
-        {
-            if (!this)
-            {
-                return;
-            }
-            if (RoomHandler.unassignedInteractableObjects.Contains(this))
-            {
-                RoomHandler.unassignedInteractableObjects.Remove(this);
-            }
-            SpriteOutlineManager.RemoveOutlineFromSprite(base.sprite, true);
-            this.Pickup(interactor);
-        }
 
-        public string GetAnimationState(PlayerController interactor, out bool shouldBeFlipped)
-        {
-            shouldBeFlipped = false;
-            return string.Empty;
-        }
 
         private bool m_hasBeenPickedUp;
     }

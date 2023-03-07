@@ -455,7 +455,7 @@ namespace Planetside
 
 		public class EatPants : Script 
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 
 				if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
@@ -484,7 +484,7 @@ namespace Planetside
 			{
 
 			}
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				base.ChangeSpeed(new Speed(1f, SpeedType.Absolute), 20);
 				yield return this.Wait(60);
@@ -494,7 +494,7 @@ namespace Planetside
 		}
 		public class SkullScript : Script 
 		{
-			protected override IEnumerator Top() 
+			public override IEnumerator Top() 
 			{
 				base.PostWwiseEvent("Play_WPN_woodbow_shot_02", null);
 				base.Fire(new Direction(0f, DirectionType.Aim, -1f), new Speed(3f, SpeedType.Absolute), new Bullet("homing", false, false, false));

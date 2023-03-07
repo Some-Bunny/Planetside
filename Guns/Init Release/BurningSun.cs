@@ -134,10 +134,48 @@ namespace Planetside
 			};
 
 
-			CustomSynergies.Add("Praise The Gun!", mandatoryConsoleIDs, optionalConsoleIDs, true);
+			CustomSynergies.Add("Praise The Gun!", mandatoryConsoleIDs, optionalConsoleIDs, false);
 			BurningSun.BurningSunId = gun.PickupObjectId;
 			ItemIDs.AddToList(gun.PickupObjectId);
-		}
+
+			
+			/*
+			var EnemBav = EnemyDatabase.GetOrLoadByGuid("8b4a938cdbc64e64822e841e482ba3d2"));
+
+            var BuffVFXJam3 = EnemBav.behaviorSpeculator.AttackBehaviorGroup.GetAttackBehavior(0) as BuffEnemiesBehavior;
+            var buffsprite = BuffVFXJam3.BuffVfx;
+
+            List<AIAnimator.NamedVFXPool> namedVFX = EnemBav.aiAnimator.OtherVFX;
+
+
+            List<AIAnimator.NamedVFXPool> namedVFXList = enemy.aiAnimator.OtherVFX;
+            if (namedVFXList == null) { namedVFXList = new List<AIAnimator.NamedVFXPool>() { }; }
+            namedVFXList.Add(new AIAnimator.NamedVFXPool()
+            {
+                name = "buffy",
+                vfxPool = new VFXPool() { type = VFXPoolType.Single, effects = new VFXComplex[]
+					{
+						new VFXComplex()
+						{
+							effects = new VFXObject[]
+							{
+								new VFXObject()
+								{
+									alignment = VFXAlignment.NormalAligned,
+									orphaned = true,
+									destructible = false,
+									effect = namedVFX[0].vfxPool.effects[0].effects[0].effect,
+									attached = true,
+									persistsOnDeath	= false
+                                }
+							}
+						}
+					} 
+				},
+				anchorTransform = enemy.transform
+            });
+			*/
+        }
 		public static int BurningSunId;
 
 		private static bool CanSynergy()

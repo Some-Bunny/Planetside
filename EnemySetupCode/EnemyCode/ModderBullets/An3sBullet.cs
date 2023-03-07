@@ -22,7 +22,7 @@ namespace Planetside
 
 		public class SkellScript : Script 
 		{
-			protected override IEnumerator Top() 
+			public override IEnumerator Top() 
 			{
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("ring"));
 				float startDirection = base.RandomAngle();
@@ -46,7 +46,7 @@ namespace Planetside
 				this.m_radius = aradius;
 			}
 
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				base.ManualControl = true;
 				Vector2 centerPosition = base.Position;

@@ -82,7 +82,7 @@ namespace Planetside
 
 		public class ModifiedMineFlayerMineCircle1 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				int numMines = ((double)this.BulletBank.healthHaver.GetCurrentHealthPercentage() <= 0.5) ? 12 : 9;
 				int goopExceptionId = DeadlyDeadlyGoopManager.RegisterUngoopableCircle(this.BulletBank.specRigidbody.UnitCenter, 2f);
@@ -165,7 +165,7 @@ namespace Planetside
 				}
 
 				// Token: 0x06000A28 RID: 2600 RVA: 0x0002EC28 File Offset: 0x0002CE28
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					this.ManualControl = true;
 					this.Direction = (this.m_goalPos - this.Position).ToAngle();
@@ -203,7 +203,7 @@ namespace Planetside
 
 		public class ModifiedMineFlayerMineSeeking1 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				int numMines = ((double)this.BulletBank.healthHaver.GetCurrentHealthPercentage() <= 0.5) ? 12 : 9;
 				int goopExceptionId = DeadlyDeadlyGoopManager.RegisterUngoopableCircle(this.BulletBank.specRigidbody.UnitCenter, 2f);
@@ -277,7 +277,7 @@ namespace Planetside
 					this.m_index = index;
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					this.ManualControl = true;
 					this.Direction = (this.m_goalPos - this.Position).ToAngle();
@@ -310,7 +310,7 @@ namespace Planetside
 
 		public class ModifiedMineFlayerBong1 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				float startDirection = this.RandomAngle();
 				float delta = 15f;
@@ -329,7 +329,7 @@ namespace Planetside
 				{
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					this.Projectile.IgnoreTileCollisionsFor(1f);
 
@@ -348,7 +348,7 @@ namespace Planetside
 
 		public class ModifiedMineFlayerSoundWaves1 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				float delta = 22.5f;
 				for (int i = 0; i < 5; i++)
@@ -384,7 +384,7 @@ namespace Planetside
 					this.m_ticksLeft = -1;
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					SpeculativeRigidbody specRigidbody = this.Projectile.specRigidbody;
 					specRigidbody.OnTileCollision = (SpeculativeRigidbody.OnTileCollisionDelegate)Delegate.Combine(specRigidbody.OnTileCollision, new SpeculativeRigidbody.OnTileCollisionDelegate(this.OnTileCollision));

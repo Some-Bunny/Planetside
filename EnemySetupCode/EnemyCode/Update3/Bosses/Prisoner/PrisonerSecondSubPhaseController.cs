@@ -586,7 +586,7 @@ namespace Planetside
 
         public class A : Script
         {
-            protected override IEnumerator Top()
+            public override IEnumerator Top()
             {
                 this.EndOnBlank = false;
                 Vector2 spawnPos = base.BulletBank.aiActor.ParentRoom.GetCenterCell().ToCenterVector2();
@@ -624,7 +624,7 @@ namespace Planetside
                     this.radCap = radiusCap;
                 }
 
-                protected override IEnumerator Top()
+                public override IEnumerator Top()
                 {
                     this.Projectile.ImmuneToBlanks = true;
                     this.Projectile.ImmuneToSustainedBlanks = true;
@@ -665,7 +665,7 @@ namespace Planetside
             public List<TargetBullet> activeRingSegments = new List<TargetBullet>();
             public TargetDummy activeDummy;
 
-            protected override IEnumerator Top()
+            public override IEnumerator Top()
             {
 
 
@@ -719,7 +719,7 @@ namespace Planetside
                 public MegaBoulder() : base(StaticUndodgeableBulletEntries.undodgeableBig.Name, true, false, true)
                 {
                 }
-                protected override IEnumerator Top()
+                public override IEnumerator Top()
                 {
                     this.Projectile.IgnoreTileCollisionsFor(180f);
                     this.Projectile.specRigidbody.AddCollisionLayerIgnoreOverride(CollisionMask.LayerToMask(CollisionLayer.HighObstacle, CollisionLayer.LowObstacle));
@@ -778,7 +778,7 @@ namespace Planetside
                 {
                     this.Angle = angle;
                 }
-                protected override IEnumerator Top()
+                public override IEnumerator Top()
                 {
                     this.Projectile.IgnoreTileCollisionsFor(180f);
                     this.Projectile.specRigidbody.AddCollisionLayerIgnoreOverride(CollisionMask.LayerToMask(CollisionLayer.HighObstacle, CollisionLayer.LowObstacle));
@@ -864,7 +864,7 @@ namespace Planetside
                 {
                     this.parent = parent;
                 }
-                protected override IEnumerator Top()
+                public override IEnumerator Top()
                 {
                     WeightedIntCollection attackWeights = new WeightedIntCollection();
                     attackWeights.elements = new WeightedInt[]
@@ -1150,7 +1150,7 @@ namespace Planetside
                 public WallBulletNoDodge(string BulletType) : base(BulletType, false, false, false)
                 {
                 }
-                protected override IEnumerator Top()
+                public override IEnumerator Top()
                 {
                     this.Projectile.IgnoreTileCollisionsFor(300f);
                     this.Projectile.specRigidbody.AddCollisionLayerIgnoreOverride(CollisionMask.LayerToMask(CollisionLayer.HighObstacle, CollisionLayer.LowObstacle));
@@ -1171,7 +1171,7 @@ namespace Planetside
                     this.m_targetDummy = targetDummy;
                 }
 
-                protected override IEnumerator Top()
+                public override IEnumerator Top()
                 {
                     this.m_parent.activeRingSegments.Add(this);
                     this.Projectile.ImmuneToBlanks = true;
@@ -1233,7 +1233,7 @@ namespace Planetside
                     this.IsEarliestRing = IsEarliestRing;
                 }
 
-                protected override IEnumerator Top()
+                public override IEnumerator Top()
                 {
                     this.Projectile.IgnoreTileCollisionsFor(6000f);
                     this.Projectile.specRigidbody.AddCollisionLayerIgnoreOverride(CollisionMask.LayerToMask(CollisionLayer.HighObstacle, CollisionLayer.LowObstacle));

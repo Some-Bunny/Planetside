@@ -935,7 +935,7 @@ namespace Planetside
 
 		public class Repel : Script
         {
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				string shootPointCalc = (string)((BraveMathCollege.AbsAngleBetween(this.BulletBank.aiActor.aiAnimator.FacingDirection, 0f) <= 90f) ? "RightHandFire" : "LeftHandFire");
 				float Pos = (base.GetPredictedTargetPosition(0.6f, 34) - base.BulletBank.aiActor.transform.Find(shootPointCalc).PositionVector2()).ToAngle();
@@ -962,7 +962,7 @@ namespace Planetside
 				{
 					Delay = delay;
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					yield return this.Wait(Delay);
 					base.ChangeSpeed(new Speed(8f, SpeedType.Absolute), 60);
@@ -976,7 +976,7 @@ namespace Planetside
 				{
 
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 60);
 					yield return this.Wait(480);
@@ -989,7 +989,7 @@ namespace Planetside
 				public Ballin() : base(StaticUndodgeableBulletEntries.undodgeableBig.Name, false, false, false)
 				{
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					base.ChangeSpeed(new Speed(18f, SpeedType.Absolute), 60);
 					yield break;
@@ -1010,7 +1010,7 @@ namespace Planetside
 		}
 		public class FakeUndodgeableBeam : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
 				AIBeamShooter2[] beams = this.BulletBank.aiActor.GetComponents<AIBeamShooter2>();
@@ -1039,7 +1039,7 @@ namespace Planetside
 				public FakeBeamPart() : base(StaticUndodgeableBulletEntries.undodgeableSmallSpore.Name, false, false, false)
 				{
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					this.Projectile.IgnoreTileCollisionsFor(6000f);
 					base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 75);
@@ -1053,7 +1053,7 @@ namespace Planetside
 
 		public class Force : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableBig);
 				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
@@ -1074,7 +1074,7 @@ namespace Planetside
 			public class BasicBigBall : Bullet
 			{
 				public BasicBigBall() : base(StaticUndodgeableBulletEntries.undodgeableBig.Name, false, false, false) { }
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					while (this.Projectile)
                     {
@@ -1115,7 +1115,7 @@ namespace Planetside
 					this.NegativePower = NegativePower;
 
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					this.ManualControl = true;
 					yield return base.Wait(this.Delay);
@@ -1171,7 +1171,7 @@ namespace Planetside
 				{
 
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					base.ChangeSpeed(new Speed(18f, SpeedType.Absolute), 75);
 					yield return this.Wait(480);
@@ -1186,7 +1186,7 @@ namespace Planetside
 				{
 
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 60);
 					yield return this.Wait(480);
@@ -1199,7 +1199,7 @@ namespace Planetside
 
 		public class TelegraphScript : Script 
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSniper);
 				for (int i = -1; i < 2; i++)
@@ -1234,7 +1234,7 @@ namespace Planetside
 				{
 
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					yield break;
 				}

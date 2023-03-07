@@ -104,7 +104,7 @@ namespace Planetside
         }
 
 
-        protected override void DoEffect(PlayerController user)
+        public override void DoEffect(PlayerController user)
         {
             user.StartCoroutine(this.HandlePlaceDoll(user));
         }

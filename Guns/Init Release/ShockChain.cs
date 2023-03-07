@@ -21,7 +21,7 @@ namespace Planetside
 			GunExt.SetShortDescription(gun, "Proc Coefficient: 0.2");
 			GunExt.SetLongDescription(gun, "A reformed taser weapon that fires electric arcs in a wide area. Gungeonologists speculate whether the similarities between this weapon and an existing weapon are intentional, or just coincidence.");
 			GunExt.SetupSprite(gun, null, "shocklaser_idle_001", 8);
-			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 48);
+			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 13);
 			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 9);
 			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 2);
 			gun.SetBaseMaxAmmo(150);
@@ -55,8 +55,9 @@ namespace Planetside
 			projectile.gameObject.SetActive(false);
 			gun.Volley.projectiles[0].projectiles[0] = projectile;
 			projectile.baseData.damage = 2f;
-			projectile.baseData.speed *= 2f;
-			projectile.gameObject.AddComponent<ShockChainProjectile>();
+			projectile.baseData.speed *= 1f;
+			var s = projectile.gameObject.AddComponent<ShockChainProjectile>();
+			s.IsLeft = false;
 			PierceProjModifier spook = projectile.gameObject.AddComponent<PierceProjModifier>();
 			spook.penetration = 20;
 			spook.penetratesBreakables = true;
@@ -84,9 +85,11 @@ namespace Planetside
 			projectile1.gameObject.SetActive(false);
 			gun.Volley.projectiles[1].projectiles[0] = projectile1;
 			projectile1.baseData.damage = 8f;
-			projectile1.baseData.speed *= 2f;
-			projectile1.gameObject.AddComponent<ShockChainProjectile>();
-			PierceProjModifier spooky = projectile1.gameObject.AddComponent<PierceProjModifier>();
+			projectile1.baseData.speed *= 1f;
+            var s1 = projectile1.gameObject.AddComponent<ShockChainProjectile>();
+            s1.IsLeft = true;
+
+            PierceProjModifier spooky = projectile1.gameObject.AddComponent<PierceProjModifier>();
 			spooky.penetration = 20;
 			spooky.penetratesBreakables = true;
 			FakePrefab.MarkAsFakePrefab(projectile1.gameObject);
@@ -104,7 +107,7 @@ namespace Planetside
 			gun.encounterTrackable.EncounterGuid = "):";
 			ETGMod.Databases.Items.Add(gun, false, "ANY");
 
-			gun.barrelOffset.transform.localPosition = new Vector3(2.5f, 0.375f, 0f);
+			gun.barrelOffset.transform.localPosition = new Vector3(1.5f, 0.375f, 0f);
 			gun.carryPixelOffset = new IntVector2((int)4f, (int)-0.5f);
 			Gun gun4 = PickupObjectDatabase.GetById(13) as Gun;
 			gun.muzzleFlashEffects = gun4.muzzleFlashEffects;

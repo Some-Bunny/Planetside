@@ -40,10 +40,7 @@ C:\Users\maxvo\source\repos\Planetside\bin\Debug\UnityEngine.UnityWebRequestWWWM
 C:\Users\maxvo\source\repos\Planetside\bin\Debug\GalaxyCSharp.dll
 C:\Users\maxvo\source\repos\Planetside\bin\Debug\Assembly-CSharp-firstpass.dll
 C:\Users\maxvo\source\repos\Planetside\bin\Debug\UnityEngine.Timeline.dll
-C:\Users\maxvo\source\repos\Planetside\bin\Debug\dfScriptLite.dll
 C:\Users\maxvo\source\repos\Planetside\bin\Debug\UnityEngine.ScreenCaptureModule.dll
-C:\Users\maxvo\source\repos\Planetside\bin\Debug\Unity.Analytics.DataPrivacy.dll
-C:\Users\maxvo\source\repos\Planetside\bin\Debug\Mono.Security.dll
 C:\Users\maxvo\source\repos\Planetside\bin\Debug\UnityEngine.AccessibilityModule.dll
 C:\Users\maxvo\source\repos\Planetside\bin\Debug\UnityEngine.VehiclesModule.dll
 C:\Users\maxvo\source\repos\Planetside\bin\Debug\UnityEngine.ClothModule.dll

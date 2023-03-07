@@ -41,7 +41,7 @@ namespace Planetside
 			DebrisObject result = base.Drop(player);
 			return result;
 		}
-		protected override void Update()
+		public override void Update()
 		{
 			base.Update();
 			if (base.Owner != null)

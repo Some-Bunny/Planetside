@@ -51,7 +51,6 @@ namespace Planetside
 			this.actor = base.GetComponent<PlayerOrbital>();
 			this.player = base.GetComponent<PlayerController>();
 		}
-		public static Hook guonHook;
 
 		public void Start()
 		{
@@ -192,7 +191,6 @@ namespace Planetside
 
 		public void OnDestroy()
         {
-			PickupGuonComponent.guonHook.Dispose();
 			
 			if (Hits != HitsBeforeDeath)
             {

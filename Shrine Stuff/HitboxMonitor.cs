@@ -68,7 +68,7 @@ namespace GungeonAPI
                 hitboxDisplay.transform.localPosition = offset;
             }
 
-            protected override void OnDestroy()
+            public override void OnDestroy()
             {
                 if (hitboxDisplay)
                     GameObject.DestroyImmediate(hitboxDisplay);

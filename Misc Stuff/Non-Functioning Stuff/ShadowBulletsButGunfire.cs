@@ -99,6 +99,6 @@ namespace Planetside
 			}
 			return result;
 		}
-		protected PlayerController m_owner;
+		public PlayerController m_owner;
 	}
 }

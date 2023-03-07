@@ -3,6 +3,8 @@ using ItemAPI;
 using System;
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using SaveAPI;
 
 namespace Planetside
 {
@@ -177,7 +179,7 @@ namespace Planetside
         public bool hasBeenPickedup;
         public PlayerController player;
     }
-    class Greedy : PickupObject, IPlayerInteractable
+    class Greedy : PerkPickupObject, IPlayerInteractable
     {
         public static void Init()
         {
@@ -197,11 +199,37 @@ namespace Planetside
             PerkParticleSystemController particles = gameObject.AddComponent<PerkParticleSystemController>();
             particles.ParticleSystemColor = Color.yellow;
             particles.ParticleSystemColor2 = new Color(255, 215, 0);
-            OutlineColor = new Color(0.6f, 0.52f, 0.05f);
+            item.OutlineColor = new Color(0.6f, 0.52f, 0.05f);
 
         }
+        public override List<PerkDisplayContainer> perkDisplayContainers => new List<PerkDisplayContainer>()
+        {
+                new PerkDisplayContainer()
+                {
+                    AmountToBuyBeforeReveal = 1,
+                    LockedString = AlphabetController.ConvertString("Greed Is Good"),
+                    UnlockedString = "Slain enemies drop glowing casings that fade over time.",
+                    requiresFlag = false
+                },
+                new PerkDisplayContainer()
+                {
+                    AmountToBuyBeforeReveal = 2,
+                    LockedString = AlphabetController.ConvertString("That Greed Better"),
+                    UnlockedString = "Picking up glowing casings temporarily increases movement speed and damage.",
+                    requiresFlag = false
+                },
+                new PerkDisplayContainer()
+                {
+                    AmountToBuyBeforeReveal = 4,
+                    LockedString = AlphabetController.ConvertString("Stacking Is Good"),
+                    UnlockedString = "Stacking increases the lifetime of glowing casings, and increases the amount of stats you get from them.",
+                    FlagToTrack = SaveAPI.CustomDungeonFlags.GREEDY_FLAG_STACK
+                },
+        };
+        public override CustomTrackedStats StatToIncreaseOnPickup => SaveAPI.CustomTrackedStats.AMOUNT_BOUGHT_GREEDY;
+
+
         public static int GreedyID;
-        private static Color OutlineColor;
 
         public new bool PrerequisitesMet()
         {
@@ -222,7 +250,7 @@ namespace Planetside
             GreedController greed = player.gameObject.GetOrAddComponent<GreedController>();
             greed.player = player;
             if (greed.hasBeenPickedup == true)
-            { greed.IncrementStack(); }
+            { greed.IncrementStack(); SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.GREEDY_FLAG_STACK, true); }
             Exploder.DoDistortionWave(player.sprite.WorldTopCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
             player.BloopItemAboveHead(base.sprite, "");
             string BlurbText = greed.hasBeenPickedup == true ? "Greed Is Even Better." : "Greed Is Good.";
@@ -337,11 +365,8 @@ namespace Planetside
             yield break;
         }
 
-        public float distortionMaxRadius = 30f;
-        public float distortionDuration = 2f;
-        public float distortionIntensity = 0.7f;
-        public float distortionThickness = 0.1f;
-        protected void Start()
+
+        public void Start()
         {
             try
             {
@@ -354,49 +379,7 @@ namespace Planetside
             }
         }
 
-        public float GetDistanceToPoint(Vector2 point)
-        {
-            if (!base.sprite)
-            {
-                return 1000f;
-            }
-            Bounds bounds = base.sprite.GetBounds();
-            bounds.SetMinMax(bounds.min + base.transform.position, bounds.max + base.transform.position);
-            float num = Mathf.Max(Mathf.Min(point.x, bounds.max.x), bounds.min.x);
-            float num2 = Mathf.Max(Mathf.Min(point.y, bounds.max.y), bounds.min.y);
-            return Mathf.Sqrt((point.x - num) * (point.x - num) + (point.y - num2) * (point.y - num2)) / 1.5f;
-        }
-
-        public float GetOverrideMaxDistance()
-        {
-            return 1f;
-        }
-
-        public void OnEnteredRange(PlayerController interactor)
-        {
-            if (!this)
-            {
-                return;
-            }
-            if (!interactor.CurrentRoom.IsRegistered(this) && !RoomHandler.unassignedInteractableObjects.Contains(this))
-            {
-                return;
-            }
-            SpriteOutlineManager.RemoveOutlineFromSprite(base.sprite, false);
-            SpriteOutlineManager.AddOutlineToSprite(base.sprite, Color.white, 0.1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
-            base.sprite.UpdateZDepth();
-        }
-
-        public void OnExitRange(PlayerController interactor)
-        {
-            if (!this)
-            {
-                return;
-            }
-            SpriteOutlineManager.RemoveOutlineFromSprite(base.sprite, true);
-            SpriteOutlineManager.AddOutlineToSprite(base.sprite, OutlineColor, 0.1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
-            base.sprite.UpdateZDepth();
-        }
+       
 
         private void Update()
         {
@@ -406,25 +389,6 @@ namespace Planetside
             }
         }
 
-        public void Interact(PlayerController interactor)
-        {
-            if (!this)
-            {
-                return;
-            }
-            if (RoomHandler.unassignedInteractableObjects.Contains(this))
-            {
-                RoomHandler.unassignedInteractableObjects.Remove(this);
-            }
-            SpriteOutlineManager.RemoveOutlineFromSprite(base.sprite, true);
-            this.Pickup(interactor);
-        }
-
-        public string GetAnimationState(PlayerController interactor, out bool shouldBeFlipped)
-        {
-            shouldBeFlipped = false;
-            return string.Empty;
-        }
 
         private bool m_hasBeenPickedUp;
     }

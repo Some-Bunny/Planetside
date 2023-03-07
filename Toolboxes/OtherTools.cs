@@ -920,6 +920,69 @@ namespace Planetside
             proj.sprite.spriteAnimator.DefaultClipId = proj.sprite.spriteAnimator.Library.GetClipIdByName(clipName);
             proj.sprite.spriteAnimator.deferNextStartClip = false;
         }
+
+        public static void AnimateProjectileBundle(this Projectile proj, string defaultClipName, tk2dSpriteCollectionData data, tk2dSpriteAnimation animation, string animationName, List<IntVector2> pixelSizes, List<bool> lighteneds, List<tk2dBaseSprite.Anchor> anchors, List<bool> anchorsChangeColliders,
+        List<bool> fixesScales, List<Vector3?> manualOffsets, List<IntVector2?> overrideColliderPixelSizes, List<IntVector2?> overrideColliderOffsets, List<Projectile> overrideProjectilesToCopyFrom)
+        {
+
+            if (proj.sprite.spriteAnimator == null)
+            {
+                proj.sprite.spriteAnimator = proj.sprite.gameObject.AddComponent<tk2dSpriteAnimator>();
+            }
+            proj.sprite.spriteAnimator.Library = animation;
+            if (defaultClipName != null)
+            {
+                proj.sprite.spriteAnimator.DefaultClipId = animation.GetClipIdByName(defaultClipName);
+            }
+            proj.sprite.spriteAnimator.playAutomatically = true;
+
+            for (int i = 0; i < animation.GetClipByName(animationName).frames.Length; i++)
+            {
+                var frame = animation.GetClipByName(animationName).frames[i];
+
+                IntVector2 pixelSize = pixelSizes[i];
+                IntVector2? overrideColliderPixelSize = overrideColliderPixelSizes[i];
+                IntVector2? overrideColliderOffset = overrideColliderOffsets[i];
+                Vector3? manualOffset = manualOffsets[i];
+                bool anchorChangesCollider = anchorsChangeColliders[i];
+                bool fixesScale = fixesScales[i];
+                if (!manualOffset.HasValue)
+                {
+                    manualOffset = new Vector2?(Vector2.zero);
+                }
+                tk2dBaseSprite.Anchor anchor = anchors[i];
+                bool lightened = lighteneds[i];
+                Projectile overrideProjectileToCopyFrom = overrideProjectilesToCopyFrom[i];
+                int? overrideColliderPixelWidth = null;
+                int? overrideColliderPixelHeight = null;
+                if (overrideColliderPixelSize.HasValue)
+                {
+                    overrideColliderPixelWidth = overrideColliderPixelSize.Value.x;
+                    overrideColliderPixelHeight = overrideColliderPixelSize.Value.y;
+                }
+                int? overrideColliderOffsetX = null;
+                int? overrideColliderOffsetY = null;
+                if (overrideColliderOffset.HasValue)
+                {
+                    overrideColliderOffsetX = overrideColliderOffset.Value.x;
+                    overrideColliderOffsetY = overrideColliderOffset.Value.y;
+                }
+                tk2dSpriteDefinition def = GunTools.SetupDefinitionForProjectileSpriteBundle(animationName, frame.spriteId, data, pixelSize.x, pixelSize.y, lightened, overrideColliderPixelWidth, overrideColliderPixelHeight, overrideColliderOffsetX, overrideColliderOffsetY,
+                    overrideProjectileToCopyFrom);
+                def.ConstructOffsetsFromAnchor(anchor, def.position3, fixesScale, anchorChangesCollider);
+                def.position0 += manualOffset.Value;
+                def.position1 += manualOffset.Value;
+                def.position2 += manualOffset.Value;
+                def.position3 += manualOffset.Value;
+                if (i == 0)
+                {
+                    proj.GetAnySprite().SetSprite(data, frame.spriteId);
+                }
+            }
+        }
+
+
+
         public static AIActor SetupAIActorDummy(string name, IntVector2 colliderOffset, IntVector2 colliderDimensions)
         {
             GameObject gameObject = new GameObject(name);

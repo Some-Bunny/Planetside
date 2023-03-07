@@ -75,7 +75,7 @@ namespace Planetside
 
 		private static int StoredAmmo;
 
-		protected override void Update()
+		public override void Update()
         {
 			if (base.Owner && base.Owner.IsInCombat && Candofuckening == true)
             {
@@ -236,7 +236,7 @@ namespace Planetside
 			base.Pickup(player);
 		}
 
-		protected override void OnDestroy()
+		public override void OnDestroy()
 		{
 			StaticReferenceManager.ProjectileAdded += AddProjectile;
 			if (base.Owner != null)

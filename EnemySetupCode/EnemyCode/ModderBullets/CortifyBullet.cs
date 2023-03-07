@@ -22,7 +22,7 @@ namespace Planetside
 
 		public class SkellScript : Script 
 		{
-			protected override IEnumerator Top() 
+			public override IEnumerator Top() 
 			{
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("1bc2a07ef87741be90c37096910843ab").bulletBank.GetBullet("icicle"));
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("f905765488874846b7ff257ff81d6d0c").bulletBank.GetBullet("spore2"));
@@ -52,7 +52,7 @@ namespace Planetside
 				this.bullettype = BulletType;
 			}
 
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				this.ManualControl = true;
 				this.m_offset = this.m_offset.Rotate(this.Direction);

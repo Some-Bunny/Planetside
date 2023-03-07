@@ -901,7 +901,8 @@ namespace Planetside
 				
 				target.PlayEffectOnActor(StaticVFXStorage.HealingSparklesVFX, Vector3.zero, true, false, false);
 				target.healthHaver.FullHeal();
-			}
+				target.healthHaver.AllDamageMultiplier *= 0.8f;
+            }
 		}
 		private IEnumerator SpawnRadialPoofs(Vector2 centre, RoomHandler room)
 		{
@@ -1142,7 +1143,7 @@ namespace Planetside
 	}
 	public class EliteReflect : Script
 	{
-		protected override IEnumerator Top()
+		public override IEnumerator Top()
 		{
 			if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
 			{
@@ -1162,7 +1163,7 @@ namespace Planetside
 			{
 
 			}
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				base.ChangeSpeed(new Speed(1f, SpeedType.Absolute), 20);
 				yield return this.Wait(60);
@@ -1968,7 +1969,7 @@ namespace Planetside
 		}
 
 
-		protected override void OnDestroy()
+		public override void OnDestroy()
 		{
             for (int i = 0; i < this.m_projectiles.Count; i++)
             {

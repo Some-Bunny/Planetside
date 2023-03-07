@@ -598,7 +598,7 @@ namespace Planetside
 
 		public class TeleportScript : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				for (int i = 0; i < 12; i++)
                 {
@@ -612,7 +612,7 @@ namespace Planetside
 				{
 
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 60);
 					yield return this.Wait(360f);
@@ -627,7 +627,7 @@ namespace Planetside
 				{
 
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					SpawnManager.PoolManager.Remove(this.Projectile.gameObject.transform);
 					this.Projectile.BulletScriptSettings.preventPooling = true;
@@ -640,7 +640,7 @@ namespace Planetside
 
 		public class TelegraphScript : Script 
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				float Angle = base.AimDirection;
 				GameObject gameObject = SpawnManager.SpawnVFX(RandomPiecesOfStuffToInitialise.LaserReticle, false);
@@ -669,7 +669,7 @@ namespace Planetside
 				{
 
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					for (int i = 0; i < 100; i++)
 					{
@@ -685,7 +685,7 @@ namespace Planetside
 				{
 
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					yield return this.Wait(300f);
 					base.Vanish(false);

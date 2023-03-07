@@ -80,7 +80,7 @@ namespace Planetside
 
 
 
-        protected override void DoEffect(PlayerController user)
+        public override void DoEffect(PlayerController user)
         {
             /*
             var portal = PlanetsideModule.ModAssets.LoadAsset<GameObject>("vdeioplayer");

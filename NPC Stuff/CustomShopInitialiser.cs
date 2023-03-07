@@ -8,6 +8,8 @@ using ItemAPI;
 using GungeonAPI;
 using MonoMod.RuntimeDetour;
 using System.Reflection;
+using System.Collections;
+using SaveAPI;
 
 namespace Planetside
 {
@@ -20,15 +22,66 @@ namespace Planetside
             Gregthly();
             InitMasteryTrader();
 
+
+            GameObject gameObject = (GameObject)UnityEngine.Object.Instantiate(BraveResources.Load("DefaultLabelPanel", ".prefab"));
+            FakePrefab.MarkAsFakePrefab(gameObject);
+            UnityEngine.Object.DontDestroyOnLoad(gameObject);
+
+            var dlm = gameObject.GetComponent<DefaultLabelController>();
+
+            var mdlm = gameObject.AddComponent<ModifiedDefaultLabelManager>();
+            mdlm.label = dlm.label;
+            mdlm.m_cachedCache = dlm.m_cachedCache;
+            mdlm.m_manager = dlm.m_manager;
+            mdlm.offset = dlm.offset;
+            mdlm.panel = dlm.panel;
+            mdlm.targetObject = dlm.targetObject;
+            UnityEngine.Object.Destroy(dlm);
+
+            var label = mdlm.label;
+            label.backgroundColor = new Color32(40, 1, 20, 180);
+            label.colorizeSymbols = false;
+
+            label.textScale = 3.33f;
+            //label.textScaleMode = dfTextScaleMode.None;
+
+            label.shadow = true;
+            label.shadowColor = new Color32(20, 20, 50, 255);
+            label.shadowOffset = new Vector2(0, -0.75f);
+            //label.Height = 1000;
+
+            label.anchorStyle = dfAnchorStyle.Top | dfAnchorStyle.Left;
+
+            label.autoSize = true;
+            label.autoHeight = true;
+            label.wordWrap = false;
+
+            var data = new dfRenderData()
+            {
+                Glitchy = false,
+                Shader = ShaderCache.Acquire("Brave/Internal/HologramShader"),
+            };
+            label.renderData = data;
+
+            PerkLabel = mdlm;
+
+            ETGModConsole.Commands.AddGroup("psog_shope", args =>
+            {
+            });
+            ETGModConsole.Commands.GetGroup("psog_shope").AddUnit("toggletest", ForceEnableMixedFloor);
             //new Hook(typeof(PlayMakerFSM).GetMethod("SendEvent", BindingFlags.Instance | BindingFlags.Public), typeof(CustomShopInitialiser).GetMethod("SendEventHook"));
         }
 
-        public static void SendEventHook(Action<PlayMakerFSM, string> orig, PlayMakerFSM self, string str)
+        public static void ForceEnableMixedFloor(string[] s)
         {
-            //ETGModConsole.Log(str);
-            orig(self, str);
+            SaveAPIManager.SetFlag(CustomDungeonFlags.SPECIAL_LOCK, !SaveAPIManager.GetFlag(CustomDungeonFlags.SPECIAL_LOCK));
+
         }
 
+        public static ModifiedDefaultLabelManager PerkLabel;
+
+
+   
         public static void InitialiseTablert()
         {
             string baseFilepath = "Planetside/Resources/NPCs/TableDude/";
@@ -161,7 +214,7 @@ namespace Planetside
                 , new Vector3(0.375f, 1.375f, 5.9375f)
                 , ItsDaFuckinShopApi.VoiceBoxes.FOOL
                 , new Vector3[] { new Vector3(0.75f, 0.875f, 1) }
-                , 0.8f
+                , 0.7f
                 , false
                 , null
                 , null
@@ -314,7 +367,7 @@ namespace Planetside
             mat.SetFloat("_EmissiveColorPower", 3f);
             mat.SetFloat("_EmissivePower", 80);
             masteryShop.GetComponentInChildren<tk2dBaseSprite>().sprite.renderer.material = mat;
-
+            masteryShop.AddComponent<PerkShopController>();
             StaticReferences.StoredRoomObjects.Add("masteryRewardTrader", masteryShop);
         }
 
@@ -356,6 +409,10 @@ namespace Planetside
             }
             return HasMastery;
         }
+
+
+
+
 
         public static void InitialiseTimeTrader()
         {
@@ -463,5 +520,122 @@ namespace Planetside
                 3.25f);
             */
         }
+    }
+
+
+    public class PerkShopController : MonoBehaviour
+    {
+        public void Start()
+        {
+            CustomShopController customShopController = this.GetComponent<CustomShopController>();
+            var list = customShopController.m_itemControllers;
+            foreach (var item in list)
+            {
+                if (item is CustomShopItemController customShopItem)
+                {
+                    if (customShopItem.item is PerkPickupObject perk)
+                    {
+                        customShopItem.OverrideText = (player, self, special) =>
+                        {
+                            string Text = StringTableManager.GetItemsString(perk.encounterTrackable.journalData.PrimaryDisplayName) + "  " + special + " " + customShopController.customPrice(customShopController, customShopItem, customShopItem.item);
+                            foreach (var enrty in perk.perkDisplayContainers)
+                            {
+                                bool req = enrty.requiresFlag == false ? false : SaveAPI.AdvancedGameStatsManager.Instance.GetFlag(enrty.FlagToTrack);
+                                bool req2 = enrty.requiresStack == false ? false : SaveAPI.AdvancedGameStatsManager.Instance.GetPlayerStatValue(perk.StatToIncreaseOnPickup) >= enrty.AmountToBuyBeforeReveal;
+
+                                if (req == true || req2 == true)
+                                {
+                                    Text += "\n- " + enrty.UnlockedString;
+                                }
+                                else
+                                {
+                                    Text += "\n- " + enrty.LockedString;
+                                }
+                            }
+                            customShopItem.safetyCoin = UIToolbox.GenerateText(this.transform, new Vector2(1.5f, -1f), 0.5f, Text, new Color32(0, 12, 50, 200));
+                        };
+                        customShopItem.OverrideExitText = (player, self) =>
+                        {
+                            if (customShopItem.safetyCoin) { customShopItem.safetyCoin.Inv(); }
+                        };
+                    }
+                }
+            }
+        }
+    }
+    public class ModifiedDefaultLabelManager : DefaultLabelController
+    {
+        public void Trigger_C(float d)
+        {
+            base.StartCoroutine(this.Expand_CR_Custom(d));
+        }
+
+        public void Trigger_CustomTime(Transform aTarget, Vector3 anOffset, float duration, float AutoDestroyTimer = -1)
+        {
+            this.offset = anOffset;
+            this.targetObject = aTarget;
+            this.Trigger_C(duration);
+            if (AutoDestroyTimer > 0)
+            {
+                this.Invoke("Inv", AutoDestroyTimer);
+            }
+        }
+
+        public void Trigger_CustomDestroyTime(float duration)
+        {
+            base.StartCoroutine(this.Unexpand_CR_Custom(duration, true));
+        }
+
+        public void Inv()
+        {
+            base.StartCoroutine(this.Unexpand_CR_Custom(0.35f, true));
+        }
+
+
+        private IEnumerator Expand_CR_Custom(float duration)
+        {
+            float elapsed = 0f;
+            float targetWidth = this.label.Width + 1f;
+            float targetHeight = this.label.Height + 1f;
+            panel.padding.bottom = (int)(targetHeight * -1);
+            this.panel.Width = targetWidth;
+            while (elapsed < duration)
+            {
+                elapsed += BraveTime.DeltaTime;
+                this.panel.Width = Mathf.Lerp(1f, targetWidth, MathToolbox.SinLerpTValue(elapsed / duration));
+                yield return null;
+            }
+            yield break;
+        }
+
+
+        public Action<dfLabel, bool> MouseHover;
+
+        private IEnumerator Unexpand_CR_Custom(float duration, bool willDestroy = false)
+        {
+            float elapsed = 0f;
+            float targetWidth = this.label.Width + 1f;
+            float targetHeight = this.label.Height + 1f;
+            panel.padding.bottom = (int)(targetHeight * -1);
+            this.panel.Width = targetWidth;
+            while (elapsed < duration)
+            {
+                elapsed += BraveTime.DeltaTime;
+                this.panel.Width = Mathf.Lerp(targetWidth, 0, elapsed / duration);
+                yield return null;
+            }
+            if (willDestroy == true)
+            {
+                Destroy(this.gameObject);
+            }
+            yield break;
+        }
+
+        public override void OnDestroy()
+        {
+            base.OnDestroy();
+        }
+
+
     }
 }

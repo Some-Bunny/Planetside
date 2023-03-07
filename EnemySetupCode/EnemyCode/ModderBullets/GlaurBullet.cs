@@ -22,7 +22,7 @@ namespace Planetside
 
 		public class SkellScript : Script 
 		{
-			protected override IEnumerator Top() 
+			public override IEnumerator Top() 
 			{
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("frogger"));
 				for (int j = 0; j < 8; j++)
@@ -42,7 +42,7 @@ namespace Planetside
 
 			}
 
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				float speed = base.Speed;
 				base.ChangeSpeed(new Speed(speed*2f, SpeedType.Absolute), 120);

@@ -178,7 +178,7 @@ namespace Planetside
             }
         }
 
-        protected override void DoEffect(PlayerController user)
+        public override void DoEffect(PlayerController user)
         {
             bool PurpleParticles = false;
             AkSoundEngine.PostEvent("Play_RockBreaking", base.gameObject);            
@@ -910,7 +910,7 @@ namespace Planetside
             }
         }
 
-        protected override void OnDestroy()
+        public override void OnDestroy()
         {
             this.RemoveGunShader(playeroue.CurrentGun);
             playeroue.GunChanged -= this.HandleGunChanged;
@@ -938,7 +938,7 @@ namespace Planetside
 
         }
 
-        protected override void OnDestroy()
+        public override void OnDestroy()
         {
 
         }
@@ -989,7 +989,7 @@ namespace Planetside
             }
         }
 
-        protected override void OnDestroy()
+        public override void OnDestroy()
         {
             GameManager.Instance.OnNewLevelFullyLoaded -= this.OnNewFloor;
         }
@@ -1007,7 +1007,7 @@ namespace Planetside
 
 public class UltraAngryGodsScript : Script
 {
-    protected override IEnumerator Top()
+    public override IEnumerator Top()
     {
         PlayerController player = (GameManager.Instance.PrimaryPlayer);
         RoomHandler currentRoom = player.CurrentRoom;
@@ -1048,7 +1048,7 @@ public class UltraAngryGodsScript : Script
             base.Initialize();
         }
 
-        protected override IEnumerator Top()
+        public override IEnumerator Top()
         {
             base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("1bc2a07ef87741be90c37096910843ab").bulletBank.GetBullet("reversible"));
             this.Projectile.specRigidbody.CollideWithTileMap = false;
@@ -1096,7 +1096,7 @@ public class UltraAngryGodsScript : Script
             public BurstBullet() : base("reversible", false, false, false)
             {
             }
-            protected override IEnumerator Top()
+            public override IEnumerator Top()
             {
                 base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 60);
                 yield return base.Wait(60);

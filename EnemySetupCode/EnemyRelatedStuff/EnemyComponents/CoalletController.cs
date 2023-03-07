@@ -57,7 +57,7 @@ public class CoalletController : BraveBehaviour
 		yield break;
 	}
 
-	protected override void OnDestroy()
+	public override void OnDestroy()
 	{
 		if (base.healthHaver)
 		{

@@ -103,7 +103,7 @@ namespace Planetside
             return 2.5f;
         }
 
-        protected override void OnDestroy()
+        public override void OnDestroy()
         {
             if (this.m_room.GetRoomInteractables().Contains(this))
             {

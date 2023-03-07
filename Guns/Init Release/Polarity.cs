@@ -105,7 +105,7 @@ namespace Planetside
 				"ice_bomb",
 				"glacier"
 			};
-			CustomSynergies.Add("Refridgeration", mandatoryConsoleIDs1, optionalConsoleIDs, true);
+			CustomSynergies.Add("Refridgeration", mandatoryConsoleIDs1, optionalConsoleIDs, false);
 			ItemIDs.AddToList(gun.PickupObjectId);
 
 			string[] clipPaths = new string[]

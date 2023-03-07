@@ -39,7 +39,7 @@ namespace Planetside
 		}
 		public static int GunslingersRingID;
 
-		protected override void Update()
+		public override void Update()
         {
 			if (base.Owner != null)
             {
@@ -152,7 +152,7 @@ namespace Planetside
 			player.GunChanged += this.OnGunChanged;
 			base.Pickup(player);
 		}
-		protected override void OnDestroy()
+		public override void OnDestroy()
 		{
 			if (base.Owner != null)
             {

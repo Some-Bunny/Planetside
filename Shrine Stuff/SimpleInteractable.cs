@@ -37,9 +37,9 @@ namespace GungeonAPI
 
 		public GameObject roomIcon;
 
-		protected bool m_isToggled;
+		public bool m_isToggled;
 
-		protected bool m_canUse = true;
+		public bool m_canUse = true;
 
 		public bool HasRoomIcon;
 	}

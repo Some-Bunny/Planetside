@@ -21,7 +21,7 @@ namespace Planetside
 
 		public class SkellScript : Script 
 		{
-			protected override IEnumerator Top() 
+			public override IEnumerator Top() 
 			{
 				PlayerController player = GameManager.Instance.PrimaryPlayer;
                 RoomHandler currentRoom = player.CurrentRoom;

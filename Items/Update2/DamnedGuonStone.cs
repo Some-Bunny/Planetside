@@ -117,8 +117,7 @@ namespace Planetside
 			return base.Drop(player);
 		}
 
-		// Token: 0x060007AB RID: 1963 RVA: 0x000439C0 File Offset: 0x00041BC0
-		protected override void OnDestroy()
+		public override void OnDestroy()
 		{
 			if (base.Owner != null)
             {
@@ -131,16 +130,11 @@ namespace Planetside
 			}
 		}
 
-		// Token: 0x060007AC RID: 1964 RVA: 0x00043A25 File Offset: 0x00041C25
 		public static void GuonInit(Action<PlayerOrbital, PlayerController> orig, PlayerOrbital self, PlayerController player)
 		{
 			orig(self, player);
 		}
 
-		// Token: 0x060007AD RID: 1965 RVA: 0x00043A31 File Offset: 0x00041C31
-		private void OwnerHitByProjectile(Projectile incomingProjectile, PlayerController arg2)
-		{
-		}
 
 		private void breakThis()
 		{

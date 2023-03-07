@@ -45,7 +45,7 @@ namespace Planetside
             base.Pickup(player);
         }
 
-        protected override void DoEffect(PlayerController user)
+        public override void DoEffect(PlayerController user)
         {
 			Gun gun = user.CurrentGun;
 			Vector2 AAAA =  new Vector2(user.CurrentGun.barrelOffset.position.x, user.CurrentGun.barrelOffset.position.y);

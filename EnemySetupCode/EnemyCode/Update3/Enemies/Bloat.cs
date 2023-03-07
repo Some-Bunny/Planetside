@@ -386,7 +386,7 @@ namespace Planetside
 
 		public class DIE : Script 
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				for (int i = 0; i <= 12; i++)
 				{
@@ -413,7 +413,7 @@ namespace Planetside
 			{
 				RNGSPeedChange = RNG;
 			}
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				base.ChangeSpeed(new Brave.BulletScript.Speed(0, SpeedType.Absolute), RNGSPeedChange);
 				yield return this.Wait(UnityEngine.Random.Range(240, 600));
@@ -426,7 +426,7 @@ namespace Planetside
 		public class Burst : Bullet
 		{
 			public Burst() : base(StaticUndodgeableBulletEntries.UndodgeableDirectedfireSoundless.Name, false, false, false){}
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				base.ChangeSpeed(new Brave.BulletScript.Speed(UnityEngine.Random.Range(14, 20), SpeedType.Absolute), 50);
 				base.ChangeDirection(new Brave.BulletScript.Direction(UnityEngine.Random.Range(-20, 20), DirectionType.Relative), 40);

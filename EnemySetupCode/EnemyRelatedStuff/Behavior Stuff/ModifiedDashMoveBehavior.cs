@@ -246,10 +246,10 @@ namespace Planetside
 		public bool enableShadowTrail;
 
 		// Token: 0x04004107 RID: 16647
-		protected float m_cooldownTimer;
+		public float m_cooldownTimer;
 
 		// Token: 0x04004108 RID: 16648
-		protected float m_dashTimer;
+		public float m_dashTimer;
 	}
 
 }

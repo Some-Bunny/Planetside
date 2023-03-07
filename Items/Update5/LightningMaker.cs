@@ -171,8 +171,6 @@ namespace Planetside
                     position = (createdPosition + MathToolbox.GetUnitOnCircle(Angle, Dist)),
                     minorNodes = GenerateMinorNodes(createdPosition, createdPosition + MathToolbox.GetUnitOnCircle(Angle, Dist), UnityEngine.Random.Range(MinorNodesMin, MinorNodesMax + 1), MinorNodeMaxAngleSpacing, MinorNodeMaxAngleSpacing),
                     branchNodes = GenerateMinorNodes(createdPosition + MathToolbox.GetUnitOnCircle(Angle, Dist), createdPosition + MathToolbox.GetUnitOnCircle(Angle, Dist) + MathToolbox.GetUnitOnCircle(Angle, UnityEngine.Random.Range(RadiusBranchMin, RadiusBranchMax)), UnityEngine.Random.Range(MinorBranchNodesMin, MinorBranchNodesMin + 1), MinorBranchNodeMinAngleSpacing, MinorBranchNodeMaxAngleSpacing),//, UnityEngine.Random.Range(RadiusBranchMin, RadiusBranchMax), Angle)
-
-
                 });           
             }      
             List.Add(new LightningMajorNode() 
@@ -302,7 +300,7 @@ namespace Planetside
         {
             base.Pickup(player);
         }
-        protected override void DoEffect(PlayerController user)
+        public override void DoEffect(PlayerController user)
         {
             LightningController c = new LightningController();
             c.MajorNodesCount = UnityEngine.Random.Range(3, 6);

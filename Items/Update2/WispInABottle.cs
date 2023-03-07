@@ -148,7 +148,7 @@ namespace Planetside
             base.Pickup(player);
         }
 
-        protected override void DoEffect(PlayerController user)
+        public override void DoEffect(PlayerController user)
         {
             GameObject original;
             original = WispInABottle.SunPrefab;

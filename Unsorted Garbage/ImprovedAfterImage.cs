@@ -129,7 +129,7 @@ namespace Planetside
             yield break;
         }
 
-        protected override void OnDestroy()
+        public override void OnDestroy()
         {
             GameManager.Instance.StartCoroutine(this.HandleDeathShadowCleanup());
             base.OnDestroy();
@@ -390,7 +390,7 @@ namespace Planetside
             yield break;
         }
 
-        protected override void OnDestroy()
+        public override void OnDestroy()
         {
             GameManager.Instance.StartCoroutine(this.HandleDeathShadowCleanup());
             base.OnDestroy();

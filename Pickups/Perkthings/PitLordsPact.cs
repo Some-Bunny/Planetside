@@ -6,6 +6,7 @@ using System.Collections;
 using System.Reflection;
 using MonoMod.RuntimeDetour;
 using System.Collections.Generic;
+using SaveAPI;
 
 namespace Planetside
 {
@@ -117,7 +118,7 @@ namespace Planetside
         public PlayerController player;
     }
 
-    class PitLordsPact : PickupObject, IPlayerInteractable
+    class PitLordsPact : PerkPickupObject, IPlayerInteractable
     {
         public static void Init()
         {
@@ -140,12 +141,15 @@ namespace Planetside
             PerkParticleSystemController particles = gameObject.AddComponent<PerkParticleSystemController>();
             particles.ParticleSystemColor = Color.black;
             particles.ParticleSystemColor2 = new Color(50f, 0f, 0f);
-            OutlineColor = new Color(0f, 0f, 0f);
+            item.OutlineColor = new Color(0f, 0f, 0f);
 
             new Hook(typeof(FlippableCover).GetMethod("StartFallAnimation", BindingFlags.Instance | BindingFlags.NonPublic), typeof(PitLordsPact).GetMethod("StartFallAnimationHook"));
             new Hook(typeof(DebrisObject).GetMethod("MaybeRespawnIfImportant", BindingFlags.Instance | BindingFlags.NonPublic), typeof(PitLordsPact).GetMethod("MaybeRespawnIfImportantHook"));
             new Hook(typeof(AIActor).GetMethod("Fall", BindingFlags.Instance | BindingFlags.NonPublic), typeof(PitLordsPact).GetMethod("FallHook"));
             new Hook(typeof(PlayerController).GetMethod("Fall", BindingFlags.Instance | BindingFlags.NonPublic), typeof(PitLordsPact).GetMethod("FallHookPlayer"));
+
+
+           
 
             GenericLootTable pitLordsPactPickupTable = LootTableTools.CreateLootTable();
             pitLordsPactPickupTable.AddItemsToPool(new Dictionary<int, float>() { { 70, 1f }, { 73, 0.7f }, { 120, 0.6f }, { 85, 0.6f }, { 565, 0.5f }, { 224, 0.5f }, { 67, 0.33f }, { LeSackPickup.SaccID, 0.02f }, { NullPickupInteractable.NollahID, 0.02f }, });
@@ -155,11 +159,74 @@ namespace Planetside
             pitLordsPactPickupTableNoHP.AddItemsToPool(new Dictionary<int, float>() { { 70, 1f },{ 565, 0.5f }, { 224, 0.5f }, { 67, 0.33f }, { LeSackPickup.SaccID, 0.02f }, { NullPickupInteractable.NollahID, 0.02f }, });
             PitLordsPactTableNoHP = pitLordsPactPickupTableNoHP;
         }
+
+        public override List<PerkDisplayContainer> perkDisplayContainers => new List<PerkDisplayContainer>()
+        {
+                new PerkDisplayContainer()
+                {
+                    AmountToBuyBeforeReveal = 1,
+                    LockedString = AlphabetController.ConvertString("Sacrifice To Pits"),
+                    UnlockedString = "Sacrificing various things to pits can grant rewards.",
+                    requiresFlag = false
+                },
+                new PerkDisplayContainer()
+                {
+                    AmountToBuyBeforeReveal = 2,
+                    LockedString = AlphabetController.ConvertString("Pit Blast"),
+                    UnlockedString = "Live sacrifices do soul explosions.",
+                    requiresFlag = false
+                },
+                new PerkDisplayContainer()
+                {
+                    AmountToBuyBeforeReveal = 3,
+                    LockedString = AlphabetController.ConvertString("Pit Damage"),
+                    UnlockedString = "Enemies above pits take damage.",
+                    requiresFlag = false
+                },
+                new PerkDisplayContainer()
+                {
+                    AmountToBuyBeforeReveal = 7,
+                    LockedString = AlphabetController.ConvertString("Sacrifice Foes"),
+                    UnlockedString = "Sacrificing living things can pay out with loot.",
+                    FlagToTrack = SaveAPI.CustomDungeonFlags.PITLORDPACT_FLAG_FALLLIVING
+                },
+                new PerkDisplayContainer()
+                {
+                    AmountToBuyBeforeReveal = 8,
+                    LockedString = AlphabetController.ConvertString("Reroll Items"),
+                    UnlockedString = "Sacrificing items can exchange them, up to a certain point.",
+                    FlagToTrack = SaveAPI.CustomDungeonFlags.PITLORDPACT_FLAG_ITEM
+                },
+
+                new PerkDisplayContainer()
+                {
+                    AmountToBuyBeforeReveal = 9,
+                    LockedString = AlphabetController.ConvertString("Larger Selection"),
+                    UnlockedString = "Stacking grants more pit damage, rerolls and sacrifice damage.",
+                    FlagToTrack = SaveAPI.CustomDungeonFlags.PITLORDPACT_FLAG_STACK
+
+                },
+                new PerkDisplayContainer()
+                {
+                    AmountToBuyBeforeReveal = 15,
+                    LockedString = AlphabetController.ConvertString("No Cheese"),
+                    UnlockedString = "Fall Damage Immunity Prevents farming pickups.",
+                    requiresFlag = false
+                },
+                new PerkDisplayContainer()
+                {
+                    AmountToBuyBeforeReveal = 999,
+                    LockedString = AlphabetController.ConvertString("I Knew Someone Would Do It"),
+                    UnlockedString = "Sacrificing tables pays out with money.",
+                    requiresStack = false
+                },
+        };
+        public override CustomTrackedStats StatToIncreaseOnPickup => SaveAPI.CustomTrackedStats.AMOUNT_BOUGHT_PITLORDPACT;
+
         public static GenericLootTable PitLordsPactTable;
         private static GenericLootTable PitLordsPactTableNoHP;
 
         public static int PitLordsPactID;
-        private static Color OutlineColor;
         public new bool PrerequisitesMet()
         {
             EncounterTrackable component = base.GetComponent<EncounterTrackable>();
@@ -176,6 +243,8 @@ namespace Planetside
             PitLordsPactController pact = self.GetComponent<PitLordsPactController>();
             if (pact != null && IsFallingIntoOtherRoom != true && IsFallingIntoElevatorShaft != true && GunpreventsDamage != true && IsPitimmune != true)
             {
+                SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.PITLORDPACT_FLAG_FALLLIVING, true);
+
                 GameObject gameObject = SpawnManager.SpawnVFX(StaticVFXStorage.JammedDeathVFX, self.transform.position, Quaternion.identity, false);
                 AkSoundEngine.PostEvent("Play_WPN_Life_Orb_Blast_01", self.gameObject);
                 if (gameObject && gameObject.GetComponent<tk2dSprite>())
@@ -213,6 +282,7 @@ namespace Planetside
             else if (pact != null && pact.SelfSacrificeWithPitLordAmuletCap >= pact.AmountSelfSacrificedWithPitLordAmulet && IsFallingIntoOtherRoom != true && IsFallingIntoElevatorShaft != true)
             {
                 pact.AmountSelfSacrificedWithPitLordAmulet++;
+                SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.PITLORDPACT_FLAG_FALLPLAYER_AMULET, true);
                 GameObject gameObject = SpawnManager.SpawnVFX(StaticVFXStorage.JammedDeathVFX, self.transform.position, Quaternion.identity, false);
                 AkSoundEngine.PostEvent("Play_WPN_Life_Orb_Blast_01", self.gameObject);
                 if (gameObject && gameObject.GetComponent<tk2dSprite>())
@@ -401,6 +471,7 @@ namespace Planetside
                 PitLordsPactController pact = player.GetComponent<PitLordsPactController>();
                 if (pact != null)
                 {
+                    SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.PITLORDPACT_FLAG_FALLLIVING, true);
                     GameObject gameObject = SpawnManager.SpawnVFX(StaticVFXStorage.JammedDeathVFX, self.transform.position, Quaternion.identity, false);
                     AkSoundEngine.PostEvent("Play_WPN_Life_Orb_Blast_01", player.gameObject);
                     if (gameObject && gameObject.GetComponent<tk2dSprite>())
@@ -457,6 +528,9 @@ namespace Planetside
                     PitLordsPactController pact = player.GetComponent<PitLordsPactController>();
                     if (pact != null)
                     {
+                        SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.PITLORDPACT_FLAG_ITEM, true);
+
+
                         if (pact.AmountOfItemsSacrificed < pact.ItemSacrificablePerFloor)
                         {
                             pact.AmountOfItemsSacrificed++;
@@ -617,11 +691,9 @@ namespace Planetside
                 PitLordsPactController pact = player.GetComponent<PitLordsPactController>();
                 if (pact != null)
                 {
-                    if(UnityEngine.Random.value > pact.TablesSarificeChance)
-                    {
-                        AkSoundEngine.PostEvent("Play_OBJ_coin_medium_01", self.gameObject);
-                        LootEngine.SpawnCurrency((!player.sprite) ? player.specRigidbody.UnitCenter : player.sprite.WorldCenter, UnityEngine.Random.Range(pact.TablesSarificeBonusMax, pact.TablesSarificeBonusMax), false);
-                    }
+                    SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.PITLORDPACT_FLAG_TABLE, true);
+                    AkSoundEngine.PostEvent("Play_OBJ_coin_medium_01", self.gameObject);
+                    LootEngine.SpawnCurrency((!player.sprite) ? player.specRigidbody.UnitCenter : player.sprite.WorldCenter, UnityEngine.Random.Range(pact.TablesSarificeBonusMax, pact.TablesSarificeBonusMax), false);
                 }
             }
             yield break;
@@ -640,7 +712,7 @@ namespace Planetside
             PitLordsPactController pact = player.gameObject.GetOrAddComponent<PitLordsPactController>();
             pact.player = player;
             if (pact.hasBeenPickedup == true)
-            { pact.IncrementStack(); }
+            { pact.IncrementStack(); SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.PITLORDPACT_FLAG_STACK, true); }
 
             Exploder.DoDistortionWave(player.sprite.WorldTopCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
             player.BloopItemAboveHead(base.sprite, "");
@@ -651,11 +723,7 @@ namespace Planetside
             UnityEngine.Object.Destroy(base.gameObject);
         }
 
-        public float distortionMaxRadius = 30f;
-        public float distortionDuration = 2f;
-        public float distortionIntensity = 0.7f;
-        public float distortionThickness = 0.1f;
-        protected void Start()
+        public void Start()
         {
             try
             {
@@ -668,49 +736,6 @@ namespace Planetside
             }
         }
 
-        public float GetDistanceToPoint(Vector2 point)
-        {
-            if (!base.sprite)
-            {
-                return 1000f;
-            }
-            Bounds bounds = base.sprite.GetBounds();
-            bounds.SetMinMax(bounds.min + base.transform.position, bounds.max + base.transform.position);
-            float num = Mathf.Max(Mathf.Min(point.x, bounds.max.x), bounds.min.x);
-            float num2 = Mathf.Max(Mathf.Min(point.y, bounds.max.y), bounds.min.y);
-            return Mathf.Sqrt((point.x - num) * (point.x - num) + (point.y - num2) * (point.y - num2)) / 1.5f;
-        }
-
-        public float GetOverrideMaxDistance()
-        {
-            return 1f;
-        }
-
-        public void OnEnteredRange(PlayerController interactor)
-        {
-            if (!this)
-            {
-                return;
-            }
-            if (!interactor.CurrentRoom.IsRegistered(this) && !RoomHandler.unassignedInteractableObjects.Contains(this))
-            {
-                return;
-            }
-            SpriteOutlineManager.RemoveOutlineFromSprite(base.sprite, false);
-            SpriteOutlineManager.AddOutlineToSprite(base.sprite, Color.white, 0.1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
-            base.sprite.UpdateZDepth();
-        }
-
-        public void OnExitRange(PlayerController interactor)
-        {
-            if (!this)
-            {
-                return;
-            }
-            SpriteOutlineManager.RemoveOutlineFromSprite(base.sprite, true);
-            SpriteOutlineManager.AddOutlineToSprite(base.sprite, OutlineColor, 0.1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
-            base.sprite.UpdateZDepth();
-        }
 
         private void Update()
         {
@@ -719,27 +744,6 @@ namespace Planetside
                 GameManager.Instance.Dungeon.StartCoroutine(base.HandleRatTheft());
             }
         }
-
-        public void Interact(PlayerController interactor)
-        {
-            if (!this)
-            {
-                return;
-            }
-            if (RoomHandler.unassignedInteractableObjects.Contains(this))
-            {
-                RoomHandler.unassignedInteractableObjects.Remove(this);
-            }
-            SpriteOutlineManager.RemoveOutlineFromSprite(base.sprite, true);
-            this.Pickup(interactor);
-        }
-
-        public string GetAnimationState(PlayerController interactor, out bool shouldBeFlipped)
-        {
-            shouldBeFlipped = false;
-            return string.Empty;
-        }
-
         private bool m_hasBeenPickedUp;
 
         public PitLordsPact()

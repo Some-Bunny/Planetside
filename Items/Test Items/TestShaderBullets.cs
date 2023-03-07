@@ -171,7 +171,7 @@ namespace Planetside
 
 			return result;
 		}
-		protected override void OnDestroy()
+		public override void OnDestroy()
 		{
 			if (Owner != null)
 			{

@@ -133,7 +133,7 @@ namespace Planetside
         {
             return user.IsInCombat;
         }
-        protected override void DoEffect(PlayerController user)
+        public override void DoEffect(PlayerController user)
         {
             PylonController gameObject = UnityEngine.Object.Instantiate<GameObject>(pylonObject, user.specRigidbody.UnitCenter, Quaternion.identity).GetComponent<PylonController>();
             if (user.PlayerHasActiveSynergy("Loader Chassis")) 

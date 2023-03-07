@@ -170,7 +170,7 @@ namespace Planetside
 		}
 
 
-		protected override void Update()
+		public override void Update()
 		{
 			base.Update();
 			if (!Dungeon.IsGenerating && this.m_owner && this.Synergies.Length > 0)
@@ -223,7 +223,7 @@ namespace Planetside
 			return base.Drop(player);
 		}
 
-		protected override void OnDestroy()
+		public override void OnDestroy()
 		{
 			if (this.m_owner != null)
 			{

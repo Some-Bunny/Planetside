@@ -55,7 +55,7 @@ namespace Planetside
             return base.Drop(player);
         }
 
-        protected override void OnDestroy()
+        public override void OnDestroy()
         {
             base.Owner.OnRoomClearEvent -= this.OnLeaveCombat;
             base.Owner.PostProcessBeamTick -= this.PostProcessBeamTick;

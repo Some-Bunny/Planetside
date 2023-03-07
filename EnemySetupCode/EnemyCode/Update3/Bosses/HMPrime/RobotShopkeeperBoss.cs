@@ -2038,7 +2038,7 @@ namespace Planetside
 
 		public class CleanSweeps : Script
         {
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
             {
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("ffca09398635467da3b1f4a54bcfda80").bulletBank.GetBullet("directedfire"));
 				int amount = base.BulletBank.aiActor.GetComponent<RobotShopkeeperEngageDoer>().AmountOfPurchases;
@@ -2197,7 +2197,7 @@ namespace Planetside
 
 		public class BigBomb : Script
         {
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("fa76c8cfdf1c4a88b55173666b4bc7fb").bulletBank.GetBullet("hugeBullet"));
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("poundLarge"));
@@ -2221,7 +2221,7 @@ namespace Planetside
 				{
 					PurchaseAmount = pursh;
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					if (PurchaseAmount > 3)
                     {
@@ -2428,7 +2428,7 @@ namespace Planetside
 					{
 						delay = dela;
 					}
-					protected override IEnumerator Top()
+					public override IEnumerator Top()
 					{
 						this.ManualControl = true;
 						yield return this.Wait(delay);
@@ -2448,7 +2448,7 @@ namespace Planetside
 			{
 				public Shrapnel(AdditionalLinesOfBullets parent) : base("poundSmall", false, false, false)
 				{ father = parent; }
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					
 					while (base.Projectile != null)
@@ -2464,7 +2464,7 @@ namespace Planetside
 				private AdditionalLinesOfBullets father;
 			}
 			
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("amuletRing"));
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("poundSmall"));
@@ -2520,7 +2520,7 @@ namespace Planetside
 
 		public class Taser : Script
         {
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				base.BulletBank.aiActor.GetComponent<HMPrimeController>().StartDisableAttackFor("LargeBomb", 12f, 5);
 				this.m_clms = new List<ChainLightningModifier>();
@@ -2609,7 +2609,7 @@ namespace Planetside
 					base.OnBulletDestruction(destroyType, hitRigidbody, preventSpawningProjectiles);
 				}
 
-                protected override IEnumerator Top()
+                public override IEnumerator Top()
 				{
 					base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 120);
 					yield return this.Wait(870);
@@ -2662,7 +2662,7 @@ namespace Planetside
 
 		public class EatMissiles : Script
         {
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("4d164ba3f62648809a4a82c90fc22cae").bulletBank.GetBullet("missile"));
 				Vector2 positionLeft = base.BulletBank.aiActor.transform.Find("LeftGun_Down(Left)").transform.PositionVector2();
@@ -2694,7 +2694,7 @@ namespace Planetside
 				{
 
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					yield return this.Wait(300);
 					base.Vanish(false);
@@ -2720,7 +2720,7 @@ namespace Planetside
 
 				
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("quickHoming"));
 
@@ -2781,7 +2781,7 @@ namespace Planetside
 		}
 		public class ShootGun : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("ffca09398635467da3b1f4a54bcfda80").bulletBank.GetBullet("directedfire"));
 

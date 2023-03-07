@@ -5,6 +5,7 @@ using SaveAPI;
 using System.Collections.Generic;
 
 using System;
+using System.Linq;
 
 namespace Planetside
 {
@@ -60,6 +61,17 @@ namespace Planetside
             projectile.gameObject.AddComponent<RiftakerProjectile>();
             projectile.SetProjectileSpriteRight("bloopky_projectile_001", 15, 7, false, tk2dBaseSprite.Anchor.MiddleCenter, 15, 7);
             projectile.shouldRotate = true;
+            projectile.baseData.UsesCustomAccelerationCurve = true;
+            projectile.baseData.AccelerationCurve = AnimationCurve.Linear(0, 1.5f, 1.5f, 0.3f);
+
+            projectile.objectImpactEventName = (PickupObjectDatabase.GetById(47) as Gun).DefaultModule.projectiles[0].objectImpactEventName;
+            projectile.enemyImpactEventName = (PickupObjectDatabase.GetById(47) as Gun).DefaultModule.projectiles[0].enemyImpactEventName;
+
+            projectile.hitEffects.tileMapHorizontal = ObjectMakers.MakeObjectIntoVFX((PickupObjectDatabase.GetById(169) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapHorizontal.effects.First().effects.First().effect);
+            projectile.hitEffects.tileMapVertical = ObjectMakers.MakeObjectIntoVFX((PickupObjectDatabase.GetById(169) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapHorizontal.effects.First().effects.First().effect);
+            projectile.hitEffects.enemy = ObjectMakers.MakeObjectIntoVFX((PickupObjectDatabase.GetById(169) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapHorizontal.effects.First().effects.First().effect);
+            projectile.hitEffects.deathAny = ObjectMakers.MakeObjectIntoVFX((PickupObjectDatabase.GetById(169) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapHorizontal.effects.First().effects.First().effect);
+
             gun.gunClass = GunClass.RIFLE;
 
             gun.sprite.usesOverrideMaterial = true;

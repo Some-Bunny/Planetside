@@ -170,7 +170,7 @@ namespace Planetside
             player.OnAnyEnemyReceivedDamage = (Action<float, bool, HealthHaver>)Delegate.Combine(player.OnAnyEnemyReceivedDamage, new Action<float, bool, HealthHaver>(this.OnEnemyDamaged));
             base.Pickup(player);
 		}
-		protected override void OnDestroy()
+		public override void OnDestroy()
 		{
             if (base.Owner != null)
             {

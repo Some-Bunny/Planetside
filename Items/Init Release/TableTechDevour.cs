@@ -264,7 +264,7 @@ namespace Planetside
             return gameObject2.transform;
         }
 
-        protected override void OnDestroy()
+        public override void OnDestroy()
         {
             if (base.Owner != null)
             {

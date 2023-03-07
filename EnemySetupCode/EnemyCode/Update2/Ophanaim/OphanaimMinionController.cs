@@ -33,7 +33,7 @@ namespace Planetside
             SpriteOutlineManager.AddOutlineToSprite(this.sprite, new Color(10f, 10f, 10f), 0.1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
         }
 
-        protected override void OnDestroy()
+        public override void OnDestroy()
         {
             base.OnDestroy();
         }
@@ -133,7 +133,7 @@ namespace Planetside
                 return false;
             }
         }
-        protected override IEnumerator Top()
+        public override IEnumerator Top()
         {
             float r = BraveUtility.RandomAngle();
             for (int i =0; i < 4;i++)
@@ -167,7 +167,7 @@ namespace Planetside
             }
         }
 
-        protected override IEnumerator Top()
+        public override IEnumerator Top()
         {
             float Angle = base.AimDirection;
             GameObject gameObject = SpawnManager.SpawnVFX(RandomPiecesOfStuffToInitialise.LaserReticle, false);
@@ -308,7 +308,7 @@ namespace Planetside
             }
         }
 
-        protected override IEnumerator Top()
+        public override IEnumerator Top()
         {
             float Angle = base.AimDirection;
             GameObject gameObject = SpawnManager.SpawnVFX(RandomPiecesOfStuffToInitialise.LaserReticle, false);

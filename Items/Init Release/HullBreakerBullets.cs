@@ -124,7 +124,7 @@ namespace Planetside
 			base.Pickup(player);
 			player.PostProcessProjectile += this.PostProcessProjectile;
 		}
-		protected override void OnDestroy()
+		public override void OnDestroy()
 		{
 			if (base.Owner != null)
             {

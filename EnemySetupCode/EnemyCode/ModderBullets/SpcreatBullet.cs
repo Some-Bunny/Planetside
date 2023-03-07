@@ -16,80 +16,91 @@ namespace Planetside
 	{
 		public static void Init()
 		{
-			EnemyToolbox.CreateNewBulletBankerEnemy("spcreat_bullet", "Spcreat", 18, 18,  new List<int> { 197, 198, 199, 200 }, new List<int> { 201, 202, 203, 204, 205, 206 }, null, new SalamanderScript(), 3f);
-		}
+			var ae = EnemyToolbox.CreateNewBulletBankerEnemy("spcreat_bullet", "Spcreat", 18, 18,  new List<int> { 197, 198, 199, 200 }, new List<int> { 201, 202, 203, 204, 205, 206 }, null, new SpcreatAttack(), 3f);
+            ae.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("6868795625bd46f3ae3e4377adce288b").bulletBank.GetBullet("dagger"));
+
+        }
 
 
-		public class SalamanderScript : Script 
+        public class SpcreatAttack : Script 
 		{
 
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
-				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("796a7ed4ad804984859088fc91672c7f").bulletBank.GetBullet("default"));
-				Vector2 zero = Vector2.zero;
-				Vector2 p = zero + new Vector2(-1.5f, -1.5f);
-				Vector2 vector = new Vector2(2f, -5f);
-				Vector2 p2 = vector + new Vector2(-1.5f, 0.4f);
-				Vector2 vector2 = new Vector2(-0.5f, -1.5f);
-				Vector2 p3 = vector2 + new Vector2(0.75f, 0.75f);
-				Vector2 vector3 = new Vector2(-0.5f, 1.5f);
-				Vector2 p4 = vector3 + new Vector2(0.75f, -0.75f);
-				float num = BraveMathCollege.ClampAngle180((this.BulletManager.PlayerPosition() - base.BulletBank.specRigidbody.GetUnitCenter(ColliderType.HitBox)).ToAngle());
-				bool flag = num > -45f && num < 120f;
-				Vector2 phantomBulletPoint = base.Position + BraveMathCollege.CalculateBezierPoint(0.5f, zero, p, p2, vector);
-				for (int i = 0; i < 6; i++)
-				{
-					float num2 = (float)i / 11f;
-					Vector2 offset = BraveMathCollege.CalculateBezierPoint(num2, zero, p, p2, vector);
-					if (flag)
-					{
-						num2 = 1f - num2;
-					}
-					Vector2 offset2 = BraveMathCollege.CalculateBezierPoint(num2, vector2, p3, p4, vector3);
-					base.Fire(new Offset(offset, 0f, string.Empty, DirectionType.Absolute), new Direction(0f, DirectionType.Aim, -1f), new Speed(8f, SpeedType.Absolute), new SalamanderScript.ReaperBullet(phantomBulletPoint, offset2));
-				}
-				return null;
-			}
+                if (base.BulletBank && base.BulletBank.aiActor && base.BulletBank.aiActor.TargetRigidbody)
+                {
+                    this.m_targetRigidbody = base.BulletBank.aiActor.TargetRigidbody;
+                }
+                else if (GameManager.Instance.BestActivePlayer)
+                {
+                    this.m_targetRigidbody = GameManager.Instance.BestActivePlayer.specRigidbody;
+                }
+                float angle = UnityEngine.Random.Range(0f, 360f);
+                for (int i = 0; i < 24; i++)
+                {
+                    base.Fire(new Offset(new Vector2(1f, 0f), angle, string.Empty, DirectionType.Absolute), new Direction(angle, DirectionType.Absolute, -1f), new SpcreatAttack.RingBullet(angle, this));
+                    yield return base.Wait(3);
+                }
+                yield break;
+            }
+            private float RetargetAngle
+            {
+                get
+                {
+                    if (this.m_targetRigidbody)
+                    {
+                        return (this.m_targetRigidbody.HitboxPixelCollider.UnitCenter - base.Position).ToAngle();
+                    }
+                    float? cachedRetargetAngle = this.m_cachedRetargetAngle;
+                    if (cachedRetargetAngle == null)
+                    {
+                        this.m_cachedRetargetAngle = new float?(UnityEngine.Random.Range(0f, 360f));
+                    }
+                    return this.m_cachedRetargetAngle.Value;
+                }
+            }
+            private const float SpinSpeed = 720f;
+            private const float FireRadius = 1f;
 
-			public class ReaperBullet : Bullet
-			{
-				public ReaperBullet(Vector2 phantomBulletPoint, Vector2 offset) : base("default", false, false, false)
-				{
-					this.m_phantomBulletPoint = phantomBulletPoint;
-					this.m_offset = offset;
-				}
+            private SpeculativeRigidbody m_targetRigidbody;
 
-				protected override IEnumerator Top()
-				{
-					base.ManualControl = true;
-					yield return base.Wait(5);
-					for (int i = 0; i < 180; i++)
-					{
-						this.Projectile.ResetDistance();
-						this.Direction = Mathf.MoveTowardsAngle(this.Direction, base.GetAimDirection(this.m_phantomBulletPoint, 0f, this.Speed), 2f);
-						base.UpdateVelocity();
-						this.m_phantomBulletPoint += this.Velocity / 60f;
-						base.Position += this.Velocity / 60f;
-						float rotation = this.Velocity.ToAngle();
-						Vector2 goalPos = this.m_phantomBulletPoint + this.m_offset.Rotate(rotation);
-						if (i < 30)
-						{
-							Vector2 a = goalPos - base.Position;
-							base.Position += a / (float)(30 - i);
-						}
-						else
-						{
-							base.Position = goalPos;
-						}
-						yield return base.Wait(1);
-					}
-					base.Vanish(false);
-					yield break;
-				}
-				private Vector2 m_phantomBulletPoint;
-				private Vector2 m_offset;
-			}
-		}
+            private float? m_cachedRetargetAngle;
+
+            public class RingBullet : Bullet
+            {
+                public RingBullet(float angle, SpcreatAttack parentScript) : base("dagger", false, false, false)
+                {
+                    this.m_angle = angle;
+                    this.m_parentScript = parentScript;
+                }
+
+                public override IEnumerator Top()
+                {
+                    base.ManualControl = true;
+                    this.Projectile.specRigidbody.CollideWithTileMap = false;
+                    Vector2 center = this.m_parentScript.Position;
+                    for (int i = 0; i < 60; i++)
+                    {
+                        this.m_angle += 9f;
+                        float shownAngle = this.m_angle;
+                        if (i >= 50)
+                        {
+                            shownAngle = Mathf.LerpAngle(this.m_angle, this.m_parentScript.RetargetAngle, (float)(i - 49) / 10f);
+                        }
+                        base.Position = center + BraveMathCollege.DegreesToVector(shownAngle, 1f);
+                        yield return base.Wait(1);
+                    }
+                    this.Projectile.specRigidbody.CollideWithTileMap = true;
+                    this.Direction = this.m_parentScript.RetargetAngle;
+                    this.Speed = 3f;
+                    base.ManualControl = false;
+                    this.ChangeSpeed(new Brave.BulletScript.Speed(18, SpeedType.Absolute), 120);
+                    yield break;
+                }
+                private float m_angle;
+                private SpcreatAttack m_parentScript;
+            }
+        }
 	}
 }
 

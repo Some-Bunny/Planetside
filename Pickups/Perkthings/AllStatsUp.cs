@@ -1,11 +1,13 @@
 ﻿using Dungeonator;
 using ItemAPI;
+using SaveAPI;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Planetside
 {
-    class AllStatsUp : PickupObject, IPlayerInteractable
+    class AllStatsUp : PerkPickupObject, IPlayerInteractable
     {
         public static void Init()
         {
@@ -25,11 +27,24 @@ namespace Planetside
             PerkParticleSystemController particles = gameObject.AddComponent<PerkParticleSystemController>();
             particles.ParticleSystemColor = Color.red;
             particles.ParticleSystemColor2 = Color.red;
-            OutlineColor = new Color(0.2f, 0f, 0f);
+            item.OutlineColor = new Color(0.2f, 0f, 0f);
+
 
         }
+        public override CustomTrackedStats StatToIncreaseOnPickup => SaveAPI.CustomTrackedStats.AMOUNT_BOUGHT_ALLSTATUP;
+        public override List<PerkDisplayContainer> perkDisplayContainers => new List<PerkDisplayContainer>()
+        {
+                new PerkDisplayContainer()
+                {
+                    AmountToBuyBeforeReveal = 1,
+                    LockedString = AlphabetController.ConvertString("Stats Up"),
+                    UnlockedString = "Grants a minor buff to most stats.",
+                    requiresFlag = false
+                },
+        };
+
+
         public static int AllStatsUpID;
-        private static Color OutlineColor;
 
         public new bool PrerequisitesMet()
         {
@@ -45,12 +60,14 @@ namespace Planetside
             if (cont != null) { cont.DoBigBurst(player); }
             AkSoundEngine.PostEvent("Play_OBJ_dice_bless_01", player.gameObject);
             OtherTools.ApplyStat(player, PlayerStats.StatType.Damage, 1.1f, StatModifier.ModifyMethod.MULTIPLICATIVE);
-            OtherTools.ApplyStat(player, PlayerStats.StatType.MovementSpeed, 1.1f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+            OtherTools.ApplyStat(player, PlayerStats.StatType.MovementSpeed, 1.05f, StatModifier.ModifyMethod.MULTIPLICATIVE);
             OtherTools.ApplyStat(player, PlayerStats.StatType.ChargeAmountMultiplier, 1.1f, StatModifier.ModifyMethod.MULTIPLICATIVE);
             OtherTools.ApplyStat(player, PlayerStats.StatType.Accuracy, 0.9f, StatModifier.ModifyMethod.MULTIPLICATIVE);
             OtherTools.ApplyStat(player, PlayerStats.StatType.Coolness, 1f, StatModifier.ModifyMethod.ADDITIVE);
-            OtherTools.ApplyStat(player, PlayerStats.StatType.DamageToBosses, 1.05f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+            OtherTools.ApplyStat(player, PlayerStats.StatType.DamageToBosses, 1.025f, StatModifier.ModifyMethod.MULTIPLICATIVE);
             OtherTools.ApplyStat(player, PlayerStats.StatType.RateOfFire, 1.05f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+            OtherTools.ApplyStat(player, PlayerStats.StatType.KnockbackMultiplier, 1.1f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+
             Exploder.DoDistortionWave(player.sprite.WorldTopCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
             player.BloopItemAboveHead(base.sprite, "");
 
@@ -60,11 +77,8 @@ namespace Planetside
             UnityEngine.Object.Destroy(base.gameObject);
         }
 
-        public float distortionMaxRadius = 30f;
-        public float distortionDuration = 2f;
-        public float distortionIntensity = 0.7f;
-        public float distortionThickness = 0.1f;
-        protected void Start()
+
+        public void Start()
         {
             try
             {
@@ -77,50 +91,7 @@ namespace Planetside
             }
         }
 
-        public float GetDistanceToPoint(Vector2 point)
-        {
-            if (!base.sprite)
-            {
-                return 1000f;
-            }
-            Bounds bounds = base.sprite.GetBounds();
-            bounds.SetMinMax(bounds.min + base.transform.position, bounds.max + base.transform.position);
-            float num = Mathf.Max(Mathf.Min(point.x, bounds.max.x), bounds.min.x);
-            float num2 = Mathf.Max(Mathf.Min(point.y, bounds.max.y), bounds.min.y);
-            return Mathf.Sqrt((point.x - num) * (point.x - num) + (point.y - num2) * (point.y - num2)) / 1.5f;
-        }
-
-        public float GetOverrideMaxDistance()
-        {
-            return 1f;
-        }
-
-        public void OnEnteredRange(PlayerController interactor)
-        {
-            if (!this)
-            {
-                return;
-            }
-            if (!interactor.CurrentRoom.IsRegistered(this) && !RoomHandler.unassignedInteractableObjects.Contains(this))
-            {
-                return;
-            }
-            SpriteOutlineManager.RemoveOutlineFromSprite(base.sprite, false);
-            SpriteOutlineManager.AddOutlineToSprite(base.sprite, Color.white, 0.1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
-            base.sprite.UpdateZDepth();
-        }
-
-        public void OnExitRange(PlayerController interactor)
-        {
-            if (!this)
-            {
-                return;
-            }
-            SpriteOutlineManager.RemoveOutlineFromSprite(base.sprite, true);
-            SpriteOutlineManager.AddOutlineToSprite(base.sprite, OutlineColor, 0.1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
-            base.sprite.UpdateZDepth();
-        }
-
+     
         private void Update()
         {
             if (!this.m_hasBeenPickedUp && !this.m_isBeingEyedByRat && base.ShouldBeTakenByRat(base.sprite.WorldCenter))
@@ -129,25 +100,7 @@ namespace Planetside
             }
         }
 
-        public void Interact(PlayerController interactor)
-        {
-            if (!this)
-            {
-                return;
-            }
-            if (RoomHandler.unassignedInteractableObjects.Contains(this))
-            {
-                RoomHandler.unassignedInteractableObjects.Remove(this);
-            }
-            SpriteOutlineManager.RemoveOutlineFromSprite(base.sprite, true);
-            this.Pickup(interactor);
-        }
-
-        public string GetAnimationState(PlayerController interactor, out bool shouldBeFlipped)
-        {
-            shouldBeFlipped = false;
-            return string.Empty;
-        }
+     
 
         private bool m_hasBeenPickedUp;
     }

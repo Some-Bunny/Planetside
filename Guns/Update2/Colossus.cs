@@ -215,7 +215,7 @@ namespace Planetside
                 "bottle",
                 "heart_bottle"
             };
-            CustomSynergies.Add("Perfected", mandatoryConsoleIDs, optionalConsoleIDs, true);
+            CustomSynergies.Add("Perfected", mandatoryConsoleIDs, optionalConsoleIDs, false);
             Colossus.ColossusID = gun.PickupObjectId;
             ItemIDs.AddToList(gun.PickupObjectId);
 

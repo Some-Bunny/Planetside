@@ -1140,7 +1140,7 @@ namespace Planetside
 				}
 			}
 
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				PrisonerController controller = base.BulletBank.aiActor.GetComponent<PrisonerController>();
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("31a3ea0c54a745e182e22ea54844a82d").bulletBank.GetBullet("sniper"));
@@ -1346,7 +1346,7 @@ namespace Planetside
 					this.spawnsUndodgeables = SpawnsUnDodgeablesOnDeath;
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					//this.lifeTime = 0;
 					this.ManualControl = true;
@@ -1398,7 +1398,7 @@ namespace Planetside
 				{
 					this.Inc = SpeedIncrease;
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					base.Projectile.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
 					SpawnManager.PoolManager.Remove(base.Projectile.transform);
@@ -1410,7 +1410,7 @@ namespace Planetside
 		}
 		public class BasicLaserAttackTell : Script
         {
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				bool ISDodgeAble = true;
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("ffca09398635467da3b1f4a54bcfda80").bulletBank.GetBullet("directedfire"));
@@ -1558,7 +1558,7 @@ namespace Planetside
 				public WallBullet(string BulletType) : base(BulletType, false, false, false)
 				{
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					
 					yield break;
@@ -1570,7 +1570,7 @@ namespace Planetside
 				{
 					ang = Angle;
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					base.Projectile.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
 					SpawnManager.PoolManager.Remove(base.Projectile.transform);
@@ -1581,7 +1581,7 @@ namespace Planetside
 		}
 		public class WallSweep : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("f905765488874846b7ff257ff81d6d0c").bulletBank.GetBullet("spore2"));
 				Vector2 TopRight = base.BulletBank.aiActor.GetAbsoluteParentRoom().area.UnitTopRight;
@@ -1828,7 +1828,7 @@ namespace Planetside
 					this.Angle = angle;
 					this.IsDoge = IsDodgeAble;
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					if (IsDoge == false)
                     {
@@ -1850,7 +1850,7 @@ namespace Planetside
 		}
 		public class SimpleBlasts : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				this.EndOnBlank = true;
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("1bc2a07ef87741be90c37096910843ab").bulletBank.GetBullet("icicle"));
@@ -1893,7 +1893,7 @@ namespace Planetside
 					this.isDodgeable = IsdodgeAble;
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					if (isDodgeable == false)
                     {
@@ -1945,7 +1945,7 @@ namespace Planetside
 		}
 		public class SweepJukeAttack : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				this.EndOnBlank = true;
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("31a3ea0c54a745e182e22ea54844a82d").bulletBank.GetBullet("sniper"));
@@ -2199,7 +2199,7 @@ namespace Planetside
 				{
 					ang = Angle;
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					base.Projectile.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
 					SpawnManager.PoolManager.Remove(base.Projectile.transform);
@@ -2213,7 +2213,7 @@ namespace Planetside
 				{
 					this.Inc = SpeedIncrease;
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					yield break;
 				}
@@ -2222,7 +2222,7 @@ namespace Planetside
 		}
 		public class LaserCross : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				PrisonerController controller = base.BulletBank.aiActor.GetComponent<PrisonerController>();
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("41ee1c8538e8474a82a74c4aff99c712").bulletBank.GetBullet("big"));
@@ -2339,7 +2339,7 @@ namespace Planetside
 				public WallBulletNoDodge(string BulletType) : base(BulletType, false, false, false)
 				{
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					this.Projectile.IgnoreTileCollisionsFor(300f);
 					yield break;
@@ -2350,7 +2350,7 @@ namespace Planetside
 				public WallBulletDodge(string BulletType) : base(BulletType, false, false, false)
 				{
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					base.ChangeSpeed(new Speed(8f, SpeedType.Absolute), 30);
 					//base.Projectile.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
@@ -2364,7 +2364,7 @@ namespace Planetside
 				{
 
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					base.ChangeSpeed(new Speed(base.Speed + 11, SpeedType.Absolute), 60);
 					yield break;
@@ -2376,7 +2376,7 @@ namespace Planetside
 				{
 
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					base.Projectile.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
 					SpawnManager.PoolManager.Remove(base.Projectile.transform);

@@ -116,7 +116,7 @@ namespace Planetside
             return base.Drop(player);
         }
 
-        protected override void OnDestroy()
+        public override void OnDestroy()
         {
             if (base.Owner != null)
             {
@@ -132,7 +132,7 @@ namespace Planetside
         }
 
         private tk2dTiledSprite extantLink;
-        protected override void Update()
+        public override void Update()
         {
             base.Update();
             if (this.m_extantOrbital != null)

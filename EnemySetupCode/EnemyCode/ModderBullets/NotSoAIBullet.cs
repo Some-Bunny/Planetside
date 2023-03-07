@@ -20,7 +20,7 @@ namespace Planetside
 		}
 		public class SkellScript : Script 
 		{
-			protected override IEnumerator Top() 
+			public override IEnumerator Top() 
 			{
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("796a7ed4ad804984859088fc91672c7f").bulletBank.GetBullet("default"));
 				float startDirection = base.RandomAngle();
@@ -58,7 +58,7 @@ namespace Planetside
 
 			}
 
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				base.ManualControl = true;
 				Vector2 centerPosition = base.Position;

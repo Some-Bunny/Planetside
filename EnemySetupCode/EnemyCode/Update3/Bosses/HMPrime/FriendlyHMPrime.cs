@@ -1633,7 +1633,7 @@ namespace Planetside
 	
 		public class CleanSweeps : Script
         {
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
             {
 				base.BulletBank.Bullets.Add(minigunEntryTwo);
 				for (int e = (-3); e < (4); e++)
@@ -1763,7 +1763,7 @@ namespace Planetside
 			{
 				public Shrapnel(AdditionalLinesOfBullets parent) : base("poundSmall", false, false, false)
 				{ father = parent; }
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					
 					while (base.Projectile != null)
@@ -1779,7 +1779,7 @@ namespace Planetside
 				private AdditionalLinesOfBullets father;
 			}
 			
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("amuletRing"));
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("poundSmall"));
@@ -1834,7 +1834,7 @@ namespace Planetside
 
 		public class Taser : Script
         {
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				//Taser.LargeBomb
 
@@ -1914,7 +1914,7 @@ namespace Planetside
 					base.OnBulletDestruction(destroyType, hitRigidbody, preventSpawningProjectiles);
 				}
 
-                protected override IEnumerator Top()
+                public override IEnumerator Top()
 				{
 					base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 120);
 					yield return this.Wait(870);
@@ -1967,7 +1967,7 @@ namespace Planetside
 
 		public class EatMissiles : Script
         {
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				//base.BulletBank.Bullets.Add(missileEntry);
 				Vector2 positionLeft = base.BulletBank.aiActor.transform.Find("LeftGun_Down(Left)").transform.PositionVector2();
@@ -2001,7 +2001,7 @@ namespace Planetside
 		}
 		public class ShootGun : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				base.BulletBank.Bullets.Add(minigunEntry);
 			

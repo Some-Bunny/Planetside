@@ -73,7 +73,7 @@ namespace Planetside
 				playeroue.OnRoomClearEvent += this.RoomCleared;
 				ETGMod.AIActor.OnPreStart = (Action<AIActor>)Delegate.Combine(ETGMod.AIActor.OnPreStart, new Action<AIActor>(this.AIActorMods));
 			}
-			protected override void OnDestroy()
+			public override void OnDestroy()
 			{
 				if (playeroue != null)
                 {

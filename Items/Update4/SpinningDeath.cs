@@ -58,8 +58,7 @@ namespace Planetside
 		{
 			LinkedList<BasicBeamController.BeamBone> linkedList = PlanetsideReflectionHelper.ReflectGetField<LinkedList<BasicBeamController.BeamBone>>(typeof(BasicBeamController), "m_bones", this.basicBeamController);
 			Vector2 bonePosition = this.basicBeamController.GetBonePosition(linkedList.ElementAt(UnityEngine.Random.Range(0, linkedList.Count())));
-            ParticleSystem particleSystem = UnityEngine.Object.Instantiate(StaticVFXStorage.PerfectedParticleSystem).GetComponent<ParticleSystem>();
-            particleSystem.gameObject.transform.parent = this.projectile.transform;
+            ParticleSystem particleSystem = StaticVFXStorage.PerfectedParticleSystem.GetComponent<ParticleSystem>();
             var trails = particleSystem.trails;
             trails.worldSpace = false;
             ParticleSystem.EmitParams emitParams = new ParticleSystem.EmitParams
@@ -194,7 +193,13 @@ namespace Planetside
 				"directional_pad"
 			};
 			CustomSynergies.Add("D-rectional", mandatoryConsoleIDs, optionalConsoleIDs, true);
-		}
+
+            List<string> optionalConsoleIDs2 = new List<string>
+            {
+                "psog:shockchain"
+            };
+            CustomSynergies.Add("Overclocked", mandatoryConsoleIDs, optionalConsoleIDs2, true);
+        }
 
 
 		public static Projectile SpinningDeathBeam; 
@@ -204,8 +209,41 @@ namespace Planetside
 			float procChance = 0.25f;
 			procChance *= effectChanceScalar;
 			SpinningDeathController cont = sourceProjectile.gameObject.GetComponent<SpinningDeathController>();
-			//bool SynergyCheck = Owner.CurrentGun != PickupObjectDatabase.GetById(514) as Gun && Owner.PlayerHasActiveSynergy("D-rectional");
-			if (UnityEngine.Random.value <= procChance && cont == null)// && SynergyCheck == false)
+            ShockChainProjectile sh = sourceProjectile.gameObject.GetComponent<ShockChainProjectile>();
+
+			if (sh != null && Owner.PlayerHasActiveSynergy("Overclocked"))
+			{
+                AkSoundEngine.PostEvent("Play_EnergySwirl", sourceProjectile.gameObject);
+                PierceProjModifier spook = sourceProjectile.gameObject.GetOrAddComponent<PierceProjModifier>();
+                spook.penetration += 10;
+                spook.penetratesBreakables = true;
+                bool Flipped = sh.IsLeft;
+
+                if (Owner.PlayerHasActiveSynergy("D-rectional"))
+                {
+                    for (int i = 0; i < 4; i++)
+                    {
+                        BeamController beamController3 = BeamToolbox.FreeFireBeamFromAnywhere(SpinningDeath.SpinningDeathBeam, Owner, sourceProjectile.gameObject, sourceProjectile.gameObject.transform.PositionVector2(), false, (90f * i), 30f, true, true, Flipped ? 360 : -360);
+                        Projectile component3 = beamController3.GetComponent<Projectile>();
+                        float Dmg = sourceProjectile.baseData.damage *= Owner != null ? Owner.stats.GetStatValue(PlayerStats.StatType.Damage) : 1;
+                        component3.baseData.damage = Dmg * 4f;
+                        component3.AdditionalScaleMultiplier *= 0.66f;
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < 2; i++)
+                    {
+                        BeamController beamController3 = BeamToolbox.FreeFireBeamFromAnywhere(SpinningDeathBeam, base.Owner, sourceProjectile.gameObject, sourceProjectile.gameObject.transform.PositionVector2(), false, 180f * i, 30f, true, true, Flipped ? -720 : 720);
+                        Projectile component3 = beamController3.GetComponent<Projectile>();
+                        float Dmg = sourceProjectile.baseData.damage *= base.Owner != null ? base.Owner.stats.GetStatValue(PlayerStats.StatType.Damage) : 1;
+                        component3.baseData.damage = Dmg * 6f;
+                        component3.AdditionalScaleMultiplier *= 0.66f;
+                    }
+                }
+
+            }
+			else if (UnityEngine.Random.value <= procChance && cont == null)// && SynergyCheck == false)
 			{
 				try
 				{
@@ -214,7 +252,7 @@ namespace Planetside
 					sourceProjectile.UpdateSpeed();
 
 					PierceProjModifier spook = sourceProjectile.gameObject.GetOrAddComponent<PierceProjModifier>();
-					spook.penetration = 10;
+					spook.penetration += 10;
 					spook.penetratesBreakables = true;
 
 
@@ -324,7 +362,7 @@ namespace Planetside
 
 		
 
-		protected override void OnDestroy()
+		public override void OnDestroy()
 		{
 			if (base.Owner != null)
             {

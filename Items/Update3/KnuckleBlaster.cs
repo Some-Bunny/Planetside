@@ -111,7 +111,7 @@ namespace Planetside
                 SwitchHand();
             }
         }
-        protected override void OnPreDrop(PlayerController player)
+        public override void OnPreDrop(PlayerController player)
         {
             player.OnReloadPressed -= reloadPressed;
             base.OnPreDrop(player);
@@ -209,7 +209,7 @@ namespace Planetside
             return user && ISFeedBacker ? Charge >= 1 : Charge >= 3 | Charge == 3;
         }
         
-        protected override void DoEffect(PlayerController user)
+        public override void DoEffect(PlayerController user)
         {
             if (ISFeedBacker != true)
             {

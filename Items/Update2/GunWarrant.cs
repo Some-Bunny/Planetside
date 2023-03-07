@@ -23,12 +23,10 @@ namespace Planetside
         public static void Init()
         {
             string itemName = "Gun Warrant";
-            //string resourceName = "Planetside/Resources/gunwarrant.png";
             GameObject obj = new GameObject(itemName);
             var item = obj.AddComponent<GunWarrant>();
             var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
             ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("gunwarrant"), data, obj);
-            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "The Buy To Carry";
             string longDesc = "Although being a Gungeoneer doesn't require a warrant, the benefits of having one is hard to pass by, especially for Gungeoneers that enjoy a steady supply of new weaponry.";
             ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
@@ -174,10 +172,7 @@ namespace Planetside
                         leEnabler.SetValue(self, uses);
                     }
                 }
-            }
-
-
-                 
+            }             
         }
 
 

@@ -106,7 +106,7 @@ namespace Planetside
             return (base.LastOwner.sprite.WorldCenter - unitCenter).normalized * d;
         }
 
-        protected override void DoEffect(PlayerController user)
+        public override void DoEffect(PlayerController user)
         {
             RoomHandler roomHandler = user.CurrentRoom;
             List<AIActor> activeEnemies = roomHandler.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);

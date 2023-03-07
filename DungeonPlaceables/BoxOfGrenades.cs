@@ -52,7 +52,7 @@ namespace Planetside
         }
         public class SpewGrenades : Script
         {
-            protected override IEnumerator Top()
+            public override IEnumerator Top()
             {
                 for (int i = 0; i < 4; i++)
                 {

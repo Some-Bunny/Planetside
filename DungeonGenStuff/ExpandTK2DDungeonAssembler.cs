@@ -2288,7 +2288,7 @@ namespace Planetside
 
         private List<StampDataBase> expanseUsedStamps;
 
-        protected class ViableStampCategorySet
+        public class ViableStampCategorySet
         {
             public ViableStampCategorySet(DungeonTileStampData.StampCategory c, DungeonTileStampData.StampPlacementRule p, DungeonTileStampData.StampSpace s)
             {
@@ -2461,12 +2461,12 @@ namespace Planetside
             }
         }
 
-        protected bool IsValidPondCell(CellData cell, RoomHandler parentRoom, Dungeon d)
+        public bool IsValidPondCell(CellData cell, RoomHandler parentRoom, Dungeon d)
         {
             return cell != null && (parentRoom.ContainsPosition(cell.position) && cell.type == CellType.FLOOR && !cell.doesDamage && !cell.HasNonTopWallWallNeighbor() && !cell.HasPitNeighbor(d.data) && !cell.isOccupied && !cell.cellVisualData.floorTileOverridden && cell.cellVisualData.roomVisualTypeIndex == parentRoom.RoomVisualSubtype);
         }
 
-        protected bool IsValidChannelCell(CellData cell, RoomHandler parentRoom, Dungeon d)
+        public bool IsValidChannelCell(CellData cell, RoomHandler parentRoom, Dungeon d)
         {
             return cell != null && (parentRoom.ContainsPosition(cell.position) && cell.type == CellType.FLOOR && !cell.doesDamage && !cell.HasPitNeighbor(d.data) && !cell.isOccupied && !cell.cellVisualData.floorTileOverridden && cell.cellVisualData.roomVisualTypeIndex == parentRoom.RoomVisualSubtype);
         }

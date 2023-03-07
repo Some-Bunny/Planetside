@@ -109,7 +109,7 @@ namespace Planetside
       
 
 
-        protected override void DoEffect(PlayerController user)
+        public override void DoEffect(PlayerController user)
         {
 
             GameObject fart;
@@ -768,7 +768,7 @@ namespace Planetside
         public IntVector2 colliderOffset;
 
         public IntVector2 colliderSize;
-        protected IEnumerator FireBeam(Projectile projectile)
+        public IEnumerator FireBeam(Projectile projectile)
         {
             GameObject beamObject = UnityEngine.Object.Instantiate<GameObject>(projectile.gameObject);
             this.m_laserBeam = beamObject.GetComponent<BasicBeamController>();
@@ -859,7 +859,7 @@ namespace Planetside
         }
 
         /*
-        protected IEnumerator FireBeam()
+        public IEnumerator FireBeam()
         {
             ETGModConsole.Log("1");
             //this.m_firingLaser = true;

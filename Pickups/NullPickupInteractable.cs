@@ -67,7 +67,7 @@ namespace Planetside
         public float distortionDuration = 2f;
         public float distortionIntensity = 0.7f;
         public float distortionThickness = 0.1f;
-        protected void Start()
+        public void Start()
         {
             try
             {

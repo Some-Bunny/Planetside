@@ -16,12 +16,14 @@ namespace Planetside
 	{
 		public static void Init()
 		{
-			EnemyToolbox.CreateNewBulletBankerEnemy("hunter_bullet", "Bl4ckHunter", 18, 19, new List<int> { 93, 94, 95, 96 }, new List<int> { 97, 98, 99, 100, 101 }, null, new SalamanderScript(), 3f);
-		}
-		
-		public class SalamanderScript : Script 
+			var enm = EnemyToolbox.CreateNewBulletBankerEnemy("hunter_bullet", "Bl4ckHunter", 18, 19, new List<int> { 93, 94, 95, 96 }, new List<int> { 97, 98, 99, 100, 101 }, null, new SalamanderScript(), 3f);
+            enm.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("796a7ed4ad804984859088fc91672c7f").bulletBank.GetBullet("default"));
+
+        }
+
+        public class SalamanderScript : Script 
 		{
-			protected override IEnumerator Top() 
+			public override IEnumerator Top() 
 			{
 				if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
 				{
@@ -44,7 +46,7 @@ namespace Planetside
 			{
 
 			}
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				for (int i = 0; i < 10; i++)
                 {

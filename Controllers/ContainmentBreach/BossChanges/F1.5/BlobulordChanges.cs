@@ -78,7 +78,7 @@ namespace Planetside
 
 		public class ModifiedBlobulordBouncingRings1 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				for (int i = 0; i < 7; i++)
 				{
@@ -108,7 +108,7 @@ namespace Planetside
 					this.m_desiredOffset = desiredOffset;
 					this.CanFire = Can;
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					Vector2 centerPoint = this.Position;
 					Vector2 lowestOffset = BraveMathCollege.DegreesToVector(-90f, 1.5f);
@@ -161,7 +161,7 @@ namespace Planetside
 			public class Spore : Bullet
 			{
 				public Spore() : base(UnityEngine.Random.value > 0.33f ? StaticUndodgeableBulletEntries.undodgeableSmallSpore.Name : StaticUndodgeableBulletEntries.undodgeableLargeSpore.Name, false, false, false) { }
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					yield return this.Wait(30);
 					base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), UnityEngine.Random.Range(60, 120));
@@ -175,7 +175,7 @@ namespace Planetside
 
 		public class ModifiedBlobulordSlam1 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				for (int i = 0; i < 3; i++)
 				{
@@ -203,7 +203,7 @@ namespace Planetside
 					this.m_speed = speed;
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					int slowTime = this.m_spawnDelay;
 					int i = 0;
@@ -226,7 +226,7 @@ namespace Planetside
 
 		public class ModifiedBlobulordMoveSpray1 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				int i = 0;
 				while ((float)i < 64f)
@@ -240,7 +240,7 @@ namespace Planetside
 			public class Spore : Bullet
 			{
 				public Spore() : base(StaticUndodgeableBulletEntries.UndodgeableSpew.Name, false, false, false) { }
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					yield return this.Wait(30);
 					base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), UnityEngine.Random.Range(60, 120));

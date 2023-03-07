@@ -39,7 +39,6 @@ namespace Planetside
             {
                 IdentificationKey = "Candy_Heart",
                 PriceMultiplier = 0.5f,
-                //IDsToReducePriceOf = new List<int>() { 73, 85, 120 },
                 CanDiscountCondition = CanBuy,
                 CustomPriceMultiplier = CanMult,
                 ItemToDiscount = Can
@@ -54,7 +53,6 @@ namespace Planetside
                 "antibody"
             };
             CustomSynergies.Add("Hearts In Halves", mandatoryConsoleIDs, optionalConsoleIDs, true);
-
         }
         public static int CandyHeartID;
 
@@ -77,7 +75,6 @@ namespace Planetside
                     return true;
                 }
             }
-
             return false;
         }
 

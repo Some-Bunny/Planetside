@@ -86,7 +86,7 @@ public class AIBeamShooter2 : BraveBehaviour
 		}
 	}
 
-	protected override void OnDestroy()
+	public override void OnDestroy()
 	{
 		if (this.m_laserBeam)
 		{
@@ -145,7 +145,7 @@ public class AIBeamShooter2 : BraveBehaviour
 		}
 	}
 
-	protected IEnumerator FireBeam(Projectile projectile)
+	public IEnumerator FireBeam(Projectile projectile)
 	{
 		GameObject beamObject = UnityEngine.Object.Instantiate<GameObject>(projectile.gameObject);
 		this.m_laserBeam = beamObject.GetComponent<BasicBeamController>();

@@ -69,7 +69,7 @@ namespace Planetside
             return true;
         }
 
-        protected override void DoEffect(PlayerController user)
+        public override void DoEffect(PlayerController user)
         {
 
             GameObject obj = new GameObject();

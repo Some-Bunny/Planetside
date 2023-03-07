@@ -59,7 +59,7 @@ namespace Planetside
 
 		public class ModifiedBulletKingDirectedFireDownRight : ModifiedBulletKingDirectedFire
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				yield return this.Wait(10);
 				this.DirectedShots(1.875f, 0.25f, 4f);
@@ -81,7 +81,7 @@ namespace Planetside
 
 		public class ModifiedBulletKingDirectedFireDownLeft : ModifiedBulletKingDirectedFire
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				yield return this.Wait(10);
 				this.DirectedShots(-1.3125f, -0.4375f, -4f);
@@ -103,7 +103,7 @@ namespace Planetside
 
 		public class ModifiedBulletKingDirectedFireLeft : ModifiedBulletKingDirectedFire
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				yield return this.Wait(10);
 				this.DirectedShots(-1.3125f, -0.4375f, -120f);
@@ -125,7 +125,7 @@ namespace Planetside
 
 		public class ModifiedBulletKingDirectedFireRight : ModifiedBulletKingDirectedFire
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				yield return this.Wait(10);
 				this.DirectedShots(2.125f, 2.375f, 120f);
@@ -145,7 +145,7 @@ namespace Planetside
 
 		public abstract class ModifiedBulletKingDirectedFire : Script
 		{	
-			protected void DirectedShots(float x, float y, float direction)
+			public void DirectedShots(float x, float y, float direction)
 			{
 				direction -= 90f;
 				base.Fire(new Offset(x, y, 0f, string.Empty, DirectionType.Absolute), new Direction(direction, DirectionType.Absolute, -1f), new Speed(11, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.UndodgeableDirectedfire.Name, false, false, false));
@@ -155,7 +155,7 @@ namespace Planetside
 
 		public class ModifeidBulletKingSlam1 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				this.EndOnBlank = true;
 				float startAngle = this.RandomAngle();
@@ -194,7 +194,7 @@ namespace Planetside
 					this.startAngle = startAngle;
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					this.ManualControl = true;
 					float radius = Vector2.Distance(this.centerPoint, this.Position);
@@ -223,7 +223,7 @@ namespace Planetside
 		public class ModifeidBulletKingCrazySpin1 : Script
 		{
 		
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				for (int i = 0; i < 29; i++)
 				{

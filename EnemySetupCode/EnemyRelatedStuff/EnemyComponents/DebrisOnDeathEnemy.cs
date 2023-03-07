@@ -40,7 +40,7 @@ namespace Planetside
 		}
 
 		// Token: 0x060004D8 RID: 1240 RVA: 0x000B2780 File Offset: 0x000B0980
-		protected override void OnTrigger(Vector2 dirVec)
+		public override void OnTrigger(Vector2 dirVec)
 		{
 			if (this.m_hasTriggered)
 			{
@@ -232,7 +232,7 @@ namespace Planetside
 		}
 
 		// Token: 0x060004E0 RID: 1248 RVA: 0x000B2DEC File Offset: 0x000B0FEC
-		protected override void OnDestroy()
+		public override void OnDestroy()
 		{
 			base.OnDestroy();
 		}

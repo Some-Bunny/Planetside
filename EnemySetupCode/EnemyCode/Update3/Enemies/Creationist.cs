@@ -778,7 +778,7 @@ namespace Planetside
 
 		public class BasicCreationistAttack : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableBigBullet);
 				for (int i = 0; i < 3; i++)
@@ -794,7 +794,7 @@ namespace Planetside
 				{
 
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					base.ChangeSpeed(new Speed(20f, SpeedType.Absolute), 120);
 					yield break;
@@ -804,7 +804,7 @@ namespace Planetside
 
 		public class TelegraphScript : Script 
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSniper);
 				for (int i = -1; i < 2; i++)
@@ -839,7 +839,7 @@ namespace Planetside
 				{
 
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					yield break;
 				}

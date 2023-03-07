@@ -63,7 +63,7 @@ public class ShamberController : BraveBehaviour
 		}
 	}
 
-	protected override void OnDestroy()
+	public override void OnDestroy()
 	{
 		if (base.healthHaver)
 		{
@@ -83,7 +83,7 @@ public class ShamberController : BraveBehaviour
     }
 
 
-	protected void Update()
+	public void Update()
 	{
 		if (base.aiActor)
         {
@@ -171,7 +171,7 @@ public class ShamberController : BraveBehaviour
 	}
 	//private bool CanSucc;
 	public int BulletsEaten;
-	protected void OnProjCreated(Projectile projectile)
+	public void OnProjCreated(Projectile projectile)
 	{
 		if (!projectile.Owner.aiActor.CanTargetPlayers && projectile.Owner.aiActor.CanTargetEnemies)
 		{
@@ -190,7 +190,7 @@ public class ShamberController : BraveBehaviour
 
 public class BLLLARGH : Script
 {
-	protected override IEnumerator Top()
+	public override IEnumerator Top()
 	{
 		float fuckYOUYOUPIECEOFfuckINGSHITIHOPEYOUROTINAfuckINGFREEZER = UnityEngine.Random.Range(-180, 180);
 		base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("1bc2a07ef87741be90c37096910843ab").bulletBank.GetBullet("reversible"));
@@ -202,7 +202,7 @@ public class BLLLARGH : Script
 		public BurstBullet() : base("reversible", false, false, false)
 		{
 		}
-		protected override IEnumerator Top()
+		public override IEnumerator Top()
 		{
 			float speed = base.Speed;
 			base.ChangeSpeed(new Speed(speed * 3.6f, SpeedType.Absolute), 120);

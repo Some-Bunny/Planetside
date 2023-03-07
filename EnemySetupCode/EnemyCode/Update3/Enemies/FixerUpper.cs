@@ -191,7 +191,7 @@ namespace Planetside
 		}
 		public class ServontAttack : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				hasSpawnedAllProjectiles = false;
 				if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody) { base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("cd4a4b7f612a4ba9a720b9f97c52f38c").bulletBank.GetBullet("default")); }
@@ -211,7 +211,7 @@ namespace Planetside
 			{
 				this.m_parent = parent;
 			}
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				while (true)
 				{

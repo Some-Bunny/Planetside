@@ -26,7 +26,7 @@ namespace Planetside
 			Gun gun = ETGMod.Databases.Items.NewGun("Whistler", "whistler");
 			Game.Items.Rename("outdated_gun_mods:whistler", "psog:whistler");
 			gun.gameObject.AddComponent<Whistler>();
-			GunExt.SetShortDescription(gun, "Can You H	ear It?");
+			GunExt.SetShortDescription(gun, "Can You Hear It?");
 			GunExt.SetLongDescription(gun, "A gun invented by someone *particularly* lazy, with the desire to never meet their enemy face on. It got its legendary name due to its unique bullet structure, causing the rounds to seemingly whistle.");
 			GunExt.SetupSprite(gun, null, "whistler_idle_001", 8);
 			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 24);
@@ -35,7 +35,7 @@ namespace Planetside
 			GunExt.SetAnimationFPS(gun, gun.chargeAnimation, 3);
 
 			GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(56) as Gun, true, false);
-			gun.SetBaseMaxAmmo(70);
+			gun.SetBaseMaxAmmo(45);
 			
 			gun.DefaultModule.ammoCost = 1;
 			gun.DefaultModule.shootStyle = ProjectileModule.ShootStyle.Charged;
@@ -88,7 +88,7 @@ namespace Planetside
 			noDamageLoss.damageMultOnPierce = 1.05f;
 
 			HomingModifier HomingMod = projectile.gameObject.GetOrAddComponent<HomingModifier>();
-			HomingMod.AngularVelocity = 300;
+			HomingMod.AngularVelocity = 210;
 			HomingMod.HomingRadius = 20;
 
 			BounceProjModifier BounceProjMod = projectile.gameObject.GetOrAddComponent<BounceProjModifier>();
@@ -96,7 +96,6 @@ namespace Planetside
 			BounceProjMod.numberOfBounces = 1000;
 
 			projectile.gameObject.GetOrAddComponent<WhistlerProjectile>();
-
 
 			ProjectileModule.ChargeProjectile whistler1 = new ProjectileModule.ChargeProjectile
 			{

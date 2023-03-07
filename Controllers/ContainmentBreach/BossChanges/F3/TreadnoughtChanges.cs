@@ -83,7 +83,7 @@ namespace Planetside
 
 		public class ModifiedTankTreaderScatterShot1 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				base.Fire(new Direction(0f, DirectionType.Aim, -1f), new Speed(10f, SpeedType.Absolute), new ModifiedTankTreaderScatterShot1.ScatterBullet());
 				return null;
@@ -98,7 +98,7 @@ namespace Planetside
 				{
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					yield return this.Wait(45);
 					for (int i = -4; i < 5; i++)
@@ -119,7 +119,7 @@ namespace Planetside
 				{
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					this.ChangeSpeed(new Speed(12f, SpeedType.Absolute), 40);
 					yield return this.Wait(300);
@@ -134,7 +134,7 @@ namespace Planetside
 
 		public class ModifiedTankTreaderAreaDenial1 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				base.Fire(new Direction(0f, DirectionType.Aim, -1f), new Speed(ModifiedTankTreaderAreaDenial1.HugeBulletStartSpeed, SpeedType.Absolute), new ModifiedTankTreaderAreaDenial1.HugeBullet());
 				return null;
@@ -162,7 +162,7 @@ namespace Planetside
 				{
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					this.m_fireSemicircles = true;
 					this.StartTask(this.FireSemicircles());
@@ -224,7 +224,7 @@ namespace Planetside
 						this.SuppressVfx = true;
 					}
 
-					protected override IEnumerator Top()
+					public override IEnumerator Top()
 					{
 						base.ManualControl = true;
 						Vector2 centerPosition = base.Position;
@@ -259,7 +259,7 @@ namespace Planetside
 				public class WeakSpore : Bullet
 				{
 					public WeakSpore() : base(StaticUndodgeableBulletEntries.undodgeableSmallSpore.Name, false, false, false) { }
-					protected override IEnumerator Top()
+					public override IEnumerator Top()
 					{
 						yield return this.Wait(20);
 						base.Vanish(false);
@@ -278,7 +278,7 @@ namespace Planetside
 
 		public class ModifiedTankTreaderHomingShot1 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				base.Fire(new Direction(0f, DirectionType.Aim, -1f), new Speed(6.5f, SpeedType.Absolute), new ModifiedTankTreaderHomingShot1.HomingBullet());
 				return null;
@@ -294,7 +294,7 @@ namespace Planetside
 				{
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					for (int i = 0; i < 75; i++)
 					{

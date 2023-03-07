@@ -101,7 +101,7 @@ namespace Planetside
 
         private bool HasReloaded;
         private bool Switchclip = false;
-        protected override void Update()
+        public override void Update()
         {
             base.Update();
             if (gun.CurrentOwner)
@@ -113,17 +113,17 @@ namespace Planetside
             }
         }
 
-        protected override void OnPickup(GameActor owner)
+        public override void OnPickup(GameActor owner)
         {
             base.OnPickup(owner);
         }
 
-        protected override void OnPickedUpByPlayer(PlayerController player)
+        public override void OnPickedUpByPlayer(PlayerController player)
         {
             base.OnPickedUpByPlayer(player);
         }
 
-        protected override void OnPostDroppedByPlayer(PlayerController player)
+        public override void OnPostDroppedByPlayer(PlayerController player)
         {
             base.OnPostDroppedByPlayer(player);
         }

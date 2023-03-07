@@ -789,7 +789,7 @@ namespace Planetside
 
 		public class SpawnDash : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
 				{
@@ -813,7 +813,7 @@ namespace Planetside
 				public Superball() : base("big", false, false, false)
 				{
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
 					{
@@ -850,7 +850,7 @@ namespace Planetside
 				public BurstBullet() : base("snakeBullet", false, false, false)
 				{
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 60);
 					yield return base.Wait(60);
@@ -862,7 +862,7 @@ namespace Planetside
 
 		public class SpawnBottle : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
 				{
@@ -891,7 +891,7 @@ namespace Planetside
 				public Superball() : base("big", false, false, false)
 				{
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
 					{
@@ -930,7 +930,7 @@ namespace Planetside
 				public BurstBullet() : base("snakeBullet", false, false, false)
 				{
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 60);
 					yield return base.Wait(60);
@@ -948,7 +948,7 @@ namespace Planetside
 
 		public class BigWhips : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
 				{
@@ -971,7 +971,7 @@ namespace Planetside
 				public BasicBullet() : base("snakeBullet", false, false, false)
 				{
 				}
-                protected override IEnumerator Top()
+                public override IEnumerator Top()
                 {
                     base.ChangeSpeed(new Speed(12f, SpeedType.Absolute), 120);
                     base.ChangeDirection(new Brave.BulletScript.Direction(120, DirectionType.Relative), 120);
@@ -983,7 +983,7 @@ namespace Planetside
 
         public class HealScript : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				List<AIActor> l = base.BulletBank.aiActor.GetComponent<BankerEnemyBehavior>().spawnBullets;
 				for (int i = 0; i < l.Count; i++)
@@ -1059,7 +1059,7 @@ namespace Planetside
                 public Shrapnel() : base("poundSmall", false, false, false)
                 {
                 }
-                protected override IEnumerator Top()
+                public override IEnumerator Top()
                 {
                     base.ChangeSpeed(new Speed(5f, SpeedType.Absolute), 90);
                     yield break;
@@ -1106,7 +1106,7 @@ namespace Planetside
 
         public class BloopScript : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
 				{
@@ -1142,7 +1142,7 @@ namespace Planetside
 					this.SuppressVfx = true;
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					base.ManualControl = true;
 					Vector2 centerPosition = base.Position;

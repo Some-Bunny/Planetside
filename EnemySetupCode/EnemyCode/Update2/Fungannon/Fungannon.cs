@@ -1142,7 +1142,7 @@ namespace Planetside
 		}
 		public class FastCannons : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				CellArea area = base.BulletBank.aiActor.ParentRoom.area;
 
@@ -1205,7 +1205,7 @@ namespace Planetside
 
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("f905765488874846b7ff257ff81d6d0c").bulletBank.GetBullet("spore2"));
 					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("f905765488874846b7ff257ff81d6d0c").bulletBank.GetBullet("spore1"));
@@ -1227,7 +1227,7 @@ namespace Planetside
 					this.AirTime = Airtime;
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					if (this.BulletName == "spore2")
 					{
@@ -1260,7 +1260,7 @@ namespace Planetside
 		}
 		public class BigEverywhereAttack : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				CellArea area = base.BulletBank.aiActor.ParentRoom.area;
 				float delta = 20f;
@@ -1342,7 +1342,7 @@ namespace Planetside
 
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("f905765488874846b7ff257ff81d6d0c").bulletBank.GetBullet("spore2"));
 					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("f905765488874846b7ff257ff81d6d0c").bulletBank.GetBullet("spore1"));
@@ -1364,7 +1364,7 @@ namespace Planetside
 					this.AirTime = Airtime;
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					if (this.BulletName == "spore2")
 					{
@@ -1410,7 +1410,7 @@ namespace Planetside
 					this.SuppressVfx = true;
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					base.ManualControl = true;
 					this.Projectile.collidesOnlyWithPlayerProjectiles = true;
@@ -1469,7 +1469,7 @@ namespace Planetside
 				public Superball() : base("big", false, false, false)
 				{
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
 					{
@@ -1527,7 +1527,7 @@ namespace Planetside
 					this.BulletName = bulletname;
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					if (this.BulletName == "spore2")
 					{
@@ -1546,7 +1546,7 @@ namespace Planetside
 		public class RainingPoot : Script
 		{
 
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 
 				CellArea area = base.BulletBank.aiActor.ParentRoom.area;
@@ -1611,7 +1611,7 @@ namespace Planetside
 				{
 					this.m_parent = parent;
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					int travelTime = UnityEngine.Random.Range(150, 450);
 					this.Projectile.IgnoreTileCollisionsFor(90f);
@@ -1634,7 +1634,7 @@ namespace Planetside
 
 		public class PooterCannon : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				for (int e = 0; e < 5; e++)
                 {
@@ -1743,7 +1743,7 @@ namespace Planetside
 
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("f905765488874846b7ff257ff81d6d0c").bulletBank.GetBullet("spore2"));
 					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("f905765488874846b7ff257ff81d6d0c").bulletBank.GetBullet("spore1"));
@@ -1765,7 +1765,7 @@ namespace Planetside
 					this.AirTime = Airtime;
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					if (this.BulletName == "spore2")
 					{
@@ -1786,7 +1786,7 @@ namespace Planetside
 
 		public class PrimaryCannonScript : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				base.PostWwiseEvent("Play_BOSS_RatMech_Stomp_01", null);
 				ExplosionData aww = GameManager.Instance.Dungeon.sharedSettingsPrefab.DefaultExplosionData;
@@ -1823,7 +1823,7 @@ namespace Planetside
 
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("f905765488874846b7ff257ff81d6d0c").bulletBank.GetBullet("spore2"));
 					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("f905765488874846b7ff257ff81d6d0c").bulletBank.GetBullet("spore1"));
@@ -1846,7 +1846,7 @@ namespace Planetside
 					this.AirTime = Airtime;
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					if (this.BulletName == "spore2")
                     {
@@ -1868,7 +1868,7 @@ namespace Planetside
 
 		public class MegaCannon : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("41ee1c8538e8474a82a74c4aff99c712").bulletBank.GetBullet("big"));
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("f905765488874846b7ff257ff81d6d0c").bulletBank.GetBullet("spore2"));
@@ -1894,7 +1894,7 @@ namespace Planetside
 				public Superball() : base("big", false, false, false)
 				{
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					for (int i = 0; i < 100; i++)
 					{
@@ -1925,7 +1925,7 @@ namespace Planetside
 
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("f905765488874846b7ff257ff81d6d0c").bulletBank.GetBullet("spore2"));
 					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("f905765488874846b7ff257ff81d6d0c").bulletBank.GetBullet("spore1"));
@@ -1948,7 +1948,7 @@ namespace Planetside
 					this.AirTime = Airtime;
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					if (this.BulletName == "spore2")
 					{

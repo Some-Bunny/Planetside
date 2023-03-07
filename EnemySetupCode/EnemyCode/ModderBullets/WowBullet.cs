@@ -62,7 +62,7 @@ namespace Planetside
 
 		public class SalamanderScript : Script 
 		{
-			protected override IEnumerator Top() 
+			public override IEnumerator Top() 
 			{
 				if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
 				{
@@ -86,7 +86,7 @@ namespace Planetside
 			{
 
 			}
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				yield return Wait(UnityEngine.Random.Range(30, 90));
 				DoFireGoop((base.Projectile.sprite.WorldCenter));

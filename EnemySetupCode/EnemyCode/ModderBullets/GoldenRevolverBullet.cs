@@ -20,7 +20,7 @@ namespace Planetside
 		}
 		public class SkellScript : Script 
 		{
-			protected override IEnumerator Top() 
+			public override IEnumerator Top() 
 			{
 				if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
 				{
@@ -40,7 +40,7 @@ namespace Planetside
 			public WallBullet() : base("bigBullet", false, false, false)
 			{
 			}
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 60);
 				yield return this.Wait(60 + UnityEngine.Random.Range(0, 60));

@@ -43,7 +43,7 @@ public class UmbraController : BraveBehaviour
 			base.aiActor.BecomeBlackPhantom();
 		}
     }
-	protected override void OnDestroy()
+	public override void OnDestroy()
 	{
 		if (base.aiActor)
 		{
@@ -56,7 +56,7 @@ public class UmbraController : BraveBehaviour
 
 	public class Baboomer : Script
 	{
-		protected override IEnumerator Top()
+		public override IEnumerator Top()
 		{
 			base.PostWwiseEvent("Play_ENM_bulletking_slam_01", null);
 			base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("4d164ba3f62648809a4a82c90fc22cae").bulletBank.GetBullet("big_one"));
@@ -76,7 +76,7 @@ public class UmbraController : BraveBehaviour
 				base.Initialize();
 			}
 
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("1bc2a07ef87741be90c37096910843ab").bulletBank.GetBullet("reversible"));
 				this.Projectile.specRigidbody.CollideWithTileMap = false;

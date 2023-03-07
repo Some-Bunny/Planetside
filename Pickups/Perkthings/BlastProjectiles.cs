@@ -1,6 +1,8 @@
 ﻿using Dungeonator;
 using ItemAPI;
+using SaveAPI;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Planetside
@@ -24,7 +26,7 @@ namespace Planetside
         public int MinToSpawn;
     }
 
-    class BlastProjectiles : PickupObject, IPlayerInteractable
+    class BlastProjectiles : PerkPickupObject, IPlayerInteractable
     {
         public static void Init()
         {
@@ -43,7 +45,7 @@ namespace Planetside
             PerkParticleSystemController particles = gameObject.AddComponent<PerkParticleSystemController>();
             particles.ParticleSystemColor = Color.yellow;
             particles.ParticleSystemColor2 = new Color(255, 215, 0);
-            OutlineColor = new Color(1f, 0.55f, 0f);
+            item.OutlineColor = new Color(1f, 0.55f, 0f);
 
             Gun gun4 = PickupObjectDatabase.GetById(43) as Gun;
             Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(gun4.DefaultModule.projectiles[0]);
@@ -68,11 +70,39 @@ namespace Planetside
             trail.StartColor = new Color(1f, 1f, 0f, 0.6f);
             trail.EndColor = new Color(0.1f, 0f, 0f, 0f);
 
+           
 
             VengefulProjectile = projectile;
         }
+
+        public override CustomTrackedStats StatToIncreaseOnPickup => SaveAPI.CustomTrackedStats.AMOUNT_BOUGHT_EXPLOSIVEBIRTH;
+        public override List<PerkDisplayContainer> perkDisplayContainers => new List<PerkDisplayContainer>()
+        {
+                new PerkDisplayContainer()
+                {
+                    AmountToBuyBeforeReveal = 1,
+                    LockedString = AlphabetController.ConvertString("Explosions Birth"),
+                    UnlockedString = "Explosions Birth Vengeful Shells.",
+                    requiresFlag = false
+                },
+                new PerkDisplayContainer()
+                {
+                    AmountToBuyBeforeReveal = 3,
+                    LockedString = AlphabetController.ConvertString("Damage Scales Amount"),
+                    UnlockedString = "Higher Explosion Damage Births More Shells.",
+                    requiresFlag = false
+                },
+                new PerkDisplayContainer()
+                {
+                    AmountToBuyBeforeReveal = 5,
+                    LockedString = AlphabetController.ConvertString("Stacking Scales Amount"),
+                    UnlockedString = "Stacking Increases amount of shells birthed.",
+                    FlagToTrack = SaveAPI.CustomDungeonFlags.EXPLOSIVEBIRTH_FLAG_STACK
+                },
+        };
+
+
         public static int BlastProjectilesID;
-        private static Color OutlineColor;
         public static Projectile VengefulProjectile;
         public new bool PrerequisitesMet()
         {
@@ -91,7 +121,8 @@ namespace Planetside
             if (cont != null) { cont.DoBigBurst(player); }
             BlastProjectilesCheck blast =player.gameObject.GetOrAddComponent<BlastProjectilesCheck>();
             if(blast.hasBeenPickedup==true)
-            { blast.IncrementStack(); }
+            { blast.IncrementStack(); 
+                SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.EXPLOSIVEBIRTH_FLAG_STACK, true); }
 
             Exploder.DoDistortionWave(player.sprite.WorldTopCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
             player.BloopItemAboveHead(base.sprite, "");
@@ -104,11 +135,7 @@ namespace Planetside
 
 
 
-        public float distortionMaxRadius = 30f;
-        public float distortionDuration = 2f;
-        public float distortionIntensity = 0.7f;
-        public float distortionThickness = 0.1f;
-        protected void Start()
+        public void Start()
         {
             try
             {
@@ -121,49 +148,7 @@ namespace Planetside
             }
         }
 
-        public float GetDistanceToPoint(Vector2 point)
-        {
-            if (!base.sprite)
-            {
-                return 1000f;
-            }
-            Bounds bounds = base.sprite.GetBounds();
-            bounds.SetMinMax(bounds.min + base.transform.position, bounds.max + base.transform.position);
-            float num = Mathf.Max(Mathf.Min(point.x, bounds.max.x), bounds.min.x);
-            float num2 = Mathf.Max(Mathf.Min(point.y, bounds.max.y), bounds.min.y);
-            return Mathf.Sqrt((point.x - num) * (point.x - num) + (point.y - num2) * (point.y - num2)) / 1.5f;
-        }
-
-        public float GetOverrideMaxDistance()
-        {
-            return 1f;
-        }
-
-        public void OnEnteredRange(PlayerController interactor)
-        {
-            if (!this)
-            {
-                return;
-            }
-            if (!interactor.CurrentRoom.IsRegistered(this) && !RoomHandler.unassignedInteractableObjects.Contains(this))
-            {
-                return;
-            }
-            SpriteOutlineManager.RemoveOutlineFromSprite(base.sprite, false);
-            SpriteOutlineManager.AddOutlineToSprite(base.sprite, Color.white, 0.1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
-            base.sprite.UpdateZDepth();
-        }
-
-        public void OnExitRange(PlayerController interactor)
-        {
-            if (!this)
-            {
-                return;
-            }
-            SpriteOutlineManager.RemoveOutlineFromSprite(base.sprite, true);
-            SpriteOutlineManager.AddOutlineToSprite(base.sprite, OutlineColor, 0.1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
-            base.sprite.UpdateZDepth();
-        }
+      
 
         private void Update()
         {
@@ -172,27 +157,6 @@ namespace Planetside
                 GameManager.Instance.Dungeon.StartCoroutine(base.HandleRatTheft());
             }
         }
-
-        public void Interact(PlayerController interactor)
-        {
-            if (!this)
-            {
-                return;
-            }
-            if (RoomHandler.unassignedInteractableObjects.Contains(this))
-            {
-                RoomHandler.unassignedInteractableObjects.Remove(this);
-            }
-            SpriteOutlineManager.RemoveOutlineFromSprite(base.sprite, true);
-            this.Pickup(interactor);
-        }
-
-        public string GetAnimationState(PlayerController interactor, out bool shouldBeFlipped)
-        {
-            shouldBeFlipped = false;
-            return string.Empty;
-        }
-
         private bool m_hasBeenPickedUp;
     }
 }

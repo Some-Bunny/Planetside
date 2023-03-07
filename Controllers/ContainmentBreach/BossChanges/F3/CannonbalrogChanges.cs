@@ -86,7 +86,7 @@ namespace Planetside
 
 		public class ModifiedGiantPowderSkullCannonVolley1 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				AIAnimator aiAnimator = this.BulletBank.aiAnimator;
 				string name = "eyeflash";
@@ -109,7 +109,7 @@ namespace Planetside
 
 		public class ModifiedGiantPowderSkullPound1 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				int num = BraveUtility.SequentialRandomRange(0, 4, ModifiedGiantPowderSkullPound1.s_lastPatternNum, null, true);
 				ModifiedGiantPowderSkullPound1.s_lastPatternNum = num;
@@ -170,7 +170,7 @@ namespace Planetside
 
 		public class ModifiedGiantPowderSkullRollSlam1 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				AkSoundEngine.PostEvent("Play_BOSS_doormimic_blast_01", this.BulletBank.gameObject);
 				float startDirection = 0f;

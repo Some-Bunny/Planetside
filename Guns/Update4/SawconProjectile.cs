@@ -77,7 +77,7 @@ namespace Planetside
                     projectile.baseData.speed *= 0.4f;
                     projectile.UpdateSpeed();
 
-                    SawTime = 10;
+                    SawTime = 12;
                     projectile.baseData.damage *= 0.5f;
 
                     blueIndicator = (UnityEngine.Object.Instantiate(StaticVFXStorage.RadialRing, projectile.sprite.WorldCenter, Quaternion.identity, projectile.transform)).GetComponent<HeatIndicatorController>();
@@ -112,7 +112,14 @@ namespace Planetside
             projectile.DestroyMode = Projectile.ProjectileDestroyMode.DestroyComponent;
             objectToLookOutFor = projectile.gameObject;
             objectToLookOutFor.transform.parent = otherBody.transform;
-            parent = otherBody.GetComponent<AIActor>();
+            parent = otherBody.GetComponent<HealthHaver>() ?? otherBody.GetComponentInChildren<HealthHaver>();
+            if (parent == null)
+            {
+                DoBreak(otherBody.transform.PositionVector2());
+
+                return;
+            }
+
 
             AkSoundEngine.PostEvent("Play_ITM_Crisis_Stone_Shield_01", objectToLookOutFor.gameObject);
 
@@ -120,10 +127,13 @@ namespace Planetside
         }
         private IEnumerator ItsSawingTime(Vector2 lastVelocity)
         {
+
             float VelAngle = lastVelocity.ToAngle();
 
+            var sprite = parent.sprite ?? parent.GetComponentInChildren<tk2dBaseSprite>();
+            
             if (objectToLookOutFor == null) { yield break; }
-            Vector2 startPosition = MathToolbox.GetUnitOnCircle(VelAngle + 180, (Vector3.Distance(objectToLookOutFor.GetComponentInChildren<tk2dBaseSprite>().WorldCenter, parent.sprite.WorldCenter)/1.5f));
+            Vector2 startPosition = MathToolbox.GetUnitOnCircle(VelAngle + 180, (Vector3.Distance(objectToLookOutFor.GetComponentInChildren<tk2dBaseSprite>().WorldCenter, sprite.WorldCenter)/1.5f));
             AkSoundEngine.PostEvent("Play_OBJ_paydaydrill_loop_01", GameManager.Instance.gameObject);
             float elapsed = 0f;
             float duration = SawTime;
@@ -144,10 +154,10 @@ namespace Planetside
                 float tLerp = MathToolbox.SinLerpTValue(t);
                 if (parent != null)
                 {
-                    location = Vector3.Lerp(parent.sprite.WorldCenter + startPosition, parent.sprite.WorldCenter, tLerp);
+                    location = Vector3.Lerp(sprite.WorldCenter + startPosition, sprite.WorldCenter, tLerp);
 
                     objectToLookOutFor.transform.position = location;
-                    parent.healthHaver.ApplyDamage(Damage * BraveTime.DeltaTime, this.transform.PositionVector2(), "saw");
+                    parent.healthHaver.ApplyDamage((Damage * BraveTime.DeltaTime) * (1 + tLerp), this.transform.PositionVector2(), "saw");
                     GlobalSparksDoer.DoSingleParticle(objectToLookOutFor.GetComponentInChildren<tk2dBaseSprite>().WorldCenter, MathToolbox.GetUnitOnCircle(VelAngle + UnityEngine.Random.Range(-10, 10), 10), null, null, null, GlobalSparksDoer.SparksType.BLOODY_BLOOD);
                     GlobalSparksDoer.DoSingleParticle(objectToLookOutFor.GetComponentInChildren<tk2dBaseSprite>().WorldCenter, MathToolbox.GetUnitOnCircle((VelAngle - 180) + UnityEngine.Random.Range(-10, 10), 10), null, null, null, GlobalSparksDoer.SparksType.BLOODY_BLOOD);
                 }
@@ -160,9 +170,16 @@ namespace Planetside
                 blueIndicator.EndEffect();
             }
 
+            DoBreak(location);
+
+            yield break;
+        }
+
+        public void DoBreak(Vector2 location)
+        {
             ExplosionData data = StaticExplosionDatas.CopyFields(StaticExplosionDatas.genericSmallExplosion);//StaticExplosionDatas.genericSmallExplosion;
             data.effect = (PickupObjectDatabase.GetById(601) as Gun).DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX;
-            float damage = player != null ? player.PlayerHasActiveSynergy("Screwdriver") == true ? 20 : 6 : 6;
+            float damage = player != null ? player.PlayerHasActiveSynergy("Screwdriver") == true ? 20 : 8 : 8;
             data.damage = damage * (player != null ? player.stats.GetStatValue(PlayerStats.StatType.Damage) : 1);
             data.damageRadius = 3;
             data.doScreenShake = false;
@@ -195,9 +212,8 @@ namespace Planetside
                 Destroy(objectToLookOutFor);
             }
             AkSoundEngine.PostEvent("Play_ITM_Crisis_Stone_Shield_01", objectToLookOutFor.gameObject ?? GameManager.Instance.PrimaryPlayer.gameObject);
-
-            yield break;
         }
+
 
         public void Update()
         {
@@ -326,12 +342,12 @@ namespace Planetside
         }
 
 
-        public float SawTime = 6;
+        public float SawTime = 7;
 
         public PlayerController player;
         public float Damage;
         public GameObject objectToLookOutFor;
-        public AIActor parent;
+        public HealthHaver parent;
         private Projectile projectile;
 	}
 }

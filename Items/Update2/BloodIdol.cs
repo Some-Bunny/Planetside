@@ -57,7 +57,7 @@ namespace Planetside
             player.OnAnyEnemyReceivedDamage = (Action<float, bool, HealthHaver>)Delegate.Combine(player.OnAnyEnemyReceivedDamage, new Action<float, bool, HealthHaver>(this.OnEnemyDamaged));
             base.Pickup(player);
         }
-        protected override void OnPreDrop(PlayerController user)
+        public override void OnPreDrop(PlayerController user)
         {
             user.OnAnyEnemyReceivedDamage = (Action<float, bool, HealthHaver>)Delegate.Remove(user.OnAnyEnemyReceivedDamage, new Action<float, bool, HealthHaver>(this.OnEnemyDamaged));
         }
@@ -74,7 +74,7 @@ namespace Planetside
             base.Update();
         }
         public bool BllodCanBeUsed;
-        protected override void OnDestroy()
+        public override void OnDestroy()
         {
             if (base.LastOwner != null)
             {
@@ -82,7 +82,7 @@ namespace Planetside
             }
             base.OnDestroy();
         }
-        protected override void DoEffect(PlayerController user)
+        public override void DoEffect(PlayerController user)
         {
             SaveAPIManager.RegisterStatChange(CustomTrackedStats.BLODD_IDOL_KILLS, -250);
             GameManager.Instance.StartCoroutine(DoWackyStuff(user));    

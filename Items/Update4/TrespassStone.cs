@@ -60,6 +60,7 @@ namespace Planetside
                     comparisonValue = 5,
                     prerequisiteOperation = DungeonPrerequisite.PrerequisiteOperation.GREATER_THAN,
                     useSessionStatValue = false,
+                    advancedPrerequisiteType = CustomDungeonPrerequisite.AdvancedPrerequisiteType.CUSTOM_STAT_COMPARISION
                 }
             };
 
@@ -140,7 +141,7 @@ namespace Planetside
             base.Pickup(player);   
         }
 
-        protected override void DoEffect(PlayerController user)
+        public override void DoEffect(PlayerController user)
         {
             GameObject partObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("Portal"));
             MeshRenderer rend = partObj.GetComponent<MeshRenderer>();

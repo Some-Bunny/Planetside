@@ -147,7 +147,7 @@ namespace Planetside
 				//absoluteRoom.BecomeTerrifyingDarkRoom(1f, 0.15f, 0.3f, "Play_ENM_darken_world_01");
 			}
 
-			protected override void OnDestroy()
+			public override void OnDestroy()
 			{
 				if (playeroue != null)
 				{
@@ -202,7 +202,7 @@ namespace Planetside
 				ETGMod.AIActor.OnPreStart = (Action<AIActor>)Delegate.Combine(ETGMod.AIActor.OnPreStart, new Action<AIActor>(this.AIActorMods));
 			}
 
-			protected override void OnDestroy()
+			public override void OnDestroy()
 			{
 				if (playeroue != null)
                 {
@@ -267,7 +267,7 @@ namespace Planetside
 				ETGMod.AIActor.OnPreStart = (Action<AIActor>)Delegate.Combine(ETGMod.AIActor.OnPreStart, new Action<AIActor>(this.AIActorMods));
 			}
 
-			protected override void OnDestroy()
+			public override void OnDestroy()
 			{
 				if (playeroue != null)
                 {
@@ -339,7 +339,7 @@ namespace Planetside
 
 				}
 			}
-			protected override void OnDestroy()
+			public override void OnDestroy()
 			{
 				if (playeroue != null)
 				{

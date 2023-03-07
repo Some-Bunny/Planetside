@@ -36,7 +36,7 @@ namespace Planetside
 			Values.player = player;
 			base.Pickup(player);
 		}
-		protected override void OnDestroy()
+		public override void OnDestroy()
 		{
 			if (base.Owner != null)
             {

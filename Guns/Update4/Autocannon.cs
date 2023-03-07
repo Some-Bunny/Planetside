@@ -23,11 +23,11 @@ namespace Planetside
             gun.SetShortDescription("So What If I Like Really Big Guns?");
             gun.SetLongDescription("Fires faster the longer you hold the trigger, loaded with depleted uranium rounds.\n\nManufactured by the same people that produced the H.M Prime models, these portable auto-cannons deliver the same kick to your enemies as they do to you.");
 
-            gun.SetupSprite(null, "autocannon_idle_001", 8);
+            GunExt.SetupSprite(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "autocannon_idle_001", 11);
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
+            gun.sprite.SortingOrder = 1;
 
-            gun.SetAnimationFPS(gun.shootAnimation, 36);
-            gun.SetAnimationFPS(gun.reloadAnimation, 7);
-            gun.SetAnimationFPS(gun.idleAnimation, 1);
+            //gun.SetupSprite(null, "autocannon_idle_001", 8);
 
             gun.AddProjectileModuleFrom(PickupObjectDatabase.GetById(56) as Gun, true, false);
             gun.AddProjectileModuleFrom(PickupObjectDatabase.GetById(56) as Gun, true, false);
@@ -66,7 +66,7 @@ namespace Planetside
                 projectile.gameObject.SetActive(false);
                 FakePrefab.MarkAsFakePrefab(projectile.gameObject);
                 UnityEngine.Object.DontDestroyOnLoad(projectile);
-                projectile.baseData.damage = 4.5f;
+                projectile.baseData.damage = 5.5f;
                 projectile.baseData.speed *= 3f;
 
                 ExplosiveModifier explosiveModifier = projectile.gameObject.GetOrAddComponent<ExplosiveModifier>();
@@ -75,7 +75,7 @@ namespace Planetside
                     breakSecretWalls = false,
                     comprehensiveDelay = 0,
                     damage = 2,
-                    damageRadius = 2,
+                    damageRadius = 3.25f,
                     damageToPlayer = 0,
                     debrisForce = 40,
                     doDamage = true,

@@ -128,7 +128,7 @@ namespace Planetside
 			AkSoundEngine.PostEvent("Play_ENM_critter_poof_01", base.gameObject);
 			UnityEngine.Object.Destroy(base.gameObject);
 		}
-		protected void Start()
+		public void Start()
 		{
 			try
 			{

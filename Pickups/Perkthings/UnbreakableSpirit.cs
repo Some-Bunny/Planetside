@@ -118,7 +118,7 @@ namespace Planetside
         public PlayerController player;
         public bool hasBeenPickedup;
     }
-    class UnbreakableSpirit : PickupObject, IPlayerInteractable
+    class UnbreakableSpirit : PerkPickupObject, IPlayerInteractable
     {
         public static void Init()
         {
@@ -138,11 +138,45 @@ namespace Planetside
             PerkParticleSystemController particles = gameObject.AddComponent<PerkParticleSystemController>();
             particles.ParticleSystemColor = Color.white;
             particles.ParticleSystemColor2 = Color.yellow;
-            OutlineColor = new Color(0.33f, 0.33f, 0.33f);
+            item.OutlineColor = new Color(0.33f, 0.33f, 0.33f);
 
+     
         }
+        public override List<PerkDisplayContainer> perkDisplayContainers => new List<PerkDisplayContainer>()
+        {
+                new PerkDisplayContainer()
+                {
+                    AmountToBuyBeforeReveal = 1,
+                    LockedString = AlphabetController.ConvertString("Another Chance"),
+                    UnlockedString = "Dying revives you, but leaves you at low HP.",
+                    requiresFlag = false
+                },
+                new PerkDisplayContainer()
+                {
+                    AmountToBuyBeforeReveal = 3,
+                    LockedString = AlphabetController.ConvertString("All Blast"),
+                    UnlockedString = "Reviving creates a massive explosion that deals massive damage to enemies.",
+                    requiresFlag = false
+                },
+                new PerkDisplayContainer()
+                {
+                    AmountToBuyBeforeReveal = 5,
+                    LockedString = AlphabetController.ConvertString("All Damage"),
+                    UnlockedString = "Reviving also grants a permanent damage up.",
+                    requiresFlag = false
+                },
+                new PerkDisplayContainer()
+                {
+                    AmountToBuyBeforeReveal = 7,
+                    LockedString = AlphabetController.ConvertString("More Chances"),
+                    UnlockedString = "Staking grants more revives, but does not grant any additional damage after the first revive.",
+                    FlagToTrack = SaveAPI.CustomDungeonFlags.UNBREAKABLESPIRIT_FLAG_STACK
+                },
+        };
+        public override SaveAPI.CustomTrackedStats StatToIncreaseOnPickup => SaveAPI.CustomTrackedStats.AMOUNT_BOUGHT_UNBREAKABLESPIRIT;
+
+
         public static int UnbreakableSpiritID;
-        private static Color OutlineColor;
 
     
         public override void Pickup(PlayerController player)
@@ -159,7 +193,7 @@ namespace Planetside
             UnbreakableSpiritController spirit = player.gameObject.GetOrAddComponent<UnbreakableSpiritController>();
             spirit.player = player;
             if (spirit.hasBeenPickedup == true)
-            { spirit.IncrementStack(); }
+            { spirit.IncrementStack(); SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.UNBREAKABLESPIRIT_FLAG_STACK, true); }
             string BlurbText = spirit.hasBeenPickedup == true ? "Another Chance." : "Come Back Stronger.";
             OtherTools.NotifyCustom("Unbreakable Spirit", BlurbText, "unbreakablespirit", StaticSpriteDefinitions.Pickup_Sheet_Data, UINotificationController.NotificationColor.GOLD);
 
@@ -167,11 +201,8 @@ namespace Planetside
             UnityEngine.Object.Destroy(base.gameObject);
         }
 
-        public float distortionMaxRadius = 30f;
-        public float distortionDuration = 2f;
-        public float distortionIntensity = 0.7f;
-        public float distortionThickness = 0.1f;
-        protected void Start()
+
+        public void Start()
         {
             try
             {
@@ -184,50 +215,7 @@ namespace Planetside
             }
         }
 
-        public float GetDistanceToPoint(Vector2 point)
-        {
-            if (!base.sprite)
-            {
-                return 1000f;
-            }
-            Bounds bounds = base.sprite.GetBounds();
-            bounds.SetMinMax(bounds.min + base.transform.position, bounds.max + base.transform.position);
-            float num = Mathf.Max(Mathf.Min(point.x, bounds.max.x), bounds.min.x);
-            float num2 = Mathf.Max(Mathf.Min(point.y, bounds.max.y), bounds.min.y);
-            return Mathf.Sqrt((point.x - num) * (point.x - num) + (point.y - num2) * (point.y - num2)) / 1.5f;
-        }
-
-        public float GetOverrideMaxDistance()
-        {
-            return 1f;
-        }
-
-        public void OnEnteredRange(PlayerController interactor)
-        {
-            if (!this)
-            {
-                return;
-            }
-            if (!interactor.CurrentRoom.IsRegistered(this) && !RoomHandler.unassignedInteractableObjects.Contains(this))
-            {
-                return;
-            }
-            SpriteOutlineManager.RemoveOutlineFromSprite(base.sprite, false);
-            SpriteOutlineManager.AddOutlineToSprite(base.sprite, Color.white, 0.1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
-            base.sprite.UpdateZDepth();
-        }
-
-        public void OnExitRange(PlayerController interactor)
-        {
-            if (!this)
-            {
-                return;
-            }
-            SpriteOutlineManager.RemoveOutlineFromSprite(base.sprite, true);
-            SpriteOutlineManager.AddOutlineToSprite(base.sprite, OutlineColor, 0.1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
-            base.sprite.UpdateZDepth();
-        }
-
+        
         private void Update()
         {
             if (!this.m_hasBeenPickedUp && !this.m_isBeingEyedByRat && base.ShouldBeTakenByRat(base.sprite.WorldCenter))
@@ -236,25 +224,7 @@ namespace Planetside
             }
         }
 
-        public void Interact(PlayerController interactor)
-        {
-            if (!this)
-            {
-                return;
-            }
-            if (RoomHandler.unassignedInteractableObjects.Contains(this))
-            {
-                RoomHandler.unassignedInteractableObjects.Remove(this);
-            }
-            SpriteOutlineManager.RemoveOutlineFromSprite(base.sprite, true);
-            this.Pickup(interactor);
-        }
-
-        public string GetAnimationState(PlayerController interactor, out bool shouldBeFlipped)
-        {
-            shouldBeFlipped = false;
-            return string.Empty;
-        }
+       
 
         private bool m_hasBeenPickedUp;
     }

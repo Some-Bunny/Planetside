@@ -598,7 +598,7 @@ namespace Planetside
 
 		public class zappies : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("01972dee89fc4404a5c408d50007dad5").bulletBank.GetBullet("default"));
 				float direction = BraveMathCollege.QuantizeFloat(base.AimDirection, 45f);
@@ -639,7 +639,7 @@ namespace Planetside
 					this.m_truePosition = truePosition;
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					yield return base.Wait(2);
 					Vector2? truePosition = this.m_truePosition;
@@ -687,7 +687,7 @@ namespace Planetside
 
 		public class SkellScript : Script 
 		{
-			protected override IEnumerator Top() 
+			public override IEnumerator Top() 
 			{
 				AkSoundEngine.PostEvent("Play_WPN_eyeballgun_shot_01", this.BulletBank.aiActor.gameObject);
 				if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
@@ -710,7 +710,7 @@ namespace Planetside
 
 			}
 
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				base.ManualControl = true;
 				Vector2 truePosition = base.Position;
@@ -731,7 +731,7 @@ namespace Planetside
 
 		public class Shoot : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 
 
@@ -764,7 +764,7 @@ namespace Planetside
 				{
 
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					//You can leave this empty as this bullet has no special properties needed
 					yield break;
@@ -776,7 +776,7 @@ namespace Planetside
 				{
 
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					if (this.Projectile.gameObject.GetComponent<Projectile>() != null)
 					{
@@ -799,7 +799,7 @@ namespace Planetside
 		}
 		public class Wail : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
 				{
@@ -821,7 +821,7 @@ namespace Planetside
 				base.SuppressVfx = true;
 			}
 
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				float speed = this.Speed;
 				yield return this.Wait(10);

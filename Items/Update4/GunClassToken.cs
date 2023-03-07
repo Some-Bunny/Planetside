@@ -64,7 +64,7 @@ namespace Planetside
 		{
 			base.Pickup(player);
 		}
-		protected override void OnDestroy()
+		public override void OnDestroy()
 		{
 			base.OnDestroy();
 		}

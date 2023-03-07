@@ -43,7 +43,7 @@ namespace Planetside
 			base.Pickup(player);
 		}
 
-		protected override void Update()
+		public override void Update()
         {
             base.Update();
 			if (base.Owner)

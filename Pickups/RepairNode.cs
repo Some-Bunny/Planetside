@@ -46,7 +46,7 @@ namespace Planetside
 			player.BloopItemAboveHead(base.sprite, "");
 			UnityEngine.Object.Destroy(base.gameObject);
 		}
-		protected void Start()
+		public void Start()
 		{
 			try
 			{

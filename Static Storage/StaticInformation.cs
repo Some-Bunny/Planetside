@@ -565,6 +565,11 @@ namespace Planetside
                 entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
                 UndodgeableDoorLordPuke = entry;
             }
+            {
+                AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("880bbe4ce1014740ba6b4e2ea521e49d").bulletBank.GetBullet("grenade"), "UndodgeableGrenade", "DNC", null, false);
+                entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                undodgeableGrenade = entry;
+            }
         }
 
         //flame
@@ -668,6 +673,8 @@ namespace Planetside
         public static AIBulletBank.Entry undodgeableSkull;
         public static AIBulletBank.Entry undodgeableBatBullet;
         public static AIBulletBank.Entry undodgeableMine;
+
+        public static AIBulletBank.Entry undodgeableGrenade;
 
         public static AIBulletBank.Entry undodgeableBouncyBatBullet;
         public static AIBulletBank.Entry NemesisGuon;

@@ -217,6 +217,7 @@ namespace Planetside
                 bool b = false;
                 if (b == false && player.GetComponent<CorruptedWealthController>() != null && player.CurrentGun != null)
                 {
+                    SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.CORRUPTEDWEALTH_FLAG_AMMO, true);
 
                     GameObject vfx = SpawnManager.SpawnVFX((PickupObjectDatabase.GetById(365) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapVertical.effects.First().effects.First().effect, true);
                     vfx.transform.position = player.sprite.WorldCenter;
@@ -271,6 +272,7 @@ namespace Planetside
                     float MA = cont.AmountOfCorruptKeys;
                     if (MA > 0)
                     {
+                        SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.CORRUPTEDWEALTH_FLAG_KEY, true);
                         GameObject vfx = SpawnManager.SpawnVFX(StaticVFXStorage.MachoBraceDustupVFX, true);
                         vfx.transform.position = self.sprite.WorldCenter;
                         vfx.GetComponent<tk2dBaseSprite>().HeightOffGround = 22;
@@ -448,6 +450,7 @@ namespace Planetside
                 {
                     if (player.GetComponent<CorruptedWealthController>() != null)
                     {
+                        SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.CORRUPTEDWEALTH_FLAG_GUON, true);
                         CorruptedPickupController corruptedPickup = self.GetOrAddComponent<CorruptedPickupController>();
                         corruptedPickup.pickup = CorruptedPickupController.PickupType.GLASS_GUON;
                     }

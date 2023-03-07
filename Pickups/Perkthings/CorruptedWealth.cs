@@ -5,6 +5,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using System.Collections;
+using SaveAPI;
 
 namespace Planetside
 {
@@ -116,6 +117,7 @@ namespace Planetside
         }
         private IEnumerator SaveFlawless()
         {
+            SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.CORRUPTEDWEALTH_FLAG_ARMOR, true);
             yield return new WaitForSeconds(0.1f);
             if (player.CurrentRoom != null)
             {
@@ -129,6 +131,7 @@ namespace Planetside
             if (AmountOfCorruptBlanks > 0)
             {
                 AmountOfCorruptBlanks--;
+                SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.CORRUPTEDWEALTH_FLAG_BLANK, true);
                 GameManager.Instance.StartCoroutine(this.HandleSilence(arg1.sprite.WorldCenter, 30, 5, arg1));
             }
         }
@@ -202,6 +205,7 @@ namespace Planetside
 
                 if (LastStoredAmountOfHPConsumed != ActualHPPointsStored())
                 {
+                    SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.CORRUPTEDWEALTH_FLAG_HP, true);
                     AkSoundEngine.PostEvent("Play_BOSS_Rat_Cheese_Jump_01", player.gameObject);
 
                     GameObject vfx = SpawnManager.SpawnVFX((PickupObjectDatabase.GetById(577) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapVertical.effects.First().effects.First().effect, true);
@@ -303,7 +307,7 @@ namespace Planetside
 
 
 
-    class CorruptedWealth : PickupObject, IPlayerInteractable
+    class CorruptedWealth : PerkPickupObject, IPlayerInteractable
     {
         public static void Init()
         {
@@ -324,12 +328,76 @@ namespace Planetside
             PerkParticleSystemController particles = gameObject.AddComponent<PerkParticleSystemController>();
             particles.ParticleSystemColor = Color.blue;
             particles.ParticleSystemColor2 = Color.blue;
-            OutlineColor = new Color(0f, 0.2f, 1f);
+            item.OutlineColor = new Color(0f, 0.2f, 1f);
+
+            
 
             SetupHeartVFX();
             SetupHalfHeartVFX();
             BuildVoidGlassStone();
         }
+
+        public override CustomTrackedStats StatToIncreaseOnPickup => SaveAPI.CustomTrackedStats.AMOUNT_BOUGHT_CORRUPTEDWEALTH;
+        public override List<PerkDisplayContainer> perkDisplayContainers => new List<PerkDisplayContainer>()
+        {
+                new PerkDisplayContainer()
+                {
+                    AmountToBuyBeforeReveal = 1,
+                    LockedString = AlphabetController.ConvertString("Trade Off Pickups"),
+                    UnlockedString = "Corrupt All pickups into risk-reward style versions.",
+                    requiresFlag = false
+                },
+                new PerkDisplayContainer()
+                {
+                    AmountToBuyBeforeReveal = 2,
+                    LockedString = AlphabetController.ConvertString("Health Is Damage"),
+                    UnlockedString = "Corrupt Hearts grant damage for each held, but you lose them in pairs.",
+                    FlagToTrack = SaveAPI.CustomDungeonFlags.CORRUPTEDWEALTH_FLAG_HP
+                },
+                new PerkDisplayContainer()
+                {
+                    AmountToBuyBeforeReveal = 3,
+                    LockedString = AlphabetController.ConvertString("Armor Is Safe"),
+                    UnlockedString = "Corrupt Armor damage prevents Mastery Loss.",
+                    FlagToTrack = SaveAPI.CustomDungeonFlags.CORRUPTEDWEALTH_FLAG_ARMOR
+                },
+                new PerkDisplayContainer()
+                {
+                    AmountToBuyBeforeReveal = 4,
+                    LockedString = AlphabetController.ConvertString("Guon Is Enraged"),
+                    UnlockedString = "Glass Guon Stones no longer block bullets, but deal high damage.",
+                    FlagToTrack = SaveAPI.CustomDungeonFlags.CORRUPTEDWEALTH_FLAG_GUON
+                },
+                new PerkDisplayContainer()
+                {
+                    AmountToBuyBeforeReveal = 5,
+                    LockedString = AlphabetController.ConvertString("Blanks Last Longer"),
+                    UnlockedString = "Blanks last longer, but have a chance to to fail to destroy fired bullets.",
+                    FlagToTrack = SaveAPI.CustomDungeonFlags.CORRUPTEDWEALTH_FLAG_BLANK
+                },
+                new PerkDisplayContainer()
+                {
+                    AmountToBuyBeforeReveal = 6,
+                    LockedString = AlphabetController.ConvertString("Ammo Grants More"),
+                    UnlockedString = "Ammo now creates an orbiting gun parented to your gun, which takes ammo from the parented gun to fire.",
+                    FlagToTrack = SaveAPI.CustomDungeonFlags.CORRUPTEDWEALTH_FLAG_AMMO
+                },
+                new PerkDisplayContainer()
+                {
+                    AmountToBuyBeforeReveal = 7,
+                    LockedString = AlphabetController.ConvertString("Keys Dump"),
+                    UnlockedString = "Having more than 1 Corrupted Key consumes all Corrupted keys when opening chests, but spawns an item for each key consumed.",
+                    FlagToTrack = SaveAPI.CustomDungeonFlags.CORRUPTEDWEALTH_FLAG_KEY
+                },
+                new PerkDisplayContainer()
+                {
+                    AmountToBuyBeforeReveal = 4,
+                    LockedString = AlphabetController.ConvertString("Stacking Adds Effectiveness"),
+                    UnlockedString = "Stacking increases the effectiveness of Corrupt Pickups.",
+                    FlagToTrack = SaveAPI.CustomDungeonFlags.CORRUPTEDWEALTH_FLAG_STACK
+                },
+        };
+
 
         public static void BuildVoidGlassStone()
         {
@@ -486,7 +554,6 @@ namespace Planetside
 
 
         public static int CorruptedWealthID;
-        private static Color OutlineColor;
         public static GameObject heartorbitalVFX;
         public static GameObject halfheartorbitalvfx;
 
@@ -505,7 +572,7 @@ namespace Planetside
             CorruptedWealthController blast = player.gameObject.GetOrAddComponent<CorruptedWealthController>();
             blast.player = player;
             if (blast.hasBeenPickedup == true)
-            { blast.IncrementStack(); }
+            { blast.IncrementStack(); SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.CORRUPTEDWEALTH_FLAG_STACK, true); }
 
             AkSoundEngine.PostEvent("Play_OBJ_dice_bless_01", player.gameObject);
 
@@ -518,11 +585,8 @@ namespace Planetside
             UnityEngine.Object.Destroy(base.gameObject);
         }
 
-        public float distortionMaxRadius = 30f;
-        public float distortionDuration = 2f;
-        public float distortionIntensity = 0.7f;
-        public float distortionThickness = 0.1f;
-        protected void Start()
+
+        public void Start()
         {
             try
             {
@@ -535,49 +599,7 @@ namespace Planetside
             }
         }
 
-        public float GetDistanceToPoint(Vector2 point)
-        {
-            if (!base.sprite)
-            {
-                return 1000f;
-            }
-            Bounds bounds = base.sprite.GetBounds();
-            bounds.SetMinMax(bounds.min + base.transform.position, bounds.max + base.transform.position);
-            float num = Mathf.Max(Mathf.Min(point.x, bounds.max.x), bounds.min.x);
-            float num2 = Mathf.Max(Mathf.Min(point.y, bounds.max.y), bounds.min.y);
-            return Mathf.Sqrt((point.x - num) * (point.x - num) + (point.y - num2) * (point.y - num2)) / 1.5f;
-        }
-
-        public float GetOverrideMaxDistance()
-        {
-            return 1f;
-        }
-
-        public void OnEnteredRange(PlayerController interactor)
-        {
-            if (!this)
-            {
-                return;
-            }
-            if (!interactor.CurrentRoom.IsRegistered(this) && !RoomHandler.unassignedInteractableObjects.Contains(this))
-            {
-                return;
-            }
-            SpriteOutlineManager.RemoveOutlineFromSprite(base.sprite, false);
-            SpriteOutlineManager.AddOutlineToSprite(base.sprite, Color.white, 0.1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
-            base.sprite.UpdateZDepth();
-        }
-
-        public void OnExitRange(PlayerController interactor)
-        {
-            if (!this)
-            {
-                return;
-            }
-            SpriteOutlineManager.RemoveOutlineFromSprite(base.sprite, true);
-            SpriteOutlineManager.AddOutlineToSprite(base.sprite, OutlineColor, 0.1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
-            base.sprite.UpdateZDepth();
-        }
+       
 
         private void Update()
         {
@@ -587,25 +609,6 @@ namespace Planetside
             }
         }
 
-        public void Interact(PlayerController interactor)
-        {
-            if (!this)
-            {
-                return;
-            }
-            if (RoomHandler.unassignedInteractableObjects.Contains(this))
-            {
-                RoomHandler.unassignedInteractableObjects.Remove(this);
-            }
-            SpriteOutlineManager.RemoveOutlineFromSprite(base.sprite, true);
-            this.Pickup(interactor);
-        }
-
-        public string GetAnimationState(PlayerController interactor, out bool shouldBeFlipped)
-        {
-            shouldBeFlipped = false;
-            return string.Empty;
-        }
 
         private bool m_hasBeenPickedUp;
     }

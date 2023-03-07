@@ -680,7 +680,7 @@ namespace Planetside
 
 		public class SpawnDash : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
 				{
@@ -700,7 +700,7 @@ namespace Planetside
 				public Superball() : base("big", false, false, false)
 				{
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
 					{
@@ -723,7 +723,7 @@ namespace Planetside
 				public BurstBullet() : base("snakeBullet", false, false, false)
 				{
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 60);
 					yield return base.Wait(60);
@@ -735,7 +735,7 @@ namespace Planetside
 
 		public class SpawnBottle : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
 				{
@@ -764,7 +764,7 @@ namespace Planetside
 				public Superball() : base("big", false, false, false)
 				{
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
 					{
@@ -791,7 +791,7 @@ namespace Planetside
 				public BurstBullet() : base("snakeBullet", false, false, false)
 				{
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 60);
 					yield return base.Wait(60);
@@ -809,7 +809,7 @@ namespace Planetside
 
 		public class BigWhips : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
 				{

@@ -216,7 +216,7 @@ namespace Planetside
                 prefab.AddComponent<NemesisController>();
 				prefab.AddComponent<ForgottenEnemyComponent>();
 				companion.aiActor.knockbackDoer.weight = 120;
-				companion.aiActor.MovementSpeed = 2f;
+				companion.aiActor.MovementSpeed = 3.5f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
 				companion.aiActor.CollisionDamage = 1f;
 				companion.aiActor.IgnoreForRoomClear = false;
@@ -549,7 +549,27 @@ namespace Planetside
                 //NemesisEngageDoer trespassEngager = companion.aiActor.gameObject.AddComponent<NemesisEngageDoer>();
 
 
-
+                /*
+				 * 				aiAnimator.IdleAnimation = new DirectionalAnimation
+				{
+					Type = DirectionalAnimation.DirectionType.FourWay,
+					Prefix = "idle",
+					AnimNames = new string[] { "idle_top_left", "idle_bottom_right", "idle_bottom_left", "idle_top_right" },
+					Flipped = new DirectionalAnimation.FlipType[4]
+				};
+				aiAnimator.MoveAnimation = new DirectionalAnimation
+				{
+					Type = DirectionalAnimation.DirectionType.FourWay,
+					Flipped = new DirectionalAnimation.FlipType[4],
+					AnimNames = new string[]
+					{
+						"run_top_left",
+						"run_bottom_right",
+						"run_bottom_left",
+						"run_top_right",
+					}
+				};
+				*/
                 GameObject shootpoint = EnemyToolbox.GenerateShootPoint(companion.gameObject, new Vector2(0.5f, 0.5f), "UnwillingShootpoint");
 
 				var bs = prefab.GetComponent<BehaviorSpeculator>();
@@ -587,26 +607,40 @@ namespace Planetside
 
                     new TakeCoverBehavior()
                     {
-						/*
+						
                         FlipCoverDistance = 3f,
-                        InsideCoverTime = 4,
+                        InsideCoverTime = 2,
                         PopInSpeedMultiplier = 3,
                         PopOutSpeedMultiplier = 1.7f,
-                        RepeatingCoverChance = 1f,
+                        RepeatingCoverChance = 0.06f,
                         OutsideCoverTime = 1f,
                         LineOfSightToLeaveCover = true,
                         InitialCoverChance  = 1f,
-                        MaxCoverDistance = 2,
-                        MaxCoverDistanceToTarget = 2,
+                        MaxCoverDistance = 5,
+                        MaxCoverDistanceToTarget = 5,
                         PathInterval = 0.25f,
                         RepeatingCoverInterval = 3,
-						*/
+						
+						coverAnimations = new string[]
+						{
+                            "idle_bottom_right",
+                            "idle_bottom_right",
+                            "idle_bottom_left",
+                            "idle_bottom_left",
+                        },
+						emergeAnimations = new string[]
+						{
+                            "run_bottom_right",
+                            "run_bottom_right",
+                            "run_bottom_left",
+                            "run_bottom_left",
+                        }		
                     }
 
                 };
 				bs.AttackBehaviorGroup.AttackBehaviors = new List<AttackBehaviorGroup.AttackGroupItem>
 				{
-					
+
 					new AttackBehaviorGroup.AttackGroupItem()
 					{
 						Probability = 1f,
@@ -669,8 +703,8 @@ namespace Planetside
 						LeadAmount = 0f,
 						AttackCooldown = 2f,
 						InitialCooldown = 1f,
+						Cooldown = 4,
 						RequiresLineOfSight = true,
-						//StopDuring = ShootBehavior.StopType.Attack,
 						Uninterruptible = true,
 						HideGun =false,
 						}
@@ -707,7 +741,7 @@ namespace Planetside
 						AimAtFacingDirectionWhenSafe = false,
 						Cooldown = 1f,
 						CooldownVariance = 0,
-						AttackCooldown = 2,
+						AttackCooldown = 1.5f,
 						GlobalCooldown = 0,
 						InitialCooldown = 0,
 						InitialCooldownVariance = 0,
@@ -736,7 +770,7 @@ namespace Planetside
 						ShootPoint = shootpoint,
 						BulletScript = new CustomBulletScriptSelector(typeof(ShotgunTwoScript)),
 						LeadAmount = 0f,
-						AttackCooldown = 3f,
+						AttackCooldown = 2f,
 						InitialCooldown = 1f,
 						RequiresLineOfSight = true,
 						//StopDuring = ShootBehavior.StopType.Attack,
@@ -752,9 +786,9 @@ namespace Planetside
 						ShootPoint = shootpoint,
 						BulletScript = new CustomBulletScriptSelector(typeof(RailgunOneScript)),
 						LeadAmount = 0f,
-						AttackCooldown = 3f,
+						AttackCooldown = 2f,
 						InitialCooldown = 1f,
-						Cooldown = 2,
+						Cooldown = 3,
 						RequiresLineOfSight = true,
 						//StopDuring = ShootBehavior.StopType.Attack,
 						Uninterruptible = true,
@@ -769,9 +803,9 @@ namespace Planetside
 						ShootPoint = shootpoint,
 						BulletScript = new CustomBulletScriptSelector(typeof(RailgunTwoScript)),
 						LeadAmount = 0f,
-						AttackCooldown = 3f,
+						AttackCooldown = 2f,
 						InitialCooldown = 1f,
-						Cooldown = 3,
+						Cooldown = 4,
 						RequiresLineOfSight = true,
 						//StopDuring = ShootBehavior.StopType.Attack,
 						Uninterruptible = true,
@@ -808,7 +842,7 @@ namespace Planetside
 					new SansTeleportBehavior()
                     {
                         AvoidWalls = true,
-                        Cooldown = 2,
+                        Cooldown = 5,
                         dodgeChance = 0f,
                         timeToHitThreshold = 0.3f,
                         rollDistance = 6,
@@ -825,10 +859,11 @@ namespace Planetside
 					{
 						Cooldown = 3,
 						dodgeChance = 1f,
-						timeToHitThreshold = 0.25f,
+						timeToHitThreshold = 0.35f,
 						dodgeAnim = "dodgeroll",
 						rollDistance = 5,
 						Enabled = true,
+						
 					},		
 				};
 
@@ -908,9 +943,9 @@ namespace Planetside
 				companion.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableBouncyBatBullet);
 				companion.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableDefault);
 				companion.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableMine);
+                companion.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableGrenade);
 
-
-				companion.aiActor.bulletBank.Bullets[0].BulletObject.GetComponent<Projectile>().baseData.speed *= 2f;
+                companion.aiActor.bulletBank.Bullets[0].BulletObject.GetComponent<Projectile>().baseData.speed *= 2f;
 
 
 				GenericIntroDoer miniBossIntroDoer = prefab.AddComponent<GenericIntroDoer>();
@@ -978,16 +1013,18 @@ namespace Planetside
 			{
 				base.BulletBank.aiActor.gameObject.GetComponent<NemesisController>().activeLines.Add(obj);
 			}
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
             {
-				for (int i = 0; i < 2; i++)
+				for (int i = 0; i < 3; i++)
                 {
-					base.StartTask(SwipeLaser(0, this, 0.75f - (0.125f*i), true, 30 + (10*i)));
-					base.StartTask(SwipeLaser(45, this, 0.75f - (0.125f * i), false, 30 + (10 * i)));
-					base.StartTask(SwipeLaser(90, this, 0.75f - (0.125f * i), false, 30 + (10 * i)));
-					base.StartTask(SwipeLaser(-45, this, 0.75f - (0.125f * i), false, 30 + (10 * i)));
-					base.StartTask(SwipeLaser(-90, this, 0.75f - (0.125f * i), false, 30 + (10 * i)));
-					yield return this.Wait(75 - (12.5f*i));
+					float sp = i == 2 ? 90 : 20 + (10 * i);
+
+                    base.StartTask(SwipeLaser(0, this, 0.75f - (0.125f*i), true, sp));
+					base.StartTask(SwipeLaser(45, this, 0.75f - (0.125f * i), false, sp));
+					base.StartTask(SwipeLaser(90, this, 0.75f - (0.125f * i), false, sp));
+					base.StartTask(SwipeLaser(-45, this, 0.75f - (0.125f * i), false, sp));
+					base.StartTask(SwipeLaser(-90, this, 0.75f - (0.125f * i), false, sp));
+					yield return this.Wait(90 - (12.5f*i));
 
 				}
 				yield return this.Wait(45);
@@ -1077,7 +1114,7 @@ namespace Planetside
 				{
 
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					for (int i = 0; i < 100; i++)
 					{
@@ -1093,9 +1130,9 @@ namespace Planetside
 				{
 
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
-					yield return this.Wait(90f);
+					yield return this.Wait(135f);
 					base.Vanish(false);
 					yield break;
 				}
@@ -1111,7 +1148,7 @@ namespace Planetside
 			{
 				base.BulletBank.aiActor.gameObject.GetComponent<NemesisController>().activeLines.Add(obj);
 			}
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				base.StartTask(SwipeLaser(0, this, 1.5f, true, 0));
 				base.StartTask(SwipeLaser(15, this, 1.5f, false, 0.25f));
@@ -1211,7 +1248,7 @@ namespace Planetside
 			public class SuperShot : Bullet
 			{
 				public SuperShot() : base("sniperUndodgeable", false, false, false){}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					bool H = true;
 					for (int i = 0; i < 100; i++)
@@ -1223,14 +1260,42 @@ namespace Planetside
 					}
 					yield break;
 				}
+
+				public override void OnBulletDestruction(DestroyType destroyType, SpeculativeRigidbody hitRigidbody, bool preventSpawningProjectiles)
+				{
+					if (preventSpawningProjectiles == false)
+					{
+						for (int i = 0; i < 16; i++)
+						{
+                            base.Fire(new Direction(BraveUtility.RandomAngle(), Brave.BulletScript.DirectionType.Relative, -1f), new Speed(UnityEngine.Random.Range(3, 8), SpeedType.Absolute), new RailgunTwoScript.ShotgunBulletOne());
+                        }
+                    }
+				}
 			}
-			public class UndodgeableSpore : Bullet
+
+            public class ShotgunBulletOne : Bullet
+            {
+                public ShotgunBulletOne() : base(UnityEngine.Random.value > 0.33f ? StaticUndodgeableBulletEntries.undodgeableLargeSpore.Name : StaticUndodgeableBulletEntries.undodgeableSmallSpore.Name, false, false, false)
+                {
+
+                }
+                public override IEnumerator Top()
+                {
+                    yield return this.Wait(30);
+                    base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 100);
+                    yield return this.Wait(UnityEngine.Random.Range(300, 600));
+                    base.Vanish(false);
+                    yield break;
+                }
+            }
+
+            public class UndodgeableSpore : Bullet
 			{
 				public UndodgeableSpore(bool iswait) : base("undodgeableSpore", true, false, false)
 				{
 					IsWait = iswait;
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					float h = (IsWait == false ? 0 : 90);
 					yield return this.Wait(30f + h);
@@ -1246,7 +1311,7 @@ namespace Planetside
 
 		public class ShotgunOneScript : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				AkSoundEngine.PostEvent("Play_WPN_deck4rd_shot_01", this.BulletBank.aiActor.gameObject);
 
@@ -1272,9 +1337,9 @@ namespace Planetside
 				{
 
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
-					base.ChangeSpeed(new Speed(11f, SpeedType.Absolute), 75);
+					base.ChangeSpeed(new Speed(13f, SpeedType.Absolute), 90);
 					yield break;
 				}
 			}
@@ -1284,7 +1349,7 @@ namespace Planetside
 		{
 			public Vector2 CurrentBarrelPosition()
 			{ return base.BulletBank.aiShooter.CurrentGun.barrelOffset.transform.PositionVector2(); }
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				for (int e = 0; e <= 3; e++)
 				{
@@ -1305,11 +1370,11 @@ namespace Planetside
 				{
 
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					yield return this.Wait(30);
-					base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 120);
-					yield return this.Wait(UnityEngine.Random.Range(120, 300));
+					base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 100);
+					yield return this.Wait(UnityEngine.Random.Range(300, 600));
 					base.Vanish(false);
 					yield break;
 				}
@@ -1320,7 +1385,7 @@ namespace Planetside
 
 		public class RevolverOneScript : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				AkSoundEngine.PostEvent("Play_WPN_magnum_shot_01", this.BulletBank.aiActor.gameObject);
 				for (int i = -1; i <= 1; i++)
@@ -1335,7 +1400,7 @@ namespace Planetside
 				{
 
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					base.ChangeSpeed(new Speed(14f, SpeedType.Absolute), 75);
 					yield break;
@@ -1354,7 +1419,7 @@ namespace Planetside
 				base.BulletBank.aiActor.gameObject.GetComponent<NemesisController>().activeLines.Add(obj);
             }
 
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				base.BulletBank.aiActor.aiAnimator.LockFacingDirection = true;
 				float r = UnityEngine.Random.Range(3, 5);

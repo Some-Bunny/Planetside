@@ -1,4 +1,5 @@
 ﻿using Dungeonator;
+using Planetside;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -251,31 +252,38 @@ namespace NpcApi
 			EncounterTrackable component = this.item.GetComponent<EncounterTrackable>();
 			string arg = (!(component != null)) ? this.item.DisplayName : component.journalData.GetPrimaryDisplayName(false);
 			string text = this.ModifiedPrice.ToString();
-			if (this.m_baseParentShop != null)
+			string CC = "[sprite \"ui_coin\"]";
+            if (this.m_baseParentShop != null)
 			{
 
 				
 				if (this.CurrencyType == CustomShopItemController.ShopCurrencyType.META_CURRENCY)
 				{
 					text += "[sprite \"hbux_text_icon\"]";
-				}
+					CC = "[sprite \"hbux_text_icon\"]";
+
+                }
 				else if (this.CurrencyType == CustomShopItemController.ShopCurrencyType.COINS)
 				{
 					text += "[sprite \"ui_coin\"]";
-				}
-				else if (this.CurrencyType == CustomShopItemController.ShopCurrencyType.KEYS)
+                    CC = "[sprite \"ui_coin\"]";
+                }
+                else if (this.CurrencyType == CustomShopItemController.ShopCurrencyType.KEYS)
 				{
 					text += "[sprite \"ui_key\"]";
-				}
-				else if (this.CurrencyType == CustomShopItemController.ShopCurrencyType.BLANKS)
+                    CC = "[sprite \"ui_key\"]";
+                }
+                else if (this.CurrencyType == CustomShopItemController.ShopCurrencyType.BLANKS)
 				{
 					text += "[sprite \"ui_blank\"]";
-				}
-				else if (this.CurrencyType == CustomShopItemController.ShopCurrencyType.CUSTOM)
+                    CC = "[sprite \"ui_blank\"]";
+                }
+                else if (this.CurrencyType == CustomShopItemController.ShopCurrencyType.CUSTOM)
 				{
 					text += "[sprite \"" + customPriceSprite + "\"]";
-				}
-				else
+                    CC = "[sprite \"" + customPriceSprite + "\"]";
+                }
+                else
 				{
 					text += "[sprite \"ui_coin\"]";
 				}
@@ -289,15 +297,27 @@ namespace NpcApi
 			{
 				text2 = string.Format("{0}: {1}", arg, text);
 			}
-			GameObject gameObject = GameUIRoot.Instance.RegisterDefaultLabel(base.transform, offset, text2);
-			dfLabel componentInChildren = gameObject.GetComponentInChildren<dfLabel>();
-			componentInChildren.ColorizeSymbols = false;
-			componentInChildren.ProcessMarkup = true;
-			
-
+			if (OverrideText != null)
+			{
+				OverrideText(interactor, this, CC);
+            }
+			else
+			{
+                GameObject gameObject = GameUIRoot.Instance.RegisterDefaultLabel(base.transform, offset, text2);
+                dfLabel componentInChildren = gameObject.GetComponentInChildren<dfLabel>();
+                componentInChildren.ColorizeSymbols = false;
+                componentInChildren.ProcessMarkup = true;
+            }
 		}
 
-		public new void OnExitRange(PlayerController interactor)
+		public Action<PlayerController, CustomShopItemController, string> OverrideText;
+        public Action<PlayerController, CustomShopItemController> OverrideExitText;
+
+        public Action<PlayerController, CustomShopItemController> ExitedRange;
+
+		public ModifiedDefaultLabelManager safetyCoin;
+
+        public new void OnExitRange(PlayerController interactor)
 		{
 			if (!this)
 			{
@@ -305,8 +325,15 @@ namespace NpcApi
 			}
 			SpriteOutlineManager.RemoveOutlineFromSprite(base.sprite, false);
 			SpriteOutlineManager.AddOutlineToSprite(base.sprite, Color.black, 0.1f, 0.05f, SpriteOutlineManager.OutlineType.NORMAL);
-			GameUIRoot.Instance.DeregisterDefaultLabel(base.transform);
-		}
+			if (OverrideExitText != null)
+			{
+				OverrideExitText(interactor, this);
+            }
+			else
+			{
+                GameUIRoot.Instance.DeregisterDefaultLabel(base.transform);
+            }
+        }
 		public new float GetDistanceToPoint(Vector2 point)
 		{
 			if (!this)

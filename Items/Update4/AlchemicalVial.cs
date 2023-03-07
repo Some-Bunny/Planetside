@@ -64,7 +64,6 @@ namespace Planetside
             CustomSynergies.Add("You Can Liquidate That???", mandatoryConsoleIDs, optionalConsoleIDs, true);
             List<string> optionalConsoleIDs2 = new List<string>
             {
-                "psog:wither_lance",
                 "psog:frailty_ammolet",
                 "psog:frailty_rounds",
             };
@@ -173,14 +172,14 @@ namespace Planetside
                 }              
             }
         }
-        protected override void OnPreDrop(PlayerController player)
+        public override void OnPreDrop(PlayerController player)
         {
             CanSwitch = true;
             player.OnReloadPressed -= reloadPressed;
             base.OnPreDrop(player);
         }
 
-        protected override void OnDestroy()
+        public override void OnDestroy()
         {
             base.OnDestroy();
             CanSwitch = true;
@@ -189,7 +188,7 @@ namespace Planetside
                 base.LastOwner.OnReloadPressed -= reloadPressed;
             }
         }
-        protected override void DoEffect(PlayerController user)
+        public override void DoEffect(PlayerController user)
         {
             base.DoEffect(user);
             GameObject gameObject2 = SpawnManager.SpawnVFX(StaticVFXStorage.JammedDeathVFX, user.transform.position, Quaternion.identity, false);

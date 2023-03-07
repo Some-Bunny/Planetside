@@ -130,6 +130,27 @@ namespace Planetside
 
             FriendlyElectricLinkVFX = FakePrefab.Clone(Game.Items["shock_rounds"].GetComponent<ComplexProjectileModifier>().ChainLightningVFX);
 
+            /*
+            VFXPool aaa = null;
+            AIAnimator aiAnimator = EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").aiAnimator;
+            List<AIAnimator.NamedVFXPool> namedVFX = aiAnimator.OtherVFX;
+            foreach (AIAnimator.NamedVFXPool pool in namedVFX)
+            {
+                if (pool.name == "mergo")
+                {
+                    aaa = pool.vfxPool;
+                }
+            }
+
+            List<AIAnimator.NamedVFXPool> namedVFXList = yourAIanimator.OtherVFX;
+            if (namedVFXList == null) { namedVFXList = new List<AIAnimator.NamedVFXPool>() { }; }
+            namedVFXList.Add(new AIAnimator.NamedVFXPool()
+            {
+                name = "yourName",
+                vfxPool = aaa
+            });
+            */
+
             AIAnimator aiAnimator = EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").aiAnimator;
             List<AIAnimator.NamedVFXPool> namedVFX = aiAnimator.OtherVFX;
             foreach (AIAnimator.NamedVFXPool pool in namedVFX)
@@ -304,7 +325,7 @@ namespace Planetside
                 }
             }
 
-            protected override void OnDestroy()
+            public override void OnDestroy()
             {
                 if (DoesSound == true)
                 {

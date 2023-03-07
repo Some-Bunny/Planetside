@@ -150,7 +150,7 @@ namespace Planetside
 			ChargerGun.Chargerreticles.Clear();
 		}
 
-		protected override void Update()
+		public override void Update()
 		{
 			base.Update();
 			if (gun.CurrentOwner != null)
@@ -163,7 +163,7 @@ namespace Planetside
 						float charge = player.stats.GetStatValue(PlayerStats.StatType.ChargeAmountMultiplier);
 						if (this.elapsed <= 2)
                         {
-							this.elapsed += (BraveTime.DeltaTime / charge);
+							this.elapsed += (BraveTime.DeltaTime * charge);
 						}
 						if (VFXActive != true)
                         {
@@ -273,14 +273,14 @@ namespace Planetside
 				base.OnReloadPressed(player, gun, bSOMETHING);
 			}
 		}
-		protected override void OnPickup(PlayerController player)
+		public override void OnPickup(PlayerController player)
 		{
 			player.GunChanged += this.OnGunChanged;
 			base.OnPickup(player);
 			CleanupReticles();
 		}
 
-		protected override void OnPostDrop(PlayerController player)
+		public override void OnPostDrop(PlayerController player)
 		{
 			player.GunChanged -= this.OnGunChanged;
 			base.OnPostDrop(player);

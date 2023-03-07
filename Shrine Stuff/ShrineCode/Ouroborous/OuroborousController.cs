@@ -499,7 +499,7 @@ namespace Planetside
 
 public class GrenadeYahyeet : Script
 {
-	protected override IEnumerator Top()
+	public override IEnumerator Top()
 	{
 		PlayerController player = GameManager.Instance.PrimaryPlayer;
 		DraGunController dragunController = EnemyDatabase.GetOrLoadByGuid("05b8afe0b6cc4fffa9dc6036fa24c8ec").GetComponent<DraGunController>();
@@ -521,7 +521,7 @@ public class GrenadeYahyeet : Script
 
 public class ExplosiveDeath : Script
 {
-	protected override IEnumerator Top()
+	public override IEnumerator Top()
 	{
 		base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("880bbe4ce1014740ba6b4e2ea521e49d").bulletBank.GetBullet("grenade"));
 		float airTime = base.BulletBank.GetBullet("grenade").BulletObject.GetComponent<ArcProjectile>().GetTimeInFlight();

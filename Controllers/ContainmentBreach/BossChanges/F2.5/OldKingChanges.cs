@@ -84,7 +84,7 @@ namespace Planetside
 
 		public class ModifiedBulletKingHomingRing1 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				this.EndOnBlank = true;
 				float startDirection = this.RandomAngle();
@@ -106,7 +106,7 @@ namespace Planetside
 					this.m_angle = angle;
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					this.ManualControl = true;
 					Vector2 centerPosition = this.Position;
@@ -148,7 +148,7 @@ namespace Planetside
 
 		public class ModifiedBulletKingSuck1 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				this.EndOnBlank = true;
 				float startAngle = this.RandomAngle();
@@ -198,7 +198,7 @@ namespace Planetside
 					this.flipp = fli;
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					this.ManualControl = true;
 					float radius = 1f;
@@ -263,7 +263,7 @@ namespace Planetside
 
 		public class ModifiedBulletKingSlam1 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				this.EndOnBlank = true;
 				float startAngle = this.RandomAngle();
@@ -308,7 +308,7 @@ namespace Planetside
 					this.SpinSpeed = SpinSpeed;
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					this.ManualControl = true;
 					float radius = Vector2.Distance(this.centerPoint, this.Position);
@@ -337,7 +337,7 @@ namespace Planetside
 
 		public class ModifiedBulletKingCrazySpin1 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				Stop = false;
 				for (int i = 0; i < 29; i++)
@@ -373,7 +373,7 @@ namespace Planetside
 				parent = p;
 				WaitTime = W;
 			}
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				while(parent.Stop == false)
                 {

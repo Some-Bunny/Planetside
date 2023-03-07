@@ -50,7 +50,7 @@ namespace Planetside
 		}
 		public class SalamanderScript : Script 
 		{
-			protected override IEnumerator Top() 
+			public override IEnumerator Top() 
 			{
 				AkSoundEngine.PostEvent("Play_WPN_stickycrossbow_shot_01", this.BulletBank.aiActor.gameObject);
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("sweep"));
@@ -67,7 +67,7 @@ namespace Planetside
 			public WallBullet() : base("sweep", false, false, false)
 			{
 			}
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				yield return this.Wait(30);
 				base.ChangeSpeed(new Speed(16f, SpeedType.Absolute), 60);

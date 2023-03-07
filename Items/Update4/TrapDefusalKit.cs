@@ -37,7 +37,6 @@ namespace Planetside
 			TrapDefusalKit.TrapDefusalKitID = item.PickupObjectId;
 			ItemIDs.AddToList(item.PickupObjectId);
 
-
 			new Hook(typeof(ProjectileTrapController).GetMethod("ShootProjectileInDirection", BindingFlags.Instance | BindingFlags.NonPublic), typeof(TrapDefusalKit).GetMethod("ShootProjectileInDirectionHook"));
 			new Hook(typeof(BasicTrapController).GetMethod("Update", BindingFlags.Instance | BindingFlags.Public), typeof(TrapDefusalKit).GetMethod("UpdateHook"));
 			new Hook(typeof(CartTurretController).GetMethod("Fire", BindingFlags.Instance | BindingFlags.NonPublic), typeof(TrapDefusalKit).GetMethod("FireHook"));		
@@ -172,7 +171,7 @@ namespace Planetside
 
 		
 		public static int TrapDefusalKitID;
-		protected override void Update()
+		public override void Update()
 		{
 			/*
 			if (base.Owner)
@@ -239,7 +238,7 @@ namespace Planetside
 
 		}
 
-		protected override void OnDestroy()
+		public override void OnDestroy()
 		{
             RemoveTrapDefuseOverride("defusal_kit");
             if (base.Owner != null)

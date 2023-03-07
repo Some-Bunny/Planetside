@@ -108,7 +108,7 @@ namespace SynergyAPI
 			yield break;
 		}
 
-		protected static void ClearTemporaryOverrideGun(PlayerController targetPlayer, Gun m_extantGun)
+		public static void ClearTemporaryOverrideGun(PlayerController targetPlayer, Gun m_extantGun)
 		{
 			if (!targetPlayer || !m_extantGun)
 			{

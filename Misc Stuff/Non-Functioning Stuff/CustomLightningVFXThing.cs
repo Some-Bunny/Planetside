@@ -40,7 +40,7 @@ public class ModifiedChainLightningModifier : BraveBehaviour
 	}
 
 	// Token: 0x06008493 RID: 33939 RVA: 0x00369858 File Offset: 0x00367A58
-	protected override void OnDestroy()
+	public override void OnDestroy()
 	{
 		if (PhysicsEngine.Instance != null)
 		{

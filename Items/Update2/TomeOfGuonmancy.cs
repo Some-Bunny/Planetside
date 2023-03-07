@@ -143,7 +143,7 @@ namespace Planetside
             }
             return false;
         }
-        protected override void DoEffect(PlayerController user)
+        public override void DoEffect(PlayerController user)
         {
 
             if (user.CurrentRoom != null)

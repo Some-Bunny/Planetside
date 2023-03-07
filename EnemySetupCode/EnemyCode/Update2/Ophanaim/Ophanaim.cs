@@ -2481,7 +2481,7 @@ namespace Planetside
                 }
             }
 
-            protected override IEnumerator Top()
+            public override IEnumerator Top()
             {
                 base.PostWwiseEvent("Play_BOSS_doormimic_blast_01", null);
 
@@ -2505,7 +2505,7 @@ namespace Planetside
                     t = tMius;
 					parent = p;
                 }
-                protected override IEnumerator Top()
+                public override IEnumerator Top()
                 {
                     yield return base.Wait(20);
                     base.ChangeSpeed(new Speed(20f, SpeedType.Absolute), 120);
@@ -2534,7 +2534,7 @@ namespace Planetside
                 {
                     LifetimeMax = p;
                 }
-                protected override IEnumerator Top()
+                public override IEnumerator Top()
                 {
                     yield return base.Wait((Mathf.Max(LifetimeMax, BraveUtility.RandomAngle()) / 1.75f));
                     base.Vanish(false);
@@ -2577,7 +2577,7 @@ namespace Planetside
             }
 
 
-            protected override IEnumerator Top()
+            public override IEnumerator Top()
             {
                 base.PostWwiseEvent("Play_BOSS_doormimic_blast_01", null);
 
@@ -2654,7 +2654,7 @@ namespace Planetside
                     this.SpinSpeed = spinspeed;
                     this.kd = Killdelay;
                 }
-                protected override IEnumerator Top()
+                public override IEnumerator Top()
                 {
                     base.ManualControl = true;
                     float radius = Vector2.Distance(this.centerPoint, base.Position);
@@ -2701,7 +2701,7 @@ namespace Planetside
                 {
                     killDelay = kd;
                 }
-                protected override IEnumerator Top()
+                public override IEnumerator Top()
                 {
                     yield return base.Wait(killDelay);
                     base.Vanish(false);
@@ -2715,7 +2715,7 @@ namespace Planetside
                 public FireFire() : base("suck", false, false, false)
                 {
                 }
-                protected override IEnumerator Top()
+                public override IEnumerator Top()
                 {
                     this.Projectile.IgnoreTileCollisionsFor(90f);
                     yield return this.Wait(30);
@@ -2735,7 +2735,7 @@ namespace Planetside
                 base.OnForceEnded();
             }
 
-            protected override IEnumerator Top()
+            public override IEnumerator Top()
             {
                 base.PostWwiseEvent("Play_BOSS_doormimic_blast_01", null);
                 //float pp = this.AimDirection;
@@ -2805,7 +2805,7 @@ namespace Planetside
                     this.startAngle = startAngle;
                     this.SpinSpeed = spinspeed;
                 }
-                protected override IEnumerator Top()
+                public override IEnumerator Top()
                 {
                     base.ManualControl = true;
                     float radius = Vector2.Distance(this.centerPoint, base.Position);
@@ -2846,7 +2846,7 @@ namespace Planetside
                 public Dissipate() : base("frogger", false, false, false)
                 {
                 }
-                protected override IEnumerator Top()
+                public override IEnumerator Top()
                 {
                     yield return base.Wait(300);
                     base.Vanish(false);
@@ -2860,7 +2860,7 @@ namespace Planetside
                 public FireFire() : base("suck", false, false, false)
                 {
                 }
-                protected override IEnumerator Top()
+                public override IEnumerator Top()
                 {
                     this.Projectile.IgnoreTileCollisionsFor(300f);
                     yield return this.Wait(30);
@@ -2879,7 +2879,7 @@ namespace Planetside
             public bool fire;
             public float angle;
 
-            protected override IEnumerator Top()
+            public override IEnumerator Top()
             {
 
                 float dur1 = 0;
@@ -2962,7 +2962,7 @@ namespace Planetside
                 {
                     parent = p;
                 }
-                protected override IEnumerator Top()
+                public override IEnumerator Top()
                 {
                     int i = 0;
                     while (parent.IsEnded == false)
@@ -2993,7 +2993,7 @@ namespace Planetside
 
         public class FireBurst : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				AIBeamShooter2[] beams = this.BulletBank.aiActor.GetComponents<AIBeamShooter2>();
 				yield return this.Wait(60);
@@ -3052,7 +3052,7 @@ namespace Planetside
 				{
 					t = th;
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
                     this.Projectile.IgnoreTileCollisionsFor(300f);
                     yield return this.Wait(30);
@@ -3088,7 +3088,7 @@ namespace Planetside
         {
            
 
-            protected override IEnumerator Top()
+            public override IEnumerator Top()
             {
                 //base.PostWwiseEvent("Play_ENM_gunknight_shockwave_01", null);
 
@@ -3120,7 +3120,7 @@ namespace Planetside
                 }
             }
 
-            protected override IEnumerator Top()
+            public override IEnumerator Top()
             {
                 //base.PostWwiseEvent("Play_ENM_gunknight_shockwave_01", null);
 
@@ -3152,7 +3152,7 @@ namespace Planetside
                     this.startAngle = startAngle;
                     this.SpinSpeed = spinspeed;
                 }
-                protected override IEnumerator Top()
+                public override IEnumerator Top()
                 {
                     base.ManualControl = true;
                     float radius = Vector2.Distance(this.centerPoint, base.Position);
@@ -3189,7 +3189,7 @@ namespace Planetside
 
         public class MithrixSlamTwo : Script
         {
-            protected override IEnumerator Top()
+            public override IEnumerator Top()
             {              
                 for (int q = 0; q < 6; q++)
                 {
@@ -3305,7 +3305,7 @@ namespace Planetside
 
                 }
 
-                protected override IEnumerator Top()
+                public override IEnumerator Top()
                 {
                     for (int i = 0; i < 200; i++)
                     {
@@ -3322,7 +3322,7 @@ namespace Planetside
                     TimeTillDeath = timetilldie;
                 }
 
-                protected override IEnumerator Top()
+                public override IEnumerator Top()
                 {
                     this.ManualControl = true;
                     Vector2 truePosition = this.Position;
@@ -3345,7 +3345,7 @@ namespace Planetside
 
         public class MithrixSlamOmega : Script
         {
-            protected override IEnumerator Top()
+            public override IEnumerator Top()
             {
                 for (int q = 0; q < 4; q++)
                 {
@@ -3458,7 +3458,7 @@ namespace Planetside
                     b = h;
                 }
 
-                protected override IEnumerator Top()
+                public override IEnumerator Top()
                 {
                     for (int i = 0; i < 45; i++)
                     {
@@ -3477,7 +3477,7 @@ namespace Planetside
                     wait = t;
                 }
 
-                protected override IEnumerator Top()
+                public override IEnumerator Top()
                 {
                     yield return this.Wait(wait);
                     this.ChangeSpeed(new Brave.BulletScript.Speed(15, SpeedType.Absolute), 120);
@@ -3492,7 +3492,7 @@ namespace Planetside
         //
         public class SomeBigAttackThatGetsReplacedInPhase2 : Script
 		{
-			protected override IEnumerator Top()
+			public override IEnumerator Top()
 			{
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("frogger"));
 				base.PostWwiseEvent("Play_EyeRoar", null);
@@ -3540,7 +3540,7 @@ namespace Planetside
 					this.startAngle = startAngle;
 					this.SpinSpeed = spinspeed;
 				}
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					base.ManualControl = true;
 					float radius = Vector2.Distance(this.centerPoint, base.Position);
@@ -3579,7 +3579,7 @@ namespace Planetside
 
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					yield return base.Wait(900);
 					yield break;
@@ -3592,7 +3592,7 @@ namespace Planetside
 					this.delay = delay;
 				}
 
-				protected override IEnumerator Top()
+				public override IEnumerator Top()
 				{
 					yield return base.Wait(this.delay);
 					base.ChangeSpeed(new Speed(9f, SpeedType.Absolute), 0);
@@ -3604,7 +3604,7 @@ namespace Planetside
 
         public class THESUN : Script
         {
-            protected override IEnumerator Top()
+            public override IEnumerator Top()
             {
                 yield return base.Wait(60);
 
@@ -3786,7 +3786,7 @@ namespace Planetside
                     this.startAngle = startAngle;
                     this.SpinSpeed = spinspeed;
                 }
-                protected override IEnumerator Top()
+                public override IEnumerator Top()
                 {
                     base.ManualControl = true;
                     float radius = Vector2.Distance(this.centerPoint, base.Position);
@@ -3827,7 +3827,7 @@ namespace Planetside
                 {
                 }
 
-                protected override IEnumerator Top()
+                public override IEnumerator Top()
                 {
                     yield return this.Wait(600);
                     base.Vanish();
@@ -3843,7 +3843,7 @@ namespace Planetside
                     this.target = target;
                 }
 
-                protected override IEnumerator Top()
+                public override IEnumerator Top()
                 {
                     base.ManualControl = true;
                     yield return base.Wait(this.delay);

@@ -184,7 +184,7 @@ namespace Planetside
 		}
 		private bool HasReloaded;
 
-		protected override void Update()
+		public override void Update()
 		{
 			base.Update();
 			if (gun.CurrentOwner)
@@ -201,12 +201,12 @@ namespace Planetside
 			}
 
 		}
-		protected override void OnPickup(PlayerController player)
+		public override void OnPickup(PlayerController player)
 		{		
 			base.OnPickup(player);
 		}
 
-		protected override void OnPostDrop(PlayerController player)
+		public override void OnPostDrop(PlayerController player)
 		{
 			base.OnPostDrop(player);
 		}
