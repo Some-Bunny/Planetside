@@ -8020,6 +8020,726 @@ MonoBehaviour:
     flipped: 1
     complexGeometry: 0
     physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: soullantern_fire_003
+    boundsData:
+    - {x: 0.75, y: 0.625, z: 0}
+    - {x: 1.5, y: 1.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.75, y: 0.625, z: 0}
+    - {x: 1.5, y: 1.25, z: 0}
+    boundsDataCenter: {x: 0.75, y: 0.625, z: 0}
+    boundsDataExtents: {x: 1.5, y: 1.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.75, y: 0.625, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.5, y: 1.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.5, y: 0, z: 0}
+    - {x: 0, y: 1.25, z: 0}
+    - {x: 1.5, y: 1.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.5, y: 0, z: 0}
+    position2: {x: 0, y: 1.25, z: 0}
+    position3: {x: 1.5, y: 1.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.5195332, y: 0.38281447}
+    - {x: 0.5195332, y: 0.42968553}
+    - {x: 0.5585918, y: 0.38281447}
+    - {x: 0.5585918, y: 0.42968553}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 20f1983dd9966874c942de7cabca81bb, type: 2}
+    materialId: 0
+    sourceTextureGUID: 68a424148f4bdfe468faec3ae741c5ac
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 0
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: soullantern_fire_001
+    boundsData:
+    - {x: 0.75, y: 0.625, z: 0}
+    - {x: 1.5, y: 1.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.75, y: 0.625, z: 0}
+    - {x: 1.5, y: 1.25, z: 0}
+    boundsDataCenter: {x: 0.75, y: 0.625, z: 0}
+    boundsDataExtents: {x: 1.5, y: 1.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.75, y: 0.625, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.5, y: 1.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.5, y: 0, z: 0}
+    - {x: 0, y: 1.25, z: 0}
+    - {x: 1.5, y: 1.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.5, y: 0, z: 0}
+    position2: {x: 0, y: 1.25, z: 0}
+    position3: {x: 1.5, y: 1.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.52148634, y: 0.44140822}
+    - {x: 0.52148634, y: 0.48827928}
+    - {x: 0.5605449, y: 0.44140822}
+    - {x: 0.5605449, y: 0.48827928}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 20f1983dd9966874c942de7cabca81bb, type: 2}
+    materialId: 0
+    sourceTextureGUID: 40f4a415698619d4db4585a516cac0c4
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 0
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: soullantern_idle_001
+    boundsData:
+    - {x: 0.75, y: 0.625, z: 0}
+    - {x: 1.5, y: 1.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.75, y: 0.625, z: 0}
+    - {x: 1.5, y: 1.25, z: 0}
+    boundsDataCenter: {x: 0.75, y: 0.625, z: 0}
+    boundsDataExtents: {x: 1.5, y: 1.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.75, y: 0.625, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.5, y: 1.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.5, y: 0, z: 0}
+    - {x: 0, y: 1.25, z: 0}
+    - {x: 1.5, y: 1.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.5, y: 0, z: 0}
+    position2: {x: 0, y: 1.25, z: 0}
+    position3: {x: 1.5, y: 1.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.52148634, y: 0.50000197}
+    - {x: 0.52148634, y: 0.54687303}
+    - {x: 0.5605449, y: 0.50000197}
+    - {x: 0.5605449, y: 0.54687303}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 20f1983dd9966874c942de7cabca81bb, type: 2}
+    materialId: 0
+    sourceTextureGUID: 8d5ca6af030f1d840b46b8d83864aa17
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 0
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: soullantern_idle_003
+    boundsData:
+    - {x: 0.75, y: 0.625, z: 0}
+    - {x: 1.5, y: 1.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.75, y: 0.625, z: 0}
+    - {x: 1.5, y: 1.25, z: 0}
+    boundsDataCenter: {x: 0.75, y: 0.625, z: 0}
+    boundsDataExtents: {x: 1.5, y: 1.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.75, y: 0.625, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.5, y: 1.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.5, y: 0, z: 0}
+    - {x: 0, y: 1.25, z: 0}
+    - {x: 1.5, y: 1.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.5, y: 0, z: 0}
+    position2: {x: 0, y: 1.25, z: 0}
+    position3: {x: 1.5, y: 1.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.53906447, y: 0.5585957}
+    - {x: 0.53906447, y: 0.6054668}
+    - {x: 0.57812303, y: 0.5585957}
+    - {x: 0.57812303, y: 0.6054668}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 20f1983dd9966874c942de7cabca81bb, type: 2}
+    materialId: 0
+    sourceTextureGUID: 12e10028fa9c7e34b9add68a38d76482
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 0
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: soullantern_reload_001
+    boundsData:
+    - {x: 0.75, y: 0.625, z: 0}
+    - {x: 1.5, y: 1.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.75, y: 0.625, z: 0}
+    - {x: 1.5, y: 1.25, z: 0}
+    boundsDataCenter: {x: 0.75, y: 0.625, z: 0}
+    boundsDataExtents: {x: 1.5, y: 1.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.75, y: 0.625, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.5, y: 1.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.5, y: 0, z: 0}
+    - {x: 0, y: 1.25, z: 0}
+    - {x: 1.5, y: 1.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.5, y: 0, z: 0}
+    position2: {x: 0, y: 1.25, z: 0}
+    position3: {x: 1.5, y: 1.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.52148634, y: 0.50000197}
+    - {x: 0.52148634, y: 0.54687303}
+    - {x: 0.5605449, y: 0.50000197}
+    - {x: 0.5605449, y: 0.54687303}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 20f1983dd9966874c942de7cabca81bb, type: 2}
+    materialId: 0
+    sourceTextureGUID: 64d8a0cb36bcec04e82d05c8d5d33477
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 0
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: soullantern_idle_004
+    boundsData:
+    - {x: 0.75, y: 0.625, z: 0}
+    - {x: 1.5, y: 1.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.75, y: 0.625, z: 0}
+    - {x: 1.5, y: 1.25, z: 0}
+    boundsDataCenter: {x: 0.75, y: 0.625, z: 0}
+    boundsDataExtents: {x: 1.5, y: 1.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.75, y: 0.625, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.5, y: 1.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.5, y: 0, z: 0}
+    - {x: 0, y: 1.25, z: 0}
+    - {x: 1.5, y: 1.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.5, y: 0, z: 0}
+    position2: {x: 0, y: 1.25, z: 0}
+    position3: {x: 1.5, y: 1.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.5722676, y: 0.61718947}
+    - {x: 0.5722676, y: 0.66406053}
+    - {x: 0.61132616, y: 0.61718947}
+    - {x: 0.61132616, y: 0.66406053}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 20f1983dd9966874c942de7cabca81bb, type: 2}
+    materialId: 0
+    sourceTextureGUID: e1924218383d3ed43a042b77e3bd49c5
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 0
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: soullantern_fire_004
+    boundsData:
+    - {x: 0.75, y: 0.625, z: 0}
+    - {x: 1.5, y: 1.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.75, y: 0.625, z: 0}
+    - {x: 1.5, y: 1.25, z: 0}
+    boundsDataCenter: {x: 0.75, y: 0.625, z: 0}
+    boundsDataExtents: {x: 1.5, y: 1.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.75, y: 0.625, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.5, y: 1.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.5, y: 0, z: 0}
+    - {x: 0, y: 1.25, z: 0}
+    - {x: 1.5, y: 1.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.5, y: 0, z: 0}
+    position2: {x: 0, y: 1.25, z: 0}
+    position3: {x: 1.5, y: 1.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.59961134, y: 0.6757832}
+    - {x: 0.59961134, y: 0.7226543}
+    - {x: 0.6386699, y: 0.6757832}
+    - {x: 0.6386699, y: 0.7226543}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 20f1983dd9966874c942de7cabca81bb, type: 2}
+    materialId: 0
+    sourceTextureGUID: de0eaedcf75c6e84b806500c3bbedc79
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 0
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: soullantern_fire_002
+    boundsData:
+    - {x: 0.75, y: 0.625, z: 0}
+    - {x: 1.5, y: 1.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.75, y: 0.625, z: 0}
+    - {x: 1.5, y: 1.25, z: 0}
+    boundsDataCenter: {x: 0.75, y: 0.625, z: 0}
+    boundsDataExtents: {x: 1.5, y: 1.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.75, y: 0.625, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.5, y: 1.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.5, y: 0, z: 0}
+    - {x: 0, y: 1.25, z: 0}
+    - {x: 1.5, y: 1.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.5, y: 0, z: 0}
+    position2: {x: 0, y: 1.25, z: 0}
+    position3: {x: 1.5, y: 1.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.6132832, y: 0.73437697}
+    - {x: 0.6132832, y: 0.78124803}
+    - {x: 0.6523418, y: 0.73437697}
+    - {x: 0.6523418, y: 0.78124803}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 20f1983dd9966874c942de7cabca81bb, type: 2}
+    materialId: 0
+    sourceTextureGUID: 35db846711cc6534f92b476a5fd93f32
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 0
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: soullantern_idle_005
+    boundsData:
+    - {x: 0.75, y: 0.625, z: 0}
+    - {x: 1.5, y: 1.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.75, y: 0.625, z: 0}
+    - {x: 1.5, y: 1.25, z: 0}
+    boundsDataCenter: {x: 0.75, y: 0.625, z: 0}
+    boundsDataExtents: {x: 1.5, y: 1.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.75, y: 0.625, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.5, y: 1.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.5, y: 0, z: 0}
+    - {x: 0, y: 1.25, z: 0}
+    - {x: 1.5, y: 1.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.5, y: 0, z: 0}
+    position2: {x: 0, y: 1.25, z: 0}
+    position3: {x: 1.5, y: 1.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.64843947, y: 0.7929707}
+    - {x: 0.64843947, y: 0.8398418}
+    - {x: 0.68749803, y: 0.7929707}
+    - {x: 0.68749803, y: 0.8398418}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 20f1983dd9966874c942de7cabca81bb, type: 2}
+    materialId: 0
+    sourceTextureGUID: 9898e4e32d5572846b024fc64a08af3e
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 0
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: soullantern_idle_002
+    boundsData:
+    - {x: 0.75, y: 0.625, z: 0}
+    - {x: 1.5, y: 1.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.75, y: 0.625, z: 0}
+    - {x: 1.5, y: 1.25, z: 0}
+    boundsDataCenter: {x: 0.75, y: 0.625, z: 0}
+    boundsDataExtents: {x: 1.5, y: 1.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.75, y: 0.625, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.5, y: 1.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1.5, y: 0, z: 0}
+    - {x: 0, y: 1.25, z: 0}
+    - {x: 1.5, y: 1.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 1.5, y: 0, z: 0}
+    position2: {x: 0, y: 1.25, z: 0}
+    position3: {x: 1.5, y: 1.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.6523457, y: 0.85156447}
+    - {x: 0.6523457, y: 0.89843553}
+    - {x: 0.6914043, y: 0.85156447}
+    - {x: 0.6914043, y: 0.89843553}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 20f1983dd9966874c942de7cabca81bb, type: 2}
+    materialId: 0
+    sourceTextureGUID: d5d0c120d3a2b3d468faeec8f4f24630
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
     colliderType: 0
     customColliders: []
     metadata:
@@ -8065,7 +8785,7 @@ MonoBehaviour:
   loadable: 0
   invOrthoSize: 2
   halfTargetHeight: 8
-  buildKey: 1946763412
+  buildKey: 492472584
   dataGuid: c333b89a3d37c564abe3ed7a43354520
   managedSpriteCollection: 0
   hasPlatformData: 0

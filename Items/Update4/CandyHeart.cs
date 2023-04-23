@@ -78,7 +78,7 @@ namespace Planetside
             return false;
         }
 
-        public static float CanMult()
+        public static float CanMult(ShopItemController item)
         {
             foreach (var p in GameManager.Instance.AllPlayers)
             {

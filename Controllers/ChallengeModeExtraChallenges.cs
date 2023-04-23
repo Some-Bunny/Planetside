@@ -95,7 +95,7 @@ namespace Planetside
         {            
             PlayerController player = GameManager.Instance.PrimaryPlayer;
             this.elapsed += BraveTime.DeltaTime;
-            if (this.elapsed > 2f)
+            if (this.elapsed > 8f)
             {
                 this.elapsed = 0;
                 IntVector2 intVector2 = player.CurrentRoom.GetRandomAvailableCell().Value;
@@ -143,8 +143,6 @@ namespace Planetside
                         Destroy(fart, 1.1f);
                     }
                 }
-                ETGModConsole.Log("5");
-
                 base.Fire(Offset.OverridePosition(base.Position + new Vector2(0f, 30f)), new Direction(-90f, DirectionType.Absolute, -1f), new Speed(30f, SpeedType.Absolute), new Skyfall.BigBullet());
                 yield break;
             }
@@ -182,7 +180,7 @@ namespace Planetside
                         var Enemy = EnemyDatabase.GetOrLoadByGuid(guid);
                         AIActor das = AIActor.Spawn(Enemy.aiActor, this.Projectile.sprite.WorldCenter, GameManager.Instance.PrimaryPlayer.CurrentRoom, true, AIActor.AwakenAnimationType.Default, true);
                         das.AddComponent<KillOnRoomClear>();
-                        das.healthHaver.ForceSetCurrentHealth(10);
+                        das.healthHaver.ForceSetCurrentHealth(11);
                         float num = base.RandomAngle();
                         for (int i = 0; i < 12; i++)
                         {base.Fire(new Direction(num + (30 * (float)i) + 10, DirectionType.Absolute, -1f), new Speed(3.5f, SpeedType.Absolute), new BurstBullet()); }

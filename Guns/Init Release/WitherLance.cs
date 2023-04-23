@@ -113,11 +113,10 @@ namespace Planetside
 			gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
 			gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Wither Lance", "Planetside/Resources/GunClips/WitherLance/lancefull", "Planetside/Resources/GunClips/WitherLance/lanceempty");
 
-            gun.barrelOffset.transform.localPosition = new Vector3(2.4375f, 0.375f, 0f);
+            gun.barrelOffset.transform.localPosition = new Vector3(2.4375f, 0.625f, 0f);
 
 
             //projectile.baseData.range = 5.8f;
-            gun.AddPassiveStatModifier(PlayerStats.StatType.Curse, 1f, StatModifier.ModifyMethod.ADDITIVE);
 			gun.encounterTrackable.EncounterGuid = "Malachite Elite go BWOOOOOOOOOOOOOOOOOM";
 			ETGMod.Databases.Items.Add(gun, false, "ANY");
 			gun.AddToSubShop(ItemBuilder.ShopType.Cursula, 1f);

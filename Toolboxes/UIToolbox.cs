@@ -39,7 +39,7 @@ namespace Planetside
                 labelToSet.Trigger_CustomTime(trans, offset, time);
             }
             labelToSet.label.backgroundColor = color;
-
+			labelToSet.label.textScale = labelToSet.label.textScale / (GameUIUtility.GetCurrentTK2D_DFScale(labelToSet.panel.GetManager()) * 20);
             GameUIRoot.Instance.m_manager.AddControl(labelToSet.panel);
             dfLabel componentInChildren = labelToSet.gameObject.GetComponentInChildren<dfLabel>();
             componentInChildren.ColorizeSymbols = false;
@@ -321,7 +321,7 @@ namespace Planetside
 			{
 				targetLabel.Opacity = this.Opacity;
 			}
-			targetLabel.TextScale = this.TextSize;
+			targetLabel.TextScale = this.TextSize / (GameUIUtility.GetCurrentTK2D_DFScale(targetLabel.GetManager()) * 20);
             
 
 

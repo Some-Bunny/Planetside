@@ -6461,6 +6461,16 @@ MonoBehaviour:
     - magicstaffofpower_reload_005
     - magicstaffofpower_reload_006
     - magicstaffofpower_idle_002
+    - soullantern_fire_003
+    - soullantern_fire_001
+    - soullantern_idle_001
+    - soullantern_idle_003
+    - soullantern_reload_001
+    - soullantern_idle_004
+    - soullantern_fire_004
+    - soullantern_fire_002
+    - soullantern_idle_005
+    - soullantern_idle_002
     spriteTextureGUIDs:
     - 34ca97dcff305fd468502cf49047e0ac
     - 1971f743e38664e4c9c89f1d06cd9449
@@ -6573,6 +6583,16 @@ MonoBehaviour:
     - 75b0a4b48f6f160449fac150e2e29b25
     - f24921318aad32b4397a45d29c3795f7
     - 0bbf06f33397c3e48a9bf866d3b21d93
+    - 68a424148f4bdfe468faec3ae741c5ac
+    - 40f4a415698619d4db4585a516cac0c4
+    - 8d5ca6af030f1d840b46b8d83864aa17
+    - 12e10028fa9c7e34b9add68a38d76482
+    - 64d8a0cb36bcec04e82d05c8d5d33477
+    - e1924218383d3ed43a042b77e3bd49c5
+    - de0eaedcf75c6e84b806500c3bbedc79
+    - 35db846711cc6534f92b476a5fd93f32
+    - 9898e4e32d5572846b024fc64a08af3e
+    - d5d0c120d3a2b3d468faeec8f4f24630
     spriteTextureTimeStamps:
     - 1659532294
     - 1659532294
@@ -6685,6 +6705,16 @@ MonoBehaviour:
     - 1677882915.21084
     - 1677882915.21284
     - 1677881264.75163
+    - 1679614856.40826
+    - 1679614856.40326
+    - 1679614638.54099
+    - 1679614638.54661
+    - 1679614677.69074
+    - 1679614638.54962
+    - 1679614856.41127
+    - 1679614856.40626
+    - 1679614638.55162
+    - 1679614638.54461
     managedSpriteCollection: 0
     loadable: 0
     assetName: 

@@ -175,7 +175,9 @@ namespace Planetside
 
 				Actions.OnRunStart += OnRunStartMethod;
 				Debug.Log("Finished OuroborosController setup without failure!");
-			}
+
+
+            }
 			catch (Exception e)
 			{
 				Debug.Log("Unable to finish OuroborosController setup!");
@@ -273,7 +275,8 @@ namespace Planetside
 			{
 				TextMaker text = player.gameObject.AddComponent<TextMaker>();
 				text.TextSize = 5;
-				text.Color = Color.red;
+                
+                text.Color = Color.red;
 				text.ExistTime = 3;
 				text.FadeInTime = 0.75f;
 				text.FadeOutTime = 1.25f;
@@ -838,7 +841,7 @@ namespace Planetside
 			{
 				if (aiActor.behaviorSpeculator) 
 				{
-					aiActor.behaviorSpeculator.LocalTimeScale *= 1.2f;
+					aiActor.behaviorSpeculator.LocalTimeScale *= 1.125f;
                 }
 			}
 			base.Start();
@@ -1058,7 +1061,7 @@ namespace Planetside
 		public override void Start()
 		{
 			base.Start();
-			EnrageHP = base.aiActor.healthHaver.GetMaxHealth() / 5;
+			EnrageHP = base.aiActor.healthHaver.GetMaxHealth() / 3;
 
 
         }
@@ -1250,71 +1253,77 @@ namespace Planetside
 		}
     }
 }
-/*
+
 namespace Planetside
 {
-	public class ReplicatorElite : SpecialEliteType
-	{
-		public override float HealthMultiplier => 3f;
-		public override float CooldownMultiplier => 0.9f;
-		public override float MovementSpeedMultiplier => 0.7f;
-		public override Color EliteOutlineColor => Color.blue;
-		public override Color EliteParticleColor => Color.white;
-		public override Color SecondaryEliteParticleColor => Color.blue;
-		public override List<string> EnemyBlackList => new List<string>()
-		{
-			EnemyGuidDatabase.Entries["blobulon"],
-			EnemyGuidDatabase.Entries["blobuloid"],
-			EnemyGuidDatabase.Entries["blobulin"],
+    public class VoidElite : SpecialEliteType
+    {
+        public override float HealthMultiplier => 1.1f;
+        public override float CooldownMultiplier => 1.1f;
+        public override float MovementSpeedMultiplier => 1f;
+        public override Color EliteOutlineColor => Color.black;
+        public override Color EliteParticleColor => Color.black;
+        public override Color SecondaryEliteParticleColor => Color.black;
+        public override List<string> EnemyBlackList => new List<string>()
+        {
 
-			EnemyGuidDatabase.Entries["poisbulon"],
-			EnemyGuidDatabase.Entries["poisbuloid"],
-			EnemyGuidDatabase.Entries["poisbulin"],
+            EnemyGuidDatabase.Entries["mountain_cube"],
+            EnemyGuidDatabase.Entries["lead_cube"],
+            EnemyGuidDatabase.Entries["flesh_cube"],
 
-			EnemyGuidDatabase.Entries["king_bullat"],
+            EnemyGuidDatabase.Entries["brown_chest_mimic"],
 
-			EnemyGuidDatabase.Entries["spectre"],
-			EnemyGuidDatabase.Entries["king_bullat"],
+            EnemyGuidDatabase.Entries["brown_chest_mimic"],
+            EnemyGuidDatabase.Entries["blue_chest_mimic"],
+            EnemyGuidDatabase.Entries["green_chest_mimic"],
+            EnemyGuidDatabase.Entries["red_chest_mimic"],
+            EnemyGuidDatabase.Entries["black_chest_mimic"],
+            EnemyGuidDatabase.Entries["rat_chest_mimic"],
+            EnemyGuidDatabase.Entries["pedestal_mimic"],
+            EnemyGuidDatabase.Entries["wall_mimic"],
 
-			EnemyGuidDatabase.Entries["mountain_cube"],
-			EnemyGuidDatabase.Entries["lead_cube"],
-			EnemyGuidDatabase.Entries["flesh_cube"],
+            EnemyGuidDatabase.Entries["misfire_beast"],
 
-			EnemyGuidDatabase.Entries["brown_chest_mimic"],
+            EnemyGuidDatabase.Entries["shambling_round"],
+            EnemyGuidDatabase.Entries["killithid"],
+        };
 
-			EnemyGuidDatabase.Entries["brown_chest_mimic"],
-			EnemyGuidDatabase.Entries["blue_chest_mimic"],
-			EnemyGuidDatabase.Entries["green_chest_mimic"],
-			EnemyGuidDatabase.Entries["red_chest_mimic"],
-			EnemyGuidDatabase.Entries["black_chest_mimic"],
-			EnemyGuidDatabase.Entries["rat_chest_mimic"],
-			EnemyGuidDatabase.Entries["pedestal_mimic"],
-			EnemyGuidDatabase.Entries["wall_mimic"],
+		public override List<ActorEffectResistance> DebuffImmunities => new List<ActorEffectResistance> {
+			new ActorEffectResistance() { resistAmount = 1, resistType = EffectResistanceType.Freeze },
+			new ActorEffectResistance() { resistAmount = 1, resistType = EffectResistanceType.Charm },
+			new ActorEffectResistance() { resistAmount = 1, resistType = EffectResistanceType.Fire },
+			new ActorEffectResistance() { resistAmount = 1, resistType = EffectResistanceType.Poison }};
+        public override void Start()
+        {
+            base.Start();
+			base.aiActor.LocalTimeScale *= 0.9f;
+			base.aiActor.SetIsFlying(true, "Void", true, true);
+        }
+        public override void OnPreDeath(Vector2 obj)
+        {
 
-			EnemyGuidDatabase.Entries["misfire_beast"],
+        }
+        public override void OnDamaged(float resultValue, float maxValue, CoreDamageTypes damageTypes, DamageCategory damageCategory, Vector2 damageDirection)
+        {
+            
+        }
 
-			EnemyGuidDatabase.Entries["shambling_round"],
-			EnemyGuidDatabase.Entries["killithid"],
-			EnemyGuidDatabase.Entries["lead_maiden"],
-			EnemyGuidDatabase.Entries["fridge_maiden"],
+        
+       
 
-		};
-		public override List<ActorEffectResistance> DebuffImmunities => new List<ActorEffectResistance> { new ActorEffectResistance() { resistAmount = 1, resistType = EffectResistanceType.Charm } };
-		public override void Start()
-		{
-			base.Start();
-		}
-		public override void OnPreDeath(Vector2 obj)
-		{
-
-		}
-		public override void Update()
-		{
-			base.Update();
-		}
-	}
+        public override void Update()
+        {
+            base.Update();
+            if (base.aiActor)
+            {
+				SpriteOutlineManager.RemoveOutlineFromSprite(base.aiActor.sprite);
+            }
+        }
+    }
 }
-*/
+
+
+
 namespace Planetside
 {
 	public class ChaoticShiftedElite : SpecialEliteType

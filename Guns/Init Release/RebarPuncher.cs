@@ -50,7 +50,7 @@ namespace Planetside
 			gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
 			gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Rebar", "Planetside/Resources/GunClips/RebarPuncher/rebarfull", "Planetside/Resources/GunClips/RebarPuncher/rebarempty");
 
-			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_WPN_seriouscannon_shot_01";
+			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_Railgun";
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].triggerEvent = true;
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.reloadAnimation).frames[8].eventAudio = "Play_OBJ_lock_unlock_01";
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.reloadAnimation).frames[8].triggerEvent = true;

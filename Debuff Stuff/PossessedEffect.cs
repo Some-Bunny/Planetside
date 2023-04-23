@@ -44,17 +44,16 @@ namespace Planetside
 		}
 		public override void EffectTick(GameActor actor, RuntimeGameActorEffectData effectData)
 		{
-			PlayerController player = GameManager.Instance.PrimaryPlayer;
-			List<AIActor> activeEnemies = player.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
+			List<AIActor> activeEnemies = actor.GetAbsoluteParentRoom().GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
 			Vector2 centerPosition = actor.sprite.WorldCenter;
 			if (activeEnemies != null)
 			{
-				foreach (AIActor aiactor in activeEnemies)
+				for (int i = activeEnemies.Count - 1; i < 0; i--)
 				{
-					bool ae = Vector2.Distance(aiactor.CenterPosition, centerPosition) < 5 && aiactor.healthHaver.GetMaxHealth() > 0f && aiactor != null && aiactor.specRigidbody != null && player != null;
-					if (ae)
+					var aiactor = activeEnemies[i];
+					if (Vector2.Distance(aiactor.CenterPosition, centerPosition) < 5 && aiactor.healthHaver.GetMaxHealth() > 0f && aiactor != null)
 					{
-						aiactor.healthHaver.ApplyDamage(4.5f* BraveTime.DeltaTime, Vector2.zero, "oooo spoooooky", CoreDamageTypes.Void, DamageCategory.Normal, false, null, false);
+						aiactor.healthHaver.ApplyDamage(4.5f * BraveTime.DeltaTime, Vector2.zero, "oooo spoooooky", CoreDamageTypes.Void, DamageCategory.Normal, false, null, false);
 					}
 				}
 			}

@@ -56,7 +56,8 @@ namespace ItemAPI
                 ammoBarBG = bgSprite,
                 ammoBarFG = fgSprite,
                 ammoType = ammoType,
-                customAmmoType = name
+                customAmmoType = name,
+                
                 
             };
             CustomClipAmmoTypeToolbox.addedAmmoTypes.Add(uiammotype);
@@ -99,7 +100,6 @@ namespace ItemAPI
     }
     public class AddMissingAmmoTypes : MonoBehaviour
     {
-
         public void Update()
         {
             if (GameUIRoot.HasInstance)

@@ -5096,5 +5096,17 @@
     <EmbeddedResource Include="Guns\Jsons\magicstaffofpower_reload_005.json" />
     <EmbeddedResource Include="Guns\Jsons\magicstaffofpower_reload_006.json" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Guns\Jsons\soullantern_fire_001.json" />
+    <EmbeddedResource Include="Guns\Jsons\soullantern_fire_002.json" />
+    <EmbeddedResource Include="Guns\Jsons\soullantern_fire_003.json" />
+    <EmbeddedResource Include="Guns\Jsons\soullantern_fire_004.json" />
+    <EmbeddedResource Include="Guns\Jsons\soullantern_idle_001.json" />
+    <EmbeddedResource Include="Guns\Jsons\soullantern_idle_002.json" />
+    <EmbeddedResource Include="Guns\Jsons\soullantern_idle_003.json" />
+    <EmbeddedResource Include="Guns\Jsons\soullantern_idle_004.json" />
+    <EmbeddedResource Include="Guns\Jsons\soullantern_idle_005.json" />
+    <EmbeddedResource Include="Guns\Jsons\soullantern_reload_001.json" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

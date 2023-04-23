@@ -137,7 +137,6 @@ namespace Planetside
             texture.filterMode = FilterMode.Point;
             mat.SetTexture("_MainTex", texture);
             bundleData.material = mat;
-
             bundleData.materials = new Material[]
             {
                 mat,

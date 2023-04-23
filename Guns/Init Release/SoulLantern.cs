@@ -20,17 +20,20 @@ namespace Planetside
 	{
 		public static void Add()
 		{
-			Gun gun = ETGMod.Databases.Items.NewGun("Soul Lantern", "lantern");
+			Gun gun = ETGMod.Databases.Items.NewGun("Soul Lantern", "soullantern");
 			Game.Items.Rename("outdated_gun_mods:soul_lantern", "psog:soul_lantern");
 			gun.gameObject.AddComponent<SoulLantern>();
 
 			GunExt.SetShortDescription(gun, "Light The Way");
 			GunExt.SetLongDescription(gun, "A lantern filled with the souls that came before and after its time. Who knows how old it is, and if it even was manufactured by human hands...");
-			GunExt.SetupSprite(gun, null, "lantern_idle_001", 11);
-			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 15);
-			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 10);
-			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 4);
-			gun.AddPassiveStatModifier(PlayerStats.StatType.Curse, 0.5f, StatModifier.ModifyMethod.ADDITIVE);
+            GunExt.SetupSprite(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "soullantern_idle_001", 11);
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
+            gun.sprite.SortingOrder = 1;
+
+            gun.idleAnimation = "soullantern_idle";
+            gun.shootAnimation = "soullantern_fire";
+            gun.reloadAnimation = "soullantern_reload";
+            gun.AddPassiveStatModifier(PlayerStats.StatType.Curse, 1f, StatModifier.ModifyMethod.ADDITIVE);
 			GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(378) as Gun, true, false);
 			gun.gunSwitchGroup = (PickupObjectDatabase.GetById(370) as Gun).gunSwitchGroup;
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_WPN_Life_Orb_Fade_01";
@@ -107,7 +110,7 @@ namespace Planetside
 			gun.AddToSubShop(ItemBuilder.ShopType.Cursula, 1f);
 			gun.PreventNormalFireAudio = true;
 			gun.SetupUnlockOnCustomFlag(CustomDungeonFlags.BULLETBANK_DEFEATED, true);
-			gun.barrelOffset.transform.localPosition -= new Vector3(0.25f, 0, 0f);
+			gun.barrelOffset.transform.localPosition -= new Vector3(0.25f, -0.125f, 0f);
 
 			GameObject lightObj = new GameObject("LightObj");
 			FakePrefab.MarkAsFakePrefab(lightObj);
@@ -120,7 +123,7 @@ namespace Planetside
 			glow.intensity = 10;
 			gun.baseLightIntensity = 100;
 			gun.light = glow;
-			gun.muzzleFlashEffects = new VFXPool { type = VFXPoolType.None, effects = new VFXComplex[0] };
+			gun.muzzleFlashEffects = (PickupObjectDatabase.GetById(372) as Gun).muzzleFlashEffects;//new VFXPool { type = VFXPoolType.None, effects = new VFXComplex[0] };
 
 
 			SoulLantern.SoulLanternID = gun.PickupObjectId;

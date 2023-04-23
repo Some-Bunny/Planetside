@@ -155,7 +155,7 @@ namespace Planetside
         /// <summary>
         /// A function that lets you give a *custom* price multipler, for more dynamic price reductions..
         /// </summary>
-        public Func<float> CustomPriceMultiplier;
+        public Func<ShopItemController ,float> CustomPriceMultiplier;
 
 
         private bool OverridePriceReduction = false;
@@ -181,11 +181,11 @@ namespace Planetside
         }
 
 
-        public float ReturnCustomPriceMultiplier()
+        public float ReturnCustomPriceMultiplier(ShopItemController itemController)
         {
             if (CustomPriceMultiplier != null)
             {
-                return CustomPriceMultiplier();
+                return CustomPriceMultiplier(itemController);
             }
             return PriceMultiplier;
         }
@@ -268,7 +268,7 @@ namespace Planetside
                 {
                     if (DiscountVar.CanBeDiscounted() == true)
                     {
-                        mult *= DiscountVar.ReturnCustomPriceMultiplier();
+                        mult *= DiscountVar.ReturnCustomPriceMultiplier(shopItemSelf);
                     }
                 }
             }

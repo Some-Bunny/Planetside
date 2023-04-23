@@ -66,7 +66,7 @@ public class UmbraController : BraveBehaviour
 		}
 		private class BigBullet : Bullet
 		{
-			public BigBullet() : base("big_one", false, false, false)
+			public BigBullet() : base("big_one", false, false, true)
 			{
 			}
 
@@ -100,21 +100,31 @@ public class UmbraController : BraveBehaviour
 					float Angle = 360 / Amount;
 					for (int i = 0; i < Amount; i++)
 					{
-						base.Fire(new Direction((Angle * i) + num, DirectionType.Absolute, -1f), new Speed(7f, SpeedType.Absolute), new SpeedChangingBullet(14, 180));
+						base.Fire(new Direction((Angle * i) + num, DirectionType.Absolute, -1f), new Speed(7f, SpeedType.Absolute), new SmallBullet());
                     }
 					num = base.RandomAngle();
 					for (int i = 0; i < Amount; i++)
 					{
-						base.Fire(new Direction((Angle * i) + num, DirectionType.Absolute, -1f), new Speed(3f, SpeedType.Absolute), new SpeedChangingBullet(12, 120));
+						base.Fire(new Direction((Angle * i) + num, DirectionType.Absolute, -1f), new Speed(3f, SpeedType.Absolute), new SmallBullet());
 					}
 					num = base.RandomAngle();
 					base.PostWwiseEvent("Play_ENM_bulletking_slam_01", null);
 					return;
 				}
 			}
-			
-
-		}
+            private class SmallBullet : Bullet
+			{
+                public SmallBullet() : base("reversible", false, false, true)
+                {
+					
+                }
+				public override IEnumerator Top()
+				{
+					this.ChangeSpeed(new Brave.BulletScript.Speed(12,SpeedType.Absolute), 120);
+					yield break;
+				}
+			}
+        }
 	}
 
 	public bool CanTeleport;

@@ -91,8 +91,37 @@ namespace Planetside
                     }
                 }
             }
+           
 
             base.EndIntro();
+            if (base.aiActor.EffectResistances == null)
+            {
+                base.aiActor.EffectResistances = new ActorEffectResistance[0];
+            }
+            List<ActorEffectResistance> l = base.aiActor.EffectResistances.ToList();
+
+            switch (engager.AmountOfPurchases)
+            {
+                case 1:
+                    return;
+                case 2:
+                    l.Add(new ActorEffectResistance() { resistAmount = 1000, resistType = EffectResistanceType.Freeze });
+                    base.aiActor.EffectResistances = l.ToArray();
+                    return;
+
+                case 3:
+                    l.Add(new ActorEffectResistance() { resistAmount = 1000, resistType = EffectResistanceType.Freeze });
+                    l.Add(new ActorEffectResistance() { resistAmount = 1000, resistType = EffectResistanceType.Poison });
+                    base.aiActor.EffectResistances = l.ToArray();
+
+                    return;
+                case 4:
+                    l.Add(new ActorEffectResistance() { resistAmount = 1000, resistType = EffectResistanceType.Fire });
+                    l.Add(new ActorEffectResistance() { resistAmount = 1000, resistType = EffectResistanceType.Poison });
+                    l.Add(new ActorEffectResistance() { resistAmount = 1000, resistType = EffectResistanceType.Freeze });
+                    base.aiActor.EffectResistances = l.ToArray();
+                    return;
+            }
         }
     }
 }

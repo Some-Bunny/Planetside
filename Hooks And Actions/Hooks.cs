@@ -763,6 +763,7 @@ namespace Planetside
             rng = UnityEngine.Random.Range(0.0000000f, 1.0000000f);
             if (rng <= 0.0000001f)
             {
+                //1,000,000
 
                 PlayerController player = GameManager.Instance.PrimaryPlayer;
                 Chest rainbow_Chest = GameManager.Instance.RewardManager.Rainbow_Chest;

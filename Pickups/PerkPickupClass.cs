@@ -105,7 +105,7 @@ namespace Planetside
             SpriteOutlineManager.AddOutlineToSprite(base.sprite, Color.white, 0.1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
             base.sprite.UpdateZDepth();
 
-            if (extantLabel != null) { Destroy(extantLabel); }
+            if (extantLabel != null) { Destroy(extantLabel.gameObject); }
 
             string Text = StringTableManager.GetItemsString(this.encounterTrackable.journalData.PrimaryDisplayName);
             foreach (var enrty in this.perkDisplayContainers)

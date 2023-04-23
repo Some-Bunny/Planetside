@@ -31,12 +31,13 @@ namespace Planetside
             ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("gunsnakeoil"), data, obj);
             //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "Works 103%!";
-            string longDesc = "Harvested from elusive shell-snakes, This wonderful elixir is SURE to boost your firepower and strength in combat." +
+            string longDesc = "Harvested from elusive shell-snakes, This wonderful elixir is SURE to boost your firepower and strength in combat. It'll EVEN let you barter better! It's a miracle oil!" +
                 "\n\nSource: Trust us! We're completely honest!";
             ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
 			ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.KnockbackMultiplier, 1.5f, StatModifier.ModifyMethod.MULTIPLICATIVE);
 			ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.PlayerBulletScale, 1.5f, StatModifier.ModifyMethod.MULTIPLICATIVE);
-			item.quality = PickupObject.ItemQuality.C;
+
+            item.quality = PickupObject.ItemQuality.C;
             List<string> mandatoryConsoleIDs = new List<string>
             {
                 "psog:shell-snake_oil",
@@ -55,15 +56,56 @@ namespace Planetside
             ShellsnakeOil.ShellSnakeOilID = item.PickupObjectId;
             ItemIDs.AddToList(item.PickupObjectId);
 
+            ShopDiscountMegaMind.DiscountsToAdd.Add(new ShopDiscount()
+            {
+                IdentificationKey = "ShellsnakeBartering",
+                CanDiscountCondition = CanBuy,
+                CustomPriceMultiplier = CanMult,
+                ItemToDiscount = Can
+            });
+            ShopDiscountMegaMind.OnShopItemStarted += OSIS;
         }
+
+        public class RandomBoolComp : MonoBehaviour { public void Start() { B = BraveUtility.RandomBool(); rng = UnityEngine.Random.value; } public bool B; public float rng; }
+
+        public static void OSIS(ShopItemController ITEM)
+        {
+            ITEM.gameObject.AddComponent<RandomBoolComp>();
+        }
+
+        public static bool Can(ShopItemController s)
+        {
+            return true;
+        }
+
+        public static bool CanBuy()
+        {
+            foreach (var p in GameManager.Instance.AllPlayers)
+            {
+                if (p.HasPickupID(ShellsnakeOil.ShellSnakeOilID) == true)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static float CanMult(ShopItemController item)
+        {
+            if (item.gameObject.GetComponent<ShellsnakeOil.RandomBoolComp>() == null) { return 1; }
+            if (item.gameObject.GetComponent<ShellsnakeOil.RandomBoolComp>().rng < 0.2f)
+            {
+                return 0.66f;
+            }
+            return 1f;
+        }
+
         public static int ShellSnakeOilID;
         private void PostProcessProjectile(Projectile sourceProjectile, float effectChanceScalar)
         {
             try
             {
-                SpeculativeRigidbody specRigidbody = sourceProjectile.projectile.specRigidbody;
-                specRigidbody.OnPreRigidbodyCollision = (SpeculativeRigidbody.OnPreRigidbodyCollisionDelegate)Delegate.Combine(specRigidbody.OnPreRigidbodyCollision, new SpeculativeRigidbody.OnPreRigidbodyCollisionDelegate(this.HandlePreCollision));
-
+                sourceProjectile.projectile.specRigidbody.OnPreRigidbodyCollision += HandlePreCollision;
             }
             catch (Exception ex)
             {
@@ -72,7 +114,7 @@ namespace Planetside
         }
         private void HandlePreCollision(SpeculativeRigidbody myRigidbody, PixelCollider myPixelCollider, SpeculativeRigidbody otherRigidbody, PixelCollider otherPixelCollider)
         {
-            string value = otherRigidbody.aiActor != null ? aiActor.EnemyGuid : null;
+            string value = otherRigidbody.aiActor != null ? otherRigidbody.aiActor.EnemyGuid : null;
             if (!string.IsNullOrEmpty(value))
             {
                 if (otherRigidbody && otherRigidbody.healthHaver)

@@ -12,14 +12,13 @@ namespace Planetside
         public GlassComponent()
         {
             this.DamageMult = 2.25f;
-            this.DamageToGetFromOverHeal = 0.25f;
+            this.DamageToGetFromOverHeal = 0.125f;
             this.hasBeenPickedup = false;
             this.LeniencyProtection = 0;
         }
         public void Start() 
         {
-            GiveDamage();
-            this.hasBeenPickedup = true; 
+           //
             if (player.ForceZeroHealthState == true){
                 player.healthHaver.Armor = 2;
             }
@@ -28,11 +27,29 @@ namespace Planetside
                 OtherTools.ApplyStat(player, PlayerStats.StatType.Health, (-HPtOremove) + 1, StatModifier.ModifyMethod.ADDITIVE);
                 if (player.healthHaver.Armor > 1) { player.healthHaver.Armor = 1; }
             }
+            if (this.hasBeenPickedup == false)
+            {
+                this.hasBeenPickedup = true;
+                StatModifier item = new StatModifier
+                {
+                    statToBoost = PlayerStats.StatType.Damage,
+                    amount = DamageMult,
+                    modifyType = StatModifier.ModifyMethod.MULTIPLICATIVE
+                };
+                this.DamageStat = item;
+                player.ownerlessStatModifiers.Add(item);
+                player.stats.RecalculateStats(player, true, true);
+            }
+            else
+            {
+                GiveDamage();
+            }
+
         }
         public void Update()
         {
             int ArmorAllowed = player.ForceZeroHealthState == true ? 4 : 2;
-            ArmorAllowed -= LeniencyProtection;
+            ArmorAllowed += LeniencyProtection;
             if (player.healthHaver.Armor > ArmorAllowed){
                 DoHurty();
                 OtherTools.NotifyCustom("A Glass Curse", "Prevented Armor Increase!", "glass", StaticSpriteDefinitions.Pickup_Sheet_Data, UINotificationController.NotificationColor.GOLD);
@@ -64,10 +81,9 @@ namespace Planetside
             StatModifier item = new StatModifier
             {
                 statToBoost = PlayerStats.StatType.Damage,
-                amount = DamageMult,
-                modifyType = StatModifier.ModifyMethod.MULTIPLICATIVE
+                amount = DamageToGetFromOverHeal,
+                modifyType = StatModifier.ModifyMethod.ADDITIVE
             };
-            this.DamageStat = item;
             player.ownerlessStatModifiers.Add(item);
             player.stats.RecalculateStats(player, true, true);
         }

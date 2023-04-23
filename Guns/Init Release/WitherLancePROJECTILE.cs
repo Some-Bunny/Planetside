@@ -153,6 +153,9 @@ namespace Planetside
                             {
                                 if (doMagic == true)
                                 {
+                                    var h = Instantiate(projectile.hitEffects.deathAny.effects.First().effects.First().effect, projectile.sprite.WorldCenter, Quaternion.identity);
+                                    Destroy(h, 2);
+                                    AkSoundEngine.PostEvent("Play_WPN_star_impact_01", projectile.gameObject);
                                     var attacher = proj.GetOrAddComponent<StarAttacherProjectileComponent>();
                                     attacher.ProcessAdd(this);
                                     proj.baseData.speed = Mathf.Max(proj.baseData.speed *= 0.8f, 6f);
