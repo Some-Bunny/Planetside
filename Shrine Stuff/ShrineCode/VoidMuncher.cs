@@ -48,7 +48,7 @@ namespace Planetside
 				}
 			}
 			public bool Full()
-            {return CrossGameDataStorage.CrossGameStorage.primaryGunSaved != string.Empty && CrossGameDataStorage.CrossGameStorage.secondaryGunSaved != string.Empty;}
+            {return CrossGameDataStorage.CrossGameStorage.primaryGunSavedID != 69420 && CrossGameDataStorage.CrossGameStorage.secondaryGunSavedID != 69420; }
 
 			public void TossObjectIntoVoid(tk2dBaseSprite spriteSource, Vector3 startPosition)
 			{
@@ -58,17 +58,16 @@ namespace Planetside
 
 			public void ProcessDevouredGun(Gun gun)
             {
-				string primaryDisplayName = gun.encounterTrackable.journalData.GetPrimaryDisplayName(false);
-				if (CrossGameDataStorage.CrossGameStorage.primaryGunSaved == string.Empty) 
+				if (CrossGameDataStorage.CrossGameStorage.primaryGunSavedID == 69420) 
 				{
-					CrossGameDataStorage.CrossGameStorage.primaryGunSaved = primaryDisplayName;
+					CrossGameDataStorage.CrossGameStorage.primaryGunSavedID = gun.PickupObjectId;
 					CrossGameDataStorage.UpdateConfiguration();
 					return;
 				}
-				if (CrossGameDataStorage.CrossGameStorage.secondaryGunSaved == string.Empty)
+				if (CrossGameDataStorage.CrossGameStorage.secondaryGunSavedID == 69420)
 				{
-					CrossGameDataStorage.CrossGameStorage.secondaryGunSaved = primaryDisplayName;
-					CrossGameDataStorage.UpdateConfiguration();
+					CrossGameDataStorage.CrossGameStorage.secondaryGunSavedID = gun.PickupObjectId;
+                    CrossGameDataStorage.UpdateConfiguration();
 					return;
 				}
 			}
@@ -136,7 +135,7 @@ namespace Planetside
                     {
 						shrineSelf.text = "The portal has closed, and no more weapons can be deposited.";
                     }
-					else if (CrossGameDataStorage.CrossGameStorage.secondaryGunSaved == string.Empty && CrossGameDataStorage.CrossGameStorage.primaryGunSaved != string.Empty)
+					else if (CrossGameDataStorage.CrossGameStorage.secondaryGunSavedID == 69420 && CrossGameDataStorage.CrossGameStorage.primaryGunSavedID != 69420)
                     {
 						shrineSelf.text = "The portal has room for one more gun.";
 					}
@@ -244,9 +243,9 @@ namespace Planetside
 
             Vector3 offset = new Vector3(0.5f, 1.5f, 0);
             if (gameMode != GameManager.GameMode.NORMAL) { offset = new Vector3(0.5f, -3f, 0); }
-            if (CrossGameDataStorage.CrossGameStorage.primaryGunSaved != string.Empty && CrossGameDataStorage.CrossGameStorage.secondaryGunSaved != string.Empty)
+            if (CrossGameDataStorage.CrossGameStorage.primaryGunSavedID != 69420 && CrossGameDataStorage.CrossGameStorage.secondaryGunSavedID != 69420)
             {
-                PickupObject pickup = PickupObjectDatabase.GetByEncounterName(UnityEngine.Random.value > 0.5f ? CrossGameDataStorage.CrossGameStorage.primaryGunSaved : CrossGameDataStorage.CrossGameStorage.secondaryGunSaved);
+                PickupObject pickup = PickupObjectDatabase.GetById(UnityEngine.Random.value > 0.5f ? CrossGameDataStorage.CrossGameStorage.primaryGunSavedID : CrossGameDataStorage.CrossGameStorage.secondaryGunSavedID);
                 if (pickup == null) { pickup = PickupObjectDatabase.GetById(GTEE.fuckinGhELL); }
 
                 GameObject bubble = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("Portal"));
@@ -258,8 +257,8 @@ namespace Planetside
                 bubble.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
                 bubble.transform.localScale *= 0;
                 GameManager.Instance.StartCoroutine(LerpBubbleToSize(bubble, Vector3.zero, Vector3.one * 2.5f, 1.5f, pickup));
-                CrossGameDataStorage.CrossGameStorage.primaryGunSaved = string.Empty;
-                CrossGameDataStorage.CrossGameStorage.secondaryGunSaved = string.Empty;
+                CrossGameDataStorage.CrossGameStorage.primaryGunSavedID = 69420;
+                CrossGameDataStorage.CrossGameStorage.secondaryGunSavedID = 69420;
                 CrossGameDataStorage.UpdateConfiguration();
             }
         }
@@ -328,7 +327,7 @@ namespace Planetside
 			if (player.CurrentGun.InfiniteAmmo == true) { return false; }
 			if (player.CurrentGun.quality == PickupObject.ItemQuality.EXCLUDED) { return false; }
 			if (player.CurrentGun.quality == PickupObject.ItemQuality.SPECIAL) { return false; }
-			return CrossGameDataStorage.CrossGameStorage.primaryGunSaved == string.Empty || CrossGameDataStorage.CrossGameStorage.secondaryGunSaved == string.Empty;
+			return CrossGameDataStorage.CrossGameStorage.primaryGunSavedID == 69420 || CrossGameDataStorage.CrossGameStorage.secondaryGunSavedID == 69420;
 		}
 		public static void Accept(PlayerController player, GameObject shrine)
 		{

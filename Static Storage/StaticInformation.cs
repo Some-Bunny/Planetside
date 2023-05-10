@@ -139,6 +139,7 @@ namespace Planetside
         }
 
 
+
         public static AIBulletBank.Entry CopyFields<T>(AIBulletBank.Entry sample2) where T : AIBulletBank.Entry
         {
             AIBulletBank.Entry sample = new AIBulletBank.Entry();

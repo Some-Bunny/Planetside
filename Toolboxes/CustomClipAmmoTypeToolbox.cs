@@ -57,8 +57,7 @@ namespace ItemAPI
                 ammoBarFG = fgSprite,
                 ammoType = ammoType,
                 customAmmoType = name,
-                
-                
+                             
             };
             CustomClipAmmoTypeToolbox.addedAmmoTypes.Add(uiammotype);
             foreach (GameUIAmmoController uiammocontroller in GameUIRoot.Instance.ammoControllers)

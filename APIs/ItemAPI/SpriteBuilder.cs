@@ -10,10 +10,9 @@ namespace ItemAPI
 {
     public static class SpriteBuilder
     {
-        public static tk2dSpriteCollectionData itemCollection = PickupObjectDatabase.GetByEncounterName("singularity").sprite.Collection;
+        public static tk2dSpriteCollectionData itemCollection = PickupObjectDatabase.GetById(155).sprite.Collection;
         public static tk2dSpriteCollectionData ammonomiconCollection = AmmonomiconController.ForceInstance.EncounterIconCollection;
-        private static tk2dSprite baseSprite = PickupObjectDatabase.GetByEncounterName("singularity").GetComponent<tk2dSprite>();
-
+        private static tk2dSprite baseSprite = PickupObjectDatabase.GetById(155).GetComponent<tk2dSprite>();
         /// <summary>
         /// Returns an object with a tk2dSprite component with the 
         /// texture of a file in the sprites folder

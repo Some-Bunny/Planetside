@@ -216,7 +216,6 @@ namespace Knives
 
             if (gun.ClipShotsRemaining < gun.ClipCapacity)
             {
-                Gun swipeFlash = (Gun)PickupObjectDatabase.GetByEncounterName("Silencer");
                 Projectile projectile1 = ((Gun)ETGMod.Databases.Items[3]).DefaultModule.projectiles[0];
                 GameObject gameObject = SpawnManager.SpawnProjectile(projectile1.gameObject, player.CurrentGun.sprite.WorldCenter, Quaternion.Euler(0f, 0f, (player.CurrentGun == null) ? 0f : player.CurrentGun.CurrentAngle), true);
                 Projectile component = gameObject.GetComponent<Projectile>();
