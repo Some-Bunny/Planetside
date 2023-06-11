@@ -625,7 +625,6 @@ namespace Planetside
 				}
 			}
 		}
-
 	}
 }
 

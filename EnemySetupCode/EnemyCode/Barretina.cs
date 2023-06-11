@@ -487,7 +487,7 @@ namespace Planetside
 				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("barretinaiconthing");// ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\barretinaiconthing.png");
                 PlanetsideModule.Strings.Enemies.Set("#THE_BARRETINA", "Barretina");
 				PlanetsideModule.Strings.Enemies.Set("#THE_BARRETINA_SHORTDESC", "Sn-eye-per");
-				PlanetsideModule.Strings.Enemies.Set("#THE_BARRETINA_LONGDESC", "A sentinel of greater size from beyond the Curtain, blessed with the gift of greater manueverability.\n\nTheories circulated that these foes were a sign of something greater to be discovered in the Gungeon, but again, no evidence supports that... yet.");
+				PlanetsideModule.Strings.Enemies.Set("#THE_BARRETINA_LONGDESC", "A sentinel of greater size from beyond the Curtain, blessed with the gift of greater maneuverability.\n\nTheories circulated that these foes were a sign of something greater to be discovered in the Gungeon, but again, no evidence supports that... yet.");
 				companion.encounterTrackable.journalData.PrimaryDisplayName = "#THE_BARRETINA";
 				companion.encounterTrackable.journalData.NotificationPanelDescription = "#THE_BARRETINA_SHORTDESC";
 				companion.encounterTrackable.journalData.AmmonomiconFullEntry = "#THE_BARRETINA_LONGDESC";

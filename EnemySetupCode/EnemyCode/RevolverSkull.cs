@@ -364,7 +364,7 @@ namespace Planetside
 				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("skullvenanticonaoo");// ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\skullvenanticonaoo.png");
 				PlanetsideModule.Strings.Enemies.Set("#THE_SKULLVENANT", "Skullvenant");
 				PlanetsideModule.Strings.Enemies.Set("#THE_SKULLVENANT_SHORTDESC", "Headache");
-				PlanetsideModule.Strings.Enemies.Set("#THE_SKULLVENANT_LONGDESC", "The remaining remnants of slain Revolvenants, these heads have been imbued with life to relive their former lives as servants to the Gungeon and its Master.");
+				PlanetsideModule.Strings.Enemies.Set("#THE_SKULLVENANT_LONGDESC", "The remnants of slain Revolvenants, these heads have been given life once more to continue on as servants to the Gungeon and its Master.");
 				companion.encounterTrackable.journalData.PrimaryDisplayName = "#THE_SKULLVENANT";
 				companion.encounterTrackable.journalData.NotificationPanelDescription = "#THE_SKULLVENANT_SHORTDESC";
 				companion.encounterTrackable.journalData.AmmonomiconFullEntry = "#THE_SKULLVENANT_LONGDESC";

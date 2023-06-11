@@ -40,7 +40,7 @@ namespace Planetside
             ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("heresyhammer"), data, obj);
             //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "BLASPHEMER";
-            string longDesc = "Allows for destruction of monuments.\n\nA large hammer, originally used by protesters off-world to destroy monuments of the corrupt in power. It found new life in here after many of said protestors were shipped to the Gungeon.";
+            string longDesc = "Allows for destruction of shrines.\n\nA large hammer, originally used by protestors off-world to destroy monuments of the corrupt in power. It found new life in here after many of said protestors were shipped to the Gungeon.";
             activeitem.SetupItem(shortDesc, longDesc, "psog");
             activeitem.SetCooldownType(ItemBuilder.CooldownType.Timed, 1f);
             activeitem.consumable = false;

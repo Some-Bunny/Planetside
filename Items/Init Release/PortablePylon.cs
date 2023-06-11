@@ -53,11 +53,14 @@ namespace Planetside
                 "bionic_leg"
             };
             CustomSynergies.Add("Loader Chassis", mandatoryConsoleIDs, optionalConsoleIDs, true);
-            List<string> optionalConsoleID1s = new List<string>
+
+
+            List<string> mandatoryConsoleIDs2 = new List<string>
             {
+                "psog:portable_pylon",
                 "gungeon_blueprint"
             };
-            CustomSynergies.Add("Sentry Goin' Up!", mandatoryConsoleIDs, optionalConsoleID1s, true);
+            CustomSynergies.Add("Sentry Goin' Up!", mandatoryConsoleIDs2, null, true);
             SynergyAPI.SynergyBuilder.AddItemToSynergy(activeitem, CustomSynergyType.BATTERY_POWERED);
 
             activeitem.AddToSubShop(ItemBuilder.ShopType.Trorc, 1f);

@@ -9,7 +9,6 @@ using UnityEngine;
 
 namespace Planetside
 {
-
     public class OphanaimFlightBehavior : BasicAttackBehavior
     {
         private bool ShowBulletScript()

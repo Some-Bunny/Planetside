@@ -1674,7 +1674,7 @@ namespace Planetside
 				enemy.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("ophanaimsheetrt");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\ophanaimsheetrt.png");
                 PlanetsideModule.Strings.Enemies.Set("#OPHANAIMAMMONOMICON", "Ophanaim");
 				PlanetsideModule.Strings.Enemies.Set("#OPHANAIMAMMONOMICONSHORT", "Observant Aimgel");
-				PlanetsideModule.Strings.Enemies.Set("#OPHANAIMAMMONOMICONLONG", "Ophanaim are some of the more weaker of the Aimgels, and thus are tasked with commanding ocular forces to observe the Gungeon.\n\nDespite this, their job, along with the jobs of the ocular force, is invaluable to the sanctity of the Gungeon.");
+				PlanetsideModule.Strings.Enemies.Set("#OPHANAIMAMMONOMICONLONG", "Ophanaim are some of the stronger of the Aimgels, and thus are tasked with commanding ocular forces to observe the Gungeon.\n\nTheir job, along with the jobs of the ocular force, is invaluable to the sanctity of the Gungeon.");
 				enemy.encounterTrackable.journalData.PrimaryDisplayName = "#OPHANAIMAMMONOMICON";
 				enemy.encounterTrackable.journalData.NotificationPanelDescription = "#OPHANAIMAMMONOMICONSHORT";
 				enemy.encounterTrackable.journalData.AmmonomiconFullEntry = "#OPHANAIMAMMONOMICONLONG";
@@ -2319,12 +2319,9 @@ namespace Planetside
 
                 base.aiActor.healthHaver.minimumHealth = base.aiActor.healthHaver.GetMaxHealth() * 0.6f;
 
-
                 base.aiActor.spriteAnimator.AnimationEventTriggered += this.AnimationEventTriggered; 
 				this.aiActor.knockbackDoer.SetImmobile(true, "nope.");
 				base.aiActor.HasBeenEngaged = false;
-
-
 				base.aiActor.healthHaver.OnPreDeath += (obj) =>
 				{
 					
@@ -2334,8 +2331,6 @@ namespace Planetside
 					AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.DEFEAT_OPHANAIM, true);
 				};
 			}
-
-           
 
             private void AnimationEventTriggered(tk2dSpriteAnimator animator, tk2dSpriteAnimationClip clip, int frameIdx)
 			{

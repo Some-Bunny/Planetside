@@ -69,9 +69,15 @@ public class InjectorRoundsComponent : BraveBehaviour
 				{
                     //ETGModConsole.Log("name of key: " + LocalValue);
                     Keys.Add(LocalValue);
-                    effectKeys.Add(LocalValue, gameActorEffect);
+					if (!effectKeys.ContainsKey(LocalValue))
+					{
+                        effectKeys.Add(LocalValue, gameActorEffect);
+                    }
 
-                    InjectorRounds.DebuffKeys.Add(gameActorEffect, gameActorEffect.effectIdentifier);
+					if (!InjectorRounds.DebuffKeys.ContainsKey(gameActorEffect))
+					{
+                        InjectorRounds.DebuffKeys.Add(gameActorEffect, gameActorEffect.effectIdentifier);
+                    }
                     //ETGModConsole.Log("added: " + gameActorEffect.effectIdentifier + " to effectKeys with key: " + LocalValue);
                 }
 			}
