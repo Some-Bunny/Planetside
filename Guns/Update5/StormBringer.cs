@@ -27,13 +27,23 @@ namespace Planetside
 			var behav = gun.gameObject.AddComponent<StormBringer>();
 			GunExt.SetShortDescription(gun, "Royal");
 			GunExt.SetLongDescription(gun, "A bad replica of the hammer of legend, capable of generating and expelling more than lethal amounts of energy.\n\nPoint away from face. Yours, to be precise.");
-			GunExt.SetupSprite(gun, null, "hammerofstorms_idle_001", 8);
-			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 20);
-			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 5);
-			GunExt.SetAnimationFPS(gun, gun.chargeAnimation, 5);
-			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 5);
 
-			GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(38) as Gun, true, false);
+            GunExt.SetupSprite(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "hammerofstorms_idle_001", 11);
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
+            gun.sprite.SortingOrder = 1;
+
+            gun.idleAnimation = "lightninghammer_idle";
+            gun.shootAnimation = "lightninghammer_fire";
+            gun.reloadAnimation = "lightninghammer_reload";
+            gun.chargeAnimation = "lightninghammer_charge";
+
+            //GunExt.SetupSprite(gun, null, "hammerofstorms_idle_001", 8);
+            //GunExt.SetAnimationFPS(gun, gun.shootAnimation, 20);
+            //GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 5);
+            //GunExt.SetAnimationFPS(gun, gun.chargeAnimation, 5);
+            //GunExt.SetAnimationFPS(gun, gun.idleAnimation, 5);
+
+            GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(38) as Gun, true, false);
 			gun.DefaultModule.ammoCost = 1;
 			gun.DefaultModule.shootStyle = ProjectileModule.ShootStyle.Charged;
 			gun.DefaultModule.sequenceStyle = ProjectileModule.ProjectileSequenceStyle.Random;
@@ -50,8 +60,8 @@ namespace Planetside
             //EnemyToolbox.AddSoundsToAnimationFrame(gun.GetComponent<tk2dSpriteAnimator>(), gun.reloadAnimation, new Dictionary<int, string> { { 9, "Play_OBJ_lock_unlock_01" }, { 10, "Play_BOSS_lichC_zap_01" }, { 11, "Play_OBJ_metalskin_end_01" } });
             gun.barrelOffset.transform.localPosition = new Vector3(3.6875f, 1.125f, 0f);
 
-			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.chargeAnimation).wrapMode = tk2dSpriteAnimationClip.WrapMode.LoopSection;
-			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.chargeAnimation).loopStart = 5;
+			//gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.chargeAnimation).wrapMode = tk2dSpriteAnimationClip.WrapMode.LoopSection;
+			//gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.chargeAnimation).loopStart = 5;
 			gun.gunClass = GunClass.FIRE;
 
 

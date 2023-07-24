@@ -184,10 +184,13 @@ namespace Planetside
 
             player.gameObject.AddComponent<AllSeeingEyeController.AllSeeingEyeChestBehaviour>();
 			player.OnRoomClearEvent += Player_OnRoomClearEvent;
-
-
-
         }
+
+		public override void OnDestroy()
+		{
+            GameManager.Instance.OnNewLevelFullyLoaded -= this.RevealSecretRooms;
+            base.OnDestroy();
+		}
 
 		private void Player_OnRoomClearEvent(PlayerController obj)
 		{

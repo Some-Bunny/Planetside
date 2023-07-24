@@ -118,7 +118,7 @@ namespace Planetside
 				for (int i = 0; i < 60; i++)
 				{
 					TempaletAngle += (1 * turnSign);
-					yield return this.Wait(1);
+					yield return this.Wait(1 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
 				}
 				for (int i = 0; i < 2; i++)
 				{
@@ -135,7 +135,7 @@ namespace Planetside
 				{
 					float t = (float)i / (float)60;
 					this.TurnSpeed = Mathf.SmoothStep(60, 45, t) * turnSign;
-					yield return this.Wait(1);
+					yield return this.Wait(1 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
 				}
 
 				this.SpawnChainsOf(bullets3, 270 + this.TempaletAngle, 250);
@@ -157,7 +157,7 @@ namespace Planetside
 				{
 					float t = (float)i / (float)60;
 					this.TurnSpeed = Mathf.SmoothStep(45, 30, t) * turnSign;
-					yield return this.Wait(1);
+					yield return this.Wait(1 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
 
 				}
 				controller.extantReticles.Clear();
@@ -434,7 +434,7 @@ namespace Planetside
 					controller.extantReticles.Add(gameObject);
 
 				}
-				yield return this.Wait(45);
+				yield return this.Wait(45 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
 				ISDodgeAble = false;
 				for (int i = -2; i < 3; i++)
 				{
@@ -460,7 +460,7 @@ namespace Planetside
 					GameManager.Instance.StartCoroutine(FlashReticles(component2, ISDodgeAble, Angle, Offset, this, "sniperUndodgeable"));
 					controller.extantReticles.Add(gameObject);
 				}
-				yield return this.Wait(30);
+				yield return this.Wait(30 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
 				ISDodgeAble = false;
 				for (int i = -1; i < 2; i++)
 				{
@@ -488,7 +488,7 @@ namespace Planetside
 				}
 
 
-				yield return this.Wait(60);
+				yield return this.Wait(60 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
 				yield break;
 			}
 			private IEnumerator FlashReticles(tk2dTiledSprite tiledspriteObject, bool isDodgeAble, float Angle, float Offset, BasicLaserAttackTellTwo parent, string BulletType)
@@ -645,7 +645,7 @@ namespace Planetside
 						if (listObj.Key.name == "CanSpawn") { JustForOne = true; } else { JustForOne = false; }
 						GameManager.Instance.StartCoroutine(MoveReticlesSmoothly(listObj.Key, listObj.Value, String, JustForOne, ISDodgeAble));
 					}
-					yield return this.Wait(105f);
+					yield return this.Wait(105f * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
 				}
 				yield break;
 			}
@@ -969,7 +969,7 @@ namespace Planetside
 				base.BulletBank.aiActor.StartCoroutine(FlashReticles(CentreAngle - 180, -168, this));
 				for (int e = 0; e < 4; e++)
 				{
-					yield return this.Wait(30);
+					yield return this.Wait(30 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
 					base.PostWwiseEvent("Play_BOSS_omegaBeam_charge_01");
 					base.BulletBank.aiActor.StartCoroutine(SwipeLaser(CentreAngle - 180, -168, this, 1.5f - (0.5f * e)));
 					base.BulletBank.aiActor.StartCoroutine(SwipeLaser(CentreAngle - 180, 168, this, 1.5f - (0.5f * e)));
@@ -980,10 +980,10 @@ namespace Planetside
 					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(CentreAngle, this, 0.75f, 15f));
 					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(CentreAngle, this, 0.75f, -15f));
 
-					yield return this.Wait(60);
+					yield return this.Wait(60 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
 				}
 				base.BulletBank.aiActor.StartCoroutine(DoBlast(this));
-				yield return this.Wait(75);
+				yield return this.Wait(75 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
 
 				yield break;
 			}
@@ -1317,7 +1317,7 @@ namespace Planetside
 				}
 
 				controller.MoveTowardsPositionMethod(1f, 5);
-				yield return this.Wait(150);
+				yield return this.Wait(150 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
 				yield break;
 			}
 

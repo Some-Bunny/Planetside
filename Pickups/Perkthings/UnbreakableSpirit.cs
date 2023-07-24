@@ -169,7 +169,7 @@ namespace Planetside
                 {
                     AmountToBuyBeforeReveal = 7,
                     LockedString = AlphabetController.ConvertString("More Chances"),
-                    UnlockedString = "Staking grants more revives, but does not grant any additional damage after the first revive.",
+                    UnlockedString = "Stacking grants more revives, but does not grant any additional damage after the first revive.",
                     FlagToTrack = SaveAPI.CustomDungeonFlags.UNBREAKABLESPIRIT_FLAG_STACK
                 },
         };

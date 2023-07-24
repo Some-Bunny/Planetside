@@ -26,11 +26,19 @@ namespace Planetside
             gun.SetShortDescription("Make It Go Boom!");
             gun.SetLongDescription("Fires rounds with embedded detonators in them. Explosives go off on enemy death.\n\nSmells of beard shampoo.");
 
-            gun.SetupSprite(null, "bulldog_idle_001", 8);
+            GunExt.SetupSprite(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "polarity1_idle_001", 11);
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
+            gun.sprite.SortingOrder = 1;
 
-            gun.SetAnimationFPS(gun.shootAnimation, 16);
-            gun.SetAnimationFPS(gun.reloadAnimation, 8);
-            gun.SetAnimationFPS(gun.idleAnimation, 1);
+            gun.idleAnimation = "thundershot_idle";
+            gun.shootAnimation = "thundershot_fire";
+            gun.reloadAnimation = "thundershot_reload";
+
+            //gun.SetupSprite(null, "bulldog_idle_001", 8);
+
+            //gun.SetAnimationFPS(gun.shootAnimation, 16);
+            //gun.SetAnimationFPS(gun.reloadAnimation, 8);
+            //gun.SetAnimationFPS(gun.idleAnimation, 1);
 
             gun.AddProjectileModuleFrom(PickupObjectDatabase.GetById(56) as Gun, true, false);
             gun.gunSwitchGroup = (PickupObjectDatabase.GetById(81) as Gun).gunSwitchGroup;

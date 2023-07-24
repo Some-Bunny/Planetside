@@ -9,6 +9,7 @@ using MonoMod.RuntimeDetour;
 using Brave.BulletScript;
 using DirectionType = DirectionalAnimation.DirectionType;
 using FlipType = DirectionalAnimation.FlipType;
+using FullInspector;
 
 namespace ItemAPI
 {
@@ -161,6 +162,31 @@ namespace ItemAPI
                 AIBulletBank aibulletBank = prefab.AddComponent<AIBulletBank>();
                 aibulletBank.Bullets = new List<AIBulletBank.Entry>();
             }
+
+                        ((ISerializedObject)bs).SerializedObjectReferences = new List<UnityEngine.Object>
+                        {
+
+                        };
+            ((ISerializedObject)bs).SerializedStateKeys = new List<string>
+            {
+                "OverrideBehaviors",
+                "TargetBehaviors",
+                "MovementBehaviors",
+                "AttackBehaviors",
+                "OtherBehaviors",
+                "AttackBehaviorGroup"
+            };
+            ((ISerializedObject)bs).SerializedStateValues = new List<string>(0);
+            bs._serializedStateKeys = new List<string>
+            {
+                "OverrideBehaviors",
+                "TargetBehaviors",
+                "MovementBehaviors",
+                "AttackBehaviors",
+                "OtherBehaviors",
+                "AttackBehaviorGroup"
+            };
+            bs._serializedStateValues = new List<string>(0);
 
             //Add to enemy database
             EnemyDatabaseEntry enemyDatabaseEntry = new EnemyDatabaseEntry()

@@ -35,11 +35,19 @@ namespace Planetside
 			gun.gameObject.AddComponent<Mop>();
 			gun.SetShortDescription("Honest Work");
 			gun.SetLongDescription("A mop thats been left inside of a chest. Surely the goops found around the Gungeon could be mopped up to some benefit?");
-			gun.SetupSprite(null, "mopgun_idle_001", 11);
-			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 15);
-			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 10);
-			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 2);
-			gun.gunSwitchGroup = (PickupObjectDatabase.GetById(33) as Gun).gunSwitchGroup;
+            GunExt.SetupSprite(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "mopgun_idle_001", 11);
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
+            gun.sprite.SortingOrder = 1;
+
+            gun.idleAnimation = "mop_idle";
+            gun.shootAnimation = "mop_fire";
+            gun.reloadAnimation = "mop_reload";
+
+            //gun.SetupSprite(null, "mopgun_idle_001", 11);
+            //GunExt.SetAnimationFPS(gun, gun.shootAnimation, 15);
+            //GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 10);
+            //GunExt.SetAnimationFPS(gun, gun.idleAnimation, 2);
+            gun.gunSwitchGroup = (PickupObjectDatabase.GetById(33) as Gun).gunSwitchGroup;
 
 			for (int i = 0; i < 3; i++)
 			{

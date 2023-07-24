@@ -274,7 +274,7 @@ namespace Planetside
 			if (LoopOn == true)
 			{
 				TextMaker text = player.gameObject.AddComponent<TextMaker>();
-				text.TextSize = 5;
+				text.TextSize = 5 * UIToolbox.CalculateScale_X_Y_Based_On_Resolution().x;
                 
                 text.Color = Color.red;
 				text.ExistTime = 3;

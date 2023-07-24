@@ -95,6 +95,10 @@ namespace Planetside
 			gun.finalMuzzleFlashEffects = (PickupObjectDatabase.GetById(334) as Gun).muzzleFlashEffects;
 			gun.DefaultModule.usesOptionalFinalProjectile = true;
 
+
+
+
+
 			Projectile CollapseProjectile = UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(86) as Gun).DefaultModule.projectiles[0]); 
 			CollapseProjectile.gameObject.SetActive(false);
 			FakePrefab.MarkAsFakePrefab(CollapseProjectile.gameObject);

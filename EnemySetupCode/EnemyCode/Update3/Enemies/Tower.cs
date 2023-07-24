@@ -539,7 +539,7 @@ namespace Planetside
                 component2.sprite.renderer.material.SetColor("_EmissiveColor", laser);
                 GameManager.Instance.StartCoroutine(FlashReticles(component2, false, this));
 
-                yield return this.Wait(105);
+                yield return this.Wait(105 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
                 yield break;
             }
 

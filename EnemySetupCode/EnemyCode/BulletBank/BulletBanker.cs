@@ -830,8 +830,8 @@ namespace Planetside
 						base.PostWwiseEvent("Play_BOSS_Rat_Cheese_Burst_02", null);
 						string guid = BraveUtility.RandomElement<string>(StaticInformation.ModderBulletGUIDs);
 						var Enemy = EnemyDatabase.GetOrLoadByGuid(guid);
-						Enemy.healthHaver.SetHealthMaximum(20f);
-						var en = AIActor.Spawn(Enemy.aiActor, this.Projectile.sprite.WorldCenter, GameManager.Instance.PrimaryPlayer.CurrentRoom, true, AIActor.AwakenAnimationType.Default, true);
+                        Enemy.healthHaver.SetHealthMaximum(14f);
+                        var en = AIActor.Spawn(Enemy.aiActor, this.Projectile.sprite.WorldCenter, GameManager.Instance.PrimaryPlayer.CurrentRoom, true, AIActor.AwakenAnimationType.Default, true);
                         base.BulletBank.aiActor.GetComponent<BankerEnemyBehavior>().spawnBullets.Add(en);
 
                         float num = base.RandomAngle();
@@ -910,7 +910,7 @@ namespace Planetside
 						base.PostWwiseEvent("Play_BOSS_Rat_Cheese_Burst_02", null);
 						string guid = BraveUtility.RandomElement<string>(StaticInformation.ModderBulletGUIDs);
 						var Enemy = EnemyDatabase.GetOrLoadByGuid(guid);
-						Enemy.healthHaver.SetHealthMaximum(20f);
+						Enemy.healthHaver.SetHealthMaximum(14f);
 						var en = AIActor.Spawn(Enemy.aiActor, this.Projectile.sprite.WorldCenter, GameManager.Instance.PrimaryPlayer.CurrentRoom, true, AIActor.AwakenAnimationType.Default, true);
 						base.BulletBank.aiActor.GetComponent<BankerEnemyBehavior>().spawnBullets.Add(en);
 

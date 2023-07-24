@@ -30,8 +30,23 @@ namespace Planetside
 
     public class UIToolbox : TimeInvariantMonoBehaviour
     {
+        public const int ResolutionIBuiltOffOf_X = 1600;
+        public const int ResolutionIBuiltOffOf_Y = 1024;
+
+        public const int Resolution_Ratio_X = 25;
+        public const int Resolution_Ratio_Y = 16;
+
+        public static Vector2 CalculateScale_X_Y_Based_On_Resolution()
+        {
+            Vector2 vector2 = new Vector2();
+            vector2.x = GameManager.Options.preferredResolutionX;
+            vector2.y = GameManager.Options.preferredResolutionY;//Screen.currentResolution;
+            //Debug.Log("sc: "+ vector2);
+            return new Vector2(((float)vector2.x / (float)ResolutionIBuiltOffOf_X), ((float)vector2.y / (float)ResolutionIBuiltOffOf_Y));
+        }
         public static ModifiedDefaultLabelManager GenerateText(Transform trans, Vector2 offset, float time, string Text, Color32 color, bool Autotrigger = true)
         {
+            Vector2 scaler = CalculateScale_X_Y_Based_On_Resolution();
             var labelToSet = UnityEngine.Object.Instantiate(CustomShopInitialiser.PerkLabel).gameObject.GetComponent<ModifiedDefaultLabelManager>();
             labelToSet.label.Text = Text;
             if (Autotrigger == true)
@@ -39,7 +54,7 @@ namespace Planetside
                 labelToSet.Trigger_CustomTime(trans, offset, time);
             }
             labelToSet.label.backgroundColor = color;
-			labelToSet.label.textScale = labelToSet.label.textScale / (GameUIUtility.GetCurrentTK2D_DFScale(labelToSet.panel.GetManager()) * 20);
+			labelToSet.label.textScale = labelToSet.label.textScale / (GameUIUtility.GetCurrentTK2D_DFScale(labelToSet.panel.GetManager()) * 20) * scaler.x;
             GameUIRoot.Instance.m_manager.AddControl(labelToSet.panel);
             dfLabel componentInChildren = labelToSet.gameObject.GetComponentInChildren<dfLabel>();
             componentInChildren.ColorizeSymbols = false;

@@ -150,9 +150,7 @@ namespace Planetside
 
         public override void DoEffect(PlayerController user)
         {
-            GameObject original;
-            original = WispInABottle.SunPrefab;
-            tk2dSprite component = GameObject.Instantiate(original, user.specRigidbody.UnitTopCenter, Quaternion.identity, user.transform).GetComponent<tk2dSprite>();
+            tk2dSprite component = GameObject.Instantiate(WispInABottle.SunPrefab, user.specRigidbody.UnitTopCenter, Quaternion.identity, user.transform).GetComponent<tk2dSprite>();
             component.transform.position.WithZ(transform.position.z + 99999);
             component.GetComponent<tk2dBaseSprite>().PlaceAtPositionByAnchor(user.CenterPosition, tk2dBaseSprite.Anchor.MiddleCenter);
             user.sprite.AttachRenderer(component.GetComponent<tk2dBaseSprite>());

@@ -29,12 +29,21 @@ namespace Planetside
 			//behav.overrideNormalReloadAudio = "Play_BOSS_doormimic_appear_01";
 			GunExt.SetShortDescription(gun, "Ring Of Fire");
 			GunExt.SetLongDescription(gun, "Despite its looks, this portable weapon can generate, and fire miniature stars.\n\nServes enemies as medium rare.");
-			GunExt.SetupSprite(gun, null, "burningsun_idle_001", 8);
-			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 8);
-			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 10);
-			GunExt.SetAnimationFPS(gun, gun.chargeAnimation, 10);
-			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 5);
-			GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(384) as Gun, true, false);
+
+            GunExt.SetupSprite(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "burningsun_idle_001", 11);
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
+            gun.sprite.SortingOrder = 1;
+
+            gun.idleAnimation = "burningsun_idle";
+            gun.shootAnimation = "burningsun_fire";
+            gun.reloadAnimation = "burningsun_reload";
+            gun.chargeAnimation = "burningsun_charge";
+            //GunExt.SetupSprite(gun, null, "burningsun_idle_001", 8);
+            //GunExt.SetAnimationFPS(gun, gun.shootAnimation, 8);
+            //GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 10);
+            //GunExt.SetAnimationFPS(gun, gun.chargeAnimation, 10);
+            //GunExt.SetAnimationFPS(gun, gun.idleAnimation, 5);
+            GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(384) as Gun, true, false);
 			gun.DefaultModule.ammoCost = 1;
 			gun.DefaultModule.shootStyle = ProjectileModule.ShootStyle.Charged;
 			gun.DefaultModule.sequenceStyle = ProjectileModule.ProjectileSequenceStyle.Random;
@@ -51,8 +60,8 @@ namespace Planetside
 
 			gun.barrelOffset.transform.localPosition = new Vector3(2.0f, 0.4375f, 0f);
 			gun.carryPixelOffset += new IntVector2((int)4f, (int)0f);
-			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.chargeAnimation).wrapMode = tk2dSpriteAnimationClip.WrapMode.LoopSection;
-			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.chargeAnimation).loopStart = 16;
+			//gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.chargeAnimation).wrapMode = tk2dSpriteAnimationClip.WrapMode.LoopSection;
+			//gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.chargeAnimation).loopStart = 16;
 			gun.gunClass = GunClass.FIRE;
 
 

@@ -18,11 +18,21 @@ namespace Planetside
 			gun.gameObject.AddComponent<PolarityForme>();
 			GunExt.SetShortDescription(gun, "This was a fucking pain to make");
 			GunExt.SetLongDescription(gun, "A weapon forged by two wanderers from polar-opposite climates. It is said that they imbued part of their magic into it so one element doesn't damage the other.");
-			GunExt.SetupSprite(gun, null, "polarity1_idle_001", 8);
-			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 160);
-			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 10);
-			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 4);
-			gun.SetBaseMaxAmmo(450);
+
+            GunExt.SetupSprite(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "polarity1_idle_001", 11);
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
+            gun.sprite.SortingOrder = 1;
+
+            gun.idleAnimation = "polarityalt_idle";
+            gun.shootAnimation = "polarityalt_fire";
+            gun.reloadAnimation = "polarityalt_reload";
+
+
+            //GunExt.SetupSprite(gun, null, "polarity1_idle_001", 8);
+            //GunExt.SetAnimationFPS(gun, gun.shootAnimation, 160);
+            //GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 10);
+            //GunExt.SetAnimationFPS(gun, gun.idleAnimation, 4);
+            gun.SetBaseMaxAmmo(450);
 
 			GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(223) as Gun, true, false);
 			GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(336) as Gun, true, false);

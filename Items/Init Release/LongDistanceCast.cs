@@ -48,15 +48,18 @@ namespace Planetside
 			{
 				if (UnityEngine.Random.value < 0.5f * effectChanceScalar && sourceProjectile.gameObject.GetComponent<RecursionPreventer>() == null)
 				{
-                    List<AIActor> activeEnemies = base.Owner.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
-                    if (activeEnemies != null || activeEnemies.Count > 0)
+                    if (base.Owner.CurrentRoom != null)
                     {
-                        AIActor aiActor = activeEnemies[UnityEngine.Random.Range(0, activeEnemies.Count)];
-						if (aiActor)
-						{
-                            var castResult = DoRaycasts(aiActor, BraveUtility.RandomAngle());
-                            SpawnProjectile(sourceProjectile, aiActor, castResult.Contact);
-                            RaycastResult.Pool.Free(ref castResult);
+                        List<AIActor> activeEnemies = base.Owner.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.RoomClear);
+                        if (activeEnemies != null && activeEnemies.Count > 0)
+                        {
+                            AIActor aiActor = BraveUtility.RandomElement<AIActor>(activeEnemies);
+                            if (aiActor)
+                            {
+                                var castResult = DoRaycasts(aiActor, BraveUtility.RandomAngle());
+                                SpawnProjectile(sourceProjectile, aiActor, castResult.Contact);
+                                RaycastResult.Pool.Free(ref castResult);
+                            }
                         }
                     }
                 }
@@ -74,7 +77,7 @@ namespace Planetside
             Destroy(gameObject, 1.5f);
             AkSoundEngine.PostEvent("Play_ENM_bullat_tackle_01", gameObject);
 
-            GameObject spawnedBulletOBJ = SpawnManager.SpawnProjectile(proj.gameObject, startPosition, Quaternion.Euler(0f, 0f, (enemy.sprite.WorldCenter - startPosition).ToAngle()), true);
+            GameObject spawnedBulletOBJ = SpawnManager.SpawnProjectile(proj.PossibleSourceGun.DefaultModule.GetCurrentProjectile().gameObject, startPosition, Quaternion.Euler(0f, 0f, (enemy.sprite.WorldCenter - startPosition).ToAngle()), true);
             Projectile projectile = spawnedBulletOBJ.GetComponent<Projectile>();
             if (projectile != null)
             {
@@ -106,17 +109,23 @@ namespace Planetside
                     Projectile currentProjectile = beam.projectile.PossibleSourceGun.DefaultModule.GetCurrentProjectile();
                     if (currentProjectile)
                     {
-                        List<AIActor> activeEnemies = base.Owner.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
-                        if (activeEnemies != null || activeEnemies.Count > 0)
+                        if (base.Owner.CurrentRoom != null)
                         {
-                            AIActor aiActor = activeEnemies[UnityEngine.Random.Range(0, activeEnemies.Count)];
-                            if (aiActor)
+                            List<AIActor> activeEnemies = base.Owner.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.RoomClear);
+                            if (activeEnemies != null && activeEnemies.Count > 0)
                             {
-                                var castResult = DoRaycasts(aiActor, BraveUtility.RandomAngle());
-                                SpawnBeam(currentProjectile, aiActor, castResult.Contact);
-                                RaycastResult.Pool.Free(ref castResult);
+                                AIActor aiActor = BraveUtility.RandomElement<AIActor>(activeEnemies);
+                                if (aiActor)
+                                {
+                                    var castResult = DoRaycasts(aiActor, BraveUtility.RandomAngle());
+                                    SpawnBeam(currentProjectile, aiActor, castResult.Contact);
+                                    RaycastResult.Pool.Free(ref castResult);
+                                }
                             }
                         }
+
+
+                           
                     }                   
                 }
             }

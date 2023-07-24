@@ -28,11 +28,22 @@ namespace Planetside
 			gun.gameObject.AddComponent<Polarity>();
 			GunExt.SetShortDescription(gun, "Climate Contrast");
 			GunExt.SetLongDescription(gun, "A weapon forged by two wanderers from polar-opposite climates. It is said that they imbued part of their magic into it so one element doesn't damage the other.");
-			GunExt.SetupSprite(gun, null, "polarity_idle_001", 8);
-			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 160);
-			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 10);
-			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 4);
-			GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(223) as Gun, true, false);
+
+            GunExt.SetupSprite(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "polarity_idle_001", 11);
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
+            gun.sprite.SortingOrder = 1;
+
+            gun.idleAnimation = "polarity_idle";
+            gun.shootAnimation = "polarity_fire";
+            gun.reloadAnimation = "polarity_reload";
+
+            //GunExt.SetupSprite(gun, null, "polarity_idle_001", 8);
+            //GunExt.SetAnimationFPS(gun, gun.shootAnimation, 160);
+            //GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 10);
+            //GunExt.SetAnimationFPS(gun, gun.idleAnimation, 4);
+
+
+            GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(223) as Gun, true, false);
 			gun.SetBaseMaxAmmo(450);
 			
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_Yari";

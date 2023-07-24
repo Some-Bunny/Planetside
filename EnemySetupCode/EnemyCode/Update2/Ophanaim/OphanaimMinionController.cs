@@ -188,7 +188,7 @@ namespace Planetside
             component2.sprite.renderer.material.SetColor("_EmissiveColor", laser);
 
             GameManager.Instance.StartCoroutine(FlashReticles(component2, Angle, this));
-            yield return this.Wait(75);
+            yield return this.Wait(75 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
             yield break;
         }
         private IEnumerator FlashReticles(tk2dTiledSprite tiledspriteObject,float Angle, MinionShot parent)
@@ -329,7 +329,7 @@ namespace Planetside
             component2.sprite.renderer.material.SetColor("_EmissiveColor", laser);
 
             GameManager.Instance.StartCoroutine(FlashReticles(component2, this));
-            yield return this.Wait(90);
+            yield return this.Wait(90 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
             yield break;
         }
         private IEnumerator FlashReticles(tk2dTiledSprite tiledspriteObject, MinionShotPredictive parent)

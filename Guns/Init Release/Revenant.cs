@@ -24,12 +24,23 @@ namespace Planetside
 			gun.gameObject.AddComponent<Revenant>();
 			gun.SetShortDescription("Reaped By Death");
 			gun.SetLongDescription("A simple, elegant and powerful revolver, capable of killing even behind cover.\n\nWielded by a particularly regretful undead Gungeoneer seeking an old friend...");
-			GunExt.SetupSprite(gun, null, "revenant_idle_001", 11);
-			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_WPN_golddoublebarrelshotgun_shot_01";
+            GunExt.SetupSprite(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "revenant_idle_001", 11);
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
+            gun.sprite.SortingOrder = 1;
+
+            gun.idleAnimation = "revenant_idle";
+            gun.shootAnimation = "revenant_fire";
+            gun.reloadAnimation = "revenant_reload";
+
+
+            //GunExt.SetupSprite(gun, null, "revenant_idle_001", 11);
+
+
+            gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_WPN_golddoublebarrelshotgun_shot_01";
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].triggerEvent = true;
-			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 30);
-			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 15);
-			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 1);
+			//GunExt.SetAnimationFPS(gun, gun.shootAnimation, 30);
+			//GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 15);
+			//GunExt.SetAnimationFPS(gun, gun.idleAnimation, 1);
 			GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(56) as Gun, true, false);
 			gun.gunSwitchGroup = (PickupObjectDatabase.GetById(387) as Gun).gunSwitchGroup;
 			gun.DefaultModule.ammoCost = 1;

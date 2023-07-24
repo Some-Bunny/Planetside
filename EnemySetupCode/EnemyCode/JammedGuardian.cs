@@ -840,8 +840,12 @@ namespace Planetside
 				m_StartRoom = aiActor.GetAbsoluteParentRoom();
 				base.aiActor.healthHaver.OnPreDeath += (obj) =>
 				{
-					LootEngine.SpawnItem(PickupObjectDatabase.GetById(74).gameObject, base.aiActor.sprite.WorldCenter, Vector2.zero, 1f, false, true, false);
-					AkSoundEngine.PostEvent("Play_GuardDie", base.aiActor.gameObject);
+					LootEngine.SpawnItem(PickupObjectDatabase.GetById(70).gameObject, base.aiActor.sprite.WorldCenter, Vector2.up, 1f, false, true, false);
+                    LootEngine.SpawnItem(PickupObjectDatabase.GetById(70).gameObject, base.aiActor.sprite.WorldCenter, Vector2.down, 1f, false, true, false);
+					LootEngine.SpawnItem(PickupObjectDatabase.GetById(70).gameObject, base.aiActor.sprite.WorldCenter, Vector2.left, 1f, false, true, false);
+                    LootEngine.SpawnItem(PickupObjectDatabase.GetById(70).gameObject, base.aiActor.sprite.WorldCenter, Vector2.right, 1f, false, true, false);
+
+                    AkSoundEngine.PostEvent("Play_GuardDie", base.aiActor.gameObject);
 					AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.JAMMED_GUARD_DEFEATED, true);
 				};
 			}

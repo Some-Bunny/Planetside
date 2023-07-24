@@ -371,7 +371,7 @@ namespace Planetside
 		private void Start()
 		{
 			currentState = States.NONE;
-
+			PlayersToIgnore = new List<PlayerController>();
 			base.gameObject.GetComponent<tk2dSpriteAnimator>().Play("idle");
 			Rigidbody = base.gameObject.GetComponent<SpeculativeRigidbody>();
 			Rigidbody.OnPreRigidbodyCollision += DoCollision;
@@ -404,6 +404,8 @@ namespace Planetside
 				base.gameObject.SetActive(false);
 				return;
 			}
+			if (GameManager.Instance.IsPaused) { Rigidbody.Velocity = Vector2.zero; return; }
+
 			if (currentState == States.NONE)
             { StartLurk(); }
 			if (currentState == States.WATCH)
@@ -443,9 +445,6 @@ namespace Planetside
 				if (roomSelected != null)
                 {
 					RollBreakableBreak();
-
-
-
                     foreach (PlayerController player in GameManager.Instance.AllPlayers)
 					{
 						if (player.CurrentRoom != null && player.CurrentRoom != roomSelected && Vector2.Distance(positionSelected.Value.ToCenterVector2(), player.transform.position) > 35 && Vector2.Distance(positionSelected.Value.ToCenterVector2(), player.transform.position) < 50)
@@ -536,7 +535,7 @@ namespace Planetside
 			}		
 		}
 
-		public void ReinitializeProeprly()
+		public void ReinitializeProeprly()	
         {
 			base.gameObject.GetComponent<tk2dBaseSprite>().sprite.renderer.enabled = true;
 			currentState = States.NONE;
@@ -551,7 +550,7 @@ namespace Planetside
 			Vector2 velocityToUse = vector.normalized * 12;
 			float ela = 0f;
 			base.StartCoroutine(LerpGlowToValue(0, 5000, 0.5f));
-			while (ela < 1f)
+			while (ela < 1.25f)
 			{
 				float t = ela / 0.8f;
 				if (Rigidbody != null) { Rigidbody.Velocity = Vector2.Lerp(savedVelocity, Vector2.zero, t); }
@@ -569,6 +568,16 @@ namespace Planetside
 			ela = 0f;
 			while (ela < 2f)
 			{
+				if (GameManager.Instance.IsPaused)
+				{
+					Rigidbody.Velocity = Vector2.zero;
+				}
+				else
+				{
+					Rigidbody.Velocity = velocityToUse * 6;
+
+                }
+
 				ela += BraveTime.DeltaTime;
 				yield return null;
 			}
@@ -621,49 +630,34 @@ namespace Planetside
 
 		public States currentState;
 
-		private void DoMotion()
-		{
-			/*
-			Rigidbody.Velocity = Vector2.zero;
-			if (base.gameObject.GetComponent<tk2dSpriteAnimator>().IsPlaying("start"))
-			{
-				return;
-			}
-			if (this.PlayerToTrack.healthHaver.IsDead || this.PlayerToTrack.IsGhost)
-			{
-				this.PlayerToTrack = GameManager.Instance.GetRandomActivePlayer();
-			}
-
-			float Multiplier = HasPickedUpRedCasing ? 1.2f : 1;
-			Vector2 centerPosition = HasTPed ? Rigidbody.UnitCenter + MathToolbox.GetUnitOnCircle(RanDir, 9) :this.PlayerToTrack.CenterPosition;	
-			Vector2 vector =  centerPosition - Rigidbody.UnitCenter;
-			float magnitude =vector.magnitude;
-			float d = Mathf.Lerp(4.2f* Multiplier, MaxSpeed, (magnitude - (MaxSpeed*Multiplier)) / (40 - 5));
-			Rigidbody.Velocity = !HasTPed ? vector.normalized * d : vector.normalized * (d*40);
-			StoredVelocity = Rigidbody.Velocity;
-			*/
-		}
 
 		Vector2 StoredVelocity;
 		private void DoCollision(SpeculativeRigidbody myRigidbody, PixelCollider myPixelCollider, SpeculativeRigidbody otherRigidbody, PixelCollider otherPixelCollider)
 		{
 			PhysicsEngine.SkipCollision = true;
 			bool isAgressive = currentState == States.CHARGE | currentState == States.HUNT;
-			if (otherRigidbody.gameObject.GetComponent<PlayerController>() && isAgressive == true)
+			var player = otherRigidbody.gameObject.GetComponent<PlayerController>();
+
+
+            if (player && isAgressive == true)
 			{
-				if (otherRigidbody.gameObject.GetComponent<PlayerController>().characterIdentity == PlayableCharacters.Robot)
-                {
-					otherRigidbody.gameObject.GetComponent<PlayerController>().healthHaver.Armor = 1;
-					otherRigidbody.gameObject.GetComponent<PlayerController>().healthHaver.ApplyDamage(0.5f, Vector2.zero, "Something Wicked", CoreDamageTypes.None, DamageCategory.Normal, false, null, false);
-				}
-				else
-                {
-					otherRigidbody.gameObject.GetComponent<PlayerController>().healthHaver.ForceSetCurrentHealth(0.5f);
-					otherRigidbody.gameObject.GetComponent<PlayerController>().healthHaver.Armor = 0;
-					otherRigidbody.gameObject.GetComponent<PlayerController>().healthHaver.ApplyDamage(0.5f, Vector2.zero, "Something Wicked", CoreDamageTypes.None, DamageCategory.Normal, false, null, false);
-				}
+				if (!player.healthHaver.IsDead && !PlayersToIgnore.Contains(player))
+				{
+                    if (player.characterIdentity == PlayableCharacters.Robot)
+                    {
+                        player.healthHaver.Armor = 1;
+                        player.healthHaver.ApplyDamage(0.5f, Vector2.zero, "Something Wicked", CoreDamageTypes.None, DamageCategory.Normal, false, null, false);
+                    }
+                    else
+                    {
+                        player.healthHaver.ForceSetCurrentHealth(0.5f);
+                        player.healthHaver.Armor = 0;
+                        player.healthHaver.ApplyDamage(0.5f, Vector2.zero, "Something Wicked", CoreDamageTypes.None, DamageCategory.Normal, false, null, false);
+                    }
+                }		
 			}
 		}
+		public static List<PlayerController> PlayersToIgnore = new List<PlayerController>();
 		//private float MaxSpeed;
 		public static GameObject SomethingWickedObject = new GameObject();
 		private SpeculativeRigidbody Rigidbody;

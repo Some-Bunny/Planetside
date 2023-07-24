@@ -28,13 +28,25 @@ namespace Planetside
 			gun.gameObject.AddComponent<Whistler>();
 			GunExt.SetShortDescription(gun, "Can You Hear It?");
 			GunExt.SetLongDescription(gun, "A gun invented by someone *particularly* lazy, with the desire to never meet their enemy face on. It got its legendary name due to its unique bullet structure, causing the rounds to seemingly whistle.");
-			GunExt.SetupSprite(gun, null, "whistler_idle_001", 8);
-			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 24);
-			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 6);
-			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 1);
-			GunExt.SetAnimationFPS(gun, gun.chargeAnimation, 3);
+            GunExt.SetupSprite(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "whistler_idle_001", 11);
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
+            gun.sprite.SortingOrder = 1;
 
-			GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(56) as Gun, true, false);
+            gun.idleAnimation = "whistler_idle";
+            gun.shootAnimation = "whistler_fire";
+            gun.reloadAnimation = "whistler_reload";
+			gun.chargeAnimation = "whistler_charge";
+
+            //GunExt.SetupSprite(gun, null, "whistler_idle_001", 8);
+
+
+
+            //GunExt.SetAnimationFPS(gun, gun.shootAnimation, 24);
+            //GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 6);
+            //GunExt.SetAnimationFPS(gun, gun.idleAnimation, 1);
+            //GunExt.SetAnimationFPS(gun, gun.chargeAnimation, 3);
+
+            GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(56) as Gun, true, false);
 			gun.SetBaseMaxAmmo(45);
 			
 			gun.DefaultModule.ammoCost = 1;
@@ -53,8 +65,8 @@ namespace Planetside
 			Gun cricket = PickupObjectDatabase.GetById(180) as Gun;
 			gun.gunSwitchGroup = cricket.gunSwitchGroup;
 
-			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.chargeAnimation).wrapMode = tk2dSpriteAnimationClip.WrapMode.LoopSection;
-			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.chargeAnimation).loopStart = 3;
+			//gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.chargeAnimation).wrapMode = tk2dSpriteAnimationClip.WrapMode.LoopSection;
+			//gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.chargeAnimation).loopStart = 3;
 	
 			Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(gun.DefaultModule.projectiles[0]); projectile.gameObject.SetActive(false);
 			FakePrefab.MarkAsFakePrefab(projectile.gameObject);

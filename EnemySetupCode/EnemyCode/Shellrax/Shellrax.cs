@@ -1593,7 +1593,7 @@ namespace Planetside
 						float yah = list[l];
 						base.Fire(new Direction(yah, DirectionType.Absolute, -1f), new Speed(9-(i / 9), SpeedType.Absolute), new OMEGADEATHSCRIPTOFDOOM.DelayedBullet(basevalue * 2));
 					}
-					yield return this.Wait(basevalue * 2.5f);
+					yield return this.Wait(basevalue * 2.5f * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
 
 					i++;
 				}

@@ -2047,22 +2047,22 @@ namespace Planetside
 					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(true, base.AimDirection, (9+amount)*e, this, 0.75f));
 					yield return this.Wait(1);
 				}
-				yield return this.Wait(30);
-				for (int e = (-1 - amount); e < (2 + amount); e++)
+				yield return this.Wait(30 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
+                for (int e = (-1 - amount); e < (2 + amount); e++)
 				{
 					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(false, base.AimDirection, (9 + amount) * e, this, 0.75f));
 					yield return this.Wait(1);
 				}
-				yield return this.Wait(45);
-				if (amount > 3)
+				yield return this.Wait(45 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
+                if (amount > 3)
                 {
 					this.StartTask(this.ChargeMinigunsLeft());
-					yield return this.Wait(30);
-					this.StartTask(this.ChargeMinigunsRight());
-					yield return this.Wait(90);
-				}
-				yield return this.Wait(45);
-				yield break;
+					yield return this.Wait(30 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
+                    this.StartTask(this.ChargeMinigunsRight());
+					yield return this.Wait(90 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
+                }
+				yield return this.Wait(45 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
+                yield break;
 			}
 
 			private IEnumerator ChargeMinigunsLeft()
@@ -2232,7 +2232,7 @@ namespace Planetside
                         {
 							GameManager.Instance.StartCoroutine(this.QuickscopeNoobProfessional(CentreAngle + (60 * i), this, 7, false));
 						}
-						yield return this.Wait(300);
+						yield return this.Wait(300 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
 						predictedPosition = BraveMathCollege.GetPredictedPosition(this.BulletManager.PlayerPosition(), this.BulletManager.PlayerVelocity(), this.Projectile.transform.position, 1000);
 						CentreAngle = (predictedPosition - this.Position).ToAngle();
 						for (int i = 0; i < 6; i++)
@@ -2468,8 +2468,8 @@ namespace Planetside
 			{
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("amuletRing"));
 				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("poundSmall"));
-				yield return this.Wait(126);
-				AIBeamShooter2[] beams = this.BulletBank.aiActor.GetComponents<AIBeamShooter2>();
+				yield return this.Wait(126 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
+                AIBeamShooter2[] beams = this.BulletBank.aiActor.GetComponents<AIBeamShooter2>();
 				for (int e = 0; e < 4; e++)
 				{
 					if (beams == null || beams.Length == 0)
@@ -2502,8 +2502,8 @@ namespace Planetside
 							}
 						}
 					}
-					yield return this.Wait(37.5f);
-				}
+					yield return this.Wait(37.5f * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
+                }
 				for (int e = 1; e < 12; e++)
                 {
 					this.PostWwiseEvent("Play_BOSS_lichC_zap_01", null);
@@ -2512,8 +2512,8 @@ namespace Planetside
 						this.Fire(new Direction((20 * i) + 10f, DirectionType.Aim, -1f), new Speed(8), new Taser.BasicBullet());
 						this.Fire(new Direction((20 * i) + 10f, DirectionType.Aim, -1f), new Speed(8), new SpeedChangingBullet("amuletRing", 7, 300/e));
 					}
-					yield return this.Wait(50);
-				}
+					yield return this.Wait(50 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
+                }
 				yield break;
 			}
 		}
@@ -2829,8 +2829,8 @@ namespace Planetside
 					}
 				}
 			
-				yield return this.Wait(120);
-				yield break;
+				yield return this.Wait(120 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
+                yield break;
 			}
 			private IEnumerator QuickscopeNoob(bool isLeft, float aimDir, ShootGun parent, float chargeTime = 0.5f, float AimAccuracy = 60)
 			{

@@ -48,12 +48,12 @@ namespace Planetside
         }
         public void Update()
         {
-            int ArmorAllowed = player.ForceZeroHealthState == true ? 4 : 2;
+            int ArmorAllowed = player.ForceZeroHealthState == true ? 4 : 2; //
             ArmorAllowed += LeniencyProtection;
             if (player.healthHaver.Armor > ArmorAllowed){
                 DoHurty();
                 OtherTools.NotifyCustom("A Glass Curse", "Prevented Armor Increase!", "glass", StaticSpriteDefinitions.Pickup_Sheet_Data, UINotificationController.NotificationColor.GOLD);
-                player.healthHaver.Armor = ArmorAllowed-1; 
+                player.healthHaver.Armor = ArmorAllowed; 
             }
             if ((player.stats.GetStatValue(PlayerStats.StatType.Health) != 1 && player.stats.GetStatValue(PlayerStats.StatType.Health) >= 1)){
                 DoHurty();

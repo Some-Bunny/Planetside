@@ -94,8 +94,8 @@ namespace Planetside
                     {
                         var ItemPoint = new GameObject("ItemPoint" + i);
                         ItemPoint.transform.position = itemPositions[i];
-                        FakePrefab.MarkAsFakePrefab(ItemPoint);
-                        UnityEngine.Object.DontDestroyOnLoad(ItemPoint);
+                        //FakePrefab.MarkAsFakePrefab(ItemPoint);
+                        //UnityEngine.Object.DontDestroyOnLoad(ItemPoint);
                         ItemPoint.SetActive(true);
                         posList.Add(ItemPoint.transform);
                     }

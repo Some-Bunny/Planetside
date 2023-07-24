@@ -35,6 +35,7 @@ namespace Planetside
             ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
             item.quality = PickupObject.ItemQuality.EXCLUDED;
             item.CanBeDropped = false;
+            item.RespawnsIfPitfall = true;
             BlueCasingID = item.PickupObjectId;
             EncounterDatabase.GetEntry(item.encounterTrackable.EncounterGuid).usesPurpleNotifications = true;
 
@@ -43,13 +44,31 @@ namespace Planetside
         public static int BlueCasingID;
         public override DebrisObject Drop(PlayerController player)
 		{
+            player.healthHaver.OnPreDeath -= HealthHaver_OnPreDeath;
             DebrisObject result = base.Drop(player);
 			return result;
 		}
 		public override void Pickup(PlayerController player)
 		{
+            if (!this.m_pickedUpThisRun)
+            {
+                SomethingWickedEventManager.currentSWState = SomethingWickedEventManager.States.ALLOWED;
+                player.healthHaver.OnPreDeath += HealthHaver_OnPreDeath;
+            }
             base.Pickup(player);
-            SomethingWickedEventManager.currentSWState = SomethingWickedEventManager.States.ALLOWED;
+           
+        }
+
+        private void HealthHaver_OnPreDeath(Vector2 obj)
+        {
+            if (SomethingWickedEventManager.currentSWState == SomethingWickedEventManager.States.ALLOWED)
+            {
+                SomethingWickedEventManager.currentSWState = SomethingWickedEventManager.States.DISABLED;
+            }
+            base.Owner.RemovePassiveItem(BlueCasingID);
+            SomethingWickedEnemy.PlayersToIgnore.Add(base.Owner);
+            base.Owner.healthHaver.OnPreDeath -= HealthHaver_OnPreDeath;
+            base.Drop(base.Owner);
         }
 
         public override void OnDestroy()
@@ -77,19 +96,29 @@ namespace Planetside
             ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
             item.quality = PickupObject.ItemQuality.EXCLUDED;
             item.CanBeDropped = false;
+            item.RespawnsIfPitfall = true;
             RedCasingID = item.PickupObjectId;
             EncounterDatabase.GetEntry(item.encounterTrackable.EncounterGuid).usesPurpleNotifications = true;
         }
         public static int RedCasingID;
         public override DebrisObject Drop(PlayerController player)
         {
+            player.healthHaver.OnPreDeath -= HealthHaver_OnPreDeath;
             DebrisObject result = base.Drop(player);
             return result;
         }
         public override void Pickup(PlayerController player)
         {
             base.Pickup(player);
+            player.healthHaver.OnPreDeath += HealthHaver_OnPreDeath;
         }
+        private void HealthHaver_OnPreDeath(Vector2 obj)
+        {
+            SomethingWickedEnemy.PlayersToIgnore.Add(base.Owner);
+            base.Owner.healthHaver.OnPreDeath -= HealthHaver_OnPreDeath;
+            base.Owner.RemovePassiveItem(RedCasingID);
+        }
+
         public override void OnDestroy()
         {
             base.OnDestroy();

@@ -41,7 +41,14 @@ namespace Planetside
             var label = mdlm.label;
             label.backgroundColor = new Color32(40, 1, 20, 180);
             label.colorizeSymbols = false;
-
+            label.padding = new RectOffset()
+            {
+                bottom = 25,
+                left = 25,
+                right = 25,
+                top = 25
+            };
+            
             label.textScale = 3.33f;
             //label.textScaleMode = dfTextScaleMode.None;
 
@@ -50,7 +57,7 @@ namespace Planetside
             label.shadowOffset = new Vector2(0, -0.75f);
             //label.Height = 1000;
 
-            label.anchorStyle = dfAnchorStyle.Top | dfAnchorStyle.Left;
+            label.anchorStyle = dfAnchorStyle.Left;
 
             label.autoSize = true;
             label.autoHeight = true;
@@ -598,6 +605,8 @@ namespace Planetside
             float targetWidth = this.label.Width + 1f;
             float targetHeight = this.label.Height + 1f;
             panel.padding.bottom = (int)(targetHeight * -1);
+            panel.padding.top = (int)(targetHeight * -1);
+
             this.panel.Width = targetWidth;
             while (elapsed < duration)
             {

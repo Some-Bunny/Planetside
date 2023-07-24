@@ -74,16 +74,17 @@ namespace Planetside
                 projectile.gameObject.SetActive(false);
                 FakePrefab.MarkAsFakePrefab(projectile.gameObject);
                 UnityEngine.Object.DontDestroyOnLoad(projectile);
-                projectile.baseData.damage = 12f;
+                projectile.baseData.damage = 15f;
                 projectile.baseData.force = 2f;
                 projectile.baseData.range *= 50;
                 projectile.baseData.speed *= 0.66f;
                 projectile.specRigidbody.CollideWithOthers = false;
+                MeasuringTapeController controller = projectile.gameObject.AddComponent<MeasuringTapeController>();
 
                 beamComp.boneType = BasicBeamController.BeamBoneType.Straight;
 
                beamComp.startAudioEvent = "Play_OBJ_hook_pull_01";
-                beamComp.projectile.baseData.damage = 11;
+                beamComp.projectile.baseData.damage = 10;
                 beamComp.penetration = 0;
                 beamComp.reflections = 5;
                 beamComp.IsReflectedBeam = false;
@@ -149,5 +150,39 @@ namespace Planetside
         {
             gun.PreventNormalFireAudio = true;
         }
+    }
+    public class MeasuringTapeController : MonoBehaviour
+    {
+        private void Start()
+        {
+            this.projectile = base.GetComponent<Projectile>();
+            this.basicBeamController = base.GetComponent<BasicBeamController>();
+            if (this.projectile.Owner is PlayerController)
+            {
+                this.owner = (this.projectile.Owner as PlayerController);
+                this.owner.PostProcessBeam += Owner_PostProcessBeam;
+            }
+        }
+
+        private void Owner_PostProcessBeam(BeamController obj)
+        {
+            if (obj is BasicBeamController)
+            {
+                BasicBeamController basicBeamController = obj as BasicBeamController;
+                basicBeamController.DamageModifier = 1 + (basicBeamController.m_bones.Count());
+            }
+        }
+
+        public void OnDestroy()
+        {
+            if (owner)
+            {
+                this.owner.PostProcessBeam -= Owner_PostProcessBeam;
+            }
+        }
+
+        private Projectile projectile;
+        private BasicBeamController basicBeamController;
+        private PlayerController owner;
     }
 }

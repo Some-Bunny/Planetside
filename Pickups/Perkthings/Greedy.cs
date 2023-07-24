@@ -32,7 +32,7 @@ namespace Planetside
         {
             if (enemy.aiActor != null && enemy.aiActor.IsHarmlessEnemy == false)
             {
-                GameObject gameObject = SpawnManager.SpawnDebris(PickupObjectDatabase.GetById(68).gameObject, enemy.aiActor.transform.position, Quaternion.identity);
+                GameObject gameObject = SpawnManager.SpawnDebris(PickupObjectDatabase.GetById(68).gameObject, enemy.aiActor.sprite != null ? enemy.aiActor.sprite.WorldCenter : enemy.aiActor.transform.PositionVector2(), Quaternion.identity);
                 CurrencyPickup component = gameObject.GetComponent<CurrencyPickup>();
                 component.PreventPickup = true;
                 PickupMover component2 = gameObject.GetComponent<PickupMover>();

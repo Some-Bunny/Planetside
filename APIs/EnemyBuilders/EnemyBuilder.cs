@@ -9,6 +9,7 @@ using System.Reflection;
 using UnityEngine;
 using DirectionType = DirectionalAnimation.DirectionType;
 using FlipType = DirectionalAnimation.FlipType;
+using FullInspector;
 
 namespace ItemAPI
 {
@@ -233,7 +234,30 @@ namespace ItemAPI
             GameObject.DontDestroyOnLoad(prefab);
             FakePrefab.MarkAsFakePrefab(prefab);
             prefab.SetActive(false);
+            ((ISerializedObject)bs).SerializedObjectReferences = new List<UnityEngine.Object>
+            {
 
+            };
+            ((ISerializedObject)bs).SerializedStateKeys = new List<string>
+            {
+                "OverrideBehaviors",
+                "TargetBehaviors",
+                "MovementBehaviors",
+                "AttackBehaviors",
+                "OtherBehaviors",
+                "AttackBehaviorGroup"
+            };
+            ((ISerializedObject)bs).SerializedStateValues = new List<string>(0);
+            bs._serializedStateKeys = new List<string>
+            {
+                "OverrideBehaviors",
+                "TargetBehaviors",
+                "MovementBehaviors",
+                "AttackBehaviors",
+                "OtherBehaviors",
+                "AttackBehaviorGroup"
+            };
+            bs._serializedStateValues = new List<string>(0);
 
             return prefab;
         }
@@ -463,6 +487,31 @@ namespace ItemAPI
                 placeableHeight = 2,
                 isNormalEnemy = true,
             };
+
+            ((ISerializedObject)bs).SerializedObjectReferences = new List<UnityEngine.Object>
+            {
+
+            };
+            ((ISerializedObject)bs).SerializedStateKeys = new List<string>
+            {
+                "OverrideBehaviors",
+                "TargetBehaviors",
+                "MovementBehaviors",
+                "AttackBehaviors",
+                "OtherBehaviors",
+                "AttackBehaviorGroup"
+            };
+            ((ISerializedObject)bs).SerializedStateValues = new List<string>(0);
+            bs._serializedStateKeys = new List<string>
+            {
+                "OverrideBehaviors",
+                "TargetBehaviors",
+                "MovementBehaviors",
+                "AttackBehaviors",
+                "OtherBehaviors",
+                "AttackBehaviorGroup"
+            };
+            bs._serializedStateValues = new List<string>(0);
 
             EnemyDatabase.Instance.Entries.Add(enemyDatabaseEntry);
             EnemyBuilder.Dictionary.Add(guid, prefab);

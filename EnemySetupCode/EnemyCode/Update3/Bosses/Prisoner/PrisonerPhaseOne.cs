@@ -1163,7 +1163,7 @@ namespace Planetside
 				for (int i = 0; i < 60; i++)
 				{
 					TempaletAngle += (1 * turnSign);
-					yield return this.Wait(1);
+					yield return this.Wait(1 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
 				}
 				for (int i = 0; i < 3; i++)
 				{
@@ -1177,7 +1177,7 @@ namespace Planetside
 				{
 					float t = (float)i / (float)60;
 					this.TurnSpeed = Mathf.SmoothStep(84, 72, t) * turnSign;
-					yield return this.Wait(1);
+					yield return this.Wait(1 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
 				}
 
 				this.SpawnChainsOf(bullets2, 180 + this.TempaletAngle, 310);
@@ -1195,7 +1195,7 @@ namespace Planetside
 				{
 					float t = (float)i / (float)60;
 					this.TurnSpeed = Mathf.SmoothStep(72, 60, t) * turnSign;
-					yield return this.Wait(1);
+					yield return this.Wait(1 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
 
 				}
 				controller.extantReticles.Clear();
@@ -1214,7 +1214,7 @@ namespace Planetside
 					yield return this.Wait(1);
 				}
 				base.PostWwiseEvent("Play_ENM_cannonball_eyes_01", null);
-				yield return this.Wait(15);
+				yield return this.Wait(15 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
 
 				List<List<ChainRotators.SpinBullet>> lists = new List<List<ChainRotators.SpinBullet>>
 				{
@@ -1443,8 +1443,8 @@ namespace Planetside
 					controller.extantReticles.Add(gameObject);
 
 				}
-				yield return this.Wait(30);
-				ISDodgeAble = false;
+				yield return this.Wait(30 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
+                ISDodgeAble = false;
 				for (int i = -1; i < 2; i++)
 				{
 					float Angle = base.AimDirection + (30 * i);
@@ -1471,8 +1471,8 @@ namespace Planetside
 				}
 
 
-				yield return this.Wait(60);
-				yield break;
+				yield return this.Wait(60 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
+                yield break;
 			}
 			private IEnumerator FlashReticles(tk2dTiledSprite tiledspriteObject, bool isDodgeAble, float Angle, float Offset, BasicLaserAttackTell parent, string BulletType)
             {
@@ -1648,8 +1648,8 @@ namespace Planetside
 						if (listObj.Key.name == "CanSpawn") { JustForOne = true; } else { JustForOne = false; }
 						GameManager.Instance.StartCoroutine(MoveReticlesSmoothly(listObj.Key, listObj.Value, String, JustForOne, ISDodgeAble));
 					}
-					yield return this.Wait(105f);
-				}
+					yield return this.Wait(105f * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
+                }
 				yield break;
 			}
 
@@ -1960,16 +1960,16 @@ namespace Planetside
 				base.BulletBank.aiActor.StartCoroutine(FlashReticles(CentreAngle - 180, -168, this));
 				for (int e = 0; e < 4; e++)
                 {
-					yield return this.Wait(30);
-					base.PostWwiseEvent("Play_BOSS_omegaBeam_charge_01");
+					yield return this.Wait(30 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
+                    base.PostWwiseEvent("Play_BOSS_omegaBeam_charge_01");
 					base.BulletBank.aiActor.StartCoroutine(SwipeLaser(CentreAngle - 180, -168, this, 1.5f - (0.5f * e)));
 					base.BulletBank.aiActor.StartCoroutine(SwipeLaser(CentreAngle - 180, 168, this, 1.5f - (0.5f * e)));
 				}
 				for (int e = 0; e < 8; e++)
                 {
 					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(CentreAngle, this));
-					yield return this.Wait(40);
-				}
+					yield return this.Wait(40 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
+                }
 				yield break;
 			}
 
@@ -2236,7 +2236,7 @@ namespace Planetside
 						base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(GameManager.Instance.AllPlayers[e].transform.PositionVector2(), (45 * i) + Dir, this));
 					}
 				}		
-				yield return this.Wait(75);
+				yield return this.Wait(75 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
 				for (int q = 0; q < 4; q++)
                 {
 					for (int e = 0; e < GameManager.Instance.AllPlayers.Length; e++)
@@ -2251,7 +2251,7 @@ namespace Planetside
 					yield return this.Wait(20);
 				}
 				controller.MoveTowardsPositionMethod(1.5f, 6);
-				yield return this.Wait(60);
+				yield return this.Wait(60 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
 				yield break;
 			}
 

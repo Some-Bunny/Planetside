@@ -192,10 +192,8 @@ namespace Planetside
             {EnemyGuidDatabase.Entries["fallen_bullet_kin"], 0.0666f},
             {EnemyGuidDatabase.Entries["office_bullet_kin"], 0.166f},
             {EnemyGuidDatabase.Entries["office_bullette_kin"], 0.1666f},
-
             {EnemyGuidDatabase.Entries["western_bullet_kin"], 0.20f},
             {EnemyGuidDatabase.Entries["pirate_bullet_kin"], 0.20f},
-
         };
         public static void AIActorMods(AIActor target)
         {

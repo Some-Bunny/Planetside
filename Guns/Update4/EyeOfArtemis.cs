@@ -24,12 +24,22 @@ namespace Planetside
             gun.SetShortDescription("Original AI");
             gun.SetLongDescription("Perfectly crafted, codename 'XS-01' was perfectly designed to locate, track, and fire at any given target it spots.\n\nUntil some idiot ripped it apart and assembled it into this weapon.");
 
-            gun.SetupSprite(null, "tracker_idle_001", 8);
 
-            gun.SetAnimationFPS(gun.shootAnimation, 16);
-            gun.SetAnimationFPS(gun.idleAnimation, 3);
-            gun.SetAnimationFPS(gun.chargeAnimation, 6);
-            gun.SetAnimationFPS(gun.reloadAnimation, 16);
+            GunExt.SetupSprite(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "tracker_idle_001", 11);
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
+            gun.sprite.SortingOrder = 1;
+
+            gun.idleAnimation = "artemiseye_idle";
+            gun.shootAnimation = "artemiseye_fire";
+            gun.reloadAnimation = "artemiseye_reload";
+            gun.chargeAnimation = "artemiseye_charge";
+
+            //gun.SetupSprite(null, "tracker_idle_001", 8);
+
+            //gun.SetAnimationFPS(gun.shootAnimation, 16);
+            //gun.SetAnimationFPS(gun.idleAnimation, 3);
+            //gun.SetAnimationFPS(gun.chargeAnimation, 6);
+            //gun.SetAnimationFPS(gun.reloadAnimation, 16);
 
 
 

@@ -1024,10 +1024,10 @@ namespace Planetside
 					base.StartTask(SwipeLaser(90, this, 0.75f - (0.125f * i), false, sp));
 					base.StartTask(SwipeLaser(-45, this, 0.75f - (0.125f * i), false, sp));
 					base.StartTask(SwipeLaser(-90, this, 0.75f - (0.125f * i), false, sp));
-					yield return this.Wait(90 - (12.5f*i));
+					yield return this.Wait(90 - (12.5f*i) * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
 
 				}
-				yield return this.Wait(45);
+				yield return this.Wait(45 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
 
 				yield break;
 			}
@@ -1165,7 +1165,7 @@ namespace Planetside
 				base.StartTask(SwipeLaser(-75, this, 1.5f, false, 1.25f));
 				base.StartTask(SwipeLaser(-90, this, 1.5f, false, 1.5f));
 
-				yield return this.Wait(200);
+				yield return this.Wait(200 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
 
 				yield break;
 			}
@@ -1426,11 +1426,11 @@ namespace Planetside
 				for (int e = 0; e < r; e++)
 				{
 					base.StartTask(DoYeehaw(35 - (e*7.5f), this));
-					yield return this.Wait(20);
+					yield return this.Wait(20 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
 				}
 				base.BulletBank.aiActor.aiAnimator.LockFacingDirection = false;
 
-				yield return this.Wait(45);
+				yield return this.Wait(45 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
 				yield break;
 			}
 			public IEnumerator DoYeehaw(float Speed, RevolverTwoScript parent)
@@ -1517,130 +1517,6 @@ namespace Planetside
 
 
 
-		private static string[] spritePaths = new string[]
-		{
-			"Planetside/Resources/Enemies/Nemesis/nemesis_idle_bottom_left_001.png",//0
-			"Planetside/Resources/Enemies/Nemesis/nemesis_idle_bottom_left_002.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_idle_bottom_left_003.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_idle_bottom_left_004.png",//3
-
-			"Planetside/Resources/Enemies/Nemesis/nemesis_idle_bottom_right_001.png",//4
-			"Planetside/Resources/Enemies/Nemesis/nemesis_idle_bottom_right_002.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_idle_bottom_right_003.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_idle_bottom_right_004.png",//7
-
-			"Planetside/Resources/Enemies/Nemesis/nemesis_idle_top_left_001.png",//8
-			"Planetside/Resources/Enemies/Nemesis/nemesis_idle_top_left_002.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_idle_top_left_003.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_idle_top_left_004.png",//11
-
-			"Planetside/Resources/Enemies/Nemesis/nemesis_idle_top_right_001.png",//12
-			"Planetside/Resources/Enemies/Nemesis/nemesis_idle_top_right_002.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_idle_top_right_003.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_idle_top_right_004.png",//15
-
-			"Planetside/Resources/Enemies/Nemesis/nemesis_run_bottom_left_001.png",//16
-			"Planetside/Resources/Enemies/Nemesis/nemesis_run_bottom_left_002.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_run_bottom_left_003.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_run_bottom_left_004.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_run_bottom_left_005.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_run_bottom_left_006.png",//21
-
-			"Planetside/Resources/Enemies/Nemesis/nemesis_run_bottom_right_001.png",//22
-			"Planetside/Resources/Enemies/Nemesis/nemesis_run_bottom_right_002.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_run_bottom_right_003.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_run_bottom_right_004.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_run_bottom_right_005.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_run_bottom_right_006.png",//27
-
-			"Planetside/Resources/Enemies/Nemesis/nemesis_run_top_left_001.png",//28
-			"Planetside/Resources/Enemies/Nemesis/nemesis_run_top_left_002.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_run_top_left_003.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_run_top_left_004.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_run_top_left_005.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_run_top_left_006.png",//33
-
-			"Planetside/Resources/Enemies/Nemesis/nemesis_run_top_right_001.png",//34
-			"Planetside/Resources/Enemies/Nemesis/nemesis_run_top_right_002.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_run_top_right_003.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_run_top_right_004.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_run_top_right_005.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_run_top_right_006.png",//39
-
-			"Planetside/Resources/Enemies/Nemesis/nemesis_dodge_bottom_left_001.png",//40
-			"Planetside/Resources/Enemies/Nemesis/nemesis_dodge_bottom_left_002.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_dodge_bottom_left_003.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_dodge_bottom_left_004.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_dodge_bottom_left_005.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_dodge_bottom_left_006.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_dodge_bottom_left_007.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_dodge_bottom_left_008.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_dodge_bottom_left_009.png",//48
-
-			"Planetside/Resources/Enemies/Nemesis/nemesis_dodge_bottom_right_001.png",//49
-			"Planetside/Resources/Enemies/Nemesis/nemesis_dodge_bottom_right_002.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_dodge_bottom_right_003.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_dodge_bottom_right_004.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_dodge_bottom_right_005.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_dodge_bottom_right_006.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_dodge_bottom_right_007.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_dodge_bottom_right_008.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_dodge_bottom_right_009.png",//57
-
-			"Planetside/Resources/Enemies/Nemesis/nemesis_dodge_top_left_001.png",//58
-			"Planetside/Resources/Enemies/Nemesis/nemesis_dodge_top_left_002.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_dodge_top_left_003.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_dodge_top_left_004.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_dodge_top_left_005.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_dodge_top_left_006.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_dodge_top_left_007.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_dodge_top_left_008.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_dodge_top_left_009.png",//66
-
-			"Planetside/Resources/Enemies/Nemesis/nemesis_dodge_top_right_001.png",//67
-			"Planetside/Resources/Enemies/Nemesis/nemesis_dodge_top_right_002.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_dodge_top_right_003.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_dodge_top_right_004.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_dodge_top_right_005.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_dodge_top_right_006.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_dodge_top_right_007.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_dodge_top_right_008.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_dodge_top_right_009.png",//75
-
-			"Planetside/Resources/Enemies/Nemesis/nemesisd_death_001.png",//76
-			"Planetside/Resources/Enemies/Nemesis/nemesisd_death_002.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesisd_death_003.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesisd_death_004.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesisd_death_005.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesisd_death_006.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesisd_death_007.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesisd_death_008.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesisd_death_009.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesisd_death_010.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesisd_death_011.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesisd_death_012.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesisd_death_013.png",//88
-
-			"Planetside/Resources/Enemies/Nemesis/nemesis_awaken_001.png",//89
-			"Planetside/Resources/Enemies/Nemesis/nemesis_awaken_002.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_awaken_003.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_awaken_004.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_awaken_005.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_awaken_006.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_awaken_007.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_awaken_008.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_awaken_009.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_awaken_010.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_awaken_011.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_awaken_012.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_awaken_013.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_awaken_014.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_awaken_015.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_awaken_016.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_awaken_017.png",
-			"Planetside/Resources/Enemies/Nemesis/nemesis_awaken_018.png",//106
-
-		};
 
 		public class EnemyBehavior : BraveBehaviour
 		{

@@ -660,7 +660,7 @@ namespace Planetside
 				component2.sprite.renderer.material.SetColor("_OverrideColor", laser);
 				component2.sprite.renderer.material.SetColor("_EmissiveColor", laser);
 				GameManager.Instance.StartCoroutine(FlashReticles(component2, false, Angle, this, "directedfire"));
-				yield return this.Wait(75);
+				yield return this.Wait(75 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
 				yield break;
 			}
 			public class UndodgeableBullshit : Bullet
