@@ -299,7 +299,7 @@ namespace Planetside
 				robotShopkeeperprefab = BossBuilder.BuildPrefab("Friendly_HMPrime", guid, spritePaths[0], new IntVector2(0, 0), new IntVector2(8, 9), false, true);
 				var companion = robotShopkeeperprefab.AddComponent<FriendlyHMPrimeController>();
 				CompanionController yup = companion.gameObject.AddComponent<CompanionController>();
-				yup.companionID = CompanionController.CompanionIdentifier.NONE;
+				yup.companionID = CompanionController.CompanionIdentifier.GATLING_GULL;
                 EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, Collection, matRobot, false);
 
                 companion.aiActor.knockbackDoer.weight = 10000;

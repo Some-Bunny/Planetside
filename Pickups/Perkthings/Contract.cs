@@ -158,7 +158,7 @@ namespace Planetside
             aiactor.IgnoreForRoomClear = true;
             aiactor.MovementSpeed *= 1.25f;
             CompanionController yup = aiactor.gameObject.AddComponent<CompanionController>();
-            yup.companionID = CompanionController.CompanionIdentifier.NONE;
+            yup.companionID = CompanionController.CompanionIdentifier.GATLING_GULL;
             yup.CanCrossPits = true;
             yup.CanBePet = true;
             string[] anims = new string[]
@@ -280,7 +280,7 @@ namespace Planetside
             aiactor.IgnoreForRoomClear = true;
             aiactor.MovementSpeed *= 1.7f;
             CompanionController yup = aiactor.gameObject.AddComponent<CompanionController>();
-            yup.companionID = CompanionController.CompanionIdentifier.NONE;
+            yup.companionID = CompanionController.CompanionIdentifier.GATLING_GULL;
             yup.CanCrossPits = true;
             yup.CanBePet = true;
 
@@ -400,7 +400,7 @@ namespace Planetside
             aiactor.IgnoreForRoomClear = true;
             aiactor.MovementSpeed *= 0.8f;
             CompanionController yup = aiactor.gameObject.AddComponent<CompanionController>();
-            yup.companionID = CompanionController.CompanionIdentifier.NONE;
+            yup.companionID = CompanionController.CompanionIdentifier.GATLING_GULL;
             yup.CanCrossPits = true;
             yup.CanBePet = true;
             string[] anims = new string[]

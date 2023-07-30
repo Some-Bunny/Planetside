@@ -36,9 +36,11 @@ namespace Planetside
 
         public void OnHitEnemy(Projectile self, SpeculativeRigidbody rigidBody, bool fatal)
         {
-			bool flag = rigidBody && rigidBody.aiActor && rigidBody.healthHaver;
-			if (flag)
+			if (rigidBody.aiActor && rigidBody.healthHaver)
 			{
+                (PickupObjectDatabase.GetById(58) as Gun).DefaultModule.projectiles[0].hitEffects.HandleEnemyImpact(rigidBody.aiActor.sprite.WorldCenter, 0, rigidBody.aiActor.transform, self.transform.position, self.LastVelocity, false);
+                AkSoundEngine.PostEvent("Play_ITM_Crisis_Stone_Shield_01", rigidBody.gameObject);
+
                 float Dmg = 5;
                 if (Player != null && Player.PlayerHasActiveSynergy("KA-BLEWY!") == true) { Dmg *= 4; }
                 ExplodeOnDeath boomBoom = rigidBody.aiActor.gameObject.GetOrAddComponent<ExplodeOnDeath>();
@@ -48,7 +50,7 @@ namespace Planetside
                 explosionData.damageToPlayer = 0;
                 boomBoom.explosionData = explosionData;
                 boomBoom.immuneToIBombApp = true;
-                boomBoom.deathType = OnDeathBehavior.DeathType.PreDeath;
+                boomBoom.deathType = OnDeathBehavior.DeathType.Death;
             }
 		}
         private PlayerController Player;

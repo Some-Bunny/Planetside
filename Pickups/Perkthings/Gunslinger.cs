@@ -196,15 +196,12 @@ namespace Planetside
             if (proj != null && player != null)
             { }
         }
-
-      
-
         public void Update()
         {
             Timer += BraveTime.DeltaTime;
             if (self != null)
             {
-                if (Timer >= self.DefaultModule.cooldownTime + 0.03f)
+                if (Timer >= self.DefaultModule.cooldownTime * 1.5f)
                 {
                     Timer = 0;
                     ProjectileModule defaultModule = self.DefaultModule;
@@ -240,12 +237,36 @@ namespace Planetside
                 ForceInvert = UnityEngine.Random.value > 0.5f ? true : false,
                 lifespan = 10,             
             };
+            var dest = component.gameObject.AddComponent<DestroyMyBad>();
+            dest.p = component;
+            dest.Timer = 15;
         }
         private float Timer;
         public Projectile proj;
         public PlayerController player;
         public Gun self;
 
+        public class DestroyMyBad : MonoBehaviour
+        {
+            public Projectile p;
+            public float Timer = 10;
+            private float e;
+            public void Update()
+            {
+                if (e < Timer)
+                {
+                    e += BraveTime.DeltaTime;
+                }
+                else
+                {
+                    if (p != null)
+                    {
+                        p.DieInAir();
+                    }
+                }
+            }
+
+        }
     }
     class ExploCont : MonoBehaviour
     {

@@ -95,6 +95,7 @@ namespace Planetside
 			float elapsed = 0;
 			float Time = 5;
 			bool Playsound = false;
+			AIActor Prime = null;
 			while (elapsed < Time)
 			{
 				elapsed += BraveTime.DeltaTime;
@@ -103,15 +104,25 @@ namespace Planetside
 					Playsound = true;
 					AkSoundEngine.PostEvent("Play_BOSS_RatMech_Whistle_01", player.gameObject);
 					AIActor orLoadByGuid = EnemyDatabase.GetOrLoadByGuid("RobotShopkeeperBoss_friendly");
-					AIActor aiactor = AIActor.Spawn(orLoadByGuid.aiActor, position- new IntVector2(1, 0), room, true, AIActor.AwakenAnimationType.Awaken, true);
-					aiactor.HandleReinforcementFallIntoRoom(-1f);
-					CompanionController comp = aiactor.gameActor.GetComponent<CompanionController>();
+                    Prime = AIActor.Spawn(orLoadByGuid.aiActor, position- new IntVector2(1, 0), room, true, AIActor.AwakenAnimationType.Awaken, true);
+                    Prime.HandleReinforcementFallIntoRoom(-1f);
+					CompanionController comp = Prime.gameActor.GetComponent<CompanionController>();
 					comp.Initialize(player);
-					aiactor.CompanionOwner = player;
-					aiactor.specRigidbody.Reinitialize();
+                    Prime.CompanionOwner = player;
+                    Prime.specRigidbody.Reinitialize();
+
+					
 				}
 				yield return null;
 			}
+			if (room.activeEnemies != null)
+			{
+				if (room.activeEnemies.Contains(Prime))
+				{
+					room.activeEnemies.Remove(Prime);
+				}
+			}
+
 			GameObject epicwin = UnityEngine.Object.Instantiate<GameObject>(EnemyDatabase.GetOrLoadByGuid("b98b10fca77d469e80fb45f3c5badec5").GetComponent<BossFinalRogueDeathController>().DeathStarExplosionVFX);
 			epicwin.GetComponent<tk2dBaseSprite>().PlaceAtLocalPositionByAnchor(position.ToCenterVector2(), tk2dBaseSprite.Anchor.LowerCenter);
 			epicwin.transform.position = position.ToCenterVector2().Quantize(0.0625f);

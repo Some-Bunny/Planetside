@@ -26,7 +26,7 @@ namespace Planetside
             gun.SetShortDescription("Make It Go Boom!");
             gun.SetLongDescription("Fires rounds with embedded detonators in them. Explosives go off on enemy death.\n\nSmells of beard shampoo.");
 
-            GunExt.SetupSprite(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "polarity1_idle_001", 11);
+            GunExt.SetupSprite(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "bulldog_idle_001", 11);
             gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
             gun.sprite.SortingOrder = 1;
 
@@ -64,9 +64,10 @@ namespace Planetside
             gun.DefaultModule.projectiles[0] = projectile;
             projectile.baseData.damage = 7f;
             projectile.baseData.force = 10f;
-            projectile.baseData.speed = 40f;
+            projectile.baseData.speed = 44f;
             projectile.AppliesFire = false;
             projectile.baseData.range = 50;
+
 
             projectile.gameObject.GetOrAddComponent<ThunderShotProjectile>();
             gun.DefaultModule.angleVariance = 9f;
@@ -107,7 +108,7 @@ namespace Planetside
                 "psog:thundershot",
                 "double_vision"
             };
-            CustomSynergies.Add("   a", eee, null, true);
+            CustomSynergies.Add("ROCK, AAAAND, STOOOOONE!", eee, null, true);
             
             ThunderShot.ThunderShotID = gun.PickupObjectId;
             ItemIDs.AddToList(gun.PickupObjectId);
