@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 450dec378254a8d468aec32d7be4c4da
+guid: 15d64baed0ef13a45a4e899be5fbe50a
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
@@ -89,5 +89,5 @@ ModelImporter:
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
-  assetBundleName: 
+  assetBundleName: planetsidebundle
   assetBundleVariant: 

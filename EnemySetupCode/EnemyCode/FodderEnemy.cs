@@ -44,7 +44,7 @@ namespace Planetside
                 companion.aiActor.knockbackDoer.weight = 100000;
 				companion.aiActor.MovementSpeed = 0f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
-				companion.aiActor.CollisionDamage = 1f;
+				companion.aiActor.CollisionDamage = 0f;
 				companion.aiActor.HasShadow = false;
 				companion.aiActor.IgnoreForRoomClear = true;
 				companion.aiActor.aiAnimator.HitReactChance = 0f;

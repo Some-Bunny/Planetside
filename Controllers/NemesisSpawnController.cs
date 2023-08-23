@@ -35,7 +35,7 @@ namespace Planetside
                 AssetBundle shared_auto_001 = ResourceManager.LoadAssetBundle("shared_auto_001");
                 room.associatedMinimapIcon = shared_auto_001.LoadAsset("assets/data/prefabs/room icons/minimap_boss_icon.prefab") as GameObject; WeightedRoom r = new WeightedRoom();
                 r.room = room;
-                r.weight = 0.5f;
+                r.weight = 0.8f;
                 r.additionalPrerequisites = new DungeonPrerequisite[]
                 {
                     new CustomDungeonPrerequisite()

@@ -826,10 +826,10 @@ namespace Planetside
 	}
 	public class FrenzyElite : BasicEliteType
 	{
-        public override float DamageMultiplier => 1.7f;
+        public override float DamageMultiplier => 1.35f;
         public override float HealthMultiplier => 1;
 		public override float CooldownMultiplier => 1.33f;
-		public override float MovementSpeedMultiplier => 1.3f;
+		public override float MovementSpeedMultiplier => 1.2f;
 		public override Color EliteOutlineColor => Color.yellow;
 		public override Color EliteParticleColor => Color.yellow;
 		public override Color SecondaryEliteParticleColor => Color.yellow;
