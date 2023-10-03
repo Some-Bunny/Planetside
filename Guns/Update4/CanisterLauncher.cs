@@ -132,7 +132,7 @@ namespace Planetside
             }
             gun.barrelOffset.transform.localPosition = new Vector3(0.75f, 0.375f, 0f);
 			gun.reloadTime = 2f;
-			gun.SetBaseMaxAmmo(40);
+			gun.SetBaseMaxAmmo(50);
 			gun.muzzleFlashEffects = (PickupObjectDatabase.GetById(122) as Gun).muzzleFlashEffects;
             gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
 			gun.gunClass = GunClass.EXPLOSIVE;

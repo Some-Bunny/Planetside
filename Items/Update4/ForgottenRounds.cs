@@ -5,6 +5,9 @@ using Dungeonator;
 using ItemAPI;
 using UnityEngine;
 using SynergyAPI;
+using Alexandria.DungeonAPI;
+using Alexandria.Misc;
+
 namespace Planetside
 {
 	public class ForgottenRoundOubliette : BasicStatPickup
@@ -24,13 +27,28 @@ namespace Planetside
 			warVase.quality = PickupObject.ItemQuality.SPECIAL;
 			warVase.IsMasteryToken = true;
 			warVase.ForcedPositionInAmmonomicon = 4;
-			warVase.AddAsChamberGunMastery("PlanetsideOfGunymede", 4);
-			SynergyAPI.SynergyBuilder.AddItemToSynergy(warVase, CustomSynergyType.MASTERS_CHAMBERS);
+            warVase.AddAsChamberGunMastery("PlanetsideOfGunymede", 4);
+            Alexandria.DungeonAPI.MasteryOverrideHandler.RegisterFloorForMasterySpawn(MasteryOverrideHandler.ViableRegisterFloors.OUBLIETTE);
+
+            //warVase.AddAsChamberGunMastery("PlanetsideOfGunymede", 4);
+            SynergyAPI.SynergyBuilder.AddItemToSynergy(warVase, CustomSynergyType.MASTERS_CHAMBERS);
 			ItemBuilder.AddPassiveStatModifier(warVase, PlayerStats.StatType.Damage, 0.125f, StatModifier.ModifyMethod.ADDITIVE);
 			ForgottenRoundOubliette.ForgottenRoundOublietteID = warVase.PickupObjectId;
 			EncounterDatabase.GetEntry(warVase.encounterTrackable.EncounterGuid).usesPurpleNotifications = true;
-		}
-		public static int ForgottenRoundOublietteID;
+            CustomActions.OnRewardPedestalDetermineContents += OnMasteryDetermineContents;
+        }
+
+        public static void OnMasteryDetermineContents(RewardPedestal pedestal, PlayerController determiner, CustomActions.ValidPedestalContents valids)
+        {
+            if (pedestal.ContainsMasteryTokenForCurrentLevel())
+            {
+                if (GameManager.Instance.Dungeon.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.SEWERGEON)
+                {
+                    valids.overrideItemPool.Add(new Tuple<int, float>(ForgottenRoundOubliette.ForgottenRoundOublietteID, 1.25f));
+                }
+            }
+        }
+        public static int ForgottenRoundOublietteID;
 
 		public override void Pickup(PlayerController player)
 		{base.Pickup(player);}
@@ -57,14 +75,28 @@ namespace Planetside
 			warVase.quality = PickupObject.ItemQuality.SPECIAL;
 			warVase.IsMasteryToken = true;
 			warVase.ForcedPositionInAmmonomicon = 4;
-			warVase.AddAsChamberGunMastery("PlanetsideOfGunymede", 8);
-			SynergyAPI.SynergyBuilder.AddItemToSynergy(warVase, CustomSynergyType.MASTERS_CHAMBERS);
+            warVase.AddAsChamberGunMastery("PlanetsideOfGunymede", 8);
+            //warVase.AddAsChamberGunMastery("PlanetsideOfGunymede", 8);
+            SynergyAPI.SynergyBuilder.AddItemToSynergy(warVase, CustomSynergyType.MASTERS_CHAMBERS);
+            Alexandria.DungeonAPI.MasteryOverrideHandler.RegisterFloorForMasterySpawn(MasteryOverrideHandler.ViableRegisterFloors.ABBEY);
 
-			ItemBuilder.AddPassiveStatModifier(warVase, PlayerStats.StatType.Damage, 0.125f, StatModifier.ModifyMethod.ADDITIVE);
+            ItemBuilder.AddPassiveStatModifier(warVase, PlayerStats.StatType.Damage, 0.125f, StatModifier.ModifyMethod.ADDITIVE);
 			ForgottenRoundAbbey.ForgottenRoundAbbeyID = warVase.PickupObjectId;
 			EncounterDatabase.GetEntry(warVase.encounterTrackable.EncounterGuid).usesPurpleNotifications = true;
-		}
-		public static int ForgottenRoundAbbeyID;
+            CustomActions.OnRewardPedestalDetermineContents += OnMasteryDetermineContents;
+        }
+
+        public static void OnMasteryDetermineContents(RewardPedestal pedestal, PlayerController determiner, CustomActions.ValidPedestalContents valids)
+        {
+            if (pedestal.ContainsMasteryTokenForCurrentLevel())
+            {
+                if (GameManager.Instance.Dungeon.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.CATHEDRALGEON)
+                {
+                    valids.overrideItemPool.Add(new Tuple<int, float>(ForgottenRoundAbbey.ForgottenRoundAbbeyID, 1.25f));
+                }
+            }
+        }
+        public static int ForgottenRoundAbbeyID;
 
 		public override void Pickup(PlayerController player)
 		{ base.Pickup(player); }
@@ -91,14 +123,29 @@ namespace Planetside
 			warVase.quality = PickupObject.ItemQuality.SPECIAL;
 			warVase.IsMasteryToken = true;
 			warVase.ForcedPositionInAmmonomicon = 4;
-			warVase.AddAsChamberGunMastery("PlanetsideOfGunymede", 2048);
-			SynergyAPI.SynergyBuilder.AddItemToSynergy(warVase, CustomSynergyType.MASTERS_CHAMBERS);
+            warVase.AddAsChamberGunMastery("PlanetsideOfGunymede", 2048);
+			Alexandria.DungeonAPI.MasteryOverrideHandler.RegisterFloorForMasterySpawn(MasteryOverrideHandler.ViableRegisterFloors.RNG);
+
+            //warVase.AddAsChamberGunMastery("PlanetsideOfGunymede", 2048);
+            SynergyAPI.SynergyBuilder.AddItemToSynergy(warVase, CustomSynergyType.MASTERS_CHAMBERS);
 
 			ItemBuilder.AddPassiveStatModifier(warVase, PlayerStats.StatType.Damage, 0.125f, StatModifier.ModifyMethod.ADDITIVE);
 			ForgottenRoundRNG.ForgottenRoundRNGID = warVase.PickupObjectId;
 			EncounterDatabase.GetEntry(warVase.encounterTrackable.EncounterGuid).usesPurpleNotifications = true;
-		}
-		public static int ForgottenRoundRNGID;
+            CustomActions.OnRewardPedestalDetermineContents += OnMasteryDetermineContents;
+        }
+
+        public static void OnMasteryDetermineContents(RewardPedestal pedestal, PlayerController determiner, CustomActions.ValidPedestalContents valids)
+        {
+            if (pedestal.ContainsMasteryTokenForCurrentLevel())
+            {
+                if (GameManager.Instance.Dungeon.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.OFFICEGEON)
+                {
+                    valids.overrideItemPool.Add(new Tuple<int, float>(ForgottenRoundRNG.ForgottenRoundRNGID, 1.25f));
+                }
+            }
+        }
+        public static int ForgottenRoundRNGID;
 
 		public override void Pickup(PlayerController player)
 		{ base.Pickup(player); }

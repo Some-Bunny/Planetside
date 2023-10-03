@@ -21,10 +21,10 @@ namespace Planetside
 		public override void DoOverride()
 		{
 			//ToolsEnemy.DebugInformation(behaviorSpec);
-
 			foreach (Component item in actor.GetComponentsInChildren(typeof(Component)))
 			{
-				if (item is ParticleSystem particle)
+
+                if (item is ParticleSystem particle)
 				{
 					
 					var ts = particle.textureSheetAnimation;
@@ -64,7 +64,8 @@ namespace Planetside
 			
 				}
 			}
-			foreach (Component item in actor.GetComponents(typeof(Component)))
+
+            foreach (Component item in actor.GetComponents(typeof(Component)))
 			{
 				if (item is ParticleSystem particle)
 				{
@@ -83,15 +84,15 @@ namespace Planetside
 
 
 
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableFrogger);
+            actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableFrogger);
 			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSkull);
 
 
-			DraGunRPGBehavior DraGunRPGBehavior1 = behaviorSpec.AttackBehaviorGroup.AttackBehaviors[0].Behavior as DraGunRPGBehavior;
+            DraGunRPGBehavior DraGunRPGBehavior1 = behaviorSpec.AttackBehaviorGroup.AttackBehaviors[0].Behavior as DraGunRPGBehavior;
 			DraGunRPGBehavior1.BulletScript = new CustomBulletScriptSelector(typeof(ModifiedDraGunRocket1));
 			DraGunRPGBehavior1.AttackCooldown += 3.5f;
 
-			SimultaneousAttackBehaviorGroup SimultaneousAttackBehaviorGroup1 = behaviorSpec.AttackBehaviorGroup.AttackBehaviors[3].Behavior as SimultaneousAttackBehaviorGroup;
+            SimultaneousAttackBehaviorGroup SimultaneousAttackBehaviorGroup1 = behaviorSpec.AttackBehaviorGroup.AttackBehaviors[3].Behavior as SimultaneousAttackBehaviorGroup;
 			foreach (AttackBehaviorBase attackBehaviorBase in SimultaneousAttackBehaviorGroup1.AttackBehaviors)
 			{
 				if (attackBehaviorBase is DraGunThrowKnifeBehavior knifeBehavior)
@@ -100,7 +101,8 @@ namespace Planetside
 					knifeBehavior.AttackCooldown *= 2;
 				}
 			}
-			ShootBehavior ShootBehavior1 = behaviorSpec.AttackBehaviorGroup.AttackBehaviors[4].Behavior as ShootBehavior;
+
+            ShootBehavior ShootBehavior1 = behaviorSpec.AttackBehaviorGroup.AttackBehaviors[4].Behavior as ShootBehavior;
 			ShootBehavior1.BulletScript = new CustomBulletScriptSelector(typeof(ModifiedDraGunFlameBreath2));
 			ShootBehavior1.AttackCooldown = (ShootBehavior1.AttackCooldown) + 1.5f;
 

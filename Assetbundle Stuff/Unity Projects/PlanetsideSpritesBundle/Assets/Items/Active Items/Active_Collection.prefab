@@ -116,7 +116,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -176,7 +176,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -236,7 +236,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -296,7 +296,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -356,7 +356,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -416,7 +416,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -476,7 +476,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -536,7 +536,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -596,7 +596,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -656,7 +656,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -716,7 +716,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -776,7 +776,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -836,7 +836,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -896,7 +896,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -956,7 +956,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -1016,7 +1016,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -1076,7 +1076,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -1136,7 +1136,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -1196,7 +1196,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -1256,7 +1256,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -1316,7 +1316,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -1376,7 +1376,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -1436,7 +1436,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -1496,7 +1496,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -1556,7 +1556,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -1616,7 +1616,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -1676,7 +1676,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -1736,7 +1736,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -1796,7 +1796,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -1856,7 +1856,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -1916,7 +1916,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -1976,7 +1976,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -2036,7 +2036,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -2096,7 +2096,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -2110,7 +2110,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}

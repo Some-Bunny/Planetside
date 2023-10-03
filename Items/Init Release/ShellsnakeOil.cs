@@ -56,14 +56,14 @@ namespace Planetside
             ShellsnakeOil.ShellSnakeOilID = item.PickupObjectId;
             ItemIDs.AddToList(item.PickupObjectId);
 
-            ShopDiscountMegaMind.DiscountsToAdd.Add(new ShopDiscount()
-            {
+             Alexandria.NPCAPI.CustomDiscountManager.DiscountsToAdd.Add(new Alexandria.NPCAPI.ShopDiscount()
+             {
                 IdentificationKey = "ShellsnakeBartering",
                 CanDiscountCondition = CanBuy,
                 CustomPriceMultiplier = CanMult,
-                ItemToDiscount = Can
-            });
-            ShopDiscountMegaMind.OnShopItemStarted += OSIS;
+                ItemIsValidForDiscount = Can
+             });
+            Alexandria.Misc.CustomActions.OnShopItemStarted += OSIS;
         }
 
         public class RandomBoolComp : MonoBehaviour { public void Start() { B = BraveUtility.RandomBool(); rng = UnityEngine.Random.value; } public bool B; public float rng; }
@@ -75,7 +75,11 @@ namespace Planetside
 
         public static bool Can(ShopItemController s)
         {
-            return true;
+            if (s.gameObject.GetComponent<ShellsnakeOil.RandomBoolComp>().rng < 0.2f)
+            {
+                return true;
+            }
+            return false;
         }
 
         public static bool CanBuy()
@@ -90,14 +94,9 @@ namespace Planetside
             return false;
         }
 
-        public static float CanMult(ShopItemController item)
+        public static float CanMult()
         {
-            if (item.gameObject.GetComponent<ShellsnakeOil.RandomBoolComp>() == null) { return 1; }
-            if (item.gameObject.GetComponent<ShellsnakeOil.RandomBoolComp>().rng < 0.2f)
-            {
-                return 0.66f;
-            }
-            return 1f;
+            return 0.5f;
         }
 
         public static int ShellSnakeOilID;

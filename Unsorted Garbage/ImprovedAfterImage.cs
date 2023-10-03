@@ -321,8 +321,8 @@ namespace Planetside
                 this.m_spawnTimer = this.shadowTimeDelay;
             }
             this.m_previousFrameSpawnShadows = this.spawnShadows;
-            LinkedListNode<ImprovedAfterImageForTiled.Shadow> next;
-            for (LinkedListNode<ImprovedAfterImageForTiled.Shadow> linkedListNode = this.m_activeShadows.First; linkedListNode != null; linkedListNode = next)
+            LinkedListNode<Shadow> next;
+            for (LinkedListNode<Shadow> linkedListNode = this.m_activeShadows.First; linkedListNode != null; linkedListNode = next)
             {
                 next = linkedListNode.Next;
                 linkedListNode.Value.timer -= BraveTime.DeltaTime;

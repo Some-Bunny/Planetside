@@ -101,7 +101,7 @@ namespace Planetside
                         {
                             if (ActorIsActive(ai) == true)
                             {
-                                bool flag8 = ai && ai != null && Vector2.Distance(ai.CenterPosition, base.Owner.sprite.WorldCenter) < 4.5f;
+                                bool flag8 = ai && ai != null && Vector2.Distance(ai.CenterPosition, base.Owner.sprite.WorldCenter) < 6;
                                 if (flag8)
                                 {
                                     if (!Shit.ContainsKey(ai))
@@ -110,7 +110,7 @@ namespace Planetside
                                         Shit.Add(ai, obj);
                                     }
                                 }
-                                bool fuckoff = ai && ai != null && Vector2.Distance(ai.CenterPosition, base.Owner.sprite.WorldCenter) > 4.5f;
+                                bool fuckoff = ai && ai != null && Vector2.Distance(ai.CenterPosition, base.Owner.sprite.WorldCenter) > 6f;
                                 if (fuckoff)
                                 {
                                     if (Shit.ContainsKey(ai))

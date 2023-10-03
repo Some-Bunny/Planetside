@@ -45,6 +45,7 @@ namespace Planetside
 
             JammedJar.JammedJarID = activeitem.PickupObjectId;
             ItemIDs.AddToList(activeitem.PickupObjectId);
+            GameManager.Instance.RainbowRunForceExcludedIDs.Add(activeitem.PickupObjectId);
 
         }
         public static int JammedJarID;

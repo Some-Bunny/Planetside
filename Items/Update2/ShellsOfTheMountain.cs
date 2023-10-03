@@ -15,6 +15,7 @@ using MonoMod;
 using System.Collections.ObjectModel;
 
 using UnityEngine.Serialization;
+using Brave.BulletScript;
 
 namespace Planetside
 {
@@ -31,14 +32,101 @@ namespace Planetside
             ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("bulletofthemountain"), data, obj);
             //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "Forged For The Mountain King";
-			string longDesc = "No matter how steep it is, the bullets climb to the top to stay level with their foes.";
+			string longDesc = "Increased Challenge, Increased Reward.\nNo matter how steep it is, these rounds climb to the top to stay level with their foes.";
 			ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
 			item.quality = PickupObject.ItemQuality.A;
 			ShellsOfTheMountain.ShellsOfTheMountainID = item.PickupObjectId;
 			ItemIDs.AddToList(item.PickupObjectId);
+            new Hook(typeof(AIActor).GetMethod("OnPlayerEntered", BindingFlags.Instance | BindingFlags.NonPublic),
+				typeof(ShellsOfTheMountain).GetMethod("OnPlayerEnteredHook"));
+            new Hook(typeof(BehaviorSpeculator).GetMethod("Start", BindingFlags.Instance | BindingFlags.NonPublic),
+                typeof(ShellsOfTheMountain).GetMethod("StartHookBehaviorSpeculator"));
+            ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.Damage, 1.15f, StatModifier.ModifyMethod.MULTIPLICATIVE);
 
-		}
-		public static int ShellsOfTheMountainID;
+            Alexandria.RoomRewardAPI.OnRoomRewardDetermineContents += ORDC;
+        }
+
+        public static void ORDC(RoomHandler room, Alexandria.RoomRewardAPI.ValidRoomRewardContents validRoomRewardContents, float chance)
+        {
+            if (CanElite() == true && validRoomRewardContents != null)
+            {
+                validRoomRewardContents.additionalRewardChance += 0.075f;
+            }
+        }
+
+        public static bool CanElite()
+        {
+            foreach (var p in GameManager.Instance.AllPlayers)
+            {
+                if (p.HasPickupID(ShellsOfTheMountain.ShellsOfTheMountainID) == true)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        public static void OnPlayerEnteredHook(Action<AIActor, PlayerController> orig, AIActor self, PlayerController player)
+        {
+            orig(self, player);
+            if (self != null && CanElite() == true && self.aiActor != null && !OuroborosController.EliteBlackListDefault.Contains(self.aiActor.EnemyGuid) && OuroborosController.EnemyIsValid(self.aiActor) == true)
+            {
+                bool BossCheck = self.aiActor.healthHaver.IsBoss | self.aiActor.healthHaver.IsSubboss;
+                float specialChance = UnityEngine.Random.Range(0f, 1.0f);
+                if (specialChance < 0.35f | BossCheck == true)
+                {
+                    if (UnityEngine.Random.value <= 0.2f && BossCheck == false)
+                    {
+                        var SpecialElite = OuroborosController.specialEliteTypes[UnityEngine.Random.Range(0, OuroborosController.specialEliteTypes.Count)];
+                        if (self.aiActor.gameObject.GetComponent(SpecialElite) == null)
+                        {
+                            self.aiActor.gameObject.AddComponent(SpecialElite);
+                        }
+                    }
+                    else
+                    {
+                        var elite = OuroborosController.basicEliteTypes[UnityEngine.Random.Range(0, OuroborosController.basicEliteTypes.Count)];
+                        if (self.aiActor.gameObject.GetComponent(elite) == null)
+                        {
+                            self.aiActor.gameObject.AddComponent(elite);
+                        }
+                    }
+                }
+            }
+        }
+
+
+        public static void StartHookBehaviorSpeculator(Action<BehaviorSpeculator> orig, BehaviorSpeculator self)
+        {
+            orig(self);
+            if (self != null && CanElite() == true && self.aiActor != null && !OuroborosController.EliteBlackListDefault.Contains(self.aiActor.EnemyGuid) && OuroborosController.EnemyIsValid(self.aiActor) == true)
+            {
+                bool BossCheck = self.aiActor.healthHaver.IsBoss | self.aiActor.healthHaver.IsSubboss;
+                float specialChance = UnityEngine.Random.Range(0f, 1.0f);
+                if (specialChance < 0.35f | BossCheck == true)
+                {
+                    if (UnityEngine.Random.value <= 0.2f && BossCheck == false)
+                    {
+                        var SpecialElite = OuroborosController.specialEliteTypes[UnityEngine.Random.Range(0, OuroborosController.specialEliteTypes.Count)];
+                        if (self.aiActor.gameObject.GetComponent(SpecialElite) == null)
+                        {
+                            self.aiActor.gameObject.AddComponent(SpecialElite);
+                        }
+                    }
+                    else
+                    {
+                        var elite = OuroborosController.basicEliteTypes[UnityEngine.Random.Range(0, OuroborosController.basicEliteTypes.Count)];
+                        if (self.aiActor.gameObject.GetComponent(elite) == null)
+                        {
+                            self.aiActor.gameObject.AddComponent(elite);
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+        public static int ShellsOfTheMountainID;
 		private void PostProcessProjectile(Projectile sourceProjectile, float effectChanceScalar)
 		{
 			try

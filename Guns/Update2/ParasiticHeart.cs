@@ -244,7 +244,7 @@ namespace Planetside
             {
                 if (otherRigidbody.aiActor.parentRoom == room)
                 {
-                    otherRigidbody.aiActor.healthHaver.ApplyDamage(5f, Vector2.zero, "CHAMBER", CoreDamageTypes.None, DamageCategory.Normal, true, null, false);
+                    otherRigidbody.aiActor.healthHaver.ApplyDamage(2.25f, Vector2.zero, "CHAMBER", CoreDamageTypes.None, DamageCategory.Normal, true, null, false);
                 }
             }
         }

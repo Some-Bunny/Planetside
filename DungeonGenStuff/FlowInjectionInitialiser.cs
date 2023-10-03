@@ -184,14 +184,6 @@ namespace Planetside
 				chanceToSpawn = 1,
 				RequiredValidPlaceable = null,
 				prerequisites = new DungeonPrerequisite[] {
-					new DungeonGenToolbox.AdvancedDungeonPrerequisite
-					{
-					   advancedAdvancedPrerequisiteType = DungeonGenToolbox.AdvancedDungeonPrerequisite.AdvancedAdvancedPrerequisiteType.UNLOCK,
-					   UnlockFlag = CustomDungeonFlags.HAS_COMPLETED_SOMETHING_WICKED,
-					   UnlockRequirement = true,
-					   requiredTileset = GlobalDungeonData.ValidTilesets.FORGEGEON,
-					   requireTileset = true
-					},
                     new DungeonGenToolbox.AdvancedDungeonPrerequisite
                     {
                        advancedAdvancedPrerequisiteType = DungeonGenToolbox.AdvancedDungeonPrerequisite.AdvancedAdvancedPrerequisiteType.UNLOCK,

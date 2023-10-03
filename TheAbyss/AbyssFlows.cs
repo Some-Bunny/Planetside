@@ -28,8 +28,8 @@ namespace Planetside
                 DungeonFlowNode Abyss_Loot_Node_2 = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.NORMAL, ModRoomPrefabs.AbyssSpawnLootRoom);
 
 
-                DungeonFlowNode bossfoyerNode = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.SPECIAL, overrideTable: ModPrefabs.boss_foyertable);
-				DungeonFlowNode bossNode = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.BOSS, ModRoomPrefabs.Mod_Boss);
+                //DungeonFlowNode bossfoyerNode = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.SPECIAL, overrideTable: ModPrefabs.boss_foyertable);
+				//DungeonFlowNode bossNode = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.BOSS, ModRoomPrefabs.Mod_Boss);
 
 				DungeonFlowNode defaultCombatNode = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.NORMAL, overrideTable: ModPrefabs.FloorNameRoomTable);
 				DungeonFlowNode defaultCombatNode1 = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.NORMAL, overrideTable: ModPrefabs.FloorNameRoomTable);
@@ -109,11 +109,9 @@ namespace Planetside
 
 
 
-                m_CachedFlow.AddNodeToFlow(bossfoyerNode, defaultCombatNode_Branch2_3);
+                m_CachedFlow.AddNodeToFlow(exitNode, defaultCombatNode_Branch2_3);
 
-				m_CachedFlow.AddNodeToFlow(bossNode, bossfoyerNode);
-				m_CachedFlow.AddNodeToFlow(exitNode, bossNode);
-				m_CachedFlow.AddNodeToFlow(bossNode, entranceNode);
+
 
 				m_CachedFlow.FirstNode = entranceNode;
 
@@ -137,8 +135,7 @@ namespace Planetside
 
 				DungeonFlowNode entranceNode = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.ENTRANCE, ModRoomPrefabs.Mod_Entrance_Room);
 				DungeonFlowNode exitNode = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.EXIT, ModRoomPrefabs.Mod_Exit_Room);
-				DungeonFlowNode bossfoyerNode = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.SPECIAL, overrideTable: ModPrefabs.boss_foyertable);
-				DungeonFlowNode bossNode = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.BOSS, ModRoomPrefabs.Mod_Boss);
+				//DungeonFlowNode bossNode = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.BOSS, ModRoomPrefabs.Mod_Boss);
 
 				DungeonFlowNode FloorNameShopNode = GenerateDefaultNode(m_CachedFlow, ModPrefabs.shop02.category, overrideTable: ModPrefabs.shop_room_table);
 				DungeonFlowNode FloorNameRewardNode_01 = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.CONNECTOR, ModPrefabs.gungeon_rewardroom_1);
@@ -207,9 +204,8 @@ namespace Planetside
 				m_CachedFlow.AddNodeToFlow(FloorNameRoomNode_14, FloorNameRoomNode_11);
 
 
-				m_CachedFlow.AddNodeToFlow(bossfoyerNode, FloorNameRoomNode_12);
-				m_CachedFlow.AddNodeToFlow(bossNode, bossfoyerNode);
-				m_CachedFlow.AddNodeToFlow(exitNode, bossNode);
+				m_CachedFlow.AddNodeToFlow(exitNode, FloorNameRoomNode_12);
+
 
 				m_CachedFlow.FirstNode = entranceNode;
 

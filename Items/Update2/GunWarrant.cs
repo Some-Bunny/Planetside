@@ -43,6 +43,16 @@ namespace Planetside
             ItemIDs.AddToList(item.PickupObjectId);
             new Hook(typeof(BaseShopController).GetMethod("DoSetup", BindingFlags.Instance | BindingFlags.NonPublic), typeof(GunWarrant).GetMethod("DoSetupHook"));
 
+            Alexandria.NPCAPI.CustomDiscountManager.DiscountsToAdd.Add(new Alexandria.NPCAPI.ShopDiscount()
+            {
+                IdentificationKey = "Gun_Warrant",
+                CanDiscountCondition = CanBuy,
+                PriceMultiplier = 0.5f,
+                ItemIsValidForDiscount = Can
+                
+            });
+
+            /*
             ShopDiscountMegaMind.DiscountsToAdd.Add(new ShopDiscount()
             {
                 IdentificationKey = "Gun_Warrant",
@@ -50,6 +60,7 @@ namespace Planetside
                 CanDiscountCondition = CanBuy,
                 ItemToDiscount = Can
             });
+            */
 
             GameManager.Instance.RainbowRunForceExcludedIDs.Add(item.PickupObjectId);
         }

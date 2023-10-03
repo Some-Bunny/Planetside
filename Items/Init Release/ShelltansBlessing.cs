@@ -81,6 +81,7 @@ namespace Planetside
 
             ShelltansBlessingVFX = blessingObj;
             new Hook(typeof(AdvancedShrineController).GetMethod("DoShrineEffect", BindingFlags.Instance | BindingFlags.NonPublic), typeof(ShelltansBlessing).GetMethod("DoShrineEffectHook"));
+            GameManager.Instance.RainbowRunForceExcludedIDs.Add(item.PickupObjectId);
 
         }
 

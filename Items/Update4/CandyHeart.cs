@@ -35,6 +35,7 @@ namespace Planetside
 			item.quality = PickupObject.ItemQuality.D;
             CandyHeart.CandyHeartID = item.PickupObjectId;
             ItemIDs.AddToList(item.PickupObjectId);
+            /*
             ShopDiscountMegaMind.DiscountsToAdd.Add(new ShopDiscount()
             {
                 IdentificationKey = "Candy_Heart",
@@ -42,6 +43,16 @@ namespace Planetside
                 CanDiscountCondition = CanBuy,
                 CustomPriceMultiplier = CanMult,
                 ItemToDiscount = Can
+            });
+            */
+
+            Alexandria.NPCAPI.CustomDiscountManager.DiscountsToAdd.Add(new Alexandria.NPCAPI.ShopDiscount()
+            {
+                IdentificationKey = "Candy_Heart",
+                CanDiscountCondition = CanBuy,
+                PriceMultiplier = 0.5f,
+                ItemIsValidForDiscount = Can,
+                CustomPriceMultiplier = CanMult,
             });
 
             List<string> mandatoryConsoleIDs = new List<string>
@@ -78,7 +89,7 @@ namespace Planetside
             return false;
         }
 
-        public static float CanMult(ShopItemController item)
+        public static float CanMult()
         {
             foreach (var p in GameManager.Instance.AllPlayers)
             {

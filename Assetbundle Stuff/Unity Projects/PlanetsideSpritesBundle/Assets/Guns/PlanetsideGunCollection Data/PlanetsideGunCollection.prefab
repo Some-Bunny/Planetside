@@ -26164,7 +26164,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -26236,7 +26236,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -26308,7 +26308,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -26380,7 +26380,7 @@ MonoBehaviour:
     flipped: 1
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -26452,7 +26452,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -26524,7 +26524,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -26596,7 +26596,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -26668,7 +26668,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -26740,7 +26740,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -26812,7 +26812,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -26884,7 +26884,7 @@ MonoBehaviour:
     flipped: 1
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -26956,7 +26956,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -27028,7 +27028,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -27100,7 +27100,7 @@ MonoBehaviour:
     flipped: 1
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -27172,7 +27172,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -27244,7 +27244,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -27316,7 +27316,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -27388,7 +27388,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -27460,7 +27460,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -27532,7 +27532,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -27604,7 +27604,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -27676,7 +27676,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -27748,7 +27748,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -27820,7 +27820,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -27892,7 +27892,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -27964,7 +27964,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -28036,7 +28036,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -28108,7 +28108,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -28180,7 +28180,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -28225,7 +28225,7 @@ MonoBehaviour:
   loadable: 0
   invOrthoSize: 2
   halfTargetHeight: 8
-  buildKey: 1868114630
+  buildKey: 290021218
   dataGuid: c333b89a3d37c564abe3ed7a43354520
   managedSpriteCollection: 0
   hasPlatformData: 0

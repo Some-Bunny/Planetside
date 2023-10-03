@@ -48,6 +48,7 @@ namespace Planetside
                 "ring_of_miserly_protection"
             };
             CustomSynergies.Add("Make Your Choice.", mandatoryConsoleIDs, null, true);
+            GameManager.Instance.RainbowRunForceExcludedIDs.Add(activeitem.PickupObjectId);
 
         }
         public static GenericLootTable shopInABoxPickupTable;

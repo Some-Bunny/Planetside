@@ -49,6 +49,7 @@ namespace Planetside
 
         private void Update()
 		{
+            if (projectile == null) { return; }
             this.elapsed += BraveTime.DeltaTime;
             if (this.elapsed > TimeBetweenDamageEvents)
             {
@@ -104,9 +105,7 @@ namespace Planetside
 
 
         public Dictionary<GameActorEffect, float> debuffs = new Dictionary<GameActorEffect, float>();
-
         public Dictionary<GameActorEffect, Func<bool>> conditionalDebuffs = new Dictionary<GameActorEffect, Func<bool>>();
-
 
         public bool AreaIncreasesWithProjectileSizeStat;
 		public bool DamageValuesAlsoScalesWithDamageStat;

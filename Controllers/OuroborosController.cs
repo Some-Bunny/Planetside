@@ -19,6 +19,7 @@ using Brave.BulletScript;
 using Pathfinding;
 using NpcApi;
 using static tk2dSpriteCollectionDefinition;
+using Alexandria;
 
 namespace Planetside
 {
@@ -105,6 +106,20 @@ namespace Planetside
 
 				new Hook(typeof(Chest).GetMethod("Awake", BindingFlags.Instance | BindingFlags.NonPublic),
 					typeof(OuroborosController).GetMethod("ChestAwakeHook"));
+
+				var LocalObject = new GameObject("BulletBankDummy").InstantiateAndFakeprefab();
+				var b = LocalObject.AddComponent<AIBulletBank>();
+				b.Bullets = new List<AIBulletBank.Entry>()
+				{
+
+				};
+
+                b.Bullets.Add(sewwpCopy);
+                b.Bullets.Add(entryCopy);
+                b.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("homingPop"));
+				b.transforms = new List<Transform>() { };
+
+				BulletBankDummy = b.gameObject;
 
                 var Collection = StaticSpriteDefinitions.Oddments_Sheet_Data;
                 GameObject logoObj = ItemBuilder.AddSpriteToObjectAssetbundle("Big Piece Bottom", Collection.GetSpriteIdByName("ouroborosmedal"), Collection);
@@ -198,6 +213,9 @@ namespace Planetside
         public static GameObject Text;
         public static GameObject ExtantText;
 
+		public static GameObject BulletBankDummy;
+
+
         public static void UpdatePageHook(Action<AmmonomiconDeathPageController> orig, AmmonomiconDeathPageController self)
 		{
             orig(self);
@@ -288,9 +306,9 @@ namespace Planetside
 			}
 		}
 
-		private static List<Type> basicEliteTypes = new List<Type>();
-		private static List<Type> specialEliteTypes = new List<Type>();
-		private static List<Type> bossEliteTypes = new List<Type>();
+		public static List<Type> basicEliteTypes = new List<Type>();
+        public static List<Type> specialEliteTypes = new List<Type>();
+        public static List<Type> bossEliteTypes = new List<Type>();
 		private static GenericLootTable chestPickupsLootTable;
 
 
@@ -375,11 +393,39 @@ namespace Planetside
 		public static void OnPlayerEnteredHook(Action<AIActor, PlayerController> orig, AIActor self, PlayerController player)
 		{
 			orig(self, player);
+			/*
+            if (self != null && self.aiActor != null && !EliteBlackListDefault.Contains(self.aiActor.EnemyGuid) && EnemyIsValid(self.aiActor) == true)
+            {
+				if (UnityEngine.Random.value <= 1);//ChanceAccordingToGivenValues(0.05f, 0.75f, 50))
+                {
+                    bool BossCheck = self.aiActor.healthHaver.IsBoss | self.aiActor.healthHaver.IsSubboss;
+                    float specialChance = ChanceAccordingToGivenValues(0.01f, 0.3f, 75);
+                    if (UnityEngine.Random.value <= specialChance && BossCheck == false)//if (UnityEngine.Random.value <= ChanceAccordingToGivenValues(0.03f, 0.1f, 50))
+                    {
+                        var SpecialElite = specialEliteTypes[UnityEngine.Random.Range(0, specialEliteTypes.Count)];
+                        if (self.aiActor.gameObject.GetComponent(SpecialElite) == null)
+                        {
+                            self.aiActor.gameObject.AddComponent(SpecialElite);
+                        }
+                    }
+                    else
+                    {
+                        var elite = basicEliteTypes[UnityEngine.Random.Range(0, basicEliteTypes.Count)];
+                        if (self.aiActor.gameObject.GetComponent(elite) == null)
+                        {
+                            self.aiActor.gameObject.AddComponent(elite);
+                        }
+                    }
+                }
+            }
+			*/
+            /*
 			if (OuroborosMode() == true)
 			{
 			
 			}
-		}
+			*/
+        }
 
 
 		public static void StartHookAIActor(Action<AIActor> orig, AIActor self)
@@ -461,11 +507,18 @@ namespace Planetside
                         if (UnityEngine.Random.value <= specialChance && BossCheck == false)//if (UnityEngine.Random.value <= ChanceAccordingToGivenValues(0.03f, 0.1f, 50))
                         {
                             var SpecialElite = specialEliteTypes[UnityEngine.Random.Range(0, specialEliteTypes.Count)];
-                            self.aiActor.gameObject.AddComponent(SpecialElite);
+							if (self.aiActor.gameObject.GetComponent(SpecialElite) == null)
+							{
+                                self.aiActor.gameObject.AddComponent(SpecialElite);
+                            }
                         }
                         else
                         {
-                            self.aiActor.gameObject.AddComponent(basicEliteTypes[UnityEngine.Random.Range(0, basicEliteTypes.Count)]);
+							var elite = basicEliteTypes[UnityEngine.Random.Range(0, basicEliteTypes.Count)];
+                            if (self.aiActor.gameObject.GetComponent(elite) == null)
+                            {
+                                self.aiActor.gameObject.AddComponent(elite);
+                            }
                         }
                     }
                 }
@@ -516,7 +569,7 @@ namespace Planetside
             return false;
 		}
 
-		private static bool EnemyIsValid(AIActor aI)
+		public static bool EnemyIsValid(AIActor aI)
 		{
             if (aI.gameObject.GetComponent<ChaoticShiftedElite>() != null) { return false; }
             if (aI.gameObject.GetComponent<FrenzyElite>() != null) { return false; }
@@ -572,7 +625,7 @@ namespace Planetside
 			EnemyGuidDatabase.Entries["fridge_maiden"],
 		};
 
-		private static List<string> bannedEnemiesForOrbitingSkulls = new List<string>()
+		public static List<string> bannedEnemiesForOrbitingSkulls = new List<string>()
 		{
 			EnemyGuidDatabase.Entries["gummy_spent"],
 			EnemyGuidDatabase.Entries["brown_chest_mimic"],
@@ -616,7 +669,7 @@ namespace Planetside
         };
 
       
-        private static List<string> EliteBlackListDefault = new List<string>()
+        public static List<string> EliteBlackListDefault = new List<string>()
 		{
 			"deturretleft_enemy",
 			"deturret_enemy",
@@ -1119,7 +1172,7 @@ namespace Planetside
 		};
 		public override void Start()
 		{
-			Timer = 0.75f;
+			Timer = 0.8f;
 			base.Start();
 		}
 
@@ -1127,14 +1180,61 @@ namespace Planetside
         {
 			if (Timer == 0 | Timer <= 0)
             {
-				Timer = 0.75f;
+				Timer = 0.8f;
 				if (base.aiActor != null)
 				{
-					SpawnManager.SpawnBulletScript(base.aiActor, new CustomBulletScriptSelector(typeof(EliteReflect)));
+                    SpawnBulletScript(base.aiActor, base.aiActor.sprite.WorldCenter, OuroborosController.BulletBankDummy.GetComponent<AIBulletBank>(), new CustomBulletScriptSelector(typeof(EliteReflect)), "Reflection");
 				}
 			}
 		}
-		public override void Update()
+
+        public static void SpawnBulletScript(GameActor owner, Vector2 pos, AIBulletBank sourceBulletBank, BulletScriptSelector bulletScript, string ownerName, SpeculativeRigidbody sourceRigidbody = null, Vector2? direction = null, bool collidesWithEnemies = false, Action<Bullet, Projectile> OnBulletCreated = null)
+        {
+            GameObject gameObject = new GameObject("Temp BulletScript Spawner");
+            gameObject.transform.position = pos;
+
+            AIBulletBank aibulletBank = gameObject.AddComponent<AIBulletBank>();
+            aibulletBank.Bullets = new List<AIBulletBank.Entry>();
+
+            for (int i = 0; i < sourceBulletBank.Bullets.Count; i++)
+            {
+                aibulletBank.Bullets.Add(new AIBulletBank.Entry(sourceBulletBank.Bullets[i]));
+            }
+
+            aibulletBank.useDefaultBulletIfMissing = sourceBulletBank.useDefaultBulletIfMissing;
+            aibulletBank.transforms = new List<Transform>(sourceBulletBank.transforms);
+            aibulletBank.PlayVfx = false;
+            aibulletBank.PlayAudio = false;
+            aibulletBank.CollidesWithEnemies = collidesWithEnemies;
+            aibulletBank.gameActor = owner;
+
+            if (owner is AIActor)
+            {
+                aibulletBank.aiActor = (owner as AIActor);
+            }
+
+            aibulletBank.ActorName = ownerName;
+            if (OnBulletCreated != null)
+            {
+                aibulletBank.OnBulletSpawned += OnBulletCreated;
+            }
+
+            aibulletBank.SpecificRigidbodyException = sourceRigidbody;
+            if (direction != null)
+            {
+                aibulletBank.FixedPlayerPosition = new Vector2?(pos + direction.Value.normalized * 5f);
+            }
+
+            BulletScriptSource bulletScriptSource = gameObject.AddComponent<BulletScriptSource>();
+            bulletScriptSource.BulletManager = aibulletBank;
+            bulletScriptSource.BulletScript = bulletScript;
+            bulletScriptSource.Initialize();
+            BulletSourceKiller bulletSourceKiller = gameObject.AddComponent<BulletSourceKiller>();
+            bulletSourceKiller.BraveSource = bulletScriptSource;
+        }
+
+
+        public override void Update()
 		{
 			base.Update();
 			if (base.aiActor)
@@ -1148,10 +1248,6 @@ namespace Planetside
 	{
 		public override IEnumerator Top()
 		{
-			if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
-			{
-				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("sweep"));
-			}
 			base.PostWwiseEvent("Play_ENM_ironmaiden_blast_01", null);
 			float RNG = UnityEngine.Random.Range(0, 60);
 			for (int i = 0; i <= 6; i++)
@@ -1330,7 +1426,7 @@ namespace Planetside
 	{
 		public override float HealthMultiplier => 2.5f;
 		public override float CooldownMultiplier => 0.8f;
-		public override float MovementSpeedMultiplier => 1.5f;
+		public override float MovementSpeedMultiplier => 1.15f;
 		public override Color EliteOutlineColor => Color.green;
 		public override Color EliteParticleColor => Color.green;
 		public override Color SecondaryEliteParticleColor => Color.magenta;
@@ -1356,7 +1452,12 @@ namespace Planetside
 
 			EnemyGuidDatabase.Entries["shambling_round"],
 			EnemyGuidDatabase.Entries["killithid"],
-		};
+			EnemyGUIDs.Skusket_Head_GUID,
+            EnemyGUIDs.Black_Skusket_GUID,
+            EnemyGUIDs.Suicide_Vest_Bullet_Kin_GUID,
+
+
+        };
 
 		public override List<ActorEffectResistance> DebuffImmunities => new List<ActorEffectResistance> { new ActorEffectResistance() { resistAmount = 1, resistType = EffectResistanceType.Freeze } };
 		public override void Start()
@@ -1379,7 +1480,7 @@ namespace Planetside
 					Destroy(obj, 2);
 					CellArea area = base.aiActor.ParentRoom.area;
 					DoTeleport();
-                    base.aiActor.behaviorSpeculator.Stun(0.5f);
+                    base.aiActor.behaviorSpeculator.Stun(0.35f);
                 }
             }
 		}

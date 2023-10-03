@@ -31,6 +31,8 @@ namespace Planetside
     // [HarmonyLib]
 
     [BepInDependency("etgmodding.etg.mtgapi")]
+    [BepInDependency("etgmodding.etg.mtgapi")]
+
     [BepInPlugin(GUID, NAME, VERSION)]
     [HarmonyPatch]
 
@@ -38,7 +40,7 @@ namespace Planetside
     {
         public const string GUID = "somebunny.etg.planetsideofgunymede";
         public const string NAME = "Planetside Of Gunymede Pre-Release";
-        public const string VERSION = "1.3.142";
+        public const string VERSION = "1.3.145";
 
         public static readonly string TEXT_COLOR = "#9006FF";
 
@@ -81,7 +83,6 @@ namespace Planetside
             //Initialise World-Stuff here
             CrossGameDataStorage.Start();
 
-            ChamberGunAPI.Init("PlanetsideOfGunymede");
 
             //Asset bundle stuff
             PlanetsideModule.ModAssets = AssetBundleLoader.LoadAssetBundleFromLiterallyAnywhere("planetsidebundle");
@@ -110,7 +111,7 @@ namespace Planetside
 
             StaticInformation.Init();
 
-            ShopDiscountMegaMind.Init();
+            //ShopDiscountMegaMind.Init();
 
 
             InverseGlowShader = PlanetsideModule.ModAssets.LoadAsset<Shader>("inverseglowshader");
@@ -362,7 +363,7 @@ namespace Planetside
             Autocannon.Add();
             PunctureWound.Add();
             GunClassToken.Init();
-            ShopDiscountItem.Init();
+           // ShopDiscountItem.Init();
             SawBladeGun.Add();
             CoinShot.Add();
 
@@ -545,7 +546,7 @@ namespace Planetside
             PlanetsideBalanceChanges.Init();
 
             DungeonHandler.Init();
-            MasteryReplacementOub.InitDungeonHook();
+            //MasteryReplacementOub.InitDungeonHook();
 
             ModPrefabs.InitCustomPrefabs();
             ModRoomPrefabs.InitCustomRooms();

@@ -40,6 +40,7 @@ namespace Planetside
             OphanaimDecals.Init();
             EnemyBuffShrine.Init();
             NoTeleporterPlaceable.Init();
+            TrespassPortalReturn.Init();
             //TrespassTrollRock.Init();
         }
     }

@@ -3,6 +3,7 @@ using ItemAPI;
 using SaveAPI;
 using System;
 using System.Collections.Generic;
+using tk2dRuntime.TileMap;
 using UnityEngine;
 
 namespace Planetside
@@ -16,11 +17,12 @@ namespace Planetside
             this.hasBeenPickedup = false;
             this.LeniencyProtection = 0;
         }
-        public void Start() 
+        public void Start()
         {
-           //
-            if (player.ForceZeroHealthState == true){
-                player.healthHaver.Armor = 2;
+            //
+            if (player.ForceZeroHealthState == true && player.healthHaver.Armor > 4)
+            {
+                player.healthHaver.Armor = 4;
             }
             else{
                 float HPtOremove = (player.stats.GetStatValue(PlayerStats.StatType.Health));
@@ -91,8 +93,8 @@ namespace Planetside
         
         public void IncrementStack()
         {
-            this.DamageToGetFromOverHeal += 0.125f;
-            this.DamageMult += 0.5f;
+            this.DamageToGetFromOverHeal += 0.1f;
+            this.DamageMult += 0.33f;
             if (LeniencyProtection != -1) {LeniencyProtection = -1;}
         }
         private StatModifier DamageStat;

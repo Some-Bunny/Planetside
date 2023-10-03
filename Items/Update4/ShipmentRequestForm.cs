@@ -63,6 +63,8 @@ namespace Planetside
                 { 67, 0.75f }, //Key
                 });
             Actions.OnRunStart += OnRunStart;
+            GameManager.Instance.RainbowRunForceExcludedIDs.Add(activeitem.PickupObjectId);
+
         }
         public static void OnRunStart(PlayerController player, PlayerController player2, GameManager.GameMode gameMode)
         {

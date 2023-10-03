@@ -19,7 +19,7 @@ namespace Planetside
             ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("orbofpower"), data, gameObject);
             //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
             string shortDesc = "Banishment";
-			string longDesc = "A reminder of those you banished from the Gungeon, for the rest of eternity.";
+			string longDesc = "A reminder of those you banished from the Gungeon for the rest of time.";
 			ItemBuilder.SetupItem(warVase, shortDesc, longDesc, "psog");
 			warVase.quality = PickupObject.ItemQuality.EXCLUDED;
 			warVase.IgnoredByRat = true;

@@ -19,7 +19,7 @@ using SaveAPI;
 using NpcApi;
 
 namespace Planetside
-{   
+{
 
     public class ExampleShopDiscountSetup
     {
@@ -36,7 +36,7 @@ namespace Planetside
             });
             */
         }
-
+        /*
         public static bool Example_Criteria(ShopItemController shopItemController)//this will be ran to see if your shop item even has the right criteria for being discounted. if returns TRUE, will be able to be discounted (if there is disocunt conditions in the first place), else will not be
         {
             if(shopItemController.item.PickupObjectId == 69) { return true; } //has a ShopItemController accessible that you can *yoink* any information you need
@@ -346,16 +346,17 @@ namespace Planetside
         private ShopItemController shopItemSelf;
     }
 
+    */
 
-    //=============================================================================
-    //=============================================================================
-    //=============================================================================
-    //=============================================================================
-    //=============================================================================
-    //=============================================================================
+        //=============================================================================
+        //=============================================================================
+        //=============================================================================
+        //=============================================================================
+        //=============================================================================
+        //=============================================================================
 
 
-
+    }
 
 
 

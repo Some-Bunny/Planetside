@@ -67,6 +67,7 @@
     <Compile Include="Components\Projectile Components\StickyProjectileModifier.cs" />
     <Compile Include="Controllers\ChallengeModeExtraChallenges.cs" />
     <Compile Include="Controllers\ContainmentBreach\BossChanges\F1.5\FungannonChanges.cs" />
+    <Compile Include="Controllers\ContainmentBreach\BossChanges\4.5\AgunimChanges.cs" />
     <Compile Include="Controllers\ContainmentBreach\BossChanges\F2\AmmocondaChanges.cs" />
     <Compile Include="Controllers\ContainmentBreach\BossChanges\F1.5\BlobulordChanges.cs" />
     <Compile Include="Controllers\ContainmentBreach\BossChanges\F2.5\OldKingChanges.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="DungeonPlaceables\EmberPot.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassLightBig.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassLight.cs" />
+    <Compile Include="DungeonPlaceables\TrespassPortalReturn.cs" />
     <Compile Include="DungeonPlaceables\TrespassPortalBack.cs" />
     <Compile Include="EnemySetupCode\EnemyAPI %28The one that modifies behaviors%29\OverrideBehavior.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\DallanBullet.cs" />
@@ -4762,6 +4764,9 @@
     <Reference Include="0Harmony">
       <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Enter the Gungeon\BepInEx\core\0Harmony.dll</HintPath>
     </Reference>
+    <Reference Include="Alexandria">
+      <HintPath>..\..\..\AppData\Roaming\Thunderstore Mod Manager\DataFolder\ETG\profiles\Default\BepInEx\plugins\Alexandria-Alexandria\Alexandria.dll</HintPath>
+    </Reference>
     <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Modular\packages\EtG.GameLibs.2.1.9.1\lib\net35\Assembly-CSharp.dll</HintPath>
@@ -5382,6 +5387,9 @@
     <EmbeddedResource Include="Guns\Jsons\tracker_reload_010.jtk2d" />
     <EmbeddedResource Include="Guns\Jsons\tracker_reload_011.jtk2d" />
     <EmbeddedResource Include="Guns\Jsons\tracker_reload_012.jtk2d" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\AbyssRooms\oopsie.room" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

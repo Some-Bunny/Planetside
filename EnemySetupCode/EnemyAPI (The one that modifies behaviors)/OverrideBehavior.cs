@@ -27,6 +27,7 @@ namespace Planetside
         {
             if (ContainmentBreachController.CurrentState == ContainmentBreachController.States.ALLOWED) { return true; }
             return false;
+            //return true;
         }
 
         public abstract void DoOverride();

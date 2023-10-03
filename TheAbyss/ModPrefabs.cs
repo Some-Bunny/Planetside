@@ -638,7 +638,7 @@ namespace Planetside
             };
 
 			Mod_Entrance_Room = DungeonRoomFactory.BuildFromResource("Planetside/Resources/AbyssRooms/AbyssEntry/TheDeepEntrance.room");
-            Mod_Exit_Room = DungeonRoomFactory.BuildFromResource("Planetside/Resources/AbyssRooms/AbyssBossRoom/AbyssTestBossRoom.room");
+            Mod_Exit_Room = DungeonRoomFactory.BuildFromResource("Planetside/Resources/AbyssRooms/oopsie.room");
             Mod_Entrance_Room.category = PrototypeDungeonRoom.RoomCategory.ENTRANCE;
 			VoidMuncherRoom = DungeonRoomFactory.BuildFromResource("Planetside/Resources/AbyssRooms/AbyssSpecial/SpecialVoidMuncherRoom.room");
             AbyssSpawnLootRoom = DungeonRoomFactory.BuildFromResource("Planetside/Resources/AbyssRooms/AbyssSpecial/abyssroom_special_free_loot.room");

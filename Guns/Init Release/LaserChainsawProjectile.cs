@@ -33,16 +33,6 @@ namespace Planetside
 				component.projectile.OnWillKillEnemy = (Action<Projectile, SpeculativeRigidbody>)Delegate.Combine(component.projectile.OnWillKillEnemy, new Action<Projectile, SpeculativeRigidbody>(this.OnKill));
 			}
 		}
-		private void Update()
-        {
-			
-		}
-
-        private void Player_PostProcessBeamTick(BeamController arg1, SpeculativeRigidbody arg2, float arg3)
-        {
-			arg1.ChanceBasedHomingRadius += 1000000000;
-			arg1.ChanceBasedHomingAngularVelocity += 10000;
-		}
 
         private void HandleHit(Projectile arg1, SpeculativeRigidbody arg2, bool arg3)
 		{

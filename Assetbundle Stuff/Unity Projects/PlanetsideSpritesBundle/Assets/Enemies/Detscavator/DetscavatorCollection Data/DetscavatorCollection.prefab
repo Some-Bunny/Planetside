@@ -1927,6 +1927,7 @@ MonoBehaviour:
     polygonCollider2D: []
     edgeCollider2D: []
     attachPoints: []
+  SpriteIDsWithAttachPoints: 
   premultipliedAlpha: 0
   material: {fileID: 0}
   materials:
@@ -1944,7 +1945,7 @@ MonoBehaviour:
   loadable: 0
   invOrthoSize: 2
   halfTargetHeight: 8
-  buildKey: 771914297
+  buildKey: 1515051837
   dataGuid: 90d7ea28b1cfd664e8a55f794343af6c
   managedSpriteCollection: 0
   hasPlatformData: 0
