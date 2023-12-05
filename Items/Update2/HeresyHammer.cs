@@ -32,7 +32,7 @@ namespace Planetside
     {
         public static void Init()
         {
-            string itemName = "Heresy Breaker";
+            string itemName = "Heretics Hammer";
             //string resourceName = "Planetside/Resources/heresyhammer.png";
             GameObject obj = new GameObject(itemName);
             HeresyHammer activeitem = obj.AddComponent<HeresyHammer>();
@@ -190,7 +190,7 @@ namespace Planetside
                 if (death.name == "psog:nullshrine(Clone)")
                 {
                     OtherTools.ApplyStat(user, PlayerStats.StatType.Curse, 0.5f, StatModifier.ModifyMethod.ADDITIVE);
-                    if (UnityEngine.Random.value <= 0.4f)
+                    if (UnityEngine.Random.value < 0.5f)
                     {
                         LootEngine.SpawnCurrency(death.sprite.WorldCenter, 1);
                         LootEngine.SpawnItem(PickupObjectDatabase.GetById(NullPickupInteractable.NollahID).gameObject, death.sprite.WorldCenter, new Vector2(2f, 0f), 2.2f, false, true, false);
@@ -205,7 +205,7 @@ namespace Planetside
                 if (death.name == "psog:shrineofdarkness(Clone)" | death.name == "psog:shrineofcurses(Clone)" | death.name == "psog:shrineofpetrification(Clone)" | death.name == "psog:shrineofsomething(Clone)")
                 {
                     PurpleParticles = true;
-                    if (UnityEngine.Random.value <= 0.2f)
+                    if (UnityEngine.Random.value < 0.35f)
                     {
                         int id = BraveUtility.RandomElement<int>(this.CursedID);
                         LootEngine.SpawnItem(PickupObjectDatabase.GetById(id).gameObject, death.sprite.WorldCenter, new Vector2(0f, 0f), 0f, false, true, false);
@@ -218,7 +218,7 @@ namespace Planetside
                 }
                 if (death.name == "psog:shrineofpurity(Clone)")
                 {
-                    if (UnityEngine.Random.value <= 0.125f)
+                    if (UnityEngine.Random.value < 0.2f)
                     {
                         OtherTools.ApplyStat(user, PlayerStats.StatType.DamageToBosses, 0.95f, StatModifier.ModifyMethod.MULTIPLICATIVE);
                         OtherTools.ApplyStat(user, PlayerStats.StatType.RateOfFire, 1.1f, StatModifier.ModifyMethod.MULTIPLICATIVE);
@@ -258,7 +258,7 @@ namespace Planetside
                 }
                 if (death.name == "psog:gunorbitingshrine(Clone)")
                 {
-                    if (UnityEngine.Random.value <= 0.4f)
+                    if (UnityEngine.Random.value < 0.6f)
                     {
                         OtherTools.ApplyStat(user, PlayerStats.StatType.AmmoCapacityMultiplier, 1.3f, StatModifier.ModifyMethod.MULTIPLICATIVE);
                         OtherTools.ApplyStat(user, PlayerStats.StatType.AdditionalClipCapacityMultiplier, 2f, StatModifier.ModifyMethod.MULTIPLICATIVE);
@@ -276,7 +276,7 @@ namespace Planetside
                     AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.HAS_COMMITED_HERESY, true);
                     OtherTools.Notify("HERETIC!", "How Dare You Do This!", "Planetside/Resources/ShrineIcons/HeresyIcons/ShelltanIcon");
 
-                    OtherTools.ApplyStat(user, PlayerStats.StatType.Damage, 2f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+                    OtherTools.ApplyStat(user, PlayerStats.StatType.Damage, 1.5f, StatModifier.ModifyMethod.MULTIPLICATIVE);
                     OtherTools.ApplyStat(user, PlayerStats.StatType.Health,2f, StatModifier.ModifyMethod.ADDITIVE);
                     AkSoundEngine.PostEvent("Play_BOSS_lichB_intro_01", base.gameObject);
 
@@ -290,25 +290,12 @@ namespace Planetside
                         aiactor.HandleReinforcementFallIntoRoom(0);
                     }
 
-                    /*
-                    GameObject gameObject = new GameObject();
-                    gameObject.transform.position = death.transform.position;
-                    BulletScriptSource source = gameObject.GetOrAddComponent<BulletScriptSource>();
-                    gameObject.AddComponent<BulletSourceKiller>();
-                    var bulletScriptSelected = new CustomBulletScriptSelector(typeof(UltraAngryGodsScript));
-                    AIActor aIActor = EnemyDatabase.GetOrLoadByGuid("01972dee89fc4404a5c408d50007dad5");
-                    AIBulletBank bulletBank = aIActor.GetComponent<AIBulletBank>();
-                    bulletBank.CollidesWithEnemies = false;
-                    source.BulletManager = bulletBank;
-                    source.BulletScript = bulletScriptSelected;
-                    source.Initialize();//to fire the script once
-                   */
-
                     HERETIC heresy = user.gameObject.AddComponent<HERETIC>();
                     heresy.player = user;
 
                     BrokenChamberComponent chamber = user.gameObject.AddComponent<BrokenChamberComponent>();
                     chamber.player = user;
+                    chamber.TimeBetweenRockFalls = 5;
                     base.StartCoroutine(ShrineParticlesOnDestoryBlue(death.sprite.WorldBottomLeft, death.sprite.WorldTopRight));
                 }
 
@@ -317,7 +304,7 @@ namespace Planetside
             else if (nearestInteractable != null && nearestInteractable is BeholsterShrineController)
             {
                 BeholsterShrineController death = nearestInteractable as BeholsterShrineController;
-                if (UnityEngine.Random.value <= 0.3f && ((GameManager.Instance.BestGenerationDungeonPrefab.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.GUNGEON || GameManager.Instance.BestGenerationDungeonPrefab.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.CASTLEGEON || GameManager.Instance.BestGenerationDungeonPrefab.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.MINEGEON) && GameStatsManager.Instance.GetPlayerStatValue(TrackedStats.NUMBER_ATTEMPTS) > 10f && GameStatsManager.Instance.GetFlag(GungeonFlags.BOSSKILLED_BEHOLSTER)))
+                if (UnityEngine.Random.value < 0.45f && ((GameManager.Instance.BestGenerationDungeonPrefab.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.GUNGEON || GameManager.Instance.BestGenerationDungeonPrefab.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.CASTLEGEON || GameManager.Instance.BestGenerationDungeonPrefab.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.MINEGEON) && GameStatsManager.Instance.GetPlayerStatValue(TrackedStats.NUMBER_ATTEMPTS) > 10f && GameStatsManager.Instance.GetFlag(GungeonFlags.BOSSKILLED_BEHOLSTER)))
                 {
                     GameManager.Instance.InjectedFlowPath = "Core Game Flows/Secret_DoubleBeholster_Flow";
                     Pixelator.Instance.FadeToBlack(0.5f, false, 0f);
@@ -334,7 +321,7 @@ namespace Planetside
             else if (nearestInteractable != null && nearestInteractable is ChallengeShrineController)
             {
                 ChallengeShrineController death = nearestInteractable as ChallengeShrineController;
-                if (UnityEngine.Random.value <= 0.5f)
+                if (UnityEngine.Random.value < 0.5f)
                 {
                     OtherTools.Notify("The Spirits", "Hold Back", "Planetside/Resources/ShrineIcons/HeresyIcons/shrineChallengeIcon");
                     OtherTools.ApplyStat(user, PlayerStats.StatType.Damage, 1.25f, StatModifier.ModifyMethod.MULTIPLICATIVE);
@@ -380,11 +367,13 @@ namespace Planetside
                                         if (component)
                                         {
             
+                                            /*
                                             PixelCollider primaryPixelCollider = component.PrimaryPixelCollider;
                                             Vector2 a = PhysicsEngine.PixelToUnit(new IntVector2(primaryPixelCollider.ManualOffsetX, primaryPixelCollider.ManualOffsetY));
                                             Vector2 vector2 = PhysicsEngine.PixelToUnit(new IntVector2(primaryPixelCollider.ManualWidth, primaryPixelCollider.ManualHeight));
                                             Vector2 vector3 = new Vector2((float)Mathf.CeilToInt(vector2.x), (float)Mathf.CeilToInt(vector2.y));
                                             Vector2 b = new Vector2((vector3.x - vector2.x) / 0f, 0f).Quantize(0.0625f);
+                                            */
 
                                         }
                                         
@@ -413,7 +402,7 @@ namespace Planetside
                                     if (debrisObject.IsBlankShrine | debrisObject.IsBloodShrine | debrisObject.IsGlassShrine | debrisObject.IsJunkShrine | debrisObject.IsRNGShrine | debrisObject.IsHealthArmorSwapShrine)
                                     {
                                         //==============================================================================================================================================================================================
-                                        if (debrisObject.IsBlankShrine && UnityEngine.Random.value <= 0.4f)
+                                        if (debrisObject.IsBlankShrine && UnityEngine.Random.value <= 0.5f)
                                         {
                                             GameObject gameObjectBlankVFX = (GameObject)ResourceCache.Acquire("Global VFX/BlankVFX");
                                             GameObject gameObjectBlank = new GameObject("silencer");
@@ -434,7 +423,7 @@ namespace Planetside
 
                                         }
                                         //==============================================================================================================================================================================================
-                                        if (debrisObject.IsBloodShrine && UnityEngine.Random.value <= 0.4f)
+                                        if (debrisObject.IsBlankShrine && UnityEngine.Random.value <= 0.5f)
                                         {
                                             offset = new Vector2(-2, -2);
                                             int id = BraveUtility.RandomElement<int>(this.BloddItemIDS);
@@ -451,7 +440,7 @@ namespace Planetside
                                         if (debrisObject.IsGlassShrine)
                                         {
                                             AkSoundEngine.PostEvent("Play_OBJ_crystal_shatter_01", base.gameObject);
-                                            if (UnityEngine.Random.value <= 0.40)
+                                            if (debrisObject.IsBlankShrine && UnityEngine.Random.value <= 0.5f)
                                             {
                                                 int id = BraveUtility.RandomElement<int>(this.GlassItemsID);
 
@@ -463,19 +452,27 @@ namespace Planetside
                                             }
                                         }
                                         //==============================================================================================================================================================================================
-                                        if (debrisObject.IsJunkShrine && UnityEngine.Random.value <= 0.4f && debrisObject.name == "Shrine_Junk")
+                                        if (debrisObject.IsJunkShrine && UnityEngine.Random.value < 0.5f && debrisObject.name == "Shrine_Junk")
                                         {
-                                            LootEngine.SpawnItem(PickupObjectDatabase.GetById(127).gameObject, debrisObject.sprite.WorldCenter, new Vector2(0.5f, 0.5f), 2.2f, false, true, false);
-                                            LootEngine.SpawnItem(PickupObjectDatabase.GetById(127).gameObject, debrisObject.sprite.WorldCenter, new Vector2(0.5f, -0.5f), 2.2f, false, true, false);
-                                            LootEngine.SpawnItem(PickupObjectDatabase.GetById(127).gameObject, debrisObject.sprite.WorldCenter, new Vector2(-0.5f, 0.5f), 2.2f, false, true, false);
-                                            LootEngine.SpawnItem(PickupObjectDatabase.GetById(127).gameObject, debrisObject.sprite.WorldCenter, new Vector2(-0.5f, -0.5f), 2.2f, false, true, false);
+                                            bool isJunkaned = false;
+                                            for (int c = 0; c < 4; c++)
+                                            {
+                                                int ID = 127;
+                                                if (UnityEngine.Random.value < 0.05f && isJunkaned == false)
+                                                {
+                                                    ID = 580;
+                                                    isJunkaned = true;
+                                                }
+                                                LootEngine.SpawnItem(PickupObjectDatabase.GetById(ID).gameObject, debrisObject.sprite.WorldCenter,MathToolbox.GetUnitOnCircle(c * 90, 0.5f), 2.2f, false, true, false);
+
+                                            }
                                         }
                                         else if (debrisObject.IsJunkShrine && debrisObject.name == "Shrine_Junk")
                                         {
                                             base.StartCoroutine(DoNormalBoringAssReward(debrisObject.specRigidbody.UnitCenter));
                                         }
                                         //==============================================================================================================================================================================================
-                                        if (debrisObject.IsRNGShrine && UnityEngine.Random.value <= 0.4f && debrisObject.name == "Shrine_Dice")
+                                        if (debrisObject.IsRNGShrine && UnityEngine.Random.value < 0.5f && debrisObject.name == "Shrine_Dice")
                                         {
                                             for (int e = 0; e < 6; e++)
                                             {
@@ -490,7 +487,7 @@ namespace Planetside
                                         if (debrisObject.IsHealthArmorSwapShrine)// && UnityEngine.Random.value <= 0.99f)
                                         {
                                             base.StartCoroutine(DoNormalBoringAssReward(debrisObject.specRigidbody.UnitCenter));
-                                            ETGModConsole.Log("idk what shrine this is");
+                                            Debug.Log("[PSOG] idk what shrine this is");
                                         }
                                         //==============================================================================================================================================================================================
                                         base.StartCoroutine(ShrineParticlesOnDestory(debrisObject.sprite.WorldBottomLeft + offset, debrisObject.sprite.WorldTopRight+ offset, PurpleParticles));
@@ -515,7 +512,7 @@ namespace Planetside
                                     //==============================================================================================================================================================================================
                                     if (debrisObject.name == "Shrine_YV")
                                     {
-                                        if (UnityEngine.Random.value <= 0.4f)
+                                        if (UnityEngine.Random.value <= 0.5f)
                                         {
                                             OtherTools.ApplyStat(user, PlayerStats.StatType.MoneyMultiplierFromEnemies, 1.2f, StatModifier.ModifyMethod.MULTIPLICATIVE);
                                             user.gameObject.AddComponent<GoldPlatedGun>();
@@ -530,7 +527,7 @@ namespace Planetside
                                     //==============================================================================================================================================================================================
                                     if (debrisObject.name == "Shrine_FallenAngel")
                                     {
-                                        if (UnityEngine.Random.value <= 0.4f)
+                                        if (UnityEngine.Random.value <= 0.5f)
                                         {
                                             AkSoundEngine.PostEvent("Play_BOSS_lichB_grab_01", base.gameObject);
                                             GameObject hand = UnityEngine.Object.Instantiate<GameObject>(StaticVFXStorage.hellDragController.HellDragVFX);
@@ -572,42 +569,36 @@ namespace Planetside
                                     //==============================================================================================================================================================================================
                                     if (debrisObject.name == "Shrine_Health")
                                     {
-                                        if (UnityEngine.Random.value <= 0.4f)
+                                        if (UnityEngine.Random.value <= 0.5f)
                                         {
-                                            if (UnityEngine.Random.value <= 0.99f)
+                                            if (user.ForceZeroHealthState == true)
                                             {
-                                                PlayableCharacters characterIdentity = user.characterIdentity;
-                                                bool flag = characterIdentity != PlayableCharacters.Robot;
-                                                if (flag)
+                                                if (UnityEngine.Random.value <= 0.30f)
                                                 {
-                                                    if (UnityEngine.Random.value <= 0.30f)
-                                                    {
-                                                        LootEngine.SpawnItem(PickupObjectDatabase.GetById(164).gameObject, debrisObject.sprite.WorldCenter, new Vector2(0f, 0f), 2.2f, false, true, false);
-                                                    }
-                                                    else
-                                                    {
-                                                        LootEngine.SpawnItem(PickupObjectDatabase.GetById(85).gameObject, debrisObject.sprite.WorldCenter, new Vector2(0.5f, 0.5f), 2.2f, false, true, false);
-                                                        LootEngine.SpawnItem(PickupObjectDatabase.GetById(85).gameObject, debrisObject.sprite.WorldCenter, new Vector2(0.5f, -0.5f), 2.2f, false, true, false);
-                                                        LootEngine.SpawnItem(PickupObjectDatabase.GetById(85).gameObject, debrisObject.sprite.WorldCenter, new Vector2(-0.5f, 0.5f), 2.2f, false, true, false);
-                                                        LootEngine.SpawnItem(PickupObjectDatabase.GetById(85).gameObject, debrisObject.sprite.WorldCenter, new Vector2(-0.5f, -0.5f), 2.2f, false, true, false);
-                                                    }
+                                                    LootEngine.SpawnItem(PickupObjectDatabase.GetById(164).gameObject, debrisObject.sprite.WorldCenter, new Vector2(0f, 0f), 2.2f, false, true, false);
                                                 }
                                                 else
                                                 {
-                                                    bool HHH = characterIdentity == PlayableCharacters.Robot;
-                                                    if (HHH)
+                                                    LootEngine.SpawnItem(PickupObjectDatabase.GetById(85).gameObject, debrisObject.sprite.WorldCenter, new Vector2(0.5f, 0.5f), 2.2f, false, true, false);
+                                                    LootEngine.SpawnItem(PickupObjectDatabase.GetById(85).gameObject, debrisObject.sprite.WorldCenter, new Vector2(0.5f, -0.5f), 2.2f, false, true, false);
+                                                    LootEngine.SpawnItem(PickupObjectDatabase.GetById(85).gameObject, debrisObject.sprite.WorldCenter, new Vector2(-0.5f, 0.5f), 2.2f, false, true, false);
+                                                    LootEngine.SpawnItem(PickupObjectDatabase.GetById(85).gameObject, debrisObject.sprite.WorldCenter, new Vector2(-0.5f, -0.5f), 2.2f, false, true, false);
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (user.ForceZeroHealthState == false)
+                                                {
+                                                    if (UnityEngine.Random.value <= 0.30f)
                                                     {
-                                                        if (UnityEngine.Random.value <= 0.30f)
-                                                        {
-                                                            LootEngine.SpawnItem(PickupObjectDatabase.GetById(450).gameObject, debrisObject.sprite.WorldCenter, new Vector2(0f, 0f), 2.2f, false, true, false);
-                                                        }
-                                                        else
-                                                        {
-                                                            LootEngine.SpawnItem(PickupObjectDatabase.GetById(120).gameObject, debrisObject.sprite.WorldCenter, new Vector2(0.5f, 0.5f), 2.2f, false, true, false);
-                                                            LootEngine.SpawnItem(PickupObjectDatabase.GetById(120).gameObject, debrisObject.sprite.WorldCenter, new Vector2(0.5f, -0.5f), 2.2f, false, true, false);
-                                                            LootEngine.SpawnItem(PickupObjectDatabase.GetById(120).gameObject, debrisObject.sprite.WorldCenter, new Vector2(-0.5f, 0.5f), 2.2f, false, true, false);
-                                                            LootEngine.SpawnItem(PickupObjectDatabase.GetById(120).gameObject, debrisObject.sprite.WorldCenter, new Vector2(-0.5f, -0.5f), 2.2f, false, true, false);
-                                                        }
+                                                        LootEngine.SpawnItem(PickupObjectDatabase.GetById(450).gameObject, debrisObject.sprite.WorldCenter, new Vector2(0f, 0f), 2.2f, false, true, false);
+                                                    }
+                                                    else
+                                                    {
+                                                        LootEngine.SpawnItem(PickupObjectDatabase.GetById(120).gameObject, debrisObject.sprite.WorldCenter, new Vector2(0.5f, 0.5f), 2.2f, false, true, false);
+                                                        LootEngine.SpawnItem(PickupObjectDatabase.GetById(120).gameObject, debrisObject.sprite.WorldCenter, new Vector2(0.5f, -0.5f), 2.2f, false, true, false);
+                                                        LootEngine.SpawnItem(PickupObjectDatabase.GetById(120).gameObject, debrisObject.sprite.WorldCenter, new Vector2(-0.5f, 0.5f), 2.2f, false, true, false);
+                                                        LootEngine.SpawnItem(PickupObjectDatabase.GetById(120).gameObject, debrisObject.sprite.WorldCenter, new Vector2(-0.5f, -0.5f), 2.2f, false, true, false);
                                                     }
                                                 }
                                             }
@@ -622,7 +613,7 @@ namespace Planetside
                                     //==============================================================================================================================================================================================
                                     if (debrisObject.name == "Shrine_Companion")
                                     {
-                                        if (UnityEngine.Random.value <= 0.4f)
+                                        if (UnityEngine.Random.value <= 0.5f)
                                         {
                                             OtherTools.ApplyStat(user, PlayerStats.StatType.MovementSpeed, 1.1f, StatModifier.ModifyMethod.MULTIPLICATIVE);
                                             PlayerOrbitalItem.CreateOrbital(user, RandomPiecesOfStuffToInitialise.SoulSynergyGuon, false);
@@ -674,7 +665,6 @@ namespace Planetside
 
         List<int> CursedID = new List<int>
         {
-            WitherLance.WitherLanceID,
             BloodIdol.BloodIdolID,
             403,
             571,

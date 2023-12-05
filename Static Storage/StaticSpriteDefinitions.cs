@@ -30,8 +30,10 @@ namespace Planetside
         {
             Modder_Bullet_Sheet_Data = DoFastSetup("ModderBulletCollection", "modderbullet material.mat");
             if (Modder_Bullet_Sheet_Data == null) { ETGModConsole.Log("Modder_Bullet_Sheet_Data is NULL"); }
+            
             Passive_Item_Sheet_Data = DoFastSetup("Item_Collection", "item_collection material.mat");
             if (Passive_Item_Sheet_Data == null) { ETGModConsole.Log("Passive_Item_Sheet_Data is NULL"); }
+
             Active_Item_Sheet_Data = DoFastSetup("Active_Collection", "active_item material.mat");
             if (Active_Item_Sheet_Data == null) { ETGModConsole.Log("Active_Item_Sheet_Data is NULL"); }
             Debuff_Sheet_Data = DoFastSetup("DebuffCollection", "debuff material.mat");

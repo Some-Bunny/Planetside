@@ -63,8 +63,9 @@ namespace Planetside
 				enemy.aiActor.CollisionKnockbackStrength = 10f;
 				enemy.aiActor.CanTargetPlayers = true;
 				enemy.aiActor.healthHaver.SetHealthMaximum(1075f, null, false);
+                enemy.aiActor.gameObject.GetOrAddComponent<ObjectVisibilityManager>();
 
-				EnemyToolbox.AddShadowToAIActor(enemy.aiActor, StaticEnemyShadows.massiveShadow, new Vector2(2.875f, 0.25f), "shadowPos");
+                EnemyToolbox.AddShadowToAIActor(enemy.aiActor, StaticEnemyShadows.massiveShadow, new Vector2(2.875f, 0.25f), "shadowPos");
 
 				aiAnimator.IdleAnimation = new DirectionalAnimation
 				{

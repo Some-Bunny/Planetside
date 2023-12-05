@@ -23,11 +23,21 @@ namespace Planetside
             gun.SetShortDescription("Good For Frying Dwarves");
             gun.SetLongDescription("Fires rounds with embedded detonators in them.\n\nSmells of beard shampoo.");
 
+            GunExt.SetupSprite(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "pulsecannonYellow_idle_001", 11);
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
+            gun.sprite.SortingOrder = 1;
+
+            gun.reloadAnimation = "pulsecannonyellow_reload";
+            gun.idleAnimation = "pulsecannonyellow_idle";
+            gun.shootAnimation = "pulsecannonyellow_fire";
+
+            /*
             gun.SetupSprite(null, "pulsecannonYellow_idle_001", 8);
 
             gun.SetAnimationFPS(gun.shootAnimation, 16);
             gun.SetAnimationFPS(gun.reloadAnimation, 8);
             gun.SetAnimationFPS(gun.idleAnimation, 1);
+            */
 
             for (int e = 0; e < 6; e++)
             {

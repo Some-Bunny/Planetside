@@ -26,11 +26,21 @@ namespace Planetside
             gun.SetShortDescription("Good For Frying Dwarves");
             gun.SetLongDescription("A downscaled version of a pulse cannon that would be attached to a colossal battle-tower. They were decommisioned after a rise of employees reporting their legs were getting cut off.");
 
+            GunExt.SetupSprite(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "pulsecannon_idle_001", 11);
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
+            gun.sprite.SortingOrder = 1;
+
+            gun.reloadAnimation = "pulsecannon_reload";
+            gun.idleAnimation = "pulsecannon_idle";
+            gun.shootAnimation = "pulsecannon_fire";
+
+            /*
             gun.SetupSprite(null, "pulsecannon_idle_001", 8);
 
             gun.SetAnimationFPS(gun.shootAnimation, 16);
             gun.SetAnimationFPS(gun.reloadAnimation, 8);
             gun.SetAnimationFPS(gun.idleAnimation, 1);
+            */
 
 
             for (int e = 0; e < 4; e++)

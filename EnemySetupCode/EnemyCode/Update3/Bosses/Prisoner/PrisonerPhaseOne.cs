@@ -19,7 +19,7 @@ namespace Planetside
 
 	public class PrisonerPhaseOne : AIActor
 	{
-		public static GameObject fuckyouprefab;
+		public static GameObject prefab;
 		public static readonly string guid = "Prisoner_Cloaked";
 		private static tk2dSpriteCollectionData PrisonerPhaseOneSpriteCollection;
 		public static GameObject shootpoint;
@@ -49,14 +49,14 @@ namespace Planetside
 
 		public static void BuildPrefab()
 		{
-			bool flag = fuckyouprefab != null || BossBuilder.Dictionary.ContainsKey(guid);
+			bool flag = prefab != null || BossBuilder.Dictionary.ContainsKey(guid);
 			bool flag2 = flag;
 			if (!flag2)
 			{
-				fuckyouprefab = BossBuilder.BuildPrefab("Prisoner Phase One", guid, spritePaths[0], new IntVector2(15, 4), new IntVector2(34, 51), false, true);
-				var companion = fuckyouprefab.AddComponent<PrisonerController>();
-				fuckyouprefab.AddComponent<PrisonerFirstSubPhaseController>();
-				fuckyouprefab.AddComponent<PrisonerSecondSubPhaseController>();
+                prefab = BossBuilder.BuildPrefab("Prisoner Phase One", guid, spritePaths[0], new IntVector2(15, 4), new IntVector2(34, 51), false, true);
+				var companion = prefab.AddComponent<PrisonerController>();
+                prefab.AddComponent<PrisonerFirstSubPhaseController>();
+                prefab.AddComponent<PrisonerSecondSubPhaseController>();
 
 				companion.aiActor.knockbackDoer.weight = 200;
 				companion.aiActor.MovementSpeed = 3.2f;
@@ -157,7 +157,7 @@ namespace Planetside
 				bool flag3 = PrisonerPhaseOneSpriteCollection == null;
 				if (flag3)
 				{
-					PrisonerPhaseOneSpriteCollection = SpriteBuilder.ConstructCollection(fuckyouprefab, "Prisoner Phase One Collection");
+					PrisonerPhaseOneSpriteCollection = SpriteBuilder.ConstructCollection(prefab, "Prisoner Phase One Collection");
 					UnityEngine.Object.DontDestroyOnLoad(PrisonerPhaseOneSpriteCollection);
 					for (int i = 0; i < spritePaths.Length; i++)
 					{
@@ -419,22 +419,22 @@ namespace Planetside
 					67
 					}, "swipehandmoveback", tk2dSpriteAnimationClip.WrapMode.Once).fps = 8f;
 
-					EnemyToolbox.AddSoundsToAnimationFrame(fuckyouprefab.GetComponent<tk2dSpriteAnimator>(), "intro", new Dictionary<int, string> { { 47, "Play_BOSS_lichA_crack_01" }, { 61, "Play_BOSS_lichA_crack_01" }, { 49, "Play_BOSS_lichC_hook_01" }, { 63, "Play_BOSS_lichC_hook_01" }, { 50, "Play_OBJ_hook_pull_01" }, { 64, "Play_OBJ_hook_pull_01" }, { 51, "Play_OBJ_hook_pull_01" }, { 65, "Play_OBJ_hook_pull_01" }, { 71, "Play_BOSS_lichA_turn_01" }, { 86, "Play_PrisonerLaugh" } });
-					EnemyToolbox.AddSoundsToAnimationFrame(fuckyouprefab.GetComponent<tk2dSpriteAnimator>(), "intro", new Dictionary<int, string> { { 49, "Play_ChainBreak" }, { 63, "Play_ChainBreak" } });
-					EnemyToolbox.AddSoundsToAnimationFrame(fuckyouprefab.GetComponent<tk2dSpriteAnimator>(), "intro", new Dictionary<int, string> { { 49, "Play_OBJ_lock_pick_01" }, { 63, "Play_OBJ_lock_pick_01" } });
-					EnemyToolbox.AddEventTriggersToAnimation(fuckyouprefab.GetComponent<tk2dSpriteAnimator>(), "intro", new Dictionary<int, string> { { 49, "LeftHandBreakFree" }, { 63, "RightHandBreakFree" }, { 54, "LeftHandCastMagic" }, { 87, "PrisonerLaugh" }, { 90, "PrisonerLaugh" }, { 93, "PrisonerLaugh" }, { 96, "PrisonerLaugh" } });
+					EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "intro", new Dictionary<int, string> { { 47, "Play_BOSS_lichA_crack_01" }, { 61, "Play_BOSS_lichA_crack_01" }, { 49, "Play_BOSS_lichC_hook_01" }, { 63, "Play_BOSS_lichC_hook_01" }, { 50, "Play_OBJ_hook_pull_01" }, { 64, "Play_OBJ_hook_pull_01" }, { 51, "Play_OBJ_hook_pull_01" }, { 65, "Play_OBJ_hook_pull_01" }, { 71, "Play_BOSS_lichA_turn_01" }, { 86, "Play_PrisonerLaugh" } });
+					EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "intro", new Dictionary<int, string> { { 49, "Play_ChainBreak" }, { 63, "Play_ChainBreak" } });
+					EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "intro", new Dictionary<int, string> { { 49, "Play_OBJ_lock_pick_01" }, { 63, "Play_OBJ_lock_pick_01" } });
+					EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "intro", new Dictionary<int, string> { { 49, "LeftHandBreakFree" }, { 63, "RightHandBreakFree" }, { 54, "LeftHandCastMagic" }, { 87, "PrisonerLaugh" }, { 90, "PrisonerLaugh" }, { 93, "PrisonerLaugh" }, { 96, "PrisonerLaugh" } });
 					
 
-					EnemyToolbox.AddSoundsToAnimationFrame(fuckyouprefab.GetComponent<tk2dSpriteAnimator>(), "subphaseoneanimation", new Dictionary<int, string> { { 0, "Play_PrisonerCough" }, { 9, "Play_PrisonerLaugh" } });
-					EnemyToolbox.AddEventTriggersToAnimation(fuckyouprefab.GetComponent<tk2dSpriteAnimator>(), "subphaseoneanimation", new Dictionary<int, string> { { 9, "PrisonerLaugh" }, { 12, "PrisonerLaugh" }, { 15, "PrisonerLaugh" }, { 18, "PrisonerLaugh" }, { 21, "PrisonerLaugh" }, { 24, "PrisonerLaugh" }, { 27, "PrisonerLaugh" }, { 30, "PrisonerLaugh" } });
+					EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "subphaseoneanimation", new Dictionary<int, string> { { 0, "Play_PrisonerCough" }, { 9, "Play_PrisonerLaugh" } });
+					EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "subphaseoneanimation", new Dictionary<int, string> { { 9, "PrisonerLaugh" }, { 12, "PrisonerLaugh" }, { 15, "PrisonerLaugh" }, { 18, "PrisonerLaugh" }, { 21, "PrisonerLaugh" }, { 24, "PrisonerLaugh" }, { 27, "PrisonerLaugh" }, { 30, "PrisonerLaugh" } });
 
 
-					EnemyToolbox.AddEventTriggersToAnimation(fuckyouprefab.GetComponent<tk2dSpriteAnimator>(), "firelaser", new Dictionary<int, string> { { 1, "FancyMagics" } });
-					EnemyToolbox.AddEventTriggersToAnimation(fuckyouprefab.GetComponent<tk2dSpriteAnimator>(), "chargelaser", new Dictionary<int, string> { { 1, "Charge" } });
+					EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "firelaser", new Dictionary<int, string> { { 1, "FancyMagics" } });
+					EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "chargelaser", new Dictionary<int, string> { { 1, "Charge" } });
 
-					EnemyToolbox.AddSoundsToAnimationFrame(fuckyouprefab.GetComponent<tk2dSpriteAnimator>(), "chargelaser", new Dictionary<int, string> { { 1, "Play_PrisonerCharge" } });
-					EnemyToolbox.AddEventTriggersToAnimation(fuckyouprefab.GetComponent<tk2dSpriteAnimator>(), "sweengarm", new Dictionary<int, string> { { 0, "SummonRunes" }, { 2, "SummonRunes" } });
-					EnemyToolbox.AddSoundsToAnimationFrame(fuckyouprefab.GetComponent<tk2dSpriteAnimator>(), "raisearm", new Dictionary<int, string> { { 0, "Play_PrisonerCough" }, { 5, "Play_EnergySwirl" } });
+					EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "chargelaser", new Dictionary<int, string> { { 1, "Play_PrisonerCharge" } });
+					EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "sweengarm", new Dictionary<int, string> { { 0, "SummonRunes" }, { 2, "SummonRunes" } });
+					EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "raisearm", new Dictionary<int, string> { { 0, "Play_PrisonerCough" }, { 5, "Play_EnergySwirl" } });
 
 
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, PrisonerPhaseOneSpriteCollection, new List<int>
@@ -447,8 +447,8 @@ namespace Planetside
 					43,
 					44,
 					}, "chargedeath", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6f;
-					EnemyToolbox.AddSoundsToAnimationFrame(fuckyouprefab.GetComponent<tk2dSpriteAnimator>(), "chargedeath", new Dictionary<int, string> { { 0, "Play_PrisonerCharge" } });
-					EnemyToolbox.AddEventTriggersToAnimation(fuckyouprefab.GetComponent<tk2dSpriteAnimator>(), "chargedeath", new Dictionary<int, string> { { 4, "SummonOmega" } });
+					EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "chargedeath", new Dictionary<int, string> { { 0, "Play_PrisonerCharge" } });
+					EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "chargedeath", new Dictionary<int, string> { { 4, "SummonOmega" } });
 
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, PrisonerPhaseOneSpriteCollection, new List<int>
 					{
@@ -479,7 +479,7 @@ namespace Planetside
 
 				}
 
-				var bs = fuckyouprefab.GetComponent<BehaviorSpeculator>();
+				var bs = prefab.GetComponent<BehaviorSpeculator>();
 				BehaviorSpeculator behaviorSpeculator = EnemyDatabase.GetOrLoadByGuid("01972dee89fc4404a5c408d50007dad5").behaviorSpeculator;
 				bs.OverrideBehaviors = behaviorSpeculator.OverrideBehaviors;
 				bs.OtherBehaviors = behaviorSpeculator.OtherBehaviors;
@@ -1020,8 +1020,8 @@ namespace Planetside
 				yeah.OverrideImageShader = Shader.Find("Brave/PlayerShader");
 
 
-				GenericIntroDoer miniBossIntroDoer = fuckyouprefab.AddComponent<GenericIntroDoer>();
-				fuckyouprefab.AddComponent<PrisonerPhaseOneIntroController>();
+				GenericIntroDoer miniBossIntroDoer = prefab.AddComponent<GenericIntroDoer>();
+                prefab.AddComponent<PrisonerPhaseOneIntroController>();
 				miniBossIntroDoer.triggerType = GenericIntroDoer.TriggerType.PlayerEnteredRoom;
 				miniBossIntroDoer.initialDelay = 0.15f;
 				miniBossIntroDoer.cameraMoveSpeed = 14;

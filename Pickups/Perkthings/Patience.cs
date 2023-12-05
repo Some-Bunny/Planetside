@@ -65,14 +65,12 @@ namespace Planetside
                     UnlockedString = "Grants a selection of perks to choose from at the start of the next run.",
                     requiresFlag = false
                 },
-
                 new PerkDisplayContainer()
                 {
                     AmountToBuyBeforeReveal = 3,
                     LockedString = AlphabetController.ConvertString("Larger Selection"),
                     UnlockedString = "Stacking grants more choices.",
                     FlagToTrack = SaveAPI.CustomDungeonFlags.PATIENCE_FLAG_STACK
-
                 },
         };
         public override CustomTrackedStats StatToIncreaseOnPickup => SaveAPI.CustomTrackedStats.AMOUNT_BOUGHT_PATIENCE;

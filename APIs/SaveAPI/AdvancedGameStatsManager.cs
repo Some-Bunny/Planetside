@@ -370,7 +370,7 @@ namespace SaveAPI
         /// <returns></returns>
         public float GetSessionStatValue(CustomTrackedStats stat)
         {
-            return this.m_sessionStats.GetStatValue(stat) + this.m_savedSessionStats.GetStatValue(stat);
+            return (this.m_sessionStats != null ? this.m_sessionStats.GetStatValue(stat) : 0) + (this.m_savedSessionStats != null ? this.m_savedSessionStats.GetStatValue(stat) : 0);
         }
 
         /// <summary>
@@ -391,10 +391,11 @@ namespace SaveAPI
         /// <returns>Saved session stats</returns>
         public AdvancedGameStats MoveSessionStatsToSavedSessionStats()
         {
-            if (!this.IsInSession)
+            if (!this.IsInSession || (!(GameStatsManager.Instance?.IsInSession ?? false)))
             {
                 return null;
             }
+
             if (this.m_sessionStats != null)
             {
                 if (this.m_characterStats.ContainsKey(this.m_sessionCharacter))
@@ -404,9 +405,8 @@ namespace SaveAPI
                 this.m_savedSessionStats.AddStats(this.m_sessionStats);
                 this.m_sessionStats.ClearAllState();
             }
-            return this.m_savedSessionStats;
+            return this.m_savedSessionStats ?? null;
         }
-
         /// <summary>
         /// Gets <paramref name="character"/>'s <paramref name="stat"/> value.
         /// </summary>

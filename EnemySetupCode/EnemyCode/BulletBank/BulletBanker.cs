@@ -64,7 +64,7 @@ namespace Planetside
 				companion.aiActor.specRigidbody.PixelColliders.Clear();
 				companion.aiActor.gameObject.AddComponent<AfterImageTrailController>().spawnShadows = false;
 				companion.aiActor.gameObject.GetComponent<tk2dSpriteAttachPoint>();
-				companion.aiActor.gameObject.GetComponent<ObjectVisibilityManager>();
+				companion.aiActor.gameObject.GetOrAddComponent<ObjectVisibilityManager>();
 				//fuckyouprefab.name = companion.aiActor.OverrideDisplayName;
 				companion.aiActor.ShadowObject = EnemyDatabase.GetOrLoadByGuid("4db03291a12144d69fe940d5a01de376").ShadowObject;
 				companion.aiActor.HasShadow = true;

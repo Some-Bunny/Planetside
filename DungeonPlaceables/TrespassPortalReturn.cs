@@ -85,26 +85,15 @@ namespace Planetside
             Pixelator.Instance.FadeToColor(0.7f, Color.black, false, 0f);
             float elaWait = 0f;
             float duraWait = 0.7f;
-            GameUIRoot.Instance.HideCoreUI("Trespassing");
-            GameUIRoot.Instance.ForceHideGunPanel = true;
-            GameUIRoot.Instance.ForceHideItemPanel = true;
-            for (int j = 0; j < GameManager.Instance.AllPlayers.Length; j++)
-            {
-                if (GameManager.Instance.AllPlayers[j])
-                {
-                    GameManager.Instance.AllPlayers[j].SetInputOverride("Trespassing");
-                }
-            }
+
             while (elaWait < duraWait)
             {
                 elaWait += BraveTime.DeltaTime;
                 yield return null;
             }
-            GameManager.DoMidgameSave(GlobalDungeonData.ValidTilesets.HELLGEON);
+            //GameManager.DoMidgameSave(GlobalDungeonData.ValidTilesets.HELLGEON);
+            GameManager.Instance.SetNextLevelIndex(6);
             GameManager.Instance.DelayedLoadNextLevel(0.5f);
-            GameManager.Instance.LoadCustomLevel("tt_bullethell");
-
-
             yield break;
         }
 

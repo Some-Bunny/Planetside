@@ -40,7 +40,7 @@ namespace Planetside
     {
         public const string GUID = "somebunny.etg.planetsideofgunymede";
         public const string NAME = "Planetside Of Gunymede Pre-Release";
-        public const string VERSION = "1.3.145";
+        public const string VERSION = "1.3.146";
 
         public static readonly string TEXT_COLOR = "#9006FF";
 
@@ -70,7 +70,6 @@ namespace Planetside
 
         public void GameManagerStart(GameManager gameManager)
         {
-
             GunFilePath = this.FolderPath() + "/sprites";
             ETGMod.Assets.SetupSpritesFromFolder(GunFilePath);
 

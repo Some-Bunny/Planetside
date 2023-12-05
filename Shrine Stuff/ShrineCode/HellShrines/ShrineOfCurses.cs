@@ -62,56 +62,6 @@ namespace Planetside
 			//JamTime dark = player.gameObject.AddComponent<JamTime>();
 			//dark.playeroue = player;
 		}
-		public class JamTime : BraveBehaviour
-		{
-			public JamTime()
-            {
-				this.playeroue = base.GetComponent<PlayerController>();
-			}
-			public void Start()
-			{
-				playeroue.OnRoomClearEvent += this.RoomCleared;
-				ETGMod.AIActor.OnPreStart = (Action<AIActor>)Delegate.Combine(ETGMod.AIActor.OnPreStart, new Action<AIActor>(this.AIActorMods));
-			}
-			public void RemoveSelf()
-			{
-				Destroy(this);
-			}
-			public override void OnDestroy()
-			{
-				if (playeroue != null)
-				{
-					playeroue.OnRoomClearEvent -= this.RoomCleared;
-				}
-				ETGMod.AIActor.OnPreStart = (Action<AIActor>)Delegate.Remove(ETGMod.AIActor.OnPreStart, new Action<AIActor>(this.AIActorMods));
-				base.OnDestroy();
-			}
-			public void AIActorMods(AIActor target)
-			{
-				if (target != null && !OtherTools.BossBlackList.Contains(target.aiActor.encounterTrackable.EncounterGuid) && UnityEngine.Random.value <= 0.45f)
-				{
-					if (!target.IsBlackPhantom)
-					{
-						target.BecomeBlackPhantom();
-					}
-					else
-					{
-						target.gameObject.AddComponent<UmbraController>();
-					}
-				}
-			}
-			private void RoomCleared(PlayerController obj)
-			{
-				if (UnityEngine.Random.value <= 0.03f)
-				{
-					IntVector2 bestRewardLocation = playeroue.CurrentRoom.GetBestRewardLocation(IntVector2.One * 3, RoomHandler.RewardLocationStyle.PlayerCenter, true);
-					Chest chest2 = GameManager.Instance.RewardManager.SpawnRewardChestAt(bestRewardLocation, -1f, PickupObject.ItemQuality.EXCLUDED);
-					chest2.RegisterChestOnMinimap(chest2.GetAbsoluteParentRoom());
-				}
-			}
-			//private RoomHandler Microwave;
-			public PlayerController playeroue;
-		}
 	}
 }
 

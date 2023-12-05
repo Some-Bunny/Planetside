@@ -65,6 +65,7 @@ namespace Planetside
                 EnemyToolbox.AddShadowToAIActor(enemy.aiActor, StaticEnemyShadows.massiveShadow, new Vector2(4f, 0.25f), "shadowPos");
 
 
+                enemy.aiActor.gameObject.GetOrAddComponent<ObjectVisibilityManager>();
 
 
                 aiAnimator.IdleAnimation = new DirectionalAnimation

@@ -148,39 +148,42 @@ namespace Planetside
 
 			ItemIDs.AddToList(gun.PickupObjectId);
 
-			tk2dSpriteAnimationClip fireClip = gun.sprite.spriteAnimator.GetClipByName(gun.shootAnimation);
-			float[] offsetsX = new float[] { 1.25f, -1f, -0.875f, -0.6875f, -0.375f, -0.125f,  };
-			float[] offsetsY = new float[] { 0.5f, -1.25f, -1f, -0.75f, -0.5f, -0.25f };
-			for (int i = 0; i < offsetsX.Length && i < offsetsY.Length && i < fireClip.frames.Length; i++)
-			{
-				int id = fireClip.frames[i].spriteId;
-				fireClip.frames[i].spriteCollection.spriteDefinitions[id].position0.x += offsetsX[i];
-				fireClip.frames[i].spriteCollection.spriteDefinitions[id].position0.y += offsetsY[i];
-				fireClip.frames[i].spriteCollection.spriteDefinitions[id].position1.x += offsetsX[i];
-				fireClip.frames[i].spriteCollection.spriteDefinitions[id].position1.y += offsetsY[i];
-				fireClip.frames[i].spriteCollection.spriteDefinitions[id].position2.x += offsetsX[i];
-				fireClip.frames[i].spriteCollection.spriteDefinitions[id].position2.y += offsetsY[i];
-				fireClip.frames[i].spriteCollection.spriteDefinitions[id].position3.x += offsetsX[i];
-				fireClip.frames[i].spriteCollection.spriteDefinitions[id].position3.y += offsetsY[i];
-			}
+            tk2dSpriteAnimationClip fireClip = gun.sprite.spriteAnimator.GetClipByName(gun.shootAnimation);
+            float[] offsetsX = new float[] { 1.25f, -0.25f, -0.1875f, -0.125f, -0.0625f, -0.0625f, };
+            float[] offsetsY = new float[] { 0.5f, -0.625f, -0.5f, -0.375f, -0.25f, -0.125f };
+            for (int i = 0; i < offsetsX.Length && i < offsetsY.Length && i < fireClip.frames.Length; i++)
+            {
+                int id = fireClip.frames[i].spriteId;
+                fireClip.frames[i].spriteCollection.spriteDefinitions[id].position0.x += offsetsX[i];
+                fireClip.frames[i].spriteCollection.spriteDefinitions[id].position0.y += offsetsY[i];
+                fireClip.frames[i].spriteCollection.spriteDefinitions[id].position1.x += offsetsX[i];
+                fireClip.frames[i].spriteCollection.spriteDefinitions[id].position1.y += offsetsY[i];
+                fireClip.frames[i].spriteCollection.spriteDefinitions[id].position2.x += offsetsX[i];
+                fireClip.frames[i].spriteCollection.spriteDefinitions[id].position2.y += offsetsY[i];
+                fireClip.frames[i].spriteCollection.spriteDefinitions[id].position3.x += offsetsX[i];
+                fireClip.frames[i].spriteCollection.spriteDefinitions[id].position3.y += offsetsY[i];
+            }
+
+            
+
 
 			tk2dSpriteAnimationClip fireClip2 = gun.sprite.spriteAnimator.GetClipByName(gun.reloadAnimation);
-			float[] offsetsX2 = new float[] { 0.25f , 0.375f, 0.875f, 1.25f, 1.25f, 1.25f, 1.25f, 1.25f, 1.25f, 1.25f, 1.25f, 1.25f, 1.25f, 1.25f, 1, 0.625f, 0.25f};
-			float[] offsetsY2 = new float[] { 0f , -0.5f, -0.75f, -0.875f, -0.875f, -0.875f, -0.875f, -0.875f, -0.875f, -0.875f, -0.875f, -0.875f, -0.875f, -0.875f, -0.6825f, -0.4375f, 0};
+			float[] offsetsX2 = new float[] { 0.25f , 0.375f, 0.5625f, 0.75f, 0.75f, 0.75f, 0.75f, 0.75f, 0.75f, 0.75f, 0.75f, 0.75f, 0.75f, 0.625f, 0.375f, 0.25f};
+			float[] offsetsY2 = new float[] { 0f , -0.1275f, -0.25f, -0.375f, -0.375f, -0.375f, -0.375f, -0.375f, -0.375f, -0.375f, -0.375f, -0.375f, -0.375f, -0.25f, -0.125f, 0};
 			for (int i = 0; i < offsetsX2.Length && i < offsetsY2.Length && i < fireClip2.frames.Length; i++)
 			{
 				int id = fireClip2.frames[i].spriteId;
-				fireClip2.frames[i].spriteCollection.spriteDefinitions[id].position0.x += offsetsX2[i];
-				fireClip2.frames[i].spriteCollection.spriteDefinitions[id].position0.y += offsetsY2[i];
-				fireClip2.frames[i].spriteCollection.spriteDefinitions[id].position1.x += offsetsX2[i];
-				fireClip2.frames[i].spriteCollection.spriteDefinitions[id].position1.y += offsetsY2[i];
-				fireClip2.frames[i].spriteCollection.spriteDefinitions[id].position2.x += offsetsX2[i];
-				fireClip2.frames[i].spriteCollection.spriteDefinitions[id].position2.y += offsetsY2[i];
-				fireClip2.frames[i].spriteCollection.spriteDefinitions[id].position3.x += offsetsX2[i];
-				fireClip2.frames[i].spriteCollection.spriteDefinitions[id].position3.y += offsetsY2[i];
-			}
+				fireClip2.frames[i].spriteCollection.spriteDefinitions[id].position0.x += offsetsX2[i]  ;
+				fireClip2.frames[i].spriteCollection.spriteDefinitions[id].position0.y += offsetsY2[i]  ;
+                fireClip2.frames[i].spriteCollection.spriteDefinitions[id].position1.x += offsetsX2[i]  ;
+                fireClip2.frames[i].spriteCollection.spriteDefinitions[id].position1.y += offsetsY2[i]  ;
+                fireClip2.frames[i].spriteCollection.spriteDefinitions[id].position2.x += offsetsX2[i]  ;
+                fireClip2.frames[i].spriteCollection.spriteDefinitions[id].position2.y += offsetsY2[i]  ;
+                fireClip2.frames[i].spriteCollection.spriteDefinitions[id].position3.x += offsetsX2[i]  ;
+                fireClip2.frames[i].spriteCollection.spriteDefinitions[id].position3.y += offsetsY2[i]  ;
+            }
+			
 
-           
 
         }
 

@@ -28,14 +28,26 @@ namespace Planetside
 			gun.gameObject.AddComponent<ParticleCollapser>();
 			GunExt.SetShortDescription(gun, "<   (  ( o )  )  >");
 			GunExt.SetLongDescription(gun, "First shot in the clip fires a small rift, all shots after will be attracted to it.\n\nUsed by AI lumberjacks to cut down laser trees.");
-			GunExt.SetupSprite(gun, null, "particlecollapser_idle_001", 8);
-			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 30);
-			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 6);
-			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 2);
-			GunExt.SetAnimationFPS(gun, gun.finalShootAnimation, 70);
+
+            GunExt.SetupSprite(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "particlecollapser_idle_001", 11);
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
+            gun.sprite.SortingOrder = 1;
+
+			gun.reloadAnimation = "particlecollapser_reload";
+            gun.idleAnimation = "particlecollapser_idle";
+            gun.shootAnimation = "particlecollapser_fire";
+			gun.finalShootAnimation = "particlecollapser_finalfire";
 
 
-			GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(56) as Gun, true, false);
+            //GunExt.SetupSprite(gun, null, "particlecollapser_idle_001", 8);
+            //GunExt.SetAnimationFPS(gun, gun.shootAnimation, 30);
+            //	GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 6);
+            //GunExt.SetAnimationFPS(gun, gun.idleAnimation, 2);
+            //GunExt.SetAnimationFPS(gun, gun.finalShootAnimation, 70);
+
+
+
+            GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(56) as Gun, true, false);
 			gun.SetBaseMaxAmmo(630);
 
 			gun.DefaultModule.ammoCost = 1;

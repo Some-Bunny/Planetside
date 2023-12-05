@@ -61,12 +61,12 @@ namespace Planetside
             return normalized;
         }
 
-        public void DoMagicSparkles(int amount, tk2dBaseSprite sprite, float direction, float MinMult = 1, float MaxMult = 3, float DevMinus = 0, float DevPlus = 0)
+        public void DoMagicSparkles(int amount, Vector2 position, float direction, float MinMult = 1, float MaxMult = 3, float DevMinus = 0, float DevPlus = 0, GlobalSparksDoer.SparksType sparks = GlobalSparksDoer.SparksType.FLOATY_CHAFF )
         {
             for (int i = 0; i < amount; i++) 
             {
                 Vector2 push = MathToolbox.GetUnitOnCircle(direction + UnityEngine.Random.Range(DevMinus, DevPlus), 1f);
-                GlobalSparksDoer.DoSingleParticle(sprite.WorldCenter, push * UnityEngine.Random.Range(MinMult, MaxMult), null, 2, null, GlobalSparksDoer.SparksType.FLOATY_CHAFF);
+                GlobalSparksDoer.DoSingleParticle(position, push * UnityEngine.Random.Range(MinMult, MaxMult), null, 2, null, sparks);
             }
         }
 
@@ -112,7 +112,7 @@ namespace Planetside
             List<AIActor> activeEnemies = roomHandler.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
             Vector2 push = MathToolbox.GetUnitOnCircle(CurrentAimDirection(), 1f);
 
-            DoMagicSparkles(20, user.sprite, CurrentAimDirection(), 2, 5, -10, 10);
+            DoMagicSparkles(20, user.sprite.WorldCenter, CurrentAimDirection(), 2, 5, -10, 10);
             for (int i = 0; i < StaticReferenceManager.AllDebris.Count; i++)
             {
                 this.AdjustDebrisVelocity(StaticReferenceManager.AllDebris[i]);
@@ -125,7 +125,7 @@ namespace Planetside
                     if (actor.knockbackDoer)
                     {
                         actor.knockbackDoer.ApplyKnockback(push, 70);
-                        DoMagicSparkles(15, actor.sprite, CurrentAimDirection(), 0.5f, 3, -15, 15);
+                        DoMagicSparkles(15, actor.sprite.WorldCenter, CurrentAimDirection(), 0.5f, 3, -15, 15);
                     }
                     foreach (AIActor enemy in activeEnemies)
                     {
@@ -134,7 +134,7 @@ namespace Planetside
                             if (enemy.knockbackDoer)
                             {
                                 enemy.knockbackDoer.ApplyKnockback(push, 30);
-                                DoMagicSparkles(10, enemy.sprite, CurrentAimDirection(), 0.5f, 2, -10, 10);
+                                DoMagicSparkles(10, enemy.sprite.WorldCenter, CurrentAimDirection(), 0.5f, 2, -10, 10);
                             }
                         }
                     }
@@ -215,7 +215,7 @@ namespace Planetside
             float e = 0;
             float d = UnityEngine.Random.Range(0.7f, 3f);
             Vector2 lerpFrom = CurrentAimVector(self.sprite.WorldCenter);
-            DoMagicSparkles(10, self.sprite, CurrentAimDirection(), 1f, 3, -20, 20);
+            DoMagicSparkles(10, self.sprite.WorldCenter, CurrentAimDirection(), 1f, 3, -20, 20);
 
             while (e < d)
             {
@@ -241,7 +241,7 @@ namespace Planetside
                 yield return null;
             }
             if (self == null) { yield break; }
-            DoMagicSparkles(6, self.sprite, CurrentAimDirection(), 1f, 3, -20, 20);
+            DoMagicSparkles(6, self.sprite.WorldCenter, CurrentAimDirection(), 1f, 3, -20, 20);
             AkSoundEngine.PostEvent("Play_WPN_skullgun_shot_03", self.gameObject);
 
             float sp = self.baseData.speed;
@@ -290,7 +290,7 @@ namespace Planetside
                 yield return null;
             }
             if (self == null) { yield break; }
-            DoMagicSparkles(6, self.sprite, CurrentAimDirection(), 1f, 3, -20, 20);
+            DoMagicSparkles(6, self.sprite.WorldCenter, CurrentAimDirection(), 1f, 3, -20, 20);
             float fuck = 1;
             AkSoundEngine.PostEvent("Play_WPN_skullgun_shot_03", self.gameObject);
 

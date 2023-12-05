@@ -22,6 +22,7 @@ namespace SaveAPI
 
         public float GetStatValue(CustomTrackedStats statToCheck)
         {
+            if (this.stats == null) { return 0f; }
             if (!this.stats.ContainsKey(statToCheck))
             {
                 return 0f;

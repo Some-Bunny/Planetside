@@ -201,6 +201,8 @@ namespace Planetside
         }
         private static void SpawnSpecialChest(PlayerController player)
         {
+            if (player.CurrentRoom == null) { return; }
+            if (HellShrinesController.blackListedRoomNames.Contains(player.CurrentRoom.GetRoomName())) { return; }
             IntVector2 bestRewardLocation = player.CurrentRoom.GetBestRewardLocation(IntVector2.One * 3, RoomHandler.RewardLocationStyle.CameraCenter, true);
             Chest chest2 = GameManager.Instance.RewardManager.SpawnRewardChestAt(bestRewardLocation, -1f, PickupObject.ItemQuality.EXCLUDED);
             chest2.RegisterChestOnMinimap(chest2.GetAbsoluteParentRoom());

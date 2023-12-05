@@ -64,6 +64,7 @@ namespace Planetside
 				companion.aiActor.procedurallyOutlined = false;
 				companion.aiActor.CanTargetPlayers = true;
 				companion.aiActor.procedurallyOutlined = true;
+				companion.aiActor.gameObject.AddComponent<ObjectVisibilityManager>();
 				///	
 				//PlanetsideModule.Strings.Enemies.Set("#SHELLRAX", "SHELLRAX");
 				//PlanetsideModule.Strings.Enemies.Set("#????", "???");

@@ -2961,11 +2961,7 @@ namespace Planetside
                 {
 					for (int i = 0; i < 2; i++)
 					{
-						Vector2 OFsset = new Vector2(-1.5f, -0.25f);
-						if (i == 0)
-						{
-							OFsset = new Vector2(1.5f, -0.25f);
-						}
+						Vector2 OFsset = i == 0 ? new Vector2(1.5f, -0.25f) : new Vector2(-1.5f, -0.25f);
 						StaticVFXStorage.BeholsterChargeUpVFX.SpawnAtPosition(base.aiActor.sprite.WorldCenter + OFsset);
 					}
 				}

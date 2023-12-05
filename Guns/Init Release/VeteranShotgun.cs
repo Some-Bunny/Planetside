@@ -24,12 +24,23 @@ namespace Planetside
 			gun.gameObject.AddComponent<VeteranShotgun>();
 			gun.SetShortDescription("Old And Tested");
 			gun.SetLongDescription("A shotgun that oddly resembles shotguns wielded by the Shotgun Kin around the Gungeon, or maybe it's just the bullets throwing you off.");
+
+            GunExt.SetupSprite(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "veteranshotgun_idle_001", 11);
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
+            gun.sprite.SortingOrder = 1;
+
+            gun.reloadAnimation = "veteranshotgun_reload";
+            gun.idleAnimation = "veteranshotgun_idle";
+            gun.shootAnimation = "veteranshotgun_fire";
+
+            /*
 			gun.SetupSprite(null, "veteranshotgun_idle_001", 11);
 			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 15);
 			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 2);
 			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 2);
+			*/
 
-			int e = 0;
+            int e = 0;
 			for (int i = -2; e < 5; i++, e++)
 			{
 				gun.AddProjectileModuleFrom(PickupObjectDatabase.GetById(35) as Gun, true, false);

@@ -114,11 +114,11 @@ namespace Planetside
                 for (int i = 0; i < 4; i++)
                 {
                     attempts--;
-                    if (attempts == 0) { Debug.Log("ATTEMPTS HAVE RU DRY, ABORTING FURTHER PLACEMENT"); return; }
+                    if (attempts == 0) { Debug.Log("[PSOG] ATTEMPTS HAVE RUN DRY, ABORTING FURTHER PLACEMENT"); return; }
 
-                    if (list.Count == 0 || list == null) { Debug.Log("HELL ROOM LIST IS DRY, ABORTING FURTHER PLACEMENT"); return; }
+                    if (list.Count == 0 || list == null) { Debug.Log("[PSOG] HELL ROOM LIST IS DRY, ABORTING FURTHER PLACEMENT"); return; }
                     RoomHandler room = list[i];
-                    if (room == null) { Debug.Log("ROOM IS NULL, ABORTING FURTHER PLACEMENT"); return; }
+                    if (room == null) { Debug.Log("[PSOG] ROOM IS NULL, ABORTING FURTHER PLACEMENT"); return; }
 
                     string name = room.GetRoomName();
                     if (room.IsStandardRoom && name != "Hell Entrance" && name != "Boss Foyer" && name != "LichRoom01" && name != "LichRoom02" && name != "LichRoom03" && name != "BigDumbIdiotBossRoom1.room")

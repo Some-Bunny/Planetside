@@ -25,10 +25,15 @@ namespace Planetside
 			gun.gameObject.AddComponent<Sawcon>();
 			gun.SetShortDescription("Sawing Conventionally");
 			gun.SetLongDescription("'Who needs OSHA regulations when launching miniature saw blades is infinitely more fun?' said someone after creating this abomination.\n\nThey died shortly after due to sickness.");
-			gun.SetupSprite(null, "sawcon_idle_001", 11);
-			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 15);
-			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 7);
-			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 15);
+            
+			GunExt.SetupSprite(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "sawcon_idle_001", 11);
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
+            gun.sprite.SortingOrder = 1;
+
+            gun.reloadAnimation = "sawcon_reload";
+            gun.idleAnimation = "sawcon_idle";
+            gun.shootAnimation = "sawcon_fire";
+
 
             for (int i = 0; i < 1; i++)
 			{
