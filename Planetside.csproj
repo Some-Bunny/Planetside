@@ -5500,5 +5500,8 @@
     <EmbeddedResource Include="Guns\Jsons\veteranshotgun_reload_006.jtk2d" />
     <EmbeddedResource Include="Guns\Jsons\veteranshotgun_reload_007.jtk2d" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="NewRooms\testNewRoom.newroom" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

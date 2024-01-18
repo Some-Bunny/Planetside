@@ -118,13 +118,13 @@ namespace Planetside
                 emiss.EmissiveColorPower = 10f;
                 emiss.EmissivePower = 10f;
 
-                
+                /*
                 ImprovedAfterImageForTiled yes1 = beamComp.gameObject.AddComponent<ImprovedAfterImageForTiled>();
                 yes1.spawnShadows = true;
                 yes1.shadowLifetime = 0.1f;
                 yes1.shadowTimeDelay = 0.001f;
                 yes1.dashColor = new Color(0f, 1f, 0.3f, 0.2f);
-                
+                */
 
                 beamComp.boneType = BasicBeamController.BeamBoneType.Straight;
 

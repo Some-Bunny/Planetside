@@ -30,6 +30,8 @@ namespace Planetside
 
             DungeonPlaceable placeable = BreakableAPIToolbox.GenerateDungeonPlaceable(new Dictionary<GameObject, float>() { { obj, 1 } });
             StaticReferences.StoredDungeonPlaceables.Add("No_Teleporter", placeable);
+            Alexandria.DungeonAPI.StaticReferences.customPlaceables.Add("psog:No_Teleporter", placeable);
+
         }
     }
 }

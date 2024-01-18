@@ -14,6 +14,7 @@ using BreakAbleAPI;
 using Brave.BulletScript;
 using System.Collections;
 using static Planetside.Inquisitor;
+using UnityEngine.Playables;
 
 
 namespace Planetside
@@ -325,6 +326,8 @@ namespace Planetside
             statue.maxShardPercentSpeed = 0.5f;
             statue.minShardPercentSpeed = 1.5f;
             StaticReferences.StoredRoomObjects.Add("ice_buffer_statue", statue.gameObject);
+            Alexandria.DungeonAPI.StaticReferences.customObjects.Add("psog:ice_buffer_statue", statue.gameObject);
+
         }
 
         public static void GeneratePoisonShrine(ShardCluster[] array)
@@ -364,6 +367,8 @@ namespace Planetside
             statue.minShardPercentSpeed = 1.5f;
 
             StaticReferences.StoredRoomObjects.Add("poison_buffer_statue", statue.gameObject);
+            Alexandria.DungeonAPI.StaticReferences.customObjects.Add("psog:poison_buffer_statue", statue.gameObject);
+
         }
 
 
@@ -406,6 +411,8 @@ namespace Planetside
 
 
             StaticReferences.StoredRoomObjects.Add("fire_buffer_statue", statue.gameObject);
+            Alexandria.DungeonAPI.StaticReferences.customObjects.Add("psog:fire_buffer_statue", statue.gameObject);
+
         }
     }
 }

@@ -35,6 +35,7 @@ namespace Planetside
             };
             DungeonPlaceable placeable = BreakableAPIToolbox.GenerateDungeonPlaceable(dict);
             StaticReferences.StoredDungeonPlaceables.Add("moneyPotRandom", placeable);
+            Alexandria.DungeonAPI.StaticReferences.customPlaceables.Add("psog:moneyPotRandom", placeable);
 
             string defaultPath = "Planetside/Resources/DungeonObjects/TutorialNote/";
             string[] idlePaths = new string[]{defaultPath+"tatterednote.png",};
@@ -178,6 +179,7 @@ namespace Planetside
             sprite.renderer.material = mat;
 
             StaticReferences.StoredRoomObjects.Add("Gold_Pot", breakable.gameObject);
+            Alexandria.DungeonAPI.StaticReferences.customObjects.Add("psog:Gold_Pot", breakable.gameObject);
 
             return breakable.gameObject;
         }
@@ -246,6 +248,7 @@ namespace Planetside
             mat.SetFloat("_EmissiveThresholdSensitivity", 0.05f);
             sprite.renderer.material = mat;
             StaticReferences.StoredRoomObjects.Add("Silver_Pot", breakable.gameObject);
+            Alexandria.DungeonAPI.StaticReferences.customObjects.Add("psog:Silver_Pot", breakable.gameObject);
 
             return breakable.gameObject;
         }
@@ -317,6 +320,8 @@ namespace Planetside
             sprite.renderer.material = mat;
 
             StaticReferences.StoredRoomObjects.Add("Copper_Pot", breakable.gameObject);
+            Alexandria.DungeonAPI.StaticReferences.customObjects.Add("psog:Copper_Pot", breakable.gameObject);
+
             return breakable.gameObject;
         }
 
@@ -387,6 +392,8 @@ namespace Planetside
             material.SetFloat("_ColorIntensity", 0.3f);
 
             StaticReferences.StoredRoomObjects.Add("glitchPot", breakable.gameObject);
+            Alexandria.DungeonAPI.StaticReferences.customObjects.Add("psog:glitchPot", breakable.gameObject);
+
             return breakable.gameObject;
         }
 

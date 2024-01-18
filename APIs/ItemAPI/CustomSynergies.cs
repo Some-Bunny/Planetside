@@ -53,6 +53,7 @@ namespace ItemAPI
                 OptionalGunIDs = optGunIDs,
                 bonusSynergies = new List<CustomSynergyType>(),
                 statModifiers = new List<StatModifier>(),
+                IgnoreLichEyeBullets = ignoreLichEyeBullets
             };
             Add(entry);
             return entry;

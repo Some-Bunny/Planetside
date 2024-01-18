@@ -40,7 +40,7 @@ namespace Planetside
     {
         public const string GUID = "somebunny.etg.planetsideofgunymede";
         public const string NAME = "Planetside Of Gunymede Pre-Release";
-        public const string VERSION = "1.3.146";
+        public const string VERSION = "1.3.148";
 
         public static readonly string TEXT_COLOR = "#9006FF";
 
@@ -336,7 +336,7 @@ namespace Planetside
             ShopInABox.Init();
             StableVector.Init();
             ShipmentRequestForm.Init();
-            Tracker.Add();
+            //Tracker.Add();
 
             //ModifierNeedle.Init();
             TatteredRobe.Init();
@@ -547,6 +547,9 @@ namespace Planetside
             DungeonHandler.Init();
             //MasteryReplacementOub.InitDungeonHook();
 
+
+            //Alexandria.DungeonAPI.RoomFactory.LoadRoomsFromRoomDirectory
+
             ModPrefabs.InitCustomPrefabs();
             ModRoomPrefabs.InitCustomRooms();
             AbyssDungeonFlows.InitDungeonFlows();
@@ -556,6 +559,10 @@ namespace Planetside
                      typeof(PlanetsideModule).GetMethod("GameManager_Awake", BindingFlags.NonPublic | BindingFlags.Instance),
                      typeof(GameManager)
                  );
+            //Alexandria.DungeonAPI.RoomUtility.EnableDebugLogging = true;
+
+            //Alexandria.DungeonAPI.RoomFactory.LoadRoomsFromRoomDirectory("psog", "Planetside/NewRooms");
+            //Alexandria.DungeonAPI.DungeonHandler.debugFlow = true;
 
             if (DebugMode == true)
             {
@@ -568,20 +575,21 @@ namespace Planetside
             PlanetsideModule.Log($"{NAME} v{VERSION} started successfully.", TEXT_COLOR);
             List<string> RandomFunnys = new List<string>
             {
+                "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
                 "Powered by SaveAPI!",
                 "Now With 100% Less Nulls!",
                 "You Lost The Game.",
                 "WEAK.",
-                "Bullet Banks are not to rob!",
+                //"Bullet Banks are not to rob!",
                 "*Don't Download Some Bunnys Content Pack, you can't even have it on Bepinex anyway :D",
                 "weeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "If you see this, you owe me 10 bucks you nerd.",
-                "https://www.youtube.com/watch?v=qn0YdT_pQF8",
-                "https://www.youtube.com/watch?v=EGXPAoyP_cg",
+                //"https://www.youtube.com/watch?v=qn0YdT_pQF8",
+                //"https://www.youtube.com/watch?v=EGXPAoyP_cg",
                 "Ashes To Ashes, To Ashes (To Ashes)",
                 "Deadbolt Is Underrated!",
                 "You're Gonna Need A Bigger Gun",
-                "Sai Sinut Nayttamaan",
+                //"Sai Sinut Nayttamaan",
                 "oh no",
                 "is that supposed to be like that???",
                 "I'm so lonely.",
@@ -612,7 +620,7 @@ namespace Planetside
                 "pootis",
                 "Frogs are cool!",
                 "Poor aim, and a poor Reaper.",
-                "egassem sdrawkcab",
+                //"egassem sdrawkcab",
                 "The Sun! The Sun! The Sun!",
                 "if(player.IsStupid){  }",
                 "cultist_comits_tax_evasion.mp3",

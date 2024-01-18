@@ -1897,23 +1897,6 @@ namespace Planetside
 				npcObj.transform.parent = shopObj.gameObject.transform;
 				npcObj.transform.position = new Vector3(0, 0);
 
-				/*
-				if (hasCarpet)
-				{
-					var carpetObj = SpriteBuilder.SpriteFromResource(carpetSpritePath, new GameObject(prefix + ":" + name + "_Carpet"));
-					carpetObj.GetComponent<tk2dSprite>().SortingOrder = 2;
-					FakePrefab.MarkAsFakePrefab(carpetObj);
-					UnityEngine.Object.DontDestroyOnLoad(carpetObj);
-					carpetObj.SetActive(true);
-
-					carpetObj.transform.position = new Vector3(CarpetXOffset, CarpetYOffset, 1.7f);
-					carpetObj.transform.parent = shopObj.gameObject.transform;
-					carpetObj.layer = 20;
-				}
-				npcObj.SetActive(true);
-				*/
-
-
 
 
 

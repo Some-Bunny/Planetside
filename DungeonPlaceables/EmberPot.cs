@@ -174,6 +174,7 @@ namespace Planetside
 
             DungeonPlaceable placeable = BreakableAPIToolbox.GenerateDungeonPlaceable(dict);
             StaticReferences.StoredDungeonPlaceables.Add("emberPot", placeable);
+            Alexandria.DungeonAPI.StaticReferences.customPlaceables.Add("psog:emberPot", placeable);
 
             //StaticReferences.StoredRoomObjects.Add("test", breakable.gameObject);
         }

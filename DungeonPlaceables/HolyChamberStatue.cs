@@ -209,6 +209,8 @@ namespace Planetside
 
             DungeonPlaceable placeable = BreakableAPIToolbox.GenerateDungeonPlaceable(dict);
             StaticReferences.StoredDungeonPlaceables.Add("holychamberstatue", placeable);
+            Alexandria.DungeonAPI.StaticReferences.customObjects.Add("psog:holychamberstatue", statue.gameObject);
+
         }
     }
 }

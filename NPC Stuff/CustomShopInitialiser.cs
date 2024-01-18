@@ -10,6 +10,7 @@ using MonoMod.RuntimeDetour;
 using System.Reflection;
 using System.Collections;
 using SaveAPI;
+using UnityEngine.Playables;
 
 namespace Planetside
 {
@@ -183,6 +184,8 @@ namespace Planetside
 
             ItsDaFuckinShopApi.GenerateOrAddToRigidBody(talbertObj.GetComponentInChildren<tk2dSpriteAnimator>().gameObject, CollisionLayer.LowObstacle, PixelCollider.PixelColliderGeneration.Manual, true, true, true, false, false, false, false, true, new IntVector2(32, 18), new IntVector2(5, -2));
             StaticReferences.StoredRoomObjects.Add("talber", talbertObj);
+            Alexandria.DungeonAPI.StaticReferences.customObjects.Add("psog:talber", talbertObj);
+
         }
         public static void Gregthly()
         {
@@ -376,6 +379,8 @@ namespace Planetside
             masteryShop.GetComponentInChildren<tk2dBaseSprite>().sprite.renderer.material = mat;
             masteryShop.AddComponent<PerkShopController>();
             StaticReferences.StoredRoomObjects.Add("masteryRewardTrader", masteryShop);
+            Alexandria.DungeonAPI.StaticReferences.customObjects.Add("psog:masteryRewardTrader", masteryShop);
+
         }
 
         public static int MasterTraderCustomPrice(CustomShopController shop, CustomShopItemController itemCont, PickupObject item)
@@ -494,6 +499,7 @@ namespace Planetside
                 , 0.1f
                 , null);
             StaticReferences.StoredRoomObjects.Add("timedShop", timedShop);
+            Alexandria.DungeonAPI.StaticReferences.customObjects.Add("psog:timedShop", timedShop);
 
 
 

@@ -14,6 +14,7 @@ using BreakAbleAPI;
 using Brave.BulletScript;
 using System.Collections;
 using PathologicalGames;
+using UnityEngine.Playables;
 
 namespace Planetside
 {
@@ -243,6 +244,8 @@ namespace Planetside
             bulletBankLeft.Bullets = new List<AIBulletBank.Entry>();
 			bulletBankLeft.Bullets.Add(entrySniper);
 			StaticReferences.StoredRoomObjects.Add("sniperTurretFront", sniperTurretDefaultaFront.gameObject);
+            Alexandria.DungeonAPI.StaticReferences.customObjects.Add("psog:sniperTurretFront", sniperTurretDefaultaFront.gameObject);
+
 
             string defaultProfessionalPath = "Planetside/Resources/DungeonObjects/SniperTurret/Professional/";
             string[] idleProfPaths = new string[]
@@ -265,6 +268,7 @@ namespace Planetside
             bulletBank.Bullets = new List<AIBulletBank.Entry>();
             bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("31a3ea0c54a745e182e22ea54844a82d").bulletBank.GetBullet("sniper"));
             StaticReferences.StoredRoomObjects.Add("professionalTurretFront", professionalTurretFront.gameObject);
+            Alexandria.DungeonAPI.StaticReferences.customObjects.Add("psog:professionalTurretFront", professionalTurretFront.gameObject);
 
 
             MakeLeft(entrySniper);
@@ -290,6 +294,7 @@ namespace Planetside
             bulletBankLeft.Bullets = new List<AIBulletBank.Entry>();
             bulletBankLeft.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("31a3ea0c54a745e182e22ea54844a82d").bulletBank.GetBullet("sniper"));
             StaticReferences.StoredRoomObjects.Add("sniperTurretLeft", sniperTurretDefaultaFront.gameObject);
+            Alexandria.DungeonAPI.StaticReferences.customObjects.Add("psog:sniperTurretLeft", sniperTurretDefaultaFront.gameObject);
 
             string defaultProfessionalPath = "Planetside/Resources/DungeonObjects/SniperTurret/Professional/";
             string[] idleProfPaths = new string[]
@@ -310,6 +315,8 @@ namespace Planetside
             bulletBank.Bullets = new List<AIBulletBank.Entry>();
             bulletBank.Bullets.Add(entry);
             StaticReferences.StoredRoomObjects.Add("professionalTurretLeft", professionalTurretFront.gameObject);
+            Alexandria.DungeonAPI.StaticReferences.customObjects.Add("psog:professionalTurretLeft", professionalTurretFront.gameObject);
+
         }
         public static void MakeRight(AIBulletBank.Entry entry)
         {
@@ -333,6 +340,7 @@ namespace Planetside
             bulletBankLeft.Bullets = new List<AIBulletBank.Entry>();
             bulletBankLeft.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("31a3ea0c54a745e182e22ea54844a82d").bulletBank.GetBullet("sniper"));
             StaticReferences.StoredRoomObjects.Add("sniperTurretRight", sniperTurretDefaultaFront.gameObject);
+            Alexandria.DungeonAPI.StaticReferences.customObjects.Add("psog:sniperTurretRight", sniperTurretDefaultaFront.gameObject);
 
             string defaultProfessionalPath = "Planetside/Resources/DungeonObjects/SniperTurret/Professional/";
             string[] idleProfPaths = new string[]
@@ -356,6 +364,8 @@ namespace Planetside
             bulletBank.Bullets = new List<AIBulletBank.Entry>();
             bulletBank.Bullets.Add(entry);
             StaticReferences.StoredRoomObjects.Add("professionalTurretRight", professionalTurretFront.gameObject);
+            Alexandria.DungeonAPI.StaticReferences.customObjects.Add("psog:professionalTurretRight", professionalTurretFront.gameObject);
+
         }
     }
 }

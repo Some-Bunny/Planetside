@@ -126,6 +126,7 @@ namespace Planetside
 
       
             StaticReferences.StoredRoomObjects.Add("box_of_grenades", breakable.gameObject);
+            Alexandria.DungeonAPI.StaticReferences.customObjects.Add("psog:box_of_grenades", breakable.gameObject);
 
             //StaticReferences.StoredRoomObjects.Add("test", breakable.gameObject);
         }

@@ -67,6 +67,9 @@ namespace Planetside
 
 
             StaticReferences.StoredRoomObjects.Add("deturretLeft", deturretLeft.gameObject);
+            Alexandria.DungeonAPI.StaticReferences.customObjects.Add("psog:deturretLeft", deturretLeft.gameObject);
+
+
             MajorBreakable deturretRight = BreakableAPIToolbox.GenerateMajorBreakable("deturretRight", idlePaths.Reverse().ToArray(), 7, idlePaths, 18, 15000, true, 16, 16, -4, 0, true, null, null, true, null);
 			EnemyToolbox.GenerateShootPoint(deturretRight.gameObject, new Vector2(0.5f, 0.5f), "attachy");
 			AIBulletBank bulletBankRight = deturretRight.gameObject.AddComponent<AIBulletBank>();
@@ -76,6 +79,8 @@ namespace Planetside
 			bulletBankRight.Bullets.Add(entry);
 
 			StaticReferences.StoredRoomObjects.Add("deturretRight", deturretRight.gameObject);
+            Alexandria.DungeonAPI.StaticReferences.customObjects.Add("psog:deturretRight", deturretRight.gameObject);
+
         }
     }
 }

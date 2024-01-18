@@ -152,10 +152,10 @@ namespace Planetside
         public static int TrackerID;
         private bool HasReloaded;
 
-        private static List<TripleDeckerStorage> tripleDeckerStorages = new List<TripleDeckerStorage>();
-        private static List<GameObject> SynergyLaserStorage = new List<GameObject>();
+        //private static List<TripleDeckerStorage> tripleDeckerStorages = new List<TripleDeckerStorage>();
+        //private static List<GameObject> SynergyLaserStorage = new List<GameObject>();
 
-
+        /*
         public void CleanupReticles()
         {
             if (SynergyLaserStorage.Count > 0) 
@@ -240,12 +240,12 @@ namespace Planetside
             component2.sprite.renderer.material.SetFloat("_EmissivePower", 100);
             component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 1.55f);
             Color laser = new Color(1f, 0.3f, 0f, 1f);
-            /*
+            
             if (player.PlayerHasActiveSynergy("Improved Sights"))
             {
                 laser = new Color(1f, 0f, 0f, 1f);
             }
-            */
+            
             component2.sprite.renderer.material.SetColor("_OverrideColor", laser);
             component2.sprite.renderer.material.SetColor("_EmissiveColor", laser);
 
@@ -456,6 +456,8 @@ namespace Planetside
                 CleanupReticles();
             }
         }
+        */
+
         public override void OnReloadPressed(PlayerController player, Gun bruhgun, bool bSOMETHING)
         {
             if (gun.IsReloading && this.HasReloaded)
@@ -468,14 +470,14 @@ namespace Planetside
         {
             player.GunChanged += this.OnGunChanged;
             base.OnPickup(player);
-            CleanupReticles();
+            //CleanupReticles();
         }
 
         public override void OnPostDrop(PlayerController player)
         {
             player.GunChanged -= this.OnGunChanged;
             base.OnPostDrop(player);
-            CleanupReticles();
+            //CleanupReticles();
         }
         private void OnGunChanged(Gun oldGun, Gun newGun, bool arg3)
         {
@@ -484,7 +486,7 @@ namespace Planetside
                 PlayerController player = this.gun.CurrentOwner as PlayerController;
                 if (newGun != this.gun)
                 {
-                    CleanupReticles();
+                    //CleanupReticles();
                 }
             }
         }

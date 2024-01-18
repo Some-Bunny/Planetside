@@ -43,7 +43,7 @@ namespace Planetside
                             }
                         }
                     }
-                    projectile.IgnoreTileCollisionsFor(0.5f);
+                    projectile.IgnoreTileCollisionsFor(0.25f);
                     projectile.specRigidbody.OnPreRigidbodyCollision = (SpeculativeRigidbody.OnPreRigidbodyCollisionDelegate)Delegate.Combine(projectile.specRigidbody.OnPreRigidbodyCollision, new SpeculativeRigidbody.OnPreRigidbodyCollisionDelegate(this.HandlePreCollision));
                 }
                 catch (Exception ex)
