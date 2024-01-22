@@ -60,6 +60,7 @@ namespace Planetside
             //partObj.transform.parent = gameObject.transform;
             partObj.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
 
+
             Destroy(partObj, 3.4f);
             partObj.transform.localScale *= 5f;
             base.Invoke("DeregisterInteractable", 0f);
@@ -76,6 +77,7 @@ namespace Planetside
             base.StartCoroutine(LerpShaderValue(0.1f, 0.05f, 0.33f, "_OutlineWidth"));
             base.StartCoroutine(LerpShaderValue(45f, 10f, 0.33f, "_OutlinePower"));
         }
+        public bool PortalUsed = false;
         public void Interact(PlayerController interactor)
         {
             base.Invoke("DeregisterInteractable", 0f);
@@ -106,6 +108,7 @@ namespace Planetside
             else
             {
 
+                PortalUsed = true;
                 AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.TRESPASS_INTO_OTHER_PLACE, true);
                 AkSoundEngine.PostEvent("Stop_MUS_All", GameManager.Instance.gameObject);
                 AkSoundEngine.PostEvent("Play_ENM_beholster_teleport_01", interactor.gameObject);
@@ -118,6 +121,10 @@ namespace Planetside
 
         private IEnumerator TransportToRoom(PlayerController player, RoomHandler room)
         {
+            if (SaveAPI.AdvancedGameStatsManager.Instance.GetPlayerStatValue(CustomTrackedStats.PORTALS_SKIPPED) > 0)
+            {
+                SaveAPI.AdvancedGameStatsManager.Instance.RegisterStatChange(CustomTrackedStats.PORTALS_SKIPPED, -1);
+            }
             GameUIRoot.Instance.ForceHideGunPanel = true;
             GameUIRoot.Instance.ForceHideItemPanel = true;
             Pixelator.Instance.FadeToColor(1f, Color.black, false, 0f);
@@ -201,6 +208,11 @@ namespace Planetside
 
         public override void OnDestroy()
         {
+            if (PortalUsed == false)
+            {
+                //Debug.Log("Let The Games Begin. :)");
+                SaveAPI.AdvancedGameStatsManager.Instance.RegisterStatChange(CustomTrackedStats.PORTALS_SKIPPED, 1);
+            }
             if (m_room.IsRegistered(this))
             {
                 this.m_room.DeregisterInteractable(this);
@@ -248,6 +260,7 @@ namespace Planetside
             
             yield break;
         }
+
 
     }
 }

@@ -53,8 +53,7 @@ namespace Planetside
                 dungeon.DungeonFloorLevelTextOverride = "Silenced Chamber";
                 var deco = dungeon.decoSettings;
                 deco.generateLights = false;
-            }
-            
+            }      
         }
 
         void DoEventChecks()
@@ -93,7 +92,6 @@ namespace Planetside
                     NevernamedsDarknessHandler.DisableDarkness(0);
                     TrapDefusalKit.RemoveTrapDefuseOverride("somethingwicked");
                     ResetMusic(GameManager.Instance.Dungeon);
-
                 }
             }
             else

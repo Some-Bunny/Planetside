@@ -17,6 +17,7 @@ using System.ComponentModel;
 using UnityEngine.Video;
 using static ETGMod;
 using PathologicalGames;
+using Planetside.Controllers.ContainmentBreach.BossChanges.Misc;
 
 namespace Planetside
 {
@@ -166,6 +167,7 @@ namespace Planetside
             breakable.shardClusters = new ShardCluster[] { potShardCluster };
             var moneyPotvar =  breakable.gameObject.AddComponent<MoneyPotBehavior>();
             moneyPotvar.objectToSpawn = GameManager.Instance.Dungeon.sharedSettingsPrefab.currencyDropSettings.goldCoinPrefab;
+            breakable.gameObject.AddComponent<TheGames.Marker>();
 
             tk2dSpriteAnimator sprite = breakable.spriteAnimator;
             Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
@@ -234,6 +236,7 @@ namespace Planetside
             breakable.goopsOnBreak = false;
             breakable.gameObject.layer = 22;
             breakable.sprite.HeightOffGround = -1;
+            breakable.gameObject.AddComponent<TheGames.Marker>();
 
             breakable.shardClusters = new ShardCluster[] { potShardCluster };
             var moneyPotvar = breakable.gameObject.AddComponent<MoneyPotBehavior>();
@@ -307,6 +310,7 @@ namespace Planetside
             breakable.shardClusters = new ShardCluster[] { potShardCluster };
             var moneyPotvar = breakable.gameObject.AddComponent<MoneyPotBehavior>();
             moneyPotvar.objectToSpawn = GameManager.Instance.Dungeon.sharedSettingsPrefab.currencyDropSettings.bronzeCoinPrefab;
+            breakable.gameObject.AddComponent<TheGames.Marker>();
 
 
             tk2dSpriteAnimator sprite = breakable.spriteAnimator;
@@ -374,6 +378,7 @@ namespace Planetside
             breakable.gameObject.layer = 22;
             breakable.sprite.HeightOffGround = -1;
             breakable.shardClusters = new ShardCluster[] { potShardCluster };
+            breakable.gameObject.AddComponent<TheGames.Marker>();
 
 
 

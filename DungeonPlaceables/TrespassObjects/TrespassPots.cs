@@ -11,6 +11,7 @@ using MonoMod.RuntimeDetour;
 using System.Reflection;
 using Planetside;
 using BreakAbleAPI;
+using Planetside.Controllers.ContainmentBreach.BossChanges.Misc;
 
 namespace Planetside
 {
@@ -53,6 +54,7 @@ namespace Planetside
             breakable.goopsOnBreak = false;
             breakable.breakStyle = MinorBreakable.BreakStyle.BURST;
             breakable.gameObject.AddComponent<TresspassUnlitShaderController>();
+            breakable.gameObject.AddComponent<TheGames.Marker>();
 
             ShardCluster[] array = new ShardCluster[] { potShardCluster };
             breakable.shardClusters = array;
@@ -93,6 +95,7 @@ namespace Planetside
             breakable2.MaxParticlesOnBurst = 10;
             breakable2.MinParticlesOnBurst = 4;
             breakable2.gameObject.AddComponent<TresspassUnlitShaderController>();
+            breakable2.gameObject.AddComponent<TheGames.Marker>();
 
 
             MinorBreakable breakable3 = BreakableAPIToolbox.GenerateMinorBreakable("TrespassPot3", new string[] { defaultPath + "trespasspot3_idle.png" }, 2, new string[] { defaultPath + "trespasspot3_break.png" }, 10, "Play_OBJ_pot_shatter_01", true, 13, 14, 1, 1);
@@ -120,6 +123,7 @@ namespace Planetside
             breakable3.MaxParticlesOnBurst = 10;
             breakable3.MinParticlesOnBurst = 4;
             breakable3.gameObject.AddComponent<TresspassUnlitShaderController>();
+            breakable3.gameObject.AddComponent<TheGames.Marker>();
 
             Dictionary<GameObject, float> dict = new Dictionary<GameObject, float>()
             {

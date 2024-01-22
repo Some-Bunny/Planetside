@@ -11,6 +11,7 @@ using MonoMod.RuntimeDetour;
 using System.Reflection;
 using Planetside;
 using BreakAbleAPI;
+using Planetside.Controllers.ContainmentBreach.BossChanges.Misc;
 
 namespace Planetside
 {
@@ -103,6 +104,7 @@ namespace Planetside
             breakable.hasParticulates = true;
             breakable.MaxParticlesOnBurst = 10;
             breakable.MinParticlesOnBurst = 4;
+            breakable.gameObject.AddComponent<TheGames.Marker>();
 
             /*
             string defaultTablePath = "Planetside/Resources/DungeonObjects/megaTable/";

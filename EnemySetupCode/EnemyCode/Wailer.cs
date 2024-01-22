@@ -830,7 +830,7 @@ namespace Planetside
 				this.Direction += 180f;
 				this.Projectile.spriteAnimator.Play();
 				yield return this.Wait((UnityEngine.Random.Range(20, 50)));
-				this.ChangeSpeed(new Speed(speed * 3, SpeedType.Absolute), (UnityEngine.Random.Range(20, 50)));
+				this.ChangeSpeed(new Speed(Mathf.Max(speed * 4, 12), SpeedType.Absolute), (UnityEngine.Random.Range(20, 50)));
 				yield return this.Wait(130);
 				//this.Vanish(true);
 				yield break;

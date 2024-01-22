@@ -346,7 +346,7 @@ namespace Planetside
 					endWhenChargeAnimFinishes = false,
 					hitAnim = "impact_left",
 					switchCollidersOnCharge = false,
-					chargeSpeed = 14,
+					chargeSpeed = 20,
 					stopAtPits = true,
 					AttackCooldown = 0,
 					delayWallRecoil = true,

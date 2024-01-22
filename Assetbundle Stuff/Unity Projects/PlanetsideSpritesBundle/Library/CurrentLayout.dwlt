@@ -110,7 +110,7 @@ MonoBehaviour:
   m_MinSize: {x: 613, y: 492}
   m_MaxSize: {x: 18008, y: 14042}
   vertical: 0
-  controlID: 30
+  controlID: 124
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -159,7 +159,7 @@ MonoBehaviour:
   m_MinSize: {x: 234, y: 492}
   m_MaxSize: {x: 10004, y: 14042}
   vertical: 1
-  controlID: 31
+  controlID: 72
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -344,7 +344,7 @@ MonoBehaviour:
   m_PersistentViewDataDictionary: {fileID: 0}
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 7a350000
+    m_SelectedIDs: a43c0000
     m_LastClickedID: 0
     m_ExpandedIDs: a2fbffff00000000
     m_RenameOverlay:
@@ -512,34 +512,34 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Items/Passive Items/Item_Collection Data
+    - Assets/Guns
   m_ViewMode: 1
   m_StartGridSize: 96
   m_LastFolders:
-  - Assets/Items/Passive Items/Item_Collection Data
+  - Assets/Guns
   m_LastFoldersGridSize: 96
   m_LastProjectPath: C:\Users\maxvo\source\repos\Planetside\Assetbundle Stuff\Unity
     Projects\PlanetsideSpritesBundle
   m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 660}
-    m_SelectedIDs: a0300000
-    m_LastClickedID: 12448
+    scrollPos: {x: 0, y: 480}
+    m_SelectedIDs: b8380000
+    m_LastClickedID: 14520
     m_ExpandedIDs: 00000000d82a0000442b0000e42b0000062d00002e2e0000d22f00005a30000072300000d23200000433000056340000f634000044350000c63500000436000016360000be360000b838000082390000203a0000223a00003e3a0000503a0000b43b00000c3d0000083e0000623e00000a3f00002e3f0000463f0000f63f0000e44100007643000086440000884400008a4400008c4400008e44000090440000924400009444000096440000984400009a4400009c4400009e440000a0440000a2440000ffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: AnnihiChamberCollection Data
-      m_OriginalName: AnnihiChamberCollection Data
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 12008
+      m_UserData: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 9}
     m_SearchString: 
@@ -553,7 +553,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000d82a0000442b0000e42b0000062d00002e2e0000d22f00005a30000072300000d232000004330000f634000044350000c63500000436000016360000be360000b838000082390000203a0000223a00003e3a0000503a0000b43b00000c3d0000083e0000623e00000a3f00002e3f0000463f0000f63f0000e44100008042000086440000884400008a4400008c4400008e44000090440000924400009444000096440000984400009a4400009c4400009e440000a0440000a2440000
+    m_ExpandedIDs: 00000000d82a0000442b0000e42b0000062d00002e2e0000d22f00005a30000072300000d23200000433000056340000f634000044350000c63500000436000016360000be360000b838000082390000203a0000223a00003e3a0000503a0000b43b00000c3d0000083e0000623e00000a3f00002e3f0000463f0000f63f0000e44100007643000086440000884400008a4400008c4400008e44000090440000924400009444000096440000984400009a4400009c4400009e440000a0440000a2440000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

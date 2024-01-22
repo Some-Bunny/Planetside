@@ -510,6 +510,8 @@ namespace Planetside
         {
             if (m_hasBeenPickedUp)
                 return;
+            SaveAPI.AdvancedGameStatsManager.Instance.RegisterStatChange(StatToIncreaseOnPickup, 1);
+
             m_hasBeenPickedUp = true;
             AkSoundEngine.PostEvent("Play_OBJ_dice_bless_01", player.gameObject);
 

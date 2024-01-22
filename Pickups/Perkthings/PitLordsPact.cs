@@ -15,7 +15,7 @@ namespace Planetside
         public PitLordsPactController()
         {
             this.EnemySacrificeDamage = 30;
-            this.EnemyAbovePitDamage = 10;
+            this.EnemyAbovePitDamage = 6.66f;
             this.EnemySacrificedBonus = 4;
 
             this.ItemSacrificablePerFloor = 1;
@@ -83,7 +83,7 @@ namespace Planetside
         public void IncrementStack()
         {
             this.EnemySacrificeDamage += 30;
-            this.EnemyAbovePitDamage += 10;
+            this.EnemyAbovePitDamage += 6.66f;
             this.EnemySacrificedBonus += 2;
 
             this.ItemSacrificablePerFloor++;
@@ -704,6 +704,7 @@ namespace Planetside
         {
             if (m_hasBeenPickedUp)
                 return;
+            SaveAPI.AdvancedGameStatsManager.Instance.RegisterStatChange(StatToIncreaseOnPickup, 1);
             m_hasBeenPickedUp = true;
             PerkParticleSystemController cont = base.GetComponent<PerkParticleSystemController>();
             if (cont != null && player != null) { cont.DoBigBurst(player); }

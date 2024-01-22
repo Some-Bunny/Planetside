@@ -67,7 +67,7 @@ namespace Planetside
                 Enemy.reinforceType = AIActor.ReinforceType.SkipVfx;
                 Enemy.CollisionDamage = 0;
                 AIActor lad = AIActor.Spawn(Enemy.aiActor, player.CurrentRoom.GetRandomAvailableCell().Value, GameManager.Instance.PrimaryPlayer.CurrentRoom, true, AIActor.AwakenAnimationType.Default, true);
-                lad.GetComponent<ShamberController>().Invoke("Start", 0);
+                lad.GetComponent<ShamberController>().Start();
                 lad.aiActor.HasDonePlayerEnterCheck = true;
             }         
         }
@@ -85,12 +85,7 @@ namespace Planetside
     }
     public class BulletStormChallengeModifier : ChallengeModifier
     {
-        public void Start()
-        {
-
-
-
-        }
+        public void Start(){}
         public void Update()
         {            
             PlayerController player = GameManager.Instance.PrimaryPlayer;

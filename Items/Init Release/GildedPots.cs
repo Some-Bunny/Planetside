@@ -22,7 +22,7 @@ namespace Planetside
             ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("gildedceramic"), data, gameObject);
             //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
             string shortDesc = "Destruction Therapy";
-			string longDesc = "Decorative breakables have a chance to be replaced by a special coin-plated pot.\n\nOriginally a trinket carried around by the Lost Adventurer, he lost it while traversing the halls of the Gungeon.";
+			string longDesc = "Decorative breakables have a chance to be replaced by special coin-plated pottery.\n\nOriginally a trinket carried around by the Lost Adventurer, he lost it while traversing the halls of the Gungeon.";
 			ItemBuilder.SetupItem(warVase, shortDesc, longDesc, "psog");
 			warVase.quality = PickupObject.ItemQuality.D;
 			List<string> mandatoryConsoleIDs = new List<string>
@@ -55,8 +55,6 @@ namespace Planetside
 		public static int GildedPotsID;
 
      
-
-
 		public static void CoinChance(Action<MinorBreakable> orig, MinorBreakable self)
 		{
 			orig(self);
@@ -68,17 +66,18 @@ namespace Planetside
 				{
                     if (player.HasPickupID(GildedPots.GildedPotsID) && self != null)
                     {
-                        if (self.transform?.parent?.gameObject?.GetComponent<MirrorController>() != null) { return; }
-
-                        bool Synergy = player.PlayerHasActiveSynergy("Expert Demolitionist");
-                        float coinchance = Synergy ? 0.05f : 0.035f;
-                        if (self.GetComponent<MoneyPots.MoneyPotBehavior>() == null && UnityEngine.Random.value < coinchance)
-                        {
-                            Vector2 position = self.transform.position;
-                            DungeonPlaceable bom = ScriptableObject.CreateInstance<DungeonPlaceable>();
-                            StaticReferences.StoredDungeonPlaceables.TryGetValue("moneyPotRandom", out bom);
-                            bom.InstantiateObject(position.GetAbsoluteRoom(), position.ToIntVector2() - position.GetAbsoluteRoom().area.basePosition);
-                            Destroy(self.gameObject);
+                        if (self.transform?.parent?.gameObject?.GetComponent<MirrorController>() == null) 
+						{
+                            bool Synergy = player.PlayerHasActiveSynergy("Expert Demolitionist");
+                            float coinchance = Synergy ? 0.05f : 0.035f;
+                            if (self.GetComponent<MoneyPots.MoneyPotBehavior>() == null && UnityEngine.Random.value < coinchance)
+                            {
+                                Vector2 position = self.transform.position;
+                                DungeonPlaceable bom = ScriptableObject.CreateInstance<DungeonPlaceable>();
+                                StaticReferences.StoredDungeonPlaceables.TryGetValue("moneyPotRandom", out bom);
+                                bom.InstantiateObject(position.GetAbsoluteRoom(), position.ToIntVector2() - position.GetAbsoluteRoom().area.basePosition);
+                                Destroy(self.gameObject);
+                            }
                         }
                     }
                 }
@@ -113,17 +112,19 @@ namespace Planetside
 					{
 						if (self)
 						{
-                            if (self.transform?.parent?.gameObject?.GetComponent<MirrorController>() != null) { return; }
-                            bool Synergy = player.PlayerHasActiveSynergy("Expert Demolitionist");
-                            float coinchance = Synergy ? 0.05f : 0.035f;
-                            if (self.GetComponent<MoneyPots.MoneyPotBehavior>() == null && UnityEngine.Random.value < coinchance)
-                            {
-                                Vector2 position = self.transform.position;
-                                DungeonPlaceable bom = ScriptableObject.CreateInstance<DungeonPlaceable>();
-                                StaticReferences.StoredDungeonPlaceables.TryGetValue("moneyPotRandom", out bom);
-                                bom.InstantiateObject(position.GetAbsoluteRoom(), position.ToIntVector2() - position.GetAbsoluteRoom().area.basePosition);
-                                Destroy(self.gameObject);
-								LootEngine.DoDefaultItemPoof(position, true, true);
+                            if (self.transform?.parent?.gameObject?.GetComponent<MirrorController>() == null) 
+							{
+                                bool Synergy = player.PlayerHasActiveSynergy("Expert Demolitionist");
+                                float coinchance = Synergy ? 0.05f : 0.035f;
+                                if (self.GetComponent<MoneyPots.MoneyPotBehavior>() == null && UnityEngine.Random.value < coinchance)
+                                {
+                                    Vector2 position = self.transform.position;
+                                    DungeonPlaceable bom = ScriptableObject.CreateInstance<DungeonPlaceable>();
+                                    StaticReferences.StoredDungeonPlaceables.TryGetValue("moneyPotRandom", out bom);
+                                    bom.InstantiateObject(position.GetAbsoluteRoom(), position.ToIntVector2() - position.GetAbsoluteRoom().area.basePosition);
+                                    Destroy(self.gameObject);
+                                    LootEngine.DoDefaultItemPoof(position, true, true);
+                                }
                             }
                         }
 					}       

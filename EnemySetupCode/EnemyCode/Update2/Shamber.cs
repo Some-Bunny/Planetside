@@ -50,17 +50,17 @@ namespace Planetside
 				prefab.AddComponent<KillOnRoomClear>();
 				enemy.aiActor.IgnoreForRoomClear = true;
 				enemy.aiActor.knockbackDoer.weight = 35;
-				enemy.aiActor.MovementSpeed = 1f;
+				enemy.aiActor.MovementSpeed = 0.9f;
 				enemy.aiActor.healthHaver.PreventAllDamage = false;
 				enemy.aiActor.CollisionDamage = 1f;
 				enemy.aiActor.aiAnimator.HitReactChance = 0f;
 				enemy.aiActor.specRigidbody.CollideWithOthers = true;
 				enemy.aiActor.specRigidbody.CollideWithTileMap = true;
 				enemy.aiActor.PreventFallingInPitsEver = false;
-				enemy.aiActor.healthHaver.ForceSetCurrentHealth(15f);
+				enemy.aiActor.healthHaver.ForceSetCurrentHealth(10f);
 				enemy.aiActor.CollisionKnockbackStrength = 10f;
 				enemy.aiActor.CanTargetPlayers = true;
-				enemy.aiActor.healthHaver.SetHealthMaximum(15f, null, false);
+				enemy.aiActor.healthHaver.SetHealthMaximum(10f, null, false);
 				enemy.aiActor.PathableTiles = CellTypes.PIT | CellTypes.FLOOR;
 				enemy.aiActor.SetIsFlying(true, "Gamemode: Creative", true, true);
 
@@ -335,8 +335,8 @@ namespace Planetside
 					ManualOffsetX = 10,
 					ManualOffsetY = 0,
 					ManualWidth = 13,
-					ManualHeight = 14,
-					ManualDiameter = 0,
+                    ManualHeight = 18,
+                    ManualDiameter = 0,
 					ManualLeftX = 0,
 					ManualLeftY = 0,
 					ManualRightX = 0,
@@ -352,10 +352,10 @@ namespace Planetside
 					BagleUseFirstFrameOnly = false,
 					SpecifyBagelFrame = string.Empty,
 					BagelColliderNumber = 0,
-					ManualOffsetX = 0,
+					ManualOffsetX = 10,
 					ManualOffsetY = 0,
 					ManualWidth = 13,
-					ManualHeight = 14,
+					ManualHeight = 18,
 					ManualDiameter = 0,
 					ManualLeftX = 0,
 					ManualLeftY = 0,
@@ -408,13 +408,13 @@ namespace Planetside
 					teleportInAnim = "waprin",
 					teleportOutAnim = "warpout",
 					AttackCooldown = 3f,
-					InitialCooldown = 0f,
+					InitialCooldown = 5f,
 					RequiresLineOfSight = false,
 					roomMax = new Vector2(0,0),
 					roomMin = new Vector2(0,0),
 					GlobalCooldown = 0.5f,
-					Cooldown = 5f,
-
+					Cooldown = 7f,
+					
 					CooldownVariance = 1f,
 					InitialCooldownVariance = 0f,
 					goneAttackBehavior = null,
@@ -455,7 +455,10 @@ namespace Planetside
 				bs.SkipTimingDifferentiator = behaviorSpeculator.SkipTimingDifferentiator;
 				Game.Enemies.Add("psog:shamber", enemy.aiActor);
 
-				SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Ammocom/shamberammonomiconICON", SpriteBuilder.ammonomiconCollection);
+                enemy.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("1bc2a07ef87741be90c37096910843ab").bulletBank.GetBullet("reversible"));
+
+
+                SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Ammocom/shamberammonomiconICON", SpriteBuilder.ammonomiconCollection);
 				if (enemy.GetComponent<EncounterTrackable>() != null)
 				{
 					UnityEngine.Object.Destroy(enemy.GetComponent<EncounterTrackable>());

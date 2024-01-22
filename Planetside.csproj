@@ -87,6 +87,7 @@
     <Compile Include="Controllers\ContainmentBreach\BossChanges\F3\TreadnoughtChanges.cs" />
     <Compile Include="Controllers\ContainmentBreach\BossChanges\F3\CannonbalrogChanges.cs" />
     <Compile Include="Controllers\ContainmentBreach\BossChanges\F2\GorgunChanges.cs" />
+    <Compile Include="Controllers\ContainmentBreach\BossChanges\Misc\TheGames.cs" />
     <Compile Include="Controllers\CrossGameDataStorage.cs" />
     <Compile Include="Controllers\HellShrinesController.cs" />
     <Compile Include="Controllers\GlobalMessageRadio.cs" />
@@ -182,6 +183,7 @@
     <Compile Include="EnemySetupCode\EnemyRelatedStuff\AdvancedBodyPartController.cs" />
     <Compile Include="EnemySetupCode\EnemyRelatedStuff\Behavior Stuff\CustomDodgeRollBehavior.cs" />
     <Compile Include="EnemySetupCode\EnemyRelatedStuff\Behavior Stuff\ModifiedDashMoveBehavior.cs" />
+    <Compile Include="Guns\Jsons\jhbsda.cs" />
     <Compile Include="Guns\Update5\StormBringerProjectile.cs" />
     <Compile Include="Guns\Update5\StormBringer.cs" />
     <Compile Include="Guns\Update4\SawconProjectile.cs" />

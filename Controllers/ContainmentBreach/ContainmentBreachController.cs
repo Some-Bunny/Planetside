@@ -19,7 +19,7 @@ using SaveAPI;
 using NpcApi;
 using static Dungeonator.ProceduralFlowModifierData;
 using static Planetside.RealityTearData;
-
+using Planetside.Controllers.ContainmentBreach.BossChanges.Misc;
 
 namespace Planetside
 {
@@ -90,6 +90,7 @@ namespace Planetside
                         comparisonValue = 1
                     },
                 };
+                ETGModMainBehaviour.Instance.gameObject.AddComponent<TheGames>();
 
                 RoomFactory.AddInjection(RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/MortalCombat.room").room, "Combat Shrine", flowModifierPlacementTypes, 0, dungeonPrerequisites1, "Combat Shrine", 1, 1f);
 

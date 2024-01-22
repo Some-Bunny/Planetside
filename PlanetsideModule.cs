@@ -22,9 +22,7 @@ using Planetside.SoundAPI;
 using BreakAbleAPI;
 using BepInEx;
 using HarmonyLib;
-
-
-
+using Planetside.Items;
 
 namespace Planetside
 {
@@ -40,7 +38,7 @@ namespace Planetside
     {
         public const string GUID = "somebunny.etg.planetsideofgunymede";
         public const string NAME = "Planetside Of Gunymede Pre-Release";
-        public const string VERSION = "1.3.148";
+        public const string VERSION = "1.3.150";
 
         public static readonly string TEXT_COLOR = "#9006FF";
 
@@ -385,6 +383,8 @@ namespace Planetside
             CanisterLauncher.Add();
             Sawcon.Add();
 
+            //SpiritOfTheDragun.Add();
+            //TrueGunpowder.Init();
 
             if (NewContent == true)
             {

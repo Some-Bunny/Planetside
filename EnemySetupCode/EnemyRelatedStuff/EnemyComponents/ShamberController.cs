@@ -19,8 +19,6 @@ public class ShamberController : BraveBehaviour
 
 		base.aiActor.spriteAnimator.AnimationEventTriggered += this.AnimationEventTriggered;
 
-		base.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("1bc2a07ef87741be90c37096910843ab").bulletBank.GetBullet("reversible"));
-		BulletsEaten = 0;
 		Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
 		mat.mainTexture = base.aiActor.sprite.renderer.material.mainTexture;
 		mat.SetColor("_EmissiveColor", new Color32(255, 255, 255, 255));
@@ -34,7 +32,7 @@ public class ShamberController : BraveBehaviour
 		pso.transform.localRotation = Quaternion.Euler(0f, 0f, 0);
 		pso.transform.parent = base.aiActor.gameObject.transform;
 
-		var partObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("ShamberParticles")); ;//this is the name of the object which by default will be "Particle System"
+		var partObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("ShamberParticles"));//this is the name of the object which by default will be "Particle System"
 		partObj.transform.position = pso.transform.position;
 		partObj.transform.parent = pso.transform;
 
@@ -73,7 +71,26 @@ public class ShamberController : BraveBehaviour
 				particle.Stop();
             }
 		}
-		base.OnDestroy();
+        for (int i = this.m_bulletPositions.Count - 1; i >= 0; i--)
+        {
+            Projectile proj = this.m_bulletPositions[i].projectile;
+            if (proj)
+            {
+                proj.ManualControl = false;
+
+                proj.ResetDistance();
+                proj.collidesWithEnemies = base.aiActor.CanTargetEnemies;
+                proj.specRigidbody.CollideWithTileMap = true;
+                proj.collidesWithPlayer = true;
+                proj.UpdateCollisionMask();
+                proj.Direction = proj.transform.PositionVector2() - this.aiActor.sprite.WorldCenter;
+                proj.baseData.speed = Mathf.Min(this.m_bulletPositions[i].speed, 25);
+                proj.UpdateSpeed();
+                proj.IgnoreTileCollisionsFor(0.5f);
+            }
+        }
+
+        base.OnDestroy();
 	}
 
 	public bool CanSuckBullets()
@@ -82,80 +99,166 @@ public class ShamberController : BraveBehaviour
 		return false;
     }
 
+    private List<ShamberCont> m_bulletPositions = new List<ShamberCont>();
 
-	public void Update()
+	public class ShamberCont
+	{
+		public Projectile projectile;
+        public float s;
+        public float speed;
+		public float Radius = 1.5f; 
+
+    }
+
+
+    public void Update()
 	{
 		if (base.aiActor)
         {
 			if (CanSuckBullets() == true)
 			{
 				ReadOnlyCollection<Projectile> allProjectiles = StaticReferenceManager.AllProjectiles;
-				if (allProjectiles != null && allProjectiles.Count >= 0 && base.gameObject != null)
+				if (allProjectiles != null && allProjectiles.Count > 0 && base.gameObject != null)
 				{
 					for (int i = 0; i < allProjectiles.Count; i++)
 					{
 						Projectile proj = allProjectiles[i];
-						if (proj)
+						if (proj && proj.Owner != this.aiActor)
                         {
 							BeamController beamController = proj.GetComponent<BeamController>();
 							BasicBeamController basicBeamController = proj.GetComponent<BasicBeamController>();
 							bool isNotBeam = basicBeamController == null || beamController == null;
 							if (Vector2.Distance(proj.sprite.WorldCenter, base.sprite.WorldCenter) < 3f && proj != null && proj.specRigidbody != null && isNotBeam == true)
 							{
-								GameManager.Instance.Dungeon.StartCoroutine(this.HandleBulletSuck(proj));
-							}
+								if (proj.CanBeCaught)
+								{
+									if (m_bulletPositions.Count() < 300)
+									{
+                                        if (proj.Owner as PlayerController)
+                                        {
+                                            proj.sprite.color = new Color(1f, 0.1f, 0.1f);
+                                            proj.MakeLookLikeEnemyBullet(false);
+                                        }
+                                        proj.specRigidbody.DeregisterSpecificCollisionException(proj.Owner.specRigidbody);
+                                        proj.Shooter = base.aiActor.specRigidbody;
+                                        proj.Owner = base.aiActor;
+                                        proj.specRigidbody.Velocity = Vector2.zero;
+                                        proj.ManualControl = true;
+                                        float s = proj.baseData.speed;
+                                        proj.baseData.speed = 0;//proj.baseData.SetAll(base.aiActor.bulletBank.GetBullet("reversible").ProjectileData);
+                                        proj.UpdateSpeed();
+                                        proj.baseData.speed = s;
+                                        proj.specRigidbody.CollideWithTileMap = false;
+                                        proj.ResetDistance();
+                                        proj.collidesWithEnemies = base.aiActor.CanTargetEnemies;
+                                        proj.collidesWithPlayer = true;
+                                        proj.UpdateCollisionMask();
+                                        proj.RemovePlayerOnlyModifiers();
+                                        if (proj.BulletScriptSettings != null)
+                                        {
+                                            proj.BulletScriptSettings.preventPooling = true;
+
+                                        }
+                                        proj.RemoveBulletScriptControl();
+
+                                        float second = BraveMathCollege.ClampAngle360((proj.transform.PositionVector2() - base.aiActor.sprite.WorldCenter).ToAngle());
+                                        this.m_bulletPositions.Add(new ShamberCont()
+                                        {
+                                            speed = s,
+                                            s = second,
+                                            projectile = proj,
+                                            Radius = Mathf.Min(3, 1.25f + (m_bulletPositions.Count() == 0 ? 0 : m_bulletPositions.Count() / 100))
+                                        });
+                                    }
+									else
+									{
+                                        GameManager.Instance.Dungeon.StartCoroutine(this.HandleBulletSuck(proj));
+                                    }
+								}
+							}							
 						}				
 					}
 				}
 			}
-		}		
-	}
-	private IEnumerator HandleBulletSuck(Projectile target)
-	{
-		if (BulletsEaten < 250){this.BulletsEaten++;}
-		
+            for (int i = this.m_bulletPositions.Count - 1; i >= 0; i--)
+            {
+                Projectile first = this.m_bulletPositions[i].projectile;
 
+                if (!(first == null))
+                {
+                    if (!first)
+                    {
+                        this.m_bulletPositions[i] = null;
+                    }
+                    else
+                    {
+                        float num = this.m_bulletPositions[i].s + BraveTime.DeltaTime * Mathf.Max(30, (10 * this.m_bulletPositions[i].speed));
+                        this.m_bulletPositions[i].s = num;
 
-		Transform copySprite = this.CreateEmptySprite(target);
-		target.DieInAir(true);
-		Vector3 startPosition = copySprite.transform.position;
-		float elapsed = 0f;
-		float duration = 0.666f;
-		while (elapsed < duration)
-		{
-			elapsed += BraveTime.DeltaTime;
-			bool flag3 = copySprite && base.aiActor != null;
-			if (flag3)
-			{
-				Vector3 position = base.sprite.WorldCenter;
-				float t = elapsed / duration * (elapsed / duration);
-				copySprite.position = Vector3.Lerp(startPosition, position, t);
-				copySprite.rotation = Quaternion.Euler(0f, 0f, 60f * BraveTime.DeltaTime) * copySprite.rotation;
-				copySprite.localScale = Vector3.Lerp(Vector3.one, new Vector3(0.1f, 0.1f, 0.1f), t);
-				position = default(Vector3);
-			}
-			yield return null;
-		}
-		bool flag4 = copySprite;
-		if (flag4)
-		{
-			UnityEngine.Object.Destroy(copySprite.gameObject);
-		}
-		yield break;
+						Vector2 bulletPosition = this.GetBulletPosition(num, first, this.m_bulletPositions[i].Radius);
+
+						first.transform.position = bulletPosition;
+                        first.specRigidbody.Reinitialize();
+						//first.specRigidbody.Velocity = (bulletPosition - first.transform.PositionVector2()) / BraveTime.DeltaTime;
+                        if (first.shouldRotate)
+                        {
+                            first.transform.rotation = Quaternion.Euler(0f, 0f, 180f + (Quaternion.Euler(0f, 0f, 90f) * (this.aiActor.sprite.WorldCenter - bulletPosition)).XY().ToAngle());
+                        }
+                        first.ResetDistance();
+                    }
+                }
+            }
+        }		
 	}
-	private Transform CreateEmptySprite(Projectile target)
-	{
-		GameObject gameObject = new GameObject("suck image");
-		gameObject.layer = target.gameObject.layer;
-		tk2dSprite tk2dSprite = gameObject.AddComponent<tk2dSprite>();
-		gameObject.transform.parent = SpawnManager.Instance.VFX;
-		tk2dSprite.SetSprite(target.sprite.Collection, target.sprite.spriteId);
-		tk2dSprite.transform.position = target.sprite.transform.position;
-		GameObject gameObject2 = new GameObject("image parent");
-		gameObject2.transform.position = tk2dSprite.WorldCenter;
-		tk2dSprite.transform.parent = gameObject2.transform;
-		return gameObject2.transform;
-	}
+
+    private IEnumerator HandleBulletSuck(Projectile target)
+    {
+        Transform copySprite = this.CreateEmptySprite(target);
+        target.DieInAir(true);
+        Vector3 startPosition = copySprite.transform.position;
+        float elapsed = 0f;
+        float duration = 0.666f;
+        while (elapsed < duration)
+        {
+            elapsed += BraveTime.DeltaTime;
+            bool flag3 = copySprite && base.aiActor != null;
+            if (flag3)
+            {
+                Vector3 position = base.sprite.WorldCenter;
+                float t = elapsed / duration * (elapsed / duration);
+                copySprite.position = Vector3.Lerp(startPosition, position, t);
+                copySprite.rotation = Quaternion.Euler(0f, 0f, 60f * BraveTime.DeltaTime) * copySprite.rotation;
+                copySprite.localScale = Vector3.Lerp(Vector3.one, new Vector3(0.1f, 0.1f, 0.1f), t);
+                position = default(Vector3);
+            }
+            yield return null;
+        }
+        bool flag4 = copySprite;
+        if (flag4)
+        {
+            UnityEngine.Object.Destroy(copySprite.gameObject);
+        }
+        yield break;
+    }
+    private Transform CreateEmptySprite(Projectile target)
+    {
+        GameObject gameObject = new GameObject("suck image");
+        gameObject.layer = target.gameObject.layer;
+        tk2dSprite tk2dSprite = gameObject.AddComponent<tk2dSprite>();
+        gameObject.transform.parent = SpawnManager.Instance.VFX;
+        tk2dSprite.SetSprite(target.sprite.Collection, target.sprite.spriteId);
+        tk2dSprite.transform.position = target.sprite.transform.position;
+        GameObject gameObject2 = new GameObject("image parent");
+        gameObject2.transform.position = tk2dSprite.WorldCenter;
+        tk2dSprite.transform.parent = gameObject2.transform;
+        return gameObject2.transform;
+    }
+
+    private Vector2 GetBulletPosition(float angle, Projectile projectile, float radius)
+    {
+        return Vector2.MoveTowards(projectile.transform.PositionVector2(), this.aiActor.sprite.WorldCenter + new Vector2(Mathf.Cos(angle * 0.017453292f), Mathf.Sin(angle * 0.017453292f)) * radius, 0.15f);
+    }
+
 
 	private void OnPreDeath(Vector2 obj)
 	{
@@ -163,50 +266,24 @@ public class ShamberController : BraveBehaviour
 		{
 			particle.Stop();
 		}
-		for (int j = 0; j < BulletsEaten; j++)
+		for (int i = this.m_bulletPositions.Count - 1; i >= 0; i--)
 		{
-			SpawnManager.SpawnBulletScript(base.aiActor.gameActor, new CustomBulletScriptSelector(typeof(BLLLARGH)));
-		}
+            Projectile proj = this.m_bulletPositions[i].projectile;
+			if (proj)
+			{
+                proj.ManualControl = false;
 
-	}
-	//private bool CanSucc;
-	public int BulletsEaten;
-	public void OnProjCreated(Projectile projectile)
-	{
-		if (!projectile.Owner.aiActor.CanTargetPlayers && projectile.Owner.aiActor.CanTargetEnemies)
-		{
-			projectile.collidesWithPlayer = false;
-			projectile.collidesWithEnemies = true;
+                proj.ResetDistance();
+                proj.collidesWithEnemies = base.aiActor.CanTargetEnemies;
+                proj.specRigidbody.CollideWithTileMap = true;
+                proj.collidesWithPlayer = true;
+                proj.UpdateCollisionMask();
+				proj.Direction = proj.transform.PositionVector2() - this.aiActor.sprite.WorldCenter;
+                proj.baseData.speed = Mathf.Min(this.m_bulletPositions[i].speed, 25);
+                proj.UpdateSpeed();
+				proj.IgnoreTileCollisionsFor(0.5f);
+            }
+        }
+    }
 
-		}
-		else
-        {
-			projectile.collidesWithPlayer = true;
-			projectile.collidesWithEnemies = false;
-		}
-	}
-}
-
-
-public class BLLLARGH : Script
-{
-	public override IEnumerator Top()
-	{
-		float fuckYOUYOUPIECEOFfuckINGSHITIHOPEYOUROTINAfuckINGFREEZER = UnityEngine.Random.Range(-180, 180);
-		base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("1bc2a07ef87741be90c37096910843ab").bulletBank.GetBullet("reversible"));
-		base.Fire(new Direction(fuckYOUYOUPIECEOFfuckINGSHITIHOPEYOUROTINAfuckINGFREEZER), new Speed(UnityEngine.Random.Range(2f, 5.5f), SpeedType.Absolute), new BurstBullet());
-		yield break;
-	}
-	public class BurstBullet : Bullet
-	{
-		public BurstBullet() : base("reversible", false, false, false)
-		{
-		}
-		public override IEnumerator Top()
-		{
-			float speed = base.Speed;
-			base.ChangeSpeed(new Speed(speed * 3.6f, SpeedType.Absolute), 120);
-			yield break;
-		}
-	}
 }

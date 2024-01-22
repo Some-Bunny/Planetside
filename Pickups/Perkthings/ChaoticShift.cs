@@ -312,7 +312,8 @@ namespace Planetside
         public override void Pickup(PlayerController player)
         {
             if (m_hasBeenPickedUp)
-                return;    
+                return;
+            SaveAPI.AdvancedGameStatsManager.Instance.RegisterStatChange(StatToIncreaseOnPickup, 1);
             m_hasBeenPickedUp = true;
             AkSoundEngine.PostEvent("Play_OBJ_dice_bless_01", player.gameObject);
             OtherTools.ApplyStat(player, PlayerStats.StatType.Damage, 0.65f, StatModifier.ModifyMethod.MULTIPLICATIVE);

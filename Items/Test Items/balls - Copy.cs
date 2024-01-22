@@ -1,108 +1,81 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
-using ItemAPI;
-using Gungeon;
+﻿using Alexandria.ItemAPI;
 using Dungeonator;
-using SaveAPI;
-using System.Collections;
-using System.Reflection;
+using UnityEngine;
 
-namespace Planetside
+namespace Items
 {
-    class MiniMap : PassiveItem
+    class TrueGunpowder : PassiveItem
     {
-
+        public static int itemID;
         public static void Init()
         {
-            string itemName = "Mini-Map";
-            string resourceName = "Planetside/Resources/blashshower.png";
+            string itemName = "True Gunpowder";
+
+            string resourceName = "Items/Resources/ItemSprites/Passives/true_gunpowder.png";
 
             GameObject obj = new GameObject(itemName);
-            var item = obj.AddComponent<MiniMap>();
+
+            var item = obj.AddComponent<TrueGunpowder>();
 
             ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
 
-            string shortDesc = "Heavily Undersized Display";
-            string longDesc = "An impractically small map with barely enough space to display a small cluster of rooms.";
-            ItemBuilder.SetupItem(item, shortDesc, longDesc, "rld");
+            string shortDesc = "A Weapon That Cuts On Its Own";
+            string longDesc = "Every 120 damage dealt, a random enemy in the room is killed. Bosses take heavy damage instead.\n\n\"At last, I have found it: the gunpowder of the first gun fired within the Gungeon. With it, perhaps I can finally escape. But I must be quick. They know I have it. It's only a matter of time until they catch up.\"- Torn note.";
 
-            item.quality = PickupObject.ItemQuality.D;
-            item.PlaceItemInAmmonomiconAfterItemById(137);
+            ItemBuilder.SetupItem(item, shortDesc, longDesc, "cel");
+
+            item.quality = ItemQuality.EXCLUDED;
+            item.sprite.IsPerpendicular = true;
+            item.CanBeDropped = false;
+            item.CanBeSold = false;
+            itemID = item.PickupObjectId;
         }
-        bool first_pickup = true;
-        public override void Pickup(PlayerController player)
+        private float cooldown = 0;
+        private void GrabbyGrabTime(PlayerController player, float oof)
         {
-            player.OnNewFloorLoaded += GenerateCluster;
-            base.Pickup(player);
-            if (first_pickup)
+
+            cooldown += oof;
+            if (cooldown >= 80)
             {
-                GenerateCluster(player);
-                first_pickup = false;
-            }
+                AIActor actor;
+                RoomHandler absoluteRoom = base.transform.position.GetAbsoluteRoom();
+                actor = Owner.CurrentRoom.GetRandomActiveEnemy(true);
+                var hand = (EnemyDatabase.GetOrLoadByGuid("cd88c3ce60c442e9aa5b3904d31652bc")).GetComponent<LichDeathController>().HellDragVFX.GetComponent<HellDraggerArbitrary>().HellDragVFX;
+                //HellDraggerArbitrary component2 = UnityEngine.Object.Instantiate<GameObject>(hand).GetComponent<HellDraggerArbitrary>();
 
-
-
-        }
-        private void GenerateCluster(PlayerController obj)
-        {
-            for (int x = 0; x < 250; x++)
-            {
-                RoomHandler RandomRoom = GenerateRandomRoom();
-                if (IsValidRoom(RandomRoom) && !(RandomRoom == obj.CurrentRoom))
+                AkSoundEngine.PostEvent("Play_BOSS_lichB_grab_01", gameObject);
+                if (!actor.healthHaver.IsBoss)
                 {
-                    RevealRoom(RandomRoom);
-                    foreach (RoomHandler ConnectedRoom in RandomRoom.connectedRooms)
+                    actor.PlayEffectOnActor(hand, new Vector3(0f, 0, 0f), false, false, false);
+                    actor.CorpseObject = null;
+                    actor.healthHaver.ApplyDamage(100000, Vector2.zero, "GetFuckedNerd", CoreDamageTypes.None, DamageCategory.Unstoppable, true, null, true);
+
+
+                }
+                else
+                {
+                    if (actor.healthHaver.IsBoss)
                     {
-                        if (IsValidRoom(ConnectedRoom))
-                        {
-                            RevealRoom(ConnectedRoom);
-                            break;
-                        }
+                        actor.PlayEffectOnActor(hand, new Vector3(0f, 0, 0f), false, false, false);
+                        actor.healthHaver.ApplyDamage(120, Vector2.zero, "GetFuckedNerdButSlightlyLessThanNormalNerds", CoreDamageTypes.None, DamageCategory.Unstoppable, true, null, true);
+
                     }
                 }
 
+                cooldown = 0;
             }
         }
-        public void RevealRoom(RoomHandler roomToReveal)
+        public override void Pickup(PlayerController player)
         {
-            /*
-            Minimap.Instance.RevealMinimapRoom(roomToReveal, true, false, false);
-            roomToReveal.visibility = RoomHandler.VisibilityStatus.VISITED;
-            Minimap.Instance.RegenerateMapTilemap();
-            foreach (RoomHandler rommConnects in roomToReveal.connectedRooms)
-            {
-                if (rommConnects.IsSecretRoom != true)
-                {
-                    Minimap.Instance.RevealMinimapRoom(rommConnects, true, false, false);
-                    rommConnects.visibility = RoomHandler.VisibilityStatus.VISITED;
-                    Minimap.Instance.RegenerateMapTilemap();
-                }
-            }
-            */
+            base.Pickup(player);
+            player.OnDealtDamage += GrabbyGrabTime;
         }
-
-        public RoomHandler GenerateRandomRoom()
-        {
-            System.Random r = new System.Random();
-            int index = r.Next(GameManager.Instance.Dungeon.data.rooms.Count);
-            RoomHandler SelectedRoom = GameManager.Instance.Dungeon.data.rooms[index];
-            return SelectedRoom;
-        }
-        public bool IsValidRoom(RoomHandler BoolChecker)
-        {
-            return BoolChecker != GameManager.Instance.PrimaryPlayer.CurrentRoom && BoolChecker.area.PrototypeRoomCategory != PrototypeDungeonRoom.RoomCategory.ENTRANCE && BoolChecker.RevealedOnMap != true && BoolChecker.area.PrototypeRoomCategory != PrototypeDungeonRoom.RoomCategory.SPECIAL && BoolChecker.area.PrototypeRoomCategory != PrototypeDungeonRoom.RoomCategory.SECRET;
-        }
-
         public override DebrisObject Drop(PlayerController player)
         {
             DebrisObject debrisObject = base.Drop(player);
-            player.OnNewFloorLoaded -= GenerateCluster;
+            debrisObject.GetComponent<TrueGunpowder>().m_pickedUpThisRun = true;
+            player.OnDealtDamage -= GrabbyGrabTime;
             return debrisObject;
         }
-
     }
 }
