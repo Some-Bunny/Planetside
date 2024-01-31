@@ -78,7 +78,7 @@ namespace Planetside.Controllers.ContainmentBreach.BossChanges.Misc
 
         private void ResetFloorSpecificData()
         {
-            Amount = SaveAPI.AdvancedGameStatsManager.Instance.GetCharacterStatValue(CustomTrackedStats.PORTALS_SKIPPED);
+            Amount = SaveAPI.AdvancedGameStatsManager.Instance.GetPlayerStatValue(CustomTrackedStats.PORTALS_SKIPPED);
             
         }
         public static void CoinChance(Action<MinorBreakable> orig, MinorBreakable self)

@@ -38,7 +38,7 @@ namespace Planetside
     {
         public const string GUID = "somebunny.etg.planetsideofgunymede";
         public const string NAME = "Planetside Of Gunymede Pre-Release";
-        public const string VERSION = "1.3.150";
+        public const string VERSION = "1.3.152";
 
         public static readonly string TEXT_COLOR = "#9006FF";
 
@@ -561,8 +561,7 @@ namespace Planetside
                  );
             //Alexandria.DungeonAPI.RoomUtility.EnableDebugLogging = true;
 
-            //Alexandria.DungeonAPI.RoomFactory.LoadRoomsFromRoomDirectory("psog", "Planetside/NewRooms");
-            //Alexandria.DungeonAPI.DungeonHandler.debugFlow = true;
+            Alexandria.DungeonAPI.RoomFactory.LoadRoomsFromRoomDirectory("psog", FilePathFolder + "/newRooms");
 
             if (DebugMode == true)
             {

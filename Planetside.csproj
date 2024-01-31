@@ -4766,8 +4766,9 @@
     <Reference Include="0Harmony">
       <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Enter the Gungeon\BepInEx\core\0Harmony.dll</HintPath>
     </Reference>
-    <Reference Include="Alexandria">
-      <HintPath>..\..\..\AppData\Roaming\Thunderstore Mod Manager\DataFolder\ETG\profiles\Default\BepInEx\plugins\Alexandria-Alexandria\Alexandria.dll</HintPath>
+    <Reference Include="Alexandria, Version=0.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\AppData\Roaming\Thunderstore Mod Manager\DataFolder\ETG\profiles\Default\BepInEx\plugins\Alexandria-Alexandria\plugins\Alexandria.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

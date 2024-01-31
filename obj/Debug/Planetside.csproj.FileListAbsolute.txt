@@ -126,4 +126,3 @@ C:\Users\maxvo\source\repos\Planetside\obj\Debug\Planetside.csproj.CoreCompileIn
 C:\Users\maxvo\source\repos\Planetside\obj\Debug\Planetside.csproj.CopyComplete
 C:\Users\maxvo\source\repos\Planetside\obj\Debug\Planetside.dll
 C:\Users\maxvo\source\repos\Planetside\obj\Debug\Planetside.pdb
-C:\Users\maxvo\source\repos\Planetside\bin\Debug\Alexandria.dll
