@@ -112,8 +112,7 @@ namespace Planetside
             SpeculativeRigidbody specRigidbody = this.projectile.specRigidbody;
             specRigidbody.OnPreTileCollision = (SpeculativeRigidbody.OnPreTileCollisionDelegate)Delegate.Combine(specRigidbody.OnPreTileCollision, new SpeculativeRigidbody.OnPreTileCollisionDelegate(delegate (SpeculativeRigidbody myRigidbody, PixelCollider myPixelCollider, PhysicsEngine.Tile tile, PixelCollider tilePixelCollider)
             {
-
-                projectile.IgnoreTileCollisionsFor(3f / projectile.baseData.speed);
+                projectile.IgnoreTileCollisionsFor(Mathf.Min(0.25f, 3f / projectile.baseData.speed));
                 projectile.UpdateCollisionMask();
                 if (Warps < Cap)
                 {
@@ -152,12 +151,12 @@ namespace Planetside
 
         public void WoopShoop(Projectile p, Vector2 direction)
         {
+            if (p == null) { return; }
             Warps++;
             int rayMask = CollisionMask.LayerToMask(CollisionLayer.HighObstacle);
-            if (p == null) { return; }
             var cast = RaycastToolbox.ReturnRaycast(p.sprite.WorldCenter + (direction * 0.5f), direction, rayMask, 1000, null);
             var Position = cast.Contact;
-            if (p && Position != null)
+            if (p != null && Position != null)
             {
                 if (OnWrappedAround != null)
                 {
@@ -167,9 +166,6 @@ namespace Planetside
                 p.specRigidbody.Reinitialize();
             }      
         }
-
-
-
 
         public void Update()
         {
@@ -182,10 +178,7 @@ namespace Planetside
             }
         }
         public Action<Projectile, Vector2, Vector2> OnWrappedAround;
-
-
         public int Cap = 1;
-
         private Projectile projectile;
     }
 }

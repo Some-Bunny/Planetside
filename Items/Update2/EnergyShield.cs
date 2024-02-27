@@ -1,4 +1,5 @@
-﻿using ItemAPI;
+﻿using Alexandria.PrefabAPI;
+using ItemAPI;
 using MonoMod.RuntimeDetour;
 using System;
 using System.Collections;
@@ -12,21 +13,19 @@ namespace Planetside
         public static void Init()
         {
             string name = "Energy-Plated Shield";
-            //string resourcePath = "Planetside/Resources/energyshield.png";
             GameObject gameObject = new GameObject();
             EnergyShield item = gameObject.AddComponent<EnergyShield>();
             var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
             ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("energyshield"), data, gameObject);
             //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
             string shortDesc = "Thunk";
-            string longDesc = "4 Plates of protective shields.\n\nOriginally banned by the Guneva Convention for its use in torture methods, it was disguised as a defensive item when being smuggled around the Hegemony. In a hilarious twist, it proved to function better as a defensive shield than a torture device.";
+            string longDesc = "Grants 4 protective shields.\n\nCreated as a reusable defense for spaceships, the designers forgot the simple fact that enemies usually don't just fire once.";
 
             ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
 
             item.quality = PickupObject.ItemQuality.B;
             EnergyShield.BuildPrefab();
-            //item.OrbitalPrefab = EnergyShield.orbitalPrefab;
-            //item.Identifier = IounStoneOrbitalItem.IounStoneIdentifier.GENERIC;
+
             item.AddToSubShop(ItemBuilder.ShopType.Trorc, 1f);
 
             item.gameObject.AddComponent<IronsideItemPool>();
@@ -41,8 +40,21 @@ namespace Planetside
         {
             if (EnergyShield.orbitalPrefab == null)
             {
-                GameObject gameObject = SpriteBuilder.SpriteFromResource("Planetside/Resources/Guons/EnergyPlatedGuon/energyshiledguon.png");
-                gameObject.name = "Energy Shield Orbital";
+
+                GameObject gameObject = PrefabBuilder.BuildObject("EnergyShield");
+
+                tk2dSprite sprite = gameObject.AddComponent<tk2dSprite>();
+                sprite.collection = StaticSpriteDefinitions.Guon_Sheet_Data;
+                sprite.SetSprite(StaticSpriteDefinitions.Guon_Sheet_Data.GetSpriteIdByName("energyshiledguon_001"));
+
+                tk2dSpriteAnimator animator = gameObject.AddComponent<tk2dSpriteAnimator>();
+                animator.library = StaticSpriteDefinitions.Guon_Animation_Data;
+                animator.defaultClipId = StaticSpriteDefinitions.Guon_Animation_Data.GetClipIdByName("energyShield_idle");
+                animator.playAutomatically = true;
+
+                sprite.CachedPerpState = tk2dBaseSprite.PerpendicularState.FLAT;
+
+
                 SpeculativeRigidbody speculativeRigidbody = gameObject.GetComponent<tk2dSprite>().SetUpSpeculativeRigidbody(IntVector2.Zero, new IntVector2(10, 10));
                 speculativeRigidbody.CollideWithTileMap = false;
                 speculativeRigidbody.CollideWithOthers = true;
@@ -50,11 +62,24 @@ namespace Planetside
                 EnergyShield.orbitalPrefab = gameObject.AddComponent<PlayerOrbital>();
                 EnergyShield.orbitalPrefab.motionStyle = PlayerOrbital.OrbitalMotionStyle.ORBIT_PLAYER_ALWAYS;
                 EnergyShield.orbitalPrefab.shouldRotate = false;
-                EnergyShield.orbitalPrefab.orbitRadius = 4f;
+                EnergyShield.orbitalPrefab.orbitRadius = 3.2f;
                 EnergyShield.orbitalPrefab.SetOrbitalTier(0);
                 EnergyShield.orbitalPrefab.orbitDegreesPerSecond = 0;
-                EnergyShield.orbitalPrefab.perfectOrbitalFactor = 1000f;
-                EnergyShield.orbitalPrefab.gameObject.AddComponent<EnergyGuonGlowManager>();
+                EnergyShield.orbitalPrefab.perfectOrbitalFactor = 0.5f;
+                var orb = EnergyShield.orbitalPrefab.gameObject.AddComponent<EnergyGuonGlowManager>();
+
+                sprite.usesOverrideMaterial = true;
+
+                sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitCutoutUber");
+                Material mat = sprite.GetCurrentSpriteDef().material = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+                mat.mainTexture = sprite.renderer.material.mainTexture;
+                mat.SetColor("_EmissiveColor", new Color32(0, 242, 255, 255));
+                mat.SetFloat("_EmissiveColorPower", 1.55f);
+                mat.SetFloat("_EmissivePower", 70);
+                sprite.renderer.material = mat;
+                orb.GlowMat = mat;
+
+
                 UnityEngine.Object.DontDestroyOnLoad(gameObject);
                 FakePrefab.MarkAsFakePrefab(gameObject);
                 gameObject.SetActive(false);
@@ -63,47 +88,38 @@ namespace Planetside
             }
         }
         private static GameObject EnergyGuon;
-        public static List<GameObject> EnergyOrbitals = new List<GameObject>();
+        public List<GameObject> EnergyOrbitals = new List<GameObject>();
         public override void Pickup(PlayerController player)
         {
             base.Pickup(player);
             for (int i = 0; i < 4; i++)
             {
                 GameObject guon = PlayerOrbitalItem.CreateOrbital(base.Owner, EnergyShield.EnergyGuon, false);
-                EnergyOrbitals.Add(guon);
+                this.EnergyOrbitals.Add(guon);
             }
             GameManager.Instance.OnNewLevelFullyLoaded += this.FixGuon;
         }
 
-        public override void Update()
-        {
-           
-        }
-
-
-
         private void FixGuon()
         {
-            EnergyOrbitals.Clear();
+            this.EnergyOrbitals.Clear();
             for (int i = 0; i < 4; i++)
             {
                 GameObject guon = PlayerOrbitalItem.CreateOrbital(base.Owner, EnergyShield.EnergyGuon, false);
-                EnergyOrbitals.Add(guon);
-            }
-           
-            PlayerController owner = base.Owner;
+                this.EnergyOrbitals.Add(guon);
+            }           
         }
 
         public override DebrisObject Drop(PlayerController player)
         {
-            foreach (GameObject guon in EnergyOrbitals)
+            for (int i = EnergyOrbitals.Count - 1; i > -1; i--)
             {
-                if (guon != null)
+                if (EnergyOrbitals[i] != null)
                 {
-                    Destroy(guon.gameObject);
+                    Destroy(EnergyOrbitals[i].gameObject);
                 }
             }
-            EnergyOrbitals.Clear();
+            this.EnergyOrbitals.Clear();
             GameManager.Instance.OnNewLevelFullyLoaded -= this.FixGuon;
             return base.Drop(player);
         }
@@ -112,11 +128,11 @@ namespace Planetside
         {
             if (base.Owner != null)
             {
-                foreach (GameObject guon in EnergyOrbitals)
+                for (int i = EnergyOrbitals.Count - 1; i > -1; i--)
                 {
-                    if (guon != null)
+                    if (EnergyOrbitals[i] != null)
                     {
-                        Destroy(guon.gameObject);
+                        Destroy(EnergyOrbitals[i].gameObject);
                     }
                 }
                 EnergyOrbitals.Clear();
@@ -125,13 +141,6 @@ namespace Planetside
             }
         }
 
-
-
-
-        public static void GuonInit(Action<PlayerOrbital, PlayerController> orig, PlayerOrbital self, PlayerController player)
-        {
-            orig(self, player);
-        }
         public static PlayerOrbital orbitalPrefab;
        
     }
@@ -141,64 +150,76 @@ namespace Planetside
 {
     public class EnergyGuonGlowManager : MonoBehaviour
     {
-        public EnergyGuonGlowManager()
-        {
-            this.player = GameManager.Instance.PrimaryPlayer;
-        }
-
-        public void Awake()
-        {
-            this.actor = base.GetComponent<PlayerOrbital>();
-        }
-
+        private tk2dSpriteAnimator dSpriteAnimator;
         public void Start()
         {
-
-            PlayerOrbital playerOrbital2 = (PlayerOrbital)actor;
-            SpeculativeRigidbody specRigidbody = playerOrbital2.specRigidbody;
-            specRigidbody.OnPreRigidbodyCollision = (SpeculativeRigidbody.OnPreRigidbodyCollisionDelegate)Delegate.Combine(specRigidbody.OnPreRigidbodyCollision, new SpeculativeRigidbody.OnPreRigidbodyCollisionDelegate(this.OnPreCollision));
-            playerOrbital2.sprite.usesOverrideMaterial = true;
-
-            playerOrbital2.sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitCutoutUber");
-            Material mat = playerOrbital2.sprite.GetCurrentSpriteDef().material = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
-            mat.mainTexture = playerOrbital2.sprite.renderer.material.mainTexture;
-            mat.SetColor("_EmissiveColor", new Color32(0, 242, 255, 255));
-            mat.SetFloat("_EmissiveColorPower", 1.55f);
-            mat.SetFloat("_EmissivePower", 70);
-            playerOrbital2.sprite.renderer.material = mat;
-            GlowMat = mat;
+            LootEngine.DoDefaultSynergyPoof(this.transform.PositionVector2());
+            this.Orbital = base.GetComponent<PlayerOrbital>();
+            dSpriteAnimator = base.GetComponent<tk2dSpriteAnimator>();
+            SpeculativeRigidbody specRigidbody = Orbital.specRigidbody;
+            specRigidbody.OnPreRigidbodyCollision += OnPreCollision;
         }
-        private Material GlowMat;
+
+        public void OnDestroy()
+        {
+            if (this)
+            {
+                SpeculativeRigidbody specRigidbody = Orbital.specRigidbody;
+                specRigidbody.OnPreRigidbodyCollision -= OnPreCollision;
+                LootEngine.DoDefaultSynergyPoof(this.transform.PositionVector2());
+            }
+        }
+
+        public Material GlowMat;
         private void OnPreCollision(SpeculativeRigidbody myRigidbody, PixelCollider myCollider, SpeculativeRigidbody other, PixelCollider otherCollider)
         {
-            Hits++;
-            Projectile component = other.GetComponent<Projectile>();
-            bool flag = component != null && !(component.Owner is PlayerController) && Hits >= 1 && HasBeenHit == false;
-            if (flag)
+            if (Cooldown == false)
             {
-                GameManager.Instance.StartCoroutine(this.PhaseOut(actor));   
+                Hits++;
+                Cooldown = true;
+                this.Invoke("C", 0.25f);
             }
-            else if (component != null && !(component.Owner is PlayerController) && HasBeenHit == true)
+
+            if (other.projectile != null && !(other.projectile.Owner is PlayerController) && Hits > 3 && HasBeenHit == false)
+            {
+                GameManager.Instance.StartCoroutine(this.PhaseOut());   
+            }
+            else if (other.projectile != null && !(other.projectile.Owner is PlayerController) && HasBeenHit == true)
             {
                 PhysicsEngine.SkipCollision = true;
             }
         }
 
-
-        private IEnumerator PhaseOut(PlayerOrbital playerorbital)
+        private bool Cooldown = false;
+        public void C()
         {
+            Cooldown = false;
+        }
+
+
+        private IEnumerator PhaseOut()
+        {
+            if (dSpriteAnimator)
+            {
+                dSpriteAnimator.Paused = true;
+            }
             HasBeenHit = true;
-            Material material1 = playerorbital.sprite.renderer.material;
+            Material material1 = Orbital.sprite.renderer.material;
             material1.shader = ShaderCache.Acquire("Brave/Internal/HologramShader");
             material1.SetFloat("_IsGreen", 0f);
-            playerorbital.sprite.renderer.material = material1;
-            AkSoundEngine.PostEvent("Play_OBJ_mine_beep_01", playerorbital.gameObject);
-            SpeculativeRigidbody specRigidbody = playerorbital.specRigidbody;
+            Orbital.sprite.renderer.material = material1;
+            AkSoundEngine.PostEvent("Play_OBJ_mine_beep_01", Orbital.gameObject);
+            SpeculativeRigidbody specRigidbody = Orbital.specRigidbody;
             specRigidbody.CollideWithTileMap = false;
             specRigidbody.CollideWithOthers = true;
-            yield return new WaitForSeconds(3);
-            AkSoundEngine.PostEvent("Play_OBJ_mine_beep_01", playerorbital.gameObject);
-            playerorbital.sprite.renderer.material = GlowMat;
+            
+            yield return new WaitForSeconds(5);
+            if (dSpriteAnimator)
+            {
+                dSpriteAnimator.Paused = false;
+            }
+            AkSoundEngine.PostEvent("Play_OBJ_mine_beep_01", Orbital.gameObject);
+            Orbital.sprite.renderer.material = GlowMat;
             Hits = 0;
             specRigidbody.CollideWithTileMap = false;
             specRigidbody.CollideWithOthers = true;
@@ -208,7 +229,6 @@ namespace Planetside
         }
         private bool HasBeenHit;
         private int Hits;
-        private PlayerOrbital actor;
-        public PlayerController player;
+        private PlayerOrbital Orbital;
     }
 }

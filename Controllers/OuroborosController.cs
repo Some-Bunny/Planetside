@@ -237,7 +237,7 @@ namespace Planetside
             }
             if (ExtantWinIcon)
             {
-                ExtantWinIcon.transform.position = self.transform.position.WithZ(0) + new Vector3(-0.5631f, -0.161f, 0);
+                ExtantWinIcon.transform.position = self.transform.position.WithZ(0) + new Vector3(-0.5631f, -0.18f, 0);
                 ExtantWinIcon.GetComponent<dfSprite>().enabled = true;
                 ExtantWinIcon.GetComponent<dfSprite>().Opacity = OuroborosMode() == true ? 1 : 0;
             }
@@ -790,7 +790,13 @@ namespace Planetside
 		{
 			Timer = 2f;
 			base.Start();
+			if (IsBoss == true)
+			{
+				Cooldown = 11;
+
+            }
 		}
+		public float Cooldown = 6;
 		public override void OnPreDeath(Vector2 obj)
 		{
 
@@ -800,7 +806,7 @@ namespace Planetside
 		{
 			if (Timer == 0 | Timer <= 0)
 			{
-				Timer = 6f;
+				Timer = Cooldown;
 				if (base.aiActor != null)
 				{
 					GameManager.Instance.StartCoroutine(this.LaunchWave(base.aiActor.CenterPosition));
@@ -851,7 +857,7 @@ namespace Planetside
 								float b = (unitCenter - startPoint).ToAngle();
 								if (BraveMathCollege.AbsAngleBetween(playerController.FacingDirection, b) >= 60f)
 								{									
-                                    playerController.CurrentStoneGunTimer = Time;
+                                    playerController.CurrentStoneGunTimer = IsBoss == true ? 6.5f : Time;
 								}
 							}
 						}
@@ -890,14 +896,19 @@ namespace Planetside
 		public override List<ActorEffectResistance> DebuffImmunities => new List<ActorEffectResistance> { new ActorEffectResistance() { resistAmount = 1, resistType = EffectResistanceType.Freeze } };
 		public override void Start()
 		{
-			if (aiActor) 
+            base.Start();
+            if (aiActor) 
 			{
 				if (aiActor.behaviorSpeculator) 
 				{
-					aiActor.behaviorSpeculator.LocalTimeScale *= 1.125f;
+					aiActor.behaviorSpeculator.LocalTimeScale *=  IsBoss == true ? 1.2f : 1.125f;
+					if (IsBoss == true)
+					{
+						aiActor.behaviorSpeculator.CooldownScale *= 1.1f;
+						aiActor.MovementSpeed *= 0.9f;
+					}
                 }
 			}
-			base.Start();
 		}
 		public override void OnPreDeath(Vector2 obj)
 		{
@@ -1032,7 +1043,13 @@ namespace Planetside
 		{
 			base.Start();
 			base.aiActor.knockbackDoer.SetImmobile(true, "Elite.");
+			if (IsBoss == true)
+			{
+				Cooldown = 20f;
+
+            }
         }
+		public float Cooldown = 5;
 		private float Timer;
 
 		private IEnumerator IncreaseInSize(tk2dSprite CircleSprite, float SizeMultiplier = 1)
@@ -1059,7 +1076,7 @@ namespace Planetside
 				if (Timer >= 0) { Timer -= BraveTime.DeltaTime; }
 				if (Timer == 0 | Timer <= 0)
 				{
-					Timer = 5f;
+					Timer = Cooldown;
 					if (base.aiActor != null)
 					{
 						GameObject dragunBoulder = EnemyDatabase.GetOrLoadByGuid("05b8afe0b6cc4fffa9dc6036fa24c8ec").GetComponent<DraGunController>().skyBoulder;
@@ -1071,8 +1088,8 @@ namespace Planetside
 								{
 									if (item2 is DraGunBoulderController laser2)
 									{
-										laser2.LifeTime = 15;
-										GameManager.Instance.Dungeon.StartCoroutine(this.IncreaseInSize(laser2.CircleSprite, 0.5f));
+										laser2.LifeTime = IsBoss == true ? 25 : 12;
+										GameManager.Instance.Dungeon.StartCoroutine(this.IncreaseInSize(laser2.CircleSprite, IsBoss == true ? 0.8f : 0.5f));
 										SpeculativeRigidbody body = laser2.GetComponentInChildren<SpeculativeRigidbody>();
 										if (body)
 										{
@@ -1114,8 +1131,13 @@ namespace Planetside
 		public override void Start()
 		{
 			base.Start();
-			EnrageHP = base.aiActor.healthHaver.GetMaxHealth() / 3;
+			EnrageHP = base.aiActor.healthHaver.GetMaxHealth() / 3.5f;
 
+			if (IsBoss == true)
+			{
+                EnrageHP = base.aiActor.healthHaver.GetMaxHealth() / 2.25f;
+
+            }
 
         }
 		private float EnrageHP;
@@ -1174,7 +1196,11 @@ namespace Planetside
 		{
 			Timer = 0.8f;
 			base.Start();
-		}
+			if (IsBoss == true)
+			{
+                Timer = 2.5f;
+            }
+        }
 
         public override void OnDamaged(float resultValue, float maxValue, CoreDamageTypes damageTypes, DamageCategory damageCategory, Vector2 damageDirection)
         {
@@ -1183,7 +1209,7 @@ namespace Planetside
 				Timer = 0.8f;
 				if (base.aiActor != null)
 				{
-                    SpawnBulletScript(base.aiActor, base.aiActor.sprite.WorldCenter, OuroborosController.BulletBankDummy.GetComponent<AIBulletBank>(), new CustomBulletScriptSelector(typeof(EliteReflect)), "Reflection");
+                    SpawnBulletScript(base.aiActor, base.aiActor.sprite.WorldCenter, OuroborosController.BulletBankDummy.GetComponent<AIBulletBank>(), (IsBoss == true ? new CustomBulletScriptSelector(typeof(EliteReflectBoss)) : new CustomBulletScriptSelector(typeof(EliteReflect))), "Reflection");
 				}
 			}
 		}
@@ -1271,6 +1297,37 @@ namespace Planetside
 			}
 		}
 	}
+    public class EliteReflectBoss : Script
+    {
+        public override IEnumerator Top()
+        {
+            base.PostWwiseEvent("Play_ENM_ironmaiden_blast_01", null);
+            float RNG = UnityEngine.Random.Range(0, 60);
+            for (int i = 0; i <= 8; i++)
+            {
+                this.Fire(new Direction((i * 45) + RNG, DirectionType.Aim, -1f), new Speed(1f, SpeedType.Absolute), new SkellBullet());
+                this.Fire(new Direction((i * 45) + RNG, DirectionType.Aim, -1f), new Speed(1.5f, SpeedType.Absolute), new SkellBullet());
+                this.Fire(new Direction((i * 45) + RNG, DirectionType.Aim, -1f), new Speed(2f, SpeedType.Absolute), new SkellBullet());
+
+            }
+            yield break;
+        }
+        public class SkellBullet : Bullet
+        {
+            public SkellBullet() : base("sweepOuroboros", false, false, false)
+            {
+
+            }
+            public override IEnumerator Top()
+            {
+                base.ChangeSpeed(new Speed(1f, SpeedType.Absolute), 20);
+                yield return this.Wait(60);
+                base.ChangeSpeed(new Speed(12f, SpeedType.Absolute), 40);
+                yield break;
+            }
+        }
+    }
+
 }
 namespace Planetside
 { 
@@ -1661,13 +1718,19 @@ namespace Planetside
 		public abstract Color SecondaryEliteParticleColor { get; }
 		public abstract List<string> EnemyBlackList {get;}
 
+		public bool IsBoss = false;
 		public virtual void Start()
 		{
 			if (!EnemyBlackList.Contains(base.aiActor.EnemyGuid) && EnemyBlackList != null)
 			{
+				
 				ParticleSystem = StaticVFXStorage.EliteParticleSystem.GetComponent<ParticleSystem>();
 				if (base.aiActor != null)
 				{
+					if (base.aiActor.healthHaver.IsBoss)
+					{
+						IsBoss = true;
+                    }
 					base.aiActor.MovementSpeed *= MovementSpeedMultiplier;
 					base.aiActor.behaviorSpeculator.CooldownScale *= CooldownMultiplier;
 					if (!base.aiActor.healthHaver.IsBoss || !base.aiActor.healthHaver.IsSubboss) { base.aiActor.healthHaver.SetHealthMaximum(base.aiActor.healthHaver.GetCurrentHealth() * HealthMultiplier); }

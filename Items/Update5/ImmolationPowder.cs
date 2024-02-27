@@ -119,7 +119,7 @@ namespace Planetside
                     C++;
                     this.AddStat(PlayerStats.StatType.RateOfFire, .2f, StatModifier.ModifyMethod.ADDITIVE);
                     this.AddStat(PlayerStats.StatType.Accuracy, 0.5f, StatModifier.ModifyMethod.MULTIPLICATIVE);
-                    if(C == 12)
+                    if(C == 10)
                     {
                         C = 0;
                         GlobalSparksDoer.DoRadialParticleBurst(1, player.sprite.WorldBottomLeft, player.sprite.WorldTopRight, 30f, 2f, 1f, null, null, null, GlobalSparksDoer.SparksType.EMBERS_SWIRLING);

@@ -15,6 +15,7 @@ using MonoMod;
 using System.Collections.ObjectModel;
 
 using UnityEngine.Serialization;
+using Alexandria.Assetbundle;
 
 namespace Planetside
 {
@@ -28,7 +29,7 @@ namespace Planetside
 			GunExt.SetShortDescription(gun, "Royal");
 			GunExt.SetLongDescription(gun, "A bad replica of the hammer of legend, capable of generating and expelling more than lethal amounts of energy.\n\nPoint away from face. Yours, to be precise.");
 
-            GunExt.SetupSprite(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "hammerofstorms_idle_001", 11);
+            GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "hammerofstorms_idle_001");
             gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
             gun.sprite.SortingOrder = 1;
 
@@ -50,7 +51,7 @@ namespace Planetside
 			gun.reloadTime = 4f;
 			gun.DefaultModule.cooldownTime = 1f;
 			gun.DefaultModule.numberOfShotsInClip = 4;
-			gun.SetBaseMaxAmmo(44);
+			gun.SetBaseMaxAmmo(64);
 			gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.SKULL;
             gun.gunSwitchGroup = (PickupObjectDatabase.GetById(328) as Gun).gunSwitchGroup;
             gun.carryPixelOffset += new IntVector2(-1, -2);
@@ -83,7 +84,7 @@ namespace Planetside
 			var smallLightningController = smallLightning.AddComponent<StormBringerProjectile>();
             var lightningData1 = StaticExplosionDatas.CopyFields(StaticExplosionDatas.genericLargeExplosion);
             lightningData1.effect = EnemyDatabase.GetOrLoadByGuid("dc3cd41623d447aeba77c77c99598426").GetComponent<BossFinalMarineDeathController>().bigExplosionVfx[0];
-            lightningData1.damage = 40;
+            lightningData1.damage = 60;
             lightningData1.damageRadius = 3;
 			smallLightningController.Explosion = lightningData1;
 			smallLightningController.MajorNodesMin = 2;
@@ -116,13 +117,13 @@ namespace Planetside
             var largeLightningController = largeLightning.AddComponent<StormBringerProjectile>();
             var lightningData2 = StaticExplosionDatas.CopyFields(StaticExplosionDatas.genericLargeExplosion);
             lightningData2.effect = EnemyDatabase.GetOrLoadByGuid("dc3cd41623d447aeba77c77c99598426").GetComponent<BossFinalMarineDeathController>().bigExplosionVfx[0];
-            lightningData2.damage = 100;
-            lightningData2.damageRadius = 3;
+            lightningData2.damage = 150;
+            lightningData2.damageRadius = 5;
             largeLightningController.Explosion = lightningData2;
             largeLightningController.MajorNodesMin = 4;
             largeLightningController.MajorNodesMax = 7;
 			largeLightningController.Thickness = 3;
-			largeLightningController.splitoffChance = 0.5f;
+			largeLightningController.splitoffChance = 0.7f;
 
             largeLightning.baseData.UsesCustomAccelerationCurve = true;
             largeLightning.baseData.AccelerationCurve = AnimationCurve.Linear(0f, 1, 0.25f, 1.5f);
@@ -142,7 +143,7 @@ namespace Planetside
             ProjectileModule.ChargeProjectile item3 = new ProjectileModule.ChargeProjectile
             {
                 Projectile = largeLightning,
-                ChargeTime = 1.5f,
+                ChargeTime = 2f,
 				AmmoCost = 3,
 				UsedProperties = ProjectileModule.ChargeProjectileProperties.ammo,
             };

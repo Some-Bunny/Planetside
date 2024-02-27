@@ -13,6 +13,7 @@ using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
 using HarmonyLib;
+using Alexandria.Assetbundle;
 
 namespace Planetside
 {
@@ -35,7 +36,7 @@ namespace Planetside
 			gun.gameObject.AddComponent<Mop>();
 			gun.SetShortDescription("Honest Work");
 			gun.SetLongDescription("A mop thats been left inside of a chest. Surely the goops found around the Gungeon could be mopped up to some benefit?");
-            GunExt.SetupSprite(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "mopgun_idle_001", 11);
+            GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "mopgun_idle_001");
             gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
             gun.sprite.SortingOrder = 1;
 

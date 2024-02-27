@@ -8,7 +8,7 @@ using System.Collections.ObjectModel;
 using System.Collections;
 using Planetside;
 using Brave.BulletScript;
-
+using Alexandria;
 
 public class ShamberController : BraveBehaviour
 {
@@ -77,16 +77,19 @@ public class ShamberController : BraveBehaviour
             if (proj)
             {
                 proj.ManualControl = false;
-
                 proj.ResetDistance();
                 proj.collidesWithEnemies = base.aiActor.CanTargetEnemies;
                 proj.specRigidbody.CollideWithTileMap = true;
                 proj.collidesWithPlayer = true;
                 proj.UpdateCollisionMask();
                 proj.Direction = proj.transform.PositionVector2() - this.aiActor.sprite.WorldCenter;
-                proj.baseData.speed = Mathf.Min(this.m_bulletPositions[i].speed, 25);
+                proj.baseData.speed = Mathf.Min(this.m_bulletPositions[i].speed * 1.66f, 25);
                 proj.UpdateSpeed();
                 proj.IgnoreTileCollisionsFor(0.5f);
+                if (proj.shouldRotate)
+                {
+                    proj.transform.rotation = Quaternion.Euler(0f, 0f, (proj.transform.PositionVector2() - this.aiActor.sprite.WorldCenter).ToAngle());
+                }
             }
         }
 
@@ -139,36 +142,53 @@ public class ShamberController : BraveBehaviour
                                             proj.sprite.color = new Color(1f, 0.1f, 0.1f);
                                             proj.MakeLookLikeEnemyBullet(false);
                                         }
-                                        proj.specRigidbody.DeregisterSpecificCollisionException(proj.Owner.specRigidbody);
-                                        proj.Shooter = base.aiActor.specRigidbody;
-                                        proj.Owner = base.aiActor;
-                                        proj.specRigidbody.Velocity = Vector2.zero;
-                                        proj.ManualControl = true;
-                                        float s = proj.baseData.speed;
-                                        proj.baseData.speed = 0;//proj.baseData.SetAll(base.aiActor.bulletBank.GetBullet("reversible").ProjectileData);
-                                        proj.UpdateSpeed();
-                                        proj.baseData.speed = s;
-                                        proj.specRigidbody.CollideWithTileMap = false;
-                                        proj.ResetDistance();
-                                        proj.collidesWithEnemies = base.aiActor.CanTargetEnemies;
-                                        proj.collidesWithPlayer = true;
-                                        proj.UpdateCollisionMask();
-                                        proj.RemovePlayerOnlyModifiers();
-                                        if (proj.BulletScriptSettings != null)
-                                        {
-                                            proj.BulletScriptSettings.preventPooling = true;
 
+                                        if (proj.Owner as AIActor)
+                                        {
+                                            var enemy = (proj.Owner as AIActor);
+                                            switch (enemy.EnemyGuid)
+                                            {
+                                                case "b1770e0f1c744d9d887cc16122882b4f":
+                                                    proj.DieInAir();
+                                                    break;
+                                                case "d5a7b95774cd41f080e517bea07bf495":
+                                                    proj.DieInAir();
+                                                    break;
+                                            }
                                         }
-                                        proj.RemoveBulletScriptControl();
-
-                                        float second = BraveMathCollege.ClampAngle360((proj.transform.PositionVector2() - base.aiActor.sprite.WorldCenter).ToAngle());
-                                        this.m_bulletPositions.Add(new ShamberCont()
+                                        if (proj != null)
                                         {
-                                            speed = s,
-                                            s = second,
-                                            projectile = proj,
-                                            Radius = Mathf.Min(3, 1.25f + (m_bulletPositions.Count() == 0 ? 0 : m_bulletPositions.Count() / 100))
-                                        });
+                                            proj.specRigidbody.DeregisterSpecificCollisionException(proj.Owner.specRigidbody);
+                                            proj.Shooter = base.aiActor.specRigidbody;
+                                            proj.Owner = base.aiActor;
+                                            proj.specRigidbody.Velocity = Vector2.zero;
+                                            proj.ManualControl = true;
+                                            float s = proj.baseData.speed;
+                                            proj.baseData.speed = 0;//proj.baseData.SetAll(base.aiActor.bulletBank.GetBullet("reversible").ProjectileData);
+                                            proj.UpdateSpeed();
+                                            proj.baseData.speed = s;
+                                            proj.specRigidbody.CollideWithTileMap = false;
+                                            proj.ResetDistance();
+                                            proj.collidesWithEnemies = base.aiActor.CanTargetEnemies;
+                                            proj.collidesWithPlayer = true;
+                                            proj.UpdateCollisionMask();
+                                            proj.RemovePlayerOnlyModifiers();
+                                            if (proj.BulletScriptSettings != null)
+                                            {
+                                                proj.BulletScriptSettings.preventPooling = true;
+
+                                            }
+                                            proj.RemoveBulletScriptControl();
+
+                                            float second = BraveMathCollege.ClampAngle360((proj.transform.PositionVector2() - base.aiActor.sprite.WorldCenter).ToAngle());
+                                            this.m_bulletPositions.Add(new ShamberCont()
+                                            {
+                                                speed = s,
+                                                s = second,
+                                                projectile = proj,
+                                                Radius = Mathf.Min(3, 1.25f + (m_bulletPositions.Count() == 0 ? 0 : m_bulletPositions.Count() / 100))
+                                            });
+                                        }
                                     }
 									else
 									{
@@ -266,7 +286,7 @@ public class ShamberController : BraveBehaviour
 		{
 			particle.Stop();
 		}
-		for (int i = this.m_bulletPositions.Count - 1; i >= 0; i--)
+		for (int i = this.m_bulletPositions.Count - 1; i > -1; i--)
 		{
             Projectile proj = this.m_bulletPositions[i].projectile;
 			if (proj)

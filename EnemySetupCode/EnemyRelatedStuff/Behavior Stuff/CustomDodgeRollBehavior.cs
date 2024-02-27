@@ -223,15 +223,17 @@ namespace Planetside
 
 		public void SetOutline(Color color)
 		{
-			Material outlineMaterial1 = SpriteOutlineManager.GetOutlineMaterial(base.m_aiActor.sprite);
-			if (outlineMaterial1 != null)
+			if (m_aiActor != null && m_aiActor.sprite != null)
 			{
-
-				if (base.m_aiActor.healthHaver != null && base.m_aiActor != null)
-				{
-					outlineMaterial1.SetColor("_OverrideColor", color);
-				}
-			}
+                Material outlineMaterial1 = SpriteOutlineManager.GetOutlineMaterial(base.m_aiActor.sprite);
+                if (outlineMaterial1 != null)
+                {
+                    if (base.m_aiActor.healthHaver != null && base.m_aiActor != null)
+                    {
+                        outlineMaterial1.SetColor("_OverrideColor", color);
+                    }
+                }
+            }
 		}
 
 

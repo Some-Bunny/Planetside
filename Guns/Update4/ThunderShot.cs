@@ -9,7 +9,7 @@ using MonoMod;
 using UnityEngine;
 using ItemAPI;
 using MonoMod.RuntimeDetour;
-
+using Alexandria.Assetbundle;
 
 namespace Planetside
 {
@@ -26,7 +26,7 @@ namespace Planetside
             gun.SetShortDescription("Make It Go Boom!");
             gun.SetLongDescription("Fires rounds with embedded detonators in them. Explosives go off on enemy death.\n\nSmells of beard shampoo.");
 
-            GunExt.SetupSprite(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "bulldog_idle_001", 11);
+            GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "bulldog_idle_001");
             gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
             gun.sprite.SortingOrder = 1;
 

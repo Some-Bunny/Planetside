@@ -764,7 +764,7 @@ namespace Planetside
 
 				bs.AttackBehaviorGroup.AttackBehaviors = new List<AttackBehaviorGroup.AttackGroupItem>
 				{
-
+					//Phase 1 CHrgeAAAAA
 					new AttackBehaviorGroup.AttackGroupItem()//5
                     {
 						Probability = 0.7f,
@@ -820,16 +820,90 @@ namespace Planetside
 
 					},
 
+                    new AttackBehaviorGroup.AttackGroupItem()//5
+                    {
+                        Probability = 0.25f,
+                        NickName = "Phase 1 CHrgeAAAAA",
+                        Behavior = new SequentialAttackBehaviorGroup() {
+                        RunInClass = false,
+                        AttackBehaviors = new List<AttackBehaviorBase>()
+                        {
 
-					new AttackBehaviorGroup.AttackGroupItem()
+                        new ChargeBehavior()
+                        {
+                        InitialCooldown = 1,
+                        chargeAcceleration = 75,
+                        chargeSpeed = 45,
+                        maxChargeDistance = -1,
+                        bulletScript = new CustomBulletScriptSelector(typeof(ChargeAttack2Attack)),
+                        ShootPoint = shootpoint1,
+                        chargeDamage = 0.5f,
+                        chargeKnockback = 100,
+                        collidesWithDodgeRollingPlayers = false,
+                        primeAnim = "dashprime",
+                        primeTime = 1f,
+                        chargeAnim = "dashdash",
+                        stopDuringPrime = true,
+                        stoppedByProjectiles = false,
+                        wallRecoilForce = 100,
+                        AttackCooldown = 0f,
+                        Cooldown = 0,
+                        },
+                        new ChargeBehavior()
+                        {
+                        InitialCooldown = 0,
+                        chargeAcceleration = 75,
+                        chargeSpeed = 45,
+                        maxChargeDistance = -1,
+                        bulletScript = new CustomBulletScriptSelector(typeof(ChargeAttack2Attack)),
+                        ShootPoint = shootpoint1,
+                        chargeDamage = 0.5f,
+                        chargeKnockback = 100,
+                        collidesWithDodgeRollingPlayers = false,
+                        primeAnim = "dashprime",
+                        primeTime = 1f,
+                        chargeAnim = "dashdash",
+                        stopDuringPrime = true,
+                        stoppedByProjectiles = false,
+                        wallRecoilForce = 100,
+                        AttackCooldown = 0.5f,
+                        Cooldown = 12,
+                        },
+ new ChargeBehavior()
+                        {
+                        InitialCooldown = 0,
+                        chargeAcceleration = 75,
+                        chargeSpeed = 45,
+                        maxChargeDistance = -1,
+                        bulletScript = new CustomBulletScriptSelector(typeof(ChargeAttack2Attack)),
+                        ShootPoint = shootpoint1,
+                        chargeDamage = 0.5f,
+                        chargeKnockback = 100,
+                        collidesWithDodgeRollingPlayers = false,
+                        primeAnim = "dashprime",
+                        primeTime = 1f,
+                        chargeAnim = "dashdash",
+                        stopDuringPrime = true,
+                        stoppedByProjectiles = false,
+                        wallRecoilForce = 100,
+                        AttackCooldown = 0.5f,
+                        Cooldown = 12,
+                        },
+                        }
+
+                        }
+
+                    },
+
+                    new AttackBehaviorGroup.AttackGroupItem()
 					{
 
 					Probability = 1f,
 					Behavior = new CustomDashBehavior{
 					//dashAnim = "wail",
 					ShootPoint = shootpoint1,
-					dashDistance = 13f,
-					dashTime = 1f,
+					dashDistance = 17f,
+					dashTime = 0.7f,
 					AmountOfDashes = 2,
 					WaitTimeBetweenDashes = 0f,
 					enableShadowTrail = false,
@@ -1133,8 +1207,8 @@ namespace Planetside
 					Behavior = new CustomDashBehavior{
 					//dashAnim = "wail",
 					ShootPoint = shootpoint1,
-					dashDistance = 11f,
-					dashTime = 0.8f,
+					dashDistance = 13f,
+					dashTime = 0.45f,
 					AmountOfDashes = 1,
 					//doubleDashChance = 0,
 					enableShadowTrail = false,
@@ -1394,11 +1468,7 @@ namespace Planetside
 			private RoomHandler m_StartRoom;
 			public void Update()
 			{
-				m_StartRoom = aiActor.GetAbsoluteParentRoom();
-				if (!base.aiActor.HasBeenEngaged)
-				{
-					CheckPlayerRoom();
-				}
+
 				bool flag = base.aiActor && base.aiActor.healthHaver;
 				if (flag)
 				{
@@ -1489,7 +1559,13 @@ namespace Planetside
 					{
 						attackGroupItem.Probability = 0f;
 					}
-					else if (attackGroup != null && attackGroupItem.NickName == "ShadePort")
+                    if (attackGroup != null && attackGroupItem.NickName == "Phase 1 CHrgeAAAAA")
+                    {
+                        attackGroupItem.Probability = 0f;
+                    }
+
+
+                    else if (attackGroup != null && attackGroupItem.NickName == "ShadePort")
 					{
 						attackGroupItem.Probability = 0.7f;
 					}
@@ -1510,17 +1586,16 @@ namespace Planetside
 			private void Start()
 			{
 				Phase2AnnihiChamberCheck = false;
+                m_StartRoom = aiActor.GetAbsoluteParentRoom();
 
 
-				float maxHealth = base.aiActor.healthHaver.GetMaxHealth();
+                float maxHealth = base.aiActor.healthHaver.GetMaxHealth();
 				LastStoredMaxHP = maxHealth;
 				float num = maxHealth * 0.30f;
 				base.healthHaver.minimumHealth = num;
 
 				//Important for not breaking basegame stuff!
 				StaticReferenceManager.AllHealthHavers.Remove(base.aiActor.healthHaver);
-
-
 
 				base.aiActor.spriteAnimator.AnimationEventTriggered += this.AnimationEventTriggered;
 				//firehose
@@ -1626,10 +1701,10 @@ namespace Planetside
 				if (clip.GetFrame(frameIdx).eventInfo == "spawnTell")
 				{
 					//No, i can think of a better way to do this this as of writing, go fuck yourself if you ask me to change it
-					base.aiActor.StartCoroutine(SpawnDumbassTelegraphTrail(Color.red, 90, "dashprime"));
-					base.aiActor.StartCoroutine(SpawnDumbassTelegraphTrail(Color.red, -90, "dashprime"));
-					base.aiActor.StartCoroutine(SpawnDumbassTelegraphTrail(Color.red, 90, "dashprime", 0.5f));
-					base.aiActor.StartCoroutine(SpawnDumbassTelegraphTrail(Color.red, -90, "dashprime", 0.5f));
+					base.aiActor.StartCoroutine(SpawnDumbassTelegraphTrail(Color.red, 90, "dashprime", 1.5f, 0.05f));
+                    base.aiActor.StartCoroutine(SpawnDumbassTelegraphTrail(Color.red, -90, "dashprime", 1.5f, 0.05f));
+                    base.aiActor.StartCoroutine(SpawnDumbassTelegraphTrail(Color.red, 90, "dashprime", 0.65f, 0.05f));
+                    base.aiActor.StartCoroutine(SpawnDumbassTelegraphTrail(Color.red, -90, "dashprime", 0.65f, 0.05f));
 
 				}
 				if (clip.GetFrame(frameIdx).eventInfo == "spawnTell2")
@@ -1637,8 +1712,8 @@ namespace Planetside
 					base.aiActor.StartCoroutine(SpawnDumbassTelegraphTrail(Color.white, 90, "cloakdash_prime", 1.5f, 0.1f));
 					base.aiActor.StartCoroutine(SpawnDumbassTelegraphTrail(Color.white, -90, "cloakdash_prime", 1.5f, 0.1f));
 
-					base.aiActor.StartCoroutine(SpawnDumbassTelegraphTrail(Color.white, 90, "cloakdash_prime", 0.5f, 0.1f));
-					base.aiActor.StartCoroutine(SpawnDumbassTelegraphTrail(Color.white, -90, "cloakdash_prime", 0.5f, 0.1f));
+					base.aiActor.StartCoroutine(SpawnDumbassTelegraphTrail(Color.white, 90, "cloakdash_prime", 0.65f, 0.1f));
+					base.aiActor.StartCoroutine(SpawnDumbassTelegraphTrail(Color.white, -90, "cloakdash_prime", 0.65f, 0.1f));
 				}
 
 				Vector2[] positions = new Vector2[] { new Vector2(0, 0), new Vector2(0.6875f, 3.0625f), new Vector2(2.0625f, 3.8125f), new Vector2(3.5625f, 3.0625f), new Vector2(3.5625f, 1.5625f), new Vector2(2.0625f, 0.8125f), new Vector2(0.6875f, 1.5625f) };
@@ -1736,7 +1811,7 @@ namespace Planetside
 				component2.sprite.renderer.material.SetColor("_OverrideColor", telegraphColor);
 				component2.sprite.renderer.material.SetColor("_EmissiveColor", telegraphColor);
 				float elapsed = 0;
-				float Time = 1.33f;
+				float Time = 1.25f;
 				while (elapsed < Time)
 				{
 					float t = (float)elapsed / (float)Time;
@@ -1754,12 +1829,12 @@ namespace Planetside
 						component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f + ((10 * GlowAmplifier) * H));
 						component2.transform.localRotation = Quaternion.Euler(0f, 0f, base.aiActor.FacingDirection);
 						component2.HeightOffGround = -2;
-						component2.renderer.gameObject.layer = 21;
+						component2.renderer.gameObject.layer = 22;
 						component2.dimensions = new Vector2(1000f, 1f);
 						component2.UpdateZDepth();
-						if (elapsed > 0.833f)
+						if (elapsed > 0.75f)
 						{
-							bool en = elapsed % 0.2 == 0.1;
+							bool en = elapsed % 0.25f > 0.125f;
 							component2.renderer.enabled = en;
 						}
 					}
@@ -1804,7 +1879,7 @@ namespace Planetside
 						component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f + ((10 * GlowAmplifier) * H));
 						component2.transform.localRotation = Quaternion.Euler(0f, 0f, additionalOffset);
 						component2.HeightOffGround = -2;
-						component2.renderer.gameObject.layer = 21;
+						component2.renderer.gameObject.layer = 22;
 						component2.dimensions = new Vector2(1000f, 1f);
 						component2.UpdateZDepth();
 						if (elapsed > 1)
@@ -1839,25 +1914,7 @@ namespace Planetside
 				}
 				yield break;
 			}
-			private void CheckPlayerRoom()
-			{
-				if (GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() != null && GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() == m_StartRoom)
-				{
-					GameManager.Instance.StartCoroutine(LateEngage());
-				}
-				else
-				{
-					base.aiActor.HasBeenEngaged = false;
-				}
-			}
-			private IEnumerator LateEngage()
-			{
-				if (GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() != null && GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() == m_StartRoom)
-				{
-					base.aiActor.HasBeenEngaged = true;
-				}
-				yield break;
-			}
+
 			public static GameObject MakeParticleSystem(GameObject transform, Vector3 vector3)
 			{
 				var pso = new GameObject("CeramicParticles");

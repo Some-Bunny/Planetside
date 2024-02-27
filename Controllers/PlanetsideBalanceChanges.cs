@@ -14,6 +14,7 @@ using UnityEngine.UI;
 
 
 using static Planetside.MultiActiveReloadManager;
+using static ProjectileModule;
 
 namespace Planetside
 {
@@ -126,6 +127,18 @@ namespace Planetside
                     Gun GreyMauser = PickupObjectDatabase.GetById(130) as Gun;
                     GreyMauser.SetBaseMaxAmmo(150); //up from 100
                     GreyMauser.ammo = 150;
+
+                    Gun Polaris = PickupObjectDatabase.GetById(97) as Gun;
+                    foreach (ProjectileModule projectileModule in Polaris.Volley.projectiles)
+                    {
+                       projectileModule.shootStyle = ProjectileModule.ShootStyle.SemiAutomatic;
+                    }
+                    Gun Polaris_Syn = PickupObjectDatabase.GetById(718) as Gun;
+                    foreach (ProjectileModule projectileModule in Polaris_Syn.Volley.projectiles)
+                    {
+                        projectileModule.shootStyle = ProjectileModule.ShootStyle.SemiAutomatic;
+                    }
+
 
                     //Nerfs        
                     Gun MegaHand = PickupObjectDatabase.GetById(36) as Gun;

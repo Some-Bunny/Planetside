@@ -19,14 +19,12 @@ namespace Planetside
 	{
 		public static GameObject fuckyouprefab;
 		public static readonly string guid = "Shellrax";
-		//private static tk2dSpriteCollectionData ShellraxClooection;
 		public static GameObject shootpoint;
 		public static GameObject shootpoint1;
 
 		public static GameObject EyeScript;
 
 
-		//private static Texture2D BossCardTexture = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside/Resources/BossCards/shellrax_bosscard.png");
 		public static string TargetVFX;
 		public static Texture2D ShellraxEyeTexture;
 
@@ -1194,12 +1192,7 @@ namespace Planetside
 			{
 				if (!preventSpawningProjectiles)
 				{
-					var list = new List<string> {
-				//"shellet",
-				"e21ac9492110493baef6df02a2682a0d"
-			};
-					string guid = BraveUtility.RandomElement<string>(list);
-					var Enemy = EnemyDatabase.GetOrLoadByGuid(guid);
+					var Enemy = EnemyDatabase.GetOrLoadByGuid("e21ac9492110493baef6df02a2682a0d");
 					AIActor.Spawn(Enemy.aiActor, this.Projectile.sprite.WorldCenter, GameManager.Instance.PrimaryPlayer.CurrentRoom, true, AIActor.AwakenAnimationType.Default, true);
 					float num = base.RandomAngle();
 					float Amount = 12;

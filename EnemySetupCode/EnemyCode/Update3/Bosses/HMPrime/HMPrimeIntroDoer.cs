@@ -105,21 +105,30 @@ namespace Planetside
                 case 1:
                     return;
                 case 2:
-                    l.Add(new ActorEffectResistance() { resistAmount = 1000, resistType = EffectResistanceType.Freeze });
-                    base.aiActor.EffectResistances = l.ToArray();
+
+                    base.aiActor.SetResistance(EffectResistanceType.Freeze, 1);
+                    //l.Add(new ActorEffectResistance() { resistAmount = 1000, resistType = EffectResistanceType.Freeze });
+                    //base.aiActor.EffectResistances = l.ToArray();
                     return;
 
                 case 3:
-                    l.Add(new ActorEffectResistance() { resistAmount = 1000, resistType = EffectResistanceType.Freeze });
-                    l.Add(new ActorEffectResistance() { resistAmount = 1000, resistType = EffectResistanceType.Poison });
-                    base.aiActor.EffectResistances = l.ToArray();
+                    base.aiActor.SetResistance(EffectResistanceType.Freeze, 1);
+                    base.aiActor.SetResistance(EffectResistanceType.Poison, 1);
+
+                    //l.Add(new ActorEffectResistance() { resistAmount = 1000, resistType = EffectResistanceType.Freeze });
+                    //l.Add(new ActorEffectResistance() { resistAmount = 1000, resistType = EffectResistanceType.Poison });
+                    //base.aiActor.EffectResistances = l.ToArray();
 
                     return;
                 case 4:
-                    l.Add(new ActorEffectResistance() { resistAmount = 1000, resistType = EffectResistanceType.Fire });
-                    l.Add(new ActorEffectResistance() { resistAmount = 1000, resistType = EffectResistanceType.Poison });
-                    l.Add(new ActorEffectResistance() { resistAmount = 1000, resistType = EffectResistanceType.Freeze });
-                    base.aiActor.EffectResistances = l.ToArray();
+                    base.aiActor.SetResistance(EffectResistanceType.Freeze, 1);
+                    base.aiActor.SetResistance(EffectResistanceType.Poison, 1);
+                    base.aiActor.SetResistance(EffectResistanceType.Fire, 1);
+
+                    //l.Add(new ActorEffectResistance() { resistAmount = 1000, resistType = EffectResistanceType.Fire });
+                    //l.Add(new ActorEffectResistance() { resistAmount = 1000, resistType = EffectResistanceType.Poison });
+                    //l.Add(new ActorEffectResistance() { resistAmount = 1000, resistType = EffectResistanceType.Freeze });
+                    //base.aiActor.EffectResistances = l.ToArray();
                     return;
             }
         }

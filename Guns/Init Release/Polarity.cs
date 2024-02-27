@@ -16,6 +16,7 @@ using System.Collections.ObjectModel;
 using BreakAbleAPI;
 
 using UnityEngine.Serialization;
+using Alexandria.Assetbundle;
 
 namespace Planetside
 {
@@ -29,7 +30,7 @@ namespace Planetside
 			GunExt.SetShortDescription(gun, "Climate Contrast");
 			GunExt.SetLongDescription(gun, "A weapon forged by two wanderers from polar-opposite climates. It is said that they imbued part of their magic into it so one element doesn't damage the other.");
 
-            GunExt.SetupSprite(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "polarity_idle_001", 11);
+			GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "polarity_idle_001");
             gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
             gun.sprite.SortingOrder = 1;
 

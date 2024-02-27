@@ -15,6 +15,7 @@ using SaveAPI;
 namespace Planetside
 {
 
+
     [RequireComponent(typeof(GenericIntroDoer))]
     public class NemesisIntroController : SpecificIntroDoer
     {
@@ -27,9 +28,8 @@ namespace Planetside
         public override void PlayerWalkedIn(PlayerController player, List<tk2dSpriteAnimator> animators)
         {
             this.aiShooter.ToggleGunAndHandRenderers(false, "GuardIsSpawning");
-            this.aiActor.renderer.enabled = false;
-
-
+            this.aiActor.renderer.enabled = true;
+            this.aiActor.sprite.Awake();
         }
 
         public void Start()
@@ -41,14 +41,40 @@ namespace Planetside
                 base.aiActor.spriteAnimator.AnimationEventTriggered += this.AnimationEventTriggered;
             }
         }
+        private IEnumerator PortalDoer(MeshRenderer portal, bool DestroyWhenDone = true)
+        {
+            float elapsed = 0f;
+            while (elapsed < 4)
+            {
+                elapsed += 0.0167f;
+                float t = elapsed / 4;
+                if (portal.gameObject == null) { yield break; }
+                float throne1 = Mathf.Sin(t * (Mathf.PI));
+                portal.material.SetFloat("_UVDistCutoff", Mathf.Lerp(0, 0.31f, throne1));
+                portal.material.SetFloat("_HoleEdgeDepth", Mathf.Lerp(12, 2, throne1));
+                yield return null;
+            }
+
+            if (DestroyWhenDone == true)
+            {
+                Destroy(portal.gameObject);
+            }
+            yield break;
+        }
 
         private void AnimationEventTriggered(tk2dSpriteAnimator animator, tk2dSpriteAnimationClip clip, int frameIdx)
         {
             if (clip.GetFrame(frameIdx).eventInfo.Contains("v_s"))
             {
-                this.aiActor.renderer.enabled = true;
-
-
+                this.aiActor.HasBeenEngaged = true;
+                {
+                    GameObject portalObj = UnityEngine.Object.Instantiate<GameObject>(PickupObjectDatabase.GetById(155).GetComponent<SpawnObjectPlayerItem>().objectToSpawn.GetComponent<BlackHoleDoer>().HellSynergyVFX, this.aiActor.sprite.WorldBottomCenter, Quaternion.Euler(0f, 0f, 0f));
+                    portalObj.layer = this.aiActor.gameObject.layer + (int)GameManager.Instance.MainCameraController.CurrentZOffset;
+                    portalObj.gameObject.SetLayerRecursively(LayerMask.NameToLayer("BG_Critical"));
+                    MeshRenderer mesh = portalObj.GetComponent<MeshRenderer>();
+                    mesh.material.SetTexture("_PortalTex", StaticTextures.NebulaTexture);
+                    GameManager.Instance.StartCoroutine(PortalDoer(mesh, true));
+                }
             }
 
             if (clip.GetFrame(frameIdx).eventInfo.Contains("EquipSelf"))
@@ -77,11 +103,11 @@ namespace Planetside
                 tk2dSpriteAnimator componenta = gameObjectTwo.GetComponent<tk2dSpriteAnimator>();
                 if (componenta != null)
                 {
-                    component2.ignoreTimeScale = true;
-                    component2.AlwaysIgnoreTimeScale = true;
-                    component2.AnimateDuringBossIntros = true;
-                    component2.alwaysUpdateOffscreen = true;
-                    component2.playAutomatically = true;
+                    componenta.ignoreTimeScale = true;
+                    componenta.AlwaysIgnoreTimeScale = true;
+                    componenta.AnimateDuringBossIntros = true;
+                    componenta.alwaysUpdateOffscreen = true;
+                    componenta.playAutomatically = true;
                 }
                 Destroy(gameObjectTwo, 2);
             }

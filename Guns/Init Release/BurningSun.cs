@@ -15,6 +15,7 @@ using MonoMod;
 using System.Collections.ObjectModel;
 
 using UnityEngine.Serialization;
+using Alexandria.Assetbundle;
 
 namespace Planetside
 {
@@ -30,7 +31,7 @@ namespace Planetside
 			GunExt.SetShortDescription(gun, "Ring Of Fire");
 			GunExt.SetLongDescription(gun, "Despite its looks, this portable weapon can generate, and fire miniature stars.\n\nServes enemies as medium rare.");
 
-            GunExt.SetupSprite(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "burningsun_idle_001", 11);
+            GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "burningsun_idle_001");
             gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
             gun.sprite.SortingOrder = 1;
 

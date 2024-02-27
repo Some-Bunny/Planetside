@@ -16,6 +16,7 @@ using System.Collections.ObjectModel;
 
 using UnityEngine.Serialization;
 using SaveAPI;
+using Alexandria.Assetbundle;
 
 namespace Planetside
 {
@@ -29,15 +30,17 @@ namespace Planetside
 			GunExt.SetShortDescription(gun, "The Void");
 			GunExt.SetLongDescription(gun, "Fires projectiles that bend the cosmos to their will.\n\nCreated by a bunch of jerks who got bored one day and decided to break physics. How inconsiderate of them!");
             
-			GunExt.SetupSprite(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "immateria_idle_001", 11);
+			GunInt.SetupSprite(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "immateria_idle_001", 11);
             gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
             gun.sprite.SortingOrder = 1;
 
-			gun.SetBaseMaxAmmo(180);
+            gun.idleAnimation = "immateria_idle";
+            gun.shootAnimation = "immateria_fire";
+            gun.reloadAnimation = "immateria_reload";
 
-			//gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_BOSS_doormimic_blast_01";
-			//gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].triggerEvent = true;
-			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.reloadAnimation).frames[3].eventAudio = "Play_BOSS_dragun_spin_01";
+            //gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_BOSS_doormimic_blast_01";
+            //gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].triggerEvent = true;
+            gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.reloadAnimation).frames[3].eventAudio = "Play_BOSS_dragun_spin_01";
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.reloadAnimation).frames[3].triggerEvent = true;
 
 
@@ -73,7 +76,7 @@ namespace Planetside
                 projectile.AdditionalScaleMultiplier = 1f;
                 projectile.shouldRotate = false;
                 projectile.baseData.range = 1000f;
-				projectile.baseData.speed *= 0.4f;
+				projectile.baseData.speed *= 0.55f;
 
 
 				projectile.AnimateProjectileBundle("immateria_projectile_idle", StaticSpriteDefinitions.Projectile_Sheet_Data, StaticSpriteDefinitions.Projectile_Animation_Data, "immateria_projectile_idle", 
@@ -84,17 +87,22 @@ namespace Planetside
                 projectileModule.projectiles[0] = projectile;
 
                 PierceProjModifier spook = projectile.gameObject.GetOrAddComponent<PierceProjModifier>();
-                spook.penetration = 6;
+                spook.penetration = 5;
                 spook.penetratesBreakables = true;
 
                 projectile.objectImpactEventName = (PickupObjectDatabase.GetById(384) as Gun).DefaultModule.projectiles[0].objectImpactEventName;
                 projectile.enemyImpactEventName = (PickupObjectDatabase.GetById(384) as Gun).DefaultModule.projectiles[0].enemyImpactEventName;
 
+                //projectile.hitEffects.
+
+                projectile.hitEffects.overrideMidairDeathVFX = (PickupObjectDatabase.GetById(504) as Gun).DefaultModule.projectiles[0].hitEffects.enemy.effects[0].effects[0].effect;//(PickupObjectDatabase.GetById(593) as Gun).DefaultModule.projectiles[0].GetComponent<ExplosiveModifier>().explosionData.effect;
+                projectile.hitEffects.alwaysUseMidair = true;
+
                 ImprovedAfterImage yes = projectile.gameObject.AddComponent<ImprovedAfterImage>();
                 yes.spawnShadows = true;
-                yes.shadowLifetime = 0.5f;
-                yes.shadowTimeDelay = 0.03f;
-                yes.dashColor = new Color(0.8f, 0f, 0.45f, 0.9f);
+                yes.shadowLifetime = 0.6f;
+                yes.shadowTimeDelay = 0.15f;
+                yes.dashColor = new Color(0.8f, 0f, 0.45f, 0.7f);
                 yes.name = "Gun Trail";
 
                 FakePrefab.MarkAsFakePrefab(projectile.gameObject);
@@ -105,12 +113,13 @@ namespace Planetside
                 }
 				projectile.gameObject.AddComponent<ImmateriaProjectile>();
                  var a = projectile.gameObject.AddComponent<WraparoundProjectile>();
-				a.Cap = 5;
+				a.Cap = 4;
             }
             gun.Volley.UsesShotgunStyleVelocityRandomizer = true;
 			gun.Volley.DecreaseFinalSpeedPercentMin = 0.5f;
             gun.Volley.IncreaseFinalSpeedPercentMax = 1.5f;
 
+            gun.SetBaseMaxAmmo(120);
 
             gun.reloadTime = 1.1f;
 
@@ -138,8 +147,8 @@ namespace Planetside
 			{
 				breakSecretWalls = false,
 				comprehensiveDelay = 0,
-				damage = 10,
-				damageRadius = 3f,
+				damage = 6.5f,
+				damageRadius = 2.5f,
 				damageToPlayer = 0,
 				debrisForce = 10,
 				doDamage = true,
@@ -148,7 +157,7 @@ namespace Planetside
 				doForce = false,
 				doScreenShake = false,
 				doStickyFriction = false,
-				effect = (PickupObjectDatabase.GetById(593) as Gun).DefaultModule.projectiles[0].GetComponent<ExplosiveModifier>().explosionData.effect,
+				effect = (PickupObjectDatabase.GetById(504) as Gun).DefaultModule.projectiles[0].hitEffects.enemy.effects[0].effects[0].effect, //(PickupObjectDatabase.GetById(593) as Gun).DefaultModule.projectiles[0].GetComponent<ExplosiveModifier>().explosionData.effect,
                 explosionDelay = 0,
                 force = 1,
                 forcePreventSecretWallDamage = false,

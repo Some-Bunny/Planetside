@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using ItemAPI;
-
+using Alexandria.PrefabAPI;
 
 namespace Planetside
 {
@@ -156,20 +156,25 @@ namespace Planetside
 
 		public static void BuildTargetReticle()
 		{
-			KineticStrikeTargetReticle = SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/KineticStrike/redmarksthespot", new GameObject("Kinetic Strike Target Reticle"));
-			KineticStrikeTargetReticle.SetActive(false);
-            FakePrefab.MarkAsFakePrefab(KineticStrikeTargetReticle);
-            UnityEngine.Object.DontDestroyOnLoad(KineticStrikeTargetReticle);
 
-            tk2dSprite bS = KineticStrikeTargetReticle.GetOrAddComponent<tk2dSprite>();
+            GameObject gameObject = PrefabBuilder.BuildObject("Kinetic Strike Target Reticle");
+
+            tk2dSprite sprite = gameObject.AddComponent<tk2dSprite>();
+            sprite.collection = StaticSpriteDefinitions.Oddments_Sheet_Data;
+            sprite.SetSprite(StaticSpriteDefinitions.Oddments_Sheet_Data.GetSpriteIdByName("redmarksthespot"));
 
 
-            bS.GetCurrentSpriteDef().ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.LowerCenter, bS.GetCurrentSpriteDef().position3);
 
+            //KineticStrikeTargetReticle = SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/KineticStrike/redmarksthespot", new GameObject("Kinetic Strike Target Reticle"));
+            //KineticStrikeTargetReticle.SetActive(false);
+            //FakePrefab.MarkAsFakePrefab(KineticStrikeTargetReticle);
+            //UnityEngine.Object.DontDestroyOnLoad(KineticStrikeTargetReticle);
+
+            tk2dSprite bS = gameObject.GetOrAddComponent<tk2dSprite>();
+			bS.CachedPerpState = tk2dBaseSprite.PerpendicularState.FLAT;
 
             bS.sprite.usesOverrideMaterial = true;
 
-            bS.sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitCutoutUber");
 
             Material mat = bS.sprite.GetCurrentSpriteDef().material = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
 			mat.mainTexture = bS.sprite.renderer.material.mainTexture;
@@ -182,8 +187,8 @@ namespace Planetside
 			rRE.RiserHeight = 2;
 			rRE.RiseTime = 1;
 			rRE.NumRisers = 3;
-
-		}
+			KineticStrikeTargetReticle = gameObject;
+        }
 		public static GameObject KineticStrikeTargetReticle;
 
 
@@ -286,8 +291,8 @@ namespace Planetside
 			ImprovedAfterImage yeah = gameObject.AddComponent<ImprovedAfterImage>();
 			yeah.dashColor = new Color(0, 0.7f, 1);
 			yeah.spawnShadows = true;
-			yeah.shadowTimeDelay = 0.02f;
-			yeah.shadowLifetime = 0.1f;
+			yeah.shadowTimeDelay = 0.05f;
+			yeah.shadowLifetime = 0.15f;
 
 			PlayerOrbital si = gameObject.GetComponent<PlayerOrbital>();
 
@@ -322,42 +327,21 @@ namespace Planetside
 
 		public static void BuildHeartGuon()
 		{
-			GameObject deathmark = ItemBuilder.AddSpriteToObject("heart_guon", "Planetside/Resources/Guons/PickupGuons/HeartGuon/heartguon_001", null);
-			FakePrefab.MarkAsFakePrefab(deathmark);
-			UnityEngine.Object.DontDestroyOnLoad(deathmark);
-			tk2dSpriteAnimator animator = deathmark.AddComponent<tk2dSpriteAnimator>();
-			tk2dSpriteAnimationClip animationClip = new tk2dSpriteAnimationClip();
-			animationClip.fps = 4;
-			animationClip.wrapMode = tk2dSpriteAnimationClip.WrapMode.Loop;
-			animationClip.name = "start";
+            GameObject gameObject = PrefabBuilder.BuildObject("HeartGuonOrbital");
 
-			GameObject spriteObject = new GameObject("spriteObject");
-			ItemBuilder.AddSpriteToObject("spriteObject", $"Planetside/Resources/Guons/PickupGuons/HeartGuon/heartguon_001", spriteObject);
-			tk2dSpriteAnimationFrame starterFrame = new tk2dSpriteAnimationFrame();
-			starterFrame.spriteId = spriteObject.GetComponent<tk2dSprite>().spriteId;
-			starterFrame.spriteCollection = spriteObject.GetComponent<tk2dSprite>().Collection;
-			tk2dSpriteAnimationFrame[] frameArray = new tk2dSpriteAnimationFrame[]
-			{
-				starterFrame
-			};
-			animationClip.frames = frameArray;
-			for (int i = 2; i < 5; i++)
-			{
-				GameObject spriteForObject = new GameObject("spriteForObject");
-				ItemBuilder.AddSpriteToObject("spriteForObject", $"Planetside/Resources/Guons/PickupGuons/HeartGuon/heartguon_00{i}", spriteForObject);
-				tk2dSpriteAnimationFrame frame = new tk2dSpriteAnimationFrame();
-				frame.spriteId = spriteForObject.GetComponent<tk2dBaseSprite>().spriteId;
-				frame.spriteCollection = spriteForObject.GetComponent<tk2dBaseSprite>().Collection;
-				animationClip.frames = animationClip.frames.Concat(new tk2dSpriteAnimationFrame[] { frame }).ToArray();
-			}
-			animator.Library = animator.gameObject.AddComponent<tk2dSpriteAnimation>();
-			animator.Library.clips = new tk2dSpriteAnimationClip[] { animationClip };
-			animator.DefaultClipId = animator.GetClipIdByName("start");
-			animator.playAutomatically = true;
+            tk2dSprite sprite = gameObject.AddComponent<tk2dSprite>();
+            sprite.collection = StaticSpriteDefinitions.Guon_Sheet_Data;
+            sprite.SetSprite(StaticSpriteDefinitions.Guon_Sheet_Data.GetSpriteIdByName("heartguon_001"));
 
-			GameObject gameObject = animator.gameObject;
-			gameObject.name = $"Heart Guon";
-			SpeculativeRigidbody speculativeRigidbody = gameObject.GetComponent<tk2dSprite>().SetUpSpeculativeRigidbody(IntVector2.Zero, new IntVector2(10, 10));
+            tk2dSpriteAnimator animator = gameObject.AddComponent<tk2dSpriteAnimator>();
+            animator.library = StaticSpriteDefinitions.Guon_Animation_Data;
+            animator.defaultClipId = StaticSpriteDefinitions.Guon_Animation_Data.GetClipIdByName("heartguon_idle");
+            animator.playAutomatically = true;
+
+            sprite.CachedPerpState = tk2dBaseSprite.PerpendicularState.FLAT;
+
+
+            SpeculativeRigidbody speculativeRigidbody = gameObject.GetComponent<tk2dSprite>().SetUpSpeculativeRigidbody(IntVector2.Zero, new IntVector2(10, 10));
 			PlayerOrbital orbitalPrefab = gameObject.AddComponent<PlayerOrbital>();
 			speculativeRigidbody.CollideWithTileMap = false;
 			speculativeRigidbody.CollideWithOthers = true;
@@ -368,49 +352,24 @@ namespace Planetside
 			//orbitalPrefab.perfectOrbitalFactor = 1000f;
 			orbitalPrefab.SetOrbitalTier(0);
 			HeartGuon = gameObject;
-			UnityEngine.Object.DontDestroyOnLoad(HeartGuon);
-			FakePrefab.MarkAsFakePrefab(HeartGuon);
-			HeartGuon.SetActive(false);
 
 		}
 		public static void BuildHalfHeartGuon()
 		{
-			GameObject deathmark = ItemBuilder.AddSpriteToObject("half_heart_guon", "Planetside/Resources/Guons/PickupGuons/HalfheartGuon/halfheartguon_001", null);
-			FakePrefab.MarkAsFakePrefab(deathmark);
-			UnityEngine.Object.DontDestroyOnLoad(deathmark);
-			tk2dSpriteAnimator animator = deathmark.AddComponent<tk2dSpriteAnimator>();
-			tk2dSpriteAnimationClip animationClip = new tk2dSpriteAnimationClip();
-			animationClip.fps = 4;
-			animationClip.wrapMode = tk2dSpriteAnimationClip.WrapMode.Loop;
-			animationClip.name = "start";
+            GameObject gameObject = PrefabBuilder.BuildObject("HalfHeartGuonOrbital");
 
-			GameObject spriteObject = new GameObject("spriteObject");
-			ItemBuilder.AddSpriteToObject("spriteObject", $"Planetside/Resources/Guons/PickupGuons/HalfheartGuon/halfheartguon_001", spriteObject);
-			tk2dSpriteAnimationFrame starterFrame = new tk2dSpriteAnimationFrame();
-			starterFrame.spriteId = spriteObject.GetComponent<tk2dSprite>().spriteId;
-			starterFrame.spriteCollection = spriteObject.GetComponent<tk2dSprite>().Collection;
-			tk2dSpriteAnimationFrame[] frameArray = new tk2dSpriteAnimationFrame[]
-			{
-				starterFrame
-			};
-			animationClip.frames = frameArray;
-			for (int i = 2; i < 5; i++)
-			{
-				GameObject spriteForObject = new GameObject("spriteForObject");
-				ItemBuilder.AddSpriteToObject("spriteForObject", $"Planetside/Resources/Guons/PickupGuons/HalfheartGuon/halfheartguon_00{i}", spriteForObject);
-				tk2dSpriteAnimationFrame frame = new tk2dSpriteAnimationFrame();
-				frame.spriteId = spriteForObject.GetComponent<tk2dBaseSprite>().spriteId;
-				frame.spriteCollection = spriteForObject.GetComponent<tk2dBaseSprite>().Collection;
-				animationClip.frames = animationClip.frames.Concat(new tk2dSpriteAnimationFrame[] { frame }).ToArray();
-			}
-			animator.Library = animator.gameObject.AddComponent<tk2dSpriteAnimation>();
-			animator.Library.clips = new tk2dSpriteAnimationClip[] { animationClip };
-			animator.DefaultClipId = animator.GetClipIdByName("start");
-			animator.playAutomatically = true;
+            tk2dSprite sprite = gameObject.AddComponent<tk2dSprite>();
+            sprite.collection = StaticSpriteDefinitions.Guon_Sheet_Data;
+            sprite.SetSprite(StaticSpriteDefinitions.Guon_Sheet_Data.GetSpriteIdByName("halfheartguon_001"));
 
-			GameObject gameObject = animator.gameObject;
-			gameObject.name = $"Half Heart Guon";
-			SpeculativeRigidbody speculativeRigidbody = gameObject.GetComponent<tk2dSprite>().SetUpSpeculativeRigidbody(IntVector2.Zero, new IntVector2(10, 10));
+            tk2dSpriteAnimator animator = gameObject.AddComponent<tk2dSpriteAnimator>();
+            animator.library = StaticSpriteDefinitions.Guon_Animation_Data;
+            animator.defaultClipId = StaticSpriteDefinitions.Guon_Animation_Data.GetClipIdByName("halfheartguon_idle");
+            animator.playAutomatically = true;
+
+            sprite.CachedPerpState = tk2dBaseSprite.PerpendicularState.FLAT;
+
+            SpeculativeRigidbody speculativeRigidbody = gameObject.GetComponent<tk2dSprite>().SetUpSpeculativeRigidbody(IntVector2.Zero, new IntVector2(10, 10));
 			PlayerOrbital orbitalPrefab = gameObject.AddComponent<PlayerOrbital>();
 			speculativeRigidbody.CollideWithTileMap = false;
 			speculativeRigidbody.CollideWithOthers = true;
@@ -425,48 +384,24 @@ namespace Planetside
 			//gameObject.SetActive(false);
 			HalfheartGuon = gameObject;
 			//UnityEngine.Object.DontDestroyOnLoad(HalfheartGuon);
-			UnityEngine.Object.DontDestroyOnLoad(HalfheartGuon);
-			FakePrefab.MarkAsFakePrefab(HalfheartGuon);
-			HalfheartGuon.SetActive(false);
 		}
 		public static void BuildAmmoGuon()
 		{
-			GameObject deathmark = ItemBuilder.AddSpriteToObject("ammo_guon", "Planetside/Resources/Guons/PickupGuons/AmmoGuon/ammoguon_001", null);
-			FakePrefab.MarkAsFakePrefab(deathmark);
-			UnityEngine.Object.DontDestroyOnLoad(deathmark);
-			tk2dSpriteAnimator animator = deathmark.AddComponent<tk2dSpriteAnimator>();
-			tk2dSpriteAnimationClip animationClip = new tk2dSpriteAnimationClip();
-			animationClip.fps = 4;
-			animationClip.wrapMode = tk2dSpriteAnimationClip.WrapMode.Loop;
-			animationClip.name = "start";
+            GameObject gameObject = PrefabBuilder.BuildObject("AmmoGuonOrbital");
 
-			GameObject spriteObject = new GameObject("spriteObject");
-			ItemBuilder.AddSpriteToObject("spriteObject", $"Planetside/Resources/Guons/PickupGuons/AmmoGuon/ammoguon_001", spriteObject);
-			tk2dSpriteAnimationFrame starterFrame = new tk2dSpriteAnimationFrame();
-			starterFrame.spriteId = spriteObject.GetComponent<tk2dSprite>().spriteId;
-			starterFrame.spriteCollection = spriteObject.GetComponent<tk2dSprite>().Collection;
-			tk2dSpriteAnimationFrame[] frameArray = new tk2dSpriteAnimationFrame[]
-			{
-				starterFrame
-			};
-			animationClip.frames = frameArray;
-			for (int i = 2; i < 5; i++)
-			{
-				GameObject spriteForObject = new GameObject("spriteForObject");
-				ItemBuilder.AddSpriteToObject("spriteForObject", $"Planetside/Resources/Guons/PickupGuons/AmmoGuon/ammoguon_00{i}", spriteForObject);
-				tk2dSpriteAnimationFrame frame = new tk2dSpriteAnimationFrame();
-				frame.spriteId = spriteForObject.GetComponent<tk2dBaseSprite>().spriteId;
-				frame.spriteCollection = spriteForObject.GetComponent<tk2dBaseSprite>().Collection;
-				animationClip.frames = animationClip.frames.Concat(new tk2dSpriteAnimationFrame[] { frame }).ToArray();
-			}
-			animator.Library = animator.gameObject.AddComponent<tk2dSpriteAnimation>();
-			animator.Library.clips = new tk2dSpriteAnimationClip[] { animationClip };
-			animator.DefaultClipId = animator.GetClipIdByName("start");
-			animator.playAutomatically = true;
+            tk2dSprite sprite = gameObject.AddComponent<tk2dSprite>();
+            sprite.collection = StaticSpriteDefinitions.Guon_Sheet_Data;
+            sprite.SetSprite(StaticSpriteDefinitions.Guon_Sheet_Data.GetSpriteIdByName("ammoguon_001"));
 
-			GameObject gameObject = animator.gameObject;
-			gameObject.name = $"Ammo Guon";
-			SpeculativeRigidbody speculativeRigidbody = gameObject.GetComponent<tk2dSprite>().SetUpSpeculativeRigidbody(IntVector2.Zero, new IntVector2(10, 10));
+            tk2dSpriteAnimator animator = gameObject.AddComponent<tk2dSpriteAnimator>();
+            animator.library = StaticSpriteDefinitions.Guon_Animation_Data;
+            animator.defaultClipId = StaticSpriteDefinitions.Guon_Animation_Data.GetClipIdByName("ammoguon_idle");
+            animator.playAutomatically = true;
+
+            sprite.CachedPerpState = tk2dBaseSprite.PerpendicularState.FLAT;
+
+
+            SpeculativeRigidbody speculativeRigidbody = gameObject.GetComponent<tk2dSprite>().SetUpSpeculativeRigidbody(IntVector2.Zero, new IntVector2(10, 10));
 			PlayerOrbital orbitalPrefab = gameObject.AddComponent<PlayerOrbital>();
 			speculativeRigidbody.CollideWithTileMap = false;
 			speculativeRigidbody.CollideWithOthers = true;
@@ -482,49 +417,24 @@ namespace Planetside
 			AmmoGuon = gameObject;
 			//UnityEngine.Object.DontDestroyOnLoad(AmmoGuon);
 
-			UnityEngine.Object.DontDestroyOnLoad(AmmoGuon);
-			FakePrefab.MarkAsFakePrefab(AmmoGuon);
-			AmmoGuon.SetActive(false);
 
 		}
 		public static void BuildHalfAmmoGuon()
 		{
-			GameObject deathmark = ItemBuilder.AddSpriteToObject("half_ammo_guon", "Planetside/Resources/Guons/PickupGuons/HalfAmmoguon/halfammoguon_001", null);
-			FakePrefab.MarkAsFakePrefab(deathmark);
-			UnityEngine.Object.DontDestroyOnLoad(deathmark);
-			tk2dSpriteAnimator animator = deathmark.AddComponent<tk2dSpriteAnimator>();
-			tk2dSpriteAnimationClip animationClip = new tk2dSpriteAnimationClip();
-			animationClip.fps = 4;
-			animationClip.wrapMode = tk2dSpriteAnimationClip.WrapMode.Loop;
-			animationClip.name = "start";
+            GameObject gameObject = PrefabBuilder.BuildObject("HalfAmmoGuonOrbital");
 
-			GameObject spriteObject = new GameObject("spriteObject");
-			ItemBuilder.AddSpriteToObject("spriteObject", $"Planetside/Resources/Guons/PickupGuons/HalfAmmoguon/halfammoguon_001", spriteObject);
-			tk2dSpriteAnimationFrame starterFrame = new tk2dSpriteAnimationFrame();
-			starterFrame.spriteId = spriteObject.GetComponent<tk2dSprite>().spriteId;
-			starterFrame.spriteCollection = spriteObject.GetComponent<tk2dSprite>().Collection;
-			tk2dSpriteAnimationFrame[] frameArray = new tk2dSpriteAnimationFrame[]
-			{
-				starterFrame
-			};
-			animationClip.frames = frameArray;
-			for (int i = 2; i < 5; i++)
-			{
-				GameObject spriteForObject = new GameObject("spriteForObject");
-				ItemBuilder.AddSpriteToObject("spriteForObject", $"Planetside/Resources/Guons/PickupGuons/HalfAmmoguon/halfammoguon_00{i}", spriteForObject);
-				tk2dSpriteAnimationFrame frame = new tk2dSpriteAnimationFrame();
-				frame.spriteId = spriteForObject.GetComponent<tk2dBaseSprite>().spriteId;
-				frame.spriteCollection = spriteForObject.GetComponent<tk2dBaseSprite>().Collection;
-				animationClip.frames = animationClip.frames.Concat(new tk2dSpriteAnimationFrame[] { frame }).ToArray();
-			}
-			animator.Library = animator.gameObject.AddComponent<tk2dSpriteAnimation>();
-			animator.Library.clips = new tk2dSpriteAnimationClip[] { animationClip };
-			animator.DefaultClipId = animator.GetClipIdByName("start");
-			animator.playAutomatically = true;
+            tk2dSprite sprite = gameObject.AddComponent<tk2dSprite>();
+            sprite.collection = StaticSpriteDefinitions.Guon_Sheet_Data;
+            sprite.SetSprite(StaticSpriteDefinitions.Guon_Sheet_Data.GetSpriteIdByName("halfammoguon_001"));
 
-			GameObject gameObject = animator.gameObject;
-			gameObject.name = $"Half Ammo Guon";
-			SpeculativeRigidbody speculativeRigidbody = gameObject.GetComponent<tk2dSprite>().SetUpSpeculativeRigidbody(IntVector2.Zero, new IntVector2(10, 10));
+            tk2dSpriteAnimator animator = gameObject.AddComponent<tk2dSpriteAnimator>();
+            animator.library = StaticSpriteDefinitions.Guon_Animation_Data;
+            animator.defaultClipId = StaticSpriteDefinitions.Guon_Animation_Data.GetClipIdByName("halfammoguon_idle");
+            animator.playAutomatically = true;
+            sprite.CachedPerpState = tk2dBaseSprite.PerpendicularState.FLAT;
+
+
+            SpeculativeRigidbody speculativeRigidbody = gameObject.GetComponent<tk2dSprite>().SetUpSpeculativeRigidbody(IntVector2.Zero, new IntVector2(10, 10));
 			PlayerOrbital orbitalPrefab = gameObject.AddComponent<PlayerOrbital>();
 			speculativeRigidbody.CollideWithTileMap = false;
 			speculativeRigidbody.CollideWithOthers = true;
@@ -539,49 +449,24 @@ namespace Planetside
 			//gameObject.SetActive(false);
 			HalfAmmoGuon = gameObject;
 			//UnityEngine.Object.DontDestroyOnLoad(HalfAmmoGuon);
-			UnityEngine.Object.DontDestroyOnLoad(HalfAmmoGuon);
-			FakePrefab.MarkAsFakePrefab(HalfAmmoGuon);
-			HalfAmmoGuon.SetActive(false);
 
 		}
 		public static void BuildArmorGuon()
 		{
-			GameObject deathmark = ItemBuilder.AddSpriteToObject("armor_guon", "Planetside/Resources/Guons/PickupGuons/Armor/armorguon_001", null);
-			FakePrefab.MarkAsFakePrefab(deathmark);
-			UnityEngine.Object.DontDestroyOnLoad(deathmark);
-			tk2dSpriteAnimator animator = deathmark.AddComponent<tk2dSpriteAnimator>();
-			tk2dSpriteAnimationClip animationClip = new tk2dSpriteAnimationClip();
-			animationClip.fps = 4;
-			animationClip.wrapMode = tk2dSpriteAnimationClip.WrapMode.Loop;
-			animationClip.name = "start";
+            GameObject gameObject = PrefabBuilder.BuildObject("ArmorGuonOrbital");
 
-			GameObject spriteObject = new GameObject("spriteObject");
-			ItemBuilder.AddSpriteToObject("spriteObject", $"Planetside/Resources/Guons/PickupGuons/Armor/armorguon_001", spriteObject);
-			tk2dSpriteAnimationFrame starterFrame = new tk2dSpriteAnimationFrame();
-			starterFrame.spriteId = spriteObject.GetComponent<tk2dSprite>().spriteId;
-			starterFrame.spriteCollection = spriteObject.GetComponent<tk2dSprite>().Collection;
-			tk2dSpriteAnimationFrame[] frameArray = new tk2dSpriteAnimationFrame[]
-			{
-				starterFrame
-			};
-			animationClip.frames = frameArray;
-			for (int i = 2; i < 5; i++)
-			{
-				GameObject spriteForObject = new GameObject("spriteForObject");
-				ItemBuilder.AddSpriteToObject("spriteForObject", $"Planetside/Resources/Guons/PickupGuons/Armor/armorguon_00{i}", spriteForObject);
-				tk2dSpriteAnimationFrame frame = new tk2dSpriteAnimationFrame();
-				frame.spriteId = spriteForObject.GetComponent<tk2dBaseSprite>().spriteId;
-				frame.spriteCollection = spriteForObject.GetComponent<tk2dBaseSprite>().Collection;
-				animationClip.frames = animationClip.frames.Concat(new tk2dSpriteAnimationFrame[] { frame }).ToArray();
-			}
-			animator.Library = animator.gameObject.AddComponent<tk2dSpriteAnimation>();
-			animator.Library.clips = new tk2dSpriteAnimationClip[] { animationClip };
-			animator.DefaultClipId = animator.GetClipIdByName("start");
-			animator.playAutomatically = true;
+            tk2dSprite sprite = gameObject.AddComponent<tk2dSprite>();
+            sprite.collection = StaticSpriteDefinitions.Guon_Sheet_Data;
+            sprite.SetSprite(StaticSpriteDefinitions.Guon_Sheet_Data.GetSpriteIdByName("armorguon_001"));
 
-			GameObject gameObject = animator.gameObject;
-			gameObject.name = $"Armor Guon";
-			SpeculativeRigidbody speculativeRigidbody = gameObject.GetComponent<tk2dSprite>().SetUpSpeculativeRigidbody(IntVector2.Zero, new IntVector2(10, 10));
+            tk2dSpriteAnimator animator = gameObject.AddComponent<tk2dSpriteAnimator>();
+            animator.library = StaticSpriteDefinitions.Guon_Animation_Data;
+            animator.defaultClipId = StaticSpriteDefinitions.Guon_Animation_Data.GetClipIdByName("armorguon_idle");
+            animator.playAutomatically = true;
+            sprite.CachedPerpState = tk2dBaseSprite.PerpendicularState.FLAT;
+
+
+            SpeculativeRigidbody speculativeRigidbody = gameObject.GetComponent<tk2dSprite>().SetUpSpeculativeRigidbody(IntVector2.Zero, new IntVector2(10, 10));
 			PlayerOrbital orbitalPrefab = gameObject.AddComponent<PlayerOrbital>();
 			speculativeRigidbody.CollideWithTileMap = false;
 			speculativeRigidbody.CollideWithOthers = true;
@@ -596,49 +481,24 @@ namespace Planetside
 			//gameObject.SetActive(false);
 			ArmorGuon = gameObject;
 			//UnityEngine.Object.DontDestroyOnLoad(A);
-			UnityEngine.Object.DontDestroyOnLoad(ArmorGuon);
-			FakePrefab.MarkAsFakePrefab(ArmorGuon);
-			ArmorGuon.SetActive(false);
 
 		}
 		public static void BuildKeyGuon()
 		{
-			GameObject deathmark = ItemBuilder.AddSpriteToObject("key_guon", "Planetside/Resources/Guons/PickupGuons/keyguon/keyguon_001", null);
-			FakePrefab.MarkAsFakePrefab(deathmark);
-			UnityEngine.Object.DontDestroyOnLoad(deathmark);
-			tk2dSpriteAnimator animator = deathmark.AddComponent<tk2dSpriteAnimator>();
-			tk2dSpriteAnimationClip animationClip = new tk2dSpriteAnimationClip();
-			animationClip.fps = 4;
-			animationClip.wrapMode = tk2dSpriteAnimationClip.WrapMode.Loop;
-			animationClip.name = "start";
+            GameObject gameObject = PrefabBuilder.BuildObject("KeyGuonOrbital");
 
-			GameObject spriteObject = new GameObject("spriteObject");
-			ItemBuilder.AddSpriteToObject("spriteObject", $"Planetside/Resources/Guons/PickupGuons/keyguon/keyguon_001", spriteObject);
-			tk2dSpriteAnimationFrame starterFrame = new tk2dSpriteAnimationFrame();
-			starterFrame.spriteId = spriteObject.GetComponent<tk2dSprite>().spriteId;
-			starterFrame.spriteCollection = spriteObject.GetComponent<tk2dSprite>().Collection;
-			tk2dSpriteAnimationFrame[] frameArray = new tk2dSpriteAnimationFrame[]
-			{
-				starterFrame
-			};
-			animationClip.frames = frameArray;
-			for (int i = 2; i < 5; i++)
-			{
-				GameObject spriteForObject = new GameObject("spriteForObject");
-				ItemBuilder.AddSpriteToObject("spriteForObject", $"Planetside/Resources/Guons/PickupGuons/keyguon/keyguon_00{i}", spriteForObject);
-				tk2dSpriteAnimationFrame frame = new tk2dSpriteAnimationFrame();
-				frame.spriteId = spriteForObject.GetComponent<tk2dBaseSprite>().spriteId;
-				frame.spriteCollection = spriteForObject.GetComponent<tk2dBaseSprite>().Collection;
-				animationClip.frames = animationClip.frames.Concat(new tk2dSpriteAnimationFrame[] { frame }).ToArray();
-			}
-			animator.Library = animator.gameObject.AddComponent<tk2dSpriteAnimation>();
-			animator.Library.clips = new tk2dSpriteAnimationClip[] { animationClip };
-			animator.DefaultClipId = animator.GetClipIdByName("start");
-			animator.playAutomatically = true;
+            tk2dSprite sprite = gameObject.AddComponent<tk2dSprite>();
+            sprite.collection = StaticSpriteDefinitions.Guon_Sheet_Data;
+            sprite.SetSprite(StaticSpriteDefinitions.Guon_Sheet_Data.GetSpriteIdByName("keyguon_001"));
 
-			GameObject gameObject = animator.gameObject;
-			gameObject.name = $"Key Guon";
-			SpeculativeRigidbody speculativeRigidbody = gameObject.GetComponent<tk2dSprite>().SetUpSpeculativeRigidbody(IntVector2.Zero, new IntVector2(10, 10));
+            tk2dSpriteAnimator animator = gameObject.AddComponent<tk2dSpriteAnimator>();
+            animator.library = StaticSpriteDefinitions.Guon_Animation_Data;
+            animator.defaultClipId = StaticSpriteDefinitions.Guon_Animation_Data.GetClipIdByName("keyguon_idle");
+            animator.playAutomatically = true;
+            sprite.CachedPerpState = tk2dBaseSprite.PerpendicularState.FLAT;
+
+
+            SpeculativeRigidbody speculativeRigidbody = gameObject.GetComponent<tk2dSprite>().SetUpSpeculativeRigidbody(IntVector2.Zero, new IntVector2(10, 10));
 			PlayerOrbital orbitalPrefab = gameObject.AddComponent<PlayerOrbital>();
 			speculativeRigidbody.CollideWithTileMap = false;
 			speculativeRigidbody.CollideWithOthers = true;
@@ -653,48 +513,23 @@ namespace Planetside
 			//gameObject.SetActive(false);
 			KeyGuon = gameObject;
 			//UnityEngine.Object.DontDestroyOnLoad(KeyGuon);
-			UnityEngine.Object.DontDestroyOnLoad(KeyGuon);
-			FakePrefab.MarkAsFakePrefab(KeyGuon);
-			KeyGuon.SetActive(false);
 		}
 		public static void BuildBlankguon()
 		{
-			GameObject deathmark = ItemBuilder.AddSpriteToObject("blank_guon", "Planetside/Resources/Guons/PickupGuons/BlankGuon/blankguon_001", null);
-			FakePrefab.MarkAsFakePrefab(deathmark);
-			UnityEngine.Object.DontDestroyOnLoad(deathmark);
-			tk2dSpriteAnimator animator = deathmark.AddComponent<tk2dSpriteAnimator>();
-			tk2dSpriteAnimationClip animationClip = new tk2dSpriteAnimationClip();
-			animationClip.fps = 4;
-			animationClip.wrapMode = tk2dSpriteAnimationClip.WrapMode.Loop;
-			animationClip.name = "start";
+            GameObject gameObject = PrefabBuilder.BuildObject("BlankGuonOrbital");
 
-			GameObject spriteObject = new GameObject("spriteObject");
-			ItemBuilder.AddSpriteToObject("spriteObject", $"Planetside/Resources/Guons/PickupGuons/BlankGuon/blankguon_001", spriteObject);
-			tk2dSpriteAnimationFrame starterFrame = new tk2dSpriteAnimationFrame();
-			starterFrame.spriteId = spriteObject.GetComponent<tk2dSprite>().spriteId;
-			starterFrame.spriteCollection = spriteObject.GetComponent<tk2dSprite>().Collection;
-			tk2dSpriteAnimationFrame[] frameArray = new tk2dSpriteAnimationFrame[]
-			{
-				starterFrame
-			};
-			animationClip.frames = frameArray;
-			for (int i = 2; i < 5; i++)
-			{
-				GameObject spriteForObject = new GameObject("spriteForObject");
-				ItemBuilder.AddSpriteToObject("spriteForObject", $"Planetside/Resources/Guons/PickupGuons/BlankGuon/blankguon_00{i}", spriteForObject);
-				tk2dSpriteAnimationFrame frame = new tk2dSpriteAnimationFrame();
-				frame.spriteId = spriteForObject.GetComponent<tk2dBaseSprite>().spriteId;
-				frame.spriteCollection = spriteForObject.GetComponent<tk2dBaseSprite>().Collection;
-				animationClip.frames = animationClip.frames.Concat(new tk2dSpriteAnimationFrame[] { frame }).ToArray();
-			}
-			animator.Library = animator.gameObject.AddComponent<tk2dSpriteAnimation>();
-			animator.Library.clips = new tk2dSpriteAnimationClip[] { animationClip };
-			animator.DefaultClipId = animator.GetClipIdByName("start");
-			animator.playAutomatically = true;
+            tk2dSprite sprite = gameObject.AddComponent<tk2dSprite>();
+            sprite.collection = StaticSpriteDefinitions.Guon_Sheet_Data;
+            sprite.SetSprite(StaticSpriteDefinitions.Guon_Sheet_Data.GetSpriteIdByName("blankguon_001"));
 
-			GameObject gameObject = animator.gameObject;
-			gameObject.name = $"Blank Guon";
-			SpeculativeRigidbody speculativeRigidbody = gameObject.GetComponent<tk2dSprite>().SetUpSpeculativeRigidbody(IntVector2.Zero, new IntVector2(10, 10));
+            tk2dSpriteAnimator animator = gameObject.AddComponent<tk2dSpriteAnimator>();
+            animator.library = StaticSpriteDefinitions.Guon_Animation_Data;
+            animator.defaultClipId = StaticSpriteDefinitions.Guon_Animation_Data.GetClipIdByName("blankguon_idle");
+            animator.playAutomatically = true;
+            sprite.CachedPerpState = tk2dBaseSprite.PerpendicularState.FLAT;
+
+
+            SpeculativeRigidbody speculativeRigidbody = gameObject.GetComponent<tk2dSprite>().SetUpSpeculativeRigidbody(IntVector2.Zero, new IntVector2(10, 10));
 			PlayerOrbital orbitalPrefab = gameObject.AddComponent<PlayerOrbital>();
 			speculativeRigidbody.CollideWithTileMap = false;
 			speculativeRigidbody.CollideWithOthers = true;
@@ -708,9 +543,6 @@ namespace Planetside
 			//FakePrefab.MarkAsFakePrefab(gameObject);
 			//gameObject.SetActive(false);
 			BlankGuon = gameObject;
-			UnityEngine.Object.DontDestroyOnLoad(BlankGuon);
-			FakePrefab.MarkAsFakePrefab(BlankGuon);
-			BlankGuon.SetActive(false);
 		}
 
 

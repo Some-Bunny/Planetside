@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1863764248
+CRC: 3295920062
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: a2a52b6a44d359dfb620ee1fc56306cd
+    Hash: 8e0980e7027e39648549c9b4bb8ea3e9
   TypeTreeHash:
     serializedVersion: 2
     Hash: 49f9e3f3a3706f2358de64fcab9d7ba2
@@ -42,12 +42,14 @@ Assets:
 - Assets/Pickups/PickupCollection Data/pickup material.mat
 - Assets/Enemies/ModderBullets/ModderBulletCollection Data/modderbullet material.mat
 - Assets/Ammonomicon/Ammonomicon Icons/glockulussheet.png
+- Assets/Items/Guon Stones/GuonAnimation.prefab
 - Assets/UI/Alphabet Letters/letter_08.png
 - Assets/Ammonomicon/Ammonomicon Icons/ophanaimsheetrt.png
 - Assets/UI/Alphabet Letters/letter_26.png
 - Assets/UI/Alphabet Letters/letter_04.png
 - Assets/Enemies/Glockulus/GlockulusCollection Data/GlockulusCollection.prefab
 - Assets/Minibosses/Nemesis/NemesisCollection Data/NemesisCollection.prefab
+- Assets/Items/Guon Stones/PSOGGuonCollection Data/PSOGGuonCollection.prefab
 - Assets/Ammonomicon/Ammonomicon Icons/wailericonammo.png
 - Assets/UI/Alphabet Letters/letter_19.png
 - Assets/Projectiles/PlanetsideProjectileAnimation.prefab
@@ -112,6 +114,7 @@ Assets:
 - Assets/UI/Alphabet Letters/letter_09.png
 - Assets/Minibosses/Nemesis/NemesisCollection Data/nemesis material.mat
 - Assets/BossCards/annihichamber_bosscard.png
+- Assets/Items/Guon Stones/PSOGGuonCollection Data/guonpsog material.mat
 - Assets/VFX/Random Bits/OddmentsCollection Data/OddmentsCollection.prefab
 - Assets/UI/Alphabet Letters/letter_21.png
 - Assets/Enemies/Jammed Guardian/JammedGuardianCollection Data/JammedGuardianCollection.prefab

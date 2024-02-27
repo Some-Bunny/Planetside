@@ -13,6 +13,7 @@ using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
 using SaveAPI;
+using Alexandria.Assetbundle;
 
 namespace Planetside
 {
@@ -26,13 +27,14 @@ namespace Planetside
 
 			GunExt.SetShortDescription(gun, "Light The Way");
 			GunExt.SetLongDescription(gun, "A lantern filled with the souls that came before and after its time. Who knows how old it is, and if it even was manufactured by human hands...");
-            GunExt.SetupSprite(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "soullantern_idle_001", 11);
+            GunInt.SetupSprite(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "soullantern_idle_001");
             gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
             gun.sprite.SortingOrder = 1;
 
             gun.idleAnimation = "soullantern_idle";
             gun.shootAnimation = "soullantern_fire";
             gun.reloadAnimation = "soullantern_reload";
+
             gun.AddPassiveStatModifier(PlayerStats.StatType.Curse, 1f, StatModifier.ModifyMethod.ADDITIVE);
 			GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(378) as Gun, true, false);
 			gun.gunSwitchGroup = (PickupObjectDatabase.GetById(370) as Gun).gunSwitchGroup;

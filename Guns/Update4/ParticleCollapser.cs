@@ -16,6 +16,7 @@ using System.Collections.ObjectModel;
 
 
 using UnityEngine.Serialization;
+using Alexandria.Assetbundle;
 
 namespace Planetside
 {
@@ -29,7 +30,7 @@ namespace Planetside
 			GunExt.SetShortDescription(gun, "<   (  ( o )  )  >");
 			GunExt.SetLongDescription(gun, "First shot in the clip fires a small rift, all shots after will be attracted to it.\n\nUsed by AI lumberjacks to cut down laser trees.");
 
-            GunExt.SetupSprite(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "particlecollapser_idle_001", 11);
+            GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "particlecollapser_idle_001");
             gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
             gun.sprite.SortingOrder = 1;
 

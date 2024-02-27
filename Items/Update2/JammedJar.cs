@@ -36,7 +36,7 @@ namespace Planetside
             activeitem.consumable = true;
             activeitem.numberOfUses = 3;
             activeitem.quality = PickupObject.ItemQuality.C;
-            JammedJar.spriteIDs = new int[JammedJar.spritePaths.Length];
+            JammedJar.spriteIDs = new int[4];
             JammedJar.spriteIDs[3] = data.GetSpriteIdByName("cursejar_001");//ItemAPI.SpriteBuilder.AddSpriteToCollection(JammedJar.spritePaths[0], activeitem.sprite.Collection);
             JammedJar.spriteIDs[2] = data.GetSpriteIdByName("cursejar_002");//SpriteBuilder.AddSpriteToCollection(JammedJar.spritePaths[1], activeitem.sprite.Collection);
             JammedJar.spriteIDs[1] = data.GetSpriteIdByName("cursejar_003");//SpriteBuilder.AddSpriteToCollection(JammedJar.spritePaths[2], activeitem.sprite.Collection);
@@ -62,13 +62,6 @@ namespace Planetside
             user.AcquirePassiveItemPrefabDirectly(pickupObject as PassiveItem);
         }
         private static int[] spriteIDs;
-        private static readonly string[] spritePaths = new string[]
-        {
-            "Planetside/Resources/JammedJarIDK/cursejar_001",
-            "Planetside/Resources/JammedJarIDK/cursejar_002",
-            "Planetside/Resources/JammedJarIDK/cursejar_003",
-            "Planetside/Resources/JammedJarIDK/cursejar_004"
-        };
         public static int Uses;
     }
 }

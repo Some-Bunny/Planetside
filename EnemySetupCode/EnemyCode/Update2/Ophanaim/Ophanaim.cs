@@ -3253,7 +3253,7 @@ namespace Planetside
                         component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (10 * t));
                         component2.transform.localRotation = Quaternion.Euler(0f, 0f, aimDir + Q);
                         component2.HeightOffGround = -2;
-                        component2.renderer.gameObject.layer = 23;
+                        component2.renderer.gameObject.layer = 22;
                         component2.dimensions = new Vector2(Mathf.Lerp(1, 750, throne1), 1f);
                         component2.UpdateZDepth();
                     }
@@ -3276,7 +3276,7 @@ namespace Planetside
                         component2.transform.position = this.Position;
                         component2.dimensions = new Vector2(1000f, 1f);
                         component2.HeightOffGround = -2;
-                        component2.renderer.gameObject.layer = 23;
+                        component2.renderer.gameObject.layer = 22;
                         component2.UpdateZDepth();
 
                         bool enabled = elapsed % 0.25f > 0.125f;
@@ -3407,7 +3407,7 @@ namespace Planetside
                         component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (10 * t));
                         component2.transform.localRotation = Quaternion.Euler(0f, 0f, aimDir + Q);
                         component2.HeightOffGround = -2;
-                        component2.renderer.gameObject.layer = 23;
+                        component2.renderer.gameObject.layer = 22;
                         component2.dimensions = new Vector2(Mathf.Lerp(1, 750, throne1), 1f);
                         component2.UpdateZDepth();
                     }
@@ -3430,7 +3430,7 @@ namespace Planetside
                         component2.transform.position = this.Position;
                         component2.dimensions = new Vector2(1000f, 1f);
                         component2.HeightOffGround = -2;
-                        component2.renderer.gameObject.layer = 23;
+                        component2.renderer.gameObject.layer = 22;
                         component2.UpdateZDepth();
 
                         bool enabled = elapsed % 0.25f > 0.125f;

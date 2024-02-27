@@ -56,7 +56,7 @@ namespace Planetside
             {
 				this.StartEffect(player);
 			}
-			LootEngine.DoDefaultItemPoof(actor.sprite.WorldCenter, false, false);
+			LootEngine.DoDefaultItemPoof(actor.sprite.WorldCenter, false, true);
 			actor.StartCoroutine(this.HandleTimedDestroy());
 		}
 		private void StartEffect(PlayerController user)

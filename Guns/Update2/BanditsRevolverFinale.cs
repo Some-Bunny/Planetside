@@ -26,7 +26,6 @@ namespace Planetside
 
         public void Start()
         {
-            //GameObject original;
             this.projectile = base.GetComponent<Projectile>();
             if (this.projectile != null)
             {

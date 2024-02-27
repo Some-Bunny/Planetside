@@ -9,7 +9,7 @@ using MonoMod;
 using UnityEngine;
 using ItemAPI;
 using MonoMod.RuntimeDetour;
-
+using Alexandria.Assetbundle;
 
 namespace Planetside
 {
@@ -26,7 +26,7 @@ namespace Planetside
             gun.SetShortDescription("Good For Frying Dwarves");
             gun.SetLongDescription("A downscaled version of a pulse cannon that would be attached to a colossal battle-tower. They were decommisioned after a rise of employees reporting their legs were getting cut off.");
 
-            GunExt.SetupSprite(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "pulsecannon_idle_001", 11);
+            GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "pulsecannon_idle_001");
             gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
             gun.sprite.SortingOrder = 1;
 
@@ -82,8 +82,8 @@ namespace Planetside
 
                 ImprovedAfterImage yes = projectile.gameObject.AddComponent<ImprovedAfterImage>();
                 yes.spawnShadows = true;
-                yes.shadowLifetime = 0.2f;
-                yes.shadowTimeDelay = 0.01f;
+                yes.shadowLifetime = 0.3f;
+                yes.shadowTimeDelay = 0.1f;
                 yes.dashColor = new Color(1f, 0f, 0.6f, 1f);
 
                 projectile.AnimateProjectile(new List<string> {

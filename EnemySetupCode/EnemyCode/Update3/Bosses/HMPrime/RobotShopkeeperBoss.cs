@@ -1537,7 +1537,7 @@ namespace Planetside
 					TimeToReachFullSpeed = 1,
 					TimeToStayAtZeroSpeedAt = 1,
 					FacesLaserAngle = true,
-					Cooldown = 15,
+					Cooldown = 30,
 				},
 				NickName = "BigLaser"
 				},
@@ -1592,7 +1592,7 @@ namespace Planetside
 					AttackCooldown = 0.33f,
 					Cooldown = 12f,
 					RequiresLineOfSight = true,
-					InitialCooldown = 8,
+					InitialCooldown = 4,
 					MultipleFireEvents = true,
 					Uninterruptible = true,
 					TellAnimation = "chargeball",
@@ -1625,13 +1625,14 @@ namespace Planetside
 						new AttackBehaviorGroup.AttackGroupItem()
 					{
 
-					Probability = 5f,
+					Probability = 4f,
 					Behavior = new ShootBehavior{
 					ShootPoint = center,
 					BulletScript = new CustomBulletScriptSelector(typeof(RobotShopkeeperBoss.Taser)),
 					LeadAmount = 0f,
 					AttackCooldown = 1f,
 					Cooldown = 10f,
+					InitialCooldown = 3,
 					TellAnimation = "ubercharge",
 					FireAnimation = "overcharged",
 					RequiresLineOfSight = true,
@@ -2116,7 +2117,7 @@ namespace Planetside
 						component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 20);
 						component2.transform.localRotation = Quaternion.Euler(0f, 0f, aimDir + offset);
 						component2.HeightOffGround = -2;
-						component2.renderer.gameObject.layer = 23;
+						component2.renderer.gameObject.layer = 22;
 						component2.UpdateZDepth();
 					}
 					elapsed += BraveTime.DeltaTime;
@@ -2139,7 +2140,7 @@ namespace Planetside
 						component2.sprite.renderer.material.SetFloat("_EmissivePower", 50);
 						component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 20);
 						component2.HeightOffGround = -2;
-						component2.renderer.gameObject.layer = 23;
+						component2.renderer.gameObject.layer = 22;
 						component2.UpdateZDepth();
 						bool enabled = elapsed % 0.2f > 0.1f;
 						component2.renderer.enabled = enabled;
@@ -2165,7 +2166,7 @@ namespace Planetside
                         component2.sprite.renderer.material.SetFloat("_EmissivePower", 50);
                         component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 20);
                         component2.HeightOffGround = -2;
-                        component2.renderer.gameObject.layer = 23;
+                        component2.renderer.gameObject.layer = 22;
                         component2.UpdateZDepth();
                         component2.renderer.enabled = true;
                     }
@@ -2280,7 +2281,7 @@ namespace Planetside
 							component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (10 * t));
 							component2.transform.localRotation = Quaternion.Euler(0f, 0f, aimDir);
 							component2.HeightOffGround = -2;
-							component2.renderer.gameObject.layer = 23;
+							component2.renderer.gameObject.layer = 22;
 							component2.dimensions = new Vector2(Mathf.Lerp(0, 1000, t), 1f);
 							component2.UpdateZDepth();
 						}
@@ -2363,7 +2364,7 @@ namespace Planetside
 							component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (10 * t));
 							component2.transform.localRotation = Quaternion.Euler(0f, 0f, aimDir);
 							component2.HeightOffGround = -2;
-							component2.renderer.gameObject.layer = 23;
+							component2.renderer.gameObject.layer = 22;
 							component2.dimensions = new Vector2(Mathf.Lerp(0, 1000, t), 1f);
 							component2.UpdateZDepth();
 						}
@@ -2493,7 +2494,7 @@ namespace Planetside
 					for (int i = 0; i < 18; i++)
 					{
 						this.Fire(new Direction((20 * i) + 10f, DirectionType.Aim, -1f), new Speed(8), new Taser.BasicBullet());
-						this.Fire(new Direction((20 * i) + 10f, DirectionType.Aim, -1f), new Speed(8), new SpeedChangingBullet("amuletRing", 7, 300/e));
+						this.Fire(new Direction((20 * i) + 10f, DirectionType.Aim, -1f), new Speed(8), new SpeedChangingBullet("amuletRing", 7, 360/e));
 					}
 					yield return this.Wait(50 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
                 }
@@ -2858,7 +2859,7 @@ namespace Planetside
 						component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 20);
 						component2.transform.localRotation = Quaternion.Euler(0f, 0f, CentreAngle);
 						component2.HeightOffGround = -2;
-						component2.renderer.gameObject.layer = 23;
+						component2.renderer.gameObject.layer = 22;
 						component2.UpdateZDepth();
 					}
 					elapsed += BraveTime.DeltaTime;
@@ -2884,7 +2885,6 @@ namespace Planetside
 						component2.sprite.renderer.material.SetFloat("_EmissivePower", 50);
 						component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 20);
 						component2.HeightOffGround = -2;
-						component2.renderer.gameObject.layer = 23;
 						component2.UpdateZDepth();
 						bool enabled = elapsed % 0.1f > 0.05f;
 						component2.renderer.enabled = enabled;

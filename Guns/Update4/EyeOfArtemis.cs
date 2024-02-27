@@ -8,6 +8,7 @@ using Gungeon;
 using MonoMod;
 using UnityEngine;
 using ItemAPI;
+using Alexandria.Assetbundle;
 
 namespace Planetside
 {
@@ -25,7 +26,7 @@ namespace Planetside
             gun.SetLongDescription("Perfectly crafted, codename 'XS-01' was perfectly designed to locate, track, and fire at any given target it spots.\n\nUntil some idiot ripped it apart and assembled it into this weapon.");
 
 
-            GunExt.SetupSprite(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "tracker_idle_001", 11);
+            GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "tracker_idle_001");
             gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
             gun.sprite.SortingOrder = 1;
 

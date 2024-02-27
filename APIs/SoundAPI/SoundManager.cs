@@ -359,6 +359,17 @@ namespace Planetside.SoundAPI
                             }
                         }
                     }
+                    if (eventName.ToLowerInvariant() == "stop_mus_boss_theme")
+                    {
+                        foreach (string stop in StopEventsMusic)
+                        {
+                            if (!string.IsNullOrEmpty(stop))
+                            {
+                                orig(stop, go);
+                            }
+                        }
+                    }
+
                     if (eventName.ToLowerInvariant() == "stop_wpn_all")
                     {
                         foreach (string stop in StopEventsWeapons)

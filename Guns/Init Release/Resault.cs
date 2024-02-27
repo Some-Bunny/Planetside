@@ -12,7 +12,7 @@ using System.Collections;
 using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
-
+using Alexandria.Assetbundle;
 
 namespace Planetside
 {
@@ -31,15 +31,20 @@ namespace Planetside
 			GunExt.SetShortDescription(gun, "Reduce, Reuse, Reload");
 			GunExt.SetLongDescription(gun, "An automatic machine-gun that dispenses ammo capacity when fired, restores a portion of it on killing an enemy. Gungeonoligists still specualte *why* this gun dispenses its ammo capacity. Is it to reduce weight? Some idiot thought it would be an interesting gimmick? No-one really knows.");
 
-            GunExt.SetupSprite(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "resault_idle_001", 11);
+            GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "resault_idle_001");
             gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
             gun.sprite.SortingOrder = 1;
             //GunExt.SetupSprite(gun, null, "resault_idle_001", 8);
 
-            GunExt.SetAnimationFPS(gun, gun.shootAnimation, 36);
-			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 7);
-			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 4);
-			GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(96) as Gun, true, false);
+            gun.idleAnimation = "resault_idle";
+            gun.shootAnimation = "resault_fire";
+            gun.reloadAnimation = "resault_reload";
+
+
+            //GunExt.SetAnimationFPS(gun, gun.shootAnimation, 36);
+            //GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 7);
+            //GunExt.SetAnimationFPS(gun, gun.idleAnimation, 4);
+            GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(96) as Gun, true, false);
 
 
             gun.gunSwitchGroup = (PickupObjectDatabase.GetById(2) as Gun).gunSwitchGroup;

@@ -63,14 +63,30 @@ namespace Planetside
 				projectile.AdditionalScaleMultiplier = 2f;
 				projectile.shouldRotate = true;
 				projectile.baseData.range = 1000f;
-				projectile.gameObject.AddComponent<ChargerGunProjectile>();
+				//projectile.gameObject.AddComponent<ChargerGunProjectile>();
 				projectile.SetProjectileSpriteRight("chargergun_projectile_001", 7, 3, false, tk2dBaseSprite.Anchor.MiddleCenter, 7, 3);
 				gun.DefaultModule.projectiles[0] = projectile;
 
 				projectile.objectImpactEventName = (PickupObjectDatabase.GetById(384) as Gun).DefaultModule.projectiles[0].objectImpactEventName;
 				projectile.enemyImpactEventName = (PickupObjectDatabase.GetById(384) as Gun).DefaultModule.projectiles[0].enemyImpactEventName;
 
-				FakePrefab.MarkAsFakePrefab(projectile.gameObject);
+				projectile.sprite.usesOverrideMaterial = true;
+                Material mat_ = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+                mat_.mainTexture = projectile.sprite.renderer.material.mainTexture;
+                mat_.SetColor("_EmissiveColor", new Color32(255, 224, 163, 255));
+                mat_.SetFloat("_EmissiveColorPower", 1.55f);
+                mat_.SetFloat("_EmissivePower", 100);
+                projectile.sprite.renderer.material = mat_;
+
+                //SpeedMULT = UnityEngine.Random.Range(0.85f, 1.15f);
+                ImprovedAfterImage yes = projectile.gameObject.AddComponent<ImprovedAfterImage>();
+                yes.spawnShadows = true;
+                yes.shadowLifetime = 0.3f;
+                yes.shadowTimeDelay = 0.1f;
+                yes.dashColor = new Color(1, 0.8f, 0.55f, 0.3f);
+                yes.name = "Gun Trail";
+
+                FakePrefab.MarkAsFakePrefab(projectile.gameObject);
 				UnityEngine.Object.DontDestroyOnLoad(projectile);
 				if (projectileModule != gun.DefaultModule)
 				{
@@ -85,9 +101,13 @@ namespace Planetside
 				projectileModule.chargeProjectiles = new List<ProjectileModule.ChargeProjectile>() { item2 };
 				gun.DefaultModule.chargeProjectiles.Add(item2);
 			}
+			gun.Volley.UsesShotgunStyleVelocityRandomizer = true;
+			gun.Volley.DecreaseFinalSpeedPercentMin = 0.8f;
+            gun.Volley.IncreaseFinalSpeedPercentMax = 1.2f;
 
-		
-			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.chargeAnimation).wrapMode = tk2dSpriteAnimationClip.WrapMode.LoopSection;
+
+
+            gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.chargeAnimation).wrapMode = tk2dSpriteAnimationClip.WrapMode.LoopSection;
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.chargeAnimation).loopStart = 5;
 
 

@@ -78,10 +78,6 @@ namespace Planetside
 			ItemIDs.AddToList(gun.PickupObjectId);
 		}
 		public static int FuncannonID;
-		public override void PostProcessProjectile(Projectile projectile)
-		{
-
-		}
 	}
 }
 
@@ -89,34 +85,27 @@ namespace Planetside
 {
 	public class FuncannonProjectileComponent : MonoBehaviour
 	{
-		public FuncannonProjectileComponent()
-		{
-			this.projectileToSpawn = null;
-		}
-
-		private void Awake()
+		private void Start()
 		{
 			this.m_projectile = base.GetComponent<Projectile>();
-			this.speculativeRigidBoy = base.GetComponent<SpeculativeRigidbody>();
+			this.m_projectile.OnDestruction += M_projectile_OnDestruction;
 		}
+
+		private void M_projectile_OnDestruction(Projectile obj)
+		{
+			for (int i = 0; i < 16; i++)
+			{
+                this.SpawnProjectile(this.projectileToSpawn, this.m_projectile.sprite.WorldCenter, UnityEngine.Random.Range(-180, 180), null);
+            }
+        }
 
 		private void Update()
 		{
-			bool flag = this.m_projectile == null;
-			if (flag)
-			{
-				this.m_projectile = base.GetComponent<Projectile>();
-			}
-			bool flag2 = this.speculativeRigidBoy == null;
-			if (flag2)
-			{
-				this.speculativeRigidBoy = base.GetComponent<SpeculativeRigidbody>();
-			}
 			this.elapsed += BraveTime.DeltaTime;
-			bool flag3 = this.elapsed > 0.1f;
-			if (flag3)
+			if (this.elapsed > 0.05f)
 			{
-				this.SpawnProjectile(this.projectileToSpawn, this.m_projectile.sprite.WorldCenter, this.m_projectile.transform.eulerAngles.z + UnityEngine.Random.Range(-180, 180), null);
+				elapsed = 0;
+                this.SpawnProjectile(this.projectileToSpawn, this.m_projectile.sprite.WorldCenter,  UnityEngine.Random.Range(-180, 180), null);
 			}
 		}
 
@@ -124,26 +113,20 @@ namespace Planetside
 		{
 			GameObject gameObject = SpawnManager.SpawnProjectile(proj.gameObject, spawnPosition, Quaternion.Euler(0f, 0f, zRotation), true);
 			Projectile component = gameObject.GetComponent<Projectile>();
-			bool flag = component;
-			if (flag)
+			if (component != null)
 			{
-				component.gameObject.AddComponent<RecursionPreventer>();
-
                 component.SpawnedFromOtherPlayerProjectile = true;
 				PlayerController playerController = this.m_projectile.Owner as PlayerController;
 				component.gameObject.AddComponent<RecursionPreventer>();
-				component.baseData.damage *= playerController.stats.GetStatValue(PlayerStats.StatType.Damage);
-				component.baseData.speed *= .300f;
+				component.baseData.damage = 3.5f;
+				component.baseData.speed *= 0.3f;
 				playerController.DoPostProcessProjectile(component);
-				component.AdditionalScaleMultiplier = 0.8f;
 				component.baseData.range = 100f;
 				component.AdditionalScaleMultiplier *= UnityEngine.Random.Range(0.5f, 1.5f);
 				component.StartCoroutine(this.Speed(component, UnityEngine.Random.Range(8,30), UnityEngine.Random.Range(4, 20), UnityEngine.Random.Range(0.03f, 0.1f)));
 				HomingModifier homing = component.gameObject.AddComponent<HomingModifier>();
-				homing.HomingRadius = 10f;
-				homing.AngularVelocity = 60;
-
-
+				homing.HomingRadius = 12f;
+				homing.AngularVelocity = 75;
 			}
 		}
 		public IEnumerator Speed(Projectile projectile, int speeddown, float lifetime, float Speeddowndelay)
@@ -163,7 +146,6 @@ namespace Planetside
 			yield break;
 		}
 		private Projectile m_projectile;
-		private SpeculativeRigidbody speculativeRigidBoy;
 		public Projectile projectileToSpawn;
 		private float elapsed;
 	}

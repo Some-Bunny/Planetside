@@ -417,25 +417,25 @@ MonoBehaviour:
     attachPoints: []
   - name: redmarksthespot
     boundsData:
-    - {x: 1.3125, y: 1.3125, z: 0}
+    - {x: 0, y: 0, z: 0}
     - {x: 2.625, y: 2.625, z: 0}
     untrimmedBoundsData:
-    - {x: 1.3125, y: 1.3125, z: 0}
+    - {x: 0, y: 0, z: 0}
     - {x: 2.625, y: 2.625, z: 0}
-    boundsDataCenter: {x: 1.3125, y: 1.3125, z: 0}
+    boundsDataCenter: {x: 0, y: 0, z: 0}
     boundsDataExtents: {x: 2.625, y: 2.625, z: 0}
-    untrimmedBoundsDataCenter: {x: 1.3125, y: 1.3125, z: 0}
+    untrimmedBoundsDataCenter: {x: 0, y: 0, z: 0}
     untrimmedBoundsDataExtents: {x: 2.625, y: 2.625, z: 0}
     texelSize: {x: 0.0625, y: 0.0625}
     positions:
-    - {x: 0, y: 0, z: 0}
-    - {x: 2.625, y: 0, z: 0}
-    - {x: 0, y: 2.625, z: 0}
-    - {x: 2.625, y: 2.625, z: 0}
-    position0: {x: 0, y: 0, z: 0}
-    position1: {x: 2.625, y: 0, z: 0}
-    position2: {x: 0, y: 2.625, z: 0}
-    position3: {x: 2.625, y: 2.625, z: 0}
+    - {x: -1.3125, y: -1.3125, z: 0}
+    - {x: 1.3125, y: -1.3125, z: 0}
+    - {x: -1.3125, y: 1.3125, z: 0}
+    - {x: 1.3125, y: 1.3125, z: 0}
+    position0: {x: -1.3125, y: -1.3125, z: 0}
+    position1: {x: 1.3125, y: -1.3125, z: 0}
+    position2: {x: -1.3125, y: 1.3125, z: 0}
+    position3: {x: 1.3125, y: 1.3125, z: 0}
     normals: []
     tangents: []
     uvs:
@@ -1713,25 +1713,25 @@ MonoBehaviour:
     attachPoints: []
   - name: ouroborosMedal2Left
     boundsData:
-    - {x: 0.625, y: 0.84375, z: 0}
+    - {x: 0, y: -0.03125, z: 0}
     - {x: 1.25, y: 1.6875, z: 0}
     untrimmedBoundsData:
-    - {x: 0.625, y: 0.84375, z: 0}
+    - {x: 0, y: -0.03125, z: 0}
     - {x: 1.25, y: 1.6875, z: 0}
-    boundsDataCenter: {x: 0.625, y: 0.84375, z: 0}
+    boundsDataCenter: {x: 0, y: -0.03125, z: 0}
     boundsDataExtents: {x: 1.25, y: 1.6875, z: 0}
-    untrimmedBoundsDataCenter: {x: 0.625, y: 0.84375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0, y: -0.03125, z: 0}
     untrimmedBoundsDataExtents: {x: 1.25, y: 1.6875, z: 0}
     texelSize: {x: 0.0625, y: 0.0625}
     positions:
-    - {x: 0, y: 0, z: 0}
-    - {x: 1.25, y: 0, z: 0}
-    - {x: 0, y: 1.6875, z: 0}
-    - {x: 1.25, y: 1.6875, z: 0}
-    position0: {x: 0, y: 0, z: 0}
-    position1: {x: 1.25, y: 0, z: 0}
-    position2: {x: 0, y: 1.6875, z: 0}
-    position3: {x: 1.25, y: 1.6875, z: 0}
+    - {x: -0.625, y: -0.875, z: 0}
+    - {x: 0.625, y: -0.875, z: 0}
+    - {x: -0.625, y: 0.8125, z: 0}
+    - {x: 0.625, y: 0.8125, z: 0}
+    position0: {x: -0.625, y: -0.875, z: 0}
+    position1: {x: 0.625, y: -0.875, z: 0}
+    position2: {x: -0.625, y: 0.8125, z: 0}
+    position3: {x: 0.625, y: 0.8125, z: 0}
     normals: []
     tangents: []
     uvs:
@@ -1756,7 +1756,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -1785,25 +1785,25 @@ MonoBehaviour:
     attachPoints: []
   - name: ouroborosMedal2Right
     boundsData:
-    - {x: 0.625, y: 0.84375, z: 0}
+    - {x: 0, y: -0.03125, z: 0}
     - {x: 1.25, y: 1.6875, z: 0}
     untrimmedBoundsData:
-    - {x: 0.625, y: 0.84375, z: 0}
+    - {x: 0, y: -0.03125, z: 0}
     - {x: 1.25, y: 1.6875, z: 0}
-    boundsDataCenter: {x: 0.625, y: 0.84375, z: 0}
+    boundsDataCenter: {x: 0, y: -0.03125, z: 0}
     boundsDataExtents: {x: 1.25, y: 1.6875, z: 0}
-    untrimmedBoundsDataCenter: {x: 0.625, y: 0.84375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0, y: -0.03125, z: 0}
     untrimmedBoundsDataExtents: {x: 1.25, y: 1.6875, z: 0}
     texelSize: {x: 0.0625, y: 0.0625}
     positions:
-    - {x: 0, y: 0, z: 0}
-    - {x: 1.25, y: 0, z: 0}
-    - {x: 0, y: 1.6875, z: 0}
-    - {x: 1.25, y: 1.6875, z: 0}
-    position0: {x: 0, y: 0, z: 0}
-    position1: {x: 1.25, y: 0, z: 0}
-    position2: {x: 0, y: 1.6875, z: 0}
-    position3: {x: 1.25, y: 1.6875, z: 0}
+    - {x: -0.625, y: -0.875, z: 0}
+    - {x: 0.625, y: -0.875, z: 0}
+    - {x: -0.625, y: 0.8125, z: 0}
+    - {x: 0.625, y: 0.8125, z: 0}
+    position0: {x: -0.625, y: -0.875, z: 0}
+    position1: {x: 0.625, y: -0.875, z: 0}
+    position2: {x: -0.625, y: 0.8125, z: 0}
+    position3: {x: 0.625, y: 0.8125, z: 0}
     normals: []
     tangents: []
     uvs:
@@ -1828,7 +1828,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -1857,25 +1857,25 @@ MonoBehaviour:
     attachPoints: []
   - name: ouroborosmedal
     boundsData:
-    - {x: 3.09375, y: 1.25, z: 0}
+    - {x: 0.03125, y: 0, z: 0}
     - {x: 6.1875, y: 2.5, z: 0}
     untrimmedBoundsData:
-    - {x: 3.09375, y: 1.25, z: 0}
+    - {x: 0.03125, y: 0, z: 0}
     - {x: 6.1875, y: 2.5, z: 0}
-    boundsDataCenter: {x: 3.09375, y: 1.25, z: 0}
+    boundsDataCenter: {x: 0.03125, y: 0, z: 0}
     boundsDataExtents: {x: 6.1875, y: 2.5, z: 0}
-    untrimmedBoundsDataCenter: {x: 3.09375, y: 1.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.03125, y: 0, z: 0}
     untrimmedBoundsDataExtents: {x: 6.1875, y: 2.5, z: 0}
     texelSize: {x: 0.0625, y: 0.0625}
     positions:
-    - {x: 0, y: 0, z: 0}
-    - {x: 6.1875, y: 0, z: 0}
-    - {x: 0, y: 2.5, z: 0}
-    - {x: 6.1875, y: 2.5, z: 0}
-    position0: {x: 0, y: 0, z: 0}
-    position1: {x: 6.1875, y: 0, z: 0}
-    position2: {x: 0, y: 2.5, z: 0}
-    position3: {x: 6.1875, y: 2.5, z: 0}
+    - {x: -3.0625, y: -1.25, z: 0}
+    - {x: 3.125, y: -1.25, z: 0}
+    - {x: -3.0625, y: 1.25, z: 0}
+    - {x: 3.125, y: 1.25, z: 0}
+    position0: {x: -3.0625, y: -1.25, z: 0}
+    position1: {x: 3.125, y: -1.25, z: 0}
+    position2: {x: -3.0625, y: 1.25, z: 0}
+    position3: {x: 3.125, y: 1.25, z: 0}
     normals: []
     tangents: []
     uvs:
@@ -1900,7 +1900,7 @@ MonoBehaviour:
     flipped: 1
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -1972,7 +1972,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -1999,6 +1999,7 @@ MonoBehaviour:
     polygonCollider2D: []
     edgeCollider2D: []
     attachPoints: []
+  SpriteIDsWithAttachPoints: 
   premultipliedAlpha: 0
   material: {fileID: 0}
   materials:
@@ -2016,7 +2017,7 @@ MonoBehaviour:
   loadable: 0
   invOrthoSize: 2
   halfTargetHeight: 8
-  buildKey: 858207067
+  buildKey: 610488055
   dataGuid: 79a57a2a38136a24d88f4f18875bbfbe
   managedSpriteCollection: 0
   hasPlatformData: 0

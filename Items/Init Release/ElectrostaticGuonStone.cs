@@ -12,6 +12,7 @@ using System.Collections;
 using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
+using Alexandria.PrefabAPI;
 
 namespace Planetside
 {
@@ -66,12 +67,16 @@ namespace Planetside
 
         public static void BuildPrefab()
         {
-            string value = "AWESOME";
-            string.IsNullOrEmpty(value);
             bool flag = ElectrostaticGuonStone.orbitalPrefab != null;
             if (!flag)
             {
-                GameObject gameObject = SpriteBuilder.SpriteFromResource("Planetside/Resources/Guons/ElectroGuon/electrostaticguonfloaty.png");
+                GameObject gameObject = PrefabBuilder.BuildObject("ElectroStaticGuonStone");
+
+                tk2dSprite sprite = gameObject.AddComponent<tk2dSprite>();
+                sprite.collection = StaticSpriteDefinitions.Guon_Sheet_Data;
+                sprite.SetSprite(StaticSpriteDefinitions.Guon_Sheet_Data.GetSpriteIdByName("electrostaticguonfloaty"));
+
+                //GameObject gameObject = SpriteBuilder.SpriteFromResource("Planetside/Resources/Guons/ElectroGuon/electrostaticguonfloaty.png");
                 gameObject.name = "Electro Guon Stone Orbital";
                 SpeculativeRigidbody speculativeRigidbody = gameObject.GetComponent<tk2dSprite>().SetUpSpeculativeRigidbody(IntVector2.Zero, new IntVector2(7, 13));
                 speculativeRigidbody.CollideWithTileMap = false;

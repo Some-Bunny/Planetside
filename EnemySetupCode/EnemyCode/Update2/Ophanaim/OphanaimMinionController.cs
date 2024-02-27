@@ -229,7 +229,7 @@ namespace Planetside
                     tiledsprite.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (10 * t));
                     tiledsprite.transform.localRotation = Quaternion.Euler(0f, 0f, Angle);
                     tiledsprite.HeightOffGround = -2;
-                    tiledsprite.renderer.gameObject.layer = 23;
+                    tiledsprite.renderer.gameObject.layer = 22;
                     tiledsprite.dimensions = new Vector2(1000f, 1f);
                     tiledsprite.UpdateZDepth();
                 }
@@ -265,7 +265,7 @@ namespace Planetside
                     tiledsprite.transform.position = this.BulletBank.sprite.WorldCenter;
                     tiledsprite.dimensions = new Vector2(1000f, 1f);
                     tiledsprite.HeightOffGround = -2;
-                    tiledsprite.renderer.gameObject.layer = 23;
+                    tiledsprite.renderer.gameObject.layer = 22;
                     tiledsprite.UpdateZDepth();
                     bool enabled = elapsed % 0.25f > 0.125f;
                     tiledsprite.sprite.renderer.enabled = enabled;
@@ -376,7 +376,7 @@ namespace Planetside
                     tiledsprite.transform.localRotation = Quaternion.Euler(0f, 0f, CentreAngle);
 
                     tiledsprite.HeightOffGround = -2;
-                    tiledsprite.renderer.gameObject.layer = 23;
+                    tiledsprite.renderer.gameObject.layer = 22;
                     tiledsprite.dimensions = new Vector2(1000f, 1f);
                     tiledsprite.UpdateZDepth();
                 }
@@ -413,7 +413,7 @@ namespace Planetside
                     tiledsprite.transform.position = this.BulletBank.sprite.WorldCenter;
                     tiledsprite.dimensions = new Vector2(1000f, 1f);
                     tiledsprite.HeightOffGround = -2;
-                    tiledsprite.renderer.gameObject.layer = 23;
+                    tiledsprite.renderer.gameObject.layer = 22;
                     tiledsprite.UpdateZDepth();
                     bool enabled = elapsed % 0.25f > 0.125f;
                     tiledsprite.sprite.renderer.enabled = enabled;

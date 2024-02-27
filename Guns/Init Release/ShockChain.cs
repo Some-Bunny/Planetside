@@ -1,4 +1,5 @@
-﻿using Gungeon;
+﻿using Alexandria.Assetbundle;
+using Gungeon;
 using ItemAPI;
 using System;
 using System.Collections;
@@ -20,11 +21,19 @@ namespace Planetside
 			gun.gameObject.AddComponent<ShockChain>();
 			GunExt.SetShortDescription(gun, "Proc Coefficient: 0.2");
 			GunExt.SetLongDescription(gun, "A reformed taser weapon that fires electric arcs in a wide area. Gungeonologists speculate whether the similarities between this weapon and an existing weapon are intentional, or just coincidence.");
-			GunExt.SetupSprite(gun, null, "shocklaser_idle_001", 8);
-			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 13);
-			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 9);
-			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 2);
-			gun.SetBaseMaxAmmo(150);
+			
+			GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "shocklaser_idle_001");
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
+            gun.sprite.SortingOrder = 1;
+
+            gun.idleAnimation = "shocklaser_idle";
+            gun.shootAnimation = "shocklaser_fire";
+            gun.reloadAnimation = "shocklaser_reload";
+
+            //GunExt.SetAnimationFPS(gun, gun.shootAnimation, 13);
+            //GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 9);
+            //GunExt.SetAnimationFPS(gun, gun.idleAnimation, 2);
+            gun.SetBaseMaxAmmo(150);
 			GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(13) as Gun, true, false);
 			GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(13) as Gun, true, false);
 

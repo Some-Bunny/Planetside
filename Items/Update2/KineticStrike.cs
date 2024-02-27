@@ -102,7 +102,7 @@ namespace Planetside
             {
                 GameManager.Instance.StartCoroutine(ClearCooldown());
                 CrossHair = UnityEngine.Object.Instantiate<GameObject>(RandomPiecesOfStuffToInitialise.KineticStrikeTargetReticle, user.sprite.WorldCenter, Quaternion.identity);
-                CrossHair.GetComponent<tk2dBaseSprite>().PlaceAtLocalPositionByAnchor(user.sprite.WorldCenter, tk2dBaseSprite.Anchor.LowerCenter);
+
                 AkSoundEngine.PostEvent("Play_OBJ_supplydrop_activate_01", gameObject);
                 this.m_currentAngle = BraveMathCollege.Atan2Degrees(user.unadjustedAimPoint.XY() - user.CenterPosition);
                 this.m_currentDistance = 5f;
@@ -145,8 +145,8 @@ namespace Planetside
             {
                 Vector2 vector = base.LastOwner.unadjustedAimPoint.XY();
                 Vector2 vector2 = vector - sprite.GetBounds().extents.XY();
-                sprite.transform.position = vector2 + new Vector2(0.625f, -0.0625f);
-                aimpoint = vector2 + new Vector2(0.6875f, 0);
+                sprite.transform.position = vector2;
+                aimpoint = vector2 + new Vector2(0.625f, 0.625f);
             }
             else
             {
@@ -157,9 +157,9 @@ namespace Planetside
                 this.m_currentDistance = Vector2.Distance(vector3, base.LastOwner.CenterPosition);
                 this.m_currentDistance = Mathf.Min(this.m_currentDistance, this.maxDistance);
                 vector3 = base.LastOwner.CenterPosition + (Quaternion.Euler(0f, 0f, this.m_currentAngle) * Vector2.right).XY() * this.m_currentDistance;
-                Vector2 vector4 = vector3 - sprite.GetBounds().extents.XY() + new Vector2(0.625f, -0.0625f);
+                Vector2 vector4 = vector3 - sprite.GetBounds().extents.XY();
                 sprite.transform.position = vector4;
-                aimpoint = vector4;
+                aimpoint = vector4 + new Vector2(0.625f, 0.625f);
             }
         }
 
@@ -168,28 +168,24 @@ namespace Planetside
         private IEnumerator DoStrike(RoomHandler room, PlayerController player)
         {
             HasTriggeredCrossHair = false;
-            Vector2 LOL = aimpoint+ new Vector2(-0.125f ,1.25f);
+            Vector2 LOL = aimpoint;// + new Vector2(-0.125f ,1.25f);
             GameObject fuck = UnityEngine.Object.Instantiate<GameObject>(KineticStrike.StrikePrefab, LOL, Quaternion.identity);
-            fuck.GetComponent<tk2dBaseSprite>().PlaceAtLocalPositionByAnchor(LOL, tk2dBaseSprite.Anchor.LowerCenter);
             tk2dSprite ahfuck = fuck.GetComponent<tk2dSprite>();
             fuck.GetComponent<tk2dBaseSprite>().SetSprite(KineticStrike.spriteIds[0]);
             AkSoundEngine.PostEvent("Play_WPN_dawnhammer_charge_01", fuck);
+            ahfuck.usesOverrideMaterial = true;
 
-
-            Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+            Material mat = ahfuck.GetCurrentSpriteDef().material = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
             mat.mainTexture = ahfuck.renderer.material.mainTexture;
             mat.SetColor("_EmissiveColor", new Color32(255, 0, 0, 255));
-            mat.SetFloat("_EmissiveColorPower", 3);
+            mat.SetFloat("_EmissiveColorPower", 1.55f);
             mat.SetFloat("_EmissivePower", 50);
-            mat.EnableKeyword("BRIGHTNESS_CLAMP_ON");
-            mat.DisableKeyword("BRIGHTNESS_CLAMP_OFF");
+            ahfuck.renderer.material = mat;
 
             ExpandReticleRiserEffect rRE = fuck.gameObject.AddComponent<ExpandReticleRiserEffect>();
             rRE.RiserHeight = 2;
             rRE.RiseTime = 1;
             rRE.NumRisers = 3;
-
-            ahfuck.renderer.material = mat;
 
             TextMaker text = player.gameObject.AddComponent<TextMaker>();
             text.TextSize = 4;
@@ -218,15 +214,14 @@ namespace Planetside
                 ela += BraveTime.DeltaTime;
                 float t = ela / dura * (ela / dura);
                 copySprite.localScale = Vector3.Lerp(Vector3.one, new Vector3(0f, 0f, 0f), t);
-                copySprite.GetComponent<tk2dBaseSprite>().PlaceAtPositionByAnchor(LOL + new Vector2((ela / 12.08f), -1.3125f + (ela / 16)), tk2dBaseSprite.Anchor.LowerCenter);
                 yield return null;
             }
 
             Destroy(fuck);
-            GameObject fuck1 = UnityEngine.Object.Instantiate<GameObject>(KineticStrike.StrikePrefab, LOL, Quaternion.identity);
+            GameObject fuck1 = UnityEngine.Object.Instantiate<GameObject>(KineticStrike.StrikePrefab, LOL - new Vector2(0.125f, 1.25f), Quaternion.identity);
             fuck1.GetComponent<tk2dBaseSprite>().PlaceAtLocalPositionByAnchor(LOL, tk2dBaseSprite.Anchor.LowerCenter);
             tk2dSprite troll = fuck1.GetComponent<tk2dSprite>();
-            fuck1.GetComponent<tk2dBaseSprite>().SetSprite(KineticStrike.spriteIds[0]);
+            fuck1.GetComponent<tk2dBaseSprite>().SetSprite(KineticStrike.spriteIds[1]);
             
             GameObject epicwin = UnityEngine.Object.Instantiate<GameObject>(EnemyDatabase.GetOrLoadByGuid("b98b10fca77d469e80fb45f3c5badec5").GetComponent<BossFinalRogueDeathController>().DeathStarExplosionVFX);
             epicwin.GetComponent<tk2dBaseSprite>().PlaceAtLocalPositionByAnchor(LOL, tk2dBaseSprite.Anchor.LowerCenter);
@@ -234,8 +229,7 @@ namespace Planetside
             epicwin.GetComponent<tk2dBaseSprite>().UpdateZDepth();
 
 
-            fuck1.GetComponent<tk2dBaseSprite>().SetSprite(KineticStrike.spriteIds[1]);
-            this.Boom(LOL);
+            this.Boom(LOL - new Vector2(0.125f, 1.25f));
 
             AkSoundEngine.PostEvent("Play_OBJ_nuke_blast_01", fuck);
             text.ChangeText("Kinetic Impact Delivered.\n\n     Reloading Payload.");

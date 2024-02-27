@@ -158,7 +158,7 @@ public class tk2dSpriteCollectionDefinition
 	
 	public int materialId = 0;
 	
-	public Anchor anchor = Anchor.MiddleCenter;
+	public Anchor anchor = Anchor.LowerLeft;
 	public float anchorX, anchorY;
     public Object overrideMesh;
 
@@ -411,8 +411,8 @@ public class tk2dSpriteSheetSource
 	public Texture2D texture;
 	public int tilesX, tilesY;
 	public int numTiles = 0;
-	public Anchor anchor = Anchor.MiddleCenter;
-	public tk2dSpriteCollectionDefinition.Pad pad = tk2dSpriteCollectionDefinition.Pad.Default;
+	public Anchor anchor = Anchor.LowerLeft;
+	public tk2dSpriteCollectionDefinition.Pad pad = tk2dSpriteCollectionDefinition.Pad.BlackZeroAlpha;
 	public Vector3 scale = new Vector3(1,1,1);
 	public bool additive = false;
 	

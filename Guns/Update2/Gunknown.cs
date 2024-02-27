@@ -12,6 +12,7 @@ using System.Collections;
 using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
+using Alexandria.PrefabAPI;
 
 namespace Planetside
 {
@@ -83,10 +84,15 @@ namespace Planetside
 			gun.quality = PickupObject.ItemQuality.A;
 			gun.encounterTrackable.EncounterGuid = "I. AM. ETERNAL.";
 			ETGMod.Databases.Items.Add(gun, false, "ANY");
-			//====================================================================================================================
-			GameObject gameObject = SpriteBuilder.SpriteFromResource("Planetside/Resources/Guons/GunknownGuon/superguon.png");
-			gameObject.name = $"Gunknown Guon";
-			SpeculativeRigidbody speculativeRigidbody = gameObject.GetComponent<tk2dSprite>().SetUpSpeculativeRigidbody(IntVector2.Zero, new IntVector2(12, 12));
+            //====================================================================================================================
+            GameObject gameObject = PrefabBuilder.BuildObject("Gun-Ternal Strength");
+
+            tk2dSprite sprite = gameObject.AddComponent<tk2dSprite>();
+            sprite.collection = StaticSpriteDefinitions.Guon_Sheet_Data;
+            sprite.SetSprite(StaticSpriteDefinitions.Guon_Sheet_Data.GetSpriteIdByName("superguon"));
+            sprite.CachedPerpState = tk2dBaseSprite.PerpendicularState.FLAT;
+
+            SpeculativeRigidbody speculativeRigidbody = gameObject.GetComponent<tk2dSprite>().SetUpSpeculativeRigidbody(IntVector2.Zero, new IntVector2(12, 12));
 			PlayerOrbital orbitalPrefab = gameObject.AddComponent<PlayerOrbital>();
 			speculativeRigidbody.CollideWithTileMap = false;
 			speculativeRigidbody.CollideWithOthers = true;
@@ -101,7 +107,7 @@ namespace Planetside
             ImprovedAfterImage fuck = orbitalPrefab.gameObject.AddComponent<ImprovedAfterImage>();
             fuck.spawnShadows = true;
             fuck.shadowLifetime = 0.5f;
-            fuck.shadowTimeDelay = 0.001f;
+            fuck.shadowTimeDelay = 0.1f;
             fuck.dashColor = new Color(1, 0.5f, 0);
 
             orbitalPrefab.sprite.usesOverrideMaterial = true;
@@ -116,42 +122,58 @@ namespace Planetside
 			FakePrefab.MarkAsFakePrefab(gameObject);
 			gameObject.SetActive(false);
 			GunknownGuon = gameObject;
-			//================================================================================================================================
-			GameObject sprite = SpriteBuilder.SpriteFromResource("Planetside/Resources/Guons/GunknownGuon/superguon", null, true);
-			sprite.SetActive(false);
-			FakePrefab.MarkAsFakePrefab(sprite);
-			UnityEngine.Object.DontDestroyOnLoad(sprite);
-			GameObject gameObject2 = new GameObject("Soul");
-			tk2dSprite tk2dSprite = gameObject2.AddComponent<tk2dSprite>();
-			tk2dSprite.SetSprite(sprite.GetComponent<tk2dBaseSprite>().Collection, sprite.GetComponent<tk2dBaseSprite>().spriteId);
 
-			UnknownGun.spriteIds.Add(SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Guons/GunknownGuon/superguon", tk2dSprite.Collection));
+            //================================================================================================================================
 
-			Material mat = tk2dSprite.GetCurrentSpriteDef().material = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
-			mat.mainTexture = tk2dSprite.sprite.renderer.material.mainTexture;
-			mat.SetColor("_EmissiveColor", new Color32(104, 182, 255, 255));
-			mat.SetFloat("_EmissiveColorPower", 1.55f);
-			mat.SetFloat("_EmissivePower", 100);
-			tk2dSprite.sprite.renderer.material = mat;
+            GameObject gameObject_Soul = PrefabBuilder.BuildObject("Gun-Ternal Soul");
 
-			UnknownGun.spriteIds.Add(tk2dSprite.spriteId);
-			gameObject2.SetActive(false);
+            tk2dSprite sprite_Soul = gameObject_Soul.AddComponent<tk2dSprite>();
+            sprite_Soul.collection = StaticSpriteDefinitions.Guon_Sheet_Data;
+            sprite_Soul.SetSprite(StaticSpriteDefinitions.Guon_Sheet_Data.GetSpriteIdByName("superguon"));
+            sprite_Soul.CachedPerpState = tk2dBaseSprite.PerpendicularState.FLAT;
 
-			tk2dSprite.SetSprite(UnknownGun.spriteIds[0]); //Mithrix Fall
+            Material mat = sprite_Soul.GetCurrentSpriteDef().material = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+            mat.mainTexture = sprite_Soul.sprite.renderer.material.mainTexture;
+            mat.SetColor("_EmissiveColor", new Color32(104, 182, 255, 255));
+            mat.SetFloat("_EmissiveColorPower", 1.55f);
+            mat.SetFloat("_EmissivePower", 100);
+            sprite_Soul.sprite.renderer.material = mat;
+            UnknownGun.Soulprefab = gameObject_Soul;
 
-			FakePrefab.MarkAsFakePrefab(gameObject2);
-			UnityEngine.Object.DontDestroyOnLoad(gameObject2);
-			UnknownGun.Soulprefab = gameObject2;
 
-			gun.AddToSubShop(ItemBuilder.ShopType.Cursula, 1f);
+            gun.AddToSubShop(ItemBuilder.ShopType.Cursula, 1f);
 
-			UnknownGun.GunknownID = gun.PickupObjectId;
+            Material materialGun = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+            materialGun.SetColor("_EmissiveColor", new Color32(255, 255, 255, 255));
+            materialGun.SetFloat("_EmissiveColorPower", 1.55f);
+            materialGun.SetFloat("_EmissivePower", 60);
+            materialGun.SetFloat("_EmissiveThresholdSensitivity", 0.2f);
+            MeshRenderer component = gun.GetComponent<MeshRenderer>();
+            if (!component)
+            {
+                return;
+            }
+            Material[] sharedMaterials = component.sharedMaterials;
+            for (int i = 0; i < sharedMaterials.Length; i++)
+            {
+                if (sharedMaterials[i].shader == materialGun)
+                {
+                    return;
+                }
+            }
+            Array.Resize<Material>(ref sharedMaterials, sharedMaterials.Length + 1);
+            Material material = new Material(materialGun);
+            material.SetTexture("_MainTex", sharedMaterials[0].GetTexture("_MainTex"));
+            sharedMaterials[sharedMaterials.Length - 1] = material;
+            component.sharedMaterials = sharedMaterials;
+
+
+            UnknownGun.GunknownID = gun.PickupObjectId;
 			ItemIDs.AddToList(gun.PickupObjectId);
 		}
 		public static int GunknownID;
 		public static GameObject GunknownGuon;
 		public static GameObject Soulprefab;
-		public static List<int> spriteIds = new List<int>();
 
 		public override void OnPostFired(PlayerController player, Gun bruhgun)
 		{
@@ -186,55 +208,24 @@ namespace Planetside
 			}
 		}
 		public override void OnPickup(PlayerController player)
-		{
-			Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
-			mat.SetColor("_EmissiveColor", new Color32(255, 255, 255, 255));
-			mat.SetFloat("_EmissiveColorPower", 1.55f);
-			mat.SetFloat("_EmissivePower", 60);
-			if (this.gun && this.gun.CurrentOwner)
-			{
-
-				MeshRenderer component = gun.GetComponent<MeshRenderer>();
-				if (!component)
-				{
-					return;
-				}
-				Material[] sharedMaterials = component.sharedMaterials;
-				for (int i = 0; i < sharedMaterials.Length; i++)
-				{
-					if (sharedMaterials[i].shader == mat)
-					{
-						return;
-					}
-				}
-				Array.Resize<Material>(ref sharedMaterials, sharedMaterials.Length + 1);
-				Material material = new Material(mat);
-				material.SetTexture("_MainTex", sharedMaterials[0].GetTexture("_MainTex"));
-				sharedMaterials[sharedMaterials.Length - 1] = material;
-				component.sharedMaterials = sharedMaterials;
-				base.OnPickup(player);
-			}
-			player.OnAnyEnemyReceivedDamage = (Action<float, bool, HealthHaver>)Delegate.Combine(player.OnAnyEnemyReceivedDamage, new Action<float, bool, HealthHaver>(this.OnEnemyDamaged));
+		{		
+			player.OnAnyEnemyReceivedDamage += OnEnemyDamaged;
 		}
 
 		public override void OnPostDrop(PlayerController player)
 		{
-			player.OnAnyEnemyReceivedDamage = (Action<float, bool, HealthHaver>)Delegate.Remove(player.OnAnyEnemyReceivedDamage, new Action<float, bool, HealthHaver>(this.OnEnemyDamaged));
+			player.OnAnyEnemyReceivedDamage -= OnEnemyDamaged;
 			base.OnPostDrop(player);
 		}
 		private void OnEnemyDamaged(float damage, bool fatal, HealthHaver enemy)
 		{
 			if (base.Owner != null)
 			{
-				if (enemy.specRigidbody != null)
-				{
-					bool flag = enemy.aiActor && fatal;
-					if (flag)
-					{
-						GameManager.Instance.Dungeon.StartCoroutine(this.HandleSoulSucc(enemy.aiActor, gun.CurrentOwner.sprite.WorldCenter, UnityEngine.Random.Range(0.5f, 1.5f)));
-					}
-				}
-			}
+                if (enemy.aiActor != null && fatal)
+                {
+                    GameManager.Instance.Dungeon.StartCoroutine(this.HandleSoulSucc(enemy.aiActor, gun.CurrentOwner.sprite.WorldCenter, UnityEngine.Random.Range(0.5f, 1.5f)));
+                }
+            }
 		}
 		private IEnumerator HandleSoulSucc(AIActor target, Vector2 table, float DuartionForSteal)
 		{
@@ -242,7 +233,6 @@ namespace Planetside
 			{
 				PlayerController player = GameManager.Instance.PrimaryPlayer;
 				tk2dSprite component = UnityEngine.Object.Instantiate<GameObject>(UnknownGun.Soulprefab, target.sprite.WorldCenter, Quaternion.identity).GetComponent<tk2dSprite>();
-				component.GetComponent<tk2dBaseSprite>().SetSprite(UnknownGun.spriteIds[0]);
 				component.sprite.scale *= 0.5f;
 
 				component.transform.parent = SpawnManager.Instance.VFX;

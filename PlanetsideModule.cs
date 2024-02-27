@@ -22,13 +22,11 @@ using Planetside.SoundAPI;
 using BreakAbleAPI;
 using BepInEx;
 using HarmonyLib;
-using Planetside.Items;
 
 namespace Planetside
 {
     // [HarmonyLib]
 
-    [BepInDependency("etgmodding.etg.mtgapi")]
     [BepInDependency("etgmodding.etg.mtgapi")]
 
     [BepInPlugin(GUID, NAME, VERSION)]
@@ -38,7 +36,7 @@ namespace Planetside
     {
         public const string GUID = "somebunny.etg.planetsideofgunymede";
         public const string NAME = "Planetside Of Gunymede Pre-Release";
-        public const string VERSION = "1.3.152";
+        public const string VERSION = "1.3.154";
 
         public static readonly string TEXT_COLOR = "#9006FF";
 

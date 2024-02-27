@@ -74,7 +74,7 @@ namespace Planetside
                 projectile.gameObject.SetActive(false);
                 FakePrefab.MarkAsFakePrefab(projectile.gameObject);
                 UnityEngine.Object.DontDestroyOnLoad(projectile);
-                projectile.baseData.damage = 15f;
+                projectile.baseData.damage = 24f;
                 projectile.baseData.force = 2f;
                 projectile.baseData.range *= 50;
                 projectile.baseData.speed *= 0.66f;
@@ -157,11 +157,13 @@ namespace Planetside
         {
             this.projectile = base.GetComponent<Projectile>();
             this.basicBeamController = base.GetComponent<BasicBeamController>();
+            /*
             if (this.projectile.Owner is PlayerController)
             {
                 this.owner = (this.projectile.Owner as PlayerController);
                 this.owner.PostProcessBeam += Owner_PostProcessBeam;
             }
+            */
         }
 
         private void Owner_PostProcessBeam(BeamController obj)
@@ -175,14 +177,14 @@ namespace Planetside
 
         public void OnDestroy()
         {
-            if (owner)
-            {
-                this.owner.PostProcessBeam -= Owner_PostProcessBeam;
-            }
+            //if (owner)
+            //{
+                //this.owner.PostProcessBeam -= Owner_PostProcessBeam;
+            //}
         }
 
         private Projectile projectile;
         private BasicBeamController basicBeamController;
-        private PlayerController owner;
+        //private PlayerController owner;
     }
 }

@@ -13,7 +13,7 @@ using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
 using HutongGames.PlayMaker.Actions;
-
+using Alexandria.Assetbundle;
 
 namespace Planetside
 {
@@ -29,7 +29,7 @@ namespace Planetside
 			GunExt.SetLongDescription(gun, "Fires a barrage of weak stars that attach to own own projectiles, buffing them and themselves.\n\n");
             //GunExt.SetupSprite(gun, null, "magicstaffofpower_idle_001", 11);
 
-            GunExt.SetupSprite(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "magicstaffofpower_idle_001", 11);
+            GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "magicstaffofpower_idle_001");
             gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
             gun.sprite.SortingOrder = 1;
 

@@ -221,21 +221,20 @@ namespace Planetside
 						AkSoundEngine.PostEvent("Play_ENV_time_shatter_01", base.gameObject);
 						LootEngine.DoDefaultSynergyPoof(pick.transform.position, false);
 
-						ResourceGuonMaker component = base.gameObject.GetComponent<ResourceGuonMaker>();
-						ResourceGuonMaker.HoleObject = PickupObjectDatabase.GetById(155).GetComponent<SpawnObjectPlayerItem>();
+						var HoleObject = PickupObjectDatabase.GetById(155).GetComponent<SpawnObjectPlayerItem>();
 
-						component.synergyobject = ResourceGuonMaker.HoleObject.objectToSpawn;
-						BlackHoleDoer component2 = this.synergyobject.GetComponent<BlackHoleDoer>();
+						var synergyobject = HoleObject.objectToSpawn;
+						BlackHoleDoer component2 = synergyobject.GetComponent<BlackHoleDoer>();
 
 						GameObject onj = UnityEngine.Object.Instantiate<GameObject>(component2.HellSynergyVFX, new Vector3(base.transform.position.x + 1f, base.transform.position.y, base.transform.position.z + 5f), Quaternion.Euler(0f, 0f, 0f));
 						MeshRenderer component3 = onj.GetComponent<MeshRenderer>();
 						base.StartCoroutine(this.HoldPortalOpen(component3, pick.transform.position, user));
 						UnityEngine.Object.Destroy(pick.gameObject);
 						component3.material.SetTexture("_PortalTex", StaticTextures.NebulaTexture);
-						hole = component3;
 					}
-				}
-			}
+
+                }
+            }
 			bool flag5 = StaticReferenceManager.AllDebris != null;
 			if (flag5)
 			{
@@ -476,11 +475,6 @@ namespace Planetside
 			}
 			yield break;
 		}
-
-
-		MeshRenderer hole;
-		private GameObject synergyobject;
-		private static SpawnObjectPlayerItem HoleObject;
 
 		public float distortionMaxRadius = 30f;
 		public float distortionDuration = 2f;

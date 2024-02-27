@@ -12,6 +12,7 @@ using System.Collections;
 using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
+using Alexandria.Assetbundle;
 
 namespace Planetside
 {
@@ -25,13 +26,13 @@ namespace Planetside
 			gun.SetShortDescription("Old And Tested");
 			gun.SetLongDescription("A shotgun that oddly resembles shotguns wielded by the Shotgun Kin around the Gungeon, or maybe it's just the bullets throwing you off.");
 
-            GunExt.SetupSprite(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "veteranshotgun_idle_001", 11);
+            GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "veteranshotgun_idle_001");
             gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
             gun.sprite.SortingOrder = 1;
 
-            gun.reloadAnimation = "veteranshotgun_reload";
-            gun.idleAnimation = "veteranshotgun_idle";
-            gun.shootAnimation = "veteranshotgun_fire";
+            gun.reloadAnimation = "veteransshotgun_reload";
+            gun.idleAnimation = "veteransshotgun_idle";
+            gun.shootAnimation = "veteransshotgun_fire";
 
             /*
 			gun.SetupSprite(null, "veteranshotgun_idle_001", 11);

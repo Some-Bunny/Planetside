@@ -92,7 +92,15 @@ namespace Planetside
 			projectile.objectImpactEventName = (PickupObjectDatabase.GetById(198) as Gun).DefaultModule.projectiles[0].objectImpactEventName;
 			projectile.enemyImpactEventName = (PickupObjectDatabase.GetById(198) as Gun).DefaultModule.projectiles[0].enemyImpactEventName;
 
-			PierceProjModifier spook = projectile.gameObject.GetOrAddComponent<PierceProjModifier>();
+			projectile.sprite.usesOverrideMaterial = true;
+            Material mat_1 = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+            mat_1.mainTexture = projectile.sprite.renderer.material.mainTexture;
+            mat_1.SetColor("_EmissiveColor", new Color32(153, 0, 255, 255));
+            mat_1.SetFloat("_EmissiveColorPower", 1.55f);
+            mat_1.SetFloat("_EmissivePower", 100);
+            projectile.sprite.renderer.material = mat_1;
+
+            PierceProjModifier spook = projectile.gameObject.GetOrAddComponent<PierceProjModifier>();
 			spook.penetration = 10000;
 			spook.penetratesBreakables = true;
 

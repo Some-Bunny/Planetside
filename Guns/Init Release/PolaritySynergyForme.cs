@@ -1,4 +1,5 @@
-﻿using Gungeon;
+﻿using Alexandria.Assetbundle;
+using Gungeon;
 using ItemAPI;
 using System;
 using System.Collections;
@@ -19,7 +20,7 @@ namespace Planetside
 			GunExt.SetShortDescription(gun, "This was a fucking pain to make");
 			GunExt.SetLongDescription(gun, "A weapon forged by two wanderers from polar-opposite climates. It is said that they imbued part of their magic into it so one element doesn't damage the other.");
 
-            GunExt.SetupSprite(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "polarity1_idle_001", 11);
+            GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "polarity1_idle_001");
             gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
             gun.sprite.SortingOrder = 1;
 

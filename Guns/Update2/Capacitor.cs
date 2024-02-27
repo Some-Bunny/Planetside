@@ -12,6 +12,7 @@ using System.Collections;
 using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
+using Alexandria.Assetbundle;
 
 namespace Planetside
 {
@@ -25,7 +26,7 @@ namespace Planetside
 			gun.SetShortDescription("Overload");
 			gun.SetLongDescription("A large battery pack given the ability to shoot. Hold fire to reroute charge into your held active item!\n\nStill, very, very dangerous though.");
             
-            GunExt.SetupSprite(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "capacitornew_idle_001", 11);
+            GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "capacitornew_idle_001");
             gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
             gun.sprite.SortingOrder = 1;
 
@@ -162,7 +163,7 @@ namespace Planetside
 					PlayerController player = gun.CurrentOwner as PlayerController;
 					if (player != null)
 					{
-                        if (player.CurrentItem != null)
+                        if (player.CurrentItem != null && gun.InfiniteAmmo == false && gun.LocalInfiniteAmmo == false)
                         {
                             if (player.CurrentItem.IsOnCooldown == true)
                             {

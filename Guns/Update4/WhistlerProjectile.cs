@@ -28,21 +28,8 @@ namespace Planetside
 
         public void Start()
         {
-            //GameObject original;
             this.projectile = base.GetComponent<Projectile>();
             this.Player = projectile.Owner as PlayerController;
-            bool flag = this.projectile != null;
-            bool flag2 = flag;
-            if (flag2)
-            {
-                //AkSoundEngine.PostEvent("Play_Whistle", projectile.gameObject);
-                Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
-                mat.mainTexture = this.projectile.sprite.renderer.material.mainTexture;
-                mat.SetColor("_EmissiveColor", new Color32(153, 0, 255, 255));
-                mat.SetFloat("_EmissiveColorPower", 1.55f);
-                mat.SetFloat("_EmissivePower", 100);
-                this.projectile.sprite.renderer.material = mat;
-            }
         }
         public void Update()
         {
@@ -57,14 +44,6 @@ namespace Planetside
             else
             {
                 this.projectile.DieInAir(false);
-            }
-        }
-
-        public void OnDestroy()
-        {
-            if (this.projectile != null)
-            {
-                //AkSoundEngine.PostEvent("Stop_Whistle", projectile.gameObject);
             }
         }
         private PlayerController Player;

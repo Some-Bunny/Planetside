@@ -10,6 +10,7 @@ using UnityEngine;
 using ItemAPI;
 using MonoMod.RuntimeDetour;
 using SaveAPI;
+using Alexandria.Assetbundle;
 
 namespace Planetside
 {
@@ -23,9 +24,13 @@ namespace Planetside
             gun.SetShortDescription("So What If I Like Really Big Guns?");
             gun.SetLongDescription("Fires faster the longer you hold the trigger, loaded with depleted uranium rounds.\n\nManufactured by the same people that produced the H.M Prime models, these portable auto-cannons deliver the same kick to your enemies as they do to you.");
 
-            GunExt.SetupSprite(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "autocannon_idle_001", 11);
+            GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "autocannon_idle_001");
             gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
             gun.sprite.SortingOrder = 1;
+
+            gun.idleAnimation = "autocannon_idle";
+            gun.shootAnimation = "autocannon_fire";
+            gun.reloadAnimation = "autocannon_reload";
 
             //gun.SetupSprite(null, "autocannon_idle_001", 8);
 

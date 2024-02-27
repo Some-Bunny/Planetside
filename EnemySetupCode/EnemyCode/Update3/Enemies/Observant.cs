@@ -713,10 +713,10 @@ namespace Planetside
 
 						float math = isDodgeAble == true ? 250 : 25;
 						tiledsprite.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (math * t));
-						tiledsprite.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f + (10 * t));
+						tiledsprite.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f + (5 * t));
 						tiledsprite.transform.localRotation = Quaternion.Euler(0f, 0f, Angle);
 						tiledsprite.HeightOffGround = -2;
-						tiledsprite.renderer.gameObject.layer = 23;
+						tiledsprite.renderer.gameObject.layer = 22;
 						tiledsprite.dimensions = new Vector2(1000f, 1f);
 						tiledsprite.UpdateZDepth();
 					}
@@ -741,9 +741,9 @@ namespace Planetside
 						tiledsprite.transform.position = new Vector3(this.Position.x, this.Position.y, 0);
 						tiledsprite.dimensions = new Vector2(1000f, 1f);
 						tiledsprite.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (math * t));
-						tiledsprite.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f + (20 * t));
+						tiledsprite.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f + (15 * t));
 						tiledsprite.HeightOffGround = -2;
-						tiledsprite.renderer.gameObject.layer = 23;
+						tiledsprite.renderer.gameObject.layer = 22;
 						tiledsprite.UpdateZDepth();
 					}
 					elapsed += BraveTime.DeltaTime;

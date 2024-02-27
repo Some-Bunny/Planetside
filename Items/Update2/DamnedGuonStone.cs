@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Alexandria.PrefabAPI;
 using ItemAPI;
 using MonoMod.RuntimeDetour;
 using UnityEngine;
@@ -13,7 +14,6 @@ namespace Planetside
 		public static void Init()
 		{
 			string name = "Damned Guon Stone";
-			//string resourcePath = "Planetside/Resources/Guons/DamnedGuon/damnedstone.png";
 			GameObject gameObject = new GameObject();
 			DamnedGuonStone woodGuonStone = gameObject.AddComponent<DamnedGuonStone>();
             var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
@@ -21,14 +21,14 @@ namespace Planetside
 
             //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
             string shortDesc = "Laced With Curse";
-			string longDesc = "A guon stone bathed in the cursed pots scattered around the Gungeon. They reek of evils.";
+			string longDesc = "A guon stone, bathed in cursed pots scattered around the Gungeon.\n\nThey reek of curse.";
 			woodGuonStone.SetupItem(shortDesc, longDesc, "psog");
 			woodGuonStone.quality = PickupObject.ItemQuality.EXCLUDED;
 			DamnedGuonStone.BuildPrefab();
 			woodGuonStone.OrbitalPrefab = DamnedGuonStone.orbitalPrefab;
 			woodGuonStone.Identifier = IounStoneOrbitalItem.IounStoneIdentifier.GENERIC;
 			woodGuonStone.CanBeDropped = false;
-			woodGuonStone.AddPassiveStatModifier(PlayerStats.StatType.Curse, 1f, StatModifier.ModifyMethod.ADDITIVE);
+			woodGuonStone.AddPassiveStatModifier(PlayerStats.StatType.Curse, 1.5f, StatModifier.ModifyMethod.ADDITIVE);
 		}
 
 		public static void BuildPrefab()
@@ -36,44 +36,20 @@ namespace Planetside
 			bool flag = DamnedGuonStone.orbitalPrefab != null;
 			if (!flag)
 			{
-				GameObject deathmark = ItemBuilder.AddSpriteToObject("cursed_guon", "Planetside/Resources/Guons/DamnedGuon/curseguonfloaty_001", null);
-				FakePrefab.MarkAsFakePrefab(deathmark);
-				UnityEngine.Object.DontDestroyOnLoad(deathmark);
-				tk2dSpriteAnimator animator = deathmark.AddComponent<tk2dSpriteAnimator>();
-				tk2dSpriteAnimationClip animationClip = new tk2dSpriteAnimationClip();
-				animationClip.fps = 3;
-				animationClip.wrapMode = tk2dSpriteAnimationClip.WrapMode.Loop;
-				animationClip.name = "start";
+				GameObject gameObject = PrefabBuilder.BuildObject("CursedGuonStone");
 
-				GameObject spriteObject = new GameObject("spriteObject");
-				ItemBuilder.AddSpriteToObject("spriteObject", $"Planetside/Resources/Guons/DamnedGuon/curseguonfloaty_001", spriteObject);
-				tk2dSpriteAnimationFrame starterFrame = new tk2dSpriteAnimationFrame();
-				starterFrame.spriteId = spriteObject.GetComponent<tk2dSprite>().spriteId;
-				starterFrame.spriteCollection = spriteObject.GetComponent<tk2dSprite>().Collection;
-				tk2dSpriteAnimationFrame[] frameArray = new tk2dSpriteAnimationFrame[]
-				{
-				starterFrame
-				};
-				animationClip.frames = frameArray;
-				for (int i = 2; i < 4; i++)
-				{
-					GameObject spriteForObject = new GameObject("spriteForObject");
-					ItemBuilder.AddSpriteToObject("spriteForObject", $"Planetside/Resources/Guons/DamnedGuon/curseguonfloaty_00{i}", spriteForObject);
-					tk2dSpriteAnimationFrame frame = new tk2dSpriteAnimationFrame();
-					frame.spriteId = spriteForObject.GetComponent<tk2dBaseSprite>().spriteId;
-					frame.spriteCollection = spriteForObject.GetComponent<tk2dBaseSprite>().Collection;
-					animationClip.frames = animationClip.frames.Concat(new tk2dSpriteAnimationFrame[] { frame }).ToArray();
-				}
-				animator.Library = animator.gameObject.AddComponent<tk2dSpriteAnimation>();
-				animator.Library.clips = new tk2dSpriteAnimationClip[] { animationClip };
-				animator.DefaultClipId = animator.GetClipIdByName("start");
+                tk2dSprite sprite = gameObject.AddComponent<tk2dSprite>();
+				sprite.collection = StaticSpriteDefinitions.Guon_Sheet_Data;
+				sprite.SetSprite(StaticSpriteDefinitions.Guon_Sheet_Data.GetSpriteIdByName("curseguonfloaty_001"));
+
+                tk2dSpriteAnimator animator = gameObject.AddComponent<tk2dSpriteAnimator>();
+                animator.library = StaticSpriteDefinitions.Guon_Animation_Data;
+				animator.defaultClipId = StaticSpriteDefinitions.Guon_Animation_Data.GetClipIdByName("cursedFloat_idle");
 				animator.playAutomatically = true;
 
+				sprite.CachedPerpState = tk2dBaseSprite.PerpendicularState.FLAT;
 
-
-				GameObject gameObject = animator.gameObject;
-				gameObject.name = "Damned Guon Orbital";
-				SpeculativeRigidbody speculativeRigidbody = gameObject.GetComponent<tk2dSprite>().SetUpSpeculativeRigidbody(IntVector2.Zero, new IntVector2(7, 13));
+                SpeculativeRigidbody speculativeRigidbody = gameObject.GetComponent<tk2dSprite>().SetUpSpeculativeRigidbody(IntVector2.Zero, new IntVector2(7, 13));
 				speculativeRigidbody.CollideWithTileMap = false;
 				speculativeRigidbody.CollideWithOthers = true;
 				speculativeRigidbody.PrimaryPixelCollider.CollisionLayer = CollisionLayer.EnemyBulletBlocker;
@@ -81,39 +57,28 @@ namespace Planetside
 				DamnedGuonStone.orbitalPrefab.motionStyle = PlayerOrbital.OrbitalMotionStyle.ORBIT_PLAYER_ALWAYS;
 				DamnedGuonStone.orbitalPrefab.shouldRotate = false;
 				DamnedGuonStone.orbitalPrefab.orbitRadius = 3f;
-				DamnedGuonStone.orbitalPrefab.orbitDegreesPerSecond = 90f;
+				DamnedGuonStone.orbitalPrefab.orbitDegreesPerSecond = 105f;
 				DamnedGuonStone.orbitalPrefab.SetOrbitalTier(0);
 				ImprovedAfterImage yeah = gameObject.AddComponent<ImprovedAfterImage>();
 				yeah.dashColor = Color.black;
 				yeah.spawnShadows = true;
-				yeah.shadowTimeDelay = 0.01f;
+				yeah.shadowTimeDelay = 0.1f;
 				yeah.shadowLifetime = 0.5f;
-
-				UnityEngine.Object.DontDestroyOnLoad(gameObject);
-				FakePrefab.MarkAsFakePrefab(gameObject);
-				gameObject.SetActive(false);
+				//UnityEngine.Object.DontDestroyOnLoad(gameObject);
+				//FakePrefab.MarkAsFakePrefab(gameObject);
+				//gameObject.SetActive(false);
 			}
 		}
 
 		public override void Pickup(PlayerController player)
 		{
-			//player.OnHitByProjectile = (Action<Projectile, PlayerController>)Delegate.Combine(player.OnHitByProjectile, new Action<Projectile, PlayerController>(this.OwnerHitByProjectile));
-			//player.OnReceivedDamage += this.OnOwnerTookDamage;
-			DamnedGuonStone.guonHook = new Hook(typeof(PlayerOrbital).GetMethod("Initialize"), typeof(DamnedGuonStone).GetMethod("GuonInit"));
 			base.Pickup(player);
-			//base.Invoke("breakThis", 15f);
 		}
 
-		private void OnOwnerTookDamage(PlayerController user)
-		{
-		}
+
 
 		public override DebrisObject Drop(PlayerController player)
 		{
-			//player.OnHitByProjectile = (Action<Projectile, PlayerController>)Delegate.Remove(player.OnHitByProjectile, new Action<Projectile, PlayerController>(this.OwnerHitByProjectile));
-			//player.OnReceivedDamage -= this.OnOwnerTookDamage;
-			DamnedGuonStone.guonHook.Dispose();
-			DamnedGuonStone.speedUp = false;
 			return base.Drop(player);
 		}
 
@@ -121,27 +86,9 @@ namespace Planetside
 		{
 			if (base.Owner != null)
             {
-				//PlayerController owner = base.Owner;
-				//owner.OnHitByProjectile = (Action<Projectile, PlayerController>)Delegate.Remove(owner.OnHitByProjectile, new Action<Projectile, PlayerController>(this.OwnerHitByProjectile));
-				base.Owner.OnReceivedDamage -= this.OnOwnerTookDamage;
-				DamnedGuonStone.guonHook.Dispose();
-				DamnedGuonStone.speedUp = false;
 				base.OnDestroy();
 			}
-		}
-
-		public static void GuonInit(Action<PlayerOrbital, PlayerController> orig, PlayerOrbital self, PlayerController player)
-		{
-			orig(self, player);
-		}
-
-
-		private void breakThis()
-		{
-			base.Owner.RemovePassiveItem(this.PickupObjectId);
-		}
-		public static Hook guonHook;
-		public static bool speedUp = false;
+		}	
 		public static PlayerOrbital orbitalPrefab;
 	}
 }

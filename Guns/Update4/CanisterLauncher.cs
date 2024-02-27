@@ -12,6 +12,7 @@ using System.Collections;
 using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
+using Alexandria.Assetbundle;
 
 namespace Planetside
 {
@@ -24,12 +25,22 @@ namespace Planetside
 			gun.gameObject.AddComponent<CanisterLauncher>();
 			gun.SetShortDescription("Blow You Away");
 			gun.SetLongDescription("Knocks around enemies and propels all nearly projectiles to dangerous speeds on collision. Originally a can-crushing device, it was repurposed when someone thought it would be funny to stick a can of compressed air into it.");
-			gun.SetupSprite(null, "canisterlauncher_idle_001", 11);
-			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 15);
-			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 7);
-			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 7);
 
-			for (int i = 0; i < 1; i++)
+            GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "canisterlauncher_idle_001");
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
+            gun.sprite.SortingOrder = 1;
+
+            gun.idleAnimation = "canisterlauncher_idle";
+            gun.shootAnimation = "canisterlauncher_fire";
+            gun.reloadAnimation = "canisterlauncher_reload";
+
+            //GunExt.SetAnimationFPS(gun, gun.shootAnimation, 15);
+            //GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 7);
+            //GunExt.SetAnimationFPS(gun, gun.idleAnimation, 7);
+
+
+
+            for (int i = 0; i < 1; i++)
 			{
 				gun.AddProjectileModuleFrom(PickupObjectDatabase.GetById(43) as Gun, true, false);
 			}

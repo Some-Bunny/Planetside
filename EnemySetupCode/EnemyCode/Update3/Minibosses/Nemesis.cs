@@ -20,163 +20,6 @@ namespace Planetside
 	public class Nemesis : AIActor
 	{
 
-		public class NemesisEngageDoer : CustomEngageDoer
-		{
-			public NemesisEngageDoer()
-			{
-				this.PortalLifeTime = 4.5f;
-				this.PortalSize = 0.3f;
-			}
-
-
-			public void Update()
-			{
-
-			}
-
-			public override void StartIntro()
-			{
-				if (this.m_isFinished)
-				{
-					return;
-				}
-				m_isFinished = true;
-				//base.aiActor.GetComponent<GenericIntroDoer>().TriggerSequence(GameManager.Instance.BestActivePlayer);
-
-			}
-
-			private IEnumerator PortalDoer(MeshRenderer portal, bool DestroyWhenDone = false)
-			{
-				float elapsed = 0f;
-				while (elapsed < PortalLifeTime)
-				{
-					elapsed += BraveTime.DeltaTime;
-					float t = elapsed / PortalLifeTime;
-					if (portal.gameObject == null) { yield break; }
-					float throne1 = Mathf.Sin(t * (Mathf.PI));
-					portal.material.SetFloat("_UVDistCutoff", Mathf.Lerp(0, PortalSize, throne1));
-					portal.material.SetFloat("_HoleEdgeDepth", Mathf.Lerp(12, 2, throne1));
-					yield return null;
-				}
-
-				if (DestroyWhenDone == true)
-				{
-					Destroy(portal.gameObject);
-				}
-				yield break;
-			}
-
-			private IEnumerator DoIntro()
-			{
-                /*
-				m_isFinished = true;
-				this.behaviorSpeculator.enabled = false;
-				//this.aiActor.ToggleRenderers(false);
-				this.specRigidbody.enabled = false;
-                //this.aiActor.IgnoreForRoomClear = true;
-                //this.aiActor.IsGone = true;
-                if (this.aiShooter)
-				{
-					this.aiShooter.ToggleGunAndHandRenderers(false, "GuardIsSpawning");
-				}
-				this.aiActor.healthHaver.PreventAllDamage = true;
-				this.aiActor.specRigidbody.enabled = true;
-				this.aiActor.IsGone = false;
-				this.aiActor.IgnoreForRoomClear = false;
-				this.aiAnimator.PlayDefaultAwakenedState();
-				this.aiActor.State = AIActor.ActorState.Awakening;
-				int playerMask = CollisionMask.LayerToMask(CollisionLayer.PlayerCollider, CollisionLayer.PlayerHitBox);
-				this.aiActor.specRigidbody.AddCollisionLayerIgnoreOverride(playerMask);
-
-				if (HasSpawnedPortal != true)
-				{
-					GameObject portalObj = UnityEngine.Object.Instantiate<GameObject>(PickupObjectDatabase.GetById(155).GetComponent<SpawnObjectPlayerItem>().objectToSpawn.GetComponent<BlackHoleDoer>().HellSynergyVFX, this.aiActor.sprite.WorldBottomCenter, Quaternion.Euler(0f, 0f, 0f));
-					portalObj.layer = this.aiActor.gameObject.layer + (int)GameManager.Instance.MainCameraController.CurrentZOffset;
-					portalObj.gameObject.SetLayerRecursively(LayerMask.NameToLayer("BG_Critical"));
-					MeshRenderer mesh = portalObj.GetComponent<MeshRenderer>();
-					mesh.material.SetTexture("_PortalTex", StaticTextures.NebulaTexture);
-					GameManager.Instance.StartCoroutine(PortalDoer(mesh, true));
-					HasSpawnedPortal = true;
-				}
-
-
-				while (this.aiAnimator.IsPlaying("awaken"))
-				{
-					this.behaviorSpeculator.enabled = false;
-					if (this.aiShooter)
-					{
-						this.aiShooter.ToggleGunAndHandRenderers(false, "GuardIsSpawning");
-					}
-					yield return null;
-				}
-
-				if (this.aiShooter)
-				{
-					this.aiShooter.ToggleGunAndHandRenderers(true, "GuardIsSpawning");
-				}
-				AkSoundEngine.PostEvent("Play_OBJ_weapon_pickup_01", base.aiActor.gameObject);
-
-                this.aiActor.aiShooter.CurrentGun.renderer.enabled = true;
-                this.aiActor.aiShooter.CurrentGun.ToggleRenderers(true);
-
-
-                GameObject gameObject = SpawnManager.SpawnVFX(StaticVFXStorage.BlueSynergyPoofVFX, false);
-				gameObject.transform.position = base.aiActor.transform.Find("GunAttachPoint").gameObject.transform.position;
-				gameObject.transform.localScale *= 1.5f;
-                var b = gameObject.GetComponent<tk2dSpriteAnimator>();
-                if (b)
-                {
-                    b.AlwaysIgnoreTimeScale = true;
-					b.playAutomatically = true;
-                    b.AnimateDuringBossIntros = true;
-
-                }
-                Destroy(gameObject, 2);
-
-
-
-
-				GameObject gameObjectTwo = SpawnManager.SpawnVFX(StaticVFXStorage.MachoBraceDustupVFX, false);
-				gameObjectTwo.transform.position = base.aiActor.transform.position - new Vector3(1.25f, 1.25f);
-				var a = gameObjectTwo.GetComponent<tk2dSpriteAnimator>();
-				if (a)
-				{
-					a.AlwaysIgnoreTimeScale = true;
-                    a.playAutomatically = true;
-					a.AnimateDuringBossIntros = true;
-
-                }
-
-                Destroy(gameObjectTwo, 2);
-
-				yield return new WaitForSeconds(0.25f);
-
-                this.aiActor.specRigidbody.enabled = true;
-
-                this.aiActor.healthHaver.PreventAllDamage = false;
-				this.aiActor.behaviorSpeculator.enabled = true;
-				this.aiActor.specRigidbody.RemoveCollisionLayerIgnoreOverride(playerMask);
-				this.aiActor.HasBeenEngaged = true;
-				this.aiActor.State = AIActor.ActorState.Normal;
-				this.StartIntro();
-				m_isFinished = true;
-				*/
-                yield break;
-            }
-            public override bool IsFinished
-			{
-				get
-				{
-					return this.m_isFinished;
-				}
-			}
-
-			public float PortalLifeTime;
-			public float PortalSize;
-
-			//private bool HasSpawnedPortal;
-			private bool m_isFinished;
-		}
 
 		public static GameObject prefab;
 		public static readonly string guid = "nemesis";
@@ -216,9 +59,9 @@ namespace Planetside
                 prefab.AddComponent<NemesisController>();
 				prefab.AddComponent<ForgottenEnemyComponent>();
 				companion.aiActor.knockbackDoer.weight = 120;
-				companion.aiActor.MovementSpeed = 3.5f;
+				companion.aiActor.MovementSpeed = 4f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
-				companion.aiActor.CollisionDamage = 1f;
+				companion.aiActor.CollisionDamage = 0f;
 				companion.aiActor.IgnoreForRoomClear = false;
 				companion.aiActor.aiAnimator.HitReactChance = 0f;
 				companion.aiActor.specRigidbody.CollideWithOthers = true;
@@ -230,7 +73,7 @@ namespace Planetside
 
 				companion.aiActor.healthHaver.ForceSetCurrentHealth(300f);
 				companion.aiActor.CollisionKnockbackStrength = 0f;
-				companion.aiActor.procedurallyOutlined = false;
+				companion.aiActor.procedurallyOutlined = true;
 				companion.aiActor.CanTargetPlayers = true;
 
 				EnemyToolbox.AddShadowToAIActor(companion.aiActor, StaticEnemyShadows.defaultShadow, new Vector2(0.625f, -0.25f), "shadowPos");
@@ -573,7 +416,7 @@ namespace Planetside
                 GameObject shootpoint = EnemyToolbox.GenerateShootPoint(companion.gameObject, new Vector2(0.5f, 0.5f), "UnwillingShootpoint");
 
 				var bs = prefab.GetComponent<BehaviorSpeculator>();
-				prefab.GetComponent<ObjectVisibilityManager>();
+				Destroy(prefab.GetComponent<ObjectVisibilityManager>());
 				BehaviorSpeculator behaviorSpeculator = EnemyDatabase.GetOrLoadByGuid("43426a2e39584871b287ac31df04b544").behaviorSpeculator;
 				bs.OtherBehaviors = behaviorSpeculator.OtherBehaviors;
 
@@ -829,16 +672,6 @@ namespace Planetside
 				bs.OverrideBehaviors = new List<OverrideBehaviorBase>()
 				{
 
-					/*
-					new ModifySpeedBehavior()
-					{
-					minSpeed = 1.2f,
-					minSpeedDistance = 4,
-					maxSpeed = 3.2f,
-					maxSpeedDistance = 9,
-					
-					},
-					*/
 					new SansTeleportBehavior()
                     {
                         AvoidWalls = true,
@@ -956,7 +789,7 @@ namespace Planetside
 				miniBossIntroDoer.specifyIntroAiAnimator = null;
 				miniBossIntroDoer.BossMusicEvent = "Play_MUS_Lich_Double_01";
 				miniBossIntroDoer.PreventBossMusic = false;
-				miniBossIntroDoer.InvisibleBeforeIntroAnim = false;
+				miniBossIntroDoer.InvisibleBeforeIntroAnim = true;
 				miniBossIntroDoer.preIntroAnim = string.Empty;
 				miniBossIntroDoer.preIntroDirectionalAnim = string.Empty;
 				miniBossIntroDoer.introAnim = "intro";
@@ -1073,12 +906,12 @@ namespace Planetside
 					{
 						Ang = ReturnSpecialAngle(Speed);
 						component2.transform.position = new Vector3(CurrentBarrelPosition().x, CurrentBarrelPosition().y, 0);
-						component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (20 * t));
-						component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f + (1.2f * t));
+						//component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (20 * t));
+						//component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f + (1.2f * t));
 						component2.transform.localRotation = Quaternion.Euler(0f, 0f, Mathf.Lerp(Ang - AddOrSubtract, Ang, t));
 
                         component2.HeightOffGround = -2;
-						component2.renderer.gameObject.layer = 23;
+						component2.renderer.gameObject.layer = 22;
 						component2.dimensions = new Vector2(1000f, 1f);
 						component2.UpdateZDepth();
 					}
@@ -1103,6 +936,8 @@ namespace Planetside
                 if (Fires == true)
                 {
                     base.PostWwiseEvent("Play_Railgun");
+					                    base.PostWwiseEvent("Play_Railgun");
+
                     base.Fire(Offset.OverridePosition(CurrentBarrelPosition()), new Direction(Ang, DirectionType.Absolute, -1f), new Speed(Speed, SpeedType.Absolute), new UndodgeableBullshit());
 				}
 				base.BulletBank.aiActor.aiAnimator.LockFacingDirection = false;
@@ -1210,11 +1045,11 @@ namespace Planetside
 					{
 						Ang = ReturnSpecialAngle();
 						component2.transform.position = new Vector3(CurrentBarrelPosition().x, CurrentBarrelPosition().y, 0);
-						component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (5 * t));
-						component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f + (1 * t));
+						//component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (5 * t));
+						//component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f + (1 * t));
 						component2.transform.localRotation = Quaternion.Euler(0f, 0f, Mathf.Lerp(Ang - AddOrSubtract, Ang, t));
 						component2.HeightOffGround = -2;
-						component2.renderer.gameObject.layer = 23;
+						component2.renderer.gameObject.layer = 22;
 						component2.dimensions = new Vector2(1000f, 1f);
 						component2.UpdateZDepth();
 					}
@@ -1237,10 +1072,13 @@ namespace Planetside
 					yield return null;
 				}
 				UnityEngine.Object.Destroy(component2.gameObject);
-				base.PostWwiseEvent("Play_Railgun");
 				if (Fires == true)
 				{
-					base.Fire(Offset.OverridePosition(CurrentBarrelPosition()), new Direction(Ang, DirectionType.Absolute, -1f), new Speed(40f, SpeedType.Absolute), new SuperShot());
+                    base.PostWwiseEvent("Play_Railgun");
+                    base.PostWwiseEvent("Play_Railgun");
+                    base.PostWwiseEvent("Play_Railgun");
+
+                    base.Fire(Offset.OverridePosition(CurrentBarrelPosition()), new Direction(Ang, DirectionType.Absolute, -1f), new Speed(40f, SpeedType.Absolute), new SuperShot());
 				}
 				base.BulletBank.aiActor.aiAnimator.LockFacingDirection = false;
 				yield break;
@@ -1525,30 +1363,6 @@ namespace Planetside
 			public void Update()
 			{
 				m_StartRoom = aiActor.GetAbsoluteParentRoom();
-				if (!base.aiActor.HasBeenEngaged)
-				{
-					CheckPlayerRoom();
-				}
-			}
-			private void CheckPlayerRoom()
-			{
-				if (GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() != null && GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() == m_StartRoom)
-				{
-					GameManager.Instance.StartCoroutine(LateEngage());
-				}
-				else
-				{
-					base.aiActor.HasBeenEngaged = false;
-				}
-			}
-			private IEnumerator LateEngage()
-			{
-				yield return new WaitForSeconds(0.5f);
-				if (GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() != null && GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() == m_StartRoom)
-				{
-					base.aiActor.HasBeenEngaged = true;
-				}
-				yield break;
 			}
 			private void Start()
 			{

@@ -15,6 +15,7 @@ using MonoMod;
 
 using Brave.BulletScript;
 using FullInspector;
+using Alexandria.Assetbundle;
 
 namespace Planetside
 {
@@ -28,7 +29,7 @@ namespace Planetside
 			gun.SetShortDescription("Now you can be the run-ruiner");
 			gun.SetLongDescription("A shotgun that oddly resembles shotguns wielded by the Shotgun Kin around the Gungeon, or maybe it's just the bullets throwing you off.");
 
-            GunExt.SetupSprite(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "veteranershotgun_idle_001", 11);
+            GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "veteranershotgun_idle_001");
             gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
             gun.sprite.SortingOrder = 1;
 

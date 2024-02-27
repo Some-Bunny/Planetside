@@ -35,7 +35,7 @@ namespace Planetside
                 AssetBundle shared_auto_001 = ResourceManager.LoadAssetBundle("shared_auto_001");
                 room.associatedMinimapIcon = shared_auto_001.LoadAsset("assets/data/prefabs/room icons/minimap_boss_icon.prefab") as GameObject; WeightedRoom r = new WeightedRoom();
                 r.room = room;
-                r.weight = 0.8f;
+                r.weight = 0.9f;
                 r.additionalPrerequisites = new DungeonPrerequisite[]
                 {
                     new CustomDungeonPrerequisite()
@@ -51,6 +51,7 @@ namespace Planetside
                 StaticReferences.RoomTables["blockner"].includedRooms.Add(r);
                 StaticReferences.RoomTables["shadeagunim"].includedRooms.Add(r);
 
+                //StaticReferences.RoomTables["gungeon"].includedRooms.Add(r);
 
                 //GameManager.Instance.OnNewLevelFullyLoaded += this.DoEventChecks;
                 Debug.Log("Finished NemesisSpawnController setup without failure!");

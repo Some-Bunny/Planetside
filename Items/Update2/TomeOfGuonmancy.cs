@@ -19,6 +19,7 @@ using MonoMod.Utils;
 using Brave.BulletScript;
 using GungeonAPI;
 using SaveAPI;
+using Alexandria.PrefabAPI;
 //Garbage Code Incoming
 namespace Planetside
 {
@@ -100,8 +101,16 @@ namespace Planetside
 
         public static void BuildBasePrefab()
         {
-            GameObject gameObject = SpriteBuilder.SpriteFromResource("Planetside/Resources/Guons/EnergyPlatedGuon/energyshiledguon.png");
-            gameObject.name = $"Bullet orbital";
+            GameObject gameObject = PrefabBuilder.BuildObject("Bullet Orbital");
+
+            tk2dSprite sprite = gameObject.AddComponent<tk2dSprite>();
+            sprite.collection = StaticSpriteDefinitions.Guon_Sheet_Data;
+            sprite.SetSprite(StaticSpriteDefinitions.Guon_Sheet_Data.GetSpriteIdByName("energyshiledguon_001"));
+
+
+            sprite.CachedPerpState = tk2dBaseSprite.PerpendicularState.FLAT;
+
+
             SpeculativeRigidbody speculativeRigidbody = gameObject.GetComponent<tk2dSprite>().SetUpSpeculativeRigidbody(IntVector2.Zero, new IntVector2(12, 12));
             PlayerOrbital orbitalPrefab = gameObject.AddComponent<PlayerOrbital>();
             speculativeRigidbody.CollideWithTileMap = false;
@@ -212,12 +221,12 @@ namespace Planetside
             tk2dSprite tk2dSprite = gameObject.AddComponent<tk2dSprite>();
             gameObject.transform.parent = SpawnManager.Instance.VFX;
             tk2dSprite.SetSprite(target.sprite.Collection, target.sprite.spriteId);
-            this.BuildPrefab(tk2dSprite, base.LastOwner);
+            this.BuildPrefab(tk2dSprite, base.LastOwner, target.baseData.speed);
 
             target.DieInAir(false, true, true, false);
             yield break;
         }
-        public GameObject BuildPrefab(tk2dSprite sprite, PlayerController User)
+        public GameObject BuildPrefab(tk2dSprite sprite, PlayerController User, float Speed)
         {
             GameObject gameobject2 = PlayerOrbitalItem.CreateOrbital(User, BaseBulletGuon, false);
             PlayerOrbital orb = gameobject2.GetComponent<PlayerOrbital>();
@@ -228,6 +237,7 @@ namespace Planetside
 
             CreatedGuonBulletsController yes = gameobject2.AddComponent<CreatedGuonBulletsController>();
             yes.maxDuration = 15f;
+            orb.orbitDegreesPerSecond = Mathf.Max(60, Speed * 5);
 
             yes.SpawnsCharmGoop = User.PlayerHasActiveSynergy("Chapter Of Love");
             yes.ClearsGoop = User.PlayerHasActiveSynergy("Chapter Of Purity");

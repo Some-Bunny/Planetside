@@ -33,10 +33,7 @@ namespace Planetside
 			this.Hits = 0;
 		}
 
-		public void Awake()
-		{
-			this.actor = base.GetComponent<PlayerOrbital>();
-		}
+
 
 		public void Start()
 		{
@@ -54,8 +51,13 @@ namespace Planetside
 		}
 		private void OnPreCollision(SpeculativeRigidbody myRigidbody, PixelCollider myCollider, SpeculativeRigidbody other, PixelCollider otherCollider)
 		{
-			Hits++;
-			if (Hits == 3)
+            if (Cooldown == false)
+            {
+                Hits++;
+                Cooldown = true;
+                this.Invoke("C", 0.25f);
+            }
+            if (Hits == 3)
             {
 				float DmG = (player.stats.GetStatValue(PlayerStats.StatType.Damage));
 				Projectile projectile = ((Gun)ETGMod.Databases.Items[508]).DefaultModule.projectiles[0];
@@ -73,9 +75,13 @@ namespace Planetside
 				UnityEngine.Object.Destroy(base.gameObject);
 			}
 		}
+        private bool Cooldown = false;
+        public void C()
+        {
+            Cooldown = false;
+        }
 
-
-		public void Update()
+        public void Update()
 		{
 			if (this.actor == null)
 			{
@@ -112,7 +118,6 @@ namespace Planetside
 							Material material = new Material(ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive"));
 							material.SetTexture("_MainTex", sharedMaterial.GetTexture("_MainTex"));
 							material.SetColor("_OverrideColor", new Color(1f, 1f, 1f, 1f));
-							this.LerpMaterialGlow(material, 0f, 22f, 0.4f);
 							material.SetFloat("_EmissiveColorPower", 8f);
 							material.SetColor("_EmissiveColor", new Color(255, 69, 0, 255));
 							SpriteOutlineManager.AddOutlineToSprite(component3.sprite, new Color(255, 69, 0, 255));
@@ -133,7 +138,7 @@ namespace Planetside
 				elapsed += BraveTime.DeltaTime;
 				if (actor)
 				{
-					actor.SetOrbitalTier(0);
+					actor.SetOrbitalTier(110);
 					actor.orbitRadius = elapsed*3f;
 					actor.orbitDegreesPerSecond = elapsed * 7.5f;
 				}
@@ -148,7 +153,7 @@ namespace Planetside
 				bool flag3 = actor;
 				if (flag3)
 				{
-					actor.SetOrbitalTier(0);
+					actor.SetOrbitalTier(110);
 					actor.orbitRadius = (9f - (elapsed* 3.5f));
 					actor.orbitDegreesPerSecond = ((elapsed+2) * 2.5f)+22.5f;
 				}
@@ -174,12 +179,10 @@ namespace Planetside
 				component.baseData.speed = 100f;
 				component.baseData.damage = 60f* DmG;
 			}
-			yield break;
+			player.RecalculateOrbitals();
+            yield break;
 		}
-		public void LerpMaterialGlow(Material targetMaterial, float startGlow, float targetGlow, float duration)
-		{
-			targetMaterial.SetFloat("_EmissivePower", Mathf.Lerp(startGlow, targetGlow, duration));
-		}
+
 
 		public PlayerController sourcePlayer;
 		public float maxDuration = 10f;

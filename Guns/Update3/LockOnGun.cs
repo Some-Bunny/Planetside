@@ -23,7 +23,7 @@ namespace Planetside
 			Game.Items.Rename("outdated_gun_mods:t4gtr", "psog:t4gtr");
 			gun.gameObject.AddComponent<LockOnGun>();
 			gun.SetShortDescription("Locked And Loaded");
-			gun.SetLongDescription("Fires mini-rockets towards the in-built target system, reloading on a full clip locks on to the currently targeted enemy.\n\nA shoulder-mounted rocket launcher, fitted with way too much computer circuitry. Makes up for it with being good at generating half-decent jokes and a perfect enemy lock-on and tracking system.");
+			gun.SetLongDescription("Directs mini-rockets towards the reticle. Press Reload on a full clip to lock on to the currently targeted enemy.\n\nA shoulder-mounted rocket launcher, fitted with way too much computer circuitry. Makes up for it with being good at generating half-decent jokes and a perfect enemy lock-on and tracking system.");
 			GunExt.SetupSprite(gun, null, "lockongun_idle_001", 11);
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_wpn_voidcannon_shot_01";
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].triggerEvent = true;
@@ -82,7 +82,7 @@ namespace Planetside
 
 
 
-
+			tk2dSprite.usesOverrideMaterial = true;
 			tk2dSprite.GetCurrentSpriteDef().material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
 			tk2dSprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
 			tk2dSprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
@@ -188,22 +188,23 @@ namespace Planetside
                 gun.DefaultModule.numberOfShotsInClip = (int)clipsize;
                 if (LockOnInstance != null)
                 {
+					var baseSprite = LockOnInstance.GetComponent<tk2dBaseSprite>();
 
-                    if (IsLockedOn == true && LockOnInstance.GetComponent<tk2dBaseSprite>().spriteId != LockOnGun.spriteIds[1] && LockOnInstance != null)
+                    if (IsLockedOn == true && baseSprite.spriteId != LockOnGun.spriteIds[1] && LockOnInstance != null)
                     {
-                        LockOnInstance.GetComponent<tk2dBaseSprite>().SetSprite(LockOnGun.spriteIds[1]);
-                        LockOnInstance.GetComponent<tk2dBaseSprite>().renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
-                        LockOnInstance.GetComponent<tk2dBaseSprite>().renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
-                        LockOnInstance.GetComponent<tk2dBaseSprite>().renderer.material.SetFloat("_EmissivePower", 30);
-                        LockOnInstance.GetComponent<tk2dBaseSprite>().renderer.material.SetFloat("_EmissiveColorPower", 2);
+                        baseSprite.SetSprite(LockOnGun.spriteIds[1]);
+                        //LockOnInstance.GetComponent<tk2dBaseSprite>().renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
+                        //LockOnInstance.GetComponent<tk2dBaseSprite>().renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+                        //LockOnInstance.GetComponent<tk2dBaseSprite>().renderer.material.SetFloat("_EmissivePower", 30);
+                        //LockOnInstance.GetComponent<tk2dBaseSprite>().renderer.material.SetFloat("_EmissiveColorPower", 2);
                     }
                     else if (IsLockedOn == false && LockOnInstance.GetComponent<tk2dBaseSprite>().spriteId != LockOnGun.spriteIds[0] && LockOnInstance != null)
                     {
-                        LockOnInstance.GetComponent<tk2dBaseSprite>().SetSprite(LockOnGun.spriteIds[0]);
-                        LockOnInstance.GetComponent<tk2dBaseSprite>().renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
-                        LockOnInstance.GetComponent<tk2dBaseSprite>().renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
-                        LockOnInstance.GetComponent<tk2dBaseSprite>().renderer.material.SetFloat("_EmissivePower", 30);
-                        LockOnInstance.GetComponent<tk2dBaseSprite>().renderer.material.SetFloat("_EmissiveColorPower", 2);
+                        baseSprite.SetSprite(LockOnGun.spriteIds[0]);
+                        //LockOnInstance.GetComponent<tk2dBaseSprite>().renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
+                        //LockOnInstance.GetComponent<tk2dBaseSprite>().renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+                        //LockOnInstance.GetComponent<tk2dBaseSprite>().renderer.material.SetFloat("_EmissivePower", 30);
+                        //LockOnInstance.GetComponent<tk2dBaseSprite>().renderer.material.SetFloat("_EmissiveColorPower", 2);
                     }
 					if (player.CurrentRoom != null)
 					{
@@ -214,7 +215,7 @@ namespace Planetside
                             {
                                 if (aiactor == null)
                                 {
-                                    LockOnInstance.transform.position = aimpoint; ETGModConsole.Log(6);
+                                    LockOnInstance.transform.position = aimpoint; //ETGModConsole.Log(6);
                                 }
                                 if (Vector2.Distance(aiactor.CenterPosition, aimpoint) < 2f && aiactor.healthHaver.GetMaxHealth() > 0f && aiactor != null && aiactor.specRigidbody != null && player != null && IsLockedOn == false)
                                 { LockedOnEnemy = aiactor; }
@@ -232,10 +233,10 @@ namespace Planetside
                         component.PlaceAtPositionByAnchor(aimpoint, tk2dBaseSprite.Anchor.MiddleCenter);
                         component.GetComponent<tk2dBaseSprite>().SetSprite(LockOnGun.spriteIds[0]);
                         component.HeightOffGround = -5;
-                        component.renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
-                        component.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
-                        component.renderer.material.SetFloat("_EmissivePower", 30);
-                        component.renderer.material.SetFloat("_EmissiveColorPower", 2);
+                        //component.renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
+                        //component.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+                        //component.renderer.material.SetFloat("_EmissivePower", 30);
+                        //component.renderer.material.SetFloat("_EmissiveColorPower", 2);
                         LockOnInstance = component.gameObject;
                     }
                 }
@@ -320,8 +321,7 @@ namespace Planetside
 				AkSoundEngine.PostEvent("Play_WPN_plasmacell_reload_01", gameObject);
 			}
 			base.OnReloadPressed(player, gun, bSOMETHING);
-			bool flag = gun.ClipCapacity == gun.ClipShotsRemaining || gun.CurrentAmmo == gun.ClipShotsRemaining;
-			if (flag)
+			if (gun.ClipCapacity == gun.ClipShotsRemaining || gun.CurrentAmmo == gun.ClipShotsRemaining)
 			{
 				if (IsLockedOn != true && LockedOnEnemy != null)
 				{

@@ -8,6 +8,7 @@ using Gungeon;
 using MonoMod;
 using UnityEngine;
 using ItemAPI;
+using Alexandria.Assetbundle;
 
 namespace Planetside
 {
@@ -24,12 +25,14 @@ namespace Planetside
             gun.SetShortDescription("Aging Agent");
             gun.SetLongDescription("Fires vials of tarnishing liquid, making your foes tarnished.\n\nDO NOT HANDLE THE VIALS WITHOUT GLOVES OR PROPER PROTECTIVE EQUIPMENT.");
 
-            gun.SetupSprite(null, "puncturewound_idle_001", 8);
+            GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "puncturewound_idle_001");
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
+            gun.sprite.SortingOrder = 1;
 
-            gun.SetAnimationFPS(gun.shootAnimation, 16);
-            gun.SetAnimationFPS(gun.idleAnimation, 6);
-            gun.SetAnimationFPS(gun.chargeAnimation, 6);
-            gun.SetAnimationFPS(gun.reloadAnimation, 8);
+            gun.idleAnimation = "puncturewound_idle";
+            gun.shootAnimation = "puncturewound_fire";
+            gun.reloadAnimation = "puncturewound_reload";
+            gun.chargeAnimation = "puncturewound_charge";
 
 
             gun.AddProjectileModuleFrom(PickupObjectDatabase.GetById(86) as Gun, true, false);
@@ -45,10 +48,6 @@ namespace Planetside
             EnemyToolbox.AddEventTriggersToAnimation(gun.spriteAnimator, gun.reloadAnimation, new Dictionary<int, string> { { 0, "SlowDownAnim" } });
 
 
-            gun.spriteAnimator.AnimationEventTriggered += wound.AnimationEventTriggered;
-
-            gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.chargeAnimation).wrapMode = tk2dSpriteAnimationClip.WrapMode.LoopSection;
-            gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.chargeAnimation).loopStart = 6;
 
             //GUN STATS
             gun.muzzleFlashEffects = (PickupObjectDatabase.GetById(444) as Gun).muzzleFlashEffects;

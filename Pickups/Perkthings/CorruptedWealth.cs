@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Collections;
 using SaveAPI;
+using Alexandria.PrefabAPI;
 
 namespace Planetside
 {
@@ -401,16 +402,22 @@ namespace Planetside
 
         public static void BuildVoidGlassStone()
         {
-            GameObject gameObject = SpriteBuilder.SpriteFromResource("Planetside/Resources/Guons/VoidglassGuon/voidglass_guon_stone.png");
-            gameObject.name = $"Soul Guon";
+
+            GameObject gameObject = PrefabBuilder.BuildObject("VoidGlass Guon");
+
+            tk2dSprite sprite = gameObject.AddComponent<tk2dSprite>();
+            sprite.collection = StaticSpriteDefinitions.Guon_Sheet_Data;
+            sprite.SetSprite(StaticSpriteDefinitions.Guon_Sheet_Data.GetSpriteIdByName("voidglass_guon_stone"));
+            sprite.CachedPerpState = tk2dBaseSprite.PerpendicularState.FLAT;
+
             SpeculativeRigidbody speculativeRigidbody = gameObject.GetComponent<tk2dSprite>().SetUpSpeculativeRigidbody(IntVector2.Zero, new IntVector2(7, 9));
             PlayerOrbital orbitalPrefab = gameObject.AddComponent<PlayerOrbital>();
             speculativeRigidbody.CollideWithTileMap = false;
             speculativeRigidbody.CollideWithOthers = true;
             speculativeRigidbody.PrimaryPixelCollider.CollisionLayer = CollisionLayer.Projectile;
             orbitalPrefab.shouldRotate = true;
-            orbitalPrefab.orbitRadius = 6.5f;
-            orbitalPrefab.orbitDegreesPerSecond = 60;
+            orbitalPrefab.orbitRadius = 5.75f;
+            orbitalPrefab.orbitDegreesPerSecond = 90;
             orbitalPrefab.SetOrbitalTier(0);
 
             Shader glowshader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTiltedCutoutEmissive");

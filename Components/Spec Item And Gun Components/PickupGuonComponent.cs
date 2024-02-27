@@ -78,13 +78,25 @@ namespace Planetside
 		{
 			orig(self, player);
 		}
-		private void OnPreCollision(SpeculativeRigidbody myRigidbody, PixelCollider myCollider, SpeculativeRigidbody other, PixelCollider otherCollider)
+
+        private bool Cooldown = false;
+        public void C()
+        {
+            Cooldown = false;
+        }
+        private void OnPreCollision(SpeculativeRigidbody myRigidbody, PixelCollider myCollider, SpeculativeRigidbody other, PixelCollider otherCollider)
 		{
 			GameObject silencerVFX = (GameObject)ResourceCache.Acquire("Global VFX/BlankVFX_Ghost");
 			PlayerController player = this.player;
 
-			Hits++;
-			if (Hits == HitsBeforeDeath)
+            if (Cooldown == false)
+            {
+                Hits++;
+                Cooldown = true;
+                this.Invoke("C", 0.15f);
+            }
+
+            if (Hits == HitsBeforeDeath)
             {
 				LootEngine.DoDefaultItemPoof(actor.sprite.WorldCenter, false, true);
 				UnityEngine.Object.Destroy(base.gameObject);
