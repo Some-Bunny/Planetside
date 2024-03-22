@@ -13,6 +13,7 @@ using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
 using Alexandria.PrefabAPI;
+using Alexandria.Assetbundle;
 
 namespace Planetside
 {
@@ -25,12 +26,21 @@ namespace Planetside
 			gun.gameObject.AddComponent<UnknownGun>();
 			gun.SetShortDescription("Eternal Strength");
 			gun.SetLongDescription("The Gun-Ternal Power offers infinite strength, as long as it is sated.\n\nWorshipped by many a thing, both living and not, residing in an ancient monolithic construction.");
-			gun.SetupSprite(null, "gunknown_idle_001", 11);
-			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 16);
-			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 1000);
-			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 7);
 
-			for (int i = 0; i < 1; i++)
+            GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "gunknown_idle_001");
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
+            gun.sprite.SortingOrder = 1;
+
+            gun.idleAnimation = "gunknown_idle";
+            gun.shootAnimation = "gunknown_fire";
+            gun.reloadAnimation = "gunknown_reload";
+
+            //gun.SetupSprite(null, "gunknown_idle_001", 11);
+            //GunExt.SetAnimationFPS(gun, gun.shootAnimation, 16);
+            //GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 1000);
+            //GunExt.SetAnimationFPS(gun, gun.idleAnimation, 7);
+
+            for (int i = 0; i < 1; i++)
 			{
 				gun.AddProjectileModuleFrom(PickupObjectDatabase.GetById(156) as Gun, true, false);
 

@@ -643,8 +643,11 @@ namespace Planetside
 				mat.SetFloat("_EmissivePower", 80);
 				companion.aiActor.sprite.renderer.material = mat;
 
-			}
-		}
+                companion.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSniper);
+                companion.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableBigBullet);
+
+            }
+        }
 
 
 
@@ -780,7 +783,6 @@ namespace Planetside
 		{
 			public override IEnumerator Top()
 			{
-				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableBigBullet);
 				for (int i = 0; i < 3; i++)
 				{
 					this.Fire(new Direction(0, DirectionType.Aim, -1f), new Speed(0f, SpeedType.Absolute), new BasicBigBall());
@@ -806,7 +808,6 @@ namespace Planetside
 		{
 			public override IEnumerator Top()
 			{
-				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSniper);
 				for (int i = -1; i < 2; i++)
 				{
 					float Angle = base.AimDirection + (30 * i);

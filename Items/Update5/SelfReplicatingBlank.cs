@@ -44,6 +44,7 @@ namespace Planetside
                 LootTableTools.GenerateLootModData(343, 3),
                 LootTableTools.GenerateLootModData(344, 3),
             };
+            warVase.AddPassiveStatModifier(PlayerStats.StatType.AdditionalBlanksPerFloor, 1, StatModifier.ModifyMethod.ADDITIVE);
 
 
             string shardDefaultPath = "Planetside/Resources/RandomDebris/SporeDebris/";
@@ -72,6 +73,7 @@ namespace Planetside
 
             //List<string> mandatoryConsoleIDs = new List<string>
             //{
+
                 //"psog:immolation_powder",
               //  "psog:revenant"
             //};
@@ -90,6 +92,8 @@ namespace Planetside
             player.OnEnteredCombat += OnEnteredCombat;
             base.Pickup(player);
         }
+
+
 
 		public int BlanksUsed;
         public bool CanRefundBlanks;

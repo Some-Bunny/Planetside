@@ -195,6 +195,7 @@ namespace Planetside
 
             sprite.HeightOffGround = this.targetHeight;
             sprite.UpdateZDepth();
+
             this.m_activeShadows.AddLast(first);
 
         }
@@ -206,7 +207,7 @@ namespace Planetside
             GameObject gameObject = new GameObject("after image");
             if (this.UseTargetLayer)
             {
-                gameObject.layer = LayerMask.NameToLayer(this.TargetLayer);
+                gameObject.layer = this.TargetLayer;// LayerMask.NameToLayer(this.TargetLayer);
             }
             tk2dSprite sprite = gameObject.AddComponent<tk2dSprite>();
             gameObject.transform.parent = SpawnManager.Instance.VFX;
@@ -238,7 +239,7 @@ namespace Planetside
 
         public bool UseTargetLayer;
 
-        public string TargetLayer;
+        public int TargetLayer;
 
         [NonSerialized]
         public Shader OverrideImageShader;

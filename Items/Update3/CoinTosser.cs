@@ -54,7 +54,7 @@ namespace Planetside
             projectile.baseData.range = 1000f;
             
             BounceProjModifier bouncy = projectile.gameObject.AddComponent<BounceProjModifier>();
-            bouncy.numberOfBounces = 1;
+            bouncy.numberOfBounces = 2;
 
             CoinComponent coin = projectile.gameObject.AddComponent<CoinComponent>();
             coin.DeadTime = 0.2f;
@@ -82,8 +82,8 @@ namespace Planetside
             AnimateBullet.ConstructListOfSameValues<Vector3?>(null, 8), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 8), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 8), AnimateBullet.ConstructListOfSameValues<Projectile>(null, 8));
             ImprovedAfterImage yes = projectile.gameObject.AddComponent<ImprovedAfterImage>();
             yes.spawnShadows = true;
-            yes.shadowLifetime = 0.2f;
-            yes.shadowTimeDelay = 0.01f;
+            yes.shadowLifetime = 0.24f;
+            yes.shadowTimeDelay = 0.04f;
             yes.dashColor = new Color(0.9f , 0.5f, 0.3f, 1f);
 
             CoinProjectile = projectile;

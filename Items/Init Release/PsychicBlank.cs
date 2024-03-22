@@ -298,8 +298,8 @@ namespace Planetside
 
 
             Projectile projectile = self.gameObject.AddComponent<Projectile>();
-            projectile.Shooter = user.specRigidbody;
             projectile.Owner = user;
+            projectile.SetNewShooter(user.GetComponent<SpeculativeRigidbody>());
             projectile.baseData.damage = 10;
             projectile.baseData.range = 1000f;
             projectile.baseData.speed = 30f;
@@ -342,13 +342,6 @@ namespace Planetside
             projectile.GetComponent<MinorBreakable>().enabled = false;
 
             GameObject vfx = Instantiate(StaticVFXStorage.SpookySkullVFX, projectile.sprite.WorldCenter, Quaternion.identity); Destroy(vfx, 2);
-
-
-            // projectile.StartCoroutine(this.Spin(projectile));
-
-            //Vector2 direction = MathToolbox.GetUnitOnCircle(CurrentAimDirection(), 1);
-            //if (enemy != null) { direction = enemy.sprite.WorldCenter - self.sprite.WorldCenter; }
-            //if (projectile.specRigidbody) projectile.specRigidbody.Initialize();
 
             projectile.SendInDirection(CurrentAimVector(projectile.sprite.WorldCenter), true, true);
             user.DoPostProcessProjectile(projectile);

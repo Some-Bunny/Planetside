@@ -6931,6 +6931,66 @@ MonoBehaviour:
     - shocklaser_reload_004
     - shocklaser_reload_005
     - shocklaser_fire_003
+    - laserchainsaw_reload_001
+    - laserchainsaw_fire_001
+    - laserchainsaw_idle_001
+    - gunknown_idle_002
+    - gunknown_idle_003
+    - gunknown_idle_004
+    - gunknown_idle_005
+    - gunknown_idle_006
+    - gunknown_idle_007
+    - gunknown_idle_008
+    - gunknown_reload_001
+    - gunknown_fire_008
+    - gunknown_fire_009
+    - gunknown_fire_010
+    - gunknown_fire_011
+    - gunknown_fire_012
+    - gunknown_fire_005
+    - gunknown_fire_003
+    - gunknown_fire_001
+    - gunknown_fire_004
+    - gunknown_fire_007
+    - gunknown_fire_002
+    - gunknown_fire_006
+    - gunknown_fire_013
+    - gunknown_fire_014
+    - gunknown_idle_001
+    - gunknown_fire_015
+    - coinshot_alternate_shoot_002
+    - coinshot_alternate_shoot_001
+    - coinshot_alternate_shoot_003
+    - coinshot_alternate_shoot_004
+    - coinshot_alternate_shoot_005
+    - coinshot_alternate_shoot_006
+    - coinshot_alternate_shoot_007
+    - coinshot_charge_001
+    - coinshot_charge_002
+    - coinshot_charge_003
+    - coinshot_charge_004
+    - coinshot_charge_005
+    - coinshot_charge_006
+    - coinshot_charge_007
+    - coinshot_fire_001
+    - coinshot_fire_002
+    - coinshot_fire_003
+    - coinshot_fire_004
+    - coinshot_idle_001
+    - coinshot_reload_001
+    - coinshot_reload_002
+    - coinshot_reload_003
+    - coinshot_reload_004
+    - coinshot_reload_005
+    - coinshot_reload_006
+    - coinshot_reload_007
+    - coinshot_reload_008
+    - coinshot_reload_009
+    - coinshot_reload_010
+    - coinshot_reload_011
+    - coinshot_reload_012
+    - coinshot_reload_013
+    - coinshot_reload_014
     spriteTextureGUIDs:
     - 34ca97dcff305fd468502cf49047e0ac
     - 1971f743e38664e4c9c89f1d06cd9449
@@ -7509,6 +7569,66 @@ MonoBehaviour:
     - e591ab9f237a2ca4488abe9a4b423fa5
     - 00952978e248e29469e65760a0027660
     - 266a870ab94d0ec4ab91fdb139d38dea
+    - e1102ead2fe96074abdb31794be06fad
+    - 6bfa1c400d0b7fe44b4901569bf14b17
+    - 2d0f06a05c1745047b0d6196760c0b3e
+    - d5c06066cc9defd4497377445356894e
+    - 3f3269e0fbe3dde47807978dff4fba21
+    - 8cf69e22ed9b94b4d98d899835eff99c
+    - e94a2fdff11c7a34b967cb8c8687b736
+    - 0a7aa394a4245904e8b8bb472a4a34e5
+    - 327c9f89058465346b5afaf392dc1a4f
+    - adde828db484fe842b259ef5b62c3a39
+    - f2348002506307743a452f0397024344
+    - 5010f8490b3f8e145a807a30dadb3e71
+    - 28862928bf388ba419b8eda254959db5
+    - 1789e754109b96f4e894fd746553cd0d
+    - c801af0d9f338cb4380987bf40a5a927
+    - 2c7745c84c6ce4947bf7d965e45bfa9f
+    - 675110cafdd248c4da4b429b5084d06f
+    - 4e996beca7e106347a59b516b8448b9a
+    - c0691b2ddabe0e54687f254c55c3cc95
+    - 8686c3f6fdb6ccf4aae670c61f6eb27f
+    - bfed9a5840ff1654cbc5c26775ad11af
+    - 3211d3c80d903f14c89c3b6c22feb925
+    - 797c52abd3081164092805a064e63792
+    - 901521c2a2a565c47b82be696bbe2613
+    - 69dc9c08c5a48194da55f4f0d8b06fd9
+    - b815252c228d02a48b9792296ca54099
+    - a314269a4a8d3034b8e32049108d0eba
+    - 508412b0d9f08084586c1e458737ba52
+    - b1a23f262a1cc67418d08e30194f0fc1
+    - 343835b506482744b806e9f9f3ae7fb6
+    - af96c28bdff84d34aa01824e994b1f65
+    - f694c00ce718b374b815e4715620275b
+    - 738ec233cb30c1d499cfe5a26c66f3d3
+    - abeab05a0cee1d94098ccd369e65ef2c
+    - 48333ca203359734484b640d24b6a6e0
+    - 6b822355928479448a4b1aacc55913a6
+    - 3bcf42f001d8f374dbf5c5dde0833ec1
+    - 6ac74d16f7f4c18459696665f0d3e5da
+    - c45a74401fd274a40a160ac5b6b857e4
+    - 3c0077fc60c35244e85bb7c815599439
+    - 63da282939dbcca429eccea235ed300b
+    - a8d2ea83e2fb93a418a0bf219f65b0bb
+    - be063dc2106348e408718aa67260f254
+    - e425a35949d666240beda65a8f2b4b05
+    - a6ee73d0f9f329549b57ad1933578763
+    - 82ff2d18da2e67b45ab4b28c9b778e80
+    - 4ea406d2c48fab249b1f62adf060306d
+    - 5fb22f42536e86741a5a6cde9bd2c24d
+    - 9771a568e54049b4cbac451e3d65c811
+    - 5c742d296599cfd438a99a09c584c2d6
+    - 2e1bd7abbd2ed6a4294f438d45fb4c32
+    - b99c1da7f8b785942880406db3670119
+    - 3f115e8e71609ec45b1ca3165003a9c3
+    - b8c848443b6b65341bb47c5850e405b1
+    - a512588e908b49149b839aa8b64126dc
+    - 84bfe55003aa65f43b507166ef1787e1
+    - 5be7f3ad47c6a044e8be238fa0c29b2d
+    - 3608344c204d57242a61cb3c08627e74
+    - 4c094492f7cf47b498b88a0669d66855
+    - 4013bfbeb7a070545bc32db2360ec78d
     spriteTextureTimeStamps:
     - 1659532294
     - 1659532294
@@ -8087,6 +8207,66 @@ MonoBehaviour:
     - 1659532296
     - 1659532296
     - 1659532296
+    - 1659532274
+    - 1659532274
+    - 1659532274
+    - 1659532268
+    - 1659532268
+    - 1659532268
+    - 1659532268
+    - 1659532268
+    - 1659532268
+    - 1659532270
+    - 1659532270
+    - 1659532268
+    - 1659532268
+    - 1659532268
+    - 1659532268
+    - 1659532268
+    - 1659532268
+    - 1659532268
+    - 1659532268
+    - 1659532268
+    - 1659532268
+    - 1659532268
+    - 1659532268
+    - 1659532268
+    - 1659532268
+    - 1659532268
+    - 1659532268
+    - 1661879122
+    - 1661879122
+    - 1661879122
+    - 1661879122
+    - 1661879122
+    - 1661879122
+    - 1661879122
+    - 1661878970
+    - 1661878970
+    - 1661878970
+    - 1661878970
+    - 1661878970
+    - 1661878970
+    - 1661878970
+    - 1661886076
+    - 1661886076
+    - 1661886076
+    - 1661886076
+    - 1661878800
+    - 1661881390
+    - 1661881390
+    - 1661881390
+    - 1661881390
+    - 1661881390
+    - 1661881390
+    - 1661881390
+    - 1661881390
+    - 1661881390
+    - 1661881390
+    - 1661881390
+    - 1661881390
+    - 1661881390
+    - 1661881390
     managedSpriteCollection: 0
     loadable: 0
     assetName: 

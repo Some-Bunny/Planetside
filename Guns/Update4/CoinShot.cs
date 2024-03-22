@@ -9,6 +9,7 @@ using MonoMod;
 using UnityEngine;
 using ItemAPI;
 using MonoMod.RuntimeDetour;
+using Alexandria.Assetbundle;
 
 namespace Planetside
 {
@@ -23,13 +24,24 @@ namespace Planetside
             gun.SetShortDescription("Accuracy Brings Power");
             gun.SetLongDescription("A weak handgun fitted with a small coin printer. Charge up to expel a shootable coin, at a high cost.\n\nOnce carried by a Gungeoneer with no name, despite never aiming for their target, would always walk out unscathed, their foes with lead between their eyes.");
 
-            gun.SetupSprite(null, "coinshot_idle_001", 8);
 
-            gun.SetAnimationFPS(gun.shootAnimation, 20);
-            gun.SetAnimationFPS(gun.reloadAnimation, 10);
-            gun.SetAnimationFPS(gun.idleAnimation, 1);
-            gun.SetAnimationFPS(gun.chargeAnimation, 6);
-            gun.SetAnimationFPS(gun.alternateShootAnimation, 13);
+            GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "coinshot_idle_001");
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
+            gun.sprite.SortingOrder = 1;
+
+            gun.idleAnimation = "coinshot_idle";
+            gun.shootAnimation = "coinshot_fire";
+            gun.reloadAnimation = "coinshot_reload";
+            gun.chargeAnimation = "coinshot_charge";
+            gun.alternateShootAnimation = "coinshot_altfire";
+
+            //gun.SetupSprite(null, "coinshot_idle_001", 8);
+
+            //gun.SetAnimationFPS(gun.shootAnimation, 20);
+            //gun.SetAnimationFPS(gun.reloadAnimation, 10);
+            //gun.SetAnimationFPS(gun.idleAnimation, 1);
+            //gun.SetAnimationFPS(gun.chargeAnimation, 6);
+            //gun.SetAnimationFPS(gun.alternateShootAnimation, 13);
 
             gun.gunSwitchGroup = (PickupObjectDatabase.GetById(384) as Gun).gunSwitchGroup;
             gun.muzzleFlashEffects = (PickupObjectDatabase.GetById(401) as Gun).muzzleFlashEffects;

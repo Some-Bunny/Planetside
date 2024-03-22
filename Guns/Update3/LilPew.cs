@@ -23,7 +23,7 @@ namespace Planetside
 			Game.Items.Rename("outdated_gun_mods:air_blaster", "psog:air_blaster");
 			gun.gameObject.AddComponent<LilPew>();
 			gun.SetShortDescription("Pump-Action");
-			gun.SetLongDescription("Fires slower shots the less shots you have in your clip. Reloading knocks danger back based on how full it was.\n\nThe future is now! Guns full of air, just like your local leaders!");
+			gun.SetLongDescription("Fires slower shots the less shots you have in your clip. Reloading knocks foes back based on how full it was.\n\nThe future is now! Guns full of air, just like your local leaders!");
 			gun.SetupSprite(null, "lilpew_idle_001", 11);
 			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 30);
 			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 11);
@@ -43,7 +43,7 @@ namespace Planetside
 				Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(gun.Volley.projectiles[0].projectiles[0]);
 				projectile.gameObject.SetActive(false);
 				gun.Volley.projectiles[i].projectiles[0] = projectile;
-				projectile.baseData.damage = 4.8f;
+				projectile.baseData.damage = 6f;
 				projectile.baseData.speed = 12f;
 				projectile.gameObject.AddComponent<AirBlasterProjectile>();
 				projectile.SetProjectileSpriteRight("lilpew_projectile", 8, 3, false, tk2dBaseSprite.Anchor.MiddleCenter, 8, 3);

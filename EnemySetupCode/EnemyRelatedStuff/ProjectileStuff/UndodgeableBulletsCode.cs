@@ -19,23 +19,24 @@ namespace Planetside
         {
             if (base.gameObject.GetComponent<Projectile>() != null)
             {
-                DepthLookupManager.AssignRendererToSortingLayer(base.GetComponent<Projectile>().sprite.renderer, DepthLookupManager.GungeonSortingLayer.FOREGROUND);
-                DepthLookupManager.UpdateRenderer(base.GetComponent<Projectile>().sprite.renderer);
-                DepthLookupManager.UpdateRendererWithWorldYPosition(base.GetComponent<Projectile>().sprite.renderer, 18);
+                var updateComp = base.gameObject.GetComponent<Projectile>();
+                DepthLookupManager.AssignRendererToSortingLayer(updateComp.sprite.renderer, DepthLookupManager.GungeonSortingLayer.FOREGROUND);
+                DepthLookupManager.UpdateRenderer(updateComp.sprite.renderer);
+                DepthLookupManager.UpdateRendererWithWorldYPosition(updateComp.sprite.renderer, 18);
 
 
-                base.gameObject.GetComponent<Projectile>().sprite.usesOverrideMaterial = true;
-                if (base.gameObject.GetComponent<Projectile>().spriteAnimator != null)
+                updateComp.sprite.usesOverrideMaterial = true;
+                if (updateComp.spriteAnimator != null)
                 {
-                    base.gameObject.GetComponent<Projectile>().spriteAnimator.sprite.usesOverrideMaterial = true;
-                    base.gameObject.GetComponent<Projectile>().spriteAnimator.renderer.material.shader = PlanetsideModule.InverseGlowShader;
-                    base.gameObject.GetComponent<Projectile>().spriteAnimator.renderer.material.SetFloat("_EmissiveColorPower", 4);
+                    updateComp.spriteAnimator.sprite.usesOverrideMaterial = true;
+                    updateComp.spriteAnimator.renderer.material.shader = PlanetsideModule.InverseGlowShader;
+                    updateComp.spriteAnimator.renderer.material.SetFloat("_EmissiveColorPower", 3);
                 }
-                base.gameObject.GetComponent<Projectile>().sprite.renderer.material.shader = PlanetsideModule.InverseGlowShader;
-                base.gameObject.GetComponent<Projectile>().sprite.renderer.material.SetFloat("_EmissiveColorPower", 4);
-                base.gameObject.GetComponent<Projectile>().sprite.renderer.material.SetFloat("_EmissivePower", 9);
+                updateComp.sprite.renderer.material.shader = PlanetsideModule.InverseGlowShader;
+                updateComp.sprite.renderer.material.SetFloat("_EmissiveColorPower", 3);
+                updateComp.sprite.renderer.material.SetFloat("_EmissivePower", 4);
 
-                if (base.gameObject.GetComponent<Projectile>().IsBlackBullet) { base.gameObject.GetComponent<Projectile>().sprite.renderer.material.SetFloat("_BlackBullet", -1); }
+                if (updateComp.IsBlackBullet) { updateComp.sprite.renderer.material.SetFloat("_BlackBullet", -1); }
             }
         }
         public void ForceHurtPlayer(PlayerController p, Projectile projectile) 

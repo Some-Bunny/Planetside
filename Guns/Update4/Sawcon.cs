@@ -54,7 +54,7 @@ namespace Planetside
 				Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(projectileModule.projectiles[0]);
 				projectile.gameObject.SetActive(false);
 				projectileModule.projectiles[0] = projectile;
-				projectile.baseData.damage = 10f;
+				projectile.baseData.damage = 8.5f;
 				projectile.AdditionalScaleMultiplier = 1f;
 				projectile.baseData.range *= 10;
 				projectile.baseData.speed *= 2.5f;

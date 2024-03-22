@@ -127,8 +127,10 @@ Shader "Shader Forge/NewShader" {
 ////// Lighting:
 ////// Emissive:
                 float4 _MainTex_copy = tex2D(_node_296,TRANSFORM_TEX(i.uv0, _node_296));
+                float node_1444 = 100.0;
+                float node_603 = (_MainTex_copy.a*(_MainTex_copy.a+partZ+node_1444+i.vertexColor.a)); // A
                 float4 node_1907 = tex2D(_node_296,TRANSFORM_TEX(i.uv0, _node_296));
-                float node_1859 = ((_MainTex_copy.a*(_MainTex_copy.a+partZ+100.0+i.vertexColor.a))-node_1907.a);
+                float node_1859 = (node_603-node_1907.a);
                 float3 emissive = float3(node_1859,node_1859,node_1859);
                 float3 finalColor = emissive;
                 return fixed4(finalColor,node_1859);

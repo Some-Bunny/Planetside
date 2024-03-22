@@ -48,7 +48,7 @@ namespace Planetside
 			gun.DefaultModule.shootStyle = ProjectileModule.ShootStyle.SemiAutomatic;
 			gun.DefaultModule.sequenceStyle = ProjectileModule.ProjectileSequenceStyle.Random;
 			gun.reloadTime = 1.7f;
-			gun.DefaultModule.cooldownTime = .5f;
+			gun.DefaultModule.cooldownTime = .75f;
 			gun.DefaultModule.numberOfShotsInClip = 5;
 			gun.SetBaseMaxAmmo(50);
 			gun.quality = PickupObject.ItemQuality.A;
@@ -59,7 +59,7 @@ namespace Planetside
 			FakePrefab.MarkAsFakePrefab(projectile.gameObject);
 			UnityEngine.Object.DontDestroyOnLoad(projectile);
 			gun.DefaultModule.projectiles[0] = projectile;
-			projectile.baseData.damage = 45f;
+			projectile.baseData.damage = 35f;
 			projectile.baseData.speed *= 3f;
 			projectile.AdditionalScaleMultiplier *= 0.75f;
 			projectile.shouldRotate = true;
@@ -95,8 +95,6 @@ namespace Planetside
 				"vertebraek47"
 			};
 			CustomSynergies.Add("Boring Eternity", mandatoryConsoleIDs, optionalConsoleIDs, false);
-
-
 
 			ItemIDs.AddToList(gun.PickupObjectId);
 		}

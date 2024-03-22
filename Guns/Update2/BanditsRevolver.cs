@@ -59,7 +59,7 @@ namespace Planetside
 			Projectile replacementProjectile = projectile1.projectile;
 			replacementProjectile.baseData.damage = 15;
 			replacementProjectile.gameObject.AddComponent<BanditsRevolverFinaleProjectile>();
-			replacementProjectile.baseData.speed *= 5f;
+			replacementProjectile.baseData.speed *= 3f;
 
 
 			OtherTools.EasyTrailComponent trail = replacementProjectile.gameObject.AddComponent<OtherTools.EasyTrailComponent>();
@@ -88,7 +88,7 @@ namespace Planetside
 			gun.reloadTime = 2.5f;
 			gun.DefaultModule.cooldownTime = 0.166f;
 			gun.DefaultModule.numberOfShotsInClip = 6;
-			gun.DefaultModule.angleVariance = 6f;
+			gun.DefaultModule.angleVariance = 2f;
 			gun.barrelOffset.transform.localPosition = new Vector3(1.125f, 0.5f, 0f);
 			gun.quality = PickupObject.ItemQuality.C;
 			gun.encounterTrackable.EncounterGuid = "Another Goddamn Risk Of Rain reference ";
@@ -110,7 +110,7 @@ namespace Planetside
 			projectile.transform.parent = gun.barrelOffset;
 			projectile.AdditionalScaleMultiplier *= 1f;
 			projectile.baseData.damage = 10f;
-			projectile.baseData.speed *= 2;
+			projectile.baseData.speed *= 1.4f;
 			BanditsRevolver.BanditsRevolverID = gun.PickupObjectId;
 
 			ItemIDs.AddToList(gun.PickupObjectId);

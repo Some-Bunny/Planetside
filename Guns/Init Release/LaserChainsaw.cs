@@ -13,6 +13,7 @@ using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
 using SaveAPI;
+using Alexandria.Assetbundle;
 
 namespace Planetside
 {
@@ -24,17 +25,24 @@ namespace Planetside
 			Gun gun = ETGMod.Databases.Items.NewGun("Laser Chainsaw", "laserchainsaw");
 			Game.Items.Rename("outdated_gun_mods:laser_chainsaw", "psog:laser_chainsaw");
 			var behav = gun.gameObject.AddComponent<LaserChainsaw>();
-			//behav.overrideNormalFireAudio = "Play_ENM_shelleton_beam_01";
 			behav.preventNormalFireAudio = true;
 			behav.preventNormalReloadAudio = true;
-
 			gun.SetShortDescription("KILL KILL KILL");
 			gun.SetLongDescription("SHRED EVERYTHING IN SIGHT.\n\nLEAVE NO WITNESSES.\n\nHOLD THE TRIGGER UNTIL ALL THAT'S LEFT IS BLOOD.");
 
-			gun.SetupSprite(null, "laserchainsaw_idle_001", 8);
+            GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "laserchainsaw_idle_001");
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
+            gun.sprite.SortingOrder = 1;
 
-			gun.SetAnimationFPS(gun.shootAnimation, 8);
-			gun.isAudioLoop = true;
+            gun.idleAnimation = "laserchainsaw_idle";
+            gun.shootAnimation = "laserchainsaw_fire";
+            gun.reloadAnimation = "laserchainsaw_reload";
+
+
+            //gun.SetupSprite(null, "laserchainsaw_idle_001", 8);
+
+            //gun.SetAnimationFPS(gun.shootAnimation, 8);
+            gun.isAudioLoop = true;
 			gun.AddProjectileModuleFrom(PickupObjectDatabase.GetById(86) as Gun, true, false);
 			gun.AddPassiveStatModifier(PlayerStats.StatType.Curse, 2f, StatModifier.ModifyMethod.ADDITIVE);
 			gun.AddCurrentGunStatModifier(PlayerStats.StatType.MovementSpeed, 1.3f, StatModifier.ModifyMethod.MULTIPLICATIVE);
@@ -44,7 +52,7 @@ namespace Planetside
 			gun.gunSwitchGroup = (PickupObjectDatabase.GetById(370) as Gun).gunSwitchGroup;
 
 
-			gun.DefaultModule.ammoCost = 10;
+            gun.DefaultModule.ammoCost = 10;
 			gun.DefaultModule.angleVariance = 0;
 			gun.DefaultModule.shootStyle = ProjectileModule.ShootStyle.Beam;
 			gun.DefaultModule.sequenceStyle = ProjectileModule.ProjectileSequenceStyle.Random;
@@ -58,8 +66,7 @@ namespace Planetside
 			gun.ammo = 500;
 			gun.gunClass = GunClass.BEAM;
 
-			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).wrapMode = tk2dSpriteAnimationClip.WrapMode.LoopSection;
-			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).loopStart = 1;
+
 
 			List<string> BeamAnimPaths = new List<string>()
 			{
@@ -78,39 +85,43 @@ namespace Planetside
 
 			//BULLET STATS
 			Projectile projectile = UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(86) as Gun).DefaultModule.projectiles[0]);
-
+    
 			BasicBeamController beamComp = projectile.GenerateBeamPrefab(
 				"Planetside/Resources/Beams/LaserChainsaw/chainsaw_mid_001",
 				new Vector2(5, 3),
-				new Vector2(0, 1),
+				new Vector2(1, 1),
 				BeamAnimPaths,
-				60,
-				//Impact
-				null,
-				60,
+				30,
+                //Impact
+                null,
+				30,
 				null,
 				null,
 				//End
 				BeamEndPaths,
-				60,
+				30,
 				new Vector2(5, 3),
-				new Vector2(0, 1),
-				//Beginning
+				new Vector2(1, 1),
+                //Beginning
+                null,
+				30,
 				null,
-				60,
 				null,
-				null
+				false,
+				false
 				);
+			
 
-			projectile.gameObject.SetActive(false);
-			FakePrefab.MarkAsFakePrefab(projectile.gameObject);
-			UnityEngine.Object.DontDestroyOnLoad(projectile);
+            projectile.gameObject.SetActive(false);
+
 			projectile.baseData.damage = 200f;
 			projectile.baseData.force *= 0.1f;
 			projectile.baseData.range = 3.5f;
 			projectile.baseData.speed *= 1f;
+			//projectile.ignoreDamageCaps = true;
 
-			beamComp.startAudioEvent = "Play_ENM_deathray_shot_01";
+
+            beamComp.startAudioEvent = "Play_ENM_deathray_shot_01";
 			beamComp.endAudioEvent = "Stop_ENM_deathray_loop_01";
 			beamComp.penetration = 100;
 			beamComp.boneType = BasicBeamController.BeamBoneType.Straight;
@@ -118,12 +129,17 @@ namespace Planetside
 			beamComp.gameObject.AddComponent<LaserChainsawProjectile>();
 			EmmisiveBeams emiss = beamComp.gameObject.AddComponent<EmmisiveBeams>();
 			emiss.EmissiveColorPower = 1.2f;
-			emiss.EmissivePower = 30;
+			emiss.EmissivePower = 25;
 
 			beamComp.SkipPostProcessing = false;
-			gun.DefaultModule.projectiles[0] = projectile;
+			
 
-			gun.quality = PickupObject.ItemQuality.S; //D
+
+            gun.DefaultModule.projectiles[0] = projectile;
+            FakePrefab.MarkAsFakePrefab(projectile.gameObject);
+            UnityEngine.Object.DontDestroyOnLoad(projectile);
+            projectile.gameObject.SetActive(false);
+            gun.quality = PickupObject.ItemQuality.S; //D
 			gun.encounterTrackable.EncounterGuid = "https://enterthegungeon.gamepedia.com/Modding/Some_Bunny%27s_Content_Pack";
 			ETGMod.Databases.Items.Add(gun, false, "ANY");
 			gun.SetupUnlockOnCustomFlag(CustomDungeonFlags.BEAT_A_BOSS_UNDER_A_SECOND, true);

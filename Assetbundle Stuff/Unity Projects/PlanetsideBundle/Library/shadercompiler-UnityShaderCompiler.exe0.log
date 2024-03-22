@@ -1,2 +1,6 @@
 Base path: D:/YooNiitee/2017.4.40f1/Editor/Data
 Cmd: initializeCompiler
+Cmd: preprocess
+  insize=11242 outsize=6469 ok=1
+Cmd: preprocess
+  insize=11240 outsize=6467 ok=1

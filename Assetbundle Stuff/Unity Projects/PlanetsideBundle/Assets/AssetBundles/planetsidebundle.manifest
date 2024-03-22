@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2295146711
+CRC: 4071107761
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 5532f2a885a07f8fbdf4919ebaf7341a
+    Hash: 2d162e9ab414a27104c8fbab6571a0b8
   TypeTreeHash:
     serializedVersion: 2
     Hash: 22f787423614ef7c34e2e3c797baf322
@@ -73,6 +73,7 @@ Assets:
 - Assets/FloorTextures/hollow_2.jpg
 - Assets/Amogus.prefab
 - Assets/FloorTextures/proper_1.jpg
+- Assets/3D Asses/texBeetleDiffuse.png
 - Assets/FloorTextures/keep_1.jpg
 - Assets/3D Asses/beam (2).obj
 - Assets/PerkparticleSystem.prefab
@@ -89,6 +90,7 @@ Assets:
 - Assets/FloorTextures/forge_2.jpg
 - Assets/Shader/WarpScroll.shader
 - Assets/FloorTextures/forge_1.jpg
+- Assets/3D Asses/Mesh.obj
 - Assets/perkParticleThatWorks.prefab
 - Assets/videos/UKRenderTexture.renderTexture
 - Assets/Particle Systems/TheperkParticle.prefab

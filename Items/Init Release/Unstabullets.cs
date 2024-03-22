@@ -99,7 +99,7 @@ namespace Planetside
 			catch (Exception ex)
 			{
 				ETGModConsole.Log(ex.Message, false);
-				ETGModConsole.Log("If you see this pop up, write a message in the comment section of ModWorkShop AND include a list of all items/guns you have/had during the run.");
+				//ETGModConsole.Log("If you see this pop up, write a message in the comment section of ModWorkShop AND include a list of all items/guns you have/had during the run.");
 			}
 		}
 		public AIActor GetNearestEnemy(List<AIActor> activeEnemies, Vector2 position, out float nearestDistance, string[] filter)

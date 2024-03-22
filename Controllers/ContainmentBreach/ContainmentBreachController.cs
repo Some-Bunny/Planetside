@@ -128,8 +128,10 @@ namespace Planetside
 
         public static void PostFloorgen(Dungeon dungeon)
         {
-            if (CurrentState == States.ALLOWED && AdvancedGameStatsManager.Instance.GetSessionStatValue(CustomTrackedStats.INFECTION_FLOORS_ACTIVATED) == 1)
-            {                
+            if (CurrentState == States.ALLOWED)// && AdvancedGameStatsManager.Instance.GetSessionStatValue(CustomTrackedStats.INFECTION_FLOORS_ACTIVATED) == 1)
+            {
+
+
                 dungeon.DungeonFloorName = GameUIRoot.Instance.GetComponent<dfLanguageManager>().GetValue(dungeon.DungeonFloorName) + "?";
                 dungeon.DungeonFloorLevelTextOverride = "Mixed Chamber";
                 var deco = dungeon.decoSettings;
@@ -280,6 +282,8 @@ namespace Planetside
         {
             if (CurrentState == States.ALLOWED && AdvancedGameStatsManager.Instance.GetSessionStatValue(CustomTrackedStats.INFECTION_FLOORS_ACTIVATED) == 1)
             {
+
+
                 SaveAPIManager.RegisterStatChange(CustomTrackedStats.INFECTION_FLOORS_ACTIVATED, 1);
 
                 CurrentState = States.ENABLED;

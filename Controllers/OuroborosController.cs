@@ -20,6 +20,7 @@ using Pathfinding;
 using NpcApi;
 using static tk2dSpriteCollectionDefinition;
 using Alexandria;
+using static ETGMod;
 
 namespace Planetside
 {
@@ -493,18 +494,15 @@ namespace Planetside
         public static void StartHookBehaviorSpeculator(Action<BehaviorSpeculator> orig, BehaviorSpeculator self)
 		{
 			orig(self);
-			if (OuroborosMode() == true)
+			if (OuroborosMode() == true && self != null)
             {
-				//if (self == null) { ETGModConsole.Log("self is NULL"); }
-                //if (self.aiActor == null) { ETGModConsole.Log("self.aiActor is NULL"); }
-
                 if (self != null && self.aiActor != null && !EliteBlackListDefault.Contains(self.aiActor.EnemyGuid) && EnemyIsValid(self.aiActor) == true)
                 {
                     if (UnityEngine.Random.value <= ChanceAccordingToGivenValues(0.05f, 0.75f, 50))
                     {
                         bool BossCheck = self.aiActor.healthHaver.IsBoss | self.aiActor.healthHaver.IsSubboss;
-                        float specialChance = ChanceAccordingToGivenValues(0.01f, 0.3f, 75);
-                        if (UnityEngine.Random.value <= specialChance && BossCheck == false)//if (UnityEngine.Random.value <= ChanceAccordingToGivenValues(0.03f, 0.1f, 50))
+                        float specialChance = ChanceAccordingToGivenValues(0.005f, 0.25f, 100);
+                        if (UnityEngine.Random.value <= specialChance && BossCheck == false)
                         {
                             var SpecialElite = specialEliteTypes[UnityEngine.Random.Range(0, specialEliteTypes.Count)];
 							if (self.aiActor.gameObject.GetComponent(SpecialElite) == null)
@@ -883,7 +881,97 @@ namespace Planetside
 
 		private float Timer;
 	}
-	public class FrenzyElite : BasicEliteType
+    public class VolatileElite : BasicEliteType
+    {
+        public override float DamageMultiplier => 1.1f;
+        public override float HealthMultiplier => 1;
+        public override float CooldownMultiplier => 0.9f;
+        public override float MovementSpeedMultiplier => 0.7f;
+        public override Color EliteOutlineColor => new Color(50, 5, 0);
+        public override Color EliteParticleColor => new Color(50, 5, 0);
+        public override Color SecondaryEliteParticleColor => new Color(50, 5, 0);
+        public override List<string> EnemyBlackList => new List<string>() 
+		{
+               EnemyGUIDs.Ammoconda_Ball_GUID,
+               EnemyGUIDs.Blobulin_GUID,
+               EnemyGUIDs.Blobuloid_GUID,
+               EnemyGUIDs.Poisbulin_GUID,
+               EnemyGUIDs.Poisbuloiud_GUID,
+               EnemyGUIDs.Mine_Flayers_Bell_GUID,
+               EnemyGUIDs.Mine_Flayers_Claymore_GUID,
+               EnemyGUIDs.Flesh_Cube_GUID,
+               EnemyGUIDs.Lead_Cube_GUID,
+                              EnemyGUIDs.Bullat_GUID,
+                              EnemyGUIDs.Shotgat_GUID,
+                              EnemyGUIDs.Spirat_GUID,
+                              EnemyGUIDs.Grenat_GUID,
+
+        };
+        public override List<ActorEffectResistance> DebuffImmunities => new List<ActorEffectResistance> { new ActorEffectResistance() { resistAmount = 1, resistType = EffectResistanceType.Fire } };
+        public override void Start()
+        {
+            base.Start();
+            var cm = UnityEngine.Object.Instantiate<GameObject>((GameObject)BraveResources.Load("Global Prefabs/_ChallengeManager", ".prefab"));
+            this.Rocket = (cm.GetComponent<ChallengeManager>().PossibleChallenges.Where(c => c.challenge is SkyRocketChallengeModifier).First().challenge as SkyRocketChallengeModifier).Rocket;
+            UnityEngine.Object.Destroy(cm);
+			if (IsBoss)
+			{
+				Cooldown = 5;
+			}
+           
+        }
+		public GameObject Rocket;
+        public override void OnPreDeath(Vector2 obj)
+        {
+			SpawnRocket(this.aiActor.sprite.WorldCenter);
+			float t = BraveUtility.RandomAngle();
+            for (int i = 0; i < 3; i++)
+            {
+                SpawnRocket(this.aiActor.sprite.WorldCenter + MathToolbox.GetUnitOnCircle((120 * i) + t, 4), null, 1);
+
+            }
+        }
+        public float Cooldown = 10;
+        private float Timer = 3;
+
+        public void SpawnRocket(Vector2 positionToTarget, SpeculativeRigidbody targetBody = null, float HangTime = 0)
+		{
+
+            SkyRocket component = UnityEngine.Object.Instantiate<GameObject>(this.Rocket, aiActor.sprite.WorldCenter, Quaternion.identity).GetComponent<SkyRocket>();
+			component.Target = targetBody;//this.aiActor.TargetRigidbody;
+            tk2dSprite componentInChildren = component.GetComponentInChildren<tk2dSprite>();
+            component.transform.position = component.transform.position.WithY(component.transform.position.y - componentInChildren.transform.localPosition.y);
+            component.ExplosionData.ignoreList.Add(this.aiActor.specRigidbody);
+			component.IgnoreExplosionQueues = true;
+			component.HangTime = HangTime;
+            if (targetBody == null)
+			{
+                component.TargetVector2 = positionToTarget;
+            }
+        }
+
+        public override void OnDamaged(float resultValue, float maxValue, CoreDamageTypes damageTypes, DamageCategory damageCategory, Vector2 damageDirection)
+        {
+            if (Timer == 0 | Timer <= 0)
+            {
+                Timer = Cooldown;
+                SpawnRocket(Vector2.zero, this.aiActor.TargetRigidbody);
+
+            }
+        }
+        public override void Update()
+        {
+            base.Update();
+            if (Timer >= 0) { Timer -= BraveTime.DeltaTime; }
+
+        }
+
+        private void HealthHaver_OnPreDeath(Vector2 obj)
+        {
+        }
+    }
+
+    public class FrenzyElite : BasicEliteType
 	{
         public override float DamageMultiplier => 1.35f;
         public override float HealthMultiplier => 1;
@@ -1045,8 +1133,7 @@ namespace Planetside
 			base.aiActor.knockbackDoer.SetImmobile(true, "Elite.");
 			if (IsBoss == true)
 			{
-				Cooldown = 20f;
-
+				Cooldown = 15f;
             }
         }
 		public float Cooldown = 5;
@@ -1333,9 +1420,9 @@ namespace Planetside
 { 
 	public class DetonatorElite : SpecialEliteType
     {
-        public override float HealthMultiplier => 5f;
+        public override float HealthMultiplier => 3f;
         public override float CooldownMultiplier => 0.5f;
-        public override float MovementSpeedMultiplier => 0.5f;
+        public override float MovementSpeedMultiplier => 0.7f;
         public override Color EliteOutlineColor => Color.red;
         public override Color EliteParticleColor => Color.red;
         public override Color SecondaryEliteParticleColor => Color.red;
@@ -1411,12 +1498,12 @@ namespace Planetside
 {
     public class VoidElite : SpecialEliteType
     {
-        public override float HealthMultiplier => 1.1f;
-        public override float CooldownMultiplier => 1.1f;
-        public override float MovementSpeedMultiplier => 1f;
+        public override float HealthMultiplier => 1.2f;
+        public override float CooldownMultiplier => 0.8f;
+        public override float MovementSpeedMultiplier => 1.1f;
         public override Color EliteOutlineColor => Color.black;
-        public override Color EliteParticleColor => Color.black;
-        public override Color SecondaryEliteParticleColor => Color.black;
+        public override Color EliteParticleColor => new Color(5, 5, 5);
+        public override Color SecondaryEliteParticleColor => new Color(5,5,5);
         public override List<string> EnemyBlackList => new List<string>()
         {
 
@@ -1451,6 +1538,19 @@ namespace Planetside
             base.Start();
 			base.aiActor.LocalTimeScale *= 0.9f;
 			base.aiActor.SetIsFlying(true, "Void", true, true);
+			base.aiActor.gameObject.layer = 27;
+			var image = base.aiActor.AddComponent<ImprovedAfterImage>();
+			image.UseTargetLayer = true;
+			image.TargetLayer = 22;
+			if (this.aiActor.aiShooter != null)
+			{
+				this.aiActor.aiShooter.ToggleGunAndHandRenderers(false, "spookyGhost");
+
+            }
+            image.dashColor = new Color(1,1,1,1);
+			image.shadowLifetime = 10;
+            image.shadowTimeDelay = 0.5f;
+
         }
         public override void OnPreDeath(Vector2 obj)
         {
@@ -1474,6 +1574,90 @@ namespace Planetside
         }
     }
 }
+
+namespace Planetside
+{
+    public class BlightedElite : SpecialEliteType
+    {
+        public override float HealthMultiplier => 2f;
+        public override float CooldownMultiplier => 1f;
+        public override float MovementSpeedMultiplier => 1f;
+        public override Color EliteOutlineColor => new Color(2, 2, 2);
+        public override Color EliteParticleColor => new Color(2, 2, 2);
+        public override Color SecondaryEliteParticleColor => new Color(2, 2, 2);
+        public override List<string> EnemyBlackList => new List<string>()
+        {
+
+            EnemyGuidDatabase.Entries["mountain_cube"],
+            EnemyGuidDatabase.Entries["lead_cube"],
+            EnemyGuidDatabase.Entries["flesh_cube"],
+
+            EnemyGuidDatabase.Entries["brown_chest_mimic"],
+
+            EnemyGuidDatabase.Entries["brown_chest_mimic"],
+            EnemyGuidDatabase.Entries["blue_chest_mimic"],
+            EnemyGuidDatabase.Entries["green_chest_mimic"],
+            EnemyGuidDatabase.Entries["red_chest_mimic"],
+            EnemyGuidDatabase.Entries["black_chest_mimic"],
+            EnemyGuidDatabase.Entries["rat_chest_mimic"],
+            EnemyGuidDatabase.Entries["pedestal_mimic"],
+            EnemyGuidDatabase.Entries["wall_mimic"],
+
+            EnemyGuidDatabase.Entries["misfire_beast"],
+
+            EnemyGuidDatabase.Entries["shambling_round"],
+            EnemyGuidDatabase.Entries["killithid"],
+        };
+
+        public override List<ActorEffectResistance> DebuffImmunities => new List<ActorEffectResistance> {
+            new ActorEffectResistance() { resistAmount = 1, resistType = EffectResistanceType.Freeze },
+            new ActorEffectResistance() { resistAmount = 1, resistType = EffectResistanceType.Charm },
+            new ActorEffectResistance() { resistAmount = 1, resistType = EffectResistanceType.Fire },
+            new ActorEffectResistance() { resistAmount = 1, resistType = EffectResistanceType.Poison }};
+        public override void Start()
+        {
+			var newList = new List<Type>();
+			foreach (var entry in OuroborosController.basicEliteTypes)
+			{
+				newList.Add(entry);
+			}
+
+			for (int i = 0; i < 3; i++)
+			{
+                var elite = newList[UnityEngine.Random.Range(0, newList.Count)];
+                var t = (this.aiActor.gameObject.AddComponent(elite) as BasicEliteType);
+                t.DoParticles = false;
+				switch (i)
+				{
+					case (0):
+						OverrideEliteParticleColor = t.EliteParticleColor;
+                    break;
+                    case (1):
+                        OverrideSecondaryEliteParticleColor = t.SecondaryEliteParticleColor;
+                        break;
+                    case (2):
+                        OverrideEliteOutlineColor = t.EliteOutlineColor * 5;
+                        break;
+					default:
+						break;
+                }
+			
+                newList.Remove(elite);
+            }
+            base.Start();
+
+        }
+        public override void OnPreDeath(Vector2 obj)
+        {
+
+        }
+        public override void OnDamaged(float resultValue, float maxValue, CoreDamageTypes damageTypes, DamageCategory damageCategory, Vector2 damageDirection)
+        {
+
+        }
+    }
+}
+
 
 
 
@@ -1530,14 +1714,10 @@ namespace Planetside
 		{
 			if (Timer == 0 | Timer <= 0)
 			{
-				Timer = 6f;
+				Timer = UnityEngine.Random.Range(2.5f, 7f);
 				if (base.aiActor != null && base.aiActor.GetAbsoluteParentRoom() != null)
 				{
-					var obj = UnityEngine.Object.Instantiate<GameObject>(StaticVFXStorage.TeleportVFX, base.aiActor.sprite.WorldCenter, Quaternion.identity);
-					Destroy(obj, 2);
-					CellArea area = base.aiActor.ParentRoom.area;
-					DoTeleport();
-                    base.aiActor.behaviorSpeculator.Stun(0.35f);
+					this.StartCoroutine(DoTeleports());
                 }
             }
 		}
@@ -1550,6 +1730,25 @@ namespace Planetside
         public float MinDistanceFromPlayer = 6;
         public float MaxDistanceFromPlayer = 11;
 		public bool AvoidWalls = true;
+
+		public IEnumerator DoTeleports()
+		{
+			int c = UnityEngine.Random.Range(1, 4);
+			float e = 0;
+			for (int i = 0; i < c; i++)
+			{
+				e = 0;
+				while (e < 0.15f)
+				{
+                    e += BraveTime.DeltaTime;
+					yield return null;
+                }
+                var obj = UnityEngine.Object.Instantiate<GameObject>(StaticVFXStorage.TeleportVFX, base.aiActor.sprite.WorldCenter, Quaternion.identity);
+                Destroy(obj, 2);
+                DoTeleport();
+                base.aiActor.behaviorSpeculator.Stun(0.2f);
+            }
+        }
 
         private void DoTeleport()
         {
@@ -1703,6 +1902,9 @@ namespace Planetside
 		private float Timer;
 	}
 }
+
+
+
 namespace Planetside
 {
 	public abstract class BasicEliteType : BraveBehaviour
@@ -1718,7 +1920,13 @@ namespace Planetside
 		public abstract Color SecondaryEliteParticleColor { get; }
 		public abstract List<string> EnemyBlackList {get;}
 
-		public bool IsBoss = false;
+		public Color? OverrideEliteParticleColor;
+		public Color? OverrideSecondaryEliteParticleColor;
+		public Color? OverrideEliteOutlineColor;
+
+
+        public bool IsBoss = false;
+		public bool DoParticles = true;
 		public virtual void Start()
 		{
 			if (!EnemyBlackList.Contains(base.aiActor.EnemyGuid) && EnemyBlackList != null)
@@ -1769,31 +1977,35 @@ namespace Planetside
 				{
 					if (!base.aiActor.healthHaver.IsDead && outlineMaterial1 != null)
 					{
-						outlineMaterial1.SetColor("_OverrideColor", EliteOutlineColor);
+						outlineMaterial1.SetColor("_OverrideColor", OverrideEliteOutlineColor != null ? OverrideEliteOutlineColor.Value : EliteOutlineColor);
 					}
 				}
-				if (base.aiActor.sprite && !GameManager.Instance.IsPaused && (UnityEngine.Random.value > 0.5f))
+				if (DoParticles == true)
 				{
-					Vector3 vector = base.aiActor.sprite.WorldBottomLeft.ToVector3ZisY(0);
-					Vector3 vector2 =  base.aiActor.sprite.WorldTopRight.ToVector3ZisY(0);
-					Vector3 position = new Vector3(UnityEngine.Random.Range(vector.x, vector2.x), UnityEngine.Random.Range(vector.y, vector2.y), UnityEngine.Random.Range(vector.z, vector2.z));
-					ParticleSystem particleSystem = ParticleSystem;
-					var trails = particleSystem.trails;
-					trails.worldSpace = false;
-					var main = particleSystem.main;
-					main.startColor = new ParticleSystem.MinMaxGradient(EliteParticleColor != null ? EliteParticleColor : Color.white, SecondaryEliteParticleColor != null ? SecondaryEliteParticleColor : Color.white);
-					ParticleSystem.EmitParams emitParams = new ParticleSystem.EmitParams
-					{
-						position = position.WithZ(150),
-						randomSeed = (uint)UnityEngine.Random.Range(1, 1000),
-						
-					};
-					var emission = particleSystem.emission;
-					emission.enabled = false;
-					particleSystem.gameObject.SetActive(true);
-					particleSystem.Emit(emitParams, 1);
-				}
-			}			
+                    if (base.aiActor.sprite && !GameManager.Instance.IsPaused && (UnityEngine.Random.value > 0.5f))
+                    {
+                        Vector3 vector = base.aiActor.sprite.WorldBottomLeft.ToVector3ZisY(0);
+                        Vector3 vector2 = base.aiActor.sprite.WorldTopRight.ToVector3ZisY(0);
+                        Vector3 position = new Vector3(UnityEngine.Random.Range(vector.x, vector2.x), UnityEngine.Random.Range(vector.y, vector2.y), UnityEngine.Random.Range(vector.z, vector2.z));
+                        ParticleSystem particleSystem = ParticleSystem;
+                        var trails = particleSystem.trails;
+                        trails.worldSpace = false;
+                        var main = particleSystem.main;
+                        main.startColor = new ParticleSystem.MinMaxGradient((OverrideEliteParticleColor != null ? OverrideEliteParticleColor.Value : EliteParticleColor != null ? EliteParticleColor : Color.white), ((OverrideSecondaryEliteParticleColor != null ? OverrideSecondaryEliteParticleColor.Value : SecondaryEliteParticleColor != null ? SecondaryEliteParticleColor : Color.white)));
+                        ParticleSystem.EmitParams emitParams = new ParticleSystem.EmitParams
+                        {
+                            position = position.WithZ(150),
+                            randomSeed = (uint)UnityEngine.Random.Range(1, 1000),
+
+                        };
+                        var emission = particleSystem.emission;
+                        emission.enabled = false;
+                        particleSystem.gameObject.SetActive(true);
+                        particleSystem.Emit(emitParams, 1);
+                    }
+
+                }
+            }			
 		}
 	}
 }
@@ -1811,7 +2023,12 @@ namespace Planetside
 		public abstract Color SecondaryEliteParticleColor { get; }
 		public abstract List<string> EnemyBlackList { get; }
 
-		public virtual void Start()
+        public Color? OverrideEliteParticleColor;
+        public Color? OverrideSecondaryEliteParticleColor;
+        public Color? OverrideEliteOutlineColor;
+        public bool DoParticles = true;
+
+        public virtual void Start()
         {
 			if (!EnemyBlackList.Contains(base.aiActor.EnemyGuid) && EnemyBlackList != null)
 			{
@@ -1853,7 +2070,7 @@ namespace Planetside
 						outlineMaterial1.SetColor("_OverrideColor", EliteOutlineColor);
 					}
 				}
-				if (base.aiActor.sprite && !GameManager.Instance.IsPaused && (UnityEngine.Random.value > 0.5f))
+				if (base.aiActor.sprite && !GameManager.Instance.IsPaused && (UnityEngine.Random.value > 0.5f) && DoParticles == true)
 				{
 					Vector3 vector = base.aiActor.sprite.WorldBottomLeft.ToVector3ZisY(0);
 					Vector3 vector2 = base.aiActor.sprite.WorldTopRight.ToVector3ZisY(0);
@@ -1862,8 +2079,8 @@ namespace Planetside
 					var trails = particleSystem.trails;
 					trails.worldSpace = false;
 					var main = particleSystem.main;
-					main.startColor = new ParticleSystem.MinMaxGradient(EliteParticleColor != null ? EliteParticleColor : Color.white, SecondaryEliteParticleColor != null ? SecondaryEliteParticleColor : Color.white);
-					ParticleSystem.EmitParams emitParams = new ParticleSystem.EmitParams
+                    main.startColor = new ParticleSystem.MinMaxGradient((OverrideEliteParticleColor != null ? OverrideEliteParticleColor.Value : EliteParticleColor != null ? EliteParticleColor : Color.white), ((OverrideSecondaryEliteParticleColor != null ? OverrideSecondaryEliteParticleColor.Value : SecondaryEliteParticleColor != null ? SecondaryEliteParticleColor : Color.white)));
+                    ParticleSystem.EmitParams emitParams = new ParticleSystem.EmitParams
 					{
 						position = position,
 						randomSeed = (uint)UnityEngine.Random.Range(1, 1000)

@@ -78,17 +78,22 @@ namespace Planetside
 				float currentHealth = otherRigidbody.healthHaver.GetCurrentHealth();
 				if (currentHealth > num)
 				{
-					float damage = myRigidbody.projectile.baseData.damage;
-					myRigidbody.projectile.baseData.damage *= 2.5f;
-					GameManager.Instance.StartCoroutine(this.ChangeProjectileDamage(myRigidbody.projectile, damage));
-					myRigidbody.projectile.OnHitEnemy += OHE;
-                    AkSoundEngine.PostEvent("Play_ITM_Crisis_Stone_Impact_01", myRigidbody.gameObject);
-                    AkSoundEngine.PostEvent("Play_obj_vent_break_01", myRigidbody.gameObject);
 
-                    if (base.Owner.PlayerHasActiveSynergy("Shattering Justice"))
-					{
+                    if (myRigidbody && myRigidbody.projectile != null)
+                    {
+                        float damage = myRigidbody.projectile.baseData.damage;
+
+                        myRigidbody.projectile.baseData.damage *= 2.5f;
+                        GameManager.Instance.StartCoroutine(this.ChangeProjectileDamage(myRigidbody.projectile, damage));
+                        myRigidbody.projectile.OnHitEnemy += OHE;
+                        AkSoundEngine.PostEvent("Play_ITM_Crisis_Stone_Impact_01", myRigidbody.gameObject);
                         AkSoundEngine.PostEvent("Play_obj_vent_break_01", myRigidbody.gameObject);
-                        otherRigidbody.aiActor.ApplyEffect(DebuffLibrary.brokenArmor, 1f, null);
+
+                        if (base.Owner.PlayerHasActiveSynergy("Shattering Justice"))
+                        {
+                            AkSoundEngine.PostEvent("Play_obj_vent_break_01", myRigidbody.gameObject);
+                            otherRigidbody.aiActor.ApplyEffect(DebuffLibrary.brokenArmor, 1f, null);
+                        }
                     }
 				}
 			}
@@ -104,7 +109,7 @@ namespace Planetside
 
         private IEnumerator ChangeProjectileDamage(Projectile bullet, float oldDamage)
 		{
-			yield return new WaitForSeconds(0.1f);
+			yield return null;
 			if (bullet != null)
 			{
 				bullet.baseData.damage = oldDamage;

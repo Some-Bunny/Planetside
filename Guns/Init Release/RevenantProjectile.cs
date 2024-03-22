@@ -29,6 +29,16 @@ namespace Planetside
             this.projectile = base.GetComponent<Projectile>();
             if (this.projectile)
             {
+                projectile.BlackPhantomDamageMultiplier *= 3;
+                projectile.ignoreDamageCaps = true;
+                float num = 1;
+                GameLevelDefinition lastLoadedLevelDefinition = GameManager.Instance.GetLastLoadedLevelDefinition();
+                if (lastLoadedLevelDefinition != null)
+                {
+                    num = lastLoadedLevelDefinition.enemyHealthMultiplier - 1;
+                }
+                projectile.baseData.damage = projectile.baseData.damage * (num + 1);
+
                 try
                 {
                     var player = this.projectile.Owner as PlayerController;

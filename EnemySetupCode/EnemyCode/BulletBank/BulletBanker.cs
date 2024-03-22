@@ -633,7 +633,7 @@ namespace Planetside
                     new AttackBehaviorGroup.AttackGroupItem()
                     {
 
-                    Probability = 2f,
+                    Probability = 0f,
                     Behavior = new ShootBehavior{
                     ShootPoint = m_CachedGunAttachPoint,
                     BulletScript = new CustomBulletScriptSelector(typeof(HealScript)),

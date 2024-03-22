@@ -409,10 +409,10 @@ namespace Planetside
 				lightning.transform.position = base.Owner.transform.position + new Vector3(0, 1.25f);
 
 				ImprovedAfterImage image = lightning.AddComponent<ImprovedAfterImage>();
-				image.dashColor = Color.red;
+				image.dashColor = new Color(0.7f, 0,0, 1);
 				image.spawnShadows = true;
-				image.shadowLifetime = 1;
-				image.shadowTimeDelay = 0.025f;
+				image.shadowLifetime = 1.25f;
+				image.shadowTimeDelay = 0.1f;
 
 				DeathWarrantController controller = lightning.AddComponent<DeathWarrantController>();
 				controller.player = base.Owner;

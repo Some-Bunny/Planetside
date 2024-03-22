@@ -45,7 +45,8 @@ namespace Planetside
                      ChallengeBuilder.ChallengeManagerPrefab.FindChallenge<BestForLastChallengeModifier>().challenge,
 
                 }, null, null, true, true);
-                
+                Debug.Log("Finished ChallengeModeExtraChallenges setup without failure!");
+
             }
             catch (Exception e)
             {

@@ -624,8 +624,8 @@ namespace Planetside
                 public override IEnumerator Top()
                 {
                     base.ManualControl = true;
-                    this.Projectile.collidesOnlyWithPlayerProjectiles = true;
-                    this.Projectile.collidesWithProjectiles = true;
+                    //this.Projectile.collidesOnlyWithPlayerProjectiles = true;
+                    //this.Projectile.collidesWithProjectiles = true;
                     this.Projectile.UpdateCollisionMask();
                     Vector2 centerPosition = base.Position;
                     float radius = 0f;

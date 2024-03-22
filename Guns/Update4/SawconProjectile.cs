@@ -157,7 +157,7 @@ namespace Planetside
                     location = Vector3.Lerp(sprite.WorldCenter + startPosition, sprite.WorldCenter, tLerp);
 
                     objectToLookOutFor.transform.position = location;
-                    parent.healthHaver.ApplyDamage((Damage * BraveTime.DeltaTime) * (1 + tLerp), this.transform.PositionVector2(), "saw");
+                    parent.healthHaver.ApplyDamage((Damage * BraveTime.DeltaTime) * (0.7f + tLerp), this.transform.PositionVector2(), "saw");
                     GlobalSparksDoer.DoSingleParticle(objectToLookOutFor.GetComponentInChildren<tk2dBaseSprite>().WorldCenter, MathToolbox.GetUnitOnCircle(VelAngle + UnityEngine.Random.Range(-10, 10), 10), null, null, null, GlobalSparksDoer.SparksType.BLOODY_BLOOD);
                     GlobalSparksDoer.DoSingleParticle(objectToLookOutFor.GetComponentInChildren<tk2dBaseSprite>().WorldCenter, MathToolbox.GetUnitOnCircle((VelAngle - 180) + UnityEngine.Random.Range(-10, 10), 10), null, null, null, GlobalSparksDoer.SparksType.BLOODY_BLOOD);
                 }
