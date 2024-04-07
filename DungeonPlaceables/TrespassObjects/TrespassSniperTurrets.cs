@@ -31,6 +31,9 @@ namespace Planetside
         public IEnumerator FrameDelay()
         {
             yield return null;
+            yield return null;
+            yield return null;
+
             if (laserPointer == null)
             {
                 laserPointer = SpawnManager.SpawnVFX((GameObject)BraveResources.Load("Global VFX/VFX_LaserSight_Enemy"), true);

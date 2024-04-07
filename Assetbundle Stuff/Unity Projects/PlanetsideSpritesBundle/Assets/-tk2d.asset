@@ -6991,6 +6991,7 @@ MonoBehaviour:
     - coinshot_reload_012
     - coinshot_reload_013
     - coinshot_reload_014
+    - hammerofstorms_ammonomicon_001
     spriteTextureGUIDs:
     - 34ca97dcff305fd468502cf49047e0ac
     - 1971f743e38664e4c9c89f1d06cd9449
@@ -7629,6 +7630,7 @@ MonoBehaviour:
     - 3608344c204d57242a61cb3c08627e74
     - 4c094492f7cf47b498b88a0669d66855
     - 4013bfbeb7a070545bc32db2360ec78d
+    - 456609dca1ba435429c98d03c5093ed7
     spriteTextureTimeStamps:
     - 1659532294
     - 1659532294
@@ -8267,6 +8269,7 @@ MonoBehaviour:
     - 1661881390
     - 1661881390
     - 1661881390
+    - 1711120822.40049
     managedSpriteCollection: 0
     loadable: 0
     assetName: 

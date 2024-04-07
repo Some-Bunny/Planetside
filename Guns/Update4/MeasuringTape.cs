@@ -74,7 +74,7 @@ namespace Planetside
                 projectile.gameObject.SetActive(false);
                 FakePrefab.MarkAsFakePrefab(projectile.gameObject);
                 UnityEngine.Object.DontDestroyOnLoad(projectile);
-                projectile.baseData.damage = 24f;
+                projectile.baseData.damage = 30f;
                 projectile.baseData.force = 2f;
                 projectile.baseData.range *= 50;
                 projectile.baseData.speed *= 0.66f;

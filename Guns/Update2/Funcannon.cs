@@ -102,7 +102,7 @@ namespace Planetside
 		private void Update()
 		{
 			this.elapsed += BraveTime.DeltaTime;
-			if (this.elapsed > 0.05f)
+			if (this.elapsed > 0.04f)
 			{
 				elapsed = 0;
                 this.SpawnProjectile(this.projectileToSpawn, this.m_projectile.sprite.WorldCenter,  UnityEngine.Random.Range(-180, 180), null);

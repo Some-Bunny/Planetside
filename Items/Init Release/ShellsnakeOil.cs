@@ -75,7 +75,7 @@ namespace Planetside
 
         public static bool Can(ShopItemController s)
         {
-            if (s.gameObject.GetComponent<ShellsnakeOil.RandomBoolComp>().rng < 0.2f)
+            if (s.gameObject.GetComponent<ShellsnakeOil.RandomBoolComp>().rng < 0.33f)
             {
                 return true;
             }

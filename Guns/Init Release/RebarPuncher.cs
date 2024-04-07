@@ -71,7 +71,7 @@ namespace Planetside
 			gun.DefaultModule.projectiles[0] = projectile2;
 			projectile2.baseData.damage = 45f;
 			projectile2.baseData.speed *= 1f;
-			projectile2.baseData.force *= 1f;
+			projectile2.baseData.force *= 5f;
 			projectile2.baseData.range *= 100f;
 			projectile2.transform.parent = gun.barrelOffset;
 			projectile2.HasDefaultTint = true;

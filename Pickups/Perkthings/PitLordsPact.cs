@@ -21,7 +21,7 @@ namespace Planetside
             this.ItemSacrificablePerFloor = 1;
 
             this.TablesSarificeBonusMin = 3;
-            this.TablesSarificeBonusMax = 7;
+            this.TablesSarificeBonusMax = 6;
             this.TablesSarificeChance = 0.2f;
 
             this.SelfSacrificeWithPitLordAmuletCap = 3;
@@ -50,15 +50,16 @@ namespace Planetside
                     List<AIActor> activeEnemies = player.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
                     if (activeEnemies != null && activeEnemies.Count >= 0)
                     {
-                        foreach (AIActor ai in activeEnemies)
+                        for (int i = activeEnemies.Count - 1; i > -1; i--)
                         {
-                            if (ai.specRigidbody != null && ai != null)
+                            var ai = activeEnemies[i];
+                            if (ai != null && ai.specRigidbody != null)
                             {
-                                if (EnemyIsOverPit(ai) == true && ai != null && !ai.healthHaver.IsDead && !ai.IsFalling && ai.healthHaver != null && ai.isActiveAndEnabled == true)
+                                if (EnemyIsOverPit(ai) == true && !ai.healthHaver.IsDead && !ai.IsFalling && ai.healthHaver != null && ai.isActiveAndEnabled == true)
                                 {
                                     ai.healthHaver.ApplyDamage(EnemyAbovePitDamage * BraveTime.DeltaTime, Vector2.zero, "Pit Lords Wrath", CoreDamageTypes.None, DamageCategory.Environment, false, null, false);
                                 }
-                            }              
+                            }
                         }
                     }
                 }
@@ -69,9 +70,10 @@ namespace Planetside
         public bool EnemyIsOverPit(AIActor aIActor)
         {
             if (aIActor == null) { return false; }
+            if (GameManager.Instance.Dungeon == null) { return false; }
+
 
             Vector2 v = aIActor.specRigidbody == null ? aIActor.sprite.WorldCenter : aIActor.specRigidbody.GroundPixelCollider != null ? aIActor.specRigidbody.GroundPixelCollider.UnitCenter : aIActor.sprite.WorldCenter;
-            if (GameManager.Instance.Dungeon == null) { return false; }
             return GameManager.Instance.Dungeon.CellSupportsFalling(v);
         }
 
@@ -88,7 +90,6 @@ namespace Planetside
 
             this.ItemSacrificablePerFloor++;
 
-            this.TablesSarificeChance += 0.05f;
             this.TablesSarificeBonusMin++;
             this.TablesSarificeBonusMax++;
         }
@@ -529,8 +530,6 @@ namespace Planetside
                     if (pact != null)
                     {
                         SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.PITLORDPACT_FLAG_ITEM, true);
-
-
                         if (pact.AmountOfItemsSacrificed < pact.ItemSacrificablePerFloor)
                         {
                             pact.AmountOfItemsSacrificed++;
@@ -653,7 +652,7 @@ namespace Planetside
                                 switch (quality)
                                 {
                                     case PickupObject.ItemQuality.D:
-                                        moneyTogive = 10;
+                                        moneyTogive = 8;
                                         break;
                                     case PickupObject.ItemQuality.C:
                                         moneyTogive = 16;

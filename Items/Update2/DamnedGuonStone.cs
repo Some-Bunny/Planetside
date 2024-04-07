@@ -64,9 +64,6 @@ namespace Planetside
 				yeah.spawnShadows = true;
 				yeah.shadowTimeDelay = 0.1f;
 				yeah.shadowLifetime = 0.5f;
-				//UnityEngine.Object.DontDestroyOnLoad(gameObject);
-				//FakePrefab.MarkAsFakePrefab(gameObject);
-				//gameObject.SetActive(false);
 			}
 		}
 

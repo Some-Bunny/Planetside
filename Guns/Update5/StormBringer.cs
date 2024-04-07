@@ -29,7 +29,7 @@ namespace Planetside
 			GunExt.SetShortDescription(gun, "Royal");
 			GunExt.SetLongDescription(gun, "A bad replica of the hammer of legend, capable of generating and expelling more than lethal amounts of energy.\n\nPoint away from face. Yours, to be precise.");
 
-            GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "hammerofstorms_idle_001");
+            GunInt.SetupSprite(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "hammerofstorms_idle_001", 12, "hammerofstorms_ammonomicon_001");
             gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
             gun.sprite.SortingOrder = 1;
 
@@ -77,20 +77,23 @@ namespace Planetside
 			FakePrefab.MarkAsFakePrefab(smallLightning.gameObject);
 			UnityEngine.Object.DontDestroyOnLoad(smallLightning);
 			gun.DefaultModule.projectiles[0] = smallLightning;
-            smallLightning.baseData.damage = 40f;
+            smallLightning.baseData.damage = 25f;
             smallLightning.baseData.speed = 60f;
             smallLightning.baseData.force *= 0f;
             smallLightning.baseData.range = 100f;
 			var smallLightningController = smallLightning.AddComponent<StormBringerProjectile>();
             var lightningData1 = StaticExplosionDatas.CopyFields(StaticExplosionDatas.genericLargeExplosion);
             lightningData1.effect = EnemyDatabase.GetOrLoadByGuid("dc3cd41623d447aeba77c77c99598426").GetComponent<BossFinalMarineDeathController>().bigExplosionVfx[0];
-            lightningData1.damage = 60;
+            lightningData1.damage = 45;
             lightningData1.damageRadius = 3;
 			smallLightningController.Explosion = lightningData1;
 			smallLightningController.MajorNodesMin = 2;
             smallLightningController.MajorNodesMax = 4;
             smallLightning.pierceMinorBreakables = true;
 
+            PierceProjModifier spook = smallLightning.gameObject.GetOrAddComponent<PierceProjModifier>();
+            spook.penetration = 1;
+            spook.penetratesBreakables = true;
             smallLightning.baseData.UsesCustomAccelerationCurve = true;
             smallLightning.baseData.AccelerationCurve = AnimationCurve.Linear(0f, 1, 0.25f, 1.5f);
 
@@ -108,17 +111,23 @@ namespace Planetside
             FakePrefab.MarkAsFakePrefab(largeLightning.gameObject);
             UnityEngine.Object.DontDestroyOnLoad(largeLightning);
             gun.DefaultModule.projectiles[0] = largeLightning;
-            largeLightning.baseData.damage = 60f;
+            largeLightning.baseData.damage = 40f;
             largeLightning.baseData.speed = 60f;
             largeLightning.baseData.force *= 0f;
             largeLightning.baseData.range = 100f;
+
+            PierceProjModifier spook1 = largeLightning.gameObject.GetOrAddComponent<PierceProjModifier>();
+            spook1.penetration = 3;
+            spook1.penetratesBreakables = true;
+
+
             largeLightning.pierceMinorBreakables = true;
 
             var largeLightningController = largeLightning.AddComponent<StormBringerProjectile>();
             var lightningData2 = StaticExplosionDatas.CopyFields(StaticExplosionDatas.genericLargeExplosion);
             lightningData2.effect = EnemyDatabase.GetOrLoadByGuid("dc3cd41623d447aeba77c77c99598426").GetComponent<BossFinalMarineDeathController>().bigExplosionVfx[0];
-            lightningData2.damage = 150;
-            lightningData2.damageRadius = 5;
+            lightningData2.damage = 100;
+            lightningData2.damageRadius = 4;
             largeLightningController.Explosion = lightningData2;
             largeLightningController.MajorNodesMin = 4;
             largeLightningController.MajorNodesMax = 7;
@@ -202,10 +211,11 @@ namespace Planetside
                     LightningController c = new LightningController();
                     c.MajorNodesCount = UnityEngine.Random.Range(5, 10);
                     c.Thickness = 1;
-                    c.MajorNodeSplitoffChance = 0;
+                    c.MajorNodeSplitoffChance = 0.24f;
+
                     c.OnPostStrike += (obj4) =>
                     {
-                        AkSoundEngine.PostEvent("Play_Lightning", GameManager.Instance.BestActivePlayer.gameObject);
+                        AkSoundEngine.PostEvent("Play_Lightning", this.gameObject);
                         var lightObj = UnityEngine.Object.Instantiate(LightningMaker.lightObject);
                         lightObj.transform.position = obj4;
                         Destroy(lightObj, 0.25f);

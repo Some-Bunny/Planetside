@@ -163,35 +163,35 @@ namespace Planetside
             if (self.CurrentRoom != null && UnityEngine.Random.value <= ChestDropChance())
             {
                 IntVector2 bestRewardLocation = self.CurrentRoom.GetBestRewardLocation(IntVector2.One * 3, RoomHandler.RewardLocationStyle.PlayerCenter, true);
-                Chest chest2 = GameManager.Instance.RewardManager.SpawnRewardChestAt(bestRewardLocation, -1f, PickupObject.ItemQuality.EXCLUDED);
+                Chest chest2 = GameManager.Instance.RewardManager.SpawnTotallyRandomChest(bestRewardLocation);
                 chest2.RegisterChestOnMinimap(chest2.GetAbsoluteParentRoom());
             }
             
             if (PetrifyCurseState == PetrifyCurseStates.UPGRADED_AND_ONEROOMLEFT)
             {PetrifyCurseState = PetrifyCurseStates.DISABLED;
                 AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.DEPETRIFY, true);
-                OtherTools.Notify("Curse Of Petrification cleansed", "You are free now.", "Planetside/Resources/ShrineIcons/PurityIcon", UINotificationController.NotificationColor.GOLD);
+                OtherTools.Notify("Curse Of Petrification cleansed", "You are proven.", "Planetside/Resources/ShrineIcons/PurityIcon", UINotificationController.NotificationColor.GOLD);
                 SpawnSpecialChest(self);
             }
 
             if (JamnationCurseState == JamnationCurseStates.UPGRADED_AND_ONEROOMLEFT)
             { JamnationCurseState = JamnationCurseStates.DISABLED;
                 AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.DEJAM, true);
-                OtherTools.Notify("Curse Of Jamnation cleansed", "You are free now.", "Planetside/Resources/ShrineIcons/PurityIcon", UINotificationController.NotificationColor.GOLD);
+                OtherTools.Notify("Curse Of Jamnation cleansed", "You are proven.", "Planetside/Resources/ShrineIcons/PurityIcon", UINotificationController.NotificationColor.GOLD);
                 SpawnSpecialChest(self);
             }
 
             if (DarknessCurseState == DarknessCurseStates.UPGRADED_AND_ONEROOMLEFT)
             { DarknessCurseState = DarknessCurseStates.DISABLED;
                 AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.DEDARKEN, true);
-                OtherTools.Notify("Curse Of Darkness cleansed", "You are free now.", "Planetside/Resources/ShrineIcons/PurityIcon", UINotificationController.NotificationColor.GOLD);
+                OtherTools.Notify("Curse Of Darkness cleansed", "You are proven.", "Planetside/Resources/ShrineIcons/PurityIcon", UINotificationController.NotificationColor.GOLD);
                 SpawnSpecialChest(self);
             }
 
             if (BolsterCurseState == BolsterCurseStates.UPGRADED_AND_ONEROOMLEFT)
             { BolsterCurseState = BolsterCurseStates.DISABLED;
                 AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.DEBOLSTER, true);
-                OtherTools.Notify("Curse Of Bolstering cleansed", "You are free now.", "Planetside/Resources/ShrineIcons/PurityIcon", UINotificationController.NotificationColor.GOLD);
+                OtherTools.Notify("Curse Of Bolstering cleansed", "You are proven.", "Planetside/Resources/ShrineIcons/PurityIcon", UINotificationController.NotificationColor.GOLD);
                 SpawnSpecialChest(self);
             }
             if (CheckIfUnlocked() == true)
@@ -204,7 +204,7 @@ namespace Planetside
             if (player.CurrentRoom == null) { return; }
             if (HellShrinesController.blackListedRoomNames.Contains(player.CurrentRoom.GetRoomName())) { return; }
             IntVector2 bestRewardLocation = player.CurrentRoom.GetBestRewardLocation(IntVector2.One * 3, RoomHandler.RewardLocationStyle.CameraCenter, true);
-            Chest chest2 = GameManager.Instance.RewardManager.SpawnRewardChestAt(bestRewardLocation, -1f, PickupObject.ItemQuality.EXCLUDED);
+            Chest chest2 = GameManager.Instance.RewardManager.SpawnTotallyRandomChest(bestRewardLocation);
             chest2.RegisterChestOnMinimap(chest2.GetAbsoluteParentRoom());
             chest2.IsLocked = false;
             Material outlineMaterial1 = SpriteOutlineManager.GetOutlineMaterial(chest2.sprite);
@@ -274,13 +274,13 @@ namespace Planetside
         {
             float Chance = 0;
             if (BolsterCurseState == BolsterCurseStates.ENABLED)
-            { Chance += 0.045f; }
+            { Chance += 0.033f; }
             if (PetrifyCurseState == PetrifyCurseStates.ENABLED)
-            { Chance += 0.045f; }
+            { Chance += 0.033f; }
             if (JamnationCurseState == JamnationCurseStates.ENABLED)
-            { Chance += 0.045f; }
+            { Chance += 0.033f; }
             if (DarknessCurseState == DarknessCurseStates.ENABLED)
-            { Chance += 0.045f; }
+            { Chance += 0.033f; }
             return Chance;
         }
 

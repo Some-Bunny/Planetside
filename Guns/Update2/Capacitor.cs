@@ -169,7 +169,7 @@ namespace Planetside
                             {
                                 if (gun.IsCharging && gun.CurrentAmmo > 0)
                                 {
-                                    TickRate -= BraveTime.DeltaTime * player.stats.GetStatValue(PlayerStats.StatType.ChargeAmountMultiplier);
+                                    TickRate -= BraveTime.DeltaTime * player.stats.GetStatValue(PlayerStats.StatType.ChargeAmountMultiplier) * 1.5f;
                                     if (TickRate < ActivationTick)
                                     {
                                         gun.CurrentAmmo--;

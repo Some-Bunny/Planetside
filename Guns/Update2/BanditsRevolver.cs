@@ -57,12 +57,20 @@ namespace Planetside
 			//gun.gameObject.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
 
 			Projectile replacementProjectile = projectile1.projectile;
-			replacementProjectile.baseData.damage = 15;
+			replacementProjectile.baseData.damage = 18;
 			replacementProjectile.gameObject.AddComponent<BanditsRevolverFinaleProjectile>();
-			replacementProjectile.baseData.speed *= 3f;
+			replacementProjectile.baseData.speed *= 2.5f;
+            replacementProjectile.baseData.force *= 2;
 
 
-			OtherTools.EasyTrailComponent trail = replacementProjectile.gameObject.AddComponent<OtherTools.EasyTrailComponent>();
+            replacementProjectile.hitEffects.tileMapHorizontal = ObjectMakers.MakeObjectIntoVFX((PickupObjectDatabase.GetById(387) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapHorizontal.effects.First().effects.First().effect);
+            replacementProjectile.hitEffects.tileMapVertical = ObjectMakers.MakeObjectIntoVFX((PickupObjectDatabase.GetById(387) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapHorizontal.effects.First().effects.First().effect);
+            replacementProjectile.hitEffects.enemy = ObjectMakers.MakeObjectIntoVFX((PickupObjectDatabase.GetById(387) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapHorizontal.effects.First().effects.First().effect);
+            replacementProjectile.hitEffects.deathAny = ObjectMakers.MakeObjectIntoVFX((PickupObjectDatabase.GetById(387) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapHorizontal.effects.First().effects.First().effect);
+
+			replacementProjectile.additionalStartEventName = "Play_WPN_golddoublebarrelshotgun_shot_01";
+
+            OtherTools.EasyTrailComponent trail = replacementProjectile.gameObject.AddComponent<OtherTools.EasyTrailComponent>();
 			trail.TrailPos = replacementProjectile.transform.position;
 			trail.StartColor = Color.white;
 			trail.StartWidth = 0.1f;
@@ -77,8 +85,8 @@ namespace Planetside
 			gun.DefaultModule.finalProjectile = replacementProjectile;
 			gun.DefaultModule.finalCustomAmmoType = gun3.DefaultModule.customAmmoType;
 			gun.DefaultModule.finalAmmoType = gun3.DefaultModule.ammoType;
-			
-			Gun gun5 = PickupObjectDatabase.GetById(383) as Gun;
+
+            Gun gun5 = PickupObjectDatabase.GetById(383) as Gun;
 			gun.finalMuzzleFlashEffects = gun5.muzzleFlashEffects;
 
 
@@ -111,7 +119,13 @@ namespace Planetside
 			projectile.AdditionalScaleMultiplier *= 1f;
 			projectile.baseData.damage = 10f;
 			projectile.baseData.speed *= 1.4f;
-			BanditsRevolver.BanditsRevolverID = gun.PickupObjectId;
+
+			gun.finalShootAnimation = gun.shootAnimation;
+			gun.finalMuzzleFlashEffects = (PickupObjectDatabase.GetById(387) as Gun).muzzleFlashEffects;
+            gun.alternateSwitchGroup = (PickupObjectDatabase.GetById(387) as Gun).gunSwitchGroup;
+
+
+            BanditsRevolver.BanditsRevolverID = gun.PickupObjectId;
 
 			ItemIDs.AddToList(gun.PickupObjectId);
 		}

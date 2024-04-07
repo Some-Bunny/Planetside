@@ -21,6 +21,9 @@ using NpcApi;
 using static tk2dSpriteCollectionDefinition;
 using Alexandria;
 using static ETGMod;
+using PathologicalGames;
+using static Planetside.BoxOfGrenadesController;
+using AK.Wwise;
 
 namespace Planetside
 {
@@ -118,7 +121,8 @@ namespace Planetside
                 b.Bullets.Add(sewwpCopy);
                 b.Bullets.Add(entryCopy);
                 b.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("homingPop"));
-				b.transforms = new List<Transform>() { };
+                b.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("880bbe4ce1014740ba6b4e2ea521e49d").bulletBank.GetBullet("grenade"));
+                b.transforms = new List<Transform>() { };
 
 				BulletBankDummy = b.gameObject;
 
@@ -357,8 +361,17 @@ namespace Planetside
 						if (self.HasBeenPickedUp == false && Check == true)
 						{
 							float H = self.GetBaseMaxAmmo() * ChanceAccordingToGivenValues(0, 0.875f, 25);
-							self.LoseAmmo((int)H);
-						}
+
+                            self.ammo -= (int)H;
+                            if (self.ammo < 0)
+                            {
+                                self.ammo = 0;
+                            }
+                            if (self.ClipShotsRemaining > self.ammo)
+                            {
+                                self.ClipShotsRemaining = self.ammo;
+                            }
+                        }
 					}
 				}
 			}
@@ -887,9 +900,9 @@ namespace Planetside
         public override float HealthMultiplier => 1;
         public override float CooldownMultiplier => 0.9f;
         public override float MovementSpeedMultiplier => 0.7f;
-        public override Color EliteOutlineColor => new Color(50, 5, 0);
-        public override Color EliteParticleColor => new Color(50, 5, 0);
-        public override Color SecondaryEliteParticleColor => new Color(50, 5, 0);
+        public override Color EliteOutlineColor => new Color(50, 3, 0);
+        public override Color EliteParticleColor => new Color(50, 3, 0);
+        public override Color SecondaryEliteParticleColor => new Color(50, 3, 0);
         public override List<string> EnemyBlackList => new List<string>() 
 		{
                EnemyGUIDs.Ammoconda_Ball_GUID,
@@ -905,57 +918,45 @@ namespace Planetside
                               EnemyGUIDs.Shotgat_GUID,
                               EnemyGUIDs.Spirat_GUID,
                               EnemyGUIDs.Grenat_GUID,
-
+                              EnemyGUIDs.Spent_GUID,
+                              EnemyGUIDs.Mouser_GUID,
+                              EnemyGUIDs.Beadie_GUID,
+                              EnemyGUIDs.Treadnaughts_Tanker_GUID,
+                              EnemyGUIDs.Ammoconda_Ball_GUID,
+                              EnemyGUIDs.Fusebot_GUID,
         };
         public override List<ActorEffectResistance> DebuffImmunities => new List<ActorEffectResistance> { new ActorEffectResistance() { resistAmount = 1, resistType = EffectResistanceType.Fire } };
         public override void Start()
         {
-            base.Start();
+			base.Start();
+
             var cm = UnityEngine.Object.Instantiate<GameObject>((GameObject)BraveResources.Load("Global Prefabs/_ChallengeManager", ".prefab"));
             this.Rocket = (cm.GetComponent<ChallengeManager>().PossibleChallenges.Where(c => c.challenge is SkyRocketChallengeModifier).First().challenge as SkyRocketChallengeModifier).Rocket;
             UnityEngine.Object.Destroy(cm);
 			if (IsBoss)
 			{
-				Cooldown = 5;
+				Cooldown = 6;
 			}
            
         }
 		public GameObject Rocket;
         public override void OnPreDeath(Vector2 obj)
         {
-			SpawnRocket(this.aiActor.sprite.WorldCenter);
-			float t = BraveUtility.RandomAngle();
-            for (int i = 0; i < 3; i++)
-            {
-                SpawnRocket(this.aiActor.sprite.WorldCenter + MathToolbox.GetUnitOnCircle((120 * i) + t, 4), null, 1);
 
-            }
+            SpawnManager.SpawnBulletScript(null, this.aiActor.sprite.WorldCenter + new Vector2(0, 0.25f), OuroborosController.BulletBankDummy.GetComponent<AIBulletBank>(), new CustomBulletScriptSelector(typeof(SpewGrenades)), StringTableManager.GetEnemiesString("#TRAP", -1));
+
         }
-        public float Cooldown = 10;
+        public float Cooldown = 12;
         private float Timer = 3;
 
-        public void SpawnRocket(Vector2 positionToTarget, SpeculativeRigidbody targetBody = null, float HangTime = 0)
-		{
 
-            SkyRocket component = UnityEngine.Object.Instantiate<GameObject>(this.Rocket, aiActor.sprite.WorldCenter, Quaternion.identity).GetComponent<SkyRocket>();
-			component.Target = targetBody;//this.aiActor.TargetRigidbody;
-            tk2dSprite componentInChildren = component.GetComponentInChildren<tk2dSprite>();
-            component.transform.position = component.transform.position.WithY(component.transform.position.y - componentInChildren.transform.localPosition.y);
-            component.ExplosionData.ignoreList.Add(this.aiActor.specRigidbody);
-			component.IgnoreExplosionQueues = true;
-			component.HangTime = HangTime;
-            if (targetBody == null)
-			{
-                component.TargetVector2 = positionToTarget;
-            }
-        }
 
         public override void OnDamaged(float resultValue, float maxValue, CoreDamageTypes damageTypes, DamageCategory damageCategory, Vector2 damageDirection)
         {
             if (Timer == 0 | Timer <= 0)
             {
                 Timer = Cooldown;
-                SpawnRocket(Vector2.zero, this.aiActor.TargetRigidbody);
+                SpawnManager.SpawnBulletScript(null, this.aiActor.sprite.WorldCenter + new Vector2(0, 0.25f), OuroborosController.BulletBankDummy.GetComponent<AIBulletBank>(), new CustomBulletScriptSelector(typeof(SpewGrenade)), StringTableManager.GetEnemiesString("#TRAP", -1));
 
             }
         }
@@ -963,11 +964,21 @@ namespace Planetside
         {
             base.Update();
             if (Timer >= 0) { Timer -= BraveTime.DeltaTime; }
+		}
 
-        }
-
-        private void HealthHaver_OnPreDeath(Vector2 obj)
+        public class SpewGrenade : Script
         {
+            public override IEnumerator Top()
+            {
+                float airTime = base.BulletBank.GetBullet("grenade").BulletObject.GetComponent<ArcProjectile>().GetTimeInFlight();
+                Vector2 vector = base.GetPredictedTargetPositionExact(1, 30);
+                Bullet bullet2 = new Bullet("grenade", false, false, false);
+                float direction2 = (vector - base.Position).ToAngle();
+                base.Fire(new Direction(direction2, DirectionType.Absolute, -1f), new Speed(1f, SpeedType.Absolute), bullet2);
+                (bullet2.Projectile as ArcProjectile).AdjustSpeedToHit(vector);
+                bullet2.Projectile.ImmuneToSustainedBlanks = true;
+                yield break;
+            }
         }
     }
 
@@ -1274,7 +1285,9 @@ namespace Planetside
 		public override List<string> EnemyBlackList => new List<string>()
 		{
 			EnemyGuidDatabase.Entries["rat_candle"],
-		};
+            EnemyGUIDs.Fusebot_GUID,
+
+        };
 
         public override List<ActorEffectResistance> DebuffImmunities => new List<ActorEffectResistance> {
 			new ActorEffectResistance() { resistAmount = 1, resistType = EffectResistanceType.None },

@@ -76,6 +76,9 @@ namespace Planetside
                 sprite.collection = StaticSpriteDefinitions.Guon_Sheet_Data;
                 sprite.SetSprite(StaticSpriteDefinitions.Guon_Sheet_Data.GetSpriteIdByName("electrostaticguonfloaty"));
 
+
+                sprite.CachedPerpState = tk2dBaseSprite.PerpendicularState.FLAT;
+
                 //GameObject gameObject = SpriteBuilder.SpriteFromResource("Planetside/Resources/Guons/ElectroGuon/electrostaticguonfloaty.png");
                 gameObject.name = "Electro Guon Stone Orbital";
                 SpeculativeRigidbody speculativeRigidbody = gameObject.GetComponent<tk2dSprite>().SetUpSpeculativeRigidbody(IntVector2.Zero, new IntVector2(7, 13));

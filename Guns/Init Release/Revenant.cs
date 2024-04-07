@@ -62,7 +62,9 @@ namespace Planetside
 			projectile.baseData.damage = 35f;
 			projectile.baseData.speed *= 3f;
 			projectile.AdditionalScaleMultiplier *= 0.75f;
-			projectile.shouldRotate = true;
+			projectile.baseData.force *= 3;
+
+            projectile.shouldRotate = true;
 			projectile.pierceMinorBreakables = true;
 			projectile.PenetratesInternalWalls = true;
 			projectile.gameObject.AddComponent<RevenantProjectile>();

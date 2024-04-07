@@ -39,7 +39,7 @@ namespace Planetside
 			gun.reloadTime = 2.8f;
 			gun.DefaultModule.cooldownTime = .25f;
 			gun.DefaultModule.numberOfShotsInClip = 60;
-			gun.SetBaseMaxAmmo(300);
+			gun.SetBaseMaxAmmo(600);
 			gun.quality = PickupObject.ItemQuality.C;
 			gun.DefaultModule.angleVariance = 8f;
 			gun.DefaultModule.burstShotCount = 4;

@@ -59,7 +59,7 @@ namespace Planetside
                 prefab.AddComponent<NemesisController>();
 				prefab.AddComponent<ForgottenEnemyComponent>();
 				companion.aiActor.knockbackDoer.weight = 120;
-				companion.aiActor.MovementSpeed = 4f;
+				companion.aiActor.MovementSpeed = 3.6f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
 				companion.aiActor.CollisionDamage = 0f;
 				companion.aiActor.IgnoreForRoomClear = false;
@@ -71,7 +71,7 @@ namespace Planetside
 
 
 
-				companion.aiActor.healthHaver.ForceSetCurrentHealth(300f);
+				companion.aiActor.healthHaver.ForceSetCurrentHealth(400f);
 				companion.aiActor.CollisionKnockbackStrength = 0f;
 				companion.aiActor.procedurallyOutlined = true;
 				companion.aiActor.CanTargetPlayers = true;
@@ -79,7 +79,7 @@ namespace Planetside
 				EnemyToolbox.AddShadowToAIActor(companion.aiActor, StaticEnemyShadows.defaultShadow, new Vector2(0.625f, -0.25f), "shadowPos");
 
 
-				companion.aiActor.healthHaver.SetHealthMaximum(300f, null, false);
+				companion.aiActor.healthHaver.SetHealthMaximum(400f, null, false);
 				companion.aiActor.specRigidbody.PixelColliders.Clear();
 				companion.aiActor.specRigidbody.PixelColliders.Add(new PixelCollider
 				{

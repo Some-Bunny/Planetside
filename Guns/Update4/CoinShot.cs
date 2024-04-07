@@ -120,7 +120,7 @@ namespace Planetside
                 {
                     Projectile = CoinTosser.CoinProjectile,
                     ChargeTime = 0.8f,
-                    AmmoCost = 15,
+                    AmmoCost = 10,
                     OverrideShootAnimation = gun.alternateShootAnimation,
                     AdditionalWwiseEvent = "Play_WPN_m1rifle_reload_01",
                     UsedProperties = ProjectileModule.ChargeProjectileProperties.shootAnim | ProjectileModule.ChargeProjectileProperties.ammo | ProjectileModule.ChargeProjectileProperties.additionalWwiseEvent,

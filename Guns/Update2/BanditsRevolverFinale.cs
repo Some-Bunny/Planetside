@@ -39,10 +39,26 @@ namespace Planetside
             if (arg2 != null && arg2.healthHaver != null && HasKilled != true)
             {
                 HasKilled = true;
+                UnityEngine.Object.Instantiate<GameObject>(PickupObjectDatabase.GetById(449).GetComponent<TeleporterPrototypeItem>().TelefragVFXPrefab, arg2.specRigidbody.UnitCenter, Quaternion.identity);
                 AkSoundEngine.PostEvent("Play_perfectshot", playerController.gameObject);
                 playerController.CurrentGun.ForceImmediateReload();
+                this.StartCoroutine(HandleEffects(playerController.CurrentGun));
             }
         }
+        private IEnumerator HandleEffects(Gun gun)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                yield return null;
+                if (gun.CurrentOwner is PlayerController)
+                {
+                    int playerI = (gun.CurrentOwner as PlayerController).PlayerIDX;
+                    GameUIRoot.Instance.ForceClearReload(playerI);
+                }
+            }
+            yield break;
+        }
+   
         bool HasKilled;
         private Projectile projectile;
 	}

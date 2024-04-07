@@ -15,7 +15,6 @@ namespace Planetside
 		public static void Init()
 		{
 			string name = "Gilded Pot";
-			//string resourcePath = "Planetside/Resources/gildedceramic.png";
 			GameObject gameObject = new GameObject(name);
 			GildedPots warVase = gameObject.AddComponent<GildedPots>();
             var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;

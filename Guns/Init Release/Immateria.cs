@@ -30,7 +30,7 @@ namespace Planetside
 			GunExt.SetShortDescription(gun, "The Void");
 			GunExt.SetLongDescription(gun, "Fires projectiles that bend the cosmos to their will.\n\nCreated by a bunch of jerks who got bored one day and decided to break physics. How inconsiderate of them!");
             
-			GunInt.SetupSprite(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "immateria_idle_001", 11);
+			GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "immateria_idle_001");
             gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
             gun.sprite.SortingOrder = 1;
 

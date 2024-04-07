@@ -27,6 +27,11 @@ namespace Planetside
             CurrentState = State.PRIMED;
             bulletBank = this.GetComponent<AIBulletBank>();
             currentRoom = this.transform.position.GetAbsoluteRoom();
+            this.Invoke("SpawnLaser", 0.5f);
+        }
+
+        public void SpawnLaser()
+        {
             if (laserPointer == null)
             {
                 laserPointer = SpawnManager.SpawnVFX((GameObject)BraveResources.Load(isProfessional == false ? "Global VFX/VFX_LaserSight_Enemy" : "Global VFX/VFX_LaserSight_Enemy_Green", ".prefab"), true);
@@ -38,6 +43,7 @@ namespace Planetside
                 laserPointerTiledSprite.transform.localRotation = Quaternion.Euler(0f, 0f, ReturnDirection().ToAngle());
             }
         }
+
         public void Update()
         {
             if (laserPointer != null && this.gameObject != null)

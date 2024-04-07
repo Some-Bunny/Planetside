@@ -136,9 +136,9 @@ namespace Planetside
                 dungeon.DungeonFloorLevelTextOverride = "Mixed Chamber";
                 var deco = dungeon.decoSettings;
 
-                float r = 0.03f; // im fucking lazy, okay?
-                float g = 0.05f; // im fucking lazy, okay?
-                float b = 0.17f; // im fucking lazy, okay?
+                float r = 0.01f; // im fucking lazy, okay?
+                float g = 0.03f; // im fucking lazy, okay?
+                float b = 0.12f; // im fucking lazy, okay?
 
                 deco.ambientLightColor = new Color(0.05f / r, 0.15f / g, 0.9f / b);
                 deco.generateLights = true;

@@ -34,9 +34,6 @@ namespace Planetside
 				gun.AddProjectileModuleFrom(PickupObjectDatabase.GetById(88) as Gun, true, false);
 
 			}
-
-			//            GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(35) as Gun, true, false);
-
 			foreach (ProjectileModule projectileModule in gun.Volley.projectiles)
 			{
 				projectileModule.ammoCost = 1;
@@ -86,8 +83,8 @@ namespace Planetside
 				"Planetside/Resources2/ProjectileTrails/Petrifier/petrifiermid_001",
 				new Vector2(7, 3),
 				new Vector2(0, 2),
-				BeamAnimPaths, 20,
-				ImpactAnimPaths, 20,
+				BeamAnimPaths, 30,
+				ImpactAnimPaths, 30,
 				0.1f,
 				30,
 				30,
@@ -124,7 +121,7 @@ namespace Planetside
 
 				projectile.gameObject.SetActive(false);
 				projectileModule.projectiles[0] = projectile;
-				projectile.baseData.damage = 17f;
+				projectile.baseData.damage = 14f;
 				projectile.AdditionalScaleMultiplier = 1f;
 				FakePrefab.MarkAsFakePrefab(projectile.gameObject);
 				UnityEngine.Object.DontDestroyOnLoad(projectile);
@@ -158,30 +155,27 @@ namespace Planetside
 		public static FleePlayerData fleeData;
 
 		public static int PetrifierID;
-		private bool HasReloaded;
+		private bool ReloadState;
+
+		public void Start()
+		{
+			ReloadState = gun.IsReloading;
+        }
 
 		public override void Update()
 		{
 			if (gun.CurrentOwner)
 			{
-				if (!gun.IsReloading && !HasReloaded)
+				if (ReloadState != gun.IsReloading)
 				{
-					this.HasReloaded = true;
-				}
-			}
-
-		}
-		public override void OnReloadPressed(PlayerController player, Gun bruhgun, bool bSOMETHING)
-		{
-			if (gun.IsReloading && this.HasReloaded)
-			{
-				AkSoundEngine.PostEvent("Stop_WPN_All", base.gameObject);
-				HasReloaded = false;
-				base.OnReloadPressed(player, gun, bSOMETHING);
-				AddExtraFinalShots();
+					ReloadState = gun.IsReloading;
+					if (ReloadState == false)
+					{
+                        AddExtraFinalShots();
+                    }
+                }
 			}
 		}
-
 		public int ExtraClipBonus;
 
 		public void AddExtraFinalShots()
