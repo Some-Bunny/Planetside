@@ -36,7 +36,7 @@ namespace Planetside
     {
         public const string GUID = "somebunny.etg.planetsideofgunymede";
         public const string NAME = "Planetside Of Gunymede Pre-Release";
-        public const string VERSION = "1.3.161";
+        public const string VERSION = "1.3.162";
 
         public static readonly string TEXT_COLOR = "#9006FF";
 
@@ -577,7 +577,6 @@ namespace Planetside
                 "Now With 100% Less Nulls!",
                 "You Lost The Game.",
                 "WEAK.",
-                //"Bullet Banks are not to rob!",
                 "*Don't Download Some Bunnys Content Pack, you can't even have it on Bepinex anyway :D",
                 "weeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "If you see this, you owe me 10 bucks you nerd.",
@@ -586,7 +585,6 @@ namespace Planetside
                 "Ashes To Ashes, To Ashes (To Ashes)",
                 "Deadbolt Is Underrated!",
                 "You're Gonna Need A Bigger Gun",
-                //"Sai Sinut Nayttamaan",
                 "oh no",
                 "is that supposed to be like that???",
                 "I'm so lonely.",
@@ -608,7 +606,6 @@ namespace Planetside
                 "This is not a GMod Server.",
                 "oops",
                 "Can I offer you a nice egg in this trying time?",
-                "Up Up Down Down Left Right Left Right B A Start",
                 "Another Night...",
                 "skibidi bop mm dada",
                 "I coded most of this after 1am.",
@@ -617,7 +614,6 @@ namespace Planetside
                 "pootis",
                 "Frogs are cool!",
                 "Poor aim, and a poor Reaper.",
-                //"egassem sdrawkcab",
                 "The Sun! The Sun! The Sun!",
                 "if(player.IsStupid){  }",
                 "cultist_comits_tax_evasion.mp3",
@@ -642,7 +638,7 @@ namespace Planetside
                 "Now with 100% more Bepinex!",
                 "I once sneezed a pasta noodle out through my nose -- back when I had a nose, on Earth.",
                 "You shouldn't read too much anyway. It's bad for your teeth.",
-                "This cats name is Humongous Honkers look him up on your computer."
+                "This cats name is Humongous Honkers look him up on your work computer."
             };
             Random r = new Random();
             int index = r.Next(RandomFunnys.Count);

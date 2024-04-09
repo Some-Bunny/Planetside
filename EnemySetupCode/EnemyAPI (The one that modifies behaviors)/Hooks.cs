@@ -22,6 +22,7 @@ namespace Planetside
         public static void HandleCustomEnemyChanges(Action<AIActor> orig, AIActor self)
         {
             orig(self);
+            
             try
             {
                 if (self.OverrideDisplayName != "#BOSSSTATUES_ENCNAME")
@@ -30,7 +31,7 @@ namespace Planetside
                     foreach (var obehavior in obehaviors)
                     {
                         obehavior.SetupOB(self);
-                        if (obehavior.ShouldOverride() || (self.EnemyGuid == "05b8afe0b6cc4fffa9dc6036fa24c8ec" && ContainmentBreachController.CurrentState == ContainmentBreachController.States.ENABLED))
+                        if (obehavior.ShouldOverride() || (self.EnemyGuid == "05b8afe0b6cc4fffa9dc6036fa24c8ec" && ContainmentBreachController.CurrentState == ContainmentBreachController.States.ALLOWED))
                         {
                             obehavior.DoOverride();
                         }
@@ -38,9 +39,7 @@ namespace Planetside
                 }
                 else
                 {
-                    ETGModConsole.Log(7);
-
-                    if (ContainmentBreachController.CurrentState == ContainmentBreachController.States.ENABLED)
+                    if (ContainmentBreachController.CurrentState == ContainmentBreachController.States.ALLOWED)
                     {
                         new KillPillarsChanges.KillPillarChanges().OverrideAllKillPillars(self);
 

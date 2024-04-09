@@ -66,8 +66,10 @@
     <Compile Include="Components\Projectile Components\sadsda.cs" />
     <Compile Include="Components\Projectile Components\StickyProjectileModifier.cs" />
     <Compile Include="Controllers\ChallengeModeExtraChallenges.cs" />
+    <Compile Include="Controllers\ContainmentBreach\BossChanges\F3.5\RatPhase2Changes.cs" />
     <Compile Include="Controllers\ContainmentBreach\BossChanges\F1.5\FungannonChanges.cs" />
-    <Compile Include="Controllers\ContainmentBreach\BossChanges\4.5\AgunimChanges.cs" />
+    <Compile Include="Controllers\ContainmentBreach\BossChanges\F3.5\RatPhase1Changes.cs" />
+    <Compile Include="Controllers\ContainmentBreach\BossChanges\F4.5\AgunimChanges.cs" />
     <Compile Include="Controllers\ContainmentBreach\BossChanges\F2\AmmocondaChanges.cs" />
     <Compile Include="Controllers\ContainmentBreach\BossChanges\F1.5\BlobulordChanges.cs" />
     <Compile Include="Controllers\ContainmentBreach\BossChanges\F2.5\OldKingChanges.cs" />

@@ -79,20 +79,12 @@ namespace Planetside
                                 SpawnManager.PoolManager.Remove(proj.gameObject.transform);
                                 proj.BulletScriptSettings.preventPooling = true;
 
-                                DoReflect(proj, GameManager.Instance.PrimaryPlayer, 10, BraveUtility.RandomAngle(), 1, 20);
+                                DoReflect(proj, GameManager.Instance.PrimaryPlayer, proj.Speed * 1.5f, BraveUtility.RandomAngle(), 1, 20);
 
                                 BounceProjModifier bouncy = proj.gameObject.GetOrAddComponent<BounceProjModifier>();
                                 bouncy.numberOfBounces = 1;
 
-                                
-                                /*
-                                ImprovedAfterImage yes = proj.gameObject.AddComponent<ImprovedAfterImage>();
-                                yes.spawnShadows = true;
-                                yes.shadowLifetime = 0.1f;
-                                yes.shadowTimeDelay = 0.01f;
-                                yes.dashColor = new Color(0.9f, 0.6f, 0f, 1f);
-                                */
-
+                              
                             }
                             else if (proj.Owner == player)
                             {

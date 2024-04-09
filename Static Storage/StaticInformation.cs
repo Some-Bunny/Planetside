@@ -571,35 +571,103 @@ namespace Planetside
                 entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
                 undodgeableGrenade = entry;
             }
+            {
+                AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid(Alexandria.EnemyGUIDs.Resourceful_Rat_Boss_GUID).bulletBank.GetBullet("cheese"), "UndodgeableCheese", "DNC", null, false);
+                entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                UnDodgeableCheese = entry;
+            }
+            {
+                AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid(Alexandria.EnemyGUIDs.Resourceful_Rat_Boss_GUID).bulletBank.GetBullet("dagger"), "UnDodgeableDagger", "DNC", null, false);
+                entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                UnDodgeableDagger = entry;
+            }
+            {
+                AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid(Alexandria.EnemyGUIDs.Resourceful_Rat_Boss_GUID).bulletBank.GetBullet("tail"), "UnDodgeableTailProj", "DNC", null, false);
+                entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                UnDodgeableTailProj = entry;
+            }
+            {
+                AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid(Alexandria.EnemyGUIDs.Resourceful_Rat_Boss_GUID).bulletBank.GetBullet("cheeseWedge0"), "UnDodgeablecheeseWedge0", "DNC", null, false);
+                entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                UnDodgeablecheeseWedge0 = entry;
+            }
+            {
+                AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid(Alexandria.EnemyGUIDs.Resourceful_Rat_Boss_GUID).bulletBank.GetBullet("cheeseWedge1"), "UnDodgeablecheeseWedge1", "DNC", null, false);
+                entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                UnDodgeablecheeseWedge1 = entry;
+            }
+            {
+                AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid(Alexandria.EnemyGUIDs.Resourceful_Rat_Boss_GUID).bulletBank.GetBullet("cheeseWedge2"), "UnDodgeablecheeseWedge2", "DNC", null, false);
+                entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                UnDodgeablecheeseWedge2 = entry;
+            }
+            {
+                AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid(Alexandria.EnemyGUIDs.Resourceful_Rat_Boss_GUID).bulletBank.GetBullet("cheeseWedge3"), "UnDodgeablecheeseWedge3", "DNC", null, false);
+                entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                UnDodgeablecheeseWedge3 = entry;
+            }
+            {
+                AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid(Alexandria.EnemyGUIDs.Resourceful_Rat_Boss_GUID).bulletBank.GetBullet("cheeseWedge4"), "UnDodgeablecheeseWedge4", "DNC", null, false);
+                entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                UnDodgeablecheeseWedge4 = entry;
+            }
+            {
+                AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid(Alexandria.EnemyGUIDs.Resourceful_Rat_Boss_GUID).bulletBank.GetBullet("cheeseWedge5"), "UnDodgeablecheeseWedge5", "DNC", null, false);
+                entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                UnDodgeablecheeseWedge5 = entry;
+            }
+            {
+                AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid(Alexandria.EnemyGUIDs.Resourceful_Rat_Boss_GUID).bulletBank.GetBullet("cheeseWedge6"), "UnDodgeablecheeseWedge6", "DNC", null, false);
+                entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                UnDodgeablecheeseWedge6 = entry;
+            }
+            {
+                AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid(Alexandria.EnemyGUIDs.Resourceful_Rat_Boss_GUID).bulletBank.GetBullet("cheeseWedge7"), "UnDodgeablecheeseWedge7", "DNC", null, false);
+                entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                UnDodgeablecheeseWedge7 = entry;
+            }
+            {
+                AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid(Alexandria.EnemyGUIDs.Resourceful_Rat_Boss_GUID).bulletBank.GetBullet("cheeseWheel"), "UnDodgeableCheeseWheel", "DNC", null, false);
+                entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                UnDodgeableCheeseWheel = entry;
+            }
+            {
+                AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid(Alexandria.EnemyGUIDs.Resourceful_Rat_Mech_Boss_GUID).bulletBank.GetBullet("spinner"), "UnDodgeableSpinner", "DNC", null, false);
+                entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                UnDodgeableSpinner = entry;
+            }
+            {
+                AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid(Alexandria.EnemyGUIDs.Resourceful_Rat_Mech_Boss_GUID).bulletBank.GetBullet("big_one"), "UnDodgeableBigOne", "DNC", null, false);
+                entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                UnDodgeableBigOne = entry;
+            }
         }
 
-        //flame
-        //burst//puke_burst
+        
 
-        //angrybullet
+                //cheeseWedge0//cheeseWheel
+                public static AIBulletBank.Entry UnDodgeableBigOne;
 
-        //				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("fa76c8cfdf1c4a88b55173666b4bc7fb").bulletBank.GetBullet("hugeBullet"));
+        public static AIBulletBank.Entry UnDodgeableSpinner;
 
-        /*mergoWave//ffca09398635467da3b1f4a54bcfda80
-         *4b992de5b4274168a8878ef9bf7ea36b 
-         *homingRing
-         *bounce
-         *
-         *8b0dd96e2fe74ec7bebc1bc689c0008a
-         *scatterBullet
-         *cross
-         *
-         *frogger
-         *68a238ed6a82467ea85474c595c49c6e
-         */
-        //randomBullet//bigBullet
-        //1b5810fafbec445d89921a4efb4e42b7
+        public static AIBulletBank.Entry UnDodgeableCheeseWheel;
 
-        //5729c8b5ffa7415bb3d01205663a33ef
 
-        //f3b04a067a65492f8b279130323b41f0
+        public static AIBulletBank.Entry UnDodgeablecheeseWedge0;
+        public static AIBulletBank.Entry UnDodgeablecheeseWedge1;
+        public static AIBulletBank.Entry UnDodgeablecheeseWedge2;
+        public static AIBulletBank.Entry UnDodgeablecheeseWedge3;
+        public static AIBulletBank.Entry UnDodgeablecheeseWedge4;
+        public static AIBulletBank.Entry UnDodgeablecheeseWedge5;
+        public static AIBulletBank.Entry UnDodgeablecheeseWedge6;
+        public static AIBulletBank.Entry UnDodgeablecheeseWedge7;
 
-        //directedfire
+
+        public static AIBulletBank.Entry UnDodgeableDagger;
+        public static AIBulletBank.Entry UnDodgeableTailProj;
+
+        public static AIBulletBank.Entry UnDodgeableCheese;
+
 
         public static AIBulletBank.Entry UndodgeableHitscan;
 

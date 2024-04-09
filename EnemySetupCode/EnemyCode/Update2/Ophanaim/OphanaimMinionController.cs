@@ -367,7 +367,7 @@ namespace Planetside
                 if (tiledspriteObject != null)
                 {
                     tiledsprite.transform.position = this.BulletBank.sprite.WorldCenter;
-                    tiledsprite.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (75 * t));
+                    tiledsprite.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (35 * t));
                     tiledsprite.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (10 * t));
 
                     Vector2 predictedPosition = BraveMathCollege.GetPredictedPosition(this.BulletManager.PlayerPosition(), this.BulletManager.PlayerVelocity(), this.BulletBank.GetComponent<tk2dBaseSprite>().WorldCenter, 40f);

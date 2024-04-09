@@ -164,7 +164,7 @@ public class ShamberController : BraveBehaviour
                                             proj.specRigidbody.Velocity = Vector2.zero;
                                             proj.ManualControl = true;
                                             float s = proj.baseData.speed;
-                                            proj.baseData.speed = 0;//proj.baseData.SetAll(base.aiActor.bulletBank.GetBullet("reversible").ProjectileData);
+                                            proj.baseData.speed = 0;
                                             proj.UpdateSpeed();
                                             proj.baseData.speed = s;
                                             proj.specRigidbody.CollideWithTileMap = false;

@@ -518,6 +518,7 @@ namespace Planetside
 					tuple.First.GetComponent<tk2dSprite>().renderer.enabled = EnemyIsVisible(actor.aiActor);
 				}
 			}
+			/*
 			if (actor != null)
 			{
 				Elasped += BraveTime.DeltaTime;
@@ -530,6 +531,7 @@ namespace Planetside
 					}
 				}
 			}
+			*/
 		}
 
 		public float Elasped;

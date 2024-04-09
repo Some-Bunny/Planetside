@@ -676,6 +676,11 @@ namespace Planetside
             EnemyGuidDatabase.Entries["shotgat"],
             EnemyGuidDatabase.Entries["grenat"],
             EnemyGuidDatabase.Entries["spirat"],
+			EnemyGUIDs.Wizbang_GUID,
+            EnemyGUIDs.Bullet_Kin_GUID,
+            EnemyGUIDs.Ammoconda_Ball_GUID,
+            EnemyGUIDs.Bombshee_GUID,
+
 
         };
 
