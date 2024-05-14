@@ -151,7 +151,7 @@ namespace Planetside
                         component2.alwaysUpdateOffscreen = true;
                         component2.playAutomatically = true;
                     }
-                    bool ae = Vector2.Distance(aiactor.CenterPosition, centerPosition) < 5f && aiactor.healthHaver.GetCurrentHealth() < 20* num && aiactor != null && aiactor.specRigidbody != null && base.Owner != null && !aiactor.healthHaver.IsBoss;
+                    bool ae = Vector2.Distance(aiactor.CenterPosition, centerPosition) < 5f && aiactor.healthHaver.GetCurrentHealth() < 30 * num && aiactor != null && aiactor.specRigidbody != null && base.Owner != null && !aiactor.healthHaver.IsBoss;
                     if (ae)
                     {
                         float count = aiactor.healthHaver.GetMaxHealth()/20;

@@ -360,7 +360,7 @@ namespace Planetside
 						bool Check = self.CanGainAmmo == true || self.InfiniteAmmo == false;
 						if (self.HasBeenPickedUp == false && Check == true)
 						{
-							float H = self.GetBaseMaxAmmo() * ChanceAccordingToGivenValues(0, 0.875f, 25);
+							float H = self.GetBaseMaxAmmo() * ChanceAccordingToGivenValues(0.125f, UnityEngine.Random.Range(0.25f, 0.8f), 25);
 
                             self.ammo -= (int)H;
                             if (self.ammo < 0)
@@ -368,8 +368,9 @@ namespace Planetside
                                 self.ammo = 0;
                             }
                             if (self.ClipShotsRemaining > self.ammo)
-                            {
-                                self.ClipShotsRemaining = self.ammo;
+							{
+								self.m_moduleData[self.DefaultModule].numberShotsFired -= self.ammo;//self.DefaultModule.GetModNumberOfShotsInClip(self.CurrentOwner) - value;
+                                //self.ClipShotsRemaining = self.ammo;
                             }
                         }
 					}
@@ -761,7 +762,7 @@ namespace Planetside
             float AmountOfSkulls = 3;
             for (int i = 0; i < Loop; i++)
             {
-                if (i % 15 == 0)
+                if (i % 20 == 0)
                 {AmountOfSkulls++;}
             }
             return AmountOfSkulls;

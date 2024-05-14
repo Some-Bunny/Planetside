@@ -14,15 +14,16 @@ namespace Planetside
 {
     public class Colossus : GunBehaviour
     {
+        public Material Material;
         public static void Add()
         {
             Gun gun = ETGMod.Databases.Items.NewGun("Colossus", "colossus");
             Game.Items.Rename("outdated_gun_mods:colossus", "psog:colossus");
             var behav = gun.gameObject.AddComponent<Colossus>();
             //behav.overrideNormalFireAudio = "Play_ENM_shelleton_beam_01";
-            
+
             gun.SetShortDescription("Titanic");
-            gun.SetLongDescription("A collection of rocks powered by the blood of a now-dead demi-god, who used their own blood to create the Titans found on a planet far, far away.");
+            gun.SetLongDescription("A collection of rocks powered by only remaining blood of a dead demi-god, who used their own blood to create and fuel Titans found on a distant planet.");
 
             gun.SetupSprite(null, "colossus_idle_001", 8);
 
@@ -50,7 +51,7 @@ namespace Planetside
                 mod.numberOfShotsInClip = 40;
 
 
-            List<string> BeamAnimPaths = new List<string>()
+                List<string> BeamAnimPaths = new List<string>()
             {
                 "Planetside/Resources/Beams/Colossus/colossusbeam_mid_001",
                 "Planetside/Resources/Beams/Colossus/colossusbeam_mid_002",
@@ -67,8 +68,8 @@ namespace Planetside
 
 
             };
-                
-            List<string> ImpactAnimPaths = new List<string>()
+
+                List<string> ImpactAnimPaths = new List<string>()
             {
                 "Planetside/Resources/Beams/Colossus/colossusbeam_impact_001",
                 "Planetside/Resources/Beams/Colossus/colossusbeam_impact_002",
@@ -77,7 +78,7 @@ namespace Planetside
 
             };
 
-            List<string> End = new List<string>()
+                List<string> End = new List<string>()
             {
                 "Planetside/Resources/Beams/Colossus/colossusbeam_end_001",
 
@@ -111,7 +112,7 @@ namespace Planetside
                 projectile.gameObject.SetActive(false);
                 FakePrefab.MarkAsFakePrefab(projectile.gameObject);
                 UnityEngine.Object.DontDestroyOnLoad(projectile);
-                projectile.baseData.damage = 150f;
+                projectile.baseData.damage = 90f;
                 projectile.baseData.force *= 1f;
                 projectile.baseData.range *= 5;
                 projectile.baseData.speed *= 5f;
@@ -154,6 +155,9 @@ namespace Planetside
                 Array.Resize<Material>(ref sharedMaterials, sharedMaterials.Length + 1);
                 Material material = new Material(mat);
                 material.SetTexture("_MainTex", sharedMaterials[0].GetTexture("_MainTex"));
+
+                behav.Material = material;
+
                 sharedMaterials[sharedMaterials.Length - 1] = material;
                 component.sharedMaterials = sharedMaterials;
 
@@ -242,7 +246,7 @@ namespace Planetside
                 HasReloaded = false;
                 AkSoundEngine.PostEvent("Play_ENM_statue_stomp_01", player.gameObject);
                 base.OnReloadPressed(player, gun, bSOMETHING);
-                if (player.PlayerHasActiveSynergy("Perfected") && gun.ClipShotsRemaining <= gun.ClipCapacity/2)
+                if (player.PlayerHasActiveSynergy("Perfected") && gun.ClipShotsRemaining <= gun.ClipCapacity / 2)
                 {
                     player.StartCoroutine(SpawnPerfectedShots(player));
                 }
@@ -308,36 +312,30 @@ namespace Planetside
             PlayerController player = gun.CurrentOwner as PlayerController;
             if (gun.CurrentOwner)
             {
+
                 if (player.PlayerHasActiveSynergy("Perfected") && HasFlipped == false)
                 {
                     HasFlipped = true;
-                    Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
-                    mat.SetColor("_EmissiveColor", new Color32(108, 172, 255, 255));
-                    mat.SetFloat("_EmissiveColorPower", 1.55f);
-                    mat.SetFloat("_EmissivePower", 100);
-                    mat.SetFloat("_EmissiveThresholdSensitivity", 0.05f);
-                    MeshRenderer component = gun.GetComponent<MeshRenderer>();
-                    if (!component)
-                    {
-                        return;
-                    }
-                    Material[] sharedMaterials = component.sharedMaterials;
-                    for (int i = 0; i < sharedMaterials.Length; i++)
-                    {
-                        if (sharedMaterials[i].shader == mat)
-                        {
-                            return;
-                        }
-                    }
-                    Array.Resize<Material>(ref sharedMaterials, sharedMaterials.Length + 1);
-                    Material material = new Material(mat);
-                    material.SetTexture("_MainTex", sharedMaterials[0].GetTexture("_MainTex"));
-                    sharedMaterials[sharedMaterials.Length - 1] = material;
-                    component.sharedMaterials = sharedMaterials;
+                    Material.SetColor("_EmissiveColor", new Color32(108, 172, 255, 255));
+                    Material.SetFloat("_EmissiveColorPower", 1.55f);
+                    Material.SetFloat("_EmissivePower", 100);
+                    Material.SetFloat("_EmissiveThresholdSensitivity", 0.05f);
+                    Material.SetTexture("_MainTex", gun.sprite.renderer.material.GetTexture("_MainTex"));
+                    gun.sprite.usesOverrideMaterial = true;
+                    gun.sprite.renderer.material = Material;
+
                 }
                 else if (!player.PlayerHasActiveSynergy("Perfected") && HasFlipped != false)
                 {
                     HasFlipped = false;
+                    Material.SetColor("_EmissiveColor", new Color32(255, 255, 255, 255));
+                    Material.SetFloat("_EmissiveColorPower", 1.55f);
+                    Material.SetFloat("_EmissivePower", 100);
+                    Material.SetFloat("_EmissiveThresholdSensitivity", 0.05f);
+                    Material.SetTexture("_MainTex", gun.sprite.renderer.material.GetTexture("_MainTex"));
+                    gun.sprite.usesOverrideMaterial = true;
+                    gun.sprite.renderer.material = Material;
+                    /*
                     Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
                     mat.SetColor("_EmissiveColor", new Color32(255, 255, 255, 255));
                     mat.SetFloat("_EmissiveColorPower", 1.55f);
@@ -349,37 +347,31 @@ namespace Planetside
                         return;
                     }
                     Material[] sharedMaterials = component.sharedMaterials;
-                    for (int i = 0; i < sharedMaterials.Length; i++)
-                    {
-                        if (sharedMaterials[i].shader == mat)
-                        {
-                            return;
-                        }
-                    }
+
                     Array.Resize<Material>(ref sharedMaterials, sharedMaterials.Length + 1);
                     Material material = new Material(mat);
                     material.SetTexture("_MainTex", sharedMaterials[0].GetTexture("_MainTex"));
                     sharedMaterials[sharedMaterials.Length - 1] = material;
                     component.sharedMaterials = sharedMaterials;
-                }
-                gun.PreventNormalFireAudio = true;
+                    */
+                    //}
 
-                if (gun.CurrentOwner)
-                {
+                    gun.PreventNormalFireAudio = true;
 
-                    if (!gun.PreventNormalFireAudio)
+                    if (gun.CurrentOwner)
                     {
-                        this.gun.PreventNormalFireAudio = true;
-                    }
-                    if (!gun.IsReloading && !HasReloaded)
-                    {
-                        this.HasReloaded = true;
+
+                        if (!gun.PreventNormalFireAudio)
+                        {
+                            this.gun.PreventNormalFireAudio = true;
+                        }
+                        if (!gun.IsReloading && !HasReloaded)
+                        {
+                            this.HasReloaded = true;
+                        }
                     }
                 }
             }
-        }
-        public Colossus()
-        {
 
         }
     }

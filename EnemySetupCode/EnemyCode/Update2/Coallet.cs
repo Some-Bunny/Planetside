@@ -49,7 +49,7 @@ namespace Planetside
 				enemy.aiActor.aiAnimator.HitReactChance = 0f;
 				enemy.aiActor.specRigidbody.CollideWithOthers = true;
 				enemy.aiActor.specRigidbody.CollideWithTileMap = true;
-				enemy.aiActor.PreventFallingInPitsEver = true;
+				enemy.aiActor.PreventFallingInPitsEver = false;
 				enemy.aiActor.healthHaver.ForceSetCurrentHealth(25f);
 				enemy.aiActor.CollisionKnockbackStrength = 10f;
 				enemy.aiActor.CanTargetPlayers = true;
@@ -77,7 +77,27 @@ namespace Planetside
 						}
 					}
 				};
-				aiAnimator.IdleAnimation = new DirectionalAnimation
+                aiAnimator.OtherAnimations = new List<AIAnimator.NamedDirectionalAnimation>
+                {
+                    new AIAnimator.NamedDirectionalAnimation
+                    {
+                    name = "pitfall",
+                    anim = new DirectionalAnimation
+                        {
+                            Type = DirectionalAnimation.DirectionType.TwoWayHorizontal,
+                            Flipped = new DirectionalAnimation.FlipType[2],
+                            AnimNames = new string[]
+                            {
+
+                           "die_left",
+                           "die_right"
+
+                            }
+
+                        }
+                    }
+                };
+                aiAnimator.IdleAnimation = new DirectionalAnimation
 				{
 					Type = DirectionalAnimation.DirectionType.TwoWayHorizontal,
 					Flipped = new DirectionalAnimation.FlipType[2],

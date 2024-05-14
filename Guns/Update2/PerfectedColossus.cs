@@ -123,6 +123,7 @@ namespace Planetside
 
                 mod.projectiles[0] = projectile;
 
+                /*
                 gun.sprite.usesOverrideMaterial = true;
 
                 Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
@@ -148,6 +149,7 @@ namespace Planetside
                 material.SetTexture("_MainTex", sharedMaterials[0].GetTexture("_MainTex"));
                 sharedMaterials[sharedMaterials.Length - 1] = material;
                 component.sharedMaterials = sharedMaterials;
+                */
             }
 
             //GUN STATS
@@ -183,31 +185,6 @@ namespace Planetside
         }
         private bool HasReloaded;
 
-        public override void Update()
-        {
-            PlayerController player = gun.CurrentOwner as PlayerController;
-            if (gun.CurrentOwner)
-            {
-                
-                gun.PreventNormalFireAudio = true;
-
-                if (gun.CurrentOwner)
-                {
-
-                    if (!gun.PreventNormalFireAudio)
-                    {
-                        this.gun.PreventNormalFireAudio = true;
-                    }
-                    if (!gun.IsReloading && !HasReloaded)
-                    {
-                        this.HasReloaded = true;
-                    }
-                }
-            }
-        }
-        public PerfectedColossus()
-        {
-
-        }
+        
     }
 }

@@ -1,0 +1,177 @@
+fileFormatVersion: 2
+guid: c2d9beb89b5642c45bcc6e91df922237
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Siphon_Building_Interior_0
+    100004: Siphon_Building_Interior_1
+    100006: Siphon_Building_Interior_10
+    100008: Siphon_Building_Interior_11
+    100010: Siphon_Building_Interior_12
+    100012: Siphon_Building_Interior_13
+    100014: Siphon_Building_Interior_14
+    100016: Siphon_Building_Interior_2
+    100018: Siphon_Building_Interior_3
+    100020: Siphon_Building_Interior_4
+    100022: Siphon_Building_Interior_5
+    100024: Siphon_Building_Interior_6
+    100026: Siphon_Building_Interior_7
+    100028: Siphon_Building_Interior_8
+    100030: Siphon_Building_Interior_9
+    400000: //RootNode
+    400002: Siphon_Building_Interior_0
+    400004: Siphon_Building_Interior_1
+    400006: Siphon_Building_Interior_10
+    400008: Siphon_Building_Interior_11
+    400010: Siphon_Building_Interior_12
+    400012: Siphon_Building_Interior_13
+    400014: Siphon_Building_Interior_14
+    400016: Siphon_Building_Interior_2
+    400018: Siphon_Building_Interior_3
+    400020: Siphon_Building_Interior_4
+    400022: Siphon_Building_Interior_5
+    400024: Siphon_Building_Interior_6
+    400026: Siphon_Building_Interior_7
+    400028: Siphon_Building_Interior_8
+    400030: Siphon_Building_Interior_9
+    2100000: Siphon_Building_Interior_0Mat
+    2100002: Siphon_Building_Interior_1Mat
+    2100004: Siphon_Building_Interior_10Mat
+    2100006: Siphon_Building_Interior_11Mat
+    2100008: Siphon_Building_Interior_12Mat
+    2100010: Siphon_Building_Interior_13Mat
+    2100012: Siphon_Building_Interior_14Mat
+    2100014: Siphon_Building_Interior_2Mat
+    2100016: Siphon_Building_Interior_3Mat
+    2100018: Siphon_Building_Interior_4Mat
+    2100020: Siphon_Building_Interior_5Mat
+    2100022: Siphon_Building_Interior_6Mat
+    2100024: Siphon_Building_Interior_7Mat
+    2100026: Siphon_Building_Interior_8Mat
+    2100028: Siphon_Building_Interior_9Mat
+    2300000: Siphon_Building_Interior_0
+    2300002: Siphon_Building_Interior_1
+    2300004: Siphon_Building_Interior_10
+    2300006: Siphon_Building_Interior_11
+    2300008: Siphon_Building_Interior_12
+    2300010: Siphon_Building_Interior_13
+    2300012: Siphon_Building_Interior_14
+    2300014: Siphon_Building_Interior_2
+    2300016: Siphon_Building_Interior_3
+    2300018: Siphon_Building_Interior_4
+    2300020: Siphon_Building_Interior_5
+    2300022: Siphon_Building_Interior_6
+    2300024: Siphon_Building_Interior_7
+    2300026: Siphon_Building_Interior_8
+    2300028: Siphon_Building_Interior_9
+    3300000: Siphon_Building_Interior_0
+    3300002: Siphon_Building_Interior_1
+    3300004: Siphon_Building_Interior_10
+    3300006: Siphon_Building_Interior_11
+    3300008: Siphon_Building_Interior_12
+    3300010: Siphon_Building_Interior_13
+    3300012: Siphon_Building_Interior_14
+    3300014: Siphon_Building_Interior_2
+    3300016: Siphon_Building_Interior_3
+    3300018: Siphon_Building_Interior_4
+    3300020: Siphon_Building_Interior_5
+    3300022: Siphon_Building_Interior_6
+    3300024: Siphon_Building_Interior_7
+    3300026: Siphon_Building_Interior_8
+    3300028: Siphon_Building_Interior_9
+    4300000: Siphon_Building_Interior_0
+    4300002: Siphon_Building_Interior_1
+    4300004: Siphon_Building_Interior_10
+    4300006: Siphon_Building_Interior_11
+    4300008: Siphon_Building_Interior_12
+    4300010: Siphon_Building_Interior_13
+    4300012: Siphon_Building_Interior_14
+    4300014: Siphon_Building_Interior_2
+    4300016: Siphon_Building_Interior_3
+    4300018: Siphon_Building_Interior_4
+    4300020: Siphon_Building_Interior_5
+    4300022: Siphon_Building_Interior_6
+    4300024: Siphon_Building_Interior_7
+    4300026: Siphon_Building_Interior_8
+    4300028: Siphon_Building_Interior_9
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

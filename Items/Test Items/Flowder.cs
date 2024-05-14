@@ -57,8 +57,21 @@ namespace Planetside
         }
         public override void DoEffect(PlayerController user)
         {
+            GameObject beetle = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("Centaur_Midpoly_Riggeda_0"));
+            beetle.transform.position = user.transform.position;
+
+            /*
+            MeshRenderer renderer = beetle.GetComponentInChildren<MeshRenderer>();
+            renderer.allowOcclusionWhenDynamic = true;
+            beetle.transform.localScale = Vector3.one;
+            beetle.name = "ShopPortal";
+            beetle.transform.localScale *= 2;
+            */
+            beetle.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
+
+            beetle.transform.rotation = Quaternion.Euler(300, 180, 180);// 180, 180);
             //GlobalMessageRadio.BroadcastMessage("eye_shot_1");
-            GameManager.Instance.LoadCustomFlowForDebug("NPCParadise", "Base_Castle", "tt_castle");
+            //GameManager.Instance.LoadCustomFlowForDebug("NPCParadise", "Base_Castle", "tt_castle");
         }
     }
 }

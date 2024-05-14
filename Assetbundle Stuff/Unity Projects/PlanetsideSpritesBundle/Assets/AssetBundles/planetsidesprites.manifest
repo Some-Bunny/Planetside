@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 478924329
+CRC: 3207694446
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: b378ebec2bc7e785070dd9ea2c8cf265
+    Hash: e1ea29a33c88bab06580692b778794c0
   TypeTreeHash:
     serializedVersion: 2
     Hash: 49f9e3f3a3706f2358de64fcab9d7ba2
@@ -89,6 +89,7 @@ Assets:
 - Assets/Enemies/Fodder/fodder_die_010.png
 - Assets/Enemies/Fodder/fodder_idle_003.png
 - Assets/Ammonomicon/Ammonomicon Icons/bigcubeicon.png
+- Assets/Bosses/earthmoverBosscard.png
 - Assets/Ammonomicon/Ammonomicon Icons/bankericon.png
 - Assets/Enemies/Fodder/FodderCollection Data/FodderCollection.prefab
 - Assets/Minibosses/Shellrax/ShellraxCollection Data/ShellraxCollection.prefab

@@ -152,9 +152,10 @@ namespace Planetside
         public void WoopShoop(Projectile p, Vector2 direction)
         {
             if (p == null) { return; }
+            if (p.specRigidbody == null) { return; }
             Warps++;
             int rayMask = CollisionMask.LayerToMask(CollisionLayer.HighObstacle);
-            var cast = RaycastToolbox.ReturnRaycast(p.sprite.WorldCenter + (direction * 0.5f), direction, rayMask, 1000, null);
+            var cast = RaycastToolbox.ReturnRaycast(p.specRigidbody.UnitCenter + (direction * 0.5f), direction, rayMask, 1000, null);
             var Position = cast.Contact;
             if (p != null && Position != null)
             {

@@ -322,6 +322,17 @@ namespace Planetside
                         resistType = EffectResistanceType.Fire
                     }
                     };
+
+                    var pp = new DamageTypeModifier();
+                    pp.damageMultiplier = 3f;
+                    pp.damageType = CoreDamageTypes.Poison;
+                    gameActor.healthHaver.damageTypeModifiers.Add(pp);
+
+                    var ff = new DamageTypeModifier();
+                    ff.damageMultiplier = 3f;
+                    ff.damageType = CoreDamageTypes.Fire;
+                    gameActor.healthHaver.damageTypeModifiers.Add(ff);
+
                     GameManager.Instance.Dungeon.StartCoroutine(this.HandleSuckStrengths(target, user.sprite.WorldCenter,UnityEngine.Random.Range(0.5f, 1.5f), 0));
                     GameManager.Instance.Dungeon.StartCoroutine(this.HandleSuckStrengths(target, user.sprite.WorldCenter, UnityEngine.Random.Range(0.5f, 1.5f), 1));
                 }

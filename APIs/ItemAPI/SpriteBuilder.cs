@@ -6,6 +6,8 @@ using System.Reflection;
 using UnityEngine;
 
 using ItemAPI;
+using Planetside;
+
 namespace ItemAPI
 {
     public static class SpriteBuilder
@@ -41,6 +43,8 @@ namespace ItemAPI
 
             return SpriteFromTexture(texture, resourcePath, obj);
         }
+
+
 
         /// <summary>
         /// Returns an object with a tk2dSprite component with the texture provided

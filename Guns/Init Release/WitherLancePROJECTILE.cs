@@ -101,7 +101,6 @@ namespace Planetside
                         case WitherLanceProjectile.Types.BLAST:
                             self.baseData.damage *= 1.2f;
                             self.damageTypes = CoreDamageTypes.Fire;
-
                             return;
                         case WitherLanceProjectile.Types.FAST:
                             HomingModifier HomingMod = self.gameObject.GetOrAddComponent<HomingModifier>();
@@ -209,8 +208,6 @@ namespace Planetside
 
         public void ProcessAdd(WitherLanceProjectile p)
         {
-
-            var self = this.GetComponent<Projectile>();
 
             Stars.Add(p.projectile);
             p.projectile.OverrideMotionModule = new OrbitProjectileMotionModule()

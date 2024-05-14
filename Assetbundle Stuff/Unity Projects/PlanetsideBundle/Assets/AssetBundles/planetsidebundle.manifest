@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 4071107761
+CRC: 2969087735
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 2d162e9ab414a27104c8fbab6571a0b8
+    Hash: 14b948dbc9dbb5b57747e8b76f2bf58e
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 22f787423614ef7c34e2e3c797baf322
+    Hash: 4db2434854b392c9a113790346345cdb
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -30,6 +30,10 @@ ClassTypes:
 - Class: 82
   Script: {instanceID: 0}
 - Class: 84
+  Script: {instanceID: 0}
+- Class: 90
+  Script: {instanceID: 0}
+- Class: 95
   Script: {instanceID: 0}
 - Class: 135
   Script: {instanceID: 0}
@@ -62,6 +66,7 @@ Assets:
 - Assets/Shader/ParticleAdditive.shader
 - Assets/videos/2022-09-06 14-35-02.mp4
 - Assets/Shader/KillMe.shader
+- Assets/3D Asses/Benjamin2/Centaur_Main.prefab
 - Assets/Bteele.prefab
 - Assets/Shader/TrespassShader.shader
 - Assets/Particle Systems/ShellraxEye.prefab
@@ -79,6 +84,7 @@ Assets:
 - Assets/PerkparticleSystem.prefab
 - Assets/Portal.prefab
 - Assets/Particle Systems/PortalClose.prefab
+- Assets/3D Asses/Benjamin/Centaur_Midpoly_Riggeda_0.prefab
 - Assets/FloorTextures/hell_1.jpg
 - Assets/ENV_Tileset_Abyss.png
 - Assets/FloorTextures/hollow_1.jpg

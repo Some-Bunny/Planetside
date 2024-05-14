@@ -147,9 +147,11 @@ namespace ItemAPI
                 Tools.PrintError("No bytes found in " + file);
                 return null;
             }
-            
+
             Texture2D texture = new Texture2D(1, 1, TextureFormat.RGBA32, false);
             ImageConversion.LoadImage(texture, bytes);
+            //FlipTexture(ref texture);
+
             texture.filterMode = FilterMode.Point;
 
             string name = file.Substring(0, file.LastIndexOf('.'));
@@ -162,7 +164,38 @@ namespace ItemAPI
             return texture;
         }
 
-    
+
+        public static void FlipTexture(ref Texture2D original)
+        {
+            int textureWidth = original.width;
+            int textureHeight = original.height;
+
+            Color[] colorArray = original.GetPixels();
+
+            
+
+            for (int j = 0; j < textureHeight; j++)
+            {
+                //ETGModConsole.Log($"H: {textureHeight} : {textureWidth}");
+
+                int rowStart = 0;
+                int rowEnd = textureWidth - 1;
+
+                
+                while (rowStart < rowEnd)
+                {
+                    Color hold = colorArray[(j * textureWidth) + (rowStart)];
+                    colorArray[(j * textureWidth) + (rowStart)] = colorArray[(j * textureWidth) + (rowEnd)];
+                    colorArray[(j * textureWidth) + (rowEnd)] = hold;
+                    rowStart++;
+                    rowEnd--;
+                }
+                
+            }
+
+            //Texture2D finalFlippedTexture = new Texture2D(original.width, original.height);
+            original.SetPixels(colorArray);
+        }
 
 
         public static Texture2D AnotherGetTextureFromResource(string resourceName)

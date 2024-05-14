@@ -1,0 +1,195 @@
+fileFormatVersion: 2
+guid: f7c1ea83be8e04a4bb48f0cef6cea131
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: LargeBuildings_01_0
+    100004: LargeBuildings_01_1
+    100006: LargeBuildings_01_10
+    100008: LargeBuildings_01_11
+    100010: LargeBuildings_01_12
+    100012: LargeBuildings_01_13
+    100014: LargeBuildings_01_14
+    100016: LargeBuildings_01_15
+    100018: LargeBuildings_01_16
+    100020: LargeBuildings_01_17
+    100022: LargeBuildings_01_2
+    100024: LargeBuildings_01_3
+    100026: LargeBuildings_01_4
+    100028: LargeBuildings_01_5
+    100030: LargeBuildings_01_6
+    100032: LargeBuildings_01_7
+    100034: LargeBuildings_01_8
+    100036: LargeBuildings_01_9
+    400000: //RootNode
+    400002: LargeBuildings_01_0
+    400004: LargeBuildings_01_1
+    400006: LargeBuildings_01_10
+    400008: LargeBuildings_01_11
+    400010: LargeBuildings_01_12
+    400012: LargeBuildings_01_13
+    400014: LargeBuildings_01_14
+    400016: LargeBuildings_01_15
+    400018: LargeBuildings_01_16
+    400020: LargeBuildings_01_17
+    400022: LargeBuildings_01_2
+    400024: LargeBuildings_01_3
+    400026: LargeBuildings_01_4
+    400028: LargeBuildings_01_5
+    400030: LargeBuildings_01_6
+    400032: LargeBuildings_01_7
+    400034: LargeBuildings_01_8
+    400036: LargeBuildings_01_9
+    2100000: LargeBuildings_01_0Mat
+    2100002: LargeBuildings_01_1Mat
+    2100004: LargeBuildings_01_10Mat
+    2100006: LargeBuildings_01_11Mat
+    2100008: LargeBuildings_01_12Mat
+    2100010: LargeBuildings_01_13Mat
+    2100012: LargeBuildings_01_14Mat
+    2100014: LargeBuildings_01_15Mat
+    2100016: LargeBuildings_01_16Mat
+    2100018: LargeBuildings_01_17Mat
+    2100020: LargeBuildings_01_2Mat
+    2100022: LargeBuildings_01_3Mat
+    2100024: LargeBuildings_01_4Mat
+    2100026: LargeBuildings_01_5Mat
+    2100028: LargeBuildings_01_6Mat
+    2100030: LargeBuildings_01_7Mat
+    2100032: LargeBuildings_01_8Mat
+    2100034: LargeBuildings_01_9Mat
+    2300000: LargeBuildings_01_0
+    2300002: LargeBuildings_01_1
+    2300004: LargeBuildings_01_10
+    2300006: LargeBuildings_01_11
+    2300008: LargeBuildings_01_12
+    2300010: LargeBuildings_01_13
+    2300012: LargeBuildings_01_14
+    2300014: LargeBuildings_01_15
+    2300016: LargeBuildings_01_16
+    2300018: LargeBuildings_01_17
+    2300020: LargeBuildings_01_2
+    2300022: LargeBuildings_01_3
+    2300024: LargeBuildings_01_4
+    2300026: LargeBuildings_01_5
+    2300028: LargeBuildings_01_6
+    2300030: LargeBuildings_01_7
+    2300032: LargeBuildings_01_8
+    2300034: LargeBuildings_01_9
+    3300000: LargeBuildings_01_0
+    3300002: LargeBuildings_01_1
+    3300004: LargeBuildings_01_10
+    3300006: LargeBuildings_01_11
+    3300008: LargeBuildings_01_12
+    3300010: LargeBuildings_01_13
+    3300012: LargeBuildings_01_14
+    3300014: LargeBuildings_01_15
+    3300016: LargeBuildings_01_16
+    3300018: LargeBuildings_01_17
+    3300020: LargeBuildings_01_2
+    3300022: LargeBuildings_01_3
+    3300024: LargeBuildings_01_4
+    3300026: LargeBuildings_01_5
+    3300028: LargeBuildings_01_6
+    3300030: LargeBuildings_01_7
+    3300032: LargeBuildings_01_8
+    3300034: LargeBuildings_01_9
+    4300000: LargeBuildings_01_0
+    4300002: LargeBuildings_01_1
+    4300004: LargeBuildings_01_10
+    4300006: LargeBuildings_01_11
+    4300008: LargeBuildings_01_12
+    4300010: LargeBuildings_01_13
+    4300012: LargeBuildings_01_14
+    4300014: LargeBuildings_01_15
+    4300016: LargeBuildings_01_16
+    4300018: LargeBuildings_01_17
+    4300020: LargeBuildings_01_2
+    4300022: LargeBuildings_01_3
+    4300024: LargeBuildings_01_4
+    4300026: LargeBuildings_01_5
+    4300028: LargeBuildings_01_6
+    4300030: LargeBuildings_01_7
+    4300032: LargeBuildings_01_8
+    4300034: LargeBuildings_01_9
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

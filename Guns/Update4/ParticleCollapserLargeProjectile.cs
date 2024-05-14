@@ -110,7 +110,6 @@ namespace Planetside
 				Projectile projectile = other.projectile;
 				if (projectile)
 				{
-					projectile.collidesWithPlayer = false;
 					if (other.GetComponent<BlackHoleDoer>() != null)
 					{
 						return false;
@@ -141,11 +140,6 @@ namespace Planetside
 				other.Velocity = vector;
 				if (projectile != null)
 				{
-					projectile.collidesWithPlayer = false;
-					if (projectile.IsBulletScript)
-					{
-						projectile.RemoveBulletScriptControl();
-					}
 					if (vector != Vector2.zero)
 					{
 						projectile.Direction = vector.normalized;

@@ -36,7 +36,7 @@ namespace Planetside
     {
         public const string GUID = "somebunny.etg.planetsideofgunymede";
         public const string NAME = "Planetside Of Gunymede Pre-Release";
-        public const string VERSION = "1.3.162";
+        public const string VERSION = "1.3.164";
 
         public static readonly string TEXT_COLOR = "#9006FF";
 
@@ -153,6 +153,7 @@ namespace Planetside
             SoundManager.LoadBankFromModProject("Planetside/PlanetsideBank");
 
             SoundManager.RegisterStopEvent("Stop_MUS_PrisonerTheme", StopEventType.Music);
+            SoundManager.RegisterStopEvent("Stop_WARWITHOUTREASON", StopEventType.Music);
 
             ItemBuilder.Init();
             ExpandDungeonMusicAPI.InitHooks();
@@ -437,6 +438,8 @@ namespace Planetside
             RobotShopkeeperBoss.Init();
             FriendlyHMPrime.Init();
             //Servont.Init();
+
+            THREarthmover.Init();
 
             An3sBullet.Init();
             HunterBullet.Init();

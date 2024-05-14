@@ -1,0 +1,171 @@
+fileFormatVersion: 2
+guid: de912daad9426f2438a49c133288b9ad
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Building_4_0
+    100004: Building_4_1
+    100006: Building_4_10
+    100008: Building_4_11
+    100010: Building_4_12
+    100012: Building_4_13
+    100014: Building_4_2
+    100016: Building_4_3
+    100018: Building_4_4
+    100020: Building_4_5
+    100022: Building_4_6
+    100024: Building_4_7
+    100026: Building_4_8
+    100028: Building_4_9
+    400000: //RootNode
+    400002: Building_4_0
+    400004: Building_4_1
+    400006: Building_4_10
+    400008: Building_4_11
+    400010: Building_4_12
+    400012: Building_4_13
+    400014: Building_4_2
+    400016: Building_4_3
+    400018: Building_4_4
+    400020: Building_4_5
+    400022: Building_4_6
+    400024: Building_4_7
+    400026: Building_4_8
+    400028: Building_4_9
+    2100000: Building_4_0Mat
+    2100002: Building_4_1Mat
+    2100004: Building_4_10Mat
+    2100006: Building_4_11Mat
+    2100008: Building_4_12Mat
+    2100010: Building_4_13Mat
+    2100012: Building_4_2Mat
+    2100014: Building_4_3Mat
+    2100016: Building_4_4Mat
+    2100018: Building_4_5Mat
+    2100020: Building_4_6Mat
+    2100022: Building_4_7Mat
+    2100024: Building_4_8Mat
+    2100026: Building_4_9Mat
+    2300000: Building_4_0
+    2300002: Building_4_1
+    2300004: Building_4_10
+    2300006: Building_4_11
+    2300008: Building_4_12
+    2300010: Building_4_13
+    2300012: Building_4_2
+    2300014: Building_4_3
+    2300016: Building_4_4
+    2300018: Building_4_5
+    2300020: Building_4_6
+    2300022: Building_4_7
+    2300024: Building_4_8
+    2300026: Building_4_9
+    3300000: Building_4_0
+    3300002: Building_4_1
+    3300004: Building_4_10
+    3300006: Building_4_11
+    3300008: Building_4_12
+    3300010: Building_4_13
+    3300012: Building_4_2
+    3300014: Building_4_3
+    3300016: Building_4_4
+    3300018: Building_4_5
+    3300020: Building_4_6
+    3300022: Building_4_7
+    3300024: Building_4_8
+    3300026: Building_4_9
+    4300000: Building_4_0
+    4300002: Building_4_1
+    4300004: Building_4_10
+    4300006: Building_4_11
+    4300008: Building_4_12
+    4300010: Building_4_13
+    4300012: Building_4_2
+    4300014: Building_4_3
+    4300016: Building_4_4
+    4300018: Building_4_5
+    4300020: Building_4_6
+    4300022: Building_4_7
+    4300024: Building_4_8
+    4300026: Building_4_9
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

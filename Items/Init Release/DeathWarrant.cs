@@ -296,16 +296,26 @@ namespace Planetside
             string itemName = "Death Warrant";
             GameObject obj = new GameObject(itemName);
             var item = obj.AddComponent<DeathWarrant>();
-            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
-            var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
-            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("gundeathwarrant"), data, obj);
+            ItemBuilder.AddSpriteToObject(itemName, "Planetside/Resources/gundeathwarrant", obj);
+            //var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
+            //ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("gundeathwarrant"), data, obj);
             string shortDesc = "Sign It For Everyone";
             string longDesc = "A death warrant granted to you by law." +
                 "\n\nOn it are the 10 billion signatures of all the Gundead that roam in the Gungeon.";
             ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
 			item.quality = PickupObject.ItemQuality.C;
 
-			GameObject deathmark = ItemBuilder.AddSpriteToObject("deathmark_vfx", "Planetside/Resources/VFX/DeathMark/markedfordeathvfx_001", null);
+
+			//item.sprite.FlipX = true;
+			//item.sprite.collection.spriteDefinitions[item.sprite.spriteId].position0.x += item.sprite.GetBounds().size.x;
+            //item.sprite.collection.spriteDefinitions[item.sprite.spriteId].position1.x += item.sprite.GetBounds().size.x;
+            //item.sprite.collection.spriteDefinitions[item.sprite.spriteId].position2.x += item.sprite.GetBounds().size.x;
+            //item.sprite.collection.spriteDefinitions[item.sprite.spriteId].position3.x += item.sprite.GetBounds().size.x;
+
+
+
+
+            GameObject deathmark = ItemBuilder.AddSpriteToObject("deathmark_vfx", "Planetside/Resources/VFX/DeathMark/markedfordeathvfx_001", null);
 			FakePrefab.MarkAsFakePrefab(deathmark);
 			UnityEngine.Object.DontDestroyOnLoad(deathmark);
 			tk2dSpriteAnimator animator = deathmark.GetOrAddComponent<tk2dSpriteAnimator>();

@@ -152,6 +152,7 @@
     <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\DallanBullet.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\QadayBullet.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\LynceusBullet.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\Update3\1000THR Earthmover\1000THR Earthmover.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\Update2\Ophanaim\OphanaimFlightBehavior.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\Update2\Ophanaim\OphanaimMinionController.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\Update3\Enemies\Oppressor.cs" />

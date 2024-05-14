@@ -6,7 +6,7 @@ using UnityEngine;
 
 
 
-
+/*
 namespace Planetside
 {
     public static class AddItemsToChamberGunIndex
@@ -605,3 +605,4 @@ namespace Planetside
 }
 
 
+*/

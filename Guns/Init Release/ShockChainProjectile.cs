@@ -96,7 +96,7 @@ namespace Planetside
                     {
                         foreach (Projectile ai in activeProjectiles)
                         {
-                            bool flag8 = ai && ai != null && Vector2.Distance(ai.transform.PositionVector2(), this.projectile.sprite.WorldCenter) < 8f && ai.gameObject.GetComponent<ShockChainProjectile>() != null && ai != this.projectile;
+                            bool flag8 = ai && ai != null && Vector2.Distance(ai.transform.PositionVector2(), this.projectile.sprite.WorldCenter) < 7f && ai.gameObject.GetComponent<ShockChainProjectile>() != null && ai != this.projectile;
                             if (flag8)
                             {
                                 if (!ExtantTethers.ContainsKey(ai))
@@ -199,10 +199,9 @@ namespace Planetside
 
         public float getCalculateddamage()
         {
-            float ElectricDamage = 2.2f;
+            float ElectricDamage = 1.8f;
             if (player == null) { return ElectricDamage; }
-            bool flagA = player.PlayerHasActiveSynergy("Single A");
-            if (flagA)
+            if (player.PlayerHasActiveSynergy("Single A"))
             {
                 ElectricDamage *= 2;
             }

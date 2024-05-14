@@ -61,7 +61,7 @@ namespace Planetside
 			FakePrefab.MarkAsFakePrefab(normalDart.gameObject);
 			UnityEngine.Object.DontDestroyOnLoad(normalDart);
 			gun.DefaultModule.projectiles[0] = normalDart;
-            normalDart.baseData.damage = 25f;
+            normalDart.baseData.damage = 30f;
             normalDart.baseData.speed = 40f;
             normalDart.baseData.force = 1f;
             normalDart.baseData.range = 100f;
