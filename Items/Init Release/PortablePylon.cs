@@ -141,12 +141,12 @@ namespace Planetside
             PylonController gameObject = UnityEngine.Object.Instantiate<GameObject>(pylonObject, user.specRigidbody.UnitCenter, Quaternion.identity).GetComponent<PylonController>();
             if (user.PlayerHasActiveSynergy("Loader Chassis")) 
             {
-                gameObject.DPS = 4;
+                gameObject.DPS = 9;
                 gameObject.IsSynergy = true;
             }
             if (user.PlayerHasActiveSynergy("Sentry Goin' Up!"))
             {
-                gameObject.DPS += 0.5f;
+                gameObject.DPS += 1.5f;
             }
         }
     }
@@ -157,10 +157,10 @@ namespace Planetside
         public bool IsSynergy= false;
         private tk2dSpriteAnimator animator;
         private RoomHandler roomHandler;
-        public float DPS = 2.5f;
+        public float DPS = 6f;
         private HeatIndicatorController m_radialIndicator;
 
-        public float PlayerRange = 7.5f;
+        public float PlayerRange = 9f;
         public float PylonRange = 25;
 
 
@@ -337,7 +337,8 @@ namespace Planetside
 
         private void OnDestroy()
         {
-            if (PortablePylon.allPylons.Contains(gameObject)){
+            if (PortablePylon.allPylons.Contains(gameObject))
+            {
                 PortablePylon.allPylons.Remove(gameObject);
             }
             foreach (var si in ExtantTethers)
@@ -354,7 +355,10 @@ namespace Planetside
         {
             if (this.gameObject)
             {
-                PortablePylon.allPylons.Remove(gameObject);
+                if (PortablePylon.allPylons.Contains(gameObject))
+                {
+                    PortablePylon.allPylons.Remove(gameObject);
+                }
                 AkSoundEngine.PostEvent("Play_OBJ_turret_fade_01", this.gameObject);
                 LootEngine.DoDefaultSynergyPoof(gameObject.transform.PositionVector2());
                 UnityEngine.Object.Destroy(this.gameObject);

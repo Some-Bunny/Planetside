@@ -25,7 +25,7 @@ namespace Planetside
             string shortDesc = "Better Than Carpets";
             string longDesc = "A breakthrough in climate control technology, this grenade is capable of building up massive amounts of positive charge to release as a lightning strike.";
             ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
-            ItemBuilder.SetCooldownType(item, ItemBuilder.CooldownType.Damage, 500);
+            ItemBuilder.SetCooldownType(item, ItemBuilder.CooldownType.Damage, 250);
             item.consumable = false;
 
             lightningData = StaticExplosionDatas.CopyFields(StaticExplosionDatas.genericLargeExplosion);

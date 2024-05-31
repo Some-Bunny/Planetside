@@ -191,16 +191,16 @@ namespace Planetside
         {
             string baseFilepath = "Planetside/Resources/NPCs/Gregthly/gregthly";
 
+            ETGMod.Databases.Strings.Core.AddComplex("#GREGTHLY_RUNBASEDMULTILINE_GENERIC", "..");
             ETGMod.Databases.Strings.Core.AddComplex("#GREGTHLY_RUNBASEDMULTILINE_GENERIC", "...");
-            ETGMod.Databases.Strings.Core.AddComplex("#GREGTHLY_RUNBASEDMULTILINE_GENERIC", "...");
-            ETGMod.Databases.Strings.Core.AddComplex("#GREGTHLY_RUNBASEDMULTILINE_GENERIC", "...");
-            ETGMod.Databases.Strings.Core.AddComplex("#GREGTHLY_RUNBASEDMULTILINE_GENERIC", "...");
+            ETGMod.Databases.Strings.Core.AddComplex("#GREGTHLY_RUNBASEDMULTILINE_GENERIC", "....");
+            ETGMod.Databases.Strings.Core.AddComplex("#GREGTHLY_RUNBASEDMULTILINE_GENERIC", ".....");
 
             ETGMod.Databases.Strings.Core.Set("#GREGTHLY_RUNBASEDMULTILINE_STOPPER", ". . .");
             ETGMod.Databases.Strings.Core.Set("#GREGTHLY_RUNBASEDMULTILINE_PURCHASE", "!!!");
             ETGMod.Databases.Strings.Core.Set("#GREGTHLY_RUNBASEDMULTILINE_FAILPURCHASE", ".....");
-            ETGMod.Databases.Strings.Core.Set("#GREGTHLY_RUNBASEDMULTILINE_INTRO", "...");
-            ETGMod.Databases.Strings.Core.Set("#GREGTHLY_RUNBASEDMULTILINE_ATTACKED", "???");
+            ETGMod.Databases.Strings.Core.Set("#GREGTHLY_RUNBASEDMULTILINE_INTRO", "..!");
+            ETGMod.Databases.Strings.Core.Set("#GREGTHLY_RUNBASEDMULTILINE_ATTACKED", ">:(");
 
             ETGMod.Databases.Strings.Core.Set("#GREGTHLY_RUNBASEDMULTILINE_STOLEN", ">:(");
 
@@ -224,7 +224,7 @@ namespace Planetside
                 , new Vector3(0.375f, 1.375f, 5.9375f)
                 , ItsDaFuckinShopApi.VoiceBoxes.FOOL
                 , new Vector3[] { new Vector3(0.75f, 0.875f, 1) }
-                , 0.7f
+                , 0.5f
                 , false
                 , null
                 , null

@@ -187,7 +187,7 @@ namespace Planetside
             if (nearestInteractable != null && nearestInteractable is SimpleShrine)
             {
                 SimpleShrine death = nearestInteractable as SimpleShrine;
-                if (death.name == "psog:nullshrine(Clone)")
+                if (death.name.ToLower().Contains("nullshrine"))
                 {
                     OtherTools.ApplyStat(user, PlayerStats.StatType.Curse, 0.5f, StatModifier.ModifyMethod.ADDITIVE);
                     if (UnityEngine.Random.value < 0.5f)
@@ -910,33 +910,7 @@ namespace Planetside
         private PlayerController playeroue;
         private Shader m_glintShader;
     }
-    /*
-    public class ChallengeUP : BraveBehaviour
-    {
-        public void Start()
-        {
-            this.Microwave = base.GetComponent<RoomHandler>();
-            this.playeroue = base.GetComponent<PlayerController>();
-            {
-                PlayerController player = GameManager.Instance.PrimaryPlayer;
 
-            }
-
-        }
-        
-        public void Update()
-        {
-
-        }
-
-        public override void OnDestroy()
-        {
-
-        }
-        private RoomHandler Microwave;
-        private PlayerController playeroue;
-    }
-    */
     public class HERETIC : BraveBehaviour
     {
         public void Start()

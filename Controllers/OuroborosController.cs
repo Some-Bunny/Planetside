@@ -1006,7 +1006,7 @@ namespace Planetside
 			{
 				if (aiActor.behaviorSpeculator) 
 				{
-					aiActor.behaviorSpeculator.LocalTimeScale *=  IsBoss == true ? 1.2f : 1.125f;
+					aiActor.behaviorSpeculator.LocalTimeScale *= IsBoss == true ? 1.2f : 1.125f;
 					if (IsBoss == true)
 					{
 						aiActor.behaviorSpeculator.CooldownScale *= 1.1f;
@@ -1447,8 +1447,17 @@ namespace Planetside
         public override Color SecondaryEliteParticleColor => Color.red;
 		public override List<string> EnemyBlackList => new List<string>()
 		{
-
-		};
+                              EnemyGUIDs.Bullat_GUID,
+                              EnemyGUIDs.Shotgat_GUID,
+                              EnemyGUIDs.Spirat_GUID,
+                              EnemyGUIDs.Grenat_GUID,
+                              EnemyGUIDs.Spent_GUID,
+                              EnemyGUIDs.Mouser_GUID,
+                              EnemyGUIDs.Beadie_GUID,
+                              EnemyGUIDs.Treadnaughts_Tanker_GUID,
+                              EnemyGUIDs.Ammoconda_Ball_GUID,
+                              EnemyGUIDs.Fusebot_GUID,
+        };
 		public override List<ActorEffectResistance> DebuffImmunities => new List<ActorEffectResistance> { new ActorEffectResistance() {resistAmount = 1, resistType =  EffectResistanceType.Fire} };
 		public override void Start()
         {
@@ -1545,6 +1554,7 @@ namespace Planetside
 
             EnemyGuidDatabase.Entries["shambling_round"],
             EnemyGuidDatabase.Entries["killithid"],
+            Detscavator.guid
         };
 
 		public override List<ActorEffectResistance> DebuffImmunities => new List<ActorEffectResistance> {
@@ -1626,6 +1636,14 @@ namespace Planetside
 
             EnemyGuidDatabase.Entries["shambling_round"],
             EnemyGuidDatabase.Entries["killithid"],
+
+            EnemyGUIDs.Poisbulin_GUID,
+            EnemyGUIDs.Blobulin_GUID,
+
+            EnemyGUIDs.Bullat_GUID,
+            EnemyGUIDs.Spirat_GUID,
+            EnemyGUIDs.Grenat_GUID,
+            EnemyGUIDs.Shotgat_GUID,
         };
 
         public override List<ActorEffectResistance> DebuffImmunities => new List<ActorEffectResistance> {
@@ -1715,8 +1733,33 @@ namespace Planetside
 			EnemyGUIDs.Skusket_Head_GUID,
             EnemyGUIDs.Black_Skusket_GUID,
             EnemyGUIDs.Suicide_Vest_Bullet_Kin_GUID,
+            Detscavator.guid,
+            EnemyGUIDs.Revolvenant_GUID,
+            EnemyGUIDs.Agonizer_GUID,
 
+            EnemyGUIDs.Det_GUID,
+            EnemyGUIDs.Diagonal_Det_GUID,
+            EnemyGUIDs.Diagonal_X_Det_GUID,
+            EnemyGUIDs.Horizontal_Det_GUID,
+            EnemyGUIDs.Horizontal_X_Det_GUID,
+            EnemyGUIDs.Vertical_Det_GUID,
+            EnemyGUIDs.Vertical_X_Det_GUID,
+            EnemyGUIDs.X_Det_GUID,
 
+            EnemyGUIDs.Chaingunner_GUID,
+            EnemyGUIDs.Chancebulon_GUID,
+            EnemyGUIDs.Ammoconda_Ball_GUID,
+
+            EnemyGUIDs.Bullat_GUID,
+            EnemyGUIDs.Shotgat_GUID,
+            EnemyGUIDs.Spirat_GUID,
+            EnemyGUIDs.Grenat_GUID,
+            EnemyGUIDs.Spent_GUID,
+            EnemyGUIDs.Mouser_GUID,
+            EnemyGUIDs.Beadie_GUID,
+            EnemyGUIDs.Treadnaughts_Tanker_GUID,
+            EnemyGUIDs.Ammoconda_Ball_GUID,
+            EnemyGUIDs.Fusebot_GUID,
         };
 
 		public override List<ActorEffectResistance> DebuffImmunities => new List<ActorEffectResistance> { new ActorEffectResistance() { resistAmount = 1, resistType = EffectResistanceType.Freeze } };
