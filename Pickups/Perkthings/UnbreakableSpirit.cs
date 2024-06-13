@@ -74,7 +74,7 @@ namespace Planetside
         {
             ParticleSystem particleObject = UnityEngine.Object.Instantiate(StaticVFXStorage.PerkParticleObject).GetComponent<ParticleSystem>();
             AkSoundEngine.PostEvent("Play_BOSS_cyborg_eagle_01", player.gameObject);
-            user.healthHaver.IsVulnerable = false;
+            player.healthHaver.IsVulnerable = false;
             float elapsed = 0f;
             while (elapsed < 5)
             {
@@ -83,6 +83,9 @@ namespace Planetside
                     Vector3 vector = player.sprite.WorldBottomLeft.ToVector3ZisY(0);
                     Vector3 vector2 = player.sprite.WorldTopRight.ToVector3ZisY(0);
                     Vector3 position = new Vector3(UnityEngine.Random.Range(vector.x, vector2.x), UnityEngine.Random.Range(vector.y, vector2.y), UnityEngine.Random.Range(vector.z, vector2.z));
+                    
+                    if (particleObject == null){ break;}
+
                     ParticleSystem particleSystem = particleObject;
                     var trails = particleSystem.trails;
                     trails.worldSpace = false;
@@ -98,12 +101,21 @@ namespace Planetside
                     particleSystem.gameObject.SetActive(true);
                     particleSystem.Emit(emitParams, 1);
                 }
-                user.healthHaver.IsVulnerable = false;
+                if (user != null)
+                {
+                    user.healthHaver.IsVulnerable = false;
+                }
                 elapsed += BraveTime.DeltaTime;
                 yield return null;
             }
-            Destroy(particleObject.gameObject, 5);
-            user.healthHaver.IsVulnerable = true;
+            if (particleObject != null)
+            {
+                Destroy(particleObject.gameObject, 5);
+            }
+            if (user != null)
+            {
+                user.healthHaver.IsVulnerable = true;
+            }
             yield break;
         }
 

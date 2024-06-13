@@ -42,12 +42,8 @@ namespace Planetside
                         {
                             mc.recieverCall(mcG, message);
                         }
-                    }
-                    
-
-                    
+                    }                   
                 }
-                
             }
         }
 

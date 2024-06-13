@@ -116,7 +116,7 @@ public class ShamberController : BraveBehaviour
 
     public void Update()
 	{
-		if (base.aiActor)
+		if (base.aiActor != null)
         {
 			if (CanSuckBullets() == true)
 			{
@@ -128,15 +128,19 @@ public class ShamberController : BraveBehaviour
 						Projectile proj = allProjectiles[i];
 						if (proj && proj.Owner != this.aiActor)
                         {
-							BeamController beamController = proj.GetComponent<BeamController>();
+							
+                            BeamController beamController = proj.GetComponent<BeamController>();
 							BasicBeamController basicBeamController = proj.GetComponent<BasicBeamController>();
-							bool isNotBeam = basicBeamController == null || beamController == null;
-							if (Vector2.Distance(proj.sprite.WorldCenter, base.sprite.WorldCenter) < 3f && proj != null && proj.specRigidbody != null && isNotBeam == true)
-							{
-								if (proj.CanBeCaught)
-								{
-									if (m_bulletPositions.Count() < 300)
-									{
+							bool isNotBeam = basicBeamController == null && beamController == null;
+
+                            Vector2 position = proj.sprite != null ? proj.sprite.WorldCenter : proj.transform.PositionVector2();
+
+                            if (Vector2.Distance(position, base.aiActor.sprite.WorldCenter) < 3f && proj != null && proj.specRigidbody != null && isNotBeam == true)
+                            {
+                                if (proj.CanBeCaught)
+                                {
+                                    if (m_bulletPositions.Count() < 300)
+                                    {
                                         if (proj.Owner as PlayerController)
                                         {
                                             proj.sprite.color = new Color(1f, 0.1f, 0.1f);
@@ -190,43 +194,46 @@ public class ShamberController : BraveBehaviour
                                             });
                                         }
                                     }
-									else
-									{
+                                    else
+                                    {
                                         GameManager.Instance.Dungeon.StartCoroutine(this.HandleBulletSuck(proj));
                                     }
-								}
-							}							
-						}				
-					}
+                                }
+                            }
+                        }
+                    }
 				}
 			}
             for (int i = this.m_bulletPositions.Count - 1; i >= 0; i--)
             {
-                Projectile first = this.m_bulletPositions[i].projectile;
-
-                if (!(first == null))
+                var thing = this.m_bulletPositions[i];
+                if (thing != null)
                 {
-                    if (!first)
-                    {
-                        this.m_bulletPositions[i] = null;
-                    }
-                    else
-                    {
-                        float num = this.m_bulletPositions[i].s + BraveTime.DeltaTime * Mathf.Max(30, (10 * this.m_bulletPositions[i].speed));
-                        this.m_bulletPositions[i].s = num;
+                    Projectile first = thing.projectile;
 
-						Vector2 bulletPosition = this.GetBulletPosition(num, first, this.m_bulletPositions[i].Radius);
-
-						first.transform.position = bulletPosition;
-                        first.specRigidbody.Reinitialize();
-						//first.specRigidbody.Velocity = (bulletPosition - first.transform.PositionVector2()) / BraveTime.DeltaTime;
-                        if (first.shouldRotate)
+                    if (!(first == null))
+                    {
+                        if (!first)
                         {
-                            first.transform.rotation = Quaternion.Euler(0f, 0f, 180f + (Quaternion.Euler(0f, 0f, 90f) * (this.aiActor.sprite.WorldCenter - bulletPosition)).XY().ToAngle());
+                            this.m_bulletPositions[i] = null;
                         }
-                        first.ResetDistance();
+                        else
+                        {
+                            float num = this.m_bulletPositions[i].s + BraveTime.DeltaTime * Mathf.Max(30, (10 * this.m_bulletPositions[i].speed));
+                            this.m_bulletPositions[i].s = num;
+
+                            Vector2 bulletPosition = this.GetBulletPosition(num, first, this.m_bulletPositions[i].Radius);
+
+                            first.transform.position = bulletPosition;
+                            first.specRigidbody.Reinitialize();
+                            if (first.shouldRotate)
+                            {
+                                first.transform.rotation = Quaternion.Euler(0f, 0f, 180f + (Quaternion.Euler(0f, 0f, 90f) * (this.aiActor.sprite.WorldCenter - bulletPosition)).XY().ToAngle());
+                            }
+                            first.ResetDistance();
+                        }
                     }
-                }
+                }    
             }
         }		
 	}
@@ -293,15 +300,28 @@ public class ShamberController : BraveBehaviour
 			{
                 proj.ManualControl = false;
 
-                proj.ResetDistance();
                 proj.collidesWithEnemies = base.aiActor.CanTargetEnemies;
                 proj.specRigidbody.CollideWithTileMap = true;
                 proj.collidesWithPlayer = true;
                 proj.UpdateCollisionMask();
 				proj.Direction = proj.transform.PositionVector2() - this.aiActor.sprite.WorldCenter;
+                proj.ResetDistance();
+                proj.baseData.UsesCustomAccelerationCurve = true;
+                proj.baseData.CustomAccelerationCurveDuration = 2f;
+                proj.baseData.range = 1000;
+                proj.baseData.AccelerationCurve = new AnimationCurve()
+                {
+                    postWrapMode = WrapMode.ClampForever,
+
+                    keys = new Keyframe[] {
+                new Keyframe(){time = 0, value = 0.25f, inTangent = 0.75f, outTangent = 0.25f},
+                new Keyframe(){time = 0.5f, value = -0.25f},
+                new Keyframe(){time = 0.95f, value = 1.25f, inTangent = 0.75f, outTangent = 0.25f}
+                }
+                };
                 proj.baseData.speed = Mathf.Min(this.m_bulletPositions[i].speed, 25);
                 proj.UpdateSpeed();
-				proj.IgnoreTileCollisionsFor(0.5f);
+                proj.IgnoreTileCollisionsFor(0.5f);
             }
         }
     }

@@ -54,45 +54,51 @@ namespace Planetside
             if (this.elapsed > TimeBetweenDamageEvents)
             {
                 elapsed = 0;
-                List<AIActor> activeEnemies = projectile.transform.position.GetAbsoluteRoom().GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
-				Vector2 centerPosition = projectile.sprite.WorldCenter;
-				if (activeEnemies != null)
+                var room = projectile.transform.position.GetAbsoluteRoom();
+                if ( room != null)
                 {
-					for (int em = 0; em < activeEnemies.Count; em++)
-					{
-                        AIActor aiactor = activeEnemies[em];
-                        if (aiactor != null)
+                    List<AIActor> activeEnemies = room.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
+                    if (activeEnemies != null && activeEnemies.Count > 0)
+                    {
+                        Vector2 centerPosition = projectile.sprite.WorldCenter;
+                        for (int em = 0; em < activeEnemies.Count; em++)
                         {
-                            if (Vector2.Distance(aiactor.CenterPosition, centerPosition) < Radius * MultiplierScale)
+                            AIActor aiactor = activeEnemies[em];
+                            if (aiactor != null)
                             {
-                                if (DealsDamage == true)
+                                if (Vector2.Distance(aiactor.CenterPosition, centerPosition) < Radius * MultiplierScale)
                                 {
-                                    if (aiactor.healthHaver.GetMaxHealth() > 0f && aiactor != null && aiactor.specRigidbody != null)
+                                    if (DealsDamage == true && aiactor.healthHaver != null)
                                     {
-                                        aiactor.healthHaver.ApplyDamage(DamageperDamageEvent * MultiplierDamage, Vector2.zero, "Aura", CoreDamageTypes.Electric, DamageCategory.Normal, false, null, false);
+                                        if (aiactor.healthHaver.GetMaxHealth() > 0f && aiactor != null && aiactor.specRigidbody != null)
+                                        {
+                                            aiactor.healthHaver.ApplyDamage(DamageperDamageEvent * MultiplierDamage, Vector2.zero, "Aura", CoreDamageTypes.Electric, DamageCategory.Normal, false, null, false);
+                                        }
                                     }
-                                }
-                                foreach (var Entry in debuffs)
-                                {
-                                    if (UnityEngine.Random.value < Entry.Value)
+                                    foreach (var Entry in debuffs)
                                     {
-                                        aiactor.ApplyEffect(Entry.Key, 1, null);
-                                    }
-                                }
-                                foreach (var Entry in conditionalDebuffs)
-                                {
-                                    if (Entry.Value != null)
-                                    {
-                                        if (Entry.Value() == true)
+                                        if (UnityEngine.Random.value < Entry.Value)
                                         {
                                             aiactor.ApplyEffect(Entry.Key, 1, null);
+                                        }
+                                    }
+                                    foreach (var Entry in conditionalDebuffs)
+                                    {
+                                        if (Entry.Value != null)
+                                        {
+                                            if (Entry.Value() == true)
+                                            {
+                                                aiactor.ApplyEffect(Entry.Key, 1, null);
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
-                    }			
-				}
+                    }
+                }
+
+                
 			}
 		}
 		private Projectile projectile;

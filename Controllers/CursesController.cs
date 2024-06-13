@@ -92,23 +92,26 @@ namespace Planetside
 
         public void CurseAIActorChanges(AIActor target)
         {
-            if (target != null)
+            if (target != null && target.gameObject != null)
             {
                 if (JamnationCurseState != JamnationCurseStates.DISABLED)
                 {
                     float Chance = 0.4f;
                     if (JamnationCurseState == JamnationCurseStates.UPGRADED_AND_ONEROOMLEFT) { Chance = 1; }
-                    if (target != null && !OtherTools.BossBlackList.Contains(target.aiActor.encounterTrackable.EncounterGuid) && UnityEngine.Random.value <= Chance)
+                    if (target.aiActor.encounterTrackable != null)
                     {
-                        if (!target.IsBlackPhantom)
-                        { target.BecomeBlackPhantom(); }
-                        else
-                        { target.gameObject.GetOrAddComponent<UmbraController>(); }
+                        if (!OtherTools.BossBlackList.Contains(target.aiActor.encounterTrackable.EncounterGuid) && UnityEngine.Random.value <= Chance)
+                        {
+                            if (!target.IsBlackPhantom)
+                            { target.BecomeBlackPhantom(); }
+                            else
+                            { target.gameObject.GetOrAddComponent<UmbraController>(); }
+                        }
                     }
                 }
                 if (PetrifyCurseState != PetrifyCurseStates.DISABLED)
                 {
-                    if (target != null && !OtherTools.BossBlackList.Contains(target.aiActor.EnemyGuid) && !target.healthHaver.IsBoss)
+                    if (!OtherTools.BossBlackList.Contains(target.aiActor.EnemyGuid) && !target.healthHaver.IsBoss)
                     {
                         float Time = PetrifyCurseState == PetrifyCurseStates.UPGRADED_AND_ONEROOMLEFT ? 12f : 7;
                         PetrifyThing petrifyComponent = target.gameObject.AddComponent<PetrifyThing>();
@@ -117,13 +120,16 @@ namespace Planetside
                 }
                 if (BolsterCurseState != BolsterCurseStates.DISABLED)
                 {
-                    if (target != null && !OtherTools.BossBlackList.Contains(target.aiActor.encounterTrackable.EncounterGuid))
+                    if (target.aiActor.encounterTrackable != null)
                     {
-                        float CooldownScale = 0.7f;
-                        float MovementSpeed = 1.2f;
-                        if (BolsterCurseState == BolsterCurseStates.UPGRADED_AND_ONEROOMLEFT) { CooldownScale = 0.33f; MovementSpeed = 1.5f; }
-                        if (target.behaviorSpeculator != null) { target.behaviorSpeculator.CooldownScale /= CooldownScale; }
-                        target.MovementSpeed *= MovementSpeed;
+                        if (!OtherTools.BossBlackList.Contains(target.aiActor.encounterTrackable.EncounterGuid))
+                        {
+                            float CooldownScale = 0.7f;
+                            float MovementSpeed = 1.2f;
+                            if (BolsterCurseState == BolsterCurseStates.UPGRADED_AND_ONEROOMLEFT) { CooldownScale = 0.33f; MovementSpeed = 1.5f; }
+                            if (target.behaviorSpeculator != null) { target.behaviorSpeculator.CooldownScale /= CooldownScale; }
+                            target.MovementSpeed *= MovementSpeed;
+                        }
                     }
                 }
             }

@@ -124,6 +124,7 @@ namespace Planetside
             float elapsed = 0f;
             while (elapsed < lifeTime * 0.75f)
             {
+                if (coins == null) { yield break; }
                 elapsed += BraveTime.DeltaTime;
                 if (0.1f % 0.05f == 0)
                 {

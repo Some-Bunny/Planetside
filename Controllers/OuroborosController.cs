@@ -133,7 +133,12 @@ namespace Planetside
                 logoObj.transform.position = logoObj.transform.position.WithZ(0);
                 dfSprite df = logoObj.AddComponent<dfSprite>();
                 df.Atlas = GameUIRoot.Instance.FoyerAmmonomiconLabel.Atlas;
-                string t = GameUIRoot.Instance.FoyerAmmonomiconLabel.Atlas.AddNewItemToAtlas(Collection.GetSpriteDefinition("ouroborosmedal").DesheetTexture(), "OuroborosWinIcon").name;
+                if (!df.Atlas.Texture.IsReadable())
+                {
+                    df.Atlas.material.mainTexture = df.Atlas.Texture.GetRW();
+                }
+
+                string t = Alexandria.CharacterAPI.ToolsCharApi.AddNewItemToAtlas(GameUIRoot.Instance.FoyerAmmonomiconLabel.Atlas, Collection.GetSpriteDefinition("ouroborosmedal").DesheetTexture(), "OuroborosWinIcon").name;
                 df.name = t;
                 df.SpriteName = t;
 				logoObj.transform.localScale *= 4;
@@ -146,7 +151,7 @@ namespace Planetside
                     logoObj2.transform.position = logoObj2.transform.position.WithZ(0);
                     dfSprite df2 = logoObj2.AddComponent<dfSprite>();
                     df2.Atlas = GameUIRoot.Instance.FoyerAmmonomiconLabel.Atlas;
-                    string t2 = GameUIRoot.Instance.FoyerAmmonomiconLabel.Atlas.AddNewItemToAtlas(Collection.GetSpriteDefinition("ouroborosMedal2Left").DesheetTexture(), "OuroborosWinIconTwoLeft").name;
+                    string t2 = Alexandria.CharacterAPI.ToolsCharApi.AddNewItemToAtlas(GameUIRoot.Instance.FoyerAmmonomiconLabel.Atlas, Collection.GetSpriteDefinition("ouroborosMedal2Left").DesheetTexture(), "OuroborosWinIconTwoLeft").name;
                     df2.name = t2;
                     df2.SpriteName = t2;
                     logoObj2.transform.localScale *= 4;
@@ -159,15 +164,13 @@ namespace Planetside
                     logoObj2.transform.position = logoObj2.transform.position.WithZ(0);
                     dfSprite df2 = logoObj2.AddComponent<dfSprite>();
                     df2.Atlas = GameUIRoot.Instance.FoyerAmmonomiconLabel.Atlas;
-                    string t2 = GameUIRoot.Instance.FoyerAmmonomiconLabel.Atlas.AddNewItemToAtlas(Collection.GetSpriteDefinition("ouroborosMedal2Right").DesheetTexture(), "OuroborosWinIconTwoRight").name;
+                    string t2 = Alexandria.CharacterAPI.ToolsCharApi.AddNewItemToAtlas(GameUIRoot.Instance.FoyerAmmonomiconLabel.Atlas, Collection.GetSpriteDefinition("ouroborosMedal2Right").DesheetTexture(), "OuroborosWinIconTwoRight").name;
                     df2.name = t2;
                     df2.SpriteName = t2;
                     logoObj2.transform.localScale *= 4;
                     WinIconTwoRight = logoObj2;
                 }
 				
-
-
                 GameObject textObj = (GameObject)UnityEngine.Object.Instantiate(BraveResources.Load("DamagePopupLabel", ".prefab"));
                 FakePrefab.MarkAsFakePrefab(textObj);
                 UnityEngine.Object.DontDestroyOnLoad(textObj);

@@ -156,16 +156,19 @@ namespace Planetside
             Warps++;
             int rayMask = CollisionMask.LayerToMask(CollisionLayer.HighObstacle);
             var cast = RaycastToolbox.ReturnRaycast(p.specRigidbody.UnitCenter + (direction * 0.5f), direction, rayMask, 1000, null);
-            var Position = cast.Contact;
-            if (p != null && Position != null)
+            if (cast != null)// null raycast???
             {
-                if (OnWrappedAround != null)
+                var Position = cast.Contact;
+                if (p != null && Position != null)
                 {
-                    OnWrappedAround(p, p.transform.PositionVector2(), Position);
+                    if (OnWrappedAround != null)
+                    {
+                        OnWrappedAround(p, p.transform.PositionVector2(), Position);
+                    }
+                    p.transform.position = Position;
+                    p.specRigidbody.Reinitialize();
                 }
-                p.transform.position = Position;
-                p.specRigidbody.Reinitialize();
-            }      
+            }  
         }
 
         public void Update()
