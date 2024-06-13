@@ -307,16 +307,16 @@ public class ShamberController : BraveBehaviour
 				proj.Direction = proj.transform.PositionVector2() - this.aiActor.sprite.WorldCenter;
                 proj.ResetDistance();
                 proj.baseData.UsesCustomAccelerationCurve = true;
-                proj.baseData.CustomAccelerationCurveDuration = 2f;
+                proj.baseData.CustomAccelerationCurveDuration = 2.5f;
                 proj.baseData.range = 1000;
                 proj.baseData.AccelerationCurve = new AnimationCurve()
                 {
                     postWrapMode = WrapMode.ClampForever,
 
                     keys = new Keyframe[] {
-                new Keyframe(){time = 0, value = 0.25f, inTangent = 0.75f, outTangent = 0.25f},
+                new Keyframe(){time = 0.1f, value = 0.3f, inTangent = 0.75f, outTangent = 0.25f},
                 new Keyframe(){time = 0.5f, value = -0.25f},
-                new Keyframe(){time = 0.95f, value = 1.25f, inTangent = 0.75f, outTangent = 0.25f}
+                new Keyframe(){time = 0.95f, value = 1.1f, inTangent = 0.75f, outTangent = 0.25f}
                 }
                 };
                 proj.baseData.speed = Mathf.Min(this.m_bulletPositions[i].speed, 25);
