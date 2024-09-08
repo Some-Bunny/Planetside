@@ -77,8 +77,8 @@ Shader "Shader Forge/TrespassShader" {
                 float node_79_cos = cos(node_79_spd*node_79_ang);
                 float node_79_sin = sin(node_79_spd*node_79_ang);
                 float2 node_79_piv = float2(0.5,0.5);
-                float4 node_7151 = _Time;
-                float2 node_79 = (mul((i.uv0+node_7151.g*float2(0.1,0.1))-node_79_piv,float2x2( node_79_cos, -node_79_sin, node_79_sin, node_79_cos))+node_79_piv);
+                float4 node_9400 = _Time;
+                float2 node_79 = (mul((i.uv0+node_9400.g*float2(0.1,0.1))-node_79_piv,float2x2( node_79_cos, -node_79_sin, node_79_sin, node_79_cos))+node_79_piv);
                 float4 _MainTex_var = tex2D(_MainTex,TRANSFORM_TEX(node_79, _MainTex));
                 float node_5921 = dot(_MainTex_var.rgb.rgb,float3(0.3,0.59,0.11));
                 float3 node_8941 = saturate(( (node_5921*_ColorMin.rgb*_SecondaryPower) > 0.5 ? ((clamp(node_5921,0,1)*_ColorMin.rgb*_Power) + 2.0*(node_5921*_ColorMin.rgb*_SecondaryPower) -1.0) : ((clamp(node_5921,0,1)*_ColorMin.rgb*_Power) + 2.0*((node_5921*_ColorMin.rgb*_SecondaryPower)-0.5))));
@@ -164,8 +164,8 @@ Shader "Shader Forge/TrespassShader" {
                 float node_79_cos = cos(node_79_spd*node_79_ang);
                 float node_79_sin = sin(node_79_spd*node_79_ang);
                 float2 node_79_piv = float2(0.5,0.5);
-                float4 node_9774 = _Time;
-                float2 node_79 = (mul((i.uv0+node_9774.g*float2(0.1,0.1))-node_79_piv,float2x2( node_79_cos, -node_79_sin, node_79_sin, node_79_cos))+node_79_piv);
+                float4 node_1167 = _Time;
+                float2 node_79 = (mul((i.uv0+node_1167.g*float2(0.1,0.1))-node_79_piv,float2x2( node_79_cos, -node_79_sin, node_79_sin, node_79_cos))+node_79_piv);
                 float4 _MainTex_var = tex2D(_MainTex,TRANSFORM_TEX(node_79, _MainTex));
                 float node_5921 = dot(_MainTex_var.rgb.rgb,float3(0.3,0.59,0.11));
                 float3 node_8941 = saturate(( (node_5921*_ColorMin.rgb*_SecondaryPower) > 0.5 ? ((clamp(node_5921,0,1)*_ColorMin.rgb*_Power) + 2.0*(node_5921*_ColorMin.rgb*_SecondaryPower) -1.0) : ((clamp(node_5921,0,1)*_ColorMin.rgb*_Power) + 2.0*((node_5921*_ColorMin.rgb*_SecondaryPower)-0.5))));

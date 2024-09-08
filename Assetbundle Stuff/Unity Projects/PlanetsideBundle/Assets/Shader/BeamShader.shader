@@ -31,7 +31,7 @@ Shader "Shader Forge/BeamShader" {
             #include "UnityCG.cginc"
             #pragma multi_compile_fwdbase_fullshadows
             #pragma multi_compile_fog
-            #pragma only_renderers d3d9 d3d11 glcore gles 
+            #pragma only_renderers d3d9 d3d11 glcore gles gles3 metal 
             #pragma target 3.0
             uniform float4 _Color;
             uniform sampler2D _node_9440; uniform float4 _node_9440_ST;
@@ -77,8 +77,8 @@ Shader "Shader Forge/BeamShader" {
                 float node_8662_tx = node_3745 - node_3745 * node_8662_ty;
                 float2 node_8662 = (i.uv0 + float2(node_8662_tx, node_8662_ty)) * node_8662_tc_rcp;
                 float2 node_3146 = (mul(node_8662-node_3146_piv,float2x2( node_3146_cos, -node_3146_sin, node_3146_sin, node_3146_cos))+node_3146_piv);
-                float4 node_9141 = _Time;
-                float2 node_965 = (node_3146+(node_8662+node_9141.g*float2(1,2)));
+                float4 node_7888 = _Time;
+                float2 node_965 = (node_3146+(node_8662+node_7888.g*float2(1,2)));
                 float4 node_3402 = tex2D(_node_9440,TRANSFORM_TEX(node_965, _node_9440));
                 float node_7412 = 3.0;
                 float node_2755_ang = node_7412;
@@ -106,7 +106,7 @@ Shader "Shader Forge/BeamShader" {
                 float3 normalDirection = normalize(mul( normalLocal, tangentTransform )); // Perturbed normals
 ////// Lighting:
 ////// Emissive:
-                float2 node_6042 = (i.uv0+node_9141.g*float2(0.5,0.5));
+                float2 node_6042 = (i.uv0+node_7888.g*float2(0.5,0.5));
                 float4 node_6902 = tex2D(_node_6717,TRANSFORM_TEX(node_6042, _node_6717));
                 float3 emissive = saturate(( (1.0 - dot(node_2418,float3(0.3,0.59,0.11))) > 0.5 ? ((node_6902.rgb*10.0)/((1.0-(1.0 - dot(node_2418,float3(0.3,0.59,0.11))))*2.0)) : (1.0-(((1.0-(node_6902.rgb*10.0))*0.5)/(1.0 - dot(node_2418,float3(0.3,0.59,0.11)))))));
                 float3 finalColor = emissive;
@@ -133,7 +133,7 @@ Shader "Shader Forge/BeamShader" {
             #pragma fragmentoption ARB_precision_hint_fastest
             #pragma multi_compile_shadowcaster
             #pragma multi_compile_fog
-            #pragma only_renderers d3d9 d3d11 glcore gles 
+            #pragma only_renderers d3d9 d3d11 glcore gles gles3 metal 
             #pragma target 3.0
             struct VertexInput {
                 float4 vertex : POSITION;
