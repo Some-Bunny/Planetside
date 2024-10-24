@@ -41,6 +41,10 @@ MonoBehaviour:
     dataGUID: 
     managed: 0
     loadable: 0
+  - assetGUID: 914ab844f7c2fac4799c04eb96c64a1c
+    dataGUID: 
+    managed: 0
+    loadable: 0
   fontIndex:
   - assetGUID: 063b15d80dbb4604d890600a64c79cf8
     dataGUID: e7a6b09a73c6b2b4f8060096ddbd3b5e
@@ -4784,6 +4788,36 @@ MonoBehaviour:
     - TarnishEffect_start_007
     - TarnishEffect_start_008
     - TarnishEffect_start_009
+    - possesedeffect_idle_008
+    - possesedeffect_idle_010
+    - possesedeffect_idle_006
+    - possesedeffect_idle_009
+    - possesedeffect_idle_005
+    - possesedeffect_idle_004
+    - possesedeffect_idle_002
+    - possesedeffect_idle_011
+    - possesedeffect_idle_007
+    - possesedeffect_idle_003
+    - possesedeffect_idle_001
+    - ChamberDoEffect_007
+    - ChamberDoEffect_008
+    - ChamberDoEffect_005
+    - ChamberDoEffect_006
+    - ChamberDoEffect_019
+    - ChamberDoEffect_012
+    - ChamberDoEffect_004
+    - ChamberDoEffect_013
+    - ChamberDoEffect_002
+    - ChamberDoEffect_014
+    - ChamberDoEffect_018
+    - ChamberDoEffect_016
+    - ChamberDoEffect_003
+    - ChamberDoEffect_015
+    - ChamberDoEffect_001
+    - ChamberDoEffect_010
+    - ChamberDoEffect_009
+    - ChamberDoEffect_017
+    - ChamberDoEffect_011
     spriteTextureGUIDs:
     - eca28c23f3bbad849892a7a84325ac13
     - e1e4963a6b208ff4aa52af8f64f78f86
@@ -4859,6 +4893,36 @@ MonoBehaviour:
     - 020b48f20dbda9448964e2c527551b32
     - 8dd5ef9c7dac03942a8d0876b5241fb8
     - 5ca149bbf056e3e469dcdf1fad51c098
+    - dc84659d837f0924a8a207f5ad299eae
+    - 59678ba8c627b224aa8bae2a08ad3dac
+    - 7c47873db44d079479023618e10d4744
+    - b0ee016a0e97113419b6b054bffdc13a
+    - ce9532e2adb01204f803be6c68df58d1
+    - 6afc168cb1515a846966ce1dd7e6b0b4
+    - 7e7f8a99c06a40e4dba094ef5cd2643e
+    - 22089004cb6615d41bbc8b79d9773af0
+    - db572b362dd5c784eabe6000c6f1627a
+    - 7f0fb54374d037e49a2f5ab389f39d0b
+    - ad4411c20aea67e468cea275c4a60b00
+    - bbf6fdbe062147d4b97ca354df1b1390
+    - 3eeeb7edba46925478ef1b50dc419069
+    - e0a4ebbfb4be901439ab3386f9d4d5e8
+    - 8e73391eb05c4c74c911e0667e17406a
+    - 3b7bb06a38ba04d4297d1df30b456959
+    - 23273cc7bdfc37543b4366300a2847c3
+    - 0bbebcbfb4f8dfa46948cadb4fd7c27d
+    - 16ed47f4628aae54abbcd63a49baf38a
+    - 820aecc436a507049abfda2705f91ec5
+    - 6ca83aae94d24c8418af0cdb3ae58e19
+    - d1a0d305f11cf3f4c823a8e40e77d629
+    - 43811cd7fcba3574baef7d315adb0e02
+    - 4d4585e6242b35e4f94cc8e55a2d50b0
+    - 63ccc00cea1ccff41acc60f187b7fc02
+    - 6086f72ba3e27974ea9312a8590b0901
+    - 6ad7b75fac1f4a1468dcab218748789c
+    - 4ac02f91fa83ec34383a680d4385c35c
+    - a8a1c3e93207a394fbff226438ebc37c
+    - 27da7a3f8cc53e34f94fffb67d084d54
     spriteTextureTimeStamps:
     - 1618080887.94048
     - 1664219113.31252
@@ -4866,13 +4930,13 @@ MonoBehaviour:
     - 1672432634.06297
     - 1672432634.06597
     - 1672432634.06697
-    - 1672423103.1795
-    - 1672423103.18145
-    - 1672423103.18446
-    - 1672423103.18646
-    - 1672423103.18946
-    - 1672423103.19046
-    - 1672423103.19447
+    - 1721058862.02371
+    - 1721058862.02687
+    - 1721058862.02887
+    - 1721058862.03188
+    - 1721058862.03388
+    - 1721058862.03651
+    - 1721058862.03852
     - 1672422890.51325
     - 1672422890.51605
     - 1672422890.51906
@@ -4910,18 +4974,18 @@ MonoBehaviour:
     - 1656120954.10709
     - 1656120954.11009
     - 1656120954.11308
-    - 1672423686.11135
-    - 1672423686.11456
-    - 1672423686.11656
-    - 1672423686.11956
-    - 1665259314.87769
-    - 1665259314.88138
-    - 1665259314.88339
-    - 1665259314.88639
-    - 1665259314.88839
-    - 1665259314.89139
-    - 1665259314.8934
-    - 1665259314.8966
+    - 1721058553.55657
+    - 1721058553.55993
+    - 1721058553.56294
+    - 1721058553.56494
+    - 1721058524.57155
+    - 1721058524.57255
+    - 1721058524.57556
+    - 1721058524.57656
+    - 1721058524.57956
+    - 1721058524.58156
+    - 1721058524.58356
+    - 1721058524.58557
     - 1672431070.8766
     - 1672431070.87861
     - 1672431070.88261
@@ -4934,6 +4998,36 @@ MonoBehaviour:
     - 1672433047.67552
     - 1672433047.67752
     - 1672433047.68053
+    - 1721061013.81926
+    - 1721061013.82426
+    - 1721061013.81325
+    - 1721061013.82126
+    - 1721061013.81125
+    - 1721061013.80925
+    - 1721061013.80424
+    - 1721061013.82627
+    - 1721061013.81526
+    - 1721061013.80625
+    - 1721061013.80054
+    - 1721079270.27329
+    - 1721079270.27429
+    - 1721079270.26829
+    - 1721079270.27129
+    - 1721079270.29431
+    - 1721079270.2813
+    - 1721079270.26729
+    - 1721079270.2833
+    - 1721079270.26328
+    - 1721079270.2843
+    - 1721079270.29131
+    - 1721079270.28731
+    - 1721079270.26629
+    - 1721079270.2853
+    - 1721079270.26128
+    - 1721079270.2783
+    - 1721079270.2773
+    - 1721079270.28931
+    - 1721079270.2793
     managedSpriteCollection: 0
     loadable: 0
     assetName: 

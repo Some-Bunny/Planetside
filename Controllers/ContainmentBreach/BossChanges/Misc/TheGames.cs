@@ -92,7 +92,7 @@ namespace Planetside.Controllers.ContainmentBreach.BossChanges.Misc
                 {
                     if (self.transform?.parent?.gameObject?.GetComponent<MirrorController>() == null)
                     {
-                        if (self.GetComponent<MoneyPots.MoneyPotBehavior>() == null && self.GetComponent<Marker>() == null && UnityEngine.Random.value < Amount / 50000)
+                        if (self.GetComponent<MoneyPots.MoneyPotBehavior>() == null && self.GetComponent<Marker>() == null && UnityEngine.Random.value < Amount / 5000)
                         {
                             Vector2 position = self.transform.position;
                             DungeonPlaceable bom = ScriptableObject.CreateInstance<DungeonPlaceable>();

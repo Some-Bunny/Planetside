@@ -1,4 +1,5 @@
 ﻿using Brave.BulletScript;
+using SaveAPI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,9 @@ namespace Planetside
 
         public virtual bool ShouldOverride()
         {
+            if (SaveAPIManager.GetFlag(CustomDungeonFlags.HAS_TREADED_DEEPER) == false) { return false; }
+
+
             if (ContainmentBreachController.CurrentState == ContainmentBreachController.States.ALLOWED) { return true; }
             return false;
             //return true;

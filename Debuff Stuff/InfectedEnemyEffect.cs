@@ -15,6 +15,7 @@ using MonoMod;
 
 using Brave.BulletScript;
 using GungeonAPI;
+using Alexandria;
 
 namespace Planetside
 {
@@ -32,63 +33,7 @@ namespace Planetside
 				if (!InfectedEnemyEffect.InfectedEnemyBurstBlacklist.Contains(base.aiActor.EnemyGuid))
 				{
 
-                    if (base.aiActor.bulletBank == null)
-                    {
-                        return;
-                    }
-                    else
-                    {
-                        if (base.aiActor.bulletBank.Bullets == null)
-                        {
-                            base.aiActor.bulletBank.Bullets = new List<AIBulletBank.Entry>();
-                        }
-
-                        base.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableLargeSpore);
-                        base.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
-                    }
-                    AIBulletBank b = null;
-                    b = base.aiActor.GetComponent<AIBulletBank>() ?? base.aiActor.transform.Find("tempObjInfection").GetOrAddComponent<AIBulletBank>();
-                    if (b == null)
-                    {
-                        var bullet = base.aiActor.AddComponent<AIBulletBank>();
-                        bullet.Bullets = new List<AIBulletBank.Entry>();
-
-
-                        //bulletBank.FixedPlayerRigidbody = null;
-                        //bulletBank.ActorName = "Toddy";
-                        //bulletBank.transforms = new List<Transform>() { base.aiActor.transform };
-
-                        bullet.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableLargeSpore);
-                        bullet.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
-                        b = bullet;
-
-                        /*
-                        GameObject ob = new GameObject();
-
-
-                        AIBulletBank bulletBank = new AIBulletBank();
-                        bulletBank.Bullets = new List<AIBulletBank.Entry>();
-
-
-                        bulletBank.FixedPlayerRigidbody = null;
-                        bulletBank.ActorName = "Toddy";
-                        bulletBank.transforms = new List<Transform>() { ob.transform };
-                        ob.AddComponent(bulletBank);
-
-
-                        bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableLargeSpore);
-                        bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
-
-                        b = bulletBank;
-
-                        Destroy(ob, 3);
-                        */
-                    }
-                    if (b != null)
-                    {
-                        SpawnManager.SpawnBulletScript(base.aiActor, base.aiActor.sprite.WorldCenter, b, new CustomBulletScriptSelector(typeof(Splat)), StringTableManager.GetEnemiesString("#TRAP", -1));
-                    }
-
+                    SpawnManager.SpawnBulletScript(base.aiActor, base.aiActor.sprite.WorldCenter, ContainmentBreachController.InfectionBulletBank, new CustomBulletScriptSelector(typeof(Splat)), "Liminal Infection");
 
                     AkSoundEngine.PostEvent("Play_ENM_blobulord_bubble_01", base.aiActor.gameObject);
                     GameObject gameObject = SpawnManager.SpawnVFX(StaticVFXStorage.BlueSynergyPoofVFX, false);
@@ -203,7 +148,7 @@ namespace Planetside
                         if (EnemyIsVisible(actor.aiActor) == true)
                         {
                             if (actor.GetComponent<AIBulletBank>() == null && actor.transform?.Find("tempObjInfection")?.GetComponent<AIBulletBank>() == null) { return; }
-                            SpawnManager.SpawnBulletScript(actor, actor.sprite.WorldCenter, actor.GetComponent<AIBulletBank>() ?? actor.transform?.Find("tempObjInfection")?.GetComponent<AIBulletBank>(), new CustomBulletScriptSelector(typeof(SplatWeak)), StringTableManager.GetEnemiesString("#TRAP", -1));
+                            SpawnManager.SpawnBulletScript(actor, actor.sprite.WorldCenter, ContainmentBreachController.InfectionBulletBank, new CustomBulletScriptSelector(typeof(SplatWeak)), "Liminal Infection");
                         }
                     }
                         
@@ -244,6 +189,9 @@ namespace Planetside
             EnemyGuidDatabase.Entries["tiny_blobulord"],
             EnemyGuidDatabase.Entries["rat"],
             EnemyGuidDatabase.Entries["rat_candle"],
+
+			EnemyGUIDs.Blobulin_GUID,
+            EnemyGUIDs.Poisbulin_GUID,
         };
 
         public static List<string> InfectedEnemyParticleBlacklist => new List<string>()
@@ -366,21 +314,23 @@ namespace Planetside
                     actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
 
                 }
-
-                if (UnityEngine.Random.value > actor.aiActor.healthHaver.GetMaxHealth())
-                {
-					SpawnEnemyOnDeath spawnEnemy = actor.aiActor.gameObject.AddComponent<SpawnEnemyOnDeath>();
-					spawnEnemy.deathType = OnDeathBehavior.DeathType.PreDeath;
-					spawnEnemy.DoNormalReinforcement = false;
-					spawnEnemy.spawnsCanDropLoot = false;
-					spawnEnemy.spawnAnim = "idle";
-					spawnEnemy.spawnRadius = 0.5f;
-					spawnEnemy.minSpawnCount = 1;
-					spawnEnemy.maxSpawnCount = 2;
-					spawnEnemy.enemySelection = SpawnEnemyOnDeath.EnemySelection.Random;
-					spawnEnemy.enemyGuidsToSpawn = new string[] { "unwilling", "unwilling", "unwilling" };
-					spawnEnemy.spawnPosition = SpawnEnemyOnDeath.SpawnPosition.InsideRadius;
-				}
+				if (actor.aiActor.healthHaver.GetMaxHealth() > 20)
+				{
+                    if (UnityEngine.Random.value < (actor.aiActor.healthHaver.GetMaxHealth() / 300))
+                    {
+                        SpawnEnemyOnDeath spawnEnemy = actor.aiActor.gameObject.AddComponent<SpawnEnemyOnDeath>();
+                        spawnEnemy.deathType = OnDeathBehavior.DeathType.PreDeath;
+                        spawnEnemy.DoNormalReinforcement = false;
+                        spawnEnemy.spawnsCanDropLoot = false;
+                        spawnEnemy.spawnAnim = "idle";
+                        spawnEnemy.spawnRadius = 0.35f;
+                        spawnEnemy.minSpawnCount = 1;
+                        spawnEnemy.maxSpawnCount = 2;
+                        spawnEnemy.enemySelection = SpawnEnemyOnDeath.EnemySelection.Random;
+                        spawnEnemy.enemyGuidsToSpawn = new string[] { "unwilling", "unwilling", "unwilling" };
+                        spawnEnemy.spawnPosition = SpawnEnemyOnDeath.SpawnPosition.InsideRadius;
+                    }
+                }
 			}
 			base.OnEffectApplied(actor, effectData, partialAmount);
 

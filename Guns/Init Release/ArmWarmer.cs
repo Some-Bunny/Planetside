@@ -60,28 +60,30 @@ namespace Planetside
 			if (objectToLookOutFor == null) { yield break; }
 			Vector3 currentscale = objectToLookOutFor.transform.localScale;
 			float elapsed = 0f;
-			float duration = 2.5f;
+			float duration = 5f;
 			AkSoundEngine.PostEvent("Play_ENM_blobulord_charge_01", base.gameObject);
 			while (elapsed < duration)
 			{
-				if (objectToLookOutFor.gameObject == null) { break; }
+				if (objectToLookOutFor == null) { yield break; }
 				elapsed += BraveTime.DeltaTime;
 				float t = elapsed / duration;
 				float throne1 = Mathf.Sin(t * (Mathf.PI / 2));
 				objectToLookOutFor.transform.localScale = Vector3.Lerp(currentscale, currentscale * 2f, throne1);
 				yield return null;
 			}
-			ExplosionData data = StaticExplosionDatas.CopyFields(StaticExplosionDatas.genericSmallExplosion);//StaticExplosionDatas.genericSmallExplosion;
+            if (objectToLookOutFor == null) { yield break; }
+            ExplosionData data = StaticExplosionDatas.CopyFields(StaticExplosionDatas.genericSmallExplosion);//StaticExplosionDatas.genericSmallExplosion;
             data.effect = (PickupObjectDatabase.GetById(368) as Gun).DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX;
-			data.damage = 6f * (player != null ? player.stats.GetStatValue(PlayerStats.StatType.Damage) : 1);
+            data.damage = 8f * (player != null ? player.stats.GetStatValue(PlayerStats.StatType.Damage) : 1);
 			data.damageRadius = 3;
 			data.doScreenShake = false;
 			data.playDefaultSFX = false;
-			data.force = 1;
-			Exploder.Explode(objectToLookOutFor.transform.position, data, objectToLookOutFor.transform.position);
-			AkSoundEngine.PostEvent("Play_BOSS_blobulord_burst_01", base.gameObject);
-			Destroy(objectToLookOutFor);
-			yield break;
+			data.force = 2.5f;
+            Exploder.Explode(objectToLookOutFor.transform.position, data, Vector2.zero);
+            AkSoundEngine.PostEvent("Play_BOSS_blobulord_burst_01", base.gameObject);
+            Destroy(objectToLookOutFor);
+
+            yield break;
 		}
 		public PlayerController player;
 		public Projectile currentObject;
@@ -107,7 +109,7 @@ namespace Planetside
 			Game.Items.Rename("outdated_gun_mods:arm_warmer", "psog:arm_warmer");
 			gun.gameObject.AddComponent<ArmWarmer>();
 			GunExt.SetShortDescription(gun, "Mmmm, Tasty...");
-			GunExt.SetLongDescription(gun, "A large, amalgam of living flesh.\n\nIt seems to replicate very, *very* quickly...");
+			GunExt.SetLongDescription(gun, "A large blob of living flesh of an unknown origin.\n\nSeems to replicate very, *very* quickly...");
 			GunExt.SetupSprite(gun, null, "heartthing_idle_001", 11);
 			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 25);
 			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 10);
@@ -138,7 +140,7 @@ namespace Planetside
 			projectile.gameObject.SetActive(false);
 			FakePrefab.MarkAsFakePrefab(projectile.gameObject);
 			UnityEngine.Object.DontDestroyOnLoad(projectile);
-			projectile.baseData.damage = 1f;
+			projectile.baseData.damage = 1.5f;
 			projectile.baseData.speed *= 0.7f;
 			projectile.AdditionalScaleMultiplier = 1f;
 			projectile.shouldRotate = true;

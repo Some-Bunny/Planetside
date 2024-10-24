@@ -34,7 +34,7 @@ namespace Planetside
     {
         public const string GUID = "somebunny.etg.planetsideofgunymede";
         public const string NAME = "Planetside Of Gunymede Pre-Release";
-        public const string VERSION = "1.3.166";
+        public const string VERSION = "1.3.168";
 
         public static readonly string TEXT_COLOR = "#9006FF";
 
@@ -578,7 +578,7 @@ namespace Planetside
                 "Now With 100% Less Nulls!",
                 "You Lost The Game.",
                 "WEAK.",
-                "*Don't Download Some Bunnys Content Pack, you can't even have it on Bepinex anyway :D",
+                //"*Don't Download Some Bunnys Content Pack, you can't even have it on Bepinex anyway :D",
                 "weeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "If you see this, you owe me 10 bucks you nerd.",
                 //"https://www.youtube.com/watch?v=qn0YdT_pQF8",
@@ -639,7 +639,11 @@ namespace Planetside
                 "Now with 100% more Bepinex!",
                 "I once sneezed a pasta noodle out through my nose -- back when I had a nose, on Earth.",
                 "You shouldn't read too much anyway. It's bad for your teeth.",
-                "This cats name is Humongous Honkers look him up on your work computer."
+                "This cats name is Humongous Honkers, look him up on your work computer.",
+                "Check out Astronautilus!",
+                "Check out Star Of Providence!",
+                "Check Out Zer0Ranger!",
+                "Animal Well is pretty cool."
             };
             Random r = new Random();
             int index = r.Next(RandomFunnys.Count);

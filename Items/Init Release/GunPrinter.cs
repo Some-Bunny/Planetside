@@ -31,11 +31,13 @@ namespace Planetside
             string shortDesc = "Infinite Ammo?";
             string longDesc = "A small machine that prints out and fires a shot from the currently held gun, free of charge!\n\nA failed attempt at the creation of limitless ammunition, the energy required to power one of these exceeds just manufacturing more bullets.";
             activeitem.SetupItem(shortDesc, longDesc, "psog");
-            activeitem.SetCooldownType(ItemBuilder.CooldownType.Damage, 300f);
+            activeitem.SetCooldownType(ItemBuilder.CooldownType.Damage, 150f);
             activeitem.consumable = false;
             activeitem.quality = PickupObject.ItemQuality.C;
             activeitem.AddToSubShop(ItemBuilder.ShopType.Trorc, 1f);
-			GunPrinter.GunPrinterID = activeitem.PickupObjectId;
+			activeitem.timeCooldown = 5f;
+
+            GunPrinter.GunPrinterID = activeitem.PickupObjectId;
 			ItemIDs.AddToList(activeitem.PickupObjectId);
 		}
 

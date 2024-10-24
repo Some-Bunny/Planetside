@@ -126,7 +126,7 @@ public class ShamberController : BraveBehaviour
 					for (int i = 0; i < allProjectiles.Count; i++)
 					{
 						Projectile proj = allProjectiles[i];
-						if (proj && proj.Owner != this.aiActor)
+						if (proj && proj.Owner  != null && proj.Owner != this.aiActor)
                         {
 							
                             BeamController beamController = proj.GetComponent<BeamController>();
@@ -141,15 +141,14 @@ public class ShamberController : BraveBehaviour
                                 {
                                     if (m_bulletPositions.Count() < 300)
                                     {
-                                        if (proj.Owner as PlayerController)
+                                        if (proj.Owner is PlayerController player )
                                         {
                                             proj.sprite.color = new Color(1f, 0.1f, 0.1f);
                                             proj.MakeLookLikeEnemyBullet(false);
                                         }
 
-                                        if (proj.Owner as AIActor)
+                                        if (proj.Owner is AIActor enemy)
                                         {
-                                            var enemy = (proj.Owner as AIActor);
                                             switch (enemy.EnemyGuid)
                                             {
                                                 case "b1770e0f1c744d9d887cc16122882b4f":
@@ -162,7 +161,10 @@ public class ShamberController : BraveBehaviour
                                         }
                                         if (proj != null)
                                         {
-                                            proj.specRigidbody.DeregisterSpecificCollisionException(proj.Owner.specRigidbody);
+                                            if (proj.Owner)
+                                            {
+                                                proj.specRigidbody.DeregisterSpecificCollisionException(proj.Owner.specRigidbody);
+                                            }
                                             proj.Shooter = base.aiActor.specRigidbody;
                                             proj.Owner = base.aiActor;
                                             proj.specRigidbody.Velocity = Vector2.zero;
@@ -211,27 +213,24 @@ public class ShamberController : BraveBehaviour
                 {
                     Projectile first = thing.projectile;
 
-                    if (!(first == null))
+                    if (first != null)
                     {
-                        if (!first)
-                        {
-                            this.m_bulletPositions[i] = null;
-                        }
-                        else
-                        {
-                            float num = this.m_bulletPositions[i].s + BraveTime.DeltaTime * Mathf.Max(30, (10 * this.m_bulletPositions[i].speed));
-                            this.m_bulletPositions[i].s = num;
+                        float num = this.m_bulletPositions[i].s + BraveTime.DeltaTime * Mathf.Max(30, (10 * this.m_bulletPositions[i].speed));
+                        this.m_bulletPositions[i].s = num;
 
-                            Vector2 bulletPosition = this.GetBulletPosition(num, first, this.m_bulletPositions[i].Radius);
+                        Vector2 bulletPosition = this.GetBulletPosition(num, first, this.m_bulletPositions[i].Radius);
 
-                            first.transform.position = bulletPosition;
-                            first.specRigidbody.Reinitialize();
-                            if (first.shouldRotate)
-                            {
-                                first.transform.rotation = Quaternion.Euler(0f, 0f, 180f + (Quaternion.Euler(0f, 0f, 90f) * (this.aiActor.sprite.WorldCenter - bulletPosition)).XY().ToAngle());
-                            }
-                            first.ResetDistance();
+                        first.transform.position = bulletPosition;
+                        first.specRigidbody.Reinitialize();
+                        if (first.shouldRotate)
+                        {
+                            first.transform.rotation = Quaternion.Euler(0f, 0f, 180f + (Quaternion.Euler(0f, 0f, 90f) * (this.aiActor.sprite.WorldCenter - bulletPosition)).XY().ToAngle());
                         }
+                        first.ResetDistance();
+                    }
+                    else
+                    {
+                        this.m_bulletPositions[i] = null;
                     }
                 }    
             }

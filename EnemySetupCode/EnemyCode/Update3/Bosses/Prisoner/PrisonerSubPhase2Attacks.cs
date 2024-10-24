@@ -510,8 +510,7 @@ namespace Planetside
 						tiledsprite.transform.position = new Vector3(this.Position.x, this.Position.y, 0);
 
 
-						float math = isDodgeAble == true ? 250 : 25;
-						tiledsprite.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (math * t));
+						tiledsprite.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (5 * t));
 						tiledsprite.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f + (10 * t));
 						tiledsprite.transform.localRotation = Quaternion.Euler(0f, 0f, base.AimDirection + Offset);
 						tiledsprite.HeightOffGround = -2;
@@ -525,8 +524,8 @@ namespace Planetside
 					yield return null;
 				}
 				elapsed = 0;
-				Time = 0.35f;
-				base.PostWwiseEvent("Play_FlashTell");
+				Time = 0.375f;
+				//base.PostWwiseEvent("Play_FlashTell");
 				while (elapsed < Time)
 				{
 
@@ -541,13 +540,13 @@ namespace Planetside
 						float math = isDodgeAble == true ? 350 : 35;
 						tiledsprite.transform.position = new Vector3(this.Position.x, this.Position.y, 0);
 						tiledsprite.dimensions = new Vector2(1000f, 1f);
-						tiledsprite.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (math * t));
-						tiledsprite.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f + (20 * t));
 						tiledsprite.HeightOffGround = -2;
 						tiledsprite.renderer.gameObject.layer = 23;
 						tiledsprite.UpdateZDepth();
-					}
-					elapsed += BraveTime.DeltaTime;
+                        tiledsprite.renderer.enabled = elapsed % 0.1875f > 0.09375f;
+
+                    }
+                    elapsed += BraveTime.DeltaTime;
 					yield return null;
 				}
 				UnityEngine.Object.Destroy(tiledspriteObject.gameObject);
@@ -703,7 +702,7 @@ namespace Planetside
 					yield return null;
 				}
 				elapsed = 0;
-				Time = 0.33f;
+				Time = 0.375f;
 				base.PostWwiseEvent("Play_FlashTell");
 				while (elapsed < Time)
 				{
@@ -1182,7 +1181,7 @@ namespace Planetside
 						float Pos = ((base.GetPredictedTargetPosition(0.6f, 34) - base.Position).ToAngle()) + Offset;
 
 						component2.transform.position = new Vector3(this.Position.x, this.Position.y, 0);
-						component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (25 * t));
+						component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (5 * t));
 						component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (10 * t));
 						component2.transform.localRotation = Quaternion.Euler(0f, 0f, Pos);
 						component2.HeightOffGround = -2;
@@ -1196,8 +1195,8 @@ namespace Planetside
 					yield return null;
 				}
 				elapsed = 0;
-				Time = 0.25f;
-				base.PostWwiseEvent("Play_FlashTell");
+				Time = 0.375f;
+				//base.PostWwiseEvent("Play_FlashTell");
 				while (elapsed < Time)
 				{
 					if (parent.IsEnded || parent.Destroyed)
@@ -1210,13 +1209,13 @@ namespace Planetside
 					{
 						component2.transform.position = new Vector3(this.Position.x, this.Position.y, 0);
 						component2.dimensions = new Vector2(1000f, 1f);
-						component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (60 * t));
-						component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (20 * t));
 						component2.HeightOffGround = -2;
 						component2.renderer.gameObject.layer = 23;
 						component2.UpdateZDepth();
-					}
-					elapsed += BraveTime.DeltaTime;
+                        component2.renderer.enabled = elapsed % 0.25f > 0.125f;
+
+                    }
+                    elapsed += BraveTime.DeltaTime;
 					yield return null;
 				}
 				UnityEngine.Object.Destroy(component2.gameObject);
@@ -1356,7 +1355,7 @@ namespace Planetside
 						float Q = Mathf.Lerp(0, rotSet, throne1);
 
 						component2.transform.position = Vector3.Lerp(new Vector3(startPos.x, startPos.y, 0), endPos, MathToolbox.SinLerpTValue(t));
-						component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (25 * t));
+						component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (5 * t));
 						component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (10 * t));
 						component2.transform.localRotation = Quaternion.Euler(0f, 0f, aimDir + Q);
 						component2.HeightOffGround = -2;
@@ -1370,7 +1369,7 @@ namespace Planetside
 
 				elapsed = 0;
 				Time = 0.5f;
-				base.PostWwiseEvent("Play_FlashTell");
+				//base.PostWwiseEvent("Play_FlashTell");
 				while (elapsed < Time)
 				{
 					if (parent.IsEnded || parent.Destroyed)
@@ -1383,13 +1382,12 @@ namespace Planetside
 					{
 						component2.transform.position = new Vector3(endPos.x, endPos.y, 0);
 						component2.dimensions = new Vector2(1000f, 1f);
-						component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (60 * t));
-						component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (20 * t));
 						component2.HeightOffGround = -2;
 						component2.renderer.gameObject.layer = 23;
 						component2.UpdateZDepth();
-					}
-					elapsed += BraveTime.DeltaTime;
+                        component2.renderer.enabled = elapsed % 0.25f > 0.125f;
+                    }
+                    elapsed += BraveTime.DeltaTime;
 					yield return null;
 				}
 				UnityEngine.Object.Destroy(component2.gameObject);
@@ -1437,7 +1435,7 @@ namespace Planetside
 						float Q = Mathf.Lerp(0, rotSet, throne1);
 
 						component2.transform.position = new Vector3(startPos.x, startPos.y, 0);
-						component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (25 * t));
+						component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (5 * t));
 						component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (10 * t));
 						component2.transform.localRotation = Quaternion.Euler(0f, 0f, aimDir + Q);
 						component2.HeightOffGround = -2;
@@ -1451,7 +1449,7 @@ namespace Planetside
 
 				elapsed = 0;
 				Time = 0.5f;
-				base.PostWwiseEvent("Play_FlashTell");
+				//base.PostWwiseEvent("Play_FlashTell");
 				while (elapsed < Time)
 				{
 					if (parent.IsEnded || parent.Destroyed)
@@ -1464,13 +1462,12 @@ namespace Planetside
 					{
 						component2.transform.position = new Vector3(startPos.x, startPos.y, 0);
 						component2.dimensions = new Vector2(1000f, 1f);
-						component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (60 * t));
-						component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (20 * t));
 						component2.HeightOffGround = -2;
 						component2.renderer.gameObject.layer = 23;
 						component2.UpdateZDepth();
-					}
-					elapsed += BraveTime.DeltaTime;
+                        component2.renderer.enabled = elapsed % 0.25f > 0.125f;
+                    }
+                    elapsed += BraveTime.DeltaTime;
 					yield return null;
 				}
 				UnityEngine.Object.Destroy(component2.gameObject);

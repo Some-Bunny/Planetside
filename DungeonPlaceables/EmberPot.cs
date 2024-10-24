@@ -43,7 +43,7 @@ namespace Planetside
             breakable.chanceToRain = 1;
             breakable.dropCoins = false;
             breakable.goopsOnBreak = true;
-            breakable.goopRadius = 2.5f;
+            breakable.goopRadius = 3f;
             breakable.goopType = EasyGoopDefinitions.FireDef;
 
             string shardDefaultPath = "Planetside/Resources/DungeonObjects/EmberPot/";

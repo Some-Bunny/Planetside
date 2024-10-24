@@ -11,6 +11,7 @@ using System.Reflection;
 using Planetside;
 using BreakAbleAPI;
 using System.Collections;
+using Newtonsoft.Json.Linq;
 
 
 namespace Planetside
@@ -24,6 +25,7 @@ namespace Planetside
             AkSoundEngine.PostEvent("Play_Tear", base.gameObject);
             GameManager.Instance.StartCoroutine(PortalDoer(mesh));
         }
+
 
         private IEnumerator PortalDoer(MeshRenderer portal)
         {
@@ -84,6 +86,8 @@ namespace Planetside
         public RealityTearData data;
         public bool IsRandom = true;
         public RealityTearData.Floor assigned;
+        public string SetGUID = string.Empty;
+
 
         public void Start()
         {
@@ -96,6 +100,10 @@ namespace Planetside
                 {
                     if (datum.assignedFloor == assigned) { data = datum; }
                 }
+            }
+            if (SetGUID != string.Empty)
+            {
+                data.SetGUID = SetGUID;
             }
 
             Trigger = RoomEventTriggerCondition.ON_ENEMIES_CLEARED;
@@ -160,7 +168,7 @@ namespace Planetside
 
 
             RealityTearController realityTearController = portalObj.AddComponent<RealityTearController>();
-            realityTearController.EnemyToSpawn = data.SelectByWeight(null);
+            realityTearController.EnemyToSpawn = SetGUID != string.Empty ? SetGUID : data.SelectByWeight(null);
             realityTearController.particleType = data.particleType;
             realityTearController.mesh = mesh;
 
@@ -338,6 +346,7 @@ namespace Planetside
             statue.gameObject.AddComponent<TresspassLightController>();
 
             statue.DamageReduction = 1000;
+            Alexandria.DungeonAPI.StaticReferences.StoredRoomObjects.Add("portal_pillar_random", statue.gameObject);
 
             Dictionary<GameObject, float> dict = new Dictionary<GameObject, float>()
             {
@@ -357,6 +366,71 @@ namespace Planetside
             GenerateSeparatePillar(RealityTearData.Floor.PROPER, "portal_pillar_proper");
             GenerateSeparatePillar(RealityTearData.Floor.SEWER, "portal_pillar_sewer");
 
+            Alexandria.DungeonAPI.RoomFactory.OnCustomProperty += OnAction;
+
+        }
+
+        public static GameObject OnAction(string ObjName, GameObject Original, JObject jObject)
+        {
+            if (ObjName != "portal_pillar_random") { return Original; }
+            Original = FakePrefab.Clone(Alexandria.DungeonAPI.StaticReferences.StoredRoomObjects[ObjName]);
+
+            if (Original == null) { ETGModConsole.Log("fuck_a"); }
+
+
+            var tearHolder = Original.GetComponent<TearHolderController>();
+            if (tearHolder == null) { ETGModConsole.Log("fuck_b"); }
+
+            JToken value = null;
+
+            string GUID = jObject.TryGetValue("enemyGUID", out value) ? ((string)value) : "None.";
+            if (GUID != "None.")
+            {
+                tearHolder.SetGUID = GUID;
+            }
+
+            string Type_ = jObject.TryGetValue("FloorType", out value) ? ((string)value) : "Any";
+            switch (Type_)
+            {
+                case "Any":
+                    tearHolder.IsRandom = true;
+                    break;
+                case "Keep":
+                    tearHolder.IsRandom = false;
+                    tearHolder.assigned = RealityTearData.Floor.KEEP;
+                    break;
+                case "Proper":
+                    tearHolder.IsRandom = false;
+                    tearHolder.assigned = RealityTearData.Floor.PROPER;
+                    break;
+                case "Sewer":
+                    tearHolder.IsRandom = false;
+                    tearHolder.assigned = RealityTearData.Floor.SEWER;
+                    break;
+                case "Abbey":
+                    tearHolder.IsRandom = false;
+                    tearHolder.assigned = RealityTearData.Floor.ABBEY;
+                    break;
+                case "Mines":
+                    tearHolder.IsRandom = false;
+                    tearHolder.assigned = RealityTearData.Floor.MINES;
+                    break;
+                case "Hollow":
+                    tearHolder.IsRandom = false;
+                    tearHolder.assigned = RealityTearData.Floor.HOLLOW;
+                    break;
+                case "Forge":
+                    tearHolder.IsRandom = false;
+                    tearHolder.assigned = RealityTearData.Floor.FORGE;
+                    break;
+                case "Hell":
+                    tearHolder.IsRandom = false;
+                    tearHolder.assigned = RealityTearData.Floor.HELL;
+                    break;
+            }
+            ETGModConsole.Log(5);
+
+            return Original;
         }
 
         public static void GenerateSeparatePillar(RealityTearData.Floor f, string name)
@@ -420,6 +494,7 @@ namespace Planetside
         public Texture FloorTexture;
         public Texture SecondaryFloorTexture;
         public List<SingularEnemy> FloorWaves = new List<SingularEnemy>();
+        public string SetGUID = string.Empty;
 
         public string SelectByWeight(System.Random generatorRandom)
         {

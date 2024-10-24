@@ -58,7 +58,7 @@ namespace Planetside
                 {
                     base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("880bbe4ce1014740ba6b4e2ea521e49d").bulletBank.GetBullet("grenade"));
                     float airTime = base.BulletBank.GetBullet("grenade").BulletObject.GetComponent<ArcProjectile>().GetTimeInFlight();
-                    Vector2 vector = base.BulletBank.transform.PositionVector2() + MathToolbox.GetUnitOnCircle(UnityEngine.Random.Range(-180, 180), UnityEngine.Random.Range(3, 9));
+                    Vector2 vector = base.BulletBank.transform.PositionVector2() + MathToolbox.GetUnitOnCircle(UnityEngine.Random.Range(-180, 180), UnityEngine.Random.Range(1, 8));
                     Bullet bullet2 = new Bullet("grenade", false, false, false);
                     float direction2 = (vector - base.Position).ToAngle();
                     base.Fire(new Direction(direction2, DirectionType.Absolute, -1f), new Speed(1f, SpeedType.Absolute), bullet2);
@@ -115,7 +115,7 @@ namespace Planetside
 
             };
             DebrisObject[] shardObjects = BreakableAPIToolbox.GenerateDebrisObjects(shardPaths, true, 1, 5, 720, 540, null, 0.9f, null, null, 0, false);
-            ShardCluster potShardCluster = BreakableAPIToolbox.GenerateShardCluster(shardObjects, 1f, 2f, 10, 18, 0.9f);
+            ShardCluster potShardCluster = BreakableAPIToolbox.GenerateShardCluster(shardObjects, 1f, 3f, 10, 18, 0.9f);
 
  
             ShardCluster[] array = new ShardCluster[] { potShardCluster};

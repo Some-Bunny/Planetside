@@ -13,9 +13,9 @@ namespace Planetside
     {
         public GreedController()
         {
-            this.LifeTime = 3.5f;
-            this.StatIncrease = 1.2f;
-            this.StatIncreaseFlat = 0.2f;
+            this.LifeTime = 3f;
+            this.StatIncrease = 1.1f;
+            this.StatIncreaseFlat = 0.1f;
             this.hasBeenPickedup = false;
         }
         public void Start() 
@@ -76,7 +76,7 @@ namespace Planetside
         private int ActiveBuffs = 0;
         private IEnumerator GrantTemporaryBoost(PlayerController user, float StatIncreaseValue)
         {
-            Timer = 0;
+            Timer = 0 - ((float)ActiveBuffs / 20f);
             ActiveBuffs++;
             if (user.ownerlessStatModifiers.Contains(Speed))
             { user.ownerlessStatModifiers.Remove(Speed); }
@@ -100,7 +100,7 @@ namespace Planetside
 
             if (BuffsActive == true) { yield break; }
             BuffsActive = true;
-            while (Timer < 8)
+            while (Timer < 6)
             {
                 Timer += BraveTime.DeltaTime;
                 yield return null;
@@ -122,27 +122,84 @@ namespace Planetside
         private static IEnumerator HandleManualCoinSpawnLifespan(CurrencyPickup coins, float lifeTime)
         {
             float elapsed = 0f;
+            bool isCaught = false;
+
+
             while (elapsed < lifeTime * 0.75f)
             {
                 if (coins == null) { yield break; }
-                elapsed += BraveTime.DeltaTime;
-                if (0.1f % 0.05f == 0)
+                var Player = GameManager.Instance.GetActivePlayerClosestToPoint(coins.transform.position);
+                if (MathToolbox.IsCloserThan(Player.transform.position, coins.transform.position, 2))
                 {
-                    DoParticlePoof(coins, elapsed);
+                    if (isCaught == false)
+                    {
+                        PickupMover pickupMover = coins.gameObject.GetOrAddComponent<PickupMover>();
+                        if (pickupMover.specRigidbody)
+                        {
+                            pickupMover.specRigidbody.CollideWithTileMap = false;
+                        }
+                        pickupMover.acceleration = 20f;
+                        pickupMover.maxSpeed = 5f;
+                        pickupMover.minRadius = 0.01f;
+                        pickupMover.moveIfRoomUnclear = true;
+                        pickupMover.stopPathingOnContact = false;
+                        isCaught = true;
+                    }
+                }
+                else
+                {
+                    elapsed += BraveTime.DeltaTime;
+                }
+
+
+                //elapsed += BraveTime.DeltaTime;
+                if (0.125f % 0.0625f == 0)
+                {
+                    DoParticlePoof(coins, elapsed / 2, new Vector2(-1, 1));
+                    DoParticlePoof(coins, elapsed, Vector2.up);
+                    DoParticlePoof(coins, elapsed / 2, new Vector2(1, 1));
                 }
                 yield return null;
             }
             float flickerTimer = 0f;
+
+
             while (elapsed < lifeTime)
             {
-                elapsed += BraveTime.DeltaTime;
+                var Player = GameManager.Instance.GetActivePlayerClosestToPoint(coins.transform.position);
+                if (MathToolbox.IsCloserThan(Player.transform.position, coins.transform.position, 2))
+                {
+                    if (isCaught == false)
+                    {
+                        PickupMover pickupMover = coins.gameObject.GetOrAddComponent<PickupMover>();
+                        if (pickupMover.specRigidbody)
+                        {
+                            pickupMover.specRigidbody.CollideWithTileMap = false;
+                        }
+                        pickupMover.acceleration = 20f;
+                        pickupMover.maxSpeed = 5f;
+                        pickupMover.minRadius = 0.01f;
+                        pickupMover.moveIfRoomUnclear = true;
+                        pickupMover.stopPathingOnContact = false;
+                        isCaught = true;
+                    }
+                }
+                else
+                {
+                    elapsed += BraveTime.DeltaTime;
+                }
+
                 flickerTimer += BraveTime.DeltaTime;
                 if (coins != null && coins.renderer)
                 {
+                   
                     bool enabled = flickerTimer % 0.2f > 0.15f;
                     if (enabled)
                     {
-                        DoParticlePoof(coins, elapsed);
+                        DoParticlePoof(coins, elapsed / 2, new Vector2(-1, 1));
+                        DoParticlePoof(coins, elapsed, Vector2.up);
+                        DoParticlePoof(coins, elapsed / 2, new Vector2(1, 1));
+
                     }
                     coins.renderer.enabled = enabled;
                 }
@@ -156,20 +213,20 @@ namespace Planetside
             yield break;
         }
 
-        public static void DoParticlePoof(CurrencyPickup c, float m)
+        public static void DoParticlePoof(CurrencyPickup c, float m, Vector2 Dir)
         {
             if (c == null) { return; }
             if (c.sprite == null) { return; }
             Vector3 vector = c.sprite.WorldBottomLeft.ToVector3ZisY(0);
             Vector3 vector2 = c.sprite.WorldTopRight.ToVector3ZisY(0);
             Vector3 position = new Vector3(UnityEngine.Random.Range(vector.x, vector2.x), UnityEngine.Random.Range(vector.y, vector2.y), UnityEngine.Random.Range(vector.z, vector2.z));
-            GlobalSparksDoer.DoSingleParticle(position, Vector3.up * (3 * m) * 2, null, null, null, GlobalSparksDoer.SparksType.FLOATY_CHAFF);
+            GlobalSparksDoer.DoSingleParticle(position, Dir * (3 * m) * 2, null, null, null, GlobalSparksDoer.SparksType.FLOATY_CHAFF);
         }
 
         public void IncrementStack()
         {
-            this.StatIncrease += 0.10f;
-            this.StatIncreaseFlat += 0.10f;
+            this.StatIncrease += 0.05f;
+            this.StatIncreaseFlat += 0.05f;
             this.LifeTime += 0.5f;
         }
 

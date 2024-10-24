@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3001314856
+CRC: 897376367
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: b10c8e9afdcc4bb28c292bc5019d2750
+    Hash: db9c22afa3744a602fa57b45b9c550bd
   TypeTreeHash:
     serializedVersion: 2
     Hash: 49f9e3f3a3706f2358de64fcab9d7ba2
@@ -70,6 +70,7 @@ Assets:
 - Assets/Enemies/Fodder/fodder_idle_007.png
 - Assets/Ammonomicon/Ammonomicon Icons/creationistTemplateTrespass.png
 - Assets/BossCards/fungannon_bosscard.png
+- Assets/VFX/DebuffAnimation.prefab
 - Assets/Ammonomicon/Ammonomicon Icons/skullvenanticonaoo.png
 - Assets/UI/Alphabet Letters/letter_18.png
 - Assets/Enemies/Fodder/fodder_idle_002.png

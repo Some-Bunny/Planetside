@@ -685,7 +685,10 @@ namespace Planetside
             EnemyGUIDs.Ammoconda_Ball_GUID,
             EnemyGUIDs.Bombshee_GUID,
 
-
+			Tower.guid,
+            Unwilling.guid,
+            Coallet.guid,
+			Observant.guid
         };
 
       

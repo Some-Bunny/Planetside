@@ -561,8 +561,7 @@ namespace Planetside
                     {
                         float Ang = (this.GetPredictedTargetPositionExact(1, 600) - this.BulletBank.aiActor.sprite.WorldCenter).ToAngle();
                         tiledsprite.transform.position = new Vector3(this.Position.x, this.Position.y, 0);
-                        float math = isDodgeAble == true ? 250 : 25;
-                        tiledsprite.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (math * t));
+                        tiledsprite.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (5 * t));
                         tiledsprite.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f + (5 * t));
                         tiledsprite.transform.localRotation = Quaternion.Euler(0f, 0f, Ang);
                         tiledsprite.HeightOffGround = -2;
@@ -574,8 +573,8 @@ namespace Planetside
                     yield return null;
                 }
                 elapsed = 0;
-                Time = 0.25f;
-                base.PostWwiseEvent("Play_FlashTell");
+                Time = 0.375f;
+                //base.PostWwiseEvent("Play_FlashTell");
                 while (elapsed < Time)
                 {
 
@@ -590,11 +589,11 @@ namespace Planetside
                         float math = isDodgeAble == true ? 350 : 35;
                         tiledsprite.transform.position = new Vector3(this.Position.x, this.Position.y, 0);
                         tiledsprite.dimensions = new Vector2(1000f, 1f);
-                        tiledsprite.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (math * t));
-                        tiledsprite.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f + (20 * t));
                         tiledsprite.HeightOffGround = -2;
                         tiledsprite.renderer.gameObject.layer = 22;
                         tiledsprite.UpdateZDepth();
+                        tiledsprite.renderer.enabled = elapsed % 0.125f > 0.0625f;
+
                     }
                     elapsed += BraveTime.DeltaTime;
                     yield return null;
@@ -644,9 +643,9 @@ namespace Planetside
 
                     for (int i = 0; i < 4; i++)
 					{
-						base.Fire(new Direction(aimDirection + (h * e), DirectionType.Absolute, -1f), new Speed(2+(i*2), SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.UndodgeableOldKingSlamBullet.Name, 15, 60));
+						base.Fire(new Direction(aimDirection + (h * e), DirectionType.Absolute, -1f), new Speed(1.5f+(i*1.25f), SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.UndodgeableOldKingSlamBullet.Name, 15, 60));
 					}
-					yield return this.Wait(10);
+					yield return this.Wait(15);
 				}
 				yield break;
 			}

@@ -8,6 +8,7 @@ using MonoMod.RuntimeDetour;
 using System.Reflection;
 using System.Linq;
 using SaveAPI;
+using static tk2dSpriteCollectionDefinition;
 
 namespace Planetside
 {
@@ -143,7 +144,7 @@ namespace Planetside
                                 }
                             }
                         }
-                        GameManager.Instance.StartCoroutine(fuck.DoReverseDistortionWaveLocal(self.transform.position, 4, 0.1f, 11f, 0.5f));
+                        GameManager.Instance.StartCoroutine(fuck.DoReverseDistortionWaveLocal(self.transform.position, 2, 0.1f, 11f, 0.5f));
                     }
                     Timer = 0;
                 }
@@ -348,30 +349,187 @@ namespace Planetside
             this.hasBeenPickedup = true; 
             if (player != null)
             {
-                OtherTools.ApplyStat(player, PlayerStats.StatType.AmmoCapacityMultiplier, 0.55f, StatModifier.ModifyMethod.MULTIPLICATIVE);
                 player.PostProcessThrownGun += ThrownGunModifier;
-                player.OnReloadPressed += MagDump;
+                player.GunChanged += OopsSwitch;
             }
+            ProjectileInterface = new PlayerItemProjectileInterface();
         }
-        public void MagDump(PlayerController p, Gun gun)
+        public PlayerItemProjectileInterface ProjectileInterface;
+
+
+        private float TimerToDeath = 0;
+        public tk2dSpriteAnimator effectInst;
+        public void Update()
         {
-            Gun g = p.CurrentGun;
-            if (g != null && g.InfiniteAmmo == false)
+            if (cooldown > 0)
             {
-                if (g.ClipShotsRemaining == g.ClipCapacity | g.ClipCapacity > g.CurrentAmmo)
+                cooldown -= Time.deltaTime;
+                return;
+            }
+
+            if (player.CurrentGun != null)
+            {
+                if (player.CurrentGun.CurrentAmmo > 0 && player.CurrentGun.InfiniteAmmo == false && player.CurrentGun.LocalInfiniteAmmo == false)
                 {
-                    SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.GUNSLINGER_FLAG_MAGDUMP, true);
-                    g.ammo -= g.ClipShotsRemaining;
-                    g.ClipShotsRemaining -= g.ClipShotsRemaining;
-                    GameObject vfx = SpawnManager.SpawnVFX((PickupObjectDatabase.GetById(365) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapVertical.effects.First().effects.First().effect, true);
-                    vfx.transform.position = p.sprite.WorldCenter;
-                    vfx.GetComponent<tk2dBaseSprite>().HeightOffGround = 22;
-                    vfx.transform.localScale *= 1f;
-                    UnityEngine.Object.Destroy(vfx, 1);
-                    AkSoundEngine.PostEvent("Play_WPN_Life_Orb_Capture_01", p.gameObject);
+                    bool wasPressed = player.m_activeActions.ReloadAction.State;
+                    if (wasPressed)
+                    {
+                        if (effectInst == null)
+                        {
+                            effectInst = UnityEngine.Object.Instantiate(Gunslinger.GunslingerMagDumpVFX, player.transform).GetComponent<tk2dSpriteAnimator>();
+                            effectInst.gameObject.layer = 20;
+                            AkSoundEngine.PostEvent("Play_ENM_Grip_Master_Lockon_01", player.gameObject);
+
+                        }
+
+                        TimerToDeath += Time.deltaTime;
+                        if (TimerToDeath >= 3)
+                        {
+                            TimerToDeath = 0;
+                            effectInst.PlayAndDestroyObject("chamber_vanish");
+                            effectInst = null;
+                            SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.GUNSLINGER_FLAG_MAGDUMP, true);
+
+                            int amount = player.CurrentGun.ammo;
+
+                            player.CurrentGun.ammo  = 0;
+                            GameObject vfx = SpawnManager.SpawnVFX((PickupObjectDatabase.GetById(365) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapVertical.effects.First().effects.First().effect, true);
+                            vfx.transform.position = player.sprite.WorldCenter;
+                            vfx.GetComponent<tk2dBaseSprite>().HeightOffGround = 22;
+                            UnityEngine.Object.Destroy(vfx, 1);
+                            AkSoundEngine.PostEvent("Play_ENM_Grip_Master_Eject_01", player.gameObject);
+                            cooldown = 0.5f;
+
+                            amount /= 5;
+                            amount = Mathf.Max(1, amount);
+                            amount = Mathf.Min(20, amount);
+
+
+                            var proj = this.ProjectileInterface.GetProjectile(player);
+
+                            if (proj.GetComponent<BeamController>() != null)
+                            {
+                                this.StartCoroutine(this.HandleFireShortBeam(proj, player, player.FacingDirection,(float)amount / 8f, null, null));
+                            }
+                            else
+                            {
+                                this.StartCoroutine(DoBurst(amount, proj, player.CurrentGun.Volley.projectiles.Count, player.CurrentGun.DefaultModule.cooldownTime, player.CurrentGun.DefaultModule.angleVariance));
+                            }
+                        }
+                        if (effectInst)
+                        {
+                            effectInst.transform.position = player.sprite.WorldCenter;
+                        }
+                    }
+                    else
+                    {
+                        if (TimerToDeath != 0)
+                        {
+                            TimerToDeath = 0;
+                        }
+                        if (effectInst)
+                        {
+                            AkSoundEngine.PostEvent("Play_ENM_Tarnisher_Spit_01", player.gameObject);
+                            effectInst.PlayAndDestroyObject("chamber_vanish");
+                            effectInst = null;
+                        }
+                        cooldown = 0.5f;
+                    }
+                }
+            }
+            else
+            {
+                if (TimerToDeath != 0)
+                {
+                    TimerToDeath = 0;
+                }
+                if (effectInst)
+                {
+                    AkSoundEngine.PostEvent("Play_ENM_Grip_Master_Eject_01", player.gameObject);
+                    effectInst.PlayAndDestroyObject("chamber_vanish");
+                    effectInst = null;
                 }
             }
         }
+        private float cooldown = 0;
+
+        public IEnumerator DoBurst(int amount, Projectile projectile, int Burst, float RoF, float Spread)
+        {
+            for (int i = 0; i < amount; i++)
+            {
+                for (int e = 0; e < Burst; e++)
+                {
+                    Vector3 vector = player.specRigidbody.UnitCenter;
+                    GameObject gameObject = SpawnManager.SpawnProjectile(projectile.gameObject, vector, Quaternion.Euler(0f, 0f, player.FacingDirection + UnityEngine.Random.Range(-Spread, Spread)), true);
+                    Projectile component = gameObject.GetComponent<Projectile>();
+                    component.Owner = player;
+                    component.Shooter = player.specRigidbody;
+                    player.DoPostProcessProjectile(component);
+                    component.baseData.speed *= UnityEngine.Random.Range(0.5f, 1.5f);
+                    component.UpdateSpeed();
+                }
+                yield return new WaitForSeconds(Mathf.Min(0.15f, RoF));
+            }
+            yield break;
+        }
+
+
+        public void OopsSwitch( Gun gun1, Gun gun2, bool b)
+        {
+            if (TimerToDeath != 0)
+            {
+                TimerToDeath = 0;
+            }
+            if (effectInst)
+            {
+                AkSoundEngine.PostEvent("Play_ENM_Tarnisher_Spit_01", player.gameObject);
+                effectInst.PlayAndDestroyObject("chamber_vanish");
+                effectInst = null;
+            }
+            cooldown = 0.5f;
+        }
+
+        private IEnumerator HandleFireShortBeam(Projectile projectileToSpawn, PlayerController source, float targetAngle, float duration, Vector2? overrideSpawnPoint, Vector2? spawnPointOffset = null)
+        {
+            float elapsed = 0f;
+            BeamController beam = this.BeginFiringBeam(projectileToSpawn, source, targetAngle, overrideSpawnPoint, spawnPointOffset);
+            yield return null;
+            while (elapsed < duration)
+            {
+                elapsed += BraveTime.DeltaTime;
+                this.ContinueFiringBeam(beam, source, overrideSpawnPoint, spawnPointOffset);
+                yield return null;
+            }
+            beam.CeaseAttack();
+            yield break;
+        }
+
+        private BeamController BeginFiringBeam(Projectile projectileToSpawn, PlayerController source, float targetAngle, Vector2? overrideSpawnPoint, Vector2? spawnPointOffset = null)
+        {
+            Vector2 vector = (overrideSpawnPoint == null) ? source.CenterPosition : overrideSpawnPoint.Value;
+            vector = ((spawnPointOffset == null) ? vector : (vector + spawnPointOffset.Value));
+            GameObject gameObject = SpawnManager.SpawnProjectile(projectileToSpawn.gameObject, vector, Quaternion.identity, true);
+            Projectile component = gameObject.GetComponent<Projectile>();
+            component.Owner = source;
+            BeamController component2 = gameObject.GetComponent<BeamController>();
+            component2.Owner = source;
+            component2.HitsPlayers = false;
+            component2.HitsEnemies = true;
+            Vector3 v = BraveMathCollege.DegreesToVector(targetAngle, 1f);
+            component2.Direction = v;
+            component2.Origin = vector;
+            return component2;
+        }
+
+        private void ContinueFiringBeam(BeamController beam, PlayerController source, Vector2? overrideSpawnPoint, Vector2? spawnPointOffset = null)
+        {
+            Vector2 vector = (overrideSpawnPoint == null) ? source.CenterPosition : overrideSpawnPoint.Value;
+            vector = ((spawnPointOffset == null) ? vector : (vector + spawnPointOffset.Value));
+            beam.Origin = vector;
+            beam.Direction = MathToolbox.GetUnitOnCircle(source.FacingDirection, 1).normalized;
+            beam.LateUpdatePosition(vector);
+        }
+
 
         //---DONE
         //FULLAUTO
@@ -801,16 +959,38 @@ namespace Planetside
             particles.ParticleSystemColor2 = Color.white;
             item.OutlineColor = new Color(0f, 1f, 0f);
 
+            var debuffCollection = StaticSpriteDefinitions.Debuff_Sheet_Data;
+            var BrokenArmorVFXObject = ItemBuilder.AddSpriteToObjectAssetbundle("GunslingerMagDump", debuffCollection.GetSpriteIdByName("ChamberDoEffect_001"), debuffCollection);//new GameObject("Broken Armor");//SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Debuffs/brokenarmor", new GameObject("BrokenArmorEffect"));
+            FakePrefab.MarkAsFakePrefab(BrokenArmorVFXObject);
+            UnityEngine.Object.DontDestroyOnLoad(BrokenArmorVFXObject);
+            BrokenArmorVFXObject.GetOrAddComponent<tk2dBaseSprite>();
+            tk2dSpriteAnimator animator = BrokenArmorVFXObject.GetOrAddComponent<tk2dSpriteAnimator>();
+            animator.library = StaticSpriteDefinitions.Debuff_Animation_Data;
+            animator.Library = StaticSpriteDefinitions.Debuff_Animation_Data;
 
-            //new Hook(typeof(HoveringGunController).GetMethod("UpdatePosition", BindingFlags.Instance | BindingFlags.NonPublic), typeof(Gunslinger).GetMethod("DisableFuses"));
+            animator.sprite.usesOverrideMaterial = true;
+
+            Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+            mat.mainTexture = animator.sprite.renderer.material.mainTexture;
+            mat.SetColor("_EmissiveColor", new Color32(100, 255, 154, 255));
+            mat.SetFloat("_EmissiveColorPower", 2f);
+            mat.SetFloat("_EmissivePower", 20);
+            animator.sprite.renderer.material = mat;
+
+            animator.DefaultClipId = animator.GetClipIdByName("chamber_docooltrick");
+            animator.playAutomatically = true;
+            GunslingerMagDumpVFX = BrokenArmorVFXObject;
         }
+
+        public static GameObject GunslingerMagDumpVFX;
+
         public override List<PerkDisplayContainer> perkDisplayContainers => new List<PerkDisplayContainer>()
         {
                 new PerkDisplayContainer()
                 {
                     AmountToBuyBeforeReveal = 1,
                     LockedString = AlphabetController.ConvertString("THROWN GUNS GOOD"),
-                    UnlockedString = "Massively Increases the potential power of thrown guns.",
+                    UnlockedString = "Massively Increases the power of thrown guns.",
                     requiresFlag = false
                 },
                 new PerkDisplayContainer()
@@ -823,15 +1003,15 @@ namespace Planetside
                  new PerkDisplayContainer()
                 {
                     AmountToBuyBeforeReveal = 3,
-                    LockedString = AlphabetController.ConvertString("THROW THEM"),
-                    UnlockedString = "Decreases Max Ammo, but triples thrown gun damage.",
+                    LockedString = AlphabetController.ConvertString("THROW THEM PLEASE"),
+                    UnlockedString = "Triples thrown gun damage.",
                     requiresFlag = false
                 },
                 new PerkDisplayContainer()
                 {
                     AmountToBuyBeforeReveal = 4,
-                    LockedString = AlphabetController.ConvertString("MAGAZINE DUMP"),
-                    UnlockedString = "Reloading On A Full Clip removes a clips worth of ammo.",
+                    LockedString = AlphabetController.ConvertString("AMMO DUMP"),
+                    UnlockedString = "Holding reload while out of combat allows you to dump all of your current guns ammo.",
                     FlagToTrack = SaveAPI.CustomDungeonFlags.GUNSLINGER_FLAG_MAGDUMP
                 },
 

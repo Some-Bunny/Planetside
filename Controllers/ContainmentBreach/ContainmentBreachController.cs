@@ -20,6 +20,7 @@ using NpcApi;
 using static Dungeonator.ProceduralFlowModifierData;
 using static Planetside.RealityTearData;
 using Planetside.Controllers.ContainmentBreach.BossChanges.Misc;
+using Alexandria.PrefabAPI;
 
 namespace Planetside
 {
@@ -76,7 +77,7 @@ namespace Planetside
                         validTilesets = new List<GlobalDungeonData.ValidTilesets>() {GlobalDungeonData.ValidTilesets.CASTLEGEON, GlobalDungeonData.ValidTilesets.GUNGEON, GlobalDungeonData.ValidTilesets.SEWERGEON, GlobalDungeonData.ValidTilesets.CATHEDRALGEON, GlobalDungeonData.ValidTilesets.MINEGEON, GlobalDungeonData.ValidTilesets.CATACOMBGEON}
                     },
                 };
-                RoomFactory.AddInjection(RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/PrisonUnlockRoom.room").room, "Prison Containment Shrine", flowModifierPlacementTypes, 0, dungeonPrerequisites, "Prison Containment Shrine", 1f, 0.1f);
+                RoomFactory.AddInjection(RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/PrisonUnlockRoom.room").room, "Prison Containment Shrine", flowModifierPlacementTypes, 0, dungeonPrerequisites, "Prison Containment Shrine", 1f, 0.15f);
 
 
                 List<DungeonPrerequisite> dungeonPrerequisites1 = new List<DungeonPrerequisite>()
@@ -101,6 +102,16 @@ namespace Planetside
                 });
                 ETGModConsole.Commands.GetGroup("psog_void").AddUnit("enable_mixed_floor", ForceEnableMixedFloor);
 
+                var bankObj = PrefabBuilder.BuildObject("ContainmentBreachBank");
+                InfectionBulletBank = bankObj.AddComponent<AIBulletBank>();
+                DontDestroyOnLoad(InfectionBulletBank.gameObject);
+                InfectionBulletBank.Bullets = new List<AIBulletBank.Entry>()
+                {
+                    StaticUndodgeableBulletEntries.undodgeableLargeSpore,
+                    StaticUndodgeableBulletEntries.undodgeableSmallSpore
+                };
+                InfectionBulletBank.transforms = new List<Transform>();
+                InfectionBulletBank.m_cachedActorName = "Liminal Infection";
                 //GameStatsManager.m_instance.IsInSession;
                 //GameManager.Instance.
 
@@ -112,6 +123,8 @@ namespace Planetside
                 Debug.Log(e);
             }
         }
+
+        public static AIBulletBank InfectionBulletBank;
 
         public static void AddInjecto(GlobalDungeonData.ValidTilesets s)
         {

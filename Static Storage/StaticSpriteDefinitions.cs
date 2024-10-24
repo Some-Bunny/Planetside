@@ -22,6 +22,8 @@ namespace Planetside
         public static tk2dSpriteCollectionData Projectile_Sheet_Data;
         public static tk2dSpriteCollectionData Guon_Sheet_Data;
 
+        public static tk2dSpriteAnimation Debuff_Animation_Data;
+
 
         public static tk2dSpriteAnimation Gun_Animation_Data;
         public static tk2dSpriteAnimation Projectile_Animation_Data;
@@ -54,7 +56,7 @@ namespace Planetside
             Guon_Sheet_Data = DoFastSetup("PSOGGuonCollection", "guonpsog material.mat");
             if (Guon_Sheet_Data == null) { ETGModConsole.Log("Guon_Sheet_Data is NULL"); }
 
-
+            Debuff_Animation_Data = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("DebuffAnimation").GetComponent<tk2dSpriteAnimation>();
 
             Gun_Animation_Data = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("PlanetsideGunAnimation").GetComponent<tk2dSpriteAnimation>();
 

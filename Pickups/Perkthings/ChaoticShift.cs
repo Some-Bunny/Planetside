@@ -4,26 +4,52 @@ using System;
 using UnityEngine;
 using System.Collections.Generic;
 using SaveAPI;
+using HarmonyLib;
+using static PlayerStats;
+using static StatModifier;
+using Dungeonator;
+using Pathfinding;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using tk2dRuntime.TileMap;
+using UnityEngine;
+
 
 namespace Planetside
 {
     class FuckYoGunsUp : MonoBehaviour
     {
         public FuckYoGunsUp() { }
-        public void Start(){
+        public ChaoticShiftController shiftController;
+        public void Start()
+        {
             BannedIDs.Add(self.PickupObjectId);
         }
+
+        public void OnDestroy()
+        {
+            shiftController.RemoveOldModifier(self);
+
+            //RemoveOldModifier();
+        }
+
+
+
+
 
         public void AddModule()
         {
             AmountOfModulesCurrently++;
-            Gun randomGun = GetRandomGunOfQualitiesAndShootStyle(new System.Random(UnityEngine.Random.Range(1, 1000)), BannedIDs, self.DefaultModule.shootStyle, ReturnQualities(self.quality));
+            Gun randomGun = GetRandomGunOfQualitiesAndShootStyle(new System.Random(UnityEngine.Random.Range(1, 100000)), BannedIDs, self.DefaultModule.shootStyle, ReturnQualities(self.quality));
             BannedIDs.Add(randomGun.PickupObjectId);
             ProjectileVolleyData projectileVolleyData = CombineVolleys(self, randomGun);
+
             ReconfigureVolley(projectileVolleyData);
             self.RawSourceVolley = projectileVolleyData;
             self.SetBaseMaxAmmo(self.GetBaseMaxAmmo() + (int)(randomGun.GetBaseMaxAmmo() * 0.3f));
             self.GainAmmo((int)(randomGun.CurrentAmmo * 0.3f));
+
             self.OnPrePlayerChange();
             player.inventory.ChangeGun(0, false, false);
         }
@@ -202,14 +228,74 @@ namespace Planetside
             this.hasBeenPickedup = false;
         }
         public void Start() 
-        { 
+        {
+            if (statModifier == null)
+            {
+                statModifier = new StatModifier()
+                {
+                    amount = 1,
+                    ignoredForSaveData = true,
+                    modifyType = StatModifier.ModifyMethod.MULTIPLICATIVE,
+                    statToBoost = PlayerStats.StatType.Damage,
+                    isMeatBunBuff = true,
+                };
+            }
             this.hasBeenPickedup = true;
-           
+            RecalculateDamageNumber();
+            player.GunChanged += GunSwitched;
         }
+
+        public void GunSwitched(Gun g1, Gun g2, bool b)
+        {
+            AddModifierIfPossible(g2);
+        }
+
+        public StatModifier statModifier;
+
+
+        public void AddModifierIfPossible(Gun g2)
+        {
+            if (IsGunValid(g2))
+            {
+                RecalculateDamageNumber();
+                RemoveOldModifier(g2);
+                if (!g2.currentGunStatModifiers.Contains(statModifier))
+                {
+                    g2.currentGunStatModifiers = g2.currentGunStatModifiers.Concat(new StatModifier[]
+                    {
+                        statModifier
+                    }).ToArray<StatModifier>();
+                }
+            }
+        }
+
+        public void RecalculateDamageNumber()
+        {
+            float BaseDamage = 1f;
+            for (int i = 0; i < AmountOfModules; i++)
+            {
+                BaseDamage *= 0.55f;
+            }
+            statModifier.amount = BaseDamage;
+            if (player == null) { return; }
+            player.stats.RecalculateStats(player, true, true);
+        }
+
+        public void RemoveOldModifier(Gun gun)
+        {
+            List<StatModifier> L = gun.currentGunStatModifiers.ToList();
+            L.RemoveAll(self => self.isMeatBunBuff == true);
+            gun.currentGunStatModifiers = L.ToArray();
+        }
+
+        
+
+
 
         public void IncrementStack()
         {
             AmountOfModules++;
+            RecalculateDamageNumber();
         }
 
         public void Update()
@@ -220,22 +306,32 @@ namespace Planetside
                 for (int i = 0; i < gunList.Count; i++)
                 {
                     Gun currentGunInList = gunList[i];
-                    if (IsGunValid(currentGunInList) && currentGunInList != null)
+                    if (currentGunInList != null)
                     {
+                        if (IsGunValid(currentGunInList))
+                        {
 
-                        if (currentGunInList.gameObject.GetComponent<FuckYoGunsUp>() != null)
-                        {
-                            FuckYoGunsUp guns = currentGunInList.gameObject.GetComponent<FuckYoGunsUp>();
-                            if (guns.AmountOfModulesCurrently != AmountOfModules && AmountOfModules >= guns.AmountOfModulesCurrently) { guns.AddModule(); }
+                            if (currentGunInList.gameObject.GetComponent<FuckYoGunsUp>() != null)
+                            {
+                                FuckYoGunsUp guns = currentGunInList.gameObject.GetComponent<FuckYoGunsUp>();
+                                if (guns.AmountOfModulesCurrently != AmountOfModules && AmountOfModules >= guns.AmountOfModulesCurrently) 
+                                {
+                                    guns.AddModule();
+                                }
+                            }
+                            else
+                            {
+                                FuckYoGunsUp guns = currentGunInList.gameObject.GetOrAddComponent<FuckYoGunsUp>();
+                                guns.self = currentGunInList;
+                                guns.player = player;
+                                guns.shiftController = this;
+                                guns.AddModule();
+                                //RemoveOldModifier(currentGunInList);
+                                AddModifierIfPossible(currentGunInList);
+
+                            }
                         }
-                        else
-                        {
-                            FuckYoGunsUp guns = currentGunInList.gameObject.AddComponent<FuckYoGunsUp>();
-                            guns.self = currentGunInList;
-                            guns.player = player;
-                            guns.AddModule();
-                        }
-                    }           
+                    }         
                 }
                
             }
@@ -316,7 +412,7 @@ namespace Planetside
             SaveAPI.AdvancedGameStatsManager.Instance.RegisterStatChange(StatToIncreaseOnPickup, 1);
             m_hasBeenPickedUp = true;
             AkSoundEngine.PostEvent("Play_OBJ_dice_bless_01", player.gameObject);
-            OtherTools.ApplyStat(player, PlayerStats.StatType.Damage, 0.65f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+            OtherTools.ApplyStat(player, PlayerStats.StatType.Damage, 0.1f, StatModifier.ModifyMethod.ADDITIVE);
             //OtherTools.ApplyStat(player, PlayerStats.StatType.AmmoCapacityMultiplier, 1.05f, StatModifier.ModifyMethod.MULTIPLICATIVE);
 
             PerkParticleSystemController cont = base.GetComponent<PerkParticleSystemController>();

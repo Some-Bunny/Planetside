@@ -45,6 +45,15 @@ namespace Planetside
             return startAngle + direction * Mathf.Lerp(0f, 360f, ((float)i + ((!offset) ? 0f : 0.5f)) / (float)numBullets);
         }
 
+        public static bool IsCloserThan(Vector2 pos1, Vector2 pos2, float Value_Thats_Supposed_To_Be_Larger_Than_What_You_Want_To_Return_True)
+        {
+            return (pos1 - pos2).sqrMagnitude < Value_Thats_Supposed_To_Be_Larger_Than_What_You_Want_To_Return_True * Value_Thats_Supposed_To_Be_Larger_Than_What_You_Want_To_Return_True;
+        }
+        public static bool IsFurtherThan(Vector2 pos1, Vector2 pos2, float Value_Thats_Supposed_To_Be_Larger_Than_What_You_Want_To_Return_True)
+        {
+            return (pos1 - pos2).sqrMagnitude > Value_Thats_Supposed_To_Be_Larger_Than_What_You_Want_To_Return_True * Value_Thats_Supposed_To_Be_Larger_Than_What_You_Want_To_Return_True;
+        }
+
         public static Vector2 GetUnitOnCircle(float angleDegrees, float radius)
         {
 

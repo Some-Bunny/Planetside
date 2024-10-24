@@ -111,7 +111,7 @@ namespace Planetside
                     {
 						maintain.AmountOfPiercesBeforeFalloff++;
 					}
-					float procChance = 0.15f;
+					float procChance = 0.2f;
 					if (UnityEngine.Random.value <= procChance)
 					{
 						otherRigidbody.projectile.AdjustPlayerProjectileTint(new Color(0.6f, 0.7f, 0f), 2, 0f);

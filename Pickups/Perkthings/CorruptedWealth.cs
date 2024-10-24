@@ -101,6 +101,18 @@ namespace Planetside
             player.OnUsedBlank += Player_OnUsedBlank;
             player.LostArmor += LostArmorgus;
             player.OnNewFloorLoaded += ONFL;
+
+
+            StatModifier item = new StatModifier
+            {
+                statToBoost = PlayerStats.StatType.Damage,
+                amount = 0,//(AmountOfHPConsumed / 4) * (1 + (StackCount / 0.33f)),
+                modifyType = StatModifier.ModifyMethod.ADDITIVE
+            };
+            player.ownerlessStatModifiers.Add(item);
+            player.stats.RecalculateStats(player, true, true);
+            HPBasedDamageMod = item;
+
         }
 
         public void ONFL(PlayerController player)
@@ -269,24 +281,14 @@ namespace Planetside
 
         public void RecalculateDamage()
         {
-            if (HPBasedDamageMod != null)
-            {
-                player.ownerlessStatModifiers.Remove(HPBasedDamageMod);
-            }
-            if (AmountOfHPConsumed == 0) { return; }
-            StatModifier item = new StatModifier
-            {
-                statToBoost = PlayerStats.StatType.Damage,
-                amount = (AmountOfHPConsumed/4) * (1+ (StackCount / 0.33f)),
-                modifyType = StatModifier.ModifyMethod.ADDITIVE
-            };
-            HPBasedDamageMod = item;
+            HPBasedDamageMod.amount = (AmountOfHPConsumed / 15f) * (1 + ((float)StackCount / 3f));
+            player.stats.RecalculateStats(player, true, true);
         }
-
 
         public void IncrementStack()
         {
             StackCount++;
+            RecalculateDamage();
         }
 
         

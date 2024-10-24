@@ -29,9 +29,30 @@ namespace Planetside
         public static GameObject BuildVFX()
         {
             var debuffCollection = StaticSpriteDefinitions.Debuff_Sheet_Data;
-            var BrokenArmorVFXObject = ItemBuilder.AddSpriteToObjectAssetbundle("Possessed", debuffCollection.GetSpriteIdByName("possesedeffecticon"), debuffCollection);//new GameObject("Broken Armor");//SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Debuffs/brokenarmor", new GameObject("BrokenArmorEffect"));
+            var BrokenArmorVFXObject = ItemBuilder.AddSpriteToObjectAssetbundle("Possessed", debuffCollection.GetSpriteIdByName("possesedeffect_idle_005"), debuffCollection);//new GameObject("Broken Armor");//SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Debuffs/brokenarmor", new GameObject("BrokenArmorEffect"));
             FakePrefab.MarkAsFakePrefab(BrokenArmorVFXObject);
             UnityEngine.Object.DontDestroyOnLoad(BrokenArmorVFXObject);
+            BrokenArmorVFXObject.GetOrAddComponent<tk2dBaseSprite>();
+            tk2dSpriteAnimator animator = BrokenArmorVFXObject.GetOrAddComponent<tk2dSpriteAnimator>();
+            var clip = SpriteBuilder.AddAnimation(animator, debuffCollection, new List<int>()
+            {
+                debuffCollection.GetSpriteIdByName("possesedeffect_idle_001"),
+                debuffCollection.GetSpriteIdByName("possesedeffect_idle_002"),
+                debuffCollection.GetSpriteIdByName("possesedeffect_idle_003"),
+                debuffCollection.GetSpriteIdByName("possesedeffect_idle_004"),
+                debuffCollection.GetSpriteIdByName("possesedeffect_idle_005"),
+                debuffCollection.GetSpriteIdByName("possesedeffect_idle_006"),
+                debuffCollection.GetSpriteIdByName("possesedeffect_idle_007"),
+                debuffCollection.GetSpriteIdByName("possesedeffect_idle_008"),
+                debuffCollection.GetSpriteIdByName("possesedeffect_idle_009"),
+                debuffCollection.GetSpriteIdByName("possesedeffect_idle_010"),
+                debuffCollection.GetSpriteIdByName("possesedeffect_idle_011"),
+
+            }, "start", tk2dSpriteAnimationClip.WrapMode.LoopSection, 12);
+
+            animator.DefaultClipId = animator.GetClipIdByName("start");
+            animator.playAutomatically = true;
+            clip.loopStart = 3;
             posessedVFXObject = BrokenArmorVFXObject;
             return posessedVFXObject;
         }
@@ -40,28 +61,70 @@ namespace Planetside
 		public override void ApplyTint(GameActor actor)
 		{
 			actor.RegisterOverrideColor(TintColorPosessed, vfxNameposessed);
-		
-		}
-		public override void EffectTick(GameActor actor, RuntimeGameActorEffectData effectData)
+
+            heatIndicatorController = (UnityEngine.Object.Instantiate(StaticVFXStorage.RadialRing, actor.sprite.WorldCenter, Quaternion.identity, actor.transform)).GetComponent<HeatIndicatorController>();
+            heatIndicatorController.CurrentColor = Color.yellow.WithAlpha(3f);
+            heatIndicatorController.IsFire = false;
+            heatIndicatorController.CurrentRadius = QuickRadius(actor);
+            heatIndicatorController.gameObject.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
+
+
+        }
+        private HeatIndicatorController heatIndicatorController;
+
+        public float QuickDamage(GameActor actor)
+        {
+            float Damage = actor.healthHaver != null ? actor.healthHaver.maximumHealth / 5 : 5;
+            Damage = Mathf.Max(5, Damage);
+            Damage = Mathf.Min(25, Damage);
+            return Damage;
+        }
+
+        public float QuickRadius(GameActor actor)
+        {
+            float Damage = QuickDamage(actor);
+            return Damage / 1.75f;
+        }
+
+        public override void EffectTick(GameActor actor, RuntimeGameActorEffectData effectData)
 		{
 			List<AIActor> activeEnemies = actor.GetAbsoluteParentRoom().GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
 			Vector2 centerPosition = actor.sprite.WorldCenter;
-			if (activeEnemies != null)
+
+
+            if (activeEnemies != null)
 			{
-				for (int i = activeEnemies.Count - 1; i < 0; i--)
+				for (int i = activeEnemies.Count - 1; i > -1; i--)
 				{
 					var aiactor = activeEnemies[i];
-					if (Vector2.Distance(aiactor.CenterPosition, centerPosition) < 5 && aiactor.healthHaver.GetMaxHealth() > 0f && aiactor != null)
+					if (Vector2.Distance(aiactor.CenterPosition, centerPosition) < QuickRadius(actor) && aiactor.healthHaver.GetMaxHealth() > 0f && aiactor != null)
 					{
-						aiactor.healthHaver.ApplyDamage(4.5f * BraveTime.DeltaTime, Vector2.zero, "oooo spoooooky", CoreDamageTypes.Void, DamageCategory.Normal, false, null, false);
+						aiactor.healthHaver.ApplyDamage(QuickDamage(actor) * BraveTime.DeltaTime, Vector2.zero, "oooo spoooooky", CoreDamageTypes.Void, DamageCategory.Normal, false, null, false);
 					}
 				}
 			}
 		}
+
+
 		public override void OnEffectRemoved(GameActor actor, RuntimeGameActorEffectData effectData)
 		{
 			base.OnEffectRemoved(actor, effectData);
 			actor.healthHaver.OnPreDeath -= effectData.OnActorPreDeath;
+            GameManager.Instance.StartCoroutine(KillRing(heatIndicatorController));
 		}
+
+        public IEnumerator KillRing(HeatIndicatorController myheatIndicatorController) 
+        {
+            float t = 0;
+            float g = myheatIndicatorController.CurrentRadius;
+            while (t < 1)
+            {
+                t += Time.deltaTime * 5;
+                myheatIndicatorController.CurrentRadius = Mathf.Lerp(g, 0, t);
+               yield return null;
+            }
+            UnityEngine.Object.Destroy(myheatIndicatorController.gameObject);
+            yield break;
+        }
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using MonoMod.RuntimeDetour;
+using SaveAPI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,24 +26,23 @@ namespace Planetside
             
             try
             {
-                if (self.OverrideDisplayName != "#BOSSSTATUES_ENCNAME")
+                if (ContainmentBreachController.CurrentState == ContainmentBreachController.States.ALLOWED && SaveAPIManager.GetFlag(CustomDungeonFlags.HAS_TREADED_DEEPER) == true)
                 {
-                    var obehaviors = ToolsEnemy.overrideBehaviors.Where(ob => ob.OverrideAIActorGUID == self.EnemyGuid);
-                    foreach (var obehavior in obehaviors)
-                    {
-                        obehavior.SetupOB(self);
-                        if (obehavior.ShouldOverride() || (self.EnemyGuid == "05b8afe0b6cc4fffa9dc6036fa24c8ec" && ContainmentBreachController.CurrentState == ContainmentBreachController.States.ALLOWED))
-                        {
-                            obehavior.DoOverride();
-                        }
-                    }
-                }
-                else
-                {
-                    if (ContainmentBreachController.CurrentState == ContainmentBreachController.States.ALLOWED)
+                    if (self.OverrideDisplayName == "#BOSSSTATUES_ENCNAME")
                     {
                         new KillPillarsChanges.KillPillarChanges().OverrideAllKillPillars(self);
-
+                    }
+                    else
+                    {
+                        var obehaviors = ToolsEnemy.overrideBehaviors.Where(ob => ob.OverrideAIActorGUID == self.EnemyGuid);
+                        foreach (var obehavior in obehaviors)
+                        {
+                            obehavior.SetupOB(self);
+                            if (obehavior.ShouldOverride() || self.EnemyGuid == "05b8afe0b6cc4fffa9dc6036fa24c8ec")
+                            {
+                                obehavior.DoOverride();
+                            }
+                        }
                     }
                 }
             }
