@@ -12,13 +12,14 @@ namespace Planetside
 		{
 			AssetBundle result = null;
 			{
-				if (File.Exists(PlanetsideModule.FilePathFolder + "/" + name))
+				string platformAssetName = name + GetPlatformBundleExtension();
+				if (File.Exists(PlanetsideModule.FilePathFolder + "/" + platformAssetName))
 				{
 					try
 					{
-						result = AssetBundle.LoadFromFile(Path.Combine(PlanetsideModule.FilePathFolder, name));
+						result = AssetBundle.LoadFromFile(Path.Combine(PlanetsideModule.FilePathFolder, platformAssetName));
 						if (logs == true)
-                        {
+						{
 							global::ETGModConsole.Log("Successfully loaded assetbundle!", false);
 						}
 					}
@@ -34,6 +35,15 @@ namespace Planetside
 				}
 			}
 			return result;
+		}
+
+		private static string GetPlatformBundleExtension()
+		{
+			if (Application.platform == RuntimePlatform.LinuxPlayer)
+				return "-linux";
+			if (Application.platform == RuntimePlatform.OSXPlayer)
+				return "-macos";
+			return "-windows";
 		}
 	}
 }

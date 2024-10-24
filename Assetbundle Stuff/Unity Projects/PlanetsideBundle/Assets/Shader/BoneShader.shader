@@ -32,7 +32,7 @@ Shader "Shader Forge/BoneShader" {
             #include "UnityStandardBRDF.cginc"
             #pragma multi_compile_fwdbase_fullshadows
             #pragma multi_compile_fog
-            #pragma only_renderers d3d9 d3d11 glcore gles 
+            #pragma only_renderers d3d9 d3d11 glcore gles gles3 metal 
             #pragma target 3.0
             uniform sampler2D _node_5098; uniform float4 _node_5098_ST;
             struct VertexInput {
@@ -63,18 +63,17 @@ Shader "Shader Forge/BoneShader" {
                 float3 viewReflectDirection = reflect( -viewDirection, normalDirection );
 ////// Lighting:
 ////// Emissive:
-                float4 node_312 = _Time;
+                float4 node_3598 = _Time;
                 float node_5678 = 2.0;
                 float2 node_8565_tc_rcp = float2(1.0,1.0)/float2( node_5678, node_5678 );
                 float node_8565_ty = floor(node_5678 * node_8565_tc_rcp.x);
                 float node_8565_tx = node_5678 - node_5678 * node_8565_ty;
                 float2 node_8565 = (i.uv1 + float2(node_8565_tx, node_8565_ty)) * node_8565_tc_rcp;
-                float2 node_3023 = (node_8565+node_312.g*float2(-1,1));
+                float2 node_3023 = (node_8565+node_3598.g*float2(-1,1));
                 float4 _node_8081_copy = tex2D(_node_5098,TRANSFORM_TEX(node_3023, _node_5098));
-                float2 node_7040 = (node_8565+node_312.g*float2(1,-1));
+                float2 node_7040 = (node_8565+node_3598.g*float2(1,-1));
                 float4 _BumpMap = tex2D(_node_5098,TRANSFORM_TEX(node_7040, _node_5098));
-                float3 node_2424 = saturate((_node_8081_copy.rgb+_BumpMap.rgb));
-                float3 emissive = node_2424;
+                float3 emissive = saturate((_node_8081_copy.rgb+_BumpMap.rgb));
                 float3 finalColor = emissive;
                 fixed4 finalRGBA = fixed4(finalColor,1);
                 UNITY_APPLY_FOG(i.fogCoord, finalRGBA);
@@ -101,7 +100,7 @@ Shader "Shader Forge/BoneShader" {
             #pragma fragmentoption ARB_precision_hint_fastest
             #pragma multi_compile_shadowcaster
             #pragma multi_compile_fog
-            #pragma only_renderers d3d9 d3d11 glcore gles 
+            #pragma only_renderers d3d9 d3d11 glcore gles gles3 metal 
             #pragma target 3.0
             uniform sampler2D _node_5098; uniform float4 _node_5098_ST;
             struct VertexInput {
@@ -123,18 +122,17 @@ Shader "Shader Forge/BoneShader" {
                 UnityMetaInput o;
                 UNITY_INITIALIZE_OUTPUT( UnityMetaInput, o );
                 
-                float4 node_3833 = _Time;
+                float4 node_2486 = _Time;
                 float node_5678 = 2.0;
                 float2 node_8565_tc_rcp = float2(1.0,1.0)/float2( node_5678, node_5678 );
                 float node_8565_ty = floor(node_5678 * node_8565_tc_rcp.x);
                 float node_8565_tx = node_5678 - node_5678 * node_8565_ty;
                 float2 node_8565 = (i.uv1 + float2(node_8565_tx, node_8565_ty)) * node_8565_tc_rcp;
-                float2 node_3023 = (node_8565+node_3833.g*float2(-1,1));
+                float2 node_3023 = (node_8565+node_2486.g*float2(-1,1));
                 float4 _node_8081_copy = tex2D(_node_5098,TRANSFORM_TEX(node_3023, _node_5098));
-                float2 node_7040 = (node_8565+node_3833.g*float2(1,-1));
+                float2 node_7040 = (node_8565+node_2486.g*float2(1,-1));
                 float4 _BumpMap = tex2D(_node_5098,TRANSFORM_TEX(node_7040, _node_5098));
-                float3 node_2424 = saturate((_node_8081_copy.rgb+_BumpMap.rgb));
-                o.Emission = node_2424;
+                o.Emission = saturate((_node_8081_copy.rgb+_BumpMap.rgb));
                 
                 float3 diffColor = float3(0,0,0);
                 float specularMonochrome;
