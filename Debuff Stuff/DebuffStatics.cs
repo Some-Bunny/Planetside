@@ -21,6 +21,9 @@
         //Cheeses
         public static GameActorCheeseEffect cheeseeffect = (PickupObjectDatabase.GetById(626) as Gun).DefaultModule.projectiles[0].cheeseEffect;
         //Speed Changes
-        public static GameActorSpeedEffect tripleCrossbowSlowEffect = (PickupObjectDatabase.GetById(381) as Gun).DefaultModule.projectiles[0].speedEffect;        
+        public static GameActorSpeedEffect tripleCrossbowSlowEffect = (PickupObjectDatabase.GetById(381) as Gun).DefaultModule.projectiles[0].speedEffect;     
+        
+
+        public static GameActorFireEffect SolarFire = (PickupObjectDatabase.GetById(748) as Gun).DefaultModule.chargeProjectiles[0].Projectile.fireEffect;
     }
 }

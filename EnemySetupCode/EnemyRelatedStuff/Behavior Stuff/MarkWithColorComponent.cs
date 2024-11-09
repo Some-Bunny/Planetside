@@ -70,8 +70,7 @@ namespace Planetside
 			}
 			base.OnDestroy();
 		}
-		public float minimumHealth;
-		public float Mark = 18.001f;
+		public float Mark = 20.001f;
 		public AIActor ai;
 		public PlayerController playa;
 	}

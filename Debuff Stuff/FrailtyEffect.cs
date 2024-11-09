@@ -51,30 +51,122 @@ namespace Planetside
             return frailtyVFXObject;
         }
 
+        public DamageTypeModifier FireMod;
+        public DamageTypeModifier PoisonMod;
+        public DamageTypeModifier IceMod;
+        public DamageTypeModifier ElectricMod;
+        public DamageTypeModifier VoidMod;
+        public DamageTypeModifier WaterMod;
+        public DamageTypeModifier NoneMod;
 
-		public override void ApplyTint(GameActor actor)
+
+
+        public override void ApplyTint(GameActor actor)
         {
 			actor.RegisterOverrideColor(TintColorFrailty, vfxNamefrailty);
+            actor.EffectResistances = new ActorEffectResistance[]
+            {
 
-		}
+            };
+            FireMod = new DamageTypeModifier() { damageMultiplier = 1, damageType = CoreDamageTypes.Fire };
+            PoisonMod = new DamageTypeModifier() { damageMultiplier = 1, damageType = CoreDamageTypes.Poison };
+            IceMod = new DamageTypeModifier() { damageMultiplier = 1, damageType = CoreDamageTypes.Ice };
+            ElectricMod = new DamageTypeModifier() { damageMultiplier = 1, damageType = CoreDamageTypes.Electric };
+            VoidMod = new DamageTypeModifier() { damageMultiplier = 1, damageType = CoreDamageTypes.Void };
+            WaterMod = new DamageTypeModifier() { damageMultiplier = 1, damageType = CoreDamageTypes.Water };
+            NoneMod = new DamageTypeModifier() { damageMultiplier = 1, damageType = CoreDamageTypes.None };
+
+            actor.healthHaver.damageTypeModifiers.Add(FireMod);
+            actor.healthHaver.damageTypeModifiers.Add(PoisonMod);
+            actor.healthHaver.damageTypeModifiers.Add(IceMod);
+            actor.healthHaver.damageTypeModifiers.Add(ElectricMod);
+            actor.healthHaver.damageTypeModifiers.Add(VoidMod);
+            actor.healthHaver.damageTypeModifiers.Add(WaterMod);
+            actor.healthHaver.damageTypeModifiers.Add(NoneMod);
+
+        }
+        public float damageMult = 0;
+
         public override void EffectTick(GameActor actor, RuntimeGameActorEffectData effectData)
 		{			
-			if (this.AffectsEnemies && actor is AIActor && !actor.healthHaver.IsBoss && actor.healthHaver.minimumHealth > actor.healthHaver.GetMaxHealth() * 1 - (0.80f * BraveTime.DeltaTime))
+			if (this.AffectsEnemies && actor is AIActor)
 			{
-				actor.healthHaver.SetHealthMaximum(actor.healthHaver.GetMaxHealth() * 1 - (0.80f*BraveTime.DeltaTime));			
-			}
-			if (this.AffectsEnemies && actor is AIActor && actor.healthHaver.IsBoss)
-			{
-				actor.healthHaver.ApplyDamage(32f * BraveTime.DeltaTime, Vector2.zero, "oooo spoooooky", CoreDamageTypes.Void, DamageCategory.Normal, false, null, false);
-			}
-		}
-		public override void OnEffectRemoved(GameActor actor, RuntimeGameActorEffectData effectData)
+
+                if (actor.healthHaver.IsBoss)
+                {
+                    damageMult = 0.005f * BraveTime.DeltaTime;
+                    actor.healthHaver.AllDamageMultiplier += 0.005f * BraveTime.DeltaTime;
+                    FireMod.damageMultiplier += 0.125f * BraveTime.DeltaTime;
+                    PoisonMod.damageMultiplier += 0.125f * BraveTime.DeltaTime;
+                    IceMod.damageMultiplier += 0.125f * BraveTime.DeltaTime;
+                    ElectricMod.damageMultiplier += 0.125f * BraveTime.DeltaTime;
+                    VoidMod.damageMultiplier += 0.125f * BraveTime.DeltaTime;
+                    WaterMod.damageMultiplier += 0.125f * BraveTime.DeltaTime;
+                    NoneMod.damageMultiplier += 0.125f * BraveTime.DeltaTime;
+                }
+                else
+                {
+                    damageMult = 0.05f * BraveTime.DeltaTime;
+                    actor.healthHaver.AllDamageMultiplier += 0.05f * BraveTime.DeltaTime;
+                    FireMod.damageMultiplier += 0.5f * BraveTime.DeltaTime;
+                    PoisonMod.damageMultiplier += 0.5f * BraveTime.DeltaTime;
+                    IceMod.damageMultiplier += 0.5f * BraveTime.DeltaTime;
+                    ElectricMod.damageMultiplier += 0.5f * BraveTime.DeltaTime;
+                    VoidMod.damageMultiplier += 0.5f * BraveTime.DeltaTime;
+                    WaterMod.damageMultiplier += 0.5f * BraveTime.DeltaTime;
+                    NoneMod.damageMultiplier += 0.5f * BraveTime.DeltaTime;
+                }
+            }
+
+
+            if (actor && actor.specRigidbody)
+            {
+                Vector2 unitDimensions = actor.specRigidbody.HitboxPixelCollider.UnitDimensions;
+                Vector2 a = unitDimensions / 2f;
+                int num2 = Mathf.RoundToInt((float)this.flameNumPerSquareUnit * 0.5f * Mathf.Min(30f, Mathf.Min(new float[]
+                {
+                unitDimensions.x * unitDimensions.y
+                })));
+                this.m_particleTimer += BraveTime.DeltaTime * (float)num2;
+                if (this.m_particleTimer > 1f)
+                {
+                    int num3 = Mathf.FloorToInt(this.m_particleTimer);
+                    Vector2 vector = actor.specRigidbody.HitboxPixelCollider.UnitBottomLeft;
+                    Vector2 vector2 = actor.specRigidbody.HitboxPixelCollider.UnitTopRight;
+                    PixelCollider pixelCollider = actor.specRigidbody.GetPixelCollider(ColliderType.Ground);
+                    if (pixelCollider != null && pixelCollider.ColliderGenerationMode == PixelCollider.PixelColliderGeneration.Manual)
+                    {
+                        vector = Vector2.Min(vector, pixelCollider.UnitBottomLeft);
+                        vector2 = Vector2.Max(vector2, pixelCollider.UnitTopRight);
+                    }
+                    vector += Vector2.Min(a * 0.15f, new Vector2(0.25f, 0.25f));
+                    vector2 -= Vector2.Min(a * 0.15f, new Vector2(0.25f, 0.25f));
+                    vector2.y -= Mathf.Min(a.y * 0.1f, 0.1f);
+                    GlobalSparksDoer.DoRandomParticleBurst(num3, vector, vector2, Vector3.down, 0f, 0.5f, 0.3f, 1, Color.magenta, GlobalSparksDoer.SparksType.DARK_MAGICKS);
+                    this.m_particleTimer -= Mathf.Floor(this.m_particleTimer);
+                }
+            }
+        }
+        public int flameNumPerSquareUnit = 10;
+        private float m_particleTimer;
+
+
+        public override void OnEffectRemoved(GameActor actor, RuntimeGameActorEffectData effectData)
 		{
 			actor.DeregisterOverrideColor(vfxNamefrailty);			
 			base.OnEffectRemoved(actor, effectData);
-			actor.healthHaver.OnPreDeath -= effectData.OnActorPreDeath;
-		}
-	}
+            actor.healthHaver.AllDamageMultiplier -= damageMult;
+
+            actor.healthHaver.OnPreDeath -= effectData.OnActorPreDeath;
+            actor.healthHaver.damageTypeModifiers.Remove(FireMod);
+            actor.healthHaver.damageTypeModifiers.Remove(PoisonMod);
+            actor.healthHaver.damageTypeModifiers.Remove(IceMod);
+            actor.healthHaver.damageTypeModifiers.Remove(ElectricMod);
+            actor.healthHaver.damageTypeModifiers.Remove(VoidMod);
+            actor.healthHaver.damageTypeModifiers.Remove(WaterMod);
+            actor.healthHaver.damageTypeModifiers.Remove(NoneMod);
+        }
+    }
 }
 
 

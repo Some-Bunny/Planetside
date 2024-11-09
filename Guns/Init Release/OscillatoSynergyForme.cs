@@ -12,6 +12,7 @@ using System.Collections;
 using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
+using Alexandria.Assetbundle;
 
 namespace Planetside
 {
@@ -24,13 +25,23 @@ namespace Planetside
 			gun.gameObject.AddComponent<OscillatoSynergyForme>();
 			gun.SetShortDescription("DA NANANANANANANANNANANANAN BAM");
 			gun.SetLongDescription("If you see this you owe me 20 yen");
-			GunExt.SetupSprite(gun, null, "oscillatosynergy_idle_001", 11);	
-			//gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_WPN_golddoublebarrelshotgun_shot_01";
-			//gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].triggerEvent = true;
-			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 15);
-			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 7);
-			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 5);
-			GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(56) as Gun, true, false);
+            //GunExt.SetupSprite(gun, null, "oscillatosynergy_idle_001", 11);	
+
+            GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "oscillatorsynergy_idle_001");
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
+            gun.sprite.SortingOrder = 1;
+
+            gun.reloadAnimation = "oscillatorsynergy_reload";
+            gun.idleAnimation = "oscillatorsynergy_idle";
+            gun.shootAnimation = "oscillatorsynergy_fire";
+
+
+            //gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_WPN_golddoublebarrelshotgun_shot_01";
+            //gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].triggerEvent = true;
+            //GunExt.SetAnimationFPS(gun, gun.shootAnimation, 15);
+            //GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 7);
+            //GunExt.SetAnimationFPS(gun, gun.idleAnimation, 5);
+            GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(56) as Gun, true, false);
 
 			GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(56) as Gun, true, false);
 
@@ -41,7 +52,7 @@ namespace Planetside
 			gun.reloadTime = 2.9f;
 			gun.DefaultModule.cooldownTime = .2f;
 			gun.DefaultModule.numberOfShotsInClip = 60;
-			gun.SetBaseMaxAmmo(300);
+			gun.SetBaseMaxAmmo(600);
 			gun.quality = PickupObject.ItemQuality.EXCLUDED;
 			gun.DefaultModule.angleVariance = 8f;
 			gun.DefaultModule.burstShotCount = 4;
@@ -51,7 +62,7 @@ namespace Planetside
 			gun.Volley.projectiles[1].ammoCost = 1;
 			gun.Volley.projectiles[1].shootStyle = ProjectileModule.ShootStyle.Burst;
 			gun.Volley.projectiles[1].sequenceStyle = ProjectileModule.ProjectileSequenceStyle.Random;
-			gun.Volley.projectiles[1].cooldownTime = 0.2f;
+			gun.Volley.projectiles[1].cooldownTime = 0.3f;
 			gun.Volley.projectiles[1].angleVariance = 9f;
 			gun.Volley.projectiles[1].numberOfShotsInClip = 60;
 			gun.Volley.projectiles[1].angleFromAim = 14;

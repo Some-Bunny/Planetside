@@ -141,30 +141,34 @@ public class ShamberController : BraveBehaviour
                                 {
                                     if (m_bulletPositions.Count() < 300)
                                     {
-                                        if (proj.Owner is PlayerController player )
-                                        {
-                                            proj.sprite.color = new Color(1f, 0.1f, 0.1f);
-                                            proj.MakeLookLikeEnemyBullet(false);
-                                        }
-
-                                        if (proj.Owner is AIActor enemy)
-                                        {
-                                            switch (enemy.EnemyGuid)
-                                            {
-                                                case "b1770e0f1c744d9d887cc16122882b4f":
-                                                    proj.DieInAir();
-                                                    break;
-                                                case "d5a7b95774cd41f080e517bea07bf495":
-                                                    proj.DieInAir();
-                                                    break;
-                                            }
-                                        }
                                         if (proj != null)
                                         {
-                                            if (proj.Owner)
+                                            if (proj.Owner != null)
                                             {
-                                                proj.specRigidbody.DeregisterSpecificCollisionException(proj.Owner.specRigidbody);
+                                                proj?.specRigidbody?.DeregisterSpecificCollisionException(proj.Owner.specRigidbody);
+
+                                                if (proj.Owner is PlayerController player)
+                                                {
+                                                    proj.sprite.color = new Color(1f, 0.1f, 0.1f);
+                                                    proj.MakeLookLikeEnemyBullet(false);
+                                                }
+
+                                                if (proj.Owner is AIActor enemy)
+                                                {
+                                                    switch (enemy.EnemyGuid)
+                                                    {
+                                                        case "b1770e0f1c744d9d887cc16122882b4f":
+                                                            proj.DieInAir();
+                                                            break;
+                                                        case "d5a7b95774cd41f080e517bea07bf495":
+                                                            proj.DieInAir();
+                                                            break;
+                                                    }
+                                                }
                                             }
+
+
+
                                             proj.Shooter = base.aiActor.specRigidbody;
                                             proj.Owner = base.aiActor;
                                             proj.specRigidbody.Velocity = Vector2.zero;
@@ -192,7 +196,7 @@ public class ShamberController : BraveBehaviour
                                                 speed = s,
                                                 s = second,
                                                 projectile = proj,
-                                                Radius = Mathf.Min(3, 1.25f + (m_bulletPositions.Count() == 0 ? 0 : m_bulletPositions.Count() / 100))
+                                                Radius = Mathf.Min(3, 1.25f + (m_bulletPositions.Count() == 0f ? 0f : (float)m_bulletPositions.Count() / 100f))
                                             });
                                         }
                                     }
@@ -306,7 +310,7 @@ public class ShamberController : BraveBehaviour
 				proj.Direction = proj.transform.PositionVector2() - this.aiActor.sprite.WorldCenter;
                 proj.ResetDistance();
                 proj.baseData.UsesCustomAccelerationCurve = true;
-                proj.baseData.CustomAccelerationCurveDuration = 2.5f;
+                proj.baseData.CustomAccelerationCurveDuration = 3f;
                 proj.baseData.range = 1000;
                 proj.baseData.AccelerationCurve = new AnimationCurve()
                 {
@@ -314,7 +318,7 @@ public class ShamberController : BraveBehaviour
 
                     keys = new Keyframe[] {
                 new Keyframe(){time = 0.1f, value = 0.3f, inTangent = 0.75f, outTangent = 0.25f},
-                new Keyframe(){time = 0.5f, value = -0.25f},
+                new Keyframe(){time = 0.5f, value = 0f},
                 new Keyframe(){time = 0.95f, value = 1.1f, inTangent = 0.75f, outTangent = 0.25f}
                 }
                 };

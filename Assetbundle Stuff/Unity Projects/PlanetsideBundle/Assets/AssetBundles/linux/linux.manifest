@@ -1,0 +1,7 @@
+ManifestFileVersion: 0
+CRC: 739023492
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: planetsidebundle
+      Dependencies: {}

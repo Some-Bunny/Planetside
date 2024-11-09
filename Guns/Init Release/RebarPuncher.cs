@@ -16,6 +16,7 @@ using System.Collections.ObjectModel;
 
 using UnityEngine.Serialization;
 using Brave.BulletScript;
+using Alexandria.Assetbundle;
 
 namespace Planetside
 {
@@ -29,13 +30,26 @@ namespace Planetside
 			var behav = gun.gameObject.AddComponent<RebarPuncher>();
 			GunExt.SetShortDescription(gun, "Railed It");
 			GunExt.SetLongDescription(gun, "A rebar puncher originally used by the Hegemony Of Man to set up fortifications during their attempted short-lived conquest of the Gungeon.\n\nThough after analysis of the weapon, you theorize of 'other' uses.");
-			GunExt.SetupSprite(gun, null, "rebarpuncher_idle_001", 8);
-			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 12);
-			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 7);
-			GunExt.SetAnimationFPS(gun, gun.chargeAnimation, 5);
-			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 3);
 
-			GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(88) as Gun, true, false);
+
+            GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "rebarpuncher_idle_001");
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
+            gun.sprite.SortingOrder = 1;
+
+            gun.shootAnimation = "rebarpuncher_fire";
+            gun.idleAnimation = "rebarpuncher_idle";
+            gun.reloadAnimation = "rebarpuncher_reload";
+            gun.chargeAnimation = "rebarpuncher_charge";
+            gun.emptyAnimation = "rebarpuncher_empty";
+            gun.emptyReloadAnimation = "rebarpuncher_reload";
+
+            //GunExt.SetupSprite(gun, null, "rebarpuncher_idle_001", 8);
+            //GunExt.SetAnimationFPS(gun, gun.shootAnimation, 12);
+            //GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 7);
+            //GunExt.SetAnimationFPS(gun, gun.chargeAnimation, 5);
+            //GunExt.SetAnimationFPS(gun, gun.idleAnimation, 3);
+
+            GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(88) as Gun, true, false);
 			gun.DefaultModule.ammoCost = 1;
 			gun.DefaultModule.shootStyle = ProjectileModule.ShootStyle.Charged;
 			gun.DefaultModule.sequenceStyle = ProjectileModule.ProjectileSequenceStyle.Random;
@@ -69,7 +83,7 @@ namespace Planetside
 			FakePrefab.MarkAsFakePrefab(projectile2.gameObject);
 			UnityEngine.Object.DontDestroyOnLoad(projectile2);
 			gun.DefaultModule.projectiles[0] = projectile2;
-			projectile2.baseData.damage = 45f;
+			projectile2.baseData.damage = 40f;
 			projectile2.baseData.speed *= 1f;
 			projectile2.baseData.force *= 5f;
 			projectile2.baseData.range *= 100f;
@@ -136,7 +150,7 @@ namespace Planetside
 						component.AdditionalScaleMultiplier *= 1.25f;
 						component.SetOwnerSafe(this.gun.CurrentOwner, "Player");
 						component.ignoreDamageCaps = true;
-						component.baseData.damage = 8f * dmg;
+						component.baseData.damage = 10f * dmg;
 						component.baseData.range *= 2f;
 						component.baseData.speed *= 2f;
 					}

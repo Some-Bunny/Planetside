@@ -344,8 +344,14 @@
  <Reference Include="UnityEditor.Graphs">
  <HintPath>D:/YooNiitee/2017.4.40f1/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
  </Reference>
+ <Reference Include="UnityEditor.LinuxStandalone.Extensions">
+ <HintPath>D:/YooNiitee/2017.4.40f1/Editor/Data/PlaybackEngines/LinuxStandaloneSupport/UnityEditor.LinuxStandalone.Extensions.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEditor.WindowsStandalone.Extensions">
  <HintPath>D:/YooNiitee/2017.4.40f1/Editor/Data/PlaybackEngines/windowsstandalonesupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.OSXStandalone.Extensions">
+ <HintPath>D:/YooNiitee/2017.4.40f1/Editor/Data/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll</HintPath>
  </Reference>
  <Reference Include="tk2dExternal">
  <HintPath>C:/Users/maxvo/source/repos/Planetside/Assetbundle Stuff/Unity Projects/TK2DSpriteProject/Assets/TK2DROOT/tk2d/Editor/tk2dExternal.dll</HintPath>

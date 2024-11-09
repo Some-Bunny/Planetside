@@ -21,7 +21,7 @@ namespace Planetside
             var behav = gun.gameObject.AddComponent<HeatSink>();
             
             gun.SetShortDescription("Hot N' Heavy");
-            gun.SetLongDescription("This portable microwave can super-charge a localized space with super heated particles and cause them to go BOOM!\n\nBy all accounts, illegal everywhere within Hegemony-ruled space.");
+            gun.SetLongDescription("This portable microwave can super-charge a localized space with super heated particles and cause them to go BOOM!\n\nIllegal everywhere within Hegemony-ruled space.");
 
             gun.SetupSprite(null, "heat_sink_idle_001", 8);
 

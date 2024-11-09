@@ -28,7 +28,7 @@ namespace Planetside
 			Game.Items.Rename("outdated_gun_mods:polarity", "psog:polarity");
 			gun.gameObject.AddComponent<Polarity>();
 			GunExt.SetShortDescription(gun, "Climate Contrast");
-			GunExt.SetLongDescription(gun, "A weapon forged by two wanderers from polar-opposite climates. It is said that they imbued part of their magic into it so one element doesn't damage the other.");
+			GunExt.SetLongDescription(gun, "A weapon forged by two wanderers from polar-opposite climates.\n\nThrough smart refridgeration technology, the cool and hot parts are prevented from damaging each other.");
 
 			GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "polarity_idle_001");
             gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;

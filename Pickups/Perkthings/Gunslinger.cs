@@ -135,16 +135,16 @@ namespace Planetside
                     {
                         foreach (AIActor aiactor in activeEnemies)
                         {
-                            if (aiactor != null && Vector2.Distance(aiactor.CenterPosition, self.transform.position) <  6)
+                            if (aiactor != null && Vector2.Distance(aiactor.CenterPosition, self.transform.position) <  10)
                             {
                                 if (!aiactor.healthHaver.IsBoss)
                                 {
                                     Vector2 a = aiactor.transform.position - self.transform.position;
-                                    aiactor.knockbackDoer.ApplyKnockback(-a, 20f * (Vector2.Distance(self.transform.position, aiactor.transform.position) + 0.005f), false);
+                                    aiactor.knockbackDoer.ApplyKnockback(-a, 30f * (Vector2.Distance(self.transform.position, aiactor.transform.position) + 0.01f), false);
                                 }
                             }
                         }
-                        GameManager.Instance.StartCoroutine(fuck.DoReverseDistortionWaveLocal(self.transform.position, 2, 0.1f, 11f, 0.5f));
+                        GameManager.Instance.StartCoroutine(fuck.DoReverseDistortionWaveLocal(self.transform.position, 0.75f, 0.1f, 11f, 0.5f));
                     }
                     Timer = 0;
                 }
@@ -202,7 +202,7 @@ namespace Planetside
             Timer += BraveTime.DeltaTime;
             if (self != null)
             {
-                if (Timer >= self.DefaultModule.cooldownTime * 1.5f)
+                if (Timer >= self.DefaultModule.cooldownTime * 2f)
                 {
                     Timer = 0;
                     ProjectileModule defaultModule = self.DefaultModule;
@@ -229,6 +229,7 @@ namespace Planetside
             component.Owner = source;
             component.Shooter = source.specRigidbody;
             component.specRigidbody.CollideWithTileMap = false;
+            component.baseData.damage *= 0.7f;
             source.DoPostProcessProjectile(component);
             ForceSpecificMotionModule mod = component.gameObject.AddComponent<ForceSpecificMotionModule>();
             mod.Module = new OrbitProjectileMotionModule()
@@ -280,7 +281,7 @@ namespace Planetside
         public void Update()
         {
             Timer += BraveTime.DeltaTime;
-            if (Timer >= 0.8f)
+            if (Timer >= 0.75f)
             {
                 Timer = 0;
                 UnityEngine.Object.Instantiate<GameObject>(PickupObjectDatabase.GetById(108).GetComponent<SpawnObjectPlayerItem>().objectToSpawn.gameObject, base.gameObject.transform.PositionVector2(), Quaternion.identity);
@@ -341,7 +342,7 @@ namespace Planetside
     {
         public GunslingerController()
         {
-            this.DamageMult = 3.5f;
+            this.DamageMult = 2.5f;
             this.hasBeenPickedup = false;
         }
         public void Start()
@@ -931,7 +932,7 @@ namespace Planetside
 
         public void IncrementStack()
         {
-            DamageMult += 1.5f;
+            DamageMult += 1.2f;
         }
         public float DamageMult;
         public PlayerController player;

@@ -16,6 +16,8 @@ using System.Collections.ObjectModel;
 
 
 using UnityEngine.Serialization;
+using UnityEngine.UI;
+using Alexandria.Assetbundle;
 
 namespace Planetside
 {
@@ -28,20 +30,33 @@ namespace Planetside
 			gun.gameObject.AddComponent<BanditsRevolver>();
 			GunExt.SetShortDescription(gun, "Lights Out");
 			GunExt.SetLongDescription(gun, "The thrill of landing the perfect shot is seeked out by many a Gunslinger, with some devoting their lives to landing their swan song shot.\n\nDon't waste your chance when your high-noon comes.");
-			GunExt.SetupSprite(gun, null, "banditsrevolver_idle_001", 8);
-			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 24);
-			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 12);
-			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 3);
-			gun.finalShootAnimation = gun.shootAnimation;
-			GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(62) as Gun, true, false);
+
+            GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "banditsrevolver_idle_001");
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
+            gun.sprite.SortingOrder = 1;
+
+            gun.idleAnimation = "banditsrevolver_idle";
+            gun.shootAnimation = "banditsrevolver_fire";
+            gun.reloadAnimation = "banditsrevolver_reload";
+            gun.finalShootAnimation = "banditsrevolver_finalfire";
+            gun.introAnimation = "banditsrevolver_draw";
+
+
+            //GunExt.SetupSprite(gun, null, "banditsrevolver_idle_001", 8);
+            //GunExt.SetAnimationFPS(gun, gun.shootAnimation, 24);
+            //GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 12);
+            //GunExt.SetAnimationFPS(gun, gun.idleAnimation, 3);
+
+            //gun.finalShootAnimation = gun.shootAnimation;
+            GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(62) as Gun, true, false);
 			gun.SetBaseMaxAmmo(240);
 			gun.ammo = 480;
 
-			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_WPN_colt1851_shot_03";
-			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].triggerEvent = true;
+			//gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_WPN_colt1851_shot_03";
+			//gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].triggerEvent = true;
 
-			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.finalShootAnimation).frames[0].eventAudio = "Play_WPN_colt1851_shot_03";
-			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.finalShootAnimation).frames[0].triggerEvent = true;
+			//gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.finalShootAnimation).frames[0].eventAudio = "Play_WPN_colt1851_shot_03";
+			//gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.finalShootAnimation).frames[0].triggerEvent = true;
 
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.reloadAnimation).frames[0].eventAudio = "Play_WPN_SAA_reload_01";
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.reloadAnimation).frames[0].triggerEvent = true;
@@ -57,9 +72,9 @@ namespace Planetside
 			//gun.gameObject.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
 
 			Projectile replacementProjectile = projectile1.projectile;
-			replacementProjectile.baseData.damage = 18;
+			replacementProjectile.baseData.damage = 20;
 			replacementProjectile.gameObject.AddComponent<BanditsRevolverFinaleProjectile>();
-			replacementProjectile.baseData.speed *= 2.5f;
+			replacementProjectile.baseData.speed *= 1.75f;
             replacementProjectile.baseData.force *= 2;
 
 
@@ -69,11 +84,12 @@ namespace Planetside
             replacementProjectile.hitEffects.deathAny = ObjectMakers.MakeObjectIntoVFX((PickupObjectDatabase.GetById(387) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapHorizontal.effects.First().effects.First().effect);
 
 			replacementProjectile.additionalStartEventName = "Play_WPN_golddoublebarrelshotgun_shot_01";
+			replacementProjectile.pierceMinorBreakables = true;
 
             OtherTools.EasyTrailComponent trail = replacementProjectile.gameObject.AddComponent<OtherTools.EasyTrailComponent>();
 			trail.TrailPos = replacementProjectile.transform.position;
 			trail.StartColor = Color.white;
-			trail.StartWidth = 0.1f;
+			trail.StartWidth = 0.2f;
 			trail.EndWidth = 0;
 			trail.LifeTime = 1f;
 			trail.BaseColor = new Color(1f, 1f, 6f, 2f);
@@ -83,17 +99,23 @@ namespace Planetside
 
 			gun.DefaultModule.numberOfFinalProjectiles = 1;
 			gun.DefaultModule.finalProjectile = replacementProjectile;
-			gun.DefaultModule.finalCustomAmmoType = gun3.DefaultModule.customAmmoType;
-			gun.DefaultModule.finalAmmoType = gun3.DefaultModule.ammoType;
+			gun.DefaultModule.finalCustomAmmoType = (PickupObjectDatabase.GetById(696) as Gun).DefaultModule.customAmmoType;
 
-            Gun gun5 = PickupObjectDatabase.GetById(383) as Gun;
-			gun.finalMuzzleFlashEffects = gun5.muzzleFlashEffects;
+            gun.DefaultModule.finalAmmoType = (PickupObjectDatabase.GetById(696) as Gun).DefaultModule.ammoType;
+
+
+            //696
+
+            gun.gunSwitchGroup = (PickupObjectDatabase.GetById(35) as Gun).gunSwitchGroup;
+            gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
+            gun.DefaultModule.customAmmoType = (PickupObjectDatabase.GetById(35) as Gun).DefaultModule.customAmmoType;
+
 
 
 			gun.DefaultModule.ammoCost = 1;
 			gun.DefaultModule.shootStyle = ProjectileModule.ShootStyle.SemiAutomatic;
 			gun.damageModifier = 1;
-			gun.reloadTime = 2.5f;
+			gun.reloadTime = 3f;
 			gun.DefaultModule.cooldownTime = 0.166f;
 			gun.DefaultModule.numberOfShotsInClip = 6;
 			gun.DefaultModule.angleVariance = 2f;
@@ -120,104 +142,153 @@ namespace Planetside
 			projectile.baseData.damage = 10f;
 			projectile.baseData.speed *= 1.4f;
 
-			gun.finalShootAnimation = gun.shootAnimation;
-			gun.finalMuzzleFlashEffects = (PickupObjectDatabase.GetById(387) as Gun).muzzleFlashEffects;
+			gun.finalMuzzleFlashEffects = (PickupObjectDatabase.GetById(696) as Gun).muzzleFlashEffects;
             gun.alternateSwitchGroup = (PickupObjectDatabase.GetById(387) as Gun).gunSwitchGroup;
 
 
             BanditsRevolver.BanditsRevolverID = gun.PickupObjectId;
 
 			ItemIDs.AddToList(gun.PickupObjectId);
-		}
-		public static int BanditsRevolverID;
 
+            var debuffCollection = StaticSpriteDefinitions.Debuff_Sheet_Data;
+            var BrokenArmorVFXObject = ItemBuilder.AddSpriteToObjectAssetbundle("BanditRevolverExecute", debuffCollection.GetSpriteIdByName("cankill_005"), debuffCollection);
+            FakePrefab.MarkAsFakePrefab(BrokenArmorVFXObject);
+            UnityEngine.Object.DontDestroyOnLoad(BrokenArmorVFXObject);
+            BrokenArmorVFXObject.GetOrAddComponent<tk2dBaseSprite>();
+            tk2dSpriteAnimator animator = BrokenArmorVFXObject.GetOrAddComponent<tk2dSpriteAnimator>();
+            animator.library = StaticSpriteDefinitions.Debuff_Animation_Data;
+            animator.Library = StaticSpriteDefinitions.Debuff_Animation_Data;
 
-		private bool HasReloaded;
+            animator.sprite.usesOverrideMaterial = true;
+
+            Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+            mat.mainTexture = animator.sprite.renderer.material.mainTexture;
+            mat.SetColor("_EmissiveColor", new Color32(151, 251, 255, 255));
+            mat.SetFloat("_EmissiveColorPower", 2f);
+            mat.SetFloat("_EmissivePower", 20);
+            animator.sprite.renderer.material = mat;
+
+            animator.DefaultClipId = animator.GetClipIdByName("cankillStart");
+            animator.playAutomatically = true;
+            CanKillRevolverEffect = BrokenArmorVFXObject;
+
+            CanKillRevolverGameActorEffect = new GameActorDecorationEffect();
+            CanKillRevolverGameActorEffect.AffectsEnemies = true;
+            CanKillRevolverGameActorEffect.PlaysVFXOnActor = true;
+            CanKillRevolverGameActorEffect.effectIdentifier = "BanditRevolverExecute";
+            CanKillRevolverGameActorEffect.OverheadVFX = CanKillRevolverEffect;
+			CanKillRevolverGameActorEffect.PlaysVFXOnActor = false;
+			CanKillRevolverGameActorEffect.stackMode = GameActorEffect.EffectStackingMode.Refresh;
+			CanKillRevolverGameActorEffect.duration = 3600;
+			CanKillRevolverGameActorEffect.TintColor = new Color(0.6f, 0.94f, 1, 1);
+			CanKillRevolverGameActorEffect.AppliesTint = true;
+
+            gun.sprite.usesOverrideMaterial = true;
+
+            Material mat_ = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+            mat_.SetColor("_EmissiveColor", new Color32(151, 251, 255, 255));
+            mat_.SetFloat("_EmissiveColorPower", 1.55f);
+            mat_.SetFloat("_EmissivePower", 20);
+            mat_.SetFloat("_EmissiveThresholdSensitivity", 0.05f);
+            MeshRenderer component = gun.GetComponent<MeshRenderer>();
+            if (!component)
+            {
+                return;
+            }
+            Material[] sharedMaterials = component.sharedMaterials;
+            for (int i = 0; i < sharedMaterials.Length; i++)
+            {
+                if (sharedMaterials[i].shader == mat_)
+                {
+                    return;
+                }
+            }
+            Array.Resize<Material>(ref sharedMaterials, sharedMaterials.Length + 1);
+            Material material = new Material(mat_);
+            material.SetTexture("_MainTex", sharedMaterials[0].GetTexture("_MainTex"));
+            sharedMaterials[sharedMaterials.Length - 1] = material;
+            component.sharedMaterials = sharedMaterials;
+
+        }
+        public static int BanditsRevolverID;
+		public static GameObject CanKillRevolverEffect;
+        public static GameActorDecorationEffect CanKillRevolverGameActorEffect;
+
+        private bool HasReloaded;
 
 		public Vector3 projectilePos;
 
 		public override void OnPickup(PlayerController player)
 		{
-			//player.inventory.CurrentGun.LoseAmmo(-100	);
-			//gun.
 			base.OnPickup(player);
 			player.GunChanged += this.OnGunChanged;
-
-			CanMark = true;
 		}
 
 		public override void OnPostDrop(PlayerController player)
 		{
-			CanMark = true;
 			player.GunChanged -= this.OnGunChanged;
 			base.OnPostDrop(player);
-			List<AIActor> activeEnemies = player.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
-			if (activeEnemies != null)
-			{
-				foreach (AIActor aiactor in activeEnemies)
-				{
-					MarkWithColorComponent yes = aiactor.GetComponent<MarkWithColorComponent>();
-					if (yes != null)
-					{
-						Destroy(yes);
-					}
-				}
-			}
 		}
 
 		private void OnGunChanged(Gun oldGun, Gun newGun, bool arg3)
 		{
 			if (this.gun && this.gun.CurrentOwner)
 			{
-				PlayerController player = this.gun.CurrentOwner as PlayerController;
-				if (newGun == this.gun)
+				if (newGun != this.gun)
 				{
-					CanMark = true;
-				}
-				else
-                {
-					CanMark = false;
-					List<AIActor> activeEnemies = player.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
-					if (activeEnemies != null)
-					{
-						foreach (AIActor aiactor in activeEnemies)
-						{
-							MarkWithColorComponent yes = aiactor.GetComponent<MarkWithColorComponent>();
-							if (yes != null)
-                            {
-								Destroy(yes);
-							}
-						}
-					}
-				}
-			}
+                    List<AIActor> activeEnemies  = (this.gun.CurrentOwner as PlayerController).CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
+                    if (activeEnemies != null)
+                    {
+                        foreach (AIActor aiactor in activeEnemies)
+                        {
+                            aiactor.RemoveEffect("BanditRevolverExecute");
+                        }
+                    }
+                }
+            }
 		}
-		public bool CanMark;
 		public override void Update()
 		{
 			base.Update();
-		//	gun.gameObject.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
-
 			if (gun.CurrentOwner as PlayerController)
 			{
 
 				PlayerController player = gun.CurrentOwner as PlayerController;
-				if (player.CurrentGun == gun && CanMark == true)
-				{
-					List<AIActor> activeEnemies = player.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
-					if (activeEnemies != null)
-					{
-						foreach (AIActor aiactor in activeEnemies)
-						{
-							if (aiactor.gameObject.GetComponent<MarkWithColorComponent>() == null)
+                List<AIActor> activeEnemies = player.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
+                if (activeEnemies != null)
+                {
+                    foreach (AIActor aiactor in activeEnemies)
+                    {
+                        float scale = 20;
+                        if (player != null)
+                        {
+                            scale = scale * player.stats.GetStatValue(PlayerStats.StatType.Damage);
+                        }
+
+                        if (aiactor.healthHaver != null)
+                        {
+                            if (player.CurrentGun == gun)
                             {
-								MarkWithColorComponent mark = aiactor.gameObject.AddComponent<MarkWithColorComponent>();
-								mark.ai = aiactor;
-								mark.playa = player;
-							}
-						}
-					}
-				}
+                                if (aiactor.healthHaver.GetCurrentHealth() < scale)
+                                {
+                                    aiactor.ApplyEffect(CanKillRevolverGameActorEffect);
+                                }
+								else
+								{
+                                    aiactor.RemoveEffect("BanditRevolverExecute");
+
+                                }
+                            }
+							else
+							{
+                                aiactor.RemoveEffect("BanditRevolverExecute");
+                            }
+                        }
+                    }
+                }
+
+
+
 				if (!gun.IsReloading && !HasReloaded)
 				{
 					this.HasReloaded = true;

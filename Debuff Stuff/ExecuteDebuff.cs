@@ -54,6 +54,15 @@ namespace Planetside
 
             animator.DefaultClipId = animator.GetClipIdByName("start");
             animator.playAutomatically = true;
+
+            animator.sprite.usesOverrideMaterial = true;
+            Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+            mat.mainTexture = animator.sprite.renderer.material.mainTexture;
+            mat.SetColor("_EmissiveColor", new Color32(255, 255, 255, 255));
+            mat.SetFloat("_EmissiveColorPower", 2f);
+            mat.SetFloat("_EmissivePower", 20);
+            animator.sprite.renderer.material = mat;
+
             clip.loopStart = 3;
             LockInVFXPrefab = BrokenArmorVFXObject;
             return LockInVFXPrefab;
@@ -67,7 +76,7 @@ namespace Planetside
             data.breakSecretWalls = false;
             data.comprehensiveDelay = 0.15f;
             data.damage = 10;
-            data.damageRadius = 4.33f;
+            data.damageRadius = 4.5f;
             data.damageToPlayer = 0;
             data.debrisForce = 25;
             data.doDamage = true;
@@ -142,7 +151,7 @@ namespace Planetside
                 };
                 if (GameManager.Instance.SecondaryPlayer) { dater.ignoreList.Add(GameManager.Instance.SecondaryPlayer.specRigidbody); }
 
-                dater.damage = Mathf.Min(100, Mathf.Max(2f, maxValue * 0.3f));
+                dater.damage = Mathf.Min(100, Mathf.Max(5f, maxValue * 0.5f));
                 dater.useDefaultExplosion = false;
                 dater.playDefaultSFX = false;
                 

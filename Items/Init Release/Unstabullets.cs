@@ -33,7 +33,7 @@ namespace Planetside
 			string longDesc = "These bullets were forged with lead from beyond the Curtain." +
 				"\n\nThey seem to shift their positions fairly unpredictably.";
 			ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
-			ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.Damage, 1.20f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+			ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.Damage, 1.15f, StatModifier.ModifyMethod.MULTIPLICATIVE);
 			item.quality = PickupObject.ItemQuality.B;
 			item.AddToSubShop(ItemBuilder.ShopType.Trorc, 1f);
 			item.AddToSubShop(ItemBuilder.ShopType.Goopton, 1f);
@@ -66,7 +66,7 @@ namespace Planetside
 										StaticVFXStorage.SpiratTeleportVFX.SpawnAtPosition(sourceProjectile.transform.position);
                                         Vector2 unitCenter3 = nearestEnemy.specRigidbody.HitboxPixelCollider.UnitCenter;
                                         sourceProjectile.transform.position = unitCenter3;
-                                        sourceProjectile.baseData.damage *= 0.6f;
+                                        sourceProjectile.baseData.damage *= 0.75f;
                                         StaticVFXStorage.SpiratTeleportVFX.SpawnAtPosition(sourceProjectile.transform.position);
 
                                     }

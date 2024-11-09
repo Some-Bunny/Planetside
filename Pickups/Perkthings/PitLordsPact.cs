@@ -14,17 +14,17 @@ namespace Planetside
     {
         public PitLordsPactController()
         {
-            this.EnemySacrificeDamage = 30;
-            this.EnemyAbovePitDamage = 6.66f;
-            this.EnemySacrificedBonus = 4;
+            this.EnemySacrificeDamage = 20;
+            this.EnemyAbovePitDamage = 3.33f;
+            this.EnemySacrificedBonus = 3;
 
             this.ItemSacrificablePerFloor = 1;
 
-            this.TablesSarificeBonusMin = 3;
-            this.TablesSarificeBonusMax = 6;
+            this.TablesSarificeBonusMin = 1;
+            this.TablesSarificeBonusMax = 3;
             this.TablesSarificeChance = 0.2f;
 
-            this.SelfSacrificeWithPitLordAmuletCap = 3;
+            this.SelfSacrificeWithPitLordAmuletCap = 2;
 
             this.TemporaryFlightTime = 1;
 
@@ -36,9 +36,9 @@ namespace Planetside
             GameManager.Instance.OnNewLevelFullyLoaded += this.OnNewFloorLoaded;
             if (player != null)
             {
-                OtherTools.ApplyStat(player, PlayerStats.StatType.Damage, 0.90f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+                OtherTools.ApplyStat(player, PlayerStats.StatType.Damage, 0.95f, StatModifier.ModifyMethod.MULTIPLICATIVE);
                 OtherTools.ApplyStat(player, PlayerStats.StatType.DamageToBosses, 0.95f, StatModifier.ModifyMethod.MULTIPLICATIVE);
-                OtherTools.ApplyStat(player, PlayerStats.StatType.KnockbackMultiplier, 1.66f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+                OtherTools.ApplyStat(player, PlayerStats.StatType.KnockbackMultiplier, 2f, StatModifier.ModifyMethod.MULTIPLICATIVE);
             }
         }
         public void Update()
@@ -84,9 +84,9 @@ namespace Planetside
         }
         public void IncrementStack()
         {
-            this.EnemySacrificeDamage += 30;
-            this.EnemyAbovePitDamage += 6.66f;
-            this.EnemySacrificedBonus += 2;
+            this.EnemySacrificeDamage += 20;
+            this.EnemyAbovePitDamage += 3.33f;
+            this.EnemySacrificedBonus += 1;
 
             this.ItemSacrificablePerFloor++;
 

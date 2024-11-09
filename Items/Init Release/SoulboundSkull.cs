@@ -34,6 +34,7 @@ namespace Planetside
             item.quality = PickupObject.ItemQuality.B;
             SoulboundSkull.SoulboundSkullID = item.PickupObjectId;
             ItemIDs.AddToList(item.PickupObjectId);
+            ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.Curse, 1.5f, StatModifier.ModifyMethod.ADDITIVE);
 
 
             Gun gun4 = PickupObjectDatabase.GetById(43) as Gun;
@@ -85,15 +86,44 @@ namespace Planetside
         {
             if (enemy.aiActor)
             {
-                if (fatal == true) { this.Spited(enemy.sprite.WorldCenter); enemy.aiActor.PlayEffectOnActor(StaticVFXStorage.SpookySkullVFX, new Vector3());}
-                else if (UnityEngine.Random.value <= 0.0625f && base.Owner)
+                if (fatal == true) 
+                { this.Spited(enemy.sprite.WorldCenter, true);
+                    enemy.aiActor.PlayEffectOnActor(StaticVFXStorage.SpookySkullVFX, new Vector3());}
+                else if (UnityEngine.Random.value <= Mathf.Min(0.5f, (damage * 0.01f)) && base.Owner)
                 {
-                    base.Owner.PlayEffectOnActor(StaticVFXStorage.SpookySkullVFX, new Vector3()); this.Spited(base.Owner.sprite.WorldCenter);
+                    base.Owner.PlayEffectOnActor(StaticVFXStorage.SpookySkullVFX, new Vector3()); 
+                    this.Spited(base.Owner.sprite.WorldCenter);
                 }        
             }
         }
-        public void Spited(Vector3 position)
+        public int MaxTokens = 10;
+        public int currentTokens = 0;
+        private float e = 0f;
+
+        public override void Update()
         {
+            base.Update();
+            if (base.Owner)
+            {
+                if (currentTokens < MaxTokens)
+                {
+                    e += Time.deltaTime;
+                    if (e > 1f)
+                    {
+                        e = 0f;
+                        currentTokens++;
+                    }
+                }
+            }
+        }
+
+        public void Spited(Vector3 position, bool Skip = false)
+        {
+            if (Skip == false)
+            {
+                if (currentTokens <= 0) { return; }
+                currentTokens--;
+            }
             GameObject spawnedBulletOBJ = SpawnManager.SpawnProjectile(wispProjectile.gameObject, position, Quaternion.Euler(0f, 0f, BraveUtility.RandomAngle()), true);
             Projectile component = spawnedBulletOBJ.GetComponent<Projectile>();
             if (component != null)
@@ -107,12 +137,6 @@ namespace Planetside
         {
             if (otherRigidbody && otherRigidbody.healthHaver && otherRigidbody != null)
             {     
-                if (otherRigidbody.healthHaver.GetCurrentHealth() < otherRigidbody.healthHaver.GetMaxHealth() * 0.50f)
-                {
-                    float damage = myRigidbody.projectile.baseData.damage;
-                    myRigidbody.projectile.baseData.damage *= 2f;
-                    GameManager.Instance.StartCoroutine(this.ChangeProjectileDamage(myRigidbody.projectile, damage));
-                }
                 if (base.Owner != null)
                 {
                     if (base.Owner.activeItems != null)
@@ -131,8 +155,8 @@ namespace Planetside
                                     bool flag3 = eee <= 0f || eee <= 0f;
                                     if (!flag3)
                                     {
-                                        this.remainingTimeCooldown.SetValue(playerItem, noom - timeCooldown * 0.015f);
-                                        this.remainingDamageCooldown.SetValue(playerItem, eee - damageCooldown * 0.015f);
+                                        this.remainingTimeCooldown.SetValue(playerItem, noom - timeCooldown * 0.01f);
+                                        this.remainingDamageCooldown.SetValue(playerItem, eee - damageCooldown * 0.01f);
                                     }
                                 }
                                 catch (Exception ex)
@@ -140,7 +164,6 @@ namespace Planetside
                                     ETGModConsole.Log(ex.Message + ": " + ex.StackTrace, false);
                                 }
                             }
-
                         }
                     }
                 }          
@@ -149,15 +172,6 @@ namespace Planetside
         private FieldInfo remainingDamageCooldown = typeof(PlayerItem).GetField("remainingDamageCooldown", BindingFlags.Instance | BindingFlags.NonPublic);
         private FieldInfo remainingTimeCooldown = typeof(PlayerItem).GetField("remainingTimeCooldown", BindingFlags.Instance | BindingFlags.NonPublic);
 
-        private IEnumerator ChangeProjectileDamage(Projectile bullet, float oldDamage)
-        {
-            yield return new WaitForSeconds(0.1f);
-            if (bullet != null)
-            {
-                bullet.baseData.damage = oldDamage;
-            }
-            yield break;
-        }
 
         public override DebrisObject Drop(PlayerController player)
 		{

@@ -1,0 +1,16 @@
+ManifestFileVersion: 0
+CRC: 1162589202
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: bottk2dsprites
+      Dependencies:
+        Dependency_0: planetsidetilesets
+    Info_1:
+      Name: fucktilesets
+      Dependencies: {}
+    Info_2:
+      Name: planetsidetilesets
+      Dependencies:
+        Dependency_0: bottk2dsprites
+        Dependency_1: fucktilesets

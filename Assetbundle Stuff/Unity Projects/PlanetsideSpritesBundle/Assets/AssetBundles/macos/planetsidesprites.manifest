@@ -1,0 +1,177 @@
+ManifestFileVersion: 0
+CRC: 2673550044
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 319ef67d4f9ca82f79a987538aeb8f03
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 49f9e3f3a3706f2358de64fcab9d7ba2
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: ecaffc43a5d2b1d47858e3fb687e7271, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: b03b1445062e71c4ca60f92cbd330aff, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/UI/Alphabet Letters/letter_12.png
+- Assets/Minibosses/Bullet Banker/BulletBankerCollection Data/BulletBankerCollection.prefab
+- Assets/Ammonomicon/Ammonomicon Icons/shellraxicon.png
+- Assets/Enemies/Inquisitor/InquisitorCollection Data/InquisitorCollection.prefab
+- Assets/Ammonomicon/Ammonomicon Icons/ammoentryshrrom.png
+- Assets/Minibosses/AnnihiChamber/AnnihiChamberCollection Data/annihichamber material.mat
+- Assets/Enemies/Skullvenant/SkullvenantCollection Data/SkullvenantCollection.prefab
+- Assets/VFX/Effects/DebuffCollection Data/debuff material.mat
+- Assets/Enemies/Fodder/FodderCollection Data/atlas0.png
+- Assets/Enemies/Fodder/fodder_die_004.png
+- Assets/UI/Alphabet Letters/letter_17.png
+- Assets/Pickups/PickupCollection Data/pickup material.mat
+- Assets/Enemies/ModderBullets/ModderBulletCollection Data/modderbullet material.mat
+- Assets/Ammonomicon/Ammonomicon Icons/glockulussheet.png
+- Assets/Items/Guon Stones/GuonAnimation.prefab
+- Assets/UI/Alphabet Letters/letter_08.png
+- Assets/Ammonomicon/Ammonomicon Icons/ophanaimsheetrt.png
+- Assets/UI/Alphabet Letters/letter_26.png
+- Assets/UI/Alphabet Letters/letter_04.png
+- Assets/Enemies/Glockulus/GlockulusCollection Data/GlockulusCollection.prefab
+- Assets/Minibosses/Nemesis/NemesisCollection Data/NemesisCollection.prefab
+- Assets/Items/Guon Stones/PSOGGuonCollection Data/PSOGGuonCollection.prefab
+- Assets/Ammonomicon/Ammonomicon Icons/wailericonammo.png
+- Assets/UI/Alphabet Letters/letter_19.png
+- Assets/Projectiles/PlanetsideProjectileAnimation.prefab
+- Assets/BossCards/prisonerbosscard.png
+- Assets/Enemies/Fodder/fodder_die_006.png
+- Assets/UI/Alphabet Letters/letter_16.png
+- Assets/UI/Alphabet Letters/letter_02.png
+- Assets/Enemies/Fodder/fodder_idle_005.png
+- Assets/Ammonomicon/Ammonomicon Icons/annihichamberSheet.png
+- Assets/Items/Passive Items/Item_Collection Data/Item_Collection.prefab
+- Assets/Projectiles/PlanetsideProjectileCollection Data/PlanetsideProjectileCollection.prefab
+- Assets/Enemies/Glockulus/GlockulusCollection Data/glockulus material.mat
+- Assets/Enemies/Coallet/CoalletCollection Data/CoalletCollection.prefab
+- Assets/UI/Alphabet Letters/letter_10.png
+- Assets/Enemies/Fodder/fodder_idle_004.png
+- Assets/Enemies/Fodder/fodder_die_005.png
+- Assets/Enemies/Cursebulon/CursebulonCollection Data/curseBulon material.mat
+- Assets/Enemies/Fodder/fodder_idle_007.png
+- Assets/Ammonomicon/Ammonomicon Icons/creationistTemplateTrespass.png
+- Assets/BossCards/fungannon_bosscard.png
+- Assets/VFX/DebuffAnimation.prefab
+- Assets/Ammonomicon/Ammonomicon Icons/skullvenanticonaoo.png
+- Assets/UI/Alphabet Letters/letter_18.png
+- Assets/Enemies/Fodder/fodder_idle_002.png
+- Assets/Items/Active Items/Active_Collection Data/Active_Collection.prefab
+- Assets/BossCards/shellrax_bosscard.png
+- Assets/UI/Alphabet Letters/letter_22.png
+- Assets/UI/Alphabet Letters/letter_06.png
+- Assets/Ammonomicon/Ammonomicon Icons/stagnantTrespass.png
+- Assets/Ammonomicon/Ammonomicon Icons/detscavatorivonammo.png
+- Assets/UI/Alphabet Letters/letter_14.png
+- Assets/Enemies/Fodder/fodder_die_001.png
+- Assets/Ammonomicon/Ammonomicon Icons/sheetcollectiveTrespass.png
+- Assets/Enemies/Barretina/BarretinaCollection Data/barretina material.mat
+- Assets/Bosses/Ophanaim/OphanaimCollection Data/ophanaim material.mat
+- Assets/Enemies/Shamber/ShamberCollection Data/shamber material.mat
+- Assets/Enemies/Fodder/fodder_die_009.png
+- Assets/Enemies/Fodder/fodder_die_010.png
+- Assets/Enemies/Fodder/fodder_idle_003.png
+- Assets/Ammonomicon/Ammonomicon Icons/bigcubeicon.png
+- Assets/Bosses/earthmoverBosscard.png
+- Assets/Ammonomicon/Ammonomicon Icons/bankericon.png
+- Assets/Enemies/Fodder/FodderCollection Data/FodderCollection.prefab
+- Assets/Minibosses/Shellrax/ShellraxCollection Data/ShellraxCollection.prefab
+- Assets/Items/Passive Items/Item_Collection Data/item_collection material.mat
+- Assets/Minibosses/Bullet Banker/BulletBankerCollection Data/bulletbanker material.mat
+- Assets/Ammonomicon/Ammonomicon Icons/observantsheetTrespass.png
+- Assets/BossCards/bulletbanker_bosscard.png
+- Assets/Enemies/Detscavator/DetscavatorCollection Data/DetscavatorCollection.prefab
+- Assets/Ammonomicon/Ammonomicon Icons/sheetBolatTrespass.png
+- Assets/VFX/Random Bits/OddmentsCollection Data/oddments material.mat
+- Assets/Enemies/Cursebulon/CursebulonCollection Data/CursebulonCollection.prefab
+- Assets/Enemies/Fodder/fodder_idle_008.png
+- Assets/UI/Alphabet Letters/letter_01.png
+- Assets/Bosses/Fungannon/FungannonCollection Data/fungannon material.mat
+- Assets/Ammonomicon/Ammonomicon Icons/sheetvesselTrespass.png
+- Assets/Ammonomicon/Ammonomicon Icons/sheetOppressorTrespass.png
+- Assets/UI/Alphabet Letters/letter_03.png
+- Assets/Enemies/ProperCube/ProperCubeCollection Data/propercube material.mat
+- Assets/Enemies/Barretina/BarretinaCollection Data/BarretinaCollection.prefab
+- Assets/Enemies/Arch Gunjurer/ArchGunjurerCollection Data/ArchGunjurerCollection.prefab
+- Assets/Ammonomicon/Ammonomicon Icons/nemesissheetTrespass.png
+- Assets/Ammonomicon/Ammonomicon Icons/cursebulonsmmonomiconportrait.png
+- Assets/UI/Alphabet Letters/letter_09.png
+- Assets/Minibosses/Nemesis/NemesisCollection Data/nemesis material.mat
+- Assets/BossCards/annihichamber_bosscard.png
+- Assets/Items/Guon Stones/PSOGGuonCollection Data/guonpsog material.mat
+- Assets/VFX/Random Bits/OddmentsCollection Data/OddmentsCollection.prefab
+- Assets/UI/Alphabet Letters/letter_21.png
+- Assets/Enemies/Jammed Guardian/JammedGuardianCollection Data/JammedGuardianCollection.prefab
+- Assets/Enemies/Fodder/FodderCollection Data/atlas0 material.mat
+- Assets/UI/Alphabet Letters/letter_05.png
+- Assets/Guns/PlanetsideGunCollection Data/PlanetsideGunCollection.prefab
+- Assets/Pickups/PickupCollection Data/PickupCollection.prefab
+- Assets/Ammonomicon/Ammonomicon Icons/fodderammonomiconentry.png
+- Assets/Ammonomicon/Ammonomicon Icons/blockadesheetTrespass.png
+- Assets/Bosses/Fungannon/FungannonCollection Data/FungannonCollection.prefab
+- Assets/Ammonomicon/Ammonomicon Icons/jammedguardicon.png
+- Assets/Ammonomicon/Ammonomicon Icons/coalleticon.png
+- Assets/Ammonomicon/Ammonomicon Icons/barretinaiconthing.png
+- Assets/UI/Alphabet Letters/letter_24.png
+- Assets/Enemies/Fodder/fodder_die_007.png
+- Assets/Minibosses/Shellrax/ShellraxCollection Data/shellrax material.mat
+- Assets/Minibosses/AnnihiChamber/AnnihiChamberCollection Data/AnnihiChamberCollection.prefab
+- Assets/Ammonomicon/Ammonomicon Icons/archgunjurericon.png
+- Assets/Ammonomicon/Ammonomicon Icons/sheetUnwillingTrespass.png
+- Assets/Ammonomicon/Ammonomicon Icons/sheetInquisitorTrespass.png
+- Assets/Enemies/ProperCube/ProperCubeCollection Data/ProperCubeCollection.prefab
+- Assets/UI/Alphabet Letters/letter_23.png
+- Assets/Bosses/Ophanaim/OphanaimCollection Data/OphanaimCollection.prefab
+- Assets/BossCards/nemesis_bosscard.png
+- Assets/Enemies/Wailer/WailerCollection Data/WailerCollection.prefab
+- Assets/UI/Alphabet Letters/letter_20.png
+- Assets/UI/Alphabet Letters/letter_13.png
+- Assets/Guns/PlanetsideGunCollection Data/psoggun material.mat
+- Assets/Guns/PlanetsideGunAnimation.prefab
+- Assets/Enemies/Arch Gunjurer/ArchGunjurerCollection Data/archgunjurer material.mat
+- Assets/Enemies/Fodder/fodder_idle_001.png
+- Assets/UI/Alphabet Letters/letter_25.png
+- Assets/Enemies/Fodder/fodder_die_002.png
+- Assets/Enemies/Wailer/WailerCollection Data/wailer material.mat
+- Assets/UI/Alphabet Letters/letter_15.png
+- Assets/Bosses/HM Prime/HMPrimeCollection Data/HMPrimeCollection.prefab
+- Assets/Enemies/Inquisitor/InquisitorCollection Data/inquisitor material.mat
+- Assets/Enemies/Detscavator/DetscavatorCollection Data/detscavator material.mat
+- Assets/BossCards/ophanaim_bosscard.png
+- Assets/Ammonomicon/Ammonomicon Icons/hmprimesheet.png
+- Assets/Enemies/Jammed Guardian/JammedGuardianCollection Data/jamguard material.mat
+- Assets/Enemies/Fodder/fodder_die_008.png
+- Assets/Enemies/Fodder/fodder_idle_006.png
+- Assets/BossCards/hmprime_bosscard.png
+- Assets/Projectiles/PlanetsideProjectileCollection Data/projectile material.mat
+- Assets/Bosses/HM Prime/HMPrimeCollection Data/hmprime material.mat
+- Assets/UI/Alphabet Letters/letter_07.png
+- Assets/VFX/Effects/DebuffCollection Data/DebuffCollection.prefab
+- Assets/UI/Alphabet Letters/letter_11.png
+- Assets/Enemies/Fodder/fodder_die_003.png
+- Assets/Enemies/Skullvenant/SkullvenantCollection Data/skullvenant material.mat
+- Assets/Items/Active Items/Active_Collection Data/active_item material.mat
+- Assets/Enemies/ModderBullets/ModderBulletCollection Data/ModderBulletCollection.prefab
+- Assets/Enemies/Shamber/ShamberCollection Data/ShamberCollection.prefab
+- Assets/Ammonomicon/Ammonomicon Icons/shamberammonomicoenrtytab.png
+- Assets/Enemies/Coallet/CoalletCollection Data/coallet material.mat
+- Assets/Ammonomicon/Ammonomicon Icons/SomethingWickedAmmonomiconSheet.png
+Dependencies: []

@@ -1,0 +1,2 @@
+C:\Users\maxvo\source\repos\Planetside\Assetbundle Stuff\Unity Projects\PlanetsideBundle\obj\Debug\Assembly-CSharp-Editor.csproj.AssemblyReference.cache
+C:\Users\maxvo\source\repos\Planetside\Assetbundle Stuff\Unity Projects\PlanetsideBundle\obj\Debug\Assembly-CSharp-Editor.csproj.CoreCompileInputs.cache

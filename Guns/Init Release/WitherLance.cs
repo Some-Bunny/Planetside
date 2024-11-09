@@ -26,7 +26,7 @@ namespace Planetside
 			Game.Items.Rename("outdated_gun_mods:heavens_call", "psog:heavens_call");
 			gun.gameObject.AddComponent<WitherLance>();
 			GunExt.SetShortDescription(gun, "Star God");
-			GunExt.SetLongDescription(gun, "Fires a barrage of weak stars that attach to own own projectiles, buffing them and themselves.\n\n");
+			GunExt.SetLongDescription(gun, "Creates a barrage of micro-stars that attach to your projectiles, buffing them and themselves.\n\n");
             //GunExt.SetupSprite(gun, null, "magicstaffofpower_idle_001", 11);
 
             GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "magicstaffofpower_idle_001");

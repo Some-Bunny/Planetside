@@ -48,7 +48,7 @@ namespace Planetside
                 debuffCollection.GetSpriteIdByName("brokenarmor4"),
                 debuffCollection.GetSpriteIdByName("brokenarmor5"),
                 debuffCollection.GetSpriteIdByName("brokenarmor6"),
-            }, "start", tk2dSpriteAnimationClip.WrapMode.LoopSection, 10);
+            }, "start", tk2dSpriteAnimationClip.WrapMode.Once, 10);
 
             animator.DefaultClipId = animator.GetClipIdByName("start");
             animator.playAutomatically = true;
@@ -94,14 +94,25 @@ namespace Planetside
 		public override void OnEffectApplied(GameActor actor, RuntimeGameActorEffectData effectData, float partialAmount = 1f)
 		{
 			base.OnEffectApplied(actor, effectData, partialAmount);
-			actor.healthHaver.AllDamageMultiplier += 0.35f;
-		}
+			actor.healthHaver.AllDamageMultiplier += 0.3f;
+            actor.healthHaver.ModifyDamage += ModifyDamage;
+
+        }
+
+        public void ModifyDamage(HealthHaver healthHaver, HealthHaver.ModifyDamageEventArgs modifyDamageEventArgs)
+        {
+            if (modifyDamageEventArgs.InitialDamage > 1)
+            {
+                modifyDamageEventArgs.ModifiedDamage = modifyDamageEventArgs.InitialDamage + 1;
+            }
+        }
 
 		public override void OnEffectRemoved(GameActor actor, RuntimeGameActorEffectData effectData)
 		{
-			actor.healthHaver.AllDamageMultiplier -= 0.35f;
+			actor.healthHaver.AllDamageMultiplier -= 0.3f;
+            actor.healthHaver.ModifyDamage -= ModifyDamage;
 
-			base.OnEffectRemoved(actor, effectData);
+            base.OnEffectRemoved(actor, effectData);
 			actor.healthHaver.OnPreDeath -= effectData.OnActorPreDeath;
 		}
 	}

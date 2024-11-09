@@ -15,6 +15,7 @@ using MonoMod;
 using System.Collections.ObjectModel;
 
 using UnityEngine.Serialization;
+using Alexandria.Assetbundle;
 
 namespace Planetside
 {
@@ -27,12 +28,24 @@ namespace Planetside
 			var behav = gun.gameObject.AddComponent<ExecutionersCrossbow>();
 			GunExt.SetShortDescription(gun, "Hang In There!");
 			GunExt.SetLongDescription(gun, "Charging loads a spectral arrow into the slot that marks enemies to be executed.\nOriginally a hunting crossbow made by a desparate team, the remains of the Gundead used in the weapon seek retaliation agasint their killers.");
-			GunExt.SetupSprite(gun, null, "executionerscrossbow_idle_001", 8);
-			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 16);
-			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 3);
-			GunExt.SetAnimationFPS(gun, gun.chargeAnimation, 3);
-			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 3);
-			GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(8) as Gun, true, false);
+
+            GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "executionerscrossbow_idle_001");
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
+            gun.sprite.SortingOrder = 1;
+
+            gun.idleAnimation = "executionercrossbow_idle";
+            gun.shootAnimation = "executionercrossbow_fire";
+            gun.reloadAnimation = "executionercrossbow_reload";
+            gun.chargeAnimation = "executionercrossbow_charge";
+
+
+            //GunExt.SetupSprite(gun, null, "executionerscrossbow_idle_001", 8);
+            //GunExt.SetAnimationFPS(gun, gun.shootAnimation, 16);
+            //GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 3);
+            //GunExt.SetAnimationFPS(gun, gun.chargeAnimation, 3);
+            //GunExt.SetAnimationFPS(gun, gun.idleAnimation, 3);
+
+            GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(8) as Gun, true, false);
 			gun.gunSwitchGroup = (PickupObjectDatabase.GetById(12) as Gun).gunSwitchGroup;
 
 			gun.DefaultModule.ammoCost = 1;
@@ -41,7 +54,7 @@ namespace Planetside
 			gun.reloadTime = 2f;
 			gun.DefaultModule.cooldownTime = 0.2f;
 			gun.DefaultModule.numberOfShotsInClip = 4;
-			gun.SetBaseMaxAmmo(120);
+			gun.SetBaseMaxAmmo(100);
 			gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.ARROW;
 
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[1].eventAudio = "SND_WPN_crossbow_shot_01";

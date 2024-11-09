@@ -31,6 +31,10 @@ namespace Planetside
     public static class MathToolbox
     {
 
+        public static float ToAngle(Vector2 v)
+        {
+            return Mathf.Atan2(v.y, v.x) * 57.29578f;
+        }
         public static float SubdivideRange(float startValue, float endValue, int numDivisions, int i, bool offset = false)
         {
             return Mathf.Lerp(startValue, endValue, ((float)i + ((!offset) ? 0f : 0.5f)) / (float)(numDivisions - 1));

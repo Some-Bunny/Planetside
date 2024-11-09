@@ -20,7 +20,7 @@ namespace Planetside
             Game.Items.Rename("outdated_gun_mods:tractor_beam", "psog:tractor_beam");
             var behav = gun.gameObject.AddComponent<AttractorBeam>();            
             gun.SetShortDescription("Get Over Here!");
-            gun.SetLongDescription("Pulls enemies towards you.\n\nA standard Hegemony Low-Gravity Object Relocator that has been left in the Gungeon. Looks like its stuck on the 'Pull' option.");
+            gun.SetLongDescription("Pulls enemies towards you.\n\nA standard Hegemony Low-Gravity Object Relocator that has been left in the Gungeon.\n\nIt's stuck on the 'Pull' option.");
             gun.SetupSprite(null, "attractorbeam_idle_001", 8);
 
             gun.SetAnimationFPS(gun.shootAnimation, 8);

@@ -49,8 +49,52 @@ namespace Planetside
 			new Hook(typeof(ForgeFlamePipeController).GetMethod("HandleBeamCollision", BindingFlags.Instance | BindingFlags.NonPublic), typeof(TrapDefusalKit).GetMethod("HandleBeamCollisionHook"));
 			new Hook(typeof(SpawnGoopBehavior).GetMethod("Update", BindingFlags.Instance | BindingFlags.Public), typeof(TrapDefusalKit).GetMethod("UpdateGoopHook"));
 			new Hook(typeof(HighPriestSimpleMergoBehavior).GetMethod("ShootWallBulletScript", BindingFlags.Instance | BindingFlags.NonPublic), typeof(TrapDefusalKit).GetMethod("ShootWallBulletScriptHook"));
-		}
-		public static void ShootWallBulletScriptHook(Action<HighPriestSimpleMergoBehavior> orig, HighPriestSimpleMergoBehavior self)
+            new Hook(typeof(TrapEnemyConfigurator).GetMethod("Update", BindingFlags.Instance | BindingFlags.NonPublic), typeof(TrapDefusalKit).GetMethod("UpdateTrapEnemyConfiguratorHook"));
+            new Hook(typeof(PowderSkullSpinBulletsBehavior).GetMethod("ContinuousUpdate", BindingFlags.Instance | BindingFlags.Public), typeof(TrapDefusalKit).GetMethod("ContinuousUpdatePowderSkullSpinBulletsBehaviorHook"));
+
+        }
+        public static ContinuousBehaviorResult ContinuousUpdatePowderSkullSpinBulletsBehaviorHook(Func<PowderSkullSpinBulletsBehavior, ContinuousBehaviorResult> orig, PowderSkullSpinBulletsBehavior self)
+        {
+			if (self.m_aiActor == null)
+			{
+                bool shouldBe = TrapsShouldBeDefused();
+                if (shouldBe == true)
+                {
+                    for (int i = 0; i < self.m_projectiles.Count; i++)
+                    {
+                        Projectile projectile = self.m_projectiles[i].projectile;
+                        if (projectile != null)
+                        {
+                            projectile.DieInAir(false, true, true, false);
+                        }
+                    }
+                    return ContinuousBehaviorResult.Continue;
+                }
+
+            }	
+            return orig(self);
+        }
+
+        public static void UpdateTrapEnemyConfiguratorHook(Action<TrapEnemyConfigurator> orig, TrapEnemyConfigurator self)
+        {
+            if (TrapsShouldBeDefused() == true && self.m_isActive == true)
+            {
+				self.m_isActive = false;
+                self.behaviorSpeculator.enabled = false;
+                return;
+            }
+            else 
+			{
+				if (self.m_isActive == false && GameManager.Instance.IsAnyPlayerInRoom(self.m_parentRoom))
+				{
+                    self.m_isActive = true;
+                    self.behaviorSpeculator.enabled = true;
+                }
+				orig(self); 
+			}
+        }
+
+        public static void ShootWallBulletScriptHook(Action<HighPriestSimpleMergoBehavior> orig, HighPriestSimpleMergoBehavior self)
 		{
 			if (TrapsShouldBeDefused() == true)
 			{
@@ -102,8 +146,11 @@ namespace Planetside
                 {
 					self.enabled = true;
 					AkSoundEngine.PostEvent("Play_ENV_trap_active", self.gameObject);
-				}
-				orig(self);
+                    if (self.spriteAnimator != null) { self.spriteAnimator.Play(); }
+                    if (self.Sparks_A != null && self.Sparks_A.gameObject.activeSelf == false) { self.Sparks_A.gameObject.SetActive(true); }
+                    if (self.Sparks_B != null && self.Sparks_B.gameObject.activeSelf == false) { self.Sparks_B.gameObject.SetActive(true); }
+                }
+                orig(self);
 			}
 		}
 		public static void HandleTriggerHook(Action<ForgeCrushDoorController, SpeculativeRigidbody, SpeculativeRigidbody, CollisionData> orig, ForgeCrushDoorController self, SpeculativeRigidbody specRigidbody, SpeculativeRigidbody sourceSpecRigidbody, CollisionData collisionData)

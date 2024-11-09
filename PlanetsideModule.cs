@@ -34,7 +34,7 @@ namespace Planetside
     {
         public const string GUID = "somebunny.etg.planetsideofgunymede";
         public const string NAME = "Planetside Of Gunymede Pre-Release";
-        public const string VERSION = "1.3.168";
+        public const string VERSION = "1.3.169";
 
         public static readonly string TEXT_COLOR = "#9006FF";
 
@@ -64,6 +64,9 @@ namespace Planetside
 
         public void GameManagerStart(GameManager gameManager)
         {
+            #region Basic Initialization
+
+
             GunFilePath = this.FolderPath() + "/sprites";
             ETGMod.Assets.SetupSpritesFromFolder(GunFilePath);
 
@@ -96,66 +99,43 @@ namespace Planetside
                 //ETGModConsole.Log(PlanetsideModule.TilesetAssets.name + ": " + str, false);
             }
 
-            //StaticSpriteDefinitions.SetupSpritesFromAssembly(Assembly.GetExecutingAssembly(), "Planetside/Guns/Jsons");
             StaticSpriteDefinitions.SetupSpritesFromAssembly(Assembly.GetExecutingAssembly(), "Planetside/Guns");
-
-
             StaticVFXStorage.Init();
-
             StaticInformation.Init();
-
-            //ShopDiscountMegaMind.Init();
-
-
             InverseGlowShader = PlanetsideModule.ModAssets.LoadAsset<Shader>("inverseglowshader");
-
-            //Initialise Statically Stored Stuff Here
-
             EasyGoopDefinitions.DefineDefaultGoops();
-
             RandomPiecesOfStuffToInitialise.BuildPrefab();
-
             PlanetsideModule.Strings = new AdvancedStringDB();
-
             PlanetsideCommands.Init();
-
             ItemIDs.MakeCommand();
-
             StaticReferences.Init(); //<- Used in GungeonAPI, IMPORTANT to initialise it before DungeonHandler
-
             InitNewPlaceables.InitPlaceables();
-
+            #endregion
 
             //initialise Tools classes here
             Tools.Init();
             NpcTools.Init();
 
-            //Hook stuff here
+            #region Hooks
             Actions.Init();
             PickupHooks.Init();
             ExplosionHooks.Init();
             Hooks.Init();
             MultiActiveReloadManager.SetupHooks();
-
             FakePrefabHooks.Init();
-
             TitleDioramaHooks.Init();
+            #endregion
 
 
-
-            //Initialise API stuff here
+            #region Additional APIs
             BulletBuilder.Init();
-
             SoundManager.Init();
-
             SoundManager.LoadBankFromModProject("Planetside/PlanetsideBank");
-
             SoundManager.RegisterStopEvent("Stop_MUS_PrisonerTheme", StopEventType.Music);
             SoundManager.RegisterStopEvent("Stop_WARWITHOUTREASON", StopEventType.Music);
-
             ItemBuilder.Init();
             ExpandDungeonMusicAPI.InitHooks();
-
+            #endregion
 
             //Shrine Initialisation
             //ShrineFactory.Init();

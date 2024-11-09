@@ -24,7 +24,7 @@ namespace Planetside
 			Game.Items.Rename("outdated_gun_mods:saw_controlled_dispenser", "psog:saw_controlled_dispenser");
 			gun.gameObject.AddComponent<Sawcon>();
 			gun.SetShortDescription("Sawing Conventionally");
-			gun.SetLongDescription("'Who needs OSHA regulations when launching miniature saw blades is infinitely more fun?' said someone after creating this abomination.\n\nThey died shortly after due to sickness.");
+			gun.SetLongDescription("'Who needs OSHA regulations when launching miniature saw blades is infinitely more fun?'\n\n-Unknown creator, died shortly due to rapid sickness.");
             
 			GunExt.SetupSprite(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "sawcon_idle_001", 11);
             gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;

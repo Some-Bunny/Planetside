@@ -33,7 +33,7 @@ namespace Planetside
 			string longDesc = "These bullets were forged by a smith who couldn't decide how to forge them, so they ended up forged half-and-half in different ways." +
 				"\n\nThis makes them fight over the bullets speed on how they should move.";
 			ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
-			ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.Damage, 1.25f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+			ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.Damage, 1.20f, StatModifier.ModifyMethod.MULTIPLICATIVE);
 			ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.RangeMultiplier, 2f, StatModifier.ModifyMethod.MULTIPLICATIVE);
 			item.quality = PickupObject.ItemQuality.A;
 			OscilaltingBullets.OscillatingBulletsID = item.PickupObjectId;

@@ -16,6 +16,7 @@ using System.Collections.ObjectModel;
 
 
 using UnityEngine.Serialization;
+using Alexandria.Assetbundle;
 
 namespace Planetside
 {
@@ -28,12 +29,23 @@ namespace Planetside
 			gun.gameObject.AddComponent<ChargerGun>();
 			gun.SetShortDescription("Great For Measuring Angles!");
 			gun.SetLongDescription("Fires more powerful shots, less accurately the more its charged up.\n\nA gun designed to be the complete polar opposite of a standard railgun, and as a form of crowd control in the war-torn sectors of the Hegemony.");
-			gun.SetupSprite(null, "chargergun_idle_001", 11);
-			gun.PreventNormalFireAudio = true;
-			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 15);
-			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 4);
-			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 9);
-			GunExt.SetAnimationFPS(gun, gun.chargeAnimation, 6);
+
+            GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "chargergun_idle_001");
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
+            gun.sprite.SortingOrder = 1;
+
+            gun.idleAnimation = "chargergun_idle";
+            gun.shootAnimation = "chargergun_fire";
+            gun.reloadAnimation = "chargergun_reload";
+            gun.chargeAnimation = "chargergun_charge";
+
+
+            //gun.SetupSprite(null, "chargergun_idle_001", 11);
+            gun.PreventNormalFireAudio = true;
+			//GunExt.SetAnimationFPS(gun, gun.shootAnimation, 15);
+			//GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 4);
+			//GunExt.SetAnimationFPS(gun, gun.idleAnimation, 9);
+			//GunExt.SetAnimationFPS(gun, gun.chargeAnimation, 6);
 
 
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_BOSS_RatMech_Cannon_01";

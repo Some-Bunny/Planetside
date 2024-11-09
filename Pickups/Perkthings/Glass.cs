@@ -12,8 +12,8 @@ namespace Planetside
     {
         public GlassComponent()
         {
-            this.DamageMult = 2.25f;
-            this.DamageToGetFromOverHeal = 0.125f;
+            this.DamageMult = 1.75f;
+            this.DamageToGetFromOverHeal = 0.05f;
             this.hasBeenPickedup = false;
             this.LeniencyProtection = 0;
         }
@@ -93,8 +93,8 @@ namespace Planetside
         
         public void IncrementStack()
         {
-            this.DamageToGetFromOverHeal += 0.1f;
-            this.DamageMult += 0.33f;
+            this.DamageToGetFromOverHeal += 0.025f;
+            this.DamageMult += 0.2f;
             if (LeniencyProtection != -1) {LeniencyProtection = -1;}
         }
         private StatModifier DamageStat;

@@ -24,7 +24,7 @@ namespace Planetside
 			Game.Items.Rename("outdated_gun_mods:capacitor", "psog:capacitor");
 			gun.gameObject.AddComponent<Capactior>();
 			gun.SetShortDescription("Overload");
-			gun.SetLongDescription("A large battery pack given the ability to shoot. Hold fire to reroute charge into your held active item!\n\nStill, very, very dangerous though.");
+			gun.SetLongDescription("A large battery pack given the ability to shoot. Hold fire to reroute charge into your held active item!\n\nIf you put your hand in the wrong spot it will send a current through your body, and into your heart.");
             
             GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "capacitornew_idle_001");
             gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;

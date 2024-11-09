@@ -23,7 +23,7 @@ namespace Planetside
 			Game.Items.Rename("outdated_gun_mods:t4gtr", "psog:t4gtr");
 			gun.gameObject.AddComponent<LockOnGun>();
 			gun.SetShortDescription("Locked And Loaded");
-			gun.SetLongDescription("Directs mini-rockets towards the reticle. Press Reload on a full clip to lock on to the currently targeted enemy.\n\nA shoulder-mounted rocket launcher, fitted with way too much computer circuitry. Makes up for it with being good at generating half-decent jokes and a perfect enemy lock-on and tracking system.");
+			gun.SetLongDescription("Directs micro-rockets towards the targetting reticle. Press Reload on a full clip to lock on to the currently targeted enemy.\n\nA shoulder-mounted rocket launcher, fitted with way too much computer circuitry.\nMakes up for it with being good at generating half-decent jokes and a perfect enemy lock-on and tracking system.");
 			GunExt.SetupSprite(gun, null, "lockongun_idle_001", 11);
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_wpn_voidcannon_shot_01";
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].triggerEvent = true;

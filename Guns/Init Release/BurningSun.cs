@@ -39,6 +39,8 @@ namespace Planetside
             gun.shootAnimation = "burningsun_fire";
             gun.reloadAnimation = "burningsun_reload";
             gun.chargeAnimation = "burningsun_charge";
+            gun.emptyAnimation = "burningsun_empty";
+
             //GunExt.SetupSprite(gun, null, "burningsun_idle_001", 8);
             //GunExt.SetAnimationFPS(gun, gun.shootAnimation, 8);
             //GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 10);
@@ -48,18 +50,25 @@ namespace Planetside
 			gun.DefaultModule.ammoCost = 1;
 			gun.DefaultModule.shootStyle = ProjectileModule.ShootStyle.Charged;
 			gun.DefaultModule.sequenceStyle = ProjectileModule.ProjectileSequenceStyle.Random;
-			gun.reloadTime = 2f;
+			gun.reloadTime = 4.75f;
 			gun.DefaultModule.cooldownTime = 1f;
 			gun.DefaultModule.numberOfShotsInClip = 1;
 			gun.SetBaseMaxAmmo(50);
-			gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.MEDIUM_BLASTER;
 
-			EnemyToolbox.AddSoundsToAnimationFrame(gun.GetComponent<tk2dSpriteAnimator>(),gun.chargeAnimation, new Dictionary<int, string> { { 1, "Play_WPN_bountyhunterarm_charge_01" }, { 2, "Play_ENM_bigbulletboy_step_01" }, { 4, "Play_FS_bone_step_01" }, { 7, "Play_WPN_rpg_reload_01" }, { 15, "Play_OBJ_mine_beep_01" } });
+			EnemyToolbox.AddSoundsToAnimationFrame(gun.GetComponent<tk2dSpriteAnimator>(),gun.chargeAnimation, new Dictionary<int, string> { 
+				{ 18, "Play_OBJ_mine_beep_01" }, { 16, "Play_OBJ_mine_beep_01" }, { 14, "Play_OBJ_mine_beep_01" },
+                { 2, "Play_ENM_hammer_smash_01" },{ 13, "Play_BOSS_RatMech_Squat_01" },
+            });
+			
+			
 			EnemyToolbox.AddSoundsToAnimationFrame(gun.GetComponent<tk2dSpriteAnimator>(), gun.shootAnimation, new Dictionary<int, string> { { 0, "Play_wpn_chargelaser_shot_01" }, { 1, "Play_BOSS_lichB_charge_01" } });
-			EnemyToolbox.AddSoundsToAnimationFrame(gun.GetComponent<tk2dSpriteAnimator>(), gun.reloadAnimation, new Dictionary<int, string> { { 9, "Play_OBJ_lock_unlock_01" }, { 10, "Play_BOSS_lichC_zap_01" }, { 11, "Play_OBJ_metalskin_end_01" } });
+            //EnemyToolbox.AddSoundsToAnimationFrame(gun.GetComponent<tk2dSpriteAnimator>(), gun.reloadAnimation, new Dictionary<int, string> { { 9, "Play_OBJ_lock_unlock_01" }, { 10, "Play_BOSS_lichC_zap_01" }, { 11, "Play_OBJ_metalskin_end_01" } });
+            EnemyToolbox.AddSoundsToAnimationFrame(gun.GetComponent<tk2dSpriteAnimator>(), gun.reloadAnimation, new Dictionary<int, string> { { 5, "Play_OBJ_mine_beep_01" }, { 19, "Play_OBJ_mine_beep_01" }, { 29, "Play_OBJ_mine_beep_01" },
+				{ 6, "Play_ENM_statue_jump_01" },{ 12, "Play_ENM_statue_jump_01" },{ 18, "Play_ENM_statue_jump_01" },
+				{ 20, "Play_ENM_bulletking_charge_01" }, { 35, "Play_BOSS_RatMech_Bomb_01" },});
 
 
-			gun.barrelOffset.transform.localPosition = new Vector3(2.0f, 0.4375f, 0f);
+            gun.barrelOffset.transform.localPosition = new Vector3(2.0f, 1.4375f, 0f);
 			gun.carryPixelOffset += new IntVector2((int)4f, (int)0f);
 			//gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.chargeAnimation).wrapMode = tk2dSpriteAnimationClip.WrapMode.LoopSection;
 			//gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.chargeAnimation).loopStart = 16;
@@ -76,14 +85,18 @@ namespace Planetside
 			UnityEngine.Object.DontDestroyOnLoad(projectile2);
 			gun.DefaultModule.projectiles[0] = projectile2;
 			projectile2.baseData.damage = 40f;
-			projectile2.baseData.speed *= 0.2f;
+			projectile2.baseData.speed = 10f;
 			projectile2.baseData.force *= 1f;
 			projectile2.baseData.range = 100f;
 			projectile2.AdditionalScaleMultiplier *= 1.33f;
 			projectile2.transform.parent = gun.barrelOffset;
 			projectile2.HasDefaultTint = true;
+			projectile2.baseData.AccelerationCurve = AnimationCurve.Linear(0, 1, 1, 0.2f);
+            projectile2.baseData.CustomAccelerationCurveDuration = 1.5f;
+            projectile2.baseData.UsesCustomAccelerationCurve = true;
 
-			projectile2.objectImpactEventName = (PickupObjectDatabase.GetById(336) as Gun).DefaultModule.projectiles[0].objectImpactEventName;
+
+            projectile2.objectImpactEventName = (PickupObjectDatabase.GetById(336) as Gun).DefaultModule.projectiles[0].objectImpactEventName;
 			projectile2.enemyImpactEventName = (PickupObjectDatabase.GetById(336) as Gun).DefaultModule.projectiles[0].enemyImpactEventName;
 
 			projectile2.AnimateProjectile(new List<string> {
@@ -103,7 +116,7 @@ namespace Planetside
 			Values.Radius = 4;
 			Values.TimeBetweenDamageEvents = 0.33f;
 			Values.DealsDamage = true;
-			Values.DamageperDamageEvent = 8;
+			Values.DamageperDamageEvent = 6f;
 			Values.DamageValuesAlsoScalesWithDamageStat = true;
 			Values.debuffs = new Dictionary<GameActorEffect, float>()
 			{
@@ -120,7 +133,7 @@ namespace Planetside
 			ProjectileModule.ChargeProjectile item2 = new ProjectileModule.ChargeProjectile
 			{
 				Projectile = projectile2,
-				ChargeTime = 2.2f,
+				ChargeTime = 2.5f,
 				
 			};
 			gun.DefaultModule.chargeProjectiles = new List<ProjectileModule.ChargeProjectile>
@@ -128,7 +141,6 @@ namespace Planetside
 				item2
 			};
 
-			gun.muzzleFlashEffects = (PickupObjectDatabase.GetById(370) as Gun).muzzleFlashEffects;
 			gun.quality = PickupObject.ItemQuality.A;
 			ETGMod.Databases.Items.Add(gun, false, "ANY");
 			List<string> mandatoryConsoleIDs = new List<string>
@@ -143,48 +155,42 @@ namespace Planetside
 				"gun_soul"
 			};
 
+            gun.muzzleFlashEffects = (PickupObjectDatabase.GetById(370) as Gun).muzzleFlashEffects;
+            gun.gunSwitchGroup = (PickupObjectDatabase.GetById(169) as Gun).gunSwitchGroup;
 
-			CustomSynergies.Add("Praise The Gun!", mandatoryConsoleIDs, optionalConsoleIDs, false);
+
+
+            CustomSynergies.Add("Praise The Gun!", mandatoryConsoleIDs, optionalConsoleIDs, false);
 			BurningSun.BurningSunId = gun.PickupObjectId;
 			ItemIDs.AddToList(gun.PickupObjectId);
 
-			
-			/*
-			var EnemBav = EnemyDatabase.GetOrLoadByGuid("8b4a938cdbc64e64822e841e482ba3d2"));
-
-            var BuffVFXJam3 = EnemBav.behaviorSpeculator.AttackBehaviorGroup.GetAttackBehavior(0) as BuffEnemiesBehavior;
-            var buffsprite = BuffVFXJam3.BuffVfx;
-
-            List<AIAnimator.NamedVFXPool> namedVFX = EnemBav.aiAnimator.OtherVFX;
 
 
-            List<AIAnimator.NamedVFXPool> namedVFXList = enemy.aiAnimator.OtherVFX;
-            if (namedVFXList == null) { namedVFXList = new List<AIAnimator.NamedVFXPool>() { }; }
-            namedVFXList.Add(new AIAnimator.NamedVFXPool()
+            gun.sprite.usesOverrideMaterial = true;
+
+            Material mat_ = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+            mat_.SetColor("_EmissiveColor", new Color32(255, 172, 0, 255));
+            mat_.SetFloat("_EmissiveColorPower", 10f);
+            mat_.SetFloat("_EmissivePower", 10);
+            mat_.SetFloat("_EmissiveThresholdSensitivity", 0.4f);
+            MeshRenderer component = gun.GetComponent<MeshRenderer>();
+            if (!component)
             {
-                name = "buffy",
-                vfxPool = new VFXPool() { type = VFXPoolType.Single, effects = new VFXComplex[]
-					{
-						new VFXComplex()
-						{
-							effects = new VFXObject[]
-							{
-								new VFXObject()
-								{
-									alignment = VFXAlignment.NormalAligned,
-									orphaned = true,
-									destructible = false,
-									effect = namedVFX[0].vfxPool.effects[0].effects[0].effect,
-									attached = true,
-									persistsOnDeath	= false
-                                }
-							}
-						}
-					} 
-				},
-				anchorTransform = enemy.transform
-            });
-			*/
+                return;
+            }
+            Material[] sharedMaterials = component.sharedMaterials;
+            for (int i = 0; i < sharedMaterials.Length; i++)
+            {
+                if (sharedMaterials[i].shader == mat_)
+                {
+                    return;
+                }
+            }
+            Array.Resize<Material>(ref sharedMaterials, sharedMaterials.Length + 1);
+            Material material = new Material(mat_);
+            material.SetTexture("_MainTex", sharedMaterials[0].GetTexture("_MainTex"));
+            sharedMaterials[sharedMaterials.Length - 1] = material;
+            component.sharedMaterials = sharedMaterials;
         }
 		public static int BurningSunId;
 

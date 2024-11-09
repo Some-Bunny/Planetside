@@ -1,0 +1,16 @@
+ManifestFileVersion: 0
+CRC: 3032850189
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: f18960551ca45699a21057ae244d8957
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 5ad585dd02dfb5016c0dad519eab8f49
+HashAppended: 0
+ClassTypes:
+- Class: 49
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Beyond_Collection_Data.txt
+Dependencies: []

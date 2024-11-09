@@ -158,7 +158,7 @@ namespace Planetside
             {
 				State = States.LOCKED_ON;
 				newTarget.healthHaver.OnPreDeath += OnPreDeath;
-				newTarget.healthHaver.AllDamageMultiplier *= 1.2f;
+				newTarget.healthHaver.AllDamageMultiplier *= 1.125f;
 				Target = newTarget;
 
 				GameObject gameObject = SpawnManager.SpawnVFX(StaticVFXStorage.JammedDeathVFX, base.gameObject.transform.position, Quaternion.identity, false);
@@ -296,23 +296,17 @@ namespace Planetside
             string itemName = "Death Warrant";
             GameObject obj = new GameObject(itemName);
             var item = obj.AddComponent<DeathWarrant>();
-            ItemBuilder.AddSpriteToObject(itemName, "Planetside/Resources/gundeathwarrant", obj);
-            //var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
-            //ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("gundeathwarrant"), data, obj);
+            //ItemBuilder.AddSpriteToObject(itemName, "Planetside/Resources/gundeathwarrant", obj);
+            var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("gundeathwarrant"), data, obj);
             string shortDesc = "Sign It For Everyone";
-            string longDesc = "A death warrant granted to you by law." +
-                "\n\nOn it are the 10 billion signatures of all the Gundead that roam in the Gungeon.";
+            string longDesc = "Lets you seek out targets for a reward." +
+                "\n\nDo Bullet Kin fear death?";
             ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
 			item.quality = PickupObject.ItemQuality.C;
 
 
-			//item.sprite.FlipX = true;
-			//item.sprite.collection.spriteDefinitions[item.sprite.spriteId].position0.x += item.sprite.GetBounds().size.x;
-            //item.sprite.collection.spriteDefinitions[item.sprite.spriteId].position1.x += item.sprite.GetBounds().size.x;
-            //item.sprite.collection.spriteDefinitions[item.sprite.spriteId].position2.x += item.sprite.GetBounds().size.x;
-            //item.sprite.collection.spriteDefinitions[item.sprite.spriteId].position3.x += item.sprite.GetBounds().size.x;
-
-
+            ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.Curse, 1, StatModifier.ModifyMethod.ADDITIVE);
 
 
             GameObject deathmark = ItemBuilder.AddSpriteToObject("deathmark_vfx", "Planetside/Resources/VFX/DeathMark/markedfordeathvfx_001", null);

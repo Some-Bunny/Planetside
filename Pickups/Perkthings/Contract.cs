@@ -193,7 +193,7 @@ namespace Planetside
             Projectile projectile2 = UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(2) as Gun).DefaultModule.projectiles[0]);
             projectile2.gameObject.SetActive(false);
             FakePrefab.MarkAsFakePrefab(projectile2.gameObject);
-            projectile2.baseData.damage = 9;
+            projectile2.baseData.damage = 7.5f;
             projectile2.baseData.speed *= 0.7f;
             projectile2.baseData.range *= 3;
 
@@ -316,7 +316,7 @@ namespace Planetside
             Projectile projectile2 = UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(30) as Gun).DefaultModule.projectiles[0]);
             projectile2.gameObject.SetActive(false);
             FakePrefab.MarkAsFakePrefab(projectile2.gameObject);
-            projectile2.baseData.damage = 12;
+            projectile2.baseData.damage = 10;
             projectile2.baseData.speed *= 1f;
             projectile2.baseData.range *= 3;
 
@@ -425,7 +425,7 @@ namespace Planetside
                     ShootGunBehavior tagr = att as ShootGunBehavior;
                     tagr.LineOfSight = true;
                     tagr.LeadAmount = 1f;
-                    tagr.MagazineCapacity = 3;
+                    tagr.MagazineCapacity = 1;
                     tagr.ReloadSpeed = 6;
                     tagr.RespectReload = true;
                     tagr.EmptiesClip = true;
@@ -435,7 +435,7 @@ namespace Planetside
             Projectile projectile2 = UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(49) as Gun).DefaultModule.projectiles[0]);
             projectile2.gameObject.SetActive(false);
             FakePrefab.MarkAsFakePrefab(projectile2.gameObject);
-            projectile2.baseData.damage = 30;
+            projectile2.baseData.damage = 35;
             projectile2.baseData.speed *= 1f;
             projectile2.baseData.range *= 3;
 

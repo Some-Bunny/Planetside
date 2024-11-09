@@ -1,0 +1,104 @@
+ManifestFileVersion: 0
+CRC: 2653026360
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: a5a1d6f92487f209939846d2029190ee
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 4db2434854b392c9a113790346345cdb
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 65
+  Script: {instanceID: 0}
+- Class: 82
+  Script: {instanceID: 0}
+- Class: 84
+  Script: {instanceID: 0}
+- Class: 90
+  Script: {instanceID: 0}
+- Class: 95
+  Script: {instanceID: 0}
+- Class: 135
+  Script: {instanceID: 0}
+- Class: 136
+  Script: {instanceID: 0}
+- Class: 198
+  Script: {instanceID: 0}
+- Class: 199
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+- Class: 328
+  Script: {instanceID: 0}
+- Class: 329
+  Script: {instanceID: 0}
+Assets:
+- Assets/Particle Systems/PerfectedParticles.prefab
+- Assets/AbyssRing.prefab
+- Assets/VoidCrab/mdlVoidSuperMegaCrabBody.obj
+- Assets/Shader/FuckMe.shader
+- Assets/Particle Systems/EliteVariantEnemy.prefab
+- Assets/RealityTear.prefab
+- Assets/FloorTextures/proper_2.jpg
+- Assets/FloorTextures/sewer_2.jpg
+- Assets/videoplayer.prefab
+- Assets/Particle Systems/ShamberParticles.prefab
+- Assets/Sphere 1.prefab
+- Assets/FloorTextures/abbey_1.jpg
+- Assets/videos/UKVideoMaterial.mat
+- Assets/Shader/ParticleAdditive.shader
+- Assets/videos/2022-09-06 14-35-02.mp4
+- Assets/Shader/KillMe.shader
+- Assets/3D Asses/Benjamin2/Centaur_Main.prefab
+- Assets/Bteele.prefab
+- Assets/Shader/TrespassShader.shader
+- Assets/Particle Systems/ShellraxEye.prefab
+- Assets/FloorTextures/keep_2.jpg
+- Assets/FloorTextures/sewer_1.jpg
+- Assets/FloorTextures/mines_1.jpg
+- Assets/FloorTextures/mines_2.jpg
+- Assets/FloorTextures/abbey_2.jpg
+- Assets/FloorTextures/hollow_2.jpg
+- Assets/Amogus.prefab
+- Assets/FloorTextures/proper_1.jpg
+- Assets/3D Asses/texBeetleDiffuse.png
+- Assets/FloorTextures/keep_1.jpg
+- Assets/3D Asses/beam (2).obj
+- Assets/PerkparticleSystem.prefab
+- Assets/Portal.prefab
+- Assets/Particle Systems/PortalClose.prefab
+- Assets/3D Asses/Benjamin/Centaur_Midpoly_Riggeda_0.prefab
+- Assets/FloorTextures/hell_1.jpg
+- Assets/ENV_Tileset_Abyss.png
+- Assets/FloorTextures/hollow_1.jpg
+- Assets/FloorTextures/hell_2.jpg
+- Assets/Shader/WarpedShader.shader
+- Assets/Particle Systems/CeramicParticles.prefab
+- Assets/Shader/InverseGlowShader.shader
+- Assets/Shader/TorusTrespassShader.shader
+- Assets/FloorTextures/forge_2.jpg
+- Assets/Shader/WarpScroll.shader
+- Assets/FloorTextures/forge_1.jpg
+- Assets/3D Asses/Mesh.obj
+- Assets/perkParticleThatWorks.prefab
+- Assets/videos/UKRenderTexture.renderTexture
+- Assets/Particle Systems/TheperkParticle.prefab
+- Assets/Particle Systems/BloodSplatter.prefab
+Dependencies: []

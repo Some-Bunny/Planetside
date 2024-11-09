@@ -22,7 +22,7 @@ namespace Planetside
             Game.Items.Rename("outdated_gun_mods:parasitic_heart", "psog:parasitic_heart");
             gun.gameObject.AddComponent<ParasiticHeart>();
             gun.SetShortDescription("Detached");
-            gun.SetLongDescription("The heart of a parasitic beast that lurks, and once lurked in the Gungeon. The six souls it once housed are still yet to depart, and orbit the ever-beating heart.");
+            gun.SetLongDescription("The heart of a parasitic beast that lurks deep within the Gungeon. The six souls it once housed are still yet to depart, and orbit the ever-beating heart.");
             gun.SetupSprite(null, "chambersoul_idle_001", 8);
             gun.SetAnimationFPS(gun.shootAnimation, 20);
             gun.SetAnimationFPS(gun.idleAnimation, 7);

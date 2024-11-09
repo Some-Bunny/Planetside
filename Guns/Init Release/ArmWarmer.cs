@@ -109,7 +109,7 @@ namespace Planetside
 			Game.Items.Rename("outdated_gun_mods:arm_warmer", "psog:arm_warmer");
 			gun.gameObject.AddComponent<ArmWarmer>();
 			GunExt.SetShortDescription(gun, "Mmmm, Tasty...");
-			GunExt.SetLongDescription(gun, "A large blob of living flesh of an unknown origin.\n\nSeems to replicate very, *very* quickly...");
+			GunExt.SetLongDescription(gun, "A quickly self-replicating blob of meat.\n\nIt's quite disgusting...");
 			GunExt.SetupSprite(gun, null, "heartthing_idle_001", 11);
 			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 25);
 			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 10);

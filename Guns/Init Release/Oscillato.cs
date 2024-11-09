@@ -12,6 +12,7 @@ using System.Collections;
 using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
+using Alexandria.Assetbundle;
 
 namespace Planetside
 {
@@ -26,12 +27,24 @@ namespace Planetside
 			Game.Items.Rename("outdated_gun_mods:oscillator", "psog:oscillator");
 			gun.gameObject.AddComponent<Oscillato>();
 			gun.SetShortDescription("With Slowing Grace");
-			gun.SetLongDescription("A gun that was manufactured on an earthquake-heavy planet under the Hegemony Of Mans rule. The reverberation from these events are projected onto the bullets.");
-			GunExt.SetupSprite(gun, null, "oscillato_idle_001", 11);	
-			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 15);
-			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 7);
-			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 5);
-			GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(56) as Gun, true, false);
+			gun.SetLongDescription("A limited edition burst fire weapon, who's funding was cut after all the ammunition for it was made on a tectonically unstable planet.");
+
+            GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "oscillator_idle_001");
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
+            gun.sprite.SortingOrder = 1;
+
+            gun.reloadAnimation = "oscillator_reload";
+            gun.idleAnimation = "oscillator_idle";
+            gun.shootAnimation = "oscillator_fire";
+
+
+            //GunExt.SetupSprite(gun, null, "oscillato_idle_001", 11);	
+            //GunExt.SetAnimationFPS(gun, gun.shootAnimation, 15);
+            //GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 7);
+            //GunExt.SetAnimationFPS(gun, gun.idleAnimation, 5);
+
+
+            GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(56) as Gun, true, false);
 			gun.gunSwitchGroup = (PickupObjectDatabase.GetById(89) as Gun).gunSwitchGroup;
 			gun.DefaultModule.ammoCost = 1;
 			gun.DefaultModule.shootStyle = ProjectileModule.ShootStyle.Burst;

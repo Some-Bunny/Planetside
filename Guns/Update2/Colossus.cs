@@ -23,7 +23,7 @@ namespace Planetside
             //behav.overrideNormalFireAudio = "Play_ENM_shelleton_beam_01";
 
             gun.SetShortDescription("Titanic");
-            gun.SetLongDescription("A collection of rocks powered by only remaining blood of a dead demi-god, who used their own blood to create and fuel Titans found on a distant planet.");
+            gun.SetLongDescription("A collection of rocks powered by only remaining blood of a slain demi-god, who originally used their own blood to create and fuel Titans found on a distant planet.");
 
             gun.SetupSprite(null, "colossus_idle_001", 8);
 
@@ -32,7 +32,7 @@ namespace Planetside
             gun.SetAnimationFPS(gun.reloadAnimation, 8);
 
             gun.isAudioLoop = true;
-
+            gun.gunSwitchGroup = string.Empty;
             //int iterator = 0;
             for (int i = 0; i < 1; i++)
             {

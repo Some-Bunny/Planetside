@@ -12,6 +12,9 @@ using System.Collections;
 using Gungeon;
 using MonoMod.RuntimeDetour;
 using System.Collections.ObjectModel;
+using System.Security.Cryptography.X509Certificates;
+using Alexandria.Misc;
+using UnityEngine.UI;
 
 namespace Planetside
 {
@@ -19,9 +22,8 @@ namespace Planetside
     {
         public static void Init()
         {
-            string itemName = "Table Tech Null";
+            string itemName = "Table Tech Ignition";
 
-            //string resourceName = "Planetside/Resources/tabletechnull.png";
 
             GameObject obj = new GameObject(itemName);
 
@@ -29,14 +31,25 @@ namespace Planetside
 
             var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
             ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("tabletechnull"), data, obj);
-            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
 
-            string shortDesc = "Undefined Flips";
-            string longDesc = "This ancient technique allows the user to vaporize enemy bullets from thin air, as if they never existed.\n\nChapter 17 of the Table Sutra. Nolla.";
+            string shortDesc = "Burning Flips";
+            string longDesc = "This ancient technique allows the user to create fire with a table flip.\n\nChapter 17 of the Table Sutra. May your burning passion of the flip be passed on to the flipped.";
 
             minigunrounds.SetupItem(shortDesc, longDesc, "psog");
             minigunrounds.quality = PickupObject.ItemQuality.C;
             SynergyAPI.SynergyBuilder.AddItemToSynergy(minigunrounds, CustomSynergyType.PAPERWORK);
+            List<string> mandatoryConsoleIDs = new List<string>
+            {
+                "psog:table_tech_ignition",
+                "hot_lead"
+            };
+            CustomSynergies.Add("Hidden Tech Incineration", mandatoryConsoleIDs, null, true);
+            List<string> mandatoryConsoleIDs_1 = new List<string>
+            {
+                "psog:table_tech_ignition",
+                "pitchfork"
+            };
+            CustomSynergies.Add("Tri-Forked", mandatoryConsoleIDs_1, null, true);
 
             TableTechNullReferenceException.TableTechNullID = minigunrounds.PickupObjectId;
             ItemIDs.AddToList(minigunrounds.PickupObjectId);
@@ -51,87 +64,37 @@ namespace Planetside
         }
         private void HandleFlip(FlippableCover table)
         {
-            PlayerController player = GameManager.Instance.PrimaryPlayer;
-            if ((NullShrineRoom.Contains(player.CurrentRoom.GetRoomName()) && FlippedInShrineRoom == false))
+            int rayMask = CollisionMask.LayerToMask(CollisionLayer.HighObstacle);
+            Vector2 direction = Vector2.right;
+            switch (table.DirectionFlipped)
             {
-                FlippedInShrineRoom = true;
-                IntVector2 bestRewardLocation2 = player.CurrentRoom.GetBestRewardLocation(IntVector2.One * 3, RoomHandler.RewardLocationStyle.PlayerCenter, true);
-                Chest rainbow_Chest = GameManager.Instance.RewardManager.S_Chest;
-                rainbow_Chest.IsLocked = false;
-                Chest chest2 = Chest.Spawn(rainbow_Chest, bestRewardLocation2);
-                chest2.RegisterChestOnMinimap(chest2.GetAbsoluteParentRoom());
+                case DungeonData.Direction.NORTH:
+                    direction = Vector2.up;
+                    break;
+                    case DungeonData.Direction.SOUTH:
+                    direction = Vector2.down;
+                    break;
+                        case DungeonData.Direction.WEST:
+                    direction = Vector2.left;
+                        break;
+                        case DungeonData.Direction.EAST:
+                    direction = Vector2.right;
+                        break;
             }
+            var cast = RaycastToolbox.ReturnRaycast(table.specRigidbody.UnitCenter, direction, rayMask, 1000, table.specRigidbody);
+            DeadlyDeadlyGoopManager.GetGoopManagerForGoopType(Owner.PlayerHasActiveSynergy("Hidden Tech Incineration") ? Alexandria.Misc.GoopUtility.GreenFireDef : Alexandria.Misc.GoopUtility.FireDef).TimedAddGoopLine(table.sprite.WorldCenter + direction, cast.Contact, 1, 1f);
+            if (Owner.PlayerHasActiveSynergy("Tri-Forked"))
+            {
+                float g = MathToolbox.ToAngle(direction) + 45;
+                float g_1 = MathToolbox.ToAngle(direction) - 45;
 
-            ReadOnlyCollection<Projectile> allProjectiles = StaticReferenceManager.AllProjectiles;
-            if (allProjectiles != null)
-            {
-                for (int i = 0; i < allProjectiles.Count; i++)
-                {
-                    if (allProjectiles[i].Owner != player)
-                    {
-                        Projectile proj = allProjectiles[i];
-                        SpawnManager.Despawn(proj.gameObject);
-                    }
-                }
-            }
+                cast = RaycastToolbox.ReturnRaycast(table.specRigidbody.UnitCenter, MathsAndLogicHelper.DegreeToVector2(g), rayMask, 1000, table.specRigidbody);
+                DeadlyDeadlyGoopManager.GetGoopManagerForGoopType(Owner.PlayerHasActiveSynergy("Hidden Tech Incineration") ? Alexandria.Misc.GoopUtility.GreenFireDef : Alexandria.Misc.GoopUtility.FireDef).TimedAddGoopLine(table.sprite.WorldCenter + direction, cast.Contact, 1, 1f);
 
-            pickupsInRoom.Clear();
-            DebrisObject[] shitOnGround = FindObjectsOfType<DebrisObject>();
-            foreach (DebrisObject debris in shitOnGround)
-            {
-                bool isValid = DetermineIfValid(debris);
-                if (isValid && debris.transform.position.GetAbsoluteRoom() == player.CurrentRoom)
-                {
-                    pickupsInRoom.Add(debris);
-                }
+                cast = RaycastToolbox.ReturnRaycast(table.specRigidbody.UnitCenter, MathsAndLogicHelper.DegreeToVector2(g_1), rayMask, 1000, table.specRigidbody);
+                DeadlyDeadlyGoopManager.GetGoopManagerForGoopType(Owner.PlayerHasActiveSynergy("Hidden Tech Incineration") ? Alexandria.Misc.GoopUtility.GreenFireDef : Alexandria.Misc.GoopUtility.FireDef).TimedAddGoopLine(table.sprite.WorldCenter + direction, cast.Contact, 1, 1f);
             }
-            if (pickupsInRoom.Count != 0)
-            {
-                pickupsInRoom.Shuffle();
-                DoReroll(pickupsInRoom[0]);
-            }
-        }
-        private void DoReroll(DebrisObject obj)
-        {
-            Vector2 pos = obj.transform.position;
-            LootEngine.SpawnItem(PickupObjectDatabase.GetById(NullPickupInteractable.NollahID).gameObject, pos, Vector2.zero, 1f, false, true, false);
-            Destroy(obj.gameObject);
-        }
-        private bool DetermineIfValid(DebrisObject thing)
-        {
-            PickupObject itemness = thing.gameObject.GetComponent<PickupObject>();
-            if (itemness != null)
-            {
-                if (itemness.PickupObjectId == 127 || validIDs.Contains(itemness.PickupObjectId))
-                {
-                    return true;
-                }
-                else return false;
-            }
-            else return false;
-        }
-        private List<int> validIDs = new List<int>()
-        {
-            78, //Ammo
-            600, //Spread Ammo
-            565, //Glass Guon Stone
-            73, //Half Heart
-            85, //Heart
-            120, //Armor
-            224, //Blank
-            67, //Key
-        };
-        private List<DebrisObject> pickupsInRoom = new List<DebrisObject>();
-
-        //Erase a random enemy from the room
-        //Erase random bullets in the room
-        //turns a random pickup in the room into a null pickup
-        //Erases the table?
-
-        public static List<string> NullShrineRoom = new List<string>()
-        {
-            "NullShrineRoom.room"
-        };
+        }     
         public override void OnDestroy()
         {
             if (base.Owner != null)

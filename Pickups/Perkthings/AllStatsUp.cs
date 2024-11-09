@@ -60,7 +60,7 @@ namespace Planetside
             PerkParticleSystemController cont = base.GetComponent<PerkParticleSystemController>();
             if (cont != null) { cont.DoBigBurst(player); }
             AkSoundEngine.PostEvent("Play_OBJ_dice_bless_01", player.gameObject);
-            OtherTools.ApplyStat(player, PlayerStats.StatType.Damage, 1.1f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+            OtherTools.ApplyStat(player, PlayerStats.StatType.Damage, 1.05f, StatModifier.ModifyMethod.MULTIPLICATIVE);
             OtherTools.ApplyStat(player, PlayerStats.StatType.MovementSpeed, 1.05f, StatModifier.ModifyMethod.MULTIPLICATIVE);
             OtherTools.ApplyStat(player, PlayerStats.StatType.ChargeAmountMultiplier, 1.1f, StatModifier.ModifyMethod.MULTIPLICATIVE);
             OtherTools.ApplyStat(player, PlayerStats.StatType.Accuracy, 0.9f, StatModifier.ModifyMethod.MULTIPLICATIVE);

@@ -31,7 +31,7 @@ namespace Planetside
             ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("keepersBox2"), data, obj);
             //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "Faster Than Prime Shipping!";
-            string longDesc = "Creates a small, purhasable item. \n\nThis this new-fangled box technology, you too, can support local bullet kin in their business endavours!";
+            string longDesc = "Creates a small, purchasable item. \n\nThis this new-fangled box technology, you too, can support local bullet kin in their business endavours!";
             activeitem.SetupItem(shortDesc, longDesc, "psog");
             activeitem.SetCooldownType(ItemBuilder.CooldownType.Damage, 800f);
             activeitem.consumable = false;

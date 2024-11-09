@@ -71,7 +71,7 @@ namespace Planetside
                 projectile.gameObject.SetActive(false);
                 FakePrefab.MarkAsFakePrefab(projectile.gameObject);
                 UnityEngine.Object.DontDestroyOnLoad(projectile);
-                projectile.baseData.damage = 5.5f;
+                projectile.baseData.damage = 5f;
                 projectile.baseData.speed *= 3f;
 
                 ExplosiveModifier explosiveModifier = projectile.gameObject.GetOrAddComponent<ExplosiveModifier>();
@@ -79,8 +79,8 @@ namespace Planetside
                 {
                     breakSecretWalls = false,
                     comprehensiveDelay = 0,
-                    damage = 2,
-                    damageRadius = 3.25f,
+                    damage = 2.5f,
+                    damageRadius = 3.5f,
                     damageToPlayer = 0,
                     debrisForce = 40,
                     doDamage = true,
@@ -125,7 +125,7 @@ namespace Planetside
             }
 
             gun.GainsRateOfFireAsContinueAttack = true;
-            gun.RateOfFireMultiplierAdditionPerSecond = 1.05f;
+            gun.RateOfFireMultiplierAdditionPerSecond = 1.04f;
 
             //BULLET STATS
 
