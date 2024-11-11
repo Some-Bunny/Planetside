@@ -87,6 +87,11 @@ namespace Planetside
             breakable.hasParticulates = true;
             breakable.MaxParticlesOnBurst = 10;
             breakable.MinParticlesOnBurst = 4;
+
+            breakable.sprite.SortingOrder = 0;
+            breakable.sprite.HeightOffGround = -1;
+            breakable.gameObject.layer = LayerMask.NameToLayer("FG_Critical");
+
             return breakable;
         }
     }

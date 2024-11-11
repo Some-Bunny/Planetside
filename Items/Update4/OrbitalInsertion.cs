@@ -32,7 +32,7 @@ namespace Planetside
             ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("orbitalinsertion"), data, obj);
             //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "I Need Backup!";
-            string longDesc = "Request heavy backup for the current floor. Single Use.\n\nDespite the victory of the Gungeon over the invading forces of the Hegemony, the Hegemonies presence still remains, watching...\n\nWaiting.";
+            string longDesc = "Request heavy backup for the current floor. Single Use. Stand back.\n\nDespite the victory of the Gungeon over the invading forces of the Hegemony, the Hegemonies presence still remains, watching...\n\nWaiting.";
             activeitem.SetupItem(shortDesc, longDesc, "psog");
             activeitem.SetCooldownType(ItemBuilder.CooldownType.Damage, 10f);
             activeitem.consumable = true;

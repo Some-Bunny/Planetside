@@ -36,8 +36,9 @@ namespace Planetside
 			string longDesc = "Increases rate of fire. Adds favouritism to any weapons you may find.\n\nA necklace made my someone who really, *really* preferred a certain type of weaponry.";
 			ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
 			item.quality = PickupObject.ItemQuality.D;
-			ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.RateOfFire, 1.15f, StatModifier.ModifyMethod.MULTIPLICATIVE);
-			GunClassTokenID = item.PickupObjectId;
+			ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.RateOfFire, 1.1f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+            ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.AdditionalClipCapacityMultiplier, 1.2f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+            GunClassTokenID = item.PickupObjectId;
 			new Hook(typeof(LootDataGlobalSettings).GetMethod("GetModifierForClass", BindingFlags.Instance | BindingFlags.Public), typeof(GunClassToken).GetMethod("GetModifierForClassHook", BindingFlags.Static | BindingFlags.Public));
 		}
 		public static int GunClassTokenID;

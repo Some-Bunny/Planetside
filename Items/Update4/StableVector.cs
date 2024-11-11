@@ -32,7 +32,7 @@ namespace Planetside
             ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("stableVector"), data, obj);
             //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "See Beyond";
-			string longDesc = "Certain entrances appear consistently.\n\nContains a very small blue orb.";
+			string longDesc = "Weakens the fabric of reality to grant consistent entry points between dimensions.\n\nHolds a small blue orb.";
 			ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
 			item.quality = PickupObject.ItemQuality.A;
 			item.SetupUnlockOnCustomFlag(CustomDungeonFlags.TRESPASS_INTO_OTHER_PLACE, true);

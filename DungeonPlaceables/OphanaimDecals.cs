@@ -37,8 +37,10 @@ namespace Planetside
             //
             foreach (var variable in decal2x2List)
             {
-                variable.Key.gameObject.AddComponent<TresspassUnlitShaderController>();
-                variable.Key.gameObject.SetLayerRecursively(LayerMask.NameToLayer("BG_Nonsense"));
+                
+                variable.Key.GetComponent<tk2dBaseSprite>().SortingOrder = 2;
+                variable.Key.GetComponent<tk2dBaseSprite>().HeightOffGround = -1.75f;
+                variable.Key.gameObject.SetLayerRecursively(LayerMask.NameToLayer("BG_Critical"));
 
             }
 

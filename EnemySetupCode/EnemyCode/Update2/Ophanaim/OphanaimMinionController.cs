@@ -182,7 +182,7 @@ namespace Planetside
             component2.sprite.usesOverrideMaterial = true;
             component2.sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
             component2.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
-            component2.sprite.renderer.material.SetFloat("_EmissivePower", 10);
+            component2.sprite.renderer.material.SetFloat("_EmissivePower", 5);
             component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f);
             component2.sprite.renderer.material.SetColor("_OverrideColor", laser);
             component2.sprite.renderer.material.SetColor("_EmissiveColor", laser);
@@ -225,8 +225,8 @@ namespace Planetside
                     tiledsprite.transform.position = this.BulletBank.sprite.WorldCenter;
 
 
-                    tiledsprite.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (75 * t));
-                    tiledsprite.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (10 * t));
+                    tiledsprite.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (25 * t));
+                    tiledsprite.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (5 * t));
                     tiledsprite.transform.localRotation = Quaternion.Euler(0f, 0f, Angle);
                     tiledsprite.HeightOffGround = -2;
                     tiledsprite.renderer.gameObject.layer = 22;
@@ -280,9 +280,12 @@ namespace Planetside
                 string s = IsBlue == true ? StaticUndodgeableBulletEntries.UndodgeableFrogger.Name : "frogger";
 
                 base.PostWwiseEvent("Play_BOSS_doormimic_blast_01", null);
+                base.Fire(Offset.OverridePosition(this.BulletBank.sprite.WorldCenter), new Direction(Angle, DirectionType.Absolute, -1f), new Speed(3f, SpeedType.Absolute), new SpeedChangingBullet(s, 25, 90));
                 base.Fire(Offset.OverridePosition(this.BulletBank.sprite.WorldCenter), new Direction(Angle, DirectionType.Absolute, -1f), new Speed(5f, SpeedType.Absolute), new SpeedChangingBullet(s, 25, 90));
                 base.Fire(Offset.OverridePosition(this.BulletBank.sprite.WorldCenter), new Direction(Angle, DirectionType.Absolute, -1f), new Speed(7f, SpeedType.Absolute), new SpeedChangingBullet(s, 25, 90));
                 base.Fire(Offset.OverridePosition(this.BulletBank.sprite.WorldCenter),new Direction(Angle, DirectionType.Absolute, -1f), new Speed(9f, SpeedType.Absolute), new SpeedChangingBullet(s, 25, 90));
+                base.Fire(Offset.OverridePosition(this.BulletBank.sprite.WorldCenter), new Direction(Angle, DirectionType.Absolute, -1f), new Speed(11f, SpeedType.Absolute), new SpeedChangingBullet(s, 25, 90));
+
             }
             yield break;
         }
@@ -323,7 +326,7 @@ namespace Planetside
             component2.sprite.usesOverrideMaterial = true;
             component2.sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
             component2.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
-            component2.sprite.renderer.material.SetFloat("_EmissivePower", 10);
+            component2.sprite.renderer.material.SetFloat("_EmissivePower", 5);
             component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f);
             component2.sprite.renderer.material.SetColor("_OverrideColor", laser);
             component2.sprite.renderer.material.SetColor("_EmissiveColor", laser);
@@ -367,8 +370,8 @@ namespace Planetside
                 if (tiledspriteObject != null)
                 {
                     tiledsprite.transform.position = this.BulletBank.sprite.WorldCenter;
-                    tiledsprite.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (35 * t));
-                    tiledsprite.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (10 * t));
+                    tiledsprite.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (25 * t));
+                    tiledsprite.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (5 * t));
 
                     Vector2 predictedPosition = BraveMathCollege.GetPredictedPosition(this.BulletManager.PlayerPosition(), this.BulletManager.PlayerVelocity(), this.BulletBank.GetComponent<tk2dBaseSprite>().WorldCenter, 40f);
                     float CentreAngle = (predictedPosition - this.Position).ToAngle();
@@ -428,9 +431,9 @@ namespace Planetside
                 base.PostWwiseEvent("Play_BOSS_doormimic_blast_01", null);
                 string s = IsBlue == true ? StaticUndodgeableBulletEntries.UndodgeableFrogger.Name : "frogger";
 
-                base.Fire(Offset.OverridePosition(this.BulletBank.sprite.WorldCenter), new Direction(f, DirectionType.Absolute, -1f), new Speed(7f, SpeedType.Absolute), new SpeedChangingBullet(s, 25, 60));
-                base.Fire(Offset.OverridePosition(this.BulletBank.sprite.WorldCenter), new Direction(f, DirectionType.Absolute, -1f), new Speed(8f, SpeedType.Absolute), new SpeedChangingBullet(s, 25, 60));
-                base.Fire(Offset.OverridePosition(this.BulletBank.sprite.WorldCenter), new Direction(f, DirectionType.Absolute, -1f), new Speed(9f, SpeedType.Absolute), new SpeedChangingBullet(s, 25, 60));
+                base.Fire(Offset.OverridePosition(this.BulletBank.sprite.WorldCenter), new Direction(f, DirectionType.Absolute, -1f), new Speed(7f, SpeedType.Absolute), new SpeedChangingBullet(s, 18, 75));
+                base.Fire(Offset.OverridePosition(this.BulletBank.sprite.WorldCenter), new Direction(f, DirectionType.Absolute, -1f), new Speed(8f, SpeedType.Absolute), new SpeedChangingBullet(s, 18, 75));
+                base.Fire(Offset.OverridePosition(this.BulletBank.sprite.WorldCenter), new Direction(f, DirectionType.Absolute, -1f), new Speed(9f, SpeedType.Absolute), new SpeedChangingBullet(s, 18, 75));
             }
             yield break;
         }

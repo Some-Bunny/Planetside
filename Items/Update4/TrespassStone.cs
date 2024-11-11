@@ -24,7 +24,6 @@ namespace Planetside
         public static void Init()
         {
             string itemName = "Trespass Stone";
-            //string resourceName = "Planetside/Resources/trespassStone.png";
             GameObject obj = new GameObject(itemName);
             TrespassStone activeitem = obj.AddComponent<TrespassStone>();
             var data = StaticSpriteDefinitions.Active_Item_Sheet_Data;

@@ -465,10 +465,10 @@ namespace Planetside
                             SpinBulletsController spinBulletsController = self.aiActor.gameObject.AddComponent<SpinBulletsController>();
                             spinBulletsController.ShootPoint = self.aiActor.transform.Find("SkullAttackPointOuroboros").gameObject;
                             spinBulletsController.OverrideBulletName = "homingOuroboros";
-                            spinBulletsController.NumBullets = 2;
+                            spinBulletsController.NumBullets = 1;
                             spinBulletsController.BulletMinRadius = 2.25f;
                             spinBulletsController.BulletMaxRadius = 2.5f;
-                            spinBulletsController.BulletCircleSpeed = 60;
+                            spinBulletsController.BulletCircleSpeed = 60 + (int)CurrentLoop();
                             spinBulletsController.BulletsIgnoreTiles = true;
                             spinBulletsController.RegenTimer = (CurrentLoop() / 25) + 0.25f;
                             spinBulletsController.AmountOFLines = SkullAmount;
@@ -550,9 +550,6 @@ namespace Planetside
 						{
 							bulletBank.Bullets.Add(entry);
 						}
-                        //if (self.aiActor.specRigidbody == null) { ETGModConsole.Log("self.aiActor.specRigidbody is NULL"); }
-
-
                         bulletBank.FixedPlayerRigidbody = self.aiActor.specRigidbody;
 						bulletBank.ActorName = self.aiActor.name != null ? self.aiActor.name : "Toddy";
 
@@ -773,8 +770,6 @@ namespace Planetside
             }
             return AmountOfSkulls;
         }
-
-
         public static bool OuroborosMode()
         {
             return AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.LOOPING_ON);
@@ -912,12 +907,11 @@ namespace Planetside
         public override float HealthMultiplier => 1;
         public override float CooldownMultiplier => 0.9f;
         public override float MovementSpeedMultiplier => 0.7f;
-        public override Color EliteOutlineColor => new Color(50, 3, 0);
-        public override Color EliteParticleColor => new Color(50, 3, 0);
-        public override Color SecondaryEliteParticleColor => new Color(50, 3, 0);
+        public override Color EliteOutlineColor => new Color(255, 100, 0);
+        public override Color EliteParticleColor => new Color(255, 100, 0);
+        public override Color SecondaryEliteParticleColor => new Color(255, 100, 0);
         public override List<string> EnemyBlackList => new List<string>() 
 		{
-               EnemyGUIDs.Ammoconda_Ball_GUID,
                EnemyGUIDs.Blobulin_GUID,
                EnemyGUIDs.Blobuloid_GUID,
                EnemyGUIDs.Poisbulin_GUID,
@@ -925,17 +919,17 @@ namespace Planetside
                EnemyGUIDs.Mine_Flayers_Bell_GUID,
                EnemyGUIDs.Mine_Flayers_Claymore_GUID,
                EnemyGUIDs.Flesh_Cube_GUID,
-               EnemyGUIDs.Lead_Cube_GUID,
-                              EnemyGUIDs.Bullat_GUID,
-                              EnemyGUIDs.Shotgat_GUID,
-                              EnemyGUIDs.Spirat_GUID,
-                              EnemyGUIDs.Grenat_GUID,
-                              EnemyGUIDs.Spent_GUID,
-                              EnemyGUIDs.Mouser_GUID,
-                              EnemyGUIDs.Beadie_GUID,
-                              EnemyGUIDs.Treadnaughts_Tanker_GUID,
-                              EnemyGUIDs.Ammoconda_Ball_GUID,
-                              EnemyGUIDs.Fusebot_GUID,
+               EnemyGUIDs.Lead_Cube_GUID,                              
+			   EnemyGUIDs.Bullat_GUID,
+               EnemyGUIDs.Shotgat_GUID,
+               EnemyGUIDs.Spirat_GUID,
+               EnemyGUIDs.Grenat_GUID,
+               EnemyGUIDs.Spent_GUID,
+               EnemyGUIDs.Mouser_GUID,
+               //EnemyGUIDs.Beadie_GUID,
+               //EnemyGUIDs.Treadnaughts_Tanker_GUID,
+               //EnemyGUIDs.Ammoconda_Ball_GUID,
+               EnemyGUIDs.Fusebot_GUID,
         };
         public override List<ActorEffectResistance> DebuffImmunities => new List<ActorEffectResistance> { new ActorEffectResistance() { resistAmount = 1, resistType = EffectResistanceType.Fire } };
         public override void Start()
@@ -1108,22 +1102,25 @@ namespace Planetside
 			duration = 0.25f;
 			bool b = false;
 			while (elapsed < duration)
-			{
-				elapsed += BraveTime.DeltaTime;
-				float t = Mathf.SmoothStep(0f, 1f, elapsed / duration);
-				radialIndicator.CurrentRadius = Mathf.Lerp(5.2f, 0, t);
-				float r = BraveUtility.RandomAngle();
-				if (b == true)
+			{			
+				if (BraveTime.DeltaTime > 0)
 				{
-                    for (int i = 0; i < 24; i++)
+                    elapsed += BraveTime.DeltaTime;
+                    float t = Mathf.SmoothStep(0f, 1f, elapsed / duration);
+                    radialIndicator.CurrentRadius = Mathf.Lerp(5.2f, 0, t);
+                    float r = BraveUtility.RandomAngle();
+                    if (b == true)
                     {
-                        float Dist = Mathf.Lerp(0.1f, 5.2f, t);
-                        Vector2 Point = MathToolbox.GetUnitOnCircle((15 * i) + r, Dist);
-                        GameObject obj = UnityEngine.Object.Instantiate<GameObject>(StaticVFXStorage.HealingSparklesVFX, centre + Point, Quaternion.identity);
-                        obj.transform.localScale *= 1.2f;
+                        for (int i = 0; i < 24; i++)
+                        {
+                            float Dist = Mathf.Lerp(0.1f, 5.2f, t);
+                            Vector2 Point = MathToolbox.GetUnitOnCircle((15 * i) + r, Dist);
+                            GameObject obj = UnityEngine.Object.Instantiate<GameObject>(StaticVFXStorage.HealingSparklesVFX, centre + Point, Quaternion.identity);
+                            obj.transform.localScale *= 1.2f;
+                        }
                     }
+                    b = !b;
                 }
-				b = !b;
 				yield return null;
 			}
 			Destroy(radialIndicator.gameObject);		
@@ -1298,7 +1295,21 @@ namespace Planetside
 		{
 			EnemyGuidDatabase.Entries["rat_candle"],
             EnemyGUIDs.Fusebot_GUID,
-
+               EnemyGUIDs.Blobulin_GUID,
+               EnemyGUIDs.Blobuloid_GUID,
+               EnemyGUIDs.Poisbulin_GUID,
+               EnemyGUIDs.Poisbuloiud_GUID,
+               EnemyGUIDs.Mine_Flayers_Bell_GUID,
+               EnemyGUIDs.Mine_Flayers_Claymore_GUID,
+               EnemyGUIDs.Flesh_Cube_GUID,
+               EnemyGUIDs.Lead_Cube_GUID,
+               EnemyGUIDs.Bullat_GUID,
+               EnemyGUIDs.Shotgat_GUID,
+               EnemyGUIDs.Spirat_GUID,
+               EnemyGUIDs.Grenat_GUID,
+               EnemyGUIDs.Spent_GUID,
+               EnemyGUIDs.Mouser_GUID,
+               EnemyGUIDs.Fusebot_GUID,
         };
 
         public override List<ActorEffectResistance> DebuffImmunities => new List<ActorEffectResistance> {
@@ -1306,19 +1317,19 @@ namespace Planetside
 		};
 		public override void Start()
 		{
-			Timer = 0.8f;
+			Timer = 0.75f;
 			base.Start();
 			if (IsBoss == true)
 			{
-                Timer = 2.5f;
+                Timer = 3f;
             }
         }
 
         public override void OnDamaged(float resultValue, float maxValue, CoreDamageTypes damageTypes, DamageCategory damageCategory, Vector2 damageDirection)
         {
-			if (Timer == 0 | Timer <= 0)
+			if (Timer <= 0)
             {
-				Timer = 0.8f;
+				Timer = IsBoss == true ? 2.25f : 0.75f;
 				if (base.aiActor != null)
 				{
                     SpawnBulletScript(base.aiActor, base.aiActor.sprite.WorldCenter, OuroborosController.BulletBankDummy.GetComponent<AIBulletBank>(), (IsBoss == true ? new CustomBulletScriptSelector(typeof(EliteReflectBoss)) : new CustomBulletScriptSelector(typeof(EliteReflect))), "Reflection");
@@ -1377,7 +1388,7 @@ namespace Planetside
 			base.Update();
 			if (base.aiActor)
 			{
-				if (Timer >= 0) { Timer -= BraveTime.DeltaTime; }
+				if (Timer > 0) { Timer -= BraveTime.DeltaTime; }
 			}
 		}
 		private float Timer;
@@ -1418,9 +1429,8 @@ namespace Planetside
             for (int i = 0; i <= 8; i++)
             {
                 this.Fire(new Direction((i * 45) + RNG, DirectionType.Aim, -1f), new Speed(1f, SpeedType.Absolute), new SkellBullet());
-                this.Fire(new Direction((i * 45) + RNG, DirectionType.Aim, -1f), new Speed(1.5f, SpeedType.Absolute), new SkellBullet());
-                this.Fire(new Direction((i * 45) + RNG, DirectionType.Aim, -1f), new Speed(2f, SpeedType.Absolute), new SkellBullet());
-
+                this.Fire(new Direction((i * 45) + RNG, DirectionType.Aim, -1f), new Speed(1.625f, SpeedType.Absolute), new SkellBullet());
+                this.Fire(new Direction((i * 45) + RNG, DirectionType.Aim, -1f), new Speed(2.25f, SpeedType.Absolute), new SkellBullet());
             }
             yield break;
         }
@@ -1432,7 +1442,6 @@ namespace Planetside
             }
             public override IEnumerator Top()
             {
-                base.ChangeSpeed(new Speed(1f, SpeedType.Absolute), 20);
                 yield return this.Wait(60);
                 base.ChangeSpeed(new Speed(12f, SpeedType.Absolute), 40);
                 yield break;
@@ -1453,16 +1462,20 @@ namespace Planetside
         public override Color SecondaryEliteParticleColor => Color.red;
 		public override List<string> EnemyBlackList => new List<string>()
 		{
-                              EnemyGUIDs.Bullat_GUID,
-                              EnemyGUIDs.Shotgat_GUID,
-                              EnemyGUIDs.Spirat_GUID,
-                              EnemyGUIDs.Grenat_GUID,
-                              EnemyGUIDs.Spent_GUID,
-                              EnemyGUIDs.Mouser_GUID,
-                              EnemyGUIDs.Beadie_GUID,
-                              EnemyGUIDs.Treadnaughts_Tanker_GUID,
-                              EnemyGUIDs.Ammoconda_Ball_GUID,
-                              EnemyGUIDs.Fusebot_GUID,
+               EnemyGUIDs.Bullat_GUID,
+               EnemyGUIDs.Shotgat_GUID,
+               EnemyGUIDs.Spirat_GUID,
+               EnemyGUIDs.Grenat_GUID,
+               EnemyGUIDs.Spent_GUID,
+               EnemyGUIDs.Mouser_GUID,
+               EnemyGUIDs.Beadie_GUID,
+               EnemyGUIDs.Treadnaughts_Tanker_GUID,
+               EnemyGUIDs.Ammoconda_Ball_GUID,
+               EnemyGUIDs.Fusebot_GUID,
+               EnemyGUIDs.Blobulin_GUID,
+               EnemyGUIDs.Blobuloid_GUID,
+               EnemyGUIDs.Poisbulin_GUID,
+               EnemyGUIDs.Poisbuloiud_GUID,
         };
 		public override List<ActorEffectResistance> DebuffImmunities => new List<ActorEffectResistance> { new ActorEffectResistance() {resistAmount = 1, resistType =  EffectResistanceType.Fire} };
 		public override void Start()
@@ -1782,7 +1795,7 @@ namespace Planetside
 		{
 			if (Timer == 0 | Timer <= 0)
 			{
-				Timer = UnityEngine.Random.Range(2.5f, 7f);
+				Timer = UnityEngine.Random.Range(1.5f, 4f);
 				if (base.aiActor != null && base.aiActor.GetAbsoluteParentRoom() != null)
 				{
 					this.StartCoroutine(DoTeleports());
@@ -1814,7 +1827,7 @@ namespace Planetside
                 var obj = UnityEngine.Object.Instantiate<GameObject>(StaticVFXStorage.TeleportVFX, base.aiActor.sprite.WorldCenter, Quaternion.identity);
                 Destroy(obj, 2);
                 DoTeleport();
-                base.aiActor.behaviorSpeculator.Stun(0.2f);
+                base.aiActor.behaviorSpeculator.Stun(0.1f);
             }
         }
 
@@ -2262,7 +2275,7 @@ namespace Planetside
 			{
 				num = (this.aiActor.TargetRigidbody.GetUnitCenter(ColliderType.HitBox) - this.aiActor.specRigidbody.GetUnitCenter(ColliderType.HitBox)).magnitude;
 			}
-			for (int i = 0; i < this.NumBullets; i++)
+			for (int i = 1; i < this.NumBullets + 1; i++)
 			{
 				float num2 = Mathf.Lerp(this.BulletMinRadius, this.BulletMaxRadius, (float)i / ((float)this.NumBullets - 1f));
 				if (num2 * 2f > num)
@@ -2357,7 +2370,7 @@ namespace Planetside
             {
                 if (this.m_projectiles[i] != null && this.m_projectiles[i].projectile)
                 {
-					this.m_projectiles[i].distFromCenter = Mathf.Lerp(this.BulletMinRadius, this.BulletMaxRadius, (float)this.m_projectiles[i].ValueOnLine / ((float)this.NumBullets - 1f));      
+					this.m_projectiles[i].distFromCenter = Mathf.Lerp(this.BulletMinRadius, this.BulletMaxRadius, (float)this.m_projectiles[i].ValueOnLine / ((float)this.NumBullets));      
                 }
             }
             for (int k = 0; k < this.m_projectiles.Count; k++)

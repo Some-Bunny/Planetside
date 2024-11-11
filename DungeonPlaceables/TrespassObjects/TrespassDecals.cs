@@ -27,10 +27,16 @@ namespace Planetside
                 { BreakableAPIToolbox.GenerateDecalObject("trespass_decal", new string[] {defaultPath+ "decalOne3.png" }, 1), 0.1f },
                 { BreakableAPIToolbox.GenerateDecalObject("trespass_decal", new string[] {defaultPath+ "decalOne4.png" }, 1), 0.2f },
             };
-            foreach(var Entry in decal2x2List)
+
+            foreach (var variable in decal2x2List)
             {
-                Entry.Key.gameObject.GetOrAddComponent<TresspassUnlitShaderController>();
+                //variable.Key.gameObject.AddComponent<TresspassUnlitShaderController>();
+                variable.Key.GetComponent<tk2dBaseSprite>().SortingOrder = 2;
+                variable.Key.GetComponent<tk2dBaseSprite>().HeightOffGround = -1.75f;
+                variable.Key.gameObject.SetLayerRecursively(LayerMask.NameToLayer("BG_Critical"));
+
             }
+
             DungeonPlaceable placeable = BreakableAPIToolbox.GenerateDungeonPlaceable(decal2x2List);
             StaticReferences.StoredDungeonPlaceables.Add("trespassRandom2x2Decal", placeable);
 

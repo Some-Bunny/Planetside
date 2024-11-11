@@ -526,8 +526,8 @@ namespace Planetside
                         float throne1 = Mathf.Sin(t * (Mathf.PI / 2));
                         float Q = Mathf.Lerp(0, rotSet, throne1);
                         component2.transform.position = this.Position;
-                        component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (75 * t));
-                        component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (10 * t));
+                        component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (25 * t));
+                        component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (5 * t));
                         component2.transform.localRotation = Quaternion.Euler(0f, 0f, aimDir + Q);
                         component2.HeightOffGround = -2;
                         component2.renderer.gameObject.layer = 23;
@@ -678,8 +678,8 @@ namespace Planetside
                         float throne1 = Mathf.Sin(t * (Mathf.PI / 2));
                         float Q = Mathf.Lerp(0, rotSet, throne1);
                         component2.transform.position = this.Position;
-                        component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (75 * t));
-                        component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (10 * t));
+                        component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (25 * t));
+                        component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (5 * t));
                         component2.transform.localRotation = Quaternion.Euler(0f, 0f, aimDir + Q);
                         component2.HeightOffGround = -2;
                         component2.renderer.gameObject.layer = 23;
@@ -897,7 +897,7 @@ namespace Planetside
 
                 AIBeamShooter2[] beams = this.BulletBank.aiActor.GetComponents<AIBeamShooter2>();
                 yield return this.Wait(90);
-                GlobalMessageRadio.BroadcastMessage("eye_gun_predict_blue");
+                GlobalMessageRadio.BroadcastMessage("eye_gun_laser_blue");
                 yield return this.Wait(30);
 
                 int i = 0;

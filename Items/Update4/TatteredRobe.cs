@@ -17,7 +17,7 @@ namespace Planetside
 			GameObject gameObject = new GameObject(name);
 			TatteredRobe warVase = gameObject.AddComponent<TatteredRobe>();
 			ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
-			string shortDesc = "Part Of His Power";
+			string shortDesc = "Part Of Their Power";
 			string longDesc = "A piece of the robe the Prisoner wore before escaping deeper.\n\nStrangely empowering...";
 			ItemBuilder.SetupItem(warVase, shortDesc, longDesc, "psog");
 			warVase.quality = PickupObject.ItemQuality.SPECIAL;

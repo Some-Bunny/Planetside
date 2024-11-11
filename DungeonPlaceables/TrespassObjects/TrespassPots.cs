@@ -70,6 +70,10 @@ namespace Planetside
             breakable.MaxParticlesOnBurst = 10;
             breakable.MinParticlesOnBurst = 4;
 
+            breakable.sprite.SortingOrder = 0;
+            breakable.sprite.HeightOffGround = -1;
+            breakable.gameObject.layer = LayerMask.NameToLayer("FG_Critical");
+
             MinorBreakable breakable2 = BreakableAPIToolbox.GenerateMinorBreakable("TrespassPot2", new string[] { defaultPath + "trespasspot2_idle.png" }, 2, new string[] { defaultPath + "trespasspot2_break.png" }, 10, "Play_OBJ_pot_shatter_01", true, 13, 14, 1, 1);
             BreakableAPIToolbox.GenerateShadow(shadowPath, "trespassPot_shadow", breakable2.gameObject.transform, new Vector3(0, -0.125f));
 
@@ -96,6 +100,11 @@ namespace Planetside
             breakable2.MinParticlesOnBurst = 4;
             breakable2.gameObject.AddComponent<TresspassUnlitShaderController>();
             breakable2.gameObject.AddComponent<TheGames.Marker>();
+
+            breakable2.sprite.SortingOrder = 0;
+            breakable2.sprite.HeightOffGround = -1;
+            breakable2.gameObject.layer = LayerMask.NameToLayer("FG_Critical");
+
 
 
             MinorBreakable breakable3 = BreakableAPIToolbox.GenerateMinorBreakable("TrespassPot3", new string[] { defaultPath + "trespasspot3_idle.png" }, 2, new string[] { defaultPath + "trespasspot3_break.png" }, 10, "Play_OBJ_pot_shatter_01", true, 13, 14, 1, 1);
@@ -124,6 +133,10 @@ namespace Planetside
             breakable3.MinParticlesOnBurst = 4;
             breakable3.gameObject.AddComponent<TresspassUnlitShaderController>();
             breakable3.gameObject.AddComponent<TheGames.Marker>();
+
+            breakable3.sprite.SortingOrder = 0;
+            breakable3.sprite.HeightOffGround = -1;
+            breakable3.gameObject.layer = LayerMask.NameToLayer("FG_Critical");
 
             Dictionary<GameObject, float> dict = new Dictionary<GameObject, float>()
             {

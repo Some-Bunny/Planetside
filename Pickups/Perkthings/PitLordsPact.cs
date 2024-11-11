@@ -527,7 +527,7 @@ namespace Planetside
                 {
                     PlayerController player = players[i];
                     PitLordsPactController pact = player.GetComponent<PitLordsPactController>();
-                    if (pact != null)
+                    if (pact != null && droppedGun.RespawnsIfPitfall == false)
                     {
                         SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.PITLORDPACT_FLAG_ITEM, true);
                         if (pact.AmountOfItemsSacrificed < pact.ItemSacrificablePerFloor)
@@ -564,23 +564,23 @@ namespace Planetside
                             PickupObject.ItemQuality quality = droppedGun.quality;
                             if (quality != PickupObject.ItemQuality.COMMON && quality != PickupObject.ItemQuality.SPECIAL && quality != PickupObject.ItemQuality.EXCLUDED)
                             {
-                                int moneyTogive = 24;
+                                int moneyTogive = 12;
                                 switch (quality)
                                 {
                                     case PickupObject.ItemQuality.D:
-                                        moneyTogive = 10;
+                                        moneyTogive = 5;
                                         break;
                                     case PickupObject.ItemQuality.C:
-                                        moneyTogive = 16;
+                                        moneyTogive = 10;
                                         break;
                                     case PickupObject.ItemQuality.B:
-                                        moneyTogive = 24;
+                                        moneyTogive = 15;
                                         break;
                                     case PickupObject.ItemQuality.A:
-                                        moneyTogive = 32;
+                                        moneyTogive = 20;
                                         break;
                                     case PickupObject.ItemQuality.S:
-                                        moneyTogive = 40;
+                                        moneyTogive = 25;
                                         break;
                                 }
                                 AkSoundEngine.PostEvent("Play_OBJ_coin_medium_01", self.gameObject);
@@ -600,7 +600,7 @@ namespace Planetside
                 {
                     PlayerController player = players[i];
                     PitLordsPactController pact = player.GetComponent<PitLordsPactController>();
-                    if (pact != null)
+                    if (pact != null && pickupObj.RespawnsIfPitfall == false)
                     {
                         if (pact.AmountOfItemsSacrificed <= pact.ItemSacrificablePerFloor)
                         {
@@ -648,23 +648,23 @@ namespace Planetside
                             PickupObject.ItemQuality quality = pickupObj.quality;
                             if (quality != PickupObject.ItemQuality.COMMON && quality != PickupObject.ItemQuality.SPECIAL && quality != PickupObject.ItemQuality.EXCLUDED)
                             {
-                                int moneyTogive = 24;
+                                int moneyTogive = 12;
                                 switch (quality)
                                 {
                                     case PickupObject.ItemQuality.D:
-                                        moneyTogive = 8;
+                                        moneyTogive = 5;
                                         break;
                                     case PickupObject.ItemQuality.C:
-                                        moneyTogive = 16;
+                                        moneyTogive = 10;
                                         break;
                                     case PickupObject.ItemQuality.B:
-                                        moneyTogive = 24;
+                                        moneyTogive = 15;
                                         break;
                                     case PickupObject.ItemQuality.A:
-                                        moneyTogive = 32;
+                                        moneyTogive = 20;
                                         break;
                                     case PickupObject.ItemQuality.S:
-                                        moneyTogive = 40;
+                                        moneyTogive = 25;
                                         break;
                                 }
                                 AkSoundEngine.PostEvent("Play_OBJ_coin_medium_01", self.gameObject);

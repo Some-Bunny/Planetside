@@ -613,6 +613,8 @@ namespace BreakAbleAPI
             int spriteID = SpriteBuilder.AddSpriteToCollection(SpritePaths[0], SpriteObjectSpriteCollection);
             tk2dSprite sprite = gameObject.GetOrAddComponent<tk2dSprite>();
             sprite.SetSprite(SpriteObjectSpriteCollection, spriteID);
+            sprite.usesOverrideMaterial = true;
+            sprite.renderer.material = new Material(ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTilted"));
 
             tk2dSpriteAnimator animator = gameObject.GetOrAddComponent<tk2dSpriteAnimator>();
             tk2dSpriteAnimation animation = gameObject.AddComponent<tk2dSpriteAnimation>();
