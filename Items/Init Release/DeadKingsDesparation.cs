@@ -33,7 +33,7 @@ namespace Planetside
             DeadKingsDesparation activeitem = obj.AddComponent<DeadKingsDesparation>();
             ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "Strengths Falsified";
-            string longDesc = "Steals the strength and resistances of all foes in the room. A simple battle-helmet worn by an old King, who in his final act of desparation stole the empowering trinkets the Challenger brought with him.";
+            string longDesc = "Steals the strength and resistances of all foes in the room.\n\nA simple war helmet worn by an old King, who in his final act of desparation stole the empowering trinkets the Challenger brought with them.";
             activeitem.SetupItem(shortDesc, longDesc, "psog");
             activeitem.SetCooldownType(ItemBuilder.CooldownType.Damage, 900f);
             activeitem.consumable = false;

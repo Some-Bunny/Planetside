@@ -17,19 +17,13 @@ namespace Planetside
 {
     internal class PolarityProjectile : MonoBehaviour
     {
-        public PolarityProjectile()
-        {
-			IsUp = false;
-        }
-
         public void Start()
         {
-            //GameObject original;
             Projectile component = base.gameObject.GetComponent<Projectile>();
             PlayerController playerController = component.Owner as PlayerController;
-            if (component != null)
+            if (component != null && playerController != null)
             {
-				if (playerController.PlayerHasActiveSynergy("Refridgeration") && playerController != null)
+				if (playerController.PlayerHasActiveSynergy("Refridgeration"))
 				{
                     component.OverrideMotionModule = new HelixProjectileMotionModule
                     {

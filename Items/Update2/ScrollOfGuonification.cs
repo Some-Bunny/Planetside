@@ -38,7 +38,7 @@ namespace Planetside
             ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("scrollofguon"), data, obj);
             //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "Protection Potential";
-            string longDesc = "Imbues objects with orbiting, protective powers.\n\nA scroll written by a long-dead Guonmancer. Small pieces of paper that have torn off of the scroll due to age float around it passively.";
+            string longDesc = "Imbues pickups with orbital powers.\n\nA scroll written by a long-dead Guonmancer. Small pieces of paper that have torn off of the scroll due to age float around it passively.";
 			activeitem.SetupItem(shortDesc, longDesc, "psog");
 			activeitem.SetCooldownType(ItemBuilder.CooldownType.Timed, 0.25f);
 			activeitem.consumable = false;

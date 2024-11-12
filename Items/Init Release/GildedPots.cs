@@ -21,7 +21,7 @@ namespace Planetside
             ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("gildedceramic"), data, gameObject);
             //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
             string shortDesc = "Destruction Therapy";
-			string longDesc = "Decorative breakables have a chance to be replaced by special coin-plated pottery.\n\nOriginally a trinket carried around by the Lost Adventurer, he lost it while traversing the halls of the Gungeon.";
+			string longDesc = "Decorative breakables have a chance to be replaced by special coin-plated pottery.\n\nOriginally a trinket carried around by the Lost Adventurer, it was lost only by a technicality in that the Lost Adventurer got himself lost after placing the pot down to relax.";
 			ItemBuilder.SetupItem(warVase, shortDesc, longDesc, "psog");
 			warVase.quality = PickupObject.ItemQuality.D;
 			List<string> mandatoryConsoleIDs = new List<string>

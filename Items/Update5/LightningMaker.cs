@@ -52,7 +52,7 @@ namespace Planetside
             component2.usesOverrideMaterial = true;
             component2.sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
             component2.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
-            component2.sprite.renderer.material.SetFloat("_EmissivePower", 100);
+            component2.sprite.renderer.material.SetFloat("_EmissivePower", 50);
             component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 1.55f);
 
             component2.sprite.renderer.material.SetColor("_OverrideColor", new Color(1.4f, 1.7f, 1.7f));
@@ -159,7 +159,6 @@ namespace Planetside
             Dist *= PreFinalLengthMultiplier;
             for (int i = 1; i < MajorNodesCount + 1; i++)
             {
-
                 Vector2 createdPosition = List[i - 1].position;
 
                 float Offset = BraveUtility.RandomBool() == true ? UnityEngine.Random.Range(-MajorNodeMaxAngleSpacing, -MajorNodeMinAngleSpacing) : UnityEngine.Random.Range(MajorNodeMinAngleSpacing, MajorNodeMaxAngleSpacing);

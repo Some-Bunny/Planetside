@@ -32,7 +32,7 @@ namespace Planetside
             ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("bulletofthemountain"), data, obj);
             //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "Forged For The Mountain King";
-			string longDesc = "Increased Challenge, Increased Reward.\nNo matter how steep it is, these rounds climb to the top to stay level with their foes.";
+			string longDesc = "Increased Challenge, Increased Reward.\nNo matter how steep the challenge, these rounds climb to the top to stay level with their foes.";
 			ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
 			item.quality = PickupObject.ItemQuality.A;
 			ShellsOfTheMountain.ShellsOfTheMountainID = item.PickupObjectId;

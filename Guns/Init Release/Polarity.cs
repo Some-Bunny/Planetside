@@ -94,7 +94,7 @@ namespace Planetside
 			projectile.AdditionalScaleMultiplier *= 1.33f;
 			projectile.baseData.damage = 6.5f;
 			PolarityProjectile aaaaaaa = projectile.gameObject.AddComponent<PolarityProjectile>();
-			aaaaaaa.IsUp = true;
+			aaaaaaa.IsUp = false;
 			Polarity.PolarityID = gun.PickupObjectId;
 
 			List<string> mandatoryConsoleIDs1 = new List<string>
