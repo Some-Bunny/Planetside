@@ -200,13 +200,16 @@ namespace Planetside
 		public override void Update()
 		{
 			base.Update();
-			
-		}
+			if (gun.CurrentOwner && gun.CurrentOwner is PlayerController player)
+			{
+                gun.DefaultModule.numberOfFinalProjectiles = (gun.DefaultModule.GetModNumberOfShotsInClip(player) - 1);
+            }
+        }
+
 		public override void OnReloadPressed(PlayerController player, Gun bruhgun, bool bSOMETHING)
 		{
 			base.OnReloadPressed(player, gun, bSOMETHING);
-			bool flag = gun.ClipCapacity == gun.ClipShotsRemaining || gun.CurrentAmmo == gun.ClipShotsRemaining;
-			if (flag)
+			if (gun.ClipCapacity == gun.ClipShotsRemaining || gun.CurrentAmmo == gun.ClipShotsRemaining)
 			{
 				AkSoundEngine.PostEvent("Play_OBJ_supplydrop_activate_01", player.gameObject);
 				for (int e = 0; e < allRifts.Count; e++)

@@ -298,35 +298,37 @@ public class ShamberController : BraveBehaviour
 		}
 		for (int i = this.m_bulletPositions.Count - 1; i > -1; i--)
 		{
-            Projectile proj = this.m_bulletPositions[i].projectile;
-			if (proj)
-			{
-                proj.ManualControl = false;
-
-                proj.collidesWithEnemies = base.aiActor.CanTargetEnemies;
-                proj.specRigidbody.CollideWithTileMap = true;
-                proj.collidesWithPlayer = true;
-                proj.UpdateCollisionMask();
-				proj.Direction = proj.transform.PositionVector2() - this.aiActor.sprite.WorldCenter;
-                proj.ResetDistance();
-                proj.baseData.UsesCustomAccelerationCurve = true;
-                proj.baseData.CustomAccelerationCurveDuration = 3f;
-                proj.baseData.range = 1000;
-                proj.baseData.AccelerationCurve = new AnimationCurve()
+            if (this.m_bulletPositions[i] != null)
+            {
+                Projectile proj = this.m_bulletPositions[i].projectile;
+                if (proj)
                 {
-                    postWrapMode = WrapMode.ClampForever,
+                    proj.ManualControl = false;
 
-                    keys = new Keyframe[] {
+                    proj.collidesWithEnemies = base.aiActor.CanTargetEnemies;
+                    proj.specRigidbody.CollideWithTileMap = true;
+                    proj.collidesWithPlayer = true;
+                    proj.UpdateCollisionMask();
+                    proj.Direction = proj.transform.PositionVector2() - this.aiActor.sprite.WorldCenter;
+                    proj.ResetDistance();
+                    proj.baseData.UsesCustomAccelerationCurve = true;
+                    proj.baseData.CustomAccelerationCurveDuration = 3f;
+                    proj.baseData.range = 1000;
+                    proj.baseData.AccelerationCurve = new AnimationCurve()
+                    {
+                        postWrapMode = WrapMode.ClampForever,
+
+                        keys = new Keyframe[] {
                 new Keyframe(){time = 0.1f, value = 0.3f, inTangent = 0.75f, outTangent = 0.25f},
                 new Keyframe(){time = 0.5f, value = 0f},
                 new Keyframe(){time = 0.95f, value = 1.1f, inTangent = 0.75f, outTangent = 0.25f}
                 }
-                };
-                proj.baseData.speed = Mathf.Min(this.m_bulletPositions[i].speed, 25);
-                proj.UpdateSpeed();
-                proj.IgnoreTileCollisionsFor(0.5f);
-            }
+                    };
+                    proj.baseData.speed = Mathf.Min(this.m_bulletPositions[i].speed, 25);
+                    proj.UpdateSpeed();
+                    proj.IgnoreTileCollisionsFor(0.5f);
+                }
+            }        
         }
     }
-
 }

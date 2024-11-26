@@ -72,7 +72,7 @@ namespace Planetside
 
                 Projectile projectile = UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(88) as Gun).DefaultModule.projectiles[0]);
                 projectile.gameObject.SetActive(false);
-                projectile.baseData.damage = 10f;
+                projectile.baseData.damage = 8f;
                 projectile.AdditionalScaleMultiplier = 1f;
                 projectile.shouldRotate = false;
                 projectile.baseData.range = 1000f;
