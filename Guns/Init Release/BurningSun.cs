@@ -84,7 +84,7 @@ namespace Planetside
 			FakePrefab.MarkAsFakePrefab(projectile2.gameObject);
 			UnityEngine.Object.DontDestroyOnLoad(projectile2);
 			gun.DefaultModule.projectiles[0] = projectile2;
-			projectile2.baseData.damage = 40f;
+			projectile2.baseData.damage = 55f;
 			projectile2.baseData.speed = 10f;
 			projectile2.baseData.force *= 1f;
 			projectile2.baseData.range = 100f;
@@ -112,11 +112,10 @@ namespace Planetside
 			}, AnimateBullet.ConstructListOfSameValues(false, 7), AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.MiddleCenter, 7), AnimateBullet.ConstructListOfSameValues(true, 7), AnimateBullet.ConstructListOfSameValues(false, 7),AnimateBullet.ConstructListOfSameValues<Vector3?>(null, 7), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 7), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 7), AnimateBullet.ConstructListOfSameValues<Projectile>(null, 7));
 
 			AoEDamageComponent Values = projectile2.gameObject.AddComponent<AoEDamageComponent>();
-			Values.DamageperDamageEvent = 1;
-			Values.Radius = 4;
+			Values.Radius = 4.5f;
 			Values.TimeBetweenDamageEvents = 0.33f;
 			Values.DealsDamage = true;
-			Values.DamageperDamageEvent = 6f;
+			Values.DamageperDamageEvent = 8.5f;
 			Values.DamageValuesAlsoScalesWithDamageStat = true;
 			Values.debuffs = new Dictionary<GameActorEffect, float>()
 			{

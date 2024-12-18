@@ -59,7 +59,7 @@ namespace Planetside
 			FakePrefab.MarkAsFakePrefab(projectile.gameObject);
 			UnityEngine.Object.DontDestroyOnLoad(projectile);
 			gun.DefaultModule.projectiles[0] = projectile;
-			projectile.baseData.damage = 35f;
+			projectile.baseData.damage = 45f;
 			projectile.baseData.speed *= 3f;
 			projectile.AdditionalScaleMultiplier *= 0.75f;
 			projectile.baseData.force *= 3;
@@ -69,7 +69,14 @@ namespace Planetside
 			projectile.PenetratesInternalWalls = true;
 			projectile.gameObject.AddComponent<RevenantProjectile>();
 			projectile.gameObject.AddComponent<MaintainDamageOnPierce>();
-			gun.gunClass = GunClass.NONE;
+
+            ImprovedAfterImage image = projectile.gameObject.AddComponent<ImprovedAfterImage>();
+            image.spawnShadows = true;
+            image.shadowLifetime = 0.2f;
+            image.shadowTimeDelay = 0.01f;
+            image.dashColor = new Color(1, 0.7f, 0, 0.03f);
+
+            gun.gunClass = GunClass.NONE;
 
 			gun.gameObject.transform.Find("Casing").transform.position = new Vector3(0.375f, 1f);
 			gun.shellCasing = BreakAbleAPI.BreakableAPIToolbox.GenerateDebrisObject("Planetside/Resources/GunObjects/Casings/revenantcasing.png", true, 0.333f, 2, 1080, 360, null, 1.2f).gameObject;
@@ -83,7 +90,13 @@ namespace Planetside
 			PierceProjModifier spook = projectile.gameObject.AddComponent<PierceProjModifier>();
 			spook.penetration = 3;
 			spook.penetratesBreakables = true;
-			gun.encounterTrackable.EncounterGuid = "https://www.youtube.com/watch?v=HKmYRsnMsOk";
+
+
+			gun.SneakAttackDamageMultiplier = 5;
+			gun.muzzleFlashEffects = (PickupObjectDatabase.GetById(365) as Gun).muzzleFlashEffects;
+
+
+            gun.encounterTrackable.EncounterGuid = "https://www.youtube.com/watch?v=HKmYRsnMsOk";
 			ETGMod.Databases.Items.Add(gun, false, "ANY");
 			Revenant.RevenantID = gun.PickupObjectId;
 

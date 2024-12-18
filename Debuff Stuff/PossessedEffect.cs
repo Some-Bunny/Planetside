@@ -74,16 +74,16 @@ namespace Planetside
 
         public float QuickDamage(GameActor actor)
         {
-            float Damage = actor.healthHaver != null ? actor.healthHaver.maximumHealth / 5 : 5;
-            Damage = Mathf.Max(5, Damage);
-            Damage = Mathf.Min(25, Damage);
+            float Damage = actor.healthHaver != null ? actor.healthHaver.maximumHealth / 6.25f : 6.25f;
+            Damage = Mathf.Max(3, Damage);
+            Damage = Mathf.Min(20, Damage);
             return Damage;
         }
 
         public float QuickRadius(GameActor actor)
         {
             float Damage = QuickDamage(actor);
-            return Damage / 1.75f;
+            return Damage * 0.625f;
         }
 
         public override void EffectTick(GameActor actor, RuntimeGameActorEffectData effectData)

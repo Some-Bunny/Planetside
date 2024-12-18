@@ -30,6 +30,10 @@ namespace Planetside
 
             gun.isAudioLoop = true;
 
+            EnemyToolbox.AddSoundsToAnimationFrame(gun.GetComponent<tk2dSpriteAnimator>(), gun.reloadAnimation, new Dictionary<int, string> {
+                { 3, "Play_ENM_statue_stomp_01" },
+            });
+
             //int iterator = 0;
             for (int i = 0; i < 1; i++)
             {
@@ -160,6 +164,10 @@ namespace Planetside
             gun.SetBaseMaxAmmo(360);
             gun.ammo = 360;
 
+
+            gun.gunSwitchGroup = (PickupObjectDatabase.GetById(121) as Gun).gunSwitchGroup;
+
+
             gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).wrapMode = tk2dSpriteAnimationClip.WrapMode.LoopSection;
             gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).loopStart = 1;
 
@@ -175,7 +183,7 @@ namespace Planetside
             {
                 AkSoundEngine.PostEvent("Stop_WPN_All", base.gameObject);
                 HasReloaded = false;
-                AkSoundEngine.PostEvent("Play_ENM_statue_stomp_01", player.gameObject);
+                //AkSoundEngine.PostEvent("Play_ENM_statue_stomp_01", player.gameObject);
                 base.OnReloadPressed(player, gun, bSOMETHING);
             }
         }

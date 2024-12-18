@@ -46,7 +46,7 @@ namespace Planetside
 			gun.reloadTime = 0f;
 			gun.DefaultModule.cooldownTime = .2f;
 			gun.DefaultModule.numberOfShotsInClip = -1;
-			gun.SetBaseMaxAmmo(500);
+			gun.SetBaseMaxAmmo(200);
 			gun.quality = PickupObject.ItemQuality.B;
 			gun.DefaultModule.angleVariance = 30f;
 			gun.gunClass = GunClass.POISON;
@@ -61,7 +61,7 @@ namespace Planetside
 			UnityEngine.Object.DontDestroyOnLoad(projectile);
 
 			gun.DefaultModule.projectiles[0] = projectile;
-			projectile.baseData.damage = 4f;
+			projectile.baseData.damage = 3f;
 			projectile.baseData.speed = 1f;
 			projectile.baseData.UsesCustomAccelerationCurve = true;
 			projectile.baseData.AccelerationCurve = AnimationCurve.Linear(0, 1, 2, 18);

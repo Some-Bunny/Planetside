@@ -63,7 +63,7 @@ namespace Planetside
             spear.gameObject.SetActive(false);
             FakePrefab.MarkAsFakePrefab(spear.gameObject);
             UnityEngine.Object.DontDestroyOnLoad(spear);
-            spear.baseData.damage = 10;
+            spear.baseData.damage = 13.5f;
             spear.baseData.speed *= 3f;
             spear.baseData.force = 0f;
             spear.baseData.range = 10;
@@ -98,7 +98,7 @@ namespace Planetside
             FakePrefab.MarkAsFakePrefab(projectile.gameObject);
             UnityEngine.Object.DontDestroyOnLoad(projectile);
             gun.DefaultModule.projectiles[0] = projectile;
-            projectile.baseData.damage = 12f;
+            projectile.baseData.damage = 18f;
             projectile.baseData.speed *= 1.25f;
             projectile.baseData.force *= 4f;
             projectile.baseData.range *= 4;

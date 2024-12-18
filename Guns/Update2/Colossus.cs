@@ -31,6 +31,13 @@ namespace Planetside
             gun.SetAnimationFPS(gun.idleAnimation, 8);
             gun.SetAnimationFPS(gun.reloadAnimation, 8);
 
+
+            EnemyToolbox.AddSoundsToAnimationFrame(gun.GetComponent<tk2dSpriteAnimator>(), gun.reloadAnimation, new Dictionary<int, string> {
+                { 6, "Play_ENM_statue_stomp_01" }, 
+            });
+
+            //                AkSoundEngine.PostEvent("Play_ENM_statue_stomp_01", player.gameObject);
+
             gun.isAudioLoop = true;
             gun.gunSwitchGroup = string.Empty;
             //int iterator = 0;
@@ -199,6 +206,8 @@ namespace Planetside
             gun.PreventNormalFireAudio = true;
             gun.gunClass = GunClass.BEAM;
 
+            gun.gunSwitchGroup = (PickupObjectDatabase.GetById(121) as Gun).gunSwitchGroup;
+
             gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
             gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Colossus Red", "Planetside/Resources/GunClips/Colossus/colossusfull", "Planetside/Resources/GunClips/Colossus/colossusempty");
 
@@ -217,7 +226,8 @@ namespace Planetside
             {
                 "clear_guon_stone",
                 "bottle",
-                "heart_bottle"
+                "heart_bottle",
+                "psog:dead_kings_desparation"
             };
             CustomSynergies.Add("Perfected", mandatoryConsoleIDs, optionalConsoleIDs, false);
             Colossus.ColossusID = gun.PickupObjectId;
@@ -239,14 +249,12 @@ namespace Planetside
             {
                 gun.CeaseAttack(false);
             }
-            if (gun.IsReloading && this.HasReloaded)
+            if (gun.IsReloading)
             {
                 gun.CeaseAttack(false, null);
                 AkSoundEngine.PostEvent("Stop_WPN_All", base.gameObject);
-                HasReloaded = false;
-                AkSoundEngine.PostEvent("Play_ENM_statue_stomp_01", player.gameObject);
                 base.OnReloadPressed(player, gun, bSOMETHING);
-                if (player.PlayerHasActiveSynergy("Perfected") && gun.ClipShotsRemaining <= gun.ClipCapacity / 2)
+                if (player.PlayerHasActiveSynergy("Perfected") && gun.ClipShotsRemaining <= (gun.ClipCapacity * 0.5f))
                 {
                     player.StartCoroutine(SpawnPerfectedShots(player));
                 }
@@ -304,7 +312,6 @@ namespace Planetside
         {
             gun.PreventNormalFireAudio = true;
         }
-        private bool HasReloaded;
         public bool HasFlipped;
 
         public override void Update()
@@ -365,14 +372,9 @@ namespace Planetside
                         {
                             this.gun.PreventNormalFireAudio = true;
                         }
-                        if (!gun.IsReloading && !HasReloaded)
-                        {
-                            this.HasReloaded = true;
-                        }
                     }
                 }
             }
-
         }
     }
 }

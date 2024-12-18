@@ -907,9 +907,9 @@ namespace Planetside
         public override float HealthMultiplier => 1;
         public override float CooldownMultiplier => 0.9f;
         public override float MovementSpeedMultiplier => 0.7f;
-        public override Color EliteOutlineColor => new Color(255, 100, 0);
-        public override Color EliteParticleColor => new Color(255, 100, 0);
-        public override Color SecondaryEliteParticleColor => new Color(255, 100, 0);
+        public override Color EliteOutlineColor => new Color(8, 1.25f, 0);
+        public override Color EliteParticleColor => new Color(10, 2f, 0);
+        public override Color SecondaryEliteParticleColor => new Color(10, 2, 0);
         public override List<string> EnemyBlackList => new List<string>() 
 		{
                EnemyGUIDs.Blobulin_GUID,
@@ -926,30 +926,27 @@ namespace Planetside
                EnemyGUIDs.Grenat_GUID,
                EnemyGUIDs.Spent_GUID,
                EnemyGUIDs.Mouser_GUID,
-               //EnemyGUIDs.Beadie_GUID,
-               //EnemyGUIDs.Treadnaughts_Tanker_GUID,
-               //EnemyGUIDs.Ammoconda_Ball_GUID,
                EnemyGUIDs.Fusebot_GUID,
         };
         public override List<ActorEffectResistance> DebuffImmunities => new List<ActorEffectResistance> { new ActorEffectResistance() { resistAmount = 1, resistType = EffectResistanceType.Fire } };
         public override void Start()
         {
 			base.Start();
-
-            var cm = UnityEngine.Object.Instantiate<GameObject>((GameObject)BraveResources.Load("Global Prefabs/_ChallengeManager", ".prefab"));
-            this.Rocket = (cm.GetComponent<ChallengeManager>().PossibleChallenges.Where(c => c.challenge is SkyRocketChallengeModifier).First().challenge as SkyRocketChallengeModifier).Rocket;
-            UnityEngine.Object.Destroy(cm);
 			if (IsBoss)
 			{
 				Cooldown = 6;
 			}
            
         }
-		public GameObject Rocket;
         public override void OnPreDeath(Vector2 obj)
         {
 
-            SpawnManager.SpawnBulletScript(null, this.aiActor.sprite.WorldCenter + new Vector2(0, 0.25f), OuroborosController.BulletBankDummy.GetComponent<AIBulletBank>(), new CustomBulletScriptSelector(typeof(SpewGrenades)), StringTableManager.GetEnemiesString("#TRAP", -1));
+            SpawnManager.SpawnBulletScript(
+				null, 
+				this.aiActor.sprite.WorldCenter + new Vector2(0, 0.25f),
+				OuroborosController.BulletBankDummy.GetComponent<AIBulletBank>(), 
+				new CustomBulletScriptSelector(typeof(SpewGrenades)), 
+				StringTableManager.GetEnemiesString("#TRAP", -1));
 
         }
         public float Cooldown = 12;
@@ -962,7 +959,11 @@ namespace Planetside
             if (Timer == 0 | Timer <= 0)
             {
                 Timer = Cooldown;
-                SpawnManager.SpawnBulletScript(null, this.aiActor.sprite.WorldCenter + new Vector2(0, 0.25f), OuroborosController.BulletBankDummy.GetComponent<AIBulletBank>(), new CustomBulletScriptSelector(typeof(SpewGrenade)), StringTableManager.GetEnemiesString("#TRAP", -1));
+                SpawnManager.SpawnBulletScript(null, 
+					this.aiActor.sprite.WorldCenter + new Vector2(0, 0.25f), 
+					OuroborosController.BulletBankDummy.GetComponent<AIBulletBank>(), 
+					new CustomBulletScriptSelector(typeof(SpewGrenade)), 
+					StringTableManager.GetEnemiesString("#TRAP", -1), this.aiActor.specRigidbody);
 
             }
         }
@@ -1713,9 +1714,6 @@ namespace Planetside
         }
     }
 }
-
-
-
 
 namespace Planetside
 {
