@@ -117,7 +117,7 @@ namespace Planetside
 				}
 				if (ChosenCurse == "Bolster")
 				{
-					OtherTools.Notify("Curse Of Bolstering chosen", "Prove your worth.", "Planetside /Resources/ShrineIcons/PurityIcon");
+					OtherTools.Notify("Curse Of Bolstering chosen", "Prove your worth.", "Planetside/Resources/ShrineIcons/PurityIcon");
 					CursesController.BolsterCurseState = CursesController.BolsterCurseStates.UPGRADED_AND_ONEROOMLEFT;
 
 					//ShrineOfSomething.SomethingTime comp = player.GetComponent<ShrineOfSomething.SomethingTime>();

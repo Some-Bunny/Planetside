@@ -5,6 +5,7 @@ using System.Text;
 using UnityEngine;
 using ItemAPI;
 using GungeonAPI;
+using Alexandria;
 
 namespace Planetside
 {
@@ -641,12 +642,20 @@ namespace Planetside
                 entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
                 UnDodgeableBigOne = entry;
             }
+            {
+                AIBulletBank.Entry entry = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid(Alexandria.EnemyGUIDs.Black_Stache_GUID).bulletBank.GetBullet("molotov"), "UnDodgeableMolotov", "DNC", null, false);
+                entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
+                UnDodgeableMolotov = entry;
+            }
         }
 
-        
 
-                //cheeseWedge0//cheeseWheel
-                public static AIBulletBank.Entry UnDodgeableBigOne;
+
+        //cheeseWedge0//cheeseWheel
+        public static AIBulletBank.Entry UnDodgeableMolotov;
+
+
+        public static AIBulletBank.Entry UnDodgeableBigOne;
 
         public static AIBulletBank.Entry UnDodgeableSpinner;
 

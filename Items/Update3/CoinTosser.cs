@@ -153,19 +153,22 @@ namespace Planetside
                 {
                     foreach (GameObject coin in AllActiveCoins)
                     {
-                        var proj = coin.GetComponent<Projectile>();
-                        if (coin != null && proj != null)
+                        if (coin != null)
                         {
-                            proj.baseData.damage *= 2;
-                            proj.baseData.speed *= 2;
-                            proj.UpdateSpeed();
-                            proj.baseData.range += 50;
-                            BounceProjModifier bouncy = proj.gameObject.GetOrAddComponent<BounceProjModifier>();
-                            bouncy.numberOfBounces += 2;
-                            PierceProjModifier spook = proj.gameObject.GetOrAddComponent<PierceProjModifier>();
-                            spook.penetration += 1;
-                            CoinComponent coincmp = proj.gameObject.GetComponent<CoinComponent>();
-                            coincmp.AmountOfBlanksUsedWhileAlive += 1;
+                            var proj = coin.GetComponent<Projectile>();
+                            if (proj != null)
+                            {
+                                proj.baseData.damage *= 2;
+                                proj.baseData.speed *= 2;
+                                proj.UpdateSpeed();
+                                proj.baseData.range += 50;
+                                BounceProjModifier bouncy = proj.gameObject.GetOrAddComponent<BounceProjModifier>();
+                                bouncy.numberOfBounces += 2;
+                                PierceProjModifier spook = proj.gameObject.GetOrAddComponent<PierceProjModifier>();
+                                spook.penetration += 1;
+                                CoinComponent coincmp = proj.gameObject.GetComponent<CoinComponent>();
+                                coincmp.AmountOfBlanksUsedWhileAlive += 1;
+                            }
                         }
                     }
                 }           

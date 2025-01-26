@@ -210,7 +210,7 @@ namespace Planetside
             {
                 if (BoolCanSwitch() == true)
                 {
-                    if (UnityEngine.Random.value < 0.15f && CurrentWeapon != PreferredWeapon)
+                    if (UnityEngine.Random.value < 0.3f && CurrentWeapon != PreferredWeapon)
                     {
                         switch (PreferredWeapon)
                         {

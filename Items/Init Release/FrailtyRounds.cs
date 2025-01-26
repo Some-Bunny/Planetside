@@ -51,7 +51,7 @@ namespace Planetside
 			try
 			{
 
-				float procChance = 0.25f;
+				float procChance = 0.33f;
 				procChance *= effectChanceScalar;
 				if (UnityEngine.Random.value <= procChance)
 				{
@@ -69,7 +69,7 @@ namespace Planetside
 
 		private void PostProcessBeamTick(BeamController beam, SpeculativeRigidbody hitRigidBody, float tickrate)
 		{
-			float procChance = 0.25f; //Chance per second or some shit idk
+			float procChance = 0.33f; //Chance per second or some shit idk
 			GameActor gameActor = hitRigidBody.gameActor;
 			if (!gameActor)
 			{

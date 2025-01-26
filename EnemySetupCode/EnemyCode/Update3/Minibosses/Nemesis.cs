@@ -14,6 +14,7 @@ using UnityEngine.Serialization;
 using BreakAbleAPI;
 using NpcApi;
 using SaveAPI;
+using static Planetside.KillPillarsChanges.KillPillarChanges.ModifiedBossStatuesDirectionalWaveAllSimple;
 
 namespace Planetside
 {
@@ -452,13 +453,13 @@ namespace Planetside
                     {
 						
                         FlipCoverDistance = 3f,
-                        InsideCoverTime = 2,
-                        PopInSpeedMultiplier = 3,
+                        InsideCoverTime = 5,
+                        PopInSpeedMultiplier = 4,
                         PopOutSpeedMultiplier = 1.7f,
-                        RepeatingCoverChance = 0.06f,
+                        RepeatingCoverChance = 0.2f,
                         OutsideCoverTime = 1f,
                         LineOfSightToLeaveCover = true,
-                        InitialCoverChance  = 1f,
+                        InitialCoverChance  = 0.9f,
                         MaxCoverDistance = 5,
                         MaxCoverDistanceToTarget = 5,
                         PathInterval = 0.25f,
@@ -777,6 +778,19 @@ namespace Planetside
 				companion.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableDefault);
 				companion.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableMine);
                 companion.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableGrenade);
+                companion.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UnDodgeableMolotov);
+
+
+
+                ArcProjectile arcProjectile_1 = StaticUndodgeableBulletEntries.undodgeableGrenade.BulletObject.GetComponent<ArcProjectile>();
+	//			ETGModConsole.Log($"{arcProjectile_1.gravity} | {arcProjectile_1.startingZSpeed} | {arcProjectile_1.startingHeight}");
+
+                ArcProjectile arcProjectile_2 = StaticUndodgeableBulletEntries.UnDodgeableMolotov.BulletObject.GetComponent<ArcProjectile>();
+				//ETGModConsole.Log($"{arcProjectile_1.gravity} | {arcProjectile_1.startingZSpeed} | {arcProjectile_1.startingHeight}");
+				arcProjectile_2.gravity = arcProjectile_1.gravity;
+                arcProjectile_2.startingZSpeed = arcProjectile_1.startingZSpeed;
+                arcProjectile_2.startingHeight = arcProjectile_1.startingHeight;
+
 
                 companion.aiActor.bulletBank.Bullets[0].BulletObject.GetComponent<Projectile>().baseData.speed *= 2f;
 

@@ -62,7 +62,7 @@ namespace Planetside
             FakePrefab.MarkAsFakePrefab(projectile.gameObject);
             UnityEngine.Object.DontDestroyOnLoad(projectile);
             gun.DefaultModule.projectiles[0] = projectile;
-            projectile.baseData.damage = 7f;
+            projectile.baseData.damage = 10f;
             projectile.baseData.force = 10f;
             projectile.baseData.speed = 44f;
             projectile.AppliesFire = false;
@@ -70,7 +70,7 @@ namespace Planetside
 
 
             projectile.gameObject.GetOrAddComponent<ThunderShotProjectile>();
-            gun.DefaultModule.angleVariance = 9f;
+            gun.DefaultModule.angleVariance = 7f;
 
             gun.gameObject.transform.Find("Casing").transform.position = new Vector3(1.1875f, 0.4375f);
             gun.shellsToLaunchOnFire = 0;

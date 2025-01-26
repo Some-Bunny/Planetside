@@ -92,7 +92,7 @@ namespace Planetside
 				foreach (PlayerController player in GameManager.Instance.AllPlayers)
                 {
 					float num = player.stats.GetStatValue(PlayerStats.StatType.Curse);
-					if (num == 15 || num >= 14)
+					if (num > 9)
 					{
 						AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.HIGHER_CURSE_DRAGUN_KILLED, true);
 					}

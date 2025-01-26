@@ -110,6 +110,36 @@ namespace Planetside
         }
     }
 
+    public class Molotov : Script
+    {
+        public override IEnumerator Top()
+        {
+            Bullet bullet = new Bullet(StaticUndodgeableBulletEntries.UnDodgeableMolotov.Name, false, false, false);
+ 
+
+            base.Fire(new Direction(this.AimDirection, DirectionType.Aim, -1f), new Speed(1, SpeedType.Absolute), bullet);
+
+
+
+            ArcProjectile arcProjectile = bullet.Projectile as ArcProjectile;
+            arcProjectile.startingHeight = -1;
+            arcProjectile.gravity = -10;
+            arcProjectile.startingZSpeed = 11;
+
+            float timeInFlight = arcProjectile.GetTimeInFlight();
+            Vector2 b = this.BulletManager.PlayerPosition() + this.BulletManager.PlayerVelocity() * timeInFlight;
+            //this.m_playerDist = new float?(Vector2.Distance(base.Position, b));
+
+            arcProjectile.AdjustSpeedToHit(b);
+            arcProjectile.baseData.speed = 11;
+            arcProjectile.UpdateSpeed();
+            arcProjectile.Start();
+
+
+            yield break;
+        }
+    }
+
 
 
     public class UseFakeActiveBehavior : BehaviorBase
@@ -409,6 +439,7 @@ namespace Planetside
 
 		public static List<FakeActiveContainer> fakeActives = new List<FakeActiveContainer>()
 		{
+			
 			new FakeActiveContainer()
 			{
 				name = "gun_friendship",
@@ -416,14 +447,14 @@ namespace Planetside
 				OnActivated = (obj) =>
 				{
 				   obj.gameObject.GetComponent<NemesisController>().GunSwitchTimer /= 5;
-				   obj.behaviorSpeculator.CooldownScale /= 2;
+				   obj.behaviorSpeculator.CooldownScale /= 2.5f;
 				},
 				OnRemoved =(obj) =>
 				{
 					obj.gameObject.GetComponent<NemesisController>().GunSwitchTimer *= 5;
-					obj.behaviorSpeculator.CooldownScale *= 2;
+					obj.behaviorSpeculator.CooldownScale *= 2.5f;
 				},
-				Cooldown = 15,
+				Cooldown = 20,
 				ActiveTime = 8
 			},
 			new FakeActiveContainer()
@@ -506,6 +537,24 @@ namespace Planetside
                 Cooldown = 15,
                 ActiveTime = 1,
             },
+			
+			/*
+            new FakeActiveContainer()
+            {
+                name = "molotov",
+                item_ID = 366,
+                OnActivated = (obj) =>
+                {
+                    SpawnManager.SpawnBulletScript(obj, obj.sprite.WorldCenter, obj.GetComponent<AIBulletBank>(), new CustomBulletScriptSelector(typeof(Molotov)), StringTableManager.GetEnemiesString("#TRAP", -1));
+                },
+                OnRemoved = (obj) =>
+                {
+
+                },
+                Cooldown = 15,
+                ActiveTime = 1,
+            },
+			*/
         };
 
 
