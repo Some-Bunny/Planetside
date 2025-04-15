@@ -118,7 +118,7 @@ namespace Planetside
                 "hexagun",
                 "sixth_chamber",
             };
-            CustomSynergies.Add("Hexadecimally!", mandatoryConsoleIDs1, optionalConsoleIDs, true);
+            CustomSynergies.Add("Hexadecimally!", mandatoryConsoleIDs1, optionalConsoleIDs, false);
             PulseCannonID = gun.PickupObjectId;
             ItemIDs.AddToList(gun.PickupObjectId);
         }

@@ -33,5 +33,32 @@ namespace Planetside
             pool.effects = new VFXComplex[] { complex };
             return pool;
         }
+
+        public static SpeculativeRigidbody CreateFastBody(this GameObject gameObject, IntVector2 colliderX_Y, IntVector2 OffsetX_Y, CollisionLayer collisionLayer, bool overrideAddNewSpecualativeBody = false, bool isTrigger = false)
+        {
+            SpeculativeRigidbody specBody = overrideAddNewSpecualativeBody ? gameObject.AddComponent<SpeculativeRigidbody>() : gameObject.GetOrAddComponent<SpeculativeRigidbody>();
+            specBody.CollideWithTileMap = false;
+            if (specBody.PixelColliders == null) { specBody.PixelColliders = new List<PixelCollider>(); }
+            specBody.PixelColliders.Add(new PixelCollider
+            {
+                ColliderGenerationMode = PixelCollider.PixelColliderGeneration.Manual,
+                CollisionLayer = collisionLayer,
+                IsTrigger = isTrigger,
+                BagleUseFirstFrameOnly = false,
+                SpecifyBagelFrame = string.Empty,
+                BagelColliderNumber = 0,
+                ManualOffsetX = OffsetX_Y.x,
+                ManualOffsetY = OffsetX_Y.y,
+                ManualWidth = colliderX_Y.x,
+                ManualHeight = colliderX_Y.y,
+                ManualDiameter = 0,
+                ManualLeftX = 0,
+                ManualLeftY = 0,
+                ManualRightX = 0,
+                ManualRightY = 0,
+            });
+            return specBody;
+        }
+
     }
 }

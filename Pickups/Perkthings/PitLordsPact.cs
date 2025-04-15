@@ -165,6 +165,13 @@ namespace Planetside
         {
                 new PerkDisplayContainer()
                 {
+                    AmountToBuyBeforeReveal = 0,
+                    LockedString = "\"The Pit Lord demands all offerings.\"",
+                    UnlockedString = "\"The Pit Lord demands all offerings.\"",
+                    requiresFlag = false
+                },
+                new PerkDisplayContainer()
+                {
                     AmountToBuyBeforeReveal = 1,
                     LockedString = AlphabetController.ConvertString("Sacrifice To Pits"),
                     UnlockedString = "Sacrificing various things to pits can grant rewards.",
@@ -716,7 +723,7 @@ namespace Planetside
 
             Exploder.DoDistortionWave(player.sprite.WorldTopCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
             player.BloopItemAboveHead(base.sprite, "");
-            string BlurbText = pact.hasBeenPickedup == true ? "Offerings Yield More." : "The Abyss demands all offerings.";
+            string BlurbText = pact.hasBeenPickedup == true ? "Offerings Yield More." : "The Pit Lord demands all offerings.";
             //OtherTools.Notify("Pit Lords Pact.", BlurbText, "Planetside/Resources/PerkThings/pitLordsPact", UINotificationController.NotificationColor.GOLD);
             OtherTools.NotifyCustom("Pit Lords Pact", BlurbText, "pitLordsPact", StaticSpriteDefinitions.Pickup_Sheet_Data, UINotificationController.NotificationColor.GOLD);
 

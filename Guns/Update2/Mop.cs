@@ -14,6 +14,8 @@ using MonoMod.RuntimeDetour;
 using MonoMod;
 using HarmonyLib;
 using Alexandria.Assetbundle;
+using System.ComponentModel;
+using static ETGMod;
 
 namespace Planetside
 {
@@ -66,7 +68,7 @@ namespace Planetside
 			Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(gun.Volley.projectiles[0].projectiles[0]);
 			projectile.gameObject.SetActive(false);
 			gun.Volley.projectiles[0].projectiles[0] = projectile;
-			projectile.baseData.damage = 6f;
+			projectile.baseData.damage = 9f;
 			projectile.AdditionalScaleMultiplier *= 1.5f;
 			projectile.baseData.speed *= 1.25f;
 			projectile.gameObject.AddComponent<MopProjectile>();
@@ -95,7 +97,7 @@ namespace Planetside
 			gun.Volley.projectiles[1].projectiles[0] = projectile1;
 			projectile1.gameObject.AddComponent<MopProjectile>();
 
-			projectile1.baseData.damage = 3f;
+			projectile1.baseData.damage = 4.5f;
 			FakePrefab.MarkAsFakePrefab(projectile1.gameObject);
 			UnityEngine.Object.DontDestroyOnLoad(projectile1);
 			bool aa = gun.Volley.projectiles[1] != gun.DefaultModule;
@@ -116,7 +118,7 @@ namespace Planetside
 			projectile1.gameObject.SetActive(false);
 			gun.Volley.projectiles[2].projectiles[0] = projectile1;
 
-			projectile2.baseData.damage = 3f;
+			projectile2.baseData.damage = 4.5f;
 
 
 			projectile2.gameObject.AddComponent<MopProjectile>();
@@ -170,7 +172,7 @@ namespace Planetside
 
 			tk2dSpriteAnimationClip fireClip2 = gun.sprite.spriteAnimator.GetClipByName(gun.reloadAnimation);
 			float[] offsetsX2 = new float[] { 0.25f , 0.375f, 0.5625f, 0.75f, 0.75f, 0.75f, 0.75f, 0.75f, 0.75f, 0.75f, 0.75f, 0.75f, 0.75f, 0.625f, 0.375f, 0.25f};
-			float[] offsetsY2 = new float[] { 0f , -0.1275f, -0.25f, -0.375f, -0.375f, -0.375f, -0.375f, -0.375f, -0.375f, -0.375f, -0.375f, -0.375f, -0.375f, -0.25f, -0.125f, 0};
+			float[] offsetsY2 = new float[] { 0f , -0.125f, -0.25f, -0.375f, -0.5f, -0.5f, -0.5f, -0.5f, -0.5f, -0.5f, -0.5f, -0.4375f, -0.375f, -0.25f, -0.125f, 0};
 			for (int i = 0; i < offsetsX2.Length && i < offsetsY2.Length && i < fireClip2.frames.Length; i++)
 			{
 				int id = fireClip2.frames[i].spriteId;
@@ -276,8 +278,43 @@ namespace Planetside
 			}
 			else
             {
-				currentEffectContainer = null;
-			}
+                bool check_ = true;
+
+                if (player.CurrentRoom != null)
+				{
+					var cell = player.CurrentRoom.GetNearestCellToPosition(player.transform.position);
+                    if (cell != null)
+					{
+                        if (cell.cellVisualData.floorType == CellVisualData.CellFloorType.Water) 
+						{
+                            gun.GainAmmo(Mathf.Max(0, gun.ClipCapacity - gun.ClipShotsRemaining));
+                            currentEffectContainer = containers.Where(self => self.Key == "water").FirstOrDefault();
+                            check_ = true;
+                        }
+						if (cell.doesDamage && (cell.damageDefinition.damageToPlayersPerTick > 0f ))
+						{
+                            if (cell.damageDefinition.isPoison || GameManager.Instance.Dungeon.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.MINEGEON)
+                            {
+								check_ = true;
+                                gun.GainAmmo(Mathf.Max(0, gun.ClipCapacity - gun.ClipShotsRemaining));
+                                currentEffectContainer = containers.Where(self => self.Key == "poison").FirstOrDefault();
+                            }
+                            else if (GameManager.Instance.Dungeon.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.FORGEGEON)
+                            {
+                                check_ = true;
+                                gun.GainAmmo(Mathf.Max(0, gun.ClipCapacity - gun.ClipShotsRemaining));
+                                currentEffectContainer = containers.Where(self => self.Key == "fire").FirstOrDefault();
+                            }
+						}
+                    }
+
+                    //player.transform.position 
+                }
+				if (check_ == false)
+				{
+                    currentEffectContainer = null;
+                }
+            }
 			DeadlyDeadlyGoopManager.DelayedClearGoopsInRadius(player.CenterPosition, 2f);
 		}
 
@@ -310,8 +347,8 @@ namespace Planetside
 			new MopEffectContainer()
 			{
 				component = null,
-                debuffs = new List<GameActorEffect>(){ DebuffStatics.greenFireEffect },
-                Key = "hellfire",
+				debuffs = new List<GameActorEffect>(){ DebuffStatics.greenFireEffect },
+				Key = "hellfire",
 				projectileColor = new Color32(211, 229, 73, 255),
 				goopNames = new List<string>()
 				{
@@ -321,8 +358,8 @@ namespace Planetside
 			new MopEffectContainer()
 			{
 				component = null,
-                debuffs = new List<GameActorEffect>(){  DebuffLibrary.MopBlobEffect  },
-                Key = "blob",
+				debuffs = new List<GameActorEffect>(){  DebuffLibrary.MopBlobEffect  },
+				Key = "blob",
 				projectileColor = new Color32(213, 77, 77, 255),
 				goopNames = new List<string>()
 				{
@@ -333,8 +370,8 @@ namespace Planetside
 			new MopEffectContainer()
 			{
 				component = new ApplyStep2().GetType(),
-                debuffs = new List<GameActorEffect>(){ },
-                Key = "oil",
+				debuffs = new List<GameActorEffect>(){ },
+				Key = "oil",
 				projectileColor = new Color32(10, 6, 18, 255),
 				goopNames = new List<string>()
 				{
@@ -344,8 +381,8 @@ namespace Planetside
 			new MopEffectContainer()
 			{
 				component = null,
-                debuffs = new List<GameActorEffect>(){ DebuffStatics.cheeseeffect },
-                Key = "cheese",
+				debuffs = new List<GameActorEffect>(){ DebuffStatics.cheeseeffect },
+				Key = "cheese",
 				projectileColor = new Color32(255, 102, 0, 255),
 				goopNames = new List<string>()
 				{
@@ -355,8 +392,8 @@ namespace Planetside
 			new MopEffectContainer()
 			{
 				component = null,
-                debuffs = new List<GameActorEffect>(){ DebuffStatics.charmingRoundsEffect },
-                Key = "charm",
+				debuffs = new List<GameActorEffect>(){ DebuffStatics.charmingRoundsEffect },
+				Key = "charm",
 				projectileColor = new Color32(252, 72, 241, 255),
 				goopNames = new List<string>()
 				{
@@ -366,110 +403,110 @@ namespace Planetside
 			new MopEffectContainer()
 			{
 				component = null,
-                debuffs = new List<GameActorEffect>(){ },
-                Key = "water",
+				debuffs = new List<GameActorEffect>(){ },
+				Key = "water",
 				projectileColor = new Color(0,0,0,0),
 				goopNames = new List<string>()
 				{
 					EasyGoopDefinitions.WaterGoop.name.ToLower(),
 					"mimicspitgoop"
 				},
-				DamageMultiplier = 0.7f
-            },
-            new MopEffectContainer()
-            {
-                component = null,
-                debuffs = new List<GameActorEffect>(){ },
-                Key = "water",
-                projectileColor = new Color(0,0,0,0),
-                goopNames = new List<string>()
-                {
-                    EasyGoopDefinitions.WaterGoop.name.ToLower(),
-                    "mimicspitgoop"
-                },
-                DamageMultiplier = 0.75f
-            },
-            new MopEffectContainer()
-            {
-                component = null,
-                debuffs = new List<GameActorEffect>(){ DebuffStatics.irradiatedLeadEffect },
-                Key = "poison",
-                projectileColor = new Color32(145, 227, 120, 255),
-                goopNames = new List<string>()
-                {
-                    EasyGoopDefinitions.PoisonDef.name.ToLower(),
-                    "resourcefulratpoisongoop",
-                    "meduzipoisongoop"
-                },
-            },
-            new MopEffectContainer()
-            {
-                component = null,
-                debuffs = new List<GameActorEffect>(){ DebuffLibrary.MopWebEffect },
-                Key = "web",
-                projectileColor = new Color32(184, 181, 147, 255),
-                goopNames = new List<string>()
-                {
-                    EasyGoopDefinitions.WebGoop.name.ToLower()
-                },
-            },
-            new MopEffectContainer()
-            {
-                component = new ApplyEnrage().GetType(),
-                debuffs = new List<GameActorEffect>(){ },
-                Key = "blood",
-                projectileColor = new Color32(136, 8, 8, 255),
-                goopNames = new List<string>()
-                {
-                    "permanentbloodgoop",
-                    "bloodgoop",
-                    "bloodbulongoop"
-                }
-            },
-            new MopEffectContainer()
-            {
-                component = new ApplyFear().GetType(),
-                debuffs = new List<GameActorEffect>(){ },
-                Key = "poop",
-                projectileColor = new Color32(123, 92, 0, 255),
-                goopNames = new List<string>()
-                {
-                    "poopulongoop"
-                }
-            },
-            new MopEffectContainer()
-            {
-                component = null,
-                debuffs = new List<GameActorEffect>(){ DebuffLibrary.Possessed },
-                Key = "possessed",
-                projectileColor =  new Color32(255, 188, 76, 255),
-                goopNames = new List<string>()
-                {
-                    DebuffLibrary.PossesedPuddle.name.ToLower()
-                }
-            },
-            new MopEffectContainer()
-            {
-                component = null,
-                debuffs = new List<GameActorEffect>(){ DebuffLibrary.Frailty },
-                Key = "frailty",
-                projectileColor =  new Color32(136, 25, 149, 255),
-                goopNames = new List<string>()
-                {
-                    DebuffLibrary.FrailPuddle.name.ToLower()
-                }
-            },
-            new MopEffectContainer()
-            {
-                component = null,
-                debuffs = new List<GameActorEffect>(){ DebuffLibrary.Corrosion },
-                Key = "tarnish",
-                projectileColor = new Color32(157, 147, 0, 255),
-                goopNames = new List<string>()
-                {
-                    DebuffLibrary.TarnishedGoop.name.ToLower()
-                }
-            },
-        };
+				DamageMultiplier = 1.2f
+			},
+			new MopEffectContainer()
+			{
+				component = null,
+				debuffs = new List<GameActorEffect>(){ },
+				Key = "water",
+				projectileColor = new Color(0,0,0,0),
+				goopNames = new List<string>()
+				{
+					EasyGoopDefinitions.WaterGoop.name.ToLower(),
+					"mimicspitgoop"
+				},
+				DamageMultiplier = 1.2f
+			},
+			new MopEffectContainer()
+			{
+				component = null,
+				debuffs = new List<GameActorEffect>(){ DebuffStatics.irradiatedLeadEffect },
+				Key = "poison",
+				projectileColor = new Color32(145, 227, 120, 255),
+				goopNames = new List<string>()
+				{
+					EasyGoopDefinitions.PoisonDef.name.ToLower(),
+					"resourcefulratpoisongoop",
+					"meduzipoisongoop"
+				},
+			},
+			new MopEffectContainer()
+			{
+				component = null,
+				debuffs = new List<GameActorEffect>(){ DebuffLibrary.MopWebEffect },
+				Key = "web",
+				projectileColor = new Color32(184, 181, 147, 255),
+				goopNames = new List<string>()
+				{
+					EasyGoopDefinitions.WebGoop.name.ToLower()
+				},
+			},
+			new MopEffectContainer()
+			{
+				component = new ApplyEnrage().GetType(),
+				debuffs = new List<GameActorEffect>(){ },
+				Key = "blood",
+				projectileColor = new Color32(136, 8, 8, 255),
+				goopNames = new List<string>()
+				{
+					"permanentbloodgoop",
+					"bloodgoop",
+					"bloodbulongoop"
+				}
+			},
+			new MopEffectContainer()
+			{
+				component = new ApplyFear().GetType(),
+				debuffs = new List<GameActorEffect>(){ },
+				Key = "poop",
+				projectileColor = new Color32(123, 92, 0, 255),
+				goopNames = new List<string>()
+				{
+					"poopulongoop"
+				}
+			},
+			new MopEffectContainer()
+			{
+				component = null,
+				debuffs = new List<GameActorEffect>(){ DebuffLibrary.Possessed },
+				Key = "possessed",
+				projectileColor =  new Color32(255, 188, 76, 255),
+				goopNames = new List<string>()
+				{
+					DebuffLibrary.PossesedPuddle.name.ToLower()
+				}
+			},
+			new MopEffectContainer()
+			{
+				component = null,
+				debuffs = new List<GameActorEffect>(){ DebuffLibrary.Frailty },
+				Key = "frailty",
+				projectileColor =  new Color32(136, 25, 149, 255),
+				goopNames = new List<string>()
+				{
+					DebuffLibrary.FrailPuddle.name.ToLower()
+				}
+			},
+			new MopEffectContainer()
+			{
+				component = null,
+				debuffs = new List<GameActorEffect>(){ DebuffLibrary.Corrosion },
+				Key = "tarnish",
+				projectileColor = new Color32(157, 147, 0, 255),
+				goopNames = new List<string>()
+				{
+					DebuffLibrary.TarnishedGoop.name.ToLower()
+				}
+			},
+		};
 	}
 }

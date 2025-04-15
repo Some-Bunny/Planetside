@@ -46,6 +46,7 @@ namespace Planetside
 		{
             player.healthHaver.OnPreDeath -= HealthHaver_OnPreDeath;
             DebrisObject result = base.Drop(player);
+            Destroy(result.gameObject, 1);
 			return result;
 		}
 		public override void Pickup(PlayerController player)
@@ -68,13 +69,15 @@ namespace Planetside
             base.Owner.RemovePassiveItem(BlueCasingID);
             SomethingWickedEnemy.PlayersToIgnore.Add(base.Owner);
             base.Owner.healthHaver.OnPreDeath -= HealthHaver_OnPreDeath;
-            base.Drop(base.Owner);
+            this.Drop(base.Owner);
         }
 
         public override void OnDestroy()
 		{
             base.OnDestroy();
-		}        
+		}      
+        
+        
     }
 }
 

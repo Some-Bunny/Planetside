@@ -15,6 +15,8 @@ using SaveAPI;
 using Gungeon;
 using ItemAPI;
 using System.Collections.ObjectModel;
+using Alexandria.PrefabAPI;
+using HutongGames.PlayMaker.Actions;
 
 namespace Planetside
 {
@@ -227,7 +229,12 @@ namespace Planetside
 	{
 		public static void Add()
 		{
-			string basePath = "Planetside/Resources/Shrines/PrisonShrine/";
+
+            roomIcon = PrefabBuilder.BuildObject("ContainmentPortalIcon");
+            var sprite = roomIcon.gameObject.AddComponent<tk2dSprite>();
+            sprite.SetSprite(StaticSpriteDefinitions.RoomObject_Sheet_Data, StaticSpriteDefinitions.RoomObject_Sheet_Data.GetSpriteIdByName("roomicon_containment"));
+
+            string basePath = "Planetside/Resources/Shrines/PrisonShrine/";
 			ShrineFactory iei = new ShrineFactory
 			{
 				name = "PrisonShrine",
@@ -244,12 +251,15 @@ namespace Planetside
 				isToggle = false,
 				isBreachShrine = false,
 				shadowPath = basePath+ "bigBrickShadow.png",
+				
 				ShadowOffsetX = 0f,
 				ShadowOffsetY = -0.25f,		
 				usesCustomColliderOffsetAndSize = true,
 				colliderSize = new IntVector2(46, 42),
 				colliderOffset = new IntVector2(1, 0),
-				AdditionalComponent = typeof(TresspassLightController)
+				roomIcon = roomIcon,
+				HasRoomIcon = true,
+                AdditionalComponent = typeof(TresspassLightController)
 			};
 			string[] H = new string[]
 			{
@@ -274,8 +284,9 @@ namespace Planetside
 			GameObject self = iei.BuildWithAnimations(new string[] {basePath+ "bigBrick_idle_001.png", basePath + "bigBrick_idle_002.png" }, 2, H, 10);
 			SpriteBuilder.AddSpriteToCollection("Planetside/Resources/ShrineIcons/prisonShrineIcon", SpriteBuilder.ammonomiconCollection);
 
-		}
 
+        }
+		public static GameObject roomIcon;
 		public static bool CanUse(PlayerController player, GameObject shrine)
 		{
 			return shrine.GetComponent<CustomShrineController>().numUses == 0;

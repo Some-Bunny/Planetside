@@ -42,6 +42,8 @@ namespace Planetside
             };
             DungeonPlaceable placeable = BreakableAPIToolbox.GenerateDungeonPlaceable(dict);
             StaticReferences.StoredDungeonPlaceables.Add("tresPassRandomCubes", placeable);
+            Alexandria.DungeonAPI.StaticReferences.customPlaceables.Add("PSOG_tresPassRandomCubes", placeable);
+
         }
     }
 }

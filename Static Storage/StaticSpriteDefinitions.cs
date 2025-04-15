@@ -21,29 +21,44 @@ namespace Planetside
         public static tk2dSpriteCollectionData Gun_Sheet_Data;
         public static tk2dSpriteCollectionData Projectile_Sheet_Data;
         public static tk2dSpriteCollectionData Guon_Sheet_Data;
+        public static tk2dSpriteCollectionData RoomObject_Sheet_Data;
+        public static tk2dSpriteCollectionData EnemySpecific_Sheet_Data;
+        public static tk2dSpriteCollectionData NPC_Sheet_Data;
 
-        public static tk2dSpriteAnimation Debuff_Animation_Data;
+        public static tk2dSpriteAnimation VFX_Animation_Data;
 
 
         public static tk2dSpriteAnimation Gun_Animation_Data;
         public static tk2dSpriteAnimation Projectile_Animation_Data;
         public static tk2dSpriteAnimation Guon_Animation_Data;
+        public static tk2dSpriteAnimation RoomObject_Animation_Data;
+        public static tk2dSpriteAnimation EnemySpecific_Animation_Data;
+        public static tk2dSpriteAnimation NPC_Animation_Data;
+
+
+        public static dfAtlas PlanetsideUIAtlas;
 
 
         public static void Init()
         {
+            GameObject obj = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("PlanetsideDFAtlas");
+            UnityEngine.Object.DontDestroyOnLoad(obj);
+            PlanetsideUIAtlas = obj.GetComponent<dfAtlas>();
             Modder_Bullet_Sheet_Data = DoFastSetup("ModderBulletCollection", "modderbullet material.mat");
             if (Modder_Bullet_Sheet_Data == null) { ETGModConsole.Log("Modder_Bullet_Sheet_Data is NULL"); }
-            
+
             Passive_Item_Sheet_Data = DoFastSetup("Item_Collection", "item_collection material.mat");
             if (Passive_Item_Sheet_Data == null) { ETGModConsole.Log("Passive_Item_Sheet_Data is NULL"); }
 
             Active_Item_Sheet_Data = DoFastSetup("Active_Collection", "active_item material.mat");
             if (Active_Item_Sheet_Data == null) { ETGModConsole.Log("Active_Item_Sheet_Data is NULL"); }
+
             Debuff_Sheet_Data = DoFastSetup("DebuffCollection", "debuff material.mat");
             if (Debuff_Sheet_Data == null) { ETGModConsole.Log("Debuff_Sheet_Data is NULL"); }
+
             Oddments_Sheet_Data = DoFastSetup("OddmentsCollection", "oddments material.mat");
             if (Oddments_Sheet_Data == null) { ETGModConsole.Log("Oddments_Sheet_Data is NULL"); }
+
             Pickup_Sheet_Data = DoFastSetup("PickupCollection", "pickup material.mat");
             if (Pickup_Sheet_Data == null) { ETGModConsole.Log("Pickup_Sheet_Data is NULL"); }
 
@@ -56,13 +71,29 @@ namespace Planetside
             Guon_Sheet_Data = DoFastSetup("PSOGGuonCollection", "guonpsog material.mat");
             if (Guon_Sheet_Data == null) { ETGModConsole.Log("Guon_Sheet_Data is NULL"); }
 
-            Debuff_Animation_Data = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("DebuffAnimation").GetComponent<tk2dSpriteAnimation>();
+            EnemySpecific_Sheet_Data = DoFastSetup("SpecificEnemyCollection", "enemyspecific material.mat");
+            if (EnemySpecific_Sheet_Data == null) { ETGModConsole.Log("EnemySpecific_Sheet_Data is NULL"); }
+
+            NPC_Sheet_Data = DoFastSetup("NPCSpriteCollection", "npcmat material.mat");
+            if (NPC_Sheet_Data == null) { ETGModConsole.Log("NPC_Sheet_Data is NULL"); }
+
+            VFX_Animation_Data = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("VFXAnimation").GetComponent<tk2dSpriteAnimation>();
 
             Gun_Animation_Data = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("PlanetsideGunAnimation").GetComponent<tk2dSpriteAnimation>();
 
             Projectile_Animation_Data = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("PlanetsideProjectileAnimation").GetComponent<tk2dSpriteAnimation>();
 
             Guon_Animation_Data = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("GuonAnimation").GetComponent<tk2dSpriteAnimation>();
+
+
+            RoomObject_Sheet_Data = DoFastSetup("RoomObjectCollectionKillingMyself", "roomobject material.mat");
+            if (RoomObject_Sheet_Data == null) { ETGModConsole.Log("RoomObject_Sheet_Data is NULL"); }
+
+            RoomObject_Animation_Data = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("RoomObjectAnimation").GetComponent<tk2dSpriteAnimation>();
+
+            EnemySpecific_Animation_Data = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("SpecificEnemyAnimation").GetComponent<tk2dSpriteAnimation>();
+
+            NPC_Animation_Data = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("NPCSpriteAnimation").GetComponent<tk2dSpriteAnimation>();
 
         }
 

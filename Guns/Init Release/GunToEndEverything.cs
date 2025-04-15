@@ -42,7 +42,11 @@ namespace Planetside
 			gun.quality = PickupObject.ItemQuality.EXCLUDED;
 			gun.DefaultModule.angleVariance = 0f;
 			gun.DefaultModule.burstShotCount = 1;
-			Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(gun.DefaultModule.projectiles[0]);
+
+            gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
+            gun.DefaultModule.finalCustomAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("GTEE", StaticSpriteDefinitions.PlanetsideUIAtlas, "EndOfEverythingClip_001", "EndOfEverythingClip_002");
+
+            Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(gun.DefaultModule.projectiles[0]);
 			projectile.gameObject.SetActive(false);
 			FakePrefab.MarkAsFakePrefab(projectile.gameObject);
 			UnityEngine.Object.DontDestroyOnLoad(projectile);
@@ -79,7 +83,7 @@ namespace Planetside
 		}
 		public override void OnPostFired(PlayerController player, Gun flakcannon)
 		{
-			ETGModConsole.Log("Beginning The End.");
+			//ETGModConsole.Log("Beginning The End.");
 			GameManager.Instance.StartCoroutine(GTEE.StartTheEnd());
 		}
 

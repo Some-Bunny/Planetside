@@ -87,6 +87,8 @@ namespace Planetside
 
             DungeonPlaceable placeable = BreakableAPIToolbox.GenerateDungeonPlaceable(dict);
             StaticReferences.StoredDungeonPlaceables.Add("trespassBigLight", placeable);
+            Alexandria.DungeonAPI.StaticReferences.customPlaceables.Add("PSOG_trespassBigLight", placeable);
+
         }
     }
 }

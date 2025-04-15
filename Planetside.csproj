@@ -32,6 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="APIs\AmmonomiconAPI\AmmonomiconAPIHooks.cs" />
+    <Compile Include="APIs\AmmonomiconAPI\AmmonomiconPageInitialization.cs" />
     <Compile Include="APIs\ChallengeAPI\ChallengeBuilder.cs" />
     <Compile Include="APIs\ChallengeAPI\ChallengeTools.cs" />
     <Compile Include="APIs\ChallengeAPI\dfLanguageExtraStringHolder.cs" />
@@ -61,6 +63,7 @@
     <Compile Include="Components\EmergencyPlayerDisappearedFromRoom.cs" />
     <Compile Include="Components\Item Components\CustomHoveringGunController.cs" />
     <Compile Include="Components\Other Components\TrespassPortalController.cs" />
+    <Compile Include="Components\Projectile Components\WraparoundProjectile.cs" />
     <Compile Include="Components\Projectile Components\MirrorProjectileController.cs" />
     <Compile Include="Components\Projectile Components\RecursionPreventer.cs" />
     <Compile Include="Components\Projectile Components\sadsda.cs" />
@@ -113,14 +116,20 @@
     <Compile Include="Debuff Stuff\TarnishEffect.cs" />
     <Compile Include="DungeonGenStuff\ExpandTK2DDungeonAssembler.cs" />
     <Compile Include="DungeonPlaceables\AbyssFloorDoor.cs" />
+    <Compile Include="DungeonPlaceables\BreakableAPI_Bundled.cs" />
     <Compile Include="DungeonPlaceables\EnemyBuffShrine.cs" />
+    <Compile Include="DungeonPlaceables\Gooper.cs" />
+    <Compile Include="DungeonPlaceables\Idol.cs" />
+    <Compile Include="DungeonPlaceables\MarkTileAsTrap.cs" />
     <Compile Include="DungeonPlaceables\NoTeleporterPlaceable.cs" />
+    <Compile Include="DungeonPlaceables\TheHelpfulPad.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\MovingFloorTiles\MovingTile2X2.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassBloodDecals.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TearInReality.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\MovingFloorTiles\MovingTile1X1.cs" />
     <Compile Include="DungeonPlaceables\MoneyPots.cs" />
     <Compile Include="DungeonPlaceables\OphanaimDecals.cs" />
+    <Compile Include="DungeonPlaceables\FadingBlocker.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassTrollRock.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassTentaclePillar.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassSniperTurrets.cs" />
@@ -149,6 +158,7 @@
     <Compile Include="DungeonPlaceables\TrespassPortalReturn.cs" />
     <Compile Include="DungeonPlaceables\TrespassPortalBack.cs" />
     <Compile Include="EnemySetupCode\EnemyAPI %28The one that modifies behaviors%29\OverrideBehavior.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\Update3\SecondaryEnemies\Revenant.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\DallanBullet.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\QadayBullet.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\LynceusBullet.cs" />
@@ -185,8 +195,10 @@
     <Compile Include="EnemySetupCode\EnemyCode\Update3\Bosses\Prisoner\PrisonerPhaseOne.cs" />
     <Compile Include="EnemySetupCode\EnemyRelatedStuff\AdvancedBodyPartController.cs" />
     <Compile Include="EnemySetupCode\EnemyRelatedStuff\Behavior Stuff\CustomDodgeRollBehavior.cs" />
+    <Compile Include="EnemySetupCode\EnemyRelatedStuff\Behavior Stuff\ModifiedChargeBehavior.cs" />
     <Compile Include="EnemySetupCode\EnemyRelatedStuff\Behavior Stuff\ModifiedDashMoveBehavior.cs" />
     <EmbeddedResource Include="Guns\Jsons\jhbsda.cs" />
+    <Compile Include="Guns\Update5\PointNull.cs" />
     <Compile Include="Guns\Update5\StormBringerProjectile.cs" />
     <Compile Include="Guns\Update5\StormBringer.cs" />
     <Compile Include="Guns\Update4\SawconProjectile.cs" />
@@ -224,6 +236,7 @@
     <Compile Include="Hooks And Actions\PickupHooks.cs" />
     <Compile Include="Hooks And Actions\ExplosionHooks.cs" />
     <Compile Include="Hooks And Actions\TitleDioramaHooks.cs" />
+    <Compile Include="Items\Update6\WarpMastersKit.cs" />
     <Compile Include="Items\Update5\WrapaRounds.cs" />
     <Compile Include="Items\ItemClasses\MultiCompanionItem.cs" />
     <Compile Include="Items\Test Items\balls - Copy.cs" />
@@ -256,8 +269,13 @@
     <Compile Include="Items\Update4\Modifiers\ModifierNeedle.cs" />
     <Compile Include="Items\Update5\SurgeGrenade.cs" />
     <Compile Include="Misc Stuff\CustomNotificationHandler.cs" />
+    <Compile Include="NPC Stuff\Absconditus.cs" />
     <Compile Include="NPC Stuff\AlphabetLauncher.cs" />
+    <Compile Include="NPC Stuff\Example Code\LilShit.cs" />
+    <Compile Include="NPC Stuff\ExampleFSM.cs" />
+    <Compile Include="NPC Stuff\Helper\AdvancedDialogueBox.cs" />
     <Compile Include="Pickups\AllSeeingEyeMiniPickup.cs" />
+    <Compile Include="Static Storage\StaticShaders.cs" />
     <Compile Include="Static Storage\StaticSpriteDefinitions.cs" />
     <Compile Include="Static Storage\StaticInformation.cs" />
     <Compile Include="Static Storage\StaticVFXStorage.cs" />
@@ -286,6 +304,7 @@
     <Compile Include="TheAbyss\ModPrefabs.cs" />
     <Compile Include="Toolboxes\Dictionary.cs" />
     <Compile Include="Toolboxes\EnemyToolbox.cs" />
+    <Compile Include="Toolboxes\GUID_Maker.cs" />
     <Compile Include="Toolboxes\RaycastToolbox.cs" />
     <Compile Include="Toolboxes\SpapisSuperCoolAdvancedCodeToolbox.cs" />
     <Compile Include="Toolboxes\SpriteTrimmer.cs" />
@@ -5876,6 +5895,48 @@
     <EmbeddedResource Include="Guns\Jsons\hardlightnailgun_switch_003.json" />
     <EmbeddedResource Include="Guns\Jsons\hardlightnailgun_switch_004.json" />
     <EmbeddedResource Include="Guns\Jsons\hardlightnailgun_switch_005.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Guns\Jsons\riftakernew_fire_001.json" />
+    <EmbeddedResource Include="Guns\Jsons\riftakernew_fire_002.json" />
+    <EmbeddedResource Include="Guns\Jsons\riftakernew_fire_003.json" />
+    <EmbeddedResource Include="Guns\Jsons\riftakernew_fire_004.json" />
+    <EmbeddedResource Include="Guns\Jsons\riftakernew_idle_001.json" />
+    <EmbeddedResource Include="Guns\Jsons\riftakernew_idle_002.json" />
+    <EmbeddedResource Include="Guns\Jsons\riftakernew_idle_003.json" />
+    <EmbeddedResource Include="Guns\Jsons\riftakernew_idle_004.json" />
+    <EmbeddedResource Include="Guns\Jsons\riftakernew_idle_005.json" />
+    <EmbeddedResource Include="Guns\Jsons\riftakernew_reload_001.json" />
+    <EmbeddedResource Include="Guns\Jsons\riftakernew_reload_002.json" />
+    <EmbeddedResource Include="Guns\Jsons\riftakernew_reload_003.json" />
+    <EmbeddedResource Include="Guns\Jsons\riftakernew_reload_004.json" />
+    <EmbeddedResource Include="Guns\Jsons\riftakernew_reload_005.json" />
+    <EmbeddedResource Include="Guns\Jsons\riftakernew_reload_006.json" />
+    <EmbeddedResource Include="Guns\Jsons\riftakernew_reload_007.json" />
+    <EmbeddedResource Include="Guns\Jsons\riftakernew_reload_008.json" />
+    <EmbeddedResource Include="Guns\Jsons\riftakernew_reload_009.json" />
+    <EmbeddedResource Include="Guns\Jsons\riftakernew_reload_010.json" />
+    <EmbeddedResource Include="Guns\Jsons\riftakernew_reload_011.json" />
+    <EmbeddedResource Include="Guns\Jsons\riftakernew_reload_012.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Guns\Jsons\pointgunknown_fire_001.json" />
+    <EmbeddedResource Include="Guns\Jsons\pointgunknown_fire_002.json" />
+    <EmbeddedResource Include="Guns\Jsons\pointgunknown_fire_003.json" />
+    <EmbeddedResource Include="Guns\Jsons\pointgunknown_fire_004.json" />
+    <EmbeddedResource Include="Guns\Jsons\pointgunknown_fire_005.json" />
+    <EmbeddedResource Include="Guns\Jsons\pointgunknown_fire_006.json" />
+    <EmbeddedResource Include="Guns\Jsons\pointgunknown_fire_007.json" />
+    <EmbeddedResource Include="Guns\Jsons\pointgunknown_fire_008.json" />
+    <EmbeddedResource Include="Guns\Jsons\pointgunknown_fire_009.json" />
+    <EmbeddedResource Include="Guns\Jsons\pointgunknown_idle_001.json" />
+    <EmbeddedResource Include="Guns\Jsons\pointgunknown_idle_002.json" />
+    <EmbeddedResource Include="Guns\Jsons\pointgunknown_idle_003.json" />
+    <EmbeddedResource Include="Guns\Jsons\pointgunknown_idle_004.json" />
+    <EmbeddedResource Include="Guns\Jsons\pointgunknown_idle_005.json" />
+    <EmbeddedResource Include="Guns\Jsons\pointgunknown_idle_006.json" />
+    <EmbeddedResource Include="Guns\Jsons\pointgunknown_idle_007.json" />
+    <EmbeddedResource Include="Guns\Jsons\pointgunknown_reload_001.json" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -642,10 +642,11 @@ namespace Planetside
 
 					Probability = 0f,
 					Behavior = new CustomBeholsterLaserBehavior{
-						UsesBeamProjectileWithoutModule = false,
+					UsesBeamProjectileWithoutModule = false,
 					InitialCooldown = 0f,
 					firingTime = 20f,
-					Cooldown =100,
+					ImmuneToBlanks = true,
+					Cooldown = 100,
 					AttackCooldown = 100f,
 					RequiresLineOfSight = false,
 					FiresDirectlyTowardsPlayer = false,
@@ -1558,6 +1559,7 @@ namespace Planetside
 			base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("da797878d215453abba824ff902e21b4").bulletBank.GetBullet("snakeBullet"));
 			base.PostWwiseEvent("Play_BOSS_lichB_spew_01", null);
 			Exploder.DoDistortionWave(base.BulletBank.sprite.WorldCenter, 2, 0.08f, 15, 1f);
+			base.EndOnBlank = false;
 			if (!base.BulletBank.aiActor.healthHaver.IsDead && base.BulletBank.aiActor != null && base.BulletBank.aiActor.healthHaver.GetCurrentHealth() >= 1)
 			{
 				float i = 0;
@@ -1568,7 +1570,7 @@ namespace Planetside
 					float basevalue = Mathf.Lerp(14, 28, base.BulletBank.aiActor.healthHaver.GetCurrentHealthPercentage());
 					if (i > 18)
 					{
-						basevalue = 10;
+						basevalue = 12;
 
 					}
 					List<float> list = new List<float> { };
@@ -1988,11 +1990,11 @@ namespace Planetside
 				Exploder.DoDistortionWave(base.aiActor.sprite.WorldCenter, 2, 0.15f, 30, 1f);
 				List<string> DEATH = new List<string>
 				{
-				"...to a mortal?... ugh...",
-				"No! Not again!",
-				"The creeping light...",
-				"This is not my end... I will return!",
-				"With my final breath, I curse thee!"
+					"...to a mortal?... ugh...",
+					"No! Not again!",
+					"The creeping light...",
+					"This is not my end... I will return!",
+					"With my final breath, I curse you!"
 				};
 				TextBoxManager.ShowTextBox(base.aiActor.sprite.WorldTopCenter, base.aiActor.transform, 3, BraveUtility.RandomElement<string>(DEATH), string.Empty, false, TextBoxManager.BoxSlideOrientation.NO_ADJUSTMENT, false, false);		
 				AkSoundEngine.PostEvent("Play_VO_lichC_death_01", base.gameObject);

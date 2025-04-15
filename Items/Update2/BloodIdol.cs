@@ -31,7 +31,7 @@ namespace Planetside
             string shortDesc = "The Work Never Stops";
             string longDesc = "An 1dol dedicated to Kaliber, demanding the blood of slain Gundead.\n\nThough you may not complete her quest in this lifetime, she is faithful and will keep watch for many lifetimes.";
             activeitem.SetupItem(shortDesc, longDesc, "psog");
-            activeitem.SetCooldownType(ItemBuilder.CooldownType.Timed, 5f);
+            activeitem.SetCooldownType(ItemBuilder.CooldownType.Timed, 1f);
             activeitem.consumable = false;
             activeitem.quality = PickupObject.ItemQuality.D;
             ItemBuilder.AddPassiveStatModifier(activeitem, PlayerStats.StatType.Damage, 0.95f, StatModifier.ModifyMethod.MULTIPLICATIVE);
@@ -50,7 +50,8 @@ namespace Planetside
         public static int BloodIdolID;
         public override bool CanBeUsed(PlayerController user)
         {
-            return SaveAPIManager.GetPlayerStatValue(CustomTrackedStats.BLODD_IDOL_KILLS) >= 249;
+           
+            return SaveAPIManager.GetPlayerStatValue(CustomTrackedStats.BLODD_IDOL_KILLS) > 249;
         }
         public override void Pickup(PlayerController player)
         {
@@ -66,14 +67,42 @@ namespace Planetside
            if (enemy != null && fatal == true)
            {
                 SaveAPIManager.RegisterStatChange(CustomTrackedStats.BLODD_IDOL_KILLS, 1);
-                //ETGModConsole.Log("Current Kills: " + SaveAPIManager.GetPlayerStatValue(CustomTrackedStats.BLODD_IDOL_KILLS).ToString());
-            }
+           }
         }
+
+        private int kills;
+
         public override void Update()
         {
-            base.Update();
+            
+
+
+            if (this.m_pickedUp)
+            {
+                if (this.LastOwner == null)
+                {
+                    this.LastOwner = base.GetComponentInParent<PlayerController>();
+                }
+
+                this.remainingTimeCooldown = 1f -((float)SaveAPIManager.GetPlayerStatValue(CustomTrackedStats.BLODD_IDOL_KILLS) / 250f);
+                if (this.IsCurrentlyActive)
+                {
+                    this.m_activeElapsed += BraveTime.DeltaTime * this.m_adjustedTimeScale;
+                    if (!string.IsNullOrEmpty(this.OnActivatedSprite))
+                    {
+                        base.sprite.SetSprite(this.OnActivatedSprite);
+                    }
+                }
+            }
+            else
+            {
+                base.HandlePickupCurseParticles();
+                if (!this.m_isBeingEyedByRat && Time.frameCount % 47 == 0 && base.ShouldBeTakenByRat(base.sprite.WorldCenter))
+                {
+                    GameManager.Instance.Dungeon.StartCoroutine(base.HandleRatTheft());
+                }
+            }
         }
-        public bool BllodCanBeUsed;
         public override void OnDestroy()
         {
             if (base.LastOwner != null)
@@ -85,8 +114,7 @@ namespace Planetside
         public override void DoEffect(PlayerController user)
         {
             SaveAPIManager.RegisterStatChange(CustomTrackedStats.BLODD_IDOL_KILLS, -250);
-            GameManager.Instance.StartCoroutine(DoWackyStuff(user));    
-            
+            GameManager.Instance.StartCoroutine(DoWackyStuff(user));            
         }
 
 

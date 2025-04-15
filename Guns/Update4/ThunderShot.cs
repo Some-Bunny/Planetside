@@ -101,14 +101,14 @@ namespace Planetside
                 "cluster_mine",
                 "air_strike"
             };
-            CustomSynergies.Add("KA-BLEWY!", AAA, aee, true);
+            CustomSynergies.Add("KA-BLEWY!", AAA, aee, false);
             
             List<string> eee = new List<string>
             {
                 "psog:thundershot",
                 "double_vision"
             };
-            CustomSynergies.Add("ROCK, AAAAND, STOOOOONE!", eee, null, true);
+            CustomSynergies.Add("ROCK, AAAAND, STOOOOONE!", eee, null, false);
             
             ThunderShot.ThunderShotID = gun.PickupObjectId;
             ItemIDs.AddToList(gun.PickupObjectId);

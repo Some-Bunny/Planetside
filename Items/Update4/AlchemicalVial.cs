@@ -29,7 +29,7 @@ namespace Planetside
             ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("precursor1"), data, obj);
             //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "Completely Stabile";
-            string longDesc = "Transmutes all of your projectiles, reload on a full clip to change transmutation type.\n\nDespite what the label says, this is actually a bottle of lead paint. Don't drink it...";
+            string longDesc = "Transmutes all of your projectiles to a pool of goop.\n\nReload on a full clip to change transmutation type.\n\nDespite what the label says, this is actually a bottle of lead paint. Don't drink it...";
             activeitem.SetupItem(shortDesc, longDesc, "psog");
             activeitem.SetCooldownType(ItemBuilder.CooldownType.Timed, 10f);
             activeitem.quality = PickupObject.ItemQuality.D;
@@ -92,7 +92,7 @@ namespace Planetside
         public IEnumerator Cooldown()
         {
             CanSwitch = false;
-            yield return new WaitForSeconds(0.33f);
+            yield return new WaitForSeconds(0.25f);
             CanSwitch = true;
             yield break;
         }
@@ -199,6 +199,7 @@ namespace Planetside
                 component2.HeightOffGround = 5f;
                 component2.UpdateZDepth();
             }
+            Exploder.DoDistortionWave(user.sprite.WorldCenter, 2, 0.05f, 24, 0.5f);
             AkSoundEngine.PostEvent("Play_OBJ_bottle_cork_01", user.gameObject);
             for (int i = 0; i < StaticReferenceManager.AllProjectiles.Count; i++)
             {
@@ -209,18 +210,16 @@ namespace Planetside
                 {
                     GoopDefinition goop = null;
                     AlchemicalVial.GoopKeys.TryGetValue(AlchemicalVial.ActiveIDS[CurrentCount - 1], out goop);
-                    DeadlyDeadlyGoopManager.GetGoopManagerForGoopType(goop != null ? goop: EasyGoopDefinitions.FireDef).TimedAddGoopCircle(proj.transform.PositionVector2(), user.PlayerHasActiveSynergy("You Killed Us All!") == true ? 4 : 2, 0.33f, false);
+                    DeadlyDeadlyGoopManager.GetGoopManagerForGoopType(goop != null ? goop: EasyGoopDefinitions.FireDef).TimedAddGoopCircle(proj.transform.PositionVector2(), user.PlayerHasActiveSynergy("You Killed Us All!") == true ? 4.5f : 2.25f, 0.5f, false);
                     GameObject PoofVFX = (GameObject)UnityEngine.Object.Instantiate(StaticVFXStorage.BlueSynergyPoofVFX, proj.transform.position, Quaternion.identity);
                     tk2dBaseSprite PoofVFXSprite = PoofVFX.GetComponent<tk2dBaseSprite>();
-                    PoofVFXSprite.PlaceAtPositionByAnchor(proj.transform.position, tk2dBaseSprite.Anchor.MiddleCenter);
-                    PoofVFXSprite.HeightOffGround = 35f;
-                    PoofVFXSprite.UpdateZDepth();
+                    PoofVFXSprite.PlaceAtPositionByAnchor(proj.sprite.WorldCenter, tk2dBaseSprite.Anchor.MiddleCenter);
                     tk2dSpriteAnimator component2 = PoofVFXSprite.GetComponent<tk2dSpriteAnimator>();
                     if (component2 != null)
                     {
                         Color color = new Color();
                         ColorKeys.TryGetValue(AlchemicalVial.ActiveIDS[CurrentCount - 1] != null ? AlchemicalVial.ActiveIDS[CurrentCount - 1] : "nAn", out color);
-                        PoofVFXSprite.scale *= 0.66f;
+                        PoofVFXSprite.scale *= 1.25f;
                         component2.playAutomatically = true;
                         component2.sprite.usesOverrideMaterial = true;
                         component2.sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
@@ -230,6 +229,28 @@ namespace Planetside
                         component2.sprite.renderer.material.SetColor("_OverrideColor", color);
                         component2.sprite.renderer.material.SetColor("_EmissiveColor", color);
                     }
+                    Exploder.Explode(proj.sprite.WorldCenter, new ExplosionData()
+                    {
+                        breakSecretWalls = false,
+                        damage = 5 + (proj.baseData.damage * 0.333f),
+                        debrisForce = 0,
+                        damageRadius = user.PlayerHasActiveSynergy("You Killed Us All!") == true ? 5 : 3,
+                        damageToPlayer = 0,
+                        comprehensiveDelay = 0,
+                        doForce = false,
+                        doExplosionRing = false,
+                        effect = null,
+                        force = 0,
+                        explosionDelay = 0,
+                        doDamage = true,
+                        doDestroyProjectiles = false,
+                        doScreenShake = false,
+                        ignoreList = new List<SpeculativeRigidbody>() { base.LastOwner.specRigidbody },
+                        isFreezeExplosion = false,
+                        pushRadius = 0,
+                        playDefaultSFX = false,
+                        
+                    }, Vector2.zero);
                     proj.DieInAir();
                 }
             }

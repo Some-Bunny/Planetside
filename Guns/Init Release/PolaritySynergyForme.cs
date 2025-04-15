@@ -62,7 +62,7 @@ namespace Planetside
 			Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(gun.Volley.projectiles[0].projectiles[0]);
 			projectile.gameObject.SetActive(false);
 			gun.Volley.projectiles[0].projectiles[0] = projectile;
-			projectile.baseData.damage = 5f;
+			projectile.baseData.damage = 4.5f;
 			PolarityProjectile pol1 = projectile.gameObject.AddComponent<PolarityProjectile>();
 			pol1.IsUp = false;
 
@@ -89,7 +89,7 @@ namespace Planetside
 			gun.Volley.projectiles[1].projectiles[0] = projectile1;
 			PolarityProjectile pol2 = projectile1.gameObject.AddComponent<PolarityProjectile>();
 			pol2.IsUp = true;
-			projectile1.baseData.damage = 5f;
+			projectile1.baseData.damage = 4.5f;
 			FakePrefab.MarkAsFakePrefab(projectile1.gameObject);
 			UnityEngine.Object.DontDestroyOnLoad(projectile1);
 			bool aa = gun.Volley.projectiles[1] != gun.DefaultModule;

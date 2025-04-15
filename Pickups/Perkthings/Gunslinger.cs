@@ -966,8 +966,8 @@ namespace Planetside
             UnityEngine.Object.DontDestroyOnLoad(BrokenArmorVFXObject);
             BrokenArmorVFXObject.GetOrAddComponent<tk2dBaseSprite>();
             tk2dSpriteAnimator animator = BrokenArmorVFXObject.GetOrAddComponent<tk2dSpriteAnimator>();
-            animator.library = StaticSpriteDefinitions.Debuff_Animation_Data;
-            animator.Library = StaticSpriteDefinitions.Debuff_Animation_Data;
+            animator.library = StaticSpriteDefinitions.VFX_Animation_Data;
+            animator.Library = StaticSpriteDefinitions.VFX_Animation_Data;
 
             animator.sprite.usesOverrideMaterial = true;
 
@@ -987,6 +987,13 @@ namespace Planetside
 
         public override List<PerkDisplayContainer> perkDisplayContainers => new List<PerkDisplayContainer>()
         {
+                new PerkDisplayContainer()
+                {
+                    AmountToBuyBeforeReveal = 0,
+                    LockedString = "\"Massive Boost To Thrown Weapons.\"",
+                    UnlockedString = "\"Massive Boost To Thrown Weapons.\"",
+                    requiresFlag = false
+                },
                 new PerkDisplayContainer()
                 {
                     AmountToBuyBeforeReveal = 1,

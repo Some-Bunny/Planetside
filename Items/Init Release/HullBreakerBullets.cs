@@ -17,6 +17,8 @@ namespace Planetside
 {
     public class HullBreakerBullets : PassiveItem
     {
+		public class HullBreakerTracker : MonoBehaviour { }
+
 
         public static void Init()
         {
@@ -29,7 +31,7 @@ namespace Planetside
             ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("hullbreaker"), data, obj);
 
             string shortDesc = "Once More Into The Breach";
-            string longDesc = "Deal greater damage to yet undamaged enemies." +
+            string longDesc = "First hit on an enemy deals greatly increased damage." +
                 "\n\nThese bullets were initially forged to blast holes into the sides of spaceships, but in violation of the Guneva convention, are now used in the Gungeon.";
             ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
             item.quality = PickupObject.ItemQuality.A;
@@ -73,14 +75,15 @@ namespace Planetside
 			
 			if (otherRigidbody != null&& otherRigidbody.healthHaver != null)
 			{
-				float maxHealth = otherRigidbody.healthHaver.GetMaxHealth();
-				float num = maxHealth * 0.99f;
-				float currentHealth = otherRigidbody.healthHaver.GetCurrentHealth();
-				if (currentHealth > num)
+				//float maxHealth = otherRigidbody.healthHaver.GetMaxHealth();
+				//float num = maxHealth * 0.99f;
+				//float currentHealth = otherRigidbody.healthHaver.GetCurrentHealth();
+				var tracker = otherRigidbody.gameActor.GetComponent<HullBreakerTracker>();
+				if (tracker == null)
 				{
-
                     if (myRigidbody && myRigidbody.projectile != null)
                     {
+                        otherRigidbody.gameActor.AddComponent<HullBreakerTracker>();
                         float damage = myRigidbody.projectile.baseData.damage;
 
                         myRigidbody.projectile.baseData.damage *= 2.5f;

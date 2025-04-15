@@ -117,7 +117,7 @@ namespace Planetside
                 "psog:measuring_tape",
                 "psog:rebar_puncher"
             };
-            CustomSynergies.Add("Workplace Accident", yes, null, true);
+            CustomSynergies.Add("Workplace Accident", yes, null, false);
             ItemIDs.AddToList(gun.PickupObjectId);
         }
         public static int MeasuringTapeID;

@@ -35,6 +35,7 @@ namespace Planetside
                 currentSWState = States.DISABLED;
                 GameManager.Instance.OnNewLevelFullyLoaded += this.DoEventChecks;
                 Actions.PostDungeonTrueStart += PostFloorgen;
+                Actions.OnRunStart += OnRunStart;
                 Debug.Log("Finished SomethingWickedEventManager setup without failure!");
 
             }
@@ -44,6 +45,14 @@ namespace Planetside
                 Debug.Log(e);
             }
         }
+
+        public void OnRunStart(PlayerController player_1, PlayerController player_2, GameManager.GameMode gameMode)
+        {
+            NevernamedsDarknessHandler.DisableDarkness(0);
+            currentSWState = States.DISABLED;
+            TrapDefusalKit.RemoveTrapDefuseOverride("somethingwicked");
+        }
+
 
         public static void PostFloorgen(Dungeon dungeon)
         {
@@ -101,6 +110,8 @@ namespace Planetside
                 TrapDefusalKit.RemoveTrapDefuseOverride("somethingwicked");
                 ResetMusic(GameManager.Instance.Dungeon);
             }
+
+            
         }
 
 

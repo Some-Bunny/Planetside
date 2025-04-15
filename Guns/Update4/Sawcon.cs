@@ -191,7 +191,7 @@ namespace Planetside
                 "psog:saw_controlled_dispenser",
                 "bullet_bore"
             };
-            CustomSynergies.Add("Screwdriver", yah, null, true);
+            CustomSynergies.Add("Screwdriver", yah, null, false);
             new Hook(typeof(CerebralBoreProjectile).GetMethod("HandleBoring", BindingFlags.Instance | BindingFlags.NonPublic), typeof(Sawcon).GetMethod("HandleBoringHook"));
 
 
@@ -204,7 +204,7 @@ namespace Planetside
                 "buzzkill",
 				"super_meat_gun"
             };
-            CustomSynergies.Add("Saw Your Heart Out", two, twoTwo, true);
+            CustomSynergies.Add("Saw Your Heart Out", two, twoTwo, false);
 
 			Gun buzzkill = (PickupObjectDatabase.GetById(341) as Gun);
 			buzzkill.DefaultModule.projectiles[0].gameObject.AddComponent<SawconMagnetAffected>();

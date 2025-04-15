@@ -72,7 +72,7 @@ namespace Planetside
 				"psog:air_blaster",
 				"cigarettes"
 			};
-			CustomSynergies.Add("Puff", yes, null, true);
+			CustomSynergies.Add("Puff", yes, null, false);
 			/*
 			List<string> syn = new List<string>
 			{
@@ -133,7 +133,7 @@ namespace Planetside
 					if (player.PlayerHasActiveSynergy("Puff"))
 					{
 						float dmg = (player.stats.GetStatValue(PlayerStats.StatType.Damage));
-						Exploder.DoRadialDamage(gun.ClipShotsRemaining*dmg, base.gameObject.transform.PositionVector2(), 4f, false, true, true, null);
+						Exploder.DoRadialDamage(gun.ClipShotsRemaining*dmg * 2.5f, base.gameObject.transform.PositionVector2(), 4f, false, true, true, null);
 					}
 					AkSoundEngine.PostEvent("Play_CHR_weapon_charged_01", gameObject);
 				}

@@ -77,7 +77,8 @@ namespace Planetside
                         validTilesets = new List<GlobalDungeonData.ValidTilesets>() {GlobalDungeonData.ValidTilesets.CASTLEGEON, GlobalDungeonData.ValidTilesets.GUNGEON, GlobalDungeonData.ValidTilesets.SEWERGEON, GlobalDungeonData.ValidTilesets.CATHEDRALGEON, GlobalDungeonData.ValidTilesets.MINEGEON, GlobalDungeonData.ValidTilesets.CATACOMBGEON}
                     },
                 };
-                RoomFactory.AddInjection(RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/PrisonUnlockRoom.room").room, "Prison Containment Shrine", flowModifierPlacementTypes, 0, dungeonPrerequisites, "Prison Containment Shrine", 1f, 0.15f);
+                var room = RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/PrisonUnlockRoom.room").room;
+                RoomFactory.AddInjection(room, "Prison Containment Shrine", flowModifierPlacementTypes, 0, dungeonPrerequisites, "Prison Containment Shrine", 1f, 0.15f);
 
 
                 List<DungeonPrerequisite> dungeonPrerequisites1 = new List<DungeonPrerequisite>()
@@ -92,6 +93,47 @@ namespace Planetside
                     },
                 };
                 ETGModMainBehaviour.Instance.gameObject.AddComponent<TheGames>();
+
+
+
+                dungeonPrerequisites = new List<DungeonPrerequisite>()
+                {
+                    new DungeonGenToolbox.AdvancedDungeonPrerequisite
+                    {
+                        advancedPrerequisiteType = CustomDungeonPrerequisite.AdvancedPrerequisiteType.CUSTOM_STAT_COMPARISION,
+                        customStatToCheck = CustomTrackedStats.INFECTION_FLOORS_ACTIVATED,
+                        useSessionStatValue = true,
+                        prerequisiteOperation = DungeonPrerequisite.PrerequisiteOperation.EQUAL_TO,
+                        comparisonValue = 0
+                    },
+                    new DungeonPrerequisite()
+                    {
+                        saveFlagToCheck = GungeonFlags.BOSSKILLED_LICH,
+                        requireFlag = true,
+                        prerequisiteType = DungeonPrerequisite.PrerequisiteType.FLAG,
+                        prerequisiteOperation = DungeonPrerequisite.PrerequisiteOperation.EQUAL_TO,
+                    },
+                    new CustomDungeonPrerequisite()
+                    {
+                        customStatToCheck = CustomTrackedStats.PERKS_BOUGHT,
+                        comparisonValue = 11,
+                        prerequisiteOperation = DungeonPrerequisite.PrerequisiteOperation.GREATER_THAN,
+                        useSessionStatValue = false,
+                        advancedPrerequisiteType = CustomDungeonPrerequisite.AdvancedPrerequisiteType.CUSTOM_STAT_COMPARISION
+                    },
+                    new CustomDungeonPrerequisite()
+                    {
+                        customFlagToCheck = CustomDungeonFlags.HAS_TREADED_DEEPER,
+                        requireCustomFlag = true,
+                        advancedPrerequisiteType = CustomDungeonPrerequisite.AdvancedPrerequisiteType.CUSTOM_FLAG
+
+                    },
+                    new DungeonGenToolbox.AdvancedDungeonPrerequisite
+                    {
+                        advancedAdvancedPrerequisiteType = DungeonGenToolbox.AdvancedDungeonPrerequisite.AdvancedAdvancedPrerequisiteType.MULTIPLE_FLOORS,
+                        validTilesets = new List<GlobalDungeonData.ValidTilesets>() {GlobalDungeonData.ValidTilesets.CASTLEGEON, GlobalDungeonData.ValidTilesets.GUNGEON, GlobalDungeonData.ValidTilesets.SEWERGEON, GlobalDungeonData.ValidTilesets.CATHEDRALGEON, GlobalDungeonData.ValidTilesets.MINEGEON, GlobalDungeonData.ValidTilesets.CATACOMBGEON, GlobalDungeonData.ValidTilesets.FORGEGEON }
+                    },
+                };
 
                 RoomFactory.AddInjection(RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/MortalCombat.room").room, "Combat Shrine", flowModifierPlacementTypes, 0, dungeonPrerequisites1, "Combat Shrine", 1, 1f);
 
@@ -310,8 +352,8 @@ namespace Planetside
 
                 foreach (RoomHandler roomHandler in rooms)
                 {
-                    BaseShopController[] componentsInChildren = GameManager.Instance.Dungeon.data.Entrance.hierarchyParent.parent.GetComponentsInChildren<BaseShopController>(true);
-                    bool flag3 = componentsInChildren != null && componentsInChildren.Length != 0;
+                    List<BaseShopController> componentsInChildren = roomHandler.GetComponentsAbsoluteInRoom<BaseShopController>();
+                    bool flag3 = componentsInChildren != null && componentsInChildren.Count != 0;
                     if (flag3)
                     {
                         foreach (BaseShopController shope in componentsInChildren)
@@ -370,6 +412,24 @@ namespace Planetside
 
                                     GameManager.Instance.StartCoroutine(Delay(shopCont));
 
+                                    //StaticReferences.StoredRoomObjects.TryGetValue("masteryRewardTrader", out obj);
+
+                                    GameObject objAbscond = null;
+                                    Alexandria.DungeonAPI.StaticReferences.customObjects.TryGetValue("psog:absconditus", out objAbscond);
+                                    if (objAbscond != null)
+                                    {
+                                        offset = b == true ? new IntVector2(8, 3) : new IntVector2(1, -1);
+
+                                        var obj_ = UnityEngine.Object.Instantiate(objAbscond, (new IntVector2((int)shope.gameObject.transform.position.x + (offset.x), ((int)shope.gameObject.transform.position.y)- offset.y)).ToCenterVector3(1), Quaternion.identity);// DungeonPlaceableUtility.InstantiateDungeonPlaceable(objAbscond, shope.GetAbsoluteParentRoom(), new IntVector2((int)shope.gameObject.transform.position.x + (offset.x), ((int)shope.gameObject.transform.position.y) + offset.y) - shope.GetAbsoluteParentRoom().area.basePosition, false);
+                                        
+                                        
+                                        IPlayerInteractable[] interfacesInChildren = obj_.gameObject.GetComponentsInParent<IPlayerInteractable>();
+                                        for (int j = 0; j < interfacesInChildren.Length; j++)
+                                        {
+                                            roomHandler.RegisterInteractable(interfacesInChildren[j]);
+                                        }
+
+                                    }
                                     //var list = shopCont.m_itemControllers;
                                     /*
                                     foreach (var item in list)

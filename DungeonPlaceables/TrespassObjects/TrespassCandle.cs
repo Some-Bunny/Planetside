@@ -57,6 +57,8 @@ namespace Planetside
             };
             DungeonPlaceable placeable = BreakableAPIToolbox.GenerateDungeonPlaceable(dict);
             StaticReferences.StoredDungeonPlaceables.Add("tresPassCandle", placeable);
+            Alexandria.DungeonAPI.StaticReferences.customPlaceables.Add("PSOG_tresPassCandle", placeable);
+
         }
 
         public static MinorBreakable GenerateThing(ShardCluster shardCluster, string[] animPaths,string breakStr, int FPS)

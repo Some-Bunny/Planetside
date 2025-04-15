@@ -62,7 +62,7 @@ namespace Planetside
             };
 
             ETGMod.Databases.Strings.Core.Set("#TUTORIAL_NODODGE_NOTE_1", 
-                "I'm writing these in case someone stumbles upon by remains, either by chance or searching, so they don't suffer the name fate I did." +
+                "I'm writing these in case someone stumbles upon my remains, either by chance or searching, so they don't suffer the same fate I did." +
                 "\n\nThrough my many run-throughs of the Gungeon, I stumbled onto these mysterious blue portals like the one you most likely found.");
             
             ETGMod.Databases.Strings.Core.Set("#TUTORIAL_NODODGE_NOTE_2", 

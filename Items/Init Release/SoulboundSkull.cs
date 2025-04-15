@@ -96,7 +96,7 @@ namespace Planetside
                 }        
             }
         }
-        public int MaxTokens = 10;
+        public int MaxTokens = 12;
         public int currentTokens = 0;
         private float e = 0f;
 
@@ -107,7 +107,7 @@ namespace Planetside
             {
                 if (currentTokens < MaxTokens)
                 {
-                    e += Time.deltaTime;
+                    e += Time.deltaTime * 1.5f;
                     if (e > 1f)
                     {
                         e = 0f;

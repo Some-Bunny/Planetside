@@ -23,7 +23,6 @@ namespace Planetside
 		public EndOfEverything()
 		{
 
-			//This component will run and make the projectile deal aoe damage as long as its alive
 		}
 
 		private void Awake()

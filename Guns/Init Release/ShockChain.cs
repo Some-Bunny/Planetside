@@ -63,11 +63,13 @@ namespace Planetside
 			Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(gun.Volley.projectiles[0].projectiles[0]);
 			projectile.gameObject.SetActive(false);
 			gun.Volley.projectiles[0].projectiles[0] = projectile;
-			projectile.baseData.damage = 2f;
-			projectile.baseData.speed *= 1f;
+			projectile.baseData.damage = 9f;
+			projectile.baseData.speed *= 0.9f;
 			var s = projectile.gameObject.AddComponent<ShockChainProjectile>();
 			s.IsLeft = false;
-			PierceProjModifier spook = projectile.gameObject.AddComponent<PierceProjModifier>();
+            s.projectile = projectile;
+
+            PierceProjModifier spook = projectile.gameObject.AddComponent<PierceProjModifier>();
 			spook.penetration = 20;
 			spook.penetratesBreakables = true;
 
@@ -93,11 +95,11 @@ namespace Planetside
 			Projectile projectile1 = UnityEngine.Object.Instantiate<Projectile>(gun.Volley.projectiles[1].projectiles[0]);
 			projectile1.gameObject.SetActive(false);
 			gun.Volley.projectiles[1].projectiles[0] = projectile1;
-			projectile1.baseData.damage = 8f;
-			projectile1.baseData.speed *= 1f;
+			projectile1.baseData.damage = 9;
+			projectile1.baseData.speed *= 0.9f;
             var s1 = projectile1.gameObject.AddComponent<ShockChainProjectile>();
             s1.IsLeft = true;
-
+			s1.projectile = projectile1;
             PierceProjModifier spooky = projectile1.gameObject.AddComponent<PierceProjModifier>();
 			spooky.penetration = 20;
 			spooky.penetratesBreakables = true;
@@ -124,7 +126,7 @@ namespace Planetside
 			/*
 			List<string> mandatoryConsoleIDs1 = new List<string>
 			{
-				"psog:shock-chain"
+				"psog:shockchain"
 			};
 			List<string> optionalConsoleIDs = new List<string>
 			{
@@ -140,7 +142,7 @@ namespace Planetside
 				"psog:shockchain",
 				"shock_rounds"
 			};
-			CustomSynergies.Add("Single A", AAA, null, true);
+			CustomSynergies.Add("Single A", AAA, null, false);
 			ShockChain.ElectricMusicID = gun.PickupObjectId;
 
 			ItemIDs.AddToList(gun.PickupObjectId);
@@ -169,33 +171,31 @@ namespace Planetside
 		{
 			if (gun.IsReloading && this.HasReloaded)
 			{
-				bool flag = this.HasReloaded && gun.ClipShotsRemaining == 0;
-				if (flag)
+				/*
+				if (gun.ClipShotsRemaining == 0)
 				{
-					bool flagA = player.PlayerHasActiveSynergy("POWER SURGE");
-					if (flagA)
+					if (player.PlayerHasActiveSynergy("POWER SURGE"))
 					{
-						for (int counter = 0; counter < 8; counter++)
+						for (int i = 0; i < 12; i++)
 						{
 							Projectile projectile = ((Gun)ETGMod.Databases.Items[16]).DefaultModule.projectiles[0];
 							Vector3 vector = player.unadjustedAimPoint - player.LockedApproximateSpriteCenter;
 							Vector3 vector2 = player.specRigidbody.UnitCenter;
-							GameObject gameObject = SpawnManager.SpawnProjectile(projectile.gameObject, player.sprite.WorldCenter, Quaternion.Euler(0f, 0f, ((player.CurrentGun == null) ? 1.2f : player.CurrentGun.CurrentAngle) + UnityEngine.Random.Range(-30, 30)), true);
+							GameObject gameObject = SpawnManager.SpawnProjectile(projectile.gameObject, player.sprite.WorldCenter, Quaternion.Euler(0f, 0f, (player.CurrentGun == null) ? 30 * i : player.CurrentGun.CurrentAngle + UnityEngine.Random.Range(-30, 30)), true);
 							Projectile component = gameObject.GetComponent<Projectile>();
-							if (flag)
-							{
-								component.Owner = player;
-								component.Shooter = player.specRigidbody;
-							}
+                            component.Owner = player;
+                            component.Shooter = player.specRigidbody;
+							component.baseData.speed *= UnityEngine.Random.Range(0.75f, 1.25f);
+							component.baseData.damage = 4.5f;
 
-						}
+                        }
 					}
 				}
+				*/
 				AkSoundEngine.PostEvent("Stop_WPN_All", base.gameObject);
 				HasReloaded = false;
 				base.OnReloadPressed(player, gun, bSOMETHING);
 			}
 		}
-		public Vector3 projectilePos;		
 	}
 }

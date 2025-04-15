@@ -210,7 +210,7 @@ namespace Planetside
 			float Weight = 1f;
 			if (SaveAPIManager.GetFlag(CustomDungeonFlags.BROKEN_CHAMBER_RUN_COMPLETED) == true)
             {
-				Weight = 0.05f;
+				Weight = 0.4f;
             }	
 			PrototypeDungeonRoom BrokenChamberRoomVar = RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/BrokenChamberRoom.room").room;
 

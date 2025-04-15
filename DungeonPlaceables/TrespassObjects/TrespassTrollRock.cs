@@ -62,6 +62,8 @@ namespace Planetside
             };
             DungeonPlaceable placeable2 = BreakableAPIToolbox.GenerateDungeonPlaceable(dict2);
             StaticReferences.StoredDungeonPlaceables.Add("isItARockOrAlive", placeable2);
+            Alexandria.DungeonAPI.StaticReferences.customPlaceables.Add("PSOG_isItARockOrAlive", placeable2);
+
         }
     }
 }

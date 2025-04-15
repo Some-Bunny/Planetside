@@ -27,8 +27,8 @@ namespace Planetside
 				{
                     component.OverrideMotionModule = new HelixProjectileMotionModule
                     {
-                        helixAmplitude = 2f,
-                        helixWavelength = 8f,
+                        helixAmplitude = 0.75f,
+                        helixWavelength = 5f,
                         ForceInvert = IsUp
                     };
                 }

@@ -7,13 +7,11 @@ using SaveAPI;
 using HarmonyLib;
 using static PlayerStats;
 using static StatModifier;
-using Dungeonator;
+
 using Pathfinding;
-using System;
-using System.Collections.Generic;
+
 using System.Linq;
 using tk2dRuntime.TileMap;
-using UnityEngine;
 
 
 namespace Planetside
@@ -375,9 +373,9 @@ namespace Planetside
         {
                 new PerkDisplayContainer()
                 {
-                    AmountToBuyBeforeReveal = 1,
-                    LockedString = AlphabetController.ConvertString("Increased Guns"),
-                    UnlockedString = "All guns are doubled, in spirit.",
+                    AmountToBuyBeforeReveal = 0,
+                    LockedString = "\"All Weapons are Doubled.\"",
+                    UnlockedString = "\"All Weapons are Doubled.\"",
                     requiresFlag = false
                 },
                 new PerkDisplayContainer()

@@ -372,7 +372,11 @@ namespace Planetside
 				EnemyDatabase.GetEntry("psog:skullvenant").ForcedPositionInAmmonomicon = 45;
 				EnemyDatabase.GetEntry("psog:skullvenant").isInBossTab = false;
 				EnemyDatabase.GetEntry("psog:skullvenant").isNormalEnemy = true;
-			}
+
+                companion.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("465da2bb086a4a88a803f79fe3a27677").bulletBank.bulletBank.GetBullet("homing"));
+                companion.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("796a7ed4ad804984859088fc91672c7f").bulletBank.bulletBank.GetBullet("default"));
+                companion.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("sweep"));
+            }
 		}
 
 
@@ -440,11 +444,9 @@ namespace Planetside
 					mat.SetFloat("_EmissivePower", 100);
 					aiActor.sprite.renderer.material = mat;
 				}
-				base.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("465da2bb086a4a88a803f79fe3a27677").bulletBank.bulletBank.GetBullet("homing"));
-				base.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("796a7ed4ad804984859088fc91672c7f").bulletBank.bulletBank.GetBullet("default"));
-				base.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("sweep"));
 
-				m_StartRoom = aiActor.GetAbsoluteParentRoom();
+
+                m_StartRoom = aiActor.GetAbsoluteParentRoom();
 				base.aiActor.healthHaver.OnPreDeath += (obj) =>
 				{ 
 
@@ -457,23 +459,22 @@ namespace Planetside
 		{
 			public override IEnumerator Top()
 			{
+				base.PostWwiseEvent("Play_ENM_ironmaiden_blast_01", null);
+				for (int i = 0; i <= 5; i++)
+				{
+					this.Fire(new Direction(i * 72, DirectionType.Aim, -1f), new Speed(1f, SpeedType.Absolute), new SkellBullet());
+                    this.Fire(new Direction(i * 72, DirectionType.Aim, -1f), new Speed(0f, SpeedType.Absolute), new SkellBullet());
 
-				if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
-				{
-					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("sweep"));
-				}
+                }
+                yield return this.Wait(10);
 				base.PostWwiseEvent("Play_ENM_ironmaiden_blast_01", null);
-				for (int i = 0; i <= 4; i++)
+				for (int i = 0; i <= 5; i++)
 				{
-					this.Fire(new Direction(i * 90, DirectionType.Aim, -1f), new Speed(1f, SpeedType.Absolute), new SkellBullet());
-				}
-				yield return this.Wait(10);
-				base.PostWwiseEvent("Play_ENM_ironmaiden_blast_01", null);
-				for (int i = 0; i <= 4; i++)
-				{
-					this.Fire(new Direction((i * 90)+45, DirectionType.Aim, -1f), new Speed(2f, SpeedType.Absolute), new SkellBullet());
-				}
-				yield break;
+					this.Fire(new Direction((i * 72)+36, DirectionType.Aim, -1f), new Speed(2f, SpeedType.Absolute), new SkellBullet());
+                    this.Fire(new Direction((i * 72) + 36, DirectionType.Aim, -1f), new Speed(0f, SpeedType.Absolute), new SkellBullet());
+
+                }
+                yield break;
 			}
 		}
 
@@ -488,7 +489,7 @@ namespace Planetside
 			{
 				base.ChangeSpeed(new Speed(1f, SpeedType.Absolute), 20);
 				yield return this.Wait(60);
-				base.ChangeSpeed(new Speed(14f, SpeedType.Absolute), 40);
+				base.ChangeSpeed(new Speed(12f, SpeedType.Absolute), 40);
 				yield break;
 			}
 		}
@@ -498,7 +499,12 @@ namespace Planetside
 			{
 				base.PostWwiseEvent("Play_WPN_woodbow_shot_02", null);
 				base.Fire(new Direction(0f, DirectionType.Aim, -1f), new Speed(3f, SpeedType.Absolute), new Bullet("homing", false, false, false));
-				yield break;
+                for (int i = -2; i <= 3; i++)
+                {
+                    this.Fire(new Direction((i * 24), DirectionType.Aim, -1f), new Speed(2f, SpeedType.Absolute), new SkellBullet());
+                    this.Fire(new Direction((i * 24), DirectionType.Aim, -1f), new Speed(0f, SpeedType.Absolute), new SkellBullet());
+                }
+                yield break;
 			}
 		}
 		public class SkullShot : Bullet

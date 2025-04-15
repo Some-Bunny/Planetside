@@ -8,6 +8,7 @@ using GungeonAPI;
 using MonoMod.RuntimeDetour;
 using System.Reflection;
 using ItemAPI;
+using Alexandria.PrefabAPI;
 
 namespace Planetside
 {
@@ -639,6 +640,16 @@ namespace Planetside
 
 			Mod_Entrance_Room = DungeonRoomFactory.BuildFromResource("Planetside/Resources/AbyssRooms/AbyssEntry/TheDeepEntrance.room");
             Mod_Exit_Room = DungeonRoomFactory.BuildFromResource("Planetside/Resources/AbyssRooms/oopsie.room");
+
+            var icon = PrefabBuilder.BuildObject("FUCKFUCKFUCK");
+
+            var sprite = icon.gameObject.AddComponent<tk2dSprite>();
+
+            sprite.SetSprite(StaticSpriteDefinitions.RoomObject_Sheet_Data, StaticSpriteDefinitions.RoomObject_Sheet_Data.GetSpriteIdByName("roomicon_portaltohell"));
+
+            Mod_Exit_Room.associatedMinimapIcon = icon;
+
+
             Mod_Entrance_Room.category = PrototypeDungeonRoom.RoomCategory.ENTRANCE;
 			VoidMuncherRoom = DungeonRoomFactory.BuildFromResource("Planetside/Resources/AbyssRooms/AbyssSpecial/SpecialVoidMuncherRoom.room");
             AbyssSpawnLootRoom = DungeonRoomFactory.BuildFromResource("Planetside/Resources/AbyssRooms/AbyssSpecial/abyssroom_special_free_loot.room");

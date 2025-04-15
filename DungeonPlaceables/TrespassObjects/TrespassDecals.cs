@@ -39,6 +39,7 @@ namespace Planetside
 
             DungeonPlaceable placeable = BreakableAPIToolbox.GenerateDungeonPlaceable(decal2x2List);
             StaticReferences.StoredDungeonPlaceables.Add("trespassRandom2x2Decal", placeable);
+            Alexandria.DungeonAPI.StaticReferences.customPlaceables.Add("PSOG_trespassRandom2x2Decal", placeable);
 
             GameObject megaDecal = BreakableAPIToolbox.GenerateDecalObject("trespass_decal", new string[] { "Planetside/Resources/DungeonObjects/TrespassObjects/TrespassDecals/Mega/hehehehaha.png" });
             megaDecal.gameObject.GetOrAddComponent<TresspassUnlitShaderController>();
@@ -51,10 +52,14 @@ namespace Planetside
             GameObject horizontalDecal = BreakableAPIToolbox.GenerateDecalObject("trespass_decal_horizontal", new string[] { "Planetside/Resources/DungeonObjects/TrespassObjects/TrespassDecals/TrespassDirectionalDecal/decalHorizontal.png" });
             horizontalDecal.gameObject.GetOrAddComponent<TresspassUnlitShaderController>();
             StaticReferences.StoredRoomObjects.Add("horizontalDecal", horizontalDecal);
+            Alexandria.DungeonAPI.StaticReferences.customPlaceables.Add("PSOG_horizontalDecal", placeable);
+
 
             GameObject verticalDecal = BreakableAPIToolbox.GenerateDecalObject("trespass_decal_vertical", new string[] { "Planetside/Resources/DungeonObjects/TrespassObjects/TrespassDecals/TrespassDirectionalDecal/decalVertical.png" });
             verticalDecal.gameObject.GetOrAddComponent<TresspassUnlitShaderController>();
             StaticReferences.StoredRoomObjects.Add("verticalDecal", verticalDecal);
+            Alexandria.DungeonAPI.StaticReferences.customPlaceables.Add("PSOG_verticalDecal", placeable);
+
         }
     }
 }

@@ -1531,7 +1531,7 @@ namespace Planetside
 							new WeightedInt(){additionalPrerequisites = new DungeonPrerequisite[0], annotation = "4", value = 4, weight = 1f},
 						};
 
-						player.healthHaver.ApplyDamage(1000000, Vector2.zero, StringTableManager.GetLongString("#CLOCKHAIR_SPECIAL_DEATH_" + attackWeights.SelectByWeight().ToString()), CoreDamageTypes.Void, DamageCategory.Normal, false, null, false);
+						player.healthHaver.ApplyDamage(1000000, Vector2.zero, StringTableManager.GetString("#CLOCKHAIR_SPECIAL_DEATH_" + attackWeights.SelectByWeight().ToString()), CoreDamageTypes.Void, DamageCategory.Normal, false, null, false);
 						player.healthHaver.Armor = 0;
 						player.healthHaver.ForceSetCurrentHealth(0);
 						player.healthHaver.Die(Vector2.zero);

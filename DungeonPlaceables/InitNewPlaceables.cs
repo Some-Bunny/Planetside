@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Planetside.DungeonPlaceables;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using static UnityEngine.UI.CanvasScaler;
 
 namespace Planetside
 {
@@ -41,6 +43,11 @@ namespace Planetside
             EnemyBuffShrine.Init();
             NoTeleporterPlaceable.Init();
             TrespassPortalReturn.Init();
+            TheHelpfulPad.Init();
+            Gooper.Init();
+            Idol.Init();
+            FadingBlocker.Init();
+            MarkTileAsTrap.Init();
             //TrespassTrollRock.Init();
         }
     }

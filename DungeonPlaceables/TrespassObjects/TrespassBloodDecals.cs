@@ -35,6 +35,7 @@ namespace Planetside
             }
             DungeonPlaceable placeable = BreakableAPIToolbox.GenerateDungeonPlaceable(decal2x2List);
             StaticReferences.StoredDungeonPlaceables.Add("smallRandomBloodDecal", placeable);
+            Alexandria.DungeonAPI.StaticReferences.customPlaceables.Add("PSOG_smallRandomBloodDecal", placeable);
 
             string defaultPath2 = "Planetside/Resources/DungeonObjects/TrespassObjects/TrespassDecals/Blood/";
             Dictionary<GameObject, float> decal2x2ListBlood = new Dictionary<GameObject, float>()
@@ -42,7 +43,6 @@ namespace Planetside
                 { BreakableAPIToolbox.GenerateDecalObject("blood_spallter_1", new string[] { defaultPath2 + "blooddecal_1.png" }, 1), 1f },
                 { BreakableAPIToolbox.GenerateDecalObject("blood_spallter_1", new string[] { defaultPath2 + "blooddecal_2.png" }, 1), 1f },
                 { BreakableAPIToolbox.GenerateDecalObject("blood_spallter_1", new string[] { defaultPath2 + "blooddecal_3.png" }, 1), 1f },
-
             };
             foreach (var Entry in decal2x2ListBlood)
             {
@@ -50,8 +50,7 @@ namespace Planetside
             }
             DungeonPlaceable placeable2 = BreakableAPIToolbox.GenerateDungeonPlaceable(decal2x2List);
             StaticReferences.StoredDungeonPlaceables.Add("RandomBloodDecal", placeable2);
-
-
+            Alexandria.DungeonAPI.StaticReferences.customPlaceables.Add("PSOG_RandomBloodDecal", placeable);
         }
     }
 }

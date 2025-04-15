@@ -30,7 +30,37 @@ namespace Planetside
 
     public static class MathToolbox
     {
+        public static float EaseIn(float t)
+        {
+            return t * t;
+        }
+        public static float EaseInInverse(float t)
+        {
+            return 1 - (t * t);
+        }
 
+        public static float Flip(float t)
+        {
+            return 1 - t;
+        }
+        public static float EaseOut(float t)
+        {
+            return Flip(EaseIn(Flip(t)));
+        }
+        public static float EaseInOut(float t)
+        {
+            return Mathf.Lerp(EaseIn(t), EaseOut(t), t);
+        }
+
+        public static float EaseInAndBack(float t)
+        {
+            return Mathf.Lerp(EaseIn(t), EaseInInverse(t), t);
+        }
+
+        public static float SinLerpTValueFull(float t)
+        {
+            return Mathf.Sin(t * (Mathf.PI));
+        }
         public static float ToAngle(Vector2 v)
         {
             return Mathf.Atan2(v.y, v.x) * 57.29578f;

@@ -96,7 +96,10 @@ namespace Planetside
     {
 
 
-		public static Material Copy(this Material orig, Texture2D textureOverride = null, Shader shaderOverride = null)
+
+
+
+        public static Material Copy(this Material orig, Texture2D textureOverride = null, Shader shaderOverride = null)
 		{
 			Material m_NewMaterial = new Material(orig.shader)
 			{

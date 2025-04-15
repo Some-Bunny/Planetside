@@ -264,6 +264,13 @@ namespace Planetside
         {
                 new PerkDisplayContainer()
                 {
+                    AmountToBuyBeforeReveal = 0,
+                    LockedString = "\"Greed Is Good.\"",
+                    UnlockedString = "\"Greed Is Good.\"",
+                    requiresFlag = false
+                },
+                new PerkDisplayContainer()
+                {
                     AmountToBuyBeforeReveal = 1,
                     LockedString = AlphabetController.ConvertString("Greed Is Good"),
                     UnlockedString = "Slain enemies drop glowing casings that fade over time.",

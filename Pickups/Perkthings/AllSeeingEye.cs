@@ -62,7 +62,14 @@ namespace Planetside
         public override CustomTrackedStats StatToIncreaseOnPickup => SaveAPI.CustomTrackedStats.AMOUNT_BOUGHT_ALLSEEINGEYE;
         public override List<PerkDisplayContainer> perkDisplayContainers => new List<PerkDisplayContainer>()
         {
-				new PerkDisplayContainer()
+                new PerkDisplayContainer()
+                {
+                    AmountToBuyBeforeReveal = 0,
+                    LockedString = "\"Gain Foresight.\"",
+                    UnlockedString = "\"Gain Foresight.\"",
+                    requiresFlag = false
+                },
+                new PerkDisplayContainer()
                 {
                     AmountToBuyBeforeReveal = 1,
                     LockedString = AlphabetController.ConvertString("Reveals Secrets"),

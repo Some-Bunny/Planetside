@@ -47,7 +47,7 @@ namespace Planetside
             FakePrefab.MarkAsFakePrefab(projectile.gameObject);
             UnityEngine.Object.DontDestroyOnLoad(projectile);
             projectile.baseData.damage = 5f;
-            projectile.baseData.speed *= 0.75f;
+            projectile.baseData.speed *= 0.666f;
             projectile.AdditionalScaleMultiplier = 1f;
             projectile.shouldRotate = true;
             projectile.pierceMinorBreakables = true;
@@ -55,6 +55,9 @@ namespace Planetside
             
             BounceProjModifier bouncy = projectile.gameObject.AddComponent<BounceProjModifier>();
             bouncy.numberOfBounces = 2;
+
+            PierceProjModifier spook = projectile.gameObject.GetOrAddComponent<PierceProjModifier>();
+            spook.penetration = 2;
 
             CoinComponent coin = projectile.gameObject.AddComponent<CoinComponent>();
             coin.DeadTime = 0.2f;
@@ -321,7 +324,8 @@ namespace Planetside
             PlayerController player = this.m_projectile.Owner as PlayerController;
             if (player.PlayerHasActiveSynergy("You Call Punching A Coin An Art?"))
             {
-                this.m_projectile.baseData.speed *= 1.2f;
+                this.m_projectile.baseData.speed *= 0.8f;
+                this.m_projectile.UpdateSpeed();
                 BounceProjModifier bouncy = this.m_projectile.gameObject.GetOrAddComponent<BounceProjModifier>();
                 bouncy.numberOfBounces += 1;
                 PierceProjModifier spook = this.m_projectile.gameObject.GetOrAddComponent<PierceProjModifier>();
@@ -425,75 +429,86 @@ namespace Planetside
                     }
                     else if (Vector2.Distance(proj.sprite.WorldCenter, centerPosition) < 0.666f && proj.Owner != null && proj.Owner == player && elapsed >= DeadTime && HasPerformedRicochet == false && !CoinTosser.AllActiveCoins.Contains(proj.gameObject))
                     {
-                        float blankdamage = (AmountOfBlanksUsedWhileAlive * 0.333f) + 1;
-                        float DmgMult = 1.35f;
-                        float Dmgplus = 5;
-                        if (player != null && player.PlayerHasActiveSynergy("HYPERDEATH"))
-                        {
-                            DmgMult = 1.65f;
-                            Dmgplus += 1;
-                        }
-                        if (player != null && player.PlayerHasActiveSynergy("C-C-C-C-C-C-C-Combo!"))
-                        {
-                            DmgMult -= 0.25f;
-                            Dmgplus -= 1;
-                        }
-                      
-                        HasPerformedRicochet = true;
-                        proj.baseData.speed *= 1.2f;
-                        proj.UpdateSpeed();
-                        float DamageCalc = ((proj.baseData.damage * DmgMult) + Dmgplus) * blankdamage;
+                        AkSoundEngine.PostEvent("Play_perfectshot", base.gameObject);
 
-                        var arbitraryMultiplier = proj.gameObject.GetComponent<CoinArbitraryDamageMultiplier>();
-                        if (arbitraryMultiplier != null)
+                        foreach (var proj_2 in StaticReferenceManager.AllProjectiles)
                         {
-                            DamageCalc *= arbitraryMultiplier.Multiplier;
-                            arbitraryMultiplier.ChangeMultiplier(1);
-                        }
-
-                        proj.baseData.damage = DamageCalc * AmountPunched;
-                        proj.pierceMinorBreakables = true;
-                        proj.baseData.range += 10;
-                        RicochetOffCoinComponent rico = proj.gameObject.GetOrAddComponent<RicochetOffCoinComponent>();
-                        rico.NumberOfRicochets += 1;
-                        if (base.gameObject.GetComponent<Projectile>() != null && player != null && player.PlayerHasActiveSynergy("Malicious"))
-                        {
-                            Projectile projectile = base.gameObject.GetComponent<Projectile>();
-                            if (CoinTosser.HitscanGunList.Contains(projectile.PossibleSourceGun.PickupObjectId))
+                            if (Vector2.Distance(proj_2.sprite.WorldCenter, centerPosition) < 2f && proj_2.Owner != null && proj_2.Owner == player && elapsed >= DeadTime && HasPerformedRicochet == false && !CoinTosser.AllActiveCoins.Contains(proj_2.gameObject))
                             {
-                                ExplosionData defaultSmallExplosionData2 = GameManager.Instance.Dungeon.sharedSettingsPrefab.DefaultExplosionData;
-                                this.smallPlayerSafeExplosion.effect = defaultSmallExplosionData2.effect;
-                                this.smallPlayerSafeExplosion.ignoreList = defaultSmallExplosionData2.ignoreList;
-                                this.smallPlayerSafeExplosion.ss = defaultSmallExplosionData2.ss;
-                                this.smallPlayerSafeExplosion.damage = proj.baseData.damage *= ((0.5f * (AmountOfBlanksUsedWhileAlive + 1)) * AmountPunched);
-                                Exploder.Explode(base.gameObject.transform.PositionVector2(), this.smallPlayerSafeExplosion, Vector2.zero, null, false, CoreDamageTypes.None, false);
+                                float blankdamage = (AmountOfBlanksUsedWhileAlive * 0.333f) + 1;
+                                float DmgMult = 1.35f;
+                                float Dmgplus = 5;
+                                if (player != null && player.PlayerHasActiveSynergy("HYPERDEATH"))
+                                {
+                                    DmgMult = 1.65f;
+                                    Dmgplus += 1;
+                                }
+                                if (player != null && player.PlayerHasActiveSynergy("C-C-C-C-C-C-C-Combo!"))
+                                {
+                                    DmgMult -= 0.25f;
+                                    Dmgplus -= 1;
+                                }
+
+                                proj_2.baseData.speed *= 1.2f;
+                                proj_2.UpdateSpeed();
+                                float DamageCalc = ((proj_2.baseData.damage * DmgMult) + Dmgplus) * blankdamage;
+
+                                var arbitraryMultiplier = proj_2.gameObject.GetComponent<CoinArbitraryDamageMultiplier>();
+                                if (arbitraryMultiplier != null)
+                                {
+                                    DamageCalc *= arbitraryMultiplier.Multiplier;
+                                    arbitraryMultiplier.ChangeMultiplier(1);
+                                }
+
+                                proj_2.baseData.damage = DamageCalc * AmountPunched;
+                                proj_2.pierceMinorBreakables = true;
+                                proj_2.baseData.range += 12;
+                                RicochetOffCoinComponent rico = proj_2.gameObject.GetOrAddComponent<RicochetOffCoinComponent>();
+                                rico.NumberOfRicochets += 1;
+                                if (base.gameObject.GetComponent<Projectile>() != null && player != null && player.PlayerHasActiveSynergy("Malicious"))
+                                {
+                                    Projectile projectile = base.gameObject.GetComponent<Projectile>();
+                                    if (CoinTosser.HitscanGunList.Contains(projectile.PossibleSourceGun.PickupObjectId))
+                                    {
+                                        ExplosionData defaultSmallExplosionData2 = GameManager.Instance.Dungeon.sharedSettingsPrefab.DefaultExplosionData;
+                                        this.smallPlayerSafeExplosion.effect = defaultSmallExplosionData2.effect;
+                                        this.smallPlayerSafeExplosion.ignoreList = defaultSmallExplosionData2.ignoreList;
+                                        this.smallPlayerSafeExplosion.ss = defaultSmallExplosionData2.ss;
+                                        this.smallPlayerSafeExplosion.damage = proj_2.baseData.damage *= ((0.5f * (AmountOfBlanksUsedWhileAlive + 1)) * AmountPunched);
+                                        Exploder.Explode(base.gameObject.transform.PositionVector2(), this.smallPlayerSafeExplosion, Vector2.zero, null, false, CoreDamageTypes.None, false);
+                                    }
+                                }
+                                LootEngine.DoDefaultItemPoof(base.gameObject.transform.position, false, true);
+                                if (HasBeenBeamBoosted != true)
+                                {
+                                    Destroy(base.gameObject);
+                                }
+                                else
+                                {
+                                    CoinTosser.AllActiveCoins.Remove(base.gameObject);
+                                    proj_2.baseData.range += 30;
+                                    m_projectile.baseData.speed *= 3;
+                                    m_projectile.UpdateSpeed();
+                                    AkSoundEngine.PostEvent("Play_ENM_rubber_blast_01", base.gameObject);
+                                    m_projectile.ModifyVelocity = (Func<Vector2, Vector2>)Delegate.Combine(m_projectile.ModifyVelocity, new Func<Vector2, Vector2>(this.ModifyVelocity));
+                                    m_projectile.OnHitEnemy = (Action<Projectile, SpeculativeRigidbody, bool>)Delegate.Combine(m_projectile.OnHitEnemy, new Action<Projectile, SpeculativeRigidbody, bool>(this.HandleHit));
+                                    m_projectile.gameObject.AddComponent<PierceDeadActors>();
+                                    PierceProjModifier spook = m_projectile.gameObject.GetOrAddComponent<PierceProjModifier>();
+                                    spook.penetration += 2;
+                                    Exploder.DoDistortionWave(m_projectile.sprite.WorldCenter, 4, 0.07f, 4, 0.3f);
+                                }
+                                float random = UnityEngine.Random.Range(0.00f, 1.00f);
+                                if (random <= 0.2f)
+                                {
+                                    LootEngine.SpawnItem(PickupObjectDatabase.GetById(68).gameObject, base.gameObject.transform.PositionVector2(), Vector2.zero, 1f, false, false, false);
+                                }
                             }
+                                
                         }
-                        LootEngine.DoDefaultItemPoof(base.gameObject.transform.position, false, true);
-                        if (HasBeenBeamBoosted != true)
-                        {
-                            AkSoundEngine.PostEvent("Play_perfectshot", base.gameObject);
-                            Destroy(base.gameObject);
-                        }
-                        else
-                        {
-                            CoinTosser.AllActiveCoins.Remove(base.gameObject);
-                            proj.baseData.range += 30;
-                            m_projectile.baseData.speed *= 3;
-                            m_projectile.UpdateSpeed();
-                            AkSoundEngine.PostEvent("Play_ENM_rubber_blast_01", base.gameObject);
-                            m_projectile.ModifyVelocity = (Func<Vector2, Vector2>)Delegate.Combine(m_projectile.ModifyVelocity, new Func<Vector2, Vector2>(this.ModifyVelocity));
-                            m_projectile.OnHitEnemy = (Action<Projectile, SpeculativeRigidbody, bool>)Delegate.Combine(m_projectile.OnHitEnemy, new Action<Projectile, SpeculativeRigidbody, bool>(this.HandleHit));
-                            m_projectile.gameObject.AddComponent<PierceDeadActors>();
-                            PierceProjModifier spook = m_projectile.gameObject.GetOrAddComponent<PierceProjModifier>();
-                            spook.penetration += 2;
-                            Exploder.DoDistortionWave(m_projectile.sprite.WorldCenter, 4, 0.07f, 4, 0.3f);
-                        }
-                        float random = UnityEngine.Random.Range(0.00f, 1.00f);
-                        if (random <= 0.2f)
-                        {
-                            LootEngine.SpawnItem(PickupObjectDatabase.GetById(68).gameObject, base.gameObject.transform.PositionVector2(), Vector2.zero, 1f, false, false, false);
-                        }
+                        HasPerformedRicochet = true;
+
+
+
                     }
                 }
             }

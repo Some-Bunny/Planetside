@@ -49,8 +49,8 @@ namespace Planetside
 
             //gun.finalShootAnimation = gun.shootAnimation;
             GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(62) as Gun, true, false);
-			gun.SetBaseMaxAmmo(240);
-			gun.ammo = 480;
+			gun.SetBaseMaxAmmo(300);
+			gun.ammo = 300;
 
 			//gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_WPN_colt1851_shot_03";
 			//gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].triggerEvent = true;
@@ -156,8 +156,8 @@ namespace Planetside
             UnityEngine.Object.DontDestroyOnLoad(BrokenArmorVFXObject);
             BrokenArmorVFXObject.GetOrAddComponent<tk2dBaseSprite>();
             tk2dSpriteAnimator animator = BrokenArmorVFXObject.GetOrAddComponent<tk2dSpriteAnimator>();
-            animator.library = StaticSpriteDefinitions.Debuff_Animation_Data;
-            animator.Library = StaticSpriteDefinitions.Debuff_Animation_Data;
+            animator.library = StaticSpriteDefinitions.VFX_Animation_Data;
+            animator.Library = StaticSpriteDefinitions.VFX_Animation_Data;
 
             animator.sprite.usesOverrideMaterial = true;
 
@@ -250,51 +250,59 @@ namespace Planetside
 		public override void Update()
 		{
 			base.Update();
-			if (gun.CurrentOwner as PlayerController)
-			{
-
-				PlayerController player = gun.CurrentOwner as PlayerController;
-                List<AIActor> activeEnemies = player.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
-                if (activeEnemies != null)
+            if (gun.CurrentOwner)
+            {
+                if (gun.CurrentOwner as PlayerController)
                 {
-                    foreach (AIActor aiactor in activeEnemies)
+
+                    PlayerController player = gun.CurrentOwner as PlayerController;
+                    List<AIActor> activeEnemies = player.CurrentRoom?.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
+                    if (activeEnemies != null)
                     {
-                        float scale = 20;
-                        if (player != null)
+                        foreach (AIActor aiactor in activeEnemies)
                         {
-                            scale = scale * player.stats.GetStatValue(PlayerStats.StatType.Damage);
-                        }
-
-                        if (aiactor.healthHaver != null)
-                        {
-                            if (player.CurrentGun == gun)
+                            if (aiactor != null)
                             {
-                                if (aiactor.healthHaver.GetCurrentHealth() < scale)
+                                float scale = 20;
+                                if (player != null)
                                 {
-                                    aiactor.ApplyEffect(CanKillRevolverGameActorEffect);
+                                    scale = scale * player.stats.GetStatValue(PlayerStats.StatType.Damage);
                                 }
-								else
-								{
-                                    aiactor.RemoveEffect("BanditRevolverExecute");
 
+                                if (aiactor.healthHaver != null)
+                                {
+                                    if (player.CurrentGun == gun)
+                                    {
+                                        if (aiactor.healthHaver.GetCurrentHealth() < scale)
+                                        {
+                                            aiactor.ApplyEffect(CanKillRevolverGameActorEffect);
+                                        }
+                                        else
+                                        {
+                                            aiactor.RemoveEffect("BanditRevolverExecute");
+
+                                        }
+                                    }
+                                    else
+                                    {
+                                        aiactor.RemoveEffect("BanditRevolverExecute");
+                                    }
                                 }
                             }
-							else
-							{
-                                aiactor.RemoveEffect("BanditRevolverExecute");
-                            }
+                            
                         }
                     }
+
+
+
+                    if (!gun.IsReloading && !HasReloaded)
+                    {
+                        this.HasReloaded = true;
+                    }
+
                 }
-
-
-
-				if (!gun.IsReloading && !HasReloaded)
-				{
-					this.HasReloaded = true;
-				}
-
-			}
+            }
+               
 		}
 	}
 }

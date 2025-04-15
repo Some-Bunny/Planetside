@@ -9,6 +9,9 @@ using System.Reflection;
 using MonoMod.RuntimeDetour;
 using GungeonAPI;
 using static Planetside.MultiActiveReloadManager;
+using Alexandria.PrefabAPI;
+using HutongGames.PlayMaker.Actions;
+using Alexandria.DungeonAPI;
 
 namespace Planetside
 {
@@ -40,8 +43,12 @@ namespace Planetside
 
 
 
-                DungeonHooks.OnPostDungeonGeneration += this.ClearFloorSpecificData;
+                GungeonAPI.DungeonHooks.OnPostDungeonGeneration += this.ClearFloorSpecificData;
                 Debug.Log("Finished MasteryTraderSpawnController setup without failure!");
+
+                roomIcon = PrefabBuilder.BuildObject("roomicon_portaltotheunknown");
+                var sprite = roomIcon.gameObject.AddComponent<tk2dSprite>();
+                sprite.SetSprite(StaticSpriteDefinitions.RoomObject_Sheet_Data, StaticSpriteDefinitions.RoomObject_Sheet_Data.GetSpriteIdByName("roomicon_portaltotheunknown"));
 
             }
             catch (Exception e)
@@ -51,6 +58,7 @@ namespace Planetside
             }  
         }
 
+        public static GameObject roomIcon;
 
         public static bool StartDodgeRollHook(Func<PlayerController, Vector2, bool> orig, PlayerController self, Vector2 direction)
         {

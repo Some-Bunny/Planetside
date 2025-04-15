@@ -153,13 +153,13 @@ namespace Planetside
 				"old_knights_flask",
 				"gun_soul"
 			};
+            CustomSynergies.Add("Praise The Gun!", mandatoryConsoleIDs, optionalConsoleIDs, false);
 
             gun.muzzleFlashEffects = (PickupObjectDatabase.GetById(370) as Gun).muzzleFlashEffects;
             gun.gunSwitchGroup = (PickupObjectDatabase.GetById(169) as Gun).gunSwitchGroup;
 
 
 
-            CustomSynergies.Add("Praise The Gun!", mandatoryConsoleIDs, optionalConsoleIDs, false);
 			BurningSun.BurningSunId = gun.PickupObjectId;
 			ItemIDs.AddToList(gun.PickupObjectId);
 

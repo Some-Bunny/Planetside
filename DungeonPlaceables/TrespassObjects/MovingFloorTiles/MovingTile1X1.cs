@@ -48,8 +48,7 @@ namespace Planetside
                 {
                     T = false;
                 }
-            }
-           
+            }     
         }
         public IEnumerator DestroyBlocker()
         {

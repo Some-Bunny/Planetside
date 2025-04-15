@@ -41,6 +41,7 @@ namespace Planetside
 
             DungeonPlaceable placeable = BreakableAPIToolbox.GenerateDungeonPlaceable(dict);
             StaticReferences.StoredDungeonPlaceables.Add("trespassTentacleLight", placeable);
+            Alexandria.DungeonAPI.StaticReferences.customPlaceables.Add("PSOG_trespassTentacleLight", placeable);
         }
     }
 }

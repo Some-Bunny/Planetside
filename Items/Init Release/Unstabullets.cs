@@ -63,7 +63,10 @@ namespace Planetside
                                     AIActor nearestEnemy = this.GetNearestEnemy(activeEnemies, owner.sprite.WorldCenter, out num2, null);
                                     if (nearestEnemy != null)
                                     {
-										StaticVFXStorage.SpiratTeleportVFX.SpawnAtPosition(sourceProjectile.transform.position);
+                                        PierceProjModifier spook = sourceProjectile.gameObject.GetOrAddComponent<PierceProjModifier>();
+                                        spook.penetration += 1;
+
+                                        StaticVFXStorage.SpiratTeleportVFX.SpawnAtPosition(sourceProjectile.transform.position);
                                         Vector2 unitCenter3 = nearestEnemy.specRigidbody.HitboxPixelCollider.UnitCenter;
                                         sourceProjectile.transform.position = unitCenter3;
                                         sourceProjectile.baseData.damage *= 0.75f;
@@ -90,7 +93,11 @@ namespace Planetside
 							this.m_currentDistance = Mathf.Min(this.m_currentDistance, 15f);
 							this.aimpoint = owner.CenterPosition + (Quaternion.Euler(0f, 0f, this.m_currentAngle) * Vector2.right).XY() * this.m_currentDistance;
 						}
-						sourceProjectile.transform.position = aimpoint;
+
+                        PierceProjModifier spook_ = sourceProjectile.gameObject.GetOrAddComponent<PierceProjModifier>();
+                        spook_.penetration += 1;
+
+                        sourceProjectile.transform.position = aimpoint;
                         StaticVFXStorage.SpiratTeleportVFX.SpawnAtPosition(sourceProjectile.transform.position);
                         break;
 				}

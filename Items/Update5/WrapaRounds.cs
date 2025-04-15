@@ -35,7 +35,7 @@ namespace Planetside
 			item.quality = PickupObject.ItemQuality.B;
             item.AddPassiveStatModifier(PlayerStats.StatType.AdditionalShotPiercing, 1, StatModifier.ModifyMethod.ADDITIVE);
             item.AddPassiveStatModifier(PlayerStats.StatType.ProjectileSpeed, 0.8f, StatModifier.ModifyMethod.MULTIPLICATIVE);
-            item.AddPassiveStatModifier(PlayerStats.StatType.Damage, 1.1f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+            item.AddPassiveStatModifier(PlayerStats.StatType.Damage, 1.15f, StatModifier.ModifyMethod.MULTIPLICATIVE);
 
             WrapaRounds.WrapaRoundsID = item.PickupObjectId;
 			ItemIDs.AddToList(item.PickupObjectId);

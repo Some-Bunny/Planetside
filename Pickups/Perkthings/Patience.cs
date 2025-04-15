@@ -60,6 +60,13 @@ namespace Planetside
         {
                 new PerkDisplayContainer()
                 {
+                    AmountToBuyBeforeReveal = 0,
+                    LockedString = "\"Does nothing... But...\"",
+                    UnlockedString = "\"Does nothing... But...\"",
+                    requiresFlag = false
+                },
+                new PerkDisplayContainer()
+                {
                     AmountToBuyBeforeReveal = 1,
                     LockedString = AlphabetController.ConvertString("Patience Is Worthy"),
                     UnlockedString = "Grants a selection of perks to choose from at the start of the next run.",
@@ -69,7 +76,7 @@ namespace Planetside
                 {
                     AmountToBuyBeforeReveal = 3,
                     LockedString = AlphabetController.ConvertString("Larger Selection"),
-                    UnlockedString = "Stacking grants more choices.",
+                    UnlockedString = "Stacking grants more options.",
                     FlagToTrack = SaveAPI.CustomDungeonFlags.PATIENCE_FLAG_STACK
                 },
         };

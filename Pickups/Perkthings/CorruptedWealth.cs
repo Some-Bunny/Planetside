@@ -125,9 +125,20 @@ namespace Planetside
             if (AmountOfArmorConsumed > 0)
             {
                 GameManager.Instance.StartCoroutine(this.SaveFlawless());
+                if (Power == null)
+                {
+                    E = 5;
+                    Power = GameManager.Instance.StartCoroutine(this.ThePower());
+                }
+                else
+                {
+                    E = 5;
+                }
                 AmountOfArmorConsumed--;
             }
         }
+        private float E = 5;
+        private Coroutine Power;
         private IEnumerator SaveFlawless()
         {
             SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.CORRUPTEDWEALTH_FLAG_ARMOR, true);
@@ -136,7 +147,89 @@ namespace Planetside
             {
                 player.CurrentRoom.PlayerHasTakenDamageInThisRoom = false;
             }
+
             yield break;
+        }
+        private IEnumerator ThePower()
+        {
+            //m_ENM_gunnut_shoce_01
+            player.PostProcessProjectile += Player_PostProcessProjectile;
+            player.PostProcessBeamTick += Player_PostProcessBeamTick;
+            AkSoundEngine.PostEvent("Play_ITM_Macho_Brace_Active_01", player.gameObject);
+
+            while (E > 0)
+            {
+                E -= Time.deltaTime;
+
+                if (player && player.specRigidbody)
+                {
+                    Vector2 unitDimensions = player.specRigidbody.HitboxPixelCollider.UnitDimensions;
+                    Vector2 a = unitDimensions / 2f;
+                    int num2 = Mathf.RoundToInt((float)12f * 0.5f * Mathf.Min(30f, Mathf.Min(new float[]
+                    {
+                        unitDimensions.x * unitDimensions.y
+                    })));
+                    //int num3 = Mathf.FloorToInt(this.m_particleTimer);
+                    Vector2 vector = player.specRigidbody.HitboxPixelCollider.UnitBottomLeft;
+                    Vector2 vector2 = player.specRigidbody.HitboxPixelCollider.UnitTopRight;
+                    PixelCollider pixelCollider = player.specRigidbody.GetPixelCollider(ColliderType.Ground);
+                    if (pixelCollider != null && pixelCollider.ColliderGenerationMode == PixelCollider.PixelColliderGeneration.Manual)
+                    {
+                        vector = Vector2.Min(vector, pixelCollider.UnitBottomLeft);
+                        vector2 = Vector2.Max(vector2, pixelCollider.UnitTopRight);
+                    }
+                    vector += Vector2.Min(a * 0.15f, new Vector2(0.25f, 0.25f));
+                    vector2 -= Vector2.Min(a * 0.15f, new Vector2(0.25f, 0.25f));
+                    vector2.y -= Mathf.Min(a.y * 0.1f, 0.1f);
+                    GlobalSparksDoer.DoRandomParticleBurst(1, vector, vector2, Vector3.up, 0f, 0.5f, 0.166f, 1, Color.cyan * 2, GlobalSparksDoer.SparksType.DARK_MAGICKS);
+
+                    //this.m_particleTimer += BraveTime.DeltaTime * (float)num2;
+                    //if (this.m_particleTimer > 1f)
+                    /*
+                    {
+                        int num3 = Mathf.FloorToInt(this.m_particleTimer);
+                        Vector2 vector = player.specRigidbody.HitboxPixelCollider.UnitBottomLeft;
+                        Vector2 vector2 = player.specRigidbody.HitboxPixelCollider.UnitTopRight;
+                        PixelCollider pixelCollider = player.specRigidbody.GetPixelCollider(ColliderType.Ground);
+                        if (pixelCollider != null && pixelCollider.ColliderGenerationMode == PixelCollider.PixelColliderGeneration.Manual)
+                        {
+                            vector = Vector2.Min(vector, pixelCollider.UnitBottomLeft);
+                            vector2 = Vector2.Max(vector2, pixelCollider.UnitTopRight);
+                        }
+                        vector += Vector2.Min(a * 0.15f, new Vector2(0.25f, 0.25f));
+                        vector2 -= Vector2.Min(a * 0.15f, new Vector2(0.25f, 0.25f));
+                        vector2.y -= Mathf.Min(a.y * 0.1f, 0.1f);
+                        GlobalSparksDoer.DoRandomParticleBurst(num3, vector, vector2, Vector3.down, 0f, 0.5f, 0.3f, 1, Color.magenta, GlobalSparksDoer.SparksType.DARK_MAGICKS);
+                        //this.m_particleTimer -= Mathf.Floor(this.m_particleTimer);
+                    }
+                    */
+                }
+
+                yield return null;
+            }
+            AkSoundEngine.PostEvent("Play_ITM_Macho_Brace_Fade_01", player.gameObject);
+            player.PostProcessProjectile -= Player_PostProcessProjectile;
+            player.PostProcessBeamTick -= Player_PostProcessBeamTick;
+            Power = null;
+            yield break;
+        }
+
+
+        private void Player_PostProcessBeamTick(BeamController arg1, SpeculativeRigidbody arg2, float arg3)
+        {
+            arg1.projectile.ignoreDamageCaps = true;
+            arg1.projectile.baseData.speed *= 1.4f;
+            arg1.projectile.baseData.damage *= 1.2f;
+
+        }
+
+        private void Player_PostProcessProjectile(Projectile arg1, float arg2)
+        {
+            arg1.ignoreDamageCaps = true;
+            arg1.baseData.speed *= 1.4f;
+            arg1.baseData.damage *= 1.2f;
+            arg1.UpdateSpeed();
+
         }
 
         private void Player_OnUsedBlank(PlayerController arg1, int arg2)
@@ -345,6 +438,13 @@ namespace Planetside
         {
                 new PerkDisplayContainer()
                 {
+                    AmountToBuyBeforeReveal = 0,
+                    LockedString = "\"All pickups become corrupted.\"",
+                    UnlockedString = "\"All pickups become corrupted.\"",
+                    requiresFlag = false
+                },
+                new PerkDisplayContainer()
+                {
                     AmountToBuyBeforeReveal = 1,
                     LockedString = AlphabetController.ConvertString("Trade Off Pickups"),
                     UnlockedString = "Corrupt All pickups into risk-reward style versions.",
@@ -361,7 +461,7 @@ namespace Planetside
                 {
                     AmountToBuyBeforeReveal = 3,
                     LockedString = AlphabetController.ConvertString("Armor Is Safe"),
-                    UnlockedString = "Corrupt Armor damage prevents Mastery Loss.",
+                    UnlockedString = "Corrupt Armor damage prevents Mastery Loss, but grants temporary power when lost.",
                     FlagToTrack = SaveAPI.CustomDungeonFlags.CORRUPTEDWEALTH_FLAG_ARMOR
                 },
                 new PerkDisplayContainer()
@@ -469,7 +569,7 @@ namespace Planetside
                 {
                     if (component.healthHaver && component.CenterPosition.GetAbsoluteRoom() == currentRoom)
                     {
-                        float M = 75 + c.StackCount * 25;
+                        float M = 150 + c.StackCount * 75;
                         component.healthHaver.ApplyDamage(M * BraveTime.DeltaTime, Vector2.zero, "Void Glass", CoreDamageTypes.Void, DamageCategory.DamageOverTime, false, null, false);
                     }
                 }

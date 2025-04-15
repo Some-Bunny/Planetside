@@ -26,12 +26,43 @@ namespace Planetside
             PlayerController playerController = projectile.Owner as PlayerController;
             if (this.projectile)
             {
-                for (int i = 0; i < 12; i++)
+
+                if (playerController.PlayerHasActiveSynergy(".null"))
                 {
-                    GameObject gameobject2 = PlayerOrbitalItem.CreateOrbital(playerController, UnknownGun.GunknownGuon, false);
-                    GunknownGuonComponent yes = gameobject2.AddComponent<GunknownGuonComponent>();
-                    yes.maxDuration = 15;
-                    yes.player = playerController;
+                    AkSoundEngine.PostEvent("Play_OBJ_silenceblank_use_01", base.gameObject);
+                    GameObject gameObject = new GameObject("silencer");
+                    SilencerInstance silencerInstance = gameObject.AddComponent<SilencerInstance>();
+
+
+                    playerController.ForceBlank(50f, 1, false, true, null, true, -1f);
+
+                    AkSoundEngine.PostEvent("Play_ENM_statue_ring_01", base.gameObject);
+
+                    for (int i = 0; i < 12; i++)
+                    {
+                        GameObject gameobject2 = PlayerOrbitalItem.CreateOrbital(playerController, PointNull.PointNullRune, false);
+                        GunknownGuonComponent yes = gameobject2.AddComponent<GunknownGuonComponent>();
+                        yes.maxDuration = 15;
+                        yes.sourcePlayer = playerController;
+                        yes.TimeBetweenFiring = 0.6f;
+                        yes.MaxHealth = 5;
+                        yes.isSynergy = true;
+                        yes.fireDelay = 0.05f * i;
+                        yes.Orbital = gameobject2.GetComponent<PlayerOrbital>();
+                    }
+                }
+                else
+                {
+                    AkSoundEngine.PostEvent("Play_ENM_statue_ring_01", base.gameObject);
+
+                    for (int i = 0; i < 12; i++)
+                    {
+                        GameObject gameobject2 = PlayerOrbitalItem.CreateOrbital(playerController, UnknownGun.GunknownGuon, false);
+                        GunknownGuonComponent yes = gameobject2.AddComponent<GunknownGuonComponent>();
+                        yes.maxDuration = 15;
+                        yes.sourcePlayer = playerController;
+                        yes.Orbital = gameobject2.GetComponent<PlayerOrbital>();
+                    }
                 }
             }
         }

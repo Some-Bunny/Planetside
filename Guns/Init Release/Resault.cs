@@ -117,7 +117,7 @@ namespace Planetside
 				"psog:resault",
 				"ancient_heros_bandana"
 			};
-			CustomSynergies.Add("Infinite Ammo?", yah, null, true);
+			CustomSynergies.Add("Infinite Ammo?", yah, null, false);
 			List<string> aaa = new List<string>
 			{
 				"psog:resault",
@@ -129,7 +129,7 @@ namespace Planetside
 				"turkey",
 				"utility_belt"
 			};
-			CustomSynergies.Add("Recycling", aaa, aw, true);
+			CustomSynergies.Add("Recycling", aaa, aw, false);
 
 			ItemIDs.AddToList(gun.PickupObjectId);
 

@@ -92,6 +92,9 @@ namespace Planetside
 			hexaSyn.SynergyGunId = HexaPulseCannon.HexaPluseID;
 			hexaSyn.SynergyToCheck = "Hexadecimally!";
 
+
+
+
 			BSGSynergy afaf = (PickupObjectDatabase.GetById(21) as Gun).gameObject.AddComponent<BSGSynergy>();
 
 		}

@@ -108,3 +108,12 @@ C:\Users\maxvo\source\repos\Planetside\obj\Debug\Planetside.dll
 C:\Users\maxvo\source\repos\Planetside\obj\Debug\Planetside.pdb
 C:\Users\maxvo\source\repos\Planetside\obj\Debug\Planetside.csproj.Up2Date
 C:\Users\maxvo\source\repos\Planetside\bin\Debug\Alexandria.dll
+D:\reposSecondary\failsafes\Planetside\bin\Debug\Planetside.dll
+D:\reposSecondary\failsafes\Planetside\bin\Debug\Planetside.pdb
+D:\reposSecondary\failsafes\Planetside\bin\Debug\Alexandria.dll
+D:\reposSecondary\failsafes\Planetside\bin\Debug\Ionic.Zip.dll
+D:\reposSecondary\failsafes\Planetside\obj\Debug\Planetside.csproj.AssemblyReference.cache
+D:\reposSecondary\failsafes\Planetside\obj\Debug\Planetside.csproj.CoreCompileInputs.cache
+D:\reposSecondary\failsafes\Planetside\obj\Debug\Planetside.csproj.Up2Date
+D:\reposSecondary\failsafes\Planetside\obj\Debug\Planetside.dll
+D:\reposSecondary\failsafes\Planetside\obj\Debug\Planetside.pdb

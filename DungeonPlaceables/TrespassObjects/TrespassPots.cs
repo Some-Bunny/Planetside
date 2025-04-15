@@ -146,6 +146,8 @@ namespace Planetside
             };
             DungeonPlaceable placeable = BreakableAPIToolbox.GenerateDungeonPlaceable(dict);
             StaticReferences.StoredDungeonPlaceables.Add("tresPassPots", placeable);
+            Alexandria.DungeonAPI.StaticReferences.customPlaceables.Add("PSOG_tresPassPots", placeable);
+
         }
     }
 }

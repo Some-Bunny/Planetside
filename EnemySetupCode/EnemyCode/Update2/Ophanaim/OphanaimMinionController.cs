@@ -373,7 +373,7 @@ namespace Planetside
                     tiledsprite.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (25 * t));
                     tiledsprite.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (5 * t));
 
-                    Vector2 predictedPosition = BraveMathCollege.GetPredictedPosition(this.BulletManager.PlayerPosition(), this.BulletManager.PlayerVelocity(), this.BulletBank.GetComponent<tk2dBaseSprite>().WorldCenter, 40f);
+                    Vector2 predictedPosition = BraveMathCollege.GetPredictedPosition(this.BulletManager.PlayerPosition(), this.BulletManager.PlayerVelocity(), this.BulletBank.aiActor.sprite.WorldCenter, 40f);
                     float CentreAngle = (predictedPosition - this.Position).ToAngle();
                     f = CentreAngle;
                     tiledsprite.transform.localRotation = Quaternion.Euler(0f, 0f, CentreAngle);

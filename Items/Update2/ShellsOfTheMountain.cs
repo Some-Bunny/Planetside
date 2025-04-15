@@ -41,7 +41,7 @@ namespace Planetside
 				typeof(ShellsOfTheMountain).GetMethod("OnPlayerEnteredHook"));
             new Hook(typeof(BehaviorSpeculator).GetMethod("Start", BindingFlags.Instance | BindingFlags.NonPublic),
                 typeof(ShellsOfTheMountain).GetMethod("StartHookBehaviorSpeculator"));
-            ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.Damage, 1.25f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+            ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.Damage, 1.3f, StatModifier.ModifyMethod.MULTIPLICATIVE);
 
             Alexandria.RoomRewardAPI.OnRoomRewardDetermineContents += ORDC;
         }

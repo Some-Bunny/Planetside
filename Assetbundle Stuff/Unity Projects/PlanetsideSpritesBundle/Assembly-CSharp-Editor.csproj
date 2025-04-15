@@ -51,6 +51,67 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\DFGUI\DataBinding\Editor\dfDataObjectProxyInspector.cs" />
+     <Compile Include="Assets\DFGUI\DataBinding\Editor\dfEventDrivenPropertyBindingInspector.cs" />
+     <Compile Include="Assets\DFGUI\DataBinding\Editor\dfExpressionBindingInspector.cs" />
+     <Compile Include="Assets\DFGUI\DataBinding\Editor\dfExpressionEditorWindow.cs" />
+     <Compile Include="Assets\DFGUI\DataBinding\Editor\dfSpriteAnimationInspector.cs" />
+     <Compile Include="Assets\DFGUI\DataBinding\Editor\dfTextEditorWindow.cs" />
+     <Compile Include="Assets\DFGUI\DataBinding\Editor\EventBindingEditor.cs" />
+     <Compile Include="Assets\DFGUI\DataBinding\Editor\KeyBindingEditor.cs" />
+     <Compile Include="Assets\DFGUI\DataBinding\Editor\PropertyBindingEditor.cs" />
+     <Compile Include="Assets\DFGUI\DataBinding\Editor\ProxyPropertyBindingEditor.cs" />
+     <Compile Include="Assets\DFGUI\DFGUI\Editor\dfAnimationClipInspector.cs" />
+     <Compile Include="Assets\DFGUI\DFGUI\Editor\dfButtonInspector.cs" />
+     <Compile Include="Assets\DFGUI\DFGUI\Editor\dfCheckboxInspector.cs" />
+     <Compile Include="Assets\DFGUI\DFGUI\Editor\dfControlInspector.cs" />
+     <Compile Include="Assets\DFGUI\DFGUI\Editor\dfDesignGuideEditor.cs" />
+     <Compile Include="Assets\DFGUI\DFGUI\Editor\dfDragHandleInspector.cs" />
+     <Compile Include="Assets\DFGUI\DFGUI\Editor\dfDropdownListInspector.cs" />
+     <Compile Include="Assets\DFGUI\DFGUI\Editor\dfDynamicFontInspector.cs" />
+     <Compile Include="Assets\DFGUI\DFGUI\Editor\dfEditorUtil.cs" />
+     <Compile Include="Assets\DFGUI\DFGUI\Editor\dfFontDefinitionInspector.cs" />
+     <Compile Include="Assets\DFGUI\DFGUI\Editor\dfGUIManagerInspector.cs" />
+     <Compile Include="Assets\DFGUI\DFGUI\Editor\dfGUIWizard.cs" />
+     <Compile Include="Assets\DFGUI\DFGUI\Editor\dfLabelInspector.cs" />
+     <Compile Include="Assets\DFGUI\DFGUI\Editor\dfListboxInspector.cs" />
+     <Compile Include="Assets\DFGUI\DFGUI\Editor\dfPanelFlowLayoutInspector.cs" />
+     <Compile Include="Assets\DFGUI\DFGUI\Editor\dfPanelInspector.cs" />
+     <Compile Include="Assets\DFGUI\DFGUI\Editor\dfPrefabSelectionDialog.cs" />
+     <Compile Include="Assets\DFGUI\DFGUI\Editor\dfProgressbarInspector.cs" />
+     <Compile Include="Assets\DFGUI\DFGUI\Editor\dfRadialSpriteInspector.cs" />
+     <Compile Include="Assets\DFGUI\DFGUI\Editor\dfResizeHandleInspector.cs" />
+     <Compile Include="Assets\DFGUI\DFGUI\Editor\dfRichTextLabelInspector.cs" />
+     <Compile Include="Assets\DFGUI\DFGUI\Editor\dfScriptWizard.cs" />
+     <Compile Include="Assets\DFGUI\DFGUI\Editor\dfScrollbarInspector.cs" />
+     <Compile Include="Assets\DFGUI\DFGUI\Editor\dfScrollPanelInspector.cs" />
+     <Compile Include="Assets\DFGUI\DFGUI\Editor\dfSlicedSpriteInspector.cs" />
+     <Compile Include="Assets\DFGUI\DFGUI\Editor\dfSliderInspector.cs" />
+     <Compile Include="Assets\DFGUI\DFGUI\Editor\dfSpriteInspector.cs" />
+     <Compile Include="Assets\DFGUI\DFGUI\Editor\dfSpriteSelectionDialog.cs" />
+     <Compile Include="Assets\DFGUI\DFGUI\Editor\dfTabPageContainerInspector.cs" />
+     <Compile Include="Assets\DFGUI\DFGUI\Editor\dfTabstripInspector.cs" />
+     <Compile Include="Assets\DFGUI\DFGUI\Editor\dfTextboxInspector.cs" />
+     <Compile Include="Assets\DFGUI\DFGUI\Editor\dfTextureAtlasInspector.cs" />
+     <Compile Include="Assets\DFGUI\DFGUI\Editor\dfTexturePacker.cs" />
+     <Compile Include="Assets\DFGUI\DFGUI\Editor\dfTexturePackerImporter.cs" />
+     <Compile Include="Assets\DFGUI\DFGUI\Editor\dfTextureSpriteInspector.cs" />
+     <Compile Include="Assets\DFGUI\DFGUI\Editor\dfTiledSpriteInspector.cs" />
+     <Compile Include="Assets\DFGUI\DFGUI\Editor\dfWebSpriteInspector.cs" />
+     <Compile Include="Assets\DFGUI\DFGUI\Editor\dfWelcomeDialog.cs" />
+     <Compile Include="Assets\DFGUI\Editor\dfUpgradeHelper.cs" />
+     <Compile Include="Assets\DFGUI\Examples\ActionBar\Editor\SpellInventoryInspector.cs" />
+     <Compile Include="Assets\DFGUI\Examples\ActionBar\Editor\SpellSlotInspector.cs" />
+     <Compile Include="Assets\DFGUI\Tweening\Editor\TweenColor32Inspector.cs" />
+     <Compile Include="Assets\DFGUI\Tweening\Editor\TweenColorInspector.cs" />
+     <Compile Include="Assets\DFGUI\Tweening\Editor\TweenEventBindingInspector.cs" />
+     <Compile Include="Assets\DFGUI\Tweening\Editor\TweenFloatInspector.cs" />
+     <Compile Include="Assets\DFGUI\Tweening\Editor\TweenGroupInspector.cs" />
+     <Compile Include="Assets\DFGUI\Tweening\Editor\TweenInspectorBase.cs" />
+     <Compile Include="Assets\DFGUI\Tweening\Editor\TweenRotationInspector.cs" />
+     <Compile Include="Assets\DFGUI\Tweening\Editor\TweenVector2Inspector.cs" />
+     <Compile Include="Assets\DFGUI\Tweening\Editor\TweenVector3Inspector.cs" />
+     <Compile Include="Assets\DFGUI\Tweening\Editor\TweenVector4Inspector.cs" />
      <Compile Include="Assets\Editor\BuildAssetBundles.cs" />
      <Compile Include="Assets\TK2DROOT\tk2d\Editor\Camera\tk2dCameraAnchorEditor.cs" />
      <Compile Include="Assets\TK2DROOT\tk2d\Editor\Camera\tk2dCameraEditor.cs" />
@@ -353,11 +414,14 @@
  <Reference Include="UnityEditor.OSXStandalone.Extensions">
  <HintPath>D:/YooNiitee/2017.4.40f1/Editor/Data/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll</HintPath>
  </Reference>
+ <Reference Include="dfScriptLite">
+ <HintPath>D:/reposSecondary/failsafes/Planetside/Assetbundle Stuff/Unity Projects/PlanetsideSpritesBundle/Assets/DFGUI/DataBinding/Plugins/dfScriptLite.dll</HintPath>
+ </Reference>
  <Reference Include="tk2dExternal">
- <HintPath>C:/Users/maxvo/source/repos/Planetside/Assetbundle Stuff/Unity Projects/PlanetsideSpritesBundle/Assets/TK2DROOT/tk2d/Editor/tk2dExternal.dll</HintPath>
+ <HintPath>D:/reposSecondary/failsafes/Planetside/Assetbundle Stuff/Unity Projects/PlanetsideSpritesBundle/Assets/TK2DROOT/tk2d/Editor/tk2dExternal.dll</HintPath>
  </Reference>
  <Reference Include="tk2dSkin">
- <HintPath>C:/Users/maxvo/source/repos/Planetside/Assetbundle Stuff/Unity Projects/PlanetsideSpritesBundle/Assets/TK2DROOT/tk2d/Editor/tk2dSkin.dll</HintPath>
+ <HintPath>D:/reposSecondary/failsafes/Planetside/Assetbundle Stuff/Unity Projects/PlanetsideSpritesBundle/Assets/TK2DROOT/tk2d/Editor/tk2dSkin.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.Advertisements">
  <HintPath>C:/Users/maxvo/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.ads@2.0.8/Editor/UnityEditor.Advertisements.dll</HintPath>

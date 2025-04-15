@@ -158,6 +158,13 @@ namespace Planetside
         {
                 new PerkDisplayContainer()
                 {
+                    AmountToBuyBeforeReveal = 0,
+                    LockedString = "\"Come Back Stronger.\"",
+                    UnlockedString = "\"Come Back Stronger.\"",
+                    requiresFlag = false
+                },
+                new PerkDisplayContainer()
+                {
                     AmountToBuyBeforeReveal = 1,
                     LockedString = AlphabetController.ConvertString("Another Chance"),
                     UnlockedString = "Dying revives you, but leaves you at low HP.",

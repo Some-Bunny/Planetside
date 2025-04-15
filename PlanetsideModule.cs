@@ -22,6 +22,8 @@ using Planetside.SoundAPI;
 using BreakAbleAPI;
 using BepInEx;
 using HarmonyLib;
+using Planetside.Static_Storage;
+using Planetside.NPC_Stuff;
 
 namespace Planetside
 {
@@ -34,10 +36,10 @@ namespace Planetside
     {
         public const string GUID = "somebunny.etg.planetsideofgunymede";
         public const string NAME = "Planetside Of Gunymede Pre-Release";
-        public const string VERSION = "1.3.174";
-
-        public static readonly string TEXT_COLOR = "#9006FF";
-
+        public const string VERSION = "1.3.176";
+        //9006FF
+        public static readonly string TEXT_COLOR = "#00d0ff";
+        //00d0ff
         public static string RoomFilePath;
         public static string FilePathFolder;
         public static string GunFilePath;
@@ -65,7 +67,7 @@ namespace Planetside
         public void GameManagerStart(GameManager gameManager)
         {
             #region Basic Initialization
-
+            StaticShaders.InitShaders();
 
             GunFilePath = this.FolderPath() + "/sprites";
             ETGMod.Assets.SetupSpritesFromFolder(GunFilePath);
@@ -372,8 +374,9 @@ namespace Planetside
                 StormBringer.Add();
                 ImmolationPowder.Init();
                 WrapaRounds.Init();
+                WarpMastersKit.Init();
             }
-
+            PointNull.Add();
 
 
             //VengefulShell.Init();
@@ -418,6 +421,7 @@ namespace Planetside
             //Servont.Init();
 
             THREarthmover.Init();
+            Revenant_Enemy.Init();
 
             An3sBullet.Init();
             HunterBullet.Init();
@@ -496,7 +500,12 @@ namespace Planetside
             RedThing.Init();
 
             CustomLootTableInitialiser.InitialiseCustomLootTables();
+
+            //=============================== NPCs ========================================
             CustomShopInitialiser.InitialiseCustomShops();
+            Absconditus.Init();
+
+
             TrespassStone.Init();
             //AGM.Register();
 
@@ -550,7 +559,7 @@ namespace Planetside
                 ETGModConsole.Commands.GetGroup("psog_floor").AddUnit("load", this.LoadFloor);
             }
 
-            PlanetsideModule.Log($"{NAME} v{VERSION} started successfully.", TEXT_COLOR);
+            PlanetsideModule.Log($"{{{{ {NAME} v{VERSION} started successfully. }}}}", TEXT_COLOR);
             List<string> RandomFunnys = new List<string>
             {
                 "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
@@ -568,7 +577,7 @@ namespace Planetside
                 "You're Gonna Need A Bigger Gun",
                 "oh no",
                 "is that supposed to be like that???",
-                "I'm so lonely.",
+                //"I'm so lonely.",
                 "I removed an item from the item pool, which one is it? ;)",
                 "Peter Griffin!",
                 "Hey VSauce!",
@@ -622,8 +631,8 @@ namespace Planetside
                 "This cats name is Humongous Honkers, look him up on your work computer.",
                 "Check out Astronautilus!",
                 "Check out Star Of Providence!",
-                "Check Out Zer0Ranger!",
-                "Animal Well is pretty cool."
+                "Check Out ZeroRanger!",
+                "Check Out Animal Well!."
             };
             Random r = new Random();
             int index = r.Next(RandomFunnys.Count);
@@ -632,7 +641,7 @@ namespace Planetside
 
             Log("Here's a To-Do list for unlocks, hope you have fun!", TEXT_COLOR);
             Log("If you ever need a reminder, the command 'psog to_do_list' to remind yourself.", TEXT_COLOR);
-            string a = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.HIGHER_CURSE_DRAGUN_KILLED) ? " Done!\n" : " -Defeat The Dragun At High Curse.\n";
+            string a = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.HIGHER_CURSE_DRAGUN_KILLED) ? " Done!\n" : " -Defeat The Dragun At 'Full Curse'.\n";
             string b = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.JAMMED_GUARD_DEFEATED) ? " Done!\n" : " -Defeat The Guardian Of The Holy Chamber.\n";
             string c = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.SHELLRAX_DEFEATED) ? " Done!\n" : " -Defeat The Failed Demi-Lich\n";
             string d = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.BULLETBANK_DEFEATED) ? " Done!\n" : " -Defeat The Banker Of Bullets.\n";
@@ -655,7 +664,7 @@ namespace Planetside
             string s = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.NEMESIS_KILLED) ? " Done!\n" : " -Defeat Your Rival.\n";
 
 
-            string color1 = "9006FF";
+            string color1 = "00d0ff";
             OtherTools.PrintNoID("Unlock List:\n" + a + b + c + d + e + f + g + h + i + j + k + l + m + n + o + p + q + r1 + s, color1);
             OtherTools.Init();
             new Hook(typeof(ConversationBarController).GetMethod("ShowBar", BindingFlags.Instance | BindingFlags.Public), typeof(PlanetsideModule).GetMethod("HAHA"));

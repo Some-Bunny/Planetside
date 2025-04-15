@@ -112,7 +112,7 @@ public class FungannonController : BraveBehaviour
 			ela += BraveTime.DeltaTime;
 			float t = ela / dura;
 			targetMaterial.SetFloat(emId, Mathf.Lerp(2f, 3f, t));
-			targetMaterial.SetFloat("_BurnAmount", t);
+			targetMaterial.SetFloat("_BurnAmount", t * 2);
 			yield return null;
 		}
 		yield break;

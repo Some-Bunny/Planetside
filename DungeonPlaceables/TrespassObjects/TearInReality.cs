@@ -375,11 +375,9 @@ namespace Planetside
             if (ObjName != "portal_pillar_random") { return Original; }
             Original = FakePrefab.Clone(Alexandria.DungeonAPI.StaticReferences.StoredRoomObjects[ObjName]);
 
-            if (Original == null) { ETGModConsole.Log("fuck_a"); }
 
 
             var tearHolder = Original.GetComponent<TearHolderController>();
-            if (tearHolder == null) { ETGModConsole.Log("fuck_b"); }
 
             JToken value = null;
 
@@ -428,7 +426,6 @@ namespace Planetside
                     tearHolder.assigned = RealityTearData.Floor.HELL;
                     break;
             }
-            ETGModConsole.Log(5);
 
             return Original;
         }

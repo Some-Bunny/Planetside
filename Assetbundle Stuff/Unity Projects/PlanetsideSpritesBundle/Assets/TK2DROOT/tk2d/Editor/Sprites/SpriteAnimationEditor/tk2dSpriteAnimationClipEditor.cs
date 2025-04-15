@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace tk2dEditor.SpriteAnimationEditor
 {
@@ -157,22 +158,35 @@ namespace tk2dEditor.SpriteAnimationEditor
 			}
 		}
 
-		bool CheckValidClip(tk2dSpriteAnimationClip clip) {
+		bool CheckValidClip(tk2dSpriteAnimationClip clip) 
+		{
 			bool nullCollectionFound = false;
 			bool invalidSpriteIdFound = false;
-			for (int i = 0; i < clip.frames.Length; ++i) {
+			for (int i = 0; i < clip.frames.Length; ++i) 
+			{
 				tk2dSpriteAnimationFrame frame = clip.frames[i];
-				if (frame.spriteCollection == null) {
-					nullCollectionFound = true;
+				if (frame.spriteCollection == null)
+				{
+
+                    nullCollectionFound = true;
+
+
+                    //frame.spriteCollection = AssetDatabase.LoadAssetAtPath<tk2dSpriteCollectionData>(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets("RoomObjectCollectionKillingMyself").FirstOrDefault()));
+					//Debug.Log("a : " +frame.spriteCollection != null);
+					
 				}
-				else {
-					if (!frame.spriteCollection.IsValidSpriteId(frame.spriteId)) {
-						if (frame.spriteCollection.FirstValidDefinitionIndex == -1) {
-							nullCollectionFound = true;
-						}
-						else {
+				else 
+				{
+					if  (!frame.spriteCollection.IsValidSpriteId(frame.spriteId)) 
+						{
+							if (frame.spriteCollection.FirstValidDefinitionIndex == -1) 
+							{
+								nullCollectionFound = true;
+							}
+							else 
+							{
 							invalidSpriteIdFound = true;
-						}
+							}
 					}
 				}
 			}

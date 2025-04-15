@@ -13,6 +13,7 @@ using Planetside;
 using BreakAbleAPI;
 using Brave.BulletScript;
 using System.Collections;
+using UnityEngine.Playables;
 
 namespace Planetside
 {
@@ -266,7 +267,8 @@ namespace Planetside
 
             StaticReferences.StoredRoomObjects.Add("TrespassSniperTurretFront", sniperTurretDefaultaFront.gameObject);
 
-         
+            Alexandria.DungeonAPI.StaticReferences.customObjects.Add("PSOG_TrespassSniperTurretFront", sniperTurretDefaultaFront.gameObject);
+
 
 
             MakeLeft(entry1, entry2, entry3);
@@ -298,6 +300,8 @@ namespace Planetside
             sniperTurretDefaultaFront.gameObject.AddComponent<PushImmunity>();
 
             StaticReferences.StoredRoomObjects.Add("TrespassSniperTurretLeft", sniperTurretDefaultaFront.gameObject);
+            Alexandria.DungeonAPI.StaticReferences.customObjects.Add("PSOG_TrespassSniperTurretLeft", sniperTurretDefaultaFront.gameObject);
+
         }
         public static void MakeRight(AIBulletBank.Entry entry1, AIBulletBank.Entry entry2, AIBulletBank.Entry entry3)
         {
@@ -325,6 +329,8 @@ namespace Planetside
             sniperTurretDefaultaFront.gameObject.AddComponent<PushImmunity>();
 
             StaticReferences.StoredRoomObjects.Add("TrespassSniperTurretRight", sniperTurretDefaultaFront.gameObject);
+            Alexandria.DungeonAPI.StaticReferences.customObjects.Add("PSOG_TrespassSniperTurretRight", sniperTurretDefaultaFront.gameObject);
+
         }
     }
 }

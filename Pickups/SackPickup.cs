@@ -107,7 +107,7 @@ namespace Planetside
 
 			//this.encounterTrackable.HandleEncounter();
 			GameStatsManager.Instance.HandleEncounteredObjectRaw(this.encounterTrackable.EncounterGuid);
-            int itemsToSpawn = UnityEngine.Random.Range(2, 5);
+            int itemsToSpawn = UnityEngine.Random.Range(3, 6);
 			float random = UnityEngine.Random.Range(0.00f, 1.00f);
 			GenericLootTable Table = Normal_Table;
 			if (random.IsBetweenRange(0.7f, 0.95f))

@@ -91,6 +91,8 @@ namespace Planetside
             };
             DungeonPlaceable placeable = BreakableAPIToolbox.GenerateDungeonPlaceable(dict);
             StaticReferences.StoredDungeonPlaceables.Add("trespassFadingBlocker", placeable);
+            Alexandria.DungeonAPI.StaticReferences.customPlaceables.Add("PSOG_trespassFadingBlocker", placeable);
+
         }
     }
 }

@@ -99,11 +99,11 @@ namespace Planetside
 
         public override List<PerkDisplayContainer> perkDisplayContainers => new List<PerkDisplayContainer>()
         {
-             new PerkDisplayContainer()
+                new PerkDisplayContainer()
                 {
-                    AmountToBuyBeforeReveal = 1,
-                    LockedString = AlphabetController.ConvertString("Support"),
-                    UnlockedString = "Hire a Contract Killer.",
+                    AmountToBuyBeforeReveal = 0,
+                    LockedString = "\"Hire a Contract Killer.\"",
+                    UnlockedString = "\"Hire a Contract Killer.\"",
                     requiresFlag = false
                 },
                 new PerkDisplayContainer()

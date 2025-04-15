@@ -136,7 +136,7 @@ namespace Planetside
 				"meatbun",
 				"weird_egg"
 			};
-			CustomSynergies.Add("Back For Seconds", AAA, aee, true);
+			CustomSynergies.Add("Back For Seconds", AAA, aee, false);
 
 			Capactior.CapacitorID = gun.PickupObjectId;
 			ItemIDs.AddToList(gun.PickupObjectId);

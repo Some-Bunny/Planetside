@@ -158,7 +158,7 @@ namespace Planetside
             {
 				State = States.LOCKED_ON;
 				newTarget.healthHaver.OnPreDeath += OnPreDeath;
-				newTarget.healthHaver.AllDamageMultiplier *= 1.125f;
+				newTarget.healthHaver.AllDamageMultiplier *= 1.25f;
 				Target = newTarget;
 
 				GameObject gameObject = SpawnManager.SpawnVFX(StaticVFXStorage.JammedDeathVFX, base.gameObject.transform.position, Quaternion.identity, false);
@@ -243,11 +243,11 @@ namespace Planetside
 
 		private GenericLootTable GetRewardValue()
 		{
-			if (Kills > 13)
+			if (Kills > 11)
             {return DeathWarrant.largeKillsTable;}
-			else if (Kills > 8)
+			else if (Kills > 6)
 			{return DeathWarrant.mediumKillsTable;}
-			else if (Kills > 3)
+			else if (Kills > 2)
 			{return DeathWarrant.smallKillsTable;}
 			return null;
 		}

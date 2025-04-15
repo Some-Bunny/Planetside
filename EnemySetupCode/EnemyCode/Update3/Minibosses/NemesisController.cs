@@ -390,6 +390,7 @@ namespace Planetside
             "fortunes_favor",
             "cluster",
             "blast_shower"
+           
         };
     }
 }

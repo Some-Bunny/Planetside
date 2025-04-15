@@ -23,7 +23,7 @@ namespace Planetside
 		{
 			Gun gun = ETGMod.Databases.Items.NewGun("Gunknown", "gunknown");
 			Game.Items.Rename("outdated_gun_mods:gunknown", "psog:gunknown");
-			gun.gameObject.AddComponent<UnknownGun>();
+			var behav = gun.gameObject.AddComponent<UnknownGun>();
 			gun.SetShortDescription("Eternal Strength");
 			gun.SetLongDescription("The Gun-Ternal Power offers infinite strength, as long as it is sated.\n\nWorshipped by many a thing, both living and not, residing in an ancient monolithic construction.");
 
@@ -34,7 +34,7 @@ namespace Planetside
             gun.idleAnimation = "gunknown_idle";
             gun.shootAnimation = "gunknown_fire";
             gun.reloadAnimation = "gunknown_reload";
-
+			gun.gunSwitchGroup = (PickupObjectDatabase.GetById(21) as Gun).gunSwitchGroup;
             //gun.SetupSprite(null, "gunknown_idle_001", 11);
             //GunExt.SetAnimationFPS(gun, gun.shootAnimation, 16);
             //GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 1000);
@@ -88,10 +88,10 @@ namespace Planetside
 			gun.gunClass = GunClass.CHARGE;
 
 			gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
-			gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Gunknown", "Planetside/Resources/GunClips/Gunknown/gunknownclipfull", "Planetside/Resources/GunClips/Gunknown/gunknownclipemptyl");
+            gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Gunknown", StaticSpriteDefinitions.PlanetsideUIAtlas, "gunknownclipfull", "gunknownclipemptyl");
 
 
-			gun.quality = PickupObject.ItemQuality.A;
+            gun.quality = PickupObject.ItemQuality.A;
 			gun.encounterTrackable.EncounterGuid = "I. AM. ETERNAL.";
 			ETGMod.Databases.Items.Add(gun, false, "ANY");
             //====================================================================================================================
@@ -141,12 +141,12 @@ namespace Planetside
             sprite_Soul.collection = StaticSpriteDefinitions.Guon_Sheet_Data;
             sprite_Soul.SetSprite(StaticSpriteDefinitions.Guon_Sheet_Data.GetSpriteIdByName("superguon"));
             sprite_Soul.CachedPerpState = tk2dBaseSprite.PerpendicularState.FLAT;
-
+			sprite_Soul.usesOverrideMaterial = true;
             Material mat = sprite_Soul.GetCurrentSpriteDef().material = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
             mat.mainTexture = sprite_Soul.sprite.renderer.material.mainTexture;
-            mat.SetColor("_EmissiveColor", new Color32(104, 182, 255, 255));
-            mat.SetFloat("_EmissiveColorPower", 1.55f);
-            mat.SetFloat("_EmissivePower", 100);
+            mat.SetColor("_EmissiveColor", new Color32(255, 177, 56, 255));
+            mat.SetFloat("_EmissiveColorPower", 15);
+            mat.SetFloat("_EmissivePower", 10);
             sprite_Soul.sprite.renderer.material = mat;
             UnknownGun.Soulprefab = gameObject_Soul;
 
@@ -155,8 +155,8 @@ namespace Planetside
 
             Material materialGun = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
             materialGun.SetColor("_EmissiveColor", new Color32(255, 255, 255, 255));
-            materialGun.SetFloat("_EmissiveColorPower", 1.55f);
-            materialGun.SetFloat("_EmissivePower", 60);
+            materialGun.SetFloat("_EmissiveColorPower", 15f);
+            materialGun.SetFloat("_EmissivePower", 10);
             materialGun.SetFloat("_EmissiveThresholdSensitivity", 0.2f);
             MeshRenderer component = gun.GetComponent<MeshRenderer>();
             if (!component)
@@ -176,7 +176,18 @@ namespace Planetside
             material.SetTexture("_MainTex", sharedMaterials[0].GetTexture("_MainTex"));
             sharedMaterials[sharedMaterials.Length - 1] = material;
             component.sharedMaterials = sharedMaterials;
+            behav.Material = material;
 
+
+            List<string> mandatoryConsoleIDs = new List<string>
+            {
+                "psog:gunknown",
+            };
+            List<string> optionalConsoleIDs = new List<string>
+            {
+                "bracket_key"
+            };
+            CustomSynergies.Add(".null", mandatoryConsoleIDs, optionalConsoleIDs, false);
 
             UnknownGun.GunknownID = gun.PickupObjectId;
 			ItemIDs.AddToList(gun.PickupObjectId);
@@ -184,26 +195,44 @@ namespace Planetside
 		public static int GunknownID;
 		public static GameObject GunknownGuon;
 		public static GameObject Soulprefab;
+		public Material Material;
 
-		public override void OnPostFired(PlayerController player, Gun bruhgun)
-		{
-			AkSoundEngine.PostEvent("Play_ENM_statue_ring_01", base.gameObject);
-			gun.PreventNormalFireAudio = true;
-		}
 		private bool HasReloaded;
-		public override void Update()
+		private bool HasFlipped = false;
+
+        public override void Update()
 		{
 			base.Update();
 			if (gun.CurrentOwner)
 			{
-
-				if (!gun.PreventNormalFireAudio)
-				{
-					this.gun.PreventNormalFireAudio = true;
-				}
 				if (!gun.IsReloading && !HasReloaded)
 				{
 					this.HasReloaded = true;
+				}
+				var player = gun.CurrentOwner as PlayerController;
+
+                if (!player.PlayerHasActiveSynergy(".null") && HasFlipped != false)
+				{
+					HasFlipped = false;
+					Material.SetColor("_EmissiveColor", new Color32(255, 255, 255, 255));
+                    Material.SetFloat("_EmissiveColorPower", 1.55f);
+					Material.SetFloat("_EmissivePower", 100);
+					Material.SetFloat("_EmissiveThresholdSensitivity", 0.05f);
+					Material.SetTexture("_MainTex", gun.sprite.renderer.material.GetTexture("_MainTex"));
+					gun.sprite.usesOverrideMaterial = true;
+					gun.sprite.renderer.material = Material;
+
+				}
+				else if (player.PlayerHasActiveSynergy(".null") && HasFlipped == false)
+				{
+					HasFlipped = true;
+					Material.SetColor("_EmissiveColor", new Color32(0, 227, 255, 255));
+					Material.SetFloat("_EmissiveColorPower", 10f);
+					Material.SetFloat("_EmissivePower", 5);
+					Material.SetFloat("_EmissiveThresholdSensitivity", 0.05f);
+					Material.SetTexture("_MainTex", gun.sprite.renderer.material.GetTexture("_MainTex"));
+					gun.sprite.usesOverrideMaterial = true;
+					gun.sprite.renderer.material = Material;
 				}
 			}
 
@@ -212,7 +241,6 @@ namespace Planetside
 		{
 			if (gun.IsReloading && this.HasReloaded)
 			{
-				AkSoundEngine.PostEvent("Stop_WPN_All", base.gameObject);
 				HasReloaded = false;
 				base.OnReloadPressed(player, gun, bSOMETHING);
 			}
@@ -229,34 +257,34 @@ namespace Planetside
 		}
 		private void OnEnemyDamaged(float damage, bool fatal, HealthHaver enemy)
 		{
-			if (base.Owner != null)
+			if (base.Owner != null && enemy.aiActor != null && fatal)
 			{
-                if (enemy.aiActor != null && fatal)
-                {
-                    GameManager.Instance.Dungeon.StartCoroutine(this.HandleSoulSucc(enemy.aiActor, gun.CurrentOwner.sprite.WorldCenter, UnityEngine.Random.Range(0.5f, 1.5f)));
-                }
+                GameManager.Instance.Dungeon.StartCoroutine(this.HandleSoulSucc(enemy.aiActor,UnityEngine.Random.Range(0.5f, 1.5f)));
+
             }
-		}
-		private IEnumerator HandleSoulSucc(AIActor target, Vector2 table, float DuartionForSteal)
+        }
+		private IEnumerator HandleSoulSucc(AIActor target, float DuartionForSteal)
 		{
 			if (gun.CurrentOwner != null)
 			{
-				PlayerController player = GameManager.Instance.PrimaryPlayer;
+				PlayerController player = gun.CurrentOwner as PlayerController;
 				tk2dSprite component = UnityEngine.Object.Instantiate<GameObject>(UnknownGun.Soulprefab, target.sprite.WorldCenter, Quaternion.identity).GetComponent<tk2dSprite>();
 				component.sprite.scale *= 0.5f;
 
-				component.transform.parent = SpawnManager.Instance.VFX;
+				if (player.PlayerHasActiveSynergy(".null") )
+				{
+                    component.SetSprite(StaticSpriteDefinitions.Guon_Sheet_Data.GetSpriteIdByName("pointNullRune"));
+                    Material mat = component.renderer.material;
+                    mat.SetColor("_EmissiveColor", new Color32(0, 227, 255, 255));
+                    mat.SetFloat("_EmissiveColorPower", 15);
+                    mat.SetFloat("_EmissivePower", 10);
+                }
+
+
+                component.transform.parent = SpawnManager.Instance.VFX;
 				GameObject gameObject2 = new GameObject("image parent");
 				gameObject2.transform.position = component.WorldCenter;
 				component.transform.parent = gameObject2.transform;
-
-
-				Material mat = component.GetCurrentSpriteDef().material = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
-				mat.mainTexture = component.sprite.renderer.material.mainTexture;
-				mat.SetColor("_EmissiveColor", new Color32(255, 177, 56, 255));
-				mat.SetFloat("_EmissiveColorPower", 1.55f);
-				mat.SetFloat("_EmissivePower", 100);
-				component.sprite.renderer.material = mat;
 
 				Transform copySprite = gameObject2.transform;
 
@@ -283,8 +311,7 @@ namespace Planetside
 					UnityEngine.Object.Destroy(copySprite.gameObject);
 					yield break;
 				}
-				bool flag4 = copySprite;
-				if (flag4)
+				if (copySprite)
 				{
 					UnityEngine.Object.Destroy(copySprite.gameObject);
 					yield break;

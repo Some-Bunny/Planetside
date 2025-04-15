@@ -18,6 +18,13 @@ namespace Planetside
 	internal static class EnemyToolbox
     {
 
+        public static void AddOffset(this tk2dSpriteDefinition tk2DSprite, Vector3 Offset)
+        {
+            tk2DSprite.position0 += Offset;
+            tk2DSprite.position1 += Offset;
+            tk2DSprite.position2 += Offset;
+            tk2DSprite.position3 += Offset;
+        }
         public static AIActor GetNearestEnemy(this RoomHandler room, Vector2 position, out float nearestDistance, List<AIActor> excludedActors, bool includeBosses = true, bool excludeDying = false)
         {
             AIActor aiactor = null;

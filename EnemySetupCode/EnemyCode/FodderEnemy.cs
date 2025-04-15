@@ -214,7 +214,7 @@ namespace Planetside
                 //StaticSpriteDefinitions.Amooncomicon_Enemy_Sheet_Data.spriteDefinitions[11].material.mainTexture
                 PlanetsideModule.Strings.Enemies.Set("#THE_FODDER", "Fodder");
 				PlanetsideModule.Strings.Enemies.Set("#THE_FODDER_SHORTDESC", "Hells Bells");
-				PlanetsideModule.Strings.Enemies.Set("#THE_FODDER_LONGDESC", "Filled with the remnants of lively, yet deceased Gundead, though Gungeoneers often have little respect for Gundead practices.");
+				PlanetsideModule.Strings.Enemies.Set("#THE_FODDER_LONGDESC", "Gundead approaching the end of their life often choose to have their remains placed into specialized urns, giving them one more chance to engage in glorious combat through the act of cannon fodder..");
 				companion.encounterTrackable.journalData.PrimaryDisplayName = "#THE_FODDER";
 				companion.encounterTrackable.journalData.NotificationPanelDescription = "#THE_FODDER_SHORTDESC";
 				companion.encounterTrackable.journalData.AmmonomiconFullEntry = "#THE_FODDER_LONGDESC";

@@ -42,6 +42,13 @@ namespace Planetside
                             var lightObj = UnityEngine.Object.Instantiate(LightningMaker.lightObject);
                             lightObj.transform.position = obj1;
                             Destroy(lightObj, 0.25f);
+
+                            Explosion.ignoreList = new List<SpeculativeRigidbody>();
+                            foreach (var entry in GameManager.Instance.AllPlayers)
+                            {
+                                Explosion.ignoreList.Add(entry.specRigidbody);
+                            }
+
                             Exploder.Explode(obj1, Explosion, obj1);
 
                             for (int i = 0; i < CoinTosser.AllActiveCoins.Count; i++)
@@ -71,7 +78,11 @@ namespace Planetside
                                                 lightObjlocal.transform.position = objLocal;
                                                 Destroy(lightObjlocal, 0.25f);
 
-
+                                                Explosion.ignoreList = new List<SpeculativeRigidbody>();
+                                                foreach (var entry in GameManager.Instance.AllPlayers)
+                                                {
+                                                    Explosion.ignoreList.Add(entry.specRigidbody);
+                                                }
                                                 Exploder.Explode(objLocal, Explosion, objLocal);
                                                 AkSoundEngine.PostEvent("Play_Lightning", GameManager.Instance.BestActivePlayer.gameObject);
 
@@ -127,6 +138,11 @@ namespace Planetside
                         var lightObj = UnityEngine.Object.Instantiate(LightningMaker.lightObject);
                         lightObj.transform.position = obj1;
                         Destroy(lightObj, 0.25f);
+                        Explosion.ignoreList = new List<SpeculativeRigidbody>();
+                        foreach (var entry in GameManager.Instance.AllPlayers)
+                        {
+                            Explosion.ignoreList.Add(entry.specRigidbody);
+                        }
                         Exploder.Explode(obj1, Explosion, obj1);
 
                         for (int i = 0; i < CoinTosser.AllActiveCoins.Count; i++)
@@ -156,6 +172,11 @@ namespace Planetside
                                             lightObjlocal.transform.position = objLocal;
                                             Destroy(lightObjlocal, 0.25f);
 
+                                            Explosion.ignoreList = new List<SpeculativeRigidbody>();
+                                            foreach (var entry in GameManager.Instance.AllPlayers)
+                                            {
+                                                Explosion.ignoreList.Add(entry.specRigidbody);
+                                            }
 
                                             Exploder.Explode(objLocal, Explosion, objLocal);
                                             AkSoundEngine.PostEvent("Play_Lightning", GameManager.Instance.BestActivePlayer.gameObject);

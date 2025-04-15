@@ -179,8 +179,8 @@ namespace Planetside
 			beamComp.startAudioEvent = "Play_WPN_moonscraperLaser_shot_01";
 
 			EmmisiveBeams emiss = beamComp.gameObject.AddComponent<EmmisiveBeams>();
-			emiss.EmissiveColorPower = 10f;
-			emiss.EmissivePower = 100f;
+			emiss.EmissiveColorPower = 20f;
+			emiss.EmissivePower = 50f;
 			
 			SpinningDeathBeam = projectile;
 
@@ -215,7 +215,7 @@ namespace Planetside
 			{
                 AkSoundEngine.PostEvent("Play_EnergySwirl", sourceProjectile.gameObject);
                 PierceProjModifier spook = sourceProjectile.gameObject.GetOrAddComponent<PierceProjModifier>();
-                spook.penetration += 10;
+                spook.penetration += 5;
                 spook.penetratesBreakables = true;
                 bool Flipped = sh.IsLeft;
 
@@ -226,7 +226,7 @@ namespace Planetside
                         BeamController beamController3 = BeamToolbox.FreeFireBeamFromAnywhere(SpinningDeath.SpinningDeathBeam, Owner, sourceProjectile.gameObject, sourceProjectile.gameObject.transform.PositionVector2(), false, (90f * i), 30f, true, true, Flipped ? 360 : -360);
                         Projectile component3 = beamController3.GetComponent<Projectile>();
                         float Dmg = sourceProjectile.baseData.damage *= Owner != null ? Owner.stats.GetStatValue(PlayerStats.StatType.Damage) : 1;
-                        component3.baseData.damage = Dmg * 4f;
+                        component3.baseData.damage = Dmg * 3f;
                         component3.AdditionalScaleMultiplier *= 0.66f;
                     }
                 }
@@ -237,7 +237,7 @@ namespace Planetside
                         BeamController beamController3 = BeamToolbox.FreeFireBeamFromAnywhere(SpinningDeathBeam, base.Owner, sourceProjectile.gameObject, sourceProjectile.gameObject.transform.PositionVector2(), false, 180f * i, 30f, true, true, Flipped ? -720 : 720);
                         Projectile component3 = beamController3.GetComponent<Projectile>();
                         float Dmg = sourceProjectile.baseData.damage *= base.Owner != null ? base.Owner.stats.GetStatValue(PlayerStats.StatType.Damage) : 1;
-                        component3.baseData.damage = Dmg * 6f;
+                        component3.baseData.damage = Dmg * 4.5f;
                         component3.AdditionalScaleMultiplier *= 0.66f;
                     }
                 }
@@ -265,7 +265,7 @@ namespace Planetside
 							BeamController beamController3 = BeamToolbox.FreeFireBeamFromAnywhere(SpinningDeath.SpinningDeathBeam, Owner, sourceProjectile.gameObject, sourceProjectile.gameObject.transform.PositionVector2(), false, (90f * i) + FlippedORama, 30f, true, true, Flipped ? 360 : -360);
 							Projectile component3 = beamController3.GetComponent<Projectile>();
 							float Dmg = sourceProjectile.baseData.damage *= Owner != null ? Owner.stats.GetStatValue(PlayerStats.StatType.Damage) : 1;
-							component3.baseData.damage = Dmg * 3f;
+							component3.baseData.damage = Dmg * 2f;
 							component3.AdditionalScaleMultiplier *= 0.66f;
 						}
 					}
@@ -277,7 +277,7 @@ namespace Planetside
 							BeamController beamController3 = BeamToolbox.FreeFireBeamFromAnywhere(SpinningDeathBeam, base.Owner, sourceProjectile.gameObject, sourceProjectile.gameObject.transform.PositionVector2(), false, 180f * i, 30f, true, true, Flipped ? -720 : 720);
 							Projectile component3 = beamController3.GetComponent<Projectile>();
 							float Dmg = sourceProjectile.baseData.damage *= base.Owner != null ? base.Owner.stats.GetStatValue(PlayerStats.StatType.Damage) : 1;
-							component3.baseData.damage = Dmg * 4.5f;
+							component3.baseData.damage = Dmg * 3f;
 							component3.AdditionalScaleMultiplier *= 0.66f;
 						}
 					}
@@ -297,7 +297,7 @@ namespace Planetside
 		{
 			//BeamChainController chain = beam.gameObject.GetOrAddComponent<BeamChainController>();
 			//chain.beam = beam.GetComponent<BasicBeamController>();
-			float procChance = 0.4f; //Chance per second or some shit idk
+			float procChance = 0.333f; //Chance per second or some shit idk
 			GameActor gameActor = hitRigidBody.gameActor;
 			if (!gameActor)
 			{

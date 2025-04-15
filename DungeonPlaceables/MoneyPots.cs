@@ -18,6 +18,8 @@ using UnityEngine.Video;
 using static ETGMod;
 using PathologicalGames;
 using Planetside.Controllers.ContainmentBreach.BossChanges.Misc;
+using Alexandria.PrefabAPI;
+using Alexandria.cAPI;
 
 namespace Planetside
 {
@@ -31,8 +33,7 @@ namespace Planetside
                 { GenerateSilverpot().gameObject, 0.1f },
                 { GenerateGoldpot().gameObject, 0.01f },
                 { GenerateGlitchpot().gameObject, 0.001f },
-
-                //GenerateGlitchpot
+                { GenerateCreditpot().gameObject, 0.00333f }
             };
             DungeonPlaceable placeable = BreakableAPIToolbox.GenerateDungeonPlaceable(dict);
             StaticReferences.StoredDungeonPlaceables.Add("moneyPotRandom", placeable);
@@ -42,7 +43,7 @@ namespace Planetside
             string[] idlePaths = new string[]{defaultPath+"tatterednote.png",};
 
             ETGMod.Databases.Strings.Core.Set("#TROLL_NOTE_1", "You Lost The Game.");
-            ETGMod.Databases.Strings.Core.Set("#TROLL_NOTE_2", "Download Fiend Folio on the Steam Workshop today! (Let me in I want the fiend folio community clout please please please please please please please please please please please please please please please please please please please please please please please please please please please please please please please please please please please please please please please )");
+            ETGMod.Databases.Strings.Core.Set("#TROLL_NOTE_2", "Download Fiend Folio on the Steam Workshop today!");
             ETGMod.Databases.Strings.Core.Set("#TROLL_NOTE_3", "Lead Maidens are singlehandedly ruining this game. There's no reason an extremely common random enemy should be tons harder than everything else so far including the floor 2 boss even though Lead Maidens started showing up before that fight. It makes every moment not spent fighting a Lead Maiden pointless because whether or not I win depends 99% on whether or not that bullshit miniboss appears. I've never seen one nonboss singlehandedly ruin a game before but this one is doing it extremely efficiently. Beating one Lead Maiden is harder than beating Rabi-Ribi's True Boss Rush. It's fucking unforgivable to have the game change so radically every time that enemy show up. It kills me in like one fucking hit & it has far more health than everything else I've fought before despite also being bigger & faster than everything else too.\r\n\r\nWhomever came up with that enemy needs to go jack off to medieval torture porn & get it out of their system. Jesus Christ!\r\n\r\nI really wish the creators of this game would've just decided whether to make an amazing game or the worst game ever & stuck with it.");
             ETGMod.Databases.Strings.Core.Set("#TROLL_NOTE_4", "AMONG US (vine boom)");
             ETGMod.Databases.Strings.Core.Set("#TROLL_NOTE_5", "I Ii\n\nII L");
@@ -117,43 +118,34 @@ namespace Planetside
 
         public static GameObject GenerateGoldpot()
         {
-            string shadowPath = "Planetside/Resources/DungeonObjects/MoneyPots/money_pot_shadow.png";
-            string defaultPath = "Planetside/Resources/DungeonObjects/MoneyPots/Gold/";
-
-            string[] shardPaths = new string[]
-            {
-                defaultPath+"Debris/gold_debris_idle_001.png",
-                defaultPath+"Debris/gold_debris_idle_002.png",
-                defaultPath+"Debris/gold_debris_idle_003.png",
-                defaultPath+"Debris/gold_debris_idle_004.png",
-                defaultPath+"Debris/gold_debris_idle_005.png",
-                defaultPath+"Debris/gold_debris_idle_006.png",
-                defaultPath+"Debris/gold_debris_idle_007.png",
-            };
-            DebrisObject[] shardObjects = BreakableAPIToolbox.GenerateDebrisObjects(shardPaths, true, 3, 6, 720, 540, null, 0.6f, null, null, 0, false);
+            DebrisObject[] shardObjects = new DebrisObject[]
+{
+                 BreakableAPI_Bundled.GenerateDebrisObject("gold_debris_idle_001", StaticSpriteDefinitions.RoomObject_Sheet_Data, true, 3, 6, 720, 540, null, 0.6f, null, null, 0),
+                 BreakableAPI_Bundled.GenerateDebrisObject("gold_debris_idle_002", StaticSpriteDefinitions.RoomObject_Sheet_Data, true, 3, 6, 720, 540, null, 0.6f, null, null, 0),
+                 BreakableAPI_Bundled.GenerateDebrisObject("gold_debris_idle_003", StaticSpriteDefinitions.RoomObject_Sheet_Data, true, 3, 6, 720, 540, null, 0.6f, null, null, 0),
+                 BreakableAPI_Bundled.GenerateDebrisObject("gold_debris_idle_004", StaticSpriteDefinitions.RoomObject_Sheet_Data, true, 3, 6, 720, 540, null, 0.6f, null, null, 0),
+                 BreakableAPI_Bundled.GenerateDebrisObject("gold_debris_idle_005", StaticSpriteDefinitions.RoomObject_Sheet_Data, true, 3, 6, 720, 540, null, 0.6f, null, null, 0),
+                 BreakableAPI_Bundled.GenerateDebrisObject("gold_debris_idle_006", StaticSpriteDefinitions.RoomObject_Sheet_Data, true, 3, 6, 720, 540, null, 0.6f, null, null, 0),
+                 BreakableAPI_Bundled.GenerateDebrisObject("gold_debris_idle_007", StaticSpriteDefinitions.RoomObject_Sheet_Data, true, 3, 6, 720, 540, null, 0.6f, null, null, 0),
+};
             ShardCluster potShardCluster = BreakableAPIToolbox.GenerateShardCluster(shardObjects, 0.7f, 1.2f, 6, 9, 0.6f);
-            MinorBreakable breakable = BreakableAPIToolbox.GenerateMinorBreakable("Gold_Pot", new string[] 
-            { defaultPath + "gold_pot_idle_001.png",
-            defaultPath + "gold_pot_idle_001.png",
-            defaultPath + "gold_pot_idle_001.png",
-            defaultPath + "gold_pot_idle_001.png",
-            defaultPath + "gold_pot_idle_001.png",
-            defaultPath + "gold_pot_idle_001.png",
-            defaultPath + "gold_pot_idle_001.png",
-            defaultPath + "gold_pot_idle_001.png",
-            defaultPath + "gold_pot_idle_001.png",
-            defaultPath + "gold_pot_idle_001.png",
-            defaultPath + "gold_pot_idle_001.png",
-            defaultPath + "gold_pot_idle_002.png",
-            defaultPath + "gold_pot_idle_003.png",
-            defaultPath + "gold_pot_idle_004.png",
-            defaultPath + "gold_pot_idle_005.png",
-            defaultPath + "gold_pot_idle_006.png",
-            defaultPath + "gold_pot_idle_007.png",
-            }, 10, 
-            new string[] { defaultPath + "gold_pot_break_001.png" }, 10, 
-            "Play_OBJ_pot_shatter_01", true, 14, 18, 1, 0);
-            BreakableAPIToolbox.GenerateShadow(shadowPath, "moneyPot_shadow", breakable.gameObject.transform, new Vector3(0, -0.125f));
+
+            var potObj = PrefabBuilder.BuildObject("GoldPot");
+            var sprite = potObj.AddComponent<tk2dSprite>();
+            sprite.Collection = StaticSpriteDefinitions.RoomObject_Sheet_Data;
+            sprite.SetSprite(StaticSpriteDefinitions.RoomObject_Sheet_Data, "gold_pot_idle_001");
+            BreakableAPI_Bundled.GenerateShadow("money_pot_shadow", "shadow_idol", StaticSpriteDefinitions.RoomObject_Sheet_Data, potObj.transform, new Vector3(0, -0.125f, 0));
+            potObj.CreateFastBody(new IntVector2(14, 18), new IntVector2(1, 0), CollisionLayer.HighObstacle);
+
+            var animator = potObj.AddComponent<tk2dSpriteAnimator>();
+            animator.Library = StaticSpriteDefinitions.RoomObject_Animation_Data;
+            animator.defaultClipId = StaticSpriteDefinitions.RoomObject_Animation_Data.GetClipIdByName("goldpot_idle");
+            animator.playAutomatically = true;
+
+            var breakable = potObj.AddComponent<MinorBreakable>();
+            breakable.breakAnimName = "goldpot_break";
+            breakable.breakAudioEventName = "Play_OBJ_pot_shatter_01";
+
             breakable.stopsBullets = true;
             breakable.OnlyPlayerProjectilesCanBreak = false;
             breakable.OnlyBreaksOnScreen = false;
@@ -169,7 +161,6 @@ namespace Planetside
             moneyPotvar.objectToSpawn = GameManager.Instance.Dungeon.sharedSettingsPrefab.currencyDropSettings.goldCoinPrefab;
             breakable.gameObject.AddComponent<TheGames.Marker>();
 
-            tk2dSpriteAnimator sprite = breakable.spriteAnimator;
             Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
             sprite.sprite.usesOverrideMaterial = true;
             mat.mainTexture = sprite.renderer.material.mainTexture;
@@ -186,8 +177,13 @@ namespace Planetside
             return breakable.gameObject;
         }
 
+
+
         public static GameObject GenerateSilverpot()
         {
+
+
+            /*
             string shadowPath = "Planetside/Resources/DungeonObjects/MoneyPots/money_pot_shadow.png";
             string defaultPath = "Planetside/Resources/DungeonObjects/MoneyPots/Silver/";
 
@@ -225,6 +221,35 @@ namespace Planetside
             new string[] { defaultPath + "silver_pot_break_001.png" }, 10,
             "Play_OBJ_pot_shatter_01", true, 14, 18, 1, 0);
             BreakableAPIToolbox.GenerateShadow(shadowPath, "moneyPot_shadow", breakable.gameObject.transform, new Vector3(0, -0.125f));
+            */
+            DebrisObject[] shardObjects = new DebrisObject[]
+            {
+                 BreakableAPI_Bundled.GenerateDebrisObject("silver_debris_1", StaticSpriteDefinitions.RoomObject_Sheet_Data, true, 3, 6, 720, 540, null, 0.6f, null, null, 0),
+                 BreakableAPI_Bundled.GenerateDebrisObject("silver_debris_2", StaticSpriteDefinitions.RoomObject_Sheet_Data, true, 3, 6, 720, 540, null, 0.6f, null, null, 0),
+                 BreakableAPI_Bundled.GenerateDebrisObject("silver_debris_3", StaticSpriteDefinitions.RoomObject_Sheet_Data, true, 3, 6, 720, 540, null, 0.6f, null, null, 0),
+                 BreakableAPI_Bundled.GenerateDebrisObject("silver_debris_4", StaticSpriteDefinitions.RoomObject_Sheet_Data, true, 3, 6, 720, 540, null, 0.6f, null, null, 0),
+                 BreakableAPI_Bundled.GenerateDebrisObject("silver_debris_5", StaticSpriteDefinitions.RoomObject_Sheet_Data, true, 3, 6, 720, 540, null, 0.6f, null, null, 0),
+                 BreakableAPI_Bundled.GenerateDebrisObject("silver_debris_6", StaticSpriteDefinitions.RoomObject_Sheet_Data, true, 3, 6, 720, 540, null, 0.6f, null, null, 0),
+                 BreakableAPI_Bundled.GenerateDebrisObject("silver_debris_7", StaticSpriteDefinitions.RoomObject_Sheet_Data, true, 3, 6, 720, 540, null, 0.6f, null, null, 0),
+            };
+            ShardCluster potShardCluster = BreakableAPIToolbox.GenerateShardCluster(shardObjects, 0.7f, 1.2f, 6, 9, 0.6f);
+
+            var potObj = PrefabBuilder.BuildObject("SilverPot");
+            var sprite = potObj.AddComponent<tk2dSprite>();
+            sprite.Collection = StaticSpriteDefinitions.RoomObject_Sheet_Data;
+            sprite.SetSprite(StaticSpriteDefinitions.RoomObject_Sheet_Data, "silver_pot_idle_001");
+            BreakableAPI_Bundled.GenerateShadow("money_pot_shadow", "shadow_idol", StaticSpriteDefinitions.RoomObject_Sheet_Data, potObj.transform, -new Vector3(0, 0.125f, 0));
+
+            var animator = potObj.AddComponent<tk2dSpriteAnimator>();
+            animator.Library = StaticSpriteDefinitions.RoomObject_Animation_Data;
+            animator.defaultClipId = StaticSpriteDefinitions.RoomObject_Animation_Data.GetClipIdByName("silverpot_idle");
+            animator.playAutomatically = true;
+
+            var breakable = potObj.AddComponent<MinorBreakable>();
+            breakable.breakAnimName = "silverpot_break";
+            potObj.CreateFastBody(new IntVector2(14, 18), new IntVector2(1, 0), CollisionLayer.HighObstacle);
+            breakable.breakAudioEventName = "Play_OBJ_pot_shatter_01";
+
 
             breakable.stopsBullets = true;
             breakable.OnlyPlayerProjectilesCanBreak = false;
@@ -236,12 +261,12 @@ namespace Planetside
             breakable.goopsOnBreak = false;
             breakable.gameObject.layer = 22;
             breakable.sprite.HeightOffGround = -1;
+
             breakable.gameObject.AddComponent<TheGames.Marker>();
 
             breakable.shardClusters = new ShardCluster[] { potShardCluster };
             var moneyPotvar = breakable.gameObject.AddComponent<MoneyPotBehavior>();
             moneyPotvar.objectToSpawn = GameManager.Instance.Dungeon.sharedSettingsPrefab.currencyDropSettings.silverCoinPrefab;
-            tk2dSpriteAnimator sprite = breakable.spriteAnimator;
             Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
             sprite.sprite.usesOverrideMaterial = true;
             mat.mainTexture = sprite.renderer.material.mainTexture;
@@ -258,44 +283,32 @@ namespace Planetside
 
         public static GameObject GenerateCopperpot()
         {
-            string shadowPath = "Planetside/Resources/DungeonObjects/MoneyPots/money_pot_shadow.png";
-            string defaultPath = "Planetside/Resources/DungeonObjects/MoneyPots/Copper/";
-
-            string[] shardPaths = new string[]
+            DebrisObject[] shardObjects = new DebrisObject[]
             {
-                defaultPath+"Debris/copper_debris_1.png",
-                defaultPath+"Debris/copper_debris_2.png",
-                defaultPath+"Debris/copper_debris_3.png",
-                defaultPath+"Debris/copper_debris_4.png",
-                defaultPath+"Debris/copper_debris_5.png",
-                defaultPath+"Debris/copper_debris_6.png",
-                defaultPath+"Debris/copper_debris_7.png",
-
+                 BreakableAPI_Bundled.GenerateDebrisObject("copper_debris_1", StaticSpriteDefinitions.RoomObject_Sheet_Data, true, 3, 6, 720, 540, null, 0.6f, null, null, 0),
+                 BreakableAPI_Bundled.GenerateDebrisObject("copper_debris_2", StaticSpriteDefinitions.RoomObject_Sheet_Data, true, 3, 6, 720, 540, null, 0.6f, null, null, 0),
+                 BreakableAPI_Bundled.GenerateDebrisObject("copper_debris_3", StaticSpriteDefinitions.RoomObject_Sheet_Data, true, 3, 6, 720, 540, null, 0.6f, null, null, 0),
+                 BreakableAPI_Bundled.GenerateDebrisObject("copper_debris_4", StaticSpriteDefinitions.RoomObject_Sheet_Data, true, 3, 6, 720, 540, null, 0.6f, null, null, 0),
+                 BreakableAPI_Bundled.GenerateDebrisObject("copper_debris_5", StaticSpriteDefinitions.RoomObject_Sheet_Data, true, 3, 6, 720, 540, null, 0.6f, null, null, 0),
+                 BreakableAPI_Bundled.GenerateDebrisObject("copper_debris_6", StaticSpriteDefinitions.RoomObject_Sheet_Data, true, 3, 6, 720, 540, null, 0.6f, null, null, 0),
+                 BreakableAPI_Bundled.GenerateDebrisObject("copper_debris_7", StaticSpriteDefinitions.RoomObject_Sheet_Data, true, 3, 6, 720, 540, null, 0.6f, null, null, 0),
             };
-            DebrisObject[] shardObjects = BreakableAPIToolbox.GenerateDebrisObjects(shardPaths, true, 3, 6, 720, 540, null, 0.6f, null, null, 0, false);
             ShardCluster potShardCluster = BreakableAPIToolbox.GenerateShardCluster(shardObjects, 0.7f, 1.2f, 6, 9, 0.6f);
-            MinorBreakable breakable = BreakableAPIToolbox.GenerateMinorBreakable("Glitch_Pot", new string[]
-            { defaultPath + "copper_pot_idle_001.png",
-                        defaultPath + "copper_pot_idle_001.png",
-            defaultPath + "copper_pot_idle_001.png",
-            defaultPath + "copper_pot_idle_001.png",
-            defaultPath + "copper_pot_idle_001.png",
-            defaultPath + "copper_pot_idle_001.png",
-            defaultPath + "copper_pot_idle_001.png",
-            defaultPath + "copper_pot_idle_001.png",
-            defaultPath + "copper_pot_idle_001.png",
-            defaultPath + "copper_pot_idle_001.png",
-            defaultPath + "copper_pot_idle_001.png",
-            defaultPath + "copper_pot_idle_002.png",
-            defaultPath + "copper_pot_idle_003.png",
-            defaultPath + "copper_pot_idle_004.png",
-            defaultPath + "copper_pot_idle_005.png",
-            defaultPath + "copper_pot_idle_006.png",
-            defaultPath + "copper_pot_idle_007.png",
-            }, 10,
-            new string[] { defaultPath + "copper_pot_break_001.png" }, 10,
-            "Play_OBJ_pot_shatter_01", true, 14, 18, 1, 0);
-            BreakableAPIToolbox.GenerateShadow(shadowPath, "moneyPot_shadow", breakable.gameObject.transform, new Vector3(0, -0.125f));
+
+            var potObj = PrefabBuilder.BuildObject("CopperPot");
+            var sprite = potObj.AddComponent<tk2dSprite>();
+            sprite.Collection = StaticSpriteDefinitions.RoomObject_Sheet_Data;
+            sprite.SetSprite(StaticSpriteDefinitions.RoomObject_Sheet_Data, "copper_pot_idle_001");
+            BreakableAPI_Bundled.GenerateShadow("money_pot_shadow", "shadow_idol", StaticSpriteDefinitions.RoomObject_Sheet_Data, potObj.transform, new Vector3(0, -0.125f, 0));
+            potObj.CreateFastBody(new IntVector2(14, 18), new IntVector2(1, 0), CollisionLayer.HighObstacle);
+
+            var animator = potObj.AddComponent<tk2dSpriteAnimator>();
+            animator.Library = StaticSpriteDefinitions.RoomObject_Animation_Data;
+            animator.defaultClipId = StaticSpriteDefinitions.RoomObject_Animation_Data.GetClipIdByName("copperpot_idle");
+            animator.playAutomatically = true;
+
+            var breakable = potObj.AddComponent<MinorBreakable>();
+
 
             breakable.stopsBullets = true;
             breakable.OnlyPlayerProjectilesCanBreak = false;
@@ -307,13 +320,15 @@ namespace Planetside
             breakable.goopsOnBreak = false;
             breakable.gameObject.layer = 22;
             breakable.sprite.HeightOffGround = -1;
+            breakable.breakAnimName = "copperpot_break";
+            breakable.breakAudioEventName = "Play_OBJ_pot_shatter_01";
+
             breakable.shardClusters = new ShardCluster[] { potShardCluster };
             var moneyPotvar = breakable.gameObject.AddComponent<MoneyPotBehavior>();
             moneyPotvar.objectToSpawn = GameManager.Instance.Dungeon.sharedSettingsPrefab.currencyDropSettings.bronzeCoinPrefab;
             breakable.gameObject.AddComponent<TheGames.Marker>();
 
 
-            tk2dSpriteAnimator sprite = breakable.spriteAnimator;
             Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
             sprite.sprite.usesOverrideMaterial = true;
             mat.mainTexture = sprite.renderer.material.mainTexture;
@@ -333,23 +348,18 @@ namespace Planetside
 
         public static GameObject GenerateGlitchpot()
         {
-            string shadowPath = "Planetside/Resources/DungeonObjects/MoneyPots/money_pot_shadow.png";
-            string defaultPath = "Planetside/Resources/DungeonObjects/MoneyPots/Copper/";
-
-            string[] shardPaths = new string[]
+            DebrisObject[] shardObjects = new DebrisObject[]
             {
-                defaultPath+"Debris/copper_debris_1.png",
-                defaultPath+"Debris/copper_debris_2.png",
-                defaultPath+"Debris/copper_debris_3.png",
-                defaultPath+"Debris/copper_debris_4.png",
-                defaultPath+"Debris/copper_debris_5.png",
-                defaultPath+"Debris/copper_debris_6.png",
-                defaultPath+"Debris/copper_debris_7.png",
+                 BreakableAPI_Bundled.GenerateDebrisObject("gold_debris_idle_001", StaticSpriteDefinitions.RoomObject_Sheet_Data, true, 3, 6, 720, 540, null, 0.6f, null, null, 0),
+                 BreakableAPI_Bundled.GenerateDebrisObject("gold_debris_idle_002", StaticSpriteDefinitions.RoomObject_Sheet_Data, true, 3, 6, 720, 540, null, 0.6f, null, null, 0),
+                 BreakableAPI_Bundled.GenerateDebrisObject("gold_debris_idle_003", StaticSpriteDefinitions.RoomObject_Sheet_Data, true, 3, 6, 720, 540, null, 0.6f, null, null, 0),
+                 BreakableAPI_Bundled.GenerateDebrisObject("gold_debris_idle_004", StaticSpriteDefinitions.RoomObject_Sheet_Data, true, 3, 6, 720, 540, null, 0.6f, null, null, 0),
+                 BreakableAPI_Bundled.GenerateDebrisObject("gold_debris_idle_005", StaticSpriteDefinitions.RoomObject_Sheet_Data, true, 3, 6, 720, 540, null, 0.6f, null, null, 0),
+                 BreakableAPI_Bundled.GenerateDebrisObject("gold_debris_idle_006", StaticSpriteDefinitions.RoomObject_Sheet_Data, true, 3, 6, 720, 540, null, 0.6f, null, null, 0),
+                 BreakableAPI_Bundled.GenerateDebrisObject("gold_debris_idle_007", StaticSpriteDefinitions.RoomObject_Sheet_Data, true, 3, 6, 720, 540, null, 0.6f, null, null, 0),
             };
-            DebrisObject[] shardObjects = BreakableAPIToolbox.GenerateDebrisObjects(shardPaths, true, 3, 6, 720, 540, null, 0.6f, null, null, 0, false);
             foreach (var debris in shardObjects)
             {
-                //
                 debris.sprite.usesOverrideMaterial = true;
                 Material mate = debris.sprite.renderer.material;
                 mate.shader = ShaderCache.Acquire("Brave/Internal/Glitch");
@@ -359,13 +369,20 @@ namespace Planetside
                 mate.SetFloat("_ColorProbability", 0.7f);
                 mate.SetFloat("_ColorIntensity", 0.1f);
             }
+
             ShardCluster potShardCluster = BreakableAPIToolbox.GenerateShardCluster(shardObjects, 0.7f, 1.2f, 6, 9, 0.6f);
-            MinorBreakable breakable = BreakableAPIToolbox.GenerateMinorBreakable("Glitch_Pot", new string[]
-            { defaultPath + "copper_pot_idle_001.png"
-            }, 10,
-            new string[] { defaultPath + "copper_pot_break_001.png" }, 10,
-            "Play_OBJ_pot_shatter_01", true, 14, 18, 1, 0);
-            BreakableAPIToolbox.GenerateShadow(shadowPath, "moneyPot_shadow", breakable.gameObject.transform, new Vector3(0, -0.125f));
+
+            var potObj = PrefabBuilder.BuildObject("GlitchPot");
+            var sprite = potObj.AddComponent<tk2dSprite>();
+            sprite.Collection = StaticSpriteDefinitions.RoomObject_Sheet_Data;
+            sprite.SetSprite(StaticSpriteDefinitions.RoomObject_Sheet_Data, "gold_pot_idle_001");
+            BreakableAPI_Bundled.GenerateShadow("money_pot_shadow", "shadow_idol", StaticSpriteDefinitions.RoomObject_Sheet_Data, potObj.transform, new Vector3(0, -0.125f, 0));
+
+            potObj.CreateFastBody(new IntVector2(14, 18), new IntVector2(1, 0), CollisionLayer.HighObstacle);
+
+            var breakable = potObj.AddComponent<MinorBreakable>();
+            breakable.breakAnimName = "goldpot_break";
+            breakable.breakAudioEventName = "Play_OBJ_pot_shatter_01";
 
             breakable.stopsBullets = true;
             breakable.OnlyPlayerProjectilesCanBreak = false;
@@ -380,24 +397,104 @@ namespace Planetside
             breakable.shardClusters = new ShardCluster[] { potShardCluster };
             breakable.gameObject.AddComponent<TheGames.Marker>();
 
-
+            breakable.sprite.usesOverrideMaterial = true;
+            Material mat = breakable.sprite.renderer.material;
+            mat.shader = ShaderCache.Acquire("Brave/Internal/Glitch");
+            mat.SetFloat("_GlitchInterval", 0.25f);
+            mat.SetFloat("_DispProbability", 0.6f);
+            mat.SetFloat("_DispIntensity", 0.3f);
+            mat.SetFloat("_ColorProbability", 0.7f);
+            mat.SetFloat("_ColorIntensity", 0.1f);
+            breakable.sprite.renderer.material = mat;
 
             var moneyPotvar = breakable.gameObject.AddComponent<GlitchPotBehavior>();
             moneyPotvar.objectToSpawn = GameManager.Instance.Dungeon.sharedSettingsPrefab.currencyDropSettings.bronzeCoinPrefab;
             
             
-            tk2dSpriteAnimator sprite = breakable.spriteAnimator;
-            sprite.sprite.usesOverrideMaterial = true;
-            Material material = sprite.sprite.renderer.material;
-            material.shader = ShaderCache.Acquire("Brave/Internal/Glitch");
-            material.SetFloat("_GlitchInterval", 0.05f);
-            material.SetFloat("_DispProbability", 0.1f);
-            material.SetFloat("_DispIntensity", 0.2f);
-            material.SetFloat("_ColorProbability", 0.2f);
-            material.SetFloat("_ColorIntensity", 0.3f);
-
+;
+ 
             StaticReferences.StoredRoomObjects.Add("glitchPot", breakable.gameObject);
             Alexandria.DungeonAPI.StaticReferences.customObjects.Add("psog:glitchPot", breakable.gameObject);
+
+            return breakable.gameObject;
+        }
+
+        public static GameObject GenerateCreditpot()
+        {
+            DebrisObject[] shardObjects = new DebrisObject[]
+            {
+                 BreakableAPI_Bundled.GenerateDebrisObject("gold_debris_idle_001", StaticSpriteDefinitions.RoomObject_Sheet_Data, true, 3, 6, 720, 540, null, 0.6f, null, null, 0),
+                 BreakableAPI_Bundled.GenerateDebrisObject("gold_debris_idle_002", StaticSpriteDefinitions.RoomObject_Sheet_Data, true, 3, 6, 720, 540, null, 0.6f, null, null, 0),
+                 BreakableAPI_Bundled.GenerateDebrisObject("gold_debris_idle_003", StaticSpriteDefinitions.RoomObject_Sheet_Data, true, 3, 6, 720, 540, null, 0.6f, null, null, 0),
+                 BreakableAPI_Bundled.GenerateDebrisObject("gold_debris_idle_004", StaticSpriteDefinitions.RoomObject_Sheet_Data, true, 3, 6, 720, 540, null, 0.6f, null, null, 0),
+                 BreakableAPI_Bundled.GenerateDebrisObject("gold_debris_idle_005", StaticSpriteDefinitions.RoomObject_Sheet_Data, true, 3, 6, 720, 540, null, 0.6f, null, null, 0),
+                 BreakableAPI_Bundled.GenerateDebrisObject("gold_debris_idle_006", StaticSpriteDefinitions.RoomObject_Sheet_Data, true, 3, 6, 720, 540, null, 0.6f, null, null, 0),
+                 BreakableAPI_Bundled.GenerateDebrisObject("gold_debris_idle_007", StaticSpriteDefinitions.RoomObject_Sheet_Data, true, 3, 6, 720, 540, null, 0.6f, null, null, 0),
+            };
+            foreach (var entry in shardObjects)
+            {
+                var v = entry.GetComponent<tk2dSprite>();
+                v.usesOverrideMaterial = true;
+                Material material_ = new Material(ShaderCache.Acquire("Brave/Internal/HologramShader"));
+                material_.SetFloat("_IsGreen", 1);
+                v.renderer.material = material_;
+
+            }
+
+            ShardCluster potShardCluster = BreakableAPIToolbox.GenerateShardCluster(shardObjects, 0.7f, 1.2f, 6, 9, 0.6f);
+
+            var potObj = PrefabBuilder.BuildObject("CreditPot");
+            var sprite = potObj.AddComponent<tk2dSprite>();
+            sprite.Collection = StaticSpriteDefinitions.RoomObject_Sheet_Data;
+            sprite.SetSprite(StaticSpriteDefinitions.RoomObject_Sheet_Data, "credit_pot_idle_001");
+            var shadow = BreakableAPI_Bundled.GenerateShadow("creditpot_base", "credit_base", StaticSpriteDefinitions.RoomObject_Sheet_Data, potObj.transform, new Vector3(0.1875f, 0, 0));
+            var shadowSprite = shadow.GetComponent<tk2dSprite>();
+            shadowSprite.HeightOffGround = 0;
+            shadowSprite.SortingOrder = -4;
+
+            /*
+            Material mat_shadow = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+            shadowSprite.sprite.usesOverrideMaterial = true;
+            mat_shadow.mainTexture = shadowSprite.renderer.material.mainTexture;
+            mat_shadow.SetColor("_EmissiveColor", new Color32(136, 220, 91, 255));
+            mat_shadow.SetFloat("_EmissiveColorPower", 1.55f);
+            mat_shadow.SetFloat("_EmissivePower", 10);
+            mat_shadow.SetFloat("_EmissiveThresholdSensitivity", 0.05f);
+            shadowSprite.renderer.material = mat_shadow;
+            */
+            potObj.CreateFastBody(new IntVector2(14, 18), new IntVector2(1, 0), CollisionLayer.HighObstacle);
+
+            StaticSpriteDefinitions.RoomObject_Sheet_Data.spriteDefinitions[StaticSpriteDefinitions.RoomObject_Sheet_Data.GetSpriteIdByName("creditpot_base")].AddOffset(new Vector2(-0.03125f, 0));
+            StaticSpriteDefinitions.RoomObject_Sheet_Data.spriteDefinitions[StaticSpriteDefinitions.RoomObject_Sheet_Data.GetSpriteIdByName("credit_pot_idle_001")].AddOffset(new Vector2(0, 0.3125f));
+            StaticSpriteDefinitions.RoomObject_Sheet_Data.spriteDefinitions[StaticSpriteDefinitions.RoomObject_Sheet_Data.GetSpriteIdByName("credit_pot_break_001")].AddOffset(new Vector2(0, 0.3125f));
+            
+            sprite.usesOverrideMaterial = true;
+            Material material = new Material(ShaderCache.Acquire("Brave/Internal/HologramShader"));
+            material.SetFloat("_IsGreen", 1);
+            sprite.renderer.material = material;
+
+            var breakable = potObj.AddComponent<MinorBreakable>();
+            breakable.breakAnimFrame = "credit_pot_break_001";
+            breakable.breakAudioEventName = "Play_OBJ_pot_shatter_01";
+
+            breakable.stopsBullets = true;
+            breakable.OnlyPlayerProjectilesCanBreak = false;
+            breakable.OnlyBreaksOnScreen = false;
+            breakable.resistsExplosions = false;
+            breakable.canSpawnFairy = false;
+            breakable.chanceToRain = 0;
+            breakable.dropCoins = false;
+            breakable.goopsOnBreak = false;
+            breakable.gameObject.layer = 22;
+            breakable.sprite.HeightOffGround = -1;
+            breakable.shardClusters = new ShardCluster[] { potShardCluster };
+            var moneyPotvar = breakable.gameObject.AddComponent<MoneyPotBehavior>();
+            moneyPotvar.objectToSpawn = GameManager.Instance.Dungeon.sharedSettingsPrefab.currencyDropSettings.metaCoinPrefab;
+            breakable.gameObject.AddComponent<TheGames.Marker>();
+
+
+            StaticReferences.StoredRoomObjects.Add("Credit_Pot", breakable.gameObject);
+            Alexandria.DungeonAPI.StaticReferences.customObjects.Add("psog:Credit_Pot", breakable.gameObject);
 
             return breakable.gameObject;
         }

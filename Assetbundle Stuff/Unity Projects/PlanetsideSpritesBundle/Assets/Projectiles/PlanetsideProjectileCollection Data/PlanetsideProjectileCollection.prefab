@@ -79,10 +79,10 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.046890624, y: 0.023445312}
-    - {x: 0.23435937, y: 0.023445312}
-    - {x: 0.046890624, y: 0.117179684}
-    - {x: 0.23435937, y: 0.117179684}
+    - {x: 0.6679727, y: 0.6367227}
+    - {x: 0.7148398, y: 0.6367227}
+    - {x: 0.6679727, y: 0.6835898}
+    - {x: 0.7148398, y: 0.6835898}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 1, y: 0}
@@ -151,10 +151,10 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.32814062, y: 0.023445312}
-    - {x: 0.5156094, y: 0.023445312}
-    - {x: 0.32814062, y: 0.117179684}
-    - {x: 0.5156094, y: 0.117179684}
+    - {x: 0.7382852, y: 0.6367227}
+    - {x: 0.7851523, y: 0.6367227}
+    - {x: 0.7382852, y: 0.6835898}
+    - {x: 0.7851523, y: 0.6835898}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 1, y: 0}
@@ -223,10 +223,10 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.6093906, y: 0.023445312}
-    - {x: 0.7968594, y: 0.023445312}
-    - {x: 0.6093906, y: 0.117179684}
-    - {x: 0.7968594, y: 0.117179684}
+    - {x: 0.8085977, y: 0.6367227}
+    - {x: 0.8554648, y: 0.6367227}
+    - {x: 0.8085977, y: 0.6835898}
+    - {x: 0.8554648, y: 0.6835898}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 1, y: 0}
@@ -295,10 +295,10 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.046890624, y: 0.16407031}
-    - {x: 0.23435937, y: 0.16407031}
-    - {x: 0.046890624, y: 0.2578047}
-    - {x: 0.23435937, y: 0.2578047}
+    - {x: 0.8789102, y: 0.6367227}
+    - {x: 0.9257773, y: 0.6367227}
+    - {x: 0.8789102, y: 0.6835898}
+    - {x: 0.9257773, y: 0.6835898}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 1, y: 0}
@@ -367,10 +367,10 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.32814062, y: 0.16407031}
-    - {x: 0.5156094, y: 0.16407031}
-    - {x: 0.32814062, y: 0.2578047}
-    - {x: 0.5156094, y: 0.2578047}
+    - {x: 0.6679727, y: 0.7070352}
+    - {x: 0.7148398, y: 0.7070352}
+    - {x: 0.6679727, y: 0.7539023}
+    - {x: 0.7148398, y: 0.7539023}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 1, y: 0}
@@ -439,10 +439,10 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.6093906, y: 0.16407031}
-    - {x: 0.6874844, y: 0.16407031}
-    - {x: 0.6093906, y: 0.20311719}
-    - {x: 0.6874844, y: 0.20311719}
+    - {x: 0.8867227, y: 0.7070352}
+    - {x: 0.90624607, y: 0.7070352}
+    - {x: 0.8867227, y: 0.72655857}
+    - {x: 0.90624607, y: 0.72655857}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 1, y: 0}
@@ -460,7 +460,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -511,10 +511,10 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.7812656, y: 0.16407031}
-    - {x: 0.8593594, y: 0.16407031}
-    - {x: 0.7812656, y: 0.20311719}
-    - {x: 0.8593594, y: 0.20311719}
+    - {x: 0.92969143, y: 0.71094143}
+    - {x: 0.9492148, y: 0.71094143}
+    - {x: 0.92969143, y: 0.7304648}
+    - {x: 0.9492148, y: 0.7304648}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 1, y: 0}
@@ -532,7 +532,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -583,10 +583,10 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.6093906, y: 0.2500078}
-    - {x: 0.6874844, y: 0.2500078}
-    - {x: 0.6093906, y: 0.2890547}
-    - {x: 0.6874844, y: 0.2890547}
+    - {x: 0.7382852, y: 0.75000393}
+    - {x: 0.75780857, y: 0.75000393}
+    - {x: 0.7382852, y: 0.7695273}
+    - {x: 0.75780857, y: 0.7695273}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 1, y: 0}
@@ -604,7 +604,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -655,10 +655,10 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.7812656, y: 0.2500078}
-    - {x: 0.8593594, y: 0.2500078}
-    - {x: 0.7812656, y: 0.2890547}
-    - {x: 0.8593594, y: 0.2890547}
+    - {x: 0.6679727, y: 0.7773477}
+    - {x: 0.68749607, y: 0.7773477}
+    - {x: 0.6679727, y: 0.79687107}
+    - {x: 0.68749607, y: 0.79687107}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 1, y: 0}
@@ -676,7 +676,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -727,10 +727,10 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.046890624, y: 0.3046953}
-    - {x: 0.124984376, y: 0.3046953}
-    - {x: 0.046890624, y: 0.3437422}
-    - {x: 0.124984376, y: 0.3437422}
+    - {x: 0.78125393, y: 0.75000393}
+    - {x: 0.8007773, y: 0.75000393}
+    - {x: 0.78125393, y: 0.7695273}
+    - {x: 0.8007773, y: 0.7695273}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 1, y: 0}
@@ -748,7 +748,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -799,10 +799,10 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.21876563, y: 0.3046953}
-    - {x: 0.29685938, y: 0.3046953}
-    - {x: 0.21876563, y: 0.3437422}
-    - {x: 0.29685938, y: 0.3437422}
+    - {x: 0.8242227, y: 0.75000393}
+    - {x: 0.84374607, y: 0.75000393}
+    - {x: 0.8242227, y: 0.7695273}
+    - {x: 0.84374607, y: 0.7695273}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 1, y: 0}
@@ -820,7 +820,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -871,10 +871,10 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.39064062, y: 0.3046953}
-    - {x: 0.46873438, y: 0.3046953}
-    - {x: 0.39064062, y: 0.3437422}
-    - {x: 0.46873438, y: 0.3437422}
+    - {x: 0.86719143, y: 0.75000393}
+    - {x: 0.8867148, y: 0.75000393}
+    - {x: 0.86719143, y: 0.7695273}
+    - {x: 0.8867148, y: 0.7695273}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 1, y: 0}
@@ -892,7 +892,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -943,10 +943,10 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.5625156, y: 0.3359453}
-    - {x: 0.6406094, y: 0.3359453}
-    - {x: 0.5625156, y: 0.3749922}
-    - {x: 0.6406094, y: 0.3749922}
+    - {x: 0.9101602, y: 0.7539102}
+    - {x: 0.92968357, y: 0.7539102}
+    - {x: 0.9101602, y: 0.77343357}
+    - {x: 0.92968357, y: 0.77343357}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 1, y: 0}
@@ -964,7 +964,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -1015,10 +1015,10 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.7343906, y: 0.3359453}
-    - {x: 0.8124844, y: 0.3359453}
-    - {x: 0.7343906, y: 0.3749922}
-    - {x: 0.8124844, y: 0.3749922}
+    - {x: 0.95312893, y: 0.7539102}
+    - {x: 0.9726523, y: 0.7539102}
+    - {x: 0.95312893, y: 0.77343357}
+    - {x: 0.9726523, y: 0.77343357}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 1, y: 0}
@@ -1036,7 +1036,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -1087,10 +1087,10 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.046890624, y: 0.3906328}
-    - {x: 0.124984376, y: 0.3906328}
-    - {x: 0.046890624, y: 0.4296797}
-    - {x: 0.124984376, y: 0.4296797}
+    - {x: 0.71094143, y: 0.7929727}
+    - {x: 0.7304648, y: 0.7929727}
+    - {x: 0.71094143, y: 0.81249607}
+    - {x: 0.7304648, y: 0.81249607}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 1, y: 0}
@@ -1108,7 +1108,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -1159,10 +1159,10 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.21876563, y: 0.3906328}
-    - {x: 0.29685938, y: 0.3906328}
-    - {x: 0.21876563, y: 0.4296797}
-    - {x: 0.29685938, y: 0.4296797}
+    - {x: 0.6679727, y: 0.82031643}
+    - {x: 0.68749607, y: 0.82031643}
+    - {x: 0.6679727, y: 0.8398398}
+    - {x: 0.68749607, y: 0.8398398}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 1, y: 0}
@@ -1180,7 +1180,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -1231,10 +1231,10 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.39064062, y: 0.3906328}
-    - {x: 0.46873438, y: 0.3906328}
-    - {x: 0.39064062, y: 0.4296797}
-    - {x: 0.46873438, y: 0.4296797}
+    - {x: 0.7539102, y: 0.7929727}
+    - {x: 0.77343357, y: 0.7929727}
+    - {x: 0.7539102, y: 0.81249607}
+    - {x: 0.77343357, y: 0.81249607}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 1, y: 0}
@@ -1252,7 +1252,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -1303,10 +1303,10 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.5625156, y: 0.4218828}
-    - {x: 0.6406094, y: 0.4218828}
-    - {x: 0.5625156, y: 0.4609297}
-    - {x: 0.6406094, y: 0.4609297}
+    - {x: 0.79687893, y: 0.7929727}
+    - {x: 0.8164023, y: 0.7929727}
+    - {x: 0.79687893, y: 0.81249607}
+    - {x: 0.8164023, y: 0.81249607}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 1, y: 0}
@@ -1324,7 +1324,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -1375,10 +1375,10 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.7343906, y: 0.4218828}
-    - {x: 0.8124844, y: 0.4218828}
-    - {x: 0.7343906, y: 0.4609297}
-    - {x: 0.8124844, y: 0.4609297}
+    - {x: 0.8398477, y: 0.7929727}
+    - {x: 0.85937107, y: 0.7929727}
+    - {x: 0.8398477, y: 0.81249607}
+    - {x: 0.85937107, y: 0.81249607}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 1, y: 0}
@@ -1396,7 +1396,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -1447,10 +1447,10 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.046890624, y: 0.4765703}
-    - {x: 0.124984376, y: 0.4765703}
-    - {x: 0.046890624, y: 0.5156172}
-    - {x: 0.124984376, y: 0.5156172}
+    - {x: 0.88281643, y: 0.79687893}
+    - {x: 0.9023398, y: 0.79687893}
+    - {x: 0.88281643, y: 0.8164023}
+    - {x: 0.9023398, y: 0.8164023}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 1, y: 0}
@@ -1468,7 +1468,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -1519,10 +1519,10 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.21876563, y: 0.4765703}
-    - {x: 0.29685938, y: 0.4765703}
-    - {x: 0.21876563, y: 0.5156172}
-    - {x: 0.29685938, y: 0.5156172}
+    - {x: 0.9257852, y: 0.79687893}
+    - {x: 0.94530857, y: 0.79687893}
+    - {x: 0.9257852, y: 0.8164023}
+    - {x: 0.94530857, y: 0.8164023}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 1, y: 0}
@@ -1540,7 +1540,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -1591,10 +1591,10 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.39064062, y: 0.4765703}
-    - {x: 0.46873438, y: 0.4765703}
-    - {x: 0.39064062, y: 0.5156172}
-    - {x: 0.46873438, y: 0.5156172}
+    - {x: 0.96875393, y: 0.79687893}
+    - {x: 0.9882773, y: 0.79687893}
+    - {x: 0.96875393, y: 0.8164023}
+    - {x: 0.9882773, y: 0.8164023}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 1, y: 0}
@@ -1612,7 +1612,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -1663,10 +1663,10 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.5625156, y: 0.5078203}
-    - {x: 0.6406094, y: 0.5078203}
-    - {x: 0.5625156, y: 0.5468672}
-    - {x: 0.6406094, y: 0.5468672}
+    - {x: 0.71094143, y: 0.83594143}
+    - {x: 0.7304648, y: 0.83594143}
+    - {x: 0.71094143, y: 0.8554648}
+    - {x: 0.7304648, y: 0.8554648}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 1, y: 0}
@@ -1684,7 +1684,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -1735,10 +1735,10 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.7343906, y: 0.5078203}
-    - {x: 0.8124844, y: 0.5078203}
-    - {x: 0.7343906, y: 0.5468672}
-    - {x: 0.8124844, y: 0.5468672}
+    - {x: 0.6679727, y: 0.8632852}
+    - {x: 0.68749607, y: 0.8632852}
+    - {x: 0.6679727, y: 0.88280857}
+    - {x: 0.68749607, y: 0.88280857}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 1, y: 0}
@@ -1756,7 +1756,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -1807,10 +1807,10 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.046890624, y: 0.5625078}
-    - {x: 0.124984376, y: 0.5625078}
-    - {x: 0.046890624, y: 0.6015547}
-    - {x: 0.124984376, y: 0.6015547}
+    - {x: 0.7539102, y: 0.83594143}
+    - {x: 0.77343357, y: 0.83594143}
+    - {x: 0.7539102, y: 0.8554648}
+    - {x: 0.77343357, y: 0.8554648}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 1, y: 0}
@@ -1820,6 +1820,3462 @@ MonoBehaviour:
     material: {fileID: 2100000, guid: ac69e3ee561bf1c4da1f78319d792b54, type: 2}
     materialId: 0
     sourceTextureGUID: bf4dee82ddf42ee45a382f0bedfc87b9
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: RiftakerProjectile_Out_002
+    boundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    boundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    boundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.25, y: 0, z: 0}
+    - {x: 0, y: 2.25, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.25, y: 0, z: 0}
+    position2: {x: 0, y: 2.25, z: 0}
+    position3: {x: 2.25, y: 2.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.011722656, y: 0.011722656}
+    - {x: 0.15233985, y: 0.011722656}
+    - {x: 0.011722656, y: 0.15233985}
+    - {x: 0.15233985, y: 0.15233985}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: ac69e3ee561bf1c4da1f78319d792b54, type: 2}
+    materialId: 0
+    sourceTextureGUID: 7531267c1b4b54a42a22a5c7d308fde2
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: RiftakerProjectile_In_008
+    boundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    boundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    boundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.25, y: 0, z: 0}
+    - {x: 0, y: 2.25, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.25, y: 0, z: 0}
+    position2: {x: 0, y: 2.25, z: 0}
+    position3: {x: 2.25, y: 2.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.011722656, y: 0.17578515}
+    - {x: 0.15233985, y: 0.17578515}
+    - {x: 0.011722656, y: 0.31640235}
+    - {x: 0.15233985, y: 0.31640235}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: ac69e3ee561bf1c4da1f78319d792b54, type: 2}
+    materialId: 0
+    sourceTextureGUID: 0cb9093ba358b2844b69b0b29488d0ac
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: RiftakerProjectile_In_012
+    boundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    boundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    boundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.25, y: 0, z: 0}
+    - {x: 0, y: 2.25, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.25, y: 0, z: 0}
+    position2: {x: 0, y: 2.25, z: 0}
+    position3: {x: 2.25, y: 2.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.011722656, y: 0.33984765}
+    - {x: 0.15233985, y: 0.33984765}
+    - {x: 0.011722656, y: 0.48046485}
+    - {x: 0.15233985, y: 0.48046485}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: ac69e3ee561bf1c4da1f78319d792b54, type: 2}
+    materialId: 0
+    sourceTextureGUID: f58b071e5630b694995c19f28699543b
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: RiftakerProjectile_In_001
+    boundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    boundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    boundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.25, y: 0, z: 0}
+    - {x: 0, y: 2.25, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.25, y: 0, z: 0}
+    position2: {x: 0, y: 2.25, z: 0}
+    position3: {x: 2.25, y: 2.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.011722656, y: 0.5039102}
+    - {x: 0.15233985, y: 0.5039102}
+    - {x: 0.011722656, y: 0.6445273}
+    - {x: 0.15233985, y: 0.6445273}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: ac69e3ee561bf1c4da1f78319d792b54, type: 2}
+    materialId: 0
+    sourceTextureGUID: d12feb4b72ffa4641aae1afa53b0451d
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: RiftakerProjectile_In_013
+    boundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    boundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    boundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.25, y: 0, z: 0}
+    - {x: 0, y: 2.25, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.25, y: 0, z: 0}
+    position2: {x: 0, y: 2.25, z: 0}
+    position3: {x: 2.25, y: 2.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.011722656, y: 0.6679727}
+    - {x: 0.15233985, y: 0.6679727}
+    - {x: 0.011722656, y: 0.8085898}
+    - {x: 0.15233985, y: 0.8085898}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: ac69e3ee561bf1c4da1f78319d792b54, type: 2}
+    materialId: 0
+    sourceTextureGUID: 4f61d709bf946604486c18369cabc87e
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: RiftakerProjectile_Out_011
+    boundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    boundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    boundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.25, y: 0, z: 0}
+    - {x: 0, y: 2.25, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.25, y: 0, z: 0}
+    position2: {x: 0, y: 2.25, z: 0}
+    position3: {x: 2.25, y: 2.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.011722656, y: 0.8320352}
+    - {x: 0.15233985, y: 0.8320352}
+    - {x: 0.011722656, y: 0.9726523}
+    - {x: 0.15233985, y: 0.9726523}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: ac69e3ee561bf1c4da1f78319d792b54, type: 2}
+    materialId: 0
+    sourceTextureGUID: a14403d2a8fe275458f78e765368f505
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: RiftakerProjectile_Out_013
+    boundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    boundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    boundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.25, y: 0, z: 0}
+    - {x: 0, y: 2.25, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.25, y: 0, z: 0}
+    position2: {x: 0, y: 2.25, z: 0}
+    position3: {x: 2.25, y: 2.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.17578515, y: 0.011722656}
+    - {x: 0.31640235, y: 0.011722656}
+    - {x: 0.17578515, y: 0.15233985}
+    - {x: 0.31640235, y: 0.15233985}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: ac69e3ee561bf1c4da1f78319d792b54, type: 2}
+    materialId: 0
+    sourceTextureGUID: 2d1bddb92ef1c7a4eb59a5b66f17ae82
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: RiftakerProjectile_Out_004
+    boundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    boundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    boundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.25, y: 0, z: 0}
+    - {x: 0, y: 2.25, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.25, y: 0, z: 0}
+    position2: {x: 0, y: 2.25, z: 0}
+    position3: {x: 2.25, y: 2.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.33984765, y: 0.011722656}
+    - {x: 0.48046485, y: 0.011722656}
+    - {x: 0.33984765, y: 0.15233985}
+    - {x: 0.48046485, y: 0.15233985}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: ac69e3ee561bf1c4da1f78319d792b54, type: 2}
+    materialId: 0
+    sourceTextureGUID: 59677e9386947a545ab842e135727c22
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: RiftakerProjectile_Out_001
+    boundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    boundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    boundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.25, y: 0, z: 0}
+    - {x: 0, y: 2.25, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.25, y: 0, z: 0}
+    position2: {x: 0, y: 2.25, z: 0}
+    position3: {x: 2.25, y: 2.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.011722656, y: 0.5039102}
+    - {x: 0.15233985, y: 0.5039102}
+    - {x: 0.011722656, y: 0.6445273}
+    - {x: 0.15233985, y: 0.6445273}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: ac69e3ee561bf1c4da1f78319d792b54, type: 2}
+    materialId: 0
+    sourceTextureGUID: b01a6c452a86f36418d70fd34b5b1fb2
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: RiftakerProjectile_In_005
+    boundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    boundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    boundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.25, y: 0, z: 0}
+    - {x: 0, y: 2.25, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.25, y: 0, z: 0}
+    position2: {x: 0, y: 2.25, z: 0}
+    position3: {x: 2.25, y: 2.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.5039102, y: 0.011722656}
+    - {x: 0.6445273, y: 0.011722656}
+    - {x: 0.5039102, y: 0.15233985}
+    - {x: 0.6445273, y: 0.15233985}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: ac69e3ee561bf1c4da1f78319d792b54, type: 2}
+    materialId: 0
+    sourceTextureGUID: 1ca43984aaa2724419f5dbd8334a53c6
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: RiftakerProjectile_Out_006
+    boundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    boundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    boundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.25, y: 0, z: 0}
+    - {x: 0, y: 2.25, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.25, y: 0, z: 0}
+    position2: {x: 0, y: 2.25, z: 0}
+    position3: {x: 2.25, y: 2.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.6679727, y: 0.011722656}
+    - {x: 0.8085898, y: 0.011722656}
+    - {x: 0.6679727, y: 0.15233985}
+    - {x: 0.8085898, y: 0.15233985}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: ac69e3ee561bf1c4da1f78319d792b54, type: 2}
+    materialId: 0
+    sourceTextureGUID: c0f2ac22c90e5f64ca34d8cdafa35bc9
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: RiftakerProjectile_In_004
+    boundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    boundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    boundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.25, y: 0, z: 0}
+    - {x: 0, y: 2.25, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.25, y: 0, z: 0}
+    position2: {x: 0, y: 2.25, z: 0}
+    position3: {x: 2.25, y: 2.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.33984765, y: 0.011722656}
+    - {x: 0.48046485, y: 0.011722656}
+    - {x: 0.33984765, y: 0.15233985}
+    - {x: 0.48046485, y: 0.15233985}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: ac69e3ee561bf1c4da1f78319d792b54, type: 2}
+    materialId: 0
+    sourceTextureGUID: 630f2d1875983784c8b13733db16d1ae
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: RiftakerProjectile_Out_005
+    boundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    boundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    boundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.25, y: 0, z: 0}
+    - {x: 0, y: 2.25, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.25, y: 0, z: 0}
+    position2: {x: 0, y: 2.25, z: 0}
+    position3: {x: 2.25, y: 2.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.5039102, y: 0.011722656}
+    - {x: 0.6445273, y: 0.011722656}
+    - {x: 0.5039102, y: 0.15233985}
+    - {x: 0.6445273, y: 0.15233985}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: ac69e3ee561bf1c4da1f78319d792b54, type: 2}
+    materialId: 0
+    sourceTextureGUID: f8a2dd6697d485f4c9f1f8d770b1c40f
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: RiftakerProjectile_In_010
+    boundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    boundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    boundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.25, y: 0, z: 0}
+    - {x: 0, y: 2.25, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.25, y: 0, z: 0}
+    position2: {x: 0, y: 2.25, z: 0}
+    position3: {x: 2.25, y: 2.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.8320352, y: 0.011722656}
+    - {x: 0.9726523, y: 0.011722656}
+    - {x: 0.8320352, y: 0.15233985}
+    - {x: 0.9726523, y: 0.15233985}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: ac69e3ee561bf1c4da1f78319d792b54, type: 2}
+    materialId: 0
+    sourceTextureGUID: ebf3f74e45347674184a0bbad3364dd5
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: RiftakerProjectile_Out_007
+    boundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    boundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    boundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.25, y: 0, z: 0}
+    - {x: 0, y: 2.25, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.25, y: 0, z: 0}
+    position2: {x: 0, y: 2.25, z: 0}
+    position3: {x: 2.25, y: 2.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.17578515, y: 0.17578515}
+    - {x: 0.31640235, y: 0.17578515}
+    - {x: 0.17578515, y: 0.31640235}
+    - {x: 0.31640235, y: 0.31640235}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: ac69e3ee561bf1c4da1f78319d792b54, type: 2}
+    materialId: 0
+    sourceTextureGUID: b093861cb39c90343ab3bbf112c22a01
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: RiftakerProjectile_Out_012
+    boundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    boundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    boundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.25, y: 0, z: 0}
+    - {x: 0, y: 2.25, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.25, y: 0, z: 0}
+    position2: {x: 0, y: 2.25, z: 0}
+    position3: {x: 2.25, y: 2.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.17578515, y: 0.33984765}
+    - {x: 0.31640235, y: 0.33984765}
+    - {x: 0.17578515, y: 0.48046485}
+    - {x: 0.31640235, y: 0.48046485}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: ac69e3ee561bf1c4da1f78319d792b54, type: 2}
+    materialId: 0
+    sourceTextureGUID: 4a25c272f9aa5a44db81a72e0de5ddbc
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: RiftakerProjectile_In_014
+    boundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    boundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    boundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.25, y: 0, z: 0}
+    - {x: 0, y: 2.25, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.25, y: 0, z: 0}
+    position2: {x: 0, y: 2.25, z: 0}
+    position3: {x: 2.25, y: 2.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.17578515, y: 0.5039102}
+    - {x: 0.31640235, y: 0.5039102}
+    - {x: 0.17578515, y: 0.6445273}
+    - {x: 0.31640235, y: 0.6445273}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: ac69e3ee561bf1c4da1f78319d792b54, type: 2}
+    materialId: 0
+    sourceTextureGUID: 3aaa534b24eddbf4587b248e754fcb96
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: RiftakerProjectile_In_015
+    boundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    boundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    boundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.25, y: 0, z: 0}
+    - {x: 0, y: 2.25, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.25, y: 0, z: 0}
+    position2: {x: 0, y: 2.25, z: 0}
+    position3: {x: 2.25, y: 2.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.17578515, y: 0.6679727}
+    - {x: 0.31640235, y: 0.6679727}
+    - {x: 0.17578515, y: 0.8085898}
+    - {x: 0.31640235, y: 0.8085898}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: ac69e3ee561bf1c4da1f78319d792b54, type: 2}
+    materialId: 0
+    sourceTextureGUID: 555d87c42a39e314cb90db8d0eb0f9e5
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: RiftakerProjectile_Out_003
+    boundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    boundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    boundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.25, y: 0, z: 0}
+    - {x: 0, y: 2.25, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.25, y: 0, z: 0}
+    position2: {x: 0, y: 2.25, z: 0}
+    position3: {x: 2.25, y: 2.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.17578515, y: 0.8320352}
+    - {x: 0.31640235, y: 0.8320352}
+    - {x: 0.17578515, y: 0.9726523}
+    - {x: 0.31640235, y: 0.9726523}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: ac69e3ee561bf1c4da1f78319d792b54, type: 2}
+    materialId: 0
+    sourceTextureGUID: 83aceb2b74131df4f8fea2d06f14d3d6
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: RiftakerProjectile_In_007
+    boundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    boundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    boundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.25, y: 0, z: 0}
+    - {x: 0, y: 2.25, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.25, y: 0, z: 0}
+    position2: {x: 0, y: 2.25, z: 0}
+    position3: {x: 2.25, y: 2.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.17578515, y: 0.17578515}
+    - {x: 0.31640235, y: 0.17578515}
+    - {x: 0.17578515, y: 0.31640235}
+    - {x: 0.31640235, y: 0.31640235}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: ac69e3ee561bf1c4da1f78319d792b54, type: 2}
+    materialId: 0
+    sourceTextureGUID: b6627009367b95a4998b8ea18bfe3bd2
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: RiftakerProjectile_Out_008
+    boundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    boundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    boundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.25, y: 0, z: 0}
+    - {x: 0, y: 2.25, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.25, y: 0, z: 0}
+    position2: {x: 0, y: 2.25, z: 0}
+    position3: {x: 2.25, y: 2.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.011722656, y: 0.17578515}
+    - {x: 0.15233985, y: 0.17578515}
+    - {x: 0.011722656, y: 0.31640235}
+    - {x: 0.15233985, y: 0.31640235}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: ac69e3ee561bf1c4da1f78319d792b54, type: 2}
+    materialId: 0
+    sourceTextureGUID: ab992da490d82464d8a2d1d6e83d2293
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: RiftakerProjectile_In_006
+    boundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    boundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    boundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.25, y: 0, z: 0}
+    - {x: 0, y: 2.25, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.25, y: 0, z: 0}
+    position2: {x: 0, y: 2.25, z: 0}
+    position3: {x: 2.25, y: 2.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.6679727, y: 0.011722656}
+    - {x: 0.8085898, y: 0.011722656}
+    - {x: 0.6679727, y: 0.15233985}
+    - {x: 0.8085898, y: 0.15233985}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: ac69e3ee561bf1c4da1f78319d792b54, type: 2}
+    materialId: 0
+    sourceTextureGUID: 4cffd42c59a4b744da242b05180314f6
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: RiftakerProjectile_Out_010
+    boundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    boundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    boundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.25, y: 0, z: 0}
+    - {x: 0, y: 2.25, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.25, y: 0, z: 0}
+    position2: {x: 0, y: 2.25, z: 0}
+    position3: {x: 2.25, y: 2.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.33984765, y: 0.17578515}
+    - {x: 0.48046485, y: 0.17578515}
+    - {x: 0.33984765, y: 0.31640235}
+    - {x: 0.48046485, y: 0.31640235}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: ac69e3ee561bf1c4da1f78319d792b54, type: 2}
+    materialId: 0
+    sourceTextureGUID: b639e3f5c39c976419538602d4103ce5
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: RiftakerProjectile_Out_009
+    boundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    boundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    boundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.25, y: 0, z: 0}
+    - {x: 0, y: 2.25, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.25, y: 0, z: 0}
+    position2: {x: 0, y: 2.25, z: 0}
+    position3: {x: 2.25, y: 2.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.5039102, y: 0.17578515}
+    - {x: 0.6445273, y: 0.17578515}
+    - {x: 0.5039102, y: 0.31640235}
+    - {x: 0.6445273, y: 0.31640235}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: ac69e3ee561bf1c4da1f78319d792b54, type: 2}
+    materialId: 0
+    sourceTextureGUID: 3e849ff9eb254e942b683a4e5352afd5
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: RiftakerProjectile_In_003
+    boundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    boundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    boundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.25, y: 0, z: 0}
+    - {x: 0, y: 2.25, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.25, y: 0, z: 0}
+    position2: {x: 0, y: 2.25, z: 0}
+    position3: {x: 2.25, y: 2.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.17578515, y: 0.8320352}
+    - {x: 0.31640235, y: 0.8320352}
+    - {x: 0.17578515, y: 0.9726523}
+    - {x: 0.31640235, y: 0.9726523}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: ac69e3ee561bf1c4da1f78319d792b54, type: 2}
+    materialId: 0
+    sourceTextureGUID: 6263ee1962f24a74f94e1b2c8159c306
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: RiftakerProjectile_In_009
+    boundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    boundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    boundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.25, y: 0, z: 0}
+    - {x: 0, y: 2.25, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.25, y: 0, z: 0}
+    position2: {x: 0, y: 2.25, z: 0}
+    position3: {x: 2.25, y: 2.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.6679727, y: 0.17578515}
+    - {x: 0.8085898, y: 0.17578515}
+    - {x: 0.6679727, y: 0.31640235}
+    - {x: 0.8085898, y: 0.31640235}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: ac69e3ee561bf1c4da1f78319d792b54, type: 2}
+    materialId: 0
+    sourceTextureGUID: e53bd1b2be4f77b4bbe79aefdf965ffc
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: RiftakerProjectile_In_002
+    boundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    boundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    boundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.25, y: 0, z: 0}
+    - {x: 0, y: 2.25, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.25, y: 0, z: 0}
+    position2: {x: 0, y: 2.25, z: 0}
+    position3: {x: 2.25, y: 2.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.011722656, y: 0.011722656}
+    - {x: 0.15233985, y: 0.011722656}
+    - {x: 0.011722656, y: 0.15233985}
+    - {x: 0.15233985, y: 0.15233985}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: ac69e3ee561bf1c4da1f78319d792b54, type: 2}
+    materialId: 0
+    sourceTextureGUID: 697c0bd8286fd9c4da402b980dd00f58
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: RiftakerProjectile_In_011
+    boundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    boundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    boundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.25, y: 0, z: 0}
+    - {x: 0, y: 2.25, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.25, y: 0, z: 0}
+    position2: {x: 0, y: 2.25, z: 0}
+    position3: {x: 2.25, y: 2.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.8320352, y: 0.17578515}
+    - {x: 0.9726523, y: 0.17578515}
+    - {x: 0.8320352, y: 0.31640235}
+    - {x: 0.9726523, y: 0.31640235}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: ac69e3ee561bf1c4da1f78319d792b54, type: 2}
+    materialId: 0
+    sourceTextureGUID: 8f9d240146f464941b0894d1fa989599
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: RiftakerProjectile_Detonate_007
+    boundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    boundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    boundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.25, y: 0, z: 0}
+    - {x: 0, y: 2.25, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.25, y: 0, z: 0}
+    position2: {x: 0, y: 2.25, z: 0}
+    position3: {x: 2.25, y: 2.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.33984765, y: 0.33984765}
+    - {x: 0.48046485, y: 0.33984765}
+    - {x: 0.33984765, y: 0.48046485}
+    - {x: 0.48046485, y: 0.48046485}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: ac69e3ee561bf1c4da1f78319d792b54, type: 2}
+    materialId: 0
+    sourceTextureGUID: c3520bce83198d0439bdbdabc8e993e8
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: RiftakerProjectile_Detonate_003
+    boundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    boundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    boundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.25, y: 0, z: 0}
+    - {x: 0, y: 2.25, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.25, y: 0, z: 0}
+    position2: {x: 0, y: 2.25, z: 0}
+    position3: {x: 2.25, y: 2.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.33984765, y: 0.5039102}
+    - {x: 0.48046485, y: 0.5039102}
+    - {x: 0.33984765, y: 0.6445273}
+    - {x: 0.48046485, y: 0.6445273}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: ac69e3ee561bf1c4da1f78319d792b54, type: 2}
+    materialId: 0
+    sourceTextureGUID: b6f8af847b06ba64d982e5df23443e15
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: RiftakerProjectile_Detonate_004
+    boundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    boundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    boundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.25, y: 0, z: 0}
+    - {x: 0, y: 2.25, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.25, y: 0, z: 0}
+    position2: {x: 0, y: 2.25, z: 0}
+    position3: {x: 2.25, y: 2.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.33984765, y: 0.6679727}
+    - {x: 0.48046485, y: 0.6679727}
+    - {x: 0.33984765, y: 0.8085898}
+    - {x: 0.48046485, y: 0.8085898}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: ac69e3ee561bf1c4da1f78319d792b54, type: 2}
+    materialId: 0
+    sourceTextureGUID: 6f95c6315af08b74faba2a1be509c2b8
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: RiftakerProjectile_Detonate_005
+    boundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    boundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    boundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.25, y: 0, z: 0}
+    - {x: 0, y: 2.25, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.25, y: 0, z: 0}
+    position2: {x: 0, y: 2.25, z: 0}
+    position3: {x: 2.25, y: 2.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.33984765, y: 0.8320352}
+    - {x: 0.48046485, y: 0.8320352}
+    - {x: 0.33984765, y: 0.9726523}
+    - {x: 0.48046485, y: 0.9726523}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: ac69e3ee561bf1c4da1f78319d792b54, type: 2}
+    materialId: 0
+    sourceTextureGUID: bfe68fabaaaa6b443bcac830cae565ab
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: RiftakerProjectile_Detonate_011
+    boundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    boundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    boundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.25, y: 0, z: 0}
+    - {x: 0, y: 2.25, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.25, y: 0, z: 0}
+    position2: {x: 0, y: 2.25, z: 0}
+    position3: {x: 2.25, y: 2.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.5039102, y: 0.33984765}
+    - {x: 0.6445273, y: 0.33984765}
+    - {x: 0.5039102, y: 0.48046485}
+    - {x: 0.6445273, y: 0.48046485}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: ac69e3ee561bf1c4da1f78319d792b54, type: 2}
+    materialId: 0
+    sourceTextureGUID: 5806b0605cffbdb4793f2bc43d6f2e61
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: RiftakerProjectile_Detonate_001
+    boundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    boundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    boundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.25, y: 0, z: 0}
+    - {x: 0, y: 2.25, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.25, y: 0, z: 0}
+    position2: {x: 0, y: 2.25, z: 0}
+    position3: {x: 2.25, y: 2.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.011722656, y: 0.17578515}
+    - {x: 0.15233985, y: 0.17578515}
+    - {x: 0.011722656, y: 0.31640235}
+    - {x: 0.15233985, y: 0.31640235}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: ac69e3ee561bf1c4da1f78319d792b54, type: 2}
+    materialId: 0
+    sourceTextureGUID: 1b9c04ef6276bb84cba942688b00e066
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: RiftakerProjectile_Detonate_006
+    boundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    boundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    boundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.25, y: 0, z: 0}
+    - {x: 0, y: 2.25, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.25, y: 0, z: 0}
+    position2: {x: 0, y: 2.25, z: 0}
+    position3: {x: 2.25, y: 2.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.6679727, y: 0.33984765}
+    - {x: 0.8085898, y: 0.33984765}
+    - {x: 0.6679727, y: 0.48046485}
+    - {x: 0.8085898, y: 0.48046485}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: ac69e3ee561bf1c4da1f78319d792b54, type: 2}
+    materialId: 0
+    sourceTextureGUID: 96f1bfb071b9d6443b02a33c15053eba
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: RiftakerProjectile_Detonate_008
+    boundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    boundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    boundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.25, y: 0, z: 0}
+    - {x: 0, y: 2.25, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.25, y: 0, z: 0}
+    position2: {x: 0, y: 2.25, z: 0}
+    position3: {x: 2.25, y: 2.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.8320352, y: 0.33984765}
+    - {x: 0.9726523, y: 0.33984765}
+    - {x: 0.8320352, y: 0.48046485}
+    - {x: 0.9726523, y: 0.48046485}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: ac69e3ee561bf1c4da1f78319d792b54, type: 2}
+    materialId: 0
+    sourceTextureGUID: da55106883924ab42820d73556ae0e40
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: RiftakerProjectile_Detonate_010
+    boundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    boundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    boundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.25, y: 0, z: 0}
+    - {x: 0, y: 2.25, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.25, y: 0, z: 0}
+    position2: {x: 0, y: 2.25, z: 0}
+    position3: {x: 2.25, y: 2.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.5039102, y: 0.5039102}
+    - {x: 0.6445273, y: 0.5039102}
+    - {x: 0.5039102, y: 0.6445273}
+    - {x: 0.6445273, y: 0.6445273}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: ac69e3ee561bf1c4da1f78319d792b54, type: 2}
+    materialId: 0
+    sourceTextureGUID: fb71ca13c04769e4d9e53c8594ff0bf9
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: RiftakerProjectile_Detonate_002
+    boundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    boundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    boundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.25, y: 0, z: 0}
+    - {x: 0, y: 2.25, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.25, y: 0, z: 0}
+    position2: {x: 0, y: 2.25, z: 0}
+    position3: {x: 2.25, y: 2.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.5039102, y: 0.6679727}
+    - {x: 0.6445273, y: 0.6679727}
+    - {x: 0.5039102, y: 0.8085898}
+    - {x: 0.6445273, y: 0.8085898}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: ac69e3ee561bf1c4da1f78319d792b54, type: 2}
+    materialId: 0
+    sourceTextureGUID: 7c9f0da7256ea434a868614e60d15ead
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: RiftakerProjectile_Detonate_009
+    boundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.125, y: 1.125, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    boundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    boundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.125, y: 1.125, z: 0}
+    untrimmedBoundsDataExtents: {x: 2.25, y: 2.25, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2.25, y: 0, z: 0}
+    - {x: 0, y: 2.25, z: 0}
+    - {x: 2.25, y: 2.25, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2.25, y: 0, z: 0}
+    position2: {x: 0, y: 2.25, z: 0}
+    position3: {x: 2.25, y: 2.25, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.5039102, y: 0.8320352}
+    - {x: 0.6445273, y: 0.8320352}
+    - {x: 0.5039102, y: 0.9726523}
+    - {x: 0.6445273, y: 0.9726523}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: ac69e3ee561bf1c4da1f78319d792b54, type: 2}
+    materialId: 0
+    sourceTextureGUID: 24fc38784dc35d04b9fdfc2776017bf6
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: RiftakerProjectile_Dart_002
+    boundsData:
+    - {x: 0.40625, y: 0.15625, z: 0}
+    - {x: 0.8125, y: 0.3125, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.40625, y: 0.15625, z: 0}
+    - {x: 0.8125, y: 0.3125, z: 0}
+    boundsDataCenter: {x: 0.40625, y: 0.15625, z: 0}
+    boundsDataExtents: {x: 0.8125, y: 0.3125, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.40625, y: 0.15625, z: 0}
+    untrimmedBoundsDataExtents: {x: 0.8125, y: 0.3125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0.8125, y: 0, z: 0}
+    - {x: 0, y: 0.3125, z: 0}
+    - {x: 0.8125, y: 0.3125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 0.8125, y: 0, z: 0}
+    position2: {x: 0, y: 0.3125, z: 0}
+    position3: {x: 0.8125, y: 0.3125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.9492227, y: 0.6367227}
+    - {x: 0.9492227, y: 0.68749607}
+    - {x: 0.96874607, y: 0.6367227}
+    - {x: 0.96874607, y: 0.68749607}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: ac69e3ee561bf1c4da1f78319d792b54, type: 2}
+    materialId: 0
+    sourceTextureGUID: 7aac2189adc7c8e42aa9e72e512b239f
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: RiftakerProjectile_Dart_003
+    boundsData:
+    - {x: 0.40625, y: 0.15625, z: 0}
+    - {x: 0.8125, y: 0.3125, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.40625, y: 0.15625, z: 0}
+    - {x: 0.8125, y: 0.3125, z: 0}
+    boundsDataCenter: {x: 0.40625, y: 0.15625, z: 0}
+    boundsDataExtents: {x: 0.8125, y: 0.3125, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.40625, y: 0.15625, z: 0}
+    untrimmedBoundsDataExtents: {x: 0.8125, y: 0.3125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0.8125, y: 0, z: 0}
+    - {x: 0, y: 0.3125, z: 0}
+    - {x: 0.8125, y: 0.3125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 0.8125, y: 0, z: 0}
+    position2: {x: 0, y: 0.3125, z: 0}
+    position3: {x: 0.8125, y: 0.3125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.7382852, y: 0.7070352}
+    - {x: 0.78905857, y: 0.7070352}
+    - {x: 0.7382852, y: 0.72655857}
+    - {x: 0.78905857, y: 0.72655857}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: ac69e3ee561bf1c4da1f78319d792b54, type: 2}
+    materialId: 0
+    sourceTextureGUID: c45bb2a136bd72e46b74eb7a64147d4f
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: RiftakerProjectile_Dart_001
+    boundsData:
+    - {x: 0.40625, y: 0.15625, z: 0}
+    - {x: 0.8125, y: 0.3125, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.40625, y: 0.15625, z: 0}
+    - {x: 0.8125, y: 0.3125, z: 0}
+    boundsDataCenter: {x: 0.40625, y: 0.15625, z: 0}
+    boundsDataExtents: {x: 0.8125, y: 0.3125, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.40625, y: 0.15625, z: 0}
+    untrimmedBoundsDataExtents: {x: 0.8125, y: 0.3125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0.8125, y: 0, z: 0}
+    - {x: 0, y: 0.3125, z: 0}
+    - {x: 0.8125, y: 0.3125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 0.8125, y: 0, z: 0}
+    position2: {x: 0, y: 0.3125, z: 0}
+    position3: {x: 0.8125, y: 0.3125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.81250393, y: 0.7070352}
+    - {x: 0.8632773, y: 0.7070352}
+    - {x: 0.81250393, y: 0.72655857}
+    - {x: 0.8632773, y: 0.72655857}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: ac69e3ee561bf1c4da1f78319d792b54, type: 2}
+    materialId: 0
+    sourceTextureGUID: f0cdeb1f3e5e5ab4bb9df3550f6e512d
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: pointgunknown_projectile_003
+    boundsData:
+    - {x: 0.03125, y: -0.03125, z: 0}
+    - {x: 1.4375, y: 0.6875, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.03125, y: -0.03125, z: 0}
+    - {x: 1.4375, y: 0.6875, z: 0}
+    boundsDataCenter: {x: 0.03125, y: -0.03125, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 0.6875, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.03125, y: -0.03125, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 0.6875, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: -0.6875, y: -0.375, z: 0}
+    - {x: 0.75, y: -0.375, z: 0}
+    - {x: -0.6875, y: 0.3125, z: 0}
+    - {x: 0.75, y: 0.3125, z: 0}
+    position0: {x: -0.6875, y: -0.375, z: 0}
+    position1: {x: 0.75, y: -0.375, z: 0}
+    position2: {x: -0.6875, y: 0.3125, z: 0}
+    position3: {x: 0.75, y: 0.3125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.6679727, y: 0.5039102}
+    - {x: 0.75780857, y: 0.5039102}
+    - {x: 0.6679727, y: 0.54687107}
+    - {x: 0.75780857, y: 0.54687107}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: ac69e3ee561bf1c4da1f78319d792b54, type: 2}
+    materialId: 0
+    sourceTextureGUID: bd4fddb091c23e84a98ec26922795b79
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 0
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: pointgunknown_projectile_002
+    boundsData:
+    - {x: 0.03125, y: -0.03125, z: 0}
+    - {x: 1.4375, y: 0.6875, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.03125, y: -0.03125, z: 0}
+    - {x: 1.4375, y: 0.6875, z: 0}
+    boundsDataCenter: {x: 0.03125, y: -0.03125, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 0.6875, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.03125, y: -0.03125, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 0.6875, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: -0.6875, y: -0.375, z: 0}
+    - {x: 0.75, y: -0.375, z: 0}
+    - {x: -0.6875, y: 0.3125, z: 0}
+    - {x: 0.75, y: 0.3125, z: 0}
+    position0: {x: -0.6875, y: -0.375, z: 0}
+    position1: {x: 0.75, y: -0.375, z: 0}
+    position2: {x: -0.6875, y: 0.3125, z: 0}
+    position3: {x: 0.75, y: 0.3125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.78125393, y: 0.5039102}
+    - {x: 0.8710898, y: 0.5039102}
+    - {x: 0.78125393, y: 0.54687107}
+    - {x: 0.8710898, y: 0.54687107}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: ac69e3ee561bf1c4da1f78319d792b54, type: 2}
+    materialId: 0
+    sourceTextureGUID: 3e79002b5722e994d80728c11c3c1eac
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 0
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: pointgunknown_projectile_006
+    boundsData:
+    - {x: 0.03125, y: -0.03125, z: 0}
+    - {x: 1.4375, y: 0.6875, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.03125, y: -0.03125, z: 0}
+    - {x: 1.4375, y: 0.6875, z: 0}
+    boundsDataCenter: {x: 0.03125, y: -0.03125, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 0.6875, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.03125, y: -0.03125, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 0.6875, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: -0.6875, y: -0.375, z: 0}
+    - {x: 0.75, y: -0.375, z: 0}
+    - {x: -0.6875, y: 0.3125, z: 0}
+    - {x: 0.75, y: 0.3125, z: 0}
+    position0: {x: -0.6875, y: -0.375, z: 0}
+    position1: {x: 0.75, y: -0.375, z: 0}
+    position2: {x: -0.6875, y: 0.3125, z: 0}
+    position3: {x: 0.75, y: 0.3125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.8945352, y: 0.5039102}
+    - {x: 0.98437107, y: 0.5039102}
+    - {x: 0.8945352, y: 0.54687107}
+    - {x: 0.98437107, y: 0.54687107}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: ac69e3ee561bf1c4da1f78319d792b54, type: 2}
+    materialId: 0
+    sourceTextureGUID: 3ecc32b742d000f41a17eff50e7a82e0
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 0
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: pointgunknown_projectile_004
+    boundsData:
+    - {x: 0.03125, y: -0.03125, z: 0}
+    - {x: 1.4375, y: 0.6875, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.03125, y: -0.03125, z: 0}
+    - {x: 1.4375, y: 0.6875, z: 0}
+    boundsDataCenter: {x: 0.03125, y: -0.03125, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 0.6875, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.03125, y: -0.03125, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 0.6875, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: -0.6875, y: -0.375, z: 0}
+    - {x: 0.75, y: -0.375, z: 0}
+    - {x: -0.6875, y: 0.3125, z: 0}
+    - {x: 0.75, y: 0.3125, z: 0}
+    position0: {x: -0.6875, y: -0.375, z: 0}
+    position1: {x: 0.75, y: -0.375, z: 0}
+    position2: {x: -0.6875, y: 0.3125, z: 0}
+    position3: {x: 0.75, y: 0.3125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.6679727, y: 0.57031643}
+    - {x: 0.75780857, y: 0.57031643}
+    - {x: 0.6679727, y: 0.6132773}
+    - {x: 0.75780857, y: 0.6132773}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: ac69e3ee561bf1c4da1f78319d792b54, type: 2}
+    materialId: 0
+    sourceTextureGUID: b5993cb5daab58a4e95cacff283a6375
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 0
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: pointgunknown_projectile_001
+    boundsData:
+    - {x: 0.03125, y: -0.03125, z: 0}
+    - {x: 1.4375, y: 0.6875, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.03125, y: -0.03125, z: 0}
+    - {x: 1.4375, y: 0.6875, z: 0}
+    boundsDataCenter: {x: 0.03125, y: -0.03125, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 0.6875, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.03125, y: -0.03125, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 0.6875, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: -0.6875, y: -0.375, z: 0}
+    - {x: 0.75, y: -0.375, z: 0}
+    - {x: -0.6875, y: 0.3125, z: 0}
+    - {x: 0.75, y: 0.3125, z: 0}
+    position0: {x: -0.6875, y: -0.375, z: 0}
+    position1: {x: 0.75, y: -0.375, z: 0}
+    position2: {x: -0.6875, y: 0.3125, z: 0}
+    position3: {x: 0.75, y: 0.3125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.78125393, y: 0.57031643}
+    - {x: 0.8710898, y: 0.57031643}
+    - {x: 0.78125393, y: 0.6132773}
+    - {x: 0.8710898, y: 0.6132773}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: ac69e3ee561bf1c4da1f78319d792b54, type: 2}
+    materialId: 0
+    sourceTextureGUID: b86cd040bde8e194cab2229fc1d5afbc
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 0
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: pointgunknown_projectile_005
+    boundsData:
+    - {x: 0.03125, y: -0.03125, z: 0}
+    - {x: 1.4375, y: 0.6875, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.03125, y: -0.03125, z: 0}
+    - {x: 1.4375, y: 0.6875, z: 0}
+    boundsDataCenter: {x: 0.03125, y: -0.03125, z: 0}
+    boundsDataExtents: {x: 1.4375, y: 0.6875, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.03125, y: -0.03125, z: 0}
+    untrimmedBoundsDataExtents: {x: 1.4375, y: 0.6875, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: -0.6875, y: -0.375, z: 0}
+    - {x: 0.75, y: -0.375, z: 0}
+    - {x: -0.6875, y: 0.3125, z: 0}
+    - {x: 0.75, y: 0.3125, z: 0}
+    position0: {x: -0.6875, y: -0.375, z: 0}
+    position1: {x: 0.75, y: -0.375, z: 0}
+    position2: {x: -0.6875, y: 0.3125, z: 0}
+    position3: {x: 0.75, y: 0.3125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.8945352, y: 0.57031643}
+    - {x: 0.98437107, y: 0.57031643}
+    - {x: 0.8945352, y: 0.6132773}
+    - {x: 0.98437107, y: 0.6132773}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: ac69e3ee561bf1c4da1f78319d792b54, type: 2}
+    materialId: 0
+    sourceTextureGUID: 7a2ac45ed89388f47a6061d5abb82c0b
     extractRegion: 0
     regionX: 0
     regionY: 0
@@ -1864,7 +5320,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 17b20ffda14744e49b35008e7b93914d, type: 3}
   pngTextures: []
   materialPngTextureId: 00000000
-  textureFilterMode: 1
+  textureFilterMode: 0
   textureMipMaps: 0
   allowMultipleAtlases: 0
   spriteCollectionGUID: fc93f10d55b1b2b40b09741ea58091b7
@@ -1873,7 +5329,7 @@ MonoBehaviour:
   loadable: 0
   invOrthoSize: 2
   halfTargetHeight: 8
-  buildKey: 838543749
+  buildKey: 1861626395
   dataGuid: 9e0c5023f18d4b346a3bf011a98cf1ee
   managedSpriteCollection: 0
   hasPlatformData: 0

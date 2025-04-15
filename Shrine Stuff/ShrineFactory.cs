@@ -206,19 +206,29 @@ namespace GungeonAPI
 				customShrineController.acceptText = this.acceptText;
 				customShrineController.declineText = this.declineText;
 				customShrineController.HasRoomIcon = HasRoomIcon;
-				if (!string.IsNullOrEmpty(RoomIconSpritePath))
+
+				if(roomIcon == null)
 				{
-					GameObject OptionalMinimapIcon = SpriteBuilder.SpriteFromResource(RoomIconSpritePath);
-					UnityEngine.Object.DontDestroyOnLoad(OptionalMinimapIcon);
-					FakePrefab.MarkAsFakePrefab(OptionalMinimapIcon);
-					OptionalMinimapIcon.SetActive(false);
-					customShrineController.roomIcon = OptionalMinimapIcon;
-				}
+
+                    if (!string.IsNullOrEmpty(RoomIconSpritePath))
+                    {
+                        GameObject OptionalMinimapIcon = SpriteBuilder.SpriteFromResource(RoomIconSpritePath);
+                        UnityEngine.Object.DontDestroyOnLoad(OptionalMinimapIcon);
+                        FakePrefab.MarkAsFakePrefab(OptionalMinimapIcon);
+                        OptionalMinimapIcon.SetActive(false);
+                        customShrineController.roomIcon = OptionalMinimapIcon;
+                    }
+                    else
+                    {
+                        customShrineController.roomIcon = (GameObject)BraveResources.Load("Global Prefabs/Minimap_Shrine_Icon", ".prefab");
+
+                    }
+                }
 				else
 				{
-					customShrineController.roomIcon = (GameObject)BraveResources.Load("Global Prefabs/Minimap_Shrine_Icon", ".prefab");
+					customShrineController.roomIcon = roomIcon;
 
-				}
+                }
 				bool flag3 = this.interactableComponent != null;
 				bool flag4 = flag3;
 
@@ -488,23 +498,31 @@ namespace GungeonAPI
 				customShrineController.acceptText = this.acceptText;
 				customShrineController.declineText = this.declineText;
 				customShrineController.HasRoomIcon = HasRoomIcon;
-				if (!string.IsNullOrEmpty(RoomIconSpritePath))
+
+                if (roomIcon == null)
 				{
-					GameObject OptionalMinimapIcon = SpriteBuilder.SpriteFromResource(RoomIconSpritePath);
-					UnityEngine.Object.DontDestroyOnLoad(OptionalMinimapIcon);
-					FakePrefab.MarkAsFakePrefab(OptionalMinimapIcon);
-					OptionalMinimapIcon.SetActive(false);
+                    if (!string.IsNullOrEmpty(RoomIconSpritePath))
+                    {
+                        GameObject OptionalMinimapIcon = SpriteBuilder.SpriteFromResource(RoomIconSpritePath);
+                        UnityEngine.Object.DontDestroyOnLoad(OptionalMinimapIcon);
+                        FakePrefab.MarkAsFakePrefab(OptionalMinimapIcon);
+                        OptionalMinimapIcon.SetActive(false);
 
-					customShrineController.roomIcon = OptionalMinimapIcon;
-				}
-				else
-				{
-					customShrineController.roomIcon = (GameObject)BraveResources.Load("Global Prefabs/Minimap_Shrine_Icon", ".prefab");
+                        customShrineController.roomIcon = OptionalMinimapIcon;
+                    }
+                    else
+                    {
+                        customShrineController.roomIcon = (GameObject)BraveResources.Load("Global Prefabs/Minimap_Shrine_Icon", ".prefab");
 
-				}
+                    }
+                }
+                else
+                {
+                    customShrineController.roomIcon = roomIcon;
 
+                }
 
-				if (shadowPath != null)
+                if (shadowPath != null)
 				{
 					GameObject shadowObject = SpriteBuilder.SpriteFromResource(shadowPath, null, false);
 					shadowObject.name = "Shadow_" + name;
@@ -588,10 +606,8 @@ namespace GungeonAPI
 				Transform transform = new GameObject("talkpoint").transform;
 				transform.position = gameObject.transform.position + this.talkPointOffset;
 				transform.SetParent(gameObject.transform);
-				bool flag = !this.usesCustomColliderOffsetAndSize;
-				bool flag2 = flag;
-				bool flag3 = flag2;
-				if (flag3)
+
+				if (!this.usesCustomColliderOffsetAndSize)
 				{
 					IntVector2 intVector = new IntVector2(textureFromResource.width, textureFromResource.height);
 					this.colliderOffset = new IntVector2(0, 0);
@@ -627,10 +643,8 @@ namespace GungeonAPI
 				}
 
 
-				bool flag4 = this.interactableComponent == null;
-				bool flag5 = flag4;
-				bool flag6 = flag5;
-				if (flag6)
+
+				if (this.interactableComponent == null)
 				{
 					SimpleShrine simpleShrine = gameObject.AddComponent<SimpleShrine>();
 					simpleShrine.isToggle = this.isToggle;
@@ -767,18 +781,15 @@ namespace GungeonAPI
 
 		public static void PlaceBreachShrines()
 		{
-			bool flag = ShrineFactory.m_builtShrines;
-			bool flag2 = !flag;
-			if (flag2)
+
+			if (ShrineFactory.m_builtShrines == false)
 			{
 				foreach (GameObject gameObject in ShrineFactory.registeredShrines.Values)
 				{
 					try
 					{
 						ShrineFactory.CustomShrineController component = gameObject.GetComponent<ShrineFactory.CustomShrineController>();
-						bool flag3 = !component.isBreachShrine;
-						bool flag4 = !flag3;
-						if (flag4)
+						if (component.isBreachShrine)
 						{
 							ShrineFactory.CustomShrineController component2 = UnityEngine.Object.Instantiate<GameObject>(gameObject).GetComponent<ShrineFactory.CustomShrineController>();
 							component2.Copy(component);
@@ -793,9 +804,7 @@ namespace GungeonAPI
 								((SimpleInteractable)component3).OnDecline = component2.OnDecline;
 								((SimpleInteractable)component3).CanUse = component2.CanUse;
 							}
-							bool flag7 = !RoomHandler.unassignedInteractableObjects.Contains(component3);
-							bool flag8 = flag7;
-							if (flag8)
+							if (!RoomHandler.unassignedInteractableObjects.Contains(component3))
 							{
 								RoomHandler.unassignedInteractableObjects.Add(component3);
 							}
@@ -895,6 +904,7 @@ namespace GungeonAPI
 					component.declineText = this.declineText;
 					component.roomIcon = this.roomIcon;
 					component.HasRoomIcon = this.HasRoomIcon;
+					component.roomIcon = this.roomIcon;
 				}
 			}
 

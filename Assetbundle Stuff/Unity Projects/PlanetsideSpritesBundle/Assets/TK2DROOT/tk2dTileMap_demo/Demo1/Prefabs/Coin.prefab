@@ -100,6 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fac570381f34f647b768dc5a5aa1364, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CachedPerpState: 2
   collection: {fileID: 11400000, guid: f5e64bab9902aaa4593a2652b8552744, type: 2}
   _color: {r: 1, g: 1, b: 1, a: 1}
   _scale: {x: 0.5, y: 0.5, z: 0.5}

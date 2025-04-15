@@ -1,7 +1,9 @@
 ﻿using Brave.BulletScript;
 using Dungeonator;
 using Gungeon;
+using HutongGames.PlayMaker.Actions;
 using ItemAPI;
+using Planetside.EnemySetupCode.EnemyRelatedStuff.Behavior_Stuff;
 using SaveAPI;
 using System;
 //using DirectionType = DirectionalAnimation.DirectionType;
@@ -66,10 +68,11 @@ namespace Planetside
 
                 companion.aiActor.specRigidbody.CollideWithOthers = true;
 				companion.aiActor.specRigidbody.CollideWithTileMap = true;
-				companion.aiActor.PreventFallingInPitsEver = true;
+				companion.aiActor.PreventFallingInPitsEver = false;
 				companion.aiActor.healthHaver.ForceSetCurrentHealth(450f);
 				companion.aiActor.healthHaver.SetHealthMaximum(450f);
 				companion.aiActor.SetIsFlying(true, "Gamemode: Creative", true, true);
+				companion.aiActor.PathableTiles = CellTypes.FLOOR | CellTypes.PIT;
 				companion.aiActor.CollisionKnockbackStrength = 0f;
 				companion.aiActor.CanTargetPlayers = true;
 				companion.aiActor.procedurallyOutlined = true;
@@ -98,10 +101,10 @@ namespace Planetside
 					BagleUseFirstFrameOnly = false,
 					SpecifyBagelFrame = string.Empty,
 					BagelColliderNumber = 0,
-					ManualOffsetX = 8,
-					ManualOffsetY = 11,
-					ManualWidth = 50,
-					ManualHeight = 50,
+					ManualOffsetX = 4,
+					ManualOffsetY = 7,
+					ManualWidth = 58,
+					ManualHeight = 58,
 					ManualDiameter = 0,
 					ManualLeftX = 0,
 					ManualLeftY = 0,
@@ -117,10 +120,10 @@ namespace Planetside
 					BagleUseFirstFrameOnly = false,
 					SpecifyBagelFrame = string.Empty,
 					BagelColliderNumber = 0,
-					ManualOffsetX = 8,
-					ManualOffsetY = 11,
-					ManualWidth = 50,
-					ManualHeight = 50,
+					ManualOffsetX = 4,
+					ManualOffsetY = 7,
+					ManualWidth = 58,
+					ManualHeight = 58,
 					ManualDiameter = 0,
 					ManualLeftX = 0,
 					ManualLeftY = 0,
@@ -774,15 +777,16 @@ namespace Planetside
 						AttackBehaviors = new List<AttackBehaviorBase>()
 						{
 
-						new ChargeBehavior()
+						new ModifiedChargeBehavior()
 						{
 						InitialCooldown = 1,
 						chargeAcceleration = 75,
 						chargeSpeed = 45,
-						maxChargeDistance = -1,
+						maxChargeDistance = 100,
 						bulletScript = new CustomBulletScriptSelector(typeof(ChargeAttack2Attack)),
 						ShootPoint = shootpoint1,
-						chargeDamage = 0.5f,
+                                                endWhenChargeAnimFinishes = false,
+                        chargeDamage = 0.5f,
 						chargeKnockback = 100,
 						collidesWithDodgeRollingPlayers = false,
 						primeAnim = "dashprime",
@@ -793,16 +797,18 @@ namespace Planetside
 						wallRecoilForce = 100,
 						AttackCooldown = 0f,
 						Cooldown = 0,
+						endOnWallCollision = true
 						},
-						new ChargeBehavior()
+						new ModifiedChargeBehavior()
 						{
 						InitialCooldown = 0,
 						chargeAcceleration = 75,
 						chargeSpeed = 45,
-						maxChargeDistance = -1,
+						maxChargeDistance = 100,
 						bulletScript = new CustomBulletScriptSelector(typeof(ChargeAttack2Attack)),
 						ShootPoint = shootpoint1,
-						chargeDamage = 0.5f,
+                                                endWhenChargeAnimFinishes = false,
+                        chargeDamage = 0.5f,
 						chargeKnockback = 100,
 						collidesWithDodgeRollingPlayers = false,
 						primeAnim = "dashprime",
@@ -812,7 +818,8 @@ namespace Planetside
 						stoppedByProjectiles = false,
 						wallRecoilForce = 100,
 						AttackCooldown = 0.5f,
-						Cooldown = 12,
+						Cooldown = 9,
+						endOnWallCollision = true
 						},
 						}
 
@@ -829,13 +836,14 @@ namespace Planetside
                         AttackBehaviors = new List<AttackBehaviorBase>()
                         {
 
-                        new ChargeBehavior()
+                        new ModifiedChargeBehavior()
                         {
                         InitialCooldown = 1,
                         chargeAcceleration = 75,
                         chargeSpeed = 45,
-                        maxChargeDistance = -1,
+                        maxChargeDistance = 100,
                         bulletScript = new CustomBulletScriptSelector(typeof(ChargeAttack2Attack)),
+                                                endWhenChargeAnimFinishes = false,
                         ShootPoint = shootpoint1,
                         chargeDamage = 0.5f,
                         chargeKnockback = 100,
@@ -848,15 +856,18 @@ namespace Planetside
                         wallRecoilForce = 100,
                         AttackCooldown = 0f,
                         Cooldown = 0,
+						endOnWallCollision = true
                         },
-                        new ChargeBehavior()
+                        new ModifiedChargeBehavior()
                         {
                         InitialCooldown = 0,
                         chargeAcceleration = 75,
                         chargeSpeed = 45,
-                        maxChargeDistance = -1,
+                        maxChargeDistance = 100,
                         bulletScript = new CustomBulletScriptSelector(typeof(ChargeAttack2Attack)),
                         ShootPoint = shootpoint1,
+                        endWhenChargeAnimFinishes = false,
+
                         chargeDamage = 0.5f,
                         chargeKnockback = 100,
                         collidesWithDodgeRollingPlayers = false,
@@ -867,16 +878,18 @@ namespace Planetside
                         stoppedByProjectiles = false,
                         wallRecoilForce = 100,
                         AttackCooldown = 0.5f,
-                        Cooldown = 12,
+                        Cooldown = 0,
+						endOnWallCollision = true
                         },
- new ChargeBehavior()
+						new ModifiedChargeBehavior()
                         {
                         InitialCooldown = 0,
                         chargeAcceleration = 75,
                         chargeSpeed = 45,
-                        maxChargeDistance = -1,
+                        maxChargeDistance = 100,
                         bulletScript = new CustomBulletScriptSelector(typeof(ChargeAttack2Attack)),
                         ShootPoint = shootpoint1,
+                                                endWhenChargeAnimFinishes = false,
                         chargeDamage = 0.5f,
                         chargeKnockback = 100,
                         collidesWithDodgeRollingPlayers = false,
@@ -887,7 +900,8 @@ namespace Planetside
                         stoppedByProjectiles = false,
                         wallRecoilForce = 100,
                         AttackCooldown = 0.5f,
-                        Cooldown = 12,
+                        Cooldown = 10,
+						endOnWallCollision = true
                         },
                         }
 
@@ -902,8 +916,8 @@ namespace Planetside
 					Behavior = new CustomDashBehavior{
 					//dashAnim = "wail",
 					ShootPoint = shootpoint1,
-					dashDistance = 17f,
-					dashTime = 0.7f,
+					dashDistance = 19f,
+					dashTime = 0.8f,
 					AmountOfDashes = 2,
 					WaitTimeBetweenDashes = 0f,
 					enableShadowTrail = false,
@@ -912,7 +926,7 @@ namespace Planetside
 					warpDashAnimLength = true,
 					hideShadow = true,
 					fireAtDashStart = true,
-					InitialCooldown = 3f,
+					InitialCooldown = 2f,
 					AttackCooldown = 0f,
 					bulletScript = new CustomBulletScriptSelector(typeof(DashAttack)),
 					RequiresLineOfSight = false,
@@ -992,13 +1006,14 @@ namespace Planetside
 					new AttackBehaviorGroup.AttackGroupItem()
 					{
 					Probability = 1,
-					Behavior = new ChargeBehavior{
+					Behavior = new ModifiedChargeBehavior{
 						InitialCooldown = 1,
 						chargeAcceleration = -1,
 						chargeSpeed = 35,
-						maxChargeDistance = -1,
+						maxChargeDistance = 100,
 						bulletScript = new CustomBulletScriptSelector(typeof(ChargeAttack1Attack)),
 						ShootPoint = shootpoint1,
+						endWhenChargeAnimFinishes = false,
 						chargeDamage = 0.5f,
 						chargeKnockback = 100,
 						collidesWithDodgeRollingPlayers = false,
@@ -1009,8 +1024,8 @@ namespace Planetside
 						stoppedByProjectiles = false,
 						wallRecoilForce = 50,
 						AttackCooldown = 1.5f,
-						Cooldown = 2,
-
+						Cooldown = 3,
+						endOnWallCollision = true
 					},
 					NickName = "Phase 1 CHrge"
 					},
@@ -1026,7 +1041,7 @@ namespace Planetside
 							LeadAmount = 0,
 							StopDuring = ShootBehavior.StopType.Attack,
 							AttackCooldown = 1f,
-							Cooldown = 9f,
+							Cooldown = 8f,
 							RequiresLineOfSight = true,
 							ShootPoint = shootpoint1,
 							CooldownVariance = 0f,
@@ -1097,11 +1112,11 @@ namespace Planetside
 						Range = 100,
 						RequiresLineOfSight = false,
 						},
-						 new ChargeBehavior{
+						 new ModifiedChargeBehavior{
 						InitialCooldown = 0,
 						chargeAcceleration = 60,
 						chargeSpeed = 40f,
-						maxChargeDistance = -1,
+						maxChargeDistance = 100,
 						bulletScript = new CustomBulletScriptSelector(typeof(FakeOutCharge2)),
 						ShootPoint = shootpoint1,
 						chargeDamage = 0.5f,
@@ -1116,6 +1131,7 @@ namespace Planetside
 						AttackCooldown = 0.25f,
 						wallRecoilForce = 50,
 						Range = 100,
+						endOnWallCollision = true
 
 						},
 
@@ -1177,11 +1193,11 @@ namespace Planetside
 					new AttackBehaviorGroup.AttackGroupItem()
 					{
 					Probability = 0f,
-					Behavior = new ChargeBehavior{
+					Behavior = new ModifiedChargeBehavior{
 						InitialCooldown = 1,
 						chargeAcceleration = -1,
 						chargeSpeed = 25f,
-						maxChargeDistance = -1,
+						maxChargeDistance = 100,
 						bulletScript = new CustomBulletScriptSelector(typeof(FakeOutCharge)),
 						ShootPoint = shootpoint1,
 						chargeDamage = 0.5f,
@@ -1196,7 +1212,7 @@ namespace Planetside
 						AttackCooldown = 0.25f,
 						wallRecoilForce = 50,
 						Range = 10,
-
+						endOnWallCollision = true
 					},
 					NickName = "Phase 2 CHrge"
 					},
@@ -1606,7 +1622,7 @@ namespace Planetside
 				};
 				base.healthHaver.healthHaver.OnDeath += (obj) =>
 				{
-					float itemsToSpawn = UnityEngine.Random.Range(2, 5);
+					float itemsToSpawn = UnityEngine.Random.Range(2, 6);
 					float spewItemDir = 360 / itemsToSpawn;
 					for (int i = 0; i < itemsToSpawn; i++)
 					{
@@ -1614,8 +1630,7 @@ namespace Planetside
 						LootEngine.SpawnItem(PickupObjectDatabase.GetById(id).gameObject, base.aiActor.sprite.WorldCenter, new Vector2((spewItemDir * itemsToSpawn) * i, spewItemDir * itemsToSpawn), 2.2f, false, true, false);
 					}
 
-					float value = UnityEngine.Random.Range(0.00f, 1.00f);
-					if (value <= 0.4f)
+					if (UnityEngine.Random.Range(0.00f, 1.00f) <= 0.4f)
 					{
 						Chest chest2 = GameManager.Instance.RewardManager.SpawnTotallyRandomChest(GameManager.Instance.PrimaryPlayer.CurrentRoom.GetRandomVisibleClearSpot(1, 1));
 						chest2.IsLocked = false;
@@ -1624,7 +1639,7 @@ namespace Planetside
 					AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.DEFEAT_ANNIHICHAMBER, true);
 
 
-				}; ;
+				};
 				this.aiActor.knockbackDoer.SetImmobile(true, "nope.");
 
 			}
@@ -1832,10 +1847,10 @@ namespace Planetside
 						component2.renderer.gameObject.layer = 22;
 						component2.dimensions = new Vector2(1000f, 1f);
 						component2.UpdateZDepth();
-						if (elapsed > 0.75f)
+						if (elapsed > 0.625f)
 						{
-							bool en = elapsed % 0.25f > 0.125f;
-							component2.renderer.enabled = en;
+                            bool en = elapsed % 0.125 < 0.0625;
+                            component2.renderer.enabled = en;
 						}
 					}
 					elapsed += BraveTime.DeltaTime;
@@ -1882,9 +1897,9 @@ namespace Planetside
 						component2.renderer.gameObject.layer = 22;
 						component2.dimensions = new Vector2(1000f, 1f);
 						component2.UpdateZDepth();
-						if (elapsed > 1)
+						if (elapsed > 0.75f)
 						{
-							bool en = elapsed % 0.2 == 0.1;
+							bool en = elapsed % 0.15f < 0.075f;
 							component2.renderer.enabled = en;
 						}
 					}
@@ -2071,7 +2086,7 @@ namespace Planetside
 
                 base.EndOnBlank = true;
                 AnnihiChamberTongue.HandBullet handBullet = null;
-                handBullet = this.FireVolley((float)(35));
+                handBullet = this.FireVolley((float)(42.5f));
 
                 while (!handBullet.HasTrulyStopped)
                 {
@@ -2241,7 +2256,7 @@ namespace Planetside
 
                 public IEnumerator DoPullShort()
                 {
-                    yield return base.Wait(60);
+                    yield return base.Wait(30);
                     float direction = (this.Position - this.m_parentScript.Position).ToAngle();
 					Vector2 Self = this.Position;
                     int h = 0;
@@ -2250,15 +2265,15 @@ namespace Planetside
                         h++;
 
 						this.Position = Vector2.Lerp(Self, m_parentScript.Position, Vector2.Distance(this.Position, m_parentScript.Position) / Vector2.Distance(Self, m_parentScript.Position) / 50);
-                        this.BulletBank.aiActor.specRigidbody.Velocity += MathToolbox.GetUnitOnCircle(direction, (5 + h)/2);
+                        this.BulletBank.aiActor.specRigidbody.Velocity += MathToolbox.GetUnitOnCircle(direction, (9f + (float)h)/2f);
                         yield return null;
                     }
                     AkSoundEngine.PostEvent("Play_BOSS_lichC_swing_03", this.BulletBank.gameObject);
                     base.Fire(Offset.OverridePosition(this.m_parentScript.Position), new Direction(0, DirectionType.Aim, -1f), new Speed(8f, SpeedType.Absolute), new Skull());
-                    for (int i = 3; i < 4; i++)
+                    for (int i = 0; i < 16; i++)
                     {
-                        base.Fire(Offset.OverridePosition(this.m_parentScript.Position), new Direction(30 * i, DirectionType.Aim, -1f), new Speed(4f, SpeedType.Absolute), new SpeedChangingBullet("teeth_wave", 15, 120));
-                        base.Fire(Offset.OverridePosition(this.m_parentScript.Position), new Direction(30 * i, DirectionType.Aim, -1f), new Speed(8f, SpeedType.Absolute), new SpeedChangingBullet("teeth_wave", 11, 90));
+                        base.Fire(Offset.OverridePosition(this.m_parentScript.Position), new Direction(22.5f * i, DirectionType.Aim, -1f), new Speed(4f, SpeedType.Absolute), new SpeedChangingBullet("teeth_wave", 19, 120));
+                        base.Fire(Offset.OverridePosition(this.m_parentScript.Position), new Direction((22.5f * i) + 7.5f, DirectionType.Aim, -1f), new Speed(8f, SpeedType.Absolute), new SpeedChangingBullet("teeth_wave", 14, 90));
                     }
 
                     HasTrulyStopped = true;
@@ -2278,21 +2293,24 @@ namespace Planetside
                     float direction = (this.Position - this.m_parentScript.Position).ToAngle();
 
 					int h = 0;
-					while (Vector2.Distance(this.Position, m_parentScript.Position) > 3)
+					while (Vector2.Distance(this.Position, m_parentScript.Position) > 4)
 					{
 						h++;
-                        this.BulletBank.aiActor.specRigidbody.Velocity += MathToolbox.GetUnitOnCircle(direction, (5 + h) / 1.4f);
+                        this.BulletBank.aiActor.specRigidbody.Velocity += MathToolbox.GetUnitOnCircle(direction, (9 + h) / 1.4f);
 						yield return null;
                     }
                     AkSoundEngine.PostEvent("Play_RockBreaking", base.BulletBank.aiActor.gameObject);
                     Exploder.DoDistortionWave(this.m_parentScript.Position, 5, 0.15f, 20, 0.5f);
 
-                    for (int i = 0; i < 12; i++)
+                    for (int i = 0; i < 20; i++)
                     {
-                        base.Fire(Offset.OverridePosition(this.m_parentScript.Position), new Direction(30 * i, DirectionType.Aim, -1f), new Speed(4f, SpeedType.Absolute), new SpeedChangingBullet("teeth_wave", 12, 120));
-                        base.Fire(Offset.OverridePosition(this.m_parentScript.Position), new Direction((30 * i)+15f, DirectionType.Aim, -1f), new Speed(6f, SpeedType.Absolute), new SpeedChangingBullet("teeth_wave", 14, 120));
-                        base.Fire(Offset.OverridePosition(this.m_parentScript.Position), new Direction(30 * i, DirectionType.Aim, -1f), new Speed(10f, SpeedType.Absolute), new SpeedChangingBullet("teeth_wave", 7, 120));
+                        base.Fire(Offset.OverridePosition(this.m_parentScript.Position), new Direction(18 * i, DirectionType.Aim, -1f), new Speed(4f, SpeedType.Absolute), new SpeedChangingBullet("teeth_wave", 16, 120));
+                        base.Fire(Offset.OverridePosition(this.m_parentScript.Position), new Direction((18 * i)+10f, DirectionType.Aim, -1f), new Speed(6f, SpeedType.Absolute), new SpeedChangingBullet("teeth_wave", 24, 90));
+                        base.Fire(Offset.OverridePosition(this.m_parentScript.Position), new Direction((18 * i) + 20f, DirectionType.Aim, -1f), new Speed(12f, SpeedType.Absolute), new SpeedChangingBullet("teeth_wave", 5, 180));
                     }
+
+
+
                     HasTrulyStopped = true;
                     base.Vanish(false);
                     yield break;
@@ -2373,17 +2391,20 @@ namespace Planetside
 			public override IEnumerator Top()
 			{
 
-				float floatDirection = base.AimDirection + UnityEngine.Random.Range(25f, -25f);
+				float floatDirection = base.AimDirection + UnityEngine.Random.Range(30f, -30f);
 				Vector2 floatVelocity = BraveMathCollege.DegreesToVector(floatDirection, 5f);
 				base.PostWwiseEvent("Play_BOSS_doormimic_vomit_01", null);
 
-				for (int j = 0; j < 10; j++)
+				for (int j = 0; j < 12; j++)
 				{
-					this.Fire(new Direction(this.SubdivideCircle(0, 10, j, 1f, false), DirectionType.Aim, -1f), new Speed(6f, SpeedType.Absolute), new DashAttack.BurstBullet(floatVelocity));
+					this.Fire(new Direction(this.SubdivideCircle(0, 12, j, 1f, false), DirectionType.Aim, -1f), new Speed(6.5f, SpeedType.Absolute), new DashAttack.BurstBullet(floatVelocity));
 				}
+                for (int j = 0; j < 8; j++)
+                {
+                    this.Fire(new Direction(this.SubdivideCircle(0, 8, j, 1f, false), DirectionType.Aim, -1f), new Speed(0.4f, SpeedType.Absolute), new DashAttack.BurstBullet(floatVelocity));
+                }
 
-
-				yield break;
+                yield break;
 			}
 			public class BurstBullet : Bullet
 			{
@@ -2398,7 +2419,7 @@ namespace Planetside
 					for (int i = 0; i < 300; i++)
 					{
 						this.UpdateVelocity();
-						this.Velocity += this.m_addtionalVelocity * Mathf.Min(10f, (float)i / 50f);
+						this.Velocity += this.m_addtionalVelocity * Mathf.Min(10f, (float)i / 60f);
 						this.UpdatePosition();
 						yield return this.Wait(1);
 					}
@@ -2445,15 +2466,15 @@ namespace Planetside
 		}
 		public class BigBall : Script
 		{
-            //teeth_wave
             public override IEnumerator Top()
 			{
                 for (int i = 0; i < 10; i++)
                 {
                     for (int j = 0; j < 8; j++)
                     {
-                        base.Fire(new Direction(45* j, DirectionType.Aim, -1f), new Speed(4f, SpeedType.Absolute), new Homing());
-                        base.Fire(new Direction(45f * j, DirectionType.Aim, -1f), new Speed(6f, SpeedType.Absolute), new Homing());
+                        base.Fire(new Direction(45* j, DirectionType.Aim, -1f), new Speed(4f, SpeedType.Absolute), new Homing(7));
+                        base.Fire(new Direction((45f * j)+2f, DirectionType.Aim, -1f), new Speed(2f, SpeedType.Absolute), new Homing(10));
+                        base.Fire(new Direction((45f * j) - 2f, DirectionType.Aim, -1f), new Speed(2f, SpeedType.Absolute), new Homing(10));
                     }
                     yield return base.Wait(75);
                 }
@@ -2462,12 +2483,17 @@ namespace Planetside
 
             public class Homing : Bullet
 			{
-                public Homing() : base("teeth_wave", false, false, true)
+				public float nextValue;
+                public Homing(float nextValue) : base("teeth_wave", false, false, true)
                 {
+                   
+                    this.nextValue = nextValue;
                 }
                 public override IEnumerator Top()
 				{
-                    base.ChangeSpeed(new Speed(10, SpeedType.Absolute), 180);
+                    yield return base.Wait(15);
+                    base.ChangeSpeed(new Speed(nextValue, SpeedType.Absolute), 75);
+                    yield return base.Wait(75);
                     yield break;
 				}
             }
@@ -2564,16 +2590,19 @@ namespace Planetside
 				bool t = false;
 				for (; ; )
 				{
-					if (i % 4 == 1)
+					if (i % 4 == 0)
 					{
 						t = !t;
-						Vector2 Point1 = MathToolbox.GetUnitOnCircle(fard + 90, 1.4f);
-						Vector2 Point2 = MathToolbox.GetUnitOnCircle(fard - 90, 1.4f);
-						int wait = t == true ? 75 : 150;
+						Vector2 Point1 = MathToolbox.GetUnitOnCircle(fard + 90, 1.66f);
+						Vector2 Point2 = MathToolbox.GetUnitOnCircle(fard - 90, 1.66f);
+						int wait = t == true ? 120 : 210;
 
-						base.Fire(new Offset(Point1), new Direction(fard + 90, DirectionType.Absolute, -1f), new Speed(0, SpeedType.Absolute), new SpeedChangingBullet("teeth_football", 15, wait));
-						base.Fire(new Offset(Point2), new Direction(fard - 90, DirectionType.Absolute, -1f), new Speed(0, SpeedType.Absolute), new SpeedChangingBullet("teeth_football", 15, wait));
-					}
+						base.Fire(new Offset(Point1), new Direction(fard + 95, DirectionType.Absolute, -1f), new Speed(0, SpeedType.Absolute), new SpeedChangingBullet("teeth_football", 12, wait));
+						base.Fire(new Offset(Point2), new Direction(fard - 95, DirectionType.Absolute, -1f), new Speed(0, SpeedType.Absolute), new SpeedChangingBullet("teeth_football", 12, wait));
+
+                        base.Fire(new Offset(Point1), new Direction(fard + 85, DirectionType.Absolute, -1f), new Speed(0, SpeedType.Absolute), new SpeedChangingBullet("teeth_football", 9, wait));
+                        base.Fire(new Offset(Point2), new Direction(fard - 85, DirectionType.Absolute, -1f), new Speed(0, SpeedType.Absolute), new SpeedChangingBullet("teeth_football", 9, wait));
+                    }
 					yield return base.Wait(1);
 					i++;
 				}
@@ -2588,14 +2617,18 @@ namespace Planetside
 				int i = 0;
 				for (; ; )
 				{
-					if (i % 7 == 1)
+					if (i % 4 == 0)
 					{
-						Vector2 Point1 = MathToolbox.GetUnitOnCircle(fard + 90, 1.4f);
-						Vector2 Point2 = MathToolbox.GetUnitOnCircle(fard - 90, 1.4f);
+						Vector2 Point1 = MathToolbox.GetUnitOnCircle(fard + 90, 1.5f);
+						Vector2 Point2 = MathToolbox.GetUnitOnCircle(fard - 90, 1.5f);
 
-						base.Fire(new Offset(Point1), new Direction(fard + 90, DirectionType.Absolute, -1f), new Speed(0, SpeedType.Absolute), new SpeedChangingBullet("teeth_football", 15, 90));
-						base.Fire(new Offset(Point2), new Direction(fard - 90, DirectionType.Absolute, -1f), new Speed(0, SpeedType.Absolute), new SpeedChangingBullet("teeth_football", 15, 90));
-					}
+						base.Fire(new Offset(Point1), new Direction(fard + 105, DirectionType.Absolute, -1f), new Speed(0, SpeedType.Absolute), new SpeedChangingBullet("teeth_football", 10, 120));
+						base.Fire(new Offset(Point2), new Direction(fard - 105, DirectionType.Absolute, -1f), new Speed(0, SpeedType.Absolute), new SpeedChangingBullet("teeth_football", 10, 120));
+
+
+                        base.Fire(new Offset(Point1), new Direction(fard + 75, DirectionType.Absolute, -1f), new Speed(0, SpeedType.Absolute), new SpeedChangingBullet("teeth_football", 10, 180));
+                        base.Fire(new Offset(Point2), new Direction(fard - 75, DirectionType.Absolute, -1f), new Speed(0, SpeedType.Absolute), new SpeedChangingBullet("teeth_football", 10, 180));
+                    }
 					yield return base.Wait(1);
 					i++;
 				}
@@ -2618,7 +2651,7 @@ namespace Planetside
 					base.Fire(new Offset(MathToolbox.GetUnitOnCircle(UnityEngine.Random.Range(-180, 180), UnityEngine.Random.Range(0.125f, 0.75f)), 0f, string.Empty, DirectionType.Absolute), new Direction(aim + Mathf.SmoothStep(-50f, 50f, t), DirectionType.Absolute, -1f), new Speed(6.5f, SpeedType.Absolute), bullet);
 					base.Fire(new Offset(MathToolbox.GetUnitOnCircle(UnityEngine.Random.Range(-180, 180), UnityEngine.Random.Range(0f, 0.25f)), 0f, string.Empty, DirectionType.Absolute), new Direction(aim + Mathf.SmoothStep(-50f, 50f, t), DirectionType.Absolute, -1f), new Speed(6.5f, SpeedType.Absolute), bullet);
 
-					if (i % 10 == 0)
+					if (i % 8 == 0)
 					{
 						float Dir = UnityEngine.Random.Range(-120, 120);
 						float fard = UnityEngine.Random.Range(1, 4);
@@ -2777,12 +2810,12 @@ namespace Planetside
 
 				//float AddOn = UnityEngine.Random.value > 0.5f ? 50 : -50;
 				float newAim = Angle;
-				base.Fire(new Offset(0, 1.5f), new Direction(newAim, DirectionType.Aim, -1f), new Speed(30, SpeedType.Absolute), new FakeOut.Faker(this));
-				base.Fire(new Offset(0, -1.5f), new Direction(newAim, DirectionType.Aim, -1f), new Speed(30, SpeedType.Absolute), new FakeOut.Faker(this));
-				base.Fire(new Offset(-1.4375f, 0.75f), new Direction(newAim, DirectionType.Aim, -1f), new Speed(30, SpeedType.Absolute), new FakeOut.Faker(this));
-				base.Fire(new Offset(1.4375f, 0.75f), new Direction(newAim, DirectionType.Aim, -1f), new Speed(30, SpeedType.Absolute), new FakeOut.Faker(this));
-				base.Fire(new Offset(-1.4375f, -0.75f), new Direction(newAim, DirectionType.Aim, -1f), new Speed(30, SpeedType.Absolute), new FakeOut.Faker(this));
-				base.Fire(new Offset(1.4375f, -0.75f), new Direction(newAim, DirectionType.Aim, -1f), new Speed(30, SpeedType.Absolute), new FakeOut.Faker(this));
+				base.Fire(new Offset(0, 1.5f), new Direction(newAim, DirectionType.Aim, -1f), new Speed(20, SpeedType.Absolute), new FakeOut.Faker(this));
+				base.Fire(new Offset(0, -1.5f), new Direction(newAim, DirectionType.Aim, -1f), new Speed(20, SpeedType.Absolute), new FakeOut.Faker(this));
+				base.Fire(new Offset(-1.4375f, 0.75f), new Direction(newAim, DirectionType.Aim, -1f), new Speed(20, SpeedType.Absolute), new FakeOut.Faker(this));
+				base.Fire(new Offset(1.4375f, 0.75f), new Direction(newAim, DirectionType.Aim, -1f), new Speed(20, SpeedType.Absolute), new FakeOut.Faker(this));
+				base.Fire(new Offset(-1.4375f, -0.75f), new Direction(newAim, DirectionType.Aim, -1f), new Speed(20, SpeedType.Absolute), new FakeOut.Faker(this));
+				base.Fire(new Offset(1.4375f, -0.75f), new Direction(newAim, DirectionType.Aim, -1f), new Speed(20, SpeedType.Absolute), new FakeOut.Faker(this));
 
 
 				yield return base.Wait(30);
@@ -2845,12 +2878,12 @@ namespace Planetside
 
 				//float AddOn = UnityEngine.Random.value > 0.5f ? 50 : -50;
 				float newAim = Angle;
-				base.Fire(new Offset(0, 1.5f), new Direction(newAim, DirectionType.Aim, -1f), new Speed(30, SpeedType.Absolute), new FakeOut2.Faker(this));
-				base.Fire(new Offset(0, -1.5f), new Direction(newAim, DirectionType.Aim, -1f), new Speed(30, SpeedType.Absolute), new FakeOut2.Faker(this));
-				base.Fire(new Offset(-1.4375f, 0.75f), new Direction(newAim, DirectionType.Aim, -1f), new Speed(30, SpeedType.Absolute), new FakeOut2.Faker(this));
-				base.Fire(new Offset(1.4375f, 0.75f), new Direction(newAim, DirectionType.Aim, -1f), new Speed(30, SpeedType.Absolute), new FakeOut2.Faker(this));
-				base.Fire(new Offset(-1.4375f, -0.75f), new Direction(newAim, DirectionType.Aim, -1f), new Speed(30, SpeedType.Absolute), new FakeOut2.Faker(this));
-				base.Fire(new Offset(1.4375f, -0.75f), new Direction(newAim, DirectionType.Aim, -1f), new Speed(30, SpeedType.Absolute), new FakeOut2.Faker(this));
+				base.Fire(new Offset(0, 1.5f), new Direction(newAim, DirectionType.Aim, -1f), new Speed(20, SpeedType.Absolute), new FakeOut2.Faker(this));
+				base.Fire(new Offset(0, -1.5f), new Direction(newAim, DirectionType.Aim, -1f), new Speed(20, SpeedType.Absolute), new FakeOut2.Faker(this));
+				base.Fire(new Offset(-1.4375f, 0.75f), new Direction(newAim, DirectionType.Aim, -1f), new Speed(20, SpeedType.Absolute), new FakeOut2.Faker(this));
+				base.Fire(new Offset(1.4375f, 0.75f), new Direction(newAim, DirectionType.Aim, -1f), new Speed(20, SpeedType.Absolute), new FakeOut2.Faker(this));
+				base.Fire(new Offset(-1.4375f, -0.75f), new Direction(newAim, DirectionType.Aim, -1f), new Speed(20, SpeedType.Absolute), new FakeOut2.Faker(this));
+				base.Fire(new Offset(1.4375f, -0.75f), new Direction(newAim, DirectionType.Aim, -1f), new Speed(20, SpeedType.Absolute), new FakeOut2.Faker(this));
 
 
 				yield return base.Wait(30);
@@ -2866,8 +2899,9 @@ namespace Planetside
 				}
 				public override IEnumerator Top()
 				{
-					base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 42);
-					yield return base.Wait(42);
+                    yield return base.Wait(20);
+                    base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 10);
+					yield return base.Wait(30);
 					yield return base.Wait(UnityEngine.Random.Range(60, 270));
 					base.PostWwiseEvent("Play_BOSS_doormimic_blast_01", null);
 					float rand = UnityEngine.Random.Range(-180, 180);
@@ -3029,7 +3063,8 @@ namespace Planetside
 				}
 				public override IEnumerator Top()
 				{
-					base.ChangeSpeed(new Speed(12f, SpeedType.Absolute), 120);
+                    yield return base.Wait(60);
+                    base.ChangeSpeed(new Speed(16f, SpeedType.Absolute), 120);
 					yield break;
 				}
 			}

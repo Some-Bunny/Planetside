@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Text;
 using UnityEngine;
 using ItemAPI;
 using Gungeon;
+using Alexandria.PrefabAPI;
 
 namespace Planetside
 {
@@ -190,6 +192,7 @@ namespace Planetside
             GunFullyChargedVFX = BraveResources.Load<GameObject>("Global VFX/VFX_DBZ_Charge", ".prefab");
             DodgeRollImpactVFX = (GameObject)BraveResources.Load("Global VFX/VFX_DodgeRollHit", ".prefab");
 
+            BlackHoleImpact = (PickupObjectDatabase.GetById(169) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapHorizontal.effects.First().effects.First().effect;
 
             var machoBrace = PickupObjectDatabase.GetById(665) as MachoBraceItem;
             MachoBraceDustupVFX = machoBrace.DustUpVFX;
@@ -230,6 +233,127 @@ namespace Planetside
             FearVFX = ResourceCache.Acquire("Global VFX/VFX_Fear") as GameObject;
 
             SpookySkullVFX = (PickupObjectDatabase.GetById(45) as Gun).DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX;
+
+
+            Pixel = PrefabBuilder.BuildObject("Pixel");
+            Pixel.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
+            var sprite_pixel = Pixel.AddComponent<tk2dSprite>();
+            sprite_pixel.SetSprite(StaticSpriteDefinitions.Debuff_Sheet_Data, "pixel_create_007");
+            tk2dSpriteAnimator animator = Pixel.GetOrAddComponent<tk2dSpriteAnimator>();
+            animator.library = StaticSpriteDefinitions.VFX_Animation_Data;
+            animator.Library = StaticSpriteDefinitions.VFX_Animation_Data;
+            animator.defaultClipId = StaticSpriteDefinitions.VFX_Animation_Data.GetClipIdByName("createPixel");
+            animator.playAutomatically = true;
+
+            animator.sprite.usesOverrideMaterial = true;
+            Material mat = new Material(ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive"));
+            mat.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+            mat.SetFloat("_EmissivePower", 100);
+            mat.SetFloat("_EmissiveColorPower", 10f);
+            mat.SetColor("_OverrideColor", Color.cyan);
+            mat.SetColor("_EmissiveColor", Color.cyan);
+            mat.mainTexture = animator.sprite.renderer.material.mainTexture;
+            animator.sprite.renderer.material = mat;
+
+
+            var ParticleObject = FakePrefab.Clone(PickupObjectDatabase.GetById(597).transform.GetChild(6).transform.gameObject);
+            ParticleObject.gameObject.SetActive(true);
+            VoidParticleSystem = ParticleObject.GetComponent<ParticleSystem>();
+            //ParticleObject.gameObject.SetLayerRecursively(LayerMask.NameToLayer("Unpixelated"));
+
+            var sz = VoidParticleSystem.sizeOverLifetime;
+
+            sz.enabled = true;
+
+            AnimationCurve curve = new AnimationCurve();
+            curve.AddKey(0.0f, 0.01f);
+            curve.AddKey(0.3f, 1.0f);
+            curve.AddKey(1f, 0);
+            sz.size = new ParticleSystem.MinMaxCurve(1.5f, curve);
+
+            //SilencerVFX = (PickupObjectDatabase.GetById(499) as ReusableBlankitem).silencerVFXPrefab;
+
+        }
+        public static GameObject Pixel;
+
+        public static ParticleSystem VoidParticleSystem;
+        public static GameObject SilencerVFX;
+
+        public class PixelDisplayer
+        {
+            public PixelDisplayer(List<PixelItem> rows, bool Shuffle = false)
+            {
+                pixelRows = rows;
+                if (Shuffle)
+                {
+                    pixelRows.Shuffle();
+                }
+            }
+            public void Initialise()
+            {
+                GameManager.Instance.StartCoroutine(DoDisplay());
+            }
+
+
+            public void Clear()
+            {
+                foreach (var entry in pixelRows)
+                {
+                    if (entry.Instance)
+                    {
+                        UnityEngine.Object.Destroy(entry.Instance);
+                    }
+                }
+            }
+
+            public float TotalSpawnTime = 1;
+            public float Scale;
+            public Vector2 StartPosition;
+            public List<PixelItem> pixelRows;
+            public Action OnComplete;
+            public IEnumerator DoDisplay()
+            {
+                for (int i = 0; i < pixelRows.Count; i++)
+                {
+                    var obj = UnityEngine.Object.Instantiate(Pixel, StartPosition + (pixelRows[i].Pos * Scale), Quaternion.identity);
+                    obj.SetActive(true);
+                    obj.transform.localScale *= Scale;
+                    obj.GetComponent<tk2dSprite>().color = pixelRows[i].color;
+                    pixelRows[i].Instance = obj;
+                    yield return new WaitForSeconds(TotalSpawnTime / pixelRows.Count); 
+                }
+                yield return new WaitForSeconds(1);
+                OnComplete?.Invoke();
+
+                yield break;
+            }
+            public bool isDone = false;
+
+            public class PixelItem
+            {
+                public Vector2 Pos
+                {
+                    get
+                    {
+                        return new Vector2(x, y);
+                    }
+                }
+                public Color color = Color.white;
+                int x;
+                int y;
+                public PixelItem(int x_, int y_, Color? color_ = null)
+                {
+                    x = x_;
+                    y = y_;
+                    if (color_ != null)
+                    {
+                        color = color_.Value;
+                    }
+                }
+                public bool Spawns;
+                public GameObject Instance;
+                public float Delay;
+            }
         }
 
 
@@ -449,6 +573,8 @@ namespace Planetside
         public static GameObject JammedDeathVFX;
 
         public static HellDragZoneController hellDragController;
+
+        public static GameObject BlackHoleImpact;
 
     }
 }

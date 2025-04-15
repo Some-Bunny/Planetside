@@ -27,12 +27,10 @@ namespace Planetside
 		}
         public void Start()
         {
-            this.projectile = base.GetComponent<Projectile>();
             player = projectile.Owner as PlayerController;      
             if (this.projectile != null)
 			{
                 this.projectile.StartCoroutine(Rotate(this.projectile));
-                var player = projectile.Owner as PlayerController;
                 if (player != null)
                 {
                     if (player.PlayerHasActiveSynergy("Overclocked"))
@@ -96,8 +94,8 @@ namespace Planetside
                     {
                         foreach (Projectile ai in activeProjectiles)
                         {
-                            bool flag8 = ai && ai != null && Vector2.Distance(ai.transform.PositionVector2(), this.projectile.sprite.WorldCenter) < 7f && ai.gameObject.GetComponent<ShockChainProjectile>() != null && ai != this.projectile;
-                            if (flag8)
+                            
+                            if (ai != null && Vector2.Distance(ai.transform.PositionVector2(), this.projectile.sprite.WorldCenter) < 7f && ai.gameObject.GetComponent<ShockChainProjectile>() != null && ai != this.projectile)
                             {
                                 if (!ExtantTethers.ContainsKey(ai))
                                 {
@@ -105,8 +103,7 @@ namespace Planetside
                                     ExtantTethers.Add(ai, obj);
                                 }
                             }
-                            bool fuckoff = ai && ai != null && Vector2.Distance(ai.transform.PositionVector2(), this.projectile.sprite.WorldCenter) > 8f;
-                            if (fuckoff)
+                            if (ai != null && Vector2.Distance(ai.transform.PositionVector2(), this.projectile.sprite.WorldCenter) > 8f)
                             {
                                 if (ExtantTethers.ContainsKey(ai))
                                 {
@@ -192,25 +189,24 @@ namespace Planetside
         private IEnumerator HandleDamageCooldown(AIActor damagedTarget)
         {
             this.m_damagedEnemies.Add(damagedTarget);
-            yield return new WaitForSeconds(0.25f);
+            yield return new WaitForSeconds(0.1f);
             this.m_damagedEnemies.Remove(damagedTarget);
             yield break;
         }
 
         public float getCalculateddamage()
         {
-            float ElectricDamage = 1.8f;
+            float ElectricDamage = projectile.baseData.damage * 0.333f;
             if (player == null) { return ElectricDamage; }
             if (player.PlayerHasActiveSynergy("Single A"))
             {
                 ElectricDamage *= 2;
             }
-            float dmg = (player.stats.GetStatValue(PlayerStats.StatType.Damage));
-            return ElectricDamage * dmg;
+            return ElectricDamage;
         }
 
         private PlayerController player;
-        private Projectile projectile;
+        public Projectile projectile;
 	}
 }
 

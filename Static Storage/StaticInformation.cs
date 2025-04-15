@@ -81,6 +81,9 @@ namespace Planetside
             Ouroborous_Medal_Main = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("ouroborosmedal");
             Ouroborous_Medal_Left = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("ouroborosMedal2Left");
             Ouroborous_Medal_Right = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("ouroborosMedal2Right");
+            Curse_Ring = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("blessed_pot_circle_001");
+            Gradient_Circle = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("Gradient_Round_White");
+
         }
         public static Texture AdvancedParticleBlue;
         public static Texture VoidTexture;
@@ -117,6 +120,8 @@ namespace Planetside
         public static Texture2D Ouroborous_Medal_Main;
         public static Texture2D Ouroborous_Medal_Left;
         public static Texture2D Ouroborous_Medal_Right;
+        public static Texture2D Curse_Ring;
+        public static Texture2D Gradient_Circle;
 
     }
 

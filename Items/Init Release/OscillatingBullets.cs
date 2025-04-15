@@ -35,7 +35,9 @@ namespace Planetside
 			ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
 			ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.Damage, 1.20f, StatModifier.ModifyMethod.MULTIPLICATIVE);
 			ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.RangeMultiplier, 2f, StatModifier.ModifyMethod.MULTIPLICATIVE);
-			item.quality = PickupObject.ItemQuality.A;
+            ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.AdditionalShotPiercing, 1f, StatModifier.ModifyMethod.ADDITIVE);
+
+            item.quality = PickupObject.ItemQuality.A;
 			OscilaltingBullets.OscillatingBulletsID = item.PickupObjectId;
 			ItemIDs.AddToList(item.PickupObjectId);
 

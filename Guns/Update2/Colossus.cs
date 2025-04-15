@@ -119,7 +119,7 @@ namespace Planetside
                 projectile.gameObject.SetActive(false);
                 FakePrefab.MarkAsFakePrefab(projectile.gameObject);
                 UnityEngine.Object.DontDestroyOnLoad(projectile);
-                projectile.baseData.damage = 90f;
+                projectile.baseData.damage = 55f;
                 projectile.baseData.force *= 1f;
                 projectile.baseData.range *= 5;
                 projectile.baseData.speed *= 5f;
@@ -132,7 +132,7 @@ namespace Planetside
                 beamComp.boneType = BasicBeamController.BeamBoneType.Projectile;
 
                 beamComp.startAudioEvent = "Play_ENM_deathray_shot_01";
-                beamComp.projectile.baseData.damage = 80;
+                beamComp.projectile.baseData.damage = 55;
                 beamComp.endAudioEvent = "Stop_ENM_deathray_loop_01";
                 beamComp.penetration = 1;
                 beamComp.reflections = 0;

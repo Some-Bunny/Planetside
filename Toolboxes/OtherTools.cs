@@ -27,7 +27,21 @@ namespace Planetside
 {
     static class PlanetsideReflectionHelper
     {
-
+        /// <summary>Push a rigidbody out of a wall towards a specific direction, returning the number of pixels that were moved</summary>
+        public static int PullOutOfWalls(this SpeculativeRigidbody body, IntVector2 pushDirection)
+        {
+            if (!PhysicsEngine.Instance.OverlapCast(body, null, true, false, null, null, false, null, null))
+                return 0;
+            Vector2 vector = body.transform.position.XY();
+            for (int pixels = 1; pixels <= 200; ++pixels)
+            {
+                body.transform.position = vector + PhysicsEngine.PixelToUnit(pushDirection * pixels);
+                body.Reinitialize();
+                if (!PhysicsEngine.Instance.OverlapCast(body, null, true, false, null, null, false, null, null))
+                    return pixels;
+            }
+            return -1;
+        }
         public static void ReflectionShallowCopyFields<T>(T target, T source, BindingFlags flags)
         {
             foreach (FieldInfo fieldInfo in typeof(T).GetFields(flags))
@@ -936,10 +950,13 @@ namespace Planetside
             }
             proj.sprite.spriteAnimator.playAutomatically = true;
 
+            //List<int> idsDone = new List<int>();
+
             for (int i = 0; i < animation.GetClipByName(animationName).frames.Length; i++)
             {
                 var frame = animation.GetClipByName(animationName).frames[i];
-
+                //if (idsDone.Contains(frame.spriteId)) { continue; }
+                //idsDone.Add(frame.spriteId);
                 IntVector2 pixelSize = pixelSizes[i];
                 IntVector2? overrideColliderPixelSize = overrideColliderPixelSizes[i];
                 IntVector2? overrideColliderOffset = overrideColliderOffsets[i];

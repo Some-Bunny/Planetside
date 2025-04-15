@@ -32,9 +32,13 @@ namespace Planetside
             partObj.transform.localScale *= 6f;
             ParticleSystem particleSystem = partObj.GetComponent<ParticleSystem>();
             Destroy(partObj, 3.4f);
+
+            INSTRoomIcon = Minimap.Instance.RegisterRoomIcon(this.transform.position.GetAbsoluteRoom(), MasteryTraderSpawnController.roomIcon);
+
+
         }
 
-
+        private GameObject INSTRoomIcon;
 
 
         public RoomHandler m_room;
@@ -59,8 +63,8 @@ namespace Planetside
             partObj.transform.position = gameObject.transform.position;
             //partObj.transform.parent = gameObject.transform;
             partObj.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
-
-
+            //INSTRoomIcon
+            Minimap.Instance.DeregisterRoomIcon(this.transform.position.GetAbsoluteRoom(), INSTRoomIcon);
             Destroy(partObj, 3.4f);
             partObj.transform.localScale *= 5f;
             base.Invoke("DeregisterInteractable", 0f);

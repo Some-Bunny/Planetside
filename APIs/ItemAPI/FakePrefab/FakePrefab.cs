@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NpcApi;
+using Planetside.DungeonPlaceables;
 using UnityEngine;
 namespace ItemAPI
 {
@@ -39,6 +40,7 @@ namespace ItemAPI
             DontDestroyOnLoad(obj);
         }
 
+
         /// <summary>
         /// Clones a real prefab or a fake prefab into a new fake prefab.
         /// </summary>
@@ -70,8 +72,13 @@ namespace ItemAPI
         /// <param name="new_o">The object instantiated from the original object.</param>
         public static UnityEngine.Object Instantiate(UnityEngine.Object o, UnityEngine.Object new_o)
         {
+                  
             if (o is GameObject && ExistingFakePrefabs.Contains((GameObject)o))
             {
+                
+
+
+
                 ((GameObject)new_o).SetActive(true);
                 if ((new_o as GameObject).GetComponent<CustomShopController>() != null)
                 {
@@ -82,6 +89,25 @@ namespace ItemAPI
                     (new_o as GameObject).GetComponent<CustomShopController>().OnPurchase = (o as GameObject).GetComponent<CustomShopController>().OnPurchase;
                     //(new_o as GameObject).GetComponent<CustomShopController>().customCurrencyAtlas = (o as GameObject).GetComponent<CustomShopController>().customCurrencyAtlas;
                 }
+                //ETGModConsole.Log("aieee " + (new_o as GameObject).tag + " | " + new_o);
+                /*
+                if ((new_o as GameObject).name.Contains("[PSOG]", false))
+                {
+                    //ETGModConsole.Log(":)");
+
+                    var t = ExistingFakePrefabs.Where(self => (new_o as GameObject).name == self.name).FirstOrDefault();
+                    if (t != null)
+                    {
+                        var bgij = (new_o as GameObject).GetComponent<Idol>();
+                        if (bgij != null)
+                        {
+                            ETGModConsole.Log(bgij.EnemyGUIDToSpawn + " | " + t.GetComponent<Idol>().EnemyGUIDToSpawn);
+                        }
+                        //ETGModConsole.Log(new_o + " : " + t);
+                        //new_o = t;
+                    }
+                }
+                */
             }
             else if (o is Component && ExistingFakePrefabs.Contains(((Component)o).gameObject))
             {
@@ -100,7 +126,10 @@ namespace ItemAPI
             }
 
 
-            return new_o;
+
+
+
+                return new_o;
         }
     }
 }

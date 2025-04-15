@@ -136,7 +136,7 @@ namespace Planetside
 				"homing_bullets",
 				"remote_bullets"
 			};
-			CustomSynergies.Add("No Virus Included", AAA, AAA1, true);
+			CustomSynergies.Add("No Virus Included", AAA, AAA1, false);
 
 			List<string> AAA2 = new List<string>
 			{
@@ -144,7 +144,7 @@ namespace Planetside
 				"rpg",
 				"yari_launcher"
 			};
-			CustomSynergies.Add("The Mighty Budget", AAA, AAA2, true);
+			CustomSynergies.Add("The Mighty Budget", AAA, AAA2, false);
 
 
 			List<string> yes = new List<string>
@@ -152,7 +152,7 @@ namespace Planetside
 				"psog:t4gtr",
 				"rc_rocket"
 			};
-			CustomSynergies.Add("Double Trouble!", yes, null, true);
+			CustomSynergies.Add("Double Trouble!", yes, null, false);
 
 
 			LockOnGun.LockOnGunID = gun.PickupObjectId;
@@ -162,7 +162,7 @@ namespace Planetside
 
 		public static GameObject LockOnPrefab;
 		public static List<int> spriteIds = new List<int>();
-		public static GameObject LockOnInstance;
+		public static tk2dBaseSprite LockOnInstance;
 		public static AIActor LockedOnEnemy;
 		public bool IsLockedOn;
 
@@ -188,23 +188,14 @@ namespace Planetside
                 gun.DefaultModule.numberOfShotsInClip = (int)clipsize;
                 if (LockOnInstance != null)
                 {
-					var baseSprite = LockOnInstance.GetComponent<tk2dBaseSprite>();
 
-                    if (IsLockedOn == true && baseSprite.spriteId != LockOnGun.spriteIds[1] && LockOnInstance != null)
+                    if (IsLockedOn == true && LockOnInstance.spriteId != LockOnGun.spriteIds[1])
                     {
-                        baseSprite.SetSprite(LockOnGun.spriteIds[1]);
-                        //LockOnInstance.GetComponent<tk2dBaseSprite>().renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
-                        //LockOnInstance.GetComponent<tk2dBaseSprite>().renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
-                        //LockOnInstance.GetComponent<tk2dBaseSprite>().renderer.material.SetFloat("_EmissivePower", 30);
-                        //LockOnInstance.GetComponent<tk2dBaseSprite>().renderer.material.SetFloat("_EmissiveColorPower", 2);
+                        LockOnInstance.SetSprite(LockOnGun.spriteIds[1]);
                     }
-                    else if (IsLockedOn == false && LockOnInstance.GetComponent<tk2dBaseSprite>().spriteId != LockOnGun.spriteIds[0] && LockOnInstance != null)
+                    else if (IsLockedOn == false && LockOnInstance.spriteId != LockOnGun.spriteIds[0])
                     {
-                        baseSprite.SetSprite(LockOnGun.spriteIds[0]);
-                        //LockOnInstance.GetComponent<tk2dBaseSprite>().renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
-                        //LockOnInstance.GetComponent<tk2dBaseSprite>().renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
-                        //LockOnInstance.GetComponent<tk2dBaseSprite>().renderer.material.SetFloat("_EmissivePower", 30);
-                        //LockOnInstance.GetComponent<tk2dBaseSprite>().renderer.material.SetFloat("_EmissiveColorPower", 2);
+                        LockOnInstance.SetSprite(LockOnGun.spriteIds[0]);
                     }
 					if (player.CurrentRoom != null)
 					{
@@ -215,7 +206,7 @@ namespace Planetside
                             {
                                 if (aiactor == null)
                                 {
-                                    LockOnInstance.transform.position = aimpoint; //ETGModConsole.Log(6);
+                                    LockOnInstance.gameObject.transform.position = aimpoint; //ETGModConsole.Log(6);
                                 }
                                 if (Vector2.Distance(aiactor.CenterPosition, aimpoint) < 2f && aiactor.healthHaver.GetMaxHealth() > 0f && aiactor != null && aiactor.specRigidbody != null && player != null && IsLockedOn == false)
                                 { LockedOnEnemy = aiactor; }
@@ -231,13 +222,9 @@ namespace Planetside
                     if (component != null)
                     {
                         component.PlaceAtPositionByAnchor(aimpoint, tk2dBaseSprite.Anchor.MiddleCenter);
-                        component.GetComponent<tk2dBaseSprite>().SetSprite(LockOnGun.spriteIds[0]);
+                        component.SetSprite(LockOnGun.spriteIds[0]);
                         component.HeightOffGround = -5;
-                        //component.renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
-                        //component.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
-                        //component.renderer.material.SetFloat("_EmissivePower", 30);
-                        //component.renderer.material.SetFloat("_EmissiveColorPower", 2);
-                        LockOnInstance = component.gameObject;
+                        LockOnInstance = component;
                     }
                 }
                 if (LockedOnEnemy != null && Vector2.Distance(LockedOnEnemy.CenterPosition, aimpoint) < 2f && LockedOnEnemy.healthHaver.GetMaxHealth() > 0f && LockedOnEnemy != null && LockedOnEnemy.specRigidbody != null && player != null)
@@ -263,32 +250,27 @@ namespace Planetside
                             aimpoint = player.unadjustedAimPoint.XY();
                             if (LockOnInstance != null)
                             {
-                                Vector2 vector2 = aimpoint - LockOnInstance.GetComponent<tk2dSprite>().GetBounds().extents.XY();
-                                aimpoint = vector2;
+                                aimpoint = aimpoint - LockOnInstance.GetBounds().extents.XY();
                             }
                         }
                         else
                         {
+							var math = MathToolbox.GetUnitOnCircle(this.m_currentAngle, this.m_currentDistance);
                             BraveInput instanceForPlayer = BraveInput.GetInstanceForPlayer(player.PlayerIDX);
-                            Vector2 vector3 = player.CenterPosition + (Quaternion.Euler(0f, 0f, this.m_currentAngle) * Vector2.right).XY() * this.m_currentDistance;
-                            vector3 += instanceForPlayer.ActiveActions.Aim.Vector * 8f * BraveTime.DeltaTime;
+							Vector2 vector3 = player.CenterPosition + math;
+                            vector3 += instanceForPlayer.ActiveActions.Aim.Vector * 10f * BraveTime.DeltaTime;
                             this.m_currentAngle = BraveMathCollege.Atan2Degrees(vector3 - player.CenterPosition);
                             this.m_currentDistance = Vector2.Distance(vector3, player.CenterPosition);
                             this.m_currentDistance = Mathf.Min(this.m_currentDistance, this.maxDistance);
-                            vector3 = player.CenterPosition + (Quaternion.Euler(0f, 0f, this.m_currentAngle) * Vector2.right).XY() * this.m_currentDistance;
+                            vector3 = player.CenterPosition + math;
                             aimpoint = vector3;
                             if (LockOnInstance != null)
                             {
-                                Vector2 vector4 = vector3 - LockOnInstance.GetComponent<tk2dSprite>().GetBounds().extents.XY();
+                                Vector2 vector4 = vector3 - LockOnInstance.GetBounds().extents.XY();
                                 aimpoint = vector4;
-
                             }
                         }
                     }
-
-
-                   
-
                 }
                 else
                 {

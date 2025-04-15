@@ -101,7 +101,7 @@ namespace Planetside
                         {
                             if (ActorIsActive(ai) == true)
                             {
-                                bool flag8 = ai && ai != null && Vector2.Distance(ai.CenterPosition, base.Owner.sprite.WorldCenter) < 6;
+                                bool flag8 = ai && ai != null && Vector2.Distance(ai.CenterPosition, base.Owner.sprite.WorldCenter) < 7;
                                 if (flag8)
                                 {
                                     if (!Shit.ContainsKey(ai))
@@ -110,7 +110,7 @@ namespace Planetside
                                         Shit.Add(ai, obj);
                                     }
                                 }
-                                bool fuckoff = ai && ai != null && Vector2.Distance(ai.CenterPosition, base.Owner.sprite.WorldCenter) > 6f;
+                                bool fuckoff = ai && ai != null && Vector2.Distance(ai.CenterPosition, base.Owner.sprite.WorldCenter) > 7f;
                                 if (fuckoff)
                                 {
                                     if (Shit.ContainsKey(ai))
@@ -154,7 +154,7 @@ namespace Planetside
         {
             PlayerController player = (GameManager.Instance.PrimaryPlayer);
             float dmg = player != null? (player.stats.GetStatValue(PlayerStats.StatType.Damage)):1;
-            float num = 4.5f* dmg;
+            float num = 6f* dmg;
             for (int i = 0; i < StaticReferenceManager.AllEnemies.Count; i++)
             {
                 AIActor aiactor = StaticReferenceManager.AllEnemies[i];

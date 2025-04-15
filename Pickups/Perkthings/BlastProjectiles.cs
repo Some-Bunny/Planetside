@@ -80,9 +80,9 @@ namespace Planetside
         {
                 new PerkDisplayContainer()
                 {
-                    AmountToBuyBeforeReveal = 1,
-                    LockedString = AlphabetController.ConvertString("Explosions Birth"),
-                    UnlockedString = "Explosions Birth Vengeful Shells.",
+                    AmountToBuyBeforeReveal = 0,
+                    LockedString = "\"All Explosions birth Vengeful shells.\"",
+                    UnlockedString = "\"All Explosions birth Vengeful shells.\"",
                     requiresFlag = false
                 },
                 new PerkDisplayContainer()
@@ -127,7 +127,7 @@ namespace Planetside
 
             Exploder.DoDistortionWave(player.sprite.WorldTopCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
             player.BloopItemAboveHead(base.sprite, "");
-            string BlurbText = blast.hasBeenPickedup == true ? "More Projectiles Birthed." : "All Explosions birth vengeful shells.";
+            string BlurbText = blast.hasBeenPickedup == true ? "More Projectiles Birthed." : "All Explosions birth Vengeful shells.";
             OtherTools.NotifyCustom("Explosive Birth", BlurbText, "projectileboom", StaticSpriteDefinitions.Pickup_Sheet_Data, UINotificationController.NotificationColor.GOLD);
 
             //OtherTools.Notify("Explosive Birth", BlurbText, "Planetside/Resources/PerkThings/projectileboom", UINotificationController.NotificationColor.GOLD);

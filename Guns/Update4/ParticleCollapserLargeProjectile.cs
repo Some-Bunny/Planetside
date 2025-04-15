@@ -33,7 +33,7 @@ namespace Planetside
             this.Player = projectile.Owner as PlayerController;
             if (this.projectile != null)
             {
-				AkSoundEngine.PostEvent("Play_SND_WPN_blackhole_loop_01", base.gameObject);
+				AkSoundEngine.PostEvent("Play_WPN_blackhole_loop_01", base.gameObject);
 
 				this.m_distortMaterial = new Material(ShaderCache.Acquire("Brave/Internal/DistortionRadius"));
 				this.m_distortMaterial.SetFloat("_Strength", 20f);

@@ -57,10 +57,10 @@ namespace Planetside
 				enemy.aiActor.specRigidbody.CollideWithOthers = true;
 				enemy.aiActor.specRigidbody.CollideWithTileMap = true;
 				enemy.aiActor.PreventFallingInPitsEver = false;
-				enemy.aiActor.healthHaver.ForceSetCurrentHealth(10f);
+				enemy.aiActor.healthHaver.ForceSetCurrentHealth(50f);
 				enemy.aiActor.CollisionKnockbackStrength = 10f;
 				enemy.aiActor.CanTargetPlayers = true;
-				enemy.aiActor.healthHaver.SetHealthMaximum(10f, null, false);
+				enemy.aiActor.healthHaver.SetHealthMaximum(50f, null, false);
 				enemy.aiActor.PathableTiles = CellTypes.PIT | CellTypes.FLOOR;
 				enemy.aiActor.SetIsFlying(true, "Gamemode: Creative", true, true);
 

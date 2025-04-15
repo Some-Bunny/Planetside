@@ -111,6 +111,13 @@ namespace Planetside
         {
                 new PerkDisplayContainer()
                 {
+                    AmountToBuyBeforeReveal = 0,
+                    LockedString = "\"Fragile, yet Fatal.\"",
+                    UnlockedString = "\"Fragile, yet Fatal.\"",
+                    requiresFlag = false
+                },
+                new PerkDisplayContainer()
+                {
                     AmountToBuyBeforeReveal = 1,
                     LockedString = AlphabetController.ConvertString("Glass Cannon"),
                     UnlockedString = "Very Low Health, Much Higher Damage.",

@@ -225,7 +225,9 @@ public class CustomBeholsterLaserBehavior : BasicAttackBehavior
 						}
 						this.m_bulletSource.BulletManager = this.m_aiActor.bulletBank;
 						this.m_bulletSource.BulletScript = this.BulletScript;
-						this.m_bulletSource.Initialize();
+                        
+
+                        this.m_bulletSource.Initialize();
 					}
 				}
 				this.m_timer += this.m_deltaTime;
@@ -585,7 +587,10 @@ public class CustomBeholsterLaserBehavior : BasicAttackBehavior
 			beamCont.RampHeightOffset = (float)((!facingNorth) ? 5 : 0) + AdditionalHeightOffset;
 			beamCont.Origin = startingPoint;
 			beamCont.Direction = dirVec2;
-			aibeamShooter2.m_laserBeam = beamCont;
+            beamCont.projectile.ImmuneToBlanks = ImmuneToBlanks;
+            beamCont.projectile.ImmuneToSustainedBlanks = ImmuneToBlanks;
+
+            aibeamShooter2.m_laserBeam = beamCont;
 			bool flag5 = firstFrame;
 			if (flag5)
 			{
@@ -594,7 +599,7 @@ public class CustomBeholsterLaserBehavior : BasicAttackBehavior
 			}
 			else
 			{
-				if (base.m_aiActor == null&& beamCont != null)
+				if (base.m_aiActor == null && beamCont != null)
                 {
 					beamCont.CeaseAttack();
 					aibeamShooter2.m_laserBeam = null;
@@ -709,6 +714,7 @@ public class CustomBeholsterLaserBehavior : BasicAttackBehavior
 
 	public CustomBeholsterLaserBehavior.StopType StopDuring;
 
+	public bool ImmuneToBlanks = false;
 	public enum StopType
 	{
 		None,

@@ -5,13 +5,14 @@ using System.Text;
 using UnityEngine;
 using ItemAPI;
 using Alexandria.PrefabAPI;
+using Planetside.Static_Storage;
+using System.Collections;
 
 namespace Planetside
 {
 
     public class ExpandReticleRiserEffect : MonoBehaviour
     {
-        // Token: 0x060003F1 RID: 1009 RVA: 0x000BC801 File Offset: 0x000BAA01
         public ExpandReticleRiserEffect()
         {
             this.NumRisers = 4;
@@ -27,22 +28,25 @@ namespace Planetside
             this.m_sprite.usesOverrideMaterial = true;
 
 
-            GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(base.gameObject);
-			gameObject.GetComponent<tk2dSprite>().renderer.material.shader = ShaderCache.Acquire("tk2d/BlendVertexColorUnlitTilted");
+            //GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(base.gameObject);
+            //gameObject.GetComponent<tk2dSprite>().renderer.material.shader = StaticShaders.TransparencyShader;//ShaderCache.Acquire("tk2d/BlendVertexColorUnlitTilted");
 
-            UnityEngine.Object.Destroy(gameObject.GetComponent<ExpandReticleRiserEffect>());
+            //UnityEngine.Object.Destroy(gameObject.GetComponent<ExpandReticleRiserEffect>());
 
 
             this.m_risers = new tk2dSprite[this.NumRisers];
-            this.m_risers[0] = gameObject.GetComponent<tk2dSprite>();
-            for (int i = 0; i < this.NumRisers - 1; i++)
+            //this.m_risers[0] = gameObject.GetComponent<tk2dSprite>();
+            for (int i = 0; i < this.NumRisers; i++)
             {
-                this.m_risers[i + 1] = UnityEngine.Object.Instantiate<GameObject>(gameObject).GetComponent<tk2dSprite>();
+                var obj = UnityEngine.Object.Instantiate<GameObject>(gameObject);
+                UnityEngine.Object.Destroy(obj.GetComponent<tk2dSpriteAnimator>());
+                UnityEngine.Object.Destroy(obj.GetComponent<ExpandReticleRiserEffect>());
+                obj.GetComponent<tk2dSprite>().renderer.material.shader = StaticShaders.TransparencyShader;//ShaderCache.Acquire("tk2d/BlendVertexColorUnlitTilted");
+                this.m_risers[i] = obj.GetComponent<tk2dSprite>();
+				this.StartCoroutine(DoLoop(this.m_risers[i], (((float)i / (float)this.NumRisers)) * RiseTime));
             }
             this.OnSpawned();
         }
-
-        // Token: 0x060003F3 RID: 1011 RVA: 0x000BC8EC File Offset: 0x000BAAEC
         private void OnSpawned()
         {
             this.m_localElapsed = 0f;
@@ -54,26 +58,89 @@ namespace Planetside
                     this.m_risers[i].transform.localPosition = Vector3.zero;
                     this.m_risers[i].transform.localRotation = Quaternion.identity;
                     this.m_risers[i].usesOverrideMaterial = true;
-                    //this.m_risers[i].renderer.material.shader = this.m_shader;
                     this.m_risers[i].gameObject.SetLayerRecursively(LayerMask.NameToLayer("FG_Critical"));
                 }
             }
         }
 
+        public void Stop()
+        {
+            Stopped = true;
+            for (int i = 0; i < this.m_risers.Count(); i++)
+            {
+                var riser = this.m_risers[i];
+                if (riser)
+                {
+                    riser.StartCoroutine(Zap(riser));
+                }
+            }
+        }
+
+        public IEnumerator Zap(tk2dSprite s)
+        {
+            if (s == null) { yield break; }
+            float e = s.renderer.material.GetFloat("_Fade");
+            while (e > 0)
+            {
+                float y = Mathf.Lerp(0f, this.RiserHeight, e);
+                s.transform.localPosition = Vector3.zero;
+                s.transform.position += Vector3.zero.WithY(y * 0.66f);
+                s.renderer.material.SetFloat("_Fade", Mathf.Max(0, 1 - e));
+                e += BraveTime.DeltaTime * 1.5f;
+                yield return null;
+            }
+            Destroy(s.gameObject);
+            yield break;
+        }
+
+        private bool Stopped = false;
+
+		public IEnumerator DoLoop(tk2dSprite Riser, float delay = 0)
+		{
+            float e = 0;
+            if (delay > 0)
+			{
+			
+                while (e < delay)
+				{
+                    e += Time.deltaTime;
+                    yield return null;
+                }
+				
+            }
+            e = 0;
+            while (e < RiseTime)
+			{
+				e += Time.deltaTime;
+				float t = e / RiseTime;// Mathf.Max(0f, this.m_localElapsed - this.RiseTime / (float)this.NumRisers * (float)i) % this.RiseTime / this.RiseTime;
+                float y = Mathf.Lerp(0f, this.RiserHeight, t);
+                Riser.transform.localPosition = Vector3.zero;
+                Riser.transform.position += Vector3.zero.WithY(y);
+				Riser.HeightOffGround = y;
+                Riser.SortingOrder = (int)(y * 16);
+                Riser.ForceRotationRebuild();
+                Riser.UpdateZDepth();
+                Riser.sprite.renderer.material.SetFloat("_Fade", Mathf.Max(0, 1 - t));
+				yield return null;
+            }
+			if (Stopped == false)
+			{
+				this.StartCoroutine(DoLoop(Riser));
+			}
+			yield break;
+		}
+		
+
         private void Update()
         {
-            if (!this.m_sprite)
+			/*
+            if (!this.m_sprite || Stopped == true)
             {
                 return;
             }
             this.m_localElapsed += BraveTime.DeltaTime;
-            if (this.UpdateSpriteDefinitions && !string.IsNullOrEmpty(this.CurrentSpriteName))
-            {
-                this.m_sprite.SetSprite(this.CurrentSpriteName);
-            }
             this.m_sprite.ForceRotationRebuild();
             this.m_sprite.UpdateZDepth();
-            //this.m_sprite.renderer.material.shader = this.m_shader;
             if (this.m_risers != null)
             {
                 for (int i = 0; i < this.m_risers.Length; i++)
@@ -83,42 +150,28 @@ namespace Planetside
                         this.m_risers[i].SetSprite(this.CurrentSpriteName);
                     }
                     float t = Mathf.Max(0f, this.m_localElapsed - this.RiseTime / (float)this.NumRisers * (float)i) % this.RiseTime / this.RiseTime;
-                    this.m_risers[i].color = Color.Lerp(new Color(1f, 1f, 1f, 0.75f), new Color(1f, 1f, 1f, 0f), t);
                     float y = Mathf.Lerp(0f, this.RiserHeight, t);
                     this.m_risers[i].transform.localPosition = Vector3.zero;
                     this.m_risers[i].transform.position += Vector3.zero.WithY(y);
                     this.m_risers[i].ForceRotationRebuild();
                     this.m_risers[i].UpdateZDepth();
-                    //this.m_risers[i].renderer.material.shader = this.m_shader;
+                    this.m_risers[i].sprite.renderer.material.SetFloat("_Fade", Mathf.Max(0, 1 - t));
+                    if (this.UpdateSpriteDefinitions && !string.IsNullOrEmpty(this.CurrentSpriteName))
+                    {
+                        this.m_risers[i].SetSprite(this.CurrentSpriteName);
+                    }
+
                 }
             }
+			*/
         }
-
-        // Token: 0x04000664 RID: 1636
         public bool UpdateSpriteDefinitions;
-
-        // Token: 0x04000665 RID: 1637
         public string CurrentSpriteName;
-
-        // Token: 0x04000666 RID: 1638
         public int NumRisers;
-
-        // Token: 0x04000667 RID: 1639
         public float RiserHeight;
-
-        // Token: 0x04000668 RID: 1640
         public float RiseTime;
-
-        // Token: 0x04000669 RID: 1641
         private tk2dSprite m_sprite;
-
-        // Token: 0x0400066A RID: 1642
         private tk2dSprite[] m_risers;
-
-        // Token: 0x0400066B RID: 1643
-        //private Shader m_shader;
-
-        // Token: 0x0400066C RID: 1644
         private float m_localElapsed;
     }
 

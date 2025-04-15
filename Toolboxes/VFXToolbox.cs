@@ -19,6 +19,9 @@ namespace Planetside
     }
     class VFXToolbox
     {
+
+
+
         private static GameObject VFXScapeGoat;
         private static tk2dSpriteCollectionData PrivateVFXCollection;
         public static tk2dSpriteCollectionData VFXCollection
