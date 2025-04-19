@@ -62,7 +62,7 @@ namespace Planetside
             component.UpdateZDepth();
             if (Minimap.Instance != null)
             {
-                Minimap.Instance.RevealAllRooms(false);
+                Minimap.Instance.RevealAllRooms(true);
             }   
         }
     }

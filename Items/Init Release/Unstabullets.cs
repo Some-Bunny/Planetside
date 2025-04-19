@@ -49,16 +49,16 @@ namespace Planetside
 			try
 			{
 				
-				int c = UnityEngine.Random.Range(0, 7);
+				int c = UnityEngine.Random.Range(0, 4);
 				switch (c)
 				{
-					case 1:
+					case 0:
 						float num2 = 10f;
 						{
 							if (owner.IsInCombat)
 							{
                                 List<AIActor> activeEnemies = owner.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
-                                if (activeEnemies == null | activeEnemies.Count < 0)
+                                if (activeEnemies != null)
                                 {
                                     AIActor nearestEnemy = this.GetNearestEnemy(activeEnemies, owner.sprite.WorldCenter, out num2, null);
                                     if (nearestEnemy != null)
@@ -77,29 +77,6 @@ namespace Planetside
                             }
 						}
 						break;
-					case 2:
-                        StaticVFXStorage.SpiratTeleportVFX.SpawnAtPosition(sourceProjectile.transform.position);
-                        if (BraveInput.GetInstanceForPlayer(owner.PlayerIDX).IsKeyboardAndMouse(false))
-						{
-							this.aimpoint = owner.unadjustedAimPoint.XY();
-						}
-						else
-						{
-							BraveInput instanceForPlayer = BraveInput.GetInstanceForPlayer(owner.PlayerIDX);
-							Vector2 a = owner.CenterPosition + (Quaternion.Euler(0f, 0f, this.m_currentAngle) * Vector2.right).XY() * this.m_currentDistance;
-							a += instanceForPlayer.ActiveActions.Aim.Vector * 8f * BraveTime.DeltaTime;
-							this.m_currentAngle = BraveMathCollege.Atan2Degrees(a - owner.CenterPosition);
-							this.m_currentDistance = Vector2.Distance(a, owner.CenterPosition);
-							this.m_currentDistance = Mathf.Min(this.m_currentDistance, 15f);
-							this.aimpoint = owner.CenterPosition + (Quaternion.Euler(0f, 0f, this.m_currentAngle) * Vector2.right).XY() * this.m_currentDistance;
-						}
-
-                        PierceProjModifier spook_ = sourceProjectile.gameObject.GetOrAddComponent<PierceProjModifier>();
-                        spook_.penetration += 1;
-
-                        sourceProjectile.transform.position = aimpoint;
-                        StaticVFXStorage.SpiratTeleportVFX.SpawnAtPosition(sourceProjectile.transform.position);
-                        break;
 				}
 			
 			}
