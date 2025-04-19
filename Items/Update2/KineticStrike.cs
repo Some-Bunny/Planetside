@@ -152,7 +152,7 @@ namespace Planetside
             {
                 BraveInput instanceForPlayer = BraveInput.GetInstanceForPlayer(base.LastOwner.PlayerIDX);
                 Vector2 vector3 = base.LastOwner.CenterPosition + (Quaternion.Euler(0f, 0f, this.m_currentAngle) * Vector2.right).XY() * this.m_currentDistance;
-                vector3 += instanceForPlayer.ActiveActions.Aim.Vector * 8f * BraveTime.DeltaTime;
+                vector3 += instanceForPlayer.ActiveActions.Aim.Vector * 25f * BraveTime.DeltaTime;
                 this.m_currentAngle = BraveMathCollege.Atan2Degrees(vector3 - base.LastOwner.CenterPosition);
                 this.m_currentDistance = Vector2.Distance(vector3, base.LastOwner.CenterPosition);
                 this.m_currentDistance = Mathf.Min(this.m_currentDistance, this.maxDistance);
