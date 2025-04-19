@@ -12,6 +12,7 @@ using System.Collections;
 using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
+using Alexandria.Misc;
 
 namespace Planetside
 {
@@ -202,16 +203,28 @@ namespace Planetside
                         List<AIActor> activeEnemies = player.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
                         if (activeEnemies != null)
                         {
-                            foreach (AIActor aiactor in activeEnemies)
-                            {
-                                if (aiactor == null)
-                                {
-                                    LockOnInstance.gameObject.transform.position = aimpoint; //ETGModConsole.Log(6);
-                                }
-                                if (Vector2.Distance(aiactor.CenterPosition, aimpoint) < 2f && aiactor.healthHaver.GetMaxHealth() > 0f && aiactor != null && aiactor.specRigidbody != null && player != null && IsLockedOn == false)
-                                { LockedOnEnemy = aiactor; }
-                            }
-                        }
+							if (BraveInput.GetInstanceForPlayer(player.PlayerIDX).IsKeyboardAndMouse(false)) {
+								foreach (AIActor aiactor in activeEnemies) {
+									if (aiactor == null) {
+										LockOnInstance.gameObject.transform.position = aimpoint; //ETGModConsole.Log(6);
+									}
+									if (Vector2.Distance(aiactor.CenterPosition, aimpoint) < 2f && aiactor.healthHaver.GetMaxHealth() > 0f && aiactor != null && aiactor.specRigidbody != null && player != null && IsLockedOn == false) { LockedOnEnemy = aiactor; }
+								}
+							}
+							else if (!IsLockedOn && player != null) {
+								var closestDistance = float.MaxValue;
+								foreach (AIActor aiactor in activeEnemies) {
+									if (aiactor == null || aiactor.healthHaver.GetMaxHealth() <= 0f || aiactor.specRigidbody == null) {
+										continue;
+									}
+									var distance = Vector2.Distance(aiactor.CenterPosition, player.CenterPosition);
+									if (distance < closestDistance) {
+										closestDistance = distance;
+										LockedOnEnemy = aiactor;
+									}
+								}
+							}
+						}
                     }
                     
 
@@ -227,7 +240,7 @@ namespace Planetside
                         LockOnInstance = component;
                     }
                 }
-                if (LockedOnEnemy != null && Vector2.Distance(LockedOnEnemy.CenterPosition, aimpoint) < 2f && LockedOnEnemy.healthHaver.GetMaxHealth() > 0f && LockedOnEnemy != null && LockedOnEnemy.specRigidbody != null && player != null)
+                if (LockedOnEnemy != null && (!BraveInput.GetInstanceForPlayer(player.PlayerIDX).IsKeyboardAndMouse(false) || Vector2.Distance(LockedOnEnemy.CenterPosition, aimpoint) < 2f) && LockedOnEnemy.healthHaver.GetMaxHealth() > 0f && LockedOnEnemy != null && LockedOnEnemy.specRigidbody != null && player != null)
                 {
                     LockOnInstance.transform.position = LockedOnEnemy.sprite.WorldCenter - new Vector2(0.625f, 0.625f);
                 }
@@ -255,21 +268,8 @@ namespace Planetside
                         }
                         else
                         {
-							var math = MathToolbox.GetUnitOnCircle(this.m_currentAngle, this.m_currentDistance);
-                            BraveInput instanceForPlayer = BraveInput.GetInstanceForPlayer(player.PlayerIDX);
-							Vector2 vector3 = player.CenterPosition + math;
-                            vector3 += instanceForPlayer.ActiveActions.Aim.Vector * 10f * BraveTime.DeltaTime;
-                            this.m_currentAngle = BraveMathCollege.Atan2Degrees(vector3 - player.CenterPosition);
-                            this.m_currentDistance = Vector2.Distance(vector3, player.CenterPosition);
-                            this.m_currentDistance = Mathf.Min(this.m_currentDistance, this.maxDistance);
-                            vector3 = player.CenterPosition + math;
-                            aimpoint = vector3;
-                            if (LockOnInstance != null)
-                            {
-                                Vector2 vector4 = vector3 - LockOnInstance.GetBounds().extents.XY();
-                                aimpoint = vector4;
-                            }
-                        }
+							aimpoint = player.CenterPosition - new Vector2(0.625f, 0.625f);
+						}
                     }
                 }
                 else
