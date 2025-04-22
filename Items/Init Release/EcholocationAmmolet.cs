@@ -14,7 +14,7 @@ using MonoMod.RuntimeDetour;
 using MonoMod;
 namespace Planetside
 {
-    public class EcholocationAmmolet : PassiveItem
+    public class EcholocationAmmolet : BlankModificationItem
     {
         public static void Init()
         {
@@ -45,25 +45,46 @@ namespace Planetside
         public override void Pickup(PlayerController player)
         {
             base.Pickup(player);
-            player.OnUsedBlank += this.MapOut;
+            //player.OnUsedBlank += this.MapOut;
         }
         public override DebrisObject Drop(PlayerController player)
         {
             DebrisObject debrisObject = base.Drop(player);
-            player.OnUsedBlank -= this.MapOut;
+            //player.OnUsedBlank -= this.MapOut;
             return debrisObject;
         }
         private void MapOut(PlayerController player, int blanks)
         {     
-            GameObject original = (GameObject)BraveResources.Load("Global VFX/VFX_Item_Pickup", typeof(GameObject), ".prefab");
-            GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(original);
-            tk2dSprite component = gameObject.GetComponent<tk2dSprite>();
-            component.PlaceAtPositionByAnchor(player.sprite.WorldCenter, tk2dBaseSprite.Anchor.MiddleCenter);
-            component.UpdateZDepth();
-            if (Minimap.Instance != null)
+ 
+        }
+
+        private static Hook BlankHook = new Hook(typeof(SilencerInstance).GetMethod("ProcessBlankModificationItemAdditionalEffects", BindingFlags.Instance | BindingFlags.NonPublic), typeof(FrailtyAmmolet).GetMethod("BlankModHook", BindingFlags.Instance | BindingFlags.Public), typeof(SilencerInstance));
+
+
+
+        public void BlankModHook(Action<SilencerInstance, BlankModificationItem, Vector2, PlayerController> orig, SilencerInstance silencer, BlankModificationItem bmi, Vector2 centerPoint, PlayerController user)
+        {
+            orig(silencer, bmi, centerPoint, user);
+            try
             {
-                Minimap.Instance.RevealAllRooms(true);
-            }   
+                if (user.HasPickupID(EcholocationAmmoletID))
+                {
+                    GameObject original = (GameObject)BraveResources.Load("Global VFX/VFX_Item_Pickup", typeof(GameObject), ".prefab");
+                    GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(original);
+                    tk2dSprite component = gameObject.GetComponent<tk2dSprite>();
+                    component.PlaceAtPositionByAnchor(user.sprite.WorldCenter, tk2dBaseSprite.Anchor.MiddleCenter);
+                    component.UpdateZDepth();
+                    if (Minimap.Instance != null)
+                    {
+                        Minimap.Instance.RevealAllRooms(true);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                ETGModConsole.Log(e.Message);
+                ETGModConsole.Log(e.StackTrace);
+            }
         }
     }
 }

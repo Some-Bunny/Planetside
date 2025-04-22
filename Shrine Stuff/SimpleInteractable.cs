@@ -11,7 +11,10 @@ namespace GungeonAPI
 
 		public Action<PlayerController, GameObject> OnDecline;
 
-		public List<string> conversation;
+        public Action<PlayerController, SimpleInteractable> OnPreInteract;
+
+
+        public List<string> conversation;
 
 		public List<string> conversation2;
 

@@ -401,7 +401,7 @@ namespace Planetside
                         }
                         yield return base.Wait(1);
                     }
-                    yield break;
+                    //yield break;
                 }
 
                 public int NearTime;
@@ -642,7 +642,7 @@ namespace Planetside
                         base.ChangeDirection(new Direction(0f, DirectionType.Aim, 3f), 1);
                         yield return base.Wait(1);
                     }
-                    yield break;
+                    //yield break;
                 }
             }
 

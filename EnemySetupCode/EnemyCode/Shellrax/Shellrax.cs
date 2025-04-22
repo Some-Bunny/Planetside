@@ -835,9 +835,18 @@ namespace Planetside
 				//==================	
 				//Important for not breaking basegame stuff!
 				StaticReferenceManager.AllHealthHavers.Remove(companion.aiActor.healthHaver);
-				//==================
+                //==================
 
-				SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Shellrax/shellrax_idle_001", SpriteBuilder.ammonomiconCollection);
+                companion.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("1bc2a07ef87741be90c37096910843ab").bulletBank.GetBullet("reversible"));
+                companion.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("ec6b674e0acd4553b47ee94493d66422").bulletBank.GetBullet("bigBullet"));
+                companion.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("amuletRing"));
+                companion.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("poundSmall"));
+                companion.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("465da2bb086a4a88a803f79fe3a27677").bulletBank.GetBullet("homing"));
+                companion.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("da797878d215453abba824ff902e21b4").bulletBank.GetBullet("snakeBullet"));
+                companion.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("4d164ba3f62648809a4a82c90fc22cae").bulletBank.GetBullet("big_one"));
+
+
+                SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Shellrax/shellrax_idle_001", SpriteBuilder.ammonomiconCollection);
 				if (companion.GetComponent<EncounterTrackable>() != null)
 				{
 					UnityEngine.Object.Destroy(companion.GetComponent<EncounterTrackable>());
@@ -1078,8 +1087,7 @@ namespace Planetside
 		public override IEnumerator Top()
 		{
 			base.PostWwiseEvent("Play_BOSS_doormimic_blast_01", null);
-			base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("da797878d215453abba824ff902e21b4").bulletBank.GetBullet("snakeBullet"));
-			RoomHandler room = this.BulletBank.aiActor.ParentRoom;
+            RoomHandler room = this.BulletBank.aiActor.ParentRoom;
 			for (int i = 0; i < 2; i++)
             {
 				Vector2 leftPos = BraveUtility.RandomVector2(new Vector2(room.area.UnitLeft + 2f, room.area.UnitBottom + 2f), new Vector2(room.area.UnitCenter.x - 2f, room.area.UnitTop - 2f));
@@ -1135,8 +1143,8 @@ namespace Planetside
 			}
 			public override IEnumerator Top()
 			{
-				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("4d164ba3f62648809a4a82c90fc22cae").bulletBank.GetBullet("big_one"));
-				this.ManualControl = true;
+
+                this.ManualControl = true;
 				yield return this.Wait(30);
 				Vector2 start = this.Position;
 				Vector2 end = this.Position + this.m_endOffset;
@@ -1178,8 +1186,7 @@ namespace Planetside
 
 			public override IEnumerator Top()
 			{
-				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("1bc2a07ef87741be90c37096910843ab").bulletBank.GetBullet("reversible"));
-				this.Projectile.specRigidbody.CollideWithTileMap = false;
+                this.Projectile.specRigidbody.CollideWithTileMap = false;
 				this.Projectile.specRigidbody.CollideWithOthers = false;
 				yield return base.Wait(60);
 				base.PostWwiseEvent("Play_ENM_bulletking_slam_01", null);
@@ -1271,11 +1278,6 @@ namespace Planetside
 	{
 		public override IEnumerator Top()
 		{
-			if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
-			{
-				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("ec6b674e0acd4553b47ee94493d66422").bulletBank.GetBullet("bigBullet"));
-				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("amuletRing"));
-			}
 			for (int u = 0; u < 4; u++)
             {
 				base.PostWwiseEvent("Play_BOSS_lichB_charge_01", null);
@@ -1376,10 +1378,8 @@ namespace Planetside
 	{
 		public override IEnumerator Top()
 		{
-			base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("poundSmall"));
-			base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("da797878d215453abba824ff902e21b4").bulletBank.GetBullet("snakeBullet"));
 
-			base.PostWwiseEvent("Play_BOSS_RatMech_Stomp_01", null);
+            base.PostWwiseEvent("Play_BOSS_RatMech_Stomp_01", null);
 			Exploder.DoDistortionWave(base.BulletBank.sprite.WorldCenter, 2, 0.05f, 10, 0.7f);
 
 			for (int e = 0; e < 4; e++)
@@ -1475,10 +1475,8 @@ namespace Planetside
 		public override IEnumerator Top()
 		{
 			base.PostWwiseEvent("Play_BOSS_lichB_spew_01", null);
-			base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("465da2bb086a4a88a803f79fe3a27677").bulletBank.GetBullet("homing"));
-			base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("da797878d215453abba824ff902e21b4").bulletBank.GetBullet("snakeBullet"));
 
-			int AAmountToShoot = UnityEngine.Random.Range(4, 6);
+            int AAmountToShoot = UnityEngine.Random.Range(4, 6);
 			for (int i = 0; i < AAmountToShoot; i++)
             {
 				Exploder.DoDistortionWave(base.BulletBank.sprite.WorldCenter, 2, 0.03f, 15, 0.7f);
@@ -1556,8 +1554,9 @@ namespace Planetside
 	{
 		public override IEnumerator Top()
 		{
-			base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("da797878d215453abba824ff902e21b4").bulletBank.GetBullet("snakeBullet"));
-			base.PostWwiseEvent("Play_BOSS_lichB_spew_01", null);
+
+
+            base.PostWwiseEvent("Play_BOSS_lichB_spew_01", null);
 			Exploder.DoDistortionWave(base.BulletBank.sprite.WorldCenter, 2, 0.08f, 15, 1f);
 			base.EndOnBlank = false;
 			if (!base.BulletBank.aiActor.healthHaver.IsDead && base.BulletBank.aiActor != null && base.BulletBank.aiActor.healthHaver.GetCurrentHealth() >= 1)
@@ -1966,8 +1965,6 @@ namespace Planetside
 			isTelerting = false;
 			base.healthHaver.minimumHealth = 1;
 			base.aiActor.spriteAnimator.AnimationEventTriggered += this.AnimationEventTriggered;
-			StaticReferenceManager.AllHealthHavers.Remove(base.aiActor.healthHaver);
-			base.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("4d164ba3f62648809a4a82c90fc22cae").bulletBank.GetBullet("big_one"));
 
 			base.aiActor.gameObject.layer = 22;			
 			base.aiActor.sprite.HeightOffGround = 0;

@@ -152,7 +152,7 @@ namespace Planetside
                 }
                 if (Chambers > 0)
                 {
-                    DamageMod = this.AddStat(PlayerStats.StatType.Damage, MasterRounds / 4, StatModifier.ModifyMethod.ADDITIVE);
+                    DamageMod = this.AddStat(PlayerStats.StatType.Damage, 0.25f, StatModifier.ModifyMethod.ADDITIVE);
                 }
 
 

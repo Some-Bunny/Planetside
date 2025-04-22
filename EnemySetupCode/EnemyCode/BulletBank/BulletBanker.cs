@@ -1298,7 +1298,6 @@ namespace Planetside
 					}
 				}
 				//Important for not breaking basegame stuff!
-				StaticReferenceManager.AllHealthHavers.Remove(base.aiActor.healthHaver);
 				base.aiActor.healthHaver.OnPreDeath += (obj) =>
 				{
 					AkSoundEngine.PostEvent("Play_ENM_screamer_scream_01", base.gameObject);

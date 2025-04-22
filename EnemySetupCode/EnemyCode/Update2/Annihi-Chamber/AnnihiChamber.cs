@@ -1610,8 +1610,6 @@ namespace Planetside
 				float num = maxHealth * 0.30f;
 				base.healthHaver.minimumHealth = num;
 
-				//Important for not breaking basegame stuff!
-				StaticReferenceManager.AllHealthHavers.Remove(base.aiActor.healthHaver);
 
 				base.aiActor.spriteAnimator.AnimationEventTriggered += this.AnimationEventTriggered;
 				//firehose

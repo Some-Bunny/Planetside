@@ -177,6 +177,7 @@ namespace Planetside.NPC_Stuff
             ETGMod.Databases.Strings.Core.Set("#ABSCONDUS_YEA_ARMOR", "OK.  <Give [sprite \"armor_money_icon_001\"]>");
 
 
+
             ETGMod.Databases.Strings.Core.Set("#ABSCONDUS_NAH", "No thanks..?");
 
             ETGMod.Databases.Strings.Core.Set("#ABSCONDUS_NOTHANKS", "SUIT... YOURSELF...");

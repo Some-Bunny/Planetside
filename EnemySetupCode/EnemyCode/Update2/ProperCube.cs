@@ -18,9 +18,6 @@ namespace Planetside
 	{
 		public static GameObject prefab;
 		public static readonly string guid = "proper_cube";
-		//private static tk2dSpriteCollectionData ProperCubeColection;
-		public static GameObject shootpoint;
-		public static GameObject noVFX;
 		public static void Init()
 		{
 			ProperCube.BuildPrefab();
@@ -64,10 +61,10 @@ namespace Planetside
 					BagleUseFirstFrameOnly = false,
 					SpecifyBagelFrame = string.Empty,
 					BagelColliderNumber = 0,
-					ManualOffsetX = 0,
-					ManualOffsetY = 0,
-					ManualWidth = 16,
-					ManualHeight = 20,
+					ManualOffsetX = 2,
+					ManualOffsetY = 2,
+					ManualWidth = 12,
+					ManualHeight = 16,
 					ManualDiameter = 0,
 					ManualLeftX = 0,
 					ManualLeftY = 0,
@@ -84,10 +81,10 @@ namespace Planetside
 					BagleUseFirstFrameOnly = false,
 					SpecifyBagelFrame = string.Empty,
 					BagelColliderNumber = 0,
-					ManualOffsetX = 0,
-					ManualOffsetY = 0,
-                    ManualWidth = 16,
-                    ManualHeight = 20,
+                    ManualOffsetX = 2,
+                    ManualOffsetY = 2,
+                    ManualWidth = 12,
+                    ManualHeight = 16,
                     ManualDiameter = 0,
 					ManualLeftX = 0,
 					ManualLeftY = 0,
@@ -316,7 +313,7 @@ namespace Planetside
 				BehaviorSpeculator behaviorSpeculator = EnemyDatabase.GetOrLoadByGuid("43426a2e39584871b287ac31df04b544").behaviorSpeculator;
 				bs.OverrideBehaviors = behaviorSpeculator.OverrideBehaviors;
 				bs.OtherBehaviors = behaviorSpeculator.OtherBehaviors;
-				shootpoint = new GameObject("fuck");
+				var shootpoint = new GameObject("fuck");
 				shootpoint.transform.parent = companion.transform;
 				shootpoint.transform.position = companion.sprite.WorldCenter;
 				GameObject m_CachedGunAttachPoint = companion.transform.Find("fuck").gameObject;
@@ -537,7 +534,6 @@ namespace Planetside
 					LootEngine.DoDefaultItemPoof(base.aiActor.sprite.WorldCenter, false, true);
 				};
 			}
-
 		}
 	}
 }

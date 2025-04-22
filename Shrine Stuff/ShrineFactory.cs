@@ -14,22 +14,16 @@ namespace GungeonAPI
 	{
 		public static void Init()
 		{
-			bool initialized = ShrineFactory.m_initialized;
-			bool flag = !initialized;
-			if (flag)
+			if (!ShrineFactory.m_initialized)
 			{
 				DungeonHooks.OnFoyerAwake += ShrineFactory.PlaceBreachShrines;
 				DungeonHooks.OnPreDungeonGeneration += delegate (LoopDungeonGenerator generator, Dungeon dungeon, DungeonFlow flow, int dungeonSeed)
 				{
-					bool flag2 = flow.name != "Foyer Flow" && !GameManager.IsReturningToFoyerWithPlayer;
-					bool flag3 = flag2;
-					if (flag3)
+					if (flow.name != "Foyer Flow" && !GameManager.IsReturningToFoyerWithPlayer)
 					{
 						foreach (ShrineFactory.CustomShrineController customShrineController in UnityEngine.Object.FindObjectsOfType<ShrineFactory.CustomShrineController>())
 						{
-							bool flag4 = !ShrineFakePrefab.IsFakePrefab(customShrineController);
-							bool flag5 = flag4;
-							if (flag5)
+							if (!ShrineFakePrefab.IsFakePrefab(customShrineController))
 							{
 								UnityEngine.Object.Destroy(customShrineController.gameObject);
 							}
@@ -206,8 +200,9 @@ namespace GungeonAPI
 				customShrineController.acceptText = this.acceptText;
 				customShrineController.declineText = this.declineText;
 				customShrineController.HasRoomIcon = HasRoomIcon;
+                customShrineController.OnPreInteract = OnPreInteract;
 
-				if(roomIcon == null)
+                if (roomIcon == null)
 				{
 
                     if (!string.IsNullOrEmpty(RoomIconSpritePath))
@@ -266,7 +261,9 @@ namespace GungeonAPI
 					simpleShrine.talkPoint = transform;
 					simpleShrine.roomIcon = customShrineController.roomIcon;
 					simpleShrine.HasRoomIcon = HasRoomIcon;
-					item = simpleShrine;
+                    simpleShrine.OnPreInteract = OnPreInteract;
+
+                    item = simpleShrine;
 				}
 				GameObject gameObject2 = ShrineFakePrefab.Clone(gameObject);
 				gameObject2.GetComponent<ShrineFactory.CustomShrineController>().Copy(customShrineController);
@@ -498,6 +495,7 @@ namespace GungeonAPI
 				customShrineController.acceptText = this.acceptText;
 				customShrineController.declineText = this.declineText;
 				customShrineController.HasRoomIcon = HasRoomIcon;
+                customShrineController.OnPreInteract = OnPreInteract;
 
                 if (roomIcon == null)
 				{
@@ -552,7 +550,9 @@ namespace GungeonAPI
 					simpleShrine.talkPoint = transform;
 					simpleShrine.roomIcon = customShrineController.roomIcon;
 					simpleShrine.HasRoomIcon = HasRoomIcon;
-					item = simpleShrine;
+                    simpleShrine.OnPreInteract = OnPreInteract;
+
+                    item = simpleShrine;
 				}
 
 				if (AdditionalComponent != null)
@@ -614,7 +614,102 @@ namespace GungeonAPI
 					this.colliderSize = new IntVector2(intVector.x, intVector.y / 2);
 				}
 				SpeculativeRigidbody speculativeRigidbody = component.SetUpSpeculativeRigidbody(this.colliderOffset, this.colliderSize);
-				ShrineFactory.CustomShrineController customShrineController = gameObject.AddComponent<ShrineFactory.CustomShrineController>();
+
+                speculativeRigidbody.PixelColliders.Add(new PixelCollider
+                {
+                    ColliderGenerationMode = PixelCollider.PixelColliderGeneration.Manual,
+                    CollisionLayer = CollisionLayer.PlayerBlocker,
+                    IsTrigger = false,
+                    BagleUseFirstFrameOnly = false,
+                    SpecifyBagelFrame = string.Empty,
+                    BagelColliderNumber = 0,
+                    ManualOffsetX = this.colliderOffset.x,
+                    ManualOffsetY = this.colliderOffset.y,
+                    ManualWidth = this.colliderSize.x,
+                    ManualHeight = this.colliderSize.y,
+                    ManualDiameter = 0,
+                    ManualLeftX = 0,
+                    ManualLeftY = 0,
+                    ManualRightX = 0,
+                    ManualRightY = 0,
+                });
+                speculativeRigidbody.PixelColliders.Add(new PixelCollider
+                {
+
+                    ColliderGenerationMode = PixelCollider.PixelColliderGeneration.Manual,
+                    CollisionLayer = CollisionLayer.EnemyBlocker,
+                    IsTrigger = false,
+                    BagleUseFirstFrameOnly = false,
+                    SpecifyBagelFrame = string.Empty,
+                    BagelColliderNumber = 0,
+                    ManualOffsetX = this.colliderOffset.x,
+                    ManualOffsetY = this.colliderOffset.y,
+                    ManualWidth = this.colliderSize.x,
+                    ManualHeight = this.colliderSize.y,
+                    ManualDiameter = 0,
+                    ManualLeftX = 0,
+                    ManualLeftY = 0,
+                    ManualRightX = 0,
+                    ManualRightY = 0,
+                });
+                speculativeRigidbody.PixelColliders.Add(new PixelCollider
+                {
+                    ColliderGenerationMode = PixelCollider.PixelColliderGeneration.Manual,
+                    CollisionLayer = CollisionLayer.BulletBlocker,
+                    IsTrigger = false,
+                    BagleUseFirstFrameOnly = false,
+                    SpecifyBagelFrame = string.Empty,
+                    BagelColliderNumber = 0,
+                    ManualOffsetX = this.colliderOffset.x,
+                    ManualOffsetY = this.colliderOffset.y,
+                    ManualWidth = this.colliderSize.x,
+                    ManualHeight = this.colliderSize.y,
+                    ManualDiameter = 0,
+                    ManualLeftX = 0,
+                    ManualLeftY = 0,
+                    ManualRightX = 0,
+                    ManualRightY = 0,
+                });
+                speculativeRigidbody.PixelColliders.Add(new PixelCollider
+                {
+                    ColliderGenerationMode = PixelCollider.PixelColliderGeneration.Manual,
+                    CollisionLayer = CollisionLayer.EnemyBulletBlocker,
+                    IsTrigger = false,
+                    BagleUseFirstFrameOnly = false,
+                    SpecifyBagelFrame = string.Empty,
+                    BagelColliderNumber = 0,
+                    ManualOffsetX = this.colliderOffset.x,
+                    ManualOffsetY = this.colliderOffset.y,
+                    ManualWidth = this.colliderSize.x,
+                    ManualHeight = this.colliderSize.y,
+                    ManualDiameter = 0,
+                    ManualLeftX = 0,
+                    ManualLeftY = 0,
+                    ManualRightX = 0,
+                    ManualRightY = 0,
+                });
+                speculativeRigidbody.PixelColliders.Add(new PixelCollider
+                {
+                    ColliderGenerationMode = PixelCollider.PixelColliderGeneration.Manual,
+                    CollisionLayer = CollisionLayer.BeamBlocker,
+                    IsTrigger = false,
+                    BagleUseFirstFrameOnly = false,
+                    SpecifyBagelFrame = string.Empty,
+                    BagelColliderNumber = 0,
+                    ManualOffsetX = this.colliderOffset.x,
+                    ManualOffsetY = this.colliderOffset.y,
+                    ManualWidth = this.colliderSize.x,
+                    ManualHeight = this.colliderSize.y,
+                    ManualDiameter = 0,
+                    ManualLeftX = 0,
+                    ManualLeftY = 0,
+                    ManualRightX = 0,
+                    ManualRightY = 0,
+                });
+
+
+
+                ShrineFactory.CustomShrineController customShrineController = gameObject.AddComponent<ShrineFactory.CustomShrineController>();
 				customShrineController.ID = text;
 				customShrineController.roomStyles = this.roomStyles;
 				customShrineController.isBreachShrine = true;
@@ -628,7 +723,9 @@ namespace GungeonAPI
 				customShrineController.acceptText = this.acceptText;
 				customShrineController.declineText = this.declineText;
 				customShrineController.HasRoomIcon = HasRoomIcon;
-				if (!string.IsNullOrEmpty(RoomIconSpritePath))
+                customShrineController.OnPreInteract = OnPreInteract;
+
+                if (!string.IsNullOrEmpty(RoomIconSpritePath))
 				{
 					GameObject OptionalMinimapIcon = SpriteBuilder.SpriteFromResource(RoomIconSpritePath);
 					UnityEngine.Object.DontDestroyOnLoad(OptionalMinimapIcon);
@@ -657,8 +754,10 @@ namespace GungeonAPI
 					simpleShrine.roomIcon = customShrineController.roomIcon;
 					simpleShrine.talkPoint = transform;
 					simpleShrine.HasRoomIcon = HasRoomIcon;
-				}
-				else
+                    simpleShrine.OnPreInteract = OnPreInteract;
+
+                }
+                else
 				{
 					gameObject.AddComponent(this.interactableComponent);
 				}
@@ -843,7 +942,10 @@ namespace GungeonAPI
 
 		public Action<PlayerController, GameObject> OnDecline;
 
-		public Func<PlayerController, GameObject, bool> CanUse;
+        public Action<PlayerController, SimpleInteractable> OnPreInteract;
+
+
+        public Func<PlayerController, GameObject, bool> CanUse;
 
 		public Vector3 talkPointOffset;
 
@@ -905,7 +1007,8 @@ namespace GungeonAPI
 					component.roomIcon = this.roomIcon;
 					component.HasRoomIcon = this.HasRoomIcon;
 					component.roomIcon = this.roomIcon;
-				}
+					component.OnPreInteract = this.OnPreInteract;
+                }
 			}
 
 			public void Copy(ShrineFactory.CustomShrineController other)
@@ -924,17 +1027,24 @@ namespace GungeonAPI
 				this.declineText = other.declineText;
 				this.roomIcon = other.roomIcon;
 				this.HasRoomIcon = other.HasRoomIcon;
-			}
+				this.OnPreInteract = other.OnPreInteract;
+
+            }
 
 			public void ConfigureOnPlacement(RoomHandler room)
 			{
 				this.m_parentRoom = room;
 				this.RegisterMinimapIcon();
-			}
+
+            }
 
 			public void RegisterMinimapIcon()
 			{
-				if (HasRoomIcon == true) { this.m_instanceMinimapIcon = Minimap.Instance.RegisterRoomIcon(this.m_parentRoom, this.roomIcon, false); }
+				if (HasRoomIcon == true) 
+				{
+					this.m_instanceMinimapIcon = Minimap.Instance.RegisterRoomIcon(this.m_parentRoom, this.roomIcon, false);
+				}
+
 			}
 
 			public void GetRidOfMinimapIcon()
@@ -967,7 +1077,10 @@ namespace GungeonAPI
 
 			public Action<PlayerController, GameObject> OnDecline;
 
-			public Func<PlayerController, GameObject, bool> CanUse;
+            public Action<PlayerController, SimpleInteractable> OnPreInteract;
+
+
+            public Func<PlayerController, GameObject, bool> CanUse;
 
 			private RoomHandler m_parentRoom;
 

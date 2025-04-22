@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine;
 using Dungeonator;
+using System.Linq;
 namespace GungeonAPI
 {
 	public class SimpleShrine : SimpleInteractable, IPlayerInteractable
@@ -17,8 +18,13 @@ namespace GungeonAPI
 				instanceRoom = GameManager.Instance.Dungeon.data.GetAbsoluteRoomFromPosition(base.transform.position.IntXY(VectorConversions.Floor));
 				if (instanceRoom == null) { return; }
 				if (roomIcon == null) { return; }
+				if (!instanceRoom.interactableObjects.Contains(this))
+				{
+                    instanceRoom.RegisterInteractable(this);
 
-				this.instanceMinimapIcon = Minimap.Instance.RegisterRoomIcon(instanceRoom, roomIcon ?? (GameObject)BraveResources.Load("Global Prefabs/Minimap_Shrine_Icon", ".prefab"), false);
+                }
+
+                this.instanceMinimapIcon = Minimap.Instance.RegisterRoomIcon(instanceRoom, roomIcon ?? (GameObject)BraveResources.Load("Global Prefabs/Minimap_Shrine_Icon", ".prefab"), false);
 			}
 		}
 		public RoomHandler instanceRoom;
@@ -26,9 +32,8 @@ namespace GungeonAPI
 
 		public void Interact(PlayerController interactor)
 		{
-			bool flag = TextBoxManager.HasTextBox(this.talkPoint);
-			bool flag2 = !flag;
-			if (flag2)
+			OnPreInteract?.Invoke(interactor, this);
+            if (!TextBoxManager.HasTextBox(this.talkPoint))
 			{		
 				this.m_canUse = ((this.CanUse != null) ? this.CanUse(interactor, base.gameObject) : this.m_canUse);
 				base.StartCoroutine(this.HandleConversation(interactor));
@@ -45,21 +50,15 @@ namespace GungeonAPI
 			int selectedResponse = -1;
 			interactor.SetInputOverride("shrineConversation");
 			yield return null;
-			bool flag = !this.m_canUse;
-			bool flag5 = flag;
-			if (flag5)
+			if (!this.m_canUse)
 			{
 				GameUIRoot.Instance.DisplayPlayerConversationOptions(interactor, null, this.declineText, string.Empty);
 			}
 			else
 			{
-				bool isToggle = this.isToggle;
-				bool flag6 = isToggle;
-				if (flag6)
+				if (this.isToggle)
 				{
-					bool isToggled = this.m_isToggled;
-					bool flag7 = isToggled;
-					if (flag7)
+					if (this.m_isToggled)
 					{
 						GameUIRoot.Instance.DisplayPlayerConversationOptions(interactor, null, this.declineText, string.Empty);
 					}
@@ -133,10 +132,8 @@ namespace GungeonAPI
 
 		public float GetDistanceToPoint(Vector2 point)
 		{
-			bool flag = base.sprite == null;
-			bool flag2 = flag;
 			float result;
-			if (flag2)
+			if (base.sprite == null)
 			{
 				result = 100f;
 			}

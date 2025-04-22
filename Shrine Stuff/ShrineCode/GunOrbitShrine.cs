@@ -8,6 +8,7 @@ using UnityEngine;
 using static GungeonAPI.ShrineFactory;
 using Dungeonator;
 using System.Collections;
+using DaikonForge.Tween;
 
 namespace Planetside
 {
@@ -15,12 +16,13 @@ namespace Planetside
 	{
 		public static void Add()
 		{
+			
 			ShrineFactory OHFUUCK = new ShrineFactory
 			{
 
 				name = "GunOrbitingShrine",
 				modID = "psog",
-				text = "A shrine dedicated to an old gunslinger, who could sling guns with such proficiency that they fired while in mid-air.",
+				text = "A shrine dedicated to a forgotten demi-lich, who practiced the art of gun slinging to a level of mastery previously unheard of.",
 				spritePath = "Planetside/Resources/Shrines/GunOrbitShrinel.png",
 				RoomWeight = 2f,
 				acceptText = "Grant an offering to bestow similar power.",
@@ -39,13 +41,84 @@ namespace Planetside
 				preRequisites = new DungeonPrerequisite[0],
 				ShrinePercentageChance = 0.2f,
 			};
-			GunShrine = OHFUUCK.BuildWithoutBaseGameInterference();
+            OHFUUCK.OnPreInteract += (player, shrineController) =>
+            {
+
+                if (shrineController.GetComponent<CustomShrineController>().numUses == 1)
+				{
+					shrineController.GetComponent<CustomShrineController>().text = "The spririts that have once inhabited this shrine have now departed.";
+                    return;
+				}
+
+
+                shrineController.acceptText = "Grant an offering to bestow similar power.";
+                Gun currentGun = player.CurrentGun;
+                PickupObject.ItemQuality quality = currentGun.quality;
+                int armorInt = Convert.ToInt32(player.healthHaver.Armor);
+                float num = (player.stats.GetStatValue(PlayerStats.StatType.Health));
+
+                if (currentGun.InfiniteAmmo == false)
+                {
+
+                    if (player.name == "PlayerShade(Clone)")
+                    {
+                        shrineController.acceptText = "Grant an offering to bestow similar power. <Reduce Max Ammo>";
+
+                    }
+                    else
+                    {
+
+                        bool DorC = currentGun.quality == PickupObject.ItemQuality.D | currentGun.quality == PickupObject.ItemQuality.C | currentGun.quality == PickupObject.ItemQuality.B;
+                        if (DorC)
+                        {
+
+                            if (player.ForceZeroHealthState == true)
+                            {
+                                shrineController.acceptText = "Grant an offering to bestow similar power. <Lose 2 [sprite \"armor_money_icon_001\"]>";
+                            }
+                            else
+                            {
+
+                                shrineController.acceptText = "Grant an offering to bestow similar power. <Remove [sprite \"heart_big_idle_001\"]>";
+                            }
+                        }
+                        bool Sonly = currentGun.quality == PickupObject.ItemQuality.A | currentGun.quality == PickupObject.ItemQuality.S;
+                        if (Sonly)
+                        {
+                            if (player.ForceZeroHealthState == true)
+                            {
+                                shrineController.acceptText = "Grant an offering to bestow similar power. <Lose 4 [sprite \"armor_money_icon_001\"]>";
+                            }
+                            else
+                            {
+
+                                shrineController.acceptText = "Grant an offering to bestow similar power. <Remove 2 [sprite \"heart_big_idle_001\"]>";
+                            }
+                        }
+                    }
+
+                }
+            };
+            GunShrine = OHFUUCK.BuildWithoutBaseGameInterference();
+			var t = GunShrine.AddComponent<SimpleShrine>();
+            
+			Alexandria.DungeonAPI.StaticReferences.customObjects.Add("psog:gunorbitshrine", GunShrine);
+
+
+			
 		}
 		public static GameObject GunShrine;
 
+
+		
+
 		public static bool CanUse(PlayerController player, GameObject shrine)
 		{
-			Gun currentGun = player.CurrentGun;
+
+			//[sprite \"armor_money_icon_001\"] --  [sprite \"heart_big_idle_001\"]
+			var shrineController = shrine.GetComponent<CustomShrineController>();
+			shrineController.acceptText = "Grant an offering to bestow similar power.";
+            Gun currentGun = player.CurrentGun;
 			PickupObject.ItemQuality quality = currentGun.quality;
 			int armorInt = Convert.ToInt32(player.healthHaver.Armor);	
 			float num = 0f;
@@ -63,17 +136,19 @@ namespace Planetside
 					if (Sonly)
 					{
 						return shrine.GetComponent<CustomShrineController>().numUses == 0;
-
 					}
-				}
-				else
+                    shrineController.acceptText = "Grant an offering to bestow similar power. <Reduce Max Ammo>";
+
+                }
+                else
 				{
 					bool DorC = currentGun.quality == PickupObject.ItemQuality.D | currentGun.quality == PickupObject.ItemQuality.C | currentGun.quality == PickupObject.ItemQuality.B;
 					if (DorC)
 					{
 						if (player.characterIdentity == PlayableCharacters.Robot)
 						{
-							return shrine.GetComponent<CustomShrineController>().numUses == 0 && armorInt > 2;
+                            shrineController.acceptText = "Grant an offering to bestow similar power. <Lose 2 [sprite \"armor_money_icon_001\"]>";
+                            return shrine.GetComponent<CustomShrineController>().numUses == 0 && armorInt > 2;
 						}
 						else if (player.characterIdentity == PlayableCharacters.Robot)
 						{
@@ -81,7 +156,8 @@ namespace Planetside
 						}
 						else
 						{
-							return shrine.GetComponent<CustomShrineController>().numUses == 0 && player.stats.GetStatValue(PlayerStats.StatType.Health) > 1;
+                            shrineController.acceptText = "Grant an offering to bestow similar power. <Remove [sprite \"heart_big_idle_001\"]>";
+                            return shrine.GetComponent<CustomShrineController>().numUses == 0 && player.stats.GetStatValue(PlayerStats.StatType.Health) > 1;
 						}
 					}
 					bool Sonly = currentGun.quality == PickupObject.ItemQuality.A | currentGun.quality == PickupObject.ItemQuality.S;
@@ -89,11 +165,13 @@ namespace Planetside
 					{
 						if (player.characterIdentity == PlayableCharacters.Robot)
 						{
-							return shrine.GetComponent<CustomShrineController>().numUses == 0 && armorInt > 4;
+                            shrineController.acceptText = "Grant an offering to bestow similar power. <Lose 4 [sprite \"armor_money_icon_001\"]>";
+                            return shrine.GetComponent<CustomShrineController>().numUses == 0 && armorInt > 4;
 						}
 						else
 						{
-							return shrine.GetComponent<CustomShrineController>().numUses == 0 && player.stats.GetStatValue(PlayerStats.StatType.Health) > 2;
+                            shrineController.acceptText = "Grant an offering to bestow similar power. <Remove 2 [sprite \"heart_big_idle_001\"]>";
+                            return shrine.GetComponent<CustomShrineController>().numUses == 0 && player.stats.GetStatValue(PlayerStats.StatType.Health) > 2;
 						}
 					}
 				}
@@ -146,9 +224,9 @@ namespace Planetside
 			hover.ChanceToConsumeTargetGunAmmo = 0f;
 			hover.Position = HoveringGunController.HoverPosition.CIRCULATE;
 			hover.Aim = HoveringGunController.AimType.PLAYER_AIM;
-			hover.Trigger = HoveringGunController.FireType.ON_RELOAD;
-			hover.CooldownTime = 1f;
-			hover.ShootDuration = 1f;
+			hover.Trigger = HoveringGunController.FireType.ON_FIRED_GUN;
+			hover.CooldownTime = gun.DefaultModule.cooldownTime * 1.75f;
+			hover.ShootDuration = ((float)gun.DefaultModule.numberOfShotsInClip * gun.DefaultModule.cooldownTime) * 0.4f;
 			hover.OnlyOnEmptyReload = false;
 			hover.Initialize(gun, player);
 			player.ownerlessStatModifiers.Add(item2);

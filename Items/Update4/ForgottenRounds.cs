@@ -32,8 +32,8 @@ namespace Planetside
 
             //warVase.AddAsChamberGunMastery("PlanetsideOfGunymede", 4);
             SynergyAPI.SynergyBuilder.AddItemToSynergy(warVase, CustomSynergyType.MASTERS_CHAMBERS);
-			ItemBuilder.AddPassiveStatModifier(warVase, PlayerStats.StatType.Damage, 0.075f, StatModifier.ModifyMethod.ADDITIVE);
-			ForgottenRoundOubliette.ForgottenRoundOublietteID = warVase.PickupObjectId;
+            ItemBuilder.AddPassiveStatModifier(warVase, PlayerStats.StatType.Damage, 0.1f, StatModifier.ModifyMethod.ADDITIVE);
+            ForgottenRoundOubliette.ForgottenRoundOublietteID = warVase.PickupObjectId;
 			EncounterDatabase.GetEntry(warVase.encounterTrackable.EncounterGuid).usesPurpleNotifications = true;
             CustomActions.OnRewardPedestalDetermineContents += OnMasteryDetermineContents;
         }
@@ -80,8 +80,8 @@ namespace Planetside
             SynergyAPI.SynergyBuilder.AddItemToSynergy(warVase, CustomSynergyType.MASTERS_CHAMBERS);
             Alexandria.DungeonAPI.MasteryOverrideHandler.RegisterFloorForMasterySpawn(MasteryOverrideHandler.ViableRegisterFloors.ABBEY);
 
-            ItemBuilder.AddPassiveStatModifier(warVase, PlayerStats.StatType.Damage, 0.075f, StatModifier.ModifyMethod.ADDITIVE);
-			ForgottenRoundAbbey.ForgottenRoundAbbeyID = warVase.PickupObjectId;
+            ItemBuilder.AddPassiveStatModifier(warVase, PlayerStats.StatType.Damage, 0.1f, StatModifier.ModifyMethod.ADDITIVE);
+            ForgottenRoundAbbey.ForgottenRoundAbbeyID = warVase.PickupObjectId;
 			EncounterDatabase.GetEntry(warVase.encounterTrackable.EncounterGuid).usesPurpleNotifications = true;
             CustomActions.OnRewardPedestalDetermineContents += OnMasteryDetermineContents;
         }
@@ -129,7 +129,7 @@ namespace Planetside
             //warVase.AddAsChamberGunMastery("PlanetsideOfGunymede", 2048);
             SynergyAPI.SynergyBuilder.AddItemToSynergy(warVase, CustomSynergyType.MASTERS_CHAMBERS);
 
-			ItemBuilder.AddPassiveStatModifier(warVase, PlayerStats.StatType.Damage, 0.075f, StatModifier.ModifyMethod.ADDITIVE);
+			ItemBuilder.AddPassiveStatModifier(warVase, PlayerStats.StatType.Damage, 0.1f, StatModifier.ModifyMethod.ADDITIVE);
 			ForgottenRoundRNG.ForgottenRoundRNGID = warVase.PickupObjectId;
 			EncounterDatabase.GetEntry(warVase.encounterTrackable.EncounterGuid).usesPurpleNotifications = true;
             CustomActions.OnRewardPedestalDetermineContents += OnMasteryDetermineContents;

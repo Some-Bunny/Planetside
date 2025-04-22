@@ -20,13 +20,6 @@ namespace Planetside
 	{
 		public static GameObject prefab;
 		public static readonly string guid = "Fungannon";
-		public static GameObject shootpoint;
-
-		public static GameObject Cannon1;
-		public static GameObject Cannon2;
-		public static GameObject Cannon3;
-		public static GameObject Cannon4;
-
 		public static List<int> spriteIds2 = new List<int>();
 
 		public static void Init()
@@ -586,27 +579,27 @@ namespace Planetside
 				enemy.aiActor.PreventBlackPhantom = false;
 
 
-				shootpoint = new GameObject("CentreOfAllCannons");
+				var shootpoint = new GameObject("CentreOfAllCannons");
 				shootpoint.transform.parent = enemy.transform;
 				shootpoint.transform.position = new Vector2(2.875f, 2.875f);
 				GameObject CentreOfAllCannons = enemy.transform.Find("CentreOfAllCannons").gameObject;
 
-				Cannon1 = new GameObject("CannonNorth");
+				var Cannon1 = new GameObject("CannonNorth");
 				Cannon1.transform.parent = enemy.transform;
 				Cannon1.transform.position = new Vector2(2.875f, 2.75f);
 				GameObject CannonNorth = enemy.transform.Find("CannonNorth").gameObject;
 
-				Cannon2 = new GameObject("CannonEast");
+				var Cannon2 = new GameObject("CannonEast");
 				Cannon2.transform.parent = enemy.transform;
 				Cannon2.transform.position = new Vector2(5.125f, 2.625f);
 				GameObject CannonEast= enemy.transform.Find("CannonEast").gameObject;
 
-				Cannon3 = new GameObject("CannonSouth");
+				var Cannon3 = new GameObject("CannonSouth");
 				Cannon3.transform.parent = enemy.transform;
 				Cannon3.transform.position = new Vector2(2.875f, 3.1875f);
 				GameObject CannonSouth = enemy.transform.Find("CannonSouth").gameObject;
 
-				Cannon4 = new GameObject("CannonWest");
+				var Cannon4 = new GameObject("CannonWest");
 				Cannon4.transform.parent = enemy.transform;
 				Cannon4.transform.position = new Vector2(0.625f, 2.625f);
 				GameObject CannonWest = enemy.transform.Find("CannonWest").gameObject;
