@@ -60,6 +60,8 @@ namespace Planetside
 
 
         public override CustomTrackedStats StatToIncreaseOnPickup => SaveAPI.CustomTrackedStats.AMOUNT_BOUGHT_ALLSEEINGEYE;
+        public override CustomTrackedStats SessionStatToIncreaseOnPickup => SaveAPI.CustomTrackedStats.AMOUNT_BOUGHT_ALLSEEINGEYE_SESSION;
+
         public override List<PerkDisplayContainer> perkDisplayContainers => new List<PerkDisplayContainer>()
         {
                 new PerkDisplayContainer()
@@ -105,6 +107,7 @@ namespace Planetside
             if (m_hasBeenPickedUp)
                 return;
             SaveAPI.AdvancedGameStatsManager.Instance.RegisterStatChange(StatToIncreaseOnPickup, 1);
+            SaveAPIManager.RegisterStatChange(SessionStatToIncreaseOnPickup, 1);
 
             AkSoundEngine.PostEvent("Play_OBJ_dice_bless_01", player.gameObject);
 

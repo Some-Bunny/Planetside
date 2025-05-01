@@ -96,92 +96,7 @@ namespace Planetside
                 if (player.HasPassiveItem(GunWarrantID))
                 {
                     //Yes I got lazy here, fight me
-                    if (self.baseShopType == BaseShopController.AdditionalShopType.NONE && self.cat == true)
-                    {
-                        Type type = typeof(BaseShopController); FieldInfo _property = type.GetField("m_shopItems", BindingFlags.NonPublic | BindingFlags.Instance); _property.GetValue(self);
-                        List<GameObject> uses = (List<GameObject>)_property.GetValue(self);
-                        Gun gun = PickupObjectDatabase.GetRandomGun();
-                        GameObject gunObj = gun.gameObject;
-
-                        uses.Add(gunObj);
-                        GameObject gameObject8 = new GameObject("Shop 2 item ");
-                        Transform transform4 = gameObject8.transform;
-
-                        GameObject transObj = new GameObject();
-                        transObj.transform.position = PlanetsideReflectionHelper.ReflectGetField<Transform[]>(typeof(BaseShopController), "spawnPositionsGroup2", self).Last().position + new Vector3(0, -3.125f);
-                        transform4.position = transObj.transform.position;
-                        transform4.parent = transObj.transform;
-
-                        EncounterTrackable component9 = gunObj.GetComponent<EncounterTrackable>();
-                        if (component9 != null)
-                        {
-                            GameManager.Instance.ExtantShopTrackableGuids.Add(component9.EncounterGuid);
-                        }
-                        GameLevelDefinition lastLoadedLevelDefinition = GameManager.Instance.GetLastLoadedLevelDefinition();
-                        float num4 = (lastLoadedLevelDefinition == null) ? 1f : lastLoadedLevelDefinition.priceMultiplier;
-
-                        ShopItemController shopItemController2 = gameObject8.AddComponent<ShopItemController>();
-
-                        PlanetsideReflectionHelper.InvokeMethod(typeof(BaseShopController), "AssignItemFacing", self, new object[] { PlanetsideReflectionHelper.ReflectGetField<Transform[]>(typeof(BaseShopController), "spawnPositionsGroup2", self).Last(), shopItemController2 });
-
-                        RoomHandler theRoom = PlanetsideReflectionHelper.ReflectGetField<RoomHandler>(typeof(BaseShopController), "m_room", self);
-                        if (!theRoom.IsRegistered(shopItemController2))
-                        {
-                            theRoom.RegisterInteractable(shopItemController2);
-                        }
-                        shopItemController2.Initialize(gunObj.GetComponent<PickupObject>(), self);
-
-                        Type typeOne = typeof(BaseShopController); FieldInfo _propertyOne = typeOne.GetField("m_itemControllers", BindingFlags.NonPublic | BindingFlags.Instance); _propertyOne.GetValue(self);
-                        List<ShopItemController> listOCont = (List<ShopItemController>)_propertyOne.GetValue(self);
-                        listOCont.Add(shopItemController2);
-
-                        FieldInfo leEnabler = typeof(BaseShopController).GetField("m_shopItems", BindingFlags.Instance | BindingFlags.NonPublic);
-                        leEnabler.SetValue(self, uses);
-
-                    }
-                    if (self.baseShopType == BaseShopController.AdditionalShopType.BLACKSMITH)
-                    {
-                        Type type = typeof(BaseShopController); FieldInfo _property = type.GetField("m_shopItems", BindingFlags.NonPublic | BindingFlags.Instance); _property.GetValue(self);
-                        List<GameObject> uses = (List<GameObject>)_property.GetValue(self);
-                        Gun gun = PickupObjectDatabase.GetRandomGun();
-                        GameObject gunObj = gun.gameObject;
-
-                        uses.Add(gunObj);
-                        GameObject gameObject8 = new GameObject("Shop 2 item ");
-                        Transform transform4 = gameObject8.transform;
-
-                        GameObject transObj = new GameObject();
-                        transObj.transform.position = PlanetsideReflectionHelper.ReflectGetField<Transform[]>(typeof(BaseShopController), "spawnPositionsGroup2", self).Last().position + new Vector3(-3f, 2.25f);
-                        transform4.position = transObj.transform.position;
-                        transform4.parent = transObj.transform;
-
-                        EncounterTrackable component9 = gunObj.GetComponent<EncounterTrackable>();
-                        if (component9 != null)
-                        {
-                            GameManager.Instance.ExtantShopTrackableGuids.Add(component9.EncounterGuid);
-                        }
-                        GameLevelDefinition lastLoadedLevelDefinition = GameManager.Instance.GetLastLoadedLevelDefinition();
-                        float num4 = (lastLoadedLevelDefinition == null) ? 1f : lastLoadedLevelDefinition.priceMultiplier;
-
-                        ShopItemController shopItemController2 = gameObject8.AddComponent<ShopItemController>();
-
-
-                        PlanetsideReflectionHelper.InvokeMethod(typeof(BaseShopController), "AssignItemFacing", self, new object[] { PlanetsideReflectionHelper.ReflectGetField<Transform[]>(typeof(BaseShopController), "spawnPositionsGroup2", self).Last(), shopItemController2 });
-
-                        RoomHandler theRoom = PlanetsideReflectionHelper.ReflectGetField<RoomHandler>(typeof(BaseShopController), "m_room", self);
-                        if (!theRoom.IsRegistered(shopItemController2))
-                        {
-                            theRoom.RegisterInteractable(shopItemController2);
-                        }
-                        shopItemController2.Initialize(gunObj.GetComponent<PickupObject>(), self);
-
-                        Type typeOne = typeof(BaseShopController); FieldInfo _propertyOne = typeOne.GetField("m_itemControllers", BindingFlags.NonPublic | BindingFlags.Instance); _propertyOne.GetValue(self);
-                        List<ShopItemController> listOCont = (List<ShopItemController>)_propertyOne.GetValue(self);
-                        listOCont.Add(shopItemController2);
-
-                        FieldInfo leEnabler = typeof(BaseShopController).GetField("m_shopItems", BindingFlags.Instance | BindingFlags.NonPublic);
-                        leEnabler.SetValue(self, uses);
-                    }
+                    ProcessShop(self);
                 }
             }             
         }
@@ -219,10 +134,113 @@ namespace Planetside
                 {
                     player.inventory.AllGuns[i].GainAmmo(Mathf.FloorToInt((float)player.inventory.AllGuns[i].AdjustedMaxAmmo));
                 }
+                var t = FindObjectsOfType<BaseShopController>();
+                if (t != null && t.Count() > 0)
+                {
+                    foreach (var self in t)
+                    {
+                        ProcessShop(self);
+                    }
+                }
             }
             //player.OnEnteredCombat = (Action)Delegate.Combine(player.OnEnteredCombat, new Action(this.Warrant));
             base.Pickup(player);
 		}
+
+        public static void ProcessShop(BaseShopController self)
+        {
+
+            if (self.baseShopType == BaseShopController.AdditionalShopType.NONE && self.cat == true)
+            {
+                Type type = typeof(BaseShopController); FieldInfo _property = type.GetField("m_shopItems", BindingFlags.NonPublic | BindingFlags.Instance); _property.GetValue(self);
+                List<GameObject> uses = (List<GameObject>)_property.GetValue(self);
+                Gun gun = PickupObjectDatabase.GetRandomGun();
+                GameObject gunObj = gun.gameObject;
+
+                uses.Add(gunObj);
+                GameObject gameObject8 = new GameObject("Shop 2 item ");
+                Transform transform4 = gameObject8.transform;
+
+                GameObject transObj = new GameObject();
+                transObj.transform.position = PlanetsideReflectionHelper.ReflectGetField<Transform[]>(typeof(BaseShopController), "spawnPositionsGroup2", self).Last().position + new Vector3(0, -3.3125f);
+                transform4.position = transObj.transform.position;
+                transform4.parent = transObj.transform;
+
+                EncounterTrackable component9 = gunObj.GetComponent<EncounterTrackable>();
+                if (component9 != null)
+                {
+                    GameManager.Instance.ExtantShopTrackableGuids.Add(component9.EncounterGuid);
+                }
+                GameLevelDefinition lastLoadedLevelDefinition = GameManager.Instance.GetLastLoadedLevelDefinition();
+                float num4 = (lastLoadedLevelDefinition == null) ? 1f : lastLoadedLevelDefinition.priceMultiplier;
+
+                ShopItemController shopItemController2 = gameObject8.AddComponent<ShopItemController>();
+                shopItemController2.UseOmnidirectionalItemFacing = true;
+                PlanetsideReflectionHelper.InvokeMethod(typeof(BaseShopController), "AssignItemFacing", self, new object[] { PlanetsideReflectionHelper.ReflectGetField<Transform[]>(typeof(BaseShopController), "spawnPositionsGroup2", self).Last(), shopItemController2 });
+
+                RoomHandler theRoom = PlanetsideReflectionHelper.ReflectGetField<RoomHandler>(typeof(BaseShopController), "m_room", self);
+                if (!theRoom.IsRegistered(shopItemController2))
+                {
+                    theRoom.RegisterInteractable(shopItemController2);
+                }
+                shopItemController2.Initialize(gunObj.GetComponent<PickupObject>(), self);
+
+                Type typeOne = typeof(BaseShopController); FieldInfo _propertyOne = typeOne.GetField("m_itemControllers", BindingFlags.NonPublic | BindingFlags.Instance); _propertyOne.GetValue(self);
+                List<ShopItemController> listOCont = (List<ShopItemController>)_propertyOne.GetValue(self);
+                listOCont.Add(shopItemController2);
+
+                FieldInfo leEnabler = typeof(BaseShopController).GetField("m_shopItems", BindingFlags.Instance | BindingFlags.NonPublic);
+                leEnabler.SetValue(self, uses);
+
+                LootEngine.DoDefaultItemPoof(transObj.transform.position);
+            }
+            if (self.baseShopType == BaseShopController.AdditionalShopType.BLACKSMITH)
+            {
+                Type type = typeof(BaseShopController); FieldInfo _property = type.GetField("m_shopItems", BindingFlags.NonPublic | BindingFlags.Instance); _property.GetValue(self);
+                List<GameObject> uses = (List<GameObject>)_property.GetValue(self);
+                Gun gun = PickupObjectDatabase.GetRandomGun();
+                GameObject gunObj = gun.gameObject;
+
+                uses.Add(gunObj);
+                GameObject gameObject8 = new GameObject("Shop 2 item ");
+                Transform transform4 = gameObject8.transform;
+
+                GameObject transObj = new GameObject();
+                transObj.transform.position = PlanetsideReflectionHelper.ReflectGetField<Transform[]>(typeof(BaseShopController), "spawnPositionsGroup2", self).Last().position + new Vector3(-3f, 2.25f);
+                transform4.position = transObj.transform.position;
+                transform4.parent = transObj.transform;
+
+                EncounterTrackable component9 = gunObj.GetComponent<EncounterTrackable>();
+                if (component9 != null)
+                {
+                    GameManager.Instance.ExtantShopTrackableGuids.Add(component9.EncounterGuid);
+                }
+                GameLevelDefinition lastLoadedLevelDefinition = GameManager.Instance.GetLastLoadedLevelDefinition();
+                float num4 = (lastLoadedLevelDefinition == null) ? 1f : lastLoadedLevelDefinition.priceMultiplier;
+
+                ShopItemController shopItemController2 = gameObject8.AddComponent<ShopItemController>();
+                shopItemController2.UseOmnidirectionalItemFacing = true;
+
+
+                PlanetsideReflectionHelper.InvokeMethod(typeof(BaseShopController), "AssignItemFacing", self, new object[] { PlanetsideReflectionHelper.ReflectGetField<Transform[]>(typeof(BaseShopController), "spawnPositionsGroup2", self).Last(), shopItemController2 });
+
+                RoomHandler theRoom = PlanetsideReflectionHelper.ReflectGetField<RoomHandler>(typeof(BaseShopController), "m_room", self);
+                if (!theRoom.IsRegistered(shopItemController2))
+                {
+                    theRoom.RegisterInteractable(shopItemController2);
+                }
+                shopItemController2.Initialize(gunObj.GetComponent<PickupObject>(), self);
+
+                Type typeOne = typeof(BaseShopController); FieldInfo _propertyOne = typeOne.GetField("m_itemControllers", BindingFlags.NonPublic | BindingFlags.Instance); _propertyOne.GetValue(self);
+                List<ShopItemController> listOCont = (List<ShopItemController>)_propertyOne.GetValue(self);
+                listOCont.Add(shopItemController2);
+
+                FieldInfo leEnabler = typeof(BaseShopController).GetField("m_shopItems", BindingFlags.Instance | BindingFlags.NonPublic);
+                leEnabler.SetValue(self, uses);
+                LootEngine.DoDefaultItemPoof(transObj.transform.position);
+
+            }
+        }
 	}
 }
 

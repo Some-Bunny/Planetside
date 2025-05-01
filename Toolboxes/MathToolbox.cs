@@ -110,6 +110,28 @@ namespace Planetside
             // return the vector info
             return _returnVector;
         }
+        public static Vector3 GetUnitOnCircle3(float angleDegrees, float radius)
+        {
+
+            // initialize calculation variables
+            float _x = 0;
+            float _y = 0;
+            float angleRadians = 0;
+            Vector3 _returnVector;
+
+            // convert degrees to radians
+            angleRadians = angleDegrees * Mathf.PI / 180.0f;
+
+            // get the 2D dimensional coordinates
+            _x = radius * Mathf.Cos(angleRadians);
+            _y = radius * Mathf.Sin(angleRadians);
+
+            // derive the 2D vector
+            _returnVector = new Vector3(_x, _y);
+
+            // return the vector info
+            return _returnVector;
+        }
 
         public static float SinLerpTValue(float t)
         {

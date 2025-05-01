@@ -38,7 +38,7 @@ namespace Planetside
             }
             foreach (ProjectileModule mod in gun.Volley.projectiles)
             {
-                mod.ammoCost = 1;
+                mod.ammoCost = 2;
                 if (mod != gun.DefaultModule) { mod.ammoCost = 0; }
                 mod.shootStyle = ProjectileModule.ShootStyle.Beam;
                 mod.sequenceStyle = ProjectileModule.ProjectileSequenceStyle.Random;
@@ -46,9 +46,9 @@ namespace Planetside
                 mod.numberOfShotsInClip = 100;
                 mod.angleVariance = 0;
 
-            List<string> BeamAnimPaths = new List<string>()
+                List<string> BeamAnimPaths = new List<string>()
             { "Planetside/Resources/Beams/MeasuringTape/measuringtape_mid_001"};
-            List<string> EndPaths = new List<string>()
+                List<string> EndPaths = new List<string>()
             {"Planetside/Resources/Beams/MeasuringTape/measuringtape_end_001"};
                 Projectile projectile = UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(86) as Gun).DefaultModule.projectiles[0]);
                 BasicBeamController beamComp = projectile.GenerateBeamPrefab(
@@ -74,21 +74,42 @@ namespace Planetside
                 projectile.gameObject.SetActive(false);
                 FakePrefab.MarkAsFakePrefab(projectile.gameObject);
                 UnityEngine.Object.DontDestroyOnLoad(projectile);
-                projectile.baseData.damage = 30f;
+                projectile.baseData.damage = 22.5f;
                 projectile.baseData.force = 2f;
                 projectile.baseData.range *= 50;
-                projectile.baseData.speed *= 0.66f;
+                projectile.baseData.speed *= 2f;
                 projectile.specRigidbody.CollideWithOthers = false;
                 MeasuringTapeController controller = projectile.gameObject.AddComponent<MeasuringTapeController>();
 
-                beamComp.boneType = BasicBeamController.BeamBoneType.Straight;
+                beamComp.boneType = BasicBeamController.BeamBoneType.Projectile;
 
-               beamComp.startAudioEvent = "Play_OBJ_hook_pull_01";
+                beamComp.startAudioEvent = "Play_OBJ_hook_pull_01";
                 beamComp.projectile.baseData.damage = 10;
                 beamComp.penetration = 0;
                 beamComp.reflections = 5;
                 beamComp.IsReflectedBeam = false;
-
+                beamComp.angularKnockback = true;
+                beamComp.angularKnockbackTiers = new List<BasicBeamController.AngularKnockbackTier>()
+                {
+                    new BasicBeamController.AngularKnockbackTier()
+                    {
+                        ignoreHitRigidbodyTime = 0.5f,
+                        knockbackMultiplier = 3f,
+                        minAngularSpeed = 30,
+                        damageMultiplier = 0.2f,
+                        hitRigidbodyVFX = (PickupObjectDatabase.GetById(610) as Gun).DefaultModule.projectiles[0].GetComponent<BasicBeamController>().angularKnockbackTiers.Last().hitRigidbodyVFX,
+                        additionalAmmoCost = 0
+                    },
+                    new BasicBeamController.AngularKnockbackTier()
+                    {
+                        ignoreHitRigidbodyTime = 0.5f,
+                        knockbackMultiplier = 5f,
+                        minAngularSpeed = 60,
+                        damageMultiplier = 0.4f,
+                        hitRigidbodyVFX = (PickupObjectDatabase.GetById(610) as Gun).DefaultModule.projectiles[0].GetComponent<BasicBeamController>().angularKnockbackTiers.Last().hitRigidbodyVFX,
+                        additionalAmmoCost = 0
+                    }
+                };
                 mod.projectiles[0] = projectile;
 
             }
@@ -157,6 +178,8 @@ namespace Planetside
         {
             this.projectile = base.GetComponent<Projectile>();
             this.basicBeamController = base.GetComponent<BasicBeamController>();
+            if (basicBeamController == null) {return; }
+            this.projectile.OnHitEnemy += OHE;
             /*
             if (this.projectile.Owner is PlayerController)
             {
@@ -164,6 +187,15 @@ namespace Planetside
                 this.owner.PostProcessBeam += Owner_PostProcessBeam;
             }
             */
+        }
+
+        public void OHE(Projectile projectile, SpeculativeRigidbody speculativeRigidbody, bool f)
+        {
+            float amount = basicBeamController.GetBoneCount();
+            if (speculativeRigidbody.aiActor)
+            {
+                speculativeRigidbody.aiActor.healthHaver.ApplyDamage(amount * 0.5f * BraveTime.DeltaTime, Vector2.zero, "oner", CoreDamageTypes.None, DamageCategory.Normal);
+            }
         }
 
         private void Owner_PostProcessBeam(BeamController obj)

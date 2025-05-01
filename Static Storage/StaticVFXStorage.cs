@@ -7,10 +7,11 @@ using UnityEngine;
 using ItemAPI;
 using Gungeon;
 using Alexandria.PrefabAPI;
+using Brave.BulletScript;
 
 namespace Planetside
 {
-    public class StaticVFXStorage
+    public static class StaticVFXStorage
     {
         public static void Init()
         {
@@ -273,12 +274,14 @@ namespace Planetside
 
             //SilencerVFX = (PickupObjectDatabase.GetById(499) as ReusableBlankitem).silencerVFXPrefab;
 
+            WoodBeamImpact = (PickupObjectDatabase.GetById(610) as Gun).DefaultModule.projectiles[0].GetComponent<BasicBeamController>().angularKnockbackTiers.Last().hitRigidbodyVFX.effects[0].effects[0].effect;
         }
         public static GameObject Pixel;
 
         public static ParticleSystem VoidParticleSystem;
         public static GameObject SilencerVFX;
-
+        public static GameObject WoodBeamImpact;
+        public static GameObject SeriousCannonImpact = (PickupObjectDatabase.GetById(37) as Gun).DefaultModule.chargeProjectiles[0].Projectile.hitEffects.tileMapHorizontal.effects.First().effects.First().effect;
         public class PixelDisplayer
         {
             public PixelDisplayer(List<PixelItem> rows, bool Shuffle = false)
@@ -485,6 +488,41 @@ namespace Planetside
             private float m_particleCounter;
         }
 
+
+        public static GameObject SmarterPlayEffectOnActor(this GameActor actor, GameObject effect, Vector3 offset, bool ignorePool = true, bool attached = true, bool alreadyMiddleCenter = false, bool useHitbox = false)
+        {
+            GameObject gameObject = SpawnManager.SpawnVFX(effect, ignorePool);
+            tk2dBaseSprite component = gameObject.GetComponent<tk2dBaseSprite>();
+            Vector3 a = (!useHitbox || !actor.specRigidbody || actor.specRigidbody.HitboxPixelCollider == null) ? actor.sprite.WorldCenter.ToVector3ZUp(0f) : actor.specRigidbody.HitboxPixelCollider.UnitCenter.ToVector3ZUp(0f);
+            if (!alreadyMiddleCenter)
+            {
+                component.PlaceAtPositionByAnchor(a + offset, tk2dBaseSprite.Anchor.MiddleCenter);
+            }
+            else
+            {
+                component.transform.position = a + offset;
+            }
+            if (attached)
+            {
+                gameObject.transform.parent = actor.transform;
+                component.HeightOffGround = 0.2f;
+                actor.sprite.AttachRenderer(component);
+                if (actor is PlayerController)
+                {
+                    SmartOverheadVFXController component2 = gameObject.GetComponent<SmartOverheadVFXController>();
+                    if (component2 != null)
+                    {
+                        component2.Initialize(actor as PlayerController, offset);
+                    }
+                }
+            }
+            if (!alreadyMiddleCenter)
+            {
+                gameObject.transform.localPosition = gameObject.transform.localPosition.QuantizeFloor(0.0625f);
+            }
+            return gameObject;
+        }
+    
 
         public static VFXObject CopyFields<T>(VFXObject sample2) where T : VFXObject
         {

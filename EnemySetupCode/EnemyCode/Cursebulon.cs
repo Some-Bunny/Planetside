@@ -805,6 +805,7 @@ namespace Planetside
 			}
 			private void ProcessEnemy(AIActor target, float distance)
 			{
+				if (target == this.aiActor) { return; }
 				bool jamnation = target.IsBlackPhantom;
 				if (!jamnation)
 				{
@@ -814,7 +815,7 @@ namespace Planetside
 				else if (target.IsBlackPhantom)
                 {
 					target.PlayEffectOnActor(ResourceCache.Acquire("Global VFX/VFX_Curse") as GameObject, Vector3.zero, true, false, false);
-					target.gameObject.AddComponent<UmbraController>();
+					target.gameObject.GetOrAddComponent<UmbraController>();
 				}
 			}
 			private static IEnumerator SpawnRadialPoofs(Vector2 centre, float radius)

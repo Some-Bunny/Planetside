@@ -126,7 +126,20 @@ namespace Planetside
 
 
 		}
-		public static DungeonFlow DefaultAbyssFlow()
+        public static DungeonFlow ShitAbyssFlow()
+		{
+            DungeonFlow m_CachedFlow = ScriptableObject.CreateInstance<DungeonFlow>();
+            DungeonFlowNode entranceNode = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.ENTRANCE, ModRoomPrefabs.Mod_Entrance_Room);
+            m_CachedFlow.FirstNode = entranceNode;
+            DungeonFlowNode exitNode = GenerateDefaultNode(m_CachedFlow, PrototypeDungeonRoom.RoomCategory.EXIT, ModRoomPrefabs.Mod_Exit_Room);
+            m_CachedFlow.AddNodeToFlow(entranceNode, null);
+            m_CachedFlow.AddNodeToFlow(exitNode, entranceNode);
+
+            return m_CachedFlow;
+        }
+
+
+        public static DungeonFlow DefaultAbyssFlow()
 		{
 			try
 			{

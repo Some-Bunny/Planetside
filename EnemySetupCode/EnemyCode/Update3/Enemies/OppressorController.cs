@@ -44,7 +44,7 @@ namespace Planetside
             if (clip.GetFrame(frameIdx).eventInfo.Contains("show_hands"))
             {
                 if (leftArm) { leftArm.Render = true; leftArm.gameObject.transform.localScale = Vector3.one; leftArm.healthHaver.PreventAllDamage = false; }
-                if (rightArm) { rightArm.Render = true; rightArm.gameObject.transform.localScale = Vector3.one; leftArm.healthHaver.PreventAllDamage = false; }
+                if (rightArm) { rightArm.Render = true; rightArm.gameObject.transform.localScale = Vector3.one; rightArm.healthHaver.PreventAllDamage = false; }
             }
             if (clip.GetFrame(frameIdx).eventInfo.Contains("hide_hands"))
             {

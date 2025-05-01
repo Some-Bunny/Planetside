@@ -230,7 +230,7 @@
     <Compile Include="Guns\Update4\WhistlerProjectile.cs" />
     <Compile Include="Guns\Update4\Whistler.cs" />
     <Compile Include="Hooks And Actions\BlankHooks.cs" />
-    <Compile Include="Hooks And Actions\DungeonHooks.cs" />
+    <Compile Include="Hooks And Actions\CustomDungeonHooks.cs" />
     <Compile Include="Hooks And Actions\Actions.cs" />
     <Compile Include="Hooks And Actions\GunHooks.cs" />
     <Compile Include="Hooks And Actions\PickupHooks.cs" />

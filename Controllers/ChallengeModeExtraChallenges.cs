@@ -17,6 +17,7 @@ using GungeonAPI;
 using static EnemyBulletBuilder.BulletBuilderFakePrefabHooks;
 using ChallengeAPI;
 using Brave.BulletScript;
+using static HutongGames.PlayMaker.Actions.Teleport;
 
 
 namespace Planetside
@@ -86,12 +87,15 @@ namespace Planetside
     }
     public class BulletStormChallengeModifier : ChallengeModifier
     {
-        public void Start(){}
+        public void Start(){ Living = new List<AIActor>();  }
+        public static List<AIActor> Living;
         public void Update()
         {            
             PlayerController player = GameManager.Instance.PrimaryPlayer;
+            if (Living.Count() >= 3) { return; }
             this.elapsed += BraveTime.DeltaTime;
-            if (this.elapsed > 8f)
+
+            if (this.elapsed > (3f + Living.Count()))
             {
                 this.elapsed = 0;
                 IntVector2 intVector2 = player.CurrentRoom.GetRandomAvailableCell().Value;
@@ -100,6 +104,7 @@ namespace Planetside
                 BulletScriptSource source = gameObject.GetOrAddComponent<BulletScriptSource>();
                 gameObject.AddComponent<BulletSourceKiller>();
                 var bulletScriptSelected = new CustomBulletScriptSelector(typeof(Skyfall));
+                //(bulletScriptSelected.).bulletStormChallengeModifier = this;
                 AIActor aIActor = EnemyDatabase.GetOrLoadByGuid("01972dee89fc4404a5c408d50007dad5");
                 AIBulletBank bulletBank = aIActor.GetComponent<AIBulletBank>();
                 bulletBank.CollidesWithEnemies = false;
@@ -113,6 +118,11 @@ namespace Planetside
 
         public void OnDestroy()
         {
+            foreach (var entry in Living)
+            {
+                entry?.ForceDeath(Vector2.zero);
+            }
+            Living.Clear();
             //If you want something to happen when the challenge ends, this is the place.
         }
 
@@ -121,7 +131,7 @@ namespace Planetside
             return room.GetActiveEnemiesCount(RoomHandler.ActiveEnemyType.All) < 2 ? false : true;
         }
         private float elapsed;
-
+        public BulletStormChallengeModifier bulletStormChallengeModifier;
         public class Skyfall : Script
         {
             public override IEnumerator Top()
@@ -161,7 +171,7 @@ namespace Planetside
                     this.Projectile.specRigidbody.CollideWithTileMap = false;
                     this.Projectile.specRigidbody.CollideWithOthers = false;
                     yield return base.Wait(60);
-                    base.PostWwiseEvent("Play_ENM_bulletking_slam_01", null);
+                    AkSoundEngine.PostEvent("Play_ENM_bulletking_slam_01", this.Projectile.gameObject);
                     this.Speed = 0f;
                     this.Projectile.spriteAnimator.Play();
                     base.Vanish(true);
@@ -175,8 +185,10 @@ namespace Planetside
                         string guid = BraveUtility.RandomElement<string>(StaticInformation.ModderBulletGUIDs);
                         var Enemy = EnemyDatabase.GetOrLoadByGuid(guid);
                         AIActor das = AIActor.Spawn(Enemy.aiActor, this.Projectile.sprite.WorldCenter, GameManager.Instance.PrimaryPlayer.CurrentRoom, true, AIActor.AwakenAnimationType.Default, true);
+                        Living.Add(das);
                         das.AddComponent<KillOnRoomClear>();
-                        das.healthHaver.ForceSetCurrentHealth(11);
+                        GameLevelDefinition lastLoadedLevelDefinition = GameManager.Instance.GetLastLoadedLevelDefinition();
+                        das.healthHaver.ForceSetCurrentHealth(22.5f * (lastLoadedLevelDefinition != null ? lastLoadedLevelDefinition.enemyHealthMultiplier : 1));
                         float num = base.RandomAngle();
                         for (int i = 0; i < 12; i++)
                         {base.Fire(new Direction(num + (30 * (float)i) + 10, DirectionType.Absolute, -1f), new Speed(3.5f, SpeedType.Absolute), new BurstBullet()); }
@@ -193,6 +205,7 @@ namespace Planetside
                         base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 60);
                         yield return base.Wait(60);
                         base.Vanish(false);
+
                         yield break;
                     }
                 }

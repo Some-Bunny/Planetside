@@ -134,23 +134,15 @@ namespace Planetside
         public static GameObject OnAction(string ObjName, GameObject Original, JObject jObject)
         {
             if (ObjName != "PSOG_movingblock") {return Original; }
-
             Original = UnityEngine.Object.Instantiate(Alexandria.DungeonAPI.StaticReferences.customObjects["PSOG_movingblock"]);
             ItemAPI.FakePrefab.MarkAsFakePrefab(Original);
             DontDestroyOnLoad(Original);
-
             var tearHolder = Original.GetComponent<FadingBlocker>();
-
             JToken value = null;
-
             float GUID = jObject.TryGetValue("delay_", out value) ? ((float)value) : 0.25f;
             tearHolder.DelayWaitTime = GUID;
-
             int waveClearReq = jObject.TryGetValue("waveTriggerOn", out value) ? ((int)value) : 1;
             tearHolder.WaveClearRequirement = waveClearReq;
-
-            //ETGModConsole.Log(tearHolder.WaveClearRequirement);
-
             return Original;
         }
 

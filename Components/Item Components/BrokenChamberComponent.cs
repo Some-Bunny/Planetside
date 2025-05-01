@@ -62,7 +62,11 @@ namespace Planetside
 			Dungeon dung = GameManager.Instance.Dungeon;
 			if (this.player != null && dung != null)
 			{
-				if (dung.LevelOverrideType == GameManager.LevelOverrideState.CHARACTER_PAST)
+				if (TimeTubeCreditsController.IsTimeTubing == true)
+                {
+                    Destroy(this);
+                }
+                if (dung.LevelOverrideType == GameManager.LevelOverrideState.CHARACTER_PAST)
                 {
 					Destroy(this);
 				}
@@ -107,7 +111,7 @@ namespace Planetside
 			component.TargetVector2 = target;
 			tk2dSprite componentInChildren = component.GetComponentInChildren<tk2dSprite>();
 			component.transform.position = component.transform.position.WithY(component.transform.position.y - componentInChildren.transform.localPosition.y);
-			component.ExplosionData.ignoreList.Add(player.specRigidbody);
+			GameManager.Instance.AllPlayers.ToList().ForEach(self => component.ExplosionData.ignoreList.Add(self.specRigidbody));
         }
 		public PlayerController player;
 

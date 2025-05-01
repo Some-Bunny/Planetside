@@ -225,9 +225,9 @@ namespace Planetside
 			hover.Position = HoveringGunController.HoverPosition.CIRCULATE;
 			hover.Aim = HoveringGunController.AimType.PLAYER_AIM;
 			hover.Trigger = HoveringGunController.FireType.ON_FIRED_GUN;
-			hover.CooldownTime = gun.DefaultModule.cooldownTime * 1.75f;
-			hover.ShootDuration = ((float)gun.DefaultModule.numberOfShotsInClip * gun.DefaultModule.cooldownTime) * 0.4f;
-			hover.OnlyOnEmptyReload = false;
+			hover.CooldownTime = Mathf.Max(6.66f, gun.reloadTime * 3.5f);
+			hover.ShootDuration = ((float)gun.DefaultModule.numberOfShotsInClip * gun.DefaultModule.cooldownTime) * 0.25f;
+			
 			hover.Initialize(gun, player);
 			player.ownerlessStatModifiers.Add(item2);
 			shrine.GetComponent<CustomShrineController>().numUses++;

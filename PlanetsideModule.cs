@@ -36,7 +36,7 @@ namespace Planetside
     {
         public const string GUID = "somebunny.etg.planetsideofgunymede";
         public const string NAME = "Planetside Of Gunymede Pre-Release";
-        public const string VERSION = "1.3.177";
+        public const string VERSION = "1.3.179";
         //9006FF
         public static readonly string TEXT_COLOR = "#00d0ff";
         //00d0ff
@@ -377,7 +377,7 @@ namespace Planetside
                 WarpMastersKit.Init();
             }
             PointNull.Add();
-
+            UmbraController.InitEffect();
 
             //VengefulShell.Init();
             //LaserWelder.Add();
@@ -533,7 +533,7 @@ namespace Planetside
             PlanetsideBalanceChanges.Init();
 
             DungeonHandler.Init();
-            //MasteryReplacementOub.InitDungeonHook();
+            CustomDungeonHooks.InitDungeonHook();
 
 
             //Alexandria.DungeonAPI.RoomFactory.LoadRoomsFromRoomDirectory

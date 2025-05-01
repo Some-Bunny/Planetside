@@ -172,36 +172,34 @@ namespace Planetside.DungeonPlaceables
         public static GameObject OnAction(string ObjName, GameObject Original, JObject jObject)
         {
             if (ObjName != "PSOG_HelpfulPad") { return Original; }
-
             Original = UnityEngine.Object.Instantiate(Alexandria.DungeonAPI.StaticReferences.customObjects["PSOG_HelpfulPad"]);
             ItemAPI.FakePrefab.MarkAsFakePrefab(Original);
             DontDestroyOnLoad(Original);
-
             var tearHolder = Original.GetComponent<TheHelpfulPad>();
-
             JToken value = null;
-
             float GUID = jObject.TryGetValue("delay_", out value) ? ((float)value) : 0.25f;
             tearHolder.DelayWaitTime = GUID;
-
             int waveClearReq = jObject.TryGetValue("waveTriggerOn", out value) ? ((int)value) : 1;
             tearHolder.WaveClearRequirement = waveClearReq;
-
-
             return Original;
         }
 
         private RoomHandler roomHandler;
         public void Start()
         {
-            speculativeRigidbody.enabled = false;
-            tk2DBaseSprite.renderer.enabled = false;
+
             //tk2DBaseSprite.FlipX = UnityEngine.Random.value < 0.222f;
-            
+
             roomHandler = this.transform.position.GetAbsoluteRoom();
             CheckCellsIsBottomBorder();
             AssignFloor();
+            //speculativeRigidbody.enabled = false;
+            //tk2DBaseSprite.renderer.enabled = false;
+            this.Invoke("InitializeDelayed", 0.15f);
+        }
 
+        public void InitializeDelayed()
+        {
             if (roomHandler != null)
             {
 
@@ -217,8 +215,6 @@ namespace Planetside.DungeonPlaceables
                     Actions.OnReinforcementWaveTriggered += DoWacky;
                 }
             }
-
-
             this.spriteAnimator.AnimationEventTriggered += (obj1, obj2, obj3) =>
             {
                 if (obj2.GetFrame(obj3).eventInfo == "enableCollider")
@@ -228,6 +224,8 @@ namespace Planetside.DungeonPlaceables
                     //Debug.Log("aiee!");
                 }
             };
+            speculativeRigidbody.enabled = false;
+            tk2DBaseSprite.renderer.enabled = false;
         }
 
         public void DoWacky(RoomHandler room, RoomEventTriggerCondition roomEventTriggerAction)

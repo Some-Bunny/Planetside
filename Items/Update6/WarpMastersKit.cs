@@ -223,21 +223,24 @@ namespace Planetside
             base.Update();
             if (LastOwner != null)
             {
-                if (lastRoom != LastOwner.CurrentRoom)
+                if (LastOwner.CurrentRoom != null)
                 {
-                    lastRoom = LastOwner.CurrentRoom;
-                    var t = lastRoom.GetComponentsInRoom<TeleporterController>().FirstOrDefault();
-                    if (t != null)
+                    if (lastRoom != LastOwner.CurrentRoom)
                     {
-                        currentTeleporter = t;
-                        base.sprite.SetSprite("warpmasterkit_warp");
+                        lastRoom = LastOwner.CurrentRoom;
+                        var t = lastRoom.GetComponentsInRoom<TeleporterController>().FirstOrDefault();
+                        if (t != null)
+                        {
+                            currentTeleporter = t;
+                            base.sprite.SetSprite("warpmasterkit_warp");
+                        }
+                        else
+                        {
+                            base.sprite.SetSprite("warpmasterkit");
+                            currentTeleporter = null;
+                        }
+
                     }
-                    else
-                    {
-                        base.sprite.SetSprite("warpmasterkit");
-                        currentTeleporter = null; 
-                    }
-                
                 }
             }
         }//warpmasterkit_warp
@@ -269,8 +272,16 @@ namespace Planetside
             {
                 var obj = UnityEngine.Object.Instantiate(StaticVFXStorage.TeleportDistortVFX, user.transform.position, Quaternion.identity);
                 Destroy(obj, 3);
-                AkSoundEngine.PostEvent("Play_OBJ_chestwarp_use_01", currentTeleporter.gameObject);
-                this.StartCoroutine(DoWarp(user));
+                TeleportBack teleportBack = null;
+                if (user.IsInCombat)
+                {
+                    teleportBack = currentTeleporter.GetOrAddComponent<TeleportBack>();
+                    teleportBack.Controller = currentTeleporter;
+                    teleportBack.cachedPoint = user.transform.position;
+                    user.CurrentRoom.RegisterInteractable(teleportBack);
+                }
+                this.StartCoroutine(DoWarp(user, user.transform.position, currentTeleporter.sprite.WorldCenter.ToVector3ZUp() + new Vector3(-0.5f, 0), teleportBack));
+
             }
             else
             {
@@ -294,13 +305,13 @@ namespace Planetside
             }
         }
 
-        private IEnumerator DoWarp(PlayerController playerController)
+        public static IEnumerator DoWarp(PlayerController playerController,  Vector2 startPoint, Vector2 endPoint, TeleportBack teleportBack)
         {
-            if (currentTeleporter == null) { yield break; }
-            
-            var startPos = playerController.transform.position;
-            var endPos = currentTeleporter.sprite.WorldCenter.ToVector3ZUp() + new Vector3(-0.5f, 0);
-            
+
+            var startPos = startPoint;
+            var endPos = endPoint;
+            AkSoundEngine.PostEvent("Play_OBJ_chestwarp_use_01", playerController.gameObject);
+
             float dot = Vector2.Dot((endPos - startPos).normalized, MathToolbox.GetUnitOnCircle(playerController.CurrentGun.CurrentAngle, 1));
             playerController.healthHaver.PreventAllDamage = true;
             playerController.SetIsFlying(true, "Warp");
@@ -369,7 +380,7 @@ namespace Planetside
                     {
                         float t_ = (float)i / DistTick;
                         Vector3 vector3 = Vector3.Lerp(playerController.transform.position, LastPos_2, t_);
-                        Explosion.damage = 5f * playerController.stats.GetStatValue(PlayerStats.StatType.Damage);
+                        Explosion.damage = 11.1f * playerController.stats.GetStatValue(PlayerStats.StatType.Damage);
                         Explosion.damage *= playerController.stats.GetStatValue(PlayerStats.StatType.DamageToBosses);
                         Explosion.damageRadius = 1.625f;
                         Explosion.ignoreList = new List<SpeculativeRigidbody> { playerController.specRigidbody };
@@ -391,7 +402,10 @@ namespace Planetside
             Destroy(downwellAfterimage, 1);
             var obj = UnityEngine.Object.Instantiate(StaticVFXStorage.TeleportDistortVFX, playerController.transform.position, Quaternion.identity);
             Destroy(obj, 3);
-
+            if (teleportBack != null)
+            {
+                teleportBack.ToggleIsUsable(playerController);
+            }
             playerController.CurrentInputState = inp;
             playerController.sprite.renderer.enabled = true;
             playerController.ToggleGunRenderers(true);
@@ -399,7 +413,7 @@ namespace Planetside
             SpriteOutlineManager.ToggleOutlineRenderers(playerController.sprite, true);
             playerController.knockbackDoer.m_isImmobile = new OverridableBool(false);
             yield return null;
-            playerController.knockbackDoer.ApplyKnockback(endPos - lastPos, Mathf.Min(25, Mathf.Max((endPos - lastPos).magnitude * 10, v * 10)), false);
+            playerController.knockbackDoer.ApplyKnockback(endPos - new Vector2(lastPos.x, lastPos.y), Mathf.Min(25, Mathf.Max((endPos - new Vector2(lastPos.x, lastPos.y)).magnitude * 10, v * 10)), false);
 
             AkSoundEngine.PostEvent("Play_ITM_Macho_Brace_Trigger_01", playerController.gameObject);
             Explosion.damageRadius = 2.5f;
@@ -408,6 +422,67 @@ namespace Planetside
             Exploder.Explode(playerController.sprite.WorldTopCenter, Explosion, Vector3.zero, null, true);
 
             yield break;
+        }
+    }
+
+    public class TeleportBack : MonoBehaviour, IPlayerInteractable
+    {
+        public TeleporterController Controller;
+        public bool canBeUsed = false;
+        public Vector2 cachedPoint;
+        public PlayerController trackingPlayer;
+
+        public void Update()
+        {
+            if (trackingPlayer != null && trackingPlayer.IsInCombat == false)
+            {
+                SpriteOutlineManager.RemoveOutlineFromSprite(Controller.sprite, false);
+                this.transform.position.GetAbsoluteRoom()?.DeregisterInteractable(this);
+                Destroy(this);
+            }
+        }
+
+        public void ToggleIsUsable(PlayerController playerController)
+        {
+            trackingPlayer = playerController;
+            canBeUsed = true;
+            Controller.OnEnteredRange(playerController);
+        }
+
+        public string GetAnimationState(PlayerController interactor, out bool shouldBeFlipped)
+        {
+            shouldBeFlipped = false;
+            return Controller.GetAnimationState(interactor, out shouldBeFlipped);
+        }
+
+        public float GetDistanceToPoint(Vector2 point)
+        {
+            //if (Vector2.Distance(point, Controller.sprite.WorldCenter) < 4.5f) { Destroy(this); }
+            return Vector2.Distance(point, Controller.sprite.WorldCenter) * 0.4f;
+        }
+
+        public float GetOverrideMaxDistance()
+        {
+            return Controller.GetOverrideMaxDistance();
+        }
+
+        public void Interact(PlayerController interactor)
+        {
+            if (canBeUsed == false) { return; }
+            interactor.StartCoroutine(WarpMastersKit.DoWarp(interactor, interactor.transform.position, cachedPoint, null));
+            this.transform.position.GetAbsoluteRoom()?.DeregisterInteractable(this);
+            Destroy(this);
+        }
+
+        public void OnEnteredRange(PlayerController interactor)
+        {
+            SpriteOutlineManager.AddOutlineToSprite(Controller.sprite, Color.white, 0.1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
+        }
+
+        public void OnExitRange(PlayerController interactor)
+        {
+            SpriteOutlineManager.RemoveOutlineFromSprite(Controller.sprite, false);
+
         }
     }
 }

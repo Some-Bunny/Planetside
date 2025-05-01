@@ -90,7 +90,10 @@ namespace Planetside
 		{
 			List<AIActor> activeEnemies = actor.GetAbsoluteParentRoom().GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
 			Vector2 centerPosition = actor.sprite.WorldCenter;
-
+            if (heatIndicatorController)
+            {
+                heatIndicatorController.transform.position = heatIndicatorController.transform.position.WithZ(100);
+            }
 
             if (activeEnemies != null)
 			{
@@ -117,6 +120,7 @@ namespace Planetside
         {
             float t = 0;
             float g = myheatIndicatorController.CurrentRadius;
+            heatIndicatorController.transform.SetParent(null, true);
             while (t < 1)
             {
                 t += Time.deltaTime * 5;

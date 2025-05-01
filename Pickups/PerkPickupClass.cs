@@ -39,7 +39,13 @@ namespace Planetside
                 return CustomTrackedStats.DUMMY_BOUGHT;
             }
         }
-
+        public virtual CustomTrackedStats SessionStatToIncreaseOnPickup
+        {
+            get
+            {
+                return CustomTrackedStats.DUMMY_BOUGHT;
+            }
+        }
 
         public float distortionMaxRadius = 30f;
         public float distortionDuration = 2f;

@@ -1274,7 +1274,7 @@ namespace Planetside
                 base.aiActor.PlayEffectOnActor(ResourceCache.Acquire("Global VFX/VFX_Curse") as GameObject, Vector3.zero, true, false, false);
                 if (base.aiActor.IsBlackPhantom == true)
 				{
-                    base.aiActor.gameObject.AddComponent<UmbraController>();
+                    base.aiActor.gameObject.GetOrAddComponent<UmbraController>();
                 }
                 else
 				{

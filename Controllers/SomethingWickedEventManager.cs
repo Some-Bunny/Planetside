@@ -96,7 +96,7 @@ namespace Planetside
                     ResetMusic(GameManager.Instance.Dungeon);
 
                 }
-                else if (currentSWState == States.DISABLED)
+                if (currentSWState == States.DISABLED)
                 {
                     NevernamedsDarknessHandler.DisableDarkness(0);
                     TrapDefusalKit.RemoveTrapDefuseOverride("somethingwicked");

@@ -194,7 +194,7 @@ namespace Planetside
 			doorV.GetComponent<DungeonDoorController>().unsealAnimationName = "door_block_beyond_open";
 			doorV.GetComponent<DungeonDoorController>().playerNearSealedAnimationName = "door_block_beyond_close_headshake";
 
-			var ids = new List<int>();
+            var ids = new List<int>();
 
 
 			Material material2 = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
@@ -285,11 +285,15 @@ namespace Planetside
 				doorCollection.spriteDefinitions[id].position2 = doorCollection.spriteDefinitions[baseID].position2;
 				doorCollection.spriteDefinitions[id].position3 = doorCollection.spriteDefinitions[baseID].position3;
 			}
+            doorV.transform.Find("DoorRight").GetComponent<tk2dSprite>().renderer.sortingLayerName = "Background";
+            doorV.transform.Find("DoorRight").GetComponent<tk2dSprite>().m_heightOffGround = -10;
+            doorV.transform.Find("DoorRight").GetComponent<tk2dSprite>().UpdateZDepth();
+            doorV.transform.Find("DoorRight").GetComponent<tk2dSprite>().spriteId = ids[0];
 
-			doorV.transform.Find("DoorRight").GetComponent<tk2dSprite>().spriteId = ids[0];
-			doorV.transform.Find("DoorRight").GetComponent<tk2dSpriteAnimator>().DefaultClipId = doorLibary.GetClipIdByName("beyond_door_vertical_north_right_open");
+            doorV.transform.Find("DoorRight").GetComponent<tk2dSpriteAnimator>().DefaultClipId = doorLibary.GetClipIdByName("beyond_door_vertical_north_right_open");
 
-			ids.Reverse();
+
+            ids.Reverse();
 			AddAnimation(doorAnimator, doorCollection, ids, "beyond_door_vertical_north_right_close", tk2dSpriteAnimationClip.WrapMode.Once, 15);
 			AddAnimation(doorAnimator, doorCollection, ids, "beyond_door_vertical_south_right_close", tk2dSpriteAnimationClip.WrapMode.Once, 15);
 			ids.Clear();
@@ -315,8 +319,14 @@ namespace Planetside
 				doorCollection.spriteDefinitions[id].position3 = doorCollection.spriteDefinitions[baseID].position3;
 			}
 
-			doorV.transform.Find("DoorLeft").GetComponent<tk2dSprite>().spriteId = ids[0];
-			doorV.transform.Find("DoorLeft").GetComponent<tk2dSpriteAnimator>().DefaultClipId = doorLibary.GetClipIdByName("beyond_door_vertical_north_left_open");
+
+            doorV.transform.Find("DoorLeft").GetComponent<tk2dSprite>().renderer.sortingLayerName = "Background";
+
+            doorV.transform.Find("DoorLeft").GetComponent<tk2dSprite>().m_heightOffGround = -10;
+            doorV.transform.Find("DoorLeft").GetComponent<tk2dSprite>().UpdateZDepth();
+
+            doorV.transform.Find("DoorLeft").GetComponent<tk2dSprite>().spriteId = ids[0];
+            doorV.transform.Find("DoorLeft").GetComponent<tk2dSpriteAnimator>().DefaultClipId = doorLibary.GetClipIdByName("beyond_door_vertical_north_left_open");
 
 			ids.Reverse();
 			AddAnimation(doorAnimator, doorCollection, ids, "beyond_door_vertical_north_left_close", tk2dSpriteAnimationClip.WrapMode.Once, 15);
@@ -343,8 +353,12 @@ namespace Planetside
 				doorCollection.spriteDefinitions[id].position3 = doorCollection.spriteDefinitions[baseID].position3;
 			}
 
-			doorH.transform.Find("DoorBottom").GetComponent<tk2dSprite>().spriteId = ids[0];
-			doorH.transform.Find("DoorBottom").GetComponent<tk2dSpriteAnimator>().DefaultClipId = doorLibary.GetClipIdByName("beyond_door_horizontal_bottom_open");
+            doorH.transform.Find("DoorBottom").GetComponent<tk2dSprite>().renderer.sortingLayerName = "Background";
+            doorH.transform.Find("DoorBottom").GetComponent<tk2dSprite>().m_heightOffGround = -3;
+            doorH.transform.Find("DoorBottom").GetComponent<tk2dSprite>().UpdateZDepth();
+
+            doorH.transform.Find("DoorBottom").GetComponent<tk2dSprite>().spriteId = ids[0];
+            doorH.transform.Find("DoorBottom").GetComponent<tk2dSpriteAnimator>().DefaultClipId = doorLibary.GetClipIdByName("beyond_door_horizontal_bottom_open");
 
 			ids.Reverse();
 			AddAnimation(doorAnimator, doorCollection, ids, "beyond_door_horizontal_bottom_close", tk2dSpriteAnimationClip.WrapMode.Once, 15);
@@ -367,8 +381,11 @@ namespace Planetside
 				doorCollection.spriteDefinitions[id].position2 = doorCollection.spriteDefinitions[baseID].position2;
 				doorCollection.spriteDefinitions[id].position3 = doorCollection.spriteDefinitions[baseID].position3;
 			}
+            doorH.transform.Find("DoorTop").GetComponent<tk2dSprite>().renderer.sortingLayerName = "Background";
 
-			doorH.transform.Find("DoorTop").GetComponent<tk2dSprite>().spriteId = ids[0];
+            doorH.transform.Find("DoorTop").GetComponent<tk2dSprite>().HeightOffGround = -3;
+            doorH.transform.Find("DoorTop").GetComponent<tk2dSprite>().UpdateZDepth();
+            doorH.transform.Find("DoorTop").GetComponent<tk2dSprite>().spriteId = ids[0];
 			doorH.transform.Find("DoorTop").GetComponent<tk2dSpriteAnimator>().DefaultClipId = doorLibary.GetClipIdByName("beyond_door_horizontal_top_open");
 
 			ids.Reverse();
@@ -384,10 +401,20 @@ namespace Planetside
 			doorCollection.spriteDefinitions[ids[0]].colliderVertices = new Vector3[] {new Vector3(0.1875f, 2.8125f, 0), new Vector3(0.1875f, 2.8125f, 0) };
 			AddAnimation(doorAnimator, doorCollection, ids, "door_block_beyond_side_close", tk2dSpriteAnimationClip.WrapMode.Once, 11);
 
-			doorH.transform.Find("BarsLeft").GetComponent<tk2dSprite>().spriteId = ids[0];
+            doorH.transform.Find("BarsLeft").GetComponent<tk2dSprite>().renderer.sortingLayerName = "Background";
+            doorH.transform.Find("BarsLeft").GetComponent<tk2dSprite>().m_heightOffGround = -3;
+            doorH.transform.Find("BarsLeft").GetComponent<tk2dSprite>().UpdateZDepth();
+
+            doorH.transform.Find("BarsLeft").GetComponent<tk2dSprite>().spriteId = ids[0];
 			doorH.transform.Find("BarsLeft").GetComponent<tk2dSpriteAnimator>().DefaultClipId = doorLibary.GetClipIdByName("door_block_beyond_side_close");
 
-			ids.Reverse();
+
+            doorV.transform.Find("BarsBottom").GetComponent<tk2dSprite>().renderer.sortingLayerName = "Player";
+            doorV.transform.Find("BarsBottom").GetComponent<tk2dSprite>().m_heightOffGround = 0;
+			doorV.transform.Find("BarsBottom").GetComponent<tk2dSprite>().UpdateZDepth();
+            doorV.transform.Find("BarsBottom").GetComponent<tk2dSprite>().spriteId = ids[0];
+
+            ids.Reverse();
 			AddAnimation(doorAnimator, doorCollection, ids, "door_block_beyond_side_open", tk2dSpriteAnimationClip.WrapMode.Once, 11);
 			ids.Clear();
 

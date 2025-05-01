@@ -73,17 +73,14 @@ namespace Planetside
 		private void HandlePreCollision(SpeculativeRigidbody myRigidbody, PixelCollider myPixelCollider, SpeculativeRigidbody otherRigidbody, PixelCollider otherPixelCollider)
 		{
 			
-			if (otherRigidbody != null&& otherRigidbody.healthHaver != null)
+			if (otherRigidbody != null && otherRigidbody.aiActor != null)
 			{
-				//float maxHealth = otherRigidbody.healthHaver.GetMaxHealth();
-				//float num = maxHealth * 0.99f;
-				//float currentHealth = otherRigidbody.healthHaver.GetCurrentHealth();
-				var tracker = otherRigidbody.gameActor.GetComponent<HullBreakerTracker>();
+				var tracker = otherRigidbody.aiActor.GetComponent<HullBreakerTracker>();
 				if (tracker == null)
 				{
                     if (myRigidbody && myRigidbody.projectile != null)
                     {
-                        otherRigidbody.gameActor.AddComponent<HullBreakerTracker>();
+                        otherRigidbody.aiActor.AddComponent<HullBreakerTracker>();
                         float damage = myRigidbody.projectile.baseData.damage;
 
                         myRigidbody.projectile.baseData.damage *= 2.5f;
@@ -106,7 +103,7 @@ namespace Planetside
 		{
 			if (b.aiActor) 
 			{
-				b.aiActor.PlayEffectOnActor((PickupObjectDatabase.GetById(37) as Gun).DefaultModule.chargeProjectiles[0].Projectile.hitEffects.tileMapHorizontal.effects.First().effects.First().effect, new Vector2(0, 0));
+				b.aiActor.PlayEffectOnActor(StaticVFXStorage.SeriousCannonImpact, new Vector2(0, 0));
 			}
 		}
 

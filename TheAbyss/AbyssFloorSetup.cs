@@ -88,6 +88,21 @@ namespace Planetside
 
             GameManager.Instance.customFloors.Add(AbyssDefinition);
             GameManagerObject.GetComponent<GameManager>().customFloors.Add(AbyssDefinition);
+
+            new Hook(
+                typeof(Dungeon).GetMethod("FloorReached", BindingFlags.Instance | BindingFlags.Public),
+                typeof(AbyssDungeon).GetMethod("FloorReachedHook", BindingFlags.Static | BindingFlags.Public)
+            );
+
+        }
+
+        public static void FloorReachedHook(Action<Dungeon> orig, Dungeon self)
+        {
+            if (self.DungeonShortName == "Deep.")
+            {
+                GameManager.Instance.RewardManager.FacelessChancePerFloor = 0;
+            }
+            orig(self);
         }
         public static Dungeon AbyssGeon(Dungeon dungeon)
         {
@@ -634,6 +649,7 @@ namespace Planetside
             {
                 flows = new List<DungeonFlow>()
                 {
+                    //AbyssFlows.ShitAbyssFlow()
                     ModRoomPrefabs.Loop_De_Loop_Flow
                 },
                 mandatoryExtraRooms = new List<ExtraIncludedRoomData>(0),
@@ -643,7 +659,7 @@ namespace Planetside
             };
 
             dungeon.damageTypeEffectMatrix = MinesDungeonPrefab.damageTypeEffectMatrix;
-            dungeon.stampData = ModPrefabs.AbyssStampData;
+            dungeon.stampData =ModPrefabs.AbyssStampData;
             dungeon.UsesCustomFloorIdea = false;
             dungeon.FloorIdea = new RobotDaveIdea()
             {
@@ -665,8 +681,8 @@ namespace Planetside
 
             //more variable we can copy from other floors, or make our own
             dungeon.PlaceDoors = false;
-            dungeon.doorObjects = AbyssFloorDoor.AbyssDoor;
-            dungeon.oneWayDoorObjects = MinesDungeonPrefab.oneWayDoorObjects;
+            dungeon.doorObjects = CatacombsPrefab.doorObjects;//  AbyssFloorDoor.AbyssDoor;
+            dungeon.oneWayDoorObjects = RatDungeonPrefab.oneWayDoorObjects;
             dungeon.oneWayDoorPressurePlate = MinesDungeonPrefab.oneWayDoorPressurePlate;
             dungeon.phantomBlockerDoorObjects = MinesDungeonPrefab.phantomBlockerDoorObjects;
             dungeon.UsesWallWarpWingDoors = false;
@@ -708,6 +724,10 @@ namespace Planetside
             RatDungeonPrefab = null;
             MinesDungeonPrefab = null;
             MarinePastPrefab = null;
+
+
+
+
             return dungeon;
         }
         public static Dungeon GetOrLoadByName_Orig(string name)

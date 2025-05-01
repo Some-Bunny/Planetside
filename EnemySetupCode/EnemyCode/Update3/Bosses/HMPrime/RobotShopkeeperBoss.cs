@@ -321,7 +321,7 @@ namespace Planetside
 	public class RobotShopkeeperBoss : AIActor
 	{
 		public static GameObject robotShopkeeperprefab;
-		public static readonly string guid = "RobotShopkeeperBoss";
+		public static readonly string guid = "psog:hm_prime";
 		//private static tk2dSpriteCollectionData RobotShopkeeperCollection;
 		//private static Texture2D BossCardTexture = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside/Resources/BossCards/hmprime_bosscard.png");
 
@@ -1919,7 +1919,7 @@ namespace Planetside
 				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("hmprimesheet");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\hmprimesheet.png");
                 PlanetsideModule.Strings.Enemies.Set("#HMPRIME_NAME", "H.M Prime");
 				PlanetsideModule.Strings.Enemies.Set("#HMPRIME_SD", "Battle Tower");
-				PlanetsideModule.Strings.Enemies.Set("#HMPRIME_LD", "Built by the Hegemony Of Man in preparation for the invasion of the Gungeon, they hoped that this one-core war machince could push back against the forces of the Gungeon.\n\nWhile it mostly failed, it gained the respect of the Gundead with its massive firepower, and left it in the confines of the Gungeon, albeit slightly re-programmed and disassembled.\n\nAny Gungeoneer who finds the machine in low power mode is heavily advised NOT to approach it.");
+				PlanetsideModule.Strings.Enemies.Set("#HMPRIME_LD", "Built by the Hegemony Of Man in preparation for the invasion of the Gungeon, they hoped that their new state of the art war machince could push back against the forces of the Gungeon.\n\nWhile it mostly failed, it gained the respect of the Gundead with its massive firepower, and left it in the confines of the Gungeon, albeit slightly re-programmed and disassembled.\n\nAny Gungeoneer who finds the machine in low power mode is heavily advised NOT to approach it.");
 
 				companion.encounterTrackable.journalData.PrimaryDisplayName = "#HMPRIME_NAME";
 				companion.encounterTrackable.journalData.NotificationPanelDescription = "#HMPRIME_SD";

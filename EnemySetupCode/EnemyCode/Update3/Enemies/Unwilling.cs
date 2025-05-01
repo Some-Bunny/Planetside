@@ -252,12 +252,13 @@ namespace Planetside
 						bulletBankName = StaticUndodgeableBulletEntries.UnwillingShot.Name,
 						chargeAnim = "charge",
 						Range = 20,
-						degreesBetween = 20,
-						numBullets = 3,
+						degreesBetween = 5,
+						numBullets = 5,
 						invulnerableDuringAnimatoin = true,
 						InitialCooldown = 5,
 						InitialCooldownVariance = 2,
-						RequiresLineOfSight = true,						
+						RequiresLineOfSight = true,		
+						
 						}
 					},
 				};

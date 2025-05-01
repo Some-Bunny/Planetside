@@ -4853,6 +4853,24 @@ MonoBehaviour:
     - pixel_create_003
     - pixel_create_004
     - pixel_create_007
+    - umbral_eye_005
+    - umbral_eye_007
+    - umbral_eye_008
+    - umbral_eyeinner_001
+    - umbral_eyeinner_002
+    - umbral_eyeinner_003
+    - umbral_eyeinner_004
+    - umbral_eyeinner_005
+    - umbral_eye_004
+    - umbral_eyeinner_006
+    - umbral_eye_001
+    - umbral_eye_006
+    - umbral_eye_002
+    - umbral_eye_003
+    - lockin_umbral_floor_002
+    - lockin_umbral1
+    - lockin_umbral_floor_001
+    - lockin_umbral2
     spriteTextureGUIDs:
     - eca28c23f3bbad849892a7a84325ac13
     - e1e4963a6b208ff4aa52af8f64f78f86
@@ -4975,6 +4993,24 @@ MonoBehaviour:
     - e48cc34d64b115e4da4875a3b9b5f494
     - 49394b07509aed34794ac263d055178f
     - d6b053fbdf25dff4c975156397a57f70
+    - cc602bf6e423f2a45b97bea5859a983b
+    - 0499fcaa8d5c40b449be030d8469d938
+    - 2064b047bea86c64e81279e331280e33
+    - 191af5ed44afd734197fbc6d56249175
+    - 68cc6fc40ef890c4e89c2817ae823e52
+    - d1a34ff86cee97943a1a85b1ec4a5168
+    - 5cd97c06af71c42419eb4cd3760b095b
+    - 4424da9b03e5e2b4894a8c82b73a8ca6
+    - a93edeb28848b87489cc36a042dd2e54
+    - c1b0605a9ba45af47bdafc87b5e48176
+    - adcd8b90be84f7d47ad14652321b7086
+    - 0d69525db3db49d448e32e56dcc5bf09
+    - 738ac73bf9590b347929bf9e15f0ecfc
+    - 38bf5e5adb1274249b2c94279639260b
+    - f98bb6769223891459d9cda238f51306
+    - 34e98d1a761dd7e41b6df9e9dbc9f83a
+    - a8b50d0d852f50d4b86fa3df63412d44
+    - d6dbc2a4c6324dc43974c3dd01492b25
     spriteTextureTimeStamps:
     - 1738023070.98278
     - 1738023071.08478
@@ -5097,6 +5133,24 @@ MonoBehaviour:
     - 1742825825.26534
     - 1742825825.26834
     - 1742825825.27535
+    - 1746024484.98985
+    - 1746024484.99499
+    - 1746024484.99799
+    - 1746024494.01427
+    - 1746024494.01727
+    - 1746024494.02128
+    - 1746024494.02347
+    - 1746024494.02647
+    - 1746024484.98785
+    - 1746024494.02847
+    - 1746024484.97861
+    - 1746024484.99299
+    - 1746024484.98061
+    - 1746024484.98385
+    - 1746041152.72166
+    - 1746041126.74188
+    - 1746041152.71866
+    - 1746041126.74586
     managedSpriteCollection: 0
     loadable: 0
     assetName: 

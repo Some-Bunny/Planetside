@@ -22,10 +22,7 @@ namespace Planetside
 {
     internal class MopProjectile : MonoBehaviour
 	{
-
         private Projectile projectile;
-
-
         public void Start()
         {
             this.projectile = base.GetComponent<Projectile>();
@@ -40,7 +37,6 @@ namespace Planetside
                     {
                         this.projectile.AdjustPlayerProjectileTint(effectContainer.projectileColor, 0, 0f);
                     }
-
                     //Debuffs
                     if (effectContainer.debuffs != null || effectContainer.debuffs.Count > 0)
                     {
@@ -59,7 +55,6 @@ namespace Planetside
                     }
                     projectile.baseData.damage *= effectContainer.DamageMultiplier;
                 }
-
             }
         }
     }
