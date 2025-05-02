@@ -126,7 +126,7 @@ public class ShamberController : BraveBehaviour
 					for (int i = 0; i < allProjectiles.Count; i++)
 					{
 						Projectile proj = allProjectiles[i];
-						if (proj && proj.Owner  != null && proj.Owner != this.aiActor)
+						if (proj != null && proj.Owner != this.aiActor)
                         {
 							
                             BeamController beamController = proj.GetComponent<BeamController>();
@@ -196,7 +196,7 @@ public class ShamberController : BraveBehaviour
                                                 speed = s,
                                                 s = second,
                                                 projectile = proj,
-                                                Radius = Mathf.Min(3, 1.25f + (m_bulletPositions.Count() == 0f ? 0f : (float)m_bulletPositions.Count() / 100f))
+                                                Radius = Mathf.Min(3, 1.25f + (m_bulletPositions.Count() == 0f ? 0f : (float)m_bulletPositions.Count() * 0.025f))
                                             });
                                         }
                                     }
@@ -286,7 +286,7 @@ public class ShamberController : BraveBehaviour
 
     private Vector2 GetBulletPosition(float angle, Projectile projectile, float radius)
     {
-        return Vector2.MoveTowards(projectile.transform.PositionVector2(), this.aiActor.sprite.WorldCenter + new Vector2(Mathf.Cos(angle * 0.017453292f), Mathf.Sin(angle * 0.017453292f)) * radius, 0.15f);
+        return Vector2.MoveTowards(projectile.transform.PositionVector2(), this.aiActor.sprite.WorldCenter + new Vector2(Mathf.Cos(angle * 0.017453292f), Mathf.Sin(angle * 0.017453292f)) * radius, 25 * Time.deltaTime);
     }
 
 
@@ -310,19 +310,19 @@ public class ShamberController : BraveBehaviour
                     proj.collidesWithPlayer = true;
                     proj.UpdateCollisionMask();
                     proj.Direction = proj.transform.PositionVector2() - this.aiActor.sprite.WorldCenter;
+                    proj.baseData.range = 1000;
                     proj.ResetDistance();
                     proj.baseData.UsesCustomAccelerationCurve = true;
                     proj.baseData.CustomAccelerationCurveDuration = 3f;
-                    proj.baseData.range = 1000;
                     proj.baseData.AccelerationCurve = new AnimationCurve()
                     {
                         postWrapMode = WrapMode.ClampForever,
 
                         keys = new Keyframe[] {
-                new Keyframe(){time = 0.1f, value = 0.3f, inTangent = 0.75f, outTangent = 0.25f},
-                new Keyframe(){time = 0.5f, value = 0f},
-                new Keyframe(){time = 0.95f, value = 1.1f, inTangent = 0.75f, outTangent = 0.25f}
-                }
+                        new Keyframe(){time = 0.1f, value = 0.3f, inTangent = 0.5f, outTangent = 0.25f},
+                        new Keyframe(){time = 0.5f, value = 0f},
+                        new Keyframe(){time = 0.9f, value = 1.1f, inTangent = 0.5f, outTangent = 0.25f}
+                        }
                     };
                     proj.baseData.speed = Mathf.Min(this.m_bulletPositions[i].speed, 25);
                     proj.UpdateSpeed();

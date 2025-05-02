@@ -2592,16 +2592,7 @@ namespace Planetside
 
 		}
 
-		public static List<int> Lootdrops = new List<int>
-		{
-			73,
-			85,
-			120,
-			67,
-			224,
-			600,
-			78
-		};
+
 
 
 

@@ -60,7 +60,7 @@ namespace Planetside
                     List<AIActor> activeEnemies = room.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
                     if (activeEnemies != null && activeEnemies.Count > 0)
                     {
-                        Vector2 centerPosition = projectile.sprite.WorldCenter;
+                        Vector3 centerPosition = projectile.sprite != null ? projectile.sprite.WorldCenter.ToVector3ZisY() : projectile.transform.position;
                         for (int em = 0; em < activeEnemies.Count; em++)
                         {
                             AIActor aiactor = activeEnemies[em];
@@ -68,13 +68,6 @@ namespace Planetside
                             {
                                 if (Vector2.Distance(aiactor.CenterPosition, centerPosition) < Radius * MultiplierScale)
                                 {
-                                    if (DealsDamage == true && aiactor.healthHaver != null)
-                                    {
-                                        if (aiactor.healthHaver.GetMaxHealth() > 0f && aiactor != null && aiactor.specRigidbody != null)
-                                        {
-                                            aiactor.healthHaver.ApplyDamage(DamageperDamageEvent * MultiplierDamage, Vector2.zero, "Aura", CoreDamageTypes.Electric, DamageCategory.Normal, false, null, false);
-                                        }
-                                    }
                                     foreach (var Entry in debuffs)
                                     {
                                         if (UnityEngine.Random.value < Entry.Value)
@@ -90,6 +83,13 @@ namespace Planetside
                                             {
                                                 aiactor.ApplyEffect(Entry.Key, 1, null);
                                             }
+                                        }
+                                    }
+                                    if (DealsDamage == true && aiactor.healthHaver != null)
+                                    {
+                                        if (aiactor.healthHaver.GetMaxHealth() > 0f && aiactor != null)
+                                        {
+                                            aiactor.healthHaver.ApplyDamage(DamageperDamageEvent * MultiplierDamage, Vector2.zero, "Aura", CoreDamageTypes.Electric, DamageCategory.Normal, false, null, false);
                                         }
                                     }
                                 }

@@ -36,7 +36,7 @@ namespace Planetside
     {
         public const string GUID = "somebunny.etg.planetsideofgunymede";
         public const string NAME = "Planetside Of Gunymede Pre-Release";
-        public const string VERSION = "1.3.179";
+        public const string VERSION = "1.3.180";
         //9006FF
         public static readonly string TEXT_COLOR = "#00d0ff";
         //00d0ff

@@ -29,11 +29,20 @@ namespace Planetside
             this.StartCoroutine(FrameDelay());
         }
 
+
+        public Func<SpeculativeRigidbody, bool> Excluder = (SpeculativeRigidbody otherRigidbody) =>
+        {
+            if (otherRigidbody.minorBreakable) { return otherRigidbody.minorBreakable; }
+            if (otherRigidbody.gameActor is PlayerController player)
+            {
+                return player.IsStealthed || player.IsEthereal || player.IsGhost;
+            }
+            return false;
+        };
+
         public IEnumerator FrameDelay()
         {
-            yield return null;
-            yield return null;
-            yield return null;
+            yield return new WaitForSeconds(0.5f);
 
             if (laserPointer == null)
             {
@@ -71,11 +80,10 @@ namespace Planetside
         public void DoRayCast()
         {
             float num9 = float.MaxValue;
-            Func<SpeculativeRigidbody, bool> rigidbodyExcluder = (SpeculativeRigidbody otherRigidbody) => otherRigidbody.minorBreakable;
             CollisionLayer layer2 = CollisionLayer.PlayerHitBox;
             int rayMask2 = CollisionMask.LayerToMask(CollisionLayer.HighObstacle ,CollisionLayer.BulletBlocker, layer2);
             RaycastResult raycastResult2;
-            if (PhysicsEngine.Instance.Raycast(shootPosition.transform.PositionVector2(), ReturnDirection(), 100, out raycastResult2, true, true, rayMask2, null, false, rigidbodyExcluder, null))
+            if (PhysicsEngine.Instance.Raycast(shootPosition.transform.PositionVector2(), ReturnDirection(), 100, out raycastResult2, true, true, rayMask2, null, false, Excluder, null))
             {
                 num9 = raycastResult2.Distance;
                 if (raycastResult2.SpeculativeRigidbody && raycastResult2.OtherPixelCollider.CollisionLayer == layer2)

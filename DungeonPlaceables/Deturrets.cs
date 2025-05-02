@@ -13,6 +13,7 @@ using Planetside;
 using BreakAbleAPI;
 using Brave.BulletScript;
 using System.Collections;
+using static Dungeonator.CellVisualData;
 
 namespace Planetside
 {
@@ -20,6 +21,7 @@ namespace Planetside
     public class DeturretController : MonoBehaviour
     {
 		public int Speed;
+		public SpeculativeRigidbody speculativeRigidbody;
         public void Start()
         {
 			SpinBulletsControllerEnemyless enemyless = this.gameObject.AddComponent<SpinBulletsControllerEnemyless>();
@@ -33,8 +35,43 @@ namespace Planetside
 			enemyless.RegenTimer = 0.02f;
 			enemyless.AmountOFLines = 4;
 			SpriteOutlineManager.AddOutlineToSprite(base.GetComponent<tk2dBaseSprite>(), Color.black, 0.1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
-		}
-	}
+			MarkCells();
+
+        }
+
+       public void MarkCells()
+        {
+            PixelCollider primaryPixelCollider = speculativeRigidbody.PrimaryPixelCollider;
+            IntVector2 intVector = PhysicsEngine.PixelToUnitMidpoint(primaryPixelCollider.LowerLeft).ToIntVector2(VectorConversions.Floor) - new IntVector2(2,2);
+            IntVector2 intVector2 = PhysicsEngine.PixelToUnitMidpoint(primaryPixelCollider.UpperRight).ToIntVector2(VectorConversions.Floor) - new IntVector2(2, 2);
+            for (int i = intVector.x; i <= intVector2.x; i++)
+            {
+                for (int j = intVector.y; j <= intVector2.y; j++)
+                {
+                    if (GameManager.Instance.Dungeon.data.cellData[i][j] != null)
+                    {
+                        var cell = GameManager.Instance.Dungeon.data.cellData[i][j];
+                        cell.PreventRewardSpawn = true;
+                        cell.containsTrap = true;
+                        cell.IsTrapZone = true;
+                    }
+                }
+            }
+            PhysicsEngine.PixelToUnitMidpoint(primaryPixelCollider.LowerLeft).ToIntVector2(VectorConversions.Floor);
+            PhysicsEngine.PixelToUnitMidpoint(primaryPixelCollider.UpperRight).ToIntVector2(VectorConversions.Floor);
+            for (int i = intVector.x; i <= intVector2.x; i++)
+            {
+                for (int j = intVector.y; j <= intVector2.y; j++)
+                {
+                    if (GameManager.Instance.Dungeon.data.cellData[i][j] != null)
+                    {
+                        var cell = GameManager.Instance.Dungeon.data.cellData[i][j];
+                        cell.isOccupied = true;
+                    }
+                }
+            }
+        }
+    }
     public class Deturrets
     {
         public static void Init()
@@ -62,6 +99,7 @@ namespace Planetside
             AIBulletBank bulletBankLeft = deturretLeft.gameObject.AddComponent<AIBulletBank>();
 			DeturretController deturretC = deturretLeft.gameObject.AddComponent<DeturretController>();
 			deturretC.Speed = -60;
+			deturretC.speculativeRigidbody = deturretLeft.specRigidbody;
 			bulletBankLeft.Bullets = new List<AIBulletBank.Entry>();
 			bulletBankLeft.Bullets.Add(entry);
 
@@ -75,7 +113,9 @@ namespace Planetside
 			AIBulletBank bulletBankRight = deturretRight.gameObject.AddComponent<AIBulletBank>();
 			DeturretController deturretR = deturretRight.gameObject.AddComponent<DeturretController>();
 			deturretR.Speed = 60;
-			bulletBankRight.Bullets = new List<AIBulletBank.Entry>();
+            deturretR.speculativeRigidbody = deturretRight.specRigidbody;
+
+            bulletBankRight.Bullets = new List<AIBulletBank.Entry>();
 			bulletBankRight.Bullets.Add(entry);
 
 			StaticReferences.StoredRoomObjects.Add("deturretRight", deturretRight.gameObject);

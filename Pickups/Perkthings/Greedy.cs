@@ -5,6 +5,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using SaveAPI;
+using System.Linq;
 
 namespace Planetside
 {
@@ -54,9 +55,11 @@ namespace Planetside
                             ExplosionData boomboom = StaticExplosionDatas.CopyFields(StaticExplosionDatas.genericSmallExplosion);//StaticExplosionDatas.genericSmallExplosion;
                             boomboom.damageToPlayer = 0;
                             boomboom.preventPlayerForce = true;
+                            GameManager.Instance.AllPlayers.ToList().ForEach(self => boomboom.ignoreList.Add(self.specRigidbody));
                             boomboom.ignoreList.Add(player.specRigidbody);
                             Exploder.Explode(player.sprite.WorldCenter, boomboom, player.transform.PositionVector2());
-                            player.StartCoroutine(GrantTemporaryBoost(player, this.StatIncrease));
+                            if (isNewStack != null) { player.StopCoroutine(isNewStack); }
+                            isNewStack = player.StartCoroutine(GrantTemporaryBoost(player, this.StatIncrease));
                             AkSoundEngine.PostEvent("Play_OBJ_power_up_01", player.gameObject);
 
                         }
@@ -74,9 +77,10 @@ namespace Planetside
         private float Timer;
         private bool BuffsActive= false;
         private int ActiveBuffs = 0;
+        private Coroutine isNewStack;
         private IEnumerator GrantTemporaryBoost(PlayerController user, float StatIncreaseValue)
         {
-            Timer = 0 - ((float)ActiveBuffs / 20f);
+            Timer = 0 - ((float)ActiveBuffs * 0.0333f);
             ActiveBuffs++;
             if (user.ownerlessStatModifiers.Contains(Speed))
             { user.ownerlessStatModifiers.Remove(Speed); }
@@ -85,7 +89,7 @@ namespace Planetside
             Speed = new StatModifier
             {
                 statToBoost = PlayerStats.StatType.MovementSpeed,
-                amount = ((StatIncreaseValue-1) * ActiveBuffs)+1,
+                amount = (((StatIncreaseValue-1) * ActiveBuffs)+1)*0.4f,
                 modifyType = StatModifier.ModifyMethod.ADDITIVE
             };
             Damage = new StatModifier
@@ -98,17 +102,15 @@ namespace Planetside
             user.ownerlessStatModifiers.Add(Damage);
             user.stats.RecalculateStats(user, true, true);
 
-            if (BuffsActive == true) { yield break; }
-            BuffsActive = true;
             while (Timer < 6)
             {
+               
                 Timer += BraveTime.DeltaTime;
                 yield return null;
             }
             user.ownerlessStatModifiers.Remove(Speed);
             user.ownerlessStatModifiers.Remove(Damage);
             user.stats.RecalculateStats(user, true, true);
-            BuffsActive = false;
             ActiveBuffs = 0;
             user.PlayEffectOnActor(StaticVFXStorage.MachoBraceBurstVFX, new Vector3(0, 0.25f));
             AkSoundEngine.PostEvent("Play_WPN_Life_Orb_Fade_01", user.gameObject);
@@ -129,7 +131,7 @@ namespace Planetside
             {
                 if (coins == null) { yield break; }
                 var Player = GameManager.Instance.GetActivePlayerClosestToPoint(coins.transform.position);
-                if (MathToolbox.IsCloserThan(Player.transform.position, coins.transform.position, 2))
+                if (MathToolbox.IsCloserThan(Player.transform.position, coins.transform.position, 3))
                 {
                     if (isCaught == false)
                     {
@@ -139,7 +141,7 @@ namespace Planetside
                             pickupMover.specRigidbody.CollideWithTileMap = false;
                         }
                         pickupMover.acceleration = 20f;
-                        pickupMover.maxSpeed = 5f;
+                        pickupMover.maxSpeed = 15f;
                         pickupMover.minRadius = 0.01f;
                         pickupMover.moveIfRoomUnclear = true;
                         pickupMover.stopPathingOnContact = false;
@@ -166,8 +168,9 @@ namespace Planetside
 
             while (elapsed < lifeTime)
             {
+                if (coins == null) { yield break; }
                 var Player = GameManager.Instance.GetActivePlayerClosestToPoint(coins.transform.position);
-                if (MathToolbox.IsCloserThan(Player.transform.position, coins.transform.position, 2))
+                if (MathToolbox.IsCloserThan(Player.transform.position, coins.transform.position, 3))
                 {
                     if (isCaught == false)
                     {
@@ -176,9 +179,10 @@ namespace Planetside
                         {
                             pickupMover.specRigidbody.CollideWithTileMap = false;
                         }
+                        pickupMover.m_shouldPath = true;
                         pickupMover.acceleration = 20f;
                         pickupMover.maxSpeed = 5f;
-                        pickupMover.minRadius = 0.01f;
+                        pickupMover.minRadius = -1f;
                         pickupMover.moveIfRoomUnclear = true;
                         pickupMover.stopPathingOnContact = false;
                         isCaught = true;
@@ -209,6 +213,7 @@ namespace Planetside
                 }
                 yield return null;
             }
+            if (coins == null) { yield break; }
             UnityEngine.Object.Destroy(coins.gameObject);
             yield break;
         }
