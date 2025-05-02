@@ -93,7 +93,7 @@ namespace Planetside
 
 		private void M_projectile_OnDestruction(Projectile obj)
 		{
-			for (int i = 0; i < 16; i++)
+			for (int i = 0; i < 24; i++)
 			{
                 this.SpawnProjectile(this.projectileToSpawn, this.m_projectile.sprite.WorldCenter, UnityEngine.Random.Range(-180, 180), null);
             }
@@ -102,7 +102,7 @@ namespace Planetside
 		private void Update()
 		{
 			this.elapsed += BraveTime.DeltaTime;
-			if (this.elapsed > 0.04f)
+			if (this.elapsed > 0.0333f)
 			{
 				elapsed = 0;
                 this.SpawnProjectile(this.projectileToSpawn, this.m_projectile.sprite.WorldCenter,  UnityEngine.Random.Range(-180, 180), null);
@@ -116,35 +116,33 @@ namespace Planetside
 			if (component != null)
 			{
                 component.SpawnedFromOtherPlayerProjectile = true;
-				PlayerController playerController = this.m_projectile.Owner as PlayerController;
-				component.gameObject.AddComponent<RecursionPreventer>();
-				component.baseData.damage = 3.5f;
-				component.baseData.speed *= 0.3f;
-				playerController.DoPostProcessProjectile(component);
-				component.baseData.range = 100f;
+
+				if (this.m_projectile != null && this.m_projectile.Owner != null)
+				{
+                    PlayerController playerController = this.m_projectile.Owner as PlayerController;
+					if (playerController != null)
+					{
+                        playerController.DoPostProcessProjectile(component);
+                    }
+                }
+
+                component.gameObject.AddComponent<RecursionPreventer>();
+				component.baseData.damage = UnityEngine.Random.Range(1.8f, 4.2f);
+				component.baseData.speed = UnityEngine.Random.Range(0.4f, 3.1f);
+                component.UpdateSpeed();
+
+                component.baseData.range = 100f;
 				component.AdditionalScaleMultiplier *= UnityEngine.Random.Range(0.5f, 1.5f);
-				component.StartCoroutine(this.Speed(component, UnityEngine.Random.Range(8,30), UnityEngine.Random.Range(4, 20), UnityEngine.Random.Range(0.03f, 0.1f)));
-				HomingModifier homing = component.gameObject.AddComponent<HomingModifier>();
+				component.baseData.UsesCustomAccelerationCurve = true;
+                component.baseData.AccelerationCurve = AnimationCurve.EaseInOut(0, UnityEngine.Random.Range(1.1f, 0.5f), 1, UnityEngine.Random.Range(0.25f, 0.05f));
+                component.baseData.CustomAccelerationCurveDuration = UnityEngine.Random.Range(0.5f, 5.2f);
+				component.baseData.IgnoreAccelCurveTime = UnityEngine.Random.Range(0.05f, 2.1f);
+                HomingModifier homing = component.gameObject.AddComponent<HomingModifier>();
 				homing.HomingRadius = 12f;
 				homing.AngularVelocity = 75;
 			}
 		}
-		public IEnumerator Speed(Projectile projectile, int speeddown, float lifetime, float Speeddowndelay)
-		{
-			if (projectile != null)
-			{
-				float speed = projectile.baseData.speed / speeddown;
-				for (int i = 0; i < speeddown-1; i++)
-				{
-					projectile.baseData.speed -= speed;
-					projectile.UpdateSpeed();
-					yield return new WaitForSeconds(Speeddowndelay);
-				}
-				yield return new WaitForSeconds(lifetime);
-				projectile.DieInAir();
-			}
-			yield break;
-		}
+
 		private Projectile m_projectile;
 		public Projectile projectileToSpawn;
 		private float elapsed;

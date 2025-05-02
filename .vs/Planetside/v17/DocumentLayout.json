@@ -7,7 +7,19 @@
       "RelativeMoniker": "D:0:0:{D6D7A494-722E-4763-959B-C2D6B6A42B01}|Planetside.csproj|solutionrelative:planetsidemodule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D6D7A494-722E-4763-959B-C2D6B6A42B01}|Planetside.csproj|d:\\repossecondary\\failsafes\\planetside\\static storage\\enemyguids.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{D6D7A494-722E-4763-959B-C2D6B6A42B01}|Planetside.csproj|d:\\repossecondary\\failsafes\\planetside\\guns\\update2\\funcannon.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D6D7A494-722E-4763-959B-C2D6B6A42B01}|Planetside.csproj|solutionrelative:guns\\update2\\funcannon.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D6D7A494-722E-4763-959B-C2D6B6A42B01}|Planetside.csproj|d:\\repossecondary\\failsafes\\planetside\\static storage\\staticvfxstorage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D6D7A494-722E-4763-959B-C2D6B6A42B01}|Planetside.csproj|solutionrelative:static storage\\staticvfxstorage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D6D7A494-722E-4763-959B-C2D6B6A42B01}|Planetside.csproj|D:\\reposSecondary\\failsafes\\Planetside\\enemysetupcode\\enemyrelatedstuff\\behavior stuff\\umbracontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D6D7A494-722E-4763-959B-C2D6B6A42B01}|Planetside.csproj|solutionrelative:enemysetupcode\\enemyrelatedstuff\\behavior stuff\\umbracontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D6D7A494-722E-4763-959B-C2D6B6A42B01}|Planetside.csproj|D:\\reposSecondary\\failsafes\\Planetside\\static storage\\enemyguids.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D6D7A494-722E-4763-959B-C2D6B6A42B01}|Planetside.csproj|solutionrelative:static storage\\enemyguids.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -75,10 +87,6 @@
       "RelativeMoniker": "D:0:0:{D6D7A494-722E-4763-959B-C2D6B6A42B01}|Planetside.csproj|solutionrelative:guns\\init release\\armwarmer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D6D7A494-722E-4763-959B-C2D6B6A42B01}|Planetside.csproj|D:\\reposSecondary\\failsafes\\Planetside\\enemysetupcode\\enemyrelatedstuff\\behavior stuff\\umbracontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6D7A494-722E-4763-959B-C2D6B6A42B01}|Planetside.csproj|solutionrelative:enemysetupcode\\enemyrelatedstuff\\behavior stuff\\umbracontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{D6D7A494-722E-4763-959B-C2D6B6A42B01}|Planetside.csproj|D:\\reposSecondary\\failsafes\\Planetside\\static storage\\staticinformation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D6D7A494-722E-4763-959B-C2D6B6A42B01}|Planetside.csproj|solutionrelative:static storage\\staticinformation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -117,10 +125,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{D6D7A494-722E-4763-959B-C2D6B6A42B01}|Planetside.csproj|D:\\reposSecondary\\failsafes\\Planetside\\dungeonplaceables\\idol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D6D7A494-722E-4763-959B-C2D6B6A42B01}|Planetside.csproj|solutionrelative:dungeonplaceables\\idol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D6D7A494-722E-4763-959B-C2D6B6A42B01}|Planetside.csproj|D:\\reposSecondary\\failsafes\\Planetside\\static storage\\staticvfxstorage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6D7A494-722E-4763-959B-C2D6B6A42B01}|Planetside.csproj|solutionrelative:static storage\\staticvfxstorage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D6D7A494-722E-4763-959B-C2D6B6A42B01}|Planetside.csproj|D:\\reposSecondary\\failsafes\\Planetside\\enemysetupcode\\enemycode\\cursebulon.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -1176,11 +1180,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 51,
+              "DocumentIndex": 52,
               "Title": "ContainmentBreachController.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Controllers\\ContainmentBreach\\ContainmentBreachController.cs",
               "RelativeDocumentMoniker": "Controllers\\ContainmentBreach\\ContainmentBreachController.cs",
@@ -1193,31 +1197,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "PrisonerSubPhase3Attacks.cs",
-              "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\EnemySetupCode\\EnemyCode\\Update3\\Bosses\\Prisoner\\PrisonerSubPhase3Attacks.cs",
-              "RelativeDocumentMoniker": "EnemySetupCode\\EnemyCode\\Update3\\Bosses\\Prisoner\\PrisonerSubPhase3Attacks.cs",
-              "ToolTip": "D:\\reposSecondary\\failsafes\\Planetside\\EnemySetupCode\\EnemyCode\\Update3\\Bosses\\Prisoner\\PrisonerSubPhase3Attacks.cs",
-              "RelativeToolTip": "EnemySetupCode\\EnemyCode\\Update3\\Bosses\\Prisoner\\PrisonerSubPhase3Attacks.cs",
-              "ViewState": "AQIAAMcFAAAAAAAAAAAmwKIFAAAFAAAA",
+              "DocumentIndex": 1,
+              "Title": "Funcannon.cs",
+              "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Guns\\Update2\\Funcannon.cs",
+              "RelativeDocumentMoniker": "Guns\\Update2\\Funcannon.cs",
+              "ToolTip": "D:\\reposSecondary\\failsafes\\Planetside\\Guns\\Update2\\Funcannon.cs",
+              "RelativeToolTip": "Guns\\Update2\\Funcannon.cs",
+              "ViewState": "AQIAAG0AAAAAAAAAAAAcwIEAAABCAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-27T16:44:46.585Z"
+              "WhenOpened": "2025-05-02T21:01:54.233Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 8,
-              "Title": "Deturrets.cs",
-              "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\DungeonPlaceables\\Deturrets.cs",
-              "RelativeDocumentMoniker": "DungeonPlaceables\\Deturrets.cs",
-              "ToolTip": "D:\\reposSecondary\\failsafes\\Planetside\\DungeonPlaceables\\Deturrets.cs",
-              "RelativeToolTip": "DungeonPlaceables\\Deturrets.cs",
-              "ViewState": "AQIAACAAAAAAAAAAAAAowCkAAAAeAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-01-18T14:36:52.182Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
               "Title": "PrisonerPhaseOne.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\EnemySetupCode\\EnemyCode\\Update3\\Bosses\\Prisoner\\PrisonerPhaseOne.cs",
               "RelativeDocumentMoniker": "EnemySetupCode\\EnemyCode\\Update3\\Bosses\\Prisoner\\PrisonerPhaseOne.cs",
@@ -1229,7 +1222,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 12,
               "Title": "FadingBlocker.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\DungeonPlaceables\\FadingBlocker.cs",
               "RelativeDocumentMoniker": "DungeonPlaceables\\FadingBlocker.cs",
@@ -1241,7 +1234,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 13,
               "Title": "DeTurretLeft.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\EnemySetupCode\\EnemyCode\\DeTurretLeft.cs",
               "RelativeDocumentMoniker": "EnemySetupCode\\EnemyCode\\DeTurretLeft.cs",
@@ -1253,7 +1246,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "ShamberController.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\EnemySetupCode\\EnemyRelatedStuff\\EnemyComponents\\ShamberController.cs",
               "RelativeDocumentMoniker": "EnemySetupCode\\EnemyRelatedStuff\\EnemyComponents\\ShamberController.cs",
@@ -1265,7 +1258,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "EnemyGUIDs.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Static Storage\\EnemyGUIDs.cs",
               "RelativeDocumentMoniker": "Static Storage\\EnemyGUIDs.cs",
@@ -1273,8 +1266,7 @@
               "RelativeToolTip": "Static Storage\\EnemyGUIDs.cs",
               "ViewState": "AQIAACkCAAAAAAAAAAAgwEACAAATAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-27T15:05:55.395Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-27T15:05:55.395Z"
             },
             {
               "$type": "Document",
@@ -1284,7 +1276,7 @@
               "RelativeDocumentMoniker": "PlanetsideModule.cs",
               "ToolTip": "D:\\reposSecondary\\failsafes\\Planetside\\PlanetsideModule.cs",
               "RelativeToolTip": "PlanetsideModule.cs",
-              "ViewState": "AQIAAB0AAAAAAAAAAAAqwDIAAAA5AAAA",
+              "ViewState": "AQIAABoAAAAAAAAAAAAqwCgAAAA9AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-01-18T14:23:32.393Z",
               "EditorCaption": ""
@@ -1292,6 +1284,55 @@
             {
               "$type": "Document",
               "DocumentIndex": 3,
+              "Title": "UmbraController.cs",
+              "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\EnemySetupCode\\EnemyRelatedStuff\\Behavior Stuff\\UmbraController.cs",
+              "RelativeDocumentMoniker": "EnemySetupCode\\EnemyRelatedStuff\\Behavior Stuff\\UmbraController.cs",
+              "ToolTip": "D:\\reposSecondary\\failsafes\\Planetside\\EnemySetupCode\\EnemyRelatedStuff\\Behavior Stuff\\UmbraController.cs",
+              "RelativeToolTip": "EnemySetupCode\\EnemyRelatedStuff\\Behavior Stuff\\UmbraController.cs",
+              "ViewState": "AQIAAJEBAAAAAAAAAAAiwKABAAAjAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-30T14:00:34.502Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "StaticVFXStorage.cs",
+              "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Static Storage\\StaticVFXStorage.cs",
+              "RelativeDocumentMoniker": "Static Storage\\StaticVFXStorage.cs",
+              "ToolTip": "D:\\reposSecondary\\failsafes\\Planetside\\Static Storage\\StaticVFXStorage.cs",
+              "RelativeToolTip": "Static Storage\\StaticVFXStorage.cs",
+              "ViewState": "AQIAABABAAAAAAAAAAAuwPwBAAA3AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-12T22:41:43.91Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Deturrets.cs",
+              "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\DungeonPlaceables\\Deturrets.cs",
+              "RelativeDocumentMoniker": "DungeonPlaceables\\Deturrets.cs",
+              "ToolTip": "D:\\reposSecondary\\failsafes\\Planetside\\DungeonPlaceables\\Deturrets.cs",
+              "RelativeToolTip": "DungeonPlaceables\\Deturrets.cs",
+              "ViewState": "AQIAACAAAAAAAAAAAAAowCkAAAAeAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-01-18T14:36:52.182Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "PrisonerSubPhase3Attacks.cs",
+              "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\EnemySetupCode\\EnemyCode\\Update3\\Bosses\\Prisoner\\PrisonerSubPhase3Attacks.cs",
+              "RelativeDocumentMoniker": "EnemySetupCode\\EnemyCode\\Update3\\Bosses\\Prisoner\\PrisonerSubPhase3Attacks.cs",
+              "ToolTip": "D:\\reposSecondary\\failsafes\\Planetside\\EnemySetupCode\\EnemyCode\\Update3\\Bosses\\Prisoner\\PrisonerSubPhase3Attacks.cs",
+              "RelativeToolTip": "EnemySetupCode\\EnemyCode\\Update3\\Bosses\\Prisoner\\PrisonerSubPhase3Attacks.cs",
+              "ViewState": "AQIAAMcFAAAAAAAAAAAmwKIFAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-27T16:44:46.585Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
               "Title": "TrespassSniperTurrets.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\DungeonPlaceables\\TrespassObjects\\TrespassSniperTurrets.cs",
               "RelativeDocumentMoniker": "DungeonPlaceables\\TrespassObjects\\TrespassSniperTurrets.cs",
@@ -1303,7 +1344,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 7,
               "Title": "SniperTurrets.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\DungeonPlaceables\\SniperTurrets.cs",
               "RelativeDocumentMoniker": "DungeonPlaceables\\SniperTurrets.cs",
@@ -1315,7 +1356,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 14,
               "Title": "Greedy.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Pickups\\Perkthings\\Greedy.cs",
               "RelativeDocumentMoniker": "Pickups\\Perkthings\\Greedy.cs",
@@ -1327,7 +1368,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 22,
               "Title": "Tower.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\EnemySetupCode\\EnemyCode\\Update3\\Enemies\\Tower.cs",
               "RelativeDocumentMoniker": "EnemySetupCode\\EnemyCode\\Update3\\Enemies\\Tower.cs",
@@ -1339,7 +1380,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 10,
               "Title": "PrisonerShrineController.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\DungeonPlaceables\\PrisonerShrineController.cs",
               "RelativeDocumentMoniker": "DungeonPlaceables\\PrisonerShrineController.cs",
@@ -1351,7 +1392,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 18,
               "Title": "StaticSpriteDefinitions.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Static Storage\\StaticSpriteDefinitions.cs",
               "RelativeDocumentMoniker": "Static Storage\\StaticSpriteDefinitions.cs",
@@ -1363,7 +1404,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 17,
               "Title": "Mop.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Guns\\Update2\\Mop.cs",
               "RelativeDocumentMoniker": "Guns\\Update2\\Mop.cs",
@@ -1375,7 +1416,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 21,
               "Title": "StaticInformation.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Static Storage\\StaticInformation.cs",
               "RelativeDocumentMoniker": "Static Storage\\StaticInformation.cs",
@@ -1387,7 +1428,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 25,
               "Title": "RevolverSkull.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\EnemySetupCode\\EnemyCode\\RevolverSkull.cs",
               "RelativeDocumentMoniker": "EnemySetupCode\\EnemyCode\\RevolverSkull.cs",
@@ -1399,7 +1440,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 16,
               "Title": "BulletBanker.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\EnemySetupCode\\EnemyCode\\BulletBank\\BulletBanker.cs",
               "RelativeDocumentMoniker": "EnemySetupCode\\EnemyCode\\BulletBank\\BulletBanker.cs",
@@ -1411,7 +1452,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 15,
               "Title": "BanditsRevolver.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Guns\\Update2\\BanditsRevolver.cs",
               "RelativeDocumentMoniker": "Guns\\Update2\\BanditsRevolver.cs",
@@ -1423,7 +1464,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 19,
               "Title": "Assetbundle Loader.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Assetbundle Stuff\\Assetbundle Loader.cs",
               "RelativeDocumentMoniker": "Assetbundle Stuff\\Assetbundle Loader.cs",
@@ -1435,7 +1476,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 26,
               "Title": "WarpMastersKit.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Update6\\WarpMastersKit.cs",
               "RelativeDocumentMoniker": "Items\\Update6\\WarpMastersKit.cs",
@@ -1447,7 +1488,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 23,
               "Title": "PitLordsPact.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Pickups\\Perkthings\\PitLordsPact.cs",
               "RelativeDocumentMoniker": "Pickups\\Perkthings\\PitLordsPact.cs",
@@ -1459,7 +1500,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 24,
               "Title": "TestShaderBullets.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Test Items\\TestShaderBullets.cs",
               "RelativeDocumentMoniker": "Items\\Test Items\\TestShaderBullets.cs",
@@ -1471,7 +1512,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 20,
               "Title": "ArmWarmer.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Guns\\Init Release\\ArmWarmer.cs",
               "RelativeDocumentMoniker": "Guns\\Init Release\\ArmWarmer.cs",
@@ -1483,19 +1524,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "UmbraController.cs",
-              "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\EnemySetupCode\\EnemyRelatedStuff\\Behavior Stuff\\UmbraController.cs",
-              "RelativeDocumentMoniker": "EnemySetupCode\\EnemyRelatedStuff\\Behavior Stuff\\UmbraController.cs",
-              "ToolTip": "D:\\reposSecondary\\failsafes\\Planetside\\EnemySetupCode\\EnemyRelatedStuff\\Behavior Stuff\\UmbraController.cs",
-              "RelativeToolTip": "EnemySetupCode\\EnemyRelatedStuff\\Behavior Stuff\\UmbraController.cs",
-              "ViewState": "AQIAAN0BAAAAAAAAAAAIwPYBAAAhAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-30T14:00:34.502Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 27,
               "Title": "BrokenChamberShrine.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Shrine Stuff\\ShrineCode\\BrokenChamberShrine.cs",
               "RelativeDocumentMoniker": "Shrine Stuff\\ShrineCode\\BrokenChamberShrine.cs",
@@ -1507,7 +1536,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 28,
               "Title": "BrokenChamberComponent.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Components\\Item Components\\BrokenChamberComponent.cs",
               "RelativeDocumentMoniker": "Components\\Item Components\\BrokenChamberComponent.cs",
@@ -1519,7 +1548,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 29,
               "Title": "MathToolbox.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Toolboxes\\MathToolbox.cs",
               "RelativeDocumentMoniker": "Toolboxes\\MathToolbox.cs",
@@ -1531,7 +1560,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 30,
               "Title": "Idol.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\DungeonPlaceables\\Idol.cs",
               "RelativeDocumentMoniker": "DungeonPlaceables\\Idol.cs",
@@ -1543,7 +1572,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 31,
               "Title": "Cursebulon.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\EnemySetupCode\\EnemyCode\\Cursebulon.cs",
               "RelativeDocumentMoniker": "EnemySetupCode\\EnemyCode\\Cursebulon.cs",
@@ -1555,7 +1584,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 32,
               "Title": "OuroborosController.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Controllers\\OuroborosController.cs",
               "RelativeDocumentMoniker": "Controllers\\OuroborosController.cs",
@@ -1567,19 +1596,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
-              "Title": "StaticVFXStorage.cs",
-              "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Static Storage\\StaticVFXStorage.cs",
-              "RelativeDocumentMoniker": "Static Storage\\StaticVFXStorage.cs",
-              "ToolTip": "D:\\reposSecondary\\failsafes\\Planetside\\Static Storage\\StaticVFXStorage.cs",
-              "RelativeToolTip": "Static Storage\\StaticVFXStorage.cs",
-              "ViewState": "AQIAAO8AAAAAAAAAAIAwwAMBAACAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-12T22:41:43.91Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 33,
               "Title": "FrailtyEffect.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Debuff Stuff\\FrailtyEffect.cs",
               "RelativeDocumentMoniker": "Debuff Stuff\\FrailtyEffect.cs",
@@ -1591,7 +1608,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 35,
               "Title": "HullBreakerBullets.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Init Release\\HullBreakerBullets.cs",
               "RelativeDocumentMoniker": "Items\\Init Release\\HullBreakerBullets.cs",
@@ -1603,7 +1620,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 36,
               "Title": "HMPrimeSpawnController.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Controllers\\HMPrimeSpawnController.cs",
               "RelativeDocumentMoniker": "Controllers\\HMPrimeSpawnController.cs",
@@ -1615,7 +1632,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 38,
               "Title": "AbyssFloorSetup.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\TheAbyss\\AbyssFloorSetup.cs",
               "RelativeDocumentMoniker": "TheAbyss\\AbyssFloorSetup.cs",
@@ -1627,7 +1644,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 34,
               "Title": "GunOrbitShrine.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Shrine Stuff\\ShrineCode\\GunOrbitShrine.cs",
               "RelativeDocumentMoniker": "Shrine Stuff\\ShrineCode\\GunOrbitShrine.cs",
@@ -1639,7 +1656,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 39,
               "Title": "ExpandDungeonMusicAPI.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\APIs\\ExpandDungeonMusicAPI.cs",
               "RelativeDocumentMoniker": "APIs\\ExpandDungeonMusicAPI.cs",
@@ -1651,7 +1668,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 40,
               "Title": "AbyssFloorDoor.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\DungeonPlaceables\\AbyssFloorDoor.cs",
               "RelativeDocumentMoniker": "DungeonPlaceables\\AbyssFloorDoor.cs",
@@ -1663,7 +1680,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 37,
               "Title": "RobotShopkeeperBoss.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\EnemySetupCode\\EnemyCode\\Update3\\Bosses\\HMPrime\\RobotShopkeeperBoss.cs",
               "RelativeDocumentMoniker": "EnemySetupCode\\EnemyCode\\Update3\\Bosses\\HMPrime\\RobotShopkeeperBoss.cs",
@@ -1675,7 +1692,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 41,
               "Title": "TheHelpfulPad.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\DungeonPlaceables\\TheHelpfulPad.cs",
               "RelativeDocumentMoniker": "DungeonPlaceables\\TheHelpfulPad.cs",
@@ -1687,7 +1704,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 42,
               "Title": "ModPrefabs.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\TheAbyss\\ModPrefabs.cs",
               "RelativeDocumentMoniker": "TheAbyss\\ModPrefabs.cs",
@@ -1699,7 +1716,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 43,
               "Title": "AbyssFlows.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\TheAbyss\\AbyssFlows.cs",
               "RelativeDocumentMoniker": "TheAbyss\\AbyssFlows.cs",
@@ -1711,7 +1728,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 44,
+              "DocumentIndex": 45,
               "Title": "Stagnant.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\EnemySetupCode\\EnemyCode\\Update3\\Enemies\\Stagnant.cs",
               "RelativeDocumentMoniker": "EnemySetupCode\\EnemyCode\\Update3\\Enemies\\Stagnant.cs",
@@ -1723,7 +1740,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 45,
+              "DocumentIndex": 46,
               "Title": "NemesisController.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\EnemySetupCode\\EnemyCode\\Update3\\Minibosses\\NemesisController.cs",
               "RelativeDocumentMoniker": "EnemySetupCode\\EnemyCode\\Update3\\Minibosses\\NemesisController.cs",
@@ -1735,7 +1752,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 46,
+              "DocumentIndex": 47,
               "Title": "Nemesis.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\EnemySetupCode\\EnemyCode\\Update3\\Minibosses\\Nemesis.cs",
               "RelativeDocumentMoniker": "EnemySetupCode\\EnemyCode\\Update3\\Minibosses\\Nemesis.cs",
@@ -1747,7 +1764,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 47,
+              "DocumentIndex": 48,
               "Title": "CustomDungeonHooks.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Hooks And Actions\\CustomDungeonHooks.cs",
               "RelativeDocumentMoniker": "Hooks And Actions\\CustomDungeonHooks.cs",
@@ -1759,7 +1776,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
+              "DocumentIndex": 44,
               "Title": "GunWarrant.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Update2\\GunWarrant.cs",
               "RelativeDocumentMoniker": "Items\\Update2\\GunWarrant.cs",
@@ -1771,7 +1788,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 48,
+              "DocumentIndex": 49,
               "Title": "DungeonHooks.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\APIs\\GungeonAPI\\DungeonHooks.cs",
               "RelativeDocumentMoniker": "APIs\\GungeonAPI\\DungeonHooks.cs",
@@ -1783,7 +1800,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 49,
+              "DocumentIndex": 50,
               "Title": "OppressorController.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\EnemySetupCode\\EnemyCode\\Update3\\Enemies\\OppressorController.cs",
               "RelativeDocumentMoniker": "EnemySetupCode\\EnemyCode\\Update3\\Enemies\\OppressorController.cs",
@@ -1795,7 +1812,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 50,
+              "DocumentIndex": 51,
               "Title": "TimeTraderSpawnController.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Controllers\\TimeTraderSpawnController.cs",
               "RelativeDocumentMoniker": "Controllers\\TimeTraderSpawnController.cs",
@@ -1807,7 +1824,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 52,
+              "DocumentIndex": 53,
               "Title": "Oppressor.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\EnemySetupCode\\EnemyCode\\Update3\\Enemies\\Oppressor.cs",
               "RelativeDocumentMoniker": "EnemySetupCode\\EnemyCode\\Update3\\Enemies\\Oppressor.cs",
@@ -1819,7 +1836,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 53,
+              "DocumentIndex": 54,
               "Title": "Hooks.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\EnemySetupCode\\EnemyAPI (The one that modifies behaviors)\\Hooks.cs",
               "RelativeDocumentMoniker": "EnemySetupCode\\EnemyAPI (The one that modifies behaviors)\\Hooks.cs",
@@ -1831,7 +1848,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 54,
+              "DocumentIndex": 55,
               "Title": "HolyChamberStatue.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\DungeonPlaceables\\HolyChamberStatue.cs",
               "RelativeDocumentMoniker": "DungeonPlaceables\\HolyChamberStatue.cs",
@@ -1843,7 +1860,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 55,
+              "DocumentIndex": 56,
               "Title": "SomethingWickedEventManager.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Controllers\\SomethingWickedEventManager.cs",
               "RelativeDocumentMoniker": "Controllers\\SomethingWickedEventManager.cs",
@@ -1855,7 +1872,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 56,
+              "DocumentIndex": 57,
               "Title": "Actions.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Hooks And Actions\\Actions.cs",
               "RelativeDocumentMoniker": "Hooks And Actions\\Actions.cs",
@@ -1867,7 +1884,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 57,
+              "DocumentIndex": 58,
               "Title": "OphanaimChanges.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Controllers\\ContainmentBreach\\BossChanges\\F2.5\\OphanaimChanges.cs",
               "RelativeDocumentMoniker": "Controllers\\ContainmentBreach\\BossChanges\\F2.5\\OphanaimChanges.cs",
@@ -1879,7 +1896,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 58,
+              "DocumentIndex": 59,
               "Title": "Ophanaim.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\EnemySetupCode\\EnemyCode\\Update2\\Ophanaim\\Ophanaim.cs",
               "RelativeDocumentMoniker": "EnemySetupCode\\EnemyCode\\Update2\\Ophanaim\\Ophanaim.cs",
@@ -1891,7 +1908,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 59,
+              "DocumentIndex": 60,
               "Title": "AllSeeingEye.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Pickups\\Perkthings\\AllSeeingEye.cs",
               "RelativeDocumentMoniker": "Pickups\\Perkthings\\AllSeeingEye.cs",
@@ -1903,7 +1920,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 60,
+              "DocumentIndex": 61,
               "Title": "PerkPickupClass.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Pickups\\PerkPickupClass.cs",
               "RelativeDocumentMoniker": "Pickups\\PerkPickupClass.cs",
@@ -1915,7 +1932,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 61,
+              "DocumentIndex": 62,
               "Title": "SaveAPIManager.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\APIs\\SaveAPI\\SaveAPIManager.cs",
               "RelativeDocumentMoniker": "APIs\\SaveAPI\\SaveAPIManager.cs",
@@ -1927,7 +1944,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 62,
+              "DocumentIndex": 63,
               "Title": "PlanetsideCommands.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Controllers\\PlanetsideCommands.cs",
               "RelativeDocumentMoniker": "Controllers\\PlanetsideCommands.cs",
@@ -1939,7 +1956,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 64,
+              "DocumentIndex": 65,
               "Title": "CustomTrackedStatsComparer.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\APIs\\SaveAPI\\Enums\\Comparers\\CustomTrackedStatsComparer.cs",
               "RelativeDocumentMoniker": "APIs\\SaveAPI\\Enums\\Comparers\\CustomTrackedStatsComparer.cs",
@@ -1951,7 +1968,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 66,
+              "DocumentIndex": 67,
               "Title": "MeasuringTape.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Guns\\Update4\\MeasuringTape.cs",
               "RelativeDocumentMoniker": "Guns\\Update4\\MeasuringTape.cs",
@@ -1963,7 +1980,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 67,
+              "DocumentIndex": 68,
               "Title": "Colossus.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Guns\\Update2\\Colossus.cs",
               "RelativeDocumentMoniker": "Guns\\Update2\\Colossus.cs",
@@ -1975,7 +1992,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 65,
+              "DocumentIndex": 66,
               "Title": "MopProjectile.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Guns\\Update2\\MopProjectile.cs",
               "RelativeDocumentMoniker": "Guns\\Update2\\MopProjectile.cs",
@@ -1987,7 +2004,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 63,
+              "DocumentIndex": 64,
               "Title": "CustomTrackedStats.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\APIs\\SaveAPI\\Enums\\CustomTrackedStats.cs",
               "RelativeDocumentMoniker": "APIs\\SaveAPI\\Enums\\CustomTrackedStats.cs",
@@ -1999,7 +2016,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 69,
+              "DocumentIndex": 70,
               "Title": "RevenantProjectile.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Guns\\Init Release\\RevenantProjectile.cs",
               "RelativeDocumentMoniker": "Guns\\Init Release\\RevenantProjectile.cs",
@@ -2011,7 +2028,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 70,
+              "DocumentIndex": 71,
               "Title": "OverrideBehavior.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\EnemySetupCode\\EnemyAPI (The one that modifies behaviors)\\OverrideBehavior.cs",
               "RelativeDocumentMoniker": "EnemySetupCode\\EnemyAPI (The one that modifies behaviors)\\OverrideBehavior.cs",
@@ -2023,7 +2040,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 75,
+              "DocumentIndex": 76,
               "Title": "Absconditus.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\NPC Stuff\\Absconditus.cs",
               "RelativeDocumentMoniker": "NPC Stuff\\Absconditus.cs",
@@ -2035,7 +2052,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 76,
+              "DocumentIndex": 77,
               "Title": "CustomShopController.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\APIs\\NPCAPI\\CustomShopController.cs",
               "RelativeDocumentMoniker": "APIs\\NPCAPI\\CustomShopController.cs",
@@ -2047,7 +2064,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 68,
+              "DocumentIndex": 69,
               "Title": "PossessedEffect.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Debuff Stuff\\PossessedEffect.cs",
               "RelativeDocumentMoniker": "Debuff Stuff\\PossessedEffect.cs",
@@ -2059,7 +2076,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 71,
+              "DocumentIndex": 72,
               "Title": "ShrineFactory.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Shrine Stuff\\ShrineFactory.cs",
               "RelativeDocumentMoniker": "Shrine Stuff\\ShrineFactory.cs",
@@ -2071,7 +2088,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 77,
+              "DocumentIndex": 78,
               "Title": "RatPhase2Changes.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Controllers\\ContainmentBreach\\BossChanges\\F3.5\\RatPhase2Changes.cs",
               "RelativeDocumentMoniker": "Controllers\\ContainmentBreach\\BossChanges\\F3.5\\RatPhase2Changes.cs",
@@ -2083,7 +2100,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 73,
+              "DocumentIndex": 74,
               "Title": "SimpleShrine.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Shrine Stuff\\SimpleShrine.cs",
               "RelativeDocumentMoniker": "Shrine Stuff\\SimpleShrine.cs",
@@ -2095,7 +2112,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 72,
+              "DocumentIndex": 73,
               "Title": "SimpleInteractable.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Shrine Stuff\\SimpleInteractable.cs",
               "RelativeDocumentMoniker": "Shrine Stuff\\SimpleInteractable.cs",
@@ -2107,7 +2124,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 78,
+              "DocumentIndex": 79,
               "Title": "ProperCube.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\EnemySetupCode\\EnemyCode\\Update2\\ProperCube.cs",
               "RelativeDocumentMoniker": "EnemySetupCode\\EnemyCode\\Update2\\ProperCube.cs",
@@ -2119,7 +2136,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 74,
+              "DocumentIndex": 75,
               "Title": "SpriteBuilder.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\APIs\\ItemAPI\\SpriteBuilder.cs",
               "RelativeDocumentMoniker": "APIs\\ItemAPI\\SpriteBuilder.cs",
@@ -2131,7 +2148,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 86,
+              "DocumentIndex": 87,
               "Title": "LockOnGun.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Guns\\Update3\\LockOnGun.cs",
               "RelativeDocumentMoniker": "Guns\\Update3\\LockOnGun.cs",
@@ -2143,7 +2160,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 87,
+              "DocumentIndex": 88,
               "Title": "NetheriteChamber.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Update2\\NetheriteChamber.cs",
               "RelativeDocumentMoniker": "Items\\Update2\\NetheriteChamber.cs",
@@ -2155,7 +2172,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 80,
+              "DocumentIndex": 81,
               "Title": "Shellrax.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\EnemySetupCode\\EnemyCode\\Shellrax\\Shellrax.cs",
               "RelativeDocumentMoniker": "EnemySetupCode\\EnemyCode\\Shellrax\\Shellrax.cs",
@@ -2167,7 +2184,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 79,
+              "DocumentIndex": 80,
               "Title": "AnnihiChamber.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\EnemySetupCode\\EnemyCode\\Update2\\Annihi-Chamber\\AnnihiChamber.cs",
               "RelativeDocumentMoniker": "EnemySetupCode\\EnemyCode\\Update2\\Annihi-Chamber\\AnnihiChamber.cs",
@@ -2179,7 +2196,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 82,
+              "DocumentIndex": 83,
               "Title": "FungannonChanges.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Controllers\\ContainmentBreach\\BossChanges\\F1.5\\FungannonChanges.cs",
               "RelativeDocumentMoniker": "Controllers\\ContainmentBreach\\BossChanges\\F1.5\\FungannonChanges.cs",
@@ -2191,7 +2208,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 81,
+              "DocumentIndex": 82,
               "Title": "Fungannon.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\EnemySetupCode\\EnemyCode\\Update2\\Fungannon\\Fungannon.cs",
               "RelativeDocumentMoniker": "EnemySetupCode\\EnemyCode\\Update2\\Fungannon\\Fungannon.cs",
@@ -2203,7 +2220,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 85,
+              "DocumentIndex": 86,
               "Title": "DiamondChamber.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Init Release\\DiamondChamber.cs",
               "RelativeDocumentMoniker": "Items\\Init Release\\DiamondChamber.cs",
@@ -2215,7 +2232,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 88,
+              "DocumentIndex": 89,
               "Title": "FlowInjectionInitialiser.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\DungeonGenStuff\\FlowInjectionInitialiser.cs",
               "RelativeDocumentMoniker": "DungeonGenStuff\\FlowInjectionInitialiser.cs",
@@ -2227,7 +2244,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 89,
+              "DocumentIndex": 90,
               "Title": "ShockChain.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Guns\\Init Release\\ShockChain.cs",
               "RelativeDocumentMoniker": "Guns\\Init Release\\ShockChain.cs",
@@ -2239,7 +2256,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 83,
+              "DocumentIndex": 84,
               "Title": "EcholocationAmmolet.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Init Release\\EcholocationAmmolet.cs",
               "RelativeDocumentMoniker": "Items\\Init Release\\EcholocationAmmolet.cs",
@@ -2251,7 +2268,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 84,
+              "DocumentIndex": 85,
               "Title": "FrailtyAmmolet.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Init Release\\FrailtyAmmolet.cs",
               "RelativeDocumentMoniker": "Items\\Init Release\\FrailtyAmmolet.cs",
@@ -2263,7 +2280,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 90,
+              "DocumentIndex": 91,
               "Title": "PrisonShrine.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Shrine Stuff\\ShrineCode\\PrisonShrine\\PrisonShrine.cs",
               "RelativeDocumentMoniker": "Shrine Stuff\\ShrineCode\\PrisonShrine\\PrisonShrine.cs",
@@ -2275,7 +2292,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 92,
+              "DocumentIndex": 93,
               "Title": "MasteryTraderSpawnController.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Controllers\\MasteryTraderSpawnController.cs",
               "RelativeDocumentMoniker": "Controllers\\MasteryTraderSpawnController.cs",
@@ -2287,7 +2304,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 91,
+              "DocumentIndex": 92,
               "Title": "StaticReferences.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\APIs\\GungeonAPI\\StaticReferences.cs",
               "RelativeDocumentMoniker": "APIs\\GungeonAPI\\StaticReferences.cs",
@@ -2299,7 +2316,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 93,
+              "DocumentIndex": 94,
               "Title": "TrespassPortalController.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Components\\Other Components\\TrespassPortalController.cs",
               "RelativeDocumentMoniker": "Components\\Other Components\\TrespassPortalController.cs",
@@ -2311,7 +2328,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 95,
+              "DocumentIndex": 96,
               "Title": "SporeBullets.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Update4\\SporeBullets.cs",
               "RelativeDocumentMoniker": "Items\\Update4\\SporeBullets.cs",
@@ -2323,7 +2340,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 96,
+              "DocumentIndex": 97,
               "Title": "ShopInABox.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Update4\\ShopInABox.cs",
               "RelativeDocumentMoniker": "Items\\Update4\\ShopInABox.cs",
@@ -2335,7 +2352,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 97,
+              "DocumentIndex": 98,
               "Title": "SpinningDeath.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Update4\\SpinningDeath.cs",
               "RelativeDocumentMoniker": "Items\\Update4\\SpinningDeath.cs",
@@ -2347,7 +2364,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 98,
+              "DocumentIndex": 99,
               "Title": "DeathWarrant.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Init Release\\DeathWarrant.cs",
               "RelativeDocumentMoniker": "Items\\Init Release\\DeathWarrant.cs",
@@ -2359,7 +2376,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 99,
+              "DocumentIndex": 100,
               "Title": "OscillatingBullets.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Init Release\\OscillatingBullets.cs",
               "RelativeDocumentMoniker": "Items\\Init Release\\OscillatingBullets.cs",
@@ -2371,7 +2388,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 100,
+              "DocumentIndex": 101,
               "Title": "Unstabullets.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Init Release\\Unstabullets.cs",
               "RelativeDocumentMoniker": "Items\\Init Release\\Unstabullets.cs",
@@ -2383,7 +2400,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 94,
+              "DocumentIndex": 95,
               "Title": "LuckyCharm.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Update4\\LuckyCharm.cs",
               "RelativeDocumentMoniker": "Items\\Update4\\LuckyCharm.cs",
@@ -2395,7 +2412,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 105,
+              "DocumentIndex": 106,
               "Title": "SynergyBuilder.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\APIs\\SynergyAPI\\SynergyBuilder.cs",
               "RelativeDocumentMoniker": "APIs\\SynergyAPI\\SynergyBuilder.cs",
@@ -2407,7 +2424,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 104,
+              "DocumentIndex": 105,
               "Title": "GunknownProjectile.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Guns\\Update2\\GunknownProjectile.cs",
               "RelativeDocumentMoniker": "Guns\\Update2\\GunknownProjectile.cs",
@@ -2419,7 +2436,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 102,
+              "DocumentIndex": 103,
               "Title": "Gunknown.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Guns\\Update2\\Gunknown.cs",
               "RelativeDocumentMoniker": "Guns\\Update2\\Gunknown.cs",
@@ -2431,7 +2448,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 103,
+              "DocumentIndex": 104,
               "Title": "GunknownGuonComponent.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Components\\Spec Item And Gun Components\\GunknownGuonComponent.cs",
               "RelativeDocumentMoniker": "Components\\Spec Item And Gun Components\\GunknownGuonComponent.cs",
@@ -2443,7 +2460,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 101,
+              "DocumentIndex": 102,
               "Title": "PointNull.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Guns\\Update5\\PointNull.cs",
               "RelativeDocumentMoniker": "Guns\\Update5\\PointNull.cs",
@@ -2455,7 +2472,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 108,
+              "DocumentIndex": 109,
               "Title": "TrapDefusalKit.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Update4\\TrapDefusalKit.cs",
               "RelativeDocumentMoniker": "Items\\Update4\\TrapDefusalKit.cs",
@@ -2467,7 +2484,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 109,
+              "DocumentIndex": 110,
               "Title": "TarnishedRounds.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Update4\\TarnishedRounds.cs",
               "RelativeDocumentMoniker": "Items\\Update4\\TarnishedRounds.cs",
@@ -2479,7 +2496,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 110,
+              "DocumentIndex": 111,
               "Title": "TableTechTelefrag.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Update4\\TableTechTelefrag.cs",
               "RelativeDocumentMoniker": "Items\\Update4\\TableTechTelefrag.cs",
@@ -2491,7 +2508,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 107,
+              "DocumentIndex": 108,
               "Title": "TatteredRobe.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Update4\\TatteredRobe.cs",
               "RelativeDocumentMoniker": "Items\\Update4\\TatteredRobe.cs",
@@ -2503,7 +2520,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 106,
+              "DocumentIndex": 107,
               "Title": "ShellsOfTheMountain.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Update2\\ShellsOfTheMountain.cs",
               "RelativeDocumentMoniker": "Items\\Update2\\ShellsOfTheMountain.cs",
@@ -2515,7 +2532,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 112,
+              "DocumentIndex": 113,
               "Title": "EndOfEverything.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Unsorted Garbage\\EndOfEverything.cs",
               "RelativeDocumentMoniker": "Unsorted Garbage\\EndOfEverything.cs",
@@ -2527,7 +2544,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 113,
+              "DocumentIndex": 114,
               "Title": "BlueAndRedCasings.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Update3\\BlueAndRedCasings.cs",
               "RelativeDocumentMoniker": "Items\\Update3\\BlueAndRedCasings.cs",
@@ -2539,7 +2556,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 111,
+              "DocumentIndex": 112,
               "Title": "AlchemicalVial.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Update4\\AlchemicalVial.cs",
               "RelativeDocumentMoniker": "Items\\Update4\\AlchemicalVial.cs",
@@ -2551,7 +2568,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 114,
+              "DocumentIndex": 115,
               "Title": "BreakableAPI_Bundled.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\DungeonPlaceables\\BreakableAPI_Bundled.cs",
               "RelativeDocumentMoniker": "DungeonPlaceables\\BreakableAPI_Bundled.cs",
@@ -2563,7 +2580,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 118,
+              "DocumentIndex": 119,
               "Title": "BurningSun.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Guns\\Init Release\\BurningSun.cs",
               "RelativeDocumentMoniker": "Guns\\Init Release\\BurningSun.cs",
@@ -2575,7 +2592,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 115,
+              "DocumentIndex": 116,
               "Title": "Oscillato.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Guns\\Init Release\\Oscillato.cs",
               "RelativeDocumentMoniker": "Guns\\Init Release\\Oscillato.cs",
@@ -2587,7 +2604,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 119,
+              "DocumentIndex": 120,
               "Title": "WrapaRounds.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Update5\\WrapaRounds.cs",
               "RelativeDocumentMoniker": "Items\\Update5\\WrapaRounds.cs",
@@ -2599,7 +2616,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 116,
+              "DocumentIndex": 117,
               "Title": "HardlightNailgun.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Guns\\Init Release\\HardlightNailgun.cs",
               "RelativeDocumentMoniker": "Guns\\Init Release\\HardlightNailgun.cs",
@@ -2611,7 +2628,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 120,
+              "DocumentIndex": 121,
               "Title": "EnemyToolbox.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Toolboxes\\EnemyToolbox.cs",
               "RelativeDocumentMoniker": "Toolboxes\\EnemyToolbox.cs",
@@ -2623,7 +2640,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 121,
+              "DocumentIndex": 122,
               "Title": "OtherTools.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Toolboxes\\OtherTools.cs",
               "RelativeDocumentMoniker": "Toolboxes\\OtherTools.cs",
@@ -2635,7 +2652,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 117,
+              "DocumentIndex": 118,
               "Title": "ExecutionersCrossbow.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Guns\\Init Release\\ExecutionersCrossbow.cs",
               "RelativeDocumentMoniker": "Guns\\Init Release\\ExecutionersCrossbow.cs",
@@ -2647,7 +2664,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 122,
+              "DocumentIndex": 123,
               "Title": "ParticleCollapserLargeProjectile.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Guns\\Update4\\ParticleCollapserLargeProjectile.cs",
               "RelativeDocumentMoniker": "Guns\\Update4\\ParticleCollapserLargeProjectile.cs",
@@ -2659,7 +2676,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 123,
+              "DocumentIndex": 124,
               "Title": "WispInABottle.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Update2\\WispInABottle.cs",
               "RelativeDocumentMoniker": "Items\\Update2\\WispInABottle.cs",
@@ -2671,7 +2688,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 124,
+              "DocumentIndex": 125,
               "Title": "CoinTosser.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Update3\\CoinTosser.cs",
               "RelativeDocumentMoniker": "Items\\Update3\\CoinTosser.cs",
@@ -2683,7 +2700,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 128,
+              "DocumentIndex": 129,
               "Title": "AllStatsUp.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Pickups\\Perkthings\\AllStatsUp.cs",
               "RelativeDocumentMoniker": "Pickups\\Perkthings\\AllStatsUp.cs",
@@ -2695,7 +2712,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 125,
+              "DocumentIndex": 126,
               "Title": "WraparoundProjectile.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Components\\Projectile Components\\WraparoundProjectile.cs",
               "RelativeDocumentMoniker": "Components\\Projectile Components\\WraparoundProjectile.cs",
@@ -2707,7 +2724,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 126,
+              "DocumentIndex": 127,
               "Title": "CorruptedWealth.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Pickups\\Perkthings\\CorruptedWealth.cs",
               "RelativeDocumentMoniker": "Pickups\\Perkthings\\CorruptedWealth.cs",
@@ -2719,7 +2736,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 129,
+              "DocumentIndex": 130,
               "Title": "UnbreakableSpirit.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Pickups\\Perkthings\\UnbreakableSpirit.cs",
               "RelativeDocumentMoniker": "Pickups\\Perkthings\\UnbreakableSpirit.cs",
@@ -2731,7 +2748,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 127,
+              "DocumentIndex": 128,
               "Title": "BlankHooks.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Hooks And Actions\\BlankHooks.cs",
               "RelativeDocumentMoniker": "Hooks And Actions\\BlankHooks.cs",
@@ -2743,7 +2760,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 130,
+              "DocumentIndex": 131,
               "Title": "FrailtyRounds.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Init Release\\FrailtyRounds.cs",
               "RelativeDocumentMoniker": "Items\\Init Release\\FrailtyRounds.cs",
@@ -2755,7 +2772,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 131,
+              "DocumentIndex": 132,
               "Title": "DebuffLibrary.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Debuff Stuff\\DebuffLibrary.cs",
               "RelativeDocumentMoniker": "Debuff Stuff\\DebuffLibrary.cs",
@@ -2767,7 +2784,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 134,
+              "DocumentIndex": 135,
               "Title": "CursesController.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Controllers\\CursesController.cs",
               "RelativeDocumentMoniker": "Controllers\\CursesController.cs",
@@ -2779,7 +2796,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 133,
+              "DocumentIndex": 134,
               "Title": "ExampleFSM.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\NPC Stuff\\ExampleFSM.cs",
               "RelativeDocumentMoniker": "NPC Stuff\\ExampleFSM.cs",
@@ -2791,7 +2808,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 135,
+              "DocumentIndex": 136,
               "Title": "BloodIdol.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Update2\\BloodIdol.cs",
               "RelativeDocumentMoniker": "Items\\Update2\\BloodIdol.cs",
@@ -2803,7 +2820,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 132,
+              "DocumentIndex": 133,
               "Title": "LilShit.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\NPC Stuff\\Example Code\\LilShit.cs",
               "RelativeDocumentMoniker": "NPC Stuff\\Example Code\\LilShit.cs",
@@ -2815,7 +2832,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 136,
+              "DocumentIndex": 137,
               "Title": "CustomBeholsterBeamBehavior.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\EnemySetupCode\\EnemyRelatedStuff\\Behavior Stuff\\CustomBeholsterBeamBehavior.cs",
               "RelativeDocumentMoniker": "EnemySetupCode\\EnemyRelatedStuff\\Behavior Stuff\\CustomBeholsterBeamBehavior.cs",
@@ -2827,7 +2844,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 137,
+              "DocumentIndex": 138,
               "Title": "JammedJar.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Update2\\JammedJar.cs",
               "RelativeDocumentMoniker": "Items\\Update2\\JammedJar.cs",
@@ -2839,7 +2856,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 138,
+              "DocumentIndex": 139,
               "Title": "FodderEnemy.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\EnemySetupCode\\EnemyCode\\FodderEnemy.cs",
               "RelativeDocumentMoniker": "EnemySetupCode\\EnemyCode\\FodderEnemy.cs",
@@ -2851,7 +2868,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 139,
+              "DocumentIndex": 140,
               "Title": "GildedPots.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Init Release\\GildedPots.cs",
               "RelativeDocumentMoniker": "Items\\Init Release\\GildedPots.cs",
@@ -2863,7 +2880,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 140,
+              "DocumentIndex": 141,
               "Title": "ShellsnakeOil.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Init Release\\ShellsnakeOil.cs",
               "RelativeDocumentMoniker": "Items\\Init Release\\ShellsnakeOil.cs",
@@ -2875,7 +2892,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 141,
+              "DocumentIndex": 142,
               "Title": "DiasukesPolymorph.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Init Release\\DiasukesPolymorph.cs",
               "RelativeDocumentMoniker": "Items\\Init Release\\DiasukesPolymorph.cs",
@@ -2887,7 +2904,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 142,
+              "DocumentIndex": 143,
               "Title": "Shellheart.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Init Release\\Shellheart.cs",
               "RelativeDocumentMoniker": "Items\\Init Release\\Shellheart.cs",
@@ -2899,7 +2916,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 144,
+              "DocumentIndex": 145,
               "Title": "NemesisSpawnController.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Controllers\\NemesisSpawnController.cs",
               "RelativeDocumentMoniker": "Controllers\\NemesisSpawnController.cs",
@@ -2911,7 +2928,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 150,
+              "DocumentIndex": 151,
               "Title": "GunHooks.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Hooks And Actions\\GunHooks.cs",
               "RelativeDocumentMoniker": "Hooks And Actions\\GunHooks.cs",
@@ -2923,7 +2940,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 143,
+              "DocumentIndex": 144,
               "Title": "HMPrimeIntroDoer.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\EnemySetupCode\\EnemyCode\\Update3\\Bosses\\HMPrime\\HMPrimeIntroDoer.cs",
               "RelativeDocumentMoniker": "EnemySetupCode\\EnemyCode\\Update3\\Bosses\\HMPrime\\HMPrimeIntroDoer.cs",
@@ -2935,7 +2952,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 147,
+              "DocumentIndex": 148,
               "Title": "PickupHooks.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Hooks And Actions\\PickupHooks.cs",
               "RelativeDocumentMoniker": "Hooks And Actions\\PickupHooks.cs",
@@ -2947,7 +2964,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 146,
+              "DocumentIndex": 147,
               "Title": "Hooks.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Hooks And Actions\\Hooks.cs",
               "RelativeDocumentMoniker": "Hooks And Actions\\Hooks.cs",
@@ -2959,7 +2976,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 145,
+              "DocumentIndex": 146,
               "Title": "SackPickup.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Pickups\\SackPickup.cs",
               "RelativeDocumentMoniker": "Pickups\\SackPickup.cs",
@@ -2971,7 +2988,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 149,
+              "DocumentIndex": 150,
               "Title": "ExplosionHooks.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Hooks And Actions\\ExplosionHooks.cs",
               "RelativeDocumentMoniker": "Hooks And Actions\\ExplosionHooks.cs",
@@ -2983,7 +3000,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 148,
+              "DocumentIndex": 149,
               "Title": "TitleDioramaHooks.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Hooks And Actions\\TitleDioramaHooks.cs",
               "RelativeDocumentMoniker": "Hooks And Actions\\TitleDioramaHooks.cs",
@@ -2995,7 +3012,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 151,
+              "DocumentIndex": 152,
               "Title": "Inquisitor.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\EnemySetupCode\\EnemyCode\\Update3\\Enemies\\Inquisitor.cs",
               "RelativeDocumentMoniker": "EnemySetupCode\\EnemyCode\\Update3\\Enemies\\Inquisitor.cs",
@@ -3007,7 +3024,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 154,
+              "DocumentIndex": 155,
               "Title": "LightningMaker.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Update5\\LightningMaker.cs",
               "RelativeDocumentMoniker": "Items\\Update5\\LightningMaker.cs",
@@ -3019,7 +3036,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 152,
+              "DocumentIndex": 153,
               "Title": "AdvancedDialogueBox.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\NPC Stuff\\Helper\\AdvancedDialogueBox.cs",
               "RelativeDocumentMoniker": "NPC Stuff\\Helper\\AdvancedDialogueBox.cs",
@@ -3031,7 +3048,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 155,
+              "DocumentIndex": 156,
               "Title": "AmmonomiconPageInitialization.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\APIs\\AmmonomiconAPI\\AmmonomiconPageInitialization.cs",
               "RelativeDocumentMoniker": "APIs\\AmmonomiconAPI\\AmmonomiconPageInitialization.cs",
@@ -3043,7 +3060,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 153,
+              "DocumentIndex": 154,
               "Title": "AmmonomiconAPIHooks.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\APIs\\AmmonomiconAPI\\AmmonomiconAPIHooks.cs",
               "RelativeDocumentMoniker": "APIs\\AmmonomiconAPI\\AmmonomiconAPIHooks.cs",
@@ -3055,7 +3072,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 156,
+              "DocumentIndex": 157,
               "Title": "BabyGoodCandleKin.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Init Release\\BabyGoodCandleKin.cs",
               "RelativeDocumentMoniker": "Items\\Init Release\\BabyGoodCandleKin.cs",
@@ -3067,7 +3084,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 158,
+              "DocumentIndex": 159,
               "Title": "TutorialNotes.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\DungeonPlaceables\\TrespassObjects\\TutorialNotes.cs",
               "RelativeDocumentMoniker": "DungeonPlaceables\\TrespassObjects\\TutorialNotes.cs",
@@ -3079,7 +3096,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 157,
+              "DocumentIndex": 158,
               "Title": "AoEBullets.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Init Release\\AoEBullets.cs",
               "RelativeDocumentMoniker": "Items\\Init Release\\AoEBullets.cs",
@@ -3091,7 +3108,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 159,
+              "DocumentIndex": 160,
               "Title": "DungeonGenToolbox.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Toolboxes\\DungeonGenToolbox.cs",
               "RelativeDocumentMoniker": "Toolboxes\\DungeonGenToolbox.cs",
@@ -3103,7 +3120,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 163,
+              "DocumentIndex": 164,
               "Title": "Creationist.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\EnemySetupCode\\EnemyCode\\Update3\\Enemies\\Creationist.cs",
               "RelativeDocumentMoniker": "EnemySetupCode\\EnemyCode\\Update3\\Enemies\\Creationist.cs",
@@ -3115,7 +3132,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 160,
+              "DocumentIndex": 161,
               "Title": "MoneyPots.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\DungeonPlaceables\\MoneyPots.cs",
               "RelativeDocumentMoniker": "DungeonPlaceables\\MoneyPots.cs",
@@ -3127,7 +3144,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 170,
+              "DocumentIndex": 171,
               "Title": "BurningSunProjectile.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Guns\\Init Release\\BurningSunProjectile.cs",
               "RelativeDocumentMoniker": "Guns\\Init Release\\BurningSunProjectile.cs",
@@ -3139,7 +3156,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 161,
+              "DocumentIndex": 162,
               "Title": "MarkTileAsTrap.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\DungeonPlaceables\\MarkTileAsTrap.cs",
               "RelativeDocumentMoniker": "DungeonPlaceables\\MarkTileAsTrap.cs",
@@ -3151,7 +3168,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 167,
+              "DocumentIndex": 168,
               "Title": "ImmolationPowder.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Update5\\ImmolationPowder.cs",
               "RelativeDocumentMoniker": "Items\\Update5\\ImmolationPowder.cs",
@@ -3163,7 +3180,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 168,
+              "DocumentIndex": 169,
               "Title": "LaserChainsawProjectile.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Guns\\Init Release\\LaserChainsawProjectile.cs",
               "RelativeDocumentMoniker": "Guns\\Init Release\\LaserChainsawProjectile.cs",
@@ -3175,7 +3192,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 164,
+              "DocumentIndex": 165,
               "Title": "Collective.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\EnemySetupCode\\EnemyCode\\Update3\\Enemies\\Collective.cs",
               "RelativeDocumentMoniker": "EnemySetupCode\\EnemyCode\\Update3\\Enemies\\Collective.cs",
@@ -3187,7 +3204,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 162,
+              "DocumentIndex": 163,
               "Title": "Observant.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\EnemySetupCode\\EnemyCode\\Update3\\Enemies\\Observant.cs",
               "RelativeDocumentMoniker": "EnemySetupCode\\EnemyCode\\Update3\\Enemies\\Observant.cs",
@@ -3199,7 +3216,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 169,
+              "DocumentIndex": 170,
               "Title": "InitNewPlaceables.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\DungeonPlaceables\\InitNewPlaceables.cs",
               "RelativeDocumentMoniker": "DungeonPlaceables\\InitNewPlaceables.cs",
@@ -3211,7 +3228,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 165,
+              "DocumentIndex": 166,
               "Title": "KnuckleBlaster.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Update3\\KnuckleBlaster.cs",
               "RelativeDocumentMoniker": "Items\\Update3\\KnuckleBlaster.cs",
@@ -3223,7 +3240,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 171,
+              "DocumentIndex": 172,
               "Title": "GUID_Maker.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Toolboxes\\GUID_Maker.cs",
               "RelativeDocumentMoniker": "Toolboxes\\GUID_Maker.cs",
@@ -3235,7 +3252,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 166,
+              "DocumentIndex": 167,
               "Title": "CustomShopInitialiser.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\NPC Stuff\\CustomShopInitialiser.cs",
               "RelativeDocumentMoniker": "NPC Stuff\\CustomShopInitialiser.cs",
@@ -3247,7 +3264,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 172,
+              "DocumentIndex": 173,
               "Title": "PickupGuonComponent.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Components\\Spec Item And Gun Components\\PickupGuonComponent.cs",
               "RelativeDocumentMoniker": "Components\\Spec Item And Gun Components\\PickupGuonComponent.cs",
@@ -3259,7 +3276,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 175,
+              "DocumentIndex": 176,
               "Title": "Revenant.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\EnemySetupCode\\EnemyCode\\Update3\\SecondaryEnemies\\Revenant.cs",
               "RelativeDocumentMoniker": "EnemySetupCode\\EnemyCode\\Update3\\SecondaryEnemies\\Revenant.cs",
@@ -3271,7 +3288,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 177,
+              "DocumentIndex": 178,
               "Title": "ItemTools.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Toolboxes\\ItemTools.cs",
               "RelativeDocumentMoniker": "Toolboxes\\ItemTools.cs",
@@ -3283,7 +3300,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 173,
+              "DocumentIndex": 174,
               "Title": "EnemyBuffShrine.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\DungeonPlaceables\\EnemyBuffShrine.cs",
               "RelativeDocumentMoniker": "DungeonPlaceables\\EnemyBuffShrine.cs",
@@ -3295,7 +3312,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 174,
+              "DocumentIndex": 175,
               "Title": "FakePrefab.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\APIs\\ItemAPI\\FakePrefab\\FakePrefab.cs",
               "RelativeDocumentMoniker": "APIs\\ItemAPI\\FakePrefab\\FakePrefab.cs",
@@ -3307,7 +3324,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 176,
+              "DocumentIndex": 177,
               "Title": "FakePrefabHooks.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\APIs\\ItemAPI\\FakePrefab\\FakePrefabHooks.cs",
               "RelativeDocumentMoniker": "APIs\\ItemAPI\\FakePrefab\\FakePrefabHooks.cs",
@@ -3319,7 +3336,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 179,
+              "DocumentIndex": 180,
               "Title": "UIToolbox.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Toolboxes\\UIToolbox.cs",
               "RelativeDocumentMoniker": "Toolboxes\\UIToolbox.cs",
@@ -3331,7 +3348,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 182,
+              "DocumentIndex": 183,
               "Title": "TrespassTentaclePillar.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\DungeonPlaceables\\TrespassObjects\\TrespassTentaclePillar.cs",
               "RelativeDocumentMoniker": "DungeonPlaceables\\TrespassObjects\\TrespassTentaclePillar.cs",
@@ -3343,7 +3360,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 181,
+              "DocumentIndex": 182,
               "Title": "EmberPot.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\DungeonPlaceables\\EmberPot.cs",
               "RelativeDocumentMoniker": "DungeonPlaceables\\EmberPot.cs",
@@ -3355,7 +3372,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 178,
+              "DocumentIndex": 179,
               "Title": "VFXToolbox.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Toolboxes\\VFXToolbox.cs",
               "RelativeDocumentMoniker": "Toolboxes\\VFXToolbox.cs",
@@ -3367,7 +3384,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 183,
+              "DocumentIndex": 184,
               "Title": "TrespassLightBig.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\DungeonPlaceables\\TrespassObjects\\TrespassLightBig.cs",
               "RelativeDocumentMoniker": "DungeonPlaceables\\TrespassObjects\\TrespassLightBig.cs",
@@ -3379,7 +3396,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 184,
+              "DocumentIndex": 185,
               "Title": "TrespassLight.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\DungeonPlaceables\\TrespassObjects\\TrespassLight.cs",
               "RelativeDocumentMoniker": "DungeonPlaceables\\TrespassObjects\\TrespassLight.cs",
@@ -3391,7 +3408,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 185,
+              "DocumentIndex": 186,
               "Title": "TrespassTrollRock.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\DungeonPlaceables\\TrespassObjects\\TrespassTrollRock.cs",
               "RelativeDocumentMoniker": "DungeonPlaceables\\TrespassObjects\\TrespassTrollRock.cs",
@@ -3403,7 +3420,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 186,
+              "DocumentIndex": 187,
               "Title": "TrespassCandle.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\DungeonPlaceables\\TrespassObjects\\TrespassCandle.cs",
               "RelativeDocumentMoniker": "DungeonPlaceables\\TrespassObjects\\TrespassCandle.cs",
@@ -3415,7 +3432,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 187,
+              "DocumentIndex": 188,
               "Title": "TrespassBloodDecals.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\DungeonPlaceables\\TrespassObjects\\TrespassBloodDecals.cs",
               "RelativeDocumentMoniker": "DungeonPlaceables\\TrespassObjects\\TrespassBloodDecals.cs",
@@ -3427,7 +3444,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 180,
+              "DocumentIndex": 181,
               "Title": "BoxOfGrenades.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\DungeonPlaceables\\BoxOfGrenades.cs",
               "RelativeDocumentMoniker": "DungeonPlaceables\\BoxOfGrenades.cs",
@@ -3439,7 +3456,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 188,
+              "DocumentIndex": 189,
               "Title": "TrespassDecorativePillar.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\DungeonPlaceables\\TrespassObjects\\TrespassDecorativePillar.cs",
               "RelativeDocumentMoniker": "DungeonPlaceables\\TrespassObjects\\TrespassDecorativePillar.cs",
@@ -3451,7 +3468,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 191,
+              "DocumentIndex": 192,
               "Title": "TrespassSmallCubes.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\DungeonPlaceables\\TrespassObjects\\TrespassSmallCubes.cs",
               "RelativeDocumentMoniker": "DungeonPlaceables\\TrespassObjects\\TrespassSmallCubes.cs",
@@ -3463,7 +3480,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 189,
+              "DocumentIndex": 190,
               "Title": "TrespassDecals.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\DungeonPlaceables\\TrespassObjects\\TrespassDecals.cs",
               "RelativeDocumentMoniker": "DungeonPlaceables\\TrespassObjects\\TrespassDecals.cs",
@@ -3475,7 +3492,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 190,
+              "DocumentIndex": 191,
               "Title": "TrespassFadingBlocker.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\DungeonPlaceables\\TrespassObjects\\TrespassFadingBlocker.cs",
               "RelativeDocumentMoniker": "DungeonPlaceables\\TrespassObjects\\TrespassFadingBlocker.cs",
@@ -3487,7 +3504,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 194,
+              "DocumentIndex": 195,
               "Title": "TearInReality.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\DungeonPlaceables\\TrespassObjects\\TearInReality.cs",
               "RelativeDocumentMoniker": "DungeonPlaceables\\TrespassObjects\\TearInReality.cs",
@@ -3499,7 +3516,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 193,
+              "DocumentIndex": 194,
               "Title": "TrespassPots.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\DungeonPlaceables\\TrespassObjects\\TrespassPots.cs",
               "RelativeDocumentMoniker": "DungeonPlaceables\\TrespassObjects\\TrespassPots.cs",
@@ -3511,7 +3528,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 192,
+              "DocumentIndex": 193,
               "Title": "TrespassCubes.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\DungeonPlaceables\\TrespassObjects\\TrespassCubes.cs",
               "RelativeDocumentMoniker": "DungeonPlaceables\\TrespassObjects\\TrespassCubes.cs",
@@ -3523,7 +3540,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 195,
+              "DocumentIndex": 196,
               "Title": "BlastProjectiles.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Pickups\\Perkthings\\BlastProjectiles.cs",
               "RelativeDocumentMoniker": "Pickups\\Perkthings\\BlastProjectiles.cs",
@@ -3535,7 +3552,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 196,
+              "DocumentIndex": 197,
               "Title": "DeadKingsDesparation.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Init Release\\DeadKingsDesparation.cs",
               "RelativeDocumentMoniker": "Items\\Init Release\\DeadKingsDesparation.cs",
@@ -3547,7 +3564,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 200,
+              "DocumentIndex": 201,
               "Title": "DebrisOnDeathEnemy.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\EnemySetupCode\\EnemyRelatedStuff\\EnemyComponents\\DebrisOnDeathEnemy.cs",
               "RelativeDocumentMoniker": "EnemySetupCode\\EnemyRelatedStuff\\EnemyComponents\\DebrisOnDeathEnemy.cs",
@@ -3559,7 +3576,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 199,
+              "DocumentIndex": 200,
               "Title": "I Need This.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\EnemySetupCode\\EnemyRelatedStuff\\I Need This.cs",
               "RelativeDocumentMoniker": "EnemySetupCode\\EnemyRelatedStuff\\I Need This.cs",
@@ -3571,7 +3588,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 198,
+              "DocumentIndex": 199,
               "Title": "CustomEnemyBulletsInitialiser.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\EnemySetupCode\\EnemyRelatedStuff\\CustomEnemyBulletsInitialiser.cs",
               "RelativeDocumentMoniker": "EnemySetupCode\\EnemyRelatedStuff\\CustomEnemyBulletsInitialiser.cs",
@@ -3583,7 +3600,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 197,
+              "DocumentIndex": 198,
               "Title": "TestShaderItem.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Test Items\\TestShaderItem.cs",
               "RelativeDocumentMoniker": "Items\\Test Items\\TestShaderItem.cs",
@@ -3595,7 +3612,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 201,
+              "DocumentIndex": 202,
               "Title": "MegaTable.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\DungeonPlaceables\\MegaTable.cs",
               "RelativeDocumentMoniker": "DungeonPlaceables\\MegaTable.cs",
@@ -3607,7 +3624,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 202,
+              "DocumentIndex": 203,
               "Title": "MovingTile1X1.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\DungeonPlaceables\\TrespassObjects\\MovingFloorTiles\\MovingTile1X1.cs",
               "RelativeDocumentMoniker": "DungeonPlaceables\\TrespassObjects\\MovingFloorTiles\\MovingTile1X1.cs",
@@ -3619,7 +3636,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 203,
+              "DocumentIndex": 204,
               "Title": "HeresyHammer.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Update2\\HeresyHammer.cs",
               "RelativeDocumentMoniker": "Items\\Update2\\HeresyHammer.cs",
@@ -3631,7 +3648,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 204,
+              "DocumentIndex": 205,
               "Title": "ObjectMakers.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Toolboxes\\Extensions\\ObjectMakers.cs",
               "RelativeDocumentMoniker": "Toolboxes\\Extensions\\ObjectMakers.cs",
@@ -3643,7 +3660,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 205,
+              "DocumentIndex": 206,
               "Title": "SawBladeGun.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Guns\\Update4\\SawBladeGun.cs",
               "RelativeDocumentMoniker": "Guns\\Update4\\SawBladeGun.cs",
@@ -3655,7 +3672,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 206,
+              "DocumentIndex": 207,
               "Title": "ShrineOfSomething.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Shrine Stuff\\ShrineCode\\HellShrines\\ShrineOfSomething.cs",
               "RelativeDocumentMoniker": "Shrine Stuff\\ShrineCode\\HellShrines\\ShrineOfSomething.cs",
@@ -3667,7 +3684,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 207,
+              "DocumentIndex": 208,
               "Title": "SpecificUnlockController.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Controllers\\SpecificUnlockController.cs",
               "RelativeDocumentMoniker": "Controllers\\SpecificUnlockController.cs",
@@ -3679,7 +3696,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 209,
+              "DocumentIndex": 210,
               "Title": "OffWorldMedicine.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Init Release\\OffWorldMedicine.cs",
               "RelativeDocumentMoniker": "Items\\Init Release\\OffWorldMedicine.cs",
@@ -3691,7 +3708,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 208,
+              "DocumentIndex": 209,
               "Title": "PsychicBlank.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Init Release\\PsychicBlank.cs",
               "RelativeDocumentMoniker": "Items\\Init Release\\PsychicBlank.cs",
@@ -3703,7 +3720,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 210,
+              "DocumentIndex": 211,
               "Title": "ShipmentRequestForm.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Update4\\ShipmentRequestForm.cs",
               "RelativeDocumentMoniker": "Items\\Update4\\ShipmentRequestForm.cs",
@@ -3715,7 +3732,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 211,
+              "DocumentIndex": 212,
               "Title": "EmmisiveBeams.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Guns\\Update2\\EmmisiveBeams.cs",
               "RelativeDocumentMoniker": "Guns\\Update2\\EmmisiveBeams.cs",
@@ -3727,7 +3744,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 213,
+              "DocumentIndex": 214,
               "Title": "ShrineOfCurses.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Shrine Stuff\\ShrineCode\\HellShrines\\ShrineOfCurses.cs",
               "RelativeDocumentMoniker": "Shrine Stuff\\ShrineCode\\HellShrines\\ShrineOfCurses.cs",
@@ -3739,7 +3756,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 212,
+              "DocumentIndex": 213,
               "Title": "HellShrinesController.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Controllers\\HellShrinesController.cs",
               "RelativeDocumentMoniker": "Controllers\\HellShrinesController.cs",
@@ -3751,7 +3768,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 214,
+              "DocumentIndex": 215,
               "Title": "GunPrinter.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Init Release\\GunPrinter.cs",
               "RelativeDocumentMoniker": "Items\\Init Release\\GunPrinter.cs",
@@ -3763,7 +3780,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 215,
+              "DocumentIndex": 216,
               "Title": "NeverForgiveMe.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Init Release\\NeverForgiveMe.cs",
               "RelativeDocumentMoniker": "Items\\Init Release\\NeverForgiveMe.cs",
@@ -3775,7 +3792,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 216,
+              "DocumentIndex": 217,
               "Title": "ScrollOfGuonification.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Update2\\ScrollOfGuonification.cs",
               "RelativeDocumentMoniker": "Items\\Update2\\ScrollOfGuonification.cs",
@@ -3787,7 +3804,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 219,
+              "DocumentIndex": 220,
               "Title": "EnergyShield.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Update2\\EnergyShield.cs",
               "RelativeDocumentMoniker": "Items\\Update2\\EnergyShield.cs",
@@ -3799,7 +3816,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 218,
+              "DocumentIndex": 219,
               "Title": "KineticStrike.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Update2\\KineticStrike.cs",
               "RelativeDocumentMoniker": "Items\\Update2\\KineticStrike.cs",
@@ -3811,7 +3828,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 217,
+              "DocumentIndex": 218,
               "Title": "SurgeGrenade.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Update5\\SurgeGrenade.cs",
               "RelativeDocumentMoniker": "Items\\Update5\\SurgeGrenade.cs",
@@ -3823,7 +3840,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 222,
+              "DocumentIndex": 223,
               "Title": "WitherLanceProjectile.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Guns\\Init Release\\WitherLanceProjectile.cs",
               "RelativeDocumentMoniker": "Guns\\Init Release\\WitherLanceProjectile.cs",
@@ -3835,7 +3852,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 223,
+              "DocumentIndex": 224,
               "Title": "VeteranShotgunProjectile.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Guns\\Init Release\\VeteranShotgunProjectile.cs",
               "RelativeDocumentMoniker": "Guns\\Init Release\\VeteranShotgunProjectile.cs",
@@ -3847,7 +3864,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 220,
+              "DocumentIndex": 221,
               "Title": "PrayerAmulet.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Update3\\PrayerAmulet.cs",
               "RelativeDocumentMoniker": "Items\\Update3\\PrayerAmulet.cs",
@@ -3859,7 +3876,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 221,
+              "DocumentIndex": 222,
               "Title": "BrokenArmorEffect.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Debuff Stuff\\BrokenArmorEffect.cs",
               "RelativeDocumentMoniker": "Debuff Stuff\\BrokenArmorEffect.cs",
@@ -3871,7 +3888,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 224,
+              "DocumentIndex": 225,
               "Title": "SawconProjectile.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Guns\\Update4\\SawconProjectile.cs",
               "RelativeDocumentMoniker": "Guns\\Update4\\SawconProjectile.cs",
@@ -3883,7 +3900,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 225,
+              "DocumentIndex": 226,
               "Title": "ExecuteDebuff.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Debuff Stuff\\ExecuteDebuff.cs",
               "RelativeDocumentMoniker": "Debuff Stuff\\ExecuteDebuff.cs",
@@ -3895,7 +3912,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 226,
+              "DocumentIndex": 227,
               "Title": "SelfReplicatingBlank.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Update5\\SelfReplicatingBlank.cs",
               "RelativeDocumentMoniker": "Items\\Update5\\SelfReplicatingBlank.cs",
@@ -3907,7 +3924,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 227,
+              "DocumentIndex": 228,
               "Title": "LongDistanceCast.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Init Release\\LongDistanceCast.cs",
               "RelativeDocumentMoniker": "Items\\Init Release\\LongDistanceCast.cs",
@@ -3919,7 +3936,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 228,
+              "DocumentIndex": 229,
               "Title": "GunslingersRing.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Update4\\GunslingersRing.cs",
               "RelativeDocumentMoniker": "Items\\Update4\\GunslingersRing.cs",
@@ -3931,7 +3948,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 229,
+              "DocumentIndex": 230,
               "Title": "GunClassToken.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Update4\\GunClassToken.cs",
               "RelativeDocumentMoniker": "Items\\Update4\\GunClassToken.cs",
@@ -3943,7 +3960,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 236,
+              "DocumentIndex": 237,
               "Title": "BlastShower.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Init Release\\BlastShower.cs",
               "RelativeDocumentMoniker": "Items\\Init Release\\BlastShower.cs",
@@ -3955,7 +3972,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 235,
+              "DocumentIndex": 236,
               "Title": "balls - Copy.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Test Items\\balls - Copy.cs",
               "RelativeDocumentMoniker": "Items\\Test Items\\balls - Copy.cs",
@@ -3967,7 +3984,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 234,
+              "DocumentIndex": 235,
               "Title": "balls.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Test Items\\balls.cs",
               "RelativeDocumentMoniker": "Items\\Test Items\\balls.cs",
@@ -3979,7 +3996,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 232,
+              "DocumentIndex": 233,
               "Title": "HitBoxShower.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Test Items\\HitBoxShower.cs",
               "RelativeDocumentMoniker": "Items\\Test Items\\HitBoxShower.cs",
@@ -3991,7 +4008,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 230,
+              "DocumentIndex": 231,
               "Title": "TestActiveItem.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Test Items\\TestActiveItem.cs",
               "RelativeDocumentMoniker": "Items\\Test Items\\TestActiveItem.cs",
@@ -4003,7 +4020,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 231,
+              "DocumentIndex": 232,
               "Title": "RoomReader.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Test Items\\RoomReader.cs",
               "RelativeDocumentMoniker": "Items\\Test Items\\RoomReader.cs",
@@ -4015,7 +4032,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 233,
+              "DocumentIndex": 234,
               "Title": "Flowder.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Test Items\\Flowder.cs",
               "RelativeDocumentMoniker": "Items\\Test Items\\Flowder.cs",
@@ -4027,7 +4044,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 239,
+              "DocumentIndex": 240,
               "Title": "StableVector.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Update4\\StableVector.cs",
               "RelativeDocumentMoniker": "Items\\Update4\\StableVector.cs",
@@ -4039,7 +4056,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 240,
+              "DocumentIndex": 241,
               "Title": "ShopDiscountItem.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Update4\\ShopDiscountItem.cs",
               "RelativeDocumentMoniker": "Items\\Update4\\ShopDiscountItem.cs",
@@ -4051,7 +4068,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 238,
+              "DocumentIndex": 239,
               "Title": "CandyHeart.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Update4\\CandyHeart.cs",
               "RelativeDocumentMoniker": "Items\\Update4\\CandyHeart.cs",
@@ -4063,7 +4080,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 237,
+              "DocumentIndex": 238,
               "Title": "BrokenChamber.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Init Release\\BrokenChamber.cs",
               "RelativeDocumentMoniker": "Items\\Init Release\\BrokenChamber.cs",
@@ -4075,7 +4092,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 242,
+              "DocumentIndex": 243,
               "Title": "TarnishedAmmolet.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Update4\\TarnishedAmmolet.cs",
               "RelativeDocumentMoniker": "Items\\Update4\\TarnishedAmmolet.cs",
@@ -4087,7 +4104,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 243,
+              "DocumentIndex": 244,
               "Title": "TatteredRobes.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Update2\\TatteredRobes.cs",
               "RelativeDocumentMoniker": "Items\\Update2\\TatteredRobes.cs",
@@ -4099,7 +4116,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 241,
+              "DocumentIndex": 242,
               "Title": "TrespassStone.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Update4\\TrespassStone.cs",
               "RelativeDocumentMoniker": "Items\\Update4\\TrespassStone.cs",
@@ -4111,7 +4128,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 244,
+              "DocumentIndex": 245,
               "Title": "InjectorRounds.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Update2\\InjectorRounds.cs",
               "RelativeDocumentMoniker": "Items\\Update2\\InjectorRounds.cs",
@@ -4123,7 +4140,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 246,
+              "DocumentIndex": 247,
               "Title": "OphanaimDecals.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\DungeonPlaceables\\OphanaimDecals.cs",
               "RelativeDocumentMoniker": "DungeonPlaceables\\OphanaimDecals.cs",
@@ -4135,7 +4152,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 245,
+              "DocumentIndex": 246,
               "Title": "favouritism.png -  [English (United Kingdom)] - PNG [15x12, 32 bit, PNG]",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Resources\\favouritism.png",
               "RelativeDocumentMoniker": "Resources\\favouritism.png",
@@ -4146,7 +4163,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 248,
+              "DocumentIndex": 249,
               "Title": "LostVoidPotential.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Update4\\LostVoidPotential.cs",
               "RelativeDocumentMoniker": "Items\\Update4\\LostVoidPotential.cs",
@@ -4158,7 +4175,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 247,
+              "DocumentIndex": 248,
               "Title": "OrbOfPower.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Update4\\OrbOfPower.cs",
               "RelativeDocumentMoniker": "Items\\Update4\\OrbOfPower.cs",
@@ -4170,7 +4187,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 249,
+              "DocumentIndex": 250,
               "Title": "OscillatoSynergyForme.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Guns\\Init Release\\OscillatoSynergyForme.cs",
               "RelativeDocumentMoniker": "Guns\\Init Release\\OscillatoSynergyForme.cs",
@@ -4182,7 +4199,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 250,
+              "DocumentIndex": 251,
               "Title": "DebuffStatics.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Debuff Stuff\\DebuffStatics.cs",
               "RelativeDocumentMoniker": "Debuff Stuff\\DebuffStatics.cs",
@@ -4194,7 +4211,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 251,
+              "DocumentIndex": 252,
               "Title": "StatiBlast.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Guns\\Init Release\\StatiBlast.cs",
               "RelativeDocumentMoniker": "Guns\\Init Release\\StatiBlast.cs",
@@ -4206,7 +4223,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 252,
+              "DocumentIndex": 253,
               "Title": "MarkWithColorComponent.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\EnemySetupCode\\EnemyRelatedStuff\\Behavior Stuff\\MarkWithColorComponent.cs",
               "RelativeDocumentMoniker": "EnemySetupCode\\EnemyRelatedStuff\\Behavior Stuff\\MarkWithColorComponent.cs",
@@ -4218,7 +4235,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 253,
+              "DocumentIndex": 254,
               "Title": "ForgottenEnemyComponent.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\EnemySetupCode\\EnemyCode\\Update3\\Enemies\\ForgottenEnemyComponent.cs",
               "RelativeDocumentMoniker": "EnemySetupCode\\EnemyCode\\Update3\\Enemies\\ForgottenEnemyComponent.cs",
@@ -4230,7 +4247,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 254,
+              "DocumentIndex": 255,
               "Title": "ParasiticHeart.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Guns\\Update2\\ParasiticHeart.cs",
               "RelativeDocumentMoniker": "Guns\\Update2\\ParasiticHeart.cs",
@@ -4242,7 +4259,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 255,
+              "DocumentIndex": 256,
               "Title": "WhistlerProjectile.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Guns\\Update4\\WhistlerProjectile.cs",
               "RelativeDocumentMoniker": "Guns\\Update4\\WhistlerProjectile.cs",
@@ -4254,7 +4271,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 256,
+              "DocumentIndex": 257,
               "Title": "NemesisRailgun.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Guns\\Update4\\NemesisRailgun.cs",
               "RelativeDocumentMoniker": "Guns\\Update4\\NemesisRailgun.cs",
@@ -4266,7 +4283,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 257,
+              "DocumentIndex": 258,
               "Title": "EmmisiveTrails.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Guns\\Update2\\EmmisiveTrails.cs",
               "RelativeDocumentMoniker": "Guns\\Update2\\EmmisiveTrails.cs",
@@ -4278,7 +4295,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 260,
+              "DocumentIndex": 261,
               "Title": "WeightedTypeCollection.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Misc Stuff\\WeightedTypeCollection.cs",
               "RelativeDocumentMoniker": "Misc Stuff\\WeightedTypeCollection.cs",
@@ -4290,7 +4307,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 259,
+              "DocumentIndex": 260,
               "Title": "ChallengeTools.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\APIs\\ChallengeAPI\\ChallengeTools.cs",
               "RelativeDocumentMoniker": "APIs\\ChallengeAPI\\ChallengeTools.cs",
@@ -4302,7 +4319,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 258,
+              "DocumentIndex": 259,
               "Title": "DragunChanges.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Controllers\\ContainmentBreach\\BossChanges\\F5\\DragunChanges.cs",
               "RelativeDocumentMoniker": "Controllers\\ContainmentBreach\\BossChanges\\F5\\DragunChanges.cs",
@@ -4314,7 +4331,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 261,
+              "DocumentIndex": 262,
               "Title": "DeTurretRight.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\EnemySetupCode\\EnemyCode\\DeTurretRight.cs",
               "RelativeDocumentMoniker": "EnemySetupCode\\EnemyCode\\DeTurretRight.cs",
@@ -4326,7 +4343,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 262,
+              "DocumentIndex": 263,
               "Title": "TrespassPortalBack.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\DungeonPlaceables\\TrespassPortalBack.cs",
               "RelativeDocumentMoniker": "DungeonPlaceables\\TrespassPortalBack.cs",
@@ -4338,7 +4355,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 263,
+              "DocumentIndex": 264,
               "Title": "InfectedEnemyEffect.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Debuff Stuff\\InfectedEnemyEffect.cs",
               "RelativeDocumentMoniker": "Debuff Stuff\\InfectedEnemyEffect.cs",
@@ -4350,7 +4367,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 264,
+              "DocumentIndex": 265,
               "Title": "TarnishEffect.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Debuff Stuff\\TarnishEffect.cs",
               "RelativeDocumentMoniker": "Debuff Stuff\\TarnishEffect.cs",
@@ -4362,7 +4379,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 266,
+              "DocumentIndex": 267,
               "Title": "TheGames.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Controllers\\ContainmentBreach\\BossChanges\\Misc\\TheGames.cs",
               "RelativeDocumentMoniker": "Controllers\\ContainmentBreach\\BossChanges\\Misc\\TheGames.cs",
@@ -4374,7 +4391,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 267,
+              "DocumentIndex": 268,
               "Title": "PrisonerFirstSubPhaseController.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\EnemySetupCode\\EnemyCode\\Update3\\Bosses\\Prisoner\\PrisonerFirstSubPhaseController.cs",
               "RelativeDocumentMoniker": "EnemySetupCode\\EnemyCode\\Update3\\Bosses\\Prisoner\\PrisonerFirstSubPhaseController.cs",
@@ -4386,7 +4403,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 265,
+              "DocumentIndex": 266,
               "Title": "manifest.json",
               "DocumentMoniker": "C:\\Users\\maxvo\\AppData\\Roaming\\r2modmanPlus-local\\ETG\\profiles\\Agony\\BepInEx\\plugins\\mesda-planetside\\manifest.json",
               "ToolTip": "C:\\Users\\maxvo\\AppData\\Roaming\\r2modmanPlus-local\\ETG\\profiles\\Agony\\BepInEx\\plugins\\mesda-planetside\\manifest.json",
@@ -4396,7 +4413,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 268,
+              "DocumentIndex": 269,
               "Title": "GlobalMessageRadio.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Controllers\\GlobalMessageRadio.cs",
               "RelativeDocumentMoniker": "Controllers\\GlobalMessageRadio.cs",
@@ -4408,7 +4425,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 271,
+              "DocumentIndex": 272,
               "Title": "TableTechDevour.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Init Release\\TableTechDevour.cs",
               "RelativeDocumentMoniker": "Items\\Init Release\\TableTechDevour.cs",
@@ -4420,7 +4437,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 269,
+              "DocumentIndex": 270,
               "Title": "ChamberGunAPI.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\APIs\\ChamberGunAPI.cs",
               "RelativeDocumentMoniker": "APIs\\ChamberGunAPI.cs",
@@ -4432,7 +4449,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 270,
+              "DocumentIndex": 271,
               "Title": "TomeOfGuonmancy.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Update2\\TomeOfGuonmancy.cs",
               "RelativeDocumentMoniker": "Items\\Update2\\TomeOfGuonmancy.cs",
@@ -4444,7 +4461,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 272,
+              "DocumentIndex": 273,
               "Title": "ElectrostaticGuonStone.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Init Release\\ElectrostaticGuonStone.cs",
               "RelativeDocumentMoniker": "Items\\Init Release\\ElectrostaticGuonStone.cs",
@@ -4456,7 +4473,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 275,
+              "DocumentIndex": 276,
               "Title": "RatPhase1Changes.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Controllers\\ContainmentBreach\\BossChanges\\F3.5\\RatPhase1Changes.cs",
               "RelativeDocumentMoniker": "Controllers\\ContainmentBreach\\BossChanges\\F3.5\\RatPhase1Changes.cs",
@@ -4468,7 +4485,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 273,
+              "DocumentIndex": 274,
               "Title": "ResourceExtractor.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\APIs\\ItemAPI\\ResourceExtractor.cs",
               "RelativeDocumentMoniker": "APIs\\ItemAPI\\ResourceExtractor.cs",
@@ -4480,7 +4497,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 274,
+              "DocumentIndex": 275,
               "Title": "InfectedBossEffect.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Debuff Stuff\\InfectedBossEffect.cs",
               "RelativeDocumentMoniker": "Debuff Stuff\\InfectedBossEffect.cs",
@@ -4492,7 +4509,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 276,
+              "DocumentIndex": 277,
               "Title": "CanisterLauncherProjectile.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Guns\\Update4\\CanisterLauncherProjectile.cs",
               "RelativeDocumentMoniker": "Guns\\Update4\\CanisterLauncherProjectile.cs",
@@ -4504,7 +4521,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 277,
+              "DocumentIndex": 278,
               "Title": "DamnedGuonStone.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Items\\Update2\\DamnedGuonStone.cs",
               "RelativeDocumentMoniker": "Items\\Update2\\DamnedGuonStone.cs",
@@ -4516,7 +4533,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 278,
+              "DocumentIndex": 279,
               "Title": "EyeOfArtemis.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Guns\\Update4\\EyeOfArtemis.cs",
               "RelativeDocumentMoniker": "Guns\\Update4\\EyeOfArtemis.cs",
@@ -4528,7 +4545,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 279,
+              "DocumentIndex": 280,
               "Title": "UndodgeableBulletsCode.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\EnemySetupCode\\EnemyRelatedStuff\\ProjectileStuff\\UndodgeableBulletsCode.cs",
               "RelativeDocumentMoniker": "EnemySetupCode\\EnemyRelatedStuff\\ProjectileStuff\\UndodgeableBulletsCode.cs",
@@ -4540,7 +4557,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 280,
+              "DocumentIndex": 281,
               "Title": "NemesisIntroController.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\EnemySetupCode\\EnemyCode\\Update3\\Minibosses\\NemesisIntroController.cs",
               "RelativeDocumentMoniker": "EnemySetupCode\\EnemyCode\\Update3\\Minibosses\\NemesisIntroController.cs",
@@ -4552,7 +4569,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 281,
+              "DocumentIndex": 282,
               "Title": "ChargerGunProjectile.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Guns\\Update3\\ChargerGunProjectile.cs",
               "RelativeDocumentMoniker": "Guns\\Update3\\ChargerGunProjectile.cs",
@@ -4564,7 +4581,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 282,
+              "DocumentIndex": 283,
               "Title": "PlanetsideBalanceChanges.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Controllers\\PlanetsideBalanceChanges.cs",
               "RelativeDocumentMoniker": "Controllers\\PlanetsideBalanceChanges.cs",
@@ -4576,7 +4593,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 283,
+              "DocumentIndex": 284,
               "Title": "SoundManager.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\APIs\\SoundAPI\\SoundManager.cs",
               "RelativeDocumentMoniker": "APIs\\SoundAPI\\SoundManager.cs",
@@ -4588,7 +4605,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 285,
+              "DocumentIndex": 286,
               "Title": "66Kaliber.cs",
               "DocumentMoniker": "C:\\Users\\maxvo\\Downloads\\66Kaliber.cs",
               "ToolTip": "C:\\Users\\maxvo\\Downloads\\66Kaliber.cs",
@@ -4598,7 +4615,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 284,
+              "DocumentIndex": 285,
               "Title": "jhbsda.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Guns\\Jsons\\jhbsda.cs",
               "RelativeDocumentMoniker": "Guns\\Jsons\\jhbsda.cs",
@@ -4610,7 +4627,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 287,
+              "DocumentIndex": 288,
               "Title": "NoTeleporterPlaceable.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\DungeonPlaceables\\NoTeleporterPlaceable.cs",
               "RelativeDocumentMoniker": "DungeonPlaceables\\NoTeleporterPlaceable.cs",
@@ -4622,7 +4639,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 286,
+              "DocumentIndex": 287,
               "Title": "Targets.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\DungeonPlaceables\\Targets.cs",
               "RelativeDocumentMoniker": "DungeonPlaceables\\Targets.cs",
@@ -4634,7 +4651,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 288,
+              "DocumentIndex": 289,
               "Title": "OrbitingGunAdder.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Misc Stuff\\Synergy Stuff\\Synergy Processors\\OrbitingGunAdder.cs",
               "RelativeDocumentMoniker": "Misc Stuff\\Synergy Stuff\\Synergy Processors\\OrbitingGunAdder.cs",
@@ -4646,7 +4663,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 289,
+              "DocumentIndex": 290,
               "Title": "OphanaimFlightBehavior.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\EnemySetupCode\\EnemyCode\\Update2\\Ophanaim\\OphanaimFlightBehavior.cs",
               "RelativeDocumentMoniker": "EnemySetupCode\\EnemyCode\\Update2\\Ophanaim\\OphanaimFlightBehavior.cs",
@@ -4658,7 +4675,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 290,
+              "DocumentIndex": 291,
               "Title": "VoidMuncher.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Shrine Stuff\\ShrineCode\\VoidMuncher.cs",
               "RelativeDocumentMoniker": "Shrine Stuff\\ShrineCode\\VoidMuncher.cs",
@@ -4670,7 +4687,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 291,
+              "DocumentIndex": 292,
               "Title": "LynceusBullet.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\EnemySetupCode\\EnemyCode\\ModderBullets\\LynceusBullet.cs",
               "RelativeDocumentMoniker": "EnemySetupCode\\EnemyCode\\ModderBullets\\LynceusBullet.cs",
