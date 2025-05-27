@@ -147,10 +147,10 @@ namespace Planetside.DungeonPlaceables
             lineRenderer.sortingOrder = -10;
             lineRenderer.material = new Material(StaticShaders.TransparencyShader);
             lineRenderer.material.SetTexture("_MainTex", StaticTextures.Gradient_Circle);
-            lineRenderer.material.SetFloat("_Fade", 0.9f);
+            lineRenderer.material.SetFloat("_Fade", 0.95f);
 
-            lineRenderer.startWidth = 1.25f;
-            lineRenderer.endWidth = 1.25f;
+            lineRenderer.startWidth = 1.125f;
+            lineRenderer.endWidth = 1.125f;
 
             /*
             GameObject ring = PrefabBuilder.BuildObject("BlessedIdolRing");
@@ -428,6 +428,7 @@ namespace Planetside.DungeonPlaceables
 
         private void SpawnTheGuy()
         {
+            if (this == null) { return; }
 
             EnemyBlessed = AIActor.Spawn(EnemyDatabase.GetOrLoadByGuid(EnemyGUIDToSpawn), new IntVector2(Mathf.RoundToInt(this.transform.position.x + EnemySpawnOffset.x), Mathf.RoundToInt(this.transform.position.y + EnemySpawnOffset.y)), this.transform.position.GetAbsoluteRoom(), false, AIActor.AwakenAnimationType.Default, false);
             EnemyBlessed.reinforceType = ReinforceType.Instant;

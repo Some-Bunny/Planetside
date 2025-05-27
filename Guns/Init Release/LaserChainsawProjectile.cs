@@ -35,8 +35,9 @@ namespace Planetside
 		{
 			if (arg2.aiActor != null && !arg2.healthHaver.IsBoss && !arg2.healthHaver.IsDead && arg2.aiActor.behaviorSpeculator && !arg2.aiActor.IsHarmlessEnemy && arg2.aiActor != null && UnityEngine.Random.value <= 0.11f)
 			{
-				arg2.aiActor.behaviorSpeculator.Stun(0.22f, true);
-				UnityEngine.Object.Instantiate<GameObject>(PickupObjectDatabase.GetById(449).GetComponent<TeleporterPrototypeItem>().TelefragVFXPrefab, arg2.specRigidbody.UnitCenter, Quaternion.identity);
+				arg2.aiActor.behaviorSpeculator.Stun(0.15f, true);
+				var effect = UnityEngine.Object.Instantiate<GameObject>(StaticVFXStorage.TeleportTelefragVFX, arg2.specRigidbody.UnitCenter, Quaternion.identity);
+				Destroy(effect, 3);
 			}
 		}
 
@@ -45,8 +46,11 @@ namespace Planetside
 			if (!arg2.aiActor.healthHaver.IsDead)
 			{
 				PlayerController player = arg1.PossibleSourceGun.CurrentOwner as PlayerController;
-				UnityEngine.Object.Instantiate<GameObject>(PickupObjectDatabase.GetById(449).GetComponent<TeleporterPrototypeItem>().TelefragVFXPrefab, arg2.specRigidbody.UnitCenter, Quaternion.identity);		
-				List<AIActor> activeEnemies = player.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
+                //UnityEngine.Object.Instantiate<GameObject>(PickupObjectDatabase.GetById(449).GetComponent<TeleporterPrototypeItem>().TelefragVFXPrefab, arg2.specRigidbody.UnitCenter, Quaternion.identity);		
+                var effect = UnityEngine.Object.Instantiate<GameObject>(StaticVFXStorage.TeleportTelefragVFX, arg2.specRigidbody.UnitCenter, Quaternion.identity);
+                Destroy(effect, 3);
+
+                List<AIActor> activeEnemies = player.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
 				Vector2 centerPosition = arg1.sprite.WorldCenter;
 				if (activeEnemies != null)
 				{

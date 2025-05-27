@@ -10,6 +10,7 @@ namespace Planetside
 {
     class GlassComponent : MonoBehaviour
     {
+        public int Stack = 0;
         public GlassComponent()
         {
             this.DamageMult = 1.75f;
@@ -20,6 +21,7 @@ namespace Planetside
         public void Start()
         {
             //
+            Stack = 1;
             if (player.ForceZeroHealthState == true && player.healthHaver.Armor > 4)
             {
                 player.healthHaver.Armor = 4;
@@ -93,6 +95,7 @@ namespace Planetside
         
         public void IncrementStack()
         {
+            Stack++;
             this.DamageToGetFromOverHeal += 0.025f;
             this.DamageMult += 0.2f;
             if (LeniencyProtection != -1) {LeniencyProtection = -1;}
@@ -156,8 +159,8 @@ namespace Planetside
             var data = StaticSpriteDefinitions.Pickup_Sheet_Data;
             ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("glass"), data, gameObject);
             //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
-            string shortDesc = "Literally just an all stats up.";
-            string longDesc = "yep.";
+            string shortDesc = "Fragile, Yet Fatal.";
+            string longDesc = "One of the first Perks ever made, created from the melted scraps of powerful guns that dying Gungeoneers left in the Deep.";
             item.SetupItem(shortDesc, longDesc, "psog");
             Glass.GlassID = item.PickupObjectId;
             item.quality = PickupObject.ItemQuality.EXCLUDED;
@@ -183,6 +186,8 @@ namespace Planetside
         {
             if (m_hasBeenPickedUp)
                 return;
+            base.HandleEncounterable(player);
+
             SaveAPI.AdvancedGameStatsManager.Instance.RegisterStatChange(StatToIncreaseOnPickup, 1);
 
             m_hasBeenPickedUp = true;

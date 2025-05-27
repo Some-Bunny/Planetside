@@ -119,7 +119,7 @@ namespace Planetside
         }
         private void ApplyLinearDamage(Vector2 p1, Vector2 p2)
         {
-            float num = 2f;
+            float num = 7f;
             for (int i = 0; i < StaticReferenceManager.AllEnemies.Count; i++)
             {
                 AIActor aiactor = StaticReferenceManager.AllEnemies[i];
@@ -175,7 +175,7 @@ namespace Planetside
                                 proj.pierceMinorBreakables = true;
                                 proj.collidesWithPlayer = false;
                                 proj.AdditionalScaleMultiplier = 0.5f;
-                                proj.baseData.damage = 3f * dmg;
+                                proj.baseData.damage = 4f * dmg;
 
                                 PierceProjModifier spook = proj.gameObject.AddComponent<PierceProjModifier>();
                                 spook.penetration = 10;

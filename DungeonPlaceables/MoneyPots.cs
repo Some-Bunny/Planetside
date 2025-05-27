@@ -54,7 +54,7 @@ namespace Planetside
             ETGMod.Databases.Strings.Core.Set("#TROLL_NOTE_10", ":rabbit2:\n\n:skateboard:");
             ETGMod.Databases.Strings.Core.Set("#TROLL_NOTE_11", "Our mod plans to expand and revamp vanilla content by adding new fun and interesting content! we plan on adding new gimmicks and multiple bosses to flesh out the game. (gif of buzz lightyears in a toy aisle)");
             ETGMod.Databases.Strings.Core.Set("#TROLL_NOTE_12", "Shit thyself.");
-            ETGMod.Databases.Strings.Core.Set("#TROLL_NOTE_12", "Subscribe to Agod on Youtube! I think.");
+            //ETGMod.Databases.Strings.Core.Set("#TROLL_NOTE_13", "Subscribe to Agod on Youtube! I think.");
 
 
             MajorBreakable note1 = BreakableAPIToolbox.GenerateMajorBreakable("trollNote_1", idlePaths, 1, idlePaths, 1, 15000,true, 0, 0, 0, 0, true, null, null, true, null);
@@ -609,7 +609,6 @@ namespace Planetside
             private IEnumerator HandleTrollDeath(PlayerController p)
             {
                 p.healthHaver.IsVulnerable = false;
-
                 bool wasPitFalling = p.IsFalling;
                 Pixelator.Instance.DoFinalNonFadedLayer = true;
                 if (p.CurrentGun)
@@ -623,6 +622,7 @@ namespace Planetside
                 p.spriteAnimator.Play("death");
 
                 PlanetsideReflectionHelper.InvokeMethod(typeof(PlayerController), "ToggleAttachedRenderers", p, new object[] { true });
+
                 Transform cameraTransform = GameManager.Instance.MainCameraController.transform;
                 Vector3 cameraStartPosition = cameraTransform.position;
                 Vector3 cameraEndPosition = p.CenterPosition;
@@ -631,28 +631,32 @@ namespace Planetside
                 {
                     p.CurrentGun.DespawnVFX();
                 }
+
                 yield return null;
                 p.ToggleHandRenderers(false, "death");
                 if (p.CurrentGun)
                 {
                     p.CurrentGun.DespawnVFX();
                 }
+
                 p.gameObject.SetLayerRecursively(LayerMask.NameToLayer("Unfaded"));
                 GameUIRoot.Instance.ForceClearReload(p.PlayerIDX);
                 GameUIRoot.Instance.notificationController.ForceHide();
                 float elapsed = 0f;
                 float duration = 0.8f;
+
                 tk2dBaseSprite spotlightSprite = ((GameObject)UnityEngine.Object.Instantiate(BraveResources.Load("DeathShadow", ".prefab"), p.specRigidbody.UnitCenter, Quaternion.identity)).GetComponent<tk2dBaseSprite>();
                 spotlightSprite.spriteAnimator.ignoreTimeScale = true;
                 spotlightSprite.spriteAnimator.Play();
                 tk2dSpriteAnimator whooshAnimator = spotlightSprite.transform.GetChild(0).GetComponent<tk2dSpriteAnimator>();
                 whooshAnimator.ignoreTimeScale = true;
                 whooshAnimator.Play();
+
                 Pixelator.Instance.CustomFade(0.6f, 0f, Color.white, Color.black, 0.1f, 0.5f);
                 Pixelator.Instance.LerpToLetterbox(0.35f, 0.8f);
                 BraveInput.AllowPausedRumble = true;
                 p.DoVibration(Vibration.Time.Normal, Vibration.Strength.Hard);
-                
+
                 if (p.OverrideAnimationLibrary != null)
                 {
                     p.OverrideAnimationLibrary = null;
@@ -660,6 +664,7 @@ namespace Planetside
                     GameObject effect = (GameObject)BraveResources.Load("Global VFX/VFX_BulletArmor_Death", ".prefab");
                     p.PlayEffectOnActor(effect, Vector3.zero, true, false, false);
                 }
+
                 while (elapsed < duration)
                 {
                     if (GameManager.INVARIANT_DELTA_TIME == 0f)
@@ -668,14 +673,17 @@ namespace Planetside
                     }
                     elapsed += GameManager.INVARIANT_DELTA_TIME;
                     float t = elapsed / duration;
+
                     GameManager.Instance.MainCameraController.OverridePosition = Vector3.Lerp(cameraStartPosition, cameraEndPosition, t);
                     p.spriteAnimator.UpdateAnimation(GameManager.INVARIANT_DELTA_TIME);
                     spotlightSprite.color = new Color(1f, 1f, 1f, t);
                     Pixelator.Instance.saturation = Mathf.Clamp01(1f - t);
+
                     yield return null;
                 }
                 spotlightSprite.color = Color.white;
-                yield return base.StartCoroutine(InvariantWait(0.4f, p));
+                yield return GameManager.Instance.StartCoroutine(InvariantWait(0.4f, p));
+
                 Transform clockhairTransform = ((GameObject)UnityEngine.Object.Instantiate(BraveResources.Load("Clockhair", ".prefab"))).transform;
                 ClockhairController clockhair = clockhairTransform.GetComponent<ClockhairController>();
                 elapsed = 0f;
@@ -843,6 +851,8 @@ namespace Planetside
             public void Start()
             {
                 var minorbreakable = this.GetComponent<MinorBreakable>();
+                AkSoundEngine.PostEvent("Play_Glitch", this.gameObject);
+
                 if (minorbreakable != null)
                 {
                     minorbreakable.OnBreakContext += (self) =>
@@ -908,7 +918,7 @@ namespace Planetside
                                 GameManager.Instance.PauseRaw(true);
                                 BraveTime.RegisterTimeScaleMultiplier(0f, GameManager.Instance.gameObject);
                                 AkSoundEngine.PostEvent("Stop_SND_All", base.gameObject);
-                                base.StartCoroutine(HandleTrollDeath(GameManager.Instance.PrimaryPlayer));
+                                GameManager.Instance.StartCoroutine(HandleTrollDeath(GameManager.Instance.PrimaryPlayer));
                                 AkSoundEngine.PostEvent("Play_UI_gameover_start_01", base.gameObject);
                                 break;
                             case 5:
@@ -1002,7 +1012,7 @@ namespace Planetside
                                 GameObject bom = new GameObject();
                                 StaticReferences.StoredRoomObjects.TryGetValue("trollNote", out bom);
                                 var note = DungeonPlaceableUtility.InstantiateDungeonPlaceable(bom, roomFromPosition2, new IntVector2((int)this.gameObject.transform.position.x, (int)this.gameObject.transform.position.y) - roomFromPosition2.area.basePosition, false).GetComponent<NoteDoer>();
-                                note.GetComponent<NoteDoer>().stringKey = "#TROLL_NOTE_" + (UnityEngine.Random.Range(1, 14).ToString());
+                                note.GetComponent<NoteDoer>().stringKey = "#TROLL_NOTE_" + (UnityEngine.Random.Range(1, 13).ToString());
                                 roomFromPosition2.RegisterInteractable(note);
 
                                 break;

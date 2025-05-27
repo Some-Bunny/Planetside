@@ -87,8 +87,6 @@ namespace Planetside
                 {
                     this.elapsed += BraveTime.DeltaTime;
                 }
-
-
                 if (this.elapsed > TimeBetweenRockFalls)
 				{
 					this.elapsed = 0f;

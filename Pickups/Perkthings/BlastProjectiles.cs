@@ -2,6 +2,7 @@
 using ItemAPI;
 using SaveAPI;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,15 +10,17 @@ namespace Planetside
 {
     class BlastProjectilesCheck : MonoBehaviour 
     {
+        public int Stack = 0;
         public BlastProjectilesCheck()
         {
             this.Cap = 12;
             this.MinToSpawn = 2;
             this.hasBeenPickedup = false;
         }
-        public void Start() {this.hasBeenPickedup=true;}
+        public void Start() {this.hasBeenPickedup=true; Stack = 1; }
         public void IncrementStack()
         {
+            Stack++;
             Cap+=4;
             MinToSpawn++;
         }
@@ -52,7 +55,7 @@ namespace Planetside
             projectile.gameObject.SetActive(false);
             FakePrefab.MarkAsFakePrefab(projectile.gameObject);
             UnityEngine.Object.DontDestroyOnLoad(projectile);
-            projectile.baseData.damage = 7f;
+            projectile.baseData.damage = 9f;
             projectile.baseData.speed *= 1f;
             projectile.AdditionalScaleMultiplier = 1f;
             projectile.shouldRotate = true;
@@ -114,6 +117,8 @@ namespace Planetside
         {
             if (m_hasBeenPickedUp)
                 return;
+            base.HandleEncounterable(player);
+
             SaveAPI.AdvancedGameStatsManager.Instance.RegisterStatChange(StatToIncreaseOnPickup, 1);
 
             m_hasBeenPickedUp = true;

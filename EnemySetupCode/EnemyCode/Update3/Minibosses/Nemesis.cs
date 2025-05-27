@@ -60,7 +60,7 @@ namespace Planetside
                 prefab.AddComponent<NemesisController>();
 				prefab.AddComponent<ForgottenEnemyComponent>();
 				companion.aiActor.knockbackDoer.weight = 120;
-				companion.aiActor.MovementSpeed = 3.6f;
+				companion.aiActor.MovementSpeed = 3f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
 				companion.aiActor.CollisionDamage = 0f;
 				companion.aiActor.IgnoreForRoomClear = false;
@@ -1106,9 +1106,11 @@ namespace Planetside
 					for (int i = 0; i < 100; i++)
 					{
 						H = !H;
-						base.Fire(new Direction(-90, Brave.BulletScript.DirectionType.Relative, -1f), new Speed(0f, SpeedType.Absolute), new RailgunTwoScript.UndodgeableSpore(H));
-						base.Fire(new Direction(90, Brave.BulletScript.DirectionType.Relative, -1f), new Speed(0f, SpeedType.Absolute), new RailgunTwoScript.UndodgeableSpore(H));
-						yield return this.Wait(1.5f);
+						base.Fire(new Direction(-100, Brave.BulletScript.DirectionType.Relative, -1f), new Speed(0f, SpeedType.Absolute), new RailgunTwoScript.UndodgeableSpore(H));
+						base.Fire(new Direction(100, Brave.BulletScript.DirectionType.Relative, -1f), new Speed(0f, SpeedType.Absolute), new RailgunTwoScript.UndodgeableSpore(H));
+                        base.Fire(new Direction(-80, Brave.BulletScript.DirectionType.Relative, -1f), new Speed(0f, SpeedType.Absolute), new RailgunTwoScript.UndodgeableSpore(H));
+                        base.Fire(new Direction(80, Brave.BulletScript.DirectionType.Relative, -1f), new Speed(0f, SpeedType.Absolute), new RailgunTwoScript.UndodgeableSpore(H));
+                        yield return this.Wait(1.5f);
 					}
 					yield break;
 				}
@@ -1117,9 +1119,9 @@ namespace Planetside
 				{
 					if (preventSpawningProjectiles == false)
 					{
-						for (int i = 0; i < 16; i++)
+						for (int i = 0; i < 24; i++)
 						{
-                            base.Fire(new Direction(BraveUtility.RandomAngle(), Brave.BulletScript.DirectionType.Relative, -1f), new Speed(UnityEngine.Random.Range(3, 8), SpeedType.Absolute), new RailgunTwoScript.ShotgunBulletOne());
+                            base.Fire(new Direction(BraveUtility.RandomAngle(), Brave.BulletScript.DirectionType.Relative, -1f), new Speed(UnityEngine.Random.Range(1, 5), SpeedType.Absolute), new RailgunTwoScript.ShotgunBulletOne());
                         }
                     }
 				}
@@ -1169,29 +1171,29 @@ namespace Planetside
 
 				if (UnityEngine.Random.value > 0.5f)
                 {
-					for (int i = 0; i <= 4; i++)
+					for (int i = 0; i < 4; i++)
 					{
-						this.Fire(new Direction((float)(i * 20) -25f, DirectionType.Aim, -1f), new Speed(3f, SpeedType.Absolute), new ShotgunBulletOne());
+						this.Fire(new Direction((float)(i * 24) - 36f, DirectionType.Aim, -1f), new Speed(2f, SpeedType.Absolute), new ShotgunBulletOne());
 					}
 				}
 				else
                 {
-					for (int i = -2; i <= 3; i++)
+					for (int i = -2; i < 3; i++)
 					{
-						this.Fire(new Direction((float)(i * 20), DirectionType.Aim, -1f), new Speed(3f, SpeedType.Absolute), new ShotgunBulletOne());
+						this.Fire(new Direction((float)(i * 20), DirectionType.Aim, -1f), new Speed(2f, SpeedType.Absolute), new ShotgunBulletOne());
 					}
 				}
 				yield break;
 			}
 			public class ShotgunBulletOne : Bullet
 			{
-				public ShotgunBulletOne() : base(StaticUndodgeableBulletEntries.undodgeableSmallSpore.Name, false, false, false)
+				public ShotgunBulletOne() : base(UnityEngine.Random.value > 0.33f ? StaticUndodgeableBulletEntries.undodgeableLargeSpore.Name: StaticUndodgeableBulletEntries.undodgeableSmallSpore.Name, false, false, false)
 				{
 
 				}
 				public override IEnumerator Top()
 				{
-					base.ChangeSpeed(new Speed(13f, SpeedType.Absolute), 90);
+					base.ChangeSpeed(new Speed(9f, SpeedType.Absolute), 90);
 					yield break;
 				}
 			}
@@ -1207,9 +1209,9 @@ namespace Planetside
 				{
 					Vector2 PredictedPosition = BraveMathCollege.GetPredictedPosition(this.BulletManager.PlayerPosition(), this.BulletManager.PlayerVelocity(), CurrentBarrelPosition(), Speed);
 					AkSoundEngine.PostEvent("Play_WPN_deck4rd_shot_01", this.BulletBank.aiActor.gameObject);
-					for (int i = 0; i <= 8; i++)
+					for (int i = 0; i <= 12; i++)
 					{
-						this.Fire(Offset.OverridePosition(CurrentBarrelPosition()), new Direction((PredictedPosition - CurrentBarrelPosition()).ToAngle() + UnityEngine.Random.Range(-25, 25), DirectionType.Absolute, -1f), new Speed(UnityEngine.Random.Range(3, 10), SpeedType.Absolute), new ShotgunBulletOne());
+						this.Fire(Offset.OverridePosition(CurrentBarrelPosition()), new Direction((PredictedPosition - CurrentBarrelPosition()).ToAngle() + UnityEngine.Random.Range(-20, 20), DirectionType.Absolute, -1f), new Speed(UnityEngine.Random.Range(2, 9), SpeedType.Absolute), new ShotgunBulletOne());
 					}
 					yield return this.Wait(45);
 				}
@@ -1242,24 +1244,27 @@ namespace Planetside
 				AkSoundEngine.PostEvent("Play_WPN_magnum_shot_01", this.BulletBank.aiActor.gameObject);
 				for (int i = -1; i <= 1; i++)
 				{
-					this.Fire(new Direction((float)(i * 7), DirectionType.Aim, -1f), new Speed(5f, SpeedType.Absolute), new RevolverBulletOne());
-				}
-				yield break;
+					this.Fire(new Direction((float)(i * 5), DirectionType.Aim, -1f), new Speed(3f, SpeedType.Absolute), new RevolverBulletOne(12));
+                    this.Fire(new Direction((float)(i * 8), DirectionType.Aim, -1f), new Speed(9f, SpeedType.Absolute), new RevolverBulletOne(5));
+                }
+
+                yield break;
 			}
 			public class RevolverBulletOne : Bullet
 			{
-				public RevolverBulletOne() : base(StaticUndodgeableBulletEntries.undodgeableSniper.Name, false, false, false)
+				public float NewSpeed;
+				public RevolverBulletOne(float nS) : base(StaticUndodgeableBulletEntries.undodgeableSniper.Name, false, false, false)
 				{
+                    NewSpeed = nS;
 
-				}
+                }
 				public override IEnumerator Top()
 				{
-					base.ChangeSpeed(new Speed(14f, SpeedType.Absolute), 75);
+					base.ChangeSpeed(new Speed(NewSpeed, SpeedType.Absolute), 75);
 					yield break;
 				}
 			}
 		}
-
 		public class RevolverTwoScript : Script
 		{	
 			public Vector2 CurrentBarrelPosition()
@@ -1278,7 +1283,7 @@ namespace Planetside
 				for (int e = 0; e < r; e++)
 				{
 					base.StartTask(DoYeehaw(35 - (e*7.5f), this));
-					yield return this.Wait(20 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
+					yield return this.Wait(30 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
 				}
 				base.BulletBank.aiActor.aiAnimator.LockFacingDirection = false;
 
@@ -1332,8 +1337,7 @@ namespace Planetside
 					yield return null;
 				}
 				elapsed = 0;
-				Time = 0.25f;
-				base.PostWwiseEvent("Play_FlashTell");
+				Time = 0.3f;
 				while (elapsed < Time)
 				{
 					if (parent.IsEnded || parent.Destroyed)
@@ -1351,15 +1355,21 @@ namespace Planetside
 						component2.HeightOffGround = -2;
 						component2.renderer.gameObject.layer = 23;
 						component2.UpdateZDepth();
-					}
+                        bool enabled = elapsed % 0.1f > 0.05f;
+                        component2.sprite.renderer.enabled = enabled;
+                    }
 					elapsed += BraveTime.DeltaTime;
 					yield return null;
 				}
 				UnityEngine.Object.Destroy(component2.gameObject);
 				AkSoundEngine.PostEvent("Play_WPN_sniperrifle_shot_01", this.BulletBank.aiActor.gameObject);
-				base.Fire(Offset.OverridePosition(CurrentBarrelPosition()), new Direction((PredictedPosition - CurrentBarrelPosition()).ToAngle(), DirectionType.Absolute, -1f), new Speed(40f, SpeedType.Absolute), new WallBulletNoDodge("sniperUndodgeable"));
+				base.Fire(Offset.OverridePosition(CurrentBarrelPosition()), new Direction(component2.transform.localRotation.eulerAngles.z, DirectionType.Absolute, -1f), new Speed(28f, SpeedType.Absolute), new WallBulletNoDodge("sniperUndodgeable"));
+                base.Fire(Offset.OverridePosition(CurrentBarrelPosition()), new Direction(component2.transform.localRotation.eulerAngles.z + 5, DirectionType.Absolute, -1f), new Speed(22f, SpeedType.Absolute), new WallBulletNoDodge("sniperUndodgeable"));
+                base.Fire(Offset.OverridePosition(CurrentBarrelPosition()), new Direction(component2.transform.localRotation.eulerAngles.z - 5, DirectionType.Absolute, -1f), new Speed(22f, SpeedType.Absolute), new WallBulletNoDodge("sniperUndodgeable"));
+                base.Fire(Offset.OverridePosition(CurrentBarrelPosition()), new Direction(component2.transform.localRotation.eulerAngles.z, DirectionType.Absolute, -1f), new Speed(16f, SpeedType.Absolute), new WallBulletNoDodge("sniperUndodgeable"));
 
-				yield break;
+
+                yield break;
             }
 			public class WallBulletNoDodge : Bullet
 			{public WallBulletNoDodge(string BulletType) : base(BulletType, true, false, false){}}

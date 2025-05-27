@@ -59,7 +59,7 @@ namespace Planetside
 				Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(projectileModule.projectiles[0]);
 				projectile.gameObject.SetActive(false);
 				projectileModule.projectiles[0] = projectile;
-				projectile.baseData.damage = 10f;
+				projectile.baseData.damage = 20f;
 				projectile.AdditionalScaleMultiplier = 4f;
 				projectile.baseData.range += 5;
 				projectile.baseData.speed *= 0.75f;
@@ -88,7 +88,7 @@ namespace Planetside
 				explosiveModifier.explosionData = new ExplosionData(){
 					breakSecretWalls = false,
 					comprehensiveDelay = 0,
-					damage = 11,
+					damage = 15,
 					damageRadius = 3,
 					damageToPlayer = 0,
 					debrisForce = 1000,

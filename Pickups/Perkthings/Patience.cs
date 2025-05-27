@@ -43,7 +43,7 @@ namespace Planetside
             ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("patience"), data, gameObject);
             //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
             string shortDesc = "Does nothing... But...";
-            string longDesc = "yea";
+            string longDesc = "Given enough time, the patient gungeoneer shall be rewarded, as this hourglass slips into the gungeons recursive time-stream and re-appears at the start of the loop.\n\nGiven enough time, the patient gungeoneer shall be rewarded, as this hourglass slips into the gungeons recursive time-stream and re-appears at the start of the loop.\n\nGiven enough time, the patient gungeoneer shall be rewarded, as this hourglass slips into the gungeons recursive time-stream and re-appears at the start of the loop.\n\nGiven enough time, the patient gungeoneer shall be rewarded, as this hourglass slips into the gungeons recursive time-stream and re-appears at the start of the loop.\n\nGiven enough time, the patient gungeoneer shall be rewarded, as this hourglass slips into the gungeons recursive time-stream and re-appears at the start of the loop.\n\nGiven enough time, the patient gungeoneer shall be rewarded, as this hourglass slips into the gungeons recursive time-stream and re-appears at the start of the loop...";
             item.SetupItem(shortDesc, longDesc, "psog");
             Patience.PatienceID = item.PickupObjectId;
             item.quality = PickupObject.ItemQuality.EXCLUDED;
@@ -199,6 +199,8 @@ namespace Planetside
         {
             if (m_hasBeenPickedUp)
                 return;
+            base.HandleEncounterable(player);
+
             SaveAPI.AdvancedGameStatsManager.Instance.RegisterStatChange(StatToIncreaseOnPickup, 1);
 
             m_hasBeenPickedUp = true;

@@ -74,7 +74,7 @@ namespace Planetside
             if (objectToLookOutFor == null) { yield break; }
             ExplosionData data = StaticExplosionDatas.CopyFields(StaticExplosionDatas.genericSmallExplosion);//StaticExplosionDatas.genericSmallExplosion;
             data.effect = (PickupObjectDatabase.GetById(368) as Gun).DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX;
-            data.damage = 8f * (player != null ? player.stats.GetStatValue(PlayerStats.StatType.Damage) : 1);
+            data.damage = 11f * (player != null ? player.stats.GetStatValue(PlayerStats.StatType.Damage) : 1);
 			data.damageRadius = 3;
 			data.doScreenShake = false;
 			data.playDefaultSFX = false;
@@ -140,7 +140,7 @@ namespace Planetside
 			projectile.gameObject.SetActive(false);
 			FakePrefab.MarkAsFakePrefab(projectile.gameObject);
 			UnityEngine.Object.DontDestroyOnLoad(projectile);
-			projectile.baseData.damage = 1.5f;
+			projectile.baseData.damage = 2.5f;
 			projectile.baseData.speed *= 0.7f;
 			projectile.AdditionalScaleMultiplier = 1f;
 			projectile.shouldRotate = true;

@@ -11,6 +11,7 @@ namespace Planetside
 
     class UnbreakableSpiritController : MonoBehaviour
     {
+        public int Stacks = 0;
         public UnbreakableSpiritController()
         {
             this.hasRespawnedOnce = false;
@@ -18,7 +19,8 @@ namespace Planetside
             this.AmountOfRespawns = 1;
         }
         public void Start() 
-        { 
+        {
+            Stacks = 1;
             this.hasBeenPickedup = true; 
             if (player.healthHaver !=null)
             {
@@ -122,6 +124,7 @@ namespace Planetside
 
         public void IncrementStack()
         {
+            Stacks++;
             AmountOfRespawns++;
         }
         private bool hasRespawnedOnce;
@@ -142,8 +145,8 @@ namespace Planetside
             var data = StaticSpriteDefinitions.Pickup_Sheet_Data;
             ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("unbreakablespirit"), data, gameObject);
             //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
-            string shortDesc = "Literally just an all stats up.";
-            string longDesc = "yep.";
+            string shortDesc = "One Last Chance.";
+            string longDesc = "Go out in a blaze of glory and be reborn with greater power.\n\nOnly the strongest of spirits can refuse death, to have one last chance.";
             item.SetupItem(shortDesc, longDesc, "psog");
             UnbreakableSpirit.UnbreakableSpiritID = item.PickupObjectId;
             item.quality = PickupObject.ItemQuality.EXCLUDED;
@@ -202,6 +205,8 @@ namespace Planetside
         {
             if (m_hasBeenPickedUp)
                 return;
+            base.HandleEncounterable(player);
+
             SaveAPI.AdvancedGameStatsManager.Instance.RegisterStatChange(StatToIncreaseOnPickup, 1);
             m_hasBeenPickedUp = true;
             PerkParticleSystemController cont = base.GetComponent<PerkParticleSystemController>();

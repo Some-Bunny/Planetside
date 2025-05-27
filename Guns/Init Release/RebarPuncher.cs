@@ -83,7 +83,7 @@ namespace Planetside
 			FakePrefab.MarkAsFakePrefab(projectile2.gameObject);
 			UnityEngine.Object.DontDestroyOnLoad(projectile2);
 			gun.DefaultModule.projectiles[0] = projectile2;
-			projectile2.baseData.damage = 40f;
+			projectile2.baseData.damage = 50f;
 			projectile2.baseData.speed *= 1f;
 			projectile2.baseData.force *= 5f;
 			projectile2.baseData.range *= 100f;

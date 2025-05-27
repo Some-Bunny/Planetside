@@ -184,7 +184,7 @@ namespace Planetside
                 EffectWarp.transform.parent = projectile.transform;
                 EffectWarp.transform.position = projectile.sprite.WorldCenter;
             }
-            isGooning = true;
+            //isGooning = true;
             yield break;
         }
 
@@ -225,7 +225,7 @@ namespace Planetside
 
         private GameObject EffectWarp;
 
-        private bool isGooning = false;
+        //private bool isGooning = false;
 
         public float AttackCooldown = 0.8f;
         public float CurrentAttackCooldown = 0;

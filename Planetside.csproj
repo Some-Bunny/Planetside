@@ -34,6 +34,7 @@
   <ItemGroup>
     <Compile Include="APIs\AmmonomiconAPI\AmmonomiconAPIHooks.cs" />
     <Compile Include="APIs\AmmonomiconAPI\AmmonomiconPageInitialization.cs" />
+    <Compile Include="APIs\AmmonomiconAPI\InitializeAmmonomiconStuff.cs" />
     <Compile Include="APIs\ChallengeAPI\ChallengeBuilder.cs" />
     <Compile Include="APIs\ChallengeAPI\ChallengeTools.cs" />
     <Compile Include="APIs\ChallengeAPI\dfLanguageExtraStringHolder.cs" />
@@ -233,6 +234,7 @@
     <Compile Include="Hooks And Actions\CustomDungeonHooks.cs" />
     <Compile Include="Hooks And Actions\Actions.cs" />
     <Compile Include="Hooks And Actions\GunHooks.cs" />
+    <Compile Include="Hooks And Actions\Patches.cs" />
     <Compile Include="Hooks And Actions\PickupHooks.cs" />
     <Compile Include="Hooks And Actions\ExplosionHooks.cs" />
     <Compile Include="Hooks And Actions\TitleDioramaHooks.cs" />
@@ -4679,6 +4681,15 @@
     <EmbeddedResource Include="Resources\DungeonObjects\EnemyBuffShrine\Debris\debris_pedestal_005.png" />
     <EmbeddedResource Include="Resources\DungeonObjects\EnemyBuffShrine\Debris\debris_pedestal_006.png" />
     <EmbeddedResource Include="Resources\DungeonObjects\EnemyBuffShrine\Debris\debris_pedestal_007.png" />
+    <EmbeddedResource Include="Resources\AmmonomiconAPI\bookmark_beyond_001.png" />
+    <EmbeddedResource Include="Resources\AmmonomiconAPI\bookmark_beyond_002.png" />
+    <EmbeddedResource Include="Resources\AmmonomiconAPI\bookmark_beyond_003.png" />
+    <EmbeddedResource Include="Resources\AmmonomiconAPI\bookmark_beyond_004.png" />
+    <EmbeddedResource Include="Resources\AmmonomiconAPI\bookmark_beyond_hover_001.png" />
+    <EmbeddedResource Include="Resources\AmmonomiconAPI\bookmark_beyond_select_001.png" />
+    <EmbeddedResource Include="Resources\AmmonomiconAPI\bookmark_beyond_select_002.png" />
+    <EmbeddedResource Include="Resources\AmmonomiconAPI\bookmark_beyond_select_003.png" />
+    <EmbeddedResource Include="Resources\AmmonomiconAPI\bookmark_beyond_select_hover_001.png" />
     <Content Include="Resources\Shellrax\shellrax_intro_019.png" />
     <EmbeddedResource Include="Resources\VFX\LockOnVFX\lockonvfx1.png" />
     <EmbeddedResource Include="Resources\VFX\LockOnVFX\lockonvfx2.png" />
@@ -4791,6 +4802,10 @@
     <Reference Include="Alexandria, Version=0.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>D:\r2modmanLocal\ETG\profiles\Agony\BepInEx\plugins\Alexandria-Alexandria\Alexandria.dll</HintPath>
+    </Reference>
+    <Reference Include="AmmonomiconAPI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\r2modmanLocal\ETG\profiles\Agony\BepInEx\plugins\AmmonomiconAPI\plugins\AmmonomiconAPI.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -5937,6 +5952,9 @@
     <EmbeddedResource Include="Guns\Jsons\pointgunknown_idle_006.json" />
     <EmbeddedResource Include="Guns\Jsons\pointgunknown_idle_007.json" />
     <EmbeddedResource Include="Guns\Jsons\pointgunknown_reload_001.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\OtherSpecialRooms\nemesis_miniboss_room_mixed.room" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

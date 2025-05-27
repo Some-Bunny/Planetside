@@ -416,8 +416,8 @@ namespace Planetside
             var data = StaticSpriteDefinitions.Pickup_Sheet_Data;
             ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("corrputed_wealth"), data, gameObject);
             //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
-            string shortDesc = "Corrupts all pickups.";
-            string longDesc = "yep.";
+            string shortDesc = "Wealth Of Sacrifice.";
+            string longDesc = "All good things comes at a cost. Better things come at an even higher cost. Hope you can pay the toll.";
             item.SetupItem(shortDesc, longDesc, "psog");
             CorruptedWealth.CorruptedWealthID = item.PickupObjectId;
             item.quality = PickupObject.ItemQuality.EXCLUDED;
@@ -675,6 +675,8 @@ namespace Planetside
         {
             if (m_hasBeenPickedUp)
                 return;
+            base.HandleEncounterable(player);
+
             SaveAPI.AdvancedGameStatsManager.Instance.RegisterStatChange(StatToIncreaseOnPickup, 1);
 
             m_hasBeenPickedUp = true;

@@ -58,7 +58,7 @@ namespace Planetside
 				gun.Volley.projectiles[i + 3].angleFromAim = (4*i);
 				Projectile projectile = UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(378) as Gun).DefaultModule.projectiles[0]);
 				projectile.gameObject.SetActive(false);
-				projectile.baseData.damage = 7;
+				projectile.baseData.damage = 7.5f;
 				projectile.baseData.speed = 24f - ((float)Mathf.Abs((float)i) * 0.9f);
 			    var m = projectile.gameObject.AddComponent<VeteranShotgunProjectile>();
 				m.projectile = projectile;

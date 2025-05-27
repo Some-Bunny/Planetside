@@ -65,8 +65,8 @@ namespace Planetside
 				{
                     if (player.HasPickupID(GildedPots.GildedPotsID) && self != null)
                     {
-                        if (self.transform?.parent?.gameObject?.GetComponent<MirrorController>() == null) 
-						{
+                        if (self.transform?.parent?.gameObject?.GetComponent<MirrorController>() == null && self.transform?.parent?.gameObject?.GetComponent<KickableObject>() == null)
+                        {
                             bool Synergy = player.PlayerHasActiveSynergy("Expert Demolitionist");
                             float coinchance = Synergy ? 0.05f : 0.035f;
                             if (self.GetComponent<MoneyPots.MoneyPotBehavior>() == null && UnityEngine.Random.value < coinchance)

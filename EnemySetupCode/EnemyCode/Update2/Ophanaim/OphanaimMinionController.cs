@@ -225,8 +225,8 @@ namespace Planetside
                     tiledsprite.transform.position = this.BulletBank.sprite.WorldCenter;
 
 
-                    tiledsprite.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (25 * t));
-                    tiledsprite.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (5 * t));
+                    tiledsprite.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (12.5f * t));
+                    tiledsprite.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (3 * t));
                     tiledsprite.transform.localRotation = Quaternion.Euler(0f, 0f, Angle);
                     tiledsprite.HeightOffGround = -2;
                     tiledsprite.renderer.gameObject.layer = 22;
@@ -322,6 +322,7 @@ namespace Planetside
             component2.dimensions = new Vector2(1000f, 1f);
             component2.UpdateZDepth();
             component2.HeightOffGround = -2;
+
             Color laser =  IsBlue == true ? new Color(0, 0.25f, 1f) : new Color(1, 0.85f, 0.7f);
             component2.sprite.usesOverrideMaterial = true;
             component2.sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
@@ -332,19 +333,19 @@ namespace Planetside
             component2.sprite.renderer.material.SetColor("_EmissiveColor", laser);
 
             GameManager.Instance.StartCoroutine(FlashReticles(component2, this));
+
             yield return this.Wait(90 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
+
             yield break;
         }
         private IEnumerator FlashReticles(tk2dTiledSprite tiledspriteObject, MinionShotPredictive parent)
         {
-            tk2dTiledSprite tiledsprite = tiledspriteObject.GetComponent<tk2dTiledSprite>();
             float elapsed = 0;
-            float Time = 0.75f;
+            float Time = 0.5f;
             float f = 0;
 
             while (elapsed < Time)
             {
-
                 float t = (float)elapsed / (float)Time;
                 if (this == null)
                 {
@@ -369,19 +370,21 @@ namespace Planetside
 
                 if (tiledspriteObject != null)
                 {
-                    tiledsprite.transform.position = this.BulletBank.sprite.WorldCenter;
-                    tiledsprite.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (25 * t));
-                    tiledsprite.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (5 * t));
 
-                    Vector2 predictedPosition = BraveMathCollege.GetPredictedPosition(this.BulletManager.PlayerPosition(), this.BulletManager.PlayerVelocity(), this.BulletBank.aiActor.sprite.WorldCenter, 40f);
+                    tiledspriteObject.transform.position = this.BulletBank.sprite.WorldCenter;
+                    tiledspriteObject.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (12.5f * t));
+                    tiledspriteObject.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (3 * t));
+
+                    Vector2 predictedPosition = BraveMathCollege.GetPredictedPosition(this.BulletManager.PlayerPosition(), this.BulletManager.PlayerVelocity(), this.BulletBank.sprite.WorldCenter, 40f);
                     float CentreAngle = (predictedPosition - this.Position).ToAngle();
                     f = CentreAngle;
-                    tiledsprite.transform.localRotation = Quaternion.Euler(0f, 0f, CentreAngle);
+                    tiledspriteObject.transform.localRotation = Quaternion.Euler(0f, 0f, CentreAngle);
 
-                    tiledsprite.HeightOffGround = -2;
-                    tiledsprite.renderer.gameObject.layer = 22;
-                    tiledsprite.dimensions = new Vector2(1000f, 1f);
-                    tiledsprite.UpdateZDepth();
+                    tiledspriteObject.HeightOffGround = -2;
+                    tiledspriteObject.renderer.gameObject.layer = 22;
+                    tiledspriteObject.dimensions = new Vector2(1000f, 1f);
+                    tiledspriteObject.UpdateZDepth();
+
                 }
                 elapsed += BraveTime.DeltaTime;
                 yield return null;
@@ -413,13 +416,13 @@ namespace Planetside
 
                 if (tiledspriteObject != null)
                 {
-                    tiledsprite.transform.position = this.BulletBank.sprite.WorldCenter;
-                    tiledsprite.dimensions = new Vector2(1000f, 1f);
-                    tiledsprite.HeightOffGround = -2;
-                    tiledsprite.renderer.gameObject.layer = 22;
-                    tiledsprite.UpdateZDepth();
+                    tiledspriteObject.transform.position = this.BulletBank.sprite.WorldCenter;
+                    tiledspriteObject.dimensions = new Vector2(1000f, 1f);
+                    tiledspriteObject.HeightOffGround = -2;
+                    tiledspriteObject.renderer.gameObject.layer = 22;
+                    tiledspriteObject.UpdateZDepth();
                     bool enabled = elapsed % 0.25f > 0.125f;
-                    tiledsprite.sprite.renderer.enabled = enabled;
+                    tiledspriteObject.sprite.renderer.enabled = enabled;
                 }
                 elapsed += BraveTime.DeltaTime;
                 yield return null;

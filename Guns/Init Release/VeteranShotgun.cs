@@ -73,7 +73,7 @@ namespace Planetside
 				Projectile projectile = UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(378) as Gun).DefaultModule.projectiles[0]);
 				projectile.gameObject.SetActive(false);
 				gun.Volley.projectiles[e].projectiles[0] = projectile;
-				projectile.baseData.damage = 5f;
+				projectile.baseData.damage = 6f;
 				projectile.baseData.range = 7 + e;
 				projectile.baseData.speed = 10 + e;
 				projectile.baseData.force = 5;

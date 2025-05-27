@@ -664,8 +664,8 @@ namespace Planetside
             {
                 if (NumberOfRicochets >= 5)
                 {
-                    TeleporterPrototypeItem teleporter = PickupObjectDatabase.GetById(449).GetComponent<TeleporterPrototypeItem>();
-                    UnityEngine.Object.Instantiate<GameObject>(teleporter.TelefragVFXPrefab, arg2.sprite.WorldCenter, Quaternion.identity);
+                    var prefab = UnityEngine.Object.Instantiate<GameObject>(StaticVFXStorage.TeleportTelefragVFX, arg2.sprite.WorldCenter, Quaternion.identity);
+                    Destroy(prefab, 3);
                 }
                 if (hasRetargetedToEnemy == true && arg1 != null)
                 {

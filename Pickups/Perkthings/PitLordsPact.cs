@@ -12,6 +12,7 @@ namespace Planetside
 {
     class PitLordsPactController : MonoBehaviour
     {
+        public int Stacks = 0;
         public PitLordsPactController()
         {
             this.EnemySacrificeDamage = 20;
@@ -31,7 +32,8 @@ namespace Planetside
             this.hasBeenPickedup = false;
         }
         public void Start() 
-        { 
+        {
+            Stacks = 1;
             this.hasBeenPickedup = true;
             GameManager.Instance.OnNewLevelFullyLoaded += this.OnNewFloorLoaded;
             if (player != null)
@@ -84,6 +86,7 @@ namespace Planetside
         }
         public void IncrementStack()
         {
+            Stacks++;
             this.EnemySacrificeDamage += 20;
             this.EnemyAbovePitDamage += 3.33f;
             this.EnemySacrificedBonus += 1;
@@ -134,8 +137,8 @@ namespace Planetside
             var data = StaticSpriteDefinitions.Pickup_Sheet_Data;
             ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("pitLordsPact"), data, gameObject);
             //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
-            string shortDesc = "Literally just an all stats up.";
-            string longDesc = "yep.";
+            string shortDesc = "F E E D   I T .";
+            string longDesc = "An absense. An emptiness. A pit.\n\n\nI'm hollow. I'm empty. I'm hungry.\n\n\nI give. I exchange. I kill.\n\n\nI'm hungry. I'm starving. I'm dying.";
             item.SetupItem(shortDesc, longDesc, "psog");
             PitLordsPact.PitLordsPactID = item.PickupObjectId;
             item.quality = PickupObject.ItemQuality.EXCLUDED;
@@ -710,6 +713,8 @@ namespace Planetside
         {
             if (m_hasBeenPickedUp)
                 return;
+            base.HandleEncounterable(player);
+
             SaveAPI.AdvancedGameStatsManager.Instance.RegisterStatChange(StatToIncreaseOnPickup, 1);
             m_hasBeenPickedUp = true;
             PerkParticleSystemController cont = base.GetComponent<PerkParticleSystemController>();

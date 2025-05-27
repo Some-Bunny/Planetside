@@ -78,18 +78,29 @@ public class ShamberController : BraveBehaviour
             {
                 proj.ManualControl = false;
                 proj.ResetDistance();
-                proj.collidesWithEnemies = base.aiActor.CanTargetEnemies;
+                proj.collidesWithEnemies = base.aiActor != null ? base.aiActor.CanTargetEnemies : false;
                 proj.specRigidbody.CollideWithTileMap = true;
-                proj.collidesWithPlayer = true;
+                proj.collidesWithPlayer = base.aiActor != null ? base.aiActor.CanTargetPlayers : true;
                 proj.UpdateCollisionMask();
-                proj.Direction = proj.transform.PositionVector2() - this.aiActor.sprite.WorldCenter;
+                if (base.aiActor && base.aiActor.sprite)
+                {
+                    proj.Direction = proj.transform.PositionVector2() - this.aiActor.sprite.WorldCenter;
+                    if (proj.shouldRotate)
+                    {
+                        proj.transform.rotation = Quaternion.Euler(0f, 0f, (proj.transform.PositionVector2() - this.aiActor.sprite.WorldCenter).ToAngle());
+                    }
+                }
+                else
+                {
+                    proj.Direction = proj.transform.PositionVector2() - new Vector2(this.transform.position.x, this.transform.position.y);
+                    if (proj.shouldRotate)
+                    {
+                        proj.transform.rotation = Quaternion.Euler(0f, 0f, (proj.transform.PositionVector2() - new Vector2(this.transform.position.x, this.transform.position.y)).ToAngle());
+                    }
+                }
                 proj.baseData.speed = Mathf.Min(this.m_bulletPositions[i].speed * 1.66f, 25);
                 proj.UpdateSpeed();
                 proj.IgnoreTileCollisionsFor(0.5f);
-                if (proj.shouldRotate)
-                {
-                    proj.transform.rotation = Quaternion.Euler(0f, 0f, (proj.transform.PositionVector2() - this.aiActor.sprite.WorldCenter).ToAngle());
-                }
             }
         }
 

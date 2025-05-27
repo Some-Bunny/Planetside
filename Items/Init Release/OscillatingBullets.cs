@@ -33,7 +33,7 @@ namespace Planetside
 			string longDesc = "These bullets were forged by a smith who couldn't decide how to forge them, so they ended up forged half-and-half in different ways." +
 				"\n\nThis makes them fight over the bullets speed on how they should move.";
 			ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
-			ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.Damage, 1.20f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+			ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.Damage, 1.30f, StatModifier.ModifyMethod.MULTIPLICATIVE);
 			ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.RangeMultiplier, 2f, StatModifier.ModifyMethod.MULTIPLICATIVE);
             ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.AdditionalShotPiercing, 1f, StatModifier.ModifyMethod.ADDITIVE);
 
@@ -46,8 +46,8 @@ namespace Planetside
 				postWrapMode = WrapMode.Loop,
 				keys = new Keyframe[] {
 				new Keyframe(){time = 0, value = 0.7f, inTangent = 0.75f, outTangent = 0.25f},
-				new Keyframe(){time = 0.4f, value = 0.3f, inTangent = 0.75f, outTangent = 0.25f},
-                new Keyframe(){time = 0.6f, value = -0.2f, inTangent = 0.75f, outTangent = 0.25f},
+				new Keyframe(){time = 0.4f, value = 0.4f, inTangent = 0.75f, outTangent = 0.25f},
+                new Keyframe(){time = 0.6f, value = -0.1f, inTangent = 0.75f, outTangent = 0.25f},
                 new Keyframe(){time = 0.95f, value = 0.7f, inTangent = 0.75f, outTangent = 0.25f},
                 }
             };

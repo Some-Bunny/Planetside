@@ -19,8 +19,11 @@ namespace Planetside
             this.StatIncreaseFlat = 0.1f;
             this.hasBeenPickedup = false;
         }
+        public int Stack = 0;
+
         public void Start() 
-        { 
+        {
+            Stack = 1;
             this.hasBeenPickedup = true; 
             if(player)
             {
@@ -233,6 +236,7 @@ namespace Planetside
             this.StatIncrease += 0.05f;
             this.StatIncreaseFlat += 0.05f;
             this.LifeTime += 0.5f;
+            Stack++;
         }
 
         private float StatIncreaseFlat;
@@ -254,8 +258,8 @@ namespace Planetside
             var data = StaticSpriteDefinitions.Pickup_Sheet_Data;
             ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("Greedy"), data, gameObject);
             //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
-            string shortDesc = "Makes you greedier.";
-            string longDesc = "yep.";
+            string shortDesc = "Makes You Greedier.";
+            string longDesc = "An Idol of Greed in its purest form, a Gungeoneers life taken converting themselves to gold, after selling themselves off bit by bit to hoard more of the treasures of the Gungeon to themself.\n\nBut... a little more couldn't hurt, right?";
             item.SetupItem(shortDesc, longDesc, "psog");
             Greedy.GreedyID = item.PickupObjectId;
             item.quality = PickupObject.ItemQuality.EXCLUDED;
@@ -310,6 +314,8 @@ namespace Planetside
         {
             if (m_hasBeenPickedUp)
                 return;
+            base.HandleEncounterable(player);
+
             SaveAPI.AdvancedGameStatsManager.Instance.RegisterStatChange(StatToIncreaseOnPickup, 1);
 
             m_hasBeenPickedUp = true;

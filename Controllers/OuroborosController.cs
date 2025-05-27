@@ -681,8 +681,11 @@ namespace Planetside
             EnemyGUIDs.Bullet_Kin_GUID,
             EnemyGUIDs.Ammoconda_Ball_GUID,
             EnemyGUIDs.Bombshee_GUID,
+            EnemyGUIDs.Grip_Master_GUID,
+            EnemyGUIDs.Tarnisher_GUID,
+            EnemyGUIDs.Bloodbulon_GUID,
 
-			Tower.guid,
+            Tower.guid,
             Unwilling.guid,
             Coallet.guid,
 			Observant.guid

@@ -30,7 +30,6 @@ namespace Planetside.Controllers.ContainmentBreach.BossChanges.Misc
                 if (Amount < 6) { return; }
                 if (UnityEngine.Random.value < 0.0025f)
                 {
-
                     Minimap.Instance.PreventAllTeleports = true;
                     Minimap.Instance.TemporarilyPreventMinimap = true;
                     NevernamedsDarknessHandler.EnableDarkness(0, 0);
@@ -90,7 +89,7 @@ namespace Planetside.Controllers.ContainmentBreach.BossChanges.Misc
                 PlayerController player = GameManager.Instance.AllPlayers[i];
                 if (player != null)
                 {
-                    if (self.transform?.parent?.gameObject?.GetComponent<MirrorController>() == null)
+                    if (self.transform?.parent?.gameObject?.GetComponent<MirrorController>() == null && self.transform?.parent?.gameObject?.GetComponent<KickableObject>() == null)
                     {
                         if (self.GetComponent<MoneyPots.MoneyPotBehavior>() == null && self.GetComponent<Marker>() == null && UnityEngine.Random.value < Amount / 5000)
                         {
@@ -104,7 +103,6 @@ namespace Planetside.Controllers.ContainmentBreach.BossChanges.Misc
                 }
             }
         }
-
         public static float Amount = 0;
     }
 }

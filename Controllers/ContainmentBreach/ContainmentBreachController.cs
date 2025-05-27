@@ -353,12 +353,18 @@ namespace Planetside
                 foreach (RoomHandler roomHandler in rooms)
                 {
                     List<BaseShopController> componentsInChildren = roomHandler.GetComponentsAbsoluteInRoom<BaseShopController>();
-                    bool flag3 = componentsInChildren != null && componentsInChildren.Count != 0;
-                    if (flag3)
+                    if (componentsInChildren != null && componentsInChildren.Count != 0)
                     {
                         foreach (BaseShopController shope in componentsInChildren)
                         {
-                            Minimap.Instance.DeregisterRoomIcon(roomHandler, shope.OptionalMinimapIcon);
+
+
+                            var obja = Minimap.Instance.roomToIconsMap[roomHandler].Where(x => x != null && Minimap.Instance.gameObject.name.Contains(x.name)).FirstOrDefault();
+                            if (obja != null)
+                            {
+                                Minimap.Instance.DeregisterRoomIcon(roomHandler, obja);
+
+                            }
                             List<ShopItemController> shopitem = PlanetsideReflectionHelper.ReflectGetField<List<ShopItemController>>(typeof(BaseShopController), "m_itemControllers", shope);
                             for (int i = 0; i < shopitem.Count; i++)
                             {
@@ -367,23 +373,25 @@ namespace Planetside
                                     Destroy(shopitem[i].gameObject);
                                 }
                             }
-
-                            if (ShopPlaced == false)
+                            if (shope.cat == true || shope.baseShopType== BaseShopController.AdditionalShopType.BLACKSMITH)
                             {
-                                ShopPlaced = !ShopPlaced;
-                                GameObject obj = new GameObject();
-                                StaticReferences.StoredRoomObjects.TryGetValue("masteryRewardTrader", out obj);
 
-                                bool b = GameManager.Instance.Dungeon.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.FORGEGEON;
-                                IntVector2 offset = b == true ? new IntVector2(1, -2) : new IntVector2(6, -2);
-
-
-
-                                GameObject shopObj = DungeonPlaceableUtility.InstantiateDungeonPlaceable(obj, shope.GetAbsoluteParentRoom(), new IntVector2((int)shope.gameObject.transform.position.x + (offset.x), ((int)shope.gameObject.transform.position.y)- offset.y) - shope.GetAbsoluteParentRoom().area.basePosition, false);
-                                CustomShopController shopCont = shopObj.GetComponent<CustomShopController>();
-                                if (shopCont != null)
+                                if (ShopPlaced == false)
                                 {
-                                    List<Vector2> itemPositions = new List<Vector2>()
+                                    ShopPlaced = !ShopPlaced;
+                                    GameObject obj = new GameObject();
+                                    StaticReferences.StoredRoomObjects.TryGetValue("masteryRewardTrader", out obj);
+
+                                    bool b = GameManager.Instance.Dungeon.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.FORGEGEON;
+                                    IntVector2 offset = b == true ? new IntVector2(1, -2) : new IntVector2(6, -2);
+
+
+
+                                    GameObject shopObj = DungeonPlaceableUtility.InstantiateDungeonPlaceable(obj, shope.GetAbsoluteParentRoom(), new IntVector2((int)shope.gameObject.transform.position.x + (offset.x), ((int)shope.gameObject.transform.position.y) - offset.y) - shope.GetAbsoluteParentRoom().area.basePosition, false);
+                                    CustomShopController shopCont = shopObj.GetComponent<CustomShopController>();
+                                    if (shopCont != null)
+                                    {
+                                        List<Vector2> itemPositions = new List<Vector2>()
                                     {
                                    shopObj.transform.PositionVector2() +  new Vector2(-1f, -0.25f),
                                    shopObj.transform.PositionVector2() +  new Vector2(0.5f, -1f),
@@ -391,72 +399,76 @@ namespace Planetside
                                    shopObj.transform.PositionVector2() +  new Vector2(4f, -1f),
                                    shopObj.transform.PositionVector2() +  new Vector2(5.5f, -0.25f)
                                     };
-                                    var posList = new List<Transform>();
-                                    for (int i = 0; i < itemPositions.Count; i++)
-                                    {
-                                        var ItemPoint = new GameObject("ItemPoint" + i);
-                                        ItemPoint.transform.position = itemPositions[i];
-                                        ItemPoint.SetActive(true);
-                                        posList.Add(ItemPoint.transform);
-                                    }
-                                    shopCont.spawnPositions = posList.ToArray();
-                                    shopCont.currencyType = CustomShopItemController.ShopCurrencyType.COINS;
-                                    shopCont.customCanBuy = MasterTraderCustomCanBuyOverride;
-                                    shopCont.customPrice = MasterTraderCustomPriceOverride;
-                                    shopCont.removeCurrency = MasterTraderRemoveCurrency;
-                                    //shopCont.
-                                    foreach (var pos in shopCont.spawnPositions)
-                                    {
-                                        pos.parent = shopObj.gameObject.transform;
-                                    }
-
-                                    GameManager.Instance.StartCoroutine(Delay(shopCont));
-
-                                    //StaticReferences.StoredRoomObjects.TryGetValue("masteryRewardTrader", out obj);
-
-                                    GameObject objAbscond = null;
-                                    Alexandria.DungeonAPI.StaticReferences.customObjects.TryGetValue("psog:absconditus", out objAbscond);
-                                    if (objAbscond != null)
-                                    {
-                                        offset = b == true ? new IntVector2(8, 3) : new IntVector2(1, -1);
-
-                                        var obj_ = UnityEngine.Object.Instantiate(objAbscond, (new IntVector2((int)shope.gameObject.transform.position.x + (offset.x), ((int)shope.gameObject.transform.position.y)- offset.y)).ToCenterVector3(1), Quaternion.identity);// DungeonPlaceableUtility.InstantiateDungeonPlaceable(objAbscond, shope.GetAbsoluteParentRoom(), new IntVector2((int)shope.gameObject.transform.position.x + (offset.x), ((int)shope.gameObject.transform.position.y) + offset.y) - shope.GetAbsoluteParentRoom().area.basePosition, false);
-                                        
-                                        
-                                        IPlayerInteractable[] interfacesInChildren = obj_.gameObject.GetComponentsInParent<IPlayerInteractable>();
-                                        for (int j = 0; j < interfacesInChildren.Length; j++)
+                                        var posList = new List<Transform>();
+                                        for (int i = 0; i < itemPositions.Count; i++)
                                         {
-                                            roomHandler.RegisterInteractable(interfacesInChildren[j]);
+                                            var ItemPoint = new GameObject("ItemPoint" + i);
+                                            ItemPoint.transform.position = itemPositions[i];
+                                            ItemPoint.SetActive(true);
+                                            posList.Add(ItemPoint.transform);
+                                        }
+                                        shopCont.spawnPositions = posList.ToArray();
+                                        shopCont.currencyType = CustomShopItemController.ShopCurrencyType.COINS;
+                                        shopCont.customCanBuy = MasterTraderCustomCanBuyOverride;
+                                        shopCont.customPrice = MasterTraderCustomPriceOverride;
+                                        shopCont.removeCurrency = MasterTraderRemoveCurrency;
+                                        //shopCont.
+                                        foreach (var pos in shopCont.spawnPositions)
+                                        {
+                                            pos.parent = shopObj.gameObject.transform;
                                         }
 
-                                    }
-                                    //var list = shopCont.m_itemControllers;
-                                    /*
-                                    foreach (var item in list)
-                                    {
-                                        ETGModConsole.Log(5);
+                                        GameManager.Instance.StartCoroutine(Delay(shopCont));
 
-                                        if (item is CustomShopItemController customShopItem)
+                                        //StaticReferences.StoredRoomObjects.TryGetValue("masteryRewardTrader", out obj);
+
+                                        GameObject objAbscond = null;
+                                        Alexandria.DungeonAPI.StaticReferences.customObjects.TryGetValue("psog:absconditus", out objAbscond);
+                                        if (objAbscond != null)
                                         {
-                                            customShopItem.customCanBuy = null;
-                                            customShopItem.customPrice = null;
-                                            customShopItem.removeCurrency = null;
-                                            ETGModConsole.Log(6);
+                                            offset = b == true ? new IntVector2(8, 3) : new IntVector2(1, -1);
 
-                                            customShopItem.customCanBuy = MasterTraderCustomCanBuyOverride;
-                                            customShopItem.customPrice = MasterTraderCustomPriceOverride;
-                                            customShopItem.removeCurrency = MasterTraderRemoveCurrency;
+                                            var obj_ = UnityEngine.Object.Instantiate(objAbscond, (new IntVector2((int)shope.gameObject.transform.position.x + (offset.x), ((int)shope.gameObject.transform.position.y) - offset.y)).ToCenterVector3(1), Quaternion.identity);// DungeonPlaceableUtility.InstantiateDungeonPlaceable(objAbscond, shope.GetAbsoluteParentRoom(), new IntVector2((int)shope.gameObject.transform.position.x + (offset.x), ((int)shope.gameObject.transform.position.y) + offset.y) - shope.GetAbsoluteParentRoom().area.basePosition, false);
+
+
+                                            IPlayerInteractable[] interfacesInChildren = obj_.gameObject.GetComponentsInParent<IPlayerInteractable>();
+                                            for (int j = 0; j < interfacesInChildren.Length; j++)
+                                            {
+                                                roomHandler.RegisterInteractable(interfacesInChildren[j]);
+                                            }
+
                                         }
-                                        ETGModConsole.Log(7);
+                                        //var list = shopCont.m_itemControllers;
+                                        /*
+                                        foreach (var item in list)
+                                        {
+                                            ETGModConsole.Log(5);
 
+                                            if (item is CustomShopItemController customShopItem)
+                                            {
+                                                customShopItem.customCanBuy = null;
+                                                customShopItem.customPrice = null;
+                                                customShopItem.removeCurrency = null;
+                                                ETGModConsole.Log(6);
+
+                                                customShopItem.customCanBuy = MasterTraderCustomCanBuyOverride;
+                                                customShopItem.customPrice = MasterTraderCustomPriceOverride;
+                                                customShopItem.removeCurrency = MasterTraderRemoveCurrency;
+                                            }
+                                            ETGModConsole.Log(7);
+
+                                        }
+                                        */
                                     }
-                                    */
+                                }
+                                if (shope.OptionalMinimapIcon)
+                                {
+                                    Minimap.Instance.DeregisterRoomIcon(roomHandler, shope.OptionalMinimapIcon);
                                 }
                             }
-                            if (shope.OptionalMinimapIcon)
-                            {
-                                Minimap.Instance.DeregisterRoomIcon(roomHandler, shope.OptionalMinimapIcon);
-                            }
+                            
+                            
+    
                             Destroy(shope.gameObject);                    
                         }
                     }
@@ -501,7 +513,7 @@ namespace Planetside
                             Destroy(shope.gameObject);
                         }
                     }
-
+                    /*
                     SellCellController[] sellcreep = GameManager.Instance.Dungeon.data.Entrance.hierarchyParent.parent.GetComponentsInChildren<SellCellController>(true);
                     bool sellcreepflag = sellcreep != null && sellcreep.Length != 0;
                     if (sellcreepflag)
@@ -511,16 +523,33 @@ namespace Planetside
                             Destroy(shope.gameObject);
                         }
                     }
+                    */
                     TalkDoerLite[] talkers = GameManager.Instance.Dungeon.data.Entrance.hierarchyParent.parent.GetComponentsInChildren<TalkDoerLite>(true);
-                    bool talkersflag = talkers != null && talkers.Length != 0;
-                    if (talkersflag)
+                    if (talkers != null && talkers.Length > 0)
                     {
                         foreach (TalkDoerLite shope in talkers)
                         {
                             //God fucking damnit i hate room icons so goddamn much
                             ShopController shopController = shope.GetComponent<ShopController>();
+                            SellCellController sellCellController = shope.GetComponentInChildren<SellCellController>();
+                            //Debug.Log(shope.name);
                             if (shopController != null)
                             {
+                                continue;
+                            }
+                            if (sellCellController != null)
+                            {
+                                continue;
+                            }
+                            sellCellController = shope.GetComponent<SellCellController>();
+                            if (sellCellController != null)
+                            {
+                                continue;
+                            }
+                            sellCellController = shope.GetComponentInParent<SellCellController>();
+                            if (sellCellController != null)
+                            {
+                                continue;
                             }
                             if (!shope.gameObject.name.ToLower().Contains("jailed"))
                             {

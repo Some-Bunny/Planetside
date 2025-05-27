@@ -13,10 +13,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PixelRect:
     serializedVersion: 2
-    x: 0
-    y: 43
-    width: 1920
-    height: 997
+    x: -76
+    y: 153
+    width: 1904
+    height: 981
   m_ShowMode: 4
   m_Title: 
   m_RootView: {fileID: 2}
@@ -41,8 +41,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1920
-    height: 997
+    width: 1904
+    height: 981
   m_MinSize: {x: 950, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &3
@@ -61,7 +61,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1920
+    width: 1904
     height: 30
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
@@ -81,8 +81,8 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 977
-    width: 1920
+    y: 961
+    width: 1904
     height: 20
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
@@ -105,12 +105,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 30
-    width: 1920
-    height: 947
+    width: 1904
+    height: 931
   m_MinSize: {x: 613, y: 492}
   m_MaxSize: {x: 18008, y: 14042}
   vertical: 0
-  controlID: 109
+  controlID: 9
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -127,8 +127,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 203
-    height: 947
+    width: 201
+    height: 931
   m_MinSize: {x: 102, y: 121}
   m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 12}
@@ -152,14 +152,14 @@ MonoBehaviour:
   - {fileID: 9}
   m_Position:
     serializedVersion: 2
-    x: 203
+    x: 201
     y: 0
-    width: 1119
-    height: 947
+    width: 1110
+    height: 931
   m_MinSize: {x: 234, y: 492}
   m_MaxSize: {x: 10004, y: 14042}
   vertical: 1
-  controlID: 110
+  controlID: 23
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -176,8 +176,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1119
-    height: 354
+    width: 1110
+    height: 348
   m_MinSize: {x: 204, y: 221}
   m_MaxSize: {x: 4004, y: 4021}
   m_ActualView: {fileID: 13}
@@ -202,9 +202,9 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 354
-    width: 1119
-    height: 593
+    y: 348
+    width: 1110
+    height: 583
   m_MinSize: {x: 234, y: 271}
   m_MaxSize: {x: 10004, y: 10021}
   m_ActualView: {fileID: 15}
@@ -227,10 +227,10 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 1322
+    x: 1311
     y: 0
-    width: 598
-    height: 947
+    width: 593
+    height: 931
   m_MinSize: {x: 277, y: 71}
   m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 17}
@@ -338,13 +338,13 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 92
-    width: 201
-    height: 926
+    y: 19
+    width: 199
+    height: 910
   m_PersistentViewDataDictionary: {fileID: 0}
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 1e450000
+    m_SelectedIDs: aa470000
     m_LastClickedID: 0
     m_ExpandedIDs: a2fbffff00000000
     m_RenameOverlay:
@@ -391,10 +391,10 @@ MonoBehaviour:
   m_DepthBufferBits: 32
   m_Pos:
     serializedVersion: 2
-    x: 205
-    y: 92
-    width: 1115
-    height: 333
+    x: 2
+    y: 19
+    width: 1106
+    height: 327
   m_PersistentViewDataDictionary: {fileID: 0}
   m_SceneLighting: 0
   lastFramingTime: 444.52587969999996
@@ -495,10 +495,10 @@ MonoBehaviour:
   m_DepthBufferBits: 0
   m_Pos:
     serializedVersion: 2
-    x: 205
-    y: 446
-    width: 1115
-    height: 572
+    x: 2
+    y: 367
+    width: 1106
+    height: 562
   m_PersistentViewDataDictionary: {fileID: 0}
   m_SearchFilter:
     m_NameFilter: 
@@ -512,20 +512,20 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Guns/PlanetsideGunCollection Data
+    - Assets/AssetBundles/windows
   m_ViewMode: 1
   m_StartGridSize: 96
   m_LastFolders:
-  - Assets/Guns/PlanetsideGunCollection Data
+  - Assets/AssetBundles/windows
   m_LastFoldersGridSize: 96
   m_LastProjectPath: D:\reposSecondary\failsafes\Planetside\Assetbundle Stuff\Unity
     Projects\PlanetsideSpritesBundle
   m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 31}
-    m_SelectedIDs: a4420000
-    m_LastClickedID: 17060
-    m_ExpandedIDs: 00000000a22c0000522d00004c2e00000a300000ca310000b8320000d8340000fe34000078380000c63b0000403c0000fc3c0000543d0000703d00007c41000082410000ba4200009c430000a2430000464500000446000010480000b24800001a490000a04900001a4a0000144b0000184b00005e4b00007c4b0000c84c0000704e00005a4f000022510000c0510000ce530000d0530000d2530000d4530000d6530000d8530000da530000dc530000de530000e0530000e2530000e4530000e6530000e8530000ea53000000ca9a3bffffff7f
+    scrollPos: {x: 0, y: 0}
+    m_SelectedIDs: aa470000
+    m_LastClickedID: 18346
+    m_ExpandedIDs: 00000000a22c0000542d00004e2e00000a300000ca310000bc320000e03400000635000080380000d23b00004c3c00000a3d0000623d00007e3d0000cc420000ae430000b4430000584500001646000024480000ca48000032490000b8490000324a00002e4b0000324b0000784b0000964b0000964c0000a64c0000924e0000804f000048510000e6510000f4530000f6530000f8530000fa530000fc530000fe53000000540000025400000454000006540000085400000a5400000c5400000e5400001054000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -553,7 +553,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000a22c0000522d00004c2e00000a300000ca310000b8320000d8340000fe34000078380000c63b0000403c0000fc3c0000543d0000703d00007c41000082410000ba4200009c430000a2430000464500000446000010480000b24800001a490000a04900001a4a0000144b0000184b00005e4b00007c4b00007c4c0000c84c0000704e00005a4f000022510000c0510000ce530000d0530000d2530000d4530000d6530000d8530000da530000dc530000de530000e0530000e2530000e4530000e6530000e8530000ea530000
+    m_ExpandedIDs: 00000000a22c0000542d00004e2e00000a300000ca310000bc320000e03400000635000080380000d23b00004c3c00000a3d0000623d00007e3d0000cc420000ae430000b4430000584500001646000024480000ca48000032490000b8490000324a00002e4b0000324b0000784b0000964b0000964c0000a64c0000924e0000804f000048510000e6510000f4530000f6530000f8530000fa530000fc530000fe53000000540000025400000454000006540000085400000a5400000c5400000e54000010540000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -580,7 +580,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000000000008cf9feff522900003ec0ffffac2c000062a1ffff1e3d00001a4d000054320000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -657,12 +657,12 @@ MonoBehaviour:
   m_DepthBufferBits: 0
   m_Pos:
     serializedVersion: 2
-    x: 1324
-    y: 92
-    width: 596
-    height: 926
+    x: 1313
+    y: 19
+    width: 591
+    height: 910
   m_PersistentViewDataDictionary: {fileID: 0}
-  m_ScrollPosition: {x: 0, y: 120}
+  m_ScrollPosition: {x: 0, y: 0}
   m_InspectorMode: 0
   m_PreviewResizer:
     m_CachedPref: 217

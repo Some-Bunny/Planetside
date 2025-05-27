@@ -356,8 +356,8 @@ namespace Planetside
             var data = StaticSpriteDefinitions.Pickup_Sheet_Data;
             ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("chaoticShift"), data, gameObject);
             //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
-            string shortDesc = "Literally just an all stats up.";
-            string longDesc = "yep.";
+            string shortDesc = "A weapon, folded.";
+            string longDesc = "Intertwines your weapon with a different weapon in the exact same position, place in time and user from a different timeline.";
             item.SetupItem(shortDesc, longDesc, "psog");
             ChaoticShift.ChaoticShiftID = item.PickupObjectId;
             item.quality = PickupObject.ItemQuality.EXCLUDED;
@@ -407,6 +407,8 @@ namespace Planetside
         {
             if (m_hasBeenPickedUp)
                 return;
+            base.HandleEncounterable(player);
+
             SaveAPI.AdvancedGameStatsManager.Instance.RegisterStatChange(StatToIncreaseOnPickup, 1);
             m_hasBeenPickedUp = true;
             AkSoundEngine.PostEvent("Play_OBJ_dice_bless_01", player.gameObject);

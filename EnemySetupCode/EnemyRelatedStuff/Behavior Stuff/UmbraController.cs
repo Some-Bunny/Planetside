@@ -104,9 +104,6 @@ public class UmbraController : BraveBehaviour
 
 	public static void InitEffect()
 	{
-        //lockin_umbral1-lockin_umbral2
-        //lockin_umbral_floor_001-lockin_umbral_floor_002
-
 
         UmbralEye = PrefabBuilder.BuildObject("UmbralEye");
         var sprite_eye = UmbralEye.AddComponent<tk2dSprite>();
@@ -358,7 +355,57 @@ public class UmbraController : BraveBehaviour
 		}
     }
 
+    public void UnBecomeUmbra()
+    {
+        if (isOomfing) { return; }
+        isOomfing = true;
+        this.StartCoroutine(DoWaitForKill());
+    }
+    private bool isOomfing = false;
+    public IEnumerator DoWaitForKill()
+    {
+        while (IsGooning == true)
+        {
+            yield return null;
+        }
+        if (base.aiActor)
+        {
+            base.aiActor.healthHaver.OnPreDeath -= OnDeath;
 
+            if (base.aiActor.bulletBank)
+            {
+                base.aiActor.bulletBank.OnProjectileCreated -= OnCreatedProjectile;
+            }
+
+            this.aiActor.AssignedCurrencyToDrop /= 3;
+            base.aiActor.behaviorSpeculator.CooldownScale /= 0.7f;
+            base.aiActor.MovementSpeed /= 1.15f;
+
+            if (improvedAfterImage)
+            {
+                Destroy(improvedAfterImage);
+            }
+
+            umbraEffect.gameObject.transform.SetParent(null, true);
+            umbraEffect.Kill();
+            if (umbraEffect.lockOnInst)
+            {
+                umbraEffect.lockOnInst.SetState(false);
+                Destroy(umbraEffect.lockOnInst, 0.5f);
+            }
+            UpdateBlackPhantomShaders(aiActor);
+
+            base.aiActor.UnbecomeBlackPhantom();
+            base.aiActor.BecomeBlackPhantom();
+
+            Destroy(this);
+        }
+    }
+
+    public Action<Vector2> OnDeath;
+    public Action<Projectile> OnCreatedProjectile;
+
+    private ImprovedAfterImage improvedAfterImage;
 
     public void Start()
 	{
@@ -371,46 +418,119 @@ public class UmbraController : BraveBehaviour
 		base.aiActor.behaviorSpeculator.CooldownScale *= 0.7f;
         this.aiActor.AssignedCurrencyToDrop *= 3;
 
-        base.aiActor.MovementSpeed *= 1.15f; 
-		ImprovedAfterImage yeah = base.aiActor.gameObject.GetOrAddComponent<ImprovedAfterImage>();
-		yeah.dashColor = Color.black;
-		yeah.spawnShadows = true;
-		yeah.shadowTimeDelay = 0.025f;
-		yeah.shadowLifetime = 1.5f;
+        base.aiActor.MovementSpeed *= 1.15f;
+        improvedAfterImage = base.aiActor.gameObject.AddComponent<ImprovedAfterImage>();
+        improvedAfterImage.dashColor = Color.black;
+        improvedAfterImage.spawnShadows = true;
+        improvedAfterImage.shadowTimeDelay = 0.025f;
+        improvedAfterImage.shadowLifetime = 1.5f;
+
         umbraEffect = base.aiActor.SmarterPlayEffectOnActor(UmbralEye, new Vector3(0, 1.5f, 3)).GetComponent<UmbraVFX>();
 		umbraEffect.Owner = base.aiActor;
 
         this.StartCoroutine(DoWait());
 
-		base.aiActor.healthHaver.OnPreDeath += (A) =>
-		{
-			umbraEffect.gameObject.transform.SetParent(null, true);
-			umbraEffect.Kill();
+
+        OnDeath = (A) =>
+        {
+            umbraEffect.gameObject.transform.SetParent(null, true);
+            umbraEffect.Kill();
             if (umbraEffect.lockOnInst)
-			{
-				umbraEffect.lockOnInst.SetState(false);
-				Destroy(umbraEffect.lockOnInst, 0.5f);
+            {
+                umbraEffect.lockOnInst.SetState(false);
+                Destroy(umbraEffect.lockOnInst, 0.5f);
             }
         };
+        OnCreatedProjectile = (A) =>
+        {
+            if (CooldownAttackBullet <= 0 && Ammo > 0)
+            {
+                if (umbraEffect.IsDying) { return; }
+                Ammo--;
+                CooldownAttackBullet = 1f;
+                bool player = true;
+                var start = umbraEffect.transform.position;
+                var end = umbraEffect.GetLookAt(ref player);
+                GameManager.Instance.StartCoroutine(DoAttackOfDoom(start, end));
+            }
+        };
+
+
+
+        base.aiActor.healthHaver.OnPreDeath += OnDeath;
         if (base.aiActor.bulletBank)
         {
-            base.aiActor.bulletBank.OnProjectileCreated += (A) =>
-            {
-                if (CooldownAttackBullet <= 0 && Ammo > 0)
-                {
-                    if (umbraEffect.IsDying) { return; }
-                    Ammo--;
-                    CooldownAttackBullet = 1f;
-                    bool player = true;
-                    var start = umbraEffect.transform.position;
-                    var end = umbraEffect.GetLookAt(ref player);
-                    GameManager.Instance.StartCoroutine(DoAttackOfDoom(start, end));
-                }
-            };
+            base.aiActor.bulletBank.OnProjectileCreated += OnCreatedProjectile;
         }
     }
 
-	public UmbraVFX umbraEffect;
+
+    private void UpdateBlackPhantomShaders(AIActor aIActor)
+    {
+        if (aIActor.healthHaver.bodySprites.Count != aIActor.m_cachedBodySpriteCount)
+        {
+            aIActor.m_cachedBodySpriteCount = aIActor.healthHaver.bodySprites.Count;
+            for (int i = 0; i < aIActor.healthHaver.bodySprites.Count; i++)
+            {
+                tk2dBaseSprite tk2DBaseSprite = aIActor.healthHaver.bodySprites[i];
+                tk2DBaseSprite.usesOverrideMaterial = true;
+                Material material = tk2DBaseSprite.renderer.material;
+                if (aIActor.m_cachedBodySpriteShader == null)
+                {
+                    aIActor.m_cachedBodySpriteShader = material.shader;
+                }
+
+                if (aIActor.OverrideBlackPhantomShader != null)
+                {
+                    material.shader = aIActor.OverrideBlackPhantomShader;
+                }
+                else
+                {
+                    material.shader = ShaderCache.Acquire("Brave/LitCutoutUberPhantom");
+                    material.SetFloat("_PhantomGradientScale", aIActor.BlackPhantomProperties.GradientScale);
+                    material.SetFloat("_PhantomContrastPower", aIActor.BlackPhantomProperties.ContrastPower);
+                    if (tk2DBaseSprite != aIActor.sprite)
+                    {
+                        material.SetFloat("_ApplyFade", 0f);
+                    }
+                }
+                tk2DBaseSprite.renderer.material = material;
+            }
+            if (aIActor.aiShooter && aIActor.aiShooter.CurrentGun)
+            {
+                tk2dBaseSprite sprite = aIActor.aiShooter.CurrentGun.GetSprite();
+                sprite.usesOverrideMaterial = true;
+                Material material2 = sprite.renderer.material;
+                if (aIActor.m_cachedGunSpriteShader == null)
+                {
+                    aIActor.m_cachedGunSpriteShader = material2.shader;
+                }
+                if (aIActor.OverrideBlackPhantomShader != null)
+                {
+                    material2.shader = aIActor.OverrideBlackPhantomShader;
+                }
+                else
+                {
+
+                    material2.shader = ShaderCache.Acquire("Brave/LitCutoutUberPhantom");
+                    material2.SetFloat("_PhantomGradientScale", aIActor.BlackPhantomProperties.GradientScale);
+                    material2.SetFloat("_PhantomContrastPower", aIActor.BlackPhantomProperties.ContrastPower);
+                    material2.SetFloat("_ApplyFade", 0.3f);
+                }
+                sprite.renderer.material = material2;
+            }
+
+            base.aiActor.sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitCutoutUberPhantom");
+            base.aiActor.sprite.renderer.material.SetFloat("_PhantomGradientScale", aIActor.BlackPhantomProperties.GradientScale);
+            base.aiActor.sprite.renderer.material.SetFloat("_PhantomContrastPower", aIActor.BlackPhantomProperties.ContrastPower);
+            base.aiActor.sprite.renderer.material.SetFloat("_ApplyFade", 0.3f);
+        }
+    }
+
+
+    public UmbraVFX umbraEffect;
+
+    private bool IsGooning = true;
 
     public IEnumerator DoWait()
 	{
@@ -419,19 +539,22 @@ public class UmbraController : BraveBehaviour
         //AkSoundEngine.PostEvent("Play_ENM_cannonarmor_charge_01", this.aiActor.gameObject);
         AkSoundEngine.PostEvent("Play_ENM_cannonball_intro_01", this.aiActor.gameObject);
 
-        this.aiActor.healthHaver.invulnerabilityPeriod = 0.75f;
+        this.aiActor.healthHaver.invulnerabilityPeriod = 1.5f;
         float cached = this.aiActor.MovementSpeed;
 		this.aiActor.MovementSpeed = 0;
         umbraEffect.StartUp();
 		float e = 0;
+
+        float rng = UnityEngine.Random.Range(0.85f, 1.15f);
+
 		while (e < 1)
 		{
-            e += Time.deltaTime;
+            e += Time.deltaTime * rng;
 
             if (base.aiActor && base.aiActor.specRigidbody)
             {
                 Vector2 unitDimensions = base.aiActor.specRigidbody.HitboxPixelCollider.UnitDimensions;
-                Vector2 a = unitDimensions / 2f;
+                Vector2 a = unitDimensions * 0.5f;
                 int num2 = Mathf.RoundToInt((float)12* 0.5f * Mathf.Min(30f, Mathf.Min(new float[]
                 {
                 unitDimensions.x * unitDimensions.y
@@ -461,17 +584,18 @@ public class UmbraController : BraveBehaviour
         e = 0;
 		while (e < 1)
 		{
-			e += Time.deltaTime;
+			e += Time.deltaTime * 2;
             this.aiActor.MovementSpeed = Mathf.Lerp(0, cached, e);
             yield return null;
 		}
+        IsGooning = false;
         yield break;
 	}
 
 
 	public void Update()
     {
-		if (!base.aiActor.IsBlackPhantom && base.aiActor != null)
+		if (!base.aiActor.IsBlackPhantom && base.aiActor != null && isOomfing == false)
         {
 			base.aiActor.sprite.renderer.material.shader = Shader.Find("Brave/PlayerShaderEevee");
 			base.aiActor.sprite.renderer.material.SetTexture("_EeveeTex", StaticTextures.NebulaTexture);
@@ -554,11 +678,17 @@ public class UmbraController : BraveBehaviour
         float e = 0;
         while (e < 1)
         {
+            if (this == null)
+            {
+                t.SetState(false);
+                Destroy(t.gameObject, 0.5f);
+                yield break; }
             e += Time.deltaTime;
             var newPosition = Vector3.Lerp(start, end, e) + (m.ToVector3ZUp() * MathToolbox.EaseInAndBack(e));
             GlobalSparksDoer.DoSingleParticle(newPosition, Vector3.zero, (MathToolbox.EaseInAndBack(e) + 0.25f) * 0.5f, 2f, Color.red * 2, GlobalSparksDoer.SparksType.FLOATY_CHAFF);
             yield return null;
         }
+
 
         if (base.aiActor)
         {

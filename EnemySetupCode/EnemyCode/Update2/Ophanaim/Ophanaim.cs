@@ -3096,7 +3096,15 @@ namespace Planetside
 
                 for (int n = 0; n < 16; n++)
                 {
-                    base.Fire(new Direction((22.5f * n) + (E), Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(5f, SpeedType.Absolute), new BlastAttack.RotatingBullet(base.Position, !b, (22.5f * n), 0.08f));
+                    base.Fire(new Direction((22.5f * n) + (E), Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(5f, SpeedType.Absolute), new BlastAttack.RotatingBullet(base.Position, !b, (22.5f * n), 0.05f));
+                }
+                for (int n = 0; n < 16; n++)
+                {
+                    base.Fire(new Direction((22.5f * n) + (E), Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(6.5f, SpeedType.Absolute), new BlastAttack.RotatingBullet(base.Position, b, (22.5f * n), 0.065f));
+                }
+                for (int n = 0; n < 16; n++)
+                {
+                    base.Fire(new Direction((22.5f * n) + (E), Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(8f, SpeedType.Absolute), new BlastAttack.RotatingBullet(base.Position, !b, (22.5f * n), 0.8f));
                 }
 
                 yield break;
@@ -3129,12 +3137,12 @@ namespace Planetside
                 float E = BraveUtility.RandomAngle();
 				bool b = BraveUtility.RandomBool();
 
-                for (int n = 0; n < 16; n++)
+                for (int n = 0; n < 24; n++)
 				{
-					base.Fire(new Direction((22.5f * n) + (E), Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(7f, SpeedType.Absolute), new BlastAttack.RotatingBullet(base.Position, !b, (22.5f * n), 0.08f));
-					base.Fire(new Direction((22.5f * n) + (E), Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(8f, SpeedType.Absolute), new BlastAttack.RotatingBullet(base.Position, b, (22.5f * n), 0.08f));
-                    base.Fire(new Direction((22.5f * n) + (E), Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(9f, SpeedType.Absolute), new BlastAttack.RotatingBullet(base.Position, !b, (22.5f * n), 0.08f));
-                    base.Fire(new Direction((22.5f * n) + (E), Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(10f, SpeedType.Absolute), new BlastAttack.RotatingBullet(base.Position, b, (22.5f * n), 0.08f));
+					base.Fire(new Direction((15f * n) + (E), Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(7f, SpeedType.Absolute), new BlastAttack.RotatingBullet(base.Position, !b, (15f * n), 0.05f));
+					base.Fire(new Direction((15f * n) + (E), Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(8f, SpeedType.Absolute), new BlastAttack.RotatingBullet(base.Position, b, (15f * n), 0.0625f));
+                    base.Fire(new Direction((15f * n) + (E), Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(9f, SpeedType.Absolute), new BlastAttack.RotatingBullet(base.Position, !b, (15f * n), 0.075f));
+                    base.Fire(new Direction((15f * n) + (E), Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(10f, SpeedType.Absolute), new BlastAttack.RotatingBullet(base.Position, b, (15f * n), 0.0875f));
 
                 }
                 yield break;
@@ -3456,9 +3464,9 @@ namespace Planetside
 
                 public override IEnumerator Top()
                 {
-                    for (int i = 0; i < 45; i++)
+                    for (int i = 0; i < 120; i++)
                     {
-                        base.Fire(new Direction(b == true ? 90 : -90, Brave.BulletScript.DirectionType.Relative, -1f), new Speed(0f, SpeedType.Absolute), new MithrixSlamOmega.BouncyFlame(45 - i));
+                        base.Fire(new Direction(b == true ? 90 : -90, Brave.BulletScript.DirectionType.Relative, -1f), new Speed(0f, SpeedType.Absolute), new MithrixSlamOmega.BouncyFlame(45));
                         yield return this.Wait(1f);
                     }
                     yield break;
@@ -3622,9 +3630,9 @@ namespace Planetside
 
 
                 yield return base.Wait(20);
-                var orbiter = GenerateOrbit(star.gameObject, 15);
-                var orbiter2 = GenerateOrbitMinor(star.gameObject, -15);
-                var orbiter3 = GenerateOrbitMinor(star.gameObject, -15);
+                var orbiter = GenerateOrbit(star.gameObject, 12);
+                var orbiter2 = GenerateOrbitMinor(star.gameObject, -12);
+                var orbiter3 = GenerateOrbitMinor(star.gameObject, -12);
 
                 //base.PostWwiseEvent("Play_Burn", null);
                 float m = 1;
@@ -3632,11 +3640,11 @@ namespace Planetside
                 star.OnBeamUpdate += (obj1, obj2) =>
                 {
                     float gjkgj = obj2 - 0.33f;
-                    float t = Mathf.Min(1, (gjkgj / 5));
+                    float t = Mathf.Min(1, (gjkgj * 0.2f));
                     Vector3 centerPoint = star.transform.position;
                     float a = (this.BulletManager.PlayerPosition() - new Vector2(centerPoint.x, centerPoint.y)).ToAngle();
                     float playerDist = (this.BulletManager.PlayerPosition() - star.transform.PositionVector2()).magnitude;
-                    float dist = Mathf.Min(1, (Mathf.Min(12, playerDist) / 40));
+                    float dist = (Mathf.Min(10.5f, playerDist) * Time.deltaTime);
                     dist *= t;
                     dist *= m;
                     star.transform.position = centerPoint + BraveMathCollege.DegreesToVector(a, 0.6f * dist).ToVector3ZisY();
@@ -3666,14 +3674,14 @@ namespace Planetside
                         orbiter3.BulletMinRadius = (float)Mathf.Lerp(0, 1, (float)t2);
                     }
 
-                    if (i % 60 == 0 && i < 1050)
+                    if (i % 45 == 0 && i < 1050)
                     {
                         base.PostWwiseEvent("Play_BOSS_lichB_charge_01", null);
                         float startingDirection = UnityEngine.Random.Range(-120f, 120f);
                         Vector2 targetPos = base.GetPredictedTargetPosition((float)(((double)UnityEngine.Random.value >= 0.5) ? 1 : 0), 12f);
-                        for (int j = 0; j < 4; j++)
+                        for (int j = 0; j < 5; j++)
                         {
-                            base.Fire(Offset.OverridePosition(star.transform.PositionVector2()), new Direction(startingDirection, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(5f, SpeedType.Absolute), new SnakeBullet(j * 4, targetPos));
+                            base.Fire(Offset.OverridePosition(star.transform.PositionVector2()), new Direction(startingDirection, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(5f, SpeedType.Absolute), new SnakeBullet(j * 5, targetPos));
                         }
                     }
                     yield return base.Wait(1);

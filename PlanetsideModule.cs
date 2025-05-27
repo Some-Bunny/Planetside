@@ -24,6 +24,8 @@ using BepInEx;
 using HarmonyLib;
 using Planetside.Static_Storage;
 using Planetside.NPC_Stuff;
+using AmmonomiconAPI;
+using Planetside.APIs;
 
 namespace Planetside
 {
@@ -36,7 +38,7 @@ namespace Planetside
     {
         public const string GUID = "somebunny.etg.planetsideofgunymede";
         public const string NAME = "Planetside Of Gunymede Pre-Release";
-        public const string VERSION = "1.3.181";
+        public const string VERSION = "1.3.183";
         //9006FF
         public static readonly string TEXT_COLOR = "#00d0ff";
         //00d0ff
@@ -52,7 +54,7 @@ namespace Planetside
 
         public static Shader InverseGlowShader;
 
-        public static bool DebugMode = false;
+        public static bool DebugMode = true;
         public static bool PreRelease = false;
 
         public static bool NewContent = true;
@@ -61,6 +63,7 @@ namespace Planetside
 
         public void Start()
         {
+            new Harmony(GUID).PatchAll();
             ETGModMainBehaviour.WaitForGameManagerStart(GameManagerStart);
         }
 
@@ -137,6 +140,13 @@ namespace Planetside
             SoundManager.RegisterStopEvent("Stop_WARWITHOUTREASON", StopEventType.Music);
             ItemBuilder.Init();
             ExpandDungeonMusicAPI.InitHooks();
+            //AmmonomiconAPIHooks.Init();
+            //AmmonomiconPageInitialization.Init();
+
+            AmmonomiconModification.InitializeAmmonomiconStuff();
+
+          
+
             #endregion
 
             //Shrine Initialisation
@@ -667,7 +677,17 @@ namespace Planetside
             string color1 = "00d0ff";
             OtherTools.PrintNoID("Unlock List:\n" + a + b + c + d + e + f + g + h + i + j + k + l + m + n + o + p + q + r1 + s, color1);
             OtherTools.Init();
-            new Hook(typeof(ConversationBarController).GetMethod("ShowBar", BindingFlags.Instance | BindingFlags.Public), typeof(PlanetsideModule).GetMethod("HAHA"));
+            //new Hook(typeof(ConversationBarController).GetMethod("ShowBar", BindingFlags.Instance | BindingFlags.Public), typeof(PlanetsideModule).GetMethod("HAHA"));
+
+
+//            GameManager.Instance.StartCoroutine(FrameDelay());
+        }
+
+        public IEnumerator FrameDelay()
+        {
+            yield return null;
+
+            yield break;
         }
 
         public static void HAHA(Action<ConversationBarController, PlayerController, string[]> orig, ConversationBarController self, PlayerController p, string[] r)
@@ -732,7 +752,6 @@ namespace Planetside
 
         public void Awake() 
         {
-            new Harmony(GUID).PatchAll();
             SaveAPIManager.Setup("psog");
         }
         /*

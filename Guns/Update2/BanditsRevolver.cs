@@ -72,7 +72,7 @@ namespace Planetside
 			//gun.gameObject.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
 
 			Projectile replacementProjectile = projectile1.projectile;
-			replacementProjectile.baseData.damage = 20;
+			replacementProjectile.baseData.damage = 25;
 			replacementProjectile.gameObject.AddComponent<BanditsRevolverFinaleProjectile>();
 			replacementProjectile.baseData.speed *= 1.75f;
             replacementProjectile.baseData.force *= 2;
@@ -263,7 +263,7 @@ namespace Planetside
                         {
                             if (aiactor != null)
                             {
-                                float scale = 20;
+                                float scale = 25;
                                 if (player != null)
                                 {
                                     scale = scale * player.stats.GetStatValue(PlayerStats.StatType.Damage);

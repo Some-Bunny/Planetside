@@ -52,7 +52,7 @@ namespace Planetside
 			gun.reloadTime = 2.8f;
 			gun.DefaultModule.cooldownTime = .25f;
 			gun.DefaultModule.numberOfShotsInClip = 60;
-			gun.SetBaseMaxAmmo(600);
+			gun.SetBaseMaxAmmo(900);
 			gun.quality = PickupObject.ItemQuality.C;
 			gun.DefaultModule.angleVariance = 8f;
 			gun.DefaultModule.burstShotCount = 4;
@@ -69,7 +69,7 @@ namespace Planetside
 			FakePrefab.MarkAsFakePrefab(projectile.gameObject);
 			UnityEngine.Object.DontDestroyOnLoad(projectile);
 			gun.DefaultModule.projectiles[0] = projectile;
-			projectile.baseData.damage = 4.5f;
+			projectile.baseData.damage = 3.5f;
 			projectile.baseData.speed *= 0.7f;
 
             projectile.AdditionalScaleMultiplier *= 1f;

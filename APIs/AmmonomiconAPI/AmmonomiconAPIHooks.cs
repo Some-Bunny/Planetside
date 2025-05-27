@@ -80,6 +80,8 @@ namespace AmmonomiconAPI
 
         public static void SetRightDataPageTextsHook(Action<AmmonomiconPageRenderer, tk2dBaseSprite, EncounterDatabaseEntry> orig, AmmonomiconPageRenderer self, tk2dBaseSprite sourceSprite, EncounterDatabaseEntry linkedTrackable)
         {
+            Debug.Log("SetRightDataPageTextsHook_!");
+
             JournalEntry journalData = linkedTrackable.journalData;
             AmmonomiconPageRenderer ammonomiconPageRenderer = (!(AmmonomiconController.Instance.ImpendingRightPageRenderer != null)) ? AmmonomiconController.Instance.CurrentRightPageRenderer : AmmonomiconController.Instance.ImpendingRightPageRenderer;
             dfScrollPanel component = ammonomiconPageRenderer.guiManager.transform.Find("Scroll Panel").GetComponent<dfScrollPanel>();
@@ -199,6 +201,8 @@ namespace AmmonomiconAPI
 
         public static void SetEncounterStateHook(AmmonomiconPokedexEntry self, AmmonomiconPokedexEntry.EncounterState st)
         {
+            Debug.Log("SetEncounterStateHook_!");
+
             FieldInfo _childSprite = typeof(AmmonomiconPokedexEntry).GetField("m_childSprite", BindingFlags.NonPublic | BindingFlags.Instance);
 
             if (self.IsEquipmentPage)
@@ -224,6 +228,7 @@ namespace AmmonomiconAPI
 
         public static void UpdateEncounterStateHook(AmmonomiconPokedexEntry self)
         {
+
             //Tools.Log("forcefully set encounter state", "#eb1313");
             self.SetEncounterState(AmmonomiconPokedexEntry.EncounterState.ENCOUNTERED);
         }
@@ -232,6 +237,7 @@ namespace AmmonomiconAPI
 
         private static AmmonomiconPageRenderer LoadPageUIAtPathHook(Func<AmmonomiconController, string, AmmonomiconPageRenderer.PageType, bool, bool, AmmonomiconPageRenderer> orig, AmmonomiconController self, string path, AmmonomiconPageRenderer.PageType pageType, bool isPreCache = false, bool isVictory = false)
         {
+            Debug.Log("LoadPageUIAtPathHook_!");
 
             foreach (var page in AmmonomiconPageInitialization.customPages)
             {
@@ -259,7 +265,7 @@ namespace AmmonomiconAPI
                 else
                 {
                     //Tools.Log("1", "#eb1313");
-                    GameObject gameObject = (GameObject)UnityEngine.Object.Instantiate(AmmonomiconPageInitialization.customPages[path]); //(GameObject)UnityEngine.Object.Instantiate(BraveResources.Load(path, ".prefab"));
+                    GameObject gameObject = (GameObject)UnityEngine.Object.Instantiate(AmmonomiconPageInitialization.customPages[path].gameObject); //(GameObject)UnityEngine.Object.Instantiate(BraveResources.Load(path, ".prefab"));
                     ammonomiconPageRenderer = gameObject.GetComponentInChildren<AmmonomiconPageRenderer>();
                     dfGUIManager component2 = (_AmmonomiconBase.GetValue(self) as GameObject).GetComponent<dfGUIManager>();
                     GameObject gameObject2 = UnityEngine.Object.Instantiate<GameObject>((_LowerRenderTargetPrefab.GetValue(self) as MeshRenderer).gameObject);
@@ -308,6 +314,8 @@ namespace AmmonomiconAPI
         #region a
         public static void UpdateOnBecameActiveHook(Action<AmmonomiconPageRenderer> orig, AmmonomiconPageRenderer self)
         {
+            Debug.Log("UpdateOnBecameActiveHook_!");
+
             self.ForceUpdateLanguageFonts();
             if (AmmonomiconController.Instance.ImpendingLeftPageRenderer == null || AmmonomiconController.Instance.ImpendingLeftPageRenderer.LastFocusTarget == null)
             {
@@ -334,6 +342,8 @@ namespace AmmonomiconAPI
 
         private static void CheckLanguageFontsHook(Action<AmmonomiconPageRenderer, dfLabel> orig, AmmonomiconPageRenderer self, dfLabel mainText)
         {
+            Debug.Log("CheckLanguageFontsHook_!");
+
             FieldInfo _englishFont = typeof(AmmonomiconPageRenderer).GetField("EnglishFont", BindingFlags.NonPublic | BindingFlags.Instance);
             FieldInfo _otherLanguageFont = typeof(AmmonomiconPageRenderer).GetField("OtherLanguageFont", BindingFlags.NonPublic | BindingFlags.Instance);
             FieldInfo _cachedLanguage = typeof(AmmonomiconPageRenderer).GetField("m_cachedLanguage", BindingFlags.NonPublic | BindingFlags.Instance);
@@ -387,6 +397,7 @@ namespace AmmonomiconAPI
 
         public static void AmmonomiconInitializeHook(Action<AmmonomiconPageRenderer, MeshRenderer> orig, AmmonomiconPageRenderer self, MeshRenderer ts)
         {
+            Debug.Log("AmmonomiconInitializeHook_!");
 
             FieldInfo _camera = typeof(AmmonomiconPageRenderer).GetField("m_camera", BindingFlags.NonPublic | BindingFlags.Instance);
 
@@ -427,6 +438,7 @@ namespace AmmonomiconAPI
         private static IEnumerator DelayedBuildPageHook(Func<AmmonomiconPageRenderer, IEnumerator> orig, AmmonomiconPageRenderer self)
         {
 
+            Debug.Log("DelayedBuildPageHook_!");
 
             IEnumerator origEnum = orig(self);
             while (origEnum.MoveNext())
@@ -434,7 +446,16 @@ namespace AmmonomiconAPI
                 switch (self.pageType)
                 {
                     case (AmmonomiconPageRenderer.PageType)CustomPageType.MODS_LEFT:
-                        AmmonomiconPageInitialization.InitializeItemsPageLeft(self);
+                        if (AmmonomiconPageInitialization.customTags.ContainsKey(self))
+                        {
+                            AmmonomiconPageInitialization.customTags[self].InitializeItemsPageLeft(self);
+                        }
+                        else
+                        {
+                            Debug.Log("oh no");
+                            new AmmonomiconPageInitialization.AmmonomiconPageTag().InitializeItemsPageLeft(self);
+                        }
+                        //AmmonomiconPageInitialization.InitializeItemsPageLeft(self);
                         //self.InitializeItemsPageLeft();
                         //InitializeModsPageLeft(self);
                         break;
@@ -442,7 +463,12 @@ namespace AmmonomiconAPI
                     case (AmmonomiconPageRenderer.PageType)CustomPageType.MODS_RIGHT:
                         typeof(AmmonomiconPageRenderer).GetMethod("SetPageDataUnknown", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(self, new object[] { self });
                         break;
+                    default:
+ 
+                        break;
                 }
+                object obj = origEnum.Current;
+                yield return obj;
             }
 
 
@@ -451,6 +477,8 @@ namespace AmmonomiconAPI
 
         public static void ToggleHeaderImageHook(Action<AmmonomiconPageRenderer> orig, AmmonomiconPageRenderer self)
         {
+            Debug.Log("ToggleHeaderImageHook_!");
+
             if (self.pageType == AmmonomiconPageRenderer.PageType.EQUIPMENT_LEFT || self.pageType == AmmonomiconPageRenderer.PageType.GUNS_LEFT || self.pageType == AmmonomiconPageRenderer.PageType.ITEMS_LEFT || self.pageType == AmmonomiconPageRenderer.PageType.ENEMIES_LEFT || self.pageType == AmmonomiconPageRenderer.PageType.BOSSES_LEFT || self.pageType == (AmmonomiconPageRenderer.PageType)CustomPageType.MODS_LEFT)
             {
                 if (GameManager.Options.CurrentLanguage != StringTableManager.GungeonSupportedLanguages.ENGLISH && self.HeaderBGSprite != null)
@@ -467,6 +495,7 @@ namespace AmmonomiconAPI
 
         public static void InitializeModsPageLeft(AmmonomiconPageRenderer stupidFuckingDumbCunt)
         {
+            Debug.Log("InitializeModsPageLeft_!");
 
             /*
             Transform transform = stupidFuckingDumbCunt.guiManager.transform.Find("Scroll Panel").Find("Scroll Panel");
@@ -495,6 +524,7 @@ namespace AmmonomiconAPI
         {
             try
             {
+                Debug.Log("OpenHook_!");
                 //Ammonomicon.BuildBookmark("Mods", "BotsMod/sprites/wip", "BotsMod/sprites/wip");
                 List<AmmonomiconBookmarkController> ammonomiconBookmarks = self.bookmarks.ToList();
 
@@ -508,17 +538,33 @@ namespace AmmonomiconAPI
                     }
                 }
                 bool dosetup = true;
+                bool dosetup1 = true;
+
                 foreach (var mark in self.bookmarks)
                 {
                     if (mark.name.Contains("Spells"))
                     {
 
-                        dosetup = false;
+                        //dosetup = false;
                         break;
                     }
 
                 }
-                if (dosetup)
+                //dosetup = false;
+                
+                if(dosetup == true)
+                {
+                    foreach (var entry in AmmonomiconPageInitialization.customBookmarks)
+                    {
+                        var dumbObj = UnityEngine.Object.Instantiate(entry);
+                        AmmonomiconBookmarkController tabController2 = dumbObj.GetComponent<AmmonomiconBookmarkController>();
+                        dumbObj.transform.parent = self.bookmarks.Last().gameObject.transform.parent;
+                        dumbObj.transform.position = self.bookmarks.Last().gameObject.transform.position;
+                        dumbObj.transform.localPosition = new Vector3(0, -1.2f, 0);
+                    }
+                }
+
+                if (dosetup1 == false)
                 {
                     var dumbObj = FakePrefab.Clone(self.bookmarks[ammonomiconBookmarks.Count - 1].gameObject);
 
@@ -532,8 +578,8 @@ namespace AmmonomiconAPI
 
                     tabController2.gameObject.name = "Spells";
                     //1967693681992645534
-                    tabController2.DeselectSelectedSpriteName = "bookmark_beyond_select_hover_001";
-                    tabController2.SelectSpriteName = "bookmark_beyond_hover_001";
+                    //tabController2.DeselectSelectedSpriteName = "bookmark_beyond_select_hover_001";
+                    //tabController2.SelectSpriteName = "bookmark_beyond_hover_001";
 
                     FieldInfo _sprites = typeof(dfAnimationClip).GetField("sprites", BindingFlags.NonPublic | BindingFlags.Instance);
 
@@ -598,6 +644,7 @@ namespace AmmonomiconAPI
                         //Tools.Log(bookmark.gameObject.name);
                     }
                 }
+                
                 orig(self);
                 //Tools.Log("8");
 

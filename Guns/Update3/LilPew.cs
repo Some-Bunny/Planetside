@@ -43,7 +43,7 @@ namespace Planetside
 				Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(gun.Volley.projectiles[0].projectiles[0]);
 				projectile.gameObject.SetActive(false);
 				gun.Volley.projectiles[i].projectiles[0] = projectile;
-				projectile.baseData.damage = 6f;
+				projectile.baseData.damage = 7f;
 				projectile.baseData.speed = 12f;
 				projectile.gameObject.AddComponent<AirBlasterProjectile>();
 				projectile.SetProjectileSpriteRight("lilpew_projectile", 8, 3, false, tk2dBaseSprite.Anchor.MiddleCenter, 8, 3);
@@ -133,7 +133,9 @@ namespace Planetside
 					if (player.PlayerHasActiveSynergy("Puff"))
 					{
 						float dmg = (player.stats.GetStatValue(PlayerStats.StatType.Damage));
-						Exploder.DoRadialDamage(gun.ClipShotsRemaining*dmg * 2.5f, base.gameObject.transform.PositionVector2(), 4f, false, true, true, null);
+                        float coolness = (player.stats.GetStatValue(PlayerStats.StatType.Coolness));
+
+                        Exploder.DoRadialDamage((gun.ClipShotsRemaining*dmg + coolness) * 2.5f, base.gameObject.transform.PositionVector2(), 5.5f, false, true, true, null);
 					}
 					AkSoundEngine.PostEvent("Play_CHR_weapon_charged_01", gameObject);
 				}

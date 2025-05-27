@@ -340,6 +340,7 @@ namespace Planetside
     }
     class GunslingerController : MonoBehaviour
     {
+        public int Stack = 0;
         public GunslingerController()
         {
             this.DamageMult = 2.5f;
@@ -347,6 +348,7 @@ namespace Planetside
         }
         public void Start()
         {
+            Stack = 1;
             this.hasBeenPickedup = true; 
             if (player != null)
             {
@@ -932,6 +934,7 @@ namespace Planetside
 
         public void IncrementStack()
         {
+            Stack++;
             DamageMult += 1.2f;
         }
         public float DamageMult;
@@ -950,8 +953,8 @@ namespace Planetside
             var data = StaticSpriteDefinitions.Pickup_Sheet_Data;
             ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("somethingtoDoWithThrownGuns"), data, gameObject);
             //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
-            string shortDesc = "Literally just an all stats up.";
-            string longDesc = "yep.";
+            string shortDesc = "Advanced Combat";
+            string longDesc = "Despite Gun-Throwing as a combat technique being fully abandoned out of redundancy, some have harnessed its untapped potential, conquering the Gungeons depths without ever firing a single shot with their own hands.";
             item.SetupItem(shortDesc, longDesc, "psog");
             Gunslinger.GunslingerID = item.PickupObjectId;
             item.quality = PickupObject.ItemQuality.EXCLUDED;
@@ -1045,6 +1048,8 @@ namespace Planetside
         {
             if (m_hasBeenPickedUp)
                 return;
+            base.HandleEncounterable(player);
+
             SaveAPI.AdvancedGameStatsManager.Instance.RegisterStatChange(StatToIncreaseOnPickup, 1);
 
             m_hasBeenPickedUp = true;

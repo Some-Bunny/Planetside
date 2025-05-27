@@ -236,6 +236,7 @@ namespace Planetside
             tk2dSprite.SetSprite(sprite.sprite.Collection, sprite.sprite.spriteId);
 
             CreatedGuonBulletsController yes = gameobject2.AddComponent<CreatedGuonBulletsController>();
+            yes.sourcePlayer = User;
             yes.maxDuration = 15f;
             orb.orbitDegreesPerSecond = Mathf.Max(60, Speed * 5);
 

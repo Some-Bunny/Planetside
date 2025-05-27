@@ -19,8 +19,8 @@ namespace Planetside
             var data = StaticSpriteDefinitions.Pickup_Sheet_Data;
             ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("lazyAllstatsUp"), data, gameObject);
             //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
-            string shortDesc = "Literally just an all stats up.";
-            string longDesc = "yep.";
+            string shortDesc = "Simplicity At Its Finest.";
+            string longDesc = "Sometimes all one needs is an additional small push to get going.";
             item.SetupItem(shortDesc, longDesc, "psog");
             AllStatsUp.AllStatsUpID = item.PickupObjectId;
             item.quality = PickupObject.ItemQuality.EXCLUDED;
@@ -55,6 +55,8 @@ namespace Planetside
         {
             if (m_hasBeenPickedUp)
                 return;
+            base.HandleEncounterable(player);
+
             SaveAPI.AdvancedGameStatsManager.Instance.RegisterStatChange(StatToIncreaseOnPickup, 1);
             m_hasBeenPickedUp = true;
             PerkParticleSystemController cont = base.GetComponent<PerkParticleSystemController>();
@@ -68,7 +70,8 @@ namespace Planetside
             OtherTools.ApplyStat(player, PlayerStats.StatType.DamageToBosses, 1.025f, StatModifier.ModifyMethod.MULTIPLICATIVE);
             OtherTools.ApplyStat(player, PlayerStats.StatType.RateOfFire, 1.05f, StatModifier.ModifyMethod.MULTIPLICATIVE);
             OtherTools.ApplyStat(player, PlayerStats.StatType.KnockbackMultiplier, 1.1f, StatModifier.ModifyMethod.MULTIPLICATIVE);
-
+            var stack = player.GetOrAddComponent<AllStatsTrackable>();
+            stack.Stacks++;
             Exploder.DoDistortionWave(player.sprite.WorldTopCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
             player.BloopItemAboveHead(base.sprite, "");
 
@@ -78,6 +81,7 @@ namespace Planetside
             UnityEngine.Object.Destroy(base.gameObject);
         }
 
+        public class AllStatsTrackable : MonoBehaviour { public int Stacks = 0; }
 
         public void Start()
         {

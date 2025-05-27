@@ -37,24 +37,18 @@ namespace Planetside
 		public void Awake()
 		{
 			this.actor = base.GetComponent<PlayerOrbital>();
-			this.player = base.GetComponent<PlayerController>();
 
 		}
 
 		public void Start()
 		{
-			PlayerController player = GameManager.Instance.PrimaryPlayer;
 			if (this.actor == null)
             {
 				this.actor = base.GetComponent<PlayerOrbital>();
 			}
-			if (this.player == null)
-			{
-				this.player = base.GetComponent<PlayerController>();
-			}
-			if (AddSpeed==true)
+			if (AddSpeed == true)
             {
-				this.StartEffect(player);
+				this.StartEffect(sourcePlayer);
 			}
 			LootEngine.DoDefaultItemPoof(actor.sprite.WorldCenter, false, true);
 			actor.StartCoroutine(this.HandleTimedDestroy());
@@ -83,100 +77,78 @@ namespace Planetside
 			{
 				this.actor = base.GetComponent<PlayerOrbital>();
 			}
-			if (this.player == null)
-			{
-				this.player = base.GetComponent<PlayerController>();
-			}
 			if(ClearsGoop == true)
             {
 				DeadlyDeadlyGoopManager.DelayedClearGoopsInRadius(this.actor.sprite.WorldCenter, 1.5f);
 			}
-
 		}
 
 		public void NotifyDropped()
 		{
 			this.HandleRoomCleared();
 		}
-		public float random;
 
 		private IEnumerator HandleTimedDestroy()
 		{
-			PlayerController player = GameManager.Instance.PrimaryPlayer;
 			yield return new WaitForSeconds(this.maxDuration);
 			AkSoundEngine.PostEvent("Play_OBJ_cursepot_shatter_01", actor.gameObject);
 			LootEngine.DoDefaultItemPoof(actor.sprite.WorldCenter, false, true);
 			UnityEngine.Object.Destroy(base.gameObject);
 			if (SpawnsCharmGoop == true)
             {
-				DeadlyDeadlyGoopManager.GetGoopManagerForGoopType(EasyGoopDefinitions.CharmGoopDef).TimedAddGoopCircle(this.actor.sprite.WorldCenter, 1.5f, 1f, false);
+				DeadlyDeadlyGoopManager.GetGoopManagerForGoopType(EasyGoopDefinitions.CharmGoopDef).TimedAddGoopCircle(this.actor.sprite.WorldCenter, 3.5f, 1f, false);
 			}
-			if (ChanceToBlank == true)
+			if (ChanceToBlank == true && UnityEngine.Random.value <= 0.1f)
             {
-				this.random = UnityEngine.Random.Range(0.0f, 1.0f);
-				if (random <= 0.05f)
-				{
-					this.DoMicroBlank(this.actor.sprite.WorldCenter, 0f);
-				}
-			}
-			if (AddSpeed == true)
+                this.DoMicroBlank(this.actor.sprite.WorldCenter, 0f);
+            }
+            if (AddSpeed == true)
 			{
-				this.EndEffect(player);
+				this.EndEffect(sourcePlayer);
 			}
 
 			if (ShootsOnDestruction == true)
 			{
-				bool flag3 = player.CurrentRoom.HasActiveEnemies(RoomHandler.ActiveEnemyType.All);
-				if (flag3)
+				if (sourcePlayer.CurrentRoom.HasActiveEnemies(RoomHandler.ActiveEnemyType.All))
 				{
-					bool flag4 = this.actor && this.actor != null;
-					if (flag4)
+					if (this.actor != null)
 					{
 						float num2 = 10f;
-						List<AIActor> activeEnemies = player.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
-						bool flag5 = activeEnemies == null | activeEnemies.Count <= 0;
-						bool flag6 = !flag5;
-						bool flag7 = flag6;
-						if (flag7)
+						List<AIActor> activeEnemies = sourcePlayer.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
+						if (activeEnemies != null || activeEnemies.Count > 0)
 						{
-							AIActor nearestEnemy = this.GetNearestEnemy(activeEnemies, this.actor.sprite.WorldCenter, out num2, null);
-							bool flag8 = nearestEnemy && nearestEnemy != null;
-							if (flag8)
+							AIActor nearestEnemy = this.GetNearestEnemy(activeEnemies, this.actor.sprite.WorldCenter, out num2);
+							if (nearestEnemy != null)
 							{
-								{
-									float dmg = (player.stats.GetStatValue(PlayerStats.StatType.Damage));
+                                float dmg = (sourcePlayer.stats.GetStatValue(PlayerStats.StatType.Damage));
+                                Vector2 worldCenter3 = this.actor.sprite.WorldCenter;
+                                Vector2 unitCenter3 = nearestEnemy.specRigidbody.HitboxPixelCollider.UnitCenter;
+                                float z3 = BraveMathCollege.Atan2Degrees((unitCenter3 - worldCenter3).normalized);
+                                Projectile projectile3 = ((Gun)ETGMod.Databases.Items[43]).DefaultModule.projectiles[0];
+                                GameObject gameObject3 = SpawnManager.SpawnProjectile(projectile3.gameObject, worldCenter3, Quaternion.Euler(0f, 0f, z3), true);
+                                Projectile component3 = gameObject3.GetComponent<Projectile>();
+                                if (component3 != null)
+                                {
+                                    component3.baseData.damage = 7f * dmg;
+                                    component3.Owner = sourcePlayer;
+                                    component3.baseData.range = 1000f;
+                                    component3.pierceMinorBreakables = true;
+                                    component3.collidesWithPlayer = false;
+                                    component3.baseData.speed *= 0.5f;
 
-									Vector2 worldCenter3 = this.actor.sprite.WorldCenter;
-									Vector2 unitCenter3 = nearestEnemy.specRigidbody.HitboxPixelCollider.UnitCenter;
-									float z3 = BraveMathCollege.Atan2Degrees((unitCenter3 - worldCenter3).normalized);
-									Projectile projectile3 = ((Gun)ETGMod.Databases.Items[43]).DefaultModule.projectiles[0];
-									GameObject gameObject3 = SpawnManager.SpawnProjectile(projectile3.gameObject, worldCenter3, Quaternion.Euler(0f, 0f, z3), true);
-									Projectile component3 = gameObject3.GetComponent<Projectile>();
-									bool flag15 = component3 != null;
-									bool flag16 = flag15;
-									if (flag16)
-									{
-										component3.baseData.damage = 4f * dmg;
-										component3.Owner = player;
-										component3.baseData.range = 1000f;
-										component3.pierceMinorBreakables = true;
-										component3.collidesWithPlayer = false;
-										component3.baseData.speed *= 0.5f;
-										
-										Material sharedMaterial = component3.sprite.renderer.sharedMaterial;
-										component3.sprite.usesOverrideMaterial = true;
-										Material material = new Material(ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive"));
-										material.SetTexture("_MainTex", sharedMaterial.GetTexture("_MainTex"));
-										material.SetColor("_OverrideColor", new Color(1f, 1f, 1f, 1f));
-										this.LerpMaterialGlow(material, 0f, 22f, 0.4f);
-										material.SetFloat("_EmissiveColorPower", 8f);
-										material.SetColor("_EmissiveColor", Color.red);
-										SpriteOutlineManager.AddOutlineToSprite(component3.sprite, Color.red);
-										component3.sprite.renderer.material = material;
-										
-									}
-								}
-							}
+                                    Material sharedMaterial = component3.sprite.renderer.sharedMaterial;
+                                    component3.sprite.usesOverrideMaterial = true;
+                                    Material material = new Material(ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive"));
+                                    material.SetTexture("_MainTex", sharedMaterial.GetTexture("_MainTex"));
+                                    material.SetColor("_OverrideColor", new Color(1f, 1f, 1f, 1f));
+                                    this.LerpMaterialGlow(material, 0f, 22f, 0.4f);
+                                    material.SetFloat("_EmissiveColorPower", 8f);
+                                    material.SetColor("_EmissiveColor", Color.red);
+                                    SpriteOutlineManager.AddOutlineToSprite(component3.sprite, Color.red);
+                                    component3.sprite.renderer.material = material;
+
+                                }
+                            }
 						}
 					}
 				}
@@ -190,7 +162,6 @@ namespace Planetside
 		}
 		private void HandleRoomCleared()
 		{
-			PlayerController player = GameManager.Instance.PrimaryPlayer;
 			if (this.actor)
 			{
 				AkSoundEngine.PostEvent("Play_OBJ_cursepot_shatter_01", actor.gameObject);
@@ -198,34 +169,25 @@ namespace Planetside
 				UnityEngine.Object.Destroy(base.gameObject);
 				if (SpawnsCharmGoop == true)
 				{
-					DeadlyDeadlyGoopManager.GetGoopManagerForGoopType(EasyGoopDefinitions.CharmGoopDef).TimedAddGoopCircle(this.actor.sprite.WorldCenter, 1.5f, 1f, false);
+					DeadlyDeadlyGoopManager.GetGoopManagerForGoopType(EasyGoopDefinitions.CharmGoopDef).TimedAddGoopCircle(this.actor.sprite.WorldCenter, 3.5f, 1f, false);
 				}
-				if (ChanceToBlank == true)
+				if (ChanceToBlank == true && UnityEngine.Random.value <= 0.1f)
 				{
-					this.random = UnityEngine.Random.Range(0.0f, 1.0f);
-					if (random <= 0.05f)
-					{
-						this.DoMicroBlank(this.actor.sprite.WorldCenter, 0f);
-					}
-				}
-				if (AddSpeed == true)
+                    this.DoMicroBlank(this.actor.sprite.WorldCenter, 0f);
+                }
+                if (AddSpeed == true)
 				{
-					this.EndEffect(player);
+					this.EndEffect(sourcePlayer);
 				}
 			}
 		}
 
-		public AIActor GetNearestEnemy(List<AIActor> activeEnemies, Vector2 position, out float nearestDistance, string[] filter)
+		public AIActor GetNearestEnemy(List<AIActor> activeEnemies, Vector2 position, out float nearestDistance)
 		{
 			AIActor aiactor = null;
 			nearestDistance = float.MaxValue;
-			bool flag = activeEnemies == null;
-			bool flag2 = flag;
-			bool flag3 = flag2;
-			bool flag4 = flag3;
-			bool flag5 = flag4;
 			AIActor result;
-			if (flag5)
+			if (activeEnemies == null)
 			{
 				result = null;
 			}
@@ -234,24 +196,15 @@ namespace Planetside
 				for (int i = 0; i < activeEnemies.Count; i++)
 				{
 					AIActor aiactor2 = activeEnemies[i];
-					bool flag6 = !aiactor2.healthHaver.IsDead && aiactor2.healthHaver.IsVulnerable;
-					bool flag7 = flag6;
-					if (flag7)
+					if (!aiactor2.healthHaver.IsDead && aiactor2.healthHaver.IsVulnerable)
 					{
-						bool flag8 = filter == null || !filter.Contains(aiactor2.EnemyGuid);
-						bool flag9 = flag8;
-						if (flag9)
-						{
-							float num = Vector2.Distance(position, aiactor2.CenterPosition);
-							bool flag10 = num < nearestDistance;
-							bool flag11 = flag10;
-							if (flag11)
-							{
-								nearestDistance = num;
-								aiactor = aiactor2;
-							}
-						}
-					}
+                        float num = Vector2.Distance(position, aiactor2.CenterPosition);
+                        if (num < nearestDistance)
+                        {
+                            nearestDistance = num;
+                            aiactor = aiactor2;
+                        }
+                    }
 				}
 				result = aiactor;
 			}
@@ -259,13 +212,12 @@ namespace Planetside
 		}
 		private void DoMicroBlank(Vector2 center, float knockbackForce = 30f)
 		{
-			PlayerController player = GameManager.Instance.PrimaryPlayer;
 			GameObject silencerVFX = (GameObject)ResourceCache.Acquire("Global VFX/BlankVFX_Ghost");
 			AkSoundEngine.PostEvent("Play_OBJ_silenceblank_small_01", base.gameObject);
 			GameObject gameObject = new GameObject("silencer");
 			SilencerInstance silencerInstance = gameObject.AddComponent<SilencerInstance>();
 			float additionalTimeAtMaxRadius = 0.25f;
-			silencerInstance.TriggerSilencer(center, 25f, 5f, silencerVFX, 0f, 3f, 3f, 3f, 250f, 5f, additionalTimeAtMaxRadius, player, false, false);
+			silencerInstance.TriggerSilencer(center, 25f, 5f, silencerVFX, 0f, 3f, 3f, 3f, 250f, 5f, additionalTimeAtMaxRadius, sourcePlayer, false, false);
 		}
 		[NonSerialized]
 		public PlayerController sourcePlayer;
@@ -273,7 +225,6 @@ namespace Planetside
 		public float maxDuration = 10f;
 
 		private PlayerOrbital actor;
-		private PlayerController player;
 
 		public bool ClearsGoop;
 		public bool SpawnsCharmGoop;

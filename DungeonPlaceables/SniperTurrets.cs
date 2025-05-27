@@ -48,6 +48,7 @@ namespace Planetside
                 laserPointer = SpawnManager.SpawnVFX((GameObject)BraveResources.Load(isProfessional == false ? "Global VFX/VFX_LaserSight_Enemy" : "Global VFX/VFX_LaserSight_Enemy_Green", ".prefab"), true);
                 laserPointer.transform.position = shootPosition.transform.position;
                 laserPointer.transform.parent = shootPosition.gameObject.transform;
+                laserPointer.layer = 22;
                 laserPointerTiledSprite = laserPointer.GetComponent<tk2dTiledSprite>();
                 laserPointerTiledSprite.HeightOffGround = 11;
                 laserPointerTiledSprite.renderer.enabled = true;
@@ -300,7 +301,7 @@ namespace Planetside
             };
 
             MajorBreakable sniperTurretDefaultaFront = BreakableAPIToolbox.GenerateMajorBreakable("sniperTurretDefaultaFront", idlePaths, 5, idlePaths, 18, 15000,  true, 0, 0, 0, 0, true, null, null, true, null);
-            EnemyToolbox.GenerateShootPoint(sniperTurretDefaultaFront.gameObject, new Vector2(0.5f, 0.6875f), "laserPoint");
+            EnemyToolbox.GenerateShootPoint(sniperTurretDefaultaFront.gameObject, new Vector2(0.5f, 0.875f), "laserPoint");
             AIBulletBank bulletBankLeft = sniperTurretDefaultaFront.gameObject.AddComponent<AIBulletBank>();
             SniperTurretsController t = sniperTurretDefaultaFront.gameObject.AddComponent<SniperTurretsController>();
             t.DirectionToFire = Vector2.left.ToAngle();
@@ -369,7 +370,7 @@ namespace Planetside
             };
 
             MajorBreakable professionalTurretFront = BreakableAPIToolbox.GenerateMajorBreakable("sniperTurretDefaultaFront", idleProfPaths, 5, idleProfPaths, 18, 15000, true, 0, 0, 0, 0, true, null, null, true, null);
-            EnemyToolbox.GenerateShootPoint(professionalTurretFront.gameObject, new Vector2(0.5f, 0.6875f), "laserPoint");
+            EnemyToolbox.GenerateShootPoint(professionalTurretFront.gameObject, new Vector2(0.5f, 0.875f), "laserPoint");
             AIBulletBank bulletBank = professionalTurretFront.gameObject.AddComponent<AIBulletBank>();
             SniperTurretsController turret = professionalTurretFront.gameObject.AddComponent<SniperTurretsController>();
             turret.isProfessional = true;

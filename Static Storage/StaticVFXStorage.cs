@@ -275,6 +275,7 @@ namespace Planetside
             //SilencerVFX = (PickupObjectDatabase.GetById(499) as ReusableBlankitem).silencerVFXPrefab;
 
             WoodBeamImpact = (PickupObjectDatabase.GetById(610) as Gun).DefaultModule.projectiles[0].GetComponent<BasicBeamController>().angularKnockbackTiers.Last().hitRigidbodyVFX.effects[0].effects[0].effect;
+            TeleportTelefragVFX = PickupObjectDatabase.GetById(449).GetComponent<TeleporterPrototypeItem>().TelefragVFXPrefab;
         }
         public static GameObject Pixel;
 
@@ -584,6 +585,7 @@ namespace Planetside
         public static ScarfAttachmentDoer ScarfObject;
         public static GameObject RadialRing;
         public static GameObject TeleportDistortVFX;
+        public static GameObject TeleportTelefragVFX;
         public static GameObject TeleportVFX;
         public static GameObject EnemySpawnVFX;
         public static GameObject ShootGroundVFX;

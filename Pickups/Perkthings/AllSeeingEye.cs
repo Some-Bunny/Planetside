@@ -20,8 +20,8 @@ namespace Planetside
             var data = StaticSpriteDefinitions.Pickup_Sheet_Data;
             ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("allSeeingEye"), data, gameObject);
             //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
-            string shortDesc = "All-Seeing eye.";
-            string longDesc = "yep.";
+            string shortDesc = "Eye For Secrets.";
+            string longDesc = "A Gungeoneers eye, torn out and blessed.\n\nKnows more than you do.";
             item.SetupItem(shortDesc, longDesc, "psog");
 			AllSeeingEye.AllSeeingEyeID = item.PickupObjectId;
 			item.quality = PickupObject.ItemQuality.EXCLUDED;
@@ -106,6 +106,9 @@ namespace Planetside
         {
             if (m_hasBeenPickedUp)
                 return;
+            base.HandleEncounterable(player);
+
+
             SaveAPI.AdvancedGameStatsManager.Instance.RegisterStatChange(StatToIncreaseOnPickup, 1);
             SaveAPIManager.RegisterStatChange(SessionStatToIncreaseOnPickup, 1);
 

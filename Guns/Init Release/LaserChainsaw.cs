@@ -114,9 +114,9 @@ namespace Planetside
 
             projectile.gameObject.SetActive(false);
 
-			projectile.baseData.damage = 200f;
+			projectile.baseData.damage = 160f;
 			projectile.baseData.force *= 0.1f;
-			projectile.baseData.range = 3.5f;
+			projectile.baseData.range = 4f;
 			projectile.baseData.speed *= 1f;
 			//projectile.ignoreDamageCaps = true;
 
