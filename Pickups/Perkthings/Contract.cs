@@ -131,6 +131,7 @@ namespace Planetside
             item.SetupItem(shortDesc, longDesc, "psog");
             Contract.ContractID = item.PickupObjectId;
             item.quality = PickupObject.ItemQuality.EXCLUDED;
+            item.encounterTrackable.DoNotificationOnEncounter = false;
 
             PerkParticleSystemController particles = gameObject.AddComponent<PerkParticleSystemController>();
             particles.ParticleSystemColor = Color.white;
@@ -529,7 +530,6 @@ namespace Planetside
 
 
             Exploder.DoDistortionWave(player.sprite.WorldTopCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
-            //OtherTools.Notify("Contract", BlurbText, "Planetside/Resources/PerkThings/contract", UINotificationController.NotificationColor.GOLD);
             OtherTools.NotifyCustom("Contract", BlurbText, "contract", StaticSpriteDefinitions.Pickup_Sheet_Data, UINotificationController.NotificationColor.GOLD);
 
             player.BloopItemAboveHead(base.sprite, "");

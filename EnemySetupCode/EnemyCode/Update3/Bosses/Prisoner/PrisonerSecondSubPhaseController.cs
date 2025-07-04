@@ -117,6 +117,9 @@ namespace Planetside
 
                 if (CheckIfPlayerInVoidHole(Mathf.Lerp(1, 12, t1), base.aiActor.sprite.WorldCenter))
                 {
+                    DoHoleFall(portalObject);
+                    yield break;
+                    /*
                     if (PlanetsideModule.PreRelease == false)
                     {
                         DoHoleFall(portalObject);
@@ -142,6 +145,7 @@ namespace Planetside
                             }
                         }
                     }
+                    */
                 }
               
                 DoSmallPush(t1*5.5f, base.aiActor.sprite.WorldCenter);
@@ -160,6 +164,9 @@ namespace Planetside
                 
                 if (CheckIfPlayerInVoidHole(12, base.aiActor.sprite.WorldCenter))
                 {
+                    DoHoleFall(portalObject);
+                    yield break;
+                    /*
                     if (PlanetsideModule.PreRelease == false)
                     {
                         DoHoleFall(portalObject);
@@ -185,6 +192,7 @@ namespace Planetside
                             }
                         }
                     }
+                    */
                 }
                 DoSmallPush(80, base.aiActor.sprite.WorldCenter);
                 elaWait += BraveTime.DeltaTime;
@@ -398,7 +406,7 @@ namespace Planetside
 
 
 
-            if (PlanetsideModule.DebugMode == false)
+            if (PlanetsideModule.PrisonerDebug == false)
             {
                 GameObject partObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("Amogus"));
                 MeshRenderer rend = partObj.GetComponentInChildren<MeshRenderer>();

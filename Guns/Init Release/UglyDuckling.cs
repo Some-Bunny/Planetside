@@ -12,6 +12,7 @@ using System.Collections;
 using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
+using Alexandria.Assetbundle;
 
 namespace Planetside
 {
@@ -24,12 +25,17 @@ namespace Planetside
 			gun.gameObject.AddComponent<UglyDuckling>();
 			gun.SetShortDescription("hjonk");
 			gun.SetLongDescription("You Lost the Game.");
-			gun.SetupSprite(null, "uglyduck_idle_001", 11);
-			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 15);
-			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 4);
-			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 2);
 
-			for (int i = 0; i < 1; i++)
+            GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_2_Sheet_Data, "uglyduck_fire_001");
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_2_Animation_Data;
+            gun.sprite.SortingOrder = 1;
+
+            gun.reloadAnimation = "uglyduckling_idle";
+            gun.idleAnimation = "uglyduckling_idle";
+            gun.shootAnimation = "uglyduckling_idle";
+
+
+            for (int i = 0; i < 1; i++)
 			{
 				gun.AddProjectileModuleFrom(PickupObjectDatabase.GetById(7) as Gun, true, false);
 

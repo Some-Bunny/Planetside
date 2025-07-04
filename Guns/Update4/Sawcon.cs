@@ -13,6 +13,7 @@ using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
 using SynergyAPI;
+using Alexandria.Assetbundle;
 
 namespace Planetside
 {
@@ -26,7 +27,7 @@ namespace Planetside
 			gun.SetShortDescription("Sawing Conventionally");
 			gun.SetLongDescription("'Who needs OSHA regulations when launching miniature saw blades is infinitely more fun?'\n\n-Unknown creator, died shortly due to rapid sickness.");
             
-			GunExt.SetupSprite(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "sawcon_idle_001", 11);
+			GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "sawcon_idle_001");
             gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
             gun.sprite.SortingOrder = 1;
 
@@ -91,6 +92,19 @@ namespace Planetside
                 projectile.baseData.UsesCustomAccelerationCurve = true;
 				projectile.baseData.AccelerationCurve = AnimationCurve.Linear(0, 1, 0.5f, 1.15f);
 
+                int Length = 7;
+                Alexandria.Assetbundle.ProjectileBuilders.AnimateProjectileBundle(projectile, "sawConSaw", StaticSpriteDefinitions.Projectile_Sheet_Data, StaticSpriteDefinitions.Projectile_Animation_Data, "sawConSaw",
+                 AnimateBullet.ConstructListOfSameValues<IntVector2>(new IntVector2(14, 3), Length),
+                AnimateBullet.ConstructListOfSameValues(true, Length),
+                AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.MiddleCenter, Length),
+                AnimateBullet.ConstructListOfSameValues(true, Length),
+                AnimateBullet.ConstructListOfSameValues(false, Length),
+                AnimateBullet.ConstructListOfSameValues<Vector3?>(null, Length),
+                AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(14, 3), Length),
+                AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(0, 0), Length),
+                AnimateBullet.ConstructListOfSameValues<Projectile>(null, Length));
+
+                /*
                 projectile.AnimateProjectile(new List<string> {
                 "sawsmall_idle_001",
                 "sawsmall_idle_002",
@@ -111,7 +125,8 @@ namespace Planetside
             }, AnimateBullet.ConstructListOfSameValues(false, 8), AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.MiddleCenter, 8), AnimateBullet.ConstructListOfSameValues(true, 8), AnimateBullet.ConstructListOfSameValues(false, 8),
 			   AnimateBullet.ConstructListOfSameValues<Vector3?>(null, 8), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 8), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 8), AnimateBullet.ConstructListOfSameValues<Projectile>(null, 8));
 				projectile.SetProjectileSpriteRight("sawsmall_idle_001", 14, 3, false, tk2dBaseSprite.Anchor.MiddleCenter, 14, 3);
-                
+				*/
+
             }
             gun.barrelOffset.transform.localPosition = new Vector3(0.75f, 0.375f, 0f);
 			gun.reloadTime = 2.5f;

@@ -107,7 +107,7 @@ public class UmbraController : BraveBehaviour
 
         UmbralEye = PrefabBuilder.BuildObject("UmbralEye");
         var sprite_eye = UmbralEye.AddComponent<tk2dSprite>();
-        sprite_eye.SetSprite(StaticSpriteDefinitions.Debuff_Sheet_Data, "umbral_eye_001");
+        sprite_eye.SetSprite(StaticSpriteDefinitions.VFX_Sheet_Data, "umbral_eye_001");
         tk2dSpriteAnimator animator = UmbralEye.GetOrAddComponent<tk2dSpriteAnimator>();
         animator.library = StaticSpriteDefinitions.VFX_Animation_Data;
         animator.Library = StaticSpriteDefinitions.VFX_Animation_Data;
@@ -125,7 +125,7 @@ public class UmbraController : BraveBehaviour
 
         var UmbralInner = PrefabBuilder.BuildObject("UmbralLens");
         var sprite_lens = UmbralInner.AddComponent<tk2dSprite>();
-        sprite_lens.SetSprite(StaticSpriteDefinitions.Debuff_Sheet_Data, "umbral_eyeinner_001");
+        sprite_lens.SetSprite(StaticSpriteDefinitions.VFX_Sheet_Data, "umbral_eyeinner_001");
         var animator_ = UmbralInner.GetOrAddComponent<tk2dSpriteAnimator>();
         animator_.library = StaticSpriteDefinitions.VFX_Animation_Data;
         animator_.Library = StaticSpriteDefinitions.VFX_Animation_Data;
@@ -155,7 +155,7 @@ public class UmbraController : BraveBehaviour
         #region LockOn
         UmbralLockOnSmall = PrefabBuilder.BuildObject("UmbralLockIn");
 		var s = UmbralLockOnSmall.AddComponent<tk2dSprite>();
-        s.SetSprite(StaticSpriteDefinitions.Debuff_Sheet_Data, "lockin_umbral1");
+        s.SetSprite(StaticSpriteDefinitions.VFX_Sheet_Data, "lockin_umbral1");
         s.SortingOrder = 10;
         s.HeightOffGround = 5;
         s.sprite.usesOverrideMaterial = true;
@@ -208,7 +208,7 @@ public class UmbraController : BraveBehaviour
 	{
         var UmbralLockEdge_BL = PrefabBuilder.BuildObject("UmbralLockIn"+ name);
         var s = UmbralLockEdge_BL.AddComponent<tk2dSprite>();
-        s.SetSprite(StaticSpriteDefinitions.Debuff_Sheet_Data, "lockin_umbral2");
+        s.SetSprite(StaticSpriteDefinitions.VFX_Sheet_Data, "lockin_umbral2");
         s.SortingOrder = 10;
         s.HeightOffGround = 5;
 		s.FlipX = flipX;
@@ -225,7 +225,7 @@ public class UmbraController : BraveBehaviour
     {
         var UmbralLockEdge_BL = PrefabBuilder.BuildObject("UmbralLockIn" + name);
         var s = UmbralLockEdge_BL.AddComponent<tk2dSprite>();
-        s.SetSprite(StaticSpriteDefinitions.Debuff_Sheet_Data, p);
+        s.SetSprite(StaticSpriteDefinitions.VFX_Sheet_Data, p);
         s.SortingOrder = 1;
         s.HeightOffGround = -1;
         s.FlipX = flipX;

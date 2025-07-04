@@ -82,7 +82,19 @@ namespace Planetside
                 yes.shadowTimeDelay = 0.01f;
                 yes.dashColor = new Color(1f, 0.26f, 0f, 1f);
 
+                int Length = 7;
+                Alexandria.Assetbundle.ProjectileBuilders.AnimateProjectileBundle(projectile, "havingfallen", StaticSpriteDefinitions.Projectile_Sheet_Data, StaticSpriteDefinitions.Projectile_Animation_Data, "havingfallen",
+                 AnimateBullet.ConstructListOfSameValues<IntVector2>(new IntVector2(17, 7), Length),
+                AnimateBullet.ConstructListOfSameValues(true, Length),
+                AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.MiddleCenter, Length),
+                AnimateBullet.ConstructListOfSameValues(true, Length),
+                AnimateBullet.ConstructListOfSameValues(false, Length),
+                AnimateBullet.ConstructListOfSameValues<Vector3?>(null, Length),
+                AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(17, 7), Length),
+                AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(0, 0), Length),
+                AnimateBullet.ConstructListOfSameValues<Projectile>(null, Length));
 
+                /*
                 projectile.AnimateProjectile(new List<string> {
                 "havingfallen_001",
                 "havingfallen_002",
@@ -100,6 +112,9 @@ namespace Planetside
                 new IntVector2(17, 7),
                 new IntVector2(17, 7),
                 }, AnimateBullet.ConstructListOfSameValues(false, 7), AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.MiddleCenter, 7), AnimateBullet.ConstructListOfSameValues(true, 7), AnimateBullet.ConstructListOfSameValues(false, 7), AnimateBullet.ConstructListOfSameValues<Vector3?>(null, 7), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 7), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 7), AnimateBullet.ConstructListOfSameValues<Projectile>(null, 7));
+
+                */
+
 
                 projectile.objectImpactEventName = (PickupObjectDatabase.GetById(384) as Gun).DefaultModule.projectiles[0].objectImpactEventName;
                 projectile.enemyImpactEventName = (PickupObjectDatabase.GetById(384) as Gun).DefaultModule.projectiles[0].enemyImpactEventName;

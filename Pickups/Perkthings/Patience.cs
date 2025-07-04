@@ -51,6 +51,7 @@ namespace Planetside
             particles.ParticleSystemColor = Color.cyan;
             particles.ParticleSystemColor2 = Color.blue;
             item.OutlineColor = new Color(0f, 0f, 0.4f);
+            item.encounterTrackable.DoNotificationOnEncounter = false;
 
 
 
@@ -218,8 +219,6 @@ namespace Planetside
             player.BloopItemAboveHead(base.sprite, "");
             string BlurbText = blast.hasBeenPickedup == true ? "But more..." : "Does nothing... But...";
             OtherTools.NotifyCustom("Patience", BlurbText, "patience", StaticSpriteDefinitions.Pickup_Sheet_Data, UINotificationController.NotificationColor.GOLD);
-
-            //OtherTools.Notify("Patience", BlurbText, "Planetside/Resources/PerkThings/patience", UINotificationController.NotificationColor.GOLD);
             UnityEngine.Object.Destroy(base.gameObject);
         }
 

@@ -36,7 +36,7 @@ namespace Planetside
             {
                 new Hook(typeof(GameManager).GetMethod("DelayedQuickRestart", BindingFlags.Instance | BindingFlags.Public), typeof(Hooks).GetMethod("OnQuickRestart1"));
 
-                new Hook(typeof(Foyer).GetMethod("Awake", BindingFlags.Instance | BindingFlags.NonPublic), typeof(PlanetsideModule).GetMethod("ReloadBreachShrinesPSOG"));
+                //new Hook(typeof(Foyer).GetMethod("Awake", BindingFlags.Instance | BindingFlags.NonPublic), typeof(PlanetsideModule).GetMethod("ReloadBreachShrinesPSOG"));
 
                 new Hook(typeof(RoomHandler).GetMethod("HandleRoomClearReward", BindingFlags.Instance | BindingFlags.Public), typeof(Hooks).GetMethod("GalaxyChestReward"));
 

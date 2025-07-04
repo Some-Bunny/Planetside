@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 [System.Serializable]
 public class tk2dCollider2DData {
@@ -282,6 +283,7 @@ public class tk2dSpriteDefinition
 /// Sprite Collection Data.
 /// </summary>
 /// 
+[Serializable]
 public class AttachPointData
 {
 	// Token: 0x06004016 RID: 16406 RVA: 0x001457F8 File Offset: 0x001439F8
@@ -298,7 +300,47 @@ public class tk2dSpriteCollectionData : MonoBehaviour
 {
 
 
-	public const int CURRENT_VERSION = 3;
+    public void SetAttachPoints(int spriteId, tk2dSpriteDefinition.AttachPoint[] aps)
+    {
+        if (aps == null || aps.Length == 0)
+        {
+            this.ClearAttachPoints(spriteId);
+            return;
+        }
+        if (this.SpriteIDsWithAttachPoints.Contains(spriteId))
+        {
+            this.SpriteDefinedAttachPoints[this.SpriteIDsWithAttachPoints.IndexOf(spriteId)] = new AttachPointData(aps);
+        }
+        else
+        {
+            this.SpriteIDsWithAttachPoints.Add(spriteId);
+            this.SpriteDefinedAttachPoints.Add(new AttachPointData(aps));
+        }
+    }
+    public void ClearAttachPoints(int spriteId)
+    {
+        int num = this.SpriteIDsWithAttachPoints.IndexOf(spriteId);
+        if (num >= 0)
+        {
+            this.SpriteIDsWithAttachPoints.RemoveAt(num);
+            this.SpriteDefinedAttachPoints.RemoveAt(num);
+        }
+    }
+
+
+    public tk2dSpriteDefinition.AttachPoint[] GetAttachPoints(int spriteId)
+    {
+        int num = this.SpriteIDsWithAttachPoints.IndexOf(spriteId);
+        if (num >= 0)
+        {
+            return this.SpriteDefinedAttachPoints[num].attachPoints;
+        }
+        return null;
+    }
+    [SerializeField]
+
+
+    public const int CURRENT_VERSION = 3;
 	
 	public int version;
 	public bool materialIdsValid = false;
@@ -769,7 +811,7 @@ public class tk2dSpriteCollectionData : MonoBehaviour
 
 	void DestroyTextureInsts() {
 		foreach (Texture2D texture in textureInsts) {
-			Object.DestroyImmediate(texture);
+			UnityEngine.Object.DestroyImmediate(texture);
 		}
 		textureInsts = new Texture2D[0];
 	}
@@ -821,7 +863,7 @@ public class tk2dSpriteCollectionData : MonoBehaviour
 			materialInsts = new Material[0];
 
 			foreach (Texture2D texture in textureInsts) {
-				Object.DestroyImmediate(texture);
+				UnityEngine.Object.DestroyImmediate(texture);
 			}
 			textureInsts = new Texture2D[0];
 		}

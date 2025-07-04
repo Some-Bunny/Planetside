@@ -12,6 +12,7 @@ using System.Collections;
 using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
+using Alexandria.Assetbundle;
 
 namespace Planetside
 {
@@ -24,11 +25,18 @@ namespace Planetside
 			gun.gameObject.AddComponent<LilPew>();
 			gun.SetShortDescription("Pump-Action");
 			gun.SetLongDescription("Fires slower shots the less shots you have in your clip. Reloading knocks foes back based on how full it was.\n\nThe future is now! Guns full of air, just like your local leaders!");
-			gun.SetupSprite(null, "lilpew_idle_001", 11);
-			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 30);
-			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 11);
-			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 1);
-			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.reloadAnimation).frames[4].eventAudio = "Play_WPN_mailbox_reload_01";
+            
+			GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_2_Sheet_Data, "lilpew_idle_001");
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_2_Animation_Data;
+            gun.sprite.SortingOrder = 1;
+
+            gun.reloadAnimation = "lilpew_reload";
+            gun.idleAnimation = "lilpew_idle";
+            gun.shootAnimation = "lilpew_fire";
+
+
+
+            gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.reloadAnimation).frames[4].eventAudio = "Play_WPN_mailbox_reload_01";
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.reloadAnimation).frames[4].triggerEvent = true;
 			
 			for (int i = 0; i < 1; i++)

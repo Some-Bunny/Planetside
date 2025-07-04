@@ -7,6 +7,7 @@ using Gungeon;
 using MonoMod;
 using UnityEngine;
 using ItemAPI;
+using Alexandria.Assetbundle;
 
 
 
@@ -21,11 +22,24 @@ namespace Planetside
             var behav = gun.gameObject.AddComponent<AttractorBeam>();            
             gun.SetShortDescription("Get Over Here!");
             gun.SetLongDescription("Pulls enemies towards you.\n\nA standard Hegemony Low-Gravity Object Relocator that has been left in the Gungeon.\n\nIt's stuck on the 'Pull' option.");
+
+
+            GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_2_Sheet_Data, "attractorbeam_idle_001");
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_2_Animation_Data;
+            gun.sprite.SortingOrder = 1;
+
+            gun.reloadAnimation = "attractorbeam_reload";
+            gun.idleAnimation = "attractorbeam_idle";
+            gun.shootAnimation = "attractorbeam_fire";
+
+            /*
             gun.SetupSprite(null, "attractorbeam_idle_001", 8);
 
             gun.SetAnimationFPS(gun.shootAnimation, 8);
             gun.SetAnimationFPS(gun.idleAnimation, 8);
             gun.SetAnimationFPS(gun.reloadAnimation, 8);
+            */
+
 
             gun.isAudioLoop = true;
 
@@ -155,8 +169,7 @@ namespace Planetside
             gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
             gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("TractorBeam", "Planetside/Resources/GunClips/TractorBeam/tractorfull", "Planetside/Resources/GunClips/TractorBeam/tractorempty");
 
-            gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).wrapMode = tk2dSpriteAnimationClip.WrapMode.LoopSection;
-            gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).loopStart = 0;
+
 
             gun.quality = PickupObject.ItemQuality.C; //D
             ETGMod.Databases.Items.Add(gun, false, "ANY");

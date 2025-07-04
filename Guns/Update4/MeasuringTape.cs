@@ -7,6 +7,7 @@ using Gungeon;
 using MonoMod;
 using UnityEngine;
 using ItemAPI;
+using Alexandria.Assetbundle;
 
 
 
@@ -21,11 +22,14 @@ namespace Planetside
             var behav = gun.gameObject.AddComponent<MeasuringTape>();            
             gun.SetShortDescription("The Long Way");
             gun.SetLongDescription("A hardy, basic measuring tape that's been left in a chest.\n\nIt's marked at the 2 inch mark.");
-            gun.SetupSprite(null, "measuringtape_idle_001", 8);
 
-            gun.SetAnimationFPS(gun.shootAnimation, 8);
-            gun.SetAnimationFPS(gun.idleAnimation, 8);
-            gun.SetAnimationFPS(gun.reloadAnimation, 8);
+            GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_2_Sheet_Data, "measuringtape_idle_001");
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_2_Animation_Data;
+            gun.sprite.SortingOrder = 1;
+
+            gun.reloadAnimation = "measuringtape_reload";
+            gun.idleAnimation = "measuringtape_idle";
+            gun.shootAnimation = "measuringtape_fire";
 
             gun.isAudioLoop = true;
 

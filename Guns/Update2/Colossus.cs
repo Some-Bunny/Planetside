@@ -7,6 +7,7 @@ using Gungeon;
 using MonoMod;
 using UnityEngine;
 using ItemAPI;
+using Alexandria.Assetbundle;
 
 
 
@@ -25,11 +26,14 @@ namespace Planetside
             gun.SetShortDescription("Titanic");
             gun.SetLongDescription("A collection of rocks powered by only remaining blood of a slain demi-god, who originally used their own blood to create and fuel Titans found on a distant planet.");
 
-            gun.SetupSprite(null, "colossus_idle_001", 8);
 
-            gun.SetAnimationFPS(gun.shootAnimation, 8);
-            gun.SetAnimationFPS(gun.idleAnimation, 8);
-            gun.SetAnimationFPS(gun.reloadAnimation, 8);
+            GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_2_Sheet_Data, "colossus_idle_001");
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_2_Animation_Data;
+            gun.sprite.SortingOrder = 1;
+
+            gun.reloadAnimation = "colossus_reload";
+            gun.idleAnimation = "colossus_idle";
+            gun.shootAnimation = "colossus_fire";
 
 
             EnemyToolbox.AddSoundsToAnimationFrame(gun.GetComponent<tk2dSpriteAnimator>(), gun.reloadAnimation, new Dictionary<int, string> {
@@ -179,6 +183,21 @@ namespace Planetside
                 perfProjectile.shouldRotate = true;
                 perfProjectile.pierceMinorBreakables = true;
                 perfProjectile.gameObject.AddComponent<PerfectedProjectileComponent>();
+
+
+                int Length = 4;
+                Alexandria.Assetbundle.ProjectileBuilders.AnimateProjectileBundle(projectile, "PerfectedProjectile", StaticSpriteDefinitions.Projectile_Sheet_Data, StaticSpriteDefinitions.Projectile_Animation_Data, "PerfectedProjectile",
+                 AnimateBullet.ConstructListOfSameValues<IntVector2>(new IntVector2(11, 11), Length),
+                AnimateBullet.ConstructListOfSameValues(true, Length),
+                AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.MiddleCenter, Length),
+                AnimateBullet.ConstructListOfSameValues(true, Length),
+                AnimateBullet.ConstructListOfSameValues(false, Length),
+                AnimateBullet.ConstructListOfSameValues<Vector3?>(null, Length),
+                AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(13, 13), Length),
+                AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(-1, -1), Length),
+                AnimateBullet.ConstructListOfSameValues<Projectile>(null, Length));
+
+                /*
                 perfProjectile.AnimateProjectile(new List<string> {
                 "perfectedProj_001",
                 "perfectedProj_002",
@@ -191,6 +210,8 @@ namespace Planetside
                 new IntVector2(11, 11)
             }, AnimateBullet.ConstructListOfSameValues(false, 7), AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.MiddleCenter, 7), AnimateBullet.ConstructListOfSameValues(true, 7), AnimateBullet.ConstructListOfSameValues(false, 7),
                 AnimateBullet.ConstructListOfSameValues<Vector3?>(null, 7), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 7), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 7), AnimateBullet.ConstructListOfSameValues<Projectile>(null, 7));
+                
+                */
                 perfProjectile.hitEffects.alwaysUseMidair = true;
                 perfProjectile.hitEffects.overrideMidairDeathVFX = (PickupObjectDatabase.GetById(228) as Gun).DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX;
                 PerfectedProjectile = perfProjectile;

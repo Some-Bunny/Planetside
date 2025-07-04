@@ -29,7 +29,7 @@ namespace Planetside
 			particles.ParticleSystemColor = new Color(230, 230, 250);
 			particles.ParticleSystemColor2 = new Color(255, 53, 184);
             item.OutlineColor = new Color(0.9f, 0.52f, 0.9f);
-
+			item.encounterTrackable.DoNotificationOnEncounter = false;
 
             var Collection = StaticSpriteDefinitions.Oddments_Sheet_Data;
             var GunIcon = ItemBuilder.AddSpriteToObjectAssetbundle("All Seeing Eye Gun", Collection.GetSpriteIdByName("gunicon"), Collection);

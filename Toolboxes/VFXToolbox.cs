@@ -17,9 +17,56 @@ namespace Planetside
 
         }
     }
-    class VFXToolbox
+    static class VFXToolbox
     {
+        public static void ApplyOffsetToAnimation(this tk2dSpriteAnimationClip tk2DSpriteAnimationClip, Vector2 Offset, List<int> IdsModified = null)
+        {
+            if (IdsModified == null)
+            {
+                IdsModified = new List<int>();
+            }
+            if (tk2DSpriteAnimationClip == null) { return; }
+            //tk2dSpriteAnimationClip deathClip = data.animator.GetClipByName("death_shot");
+            var offsetsX2 = Offset.x;
+            var offsetsY2 = Offset.y;
+            for (int i = 0; i < tk2DSpriteAnimationClip.frames.Length; i++)
+            {
+                int id = tk2DSpriteAnimationClip.frames[i].spriteId;
+                if (!IdsModified.Contains(id))
+                {
+                    IdsModified.Add(id);
+                    tk2DSpriteAnimationClip.frames[i].spriteCollection.spriteDefinitions[id].position0.x += offsetsX2;
+                    tk2DSpriteAnimationClip.frames[i].spriteCollection.spriteDefinitions[id].position0.y += offsetsY2;
+                    tk2DSpriteAnimationClip.frames[i].spriteCollection.spriteDefinitions[id].position1.x += offsetsX2;
+                    tk2DSpriteAnimationClip.frames[i].spriteCollection.spriteDefinitions[id].position1.y += offsetsY2;
+                    tk2DSpriteAnimationClip.frames[i].spriteCollection.spriteDefinitions[id].position2.x += offsetsX2;
+                    tk2DSpriteAnimationClip.frames[i].spriteCollection.spriteDefinitions[id].position2.y += offsetsY2;
+                    tk2DSpriteAnimationClip.frames[i].spriteCollection.spriteDefinitions[id].position3.x += offsetsX2;
+                    tk2DSpriteAnimationClip.frames[i].spriteCollection.spriteDefinitions[id].position3.y += offsetsY2;
+                }
 
+            }
+        }
+
+
+
+        public static VFXPool CreateQuickVFXPool(this GameObject gameObject, bool DeathPersistance = true, bool Attachment = true, VFXAlignment alignment = VFXAlignment.NormalAligned, bool Destroyable = false, bool usesZHeight = false, float ZHeight = 0)
+        {
+            VFXPool pool = new VFXPool();
+            pool.type = VFXPoolType.All;
+            VFXComplex complex = new VFXComplex();
+            VFXObject vfObj = new VFXObject();
+            vfObj.attached = Attachment;
+            vfObj.persistsOnDeath = DeathPersistance;
+            vfObj.usesZHeight = usesZHeight;
+            vfObj.zHeight = ZHeight;
+            vfObj.alignment = alignment;
+            vfObj.destructible = Destroyable;
+            vfObj.effect = gameObject;
+            complex.effects = new VFXObject[] { vfObj };
+            pool.effects = new VFXComplex[] { complex };
+            return pool;
+        }
 
 
         private static GameObject VFXScapeGoat;

@@ -26,7 +26,8 @@ namespace Planetside
             {
                 player.healthHaver.Armor = 4;
             }
-            else{
+            else
+            {
                 float HPtOremove = (player.stats.GetStatValue(PlayerStats.StatType.Health));
                 OtherTools.ApplyStat(player, PlayerStats.StatType.Health, (-HPtOremove) + 1, StatModifier.ModifyMethod.ADDITIVE);
                 if (player.healthHaver.Armor > 1) { player.healthHaver.Armor = 1; }
@@ -98,6 +99,8 @@ namespace Planetside
             Stack++;
             this.DamageToGetFromOverHeal += 0.025f;
             this.DamageMult += 0.2f;
+            this.DamageStat.amount = this.DamageMult;
+            player.stats.RecalculateStats(player, true, true);
             if (LeniencyProtection != -1) {LeniencyProtection = -1;}
         }
         private StatModifier DamageStat;
@@ -167,8 +170,9 @@ namespace Planetside
             PerkParticleSystemController particles = gameObject.AddComponent<PerkParticleSystemController>();
             particles.ParticleSystemColor = Color.cyan;
             particles.ParticleSystemColor2 = Color.blue;
+            item.encounterTrackable.DoNotificationOnEncounter = false;
 
-           
+
 
 
             item.OutlineColor = new Color(0, 0.045f, 0.9f);
@@ -202,8 +206,6 @@ namespace Planetside
             player.BloopItemAboveHead(base.sprite, "");
             string BlurbText = glass.hasBeenPickedup == true ? "Even More Fatal." : "Fragile, yet Fatal.";
             OtherTools.NotifyCustom("Glass", BlurbText, "glass", StaticSpriteDefinitions.Pickup_Sheet_Data, UINotificationController.NotificationColor.GOLD);
-
-            //OtherTools.Notify("Glass", BlurbText, "Planetside/Resources/PerkThings/glass", UINotificationController.NotificationColor.GOLD);
             UnityEngine.Object.Destroy(base.gameObject);
         }
 

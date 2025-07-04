@@ -29,7 +29,7 @@ namespace Planetside
             tk2dSpriteAnimator animator = vfxObj.GetOrAddComponent<tk2dSpriteAnimator>();
             tk2dSpriteAnimation animation = vfxObj.AddComponent<tk2dSpriteAnimation>();
 
-            var debuffCollection = StaticSpriteDefinitions.Debuff_Sheet_Data;
+            var debuffCollection = StaticSpriteDefinitions.VFX_Sheet_Data;
 
             ItemBuilder.AddSpriteToObjectAssetbundle("Broken Armor", debuffCollection.GetSpriteIdByName("brainnerphehehoo1"), debuffCollection, vfxObj);
             vfxObj.GetOrAddComponent<tk2dBaseSprite>();

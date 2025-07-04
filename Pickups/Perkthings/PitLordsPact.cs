@@ -146,6 +146,7 @@ namespace Planetside
             particles.ParticleSystemColor = Color.black;
             particles.ParticleSystemColor2 = new Color(50f, 0f, 0f);
             item.OutlineColor = new Color(0f, 0f, 0f);
+            item.encounterTrackable.DoNotificationOnEncounter = false;
 
             new Hook(typeof(FlippableCover).GetMethod("StartFallAnimation", BindingFlags.Instance | BindingFlags.NonPublic), typeof(PitLordsPact).GetMethod("StartFallAnimationHook"));
             new Hook(typeof(DebrisObject).GetMethod("MaybeRespawnIfImportant", BindingFlags.Instance | BindingFlags.NonPublic), typeof(PitLordsPact).GetMethod("MaybeRespawnIfImportantHook"));
@@ -729,7 +730,6 @@ namespace Planetside
             Exploder.DoDistortionWave(player.sprite.WorldTopCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
             player.BloopItemAboveHead(base.sprite, "");
             string BlurbText = pact.hasBeenPickedup == true ? "Offerings Yield More." : "The Pit Lord demands all offerings.";
-            //OtherTools.Notify("Pit Lords Pact.", BlurbText, "Planetside/Resources/PerkThings/pitLordsPact", UINotificationController.NotificationColor.GOLD);
             OtherTools.NotifyCustom("Pit Lords Pact", BlurbText, "pitLordsPact", StaticSpriteDefinitions.Pickup_Sheet_Data, UINotificationController.NotificationColor.GOLD);
 
             UnityEngine.Object.Destroy(base.gameObject);

@@ -150,7 +150,7 @@ namespace Planetside
 
 			ItemIDs.AddToList(gun.PickupObjectId);
 
-            var debuffCollection = StaticSpriteDefinitions.Debuff_Sheet_Data;
+            var debuffCollection = StaticSpriteDefinitions.VFX_Sheet_Data;
             var BrokenArmorVFXObject = ItemBuilder.AddSpriteToObjectAssetbundle("BanditRevolverExecute", debuffCollection.GetSpriteIdByName("cankill_005"), debuffCollection);
             FakePrefab.MarkAsFakePrefab(BrokenArmorVFXObject);
             UnityEngine.Object.DontDestroyOnLoad(BrokenArmorVFXObject);

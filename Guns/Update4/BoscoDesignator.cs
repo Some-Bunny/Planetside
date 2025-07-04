@@ -8,6 +8,7 @@ using Gungeon;
 using MonoMod;
 using UnityEngine;
 using ItemAPI;
+using Alexandria.Assetbundle;
 
 namespace Planetside
 {
@@ -24,10 +25,14 @@ namespace Planetside
             gun.SetShortDescription("Mine It!");
             gun.SetLongDescription("Targets objects and foes for the B-05-CO drone to prioritize.\n\nSmells of beard shampoo.");
 
-            gun.SetupSprite(null, "boscotargeter_idle_001", 8);
 
-            gun.SetAnimationFPS(gun.shootAnimation, 16);
-            gun.SetAnimationFPS(gun.idleAnimation, 1);
+            GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_2_Sheet_Data, "boscotargeter_idle_001");
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_2_Animation_Data;
+            gun.sprite.SortingOrder = 1;
+
+            gun.reloadAnimation = "boscotargeter_reload";
+            gun.idleAnimation = "boscotargeter_idle";
+            gun.shootAnimation = "boscotargeter_fire";
 
 
             gun.AddProjectileModuleFrom(PickupObjectDatabase.GetById(86) as Gun, true, false);

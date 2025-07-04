@@ -239,7 +239,7 @@ namespace Planetside
             Pixel = PrefabBuilder.BuildObject("Pixel");
             Pixel.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
             var sprite_pixel = Pixel.AddComponent<tk2dSprite>();
-            sprite_pixel.SetSprite(StaticSpriteDefinitions.Debuff_Sheet_Data, "pixel_create_007");
+            sprite_pixel.SetSprite(StaticSpriteDefinitions.VFX_Sheet_Data, "pixel_create_007");
             tk2dSpriteAnimator animator = Pixel.GetOrAddComponent<tk2dSpriteAnimator>();
             animator.library = StaticSpriteDefinitions.VFX_Animation_Data;
             animator.Library = StaticSpriteDefinitions.VFX_Animation_Data;

@@ -84,6 +84,19 @@ namespace Planetside
             BounceProjModifier bouncy = projectile.gameObject.AddComponent<BounceProjModifier>();
             bouncy.numberOfBounces = 2;
 
+            int Length = 10;
+            Alexandria.Assetbundle.ProjectileBuilders.AnimateProjectileBundle(projectile, "goreProjectile", StaticSpriteDefinitions.Projectile_Sheet_Data, StaticSpriteDefinitions.Projectile_Animation_Data, "goreProjectile",
+             AnimateBullet.ConstructListOfSameValues<IntVector2>(new IntVector2(8, 8), Length),
+            AnimateBullet.ConstructListOfSameValues(true, Length),
+            AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.MiddleCenter, Length),
+            AnimateBullet.ConstructListOfSameValues(true, Length),
+            AnimateBullet.ConstructListOfSameValues(false, Length),
+            AnimateBullet.ConstructListOfSameValues<Vector3?>(null, Length),
+            AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(8, 8), Length),
+            AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(1, 1), Length),
+            AnimateBullet.ConstructListOfSameValues<Projectile>(null, Length));
+
+            /*
             projectile.AnimateProjectile(new List<string> {
                 "goreProj_001",
                 "goreProj_002",
@@ -105,6 +118,7 @@ namespace Planetside
                 new IntVector2(4, 10),
                 new IntVector2(6, 8),
             }, AnimateBullet.ConstructListOfSameValues(false, 8), AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.MiddleCenter, 8), AnimateBullet.ConstructListOfSameValues(true, 8), AnimateBullet.ConstructListOfSameValues(false, 8),AnimateBullet.ConstructListOfSameValues<Vector3?>(null, 8), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 8), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 8), AnimateBullet.ConstructListOfSameValues<Projectile>(null, 8));
+            */
             projectile.hitEffects.alwaysUseMidair = true;
             projectile.hitEffects.overrideMidairDeathVFX = (PickupObjectDatabase.GetById(368) as Gun).DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX;
             goreProj = projectile;

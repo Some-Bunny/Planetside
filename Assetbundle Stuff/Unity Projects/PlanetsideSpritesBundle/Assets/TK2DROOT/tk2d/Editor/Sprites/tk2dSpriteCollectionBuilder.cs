@@ -2095,6 +2095,12 @@ public class tk2dSpriteCollectionBuilder
 			p.position = new Vector2(srcP.position.x * src.scale.x, (texHeight - srcP.position.y) * src.scale.y) * scale + new Vector2(origin.x, origin.y);
 			def.attachPoints[i] = p;
 		}
+
+        if (def.attachPoints.Length > 0)
+        {
+			//target.ClearAttachPoints(spriteId);
+            target.SetAttachPoints(spriteId, def.attachPoints);
+        }
     }
 
 	static void UpdateColliderData(tk2dSpriteCollection gen, float scale, tk2dSpriteCollectionData coll, int spriteIndex, Vector3 origin)

@@ -101,7 +101,7 @@ namespace Planetside
             AmountOfPurchases++;
 			if (this.GetComponentInChildren<CustomShopController>() != null) { this.GetComponentInChildren<CustomShopController>().UpdatePrice(); }
         }
-        public int AmountOfPurchases;
+        public int AmountOfPurchases = 0;
 		public void DoStartIntro()
 		{
 			base.StartCoroutine(this.DoIntro());
@@ -339,7 +339,7 @@ namespace Planetside
 
             if (robotShopkeeperprefab == null || !BossBuilder.Dictionary.ContainsKey(guid))
 			{
-				robotShopkeeperprefab = BossBuilder.BuildPrefabBundle("RobotShopkeeperBoss", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(8, 9), false, true);
+				robotShopkeeperprefab = BossBuilder.BuildPrefabBundle("HM Prime", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(8, 9), false, true);
 				var companion = robotShopkeeperprefab.AddComponent<HMPrimeController>();
                 EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, Collection, matRobot, false);
 
@@ -1655,7 +1655,7 @@ namespace Planetside
 				bs.OverrideStartingFacingDirection = behaviorSpeculator.OverrideStartingFacingDirection;
 				bs.StartingFacingDirection = behaviorSpeculator.StartingFacingDirection;
 				bs.SkipTimingDifferentiator = behaviorSpeculator.SkipTimingDifferentiator;
-				Game.Enemies.Add("psog:hm_prime", companion.aiActor);
+				Game.Enemies.Add(guid, companion.aiActor);
 
 
 				var shared_auto_001 = ResourceManager.LoadAssetBundle("shared_auto_001");
@@ -1909,7 +1909,7 @@ namespace Planetside
 				}
 				companion.encounterTrackable = companion.gameObject.AddComponent<EncounterTrackable>();
 				companion.encounterTrackable.journalData = new JournalEntry();
-				companion.encounterTrackable.EncounterGuid = "psog:hm_prime";
+				companion.encounterTrackable.EncounterGuid = guid;
 				companion.encounterTrackable.prerequisites = new DungeonPrerequisite[0];
 				companion.encounterTrackable.journalData.SuppressKnownState = false;
 				companion.encounterTrackable.journalData.IsEnemy = true;
@@ -1924,11 +1924,11 @@ namespace Planetside
 				companion.encounterTrackable.journalData.PrimaryDisplayName = "#HMPRIME_NAME";
 				companion.encounterTrackable.journalData.NotificationPanelDescription = "#HMPRIME_SD";
 				companion.encounterTrackable.journalData.AmmonomiconFullEntry = "#HMPRIME_LD";
-				EnemyBuilder.AddEnemyToDatabase(companion.gameObject, "psog:hm_prime");
+				EnemyBuilder.AddEnemyToDatabase(companion.gameObject, guid, true);
 
-				EnemyDatabase.GetEntry("psog:hm_prime").ForcedPositionInAmmonomicon = 201;
-				EnemyDatabase.GetEntry("psog:hm_prime").isInBossTab = true;
-				EnemyDatabase.GetEntry("psog:hm_prime").isNormalEnemy = true;
+				EnemyDatabase.GetEntry(guid).ForcedPositionInAmmonomicon = 201;
+                EnemyDatabase.GetEntry(guid).isNormalEnemy = true;
+                EnemyDatabase.GetEntry(guid).isInBossTab = true;
 
 				GenericIntroDoer miniBossIntroDoer = robotShopkeeperprefab.AddComponent<GenericIntroDoer>();
 				robotShopkeeperprefab.AddComponent<HMPrimeIntroController>();
@@ -3582,13 +3582,14 @@ namespace Planetside
 						blocker.Unseal();
 					}
 					int pruch = base.aiActor.GetComponent<RobotShopkeeperEngageDoer>().AmountOfPurchases;
-					int amountOfitemsToSpawn = UnityEngine.Random.Range(4+ (int)(pruch*1.5f), 6 + pruch);
+					int amountOfitemsToSpawn = UnityEngine.Random.Range(4+ (int)(pruch*1.5f), 4 + pruch);
 					AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.HM_PRIME_DEFEATED, true);//Done
 					for (int i = 0; i < amountOfitemsToSpawn; i++)
 					{
 						int id = BraveUtility.RandomElement<int>(RobotShopkeeperBoss.Lootdrops);
 						LootEngine.SpawnItem(PickupObjectDatabase.GetById(id).gameObject, base.aiActor.sprite.WorldCenter, MathToolbox.GetUnitOnCircle((360 / amountOfitemsToSpawn) * i, 1), 3f, false, true, false);
 					}
+					ETGModConsole.Log("HM-PRIME TIER: "+ pruch);
 					if (pruch > 3)
                     {
 						AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.HM_PRIME_DEFEATED_T4, true);//Done
@@ -3596,7 +3597,7 @@ namespace Planetside
 						chest2.IsLocked = false;
 						chest2.RegisterChestOnMinimap(chest2.GetAbsoluteParentRoom());
 					}
-					if (UnityEngine.Random.value <= (Mathf.Min(0.33f * pruch, 1)))
+					if (UnityEngine.Random.value <= (Mathf.Min(0.4f * pruch, 1)))
 					{
 						Chest chest2 = GameManager.Instance.RewardManager.SpawnTotallyRandomChest(GameManager.Instance.PrimaryPlayer.CurrentRoom.GetRandomVisibleClearSpot(1, 1));
 						chest2.IsLocked = false;

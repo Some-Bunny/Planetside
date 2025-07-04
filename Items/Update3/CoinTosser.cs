@@ -61,28 +61,20 @@ namespace Planetside
 
             CoinComponent coin = projectile.gameObject.AddComponent<CoinComponent>();
             coin.DeadTime = 0.2f;
-            projectile.AnimateProjectile(new List<string> {
-                "coinflip_001",
-                "coinflip_002",
-                "coinflip_003",
-                "coinflip_004",
-                "coinflip_005",
-                "coinflip_006",
-                "coinflip_007",
-                "coinflip_008"
 
-            }, 20, true, new List<IntVector2> {
-                new IntVector2(8, 8), 
-                new IntVector2(8, 8),         
-                new IntVector2(8, 8), 
-                new IntVector2(8, 8),
-                new IntVector2(8, 8),
-                new IntVector2(8, 8),
-                new IntVector2(8, 8),
-                new IntVector2(8, 8),
+            int Length = 8;
+            Alexandria.Assetbundle.ProjectileBuilders.AnimateProjectileBundle(projectile, "coinflip", StaticSpriteDefinitions.Projectile_Sheet_Data, StaticSpriteDefinitions.Projectile_Animation_Data, "coinflip",
+             AnimateBullet.ConstructListOfSameValues<IntVector2>(new IntVector2(8, 8), Length),
+            AnimateBullet.ConstructListOfSameValues(false, Length),
+            AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.LowerLeft, Length),
+            AnimateBullet.ConstructListOfSameValues(true, Length),
+            AnimateBullet.ConstructListOfSameValues(false, Length),
+            AnimateBullet.ConstructListOfSameValues<Vector3?>(null, Length),
+            AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(8, 8), Length),
+            AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(0, 0), Length),
+            AnimateBullet.ConstructListOfSameValues<Projectile>(null, Length));
 
-            }, AnimateBullet.ConstructListOfSameValues(false, 8), AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.MiddleCenter, 8), AnimateBullet.ConstructListOfSameValues(true, 8), AnimateBullet.ConstructListOfSameValues(false, 8),
-            AnimateBullet.ConstructListOfSameValues<Vector3?>(null, 8), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 8), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 8), AnimateBullet.ConstructListOfSameValues<Projectile>(null, 8));
+
             ImprovedAfterImage yes = projectile.gameObject.AddComponent<ImprovedAfterImage>();
             yes.spawnShadows = true;
             yes.shadowLifetime = 0.24f;

@@ -154,8 +154,9 @@ namespace Planetside
             particles.ParticleSystemColor = Color.white;
             particles.ParticleSystemColor2 = Color.yellow;
             item.OutlineColor = new Color(0.33f, 0.33f, 0.33f);
+            item.encounterTrackable.DoNotificationOnEncounter = false;
 
-     
+
         }
         public override List<PerkDisplayContainer> perkDisplayContainers => new List<PerkDisplayContainer>()
         {
@@ -221,8 +222,6 @@ namespace Planetside
             { spirit.IncrementStack(); SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.UNBREAKABLESPIRIT_FLAG_STACK, true); }
             string BlurbText = spirit.hasBeenPickedup == true ? "Another Chance." : "Come Back Stronger.";
             OtherTools.NotifyCustom("Unbreakable Spirit", BlurbText, "unbreakablespirit", StaticSpriteDefinitions.Pickup_Sheet_Data, UINotificationController.NotificationColor.GOLD);
-
-            //OtherTools.Notify("Unbreakable Spirit", BlurbText, "Planetside/Resources/PerkThings/unbreakablespirit", UINotificationController.NotificationColor.GOLD); 
             UnityEngine.Object.Destroy(base.gameObject);
         }
 

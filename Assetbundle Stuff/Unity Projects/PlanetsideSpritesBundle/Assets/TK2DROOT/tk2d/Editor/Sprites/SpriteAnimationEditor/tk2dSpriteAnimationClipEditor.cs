@@ -171,8 +171,8 @@ namespace tk2dEditor.SpriteAnimationEditor
                     nullCollectionFound = true;
 
 
-                    //frame.spriteCollection = AssetDatabase.LoadAssetAtPath<tk2dSpriteCollectionData>(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets("RoomObjectCollectionKillingMyself").FirstOrDefault()));
-					//Debug.Log("a : " +frame.spriteCollection != null);
+                    frame.spriteCollection = AssetDatabase.LoadAssetAtPath<tk2dSpriteCollectionData>(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets("VFXCollection").FirstOrDefault()));
+					Debug.Log("a : " +frame.spriteCollection != null);
 					
 				}
 				else 

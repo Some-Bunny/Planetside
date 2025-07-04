@@ -12,6 +12,7 @@ using System.Collections;
 using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
+using Alexandria.Assetbundle;
 
 namespace Planetside
 {
@@ -24,12 +25,17 @@ namespace Planetside
 			gun.gameObject.AddComponent<SwanOff>();
 			gun.SetShortDescription("HONK!");
 			gun.SetLongDescription("Accidentally conjured by a dyslexic wizard, this swan demands cuddles and love in exchange for firepower.");
-			gun.SetupSprite(null, "swanoff_idle_001", 11);
-			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 15);
-			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 4);
-			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 2);
 
-			for (int i = 0; i < 4; i++)
+            GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_2_Sheet_Data, "swanoff_idle_001");
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_2_Animation_Data;
+            gun.sprite.SortingOrder = 1;
+
+            gun.reloadAnimation = "swanoff_reload";
+            gun.idleAnimation = "swanoff_idle";
+            gun.shootAnimation = "swanoff_fire";
+
+
+            for (int i = 0; i < 4; i++)
 			{
 				gun.AddProjectileModuleFrom(PickupObjectDatabase.GetById(7) as Gun, true, false);
 

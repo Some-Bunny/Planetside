@@ -74,11 +74,10 @@ namespace Planetside
 			//gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.chargeAnimation).loopStart = 16;
 			gun.gunClass = GunClass.FIRE;
 
-
 			gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
 			gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Big Flame", "Planetside/Resources/GunClips/BurningSun/burningsunfull", "Planetside/Resources/GunClips/BurningSun/burningsunempty");
 
-			gun.encounterTrackable.EncounterGuid = "Here comes the sun, dudududu";
+            gun.encounterTrackable.EncounterGuid = "Here comes the sun, dudududu";
 			Projectile projectile2 = UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(146) as Gun).DefaultModule.projectiles[0]);
 			projectile2.gameObject.SetActive(false);
 			FakePrefab.MarkAsFakePrefab(projectile2.gameObject);
@@ -99,6 +98,21 @@ namespace Planetside
             projectile2.objectImpactEventName = (PickupObjectDatabase.GetById(336) as Gun).DefaultModule.projectiles[0].objectImpactEventName;
 			projectile2.enemyImpactEventName = (PickupObjectDatabase.GetById(336) as Gun).DefaultModule.projectiles[0].enemyImpactEventName;
 
+            int Length = 7;
+            Alexandria.Assetbundle.ProjectileBuilders.AnimateProjectileBundle(projectile2,"burningsun_idle", StaticSpriteDefinitions.Projectile_Sheet_Data, StaticSpriteDefinitions.Projectile_Animation_Data, "burningsun_idle",
+			new List<IntVector2>() { new IntVector2(14, 14), new IntVector2(14, 14), new IntVector2(14, 14), new IntVector2(14, 14), new IntVector2(14, 14), new IntVector2(14, 14), new IntVector2(14, 14), },
+			AnimateBullet.ConstructListOfSameValues(true, Length),
+			AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.MiddleCenter, Length),
+			AnimateBullet.ConstructListOfSameValues(true, Length),
+			AnimateBullet.ConstructListOfSameValues(false, Length),
+			AnimateBullet.ConstructListOfSameValues<Vector3?>(null, Length),
+			AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(16, 16), Length),
+            AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(-1, -1), Length),
+			AnimateBullet.ConstructListOfSameValues<Projectile>(null, Length));
+
+
+
+            /*
 			projectile2.AnimateProjectile(new List<string> {
 				"burningsun_projectile_001",
 				"burningsun_projectile_002",
@@ -110,8 +124,10 @@ namespace Planetside
                 new IntVector2(14, 14), 
                 new IntVector2(14, 14),
 			}, AnimateBullet.ConstructListOfSameValues(false, 7), AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.MiddleCenter, 7), AnimateBullet.ConstructListOfSameValues(true, 7), AnimateBullet.ConstructListOfSameValues(false, 7),AnimateBullet.ConstructListOfSameValues<Vector3?>(null, 7), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 7), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 7), AnimateBullet.ConstructListOfSameValues<Projectile>(null, 7));
+			*/
 
-			AoEDamageComponent Values = projectile2.gameObject.AddComponent<AoEDamageComponent>();
+
+            AoEDamageComponent Values = projectile2.gameObject.AddComponent<AoEDamageComponent>();
 			Values.Radius = 4.5f;
 			Values.TimeBetweenDamageEvents = 0.33f;
 			Values.DealsDamage = true;

@@ -958,12 +958,14 @@ namespace Planetside
             item.SetupItem(shortDesc, longDesc, "psog");
             Gunslinger.GunslingerID = item.PickupObjectId;
             item.quality = PickupObject.ItemQuality.EXCLUDED;
+            item.encounterTrackable.DoNotificationOnEncounter = false;
+
             PerkParticleSystemController particles = gameObject.AddComponent<PerkParticleSystemController>();
             particles.ParticleSystemColor = Color.green;
             particles.ParticleSystemColor2 = Color.white;
             item.OutlineColor = new Color(0f, 1f, 0f);
 
-            var debuffCollection = StaticSpriteDefinitions.Debuff_Sheet_Data;
+            var debuffCollection = StaticSpriteDefinitions.VFX_Sheet_Data;
             var BrokenArmorVFXObject = ItemBuilder.AddSpriteToObjectAssetbundle("GunslingerMagDump", debuffCollection.GetSpriteIdByName("ChamberDoEffect_001"), debuffCollection);//new GameObject("Broken Armor");//SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Debuffs/brokenarmor", new GameObject("BrokenArmorEffect"));
             FakePrefab.MarkAsFakePrefab(BrokenArmorVFXObject);
             UnityEngine.Object.DontDestroyOnLoad(BrokenArmorVFXObject);
@@ -1065,7 +1067,6 @@ namespace Planetside
             Exploder.DoDistortionWave(player.sprite.WorldTopCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
             player.BloopItemAboveHead(base.sprite, "");
             string BlurbText = slinger.hasBeenPickedup == true ? "Thrown Weapons Are Even Stronger." : "Massive Boost To Thrown Weapons.";
-            //OtherTools.Notify("Gunslinger", BlurbText, "Planetside/Resources/PerkThings/somethingtoDoWithThrownGuns", UINotificationController.NotificationColor.GOLD);
             OtherTools.NotifyCustom("Gunslinger", BlurbText, "somethingtoDoWithThrownGuns", StaticSpriteDefinitions.Pickup_Sheet_Data, UINotificationController.NotificationColor.GOLD);
 
             UnityEngine.Object.Destroy(base.gameObject);

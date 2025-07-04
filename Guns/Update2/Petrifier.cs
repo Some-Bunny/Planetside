@@ -12,6 +12,7 @@ using System.Collections;
 using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
+using Alexandria.Assetbundle;
 
 namespace Planetside
 {
@@ -24,12 +25,15 @@ namespace Planetside
 			gun.gameObject.AddComponent<Petrifier>();
 			gun.SetShortDescription("Fear Is The Mindkiller");
 			gun.SetLongDescription("Crude, yet powerful. Fires bursts of fast bolts. A primitive form of the railgun, designed by the insane and patented by the irrational.");
-			gun.SetupSprite(null, "petrifier_idle_001", 11);
-			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 15);
-			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 4);
-			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 2);
+            GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_2_Sheet_Data, "petrifier_idle_001");
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_2_Animation_Data;
+            gun.sprite.SortingOrder = 1;
 
-			for (int i = 0; i < 4; i++)
+            gun.reloadAnimation = "petrifier_reload";
+            gun.idleAnimation = "petrifier_idle";
+            gun.shootAnimation = "petrifier_fire";
+
+            for (int i = 0; i < 4; i++)
 			{
 				gun.AddProjectileModuleFrom(PickupObjectDatabase.GetById(88) as Gun, true, false);
 
@@ -106,20 +110,33 @@ namespace Planetside
 				projectile.shouldRotate = true;
 
 
+                int Length = 4;
+                Alexandria.Assetbundle.ProjectileBuilders.AnimateProjectileBundle(projectile, "hotrod", StaticSpriteDefinitions.Projectile_Sheet_Data, StaticSpriteDefinitions.Projectile_Animation_Data, "hotrod",
+                 AnimateBullet.ConstructListOfSameValues<IntVector2>(new IntVector2(12, 4), Length),
+                AnimateBullet.ConstructListOfSameValues(true, Length),
+                AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.MiddleCenter, Length),
+                AnimateBullet.ConstructListOfSameValues(true, Length),
+                AnimateBullet.ConstructListOfSameValues(false, Length),
+                AnimateBullet.ConstructListOfSameValues<Vector3?>(null, Length),
+                AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(12, 4), Length),
+                AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(0, 0), Length),
+                AnimateBullet.ConstructListOfSameValues<Projectile>(null, Length));
+
+                /*
 				projectile.AnimateProjectile(new List<string> {
 				"hotrod1",
 				"hotrod2",
 				"hotrod3",
 				"hotrod4",
-			}, 7, true, new List<IntVector2> {
+				}, 7, true, new List<IntVector2> {
 				new IntVector2(12, 4),
 				new IntVector2(12, 4),
 				new IntVector2(12, 4),
 				new IntVector2(12, 4)
 
-			}, AnimateBullet.ConstructListOfSameValues(false, 7), AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.MiddleCenter, 7), AnimateBullet.ConstructListOfSameValues(true, 7), AnimateBullet.ConstructListOfSameValues(false, 7), AnimateBullet.ConstructListOfSameValues<Vector3?>(null, 7), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 7), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 7), AnimateBullet.ConstructListOfSameValues<Projectile>(null, 7));
-
-				projectile.gameObject.SetActive(false);
+				}, AnimateBullet.ConstructListOfSameValues(false, 7), AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.MiddleCenter, 7), AnimateBullet.ConstructListOfSameValues(true, 7), AnimateBullet.ConstructListOfSameValues(false, 7), AnimateBullet.ConstructListOfSameValues<Vector3?>(null, 7), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 7), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 7), AnimateBullet.ConstructListOfSameValues<Projectile>(null, 7));
+				*/
+                projectile.gameObject.SetActive(false);
 				projectileModule.projectiles[0] = projectile;
 				projectile.baseData.damage = 14f;
 				projectile.AdditionalScaleMultiplier = 1f;

@@ -238,6 +238,8 @@
     <Compile Include="Hooks And Actions\PickupHooks.cs" />
     <Compile Include="Hooks And Actions\ExplosionHooks.cs" />
     <Compile Include="Hooks And Actions\TitleDioramaHooks.cs" />
+    <Compile Include="Items\Update6\LeadBaton.cs" />
+    <Compile Include="Items\Update6\Kunai.cs" />
     <Compile Include="Items\Update6\WarpMastersKit.cs" />
     <Compile Include="Items\Update5\WrapaRounds.cs" />
     <Compile Include="Items\ItemClasses\MultiCompanionItem.cs" />
@@ -277,6 +279,8 @@
     <Compile Include="NPC Stuff\ExampleFSM.cs" />
     <Compile Include="NPC Stuff\Helper\AdvancedDialogueBox.cs" />
     <Compile Include="Pickups\AllSeeingEyeMiniPickup.cs" />
+    <Compile Include="Static Storage\CustomSlash\CustomSlashDoer.cs" />
+    <Compile Include="Static Storage\CustomSlash\SlashData.cs" />
     <Compile Include="Static Storage\StaticShaders.cs" />
     <Compile Include="Static Storage\StaticSpriteDefinitions.cs" />
     <Compile Include="Static Storage\StaticInformation.cs" />

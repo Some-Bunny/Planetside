@@ -22,6 +22,8 @@ namespace Planetside
             string shortDesc = "Simplicity At Its Finest.";
             string longDesc = "Sometimes all one needs is an additional small push to get going.";
             item.SetupItem(shortDesc, longDesc, "psog");
+            item.encounterTrackable.DoNotificationOnEncounter = false;
+
             AllStatsUp.AllStatsUpID = item.PickupObjectId;
             item.quality = PickupObject.ItemQuality.EXCLUDED;
             PerkParticleSystemController particles = gameObject.AddComponent<PerkParticleSystemController>();
@@ -62,14 +64,14 @@ namespace Planetside
             PerkParticleSystemController cont = base.GetComponent<PerkParticleSystemController>();
             if (cont != null) { cont.DoBigBurst(player); }
             AkSoundEngine.PostEvent("Play_OBJ_dice_bless_01", player.gameObject);
-            OtherTools.ApplyStat(player, PlayerStats.StatType.Damage, 1.05f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+            OtherTools.ApplyStat(player, PlayerStats.StatType.Damage, 1.075f, StatModifier.ModifyMethod.MULTIPLICATIVE);
             OtherTools.ApplyStat(player, PlayerStats.StatType.MovementSpeed, 1.05f, StatModifier.ModifyMethod.MULTIPLICATIVE);
             OtherTools.ApplyStat(player, PlayerStats.StatType.ChargeAmountMultiplier, 1.1f, StatModifier.ModifyMethod.MULTIPLICATIVE);
             OtherTools.ApplyStat(player, PlayerStats.StatType.Accuracy, 0.9f, StatModifier.ModifyMethod.MULTIPLICATIVE);
             OtherTools.ApplyStat(player, PlayerStats.StatType.Coolness, 1f, StatModifier.ModifyMethod.ADDITIVE);
             OtherTools.ApplyStat(player, PlayerStats.StatType.DamageToBosses, 1.025f, StatModifier.ModifyMethod.MULTIPLICATIVE);
             OtherTools.ApplyStat(player, PlayerStats.StatType.RateOfFire, 1.05f, StatModifier.ModifyMethod.MULTIPLICATIVE);
-            OtherTools.ApplyStat(player, PlayerStats.StatType.KnockbackMultiplier, 1.1f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+            OtherTools.ApplyStat(player, PlayerStats.StatType.KnockbackMultiplier, 1.15f, StatModifier.ModifyMethod.MULTIPLICATIVE);
             var stack = player.GetOrAddComponent<AllStatsTrackable>();
             stack.Stacks++;
             Exploder.DoDistortionWave(player.sprite.WorldTopCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);

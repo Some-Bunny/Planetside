@@ -1,0 +1,1305 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1224976459164804}
+  m_IsPrefabParent: 1
+--- !u!1 &1224976459164804
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4753124485827744}
+  - component: {fileID: 114055273909479500}
+  m_Layer: 0
+  m_Name: ProjectileImpactCollection
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4753124485827744
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1224976459164804}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114055273909479500
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1224976459164804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b03b1445062e71c4ca60f92cbd330aff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 3
+  materialIdsValid: 1
+  needMaterialInstance: 0
+  spriteDefinitions:
+  - name: kunaiprojectile_impactverticalup_002
+    boundsData:
+    - {x: 0.03125, y: -0.25, z: 0}
+    - {x: 0.1875, y: 0.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.03125, y: -0.34375, z: 0}
+    - {x: 0.1875, y: 0.6875, z: 0}
+    boundsDataCenter: {x: 0.03125, y: -0.25, z: 0}
+    boundsDataExtents: {x: 0.1875, y: 0.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.03125, y: -0.34375, z: 0}
+    untrimmedBoundsDataExtents: {x: 0.1875, y: 0.6875, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: -0.0625, y: -0.5, z: 0}
+    - {x: 0.125, y: -0.5, z: 0}
+    - {x: -0.0625, y: 0, z: 0}
+    - {x: 0.125, y: 0, z: 0}
+    position0: {x: -0.0625, y: -0.5, z: 0}
+    position1: {x: 0.125, y: -0.5, z: 0}
+    position2: {x: -0.0625, y: 0, z: 0}
+    position3: {x: 0.125, y: 0, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.031265624, y: 0.45314062}
+    - {x: 0.031265624, y: 0.49998438}
+    - {x: 0.15623437, y: 0.45314062}
+    - {x: 0.15623437, y: 0.49998438}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 1ef401dfb5b28cd438650d841b35a0f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: c9ad7700693f8da43b5a998dbabd1e59
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: kunaiprojectile_impactverticalup_005
+    boundsData:
+    - {x: 0.03125, y: -0.3125, z: 0}
+    - {x: 0.1875, y: 0.625, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.03125, y: -0.34375, z: 0}
+    - {x: 0.1875, y: 0.6875, z: 0}
+    boundsDataCenter: {x: 0.03125, y: -0.3125, z: 0}
+    boundsDataExtents: {x: 0.1875, y: 0.625, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.03125, y: -0.34375, z: 0}
+    untrimmedBoundsDataExtents: {x: 0.1875, y: 0.6875, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: -0.0625, y: -0.625, z: 0}
+    - {x: 0.125, y: -0.625, z: 0}
+    - {x: -0.0625, y: 0, z: 0}
+    - {x: 0.125, y: 0, z: 0}
+    position0: {x: -0.0625, y: -0.625, z: 0}
+    position1: {x: 0.125, y: -0.625, z: 0}
+    position2: {x: -0.0625, y: 0, z: 0}
+    position3: {x: 0.125, y: 0, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.43751562, y: 0.20314063}
+    - {x: 0.48435938, y: 0.20314063}
+    - {x: 0.43751562, y: 0.35935938}
+    - {x: 0.48435938, y: 0.35935938}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 1ef401dfb5b28cd438650d841b35a0f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: ca51648f3b74d8b44ab9f6e76c4ca048
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: kunaiprojectile_impacthorizontal_001
+    boundsData:
+    - {x: -0.34375, y: -0.0625, z: 0}
+    - {x: 0.6875, y: 0.25, z: 0}
+    untrimmedBoundsData:
+    - {x: -0.5, y: -0.03125, z: 0}
+    - {x: 1, y: 0.6875, z: 0}
+    boundsDataCenter: {x: -0.34375, y: -0.0625, z: 0}
+    boundsDataExtents: {x: 0.6875, y: 0.25, z: 0}
+    untrimmedBoundsDataCenter: {x: -0.5, y: -0.03125, z: 0}
+    untrimmedBoundsDataExtents: {x: 1, y: 0.6875, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: -0.6875, y: -0.1875, z: 0}
+    - {x: 0, y: -0.1875, z: 0}
+    - {x: -0.6875, y: 0.062499993, z: 0}
+    - {x: 0, y: 0.062499993, z: 0}
+    position0: {x: -0.6875, y: -0.1875, z: 0}
+    position1: {x: 0, y: -0.1875, z: 0}
+    position2: {x: -0.6875, y: 0.062499993, z: 0}
+    position3: {x: 0, y: 0.062499993, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.8437656, y: 0.23439063}
+    - {x: 0.8437656, y: 0.40623438}
+    - {x: 0.9062344, y: 0.23439063}
+    - {x: 0.9062344, y: 0.40623438}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 1ef401dfb5b28cd438650d841b35a0f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 4da83a2429b49484ead94acb56317c89
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: kunaiprojectile_impacthorizontal_005
+    boundsData:
+    - {x: -0.28125, y: -0.062499993, z: 0}
+    - {x: 0.5625, y: 0.375, z: 0}
+    untrimmedBoundsData:
+    - {x: -0.5, y: -0.03125, z: 0}
+    - {x: 1, y: 0.6875, z: 0}
+    boundsDataCenter: {x: -0.28125, y: -0.062499993, z: 0}
+    boundsDataExtents: {x: 0.5625, y: 0.375, z: 0}
+    untrimmedBoundsDataCenter: {x: -0.5, y: -0.03125, z: 0}
+    untrimmedBoundsDataExtents: {x: 1, y: 0.6875, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: -0.5625, y: -0.25, z: 0}
+    - {x: 0, y: -0.25, z: 0}
+    - {x: -0.5625, y: 0.12500001, z: 0}
+    - {x: 0, y: 0.12500001, z: 0}
+    position0: {x: -0.5625, y: -0.25, z: 0}
+    position1: {x: 0, y: -0.25, z: 0}
+    position2: {x: -0.5625, y: 0.12500001, z: 0}
+    position3: {x: 0, y: 0.12500001, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.6406406, y: 0.031265624}
+    - {x: 0.7812344, y: 0.031265624}
+    - {x: 0.6406406, y: 0.124984376}
+    - {x: 0.7812344, y: 0.124984376}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 1ef401dfb5b28cd438650d841b35a0f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 9d0af7cf19fc66740a19f3a95d91de69
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: kunaiprojectile_impactverticalup_006
+    boundsData:
+    - {x: 0.03125, y: -0.3125, z: 0}
+    - {x: 0.1875, y: 0.625, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.03125, y: -0.34375, z: 0}
+    - {x: 0.1875, y: 0.6875, z: 0}
+    boundsDataCenter: {x: 0.03125, y: -0.3125, z: 0}
+    boundsDataExtents: {x: 0.1875, y: 0.625, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.03125, y: -0.34375, z: 0}
+    untrimmedBoundsDataExtents: {x: 0.1875, y: 0.6875, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: -0.0625, y: -0.625, z: 0}
+    - {x: 0.125, y: -0.625, z: 0}
+    - {x: -0.0625, y: 0, z: 0}
+    - {x: 0.125, y: 0, z: 0}
+    position0: {x: -0.0625, y: -0.625, z: 0}
+    position1: {x: 0.125, y: -0.625, z: 0}
+    position2: {x: -0.0625, y: 0, z: 0}
+    position3: {x: 0.125, y: 0, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.031265624, y: 0.34376562}
+    - {x: 0.031265624, y: 0.39060938}
+    - {x: 0.18748437, y: 0.34376562}
+    - {x: 0.18748437, y: 0.39060938}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 1ef401dfb5b28cd438650d841b35a0f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 92b7a34dfeea5454b850b7441d2ea2be
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: kunaiprojectile_impactverticalup_001
+    boundsData:
+    - {x: 0.03125, y: -0.21875, z: 0}
+    - {x: 0.1875, y: 0.4375, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.03125, y: -0.34375, z: 0}
+    - {x: 0.1875, y: 0.6875, z: 0}
+    boundsDataCenter: {x: 0.03125, y: -0.21875, z: 0}
+    boundsDataExtents: {x: 0.1875, y: 0.4375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.03125, y: -0.34375, z: 0}
+    untrimmedBoundsDataExtents: {x: 0.1875, y: 0.6875, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: -0.0625, y: -0.4375, z: 0}
+    - {x: 0.125, y: -0.4375, z: 0}
+    - {x: -0.0625, y: 0, z: 0}
+    - {x: 0.125, y: 0, z: 0}
+    position0: {x: -0.0625, y: -0.4375, z: 0}
+    position1: {x: 0.125, y: -0.4375, z: 0}
+    position2: {x: -0.0625, y: 0, z: 0}
+    position3: {x: 0.125, y: 0, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.21876563, y: 0.5625156}
+    - {x: 0.26560938, y: 0.5625156}
+    - {x: 0.21876563, y: 0.6718594}
+    - {x: 0.26560938, y: 0.6718594}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 1ef401dfb5b28cd438650d841b35a0f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: c0ba94d0f2e3cd341b36ec5742813eaa
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: kunaiprojectile_impactverticaldown_001
+    boundsData:
+    - {x: 0.03125, y: 0.25, z: 0}
+    - {x: 0.1875, y: 0.5, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.03125, y: 0.25, z: 0}
+    - {x: 0.1875, y: 0.5, z: 0}
+    boundsDataCenter: {x: 0.03125, y: 0.25, z: 0}
+    boundsDataExtents: {x: 0.1875, y: 0.5, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.03125, y: 0.25, z: 0}
+    untrimmedBoundsDataExtents: {x: 0.1875, y: 0.5, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: -0.0625, y: 0, z: 0}
+    - {x: 0.125, y: 0, z: 0}
+    - {x: -0.0625, y: 0.5, z: 0}
+    - {x: 0.125, y: 0.5, z: 0}
+    position0: {x: -0.0625, y: 0, z: 0}
+    position1: {x: 0.125, y: 0, z: 0}
+    position2: {x: -0.0625, y: 0.5, z: 0}
+    position3: {x: 0.125, y: 0.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.031265624, y: 0.5625156}
+    - {x: 0.031265624, y: 0.6093594}
+    - {x: 0.15623437, y: 0.5625156}
+    - {x: 0.15623437, y: 0.6093594}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 1ef401dfb5b28cd438650d841b35a0f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 99f44a2251b9c7145b3ea90b0a306e09
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: kunaiprojectile_impacthorizontal_002
+    boundsData:
+    - {x: -0.28125, y: -0.031249993, z: 0}
+    - {x: 0.5625, y: 0.3125, z: 0}
+    untrimmedBoundsData:
+    - {x: -0.5, y: -0.03125, z: 0}
+    - {x: 1, y: 0.6875, z: 0}
+    boundsDataCenter: {x: -0.28125, y: -0.031249993, z: 0}
+    boundsDataExtents: {x: 0.5625, y: 0.3125, z: 0}
+    untrimmedBoundsDataCenter: {x: -0.5, y: -0.03125, z: 0}
+    untrimmedBoundsDataExtents: {x: 1, y: 0.6875, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: -0.5625, y: -0.1875, z: 0}
+    - {x: 0, y: -0.1875, z: 0}
+    - {x: -0.5625, y: 0.12500001, z: 0}
+    - {x: 0, y: 0.12500001, z: 0}
+    position0: {x: -0.5625, y: -0.1875, z: 0}
+    position1: {x: 0, y: -0.1875, z: 0}
+    position2: {x: -0.5625, y: 0.12500001, z: 0}
+    position3: {x: 0, y: 0.12500001, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.031265624, y: 0.20314063}
+    - {x: 0.17185937, y: 0.20314063}
+    - {x: 0.031265624, y: 0.28123438}
+    - {x: 0.17185937, y: 0.28123438}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 1ef401dfb5b28cd438650d841b35a0f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 33cb507782749cd499f2e03d22faf3d5
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: kunaiprojectile_impacthorizontal_003
+    boundsData:
+    - {x: -0.28125, y: -0.062499993, z: 0}
+    - {x: 0.5625, y: 0.375, z: 0}
+    untrimmedBoundsData:
+    - {x: -0.5, y: -0.03125, z: 0}
+    - {x: 1, y: 0.6875, z: 0}
+    boundsDataCenter: {x: -0.28125, y: -0.062499993, z: 0}
+    boundsDataExtents: {x: 0.5625, y: 0.375, z: 0}
+    untrimmedBoundsDataCenter: {x: -0.5, y: -0.03125, z: 0}
+    untrimmedBoundsDataExtents: {x: 1, y: 0.6875, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: -0.5625, y: -0.25, z: 0}
+    - {x: 0, y: -0.25, z: 0}
+    - {x: -0.5625, y: 0.12500001, z: 0}
+    - {x: 0, y: 0.12500001, z: 0}
+    position0: {x: -0.5625, y: -0.25, z: 0}
+    position1: {x: 0, y: -0.25, z: 0}
+    position2: {x: -0.5625, y: 0.12500001, z: 0}
+    position3: {x: 0, y: 0.12500001, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.8437656, y: 0.031265624}
+    - {x: 0.8437656, y: 0.17185937}
+    - {x: 0.9374844, y: 0.031265624}
+    - {x: 0.9374844, y: 0.17185937}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 1ef401dfb5b28cd438650d841b35a0f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: e5a18a30dbc76db4587ad15e31fef61a
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: kunaiprojectile_impactverticalup_003
+    boundsData:
+    - {x: 0.03125, y: -0.28125, z: 0}
+    - {x: 0.1875, y: 0.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.03125, y: -0.34375, z: 0}
+    - {x: 0.1875, y: 0.6875, z: 0}
+    boundsDataCenter: {x: 0.03125, y: -0.28125, z: 0}
+    boundsDataExtents: {x: 0.1875, y: 0.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.03125, y: -0.34375, z: 0}
+    untrimmedBoundsDataExtents: {x: 0.1875, y: 0.6875, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: -0.0625, y: -0.5625, z: 0}
+    - {x: 0.125, y: -0.5625, z: 0}
+    - {x: -0.0625, y: 0, z: 0}
+    - {x: 0.125, y: 0, z: 0}
+    position0: {x: -0.0625, y: -0.5625, z: 0}
+    position1: {x: 0.125, y: -0.5625, z: 0}
+    position2: {x: -0.0625, y: 0, z: 0}
+    position3: {x: 0.125, y: 0, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.35939062, y: 0.42189062}
+    - {x: 0.40623438, y: 0.42189062}
+    - {x: 0.35939062, y: 0.5624844}
+    - {x: 0.40623438, y: 0.5624844}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 1ef401dfb5b28cd438650d841b35a0f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 7dc8b4ad57aad7740a311ea383ca973c
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: kunaiprojectile_impacthorizontal_008
+    boundsData:
+    - {x: -0.28125, y: -0.09374999, z: 0}
+    - {x: 0.5625, y: 0.4375, z: 0}
+    untrimmedBoundsData:
+    - {x: -0.5, y: -0.03125, z: 0}
+    - {x: 1, y: 0.6875, z: 0}
+    boundsDataCenter: {x: -0.28125, y: -0.09374999, z: 0}
+    boundsDataExtents: {x: 0.5625, y: 0.4375, z: 0}
+    untrimmedBoundsDataCenter: {x: -0.5, y: -0.03125, z: 0}
+    untrimmedBoundsDataExtents: {x: 1, y: 0.6875, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: -0.5625, y: -0.3125, z: 0}
+    - {x: 0, y: -0.3125, z: 0}
+    - {x: -0.5625, y: 0.12500001, z: 0}
+    - {x: 0, y: 0.12500001, z: 0}
+    position0: {x: -0.5625, y: -0.3125, z: 0}
+    position1: {x: 0, y: -0.3125, z: 0}
+    position2: {x: -0.5625, y: 0.12500001, z: 0}
+    position3: {x: 0, y: 0.12500001, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.031265624, y: 0.031265624}
+    - {x: 0.17185937, y: 0.031265624}
+    - {x: 0.031265624, y: 0.14060937}
+    - {x: 0.17185937, y: 0.14060937}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 1ef401dfb5b28cd438650d841b35a0f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 53dd4ac6f6dacc54281e0a8b5b8ea6f4
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: kunaiprojectile_impacthorizontal_007
+    boundsData:
+    - {x: -0.28125, y: -0.09374999, z: 0}
+    - {x: 0.5625, y: 0.4375, z: 0}
+    untrimmedBoundsData:
+    - {x: -0.5, y: -0.03125, z: 0}
+    - {x: 1, y: 0.6875, z: 0}
+    boundsDataCenter: {x: -0.28125, y: -0.09374999, z: 0}
+    boundsDataExtents: {x: 0.5625, y: 0.4375, z: 0}
+    untrimmedBoundsDataCenter: {x: -0.5, y: -0.03125, z: 0}
+    untrimmedBoundsDataExtents: {x: 1, y: 0.6875, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: -0.5625, y: -0.3125, z: 0}
+    - {x: 0, y: -0.3125, z: 0}
+    - {x: -0.5625, y: 0.12500001, z: 0}
+    - {x: 0, y: 0.12500001, z: 0}
+    position0: {x: -0.5625, y: -0.3125, z: 0}
+    position1: {x: 0, y: -0.3125, z: 0}
+    position2: {x: -0.5625, y: 0.12500001, z: 0}
+    position3: {x: 0, y: 0.12500001, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.23439063, y: 0.031265624}
+    - {x: 0.37498438, y: 0.031265624}
+    - {x: 0.23439063, y: 0.14060937}
+    - {x: 0.37498438, y: 0.14060937}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 1ef401dfb5b28cd438650d841b35a0f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 29167db2c37cf6f40bb0cbb14b91108c
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: kunaiprojectile_impacthorizontal_004
+    boundsData:
+    - {x: -0.28125, y: -0.062499993, z: 0}
+    - {x: 0.5625, y: 0.375, z: 0}
+    untrimmedBoundsData:
+    - {x: -0.5, y: -0.03125, z: 0}
+    - {x: 1, y: 0.6875, z: 0}
+    boundsDataCenter: {x: -0.28125, y: -0.062499993, z: 0}
+    boundsDataExtents: {x: 0.5625, y: 0.375, z: 0}
+    untrimmedBoundsDataCenter: {x: -0.5, y: -0.03125, z: 0}
+    untrimmedBoundsDataExtents: {x: 1, y: 0.6875, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: -0.5625, y: -0.25, z: 0}
+    - {x: 0, y: -0.25, z: 0}
+    - {x: -0.5625, y: 0.12500001, z: 0}
+    - {x: 0, y: 0.12500001, z: 0}
+    position0: {x: -0.5625, y: -0.25, z: 0}
+    position1: {x: 0, y: -0.25, z: 0}
+    position2: {x: -0.5625, y: 0.12500001, z: 0}
+    position3: {x: 0, y: 0.12500001, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.6406406, y: 0.18751563}
+    - {x: 0.7812344, y: 0.18751563}
+    - {x: 0.6406406, y: 0.28123438}
+    - {x: 0.7812344, y: 0.28123438}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 1ef401dfb5b28cd438650d841b35a0f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 53c1ce856e8edc9409f6b26e1d62830d
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: kunaiprojectile_impacthorizontal_006
+    boundsData:
+    - {x: -0.28125, y: -0.09374999, z: 0}
+    - {x: 0.5625, y: 0.4375, z: 0}
+    untrimmedBoundsData:
+    - {x: -0.5, y: -0.03125, z: 0}
+    - {x: 1, y: 0.6875, z: 0}
+    boundsDataCenter: {x: -0.28125, y: -0.09374999, z: 0}
+    boundsDataExtents: {x: 0.5625, y: 0.4375, z: 0}
+    untrimmedBoundsDataCenter: {x: -0.5, y: -0.03125, z: 0}
+    untrimmedBoundsDataExtents: {x: 1, y: 0.6875, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: -0.5625, y: -0.3125, z: 0}
+    - {x: 0, y: -0.3125, z: 0}
+    - {x: -0.5625, y: 0.12500001, z: 0}
+    - {x: 0, y: 0.12500001, z: 0}
+    position0: {x: -0.5625, y: -0.3125, z: 0}
+    position1: {x: 0, y: -0.3125, z: 0}
+    position2: {x: -0.5625, y: 0.12500001, z: 0}
+    position3: {x: 0, y: 0.12500001, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.43751562, y: 0.031265624}
+    - {x: 0.5781094, y: 0.031265624}
+    - {x: 0.43751562, y: 0.14060937}
+    - {x: 0.5781094, y: 0.14060937}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 1ef401dfb5b28cd438650d841b35a0f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: a50cbe0ae8529c843ac458ffbc8c3e0d
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: kunaiprojectile_impactverticalup_004
+    boundsData:
+    - {x: 0.03125, y: -0.3125, z: 0}
+    - {x: 0.1875, y: 0.625, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.03125, y: -0.34375, z: 0}
+    - {x: 0.1875, y: 0.6875, z: 0}
+    boundsDataCenter: {x: 0.03125, y: -0.3125, z: 0}
+    boundsDataExtents: {x: 0.1875, y: 0.625, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.03125, y: -0.34375, z: 0}
+    untrimmedBoundsDataExtents: {x: 0.1875, y: 0.6875, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: -0.0625, y: -0.625, z: 0}
+    - {x: 0.125, y: -0.625, z: 0}
+    - {x: -0.0625, y: 0, z: 0}
+    - {x: 0.125, y: 0, z: 0}
+    position0: {x: -0.0625, y: -0.625, z: 0}
+    position1: {x: 0.125, y: -0.625, z: 0}
+    position2: {x: -0.0625, y: 0, z: 0}
+    position3: {x: 0.125, y: 0, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.25001562, y: 0.34376562}
+    - {x: 0.29685938, y: 0.34376562}
+    - {x: 0.25001562, y: 0.49998438}
+    - {x: 0.29685938, y: 0.49998438}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 1ef401dfb5b28cd438650d841b35a0f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 196f4274a390a41499fc478a613fc804
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: kunaiprojectile_impacthorizontal_right_002
+    boundsData:
+    - {x: 0.28125, y: -0.03125, z: 0}
+    - {x: 0.5625, y: 0.3125, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.3125, y: -0.03125, z: 0}
+    - {x: 0.625, y: 0.3125, z: 0}
+    boundsDataCenter: {x: 0.28125, y: -0.03125, z: 0}
+    boundsDataExtents: {x: 0.5625, y: 0.3125, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.3125, y: -0.03125, z: 0}
+    untrimmedBoundsDataExtents: {x: 0.625, y: 0.3125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: -0.1875, z: 0}
+    - {x: 0.5625, y: -0.1875, z: 0}
+    - {x: 0, y: 0.125, z: 0}
+    - {x: 0.5625, y: 0.125, z: 0}
+    position0: {x: 0, y: -0.1875, z: 0}
+    position1: {x: 0.5625, y: -0.1875, z: 0}
+    position2: {x: 0, y: 0.125, z: 0}
+    position3: {x: 0.5625, y: 0.125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.23439063, y: 0.20314063}
+    - {x: 0.37498438, y: 0.20314063}
+    - {x: 0.23439063, y: 0.28123438}
+    - {x: 0.37498438, y: 0.28123438}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 1ef401dfb5b28cd438650d841b35a0f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: 8b82831693c6f2148a26265e8a950145
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: kunaiprojectile_impacthorizontal_right_001
+    boundsData:
+    - {x: 0.3125, y: -0.03125, z: 0}
+    - {x: 0.625, y: 0.1875, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.3125, y: -0.03125, z: 0}
+    - {x: 0.625, y: 0.3125, z: 0}
+    boundsDataCenter: {x: 0.3125, y: -0.03125, z: 0}
+    boundsDataExtents: {x: 0.625, y: 0.1875, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.3125, y: -0.03125, z: 0}
+    untrimmedBoundsDataExtents: {x: 0.625, y: 0.3125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: -0.125, z: 0}
+    - {x: 0.625, y: -0.125, z: 0}
+    - {x: 0, y: 0.0625, z: 0}
+    - {x: 0.625, y: 0.0625, z: 0}
+    position0: {x: 0, y: -0.125, z: 0}
+    position1: {x: 0.625, y: -0.125, z: 0}
+    position2: {x: 0, y: 0.0625, z: 0}
+    position3: {x: 0.625, y: 0.0625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.5468906, y: 0.34376562}
+    - {x: 0.7031094, y: 0.34376562}
+    - {x: 0.5468906, y: 0.39060938}
+    - {x: 0.7031094, y: 0.39060938}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 1ef401dfb5b28cd438650d841b35a0f4, type: 2}
+    materialId: 0
+    sourceTextureGUID: c4d77f5c3351b2240a5fb7b39b482083
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  SpriteIDsWithAttachPoints: 
+  premultipliedAlpha: 0
+  material: {fileID: 0}
+  materials:
+  - {fileID: 2100000, guid: 1ef401dfb5b28cd438650d841b35a0f4, type: 2}
+  textures:
+  - {fileID: 2800000, guid: af3b8f2f742c1a14980b5f21be73099a, type: 3}
+  pngTextures: []
+  materialPngTextureId: 00000000
+  textureFilterMode: 0
+  textureMipMaps: 0
+  allowMultipleAtlases: 0
+  spriteCollectionGUID: 90f710878a1d644488570d28103531f3
+  spriteCollectionName: ProjectileImpactCollection
+  assetName: 
+  loadable: 0
+  invOrthoSize: 2
+  halfTargetHeight: 8
+  buildKey: 1285604512
+  dataGuid: 6ee8d5b32f8f98a4bacb30e23367d4a1
+  managedSpriteCollection: 0
+  hasPlatformData: 0
+  spriteCollectionPlatforms: []
+  spriteCollectionPlatformGUIDs: []

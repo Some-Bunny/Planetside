@@ -40,8 +40,8 @@ namespace Planetside
             var data = StaticSpriteDefinitions.Pickup_Sheet_Data;
             ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("projectileboom"), data, gameObject);
             //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
-            string shortDesc = "Literally just an all stats up.";
-            string longDesc = "yep.";
+            string shortDesc = "From Death, Life";
+            string longDesc = "From Life, Death.\n\nA perfect cycle.";
             item.SetupItem(shortDesc, longDesc, "psog");
             BlastProjectiles.BlastProjectilesID = item.PickupObjectId;
             item.quality = PickupObject.ItemQuality.EXCLUDED;
@@ -49,6 +49,7 @@ namespace Planetside
             particles.ParticleSystemColor = Color.yellow;
             particles.ParticleSystemColor2 = new Color(255, 215, 0);
             item.OutlineColor = new Color(1f, 0.55f, 0f);
+            item.encounterTrackable.DoNotificationOnEncounter = false;
 
             Gun gun4 = PickupObjectDatabase.GetById(43) as Gun;
             Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(gun4.DefaultModule.projectiles[0]);
@@ -61,7 +62,7 @@ namespace Planetside
             projectile.shouldRotate = true;
             projectile.pierceMinorBreakables = true;
             projectile.baseData.range = 30f;
-            projectile.SetProjectileSpriteRight("vengbullet", 8, 5, false, tk2dBaseSprite.Anchor.MiddleCenter, 8, 5);
+            ItemAPI.GunTools.SetProjectileCollisionRight(projectile, "vengbullet", StaticSpriteDefinitions.Projectile_Sheet_Data, 8, 5, false, tk2dBaseSprite.Anchor.MiddleCenter);
 
             OtherTools.EasyTrailComponent trail = projectile.gameObject.AddComponent<OtherTools.EasyTrailComponent>();
 
@@ -132,7 +133,7 @@ namespace Planetside
 
             Exploder.DoDistortionWave(player.sprite.WorldTopCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
             player.BloopItemAboveHead(base.sprite, "");
-            string BlurbText = blast.hasBeenPickedup == true ? "More Projectiles Birthed." : "All Explosions birth Vengeful shells.";
+            string BlurbText = blast.hasBeenPickedup == true ? "More Projectiles Birthed." : "Explosions Birth Vengeful Shells.";
             OtherTools.NotifyCustom("Explosive Birth", BlurbText, "projectileboom", StaticSpriteDefinitions.Pickup_Sheet_Data, UINotificationController.NotificationColor.GOLD);
 
             //OtherTools.Notify("Explosive Birth", BlurbText, "Planetside/Resources/PerkThings/projectileboom", UINotificationController.NotificationColor.GOLD);

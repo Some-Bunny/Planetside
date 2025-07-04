@@ -54,7 +54,7 @@ MonoBehaviour:
   clips:
   - name: chamber_docooltrick
     frames:
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 89
       invulnerableFrame: 0
@@ -73,7 +73,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 95
       invulnerableFrame: 0
@@ -92,7 +92,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 102
       invulnerableFrame: 0
@@ -111,7 +111,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 96
       invulnerableFrame: 0
@@ -130,7 +130,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 94
       invulnerableFrame: 0
@@ -149,7 +149,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 98
       invulnerableFrame: 0
@@ -168,7 +168,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 99
       invulnerableFrame: 0
@@ -187,7 +187,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 93
       invulnerableFrame: 0
@@ -206,7 +206,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 97
       invulnerableFrame: 0
@@ -225,7 +225,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 91
       invulnerableFrame: 0
@@ -244,7 +244,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 87
       invulnerableFrame: 0
@@ -263,7 +263,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 88
       invulnerableFrame: 0
@@ -282,7 +282,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 85
       invulnerableFrame: 0
@@ -301,7 +301,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 86
       invulnerableFrame: 0
@@ -320,7 +320,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 101
       invulnerableFrame: 0
@@ -339,7 +339,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 100
       invulnerableFrame: 0
@@ -358,7 +358,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 103
       invulnerableFrame: 0
@@ -377,7 +377,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 90
       invulnerableFrame: 0
@@ -396,7 +396,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 92
       invulnerableFrame: 0
@@ -422,7 +422,7 @@ MonoBehaviour:
     maxFidgetDuration: 2
   - name: chamber_vanish
     frames:
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 96
       invulnerableFrame: 0
@@ -441,7 +441,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 102
       invulnerableFrame: 0
@@ -460,7 +460,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 95
       invulnerableFrame: 0
@@ -479,7 +479,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 89
       invulnerableFrame: 0
@@ -505,7 +505,7 @@ MonoBehaviour:
     maxFidgetDuration: 2
   - name: cankillStart
     frames:
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 113
       invulnerableFrame: 0
@@ -524,7 +524,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 109
       invulnerableFrame: 0
@@ -543,7 +543,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 106
       invulnerableFrame: 0
@@ -562,7 +562,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 108
       invulnerableFrame: 0
@@ -581,7 +581,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 107
       invulnerableFrame: 0
@@ -600,7 +600,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 112
       invulnerableFrame: 0
@@ -619,7 +619,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 104
       invulnerableFrame: 0
@@ -638,7 +638,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 104
       invulnerableFrame: 0
@@ -657,7 +657,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 105
       invulnerableFrame: 0
@@ -676,7 +676,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 105
       invulnerableFrame: 0
@@ -695,7 +695,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 110
       invulnerableFrame: 0
@@ -714,7 +714,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 110
       invulnerableFrame: 0
@@ -733,7 +733,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 111
       invulnerableFrame: 0
@@ -759,7 +759,7 @@ MonoBehaviour:
     maxFidgetDuration: 2
   - name: cankillEnd
     frames:
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 107
       invulnerableFrame: 0
@@ -778,7 +778,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 108
       invulnerableFrame: 0
@@ -797,7 +797,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 106
       invulnerableFrame: 0
@@ -816,7 +816,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 109
       invulnerableFrame: 0
@@ -835,7 +835,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 113
       invulnerableFrame: 0
@@ -861,7 +861,7 @@ MonoBehaviour:
     maxFidgetDuration: 2
   - name: createPixel
     frames:
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 117
       invulnerableFrame: 0
@@ -880,7 +880,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 116
       invulnerableFrame: 0
@@ -899,7 +899,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 118
       invulnerableFrame: 0
@@ -918,7 +918,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 119
       invulnerableFrame: 0
@@ -937,7 +937,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 115
       invulnerableFrame: 0
@@ -956,7 +956,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 114
       invulnerableFrame: 0
@@ -975,7 +975,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 114
       invulnerableFrame: 0
@@ -994,7 +994,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 120
       invulnerableFrame: 0
@@ -1013,7 +1013,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 120
       invulnerableFrame: 0
@@ -1039,7 +1039,7 @@ MonoBehaviour:
     maxFidgetDuration: 2
   - name: deletePixel
     frames:
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 120
       invulnerableFrame: 0
@@ -1058,7 +1058,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 120
       invulnerableFrame: 0
@@ -1077,7 +1077,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 114
       invulnerableFrame: 0
@@ -1096,7 +1096,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 114
       invulnerableFrame: 0
@@ -1115,7 +1115,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 115
       invulnerableFrame: 0
@@ -1134,7 +1134,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 119
       invulnerableFrame: 0
@@ -1153,7 +1153,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 118
       invulnerableFrame: 0
@@ -1172,7 +1172,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 116
       invulnerableFrame: 0
@@ -1191,7 +1191,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 117
       invulnerableFrame: 0
@@ -1217,7 +1217,7 @@ MonoBehaviour:
     maxFidgetDuration: 2
   - name: umbraleye_inner_open
     frames:
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 123
       invulnerableFrame: 0
@@ -1236,7 +1236,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 123
       invulnerableFrame: 0
@@ -1255,7 +1255,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 123
       invulnerableFrame: 0
@@ -1274,7 +1274,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 123
       invulnerableFrame: 0
@@ -1293,7 +1293,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 123
       invulnerableFrame: 0
@@ -1312,7 +1312,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 123
       invulnerableFrame: 0
@@ -1331,7 +1331,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 123
       invulnerableFrame: 0
@@ -1350,7 +1350,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 123
       invulnerableFrame: 0
@@ -1369,7 +1369,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 123
       invulnerableFrame: 0
@@ -1388,7 +1388,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 123
       invulnerableFrame: 0
@@ -1407,7 +1407,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 122
       invulnerableFrame: 0
@@ -1426,7 +1426,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 132
       invulnerableFrame: 0
@@ -1445,7 +1445,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 121
       invulnerableFrame: 0
@@ -1464,7 +1464,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 129
       invulnerableFrame: 0
@@ -1483,7 +1483,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 134
       invulnerableFrame: 0
@@ -1502,7 +1502,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 134
       invulnerableFrame: 0
@@ -1521,7 +1521,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 133
       invulnerableFrame: 0
@@ -1540,7 +1540,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 133
       invulnerableFrame: 0
@@ -1559,7 +1559,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 131
       invulnerableFrame: 0
@@ -1578,7 +1578,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 131
       invulnerableFrame: 0
@@ -1604,7 +1604,7 @@ MonoBehaviour:
     maxFidgetDuration: 2
   - name: umbraleye_inner_close
     frames:
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 131
       invulnerableFrame: 0
@@ -1623,7 +1623,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 133
       invulnerableFrame: 0
@@ -1642,7 +1642,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 134
       invulnerableFrame: 0
@@ -1661,7 +1661,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 129
       invulnerableFrame: 0
@@ -1680,7 +1680,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 121
       invulnerableFrame: 0
@@ -1699,7 +1699,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 132
       invulnerableFrame: 0
@@ -1718,7 +1718,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 132
       invulnerableFrame: 0
@@ -1737,7 +1737,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 122
       invulnerableFrame: 0
@@ -1756,7 +1756,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 122
       invulnerableFrame: 0
@@ -1775,7 +1775,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 123
       invulnerableFrame: 0
@@ -1794,7 +1794,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 123
       invulnerableFrame: 0
@@ -1820,7 +1820,7 @@ MonoBehaviour:
     maxFidgetDuration: 2
   - name: umbraleye_lens_open
     frames:
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 130
       invulnerableFrame: 0
@@ -1839,7 +1839,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 130
       invulnerableFrame: 0
@@ -1858,7 +1858,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 130
       invulnerableFrame: 0
@@ -1877,7 +1877,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 130
       invulnerableFrame: 0
@@ -1896,7 +1896,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 130
       invulnerableFrame: 0
@@ -1915,7 +1915,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 130
       invulnerableFrame: 0
@@ -1934,7 +1934,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 130
       invulnerableFrame: 0
@@ -1953,7 +1953,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 130
       invulnerableFrame: 0
@@ -1972,7 +1972,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 130
       invulnerableFrame: 0
@@ -1991,7 +1991,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 130
       invulnerableFrame: 0
@@ -2010,7 +2010,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 130
       invulnerableFrame: 0
@@ -2029,7 +2029,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 130
       invulnerableFrame: 0
@@ -2048,7 +2048,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 130
       invulnerableFrame: 0
@@ -2067,7 +2067,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 128
       invulnerableFrame: 0
@@ -2086,7 +2086,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 127
       invulnerableFrame: 0
@@ -2105,7 +2105,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 126
       invulnerableFrame: 0
@@ -2124,7 +2124,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 126
       invulnerableFrame: 0
@@ -2143,7 +2143,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 125
       invulnerableFrame: 0
@@ -2162,7 +2162,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 125
       invulnerableFrame: 0
@@ -2181,7 +2181,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 124
       invulnerableFrame: 0
@@ -2200,7 +2200,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 124
       invulnerableFrame: 0
@@ -2226,7 +2226,7 @@ MonoBehaviour:
     maxFidgetDuration: 2
   - name: umbraleye_lens_close
     frames:
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 124
       invulnerableFrame: 0
@@ -2245,7 +2245,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 124
       invulnerableFrame: 0
@@ -2264,7 +2264,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 125
       invulnerableFrame: 0
@@ -2283,7 +2283,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 125
       invulnerableFrame: 0
@@ -2302,7 +2302,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 126
       invulnerableFrame: 0
@@ -2321,7 +2321,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 126
       invulnerableFrame: 0
@@ -2340,7 +2340,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 127
       invulnerableFrame: 0
@@ -2359,7 +2359,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 128
       invulnerableFrame: 0
@@ -2378,9 +2378,308 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    - spriteCollection: {fileID: 114936597340169788, guid: 6b39e51f43e18b4489aaf18676fa29b0,
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
       spriteId: 130
+      invulnerableFrame: 0
+      groundedFrame: 1
+      requiresOffscreenUpdate: 0
+      eventAudio: 
+      eventVfx: 
+      eventStopVfx: 
+      eventLerpEmissive: 0
+      eventLerpEmissiveTime: 0.5
+      eventLerpEmissivePower: 30
+      forceMaterialUpdate: 0
+      finishedSpawning: 0
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+      eventOutline: 0
+    fps: 18
+    loopStart: 0
+    wrapMode: 2
+    minFidgetDuration: 1
+    maxFidgetDuration: 2
+  - name: leadBatonSwing
+    frames:
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
+        type: 2}
+      spriteId: 142
+      invulnerableFrame: 0
+      groundedFrame: 1
+      requiresOffscreenUpdate: 0
+      eventAudio: 
+      eventVfx: 
+      eventStopVfx: 
+      eventLerpEmissive: 0
+      eventLerpEmissiveTime: 0.5
+      eventLerpEmissivePower: 30
+      forceMaterialUpdate: 0
+      finishedSpawning: 0
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+      eventOutline: 0
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
+        type: 2}
+      spriteId: 142
+      invulnerableFrame: 0
+      groundedFrame: 1
+      requiresOffscreenUpdate: 0
+      eventAudio: 
+      eventVfx: 
+      eventStopVfx: 
+      eventLerpEmissive: 0
+      eventLerpEmissiveTime: 0.5
+      eventLerpEmissivePower: 30
+      forceMaterialUpdate: 0
+      finishedSpawning: 0
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+      eventOutline: 0
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
+        type: 2}
+      spriteId: 143
+      invulnerableFrame: 0
+      groundedFrame: 1
+      requiresOffscreenUpdate: 0
+      eventAudio: 
+      eventVfx: 
+      eventStopVfx: 
+      eventLerpEmissive: 0
+      eventLerpEmissiveTime: 0.5
+      eventLerpEmissivePower: 30
+      forceMaterialUpdate: 0
+      finishedSpawning: 0
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+      eventOutline: 0
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
+        type: 2}
+      spriteId: 143
+      invulnerableFrame: 0
+      groundedFrame: 1
+      requiresOffscreenUpdate: 0
+      eventAudio: 
+      eventVfx: 
+      eventStopVfx: 
+      eventLerpEmissive: 0
+      eventLerpEmissiveTime: 0.5
+      eventLerpEmissivePower: 30
+      forceMaterialUpdate: 0
+      finishedSpawning: 0
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+      eventOutline: 0
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
+        type: 2}
+      spriteId: 140
+      invulnerableFrame: 0
+      groundedFrame: 1
+      requiresOffscreenUpdate: 0
+      eventAudio: 
+      eventVfx: 
+      eventStopVfx: 
+      eventLerpEmissive: 0
+      eventLerpEmissiveTime: 0.5
+      eventLerpEmissivePower: 30
+      forceMaterialUpdate: 0
+      finishedSpawning: 0
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+      eventOutline: 0
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
+        type: 2}
+      spriteId: 139
+      invulnerableFrame: 0
+      groundedFrame: 1
+      requiresOffscreenUpdate: 0
+      eventAudio: 
+      eventVfx: 
+      eventStopVfx: 
+      eventLerpEmissive: 0
+      eventLerpEmissiveTime: 0.5
+      eventLerpEmissivePower: 30
+      forceMaterialUpdate: 0
+      finishedSpawning: 0
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+      eventOutline: 0
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
+        type: 2}
+      spriteId: 144
+      invulnerableFrame: 0
+      groundedFrame: 1
+      requiresOffscreenUpdate: 0
+      eventAudio: 
+      eventVfx: 
+      eventStopVfx: 
+      eventLerpEmissive: 0
+      eventLerpEmissiveTime: 0.5
+      eventLerpEmissivePower: 30
+      forceMaterialUpdate: 0
+      finishedSpawning: 0
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+      eventOutline: 0
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
+        type: 2}
+      spriteId: 144
+      invulnerableFrame: 0
+      groundedFrame: 1
+      requiresOffscreenUpdate: 0
+      eventAudio: 
+      eventVfx: 
+      eventStopVfx: 
+      eventLerpEmissive: 0
+      eventLerpEmissiveTime: 0.5
+      eventLerpEmissivePower: 30
+      forceMaterialUpdate: 0
+      finishedSpawning: 0
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+      eventOutline: 0
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
+        type: 2}
+      spriteId: 141
+      invulnerableFrame: 0
+      groundedFrame: 1
+      requiresOffscreenUpdate: 0
+      eventAudio: 
+      eventVfx: 
+      eventStopVfx: 
+      eventLerpEmissive: 0
+      eventLerpEmissiveTime: 0.5
+      eventLerpEmissivePower: 30
+      forceMaterialUpdate: 0
+      finishedSpawning: 0
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+      eventOutline: 0
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
+        type: 2}
+      spriteId: 141
+      invulnerableFrame: 0
+      groundedFrame: 1
+      requiresOffscreenUpdate: 0
+      eventAudio: 
+      eventVfx: 
+      eventStopVfx: 
+      eventLerpEmissive: 0
+      eventLerpEmissiveTime: 0.5
+      eventLerpEmissivePower: 30
+      forceMaterialUpdate: 0
+      finishedSpawning: 0
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+      eventOutline: 0
+    fps: 30
+    loopStart: 0
+    wrapMode: 2
+    minFidgetDuration: 1
+    maxFidgetDuration: 2
+  - name: planetsSlash
+    frames:
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
+        type: 2}
+      spriteId: 145
+      invulnerableFrame: 0
+      groundedFrame: 1
+      requiresOffscreenUpdate: 0
+      eventAudio: 
+      eventVfx: 
+      eventStopVfx: 
+      eventLerpEmissive: 0
+      eventLerpEmissiveTime: 0.5
+      eventLerpEmissivePower: 30
+      forceMaterialUpdate: 0
+      finishedSpawning: 0
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+      eventOutline: 0
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
+        type: 2}
+      spriteId: 148
+      invulnerableFrame: 0
+      groundedFrame: 1
+      requiresOffscreenUpdate: 0
+      eventAudio: 
+      eventVfx: 
+      eventStopVfx: 
+      eventLerpEmissive: 0
+      eventLerpEmissiveTime: 0.5
+      eventLerpEmissivePower: 30
+      forceMaterialUpdate: 0
+      finishedSpawning: 0
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+      eventOutline: 0
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
+        type: 2}
+      spriteId: 146
+      invulnerableFrame: 0
+      groundedFrame: 1
+      requiresOffscreenUpdate: 0
+      eventAudio: 
+      eventVfx: 
+      eventStopVfx: 
+      eventLerpEmissive: 0
+      eventLerpEmissiveTime: 0.5
+      eventLerpEmissivePower: 30
+      forceMaterialUpdate: 0
+      finishedSpawning: 0
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+      eventOutline: 0
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
+        type: 2}
+      spriteId: 149
+      invulnerableFrame: 0
+      groundedFrame: 1
+      requiresOffscreenUpdate: 0
+      eventAudio: 
+      eventVfx: 
+      eventStopVfx: 
+      eventLerpEmissive: 0
+      eventLerpEmissiveTime: 0.5
+      eventLerpEmissivePower: 30
+      forceMaterialUpdate: 0
+      finishedSpawning: 0
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+      eventOutline: 0
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
+        type: 2}
+      spriteId: 147
       invulnerableFrame: 0
       groundedFrame: 1
       requiresOffscreenUpdate: 0

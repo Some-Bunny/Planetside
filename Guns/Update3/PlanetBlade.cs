@@ -12,6 +12,7 @@ using System.Collections;
 using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
+using Alexandria.Assetbundle;
 
 namespace Planetside
 {
@@ -24,11 +25,18 @@ namespace Planetside
 			gun.gameObject.AddComponent<PlanetBlade>();
 			gun.SetShortDescription("Tears Of Providence");
 			gun.SetLongDescription("A pure, crystalline sword made for a demi-god to protect the people who looked up to it.\n\nAlthough dead, the tears of the demi-god that once carried it rain down from the heavens, causing the feeble and most vulnerable to stand for their guardian.");
-			GunExt.SetupSprite(gun, null, "planetblade_idle_001", 11);
-			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 23);
-			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 27 );
-			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 1);
-			GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(56) as Gun, true, false);
+
+            GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_2_Sheet_Data, "planetblade_idle_001");
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_2_Animation_Data;
+            gun.sprite.SortingOrder = 1;
+
+            gun.reloadAnimation = "planetblade_reload";
+            gun.idleAnimation = "planetblade_idle";
+            gun.shootAnimation = "planetblade_fire";
+
+
+
+            GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(56) as Gun, true, false);
 			gun.gunSwitchGroup = (PickupObjectDatabase.GetById(387) as Gun).gunSwitchGroup;
 			gun.DefaultModule.ammoCost = 1;
 			gun.DefaultModule.shootStyle = ProjectileModule.ShootStyle.Automatic;
@@ -62,12 +70,37 @@ namespace Planetside
             gun.IsHeroSword = true;
 			gun.HeroSwordDoesntBlank = false;
 			gun.encounterTrackable.EncounterGuid = "Planetside Sword | Bottom Text";
+
+
+            var debuffCollection = StaticSpriteDefinitions.VFX_Sheet_Data;
+            var BrokenArmorVFXObject = ItemAPI.ItemBuilder.AddSpriteToObjectAssetbundle("PlanetBladeSlash", debuffCollection.GetSpriteIdByName("planetblade_slash_003"), debuffCollection);//new GameObject("Broken Armor");//SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Debuffs/brokenarmor", new GameObject("BrokenArmorEffect"));
+            ItemAPI.FakePrefab.MarkAsFakePrefab(BrokenArmorVFXObject);
+            UnityEngine.Object.DontDestroyOnLoad(BrokenArmorVFXObject);
+            BrokenArmorVFXObject.GetOrAddComponent<tk2dBaseSprite>();
+            tk2dSpriteAnimator animator = BrokenArmorVFXObject.GetOrAddComponent<tk2dSpriteAnimator>();
+            animator.library = StaticSpriteDefinitions.VFX_Animation_Data;
+            animator.Library = StaticSpriteDefinitions.VFX_Animation_Data;
+            animator.sprite.usesOverrideMaterial = true;
+            Material mat_ = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+            mat_.mainTexture = animator.sprite.renderer.material.mainTexture;
+            mat_.SetColor("_EmissiveColor", new Color32(255, 255, 255, 255));
+            mat_.SetFloat("_EmissiveColorPower", 2f);
+            mat_.SetFloat("_EmissivePower", 2);
+            animator.sprite.renderer.material = mat_;
+
+            animator.DefaultClipId = animator.GetClipIdByName("leadBatonSwing");
+            animator.playAutomatically = true;
+            StaticSpriteDefinitions.VFX_Animation_Data.GetClipByName("planetsSlash").ApplyOffsetToAnimation(new Vector2(0.25f, 0));
+            gun.muzzleFlashEffects = BrokenArmorVFXObject.CreateQuickVFXPool();
+
+            /*
             gun.muzzleFlashEffects = OtherTools.CreateMuzzleflash("planetSlash", new List<string> { "planetblade_slash_001", "planetblade_slash_002", "planetblade_slash_003", "planetblade_slash_004", "planetblade_slash_005" }, 30, new List<IntVector2> { new IntVector2(6, 16), new IntVector2(16, 96), new IntVector2(16, 96), new IntVector2(12, 72), new IntVector2(6, 54) }, new List<tk2dBaseSprite.Anchor> {
                 tk2dBaseSprite.Anchor.MiddleLeft, tk2dBaseSprite.Anchor.MiddleLeft , tk2dBaseSprite.Anchor.MiddleLeft , tk2dBaseSprite.Anchor.MiddleLeft , tk2dBaseSprite.Anchor.MiddleLeft }, new List<Vector2> { Vector2.zero, Vector2.zero, Vector2.zero, Vector2.zero, Vector2.zero }, false, false, false, false, 0, VFXAlignment.Fixed, true, new List<float> { 100f, 100f, 100f, 100f, 100f }, new List<Color> { new Color(0, 0.8f,1),
                 new Color(0, 1f,1),
                new Color(1, 1f,1),
                 new Color(0, 0.8f,1),
                new Color(0, 0.2f,1)});
+            */
 
             ETGMod.Databases.Items.Add(gun, false, "ANY");
 

@@ -128,8 +128,12 @@ public static class tk2dSpriteGuiUtility
 
 		if (callbackData != null)
         {
-			(callbackData as tk2dEditor.SpriteAnimationEditor.ClipEditor.FrameGroup).audioEvent = EditorGUILayout.TextField("Audio", (callbackData as tk2dEditor.SpriteAnimationEditor.ClipEditor.FrameGroup).audioEvent);
-		}
+			if ((callbackData as tk2dEditor.SpriteAnimationEditor.ClipEditor.FrameGroup) !=  null)
+			{
+                (callbackData as tk2dEditor.SpriteAnimationEditor.ClipEditor.FrameGroup).audioEvent = EditorGUILayout.TextField("Audio", (callbackData as tk2dEditor.SpriteAnimationEditor.ClipEditor.FrameGroup).audioEvent);
+            }
+            //var m = EditorGUILayout.TextField("Audio", (callbackData as tk2dEditor.SpriteAnimationEditor.ClipEditor.FrameGroup).audioEvent)
+        }
 
 		
 

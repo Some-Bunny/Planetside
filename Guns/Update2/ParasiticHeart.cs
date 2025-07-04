@@ -11,6 +11,7 @@ using Brave.BulletScript;
 using Planetside;
 using static DirectionalAnimation;
 using System.Reflection;
+using Alexandria.Assetbundle;
 
 namespace Planetside
 {
@@ -23,10 +24,15 @@ namespace Planetside
             gun.gameObject.AddComponent<ParasiticHeart>();
             gun.SetShortDescription("Detached");
             gun.SetLongDescription("The heart of a parasitic beast that lurks deep within the Gungeon. The six souls it once housed are still yet to depart, and orbit the ever-beating heart.");
-            gun.SetupSprite(null, "chambersoul_idle_001", 8);
-            gun.SetAnimationFPS(gun.shootAnimation, 20);
-            gun.SetAnimationFPS(gun.idleAnimation, 7);
-            gun.SetAnimationFPS(gun.reloadAnimation, 9);
+
+
+            GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_2_Sheet_Data, "chambersoul_idle_001");
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_2_Animation_Data;
+            gun.sprite.SortingOrder = 1;
+
+            gun.reloadAnimation = "parasiteheart_reload";
+            gun.idleAnimation = "parasiteheart_idle";
+            gun.shootAnimation = "parasiteheart_fire";
 
             gun.AddProjectileModuleFrom("38_special", true, false);
             gun.SetBaseMaxAmmo(200);

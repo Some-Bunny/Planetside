@@ -12,6 +12,7 @@ using System.Collections;
 using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
+using Alexandria.Assetbundle;
 
 namespace Planetside
 {
@@ -24,12 +25,20 @@ namespace Planetside
 			gun.gameObject.AddComponent<GTEE>();
 			gun.SetShortDescription("Broken Shell");
 			gun.SetLongDescription("You are heavily advised not to fire this gun.");
-			GunExt.SetupSprite(gun, null, "yourhonordeath_idle_001", 11);
-			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_WPN_golddoublebarrelshotgun_shot_01";
+
+            GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_2_Sheet_Data, "yourhonordeath_fire_001");
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_2_Animation_Data;
+            gun.sprite.SortingOrder = 1;
+
+            gun.reloadAnimation = "GTEE_win";
+            gun.idleAnimation = "GTEE_win";
+            gun.shootAnimation = "GTEE_win";
+
+
+            gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_WPN_golddoublebarrelshotgun_shot_01";
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].triggerEvent = true;
-			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 1);
-			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 1);
-			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 1);
+
+
 			GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(56) as Gun, true, false);
 			gun.gunSwitchGroup = (PickupObjectDatabase.GetById(387) as Gun).gunSwitchGroup;
 			gun.DefaultModule.ammoCost = 1;

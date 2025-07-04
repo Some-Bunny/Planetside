@@ -446,7 +446,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: 834cb352df3560a4cac1a29985157923, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 7
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -1708,7 +1708,7 @@ MonoBehaviour:
   atlasMaterials:
   - {fileID: 2100000, guid: 18f6907855a7c654fb11e8389ee0ef48, type: 2}
   atlasTextures:
-  - {fileID: 2800000, guid: 4cb3b2a50498eb249a00dbbc2c1e4b06, type: 3}
+  - {fileID: 2800000, guid: b12aa2e44aced9d4392159ee3427e7b6, type: 3}
   atlasTextureFiles: []
   useTk2dCamera: 0
   targetHeight: 640

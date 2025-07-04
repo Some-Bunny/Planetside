@@ -39,9 +39,9 @@ namespace Planetside
 			ItemIDs.AddToList(item.PickupObjectId);
             new Hook(typeof(AIActor).GetMethod("OnPlayerEntered", BindingFlags.Instance | BindingFlags.NonPublic),
 				typeof(ShellsOfTheMountain).GetMethod("OnPlayerEnteredHook"));
-            new Hook(typeof(BehaviorSpeculator).GetMethod("Start", BindingFlags.Instance | BindingFlags.NonPublic),
-                typeof(ShellsOfTheMountain).GetMethod("StartHookBehaviorSpeculator"));
-            ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.Damage, 1.3f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+            //new Hook(typeof(BehaviorSpeculator).GetMethod("Start", BindingFlags.Instance | BindingFlags.NonPublic),
+            //    typeof(ShellsOfTheMountain).GetMethod("StartHookBehaviorSpeculator"));
+            ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.Damage, 1.35f, StatModifier.ModifyMethod.MULTIPLICATIVE);
 
             Alexandria.RoomRewardAPI.OnRoomRewardDetermineContents += ORDC;
         }
@@ -72,7 +72,7 @@ namespace Planetside
             {
                 bool BossCheck = self.aiActor.healthHaver.IsBoss | self.aiActor.healthHaver.IsSubboss;
                 float specialChance = UnityEngine.Random.Range(0f, 1.0f);
-                if (specialChance < 0.35f | BossCheck == true)
+                if (specialChance < 0.20f | BossCheck == true)
                 {
                     if (UnityEngine.Random.value <= 0.2f && BossCheck == false)
                     {

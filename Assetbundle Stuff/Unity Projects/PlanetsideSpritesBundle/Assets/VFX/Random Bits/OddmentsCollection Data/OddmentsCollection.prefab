@@ -489,25 +489,25 @@ MonoBehaviour:
     attachPoints: []
   - name: kineticstrike
     boundsData:
-    - {x: 0.90625, y: 1.6875, z: 0}
+    - {x: 0.03125, y: 1.6875, z: 0}
     - {x: 1.8125, y: 3.375, z: 0}
     untrimmedBoundsData:
-    - {x: 0.90625, y: 1.6875, z: 0}
+    - {x: 0.03125, y: 1.6875, z: 0}
     - {x: 1.8125, y: 3.375, z: 0}
-    boundsDataCenter: {x: 0.90625, y: 1.6875, z: 0}
+    boundsDataCenter: {x: 0.03125, y: 1.6875, z: 0}
     boundsDataExtents: {x: 1.8125, y: 3.375, z: 0}
-    untrimmedBoundsDataCenter: {x: 0.90625, y: 1.6875, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.03125, y: 1.6875, z: 0}
     untrimmedBoundsDataExtents: {x: 1.8125, y: 3.375, z: 0}
     texelSize: {x: 0.0625, y: 0.0625}
     positions:
-    - {x: 0, y: 0, z: 0}
-    - {x: 1.8125, y: 0, z: 0}
-    - {x: 0, y: 3.375, z: 0}
-    - {x: 1.8125, y: 3.375, z: 0}
-    position0: {x: 0, y: 0, z: 0}
-    position1: {x: 1.8125, y: 0, z: 0}
-    position2: {x: 0, y: 3.375, z: 0}
-    position3: {x: 1.8125, y: 3.375, z: 0}
+    - {x: -0.875, y: 0, z: 0}
+    - {x: 0.9375, y: 0, z: 0}
+    - {x: -0.875, y: 3.375, z: 0}
+    - {x: 0.9375, y: 3.375, z: 0}
+    position0: {x: -0.875, y: 0, z: 0}
+    position1: {x: 0.9375, y: 0, z: 0}
+    position2: {x: -0.875, y: 3.375, z: 0}
+    position3: {x: 0.9375, y: 3.375, z: 0}
     normals: []
     tangents: []
     uvs:
@@ -2005,7 +2005,7 @@ MonoBehaviour:
   materials:
   - {fileID: 2100000, guid: 18f6907855a7c654fb11e8389ee0ef48, type: 2}
   textures:
-  - {fileID: 2800000, guid: 4cb3b2a50498eb249a00dbbc2c1e4b06, type: 3}
+  - {fileID: 2800000, guid: b12aa2e44aced9d4392159ee3427e7b6, type: 3}
   pngTextures: []
   materialPngTextureId: 00000000
   textureFilterMode: 1
@@ -2017,7 +2017,7 @@ MonoBehaviour:
   loadable: 0
   invOrthoSize: 2
   halfTargetHeight: 8
-  buildKey: 610488055
+  buildKey: 234396547
   dataGuid: 79a57a2a38136a24d88f4f18875bbfbe
   managedSpriteCollection: 0
   hasPlatformData: 0

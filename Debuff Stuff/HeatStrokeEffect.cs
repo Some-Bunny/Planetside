@@ -26,7 +26,7 @@ namespace Planetside
 
         public static GameObject BuildVFX()
         {
-            var debuffCollection = StaticSpriteDefinitions.Debuff_Sheet_Data;
+            var debuffCollection = StaticSpriteDefinitions.VFX_Sheet_Data;
             var BrokenArmorVFXObject = ItemBuilder.AddSpriteToObjectAssetbundle("Heat Stroke", debuffCollection.GetSpriteIdByName("heatstrokeicon7"), debuffCollection);//new GameObject("Broken Armor");//SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Debuffs/brokenarmor", new GameObject("BrokenArmorEffect"));
             FakePrefab.MarkAsFakePrefab(BrokenArmorVFXObject);
             UnityEngine.Object.DontDestroyOnLoad(BrokenArmorVFXObject);

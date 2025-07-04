@@ -104,27 +104,24 @@ namespace Planetside
         public static void InitializeShootToBreakHook(Action<SecretRoomDoorBeer> orig, SecretRoomDoorBeer self)
         {          
             orig(self);
-            if (QOLConfig.RevealSecretRoomWalls == true)
+            if (!GameManager.Instance.InTutorial)
             {
-                if (!GameManager.Instance.InTutorial)
+                var r = self.collider.colliderObject.transform.position.GetAbsoluteRoom();
+                if (r == null) { return; }
+                foreach (var room in r.connectedRooms)
                 {
-                    var r = self.collider.colliderObject.transform.position.GetAbsoluteRoom();
-                    if (r == null) { return; }
-                    foreach (var room in r.connectedRooms)
+                    if (room != null)
                     {
-                        if (room != null)
+                        if (room.GetRoomName() != null)
                         {
-                            if (room.GetRoomName() != null)
+                            if (room.GetRoomName().ToLower().Contains("hmprime") || (QOLConfig.RevealSecretRoomWalls == true))                               
                             {
-                                if (room.GetRoomName().ToLower().Contains("hmprime"))
-                                {
-                                    MajorBreakable breakable = self.collider.colliderObject.GetComponent<MajorBreakable>();
-                                    breakable.MaxHitPoints = breakable.HitPoints;
-                                    breakable.HitPoints = breakable.HitPoints / 2;
-                                    breakable.ApplyDamage(1f, Vector2.zero, false, true, true);
-                                }
+                                MajorBreakable breakable = self.collider.colliderObject.GetComponent<MajorBreakable>();
+                                breakable.MaxHitPoints = breakable.HitPoints;
+                                breakable.HitPoints = breakable.HitPoints / 2;
+                                breakable.ApplyDamage(1f, Vector2.zero, false, true, true);
                             }
-                        }                        
+                        }
                     }
                 }
             }

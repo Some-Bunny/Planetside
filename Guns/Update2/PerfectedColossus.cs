@@ -7,6 +7,7 @@ using Gungeon;
 using MonoMod;
 using UnityEngine;
 using ItemAPI;
+using Alexandria.Assetbundle;
 
 
 
@@ -22,16 +23,19 @@ namespace Planetside
             gun.SetShortDescription("Lunar Design");
             gun.SetLongDescription("A collection of rocks powered by the blood of a now-dead demi-god, who used their own blood to create the Titans found on a planet far, far away.");
 
-            gun.SetupSprite(null, "prefectedcolossus_idle_001", 8);
+            GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_2_Sheet_Data, "prefectedcolossus_idle_001");
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_2_Animation_Data;
+            gun.sprite.SortingOrder = 1;
 
-            gun.SetAnimationFPS(gun.shootAnimation, 8);
-            gun.SetAnimationFPS(gun.idleAnimation, 8);
-            gun.SetAnimationFPS(gun.reloadAnimation, 8);
+            gun.reloadAnimation = "perfectedcolossus_reload";
+            gun.idleAnimation = "perfectedcolossus_idle";
+            gun.shootAnimation = "perfectedcolossus_fire";
+
 
             gun.isAudioLoop = true;
 
             EnemyToolbox.AddSoundsToAnimationFrame(gun.GetComponent<tk2dSpriteAnimator>(), gun.reloadAnimation, new Dictionary<int, string> {
-                { 3, "Play_ENM_statue_stomp_01" },
+                { 1, "Play_ENM_statue_stomp_01" },
             });
 
             //int iterator = 0;

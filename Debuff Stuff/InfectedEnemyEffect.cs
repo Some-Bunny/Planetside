@@ -109,7 +109,7 @@ namespace Planetside
 
         private static GameObject GenerateInfectionCrystalFromPath(string name, string fileName)
         {
-            var debuffCollection = StaticSpriteDefinitions.Debuff_Sheet_Data;
+            var debuffCollection = StaticSpriteDefinitions.VFX_Sheet_Data;
             var BrokenArmorVFXObject = ItemBuilder.AddSpriteToObjectAssetbundle(name, debuffCollection.GetSpriteIdByName(fileName), debuffCollection);//new GameObject("Broken Armor");//SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Debuffs/brokenarmor", new GameObject("BrokenArmorEffect"));
             FakePrefab.MarkAsFakePrefab(BrokenArmorVFXObject);
             UnityEngine.Object.DontDestroyOnLoad(BrokenArmorVFXObject);

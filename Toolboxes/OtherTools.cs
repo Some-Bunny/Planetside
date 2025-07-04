@@ -336,6 +336,24 @@ namespace Planetside
 
     public static class OtherTools
     {
+        public static void DoHitStop(this GameObject parent, float Duration)
+        {
+            GameManager.Instance.StartCoroutine(HitStop(parent, Duration));
+        }
+        private static IEnumerator HitStop(GameObject gameActor, float Duration)
+        {
+            float DeltaTime = Time.deltaTime;
+            BraveTime.SetTimeScaleMultiplier(0, gameActor.gameObject);
+            float e = 0;
+            while (e < Duration)
+            {
+                e += DeltaTime;
+                yield return null;
+            }
+            BraveTime.SetTimeScaleMultiplier(1, gameActor.gameObject);
+            yield break;
+        }
+
 
         public static GameObject MakeLineBundle(string name, int ID, tk2dSpriteCollectionData data, Vector2 colliderDimensions, Vector2 colliderOffsets)
         {
@@ -984,7 +1002,7 @@ namespace Planetside
                     overrideColliderOffsetX = overrideColliderOffset.Value.x;
                     overrideColliderOffsetY = overrideColliderOffset.Value.y;
                 }
-                tk2dSpriteDefinition def = GunTools.SetupDefinitionForProjectileSpriteBundle(animationName, frame.spriteId, data, pixelSize.x, pixelSize.y, lightened, overrideColliderPixelWidth, overrideColliderPixelHeight, overrideColliderOffsetX, overrideColliderOffsetY,
+                tk2dSpriteDefinition def = GunTools.SetupDefinitionForProjectileSprite(animationName, frame.spriteId, pixelSize.x, pixelSize.y, lightened, overrideColliderPixelWidth, overrideColliderPixelHeight, overrideColliderOffsetX, overrideColliderOffsetY,
                     overrideProjectileToCopyFrom);
                 def.ConstructOffsetsFromAnchor(anchor, def.position3, fixesScale, anchorChangesCollider);
                 def.position0 += manualOffset.Value;

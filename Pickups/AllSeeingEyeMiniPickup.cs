@@ -25,7 +25,7 @@ namespace Planetside
             item.SetupItem(shortDesc, longDesc, "psog");
             AllSeeingEyeMiniPickup.MiniEye = item.PickupObjectId;
             item.quality = PickupObject.ItemQuality.EXCLUDED;
-
+            item.IgnoredByRat = true;
         }
         public static int MiniEye;
 

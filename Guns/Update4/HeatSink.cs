@@ -7,6 +7,7 @@ using Gungeon;
 using MonoMod;
 using UnityEngine;
 using ItemAPI;
+using Alexandria.Assetbundle;
 
 
 
@@ -23,11 +24,15 @@ namespace Planetside
             gun.SetShortDescription("Hot N' Heavy");
             gun.SetLongDescription("This portable microwave can super-charge a localized space with super heated particles and cause them to go BOOM!\n\nIllegal everywhere within Hegemony-ruled space.");
 
-            gun.SetupSprite(null, "heat_sink_idle_001", 8);
+            GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_2_Sheet_Data, "heat_sink_idle_001");
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_2_Animation_Data;
+            gun.sprite.SortingOrder = 1;
 
-            gun.SetAnimationFPS(gun.shootAnimation, 32);
-            gun.SetAnimationFPS(gun.idleAnimation, 8);
-            gun.SetAnimationFPS(gun.reloadAnimation, 9);
+            gun.reloadAnimation = "heatsink_reload";
+            gun.idleAnimation = "heatsink_idle";
+            gun.shootAnimation = "heatsink_fire";
+
+
 
             gun.isAudioLoop = true;
             for (int i = 0; i < 1; i++)

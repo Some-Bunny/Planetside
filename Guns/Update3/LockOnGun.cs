@@ -13,6 +13,7 @@ using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
 using Alexandria.Misc;
+using Alexandria.Assetbundle;
 
 namespace Planetside
 {
@@ -25,12 +26,21 @@ namespace Planetside
 			gun.gameObject.AddComponent<LockOnGun>();
 			gun.SetShortDescription("Locked And Loaded");
 			gun.SetLongDescription("Directs micro-rockets towards the targetting reticle. Press Reload on a full clip to lock on to the currently targeted enemy.\n\nA shoulder-mounted rocket launcher, fitted with way too much computer circuitry.\nMakes up for it with being good at generating half-decent jokes and a perfect enemy lock-on and tracking system.");
-			GunExt.SetupSprite(gun, null, "lockongun_idle_001", 11);
-			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_wpn_voidcannon_shot_01";
+
+            GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_2_Sheet_Data, "lockongun_idle_001");
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_2_Animation_Data;
+            gun.sprite.SortingOrder = 1;
+
+            gun.reloadAnimation = "lockongun_reload";
+            gun.idleAnimation = "lockongun_idle";
+            gun.shootAnimation = "lockongun_fire";
+
+
+            gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_wpn_voidcannon_shot_01";
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].triggerEvent = true;
-			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 40);
-			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 6);
-			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 2);
+
+
+
 			GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(345) as Gun, true, false);
 			gun.gunSwitchGroup = (PickupObjectDatabase.GetById(593) as Gun).gunSwitchGroup;
 			gun.DefaultModule.ammoCost = 1;
@@ -55,9 +65,10 @@ namespace Planetside
 			projectile.shouldRotate = true;
 			projectile.pierceMinorBreakables = true;
 			projectile.gameObject.AddComponent<LockOnGunProjectile>();
-			projectile.SetProjectileSpriteRight("lockonprojectile", 9, 7, false, tk2dBaseSprite.Anchor.MiddleCenter, 9, 7);
+            ItemAPI.GunTools.SetProjectileCollisionRight(projectile, "lockonprojectile", StaticSpriteDefinitions.Projectile_Sheet_Data, 9, 7, false, tk2dBaseSprite.Anchor.MiddleCenter);
 
-			ExplosiveModifier explosiveModifier = projectile.gameObject.AddComponent<ExplosiveModifier>();
+
+            ExplosiveModifier explosiveModifier = projectile.gameObject.AddComponent<ExplosiveModifier>();
 			explosiveModifier.doExplosion = true;
 			explosiveModifier.explosionData = StaticExplosionDatas.explosiveRoundsExplosion;
 

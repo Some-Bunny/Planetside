@@ -77,6 +77,20 @@ namespace Planetside
 			PierceProjModifier spook = projectile.gameObject.AddComponent<PierceProjModifier>();
 			spook.penetration = 1;
 
+
+            int Length = 7;
+            Alexandria.Assetbundle.ProjectileBuilders.AnimateProjectileBundle(projectile, "OscillatorProjectileSynergy", StaticSpriteDefinitions.Projectile_Sheet_Data, StaticSpriteDefinitions.Projectile_Animation_Data, "OscillatorProjectile",
+             AnimateBullet.ConstructListOfSameValues<IntVector2>(new IntVector2(7, 5), Length),
+            AnimateBullet.ConstructListOfSameValues(true, Length),
+            AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.MiddleCenter, Length),
+            AnimateBullet.ConstructListOfSameValues(true, Length),
+            AnimateBullet.ConstructListOfSameValues(false, Length),
+            AnimateBullet.ConstructListOfSameValues<Vector3?>(null, Length),
+            AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(9, 7), Length),
+            AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(-1, -1), Length),
+            AnimateBullet.ConstructListOfSameValues<Projectile>(null, Length));
+
+            /*
 			projectile.AnimateProjectile(new List<string> {
 				"oscillatosynergy_projectile_001",
 				"oscillatosynergy_projectile_002",
@@ -95,8 +109,8 @@ namespace Planetside
                 new IntVector2(7, 5),
 			}, AnimateBullet.ConstructListOfSameValues(false, 7), AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.MiddleCenter, 7), AnimateBullet.ConstructListOfSameValues(true, 7), AnimateBullet.ConstructListOfSameValues(false, 7),
 			AnimateBullet.ConstructListOfSameValues<Vector3?>(null, 7), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 7), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 7), AnimateBullet.ConstructListOfSameValues<Projectile>(null, 7));
-
-			FakePrefab.MarkAsFakePrefab(projectile.gameObject);
+			*/
+            FakePrefab.MarkAsFakePrefab(projectile.gameObject);
 			UnityEngine.Object.DontDestroyOnLoad(projectile);
 			gun.DefaultModule.projectiles[0] = projectile;
 			bool flag = gun.Volley.projectiles[0] != gun.DefaultModule;

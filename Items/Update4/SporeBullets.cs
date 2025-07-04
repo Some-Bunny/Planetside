@@ -204,6 +204,31 @@ namespace Planetside
 			bouncy.bouncesTrackEnemies = true;
 			bouncy.bounceTrackRadius = 5;
 
+            int Length = 4;
+            Alexandria.Assetbundle.ProjectileBuilders.AnimateProjectileBundle(projectile, "sporeprojIdle", StaticSpriteDefinitions.Projectile_Sheet_Data, StaticSpriteDefinitions.Projectile_Animation_Data, "sporeprojIdle",
+			AnimateBullet.ConstructListOfSameValues<IntVector2>(new IntVector2(8, 7), Length),
+			AnimateBullet.ConstructListOfSameValues(true, Length),
+			AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.MiddleCenter, Length),
+			AnimateBullet.ConstructListOfSameValues(true, Length),
+			AnimateBullet.ConstructListOfSameValues(false, Length),
+			AnimateBullet.ConstructListOfSameValues<Vector3?>(null, Length),
+			AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(10, 9), Length),
+			AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(-1, -1), Length),
+			AnimateBullet.ConstructListOfSameValues<Projectile>(null, Length));
+
+            Length = 6;
+            Alexandria.Assetbundle.ProjectileBuilders.AnimateProjectileBundle(projectile, "sporeprojInflate", StaticSpriteDefinitions.Projectile_Sheet_Data, StaticSpriteDefinitions.Projectile_Animation_Data, "sporeprojInflate",
+			AnimateBullet.ConstructListOfSameValues<IntVector2>(new IntVector2(12, 12), Length),
+			AnimateBullet.ConstructListOfSameValues(true, Length),
+			AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.MiddleCenter, Length),
+			AnimateBullet.ConstructListOfSameValues(true, Length),
+			AnimateBullet.ConstructListOfSameValues(false, Length),
+			AnimateBullet.ConstructListOfSameValues<Vector3?>(null, Length),
+			AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(12, 12), Length),
+			AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(0, 0), Length),
+			AnimateBullet.ConstructListOfSameValues<Projectile>(null, Length));
+
+            /*
 			projectile.AnimateProjectile(new List<string> {
 				"sporebullet_001",
 				"sporebullet_002",
@@ -226,7 +251,10 @@ namespace Planetside
 				new IntVector2(6, 6),
 				new IntVector2(6, 6),
 			}, AnimateBullet.ConstructListOfSameValues(false, 8), AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.MiddleCenter, 8), AnimateBullet.ConstructListOfSameValues(true, 8), AnimateBullet.ConstructListOfSameValues(false, 8), AnimateBullet.ConstructListOfSameValues<Vector3?>(null, 8), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 8), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 8), AnimateBullet.ConstructListOfSameValues<Projectile>(null, 8), "enlarge");
-			projectile.sprite.spriteAnimator.DefaultClipId = projectile.sprite.spriteAnimator.Library.GetClipIdByName("idle");
+			*/
+
+
+            projectile.sprite.spriteAnimator.DefaultClipId = projectile.sprite.spriteAnimator.Library.GetClipIdByName("sporeprojIdle");
 			HomingModifier HomingMod = projectile.gameObject.GetOrAddComponent<HomingModifier>();
 			HomingMod.AngularVelocity = 60;
 			HomingMod.HomingRadius = 6;

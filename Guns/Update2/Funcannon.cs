@@ -13,6 +13,7 @@ using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
 using SaveAPI;
+using Alexandria.Assetbundle;
 
 namespace Planetside
 {
@@ -25,11 +26,17 @@ namespace Planetside
 			gun.gameObject.AddComponent<Funcannon>();
 			gun.SetShortDescription("Fungal Warfare");
 			gun.SetLongDescription("A mushroom that has completely enveloped an old pirate cannon.\n\nFolk tale claims of a hidden pirate-themed Chamber in the Gungeon, with this being crucial evidence.");
-			GunExt.SetupSprite(gun, null, "funcannon_idle_001", 11);
-			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 15);
-			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 7);
-			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 5);
-			GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(39) as Gun, true, false);
+
+            GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_2_Sheet_Data, "funcannon_idle_001");
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_2_Animation_Data;
+            gun.sprite.SortingOrder = 1;
+
+            gun.reloadAnimation = "funcannon_reload";
+            gun.idleAnimation = "funcannon_idle";
+            gun.shootAnimation = "funcannon_fire";
+
+
+            GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(39) as Gun, true, false);
 			gun.gunSwitchGroup = (PickupObjectDatabase.GetById(755) as Gun).gunSwitchGroup;
 			/*
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_PET_junk_splat_03";

@@ -92,7 +92,7 @@ namespace Planetside
 			AkSoundEngine.PostEvent("Play_OBJ_key_impact_01", player.gameObject);
 			AkSoundEngine.PostEvent("Stop_MUS_All", player.gameObject);
 
-			if (PlanetsideModule.DebugMode == false)
+			if (PlanetsideModule.PrisonerDebug == false)
 			{
                 yield return new WaitForSeconds(3);
                 Vector2 lol = shrineSprite.WorldTopRight + new Vector2(0.25f, 3).RoundToInt();

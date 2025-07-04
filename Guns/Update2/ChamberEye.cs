@@ -12,6 +12,7 @@ using System.Collections;
 using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
+using Alexandria.Assetbundle;
 
 namespace Planetside
 {
@@ -24,12 +25,17 @@ namespace Planetside
 			gun.gameObject.AddComponent<EyeOfAnnihilation>();
 			gun.SetShortDescription("ei bol");
 			gun.SetLongDescription("Cool eye.");
-			gun.SetupSprite(null, "chambereye_idle_001", 11);
-			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 15);
-			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 4);
-			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 2);
 
-			for (int i = 0; i < 1; i++)
+
+            GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_2_Sheet_Data, "chambereye_idle_001");
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_2_Animation_Data;
+            gun.sprite.SortingOrder = 1;
+
+            gun.reloadAnimation = "chambereye";
+            gun.idleAnimation = "chambereye";
+            gun.shootAnimation = "chambereye";
+
+            for (int i = 0; i < 1; i++)
 			{
 				gun.AddProjectileModuleFrom(PickupObjectDatabase.GetById(43) as Gun, true, false);
 
@@ -74,6 +80,21 @@ namespace Planetside
 				projectile.objectImpactEventName = (PickupObjectDatabase.GetById(13) as Gun).DefaultModule.projectiles[0].objectImpactEventName;
 				projectile.enemyImpactEventName = (PickupObjectDatabase.GetById(13) as Gun).DefaultModule.projectiles[0].enemyImpactEventName;
 				projectile.gameObject.AddComponent<ChamberEyeProjectile>();
+
+                int Length = 5;
+                Alexandria.Assetbundle.ProjectileBuilders.AnimateProjectileBundle(projectile, "eyeSpear", StaticSpriteDefinitions.Projectile_Sheet_Data, StaticSpriteDefinitions.Projectile_Animation_Data, "eyeSpear",
+                 AnimateBullet.ConstructListOfSameValues<IntVector2>(new IntVector2(20, 9), Length),
+                AnimateBullet.ConstructListOfSameValues(true, Length),
+                AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.MiddleCenter, Length),
+                AnimateBullet.ConstructListOfSameValues(true, Length),
+                AnimateBullet.ConstructListOfSameValues(false, Length),
+                AnimateBullet.ConstructListOfSameValues<Vector3?>(null, Length),
+                AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(16, 9), Length),
+                AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(2, 0), Length),
+                AnimateBullet.ConstructListOfSameValues<Projectile>(null, Length));
+
+
+                /*
 				projectile.AnimateProjectile(new List<string> {
 				"eyespear_projectile_001",
 				"eyespear_projectile_002",
@@ -88,7 +109,8 @@ namespace Planetside
 			AnimateBullet.ConstructListOfSameValues<Vector3?>(null, 7), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 7), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 7), AnimateBullet.ConstructListOfSameValues<Projectile>(null, 7));
 
 				projectile.SetProjectileSpriteRight("eyespear_projectile_001", 19, 7, false, tk2dBaseSprite.Anchor.MiddleCenter, 19, 7);
-				projectile.shouldRotate = true;
+				*/
+                projectile.shouldRotate = true;
 
 			}
 			gun.barrelOffset.transform.localPosition = new Vector3(0.6875f, 0.4375f, 0f);

@@ -115,7 +115,19 @@ namespace Planetside
 				explosiveModifier.doExplosion = true;
 				explosiveModifier.IgnoreQueues = true;
 
+                int Length = 8;
+                Alexandria.Assetbundle.ProjectileBuilders.AnimateProjectileBundle(projectile, "canisterProj", StaticSpriteDefinitions.Projectile_Sheet_Data, StaticSpriteDefinitions.Projectile_Animation_Data, "canisterProj",
+                 AnimateBullet.ConstructListOfSameValues<IntVector2>(new IntVector2(8, 8), Length),
+                AnimateBullet.ConstructListOfSameValues(true, Length),
+                AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.MiddleRight, Length),
+                AnimateBullet.ConstructListOfSameValues(true, Length),
+                AnimateBullet.ConstructListOfSameValues(false, Length),
+                AnimateBullet.ConstructListOfSameValues<Vector3?>(null, Length),
+                AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(-2, -2), Length),
+                AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(12, 12), Length),
+                AnimateBullet.ConstructListOfSameValues<Projectile>(null, Length));
 
+                /*
                 projectile.AnimateProjectile(new List<string> {
                 "canister_001",
                 "canister_002",
@@ -137,7 +149,8 @@ namespace Planetside
             }, AnimateBullet.ConstructListOfSameValues(false, 8), AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.MiddleCenter, 8), AnimateBullet.ConstructListOfSameValues(true, 8), AnimateBullet.ConstructListOfSameValues(false, 8),
 			   AnimateBullet.ConstructListOfSameValues<Vector3?>(null, 8), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 8), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 8), AnimateBullet.ConstructListOfSameValues<Projectile>(null, 8));
 				projectile.SetProjectileSpriteRight("canister_001", 8, 8, false, tk2dBaseSprite.Anchor.MiddleCenter, 8, 8);
-				projectile.shouldRotate = false;
+				*/
+                projectile.shouldRotate = false;
                 
                 SpriteOutlineManager.AddOutlineToSprite(projectile.sprite, Color.black, 0.1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
 

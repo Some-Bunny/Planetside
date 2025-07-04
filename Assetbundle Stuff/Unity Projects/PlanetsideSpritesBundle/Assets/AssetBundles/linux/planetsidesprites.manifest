@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 1418740715
+CRC: 328153517
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 14a68017211df90203ae0657761be41c
+    Hash: f6dc766df2b4b01f40b2ef521d3ec081
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 0d1a5e836af31045808494c6dfce5541
+    Hash: 458548b0fa917ebe1d600c5fabf7780a
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -30,14 +30,15 @@ ClassTypes:
 - Class: 213
   Script: {instanceID: 0}
 Assets:
+- Assets/Projectiles/ProjectileImpactAnimation.prefab
 - Assets/UI/Alphabet Letters/letter_12.png
 - Assets/Minibosses/Bullet Banker/BulletBankerCollection Data/BulletBankerCollection.prefab
 - Assets/Ammonomicon/Ammonomicon Icons/shellraxicon.png
 - Assets/Enemies/Inquisitor/InquisitorCollection Data/InquisitorCollection.prefab
+- Assets/Guns (2)/Gun2Collection Data/Gun2Collection.prefab
 - Assets/Ammonomicon/Ammonomicon Icons/ammoentryshrrom.png
 - Assets/Minibosses/AnnihiChamber/AnnihiChamberCollection Data/annihichamber material.mat
 - Assets/Enemies/Skullvenant/SkullvenantCollection Data/SkullvenantCollection.prefab
-- Assets/VFX/Effects/DebuffCollection Data/debuff material.mat
 - Assets/Enemies/Fodder/FodderCollection Data/atlas0.png
 - Assets/Enemies/Fodder/fodder_die_004.png
 - Assets/UI/Alphabet Letters/letter_17.png
@@ -75,6 +76,7 @@ Assets:
 - Assets/Enemies/Fodder/fodder_idle_004.png
 - Assets/Enemies/Fodder/fodder_die_005.png
 - Assets/Enemies/Cursebulon/CursebulonCollection Data/curseBulon material.mat
+- Assets/Projectiles/ProjectileImpactCollection Data/ProjectileImpactCollection.prefab
 - Assets/Enemies/Fodder/fodder_idle_007.png
 - Assets/Ammonomicon/Ammonomicon Icons/creationistTemplateTrespass.png
 - Assets/BossCards/fungannon_bosscard.png
@@ -96,6 +98,7 @@ Assets:
 - Assets/Enemies/Shamber/ShamberCollection Data/shamber material.mat
 - Assets/Enemies/Fodder/fodder_die_009.png
 - Assets/Enemies/Fodder/fodder_die_010.png
+- Assets/VFX/Effects/VFXCollection Data/VFXCollection.prefab
 - Assets/Enemies/Fodder/fodder_idle_003.png
 - Assets/Ammonomicon/Ammonomicon Icons/bigcubeicon.png
 - Assets/Bosses/earthmoverBosscard.png
@@ -140,6 +143,7 @@ Assets:
 - Assets/Ammonomicon/Ammonomicon Icons/blockadesheetTrespass.png
 - Assets/NPCs/NPCSpriteAnimation.prefab
 - Assets/Bosses/Fungannon/FungannonCollection Data/FungannonCollection.prefab
+- Assets/Guns (2)/Gun2Animation.prefab
 - Assets/Ammonomicon/Ammonomicon Icons/jammedguardicon.png
 - Assets/Ammonomicon/Ammonomicon Icons/coalleticon.png
 - Assets/Ammonomicon/Ammonomicon Icons/barretinaiconthing.png
@@ -158,6 +162,7 @@ Assets:
 - Assets/BossCards/nemesis_bosscard.png
 - Assets/Enemies/Wailer/WailerCollection Data/WailerCollection.prefab
 - Assets/UI/Alphabet Letters/letter_20.png
+- Assets/VFX/Effects/VFXCollection Data/vfx material.mat
 - Assets/UI/Alphabet Letters/letter_13.png
 - Assets/Guns/PlanetsideGunCollection Data/psoggun material.mat
 - Assets/NPCs/NPCSpriteCollection Data/NPCSpriteCollection.prefab
@@ -180,7 +185,6 @@ Assets:
 - Assets/Projectiles/PlanetsideProjectileCollection Data/projectile material.mat
 - Assets/Bosses/HM Prime/HMPrimeCollection Data/hmprime material.mat
 - Assets/UI/Alphabet Letters/letter_07.png
-- Assets/VFX/Effects/DebuffCollection Data/DebuffCollection.prefab
 - Assets/UI/Alphabet Letters/letter_11.png
 - Assets/Enemies/Fodder/fodder_die_003.png
 - Assets/Enemies/Skullvenant/SkullvenantCollection Data/skullvenant material.mat

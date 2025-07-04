@@ -78,9 +78,10 @@ namespace Planetside
 			Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(gun.DefaultModule.projectiles[0]); projectile.gameObject.SetActive(false);
 			FakePrefab.MarkAsFakePrefab(projectile.gameObject);
 			UnityEngine.Object.DontDestroyOnLoad(projectile);
-			projectile.SetProjectileSpriteRight("collapserNeedle_001", 8, 5, false, tk2dBaseSprite.Anchor.MiddleCenter, 10, 7);
+			//projectile.SetProjectileSpriteRight("collapserNeedle_001", 8, 5, false, tk2dBaseSprite.Anchor.MiddleCenter, 10, 7);
+            ItemAPI.GunTools.SetProjectileCollisionRight(projectile,"collapserNeedle_001", StaticSpriteDefinitions.Projectile_Sheet_Data, 8, 5, false, tk2dBaseSprite.Anchor.MiddleCenter);
 
-			ImprovedAfterImage yes = projectile.gameObject.AddComponent<ImprovedAfterImage>();
+            ImprovedAfterImage yes = projectile.gameObject.AddComponent<ImprovedAfterImage>();
 			yes.spawnShadows = true;
 			yes.shadowLifetime = 0.1875f;
 			yes.shadowTimeDelay = 0.01f;
@@ -117,6 +118,22 @@ namespace Planetside
 			FakePrefab.MarkAsFakePrefab(CollapseProjectile.gameObject);
 			UnityEngine.Object.DontDestroyOnLoad(CollapseProjectile);
 			gun.DefaultModule.projectiles[0] = CollapseProjectile;
+
+
+
+            int Length = 6;
+            Alexandria.Assetbundle.ProjectileBuilders.AnimateProjectileBundle(projectile, "collapserRift", StaticSpriteDefinitions.Projectile_Sheet_Data, StaticSpriteDefinitions.Projectile_Animation_Data, "collapserRift",
+             AnimateBullet.ConstructListOfSameValues<IntVector2>(new IntVector2(9, 9), Length),
+            AnimateBullet.ConstructListOfSameValues(true, Length),
+            AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.MiddleCenter, Length),
+            AnimateBullet.ConstructListOfSameValues(true, Length),
+            AnimateBullet.ConstructListOfSameValues(false, Length),
+            AnimateBullet.ConstructListOfSameValues<Vector3?>(null, Length),
+            AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(11, 11), Length),
+            AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(-1, -1), Length),
+            AnimateBullet.ConstructListOfSameValues<Projectile>(null, Length));
+
+            /*
 			CollapseProjectile.AnimateProjectile(new List<string> {
 				"colalsped_001",
 				"colalsped_002",
@@ -132,9 +149,9 @@ namespace Planetside
 				new IntVector2(9, 9),
 				new IntVector2(9, 9)
 			}, AnimateBullet.ConstructListOfSameValues(false, 7), AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.MiddleCenter, 7), AnimateBullet.ConstructListOfSameValues(true, 7), AnimateBullet.ConstructListOfSameValues(false, 7), AnimateBullet.ConstructListOfSameValues<Vector3?>(null, 7), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 7), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 7), AnimateBullet.ConstructListOfSameValues<Projectile>(null, 7));
+			*/
 
-
-			CollapseProjectile.AdditionalScaleMultiplier *= 1;
+            CollapseProjectile.AdditionalScaleMultiplier *= 1;
 			CollapseProjectile.baseData.damage = 20f;
 			CollapseProjectile.baseData.speed = 7;
 			CollapseProjectile.pierceMinorBreakables = true;

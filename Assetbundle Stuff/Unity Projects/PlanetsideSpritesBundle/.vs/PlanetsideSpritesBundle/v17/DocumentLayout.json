@@ -3,7 +3,23 @@
   "WorkspaceRootPath": "D:\\reposSecondary\\failsafes\\Planetside\\Assetbundle Stuff\\Unity Projects\\PlanetsideSpritesBundle\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{39389EDC-B04F-DAEA-DAB6-B43C3D4C2D31}|Assembly-CSharp-Editor.csproj|d:\\repossecondary\\failsafes\\planetside\\assetbundle stuff\\unity projects\\planetsidespritesbundle\\assets\\editor\\buildassetbundles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{39389EDC-B04F-DAEA-DAB6-B43C3D4C2D31}|Assembly-CSharp-Editor.csproj|d:\\repossecondary\\failsafes\\planetside\\assetbundle stuff\\unity projects\\planetsidespritesbundle\\assets\\tk2droot\\tk2d\\editor\\tk2dspriteguiutility.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{39389EDC-B04F-DAEA-DAB6-B43C3D4C2D31}|Assembly-CSharp-Editor.csproj|solutionrelative:assets\\tk2droot\\tk2d\\editor\\tk2dspriteguiutility.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{39389EDC-B04F-DAEA-DAB6-B43C3D4C2D31}|Assembly-CSharp-Editor.csproj|d:\\repossecondary\\failsafes\\planetside\\assetbundle stuff\\unity projects\\planetsidespritesbundle\\assets\\tk2droot\\tk2d\\editor\\sprites\\tk2dspritecollectionbuilder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{39389EDC-B04F-DAEA-DAB6-B43C3D4C2D31}|Assembly-CSharp-Editor.csproj|solutionrelative:assets\\tk2droot\\tk2d\\editor\\sprites\\tk2dspritecollectionbuilder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2DCC9A25-C5B4-E08C-780B-CE81D6D5C908}|Assembly-CSharp.csproj|D:\\reposSecondary\\failsafes\\Planetside\\Assetbundle Stuff\\Unity Projects\\PlanetsideSpritesBundle\\assets\\tk2droot\\tk2d\\code\\sprites\\tk2dspritecollectiondata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2DCC9A25-C5B4-E08C-780B-CE81D6D5C908}|Assembly-CSharp.csproj|solutionrelative:assets\\tk2droot\\tk2d\\code\\sprites\\tk2dspritecollectiondata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{39389EDC-B04F-DAEA-DAB6-B43C3D4C2D31}|Assembly-CSharp-Editor.csproj|D:\\reposSecondary\\failsafes\\Planetside\\Assetbundle Stuff\\Unity Projects\\PlanetsideSpritesBundle\\assets\\tk2droot\\tk2dui\\editor\\attachpointdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{39389EDC-B04F-DAEA-DAB6-B43C3D4C2D31}|Assembly-CSharp-Editor.csproj|solutionrelative:assets\\tk2droot\\tk2dui\\editor\\attachpointdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{39389EDC-B04F-DAEA-DAB6-B43C3D4C2D31}|Assembly-CSharp-Editor.csproj|D:\\reposSecondary\\failsafes\\Planetside\\Assetbundle Stuff\\Unity Projects\\PlanetsideSpritesBundle\\assets\\editor\\buildassetbundles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{39389EDC-B04F-DAEA-DAB6-B43C3D4C2D31}|Assembly-CSharp-Editor.csproj|solutionrelative:assets\\editor\\buildassetbundles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -31,10 +47,6 @@
       "RelativeMoniker": "D:0:0:{39389EDC-B04F-DAEA-DAB6-B43C3D4C2D31}|Assembly-CSharp-Editor.csproj|solutionrelative:assets\\tk2droot\\tk2d\\editor\\sprites\\atlas\\tk2datlasbuilder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{39389EDC-B04F-DAEA-DAB6-B43C3D4C2D31}|Assembly-CSharp-Editor.csproj|D:\\reposSecondary\\failsafes\\Planetside\\Assetbundle Stuff\\Unity Projects\\PlanetsideSpritesBundle\\assets\\tk2droot\\tk2d\\editor\\sprites\\tk2dspritecollectionbuilder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{39389EDC-B04F-DAEA-DAB6-B43C3D4C2D31}|Assembly-CSharp-Editor.csproj|solutionrelative:assets\\tk2droot\\tk2d\\editor\\sprites\\tk2dspritecollectionbuilder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{2DCC9A25-C5B4-E08C-780B-CE81D6D5C908}|Assembly-CSharp.csproj|D:\\reposSecondary\\failsafes\\Planetside\\Assetbundle Stuff\\Unity Projects\\PlanetsideSpritesBundle\\assets\\tk2droot\\tk2d\\code\\sprites\\tk2dbasesprite.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2DCC9A25-C5B4-E08C-780B-CE81D6D5C908}|Assembly-CSharp.csproj|solutionrelative:assets\\tk2droot\\tk2d\\code\\sprites\\tk2dbasesprite.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -50,7 +62,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -62,19 +74,44 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "tk2dSpriteAnimationClipEditor.cs",
-              "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Assetbundle Stuff\\Unity Projects\\PlanetsideSpritesBundle\\Assets\\TK2DROOT\\tk2d\\Editor\\Sprites\\SpriteAnimationEditor\\tk2dSpriteAnimationClipEditor.cs",
-              "RelativeDocumentMoniker": "Assets\\TK2DROOT\\tk2d\\Editor\\Sprites\\SpriteAnimationEditor\\tk2dSpriteAnimationClipEditor.cs",
-              "ToolTip": "D:\\reposSecondary\\failsafes\\Planetside\\Assetbundle Stuff\\Unity Projects\\PlanetsideSpritesBundle\\Assets\\TK2DROOT\\tk2d\\Editor\\Sprites\\SpriteAnimationEditor\\tk2dSpriteAnimationClipEditor.cs",
-              "RelativeToolTip": "Assets\\TK2DROOT\\tk2d\\Editor\\Sprites\\SpriteAnimationEditor\\tk2dSpriteAnimationClipEditor.cs",
-              "ViewState": "AQIAAJ0AAAAAAAAAAAAAALIAAAAFAAAA",
+              "DocumentIndex": 0,
+              "Title": "tk2dSpriteGuiUtility.cs",
+              "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Assetbundle Stuff\\Unity Projects\\PlanetsideSpritesBundle\\Assets\\TK2DROOT\\tk2d\\Editor\\tk2dSpriteGuiUtility.cs",
+              "RelativeDocumentMoniker": "Assets\\TK2DROOT\\tk2d\\Editor\\tk2dSpriteGuiUtility.cs",
+              "ToolTip": "D:\\reposSecondary\\failsafes\\Planetside\\Assetbundle Stuff\\Unity Projects\\PlanetsideSpritesBundle\\Assets\\TK2DROOT\\tk2d\\Editor\\tk2dSpriteGuiUtility.cs",
+              "RelativeToolTip": "Assets\\TK2DROOT\\tk2d\\Editor\\tk2dSpriteGuiUtility.cs",
+              "ViewState": "AQIAAGgAAAAAAAAAAAAIwIQAAADeAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-14T22:48:20.611Z"
+              "WhenOpened": "2025-07-04T20:22:18.719Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "tk2dSpriteCollectionData.cs",
+              "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Assetbundle Stuff\\Unity Projects\\PlanetsideSpritesBundle\\Assets\\TK2DROOT\\tk2d\\Code\\Sprites\\tk2dSpriteCollectionData.cs",
+              "RelativeDocumentMoniker": "Assets\\TK2DROOT\\tk2d\\Code\\Sprites\\tk2dSpriteCollectionData.cs",
+              "ToolTip": "D:\\reposSecondary\\failsafes\\Planetside\\Assetbundle Stuff\\Unity Projects\\PlanetsideSpritesBundle\\Assets\\TK2DROOT\\tk2d\\Code\\Sprites\\tk2dSpriteCollectionData.cs",
+              "RelativeToolTip": "Assets\\TK2DROOT\\tk2d\\Code\\Sprites\\tk2dSpriteCollectionData.cs",
+              "ViewState": "AQIAACMBAAAAAAAAAAAiwD8BAAAhAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-04T16:45:29.376Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AttachPointData.cs",
+              "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Assetbundle Stuff\\Unity Projects\\PlanetsideSpritesBundle\\Assets\\TK2DROOT\\tk2dUI\\Editor\\AttachPointData.cs",
+              "RelativeDocumentMoniker": "Assets\\TK2DROOT\\tk2dUI\\Editor\\AttachPointData.cs",
+              "ToolTip": "D:\\reposSecondary\\failsafes\\Planetside\\Assetbundle Stuff\\Unity Projects\\PlanetsideSpritesBundle\\Assets\\TK2DROOT\\tk2dUI\\Editor\\AttachPointData.cs",
+              "RelativeToolTip": "Assets\\TK2DROOT\\tk2dUI\\Editor\\AttachPointData.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-04T16:43:41.546Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
               "Title": "dfEditorUtil.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Assetbundle Stuff\\Unity Projects\\PlanetsideSpritesBundle\\Assets\\DFGUI\\DFGUI\\Editor\\dfEditorUtil.cs",
               "RelativeDocumentMoniker": "Assets\\DFGUI\\DFGUI\\Editor\\dfEditorUtil.cs",
@@ -86,7 +123,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 7,
               "Title": "dfControlInspector.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Assetbundle Stuff\\Unity Projects\\PlanetsideSpritesBundle\\Assets\\DFGUI\\DFGUI\\Editor\\dfControlInspector.cs",
               "RelativeDocumentMoniker": "Assets\\DFGUI\\DFGUI\\Editor\\dfControlInspector.cs",
@@ -98,7 +135,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 8,
               "Title": "tk2dSpriteAnimatorEditor.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Assetbundle Stuff\\Unity Projects\\PlanetsideSpritesBundle\\Assets\\TK2DROOT\\tk2d\\Editor\\Sprites\\tk2dSpriteAnimatorEditor.cs",
               "RelativeDocumentMoniker": "Assets\\TK2DROOT\\tk2d\\Editor\\Sprites\\tk2dSpriteAnimatorEditor.cs",
@@ -110,7 +147,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 9,
               "Title": "tk2dSpriteAnimation.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Assetbundle Stuff\\Unity Projects\\PlanetsideSpritesBundle\\Assets\\TK2DROOT\\tk2d\\Code\\Sprites\\tk2dSpriteAnimation.cs",
               "RelativeDocumentMoniker": "Assets\\TK2DROOT\\tk2d\\Code\\Sprites\\tk2dSpriteAnimation.cs",
@@ -122,20 +159,44 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 4,
               "Title": "BuildAssetBundles.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Assetbundle Stuff\\Unity Projects\\PlanetsideSpritesBundle\\Assets\\Editor\\BuildAssetBundles.cs",
               "RelativeDocumentMoniker": "Assets\\Editor\\BuildAssetBundles.cs",
               "ToolTip": "D:\\reposSecondary\\failsafes\\Planetside\\Assetbundle Stuff\\Unity Projects\\PlanetsideSpritesBundle\\Assets\\Editor\\BuildAssetBundles.cs",
               "RelativeToolTip": "Assets\\Editor\\BuildAssetBundles.cs",
-              "ViewState": "AQIAACQAAAAAAAAAAAAuwEYAAAAAAAAA",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAABIAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-05T20:28:35.349Z",
+              "WhenOpened": "2024-11-05T20:28:35.349Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "tk2dSpriteCollectionBuilder.cs",
+              "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Assetbundle Stuff\\Unity Projects\\PlanetsideSpritesBundle\\Assets\\TK2DROOT\\tk2d\\Editor\\Sprites\\tk2dSpriteCollectionBuilder.cs",
+              "RelativeDocumentMoniker": "Assets\\TK2DROOT\\tk2d\\Editor\\Sprites\\tk2dSpriteCollectionBuilder.cs",
+              "ToolTip": "D:\\reposSecondary\\failsafes\\Planetside\\Assetbundle Stuff\\Unity Projects\\PlanetsideSpritesBundle\\Assets\\TK2DROOT\\tk2d\\Editor\\Sprites\\tk2dSpriteCollectionBuilder.cs",
+              "RelativeToolTip": "Assets\\TK2DROOT\\tk2d\\Editor\\Sprites\\tk2dSpriteCollectionBuilder.cs",
+              "ViewState": "AQIAAB0IAAAAAAAAAAAcwDIIAAAoAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-02-17T13:33:56.254Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 5,
+              "Title": "tk2dSpriteAnimationClipEditor.cs",
+              "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Assetbundle Stuff\\Unity Projects\\PlanetsideSpritesBundle\\Assets\\TK2DROOT\\tk2d\\Editor\\Sprites\\SpriteAnimationEditor\\tk2dSpriteAnimationClipEditor.cs",
+              "RelativeDocumentMoniker": "Assets\\TK2DROOT\\tk2d\\Editor\\Sprites\\SpriteAnimationEditor\\tk2dSpriteAnimationClipEditor.cs",
+              "ToolTip": "D:\\reposSecondary\\failsafes\\Planetside\\Assetbundle Stuff\\Unity Projects\\PlanetsideSpritesBundle\\Assets\\TK2DROOT\\tk2d\\Editor\\Sprites\\SpriteAnimationEditor\\tk2dSpriteAnimationClipEditor.cs",
+              "RelativeToolTip": "Assets\\TK2DROOT\\tk2d\\Editor\\Sprites\\SpriteAnimationEditor\\tk2dSpriteAnimationClipEditor.cs",
+              "ViewState": "AQIAAJwAAAAAAAAAAAAAAKsAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-14T22:48:20.611Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
               "Title": "tk2dAtlasBuilder.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Assetbundle Stuff\\Unity Projects\\PlanetsideSpritesBundle\\Assets\\TK2DROOT\\tk2d\\Editor\\Sprites\\Atlas\\tk2dAtlasBuilder.cs",
               "RelativeDocumentMoniker": "Assets\\TK2DROOT\\tk2d\\Editor\\Sprites\\Atlas\\tk2dAtlasBuilder.cs",
@@ -147,7 +208,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 11,
               "Title": "tk2dBaseSprite.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Assetbundle Stuff\\Unity Projects\\PlanetsideSpritesBundle\\Assets\\TK2DROOT\\tk2d\\Code\\Sprites\\tk2dBaseSprite.cs",
               "RelativeDocumentMoniker": "Assets\\TK2DROOT\\tk2d\\Code\\Sprites\\tk2dBaseSprite.cs",
@@ -159,7 +220,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 12,
               "Title": "tk2dSpriteCollection.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Assetbundle Stuff\\Unity Projects\\PlanetsideSpritesBundle\\Assets\\TK2DROOT\\tk2d\\Code\\Sprites\\tk2dSpriteCollection.cs",
               "RelativeDocumentMoniker": "Assets\\TK2DROOT\\tk2d\\Code\\Sprites\\tk2dSpriteCollection.cs",
@@ -168,18 +229,6 @@
               "ViewState": "AQIAAA0BAAAAAAAAAAAAwJcBAAASAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-02-17T13:34:48.975Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "tk2dSpriteCollectionBuilder.cs",
-              "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Assetbundle Stuff\\Unity Projects\\PlanetsideSpritesBundle\\Assets\\TK2DROOT\\tk2d\\Editor\\Sprites\\tk2dSpriteCollectionBuilder.cs",
-              "RelativeDocumentMoniker": "Assets\\TK2DROOT\\tk2d\\Editor\\Sprites\\tk2dSpriteCollectionBuilder.cs",
-              "ToolTip": "D:\\reposSecondary\\failsafes\\Planetside\\Assetbundle Stuff\\Unity Projects\\PlanetsideSpritesBundle\\Assets\\TK2DROOT\\tk2d\\Editor\\Sprites\\tk2dSpriteCollectionBuilder.cs",
-              "RelativeToolTip": "Assets\\TK2DROOT\\tk2d\\Editor\\Sprites\\tk2dSpriteCollectionBuilder.cs",
-              "ViewState": "AQIAAGgHAAAAAAAAAAAAwFcGAABIAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-17T13:33:56.254Z"
             }
           ]
         }

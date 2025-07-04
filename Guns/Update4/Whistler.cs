@@ -16,6 +16,7 @@ using System.Collections.ObjectModel;
 
 
 using UnityEngine.Serialization;
+using Alexandria.Assetbundle;
 
 namespace Planetside
 {
@@ -28,7 +29,12 @@ namespace Planetside
 			gun.gameObject.AddComponent<Whistler>();
 			GunExt.SetShortDescription(gun, "Loud and Clear");
 			GunExt.SetLongDescription(gun, "A gun invented by someone *particularly* lazy, with the desire to never meet their enemy face on. It got its legendary name due to its unique bullet structure, allegedly causing the rounds to 'whistle'.");
-            GunExt.SetupSprite(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "whistler_idle_001", 11);
+
+            GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "whistler_idle_001");
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
+            gun.sprite.SortingOrder = 1;
+
+
             gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
             gun.sprite.SortingOrder = 1;
 
@@ -73,9 +79,9 @@ namespace Planetside
 			UnityEngine.Object.DontDestroyOnLoad(projectile);
 			gun.DefaultModule.projectiles[0] = projectile;
 			projectile.transform.parent = gun.barrelOffset;
-			projectile.SetProjectileSpriteRight("whistler_projectile_001", 8, 5, false, tk2dBaseSprite.Anchor.MiddleCenter, 10, 7);
+            ItemAPI.GunTools.SetProjectileCollisionRight(projectile, "whistler_projectile_001", StaticSpriteDefinitions.Projectile_Sheet_Data, 8, 5, false, tk2dBaseSprite.Anchor.MiddleCenter);
 
-			ImprovedAfterImage yes = projectile.gameObject.AddComponent<ImprovedAfterImage>();
+            ImprovedAfterImage yes = projectile.gameObject.AddComponent<ImprovedAfterImage>();
 			yes.spawnShadows = true;
 			yes.shadowLifetime = 0.7f;
 			yes.shadowTimeDelay = 0.01f;

@@ -14,6 +14,7 @@ using MonoMod.RuntimeDetour;
 using MonoMod;
 using System.Collections.ObjectModel;
 using SaveAPI;
+using Alexandria.Assetbundle;
 
 
 namespace Planetside
@@ -110,11 +111,16 @@ namespace Planetside
 			gun.gameObject.AddComponent<ArmWarmer>();
 			GunExt.SetShortDescription(gun, "Mmmm, Tasty...");
 			GunExt.SetLongDescription(gun, "A quickly self-replicating blob of meat.\n\nIt's quite disgusting...");
-			GunExt.SetupSprite(gun, null, "heartthing_idle_001", 11);
-			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 25);
-			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 10);
-			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 5);
-			GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(83) as Gun, true, false);
+
+            GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_2_Sheet_Data, "heartthing_idle_001");
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_2_Animation_Data;
+            gun.sprite.SortingOrder = 1;
+
+            gun.reloadAnimation = "armwarmer_reload";
+            gun.idleAnimation = "armwarmer_idle";
+            gun.shootAnimation = "armwarmer_fire";
+
+            GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(83) as Gun, true, false);
 
             gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_ENM_blobulord_bubble_01";
             gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].triggerEvent = true;
@@ -148,6 +154,20 @@ namespace Planetside
 			projectile.baseData.range = 1000f;
 			BounceProjModifier bouncy = projectile.gameObject.AddComponent<BounceProjModifier>();
 			bouncy.numberOfBounces = 1;
+
+            int Length = 5;
+            Alexandria.Assetbundle.ProjectileBuilders.AnimateProjectileBundle(projectile, "meatorb", StaticSpriteDefinitions.Projectile_Sheet_Data, StaticSpriteDefinitions.Projectile_Animation_Data, "meatorb",
+             AnimateBullet.ConstructListOfSameValues<IntVector2>(new IntVector2(8, 8), Length),
+            AnimateBullet.ConstructListOfSameValues(true, Length),
+            AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.MiddleCenter, Length),
+            AnimateBullet.ConstructListOfSameValues(true, Length),
+            AnimateBullet.ConstructListOfSameValues(false, Length),
+            AnimateBullet.ConstructListOfSameValues<Vector3?>(null, Length),
+            AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(8, 8), Length),
+            AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(0, 0), Length),
+            AnimateBullet.ConstructListOfSameValues<Projectile>(null, Length));
+
+            /*
 			projectile.AnimateProjectile(new List<string> {
 				"meatorb_001",
 				"meatorb_002",
@@ -161,7 +181,9 @@ namespace Planetside
 				new IntVector2(8, 8),
 				new IntVector2(8, 8),
 			}, AnimateBullet.ConstructListOfSameValues(false, 8), AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.MiddleCenter, 8), AnimateBullet.ConstructListOfSameValues(true, 8), AnimateBullet.ConstructListOfSameValues(false, 8), AnimateBullet.ConstructListOfSameValues<Vector3?>(null, 8), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 8), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 8), AnimateBullet.ConstructListOfSameValues<Projectile>(null, 8));
-			projectile.hitEffects.alwaysUseMidair = true;
+			*/
+
+            projectile.hitEffects.alwaysUseMidair = true;
 			projectile.hitEffects.overrideMidairDeathVFX = (PickupObjectDatabase.GetById(368) as Gun).DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX;
 			projectile.gameObject.AddComponent<StickyArmWarmerProjectile>();
 			projectile.objectImpactEventName = (PickupObjectDatabase.GetById(404) as Gun).DefaultModule.projectiles[0].objectImpactEventName;

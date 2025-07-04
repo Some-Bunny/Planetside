@@ -67,7 +67,8 @@ namespace Planetside
 
                 Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(mod.projectiles[0]);
                 mod.projectiles[0] = projectile;
-                projectile.SetProjectileSpriteRight("autocannon_projectile_001", 13, 5, false, tk2dBaseSprite.Anchor.MiddleCenter, 13, 5);
+                ItemAPI.GunTools.SetProjectileCollisionRight(projectile, "autocannon_projectile_001", StaticSpriteDefinitions.Projectile_Sheet_Data, 13, 5, false, tk2dBaseSprite.Anchor.MiddleCenter);
+
                 projectile.gameObject.SetActive(false);
                 FakePrefab.MarkAsFakePrefab(projectile.gameObject);
                 UnityEngine.Object.DontDestroyOnLoad(projectile);

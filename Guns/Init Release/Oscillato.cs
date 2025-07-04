@@ -84,6 +84,20 @@ namespace Planetside
 
 
             projectile.gameObject.AddComponent<OscillatorProjectile>();
+
+            int Length = 7;
+            Alexandria.Assetbundle.ProjectileBuilders.AnimateProjectileBundle(projectile, "OscillatorProjectile", StaticSpriteDefinitions.Projectile_Sheet_Data, StaticSpriteDefinitions.Projectile_Animation_Data, "OscillatorProjectile",
+             AnimateBullet.ConstructListOfSameValues<IntVector2>(new IntVector2(7, 5), Length),
+            AnimateBullet.ConstructListOfSameValues(true, Length),
+            AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.MiddleCenter, Length),
+            AnimateBullet.ConstructListOfSameValues(true, Length),
+            AnimateBullet.ConstructListOfSameValues(false, Length),
+            AnimateBullet.ConstructListOfSameValues<Vector3?>(null, Length),
+            AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(9, 7), Length),
+            AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(-1, -1), Length),
+            AnimateBullet.ConstructListOfSameValues<Projectile>(null, Length));
+
+            /*
 			projectile.AnimateProjectile(new List<string> {
 				"oscillato_projectile_001",
 				"oscillato_projectile_002",
@@ -104,8 +118,8 @@ namespace Planetside
 			AnimateBullet.ConstructListOfSameValues<Vector3?>(null, 7), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 7), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 7), AnimateBullet.ConstructListOfSameValues<Projectile>(null, 7));
 
 			projectile.SetProjectileSpriteRight("oscillato_projectile_001", 7, 5, false, tk2dBaseSprite.Anchor.MiddleCenter, 7, 5);
-
-			PierceProjModifier spook = projectile.gameObject.AddComponent<PierceProjModifier>();
+			*/
+            PierceProjModifier spook = projectile.gameObject.AddComponent<PierceProjModifier>();
 			spook.penetration = 1;
 			spook.penetratesBreakables = true;
 			gun.encounterTrackable.EncounterGuid = "https://www.youtube.com/watch?v=P5ChKb_9JoY";

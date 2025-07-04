@@ -71,7 +71,7 @@ namespace Planetside
             }
             elaWait = 0f;
 
-            if (PlanetsideModule.DebugMode == false)
+            if (PlanetsideModule.PrisonerDebug == false)
             {
                 GameManager.Instance.BestActivePlayer.CurrentRoom.BecomeTerrifyingDarkRoom(5f, 0.5f, 0.1f, "Play_ENM_darken_world_01");
 

@@ -425,8 +425,9 @@ namespace Planetside
             particles.ParticleSystemColor = Color.blue;
             particles.ParticleSystemColor2 = Color.blue;
             item.OutlineColor = new Color(0f, 0.2f, 1f);
+            item.encounterTrackable.DoNotificationOnEncounter = false;
 
-            
+
 
             SetupHeartVFX();
             SetupHalfHeartVFX();
@@ -691,10 +692,9 @@ namespace Planetside
 
             Exploder.DoDistortionWave(player.sprite.WorldTopCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
             player.BloopItemAboveHead(base.sprite, "");
-            string BlurbText = blast.hasBeenPickedup == true ? "More pain, more gain." : "All pickups become corrupted.";
+            string BlurbText = blast.hasBeenPickedup == true ? "More Pain, More Gain." : "All Pickups Are Corrupted.";
             OtherTools.NotifyCustom("Corrupted Wealth", BlurbText, "corrputed_wealth", StaticSpriteDefinitions.Pickup_Sheet_Data, UINotificationController.NotificationColor.GOLD);
 
-            //OtherTools.Notify("Corrupted Wealth", BlurbText, "Planetside/Resources/PerkThings/corrputed_wealth", UINotificationController.NotificationColor.GOLD);
             UnityEngine.Object.Destroy(base.gameObject);
         }
 

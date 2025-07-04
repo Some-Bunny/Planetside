@@ -365,8 +365,9 @@ namespace Planetside
             particles.ParticleSystemColor = new Color(0, 255, 0);
             particles.ParticleSystemColor2 = new Color(216, 191, 216);
             item.OutlineColor = new Color(0f, 0.2f, 0f);
+            item.encounterTrackable.DoNotificationOnEncounter = false;
 
-          
+
         }
         public override CustomTrackedStats StatToIncreaseOnPickup => SaveAPI.CustomTrackedStats.AMOUNT_BOUGHT_CHAOTICSHIFT;
         public override List<PerkDisplayContainer> perkDisplayContainers => new List<PerkDisplayContainer>()
@@ -424,7 +425,6 @@ namespace Planetside
             Exploder.DoDistortionWave(player.sprite.WorldTopCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
             player.BloopItemAboveHead(base.sprite, "");
             string BlurbText = chaos.hasBeenPickedup == true ? "Another Gun Added." : "All Weapons are Doubled.";
-            //OtherTools.Notify("Chaotic Shift", BlurbText, "Planetside/Resources/PerkThings/chaoticShift", UINotificationController.NotificationColor.GOLD);
             OtherTools.NotifyCustom("Chaotic Shift", BlurbText, "chaoticShift", StaticSpriteDefinitions.Pickup_Sheet_Data, UINotificationController.NotificationColor.GOLD);
 
 

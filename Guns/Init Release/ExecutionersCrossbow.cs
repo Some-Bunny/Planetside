@@ -81,7 +81,8 @@ namespace Planetside
             normalDart.AdditionalScaleMultiplier *= 1f;
             normalDart.HasDefaultTint = true;
             normalDart.shouldRotate = true;
-            normalDart.SetProjectileSpriteRight("executionerscrossbowprojectile1", 17, 3, false, tk2dBaseSprite.Anchor.MiddleCenter, 17, 3);
+            ItemAPI.GunTools.SetProjectileCollisionRight(normalDart, "executionerscrossbowprojectile1", StaticSpriteDefinitions.Projectile_Sheet_Data, 17, 3, false, tk2dBaseSprite.Anchor.MiddleCenter);
+
             normalDart.baseData.UsesCustomAccelerationCurve = true;
             normalDart.baseData.AccelerationCurve = AnimationCurve.Linear(0, 1, 0.25f, 0.75f);
 
@@ -99,7 +100,8 @@ namespace Planetside
             specialDart.AdditionalScaleMultiplier *= 1.33f;
             specialDart.HasDefaultTint = true;
             specialDart.shouldRotate = true;
-            specialDart.SetProjectileSpriteRight("executionerscrossbowprojectile2", 20, 5, false, tk2dBaseSprite.Anchor.MiddleCenter, 20, 5);
+            ItemAPI.GunTools.SetProjectileCollisionRight(specialDart, "executionerscrossbowprojectile2", StaticSpriteDefinitions.Projectile_Sheet_Data, 20, 5, false, tk2dBaseSprite.Anchor.MiddleCenter);
+
             specialDart.sprite.usesOverrideMaterial = true;
 
             specialDart.baseData.UsesCustomAccelerationCurve = true;

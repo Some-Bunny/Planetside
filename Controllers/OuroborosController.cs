@@ -688,7 +688,9 @@ namespace Planetside
             Tower.guid,
             Unwilling.guid,
             Coallet.guid,
-			Observant.guid
+			Observant.guid,
+			EnemyGUIDs.Pinhead_GUID,
+			EnemyGUIDs.Tarnisher_GUID
         };
 
       
@@ -930,6 +932,8 @@ namespace Planetside
                EnemyGUIDs.Spent_GUID,
                EnemyGUIDs.Mouser_GUID,
                EnemyGUIDs.Fusebot_GUID,
+                EnemyGUIDs.Tarnisher_GUID
+
         };
         public override List<ActorEffectResistance> DebuffImmunities => new List<ActorEffectResistance> { new ActorEffectResistance() { resistAmount = 1, resistType = EffectResistanceType.Fire } };
         public override void Start()
@@ -1314,6 +1318,8 @@ namespace Planetside
                EnemyGUIDs.Spent_GUID,
                EnemyGUIDs.Mouser_GUID,
                EnemyGUIDs.Fusebot_GUID,
+			 EnemyGUIDs.Tarnisher_GUID
+
         };
 
         public override List<ActorEffectResistance> DebuffImmunities => new List<ActorEffectResistance> {
@@ -1577,7 +1583,9 @@ namespace Planetside
 
             EnemyGuidDatabase.Entries["shambling_round"],
             EnemyGuidDatabase.Entries["killithid"],
-            Detscavator.guid
+            Detscavator.guid,
+            EnemyGUIDs.Tarnisher_GUID
+
         };
 
 		public override List<ActorEffectResistance> DebuffImmunities => new List<ActorEffectResistance> {
@@ -1780,6 +1788,8 @@ namespace Planetside
             EnemyGUIDs.Treadnaughts_Tanker_GUID,
             EnemyGUIDs.Ammoconda_Ball_GUID,
             EnemyGUIDs.Fusebot_GUID,
+            EnemyGUIDs.Tarnisher_GUID
+
         };
 
 		public override List<ActorEffectResistance> DebuffImmunities => new List<ActorEffectResistance> { new ActorEffectResistance() { resistAmount = 1, resistType = EffectResistanceType.Freeze } };

@@ -12,6 +12,7 @@ using System.Collections;
 using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
+using Alexandria.Assetbundle;
 
 namespace Planetside
 {
@@ -24,13 +25,17 @@ namespace Planetside
 			gun.gameObject.AddComponent<SirenSynergyForme>();
 			gun.SetShortDescription(":)");
 			gun.SetLongDescription("flashyn");
-			GunExt.SetupSprite(gun, null, "fishcanroll_idle_001", 11);	
-			//gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_WPN_golddoublebarrelshotgun_shot_01";
-			//gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].triggerEvent = true;
-			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 9);
-			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 4);
-			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 5);
-			for (int i = 0; i < 3; i++)
+
+            GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_2_Sheet_Data, "fishcanroll_idle_001");
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_2_Animation_Data;
+            gun.sprite.SortingOrder = 1;
+
+            gun.reloadAnimation = "sirencanroll_reload";
+            gun.idleAnimation = "sirencanroll_idle";
+            gun.shootAnimation = "sirencanroll_fire";
+
+
+            for (int i = 0; i < 3; i++)
 			{
 				gun.AddProjectileModuleFrom(PickupObjectDatabase.GetById(404) as Gun, true, false);
 
@@ -60,6 +65,20 @@ namespace Planetside
 					projectileModule.ammoCost = 0;
 				}
 				projectile.transform.parent = gun.barrelOffset;
+
+                int Length = 4;
+                Alexandria.Assetbundle.ProjectileBuilders.AnimateProjectileBundle(projectile, "fibsh", StaticSpriteDefinitions.Projectile_Sheet_Data, StaticSpriteDefinitions.Projectile_Animation_Data, "fibsh",
+                 AnimateBullet.ConstructListOfSameValues<IntVector2>(new IntVector2(17, 17), Length),
+                AnimateBullet.ConstructListOfSameValues(true, Length),
+                AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.MiddleCenter, Length),
+                AnimateBullet.ConstructListOfSameValues(true, Length),
+                AnimateBullet.ConstructListOfSameValues(false, Length),
+                AnimateBullet.ConstructListOfSameValues<Vector3?>(null, Length),
+                AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(0, 0), Length),
+                AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(17, 17), Length),
+                AnimateBullet.ConstructListOfSameValues<Projectile>(null, Length));
+
+                /*
 				projectile.AnimateProjectile(new List<string> {
 				"fishspin_projectile_001",
 				"fishspin_projectile_002",
@@ -74,7 +93,8 @@ namespace Planetside
 			AnimateBullet.ConstructListOfSameValues<Vector3?>(null, 7), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 7), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 7), AnimateBullet.ConstructListOfSameValues<Projectile>(null, 7));
 
 				projectile.SetProjectileSpriteRight("fishspin_projectile_001", 17, 17, false, tk2dBaseSprite.Anchor.MiddleCenter, 15, 15);
-			}
+				*/
+            }
 			gun.gunSwitchGroup = (PickupObjectDatabase.GetById(404) as Gun).gunSwitchGroup;
 			gun.barrelOffset.transform.localPosition += new Vector3(0.75f, 0.5f, 0f);
 			gun.reloadTime = 1.5f;

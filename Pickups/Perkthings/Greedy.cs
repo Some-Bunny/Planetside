@@ -267,6 +267,7 @@ namespace Planetside
             particles.ParticleSystemColor = Color.yellow;
             particles.ParticleSystemColor2 = new Color(255, 215, 0);
             item.OutlineColor = new Color(0.6f, 0.52f, 0.05f);
+            item.encounterTrackable.DoNotificationOnEncounter = false;
 
         }
         public override List<PerkDisplayContainer> perkDisplayContainers => new List<PerkDisplayContainer>()
@@ -332,14 +333,8 @@ namespace Planetside
             Exploder.DoDistortionWave(player.sprite.WorldTopCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
             player.BloopItemAboveHead(base.sprite, "");
             string BlurbText = greed.hasBeenPickedup == true ? "Greed Is Even Better." : "Greed Is Good.";
-            //OtherTools.Notify("Greedy", BlurbText, "Planetside/Resources/PerkThings/Greedy", UINotificationController.NotificationColor.GOLD);
             OtherTools.NotifyCustom("Greedy", BlurbText, "Greedy", StaticSpriteDefinitions.Pickup_Sheet_Data, UINotificationController.NotificationColor.GOLD);
 
-            /*
-            Exploder.DoDistortionWave(player.sprite.WorldTopCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
-            player.BloopItemAboveHead(base.sprite, "");
-            OtherTools.Notify("Greedy", "Greed Is Good.", "Planetside/Resources/PerkThings/Greedy", UINotificationController.NotificationColor.GOLD);
-            */
             UnityEngine.Object.Destroy(base.gameObject);
         }
         public void OnKilledEnemy(PlayerController source, HealthHaver enemy)

@@ -180,6 +180,7 @@
      <Compile Include="Assets\TK2DROOT\tk2dTileMap\Editor\tk2dTileMapScratchpad.cs" />
      <Compile Include="Assets\TK2DROOT\tk2dTileMap\Editor\tk2dTileMapToolbar.cs" />
      <Compile Include="Assets\TK2DROOT\tk2dTileMap\Editor\tk2dTileMapUtility.cs" />
+     <Compile Include="Assets\TK2DROOT\tk2dUI\Editor\AttachPointData.cs" />
      <Compile Include="Assets\TK2DROOT\tk2dUI\Editor\Controls\tk2dUIBaseItemControlEditor.cs" />
      <Compile Include="Assets\TK2DROOT\tk2dUI\Editor\Controls\tk2dUIControlsHelperEditor.cs" />
      <Compile Include="Assets\TK2DROOT\tk2dUI\Editor\Controls\tk2dUICustomEditorGUILayout.cs" />

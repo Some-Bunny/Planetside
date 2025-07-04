@@ -38,7 +38,7 @@ namespace Planetside
     {
         public const string GUID = "somebunny.etg.planetsideofgunymede";
         public const string NAME = "Planetside Of Gunymede Pre-Release";
-        public const string VERSION = "1.3.183";
+        public const string VERSION = "1.3.184";
         //9006FF
         public static readonly string TEXT_COLOR = "#00d0ff";
         //00d0ff
@@ -54,10 +54,22 @@ namespace Planetside
 
         public static Shader InverseGlowShader;
 
-        public static bool DebugMode = true;
-        public static bool PreRelease = false;
 
-        public static bool NewContent = true;
+
+        #region DebugToggles
+
+        public static bool DebugMode = false;
+
+        private static bool RoomsActive = true;
+        private static bool ControllersActive = true;
+        private static bool EnemiesActive = true;
+        private static bool ShrinesActive = true;
+        private static bool NPCsActive = true;
+        private static bool PlaceablesActive = true;
+        private static bool EnemyChangesActive = true;
+        public static bool PrisonerDebug = false;
+
+        #endregion
 
 
 
@@ -73,7 +85,7 @@ namespace Planetside
             StaticShaders.InitShaders();
 
             GunFilePath = this.FolderPath() + "/sprites";
-            ETGMod.Assets.SetupSpritesFromFolder(GunFilePath);
+            //ETGMod.Assets.SetupSpritesFromFolder(GunFilePath);
 
             
             //ZipFilePath = this.Metadata.Archive;
@@ -104,17 +116,22 @@ namespace Planetside
                 //ETGModConsole.Log(PlanetsideModule.TilesetAssets.name + ": " + str, false);
             }
 
-            StaticSpriteDefinitions.SetupSpritesFromAssembly(Assembly.GetExecutingAssembly(), "Planetside/Guns");
             StaticVFXStorage.Init();
             StaticInformation.Init();
             InverseGlowShader = PlanetsideModule.ModAssets.LoadAsset<Shader>("inverseglowshader");
             EasyGoopDefinitions.DefineDefaultGoops();
-            RandomPiecesOfStuffToInitialise.BuildPrefab();
             PlanetsideModule.Strings = new AdvancedStringDB();
             PlanetsideCommands.Init();
             ItemIDs.MakeCommand();
             StaticReferences.Init(); //<- Used in GungeonAPI, IMPORTANT to initialise it before DungeonHandler
-            InitNewPlaceables.InitPlaceables();
+            if (PlaceablesActive || DebugMode == false)
+            {
+                InitNewPlaceables.InitPlaceables();
+            }
+            else
+            {
+                Log($"[PSOG] WARNING, Game launched with Debug Setting [PlaceablesActive] off, this should not be on a live build!");
+            }
             #endregion
 
             //initialise Tools classes here
@@ -140,29 +157,25 @@ namespace Planetside
             SoundManager.RegisterStopEvent("Stop_WARWITHOUTREASON", StopEventType.Music);
             ItemBuilder.Init();
             ExpandDungeonMusicAPI.InitHooks();
-            //AmmonomiconAPIHooks.Init();
-            //AmmonomiconPageInitialization.Init();
-
             AmmonomiconModification.InitializeAmmonomiconStuff();
 
           
 
             #endregion
 
-            //Shrine Initialisation
-            //ShrineFactory.Init();
-            ShrineFactory.Init();
-            ShrineFakePrefabHooks.Init();
-            GunOrbitShrine.Add();
-            NullShrine.Add();
-            HolyChamberShrine.Add();
-            TooLate.Add();
-            PrisonShrine.Add();
-            VoidMuncher.Add();
-            TrespassChallengeShrine.Add();
+  
+            
 
-            ToolsEnemy.Init();
-            EnemyHooks.Init();
+            if (EnemyChangesActive || DebugMode == false)
+            {
+                ToolsEnemy.Init();
+                EnemyHooks.Init();
+            }
+            else
+            {
+                Log($"[PSOG] WARNING, Game launched with Debug Setting [EnemyChangesActive] off, this should not be on a live build!");
+            }
+
 
             //InfectionReplacement.Init();
 
@@ -182,6 +195,7 @@ namespace Planetside
             });
 
 
+            RandomPiecesOfStuffToInitialise.BuildPrefab();
 
 
             SomethingWickedEnemy.Init();
@@ -372,194 +386,226 @@ namespace Planetside
             CanisterLauncher.Add();
             Sawcon.Add();
 
-            //SpiritOfTheDragun.Add();
-            //TrueGunpowder.Init();
 
-            if (NewContent == true)
-            {
-                LightningController.Init();
-                SelfReplicatingBlank.Init();
-                LightningMaker.Init();
-                SurgeGrenade.Init();
-                StormBringer.Add();
-                ImmolationPowder.Init();
-                WrapaRounds.Init();
-                WarpMastersKit.Init();
-            }
+            LightningController.Init();
+            SelfReplicatingBlank.Init();
+            LightningMaker.Init();
+            SurgeGrenade.Init();
+            StormBringer.Add();
+            ImmolationPowder.Init();
+            WrapaRounds.Init();
+            WarpMastersKit.Init();
+
             PointNull.Add();
+            Kunai.Init();
+            LeadBaton.Init();
             UmbraController.InitEffect();
 
             //VengefulShell.Init();
             //LaserWelder.Add();
             //BoscoDesignator.Add();
+            #region Enemies
+            if (EnemiesActive || DebugMode == false)
+            {
+                Ophanaim.Init();
+                Fungannon.Init();
+                Coallet.Init();
+                Shamber.Init();
+                ProperCube.Init();
+                Detscavator.Init();
 
-            Ophanaim.Init();
-            Fungannon.Init();
-            Coallet.Init();
-            Shamber.Init();
-            ProperCube.Init();
-            Detscavator.Init();
+                Creationist.Init();
+                Observant.Init();
+                Stagnant.Init();
+                Inquisitor.Init();
+                Vessel.Init();
+                Unwilling.Init();
+                Collective.Init();
+                Bloat.Init();
+                Tower.Init();
+                Oppressor.Init();
 
-            Creationist.Init();
-            Observant.Init();
-            Stagnant.Init();
-            Inquisitor.Init();
-            Vessel.Init();
-            Unwilling.Init();
-            Collective.Init();
-            Bloat.Init();
-            Tower.Init();
-            Oppressor.Init();
-
-            //fuck 
-            TrespassTrollRock.Init();
-
-
-            DeTurretRight.Init();
-            DeTurretLeft.Init();
-            Barretina.Init();
-            Glockulus.Init();
-            Cursebulon.Init();
-            ArchGunjurer.Init();
-            RevolverSkull.Init();
-            FodderEnemy.Init();
-            JammedGuard.Init();
-            AnnihiChamber.Init();
-            PrisonerPhaseOne.Init();
-            RobotShopkeeperBoss.Init();
-            FriendlyHMPrime.Init();
-            //Servont.Init();
-
-            THREarthmover.Init();
-            Revenant_Enemy.Init();
-
-            An3sBullet.Init();
-            HunterBullet.Init();
-            NevernamedBullet.Init();
-            SkilotarBullet.Init();
-            JuneBullet.Init();
-            SpapiBullet.Init();
-            GlaurBullet.Init();
-            ApacheBullet.Init();
-            NeighborinoBullet.Init();
-            BleakBullet.Init();
-            KingBullet.Init();
-            PandaBullet.Init();
-            RetrashBullet.Init();
-            KyleBullet.Init();
-            BunnyBullet.Init();
-            BotBullet.Init();
-            WowBullet.Init();
-            TurboBullet.Init();
-            SpcreatBullet.Init();
-
-            GoldenRevolverBullet.Init();
-            NotSoAIBullet.Init();
-            CortifyBullet.Init();
-            ShotzerBullet.Init();
-            LynceusBullet.Init();
-            DallanBullet.Init();
-
-            BulletBankMan.Init();
-
-            Shellrax.Init();
-            Wailer.Init();
-
-            CelBullet.Init();
-            QadayBullet.Init();
-
-            Nemesis.Init();
+                //fuck 
+                TrespassTrollRock.Init();
 
 
-            //MiniMap.Init();
+                DeTurretRight.Init();
+                DeTurretLeft.Init();
+                Barretina.Init();
+                Glockulus.Init();
+                Cursebulon.Init();
+                ArchGunjurer.Init();
+                RevolverSkull.Init();
+                FodderEnemy.Init();
+                JammedGuard.Init();
+                AnnihiChamber.Init();
+                PrisonerPhaseOne.Init();
+                RobotShopkeeperBoss.Init();
+                FriendlyHMPrime.Init();
+                //Servont.Init();
+
+                THREarthmover.Init();
+                Revenant_Enemy.Init();
+
+                An3sBullet.Init();
+                HunterBullet.Init();
+                NevernamedBullet.Init();
+                SkilotarBullet.Init();
+                JuneBullet.Init();
+                SpapiBullet.Init();
+                GlaurBullet.Init();
+                ApacheBullet.Init();
+                NeighborinoBullet.Init();
+                BleakBullet.Init();
+                KingBullet.Init();
+                PandaBullet.Init();
+                RetrashBullet.Init();
+                KyleBullet.Init();
+                BunnyBullet.Init();
+                BotBullet.Init();
+                WowBullet.Init();
+                TurboBullet.Init();
+                SpcreatBullet.Init();
+
+                GoldenRevolverBullet.Init();
+                NotSoAIBullet.Init();
+                CortifyBullet.Init();
+                ShotzerBullet.Init();
+                LynceusBullet.Init();
+                DallanBullet.Init();
+
+                BulletBankMan.Init();
+
+                Shellrax.Init();
+                Wailer.Init();
+
+                CelBullet.Init();
+                QadayBullet.Init();
+
+                Nemesis.Init();
+            }
+            else
+            {
+                Log($"[PSOG] WARNING, Game launched with Debug Setting [EnemiesActive] off, this should not be on a live build!");
+            }
+            #endregion
 
             InitialiseSynergies.DoInitialisation();
             SynergyFormInitialiser.AddSynergyForms();
             InitialiseGTEE.DoInitialisation();
             HoveringGunsAdder.AddHovers();
 
+            //MiniMap.Init();
+
+            #region Shrines
+            if (ShrinesActive || DebugMode == false)
+            {
+                ShrineFactory.Init();
+                ShrineFakePrefabHooks.Init();
+                GunOrbitShrine.Add();
+                NullShrine.Add();
+                HolyChamberShrine.Add();
+                TooLate.Add();
+                PrisonShrine.Add();
+                VoidMuncher.Add();
+                TrespassChallengeShrine.Add();
+
+                BrokenChamberShrine.Add();
+                ShrineOfDarkness.Add();
+                ShrineOfCurses.Add();
+                ShrineOfPetrification.Add();
+                ShrineOfSomething.Add();
+                ShrineOfPurity.Add();
+
+                SWMinesShrine.Add();
+                BlueShrine.Add();
+                RedShrine.Add();
+
+                RoomReader.Init();
+                QuestWanderer.Add();
+
+                OuroborousShrine.Add();
+
+                ShrineFactory.PlaceBreachShrines();
+                SomethingWickedEnemy.Init();
+                SomethingWickedEnemy.InitDummyEnemy();
+                Thing.Init();
+                RedThing.Init();
 
 
-            BrokenChamberShrine.Add();
-            //ShrineOfEvil.Add();
-            ShrineOfDarkness.Add();
-            ShrineOfCurses.Add();
-            ShrineOfPetrification.Add();
-            ShrineOfSomething.Add();
-            ShrineOfPurity.Add();
-
-            SWMinesShrine.Add();
-            BlueShrine.Add();
-            RedShrine.Add();
-
-            //TestShaderItem.Init();
+            }
+            else
+            {
+                Log($"[PSOG] WARNING, Game launched with Debug Setting [ShrinesActive] off, this should not be on a live build!");
+            }
+            #endregion
 
 
-            RoomReader.Init();
-            QuestWanderer.Add();
-            //DungeonHooks.OnPostDungeonGeneration += this.PlaceOtherHellShrines;
 
 
-            //TestActiveItem.Init();
-            OuroborousShrine.Add();
-
-            ShrineFactory.PlaceBreachShrines();
-            SomethingWickedEnemy.Init();
-            SomethingWickedEnemy.InitDummyEnemy();
-            Thing.Init();
-            RedThing.Init();
-
-            CustomLootTableInitialiser.InitialiseCustomLootTables();
-
-            //=============================== NPCs ========================================
-            CustomShopInitialiser.InitialiseCustomShops();
-            Absconditus.Init();
 
 
-            TrespassStone.Init();
-            //AGM.Register();
-
-            FlowInjectionInitialiser.InitialiseFlows();
-
-
-            
-            ETGModMainBehaviour.Instance.gameObject.AddComponent<HMPrimeSpawnController>();
-            ETGModMainBehaviour.Instance.gameObject.AddComponent<NevernamedsDarknessHandler>();
-            ETGModMainBehaviour.Instance.gameObject.AddComponent<MasteryTraderSpawnController>();
-            ETGModMainBehaviour.Instance.gameObject.AddComponent<SomethingWickedEventManager>();
-            ETGModMainBehaviour.Instance.gameObject.AddComponent<TimeTraderSpawnController>();
-            ETGModMainBehaviour.Instance.gameObject.AddComponent<SpecificUnlockController>();
-            ETGModMainBehaviour.Instance.gameObject.AddComponent<OuroborosController>();
-            ETGModMainBehaviour.Instance.gameObject.AddComponent<CursesController>();
-            ETGModMainBehaviour.Instance.gameObject.AddComponent<ContainmentBreachController>();
-            ETGModMainBehaviour.Instance.gameObject.AddComponent<ChallengeModeExtraChallenges>();
-            ETGModMainBehaviour.Instance.gameObject.AddComponent<HellShrinesController>();
-            ETGModMainBehaviour.Instance.gameObject.AddComponent<NemesisSpawnController>();
+            if (NPCsActive || DebugMode == false)
+            {
+                CustomLootTableInitialiser.InitialiseCustomLootTables();
+                CustomShopInitialiser.InitialiseCustomShops();
+                Absconditus.Init();
+                TrespassStone.Init();
+            }
+            else
+            {
+                Log($"[PSOG] WARNING, Game launched with Debug Setting [NPCsActive] off, this should not be on a live build!");
+            }
 
 
-            //RoomDropModifier
-            //HellShrinesController
-            PlanetsideQOL.Init();
-            PlanetsideBalanceChanges.Init();
-
-            DungeonHandler.Init();
-            CustomDungeonHooks.InitDungeonHook();
 
 
-            //Alexandria.DungeonAPI.RoomFactory.LoadRoomsFromRoomDirectory
+            if (ControllersActive || DebugMode == false)
+            {
+                FlowInjectionInitialiser.InitialiseFlows();
+                ETGModMainBehaviour.Instance.gameObject.AddComponent<HMPrimeSpawnController>();
+                ETGModMainBehaviour.Instance.gameObject.AddComponent<NevernamedsDarknessHandler>();
+                ETGModMainBehaviour.Instance.gameObject.AddComponent<MasteryTraderSpawnController>();
+                ETGModMainBehaviour.Instance.gameObject.AddComponent<SomethingWickedEventManager>();
+                ETGModMainBehaviour.Instance.gameObject.AddComponent<TimeTraderSpawnController>();
+                ETGModMainBehaviour.Instance.gameObject.AddComponent<SpecificUnlockController>();
+                ETGModMainBehaviour.Instance.gameObject.AddComponent<OuroborosController>();
+                ETGModMainBehaviour.Instance.gameObject.AddComponent<CursesController>();
+                ETGModMainBehaviour.Instance.gameObject.AddComponent<ContainmentBreachController>();
+                ETGModMainBehaviour.Instance.gameObject.AddComponent<ChallengeModeExtraChallenges>();
+                ETGModMainBehaviour.Instance.gameObject.AddComponent<HellShrinesController>();
+                ETGModMainBehaviour.Instance.gameObject.AddComponent<NemesisSpawnController>();
+                PlanetsideQOL.Init();
+                PlanetsideBalanceChanges.Init();
+            }
+            else
+            {
+                Log($"[PSOG] WARNING, Game launched with Debug Setting [ControllersActive] off, this should not be on a live build!");
+            }
 
-            ModPrefabs.InitCustomPrefabs();
-            ModRoomPrefabs.InitCustomRooms();
-            AbyssDungeonFlows.InitDungeonFlows();
-            AbyssDungeon.InitCustomDungeon();
-            new Hook(
-                     typeof(GameManager).GetMethod("Awake", BindingFlags.NonPublic | BindingFlags.Instance),
-                     typeof(PlanetsideModule).GetMethod("GameManager_Awake", BindingFlags.NonPublic | BindingFlags.Instance),
-                     typeof(GameManager)
-                 );
-            //Alexandria.DungeonAPI.RoomUtility.EnableDebugLogging = true;
 
-            Alexandria.DungeonAPI.RoomFactory.LoadRoomsFromRoomDirectory("psog", FilePathFolder + "/newRooms");
+            if (RoomsActive || DebugMode == false)
+            {
+                DungeonHandler.Init();
+                CustomDungeonHooks.InitDungeonHook();
+                ModPrefabs.InitCustomPrefabs();
+                ModRoomPrefabs.InitCustomRooms();
+                AbyssDungeonFlows.InitDungeonFlows();
+                AbyssDungeon.InitCustomDungeon();
+                new Hook(
+                         typeof(GameManager).GetMethod("Awake", BindingFlags.NonPublic | BindingFlags.Instance),
+                         typeof(PlanetsideModule).GetMethod("GameManager_Awake", BindingFlags.NonPublic | BindingFlags.Instance),
+                         typeof(GameManager)
+                     );
+                //Alexandria.DungeonAPI.RoomUtility.EnableDebugLogging = true;
+
+                Alexandria.DungeonAPI.RoomFactory.LoadRoomsFromRoomDirectory("psog", FilePathFolder + "/newRooms");
+            }
+            else
+            {
+                Log($"[PSOG] WARNING, Game launched with Debug Setting [RoomsActive] off, this should not be on a live build!");
+            }
+
 
             if (DebugMode == true)
             {
@@ -569,7 +615,7 @@ namespace Planetside
                 ETGModConsole.Commands.GetGroup("psog_floor").AddUnit("load", this.LoadFloor);
             }
 
-            PlanetsideModule.Log($"{{{{ {NAME} v{VERSION} started successfully. }}}}", TEXT_COLOR);
+            PlanetsideModule.Log($"{{{{ {NAME} v{VERSION} started successfully. }}}}" + (DebugMode ? "[DEBUG MODE : NOT FOR LIVE BUILD]" : ""), TEXT_COLOR);
             List<string> RandomFunnys = new List<string>
             {
                 "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
@@ -686,7 +732,6 @@ namespace Planetside
         public IEnumerator FrameDelay()
         {
             yield return null;
-
             yield break;
         }
 
@@ -695,7 +740,6 @@ namespace Planetside
             orig(self, p, r);
         }
 
-       // public override void Start(){}
 
 
         private void LoadFloor(string[] obj)
@@ -744,7 +788,7 @@ namespace Planetside
             return manager;
         }
 
-        public static void Log(string text, string color= "#9006FF")
+        public static void Log(string text, string color = "#00d0ff")
         {
             ETGModConsole.Log($"<color={color}>{text}</color>");
         }
@@ -754,30 +798,7 @@ namespace Planetside
         {
             SaveAPIManager.Setup("psog");
         }
-        /*
-        [HarmonyPatch(typeof(Minimap), "AddIconToRoomList")]
-        [HarmonyPrefix]
-        public static void MIniMapPatch(RoomHandler room, GameObject instanceIcon)
-        {
-            bool active =instanceIcon.activeSelf;
-            instanceIcon.SetActive(true);
-            instanceIcon.SetActive(active);
-        }
-        */
-        public static void ReloadBreachShrinesPSOG(Action<Foyer> orig, Foyer self1)
-        {
-            orig(self1);
-            /*
-            if (!PlanetsideModule.hasInitialized)
-            {
-                OuroborousShrine.Add();
-                ShrineFactory.PlaceBreachShrines();
-                PlanetsideModule.hasInitialized = true;
-            }
-            ShrineFactory.PlaceBreachShrines();
-            */
-        }
-        //private static bool hasInitialized;
+       
     }
 }
 

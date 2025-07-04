@@ -525,7 +525,7 @@ namespace ItemAPI
         }
 
 
-        public static void AddEnemyToDatabase(GameObject EnemyPrefab, string EnemyGUID)
+        public static void AddEnemyToDatabase(GameObject EnemyPrefab, string EnemyGUID, bool isBoss = false)
         {
             EnemyDatabaseEntry item = new EnemyDatabaseEntry
             {
@@ -534,7 +534,7 @@ namespace ItemAPI
                 placeableHeight = 2,
                 isNormalEnemy = true,
                 path = EnemyGUID,
-                isInBossTab = false,
+                isInBossTab = isBoss,
                 encounterGuid = EnemyGUID
             };
             EnemyDatabase.Instance.Entries.Add(item);

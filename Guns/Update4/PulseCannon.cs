@@ -49,6 +49,42 @@ namespace Planetside
             }
             gun.muzzleFlashEffects = (PickupObjectDatabase.GetById(23) as Gun).muzzleFlashEffects;
             int i = 0;
+
+            Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(gun.Volley.projectiles[0].projectiles[0]);
+
+            projectile.gameObject.SetActive(false);
+            FakePrefab.MarkAsFakePrefab(projectile.gameObject);
+            UnityEngine.Object.DontDestroyOnLoad(projectile);
+            projectile.baseData.damage = 20f;
+            projectile.baseData.speed *= 0.2f;
+            projectile.shouldRotate = true;
+            projectile.objectImpactEventName = (PickupObjectDatabase.GetById(13) as Gun).DefaultModule.projectiles[0].objectImpactEventName;
+            projectile.enemyImpactEventName = (PickupObjectDatabase.GetById(13) as Gun).DefaultModule.projectiles[0].enemyImpactEventName;
+
+            projectile.hitEffects.tileMapHorizontal = ObjectMakers.MakeObjectIntoVFX((PickupObjectDatabase.GetById(504) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapHorizontal.effects.First().effects.First().effect);
+            projectile.hitEffects.tileMapVertical = ObjectMakers.MakeObjectIntoVFX((PickupObjectDatabase.GetById(504) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapHorizontal.effects.First().effects.First().effect);
+            projectile.hitEffects.enemy = ObjectMakers.MakeObjectIntoVFX((PickupObjectDatabase.GetById(504) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapHorizontal.effects.First().effects.First().effect);
+            projectile.hitEffects.deathAny = ObjectMakers.MakeObjectIntoVFX((PickupObjectDatabase.GetById(504) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapHorizontal.effects.First().effects.First().effect);
+
+
+            ImprovedAfterImage yes = projectile.gameObject.AddComponent<ImprovedAfterImage>();
+            yes.spawnShadows = true;
+            yes.shadowLifetime = 0.3f;
+            yes.shadowTimeDelay = 0.1f;
+            yes.dashColor = new Color(1f, 0f, 0.6f, 1f);
+
+            int Length = 4;
+            Alexandria.Assetbundle.ProjectileBuilders.AnimateProjectileBundle(projectile, "pulseShot", StaticSpriteDefinitions.Projectile_Sheet_Data, StaticSpriteDefinitions.Projectile_Animation_Data, "pulseShot",
+             AnimateBullet.ConstructListOfSameValues<IntVector2>(new IntVector2(5, 14), Length),
+            AnimateBullet.ConstructListOfSameValues(true, Length),
+            AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.MiddleCenter, Length),
+            AnimateBullet.ConstructListOfSameValues(true, Length),
+            AnimateBullet.ConstructListOfSameValues(false, Length),
+            AnimateBullet.ConstructListOfSameValues<Vector3?>(null, Length),
+            AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(5, 14), Length),
+            AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(0, 0), Length),
+            AnimateBullet.ConstructListOfSameValues<Projectile>(null, Length));
+
             foreach (ProjectileModule mod in gun.Volley.projectiles)
             {
                 i++;
@@ -59,33 +95,14 @@ namespace Planetside
                 mod.angleVariance = 0f;
                 mod.angleFromAim = 90 * i;
                 mod.numberOfShotsInClip = 80;
-                Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(mod.projectiles[0]);
                 mod.projectiles[0] = projectile;
 
                 gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
                 gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("RadPulseCannon", "Planetside/Resources/GunClips/PulseCannon/pulseclipFull", "Planetside/Resources/GunClips/PulseCannon/pulseclipEmpty");
 
-                projectile.gameObject.SetActive(false);
-                FakePrefab.MarkAsFakePrefab(projectile.gameObject);
-                UnityEngine.Object.DontDestroyOnLoad(projectile);
-                projectile.baseData.damage = 20f;
-                projectile.baseData.speed *= 0.2f;
-                projectile.shouldRotate = true;
-                projectile.objectImpactEventName = (PickupObjectDatabase.GetById(13) as Gun).DefaultModule.projectiles[0].objectImpactEventName;
-                projectile.enemyImpactEventName = (PickupObjectDatabase.GetById(13) as Gun).DefaultModule.projectiles[0].enemyImpactEventName;
+                
 
-                projectile.hitEffects.tileMapHorizontal = ObjectMakers.MakeObjectIntoVFX((PickupObjectDatabase.GetById(504) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapHorizontal.effects.First().effects.First().effect);
-                projectile.hitEffects.tileMapVertical = ObjectMakers.MakeObjectIntoVFX((PickupObjectDatabase.GetById(504) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapHorizontal.effects.First().effects.First().effect);
-                projectile.hitEffects.enemy = ObjectMakers.MakeObjectIntoVFX((PickupObjectDatabase.GetById(504) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapHorizontal.effects.First().effects.First().effect);
-                projectile.hitEffects.deathAny = ObjectMakers.MakeObjectIntoVFX((PickupObjectDatabase.GetById(504) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapHorizontal.effects.First().effects.First().effect);
-
-
-                ImprovedAfterImage yes = projectile.gameObject.AddComponent<ImprovedAfterImage>();
-                yes.spawnShadows = true;
-                yes.shadowLifetime = 0.3f;
-                yes.shadowTimeDelay = 0.1f;
-                yes.dashColor = new Color(1f, 0f, 0.6f, 1f);
-
+                /*
                 projectile.AnimateProjectile(new List<string> {
                 "pulseShot_001",
                 "pulseShot_002",
@@ -97,6 +114,7 @@ namespace Planetside
                 new IntVector2(5, 14),
                 new IntVector2(5, 14),
                 }, AnimateBullet.ConstructListOfSameValues(false, 7), AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.MiddleCenter, 7), AnimateBullet.ConstructListOfSameValues(true, 7), AnimateBullet.ConstructListOfSameValues(false, 7), AnimateBullet.ConstructListOfSameValues<Vector3?>(null, 7), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 7), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 7), AnimateBullet.ConstructListOfSameValues<Projectile>(null, 7));
+                */
             }
             gun.gunSwitchGroup = (PickupObjectDatabase.GetById(54) as Gun).gunSwitchGroup;
             gun.reloadTime = 1.4f;

@@ -12,6 +12,7 @@ using System.Collections;
 using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
+using Alexandria.Assetbundle;
 
 namespace Planetside
 {
@@ -27,12 +28,17 @@ namespace Planetside
 			gun.gameObject.AddComponent<NemesisGun>();
 			gun.SetShortDescription("Reaped By Death");
 			gun.SetLongDescription("A simple, elegant and powerful revolver, capable of killing even behind cover.\n\nWielded by a particularly regretful undead Gungeoneer seeking an old friend...");
-			GunExt.SetupSprite(gun, null, "nemesisgun_idle_001", 11);
 
-			GunExt.SetAnimationFPS(gun, gun.shootAnimation, 24);
-			GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 10);
-			GunExt.SetAnimationFPS(gun, gun.idleAnimation, 3);
-			GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(56) as Gun, true, false);
+            GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_2_Sheet_Data, "nemesisgun_idle_001");
+            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_2_Animation_Data;
+            gun.sprite.SortingOrder = 1;
+
+            gun.reloadAnimation = "nemesisRevolver_reload";
+            gun.idleAnimation = "nemesisRevolver_idle";
+            gun.shootAnimation = "nemesisRevolver_fire";
+
+
+            GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(56) as Gun, true, false);
 			gun.gunSwitchGroup = (PickupObjectDatabase.GetById(387) as Gun).gunSwitchGroup;
 			gun.DefaultModule.ammoCost = 1;
 			gun.DefaultModule.shootStyle = ProjectileModule.ShootStyle.SemiAutomatic;

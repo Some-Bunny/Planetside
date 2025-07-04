@@ -183,6 +183,12 @@ namespace Planetside
 
         public static void PostFloorgen(Dungeon dungeon)
         {
+            if (GameManager.Instance.IsFoyer == true) 
+            {
+                CurrentState = States.DISABLED;
+                return;
+            }
+
             if (CurrentState == States.ALLOWED)// && AdvancedGameStatsManager.Instance.GetSessionStatValue(CustomTrackedStats.INFECTION_FLOORS_ACTIVATED) == 1)
             {
 
