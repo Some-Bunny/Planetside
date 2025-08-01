@@ -175,7 +175,10 @@ namespace Planetside
                                 proj.pierceMinorBreakables = true;
                                 proj.collidesWithPlayer = false;
                                 proj.AdditionalScaleMultiplier = 0.5f;
-                                proj.baseData.damage = 4f * dmg;
+                                proj.baseData.damage = 5.25f * dmg;
+
+                                proj.AddComponent<RecursionPreventer>();
+
 
                                 PierceProjModifier spook = proj.gameObject.AddComponent<PierceProjModifier>();
                                 spook.penetration = 10;

@@ -65,7 +65,7 @@ namespace Planetside
 			projectile.shouldRotate = true;
 			projectile.pierceMinorBreakables = true;
 			projectile.gameObject.AddComponent<LockOnGunProjectile>();
-            ItemAPI.GunTools.SetProjectileCollisionRight(projectile, "lockonprojectile", StaticSpriteDefinitions.Projectile_Sheet_Data, 9, 7, false, tk2dBaseSprite.Anchor.MiddleCenter);
+            Alexandria.Assetbundle.ProjectileBuilders.SetProjectileCollisionRight(projectile, "lockonprojectile", StaticSpriteDefinitions.Projectile_Sheet_Data, 9, 7, false, tk2dBaseSprite.Anchor.MiddleCenter);
 
 
             ExplosiveModifier explosiveModifier = projectile.gameObject.AddComponent<ExplosiveModifier>();
@@ -179,7 +179,7 @@ namespace Planetside
 		public bool IsLockedOn;
 
 		private Vector2 aimpoint;
-		private float maxDistance = 15;
+		//private float maxDistance = 15;
 		private float m_currentAngle;
 		private float m_currentDistance;
 		private bool HasReloaded;

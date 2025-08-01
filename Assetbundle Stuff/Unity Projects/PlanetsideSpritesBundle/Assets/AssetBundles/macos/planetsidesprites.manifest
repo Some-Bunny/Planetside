@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1455452448
+CRC: 2971038029
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 861ab20ed5eaaf4d32c5337352daf4b6
+    Hash: 3e406f36a906cd628aa4b1684d701e18
   TypeTreeHash:
     serializedVersion: 2
     Hash: 458548b0fa917ebe1d600c5fabf7780a
@@ -46,6 +46,7 @@ Assets:
 - Assets/Pickups/PickupCollection Data/pickup material.mat
 - Assets/Enemies/ModderBullets/ModderBulletCollection Data/modderbullet material.mat
 - Assets/Ammonomicon/Ammonomicon Icons/glockulussheet.png
+- Assets/Projectiles/BeamCollection Data/BeamCollection.prefab
 - Assets/Items/Guon Stones/GuonAnimation.prefab
 - Assets/Enemies/SpecificEnemyCollection Data/enemyspecific material.mat
 - Assets/UI/Alphabet Letters/letter_08.png
@@ -123,6 +124,7 @@ Assets:
 - Assets/UI/Alphabet Letters/letter_03.png
 - Assets/Enemies/ProperCube/ProperCubeCollection Data/propercube material.mat
 - Assets/Enemies/Barretina/BarretinaCollection Data/BarretinaCollection.prefab
+- Assets/Projectiles/BeamAnimation.prefab
 - Assets/Enemies/Arch Gunjurer/ArchGunjurerCollection Data/ArchGunjurerCollection.prefab
 - Assets/Ammonomicon/Ammonomicon Icons/nemesissheetTrespass.png
 - Assets/Ammonomicon/Ammonomicon Icons/cursebulonsmmonomiconportrait.png
@@ -195,4 +197,5 @@ Assets:
 - Assets/RoomObjects/RingCollection Data/rhingthing material.mat
 - Assets/Enemies/Coallet/CoalletCollection Data/coallet material.mat
 - Assets/Ammonomicon/Ammonomicon Icons/SomethingWickedAmmonomiconSheet.png
-Dependencies: []
+Dependencies:
+- D:/reposSecondary/failsafes/Planetside/Assetbundle Stuff/Unity Projects/PlanetsideSpritesBundle/Assets/AssetBundles/macos/specialvfx

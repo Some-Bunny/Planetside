@@ -61,9 +61,12 @@
     <Compile Include="APIs\SynergyAPI\AdvancedTransformGunSynergyProcessor.cs" />
     <Compile Include="APIs\SynergyAPI\SynergyBuilder.cs" />
     <Compile Include="Assetbundle Stuff\Assetbundle Loader.cs" />
+    <Compile Include="Components\Effect Components\SummonRingController.cs" />
     <Compile Include="Components\EmergencyPlayerDisappearedFromRoom.cs" />
+    <Compile Include="Components\GlobalConsumableStorage.cs" />
     <Compile Include="Components\Item Components\CustomHoveringGunController.cs" />
     <Compile Include="Components\Other Components\TrespassPortalController.cs" />
+    <Compile Include="Components\Projectile Components\TravelledDistanceComponent.cs" />
     <Compile Include="Components\Projectile Components\WraparoundProjectile.cs" />
     <Compile Include="Components\Projectile Components\MirrorProjectileController.cs" />
     <Compile Include="Components\Projectile Components\RecursionPreventer.cs" />
@@ -199,6 +202,8 @@
     <Compile Include="EnemySetupCode\EnemyRelatedStuff\Behavior Stuff\ModifiedChargeBehavior.cs" />
     <Compile Include="EnemySetupCode\EnemyRelatedStuff\Behavior Stuff\ModifiedDashMoveBehavior.cs" />
     <EmbeddedResource Include="Guns\Jsons\jhbsda.cs" />
+    <Compile Include="Guns\Update6\GunWithNoName.cs" />
+    <Compile Include="Guns\Update6\StaticCharger.cs" />
     <Compile Include="Guns\Update5\PointNull.cs" />
     <Compile Include="Guns\Update5\StormBringerProjectile.cs" />
     <Compile Include="Guns\Update5\StormBringer.cs" />
@@ -230,14 +235,16 @@
     <Compile Include="Guns\Update4\ParticleCollapser.cs" />
     <Compile Include="Guns\Update4\WhistlerProjectile.cs" />
     <Compile Include="Guns\Update4\Whistler.cs" />
-    <Compile Include="Hooks And Actions\BlankHooks.cs" />
-    <Compile Include="Hooks And Actions\CustomDungeonHooks.cs" />
-    <Compile Include="Hooks And Actions\Actions.cs" />
-    <Compile Include="Hooks And Actions\GunHooks.cs" />
-    <Compile Include="Hooks And Actions\Patches.cs" />
-    <Compile Include="Hooks And Actions\PickupHooks.cs" />
-    <Compile Include="Hooks And Actions\ExplosionHooks.cs" />
-    <Compile Include="Hooks And Actions\TitleDioramaHooks.cs" />
+    <Compile Include="Hooks, Actions and Patches\BlankHooks.cs" />
+    <Compile Include="Hooks, Actions and Patches\CustomDungeonHooks.cs" />
+    <Compile Include="Hooks, Actions and Patches\Actions.cs" />
+    <Compile Include="Hooks, Actions and Patches\GunHooks.cs" />
+    <Compile Include="Hooks, Actions and Patches\Patches.cs" />
+    <Compile Include="Hooks, Actions and Patches\PickupHooks.cs" />
+    <Compile Include="Hooks, Actions and Patches\ExplosionHooks.cs" />
+    <Compile Include="Hooks, Actions and Patches\TitleDioramaHooks.cs" />
+    <Compile Include="Items\Update6\CHROMA.cs" />
+    <Compile Include="Items\Update6\HotSwapper.cs" />
     <Compile Include="Items\Update6\LeadBaton.cs" />
     <Compile Include="Items\Update6\Kunai.cs" />
     <Compile Include="Items\Update6\WarpMastersKit.cs" />
@@ -279,8 +286,12 @@
     <Compile Include="NPC Stuff\ExampleFSM.cs" />
     <Compile Include="NPC Stuff\Helper\AdvancedDialogueBox.cs" />
     <Compile Include="Pickups\AllSeeingEyeMiniPickup.cs" />
+    <Compile Include="Pickups\Perkthings\HollowWalls.cs" />
+    <Compile Include="Pickups\Perkthings\PerkHelper.cs" />
     <Compile Include="Static Storage\CustomSlash\CustomSlashDoer.cs" />
     <Compile Include="Static Storage\CustomSlash\SlashData.cs" />
+    <Compile Include="Static Storage\ParticleBase.cs" />
+    <Compile Include="Static Storage\StaticBulletEntries.cs" />
     <Compile Include="Static Storage\StaticShaders.cs" />
     <Compile Include="Static Storage\StaticSpriteDefinitions.cs" />
     <Compile Include="Static Storage\StaticInformation.cs" />
@@ -310,6 +321,10 @@
     <Compile Include="TheAbyss\ModPrefabs.cs" />
     <Compile Include="Toolboxes\Dictionary.cs" />
     <Compile Include="Toolboxes\EnemyToolbox.cs" />
+    <Compile Include="Toolboxes\Extensions\Easing.cs" />
+    <Compile Include="Toolboxes\Extensions\NewModuleExtensions.cs" />
+    <Compile Include="Toolboxes\Extensions\SpriteOffseter.cs" />
+    <Compile Include="Toolboxes\Extensions\StatModificationForItem.cs" />
     <Compile Include="Toolboxes\GUID_Maker.cs" />
     <Compile Include="Toolboxes\RaycastToolbox.cs" />
     <Compile Include="Toolboxes\SpapisSuperCoolAdvancedCodeToolbox.cs" />
@@ -549,7 +564,7 @@
     <Compile Include="Guns\Init Release\WitherLance.cs" />
     <Compile Include="Guns\Init Release\SwanOff.cs" />
     <Compile Include="Guns\Init Release\Polarity.cs" />
-    <Compile Include="Hooks And Actions\Hooks.cs" />
+    <Compile Include="Hooks, Actions and Patches\Hooks.cs" />
     <Compile Include="Misc Stuff\Synergy Stuff\Synergy Processors\AdvancedDualWieldProcessor.cs" />
     <Compile Include="Unsorted Garbage\EndOfEverything.cs" />
     <Compile Include="Misc Stuff\Non-Functioning Stuff\BulletsOnBulletDestructionComponent.cs" />
@@ -4805,7 +4820,7 @@
     </Reference>
     <Reference Include="Alexandria, Version=0.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>D:\r2modmanLocal\ETG\profiles\Agony\BepInEx\plugins\Alexandria-Alexandria\Alexandria.dll</HintPath>
+      <HintPath>..\..\..\r2modmanLocal\ETG\profiles\Agony\BepInEx\plugins\Alexandria-Alexandria\Alexandria.dll</HintPath>
     </Reference>
     <Reference Include="AmmonomiconAPI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -4889,6 +4904,9 @@
     <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Enter the Gungeon\EtG_Data\Managed\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UIElementsModule">
+      <HintPath>..\..\..\Steam\steamapps\common\Enter the Gungeon\EtG_Data\Managed\UnityEngine.UIElementsModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.VideoModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -5959,6 +5977,40 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\OtherSpecialRooms\nemesis_miniboss_room_mixed.room" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\TrespassRooms\TrespassDeeperRooms\trespassroom_2bigwalls.newroom" />
+    <EmbeddedResource Include="Resources\TrespassRooms\TrespassDeeperRooms\trespassroom_5bats.newroom" />
+    <EmbeddedResource Include="Resources\TrespassRooms\TrespassDeeperRooms\trespassroom_suspiciouslyprisonerlike.newroom" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\TrespassRooms\trespassbasic_prisoners.newroom" />
+    <EmbeddedResource Include="Resources\TrespassRooms\trespassbasic_scarilylarge.newroom" />
+    <EmbeddedResource Include="Resources\TrespassRooms\trespassbasic_weirdshowoffthing.newroom" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\TrespassRooms\trespassbasic_anoutcast.newroom" />
+    <EmbeddedResource Include="Resources\TrespassRooms\trespassbasic_lockedaway.newroom" />
+    <EmbeddedResource Include="Resources\TrespassRooms\trespassbasic_pitfalls.newroom" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\TrespassRooms\TrespassDeeperRooms\trespassroom_asmallpocketinspace.newroom" />
+    <EmbeddedResource Include="Resources\TrespassRooms\TrespassDeeperRooms\trespassroom_a_void.newroom" />
+    <EmbeddedResource Include="Resources\TrespassRooms\TrespassDeeperRooms\trespassroom_potentiallyintentionallyimprisoned.newroom" />
+    <EmbeddedResource Include="Resources\TrespassRooms\TrespassDeeperRooms\trespassroom_weezer.newroom" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\TrespassRooms\TrespassDeeperRooms\trespass_fourofthemagain.newroom" />
+    <EmbeddedResource Include="Resources\TrespassRooms\TrespassDeeperRooms\trespass_pathway.newroom" />
+    <EmbeddedResource Include="Resources\TrespassRooms\TrespassDeeperRooms\trespass_TheBouncer.newroom" />
+    <EmbeddedResource Include="Resources\TrespassRooms\TrespassDeeperRooms\trespass_TheBoxesAndtentacles.newroom" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\TrespassRooms\trespassbasic_cubeworld.newroom" />
+    <EmbeddedResource Include="Resources\TrespassRooms\trespassbasic_garden_of_forking_paths.newroom" />
+    <EmbeddedResource Include="Resources\TrespassRooms\trespassbasic_thegates.newroom" />
+    <EmbeddedResource Include="Resources\TrespassRooms\trespassbasic_thin.newroom" />
+    <EmbeddedResource Include="Resources\TrespassRooms\trespassbasic_treadlightly.newroom" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -75,7 +75,7 @@ namespace Planetside
 
 			public class Spore : Bullet
 			{
-				public Spore() : base(UnityEngine.Random.value > 0.33f ? StaticUndodgeableBulletEntries.undodgeableSmallSpore.Name : StaticUndodgeableBulletEntries.undodgeableLargeSpore.Name, false, false, false) { }
+				public Spore() : base(UnityEngine.Random.value > 0.33f ? StaticBulletEntries.undodgeableSmallSpore.Name : StaticBulletEntries.undodgeableLargeSpore.Name, false, false, false) { }
 				public override IEnumerator Top()
 				{
 					base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), UnityEngine.Random.Range(60, 150));
@@ -299,8 +299,8 @@ namespace Planetside
                     bulletBank.gameActor = actor;
 
 
-                    bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableLargeSpore);
-                    bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
+                    bulletBank.Bullets.Add(StaticBulletEntries.undodgeableLargeSpore);
+                    bulletBank.Bullets.Add(StaticBulletEntries.undodgeableSmallSpore);
 
                 }
                 else
@@ -310,8 +310,8 @@ namespace Planetside
                     {
                         actor.bulletBank.Bullets = new List<AIBulletBank.Entry>(); }
 
-                    actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableLargeSpore);
-                    actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
+                    actor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableLargeSpore);
+                    actor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableSmallSpore);
 
                 }
 				if (actor.aiActor.healthHaver.GetMaxHealth() > 20)
@@ -363,7 +363,7 @@ namespace Planetside
 
 			public class Spore : Bullet
 			{
-				public Spore() : base(UnityEngine.Random.value > 0.33f ? StaticUndodgeableBulletEntries.undodgeableSmallSpore.Name : StaticUndodgeableBulletEntries.undodgeableLargeSpore.Name, false, false, false) { }
+				public Spore() : base(UnityEngine.Random.value > 0.33f ? StaticBulletEntries.undodgeableSmallSpore.Name : StaticBulletEntries.undodgeableLargeSpore.Name, false, false, false) { }
 				public override IEnumerator Top()
 				{
 					base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), UnityEngine.Random.Range(30, 120));

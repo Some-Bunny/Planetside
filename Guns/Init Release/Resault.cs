@@ -232,12 +232,7 @@ namespace Planetside
 
 			}
 		}
-		public override void MidGameDeserialize(List<object> data, ref int i)
-		{
-			base.MidGameDeserialize(data, ref i);
-			//Ammo = (int)data[i];
-			i += 1;
-		}
+
 
 
 		private static GameObject Plus10AMMOVFXPrefab;

@@ -65,6 +65,10 @@ MonoBehaviour:
     dataGUID: 
     managed: 0
     loadable: 0
+  - assetGUID: d96b3489d1598cc4fa2cc4007ccc0cbb
+    dataGUID: 
+    managed: 0
+    loadable: 0
   fontIndex:
   - assetGUID: 063b15d80dbb4604d890600a64c79cf8
     dataGUID: e7a6b09a73c6b2b4f8060096ddbd3b5e
@@ -4667,6 +4671,7 @@ MonoBehaviour:
     - psychicdust
     - warpmasterkit
     - warpmasterkit_warp
+    - CHROMA
     spriteTextureGUIDs:
     - 8d5b0c6f72470024d869962889435814
     - 0701343bc7351c144829a62fe75c3af1
@@ -4704,6 +4709,7 @@ MonoBehaviour:
     - 75b7b10cc7584d64fb1d13f7204881ff
     - 81740752315f3384ab8200bc07222862
     - 31a1c56ea65007945a2aae6a40c7d9aa
+    - 9626c7e7776c4eb4fa2099fe1f23622d
     spriteTextureTimeStamps:
     - 1738023065.48157
     - 1738023065.48057
@@ -4741,6 +4747,7 @@ MonoBehaviour:
     - 1738023065.48257
     - 1741105914.07663
     - 1741186365.10092
+    - 1753038955.03984
     managedSpriteCollection: 0
     loadable: 0
     assetName: 
@@ -4856,6 +4863,8 @@ MonoBehaviour:
     - projectileboom
     - sackofstuff
     - repairNode
+    - GreedyPsog
+    - geomancy
     spriteTextureGUIDs:
     - 85686bfc703725c409d237262dc01017
     - f118b8a9002009f40878edb5887f3ab8
@@ -4873,23 +4882,27 @@ MonoBehaviour:
     - bc5f9831ea209d8438a9596a9214ee4c
     - fc099495c4f9dc942ba95932f20a401d
     - acbe72191b47c804fb4e490e4ffd498f
+    - 0ccf83ab06672284d9051b711ef48529
+    - 3e736d161203bda438ef111ab54c1067
     spriteTextureTimeStamps:
-    - 1643490329.21522
-    - 1658852380.59156
-    - 1647976734.17185
-    - 1643743381.06191
-    - 1670369980.42101
-    - 1643503198.77038
-    - 1643386892.2165
-    - 1643397113.35655
-    - 1643373429.8889
-    - 1643373767.88237
-    - 1658797670.53558
-    - 1614365471.14483
-    - 1658796547.81871
-    - 1658797891.55519
-    - 1614782305.59534
-    - 1648389236.48325
+    - 1738023068.24029
+    - 1738023068.24029
+    - 1738023068.24429
+    - 1738023068.25921
+    - 1753297231.64716
+    - 1738023068.24029
+    - 1753296404.03981
+    - 1753297629.06993
+    - 1753296480.05608
+    - 1753296538.13604
+    - 1753296904.09525
+    - 1738023068.22928
+    - 1738023068.24229
+    - 1753297511.82231
+    - 1738023068.24429
+    - 1738023068.24329
+    - 1753296480.05608
+    - 1753299363.4916
     managedSpriteCollection: 0
     loadable: 0
     assetName: 
@@ -9026,6 +9039,24 @@ MonoBehaviour:
     - vengbullet
     - whistler_projectile_001
     - witherlanceProjectile
+    - gunwithnoname_startshot_004
+    - gunwithnoname_endshot_003
+    - gunwithnoname_endshot_004
+    - gunwithnoname_endshot_001
+    - gunwithnoname_endshot_002
+    - gunwithnoname_midshot_001
+    - gunwithnoname_midshot_002
+    - gunwithnoname_midshot_003
+    - gunwithnoname_midshot_004
+    - gunwithnoname_reticle_001
+    - gunwithnoname_reticle_002
+    - gunwithnoname_reticle_003
+    - gunwithnoname_reticle_004
+    - gunwithnoname_reticle_005
+    - gunwithnoname_reticle_006
+    - gunwithnoname_startshot_001
+    - gunwithnoname_startshot_002
+    - gunwithnoname_startshot_003
     spriteTextureGUIDs:
     - 82dcda28227bc70469ab873063d19fd5
     - b5e6125294fd1c9478b1a4b222fdc4be
@@ -9218,6 +9249,24 @@ MonoBehaviour:
     - c028899c429de45448038a6216125c2c
     - 98941f0bdf4d626488c0985e1c88ecea
     - 17503b40492092642ab83ca541d2315d
+    - db3943cc9f7565049b604b67644f7402
+    - 72551d6b52b846f4e8fcd0b49c0a5e64
+    - 7a55ce7edd9a7c74ab43ed1a51d566ed
+    - 6fd1db95983a0074eadea42d0f1c7512
+    - f7da33363bfcf8945bd6c9c023211a24
+    - 4684a85aeb606ce4dbca627d9626d12d
+    - d88d51bcdb28ce34db0553662c827f74
+    - 83e4dd6905d9a9c4fb1e8aacb6b89294
+    - fea0070411b40664c996a4f743b0ef4d
+    - 09c344464f702964caa4ba11b9c767d5
+    - 9a1f71c9b8cb38d4799d21b3d458d805
+    - 165b8c2210fc52a4f91a7caba6a645fa
+    - 013c287953192e3438cef5af57b24178
+    - bf405f43473fcbe41abfd7927e4eb4b4
+    - b34a5804eaae31a49b205f38d4ca9705
+    - 34ddd13244fce2f4b809f6cc2a942433
+    - 07ddb1a7f13124a4f8147e681269ca5b
+    - b1f1a53ba0ef6df4599c94b7f43e5430
     spriteTextureTimeStamps:
     - 1738023068.27022
     - 1738023068.26021
@@ -9410,6 +9459,24 @@ MonoBehaviour:
     - 1659532256
     - 1659532256
     - 1659532256
+    - 1753119347.87782
+    - 1753119777.24782
+    - 1753119777.25183
+    - 1753119777.24182
+    - 1753119777.24582
+    - 1753119628.5545
+    - 1753119628.55751
+    - 1753119628.55951
+    - 1753119628.56151
+    - 1753115639.73525
+    - 1753115639.74026
+    - 1753115639.74326
+    - 1753115639.74726
+    - 1753115639.75127
+    - 1753115639.75527
+    - 1753119347.8588
+    - 1753119347.87282
+    - 1753119347.87482
     managedSpriteCollection: 0
     loadable: 0
     assetName: 
@@ -10121,6 +10188,40 @@ MonoBehaviour:
     - roomicon_portaltotheunknown
     - roomicon_portaltohell
     - roomicon_containment
+    - enemybuffshrine_idle_001
+    - enemybuffshrine_idle_003
+    - enemybuffshrine_shadow
+    - enemybuffshrine_idle_002
+    - poison_gem_idle_005
+    - poison_gem_idle_003
+    - poison_gem_idle_004
+    - poison_gem_idle_002
+    - ice_gem_idle_004
+    - ice_gem_idle_002
+    - fire_gem_idle_004
+    - fire_gem_idle_003
+    - fire_gem_idle_005
+    - ice_gem_idle_003
+    - ice_gem_idle_005
+    - fire_gem_idle_002
+    - fire_gem_idle_001
+    - poison_gem_idle_001
+    - ice_gem_idle_001
+    - debris_pedestal_004
+    - debris_pedestal_005
+    - debris_pedestal_006
+    - debris_pedestal_007
+    - debris_normal_004
+    - debris_normal_006
+    - debris_normal_007
+    - debris_pedestal_001
+    - debris_pedestal_002
+    - debris_pedestal_003
+    - debris_normal_005
+    - debris_hand_001
+    - debris_normal_001
+    - debris_normal_002
+    - debris_normal_003
     spriteTextureGUIDs:
     - 23c6a39626d58c94d85d5d5b1642ccf7
     - c8968b40667d1a6459270644e9bb90f3
@@ -10542,6 +10643,40 @@ MonoBehaviour:
     - de33322c581e3a945b5fd03cf45cfc8c
     - 538a8592003443c41b1c9dd55c1bc184
     - 69c375e5e4ca61d4f8d18c9eb42a5c2a
+    - dd7a5a97573949340a8122e587cbcb50
+    - 8cba51db4d4461340a78ac8f55db44f7
+    - 4b4f939b1fc200145a21bd65c1ace528
+    - 5843ea6ed0b722746a0f492e0183a297
+    - 10a8c6a99b36dd9429b21dafddfcc707
+    - 6bdffc27875f2ab43af7431d7ec705a4
+    - a0d7599eed66e1e4da5a0b15d9d11443
+    - 76e2852df4e6fe548800a9db12fe0a94
+    - 04f3d05b1fcc40e49b03d312a273ca8e
+    - be29412db6c7e2a4896fbc4305ac22c6
+    - 21cec8747b71b9c45a4664f86a764ca3
+    - ce712ec0dfc5f8d4bbaa676aea46ebfe
+    - e9873868d0efa1143853e23ef6076634
+    - 1bb2b11bfd498ae4a8027707fb657b8f
+    - cf01a539ee8c1b644abc401983d057d0
+    - 9fa62fcebea48624aada260708e2600a
+    - 6fdc8486ee8629b4297b558c9a49ea79
+    - 6e38da9be64c3a94b817f921fd8e324e
+    - 312a5a221efec3240b094066f6670833
+    - 416a23abd80340f4787bae3304db08ba
+    - 43d4c699862551b499c1223d835c54d2
+    - 30e3db2894918564bb050fc5d6df5407
+    - f39d6104816c60544835b7b6a4e5d19c
+    - 5fbc44561172cb54e88bbd1cf5e9e9b7
+    - 268255b8e743e6249869abb027dca0f0
+    - 87dbc0b5fed6e1d4c9c4e30e8679b234
+    - afa5aa48bc2727943adea3f72ad86e83
+    - 31575d357133f8541a6ea1e24f741f6e
+    - 6d8685b92bde14740b9ca050380103ff
+    - adf2eaa18528e044196f938e7fa594c0
+    - 6d2b34ac59b638a4a9281713f3c2cb25
+    - 2f9a8af1099e8714fa7cba602d47795f
+    - abe54c52f5676ff48926b4402f659106
+    - 5713478f3c2b8c34a892c9a4eb1b28f7
     spriteTextureTimeStamps:
     - 1739376732.80184
     - 1739376732.80529
@@ -10963,6 +11098,40 @@ MonoBehaviour:
     - 1744659862.00908
     - 1744659955.01778
     - 1744659812.62009
+    - 1753828025.81909
+    - 1753828025.87161
+    - 1753829050.75693
+    - 1753828025.84911
+    - 1753828932.36224
+    - 1753828932.24019
+    - 1753828932.30117
+    - 1753828932.17918
+    - 1753828916.19975
+    - 1753828916.07778
+    - 1753828899.69137
+    - 1753828899.63028
+    - 1753828899.7524
+    - 1753828916.13866
+    - 1753828916.26087
+    - 1753828899.56919
+    - 1753828899.50105
+    - 1753828932.13331
+    - 1753828916.03704
+    - 1738023121.02391
+    - 1738023121.02391
+    - 1738023121.02391
+    - 1738023121.02491
+    - 1738023121.00515
+    - 1738023121.02298
+    - 1738023121.02298
+    - 1738023121.02391
+    - 1738023121.02391
+    - 1738023121.02391
+    - 1738023121.02298
+    - 1738023121.00415
+    - 1738023121.00415
+    - 1738023121.00515
+    - 1738023121.00515
     managedSpriteCollection: 0
     loadable: 0
     assetName: 
@@ -11762,6 +11931,84 @@ MonoBehaviour:
     - nemesisshotgun_reload_006
     - nemesisgun_reload_010
     - nemesisgun_reload_011
+    - bigCharger001_fire_002
+    - bigCharger_reload_009
+    - bigCharger001_fire_001
+    - bigCharger001_fire_003
+    - bigCharger001_fire_004
+    - bigCharger001_fire_005
+    - bigCharger001_idle_001
+    - bigCharger001_idle_002
+    - bigCharger001_idle_003
+    - bigCharger001_idle_004
+    - bigCharger002_fire_001
+    - bigCharger002_fire_002
+    - bigCharger002_fire_003
+    - bigCharger002_fire_004
+    - bigCharger002_fire_005
+    - bigCharger002_idle_001
+    - bigCharger002_idle_002
+    - bigCharger002_idle_003
+    - bigCharger002_idle_004
+    - bigCharger003_fire_001
+    - bigCharger003_fire_002
+    - bigCharger003_fire_003
+    - bigCharger003_fire_004
+    - bigCharger003_fire_005
+    - bigCharger003_idle_001
+    - bigCharger003_idle_002
+    - bigCharger003_idle_003
+    - bigCharger003_idle_004
+    - bigCharger004_fire_001
+    - bigCharger004_fire_002
+    - bigCharger004_fire_003
+    - bigCharger004_fire_004
+    - bigCharger004_fire_005
+    - bigCharger004_idle_001
+    - bigCharger004_idle_002
+    - bigCharger004_idle_003
+    - bigCharger004_idle_004
+    - bigCharger005_fire_001
+    - bigCharger005_fire_002
+    - bigCharger005_fire_003
+    - bigCharger005_fire_004
+    - bigCharger005_fire_005
+    - bigCharger005_idle_001
+    - bigCharger005_idle_002
+    - bigCharger005_idle_003
+    - bigCharger005_idle_004
+    - bigCharger006_fire_001
+    - bigCharger006_fire_002
+    - bigCharger006_fire_003
+    - bigCharger006_fire_004
+    - bigCharger006_fire_005
+    - bigCharger006_idle_001
+    - bigCharger006_idle_002
+    - bigCharger006_idle_003
+    - bigCharger006_idle_004
+    - bigCharger_reload_001
+    - bigCharger_reload_002
+    - bigCharger_reload_003
+    - bigCharger_reload_004
+    - bigCharger_reload_005
+    - bigCharger_reload_006
+    - bigCharger_reload_007
+    - bigCharger_reload_008
+    - gwnn_fire_004
+    - gwnn_idle_001
+    - gwnn_idle_002
+    - gwnn_fire_001
+    - gwnn_fire_002
+    - gwnn_fire_003
+    - gwnn_idle_003
+    - gwnn_idle_004
+    - gwnn_reload_001
+    - gwnn_reload_002
+    - gwnn_reload_003
+    - gwnn_ammonomicon
+    - gwnn_reload_004
+    - gwnn_reload_005
+    - gwnn_reload_006
     spriteTextureGUIDs:
     - c90d9f42014f27c4eab2dbfb3acdae21
     - dcb582fb8937f1b43b71fad7263ce835
@@ -12033,6 +12280,84 @@ MonoBehaviour:
     - dd4d34aca27df254f81546073c22de0b
     - b79a7f030e8dbc446bdd3e1b0b733de6
     - 09e7424720d72ad4a90c19ba5c1d5c03
+    - cf3da7f84bdd5094e95461e73fcf9b04
+    - 78c7a0df69bf03a438ada45f77cbc7e4
+    - 9d0e28c277e8ac0448dc858f638b4de4
+    - 4da008b97418fd54ba95fa3706c422db
+    - 64f41a1db6f903f428001a65a079a6de
+    - bda706e8fc2ce9b4e8ffc155f9ea031e
+    - 04bbd38a4e0161b47adbef5432aa6820
+    - 686a34dd3d704cf47b2f99209b0e3512
+    - f0514516794f7dd49a524d38c6271193
+    - 875b5d4b455707c41aa24c8cbd23acd6
+    - 697e591d86f04b748a8cfe2ffc775a98
+    - d0b8b0f5efc74cd4ba69ec62bc2c7f01
+    - f359d42ede0de594a89a5e0cda4adc22
+    - be21b254cb0d09549865d1ec37ba3a15
+    - 5dc87a72ba2121e4388e28e708fce215
+    - 70fc81ce2dbabd64a8315d47d869f71b
+    - a272957c00b954048b25f46c8abdf371
+    - bf03fe95ebafb1d408e05542f1c1deb6
+    - 20f91d6515cfcdb45aa64cdd5b34ed59
+    - d785b7f680ab8da4587013c2f543f716
+    - b9e2781812f061046ad4c0a9a68b3525
+    - e92788b4542537c4f95370cd2873d7d0
+    - 5b5bf5aed2c89554b89f9df72ef075f4
+    - a5ddc43e5e3556a42b521556d90a7ef6
+    - 359fedac05a6a5747ab52d88b8b49c8a
+    - 07db3efaae665394fbc9f5e54a2a00fd
+    - e5d7637d9fd08a04da194a3daa1abeec
+    - 40ddabd68c878c44e896a8b56aa9b547
+    - 8d9873532d4fd654cbe7bb0dd0eab728
+    - 9b6be1dc51bde18408b111e44d78c76b
+    - 738e5a07f06fe364da4527c581293aa8
+    - ff7bf4b0190858a48963785d68f2663f
+    - 86b24ae37509baf4ca9f25fe38e9932e
+    - 40973571c17ad284594c4b110f32f6ed
+    - fece4355a4fdc6043b7c1dfa1d689a02
+    - 45af3cfb758aa7f4fa930e9052dd15cc
+    - ea063bff9f580b4438f6890f63517506
+    - ec5bd59937eb0d748a0c1d0169126879
+    - 2038a565da4bc5f4b9e98187d2883891
+    - 76b382d4bee7b7441a5adde90237ec54
+    - b119d2e53a727ac4fa86a97f00d7401d
+    - c59410f3b7416ed4f949e4e3023c2bab
+    - 0a6ee40955b904d42b9d50a1552e57f1
+    - 6a9195906212bdb40be63a04ceab395e
+    - 37e2ee34c80ff67488e9f0b54b525fbe
+    - 9d9de8948f178dd45b244ae42bdfde23
+    - 7b5306b0d41bcbd4b8f44b872d517f13
+    - 4eed5cfe52e6c3e45a758670fbce0f5b
+    - d7bbce08ec0135d44adcecc035f55f65
+    - 611b4a2dae371a449bf6c63597632ef6
+    - cdb3e068eb3f53a4f803fa01f69441c7
+    - b99912c711cbdaf40b3f821cbc95e5f6
+    - b361d00704996ac4c9457ac74e032e9b
+    - 2b72ce83669998a47ace9f2f4c3d5cdb
+    - 068954adfc2d9a64097b48ae6ff03495
+    - 950559037570c5245b85c30f9f0f58bf
+    - d617fe8c230604d46b06935a87041d27
+    - cd630a8ca0a024142a2e4d0ac7b2522f
+    - 5d0e48013dbe1e44ba1b0d19050185d2
+    - 68c4b461c5b118e43936e75099530b10
+    - e278629ef7748e4498b17b92eb9d2ce5
+    - c14881751ab732f419459a370399f139
+    - 88a678fe902e75e4aa7b60bb06b55181
+    - ec95d8bd6962d9d48a75ced908c9fa1c
+    - 2ff9bf6252163594f8d24b697dbb5fff
+    - 3a47ed32a91f1c54abcf144d800eccc1
+    - 9bd0d9d5fcb23d448ba219d9915358cc
+    - c0770629d2504294dae86b5bfd7dfadf
+    - e01ee7315f71fb9408d5d14c3eef2a36
+    - 0a7b949533a63d34ab3421d53e960c43
+    - ab974d41a6009514f82674c525bdf3f3
+    - ef71f2f91de742143a9d2977852b7013
+    - 61cdbd7b623695543ad15d1d447bdfa3
+    - 5201ab9072f6b394d967d9ab0be170c0
+    - 33e2946cf2765da40a400d64e7e2bc31
+    - 24b72e8ed1ad737409b1633ac3ff23fd
+    - 2160ef4974c514d4990946182a0415bc
+    - 9d604750366154b41b60cf688db4f1fe
     spriteTextureTimeStamps:
     - 1659532256
     - 1659532256
@@ -12304,6 +12629,830 @@ MonoBehaviour:
     - 1659532280
     - 1659532278
     - 1659532278
+    - 1752202121.59431
+    - 1752203853.87575
+    - 1752202121.5924
+    - 1752202121.59631
+    - 1752202121.59832
+    - 1752202121.60045
+    - 1752186878.35575
+    - 1752186878.37466
+    - 1752186878.37766
+    - 1752186878.37967
+    - 1752203937.71823
+    - 1752203937.72223
+    - 1752203937.72523
+    - 1752203937.72624
+    - 1752203937.73024
+    - 1752204521.23987
+    - 1752204521.24287
+    - 1752204521.24587
+    - 1752204521.24787
+    - 1752203971.50414
+    - 1752203971.50815
+    - 1752203971.51015
+    - 1752203971.51215
+    - 1752203971.51515
+    - 1752204565.72811
+    - 1752204565.77015
+    - 1752204565.77215
+    - 1752204565.77816
+    - 1752204035.2094
+    - 1752204035.2134
+    - 1752204035.21441
+    - 1752204035.21541
+    - 1752204035.21941
+    - 1752204583.78367
+    - 1752204583.78466
+    - 1752204583.78866
+    - 1752204583.79067
+    - 1752204124.04129
+    - 1752204124.04529
+    - 1752204124.0473
+    - 1752204124.0483
+    - 1752204124.0523
+    - 1752204606.16595
+    - 1752204606.16995
+    - 1752204606.17195
+    - 1752204606.17495
+    - 1752204183.95954
+    - 1752204183.96355
+    - 1752204183.96555
+    - 1752204183.96855
+    - 1752204183.96955
+    - 1752204625.69697
+    - 1752204625.70097
+    - 1752204625.70297
+    - 1752204625.70597
+    - 1752203853.85473
+    - 1752203853.85773
+    - 1752203853.86073
+    - 1752203853.86374
+    - 1752203853.86474
+    - 1752203853.86774
+    - 1752203853.87074
+    - 1752203853.87375
+    - 1753287666.434
+    - 1753287166.92776
+    - 1753287166.93076
+    - 1753287666.42399
+    - 1753287666.427
+    - 1753287666.43
+    - 1753287166.93376
+    - 1753287166.93577
+    - 1753288105.22084
+    - 1753288105.22285
+    - 1753288105.22685
+    - 1753288131.57761
+    - 1753288105.22985
+    - 1753288105.23386
+    - 1753288105.23686
+    managedSpriteCollection: 0
+    loadable: 0
+    assetName: 
+    version: 3
+  - name: BeamCollection
+    spriteCollectionGUID: 62d8f53a8d48c0248b943eabe04cd7c0
+    spriteCollectionDataGUID: 9a5f476120c0366458140759c3ae832d
+    spriteNames:
+    - colossusbeam_impact_004
+    - colossusbeam_mid_001
+    - colossusbeam_mid_002
+    - colossusbeam_mid_003
+    - colossusbeam_mid_004
+    - colossusbeam_start_001
+    - colossusbeam_start_004
+    - colossusbeam_start_002
+    - colossusbeam_start_003
+    - colossusbeam_impact_001
+    - colossusbeam_impact_002
+    - colossusbeam_impact_003
+    - colossusbeam_impact_001 1
+    - colossusbeam_impact_002 1
+    - colossusbeam_impact_003 1
+    - colossusbeam_impact_004 1
+    - colossusbeam_mid_001 1
+    - colossusbeam_mid_002 1
+    - colossusbeam_mid_003 1
+    - colossusbeam_mid_004 1
+    - colossusbeam_start_001 1
+    - colossusbeam_start_002 1
+    - colossusbeam_start_003 1
+    - colossusbeam_start_004 1
+    - heatsinkbeam_end_001
+    - heatsinkbeam_end_002
+    - heatsinkbeam_end_004
+    - heatsinkbeam_end_005
+    - heatsinkbeam_end_003
+    - heatsinkbeam_end_006
+    - heatsinkbeam_end_007
+    - heatsinkbeam_end_008
+    - heatsinkbeam_end_009
+    - heatsinkbeam_end_010
+    - heatsinkbeam_mid_001
+    - heatsinkbeam_mid_002
+    - heatsinkbeam_mid_003
+    - heatsinkbeam_mid_004
+    - heatsinkbeam_mid_005
+    - heatsinkbeam_mid_006
+    - heatsinkbeam_mid_007
+    - heatsinkbeam_mid_008
+    - heatsinkbeam_mid_009
+    - heatsinkbeam_mid_010
+    - heatsinkbeam_mid_011
+    - heatsinkbeam_mid_012
+    - inqBeamdissipate_start_008
+    - inqBeamtelegraph_end_001
+    - inqBeamtelegraph_end_002
+    - inqBeamtelegraph_start_008
+    - inqBeamtelegraph_start_007
+    - inqBeamtelegraph_start_006
+    - inqBeamtelegraph_start_005
+    - inqBeamtelegraph_start_004
+    - inqBeamtelegraph_start_003
+    - inqBeamtelegraph_mid_008
+    - inqBeamtelegraph_start_002
+    - inqBeamtelegraph_mid_005
+    - inqBeamtelegraph_start_001
+    - inqBeamtelegraph_mid_003
+    - inqBeamtelegraph_mid_006
+    - inqBeamtelegraph_mid_002
+    - inqBeamtelegraph_mid_001
+    - inqBeamtelegraph_end_008
+    - inqBeamtelegraph_mid_007
+    - inqBeamtelegraph_end_007
+    - inqBeamtelegraph_end_006
+    - inqBeamtelegraph_end_005
+    - inqBeamtelegraph_end_004
+    - inqBeamtelegraph_mid_004
+    - inqBeamtelegraph_end_003
+    - inqBeam_end_002
+    - inqBeam_end_001
+    - inqBeam_end_003
+    - inqBeam_end_004
+    - inqBeam_mid_001
+    - inqBeam_mid_002
+    - inqBeam_mid_003
+    - inqBeam_mid_004
+    - inqBeam_start_001
+    - inqBeam_start_002
+    - inqBeam_start_003
+    - inqBeam_start_004
+    - inqBeamdissipate_end_001
+    - inqBeamdissipate_end_002
+    - inqBeamdissipate_end_003
+    - inqBeamdissipate_end_004
+    - inqBeamdissipate_end_005
+    - inqBeamdissipate_end_006
+    - inqBeamdissipate_end_007
+    - inqBeamdissipate_end_008
+    - inqBeamdissipate_mid_001
+    - inqBeamdissipate_mid_002
+    - inqBeamdissipate_mid_003
+    - inqBeamdissipate_mid_004
+    - inqBeamdissipate_mid_005
+    - inqBeamdissipate_mid_006
+    - inqBeamdissipate_mid_007
+    - inqBeamdissipate_mid_008
+    - inqBeamdissipate_start_001
+    - inqBeamdissipate_start_002
+    - inqBeamdissipate_start_003
+    - inqBeamdissipate_start_004
+    - inqBeamdissipate_start_005
+    - inqBeamdissipate_start_006
+    - inqBeamdissipate_start_007
+    - chainsaw_mid_004
+    - chainsaw_mid_002
+    - chainsaw_mid_001
+    - chainsaw_end_003
+    - chainsaw_mid_003
+    - chainsaw_end_004
+    - chainsaw_end_002
+    - chainsaw_end_001
+    - measuringtape_mid_001
+    - measuringtape_end_001
+    - spinningDeath_impact_003
+    - spinningDeath_end_001
+    - spinningDeath_mid_001
+    - spinningDeath_impact_002
+    - spinningDeath_impact_001
+    - tractorbeam_start_006
+    - tractorbeam_impact_001
+    - tractorbeam_impact_002
+    - tractorbeam_mid_004
+    - tractorbeam_mid_005
+    - tractorbeam_mid_006
+    - tractorbeam_start_002
+    - tractorbeam_start_001
+    - tractorbeam_start_003
+    - tractorbeam_start_004
+    - tractorbeam_start_005
+    - tractorbeam_mid_001
+    - tractorbeam_mid_002
+    - tractorbeam_mid_003
+    - tractorbeam_impact_005
+    - tractorbeam_impact_006
+    - tractorbeam_impact_003
+    - tractorbeam_impact_004
+    - petrifierend_002
+    - petrifierend_003
+    - petrifierend_004
+    - petrifierend_005
+    - petrifierend_006
+    - petrifierend_007
+    - petrifierend_001
+    - petrifiermid_001
+    - petrifiermid_002
+    - petrifiermid_003
+    - petrifiermid_004
+    - petrifiermid_005
+    - petrifiermid_006
+    - petrifiermid_007
+    - petrifierstart_001
+    - petrifierstart_002
+    - petrifierstart_003
+    - petrifierstart_004
+    - petrifierstart_005
+    - petrifierstart_006
+    - petrifierstart_007
+    - puncturewound_startmid_001
+    - puncturewound_startmid_002
+    - puncturewound_startmid_003
+    - puncturewound_startmid_004
+    - puncturewound_trailmid_001
+    - puncturewound_trailmid_002
+    - puncturewound_trailmid_003
+    - puncturewound_trailmid_004
+    - trageter_mid_003
+    - trageter_mid_002
+    - trageter_mid_001
+    - trageter_mid_004
+    - trageter_mid_005
+    - trageter_start_001
+    - trageter_start_002
+    - trageter_start_003
+    - trageter_start_004
+    - trageter_start_005
+    - hitscan_front_001
+    - hitscan_front_002
+    - hitscan_front_003
+    - hitscan_front_004
+    - hitscan_front_005
+    - hitscan_mid_001
+    - hitscan_mid_002
+    - hitscan_mid_003
+    - hitscan_mid_004
+    - hitscan_mid_005
+    spriteTextureGUIDs:
+    - a5b61344723fcf549bd8beda48ecfa25
+    - 2bba2a167fa3120448b97dbeef45e8e7
+    - e197ea9f9f242bf4daddd940aba89421
+    - 57d72cf9ad158514ca14b9c2622e8c01
+    - deb861ae1a035cc47bb6c20f7b438347
+    - 69782764b1a70ca488bcbfe3acd1f5b3
+    - 1fbb3be43973bd448a2a3829d8706720
+    - 23d3fbb1eaefaaf4490386deb98b1489
+    - 423abfc04112f674f8f09d77bded1773
+    - df39a0aec8410cc44bf5ff516ed2dc28
+    - 601110e9d965f124f9e89a80b1274f05
+    - 3030e2dbcaa60654692571b2aa858b35
+    - 0c823527a48caa545a44b7be5764aaba
+    - c376dec7a5813ac40ab1c032dd59bced
+    - ed19dc90a7c6803428a86c1da7b400be
+    - 3d84d4451553f3e4cb6307e405e7cfed
+    - 619baa6fe89c46342b7ddee52bd5de8a
+    - 5844e5a9315603649bd56012cde24990
+    - 31a8313e5999d29479168b1f988bbf34
+    - 9f630a9d5f6b01c4f8bb8ea49aac7cae
+    - 4671ab3480693e742ba687fe3a7fb919
+    - 3c12fa2d88beec947b191bb03e5b25d8
+    - 0cc949da1d28f3e4e99716799ada399c
+    - 6b01ff0f22c32b14691cd3ded2e67903
+    - 0ac8209298d817a48af6d0622bba505b
+    - 37641a36e10534648943ee9f83878297
+    - 2e965777d4fa18944a12908467ea68a7
+    - ceffb78c7d5095e4e9b3343e8288c7cb
+    - 51ac664c6572541418fd92aa3ab2e0b3
+    - 8b7473cb1f67a174590b660fdd77f973
+    - 1996faadf6007354682c6617aec22943
+    - 1e21d547abe8cc349a53eafa9c09249b
+    - 43b3b17dd6bb62743bd30a4ca70e4b24
+    - 6954c70a392f8e6428fb4f2a251f2f05
+    - 5db3411eec211e44892ac3722d6c0f13
+    - eca38a86b0a25ad41b691f6c4d3eb387
+    - 79c1eff08c3a1c44b8881a85ec6d4a07
+    - 0f8a43419330aaf469196ee6af9ba9a7
+    - 7888e4632f7ef114b858fabfedb53626
+    - adf3dc262c9ecdc47aaec19f5f734f53
+    - dc54b65f22f237b449f652d65bc2b665
+    - 968ead5d59158904eb74d1b9b0e898e0
+    - d7d2317c9594f344fb37f2927cfa7a3f
+    - 936e4c605a3455b46bf89cbd788172a0
+    - 46c563121de949940aef841e187d8d4b
+    - 515b93d61b131cf4cbf5e4115802a373
+    - 120f42a979bbc2f47b73c1ce11d4ebbe
+    - 4271e3613fc57e24ca4f588384b29d62
+    - f7e9bd95f3bf9cf4d846eb8278f58676
+    - 4fc0a0315309c41469aba72efb65587d
+    - c031d2bad4e314140aa03c45b4d3012d
+    - 5bd930d60051d7a49a08597d3da9d436
+    - 58e75570402c1964cbaf94adda5e054d
+    - f47d2d27d4242f647ad9372d1c73bd42
+    - 07f704f30b2896447aa0a537f4acc30c
+    - b6ff89cd96b1de245ac61d6c7bef873c
+    - 32a050e4e06f4824b8d07dd31a6b1849
+    - 3a3fcf707fed0ea4589b17a04a5d8c94
+    - e8134d4c20d05324e9f3018441fa2c20
+    - 83e994fcd97d15849b5c2b775eec9110
+    - 92974eae4b422e4499db7a2b1449f45a
+    - c34199d8bb916424eae5a854575ea69b
+    - 26fc56cbb9bf79c4d9ae850ab8b776f6
+    - 56602e6c44867c3418ed9ab1afa62cac
+    - a62a4e05683b29b489045f0512c15457
+    - 94cdcc4e11b12dd429d4e5fd44c3d51b
+    - ffbff6690ec3bd74383f2b2a01d3202a
+    - b0e1e4b154ba9b249a33956348af8a19
+    - 2bac1a827675fc443adb198613bbec68
+    - 2e259d903f241794c84018a07e63c184
+    - 22901ffd3febd1549bd140335132373c
+    - 45e2fc7da9b8fac48bc820240920de6c
+    - 1d1fddf85c3249e4ea77e1b29a1654b4
+    - 9cd8c8590064e764e830d7941dddaef7
+    - 4858227a05ec3e646a1f254cc5d5cfc2
+    - dd0776771d0f509458139d79ef07aedb
+    - 183e6f6a3087b4f448597f7d5ef96cf1
+    - 3eedc7718fdaa24448e254db08d30ce7
+    - 6a36510e17e901f429b7a2364734f2f2
+    - 335124de72add2f48b6c7f63757a01cc
+    - 56d92c326acbb1646bddd8529d03a9ee
+    - 58bb2466a9915334a8e23bc80073c630
+    - 029279f041786c5479ef850ce0c485ad
+    - 813215101ce677f4aa1ef37e1cecebf7
+    - e1e0edbc597ee674ea1be01825b76f53
+    - cebb351135a2eef4a8ee073fd065de1a
+    - 5672f59d3a653e1428d70fcda868e979
+    - 117b655a4b1e2324e9b41d7d731cb121
+    - 8041b13fb13164a4dab015254dae71df
+    - 94eeeb1b0fd6dd84e8ab8781bbc2f118
+    - 01058ef67304c5242b604b5e3acd0b54
+    - 2bc299b2abbf96e4896787b9b3889073
+    - 87d301267e572ae4292ef525353c108a
+    - 9a9b78659cb0cfb4ba3caa8e51a62ed8
+    - 17325401c9ef4974eaa33d6b81dd3d87
+    - f56f8679ad3a0484f9c2e3dcfe2fe9ee
+    - 617fdb842bbcf7045a9c9981693dbb8b
+    - dddd194b55e8ff74989fb14122c14b7c
+    - a0d69678a3ff9df4793d2c7b39505617
+    - 97b7c7e43215c014abac8fbc2ca65044
+    - 4a59444f73718e841ac8ed3106236baf
+    - f5e18231bbbb12c4e8a9b8481eb0a780
+    - 9e757571f338a0a4d9171c4e316bb8e8
+    - 644cb63275011704e98808d9c8964d44
+    - 2a262aac194dc7148967218c1ed0e763
+    - cdb31b1c93f4ecc4bb2a8b9330dee328
+    - d8a7054878ef6a14ab16fea1db005653
+    - 0a7bdccf44e51fb4188d646b1d6dbc42
+    - 5007ff5ba220d45409fefd046d8fab51
+    - c88dfb7081733fd4e961f280ef4b8357
+    - 679f4f884a2c029478bf0478bc3a644f
+    - 839c191ea16215e47a77171e66c9bcc3
+    - bd43ecf8bb7369344b6740fb4883dbfb
+    - e83c9242be21cd54a8be6fba08606d11
+    - b275895d56aef484c85f2ade0b109147
+    - ea07af9951d27ee42b5a701f7a284aeb
+    - 87d7c31ed0a88be4d818e8acfad8f55d
+    - 078fd9472afc89f47a407a3815ed6402
+    - 7ad583bab96521b4e9a8d43984ad6d57
+    - 623eeedcca03f4f469052b313ff8b18f
+    - d36e300c4defd054794d35b2bdd65adc
+    - 237d309cd7e3ab14bb4abf2f5089d38f
+    - 003bcb8062df23643808d7615aef1925
+    - 7bd545a9616ee584cb1526664965bca5
+    - 0c82d9ddc15507143bdad5844c6c2a3c
+    - ca1860584cb2f8d43a9ddcedc8f468bb
+    - 37f6a1f7c9622b941aabd81f67bba420
+    - 46b17949417b3c84f9036dd042541f75
+    - cf0e9c79f0f6104438694690e958b026
+    - 9327e87923e5bcf44ac74768934b80d8
+    - 97a35f0ea02d4e2408fc2c8b58a33884
+    - 02fa5e66205c29f4e96be6c0bd48589e
+    - d1365a9beb620cf4c888ab1ba9499a75
+    - e1155950ea5a87b4e82cc60230bcd993
+    - 0240c7473ee80e146a9b523bb5949806
+    - 380aa9d9d2df8a34191862101dc89462
+    - 34372ef4f3e66bd479cecc437cf22815
+    - f59f5a7cccdc51e4197a4f7fd9b1fc2d
+    - c0ab9057939a69f4980edae451502422
+    - 7734b25f3e3132e44bbbb144398f155b
+    - 01305fa7f5f459547abc6e96a0010d80
+    - f19d098d6e0abdc45b847c65d835dc2c
+    - 20f3ab75392457543a3e96fc0c978b15
+    - b635040cbef66974a9bbf4f48ca88f71
+    - f80a151020e9d73429bc651da382d3ff
+    - 844a808651e25c941aa200953238e7b4
+    - bcbfeea83bf4e8a49a347292ed4ab638
+    - 247fa665ba2444c40b062cf88927fae7
+    - e7c59c0bd6a3d4f418c8d6885089137f
+    - 5efe9f03ee38fe648b9cf39ca43aa30b
+    - d65a6188d5e06904fbedcbe350cebf55
+    - a78f56dd1b6e568428e4367267d144c8
+    - 83980722c162e3b4b918e15d8aa44b3c
+    - 6a657af586a007f4b900cbaa67b96635
+    - 1609141a9c1be9b45a736332d8f41e25
+    - 6a33fd438c2f8e8439d725bb867aded0
+    - faa733275951a324dba3d5297eb52b97
+    - 4ae954b641ca26a40918b0657ac2aff3
+    - d060554a40dece24db4342cbd4e97098
+    - ea1fa285363754947ae04a1120384b20
+    - 0e2f0983782d32f4faba965f2d97affe
+    - 4e94d0ae4a4a3fb4383477bb1180ce60
+    - 4915b199c8be69440ade5edd33917f1c
+    - cda27e8d7f4ab054888de5eacd009844
+    - d0d86c63f7f4fd14ba5b41bdcf52aa9a
+    - 1b4b9a9330532554e8500521ce3a150b
+    - e9efa172c6d9531419ed52430aac9f80
+    - 8b0ab0c2b7793f1409b60bae55c4767c
+    - ab0bae67acd05884fb09391d5768b4f9
+    - 2bf0f5e350e0f3a40aacfbc9338b1703
+    - 0d8eec8fe780a6a48bb68d4ac4963d5b
+    - 8453875c09644894785da1b1bf0362f9
+    - effe084474d2a2f418d2722c8f60382f
+    - 4d1f2ec55f4d464449f57f21345affd4
+    - db504b1c9b16ad348811b0f9f89ac798
+    - 1319d80c71ca0e1428775b3197cbd678
+    - 5489b7db04f2be145ae165f164cfe93e
+    - 3f2fe73b628207c46a99a448d3ff6c67
+    - 85ead7e7c76626d40b785a51dc38f4ca
+    - f7d1085a2b94217409abe0ee857546b7
+    - bf9e23e7c58301647ae0239614df5bfb
+    - 98bbb5055f460f54890b8d360e681f4e
+    - 80ee5bfb7bf9a5f4f9a75f714a4fe27d
+    - 0da038089bc78714e9e226eb89b5e462
+    - 1ff393b3b2f5aad48bdbffe96ff90003
+    - 5b6118948fa9502468e41b976afc6287
+    - 84b0c92bbf41cf44eb0d5f90c45e9d4f
+    - fad41b3df4d9a15499e47755b1307bb1
+    spriteTextureTimeStamps:
+    - 1738023119.8282
+    - 1738023119.8282
+    - 1738023119.8282
+    - 1738023119.8282
+    - 1738023119.8282
+    - 1738023119.8282
+    - 1738023119.8292
+    - 1738023119.8292
+    - 1738023119.8292
+    - 1738023119.81864
+    - 1738023119.81864
+    - 1738023119.81864
+    - 1738023119.8292
+    - 1738023119.8302
+    - 1738023119.8302
+    - 1738023119.83894
+    - 1738023119.83894
+    - 1738023119.83894
+    - 1738023119.83894
+    - 1738023119.83894
+    - 1738023119.83894
+    - 1738023119.83995
+    - 1738023119.83995
+    - 1738023119.83995
+    - 1738023119.83995
+    - 1738023119.83995
+    - 1738023119.84095
+    - 1738023119.84925
+    - 1738023119.83995
+    - 1738023119.84925
+    - 1738023119.84925
+    - 1738023119.84925
+    - 1738023119.85025
+    - 1738023119.85025
+    - 1738023119.85025
+    - 1738023119.85025
+    - 1738023119.85025
+    - 1738023119.85025
+    - 1738023119.85025
+    - 1738023119.86184
+    - 1738023119.86184
+    - 1738023119.86184
+    - 1738023119.86284
+    - 1738023119.86284
+    - 1738023119.86284
+    - 1738023119.86284
+    - 1738023119.88195
+    - 1738023119.88195
+    - 1738023119.88195
+    - 1738023119.90545
+    - 1738023119.90545
+    - 1738023119.90545
+    - 1738023119.89344
+    - 1738023119.89244
+    - 1738023119.89244
+    - 1738023119.89244
+    - 1738023119.89244
+    - 1738023119.89144
+    - 1738023119.89244
+    - 1738023119.89144
+    - 1738023119.89244
+    - 1738023119.89144
+    - 1738023119.89144
+    - 1738023119.89144
+    - 1738023119.89244
+    - 1738023119.88295
+    - 1738023119.88295
+    - 1738023119.88295
+    - 1738023119.88195
+    - 1738023119.89144
+    - 1738023119.88195
+    - 1738023119.86384
+    - 1738023119.86284
+    - 1738023119.86384
+    - 1738023119.86384
+    - 1738023119.86384
+    - 1738023119.87049
+    - 1738023119.87049
+    - 1738023119.87049
+    - 1738023119.87049
+    - 1738023119.87049
+    - 1738023119.87049
+    - 1738023119.87149
+    - 1738023119.87149
+    - 1738023119.87149
+    - 1738023119.87149
+    - 1738023119.87149
+    - 1738023119.87149
+    - 1738023119.8725
+    - 1738023119.8725
+    - 1738023119.8725
+    - 1738023119.8725
+    - 1738023119.8725
+    - 1738023119.8725
+    - 1738023119.8725
+    - 1738023119.8735
+    - 1738023119.8735
+    - 1738023119.8735
+    - 1738023119.8735
+    - 1738023119.8735
+    - 1738023119.88095
+    - 1738023119.88095
+    - 1738023119.88095
+    - 1738023119.88095
+    - 1738023119.88095
+    - 1738023119.88195
+    - 1738023119.90954
+    - 1738023119.90954
+    - 1738023119.90645
+    - 1738023119.90645
+    - 1738023119.90954
+    - 1738023119.90645
+    - 1738023119.90545
+    - 1738023119.90545
+    - 1738023119.90954
+    - 1738023119.90954
+    - 1738023119.91545
+    - 1738023119.91445
+    - 1738023119.92334
+    - 1738023119.91545
+    - 1738023119.91545
+    - 1738023119.93646
+    - 1738023119.92334
+    - 1738023119.92334
+    - 1738023119.93546
+    - 1738023119.93546
+    - 1738023119.93546
+    - 1738023119.93546
+    - 1738023119.93546
+    - 1738023119.93546
+    - 1738023119.93646
+    - 1738023119.93646
+    - 1738023119.93446
+    - 1738023119.93446
+    - 1738023119.93446
+    - 1738023119.93446
+    - 1738023119.93446
+    - 1738023119.92334
+    - 1738023119.92434
+    - 1738023126.79797
+    - 1738023126.79797
+    - 1738023126.79797
+    - 1738023126.79897
+    - 1738023126.81064
+    - 1738023126.81064
+    - 1738023126.79797
+    - 1738023126.81064
+    - 1738023126.81064
+    - 1738023126.81064
+    - 1738023126.81164
+    - 1738023126.81164
+    - 1738023126.81164
+    - 1738023126.81164
+    - 1738023126.81164
+    - 1738023126.81164
+    - 1738023126.81264
+    - 1738023126.81264
+    - 1738023126.81264
+    - 1738023126.81264
+    - 1738023126.81264
+    - 1738023126.81264
+    - 1738023126.81364
+    - 1738023126.81364
+    - 1738023126.81364
+    - 1738023126.81764
+    - 1738023126.81864
+    - 1738023126.81864
+    - 1738023126.81864
+    - 1738023126.81864
+    - 1738023126.81864
+    - 1738023126.81864
+    - 1738023126.81965
+    - 1738023126.81965
+    - 1738023126.83027
+    - 1738023126.83027
+    - 1738023126.83027
+    - 1738023126.83027
+    - 1738023126.83027
+    - 1738023126.83127
+    - 1738023126.83127
+    - 1738023126.83127
+    - 1738023126.83127
+    - 1738023126.83127
+    - 1738023126.83928
+    - 1738023126.84028
+    - 1738023126.84028
+    - 1738023126.84028
+    - 1738023126.84028
+    managedSpriteCollection: 0
+    loadable: 0
+    assetName: 
+    version: 3
+  - name: SpecialVFXCollection
+    spriteCollectionGUID: a3692884ab127104ea16afc61073c35d
+    spriteCollectionDataGUID: 3e5d0beb9fe38db4dbb7fe0c9391c57c
+    spriteNames:
+    - letter_13
+    - letter_14
+    - letter_09
+    - letter_10
+    - letter_01
+    - letter_04
+    - letter_05
+    - letter_02
+    - letter_03
+    - letter_11
+    - letter_12
+    - letter_15
+    - letter_16
+    - letter_17
+    - letter_18
+    - letter_19
+    - letter_20
+    - letter_21
+    - letter_22
+    - letter_06
+    - letter_07
+    - letter_08
+    - letter_23
+    - letter_24
+    - letter_25
+    - letter_26
+    - DemonRing
+    - redletter_07
+    - redletter_08
+    - redletter_06
+    - redletter_12
+    - redletter_13
+    - redletter_14
+    - redletter_15
+    - redletter_16
+    - redletter_17
+    - redDemonRing
+    - redletter_05
+    - redletter_02
+    - redletter_01
+    - redletter_18
+    - redletter_09
+    - redletter_11
+    - redletter_04
+    - redletter_03
+    - redletter_10
+    - redletter_19
+    - redletter_20
+    - redletter_21
+    - redletter_22
+    - redletter_23
+    - redletter_24
+    - redletter_25
+    - redletter_26
+    spriteTextureGUIDs:
+    - 1f6e2a8b96a15b249814199f8609b555
+    - d10a72995ca7d1d4e90d989c8123a0a5
+    - 8a61a465df247b54d8eb779735a41840
+    - 545312aba9a1b6a44bbe26c6a2330bdf
+    - 5ec482a71efc1124aaa162e72e903dd5
+    - 4b888127c6532de49aa5f7acb092b450
+    - 3dac60ab12f184a4590080a213a1f553
+    - 9efa3826869e0fd409d800497fbc98df
+    - 8e11c9c1e7c2a2440bf04ac683ec6c33
+    - 5ddb24ffb3a181a478ecaf5ff17dfd88
+    - 67c00ad487d4e1046a9a20488630693d
+    - 78172f0bd4300fb42932f2567140274f
+    - 03af380c1c611064184281c029acc413
+    - 6211a40dfdffc1c4abbf63b3e5ba4692
+    - cd52af11c7c02364eb6845e2a1f04e6c
+    - c665908525d992d4797d8d872c016ea5
+    - eed17a4f3cdada443ba2f1df2191156a
+    - 5d3153b4ce378e046b8738266babf213
+    - d5b6efd89a5633e4aaa84a2321aeb345
+    - 5ea4508a20b667442a3e42d02902f3ff
+    - d32c67bb1f4a08641b04072524227d8a
+    - f3e67e35652937e48af046a7f238f249
+    - 1dd0b41eaf2ad09409858067fdc538d6
+    - d6296e4a3100de944ad9151859217ce0
+    - 6e8cd1476baacc74f8451b20ad57adbe
+    - b10375655b8802044a9f05cd5e0f028a
+    - 837b17dacbe04284380cdd3b090363f0
+    - 3d8a3da44923fcf4d8967d0a65dc2bab
+    - 04bcc6d8ccb770044af4e90aee8cb346
+    - 778692eb37c6cf84a94f65cf2f344c02
+    - 3d28c1a286d294b44846669624cf1438
+    - d563806ab9ac80e4981785fd28ae8644
+    - 8c210ba5d2bb1b943ba96c0dc671d60f
+    - e2abec4e7d4d1154eb8303f3e15ae382
+    - 999a942834fa5d941a40add31776a4b7
+    - d6691d780bc6c484385fd2136ffaf93f
+    - 8e3337f3c2a92d54697b0f45aa86d8b1
+    - 5a0595b0c1c6d2e4a8c100a84e34c733
+    - 71555134819602844b8e24c062938426
+    - e3e2900542419fa4f9a5e82ab14205e6
+    - 3fccd76ec7152d74981fb4b147a9bf8d
+    - f106786a1d7531c4cae19fa9a776ceb9
+    - d08d39aa999f08a42ad26de262560cb0
+    - 73f49011872ee3840aa43710f0a65411
+    - 50ab9c1cfe00b1547900b5645dabaf74
+    - 7f398a979c5ffc64b80d33c27ee9a7d2
+    - 8920a59b14b23aa4b825e1c9976b6545
+    - 11243dbfb9516664aa18316a94a695af
+    - bb9749b4928e24d45aa67c1b09df45ef
+    - 8a554a184d77eb744920bca018f9a9a6
+    - 8818c6aebc67372418af89aa7626502d
+    - 893cfafdcfd7eb143a7d1a9130fbcb11
+    - b9943eb3ad50fcb4a9e7b9167962ca90
+    - 7419cdb263a24df46be4932457e3b717
+    spriteTextureTimeStamps:
+    - 1753571433.27742
+    - 1753571433.33808
+    - 1753571433.03296
+    - 1753571433.09422
+    - 1753571432.51549
+    - 1753571432.71487
+    - 1753571432.77599
+    - 1753571432.59228
+    - 1753571432.65365
+    - 1753571433.15525
+    - 1753571433.21633
+    - 1753571433.39911
+    - 1753571433.46087
+    - 1753571433.52187
+    - 1753571433.58304
+    - 1753571433.64388
+    - 1753571433.70491
+    - 1753571433.766
+    - 1753571433.82703
+    - 1753571432.83704
+    - 1753571432.91509
+    - 1753571432.97204
+    - 1753571433.88805
+    - 1753571433.94909
+    - 1753571434.01021
+    - 1753571434.07117
+    - 1753573776.30285
+    - 1753579101.67937
+    - 1753579101.74169
+    - 1753579101.61834
+    - 1753579102.00499
+    - 1753579102.06599
+    - 1753579102.12703
+    - 1753579102.18805
+    - 1753579102.25951
+    - 1753579102.32034
+    - 1753579083.87541
+    - 1753579101.55731
+    - 1753579101.36601
+    - 1753579101.2991
+    - 1753579102.38137
+    - 1753579101.82219
+    - 1753579101.94388
+    - 1753579101.49612
+    - 1753579101.42504
+    - 1753579101.88325
+    - 1753579102.49768
+    - 1753579102.57498
+    - 1753579102.66599
+    - 1753579102.72724
+    - 1753579102.78826
+    - 1753579102.84929
+    - 1753579102.91105
+    - 1753579102.98212
     managedSpriteCollection: 0
     loadable: 0
     assetName: 

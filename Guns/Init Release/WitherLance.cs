@@ -57,22 +57,22 @@ namespace Planetside
 			gun.DefaultModule.angleVariance = 17f;
 			gun.DefaultModule.burstShotCount = 1;
 			gun.DefaultModule.projectiles.Clear();
-			gun.DefaultModule.projectiles.Add(AddProjectile("spark_blue_idle", 2.5f, 5.5f, new Color(0, 10, 200), WitherLanceProjectile.Types.NORMAL, 223));
+			gun.DefaultModule.projectiles.Add(AddProjectile("spark_blue_idle", 5f, 5.5f, new Color(0, 10, 200), WitherLanceProjectile.Types.NORMAL, 223));
 			
-			var green = AddProjectile("spark_green_idle", 2f, 6f, new Color(1, 200, 10), WitherLanceProjectile.Types.GREEN, 504);
+			var green = AddProjectile("spark_green_idle", 3.5f, 6f, new Color(1, 200, 10), WitherLanceProjectile.Types.GREEN, 504);
 			var greenHoming = green.GetComponent<HomingModifier>();
 			greenHoming.AngularVelocity += 120;
 			greenHoming.HomingRadius += 10;
 			gun.DefaultModule.projectiles.Add(green);
 
-			var yellow = AddProjectile("spark_yellow_idle", 3f, 10f, new Color(255, 34, 0), WitherLanceProjectile.Types.FAST, 95, 2, 4, 7);
+			var yellow = AddProjectile("spark_yellow_idle", 4.5f, 10f, new Color(255, 34, 0), WitherLanceProjectile.Types.FAST, 95, 2, 4, 7);
 			yellow.GetComponent<PierceProjModifier>().penetration += 5;
             gun.DefaultModule.projectiles.Add(yellow);
 
-            var pink = AddProjectile("spark_pink_idle", 5f, 5f, new Color(255, 150, 150), WitherLanceProjectile.Types.SPARKLY, 123, 3, 1, 2);
+            var pink = AddProjectile("spark_pink_idle", 8f, 5f, new Color(255, 150, 150), WitherLanceProjectile.Types.SPARKLY, 123, 3, 1, 2);
             gun.DefaultModule.projectiles.Add(pink);
 
-            RedStar = AddProjectile("spark_red_idle", 3f, 7f, new Color(255, 10, 10), WitherLanceProjectile.Types.BLAST, 125, 1, 2, 6);
+            RedStar = AddProjectile("spark_red_idle", 5f, 7f, new Color(255, 10, 10), WitherLanceProjectile.Types.BLAST, 125, 1, 2, 6);
             ExplosiveModifier explosiveModifier = RedStar.gameObject.GetOrAddComponent<ExplosiveModifier>();
             explosiveModifier.explosionData = new ExplosionData()
             {
@@ -207,7 +207,7 @@ namespace Planetside
             projectile.baseData.UsesCustomAccelerationCurve = true;
             projectile.baseData.AccelerationCurve = AnimationCurve.Linear(0, 1, 0.6f, 0.1f);
 
-            projectile.AnimateProjectileBundle(animationName, StaticSpriteDefinitions.Projectile_Sheet_Data, StaticSpriteDefinitions.Projectile_Animation_Data, animationName,
+            Alexandria.Assetbundle.ProjectileBuilders.AnimateProjectileBundle(projectile, animationName, StaticSpriteDefinitions.Projectile_Sheet_Data, StaticSpriteDefinitions.Projectile_Animation_Data, animationName,
 			new List<IntVector2>() { new IntVector2(7, 7), new IntVector2(7, 7), new IntVector2(7, 7), new IntVector2(7, 7), new IntVector2(7, 7) },
 			AnimateBullet.ConstructListOfSameValues(true, 5), AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.LowerLeft, 5), AnimateBullet.ConstructListOfSameValues(true, 5), AnimateBullet.ConstructListOfSameValues(false, 5),
 			AnimateBullet.ConstructListOfSameValues<Vector3?>(null, 5), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 5), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 5), AnimateBullet.ConstructListOfSameValues<Projectile>(null, 5));

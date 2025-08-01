@@ -22,6 +22,7 @@ namespace Planetside
 {
 	internal class ImmateriaProjectile : MonoBehaviour
 	{
+        public string SFX;
         public void Start()
         {
             this.projectile = base.GetComponent<Projectile>();
@@ -35,7 +36,7 @@ namespace Planetside
                 //Destroy(gameObject2, 2);
                 Exploder.Explode(pos2, Immateria.ExplosionData, Vector2.zero, null, true);
                 Exploder.Explode(pos1, Immateria.ExplosionData, Vector2.zero, null, true);
-                AkSoundEngine.PostEvent("Play_WPN_grasshopper_impact_01", proj.gameObject);
+                AkSoundEngine.PostEvent("Play_WPN_" + SFX + "_impact_01", projectile.gameObject);
                 AkSoundEngine.PostEvent("Play_WPN_" + WrapaRounds.SFX + "_impact_01", projectile.gameObject);
                 if (player)
                 {

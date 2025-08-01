@@ -246,7 +246,7 @@ namespace Planetside
                 defaultFrontPath+"sniperturret_front_idle4.png",
             };
 
-            AIBulletBank.Entry entrySniper = StaticUndodgeableBulletEntries.CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("31a3ea0c54a745e182e22ea54844a82d").bulletBank.GetBullet("sniper"), "sniperTurret");
+            AIBulletBank.Entry entrySniper = StaticBulletEntries.CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("31a3ea0c54a745e182e22ea54844a82d").bulletBank.GetBullet("sniper"), "sniperTurret");
 
 
 

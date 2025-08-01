@@ -28,8 +28,8 @@ namespace Planetside
 			// Tip: To debug an enemy's BehaviorSpeculator, you can uncomment the line below. This will print all the behavior information to the console.
 			//ToolsEnemy.DebugInformation(behaviorSpec);
 
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableFrogger);
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSkullAudio);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.UndodgeableFrogger);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableSkullAudio);
 
 
 			DraGunNearDeathBehavior DraGunNearDeathBehavior = behaviorSpec.AttackBehaviors[0] as DraGunNearDeathBehavior;
@@ -259,7 +259,7 @@ namespace Planetside
 					{
 						if (!this.m_centerBullets[k] && this.m_platformCenters[k].y < this.m_rowHeight - 2f)
 						{
-							base.Fire(new Offset(this.m_platformCenters[k].x, (20.5f - this.m_rowHeight + this.m_platformCenters[k].y)-2, 0f, string.Empty, DirectionType.Absolute), new Direction(-90f, DirectionType.Absolute, -1f), new Speed(4.66f, SpeedType.Absolute), new ModifiedDraGunNegativeSpace1.WiggleBullet(true, StaticUndodgeableBulletEntries.UndodgeableFrogger.Name));
+							base.Fire(new Offset(this.m_platformCenters[k].x, (20.5f - this.m_rowHeight + this.m_platformCenters[k].y)-2, 0f, string.Empty, DirectionType.Absolute), new Direction(-90f, DirectionType.Absolute, -1f), new Speed(4.66f, SpeedType.Absolute), new ModifiedDraGunNegativeSpace1.WiggleBullet(true, StaticBulletEntries.UndodgeableFrogger.Name));
 							this.m_centerBullets[k] = true;
 						}
 					}
@@ -453,7 +453,7 @@ namespace Planetside
 					float startAngle3 = base.RandomAngle();
 					for (int i = 0; i < 7; i++)
 					{
-						base.Fire(new Direction(base.SubdivideCircle(startAngle3, 7, i, 1f, false), DirectionType.Absolute, -1f), new Speed(3f, SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.UndodgeableFrogger.Name, 8, 90));
+						base.Fire(new Direction(base.SubdivideCircle(startAngle3, 7, i, 1f, false), DirectionType.Absolute, -1f), new Speed(3f, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.UndodgeableFrogger.Name, 8, 90));
 					}
 				}
 				else
@@ -475,7 +475,7 @@ namespace Planetside
 					float startAngle3 = base.RandomAngle();
 					for (int i = 0; i < 7; i++)
 					{
-						base.Fire(new Direction(base.SubdivideCircle(startAngle3, 7, i, 1f, false), DirectionType.Absolute, -1f), new Speed(3f, SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.UndodgeableFrogger.Name, 8, 90));
+						base.Fire(new Direction(base.SubdivideCircle(startAngle3, 7, i, 1f, false), DirectionType.Absolute, -1f), new Speed(3f, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.UndodgeableFrogger.Name, 8, 90));
 					}
 				}
 				return null;
@@ -494,7 +494,7 @@ namespace Planetside
 					i++;
 					if (i % 5 == 0)
 					{
-						this.Fire(new Direction(0, DirectionType.Relative, -1f), new Speed(1f, SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.UndodgeableFrogger.Name, 10, 180));
+						this.Fire(new Direction(0, DirectionType.Relative, -1f), new Speed(1f, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.UndodgeableFrogger.Name, 10, 180));
 					}
 					this.Fire(new Direction(UnityEngine.Random.Range(-30f, 30f), DirectionType.Relative, -1f), new Speed(12f, SpeedType.Absolute), new Bullet("UziBurst", false, false, false));
 					yield return this.Wait(UnityEngine.Random.Range(2, 3));
@@ -512,7 +512,7 @@ namespace Planetside
 					i++;
 					if (i % 4 == 0) 
 					{
-						this.Fire(new Direction(UnityEngine.Random.Range(-22.5f, 22.5f), DirectionType.Relative, -1f), new Speed(1f, SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.UndodgeableFrogger.Name, 12, 180));
+						this.Fire(new Direction(UnityEngine.Random.Range(-22.5f, 22.5f), DirectionType.Relative, -1f), new Speed(1f, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.UndodgeableFrogger.Name, 12, 180));
 					}
 					this.Fire(new Direction(UnityEngine.Random.Range(-45f, 45f), DirectionType.Relative, -1f), new Speed(14f, SpeedType.Absolute), new Bullet("Sweep", false, false, false));
 					yield return this.Wait(1);
@@ -560,7 +560,7 @@ namespace Planetside
 			}
 			public class DodgeRollCheesePreventionProjectile : Bullet
 			{
-				public DodgeRollCheesePreventionProjectile(float sign, float wait) : base(StaticUndodgeableBulletEntries.UndodgeableFrogger.Name, false, false, false)
+				public DodgeRollCheesePreventionProjectile(float sign, float wait) : base(StaticBulletEntries.UndodgeableFrogger.Name, false, false, false)
 				{
 					this.m_sign = sign;
 					this.WaitTime = wait;
@@ -584,17 +584,17 @@ namespace Planetside
 		{
 			public override IEnumerator Top()
 			{
-				base.Fire(new Direction(-90f, DirectionType.Absolute, -1f), new Speed(6f, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.undodgeableSkullAudio.Name, false, false, false));
-				base.Fire(new Direction(-110f, DirectionType.Absolute, -1f), new Speed(6f, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.undodgeableSkullAudio.Name, false, false, false));
-				base.Fire(new Direction(-130f, DirectionType.Absolute, -1f), new Speed(6f, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.undodgeableSkullAudio.Name, false, false, false));
-				base.Fire(new Direction(-70f, DirectionType.Absolute, -1f), new Speed(6f, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.undodgeableSkullAudio.Name, false, false, false));
-				base.Fire(new Direction(-50f, DirectionType.Absolute, -1f), new Speed(6f, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.undodgeableSkullAudio.Name, false, false, false));
+				base.Fire(new Direction(-90f, DirectionType.Absolute, -1f), new Speed(6f, SpeedType.Absolute), new Bullet(StaticBulletEntries.undodgeableSkullAudio.Name, false, false, false));
+				base.Fire(new Direction(-110f, DirectionType.Absolute, -1f), new Speed(6f, SpeedType.Absolute), new Bullet(StaticBulletEntries.undodgeableSkullAudio.Name, false, false, false));
+				base.Fire(new Direction(-130f, DirectionType.Absolute, -1f), new Speed(6f, SpeedType.Absolute), new Bullet(StaticBulletEntries.undodgeableSkullAudio.Name, false, false, false));
+				base.Fire(new Direction(-70f, DirectionType.Absolute, -1f), new Speed(6f, SpeedType.Absolute), new Bullet(StaticBulletEntries.undodgeableSkullAudio.Name, false, false, false));
+				base.Fire(new Direction(-50f, DirectionType.Absolute, -1f), new Speed(6f, SpeedType.Absolute), new Bullet(StaticBulletEntries.undodgeableSkullAudio.Name, false, false, false));
 				if (ChallengeManager.CHALLENGE_MODE_ACTIVE)
 				{
-					base.Fire(new Direction(-60f, DirectionType.Absolute, -1f), new Speed(6f, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.undodgeableSkullAudio.Name, false, false, false));
-					base.Fire(new Direction(-80f, DirectionType.Absolute, -1f), new Speed(6f, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.undodgeableSkullAudio.Name, false, false, false));
-					base.Fire(new Direction(-100f, DirectionType.Absolute, -1f), new Speed(6f, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.undodgeableSkullAudio.Name, false, false, false));
-					base.Fire(new Direction(-120f, DirectionType.Absolute, -1f), new Speed(6f, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.undodgeableSkullAudio.Name, false, false, false));
+					base.Fire(new Direction(-60f, DirectionType.Absolute, -1f), new Speed(6f, SpeedType.Absolute), new Bullet(StaticBulletEntries.undodgeableSkullAudio.Name, false, false, false));
+					base.Fire(new Direction(-80f, DirectionType.Absolute, -1f), new Speed(6f, SpeedType.Absolute), new Bullet(StaticBulletEntries.undodgeableSkullAudio.Name, false, false, false));
+					base.Fire(new Direction(-100f, DirectionType.Absolute, -1f), new Speed(6f, SpeedType.Absolute), new Bullet(StaticBulletEntries.undodgeableSkullAudio.Name, false, false, false));
+					base.Fire(new Direction(-120f, DirectionType.Absolute, -1f), new Speed(6f, SpeedType.Absolute), new Bullet(StaticBulletEntries.undodgeableSkullAudio.Name, false, false, false));
 				}
 				return null;
 			}
@@ -615,11 +615,11 @@ namespace Planetside
                     {
 						if (q == true)
                         {
-							this.Fire(new Direction(UnityEngine.Random.Range(-23f, -32f), DirectionType.Aim, -1f), new Speed(14f, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.UndodgeableFrogger.Name, false, false, false));
+							this.Fire(new Direction(UnityEngine.Random.Range(-23f, -32f), DirectionType.Aim, -1f), new Speed(14f, SpeedType.Absolute), new Bullet(StaticBulletEntries.UndodgeableFrogger.Name, false, false, false));
 						}
 						else
                         {
-							this.Fire(new Direction(UnityEngine.Random.Range(23f, 32f), DirectionType.Aim, -1f), new Speed(14f, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.UndodgeableFrogger.Name, false, false, false));
+							this.Fire(new Direction(UnityEngine.Random.Range(23f, 32f), DirectionType.Aim, -1f), new Speed(14f, SpeedType.Absolute), new Bullet(StaticBulletEntries.UndodgeableFrogger.Name, false, false, false));
 						}
 						q = !q;
 					}
@@ -674,7 +674,7 @@ namespace Planetside
 					bool q = UnityEngine.Random.value > 0.5f ? true : false;
 					for (int i = 0; i < 44; i++)
 					{
-						string a = q == true ? StaticUndodgeableBulletEntries.UndodgeableFrogger.Name : "default_novfx";
+						string a = q == true ? StaticBulletEntries.UndodgeableFrogger.Name : "default_novfx";
 						base.Fire(new Direction(base.SubdivideArc(-10f, 200f, 44, i, false), DirectionType.Absolute, -1f), new Speed(9f, SpeedType.Absolute), new Bullet(a, false, false, false));
 						if (i < 41)
 						{

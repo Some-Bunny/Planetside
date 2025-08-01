@@ -22,9 +22,15 @@ namespace Planetside
         {
             IsProjectileFiredFromHoveringGun = true;
             IsProjectileFiredFromTeleportingGunfire = true;
+            ChanceToNotPreventRecursion = 0;
+        }
+        public void Awake()
+        {
+            if (ChanceToNotPreventRecursion == 0) { return; }
+            if (UnityEngine.Random.value < ChanceToNotPreventRecursion) { Destroy(this); }
         }
         public bool IsProjectileFiredFromHoveringGun;
         public bool IsProjectileFiredFromTeleportingGunfire;
-
+        public float ChanceToNotPreventRecursion = 0;
     }
 }

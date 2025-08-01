@@ -28,9 +28,9 @@ namespace Planetside
 			// Tip: To debug an enemy's BehaviorSpeculator, you can uncomment the line below. This will print all the behavior information to the console.
 			//ToolsEnemy.DebugInformation(behaviorSpec);
 
-			//actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableDonut);
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableDefault);
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableDonut);
+			//actor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableDonut);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableDefault);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableDonut);
 
 			/*
 			SequentialAttackBehaviorGroup SequentialAttackBehaviorGroup = behaviorSpec.AttackBehaviorGroup.AttackBehaviors[2].Behavior as SequentialAttackBehaviorGroup;
@@ -104,7 +104,7 @@ namespace Planetside
 				}
 				for (int i = 0; i < 24; i++)
                 {
-					this.Fire(new Direction(15*i, DirectionType.Relative, -1f), new Speed(8f, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.undodgeableDefault.Name));
+					this.Fire(new Direction(15*i, DirectionType.Relative, -1f), new Speed(8f, SpeedType.Absolute), new Bullet(StaticBulletEntries.undodgeableDefault.Name));
 				}
 
 				yield break;
@@ -129,7 +129,7 @@ namespace Planetside
 				}
 				for (int i = 0; i < 24; i++)
 				{
-					this.Fire(new Direction(15 * i, DirectionType.Relative, -1f), new Speed(8f, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.undodgeableDefault.Name));
+					this.Fire(new Direction(15 * i, DirectionType.Relative, -1f), new Speed(8f, SpeedType.Absolute), new Bullet(StaticBulletEntries.undodgeableDefault.Name));
 				}
 				yield break;
 			}
@@ -151,7 +151,7 @@ namespace Planetside
 				}
 				for (int i = 0; i < 24; i++)
 				{
-					this.Fire(new Direction(15 * i, DirectionType.Relative, -1f), new Speed(8f, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.undodgeableDefault.Name));
+					this.Fire(new Direction(15 * i, DirectionType.Relative, -1f), new Speed(8f, SpeedType.Absolute), new Bullet(StaticBulletEntries.undodgeableDefault.Name));
 				}
 				yield break;
 			}
@@ -170,7 +170,7 @@ namespace Planetside
 					for (int j = 0; j < 6; j++)
 					{
 						float num = (float)j * 60f + -37f * (float)i;
-						this.Fire(new Offset(1.66f, 0f, num, string.Empty, DirectionType.Absolute), new Direction(num, DirectionType.Absolute, -1f), new Speed(F, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.undodgeableDefault.Name, false, false, false));
+						this.Fire(new Offset(1.66f, 0f, num, string.Empty, DirectionType.Absolute), new Direction(num, DirectionType.Absolute, -1f), new Speed(F, SpeedType.Absolute), new Bullet(StaticBulletEntries.undodgeableDefault.Name, false, false, false));
 					}
 					yield return this.Wait(6);
 				}
@@ -232,7 +232,7 @@ namespace Planetside
 							H = true;
 							num4 = 100;
 						}
-						this.Fire(new Direction(num, DirectionType.Absolute, -1f), new Speed(7f, SpeedType.Absolute), new ModifiedMeduziScream1.TimedBullet(num4, Mathf.Sign(num3), H == false ? "scream" : StaticUndodgeableBulletEntries.undodgeableDefault.Name));
+						this.Fire(new Direction(num, DirectionType.Absolute, -1f), new Speed(7f, SpeedType.Absolute), new ModifiedMeduziScream1.TimedBullet(num4, Mathf.Sign(num3), H == false ? "scream" : StaticBulletEntries.undodgeableDefault.Name));
 					}
 					yield return this.Wait(20);
 					if (isCoop && numGaps > 1)

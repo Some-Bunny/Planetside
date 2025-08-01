@@ -50,30 +50,16 @@ namespace Planetside
                 mod.numberOfShotsInClip = 100;
                 mod.angleVariance = 0;
 
-                List<string> BeamAnimPaths = new List<string>()
-            { "Planetside/Resources/Beams/MeasuringTape/measuringtape_mid_001"};
-                List<string> EndPaths = new List<string>()
-            {"Planetside/Resources/Beams/MeasuringTape/measuringtape_end_001"};
                 Projectile projectile = UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(86) as Gun).DefaultModule.projectiles[0]);
-                BasicBeamController beamComp = projectile.GenerateBeamPrefab(
-                    "Planetside/Resources/Beams/MeasuringTape/measuringtape_mid_001",
-                    new Vector2(6, 2),
-                    new Vector2(0, 2),
-                    BeamAnimPaths,
-                    1,
-                    null,
-                    -1,
-                    null,
-                    null,
-                    EndPaths,
-                    -1,
-                    new Vector2(6, 2),
-                    new Vector2(0, 2),
-                    null,
-                    -1,
-                    null,
-                    null
-                    );
+                BasicBeamController beamComp = projectile.GenerateBeamPrefabBundle(
+                "measuringtape_mid_001",
+                StaticSpriteDefinitions.Beam_Sheet_Data,
+                StaticSpriteDefinitions.Beam_Animation_Data,
+                "tape_mid", new Vector2(6, 2), new Vector2(0, 2), //Main
+                null, null, null, //Impact
+                "tape_end", new Vector2(6, 2), new Vector2(0, 2), //End Of beam
+                null, null, null, //Start Of Beam
+                false);
 
                 projectile.gameObject.SetActive(false);
                 FakePrefab.MarkAsFakePrefab(projectile.gameObject);
@@ -100,7 +86,7 @@ namespace Planetside
                         ignoreHitRigidbodyTime = 0.5f,
                         knockbackMultiplier = 3f,
                         minAngularSpeed = 30,
-                        damageMultiplier = 0.2f,
+                        damageMultiplier = 1.2f,
                         hitRigidbodyVFX = (PickupObjectDatabase.GetById(610) as Gun).DefaultModule.projectiles[0].GetComponent<BasicBeamController>().angularKnockbackTiers.Last().hitRigidbodyVFX,
                         additionalAmmoCost = 0
                     },
@@ -109,7 +95,7 @@ namespace Planetside
                         ignoreHitRigidbodyTime = 0.5f,
                         knockbackMultiplier = 5f,
                         minAngularSpeed = 60,
-                        damageMultiplier = 0.4f,
+                        damageMultiplier = 1.4f,
                         hitRigidbodyVFX = (PickupObjectDatabase.GetById(610) as Gun).DefaultModule.projectiles[0].GetComponent<BasicBeamController>().angularKnockbackTiers.Last().hitRigidbodyVFX,
                         additionalAmmoCost = 0
                     }
@@ -144,6 +130,8 @@ namespace Planetside
             };
             CustomSynergies.Add("Workplace Accident", yes, null, false);
             ItemIDs.AddToList(gun.PickupObjectId);
+            Alexandria.ItemAPI.ItemBuilder.AddToGunslingKingTable(gun, 1);
+
         }
         public static int MeasuringTapeID;
 

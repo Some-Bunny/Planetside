@@ -50,9 +50,9 @@ namespace Planetside
 			ShootBehavior5.BulletScript = new CustomBulletScriptSelector(typeof(ModifiedBulletKingDirectedFireDownRight));
 
 
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableDefault);
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableBulletKingSlam);//UndodgeableDirectedfire
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableDirectedfire);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableDefault);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableBulletKingSlam);//UndodgeableDirectedfire
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.UndodgeableDirectedfire);
 
 
 		}
@@ -148,7 +148,7 @@ namespace Planetside
 			public void DirectedShots(float x, float y, float direction)
 			{
 				direction -= 90f;
-				base.Fire(new Offset(x, y, 0f, string.Empty, DirectionType.Absolute), new Direction(direction, DirectionType.Absolute, -1f), new Speed(11, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.UndodgeableDirectedfire.Name, false, false, false));
+				base.Fire(new Offset(x, y, 0f, string.Empty, DirectionType.Absolute), new Direction(direction, DirectionType.Absolute, -1f), new Speed(11, SpeedType.Absolute), new Bullet(StaticBulletEntries.UndodgeableDirectedfire.Name, false, false, false));
 			}
 		}
 
@@ -188,7 +188,7 @@ namespace Planetside
 			private const int Time = 180;
 			public class SpinningBullet : Bullet
 			{
-				public SpinningBullet(Vector2 centerPoint, float startAngle) : base(StaticUndodgeableBulletEntries.undodgeableBulletKingSlam.Name)
+				public SpinningBullet(Vector2 centerPoint, float startAngle) : base(StaticBulletEntries.undodgeableBulletKingSlam.Name)
 				{
 					this.centerPoint = centerPoint;
 					this.startAngle = startAngle;
@@ -230,14 +230,14 @@ namespace Planetside
 					for (int j = 0; j < 6; j++)
 					{
 						float num = (float)j * 60f + 37f * (float)i;
-						this.Fire(new Offset(1.66f, 0f, num, string.Empty, DirectionType.Absolute), new Direction(num, DirectionType.Absolute, -1f), new Speed(7.33f, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.undodgeableDefault.Name, false, false, false));
+						this.Fire(new Offset(1.66f, 0f, num, string.Empty, DirectionType.Absolute), new Direction(num, DirectionType.Absolute, -1f), new Speed(7.33f, SpeedType.Absolute), new Bullet(StaticBulletEntries.undodgeableDefault.Name, false, false, false));
 					}
 					yield return this.Wait(6);
 				}
 				for (int k = 0; k < 36; k++)
 				{
-					this.Fire(new Direction((float)k * 360f / 36f, DirectionType.Absolute, -1f), new Speed(7, SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.undodgeableDefault.Name, 7, 60));
-					this.Fire(new Direction((float)k * 360f / 36f, DirectionType.Absolute, -1f), new Speed(6, SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.undodgeableDefault.Name, 7, 60));
+					this.Fire(new Direction((float)k * 360f / 36f, DirectionType.Absolute, -1f), new Speed(7, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.undodgeableDefault.Name, 7, 60));
+					this.Fire(new Direction((float)k * 360f / 36f, DirectionType.Absolute, -1f), new Speed(6, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.undodgeableDefault.Name, 7, 60));
 
 				}
 				yield break;

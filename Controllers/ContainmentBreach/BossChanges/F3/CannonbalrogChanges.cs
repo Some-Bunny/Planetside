@@ -28,9 +28,9 @@ namespace Planetside
 			// Tip: To debug an enemy's BehaviorSpeculator, you can uncomment the line below. This will print all the behavior information to the console.
 			//ToolsEnemy.DebugInformation(behaviorSpec);
 
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableCannonBullet);
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableSlam);
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableGroundDefault);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.UndodgeableCannonBullet);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.UndodgeableSlam);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.UndodgeableGroundDefault);
 			//UndodgeableCannonBullet
 
 			GiantPowderSkullRollBehavior rollBehavior = behaviorSpec.AttackBehaviorGroup.AttackBehaviors[4].Behavior as GiantPowderSkullRollBehavior;
@@ -96,8 +96,8 @@ namespace Planetside
 				float angle = this.AimDirection;
 				for (int i = 0; i < 1; i++)
 				{
-					this.Fire(new Direction(angle, DirectionType.Absolute, -1f), new Speed(3f, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.UndodgeableCannonBullet.Name, false, false, false));
-					this.Fire(new Direction(angle, DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.UndodgeableCannonBullet.Name, 12, 60));
+					this.Fire(new Direction(angle, DirectionType.Absolute, -1f), new Speed(3f, SpeedType.Absolute), new Bullet(StaticBulletEntries.UndodgeableCannonBullet.Name, false, false, false));
+					this.Fire(new Direction(angle, DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.UndodgeableCannonBullet.Name, 12, 60));
 					yield return this.Wait(4);
 				}
 				yield break;
@@ -121,7 +121,7 @@ namespace Planetside
 							for (int i = 0; i < 12; i++)
 							{
 								float num3 = num2 + (float)i * 9f;
-								base.Fire(new Offset(new Vector2(1f, 0f), num3, string.Empty, DirectionType.Absolute), new Direction(num3, DirectionType.Absolute, -1f), new Speed(7f, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.UndodgeableGroundDefault.Name, false, false, false));
+								base.Fire(new Offset(new Vector2(1f, 0f), num3, string.Empty, DirectionType.Absolute), new Direction(num3, DirectionType.Absolute, -1f), new Speed(7f, SpeedType.Absolute), new Bullet(StaticBulletEntries.UndodgeableGroundDefault.Name, false, false, false));
 							}
 							break;
 						}
@@ -131,8 +131,8 @@ namespace Planetside
 							for (int j = 0; j < 5; j++)
 							{
 								float num4 = num2 + (float)j * 20f;
-								base.Fire(new Offset(new Vector2(1f, 0f), num4, string.Empty, DirectionType.Absolute), new Direction(num4, DirectionType.Absolute, -1f), new Speed(6f, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.UndodgeableGroundDefault.Name, false, false, false));
-								base.Fire(new Offset(new Vector2(1f, 0f), num4, string.Empty, DirectionType.Absolute), new Direction(num4+10, DirectionType.Absolute, -1f), new Speed(10f, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.UndodgeableGroundDefault.Name, false, false, false));
+								base.Fire(new Offset(new Vector2(1f, 0f), num4, string.Empty, DirectionType.Absolute), new Direction(num4, DirectionType.Absolute, -1f), new Speed(6f, SpeedType.Absolute), new Bullet(StaticBulletEntries.UndodgeableGroundDefault.Name, false, false, false));
+								base.Fire(new Offset(new Vector2(1f, 0f), num4, string.Empty, DirectionType.Absolute), new Direction(num4+10, DirectionType.Absolute, -1f), new Speed(10f, SpeedType.Absolute), new Bullet(StaticBulletEntries.UndodgeableGroundDefault.Name, false, false, false));
 
 							}
 							break;
@@ -143,8 +143,8 @@ namespace Planetside
 							for (int k = 0; k < 8; k++)
 							{
 								float num5 = num2 + (float)k * 45f;
-								base.Fire(new Offset(new Vector2(1f, 0f), num5, string.Empty, DirectionType.Absolute), new Direction(num5, DirectionType.Absolute, -1f), new Speed(5f, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.UndodgeableGroundDefault.Name, false, false, false));
-								base.Fire(new Offset(new Vector2(1f, 0f), num5, string.Empty, DirectionType.Absolute), new Direction(num5+22.5f, DirectionType.Absolute, -1f), new Speed(9f, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.UndodgeableGroundDefault.Name, false, false, false));
+								base.Fire(new Offset(new Vector2(1f, 0f), num5, string.Empty, DirectionType.Absolute), new Direction(num5, DirectionType.Absolute, -1f), new Speed(5f, SpeedType.Absolute), new Bullet(StaticBulletEntries.UndodgeableGroundDefault.Name, false, false, false));
+								base.Fire(new Offset(new Vector2(1f, 0f), num5, string.Empty, DirectionType.Absolute), new Direction(num5+22.5f, DirectionType.Absolute, -1f), new Speed(9f, SpeedType.Absolute), new Bullet(StaticBulletEntries.UndodgeableGroundDefault.Name, false, false, false));
 							}
 							break;
 						}
@@ -154,8 +154,8 @@ namespace Planetside
 							for (int l = 0; l < 16; l++)
 							{
 								float num6 = num2 + (float)l * 22.5f;
-								base.Fire(new Offset(new Vector2(1f, 0f), num6, string.Empty, DirectionType.Absolute), new Direction(num6, DirectionType.Absolute, -1f), new Speed(6f, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.UndodgeableGroundDefault.Name, false, false, false));
-								base.Fire(new Offset(new Vector2(1f, 0f), num6, string.Empty, DirectionType.Absolute), new Direction(num6+11.25f, DirectionType.Absolute, -1f), new Speed(8f, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.UndodgeableGroundDefault.Name, false, false, false));
+								base.Fire(new Offset(new Vector2(1f, 0f), num6, string.Empty, DirectionType.Absolute), new Direction(num6, DirectionType.Absolute, -1f), new Speed(6f, SpeedType.Absolute), new Bullet(StaticBulletEntries.UndodgeableGroundDefault.Name, false, false, false));
+								base.Fire(new Offset(new Vector2(1f, 0f), num6, string.Empty, DirectionType.Absolute), new Direction(num6+11.25f, DirectionType.Absolute, -1f), new Speed(8f, SpeedType.Absolute), new Bullet(StaticBulletEntries.UndodgeableGroundDefault.Name, false, false, false));
 
 							}
 							break;
@@ -177,14 +177,14 @@ namespace Planetside
 				for (int i = 0; i < 20; i++)
 				{
 					float num = startDirection + (float)(i * 18);
-					this.Fire(new Offset(new Vector2(1.5f, 0f), num, string.Empty, DirectionType.Absolute), new Direction(num, DirectionType.Absolute, -1f), new Speed(5f, SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.UndodgeableSlam.Name, 9f, 180, -1, false));
+					this.Fire(new Offset(new Vector2(1.5f, 0f), num, string.Empty, DirectionType.Absolute), new Direction(num, DirectionType.Absolute, -1f), new Speed(5f, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.UndodgeableSlam.Name, 9f, 180, -1, false));
 				}
 				yield return this.Wait(12);
 				startDirection = 7.5f;
 				for (int k = 0; k < 20; k++)
 				{
 					float num3 = startDirection + (float)(k * 18);
-					this.Fire(new Offset(new Vector2(1.5f, 0f), num3, string.Empty, DirectionType.Absolute), new Direction(num3, DirectionType.Absolute, -1f), new Speed(3f, SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.UndodgeableSlam.Name, 12f, 120, -1, false));
+					this.Fire(new Offset(new Vector2(1.5f, 0f), num3, string.Empty, DirectionType.Absolute), new Direction(num3, DirectionType.Absolute, -1f), new Speed(3f, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.UndodgeableSlam.Name, 12f, 120, -1, false));
 				}
 				yield break;
 			}

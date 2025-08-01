@@ -93,7 +93,7 @@ namespace Planetside
 				//companion.aiActor.CorpseObject = EnemyDatabase.GetOrLoadByGuid("43426a2e39584871b287ac31df04b544").CorpseObject;
 				companion.aiActor.PreventBlackPhantom = false;
 				AIAnimator aiAnimator = companion.aiAnimator;
-				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "die", new string[] { "die" }, new DirectionalAnimation.FlipType[1]);
+				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "die", new string[] { "die" }, new DirectionalAnimation.FlipType[1] { DirectionalAnimation.FlipType.None});
 				aiAnimator.IdleAnimation = new DirectionalAnimation
 				{
 					Type = DirectionalAnimation.DirectionType.TwoWayHorizontal,
@@ -282,10 +282,14 @@ namespace Planetside
 				mat.SetFloat("_EmissivePower", 40);
 				companion.aiActor.sprite.renderer.material = mat;
 
-				companion.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableDirectedfireSoundless);
-				companion.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableLargeSpore);
-				companion.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
-			}
+				companion.aiActor.bulletBank.Bullets.Add(StaticBulletEntries.UndodgeableDirectedfireSoundless);
+				companion.aiActor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableLargeSpore);
+				companion.aiActor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableSmallSpore);
+
+
+
+
+            }
 		}
 
 
@@ -312,42 +316,17 @@ namespace Planetside
 		public class EnemyBehavior : BraveBehaviour
 		{
 
-			private RoomHandler m_StartRoom;
 
 			public void Update()
 			{
-				m_StartRoom = aiActor.GetAbsoluteParentRoom();
-				if (!base.aiActor.HasBeenEngaged)
-				{
-					CheckPlayerRoom();
-				}
+
 			}
-			private void CheckPlayerRoom()
-			{
-				if (GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() != null && GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() == m_StartRoom)
-				{
-					GameManager.Instance.StartCoroutine(LateEngage());
-				}
-				else
-				{
-					base.aiActor.HasBeenEngaged = false;
-				}
-			}
-			private IEnumerator LateEngage()
-			{
-				yield return new WaitForSeconds(0.5f);
-				if (GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() != null && GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() == m_StartRoom)
-				{
-					base.aiActor.HasBeenEngaged = true;
-				}
-				yield break;
-			}
+
+
 			private void Start()
 			{
 				this.aiActor.knockbackDoer.SetImmobile(true, "IM A BELL.");
 				base.aiActor.spriteAnimator.AnimationEventTriggered += this.AnimationEventTriggered;
-
-				m_StartRoom = aiActor.GetAbsoluteParentRoom();
 				base.aiActor.healthHaver.OnPreDeath += (obj) =>
 				{
 
@@ -364,16 +343,13 @@ namespace Planetside
 
 
 				}
-				if (clip.GetFrame(frameIdx).eventInfo.Contains("SpedC"))
-				{
-					//this.aiActor.StartCoroutine(SpeedLerp());
-				}
+
 			}
 			private IEnumerator SpeedLerp()
 			{
 				float s = base.aiActor.MovementSpeed;
 				float ela = 0;
-				while (ela <2)
+				while (ela < 2)
                 {
 					float t = ela / 1.5f;
 					ela += BraveTime.DeltaTime;
@@ -409,7 +385,7 @@ namespace Planetside
 
 		public class FUCKFUCKFUCKFUCKFUUCK : Bullet
         {
-			public FUCKFUCKFUCKFUCKFUUCK(int RNG) : base(UnityEngine.Random.value > 0.33f ? StaticUndodgeableBulletEntries.undodgeableLargeSpore.Name : StaticUndodgeableBulletEntries.undodgeableSmallSpore.Name, false, false, false) 
+			public FUCKFUCKFUCKFUCKFUUCK(int RNG) : base(UnityEngine.Random.value > 0.33f ? StaticBulletEntries.undodgeableLargeSpore.Name : StaticBulletEntries.undodgeableSmallSpore.Name, false, false, false) 
 			{
 				RNGSPeedChange = RNG;
 			}
@@ -425,7 +401,7 @@ namespace Planetside
 
 		public class Burst : Bullet
 		{
-			public Burst() : base(StaticUndodgeableBulletEntries.UndodgeableDirectedfireSoundless.Name, false, false, false){}
+			public Burst() : base(StaticBulletEntries.UndodgeableDirectedfireSoundless.Name, false, false, false){}
 			public override IEnumerator Top()
 			{
 				base.ChangeSpeed(new Brave.BulletScript.Speed(UnityEngine.Random.Range(14, 20), SpeedType.Absolute), 50);

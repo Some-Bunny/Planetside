@@ -65,7 +65,9 @@ namespace Planetside
         }
         public static void GenerateLetter(string assetName, string name, string correspondingLetter)
         {
-            var SetLetter = "[sprite \"" + GameUIRoot.Instance.ConversationBar.portraitSprite.Atlas.AddNewItemToAtlas(PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>(assetName), name).name + "\"]";
+            var t = Alexandria.CharacterAPI.ToolsCharApi.AddNewItemToAtlas(GameUIRoot.Instance.ConversationBar.portraitSprite.Atlas, PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>(assetName), name).name;
+
+            var SetLetter = "[sprite \"" + t + "\"]";
             referenceKeys.Add(correspondingLetter, SetLetter);
         }
         public static Dictionary<string, string> referenceKeys = new Dictionary<string, string>();

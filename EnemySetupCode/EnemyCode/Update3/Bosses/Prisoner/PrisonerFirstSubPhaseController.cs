@@ -6,6 +6,9 @@ using System.Collections;
 using UnityEngine;
 using Brave.BulletScript;
 using Dungeonator;
+using HutongGames.PlayMaker.Actions;
+using Planetside.Components.Effect_Components;
+using PathologicalGames;
 
 namespace Planetside
 {
@@ -48,13 +51,22 @@ namespace Planetside
             Actor.specRigidbody.enabled = false;
             int lay = Actor.gameObject.layer;
 
+            Controller.ClearRings();
+
+            var ring1 = SummonRingController.CreateSummoningRing("sealbreaker", this.Actor.sprite.WorldCenter, 1);
+            ring1.SpinSpeed = 30;
+            ring1.UpdateSpeed = 2;
+            var ring2 = SummonRingController.CreateSummoningRing("sealbreakersealbreaker", this.Actor.sprite.WorldCenter, 2f);
+            ring2.SpinSpeed = -30;
+            ring2.UpdateSpeed = 2;
+
             float elaWait = 0f;
             while (elaWait < 1f)
             {
                 elaWait += BraveTime.DeltaTime;
                 yield return null;
             }
-            Controller.MoveTowardsCenterMethod(3f);
+            Controller.MoveTowardsCenterMethod(2.25f);
             Actor.aiAnimator.PlayUntilFinished("subphaseoneanimation", true, null, -1f, false);
             Actor.renderer.material.shader = Shader.Find("Brave/Internal/SimpleAlphaFadeUnlit");
             if (WasJammed == true)
@@ -73,27 +85,26 @@ namespace Planetside
 
             if (PlanetsideModule.PrisonerDebug == false)
             {
+
+
+
                 GameManager.Instance.BestActivePlayer.CurrentRoom.BecomeTerrifyingDarkRoom(5f, 0.5f, 0.1f, "Play_ENM_darken_world_01");
 
                 SpawnManager.SpawnBulletScript(Actor, Actor.sprite.WorldCenter, Actor.GetComponent<AIBulletBank>(), new CustomBulletScriptSelector(typeof(SubphaseOneAttack)), StringTableManager.GetEnemiesString("#PRISONERPHASEONENAME", -1));
 
-                GameObject partObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("Amogus"));
-                MeshRenderer rend = partObj.GetComponentInChildren<MeshRenderer>();
-
-                rend.allowOcclusionWhenDynamic = true;
-
-                partObj.transform.position = Actor.ParentRoom.GetCenterCell().ToVector3().WithZ(50);
-
-                partObj.name = "VoidHole";
-                partObj.transform.localScale = Vector3.zero;
-
-
-
-                VoidHoleController voidHoleController = partObj.AddComponent<VoidHoleController>();
-                voidHoleController.trueCenter = Actor.ParentRoom.GetCenterCell().ToCenterVector2();
+                var voidHoleController = VoidHoleController.SpawnVoidHole(Actor.ParentRoom.GetCenterCell().ToVector3().WithZ(50), Vector2.zero);
                 voidHoleController.CanHurt = false;
                 voidHoleController.Radius = 30;
-                voidHoleController.ChangeHoleSize(0);
+                voidHoleController.ChangeHoleSize(0.285f);
+                voidHoleController.InitializeHole(null, 8, 3 * Time.deltaTime, 0.01f * Time.deltaTime, Vector2.zero);
+
+                ParticleBase.EmitParticles("WaveParticle", 1, new ParticleSystem.EmitParams()
+                {
+                    position = Actor.sprite.WorldCenter,
+                    startColor = Color.cyan.WithAlpha(0.333f),
+                    startLifetime = 0.5f,
+                    startSize = 64
+                });
 
                 EmergencyPlayerDisappearedFromRoom emergencyPlayerDisappeared = Actor.gameObject.AddComponent<EmergencyPlayerDisappearedFromRoom>();
                 emergencyPlayerDisappeared.roomAssigned = Actor.GetAbsoluteParentRoom();
@@ -103,18 +114,26 @@ namespace Planetside
                     {
                         obj.EndTerrifyingDarkRoom(1);
                     }
-                    if (partObj != null) { Destroy(partObj); }
+                    if (voidHoleController != null) { Destroy(voidHoleController.gameObject); }
                 };
 
                 while (elaWait < 3f)
                 {
                     float t = elaWait / 3;
                     float throne1 = Mathf.Sin(t * (Mathf.PI / 2));
-                    partObj.transform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one * 6.25f, throne1);
+                    ring1.transform.position = Actor.sprite.WorldCenter;
+                    ring2.transform.position = Actor.sprite.WorldCenter;
+                    ring1.SetScale((1 - t));
+                    ring2.SetScale(2 * (1 - t));
+
+                    voidHoleController.SetScale(Vector3.Lerp(Vector3.zero, Vector3.one * 100, throne1));
                     Actor.renderer.material.SetFloat("_Fade", 1 - t);
                     elaWait += BraveTime.DeltaTime;
                     yield return null;
                 }
+                ring1.SetToDestroy();
+                ring2.SetToDestroy();
+
                 voidHoleController.CanHurt = true;
                 Actor.SetOutlines(false);
                 Actor.renderer.enabled = false;
@@ -124,7 +143,8 @@ namespace Planetside
                     elaWait += BraveTime.DeltaTime;
                     float t = Mathf.Min((elaWait / 20), 1);
                     voidHoleController.Radius = Mathf.Lerp(28.5f, 8.75f, t);
-                    partObj.transform.localScale = Vector3.Lerp(Vector3.one * 6.25f, Vector3.one * 2, t);
+                    voidHoleController.ChangeHoleSize(voidHoleController.Radius / 100);
+                    //partObj.transform.localScale = Vector3.Lerp(Vector3.one * 6.25f, Vector3.one * 2, t);
 
                     yield return null;
                 }
@@ -148,13 +168,15 @@ namespace Planetside
                 {
 
                     float t = elaWait / 3;
-                    partObj.transform.localScale = Vector3.Lerp(Vector3.one * 2f, Vector3.one * 20, t);
+                    //voidHoleController.transform.localScale = Vector3.Lerp(Vector3.one * 100, Vector3.one * 1000, t);
+                    voidHoleController.ChangeHoleSize(Mathf.Lerp(8.75f, 100, t) / 100);
+
                     Actor.renderer.material.SetFloat("_Fade", t);
                     elaWait += BraveTime.DeltaTime;
                     Actor.renderer.enabled = true;
                     yield return null;
                 }
-                Destroy(partObj);
+                Destroy(voidHoleController.gameObject);
                 Destroy(emergencyPlayerDisappeared);
                 if (WasJammed == true)
                 {
@@ -248,9 +270,7 @@ namespace Planetside
                     new WeightedInt(){additionalPrerequisites = new DungeonPrerequisite[0], annotation = "Attack4", value = 4, weight = 0.5f},
                 };
                 this.EndOnBlank = false;
-                base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableDefault);
-                base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSniper);
-                base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableOldKingHomingRingBulletSoundless);
+
 
 
                 Vector2 TopRight = base.BulletBank.aiActor.GetAbsoluteParentRoom().area.UnitTopRight;
@@ -276,33 +296,40 @@ namespace Planetside
                 int T = 0;
 
                 int Speed = 180;
+                float tickWait = 100;
                 for (; ; )
                 {
                     if (SubPhaseEnded == true) { this.Destroyed = true; yield break; }  
-                    if (i % 80 == 0)
+                    if (i % tickWait == 0)
                     {
+                        tickWait = Mathf.Max(60, tickWait - 1);
                         bool LeftOrRight = (UnityEngine.Random.value > 0.5f) ? false : true;
                         float RNGSPIN = LeftOrRight == true ? 15 : -15;
                         float OffsetF = UnityEngine.Random.Range(0, 30);
                         for (int e = 0; e < 12; e++)
                         {
-                            base.Fire(Offset.OverridePosition(spawnPos), new Direction(0f, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SubphaseOneAttack.RotatedBulletBasic(RNGSPIN, 0, 0, StaticUndodgeableBulletEntries.UndodgeableOldKingHomingRingBulletSoundless.Name, this, (e * 30)+ OffsetF, 0.05f));
+                            base.Fire(Offset.OverridePosition(spawnPos), new Direction(0f, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SubphaseOneAttack.RotatedBulletBasic(RNGSPIN, 0, 0, StaticBulletEntries.UndodgeableOldKingHomingRingBulletSoundless.Name, this, (e * 30)+ OffsetF, 0.05f));
                         }
                     }
 
                     if (T == Speed)
                     {
                         T = 0;
-                        Speed -= 10;
-                        Speed = Mathf.Max(75, Speed);
+                        Speed -= 8;
+                        Speed = Mathf.Max(72, Speed);
                         switch (attackWeights.SelectByWeight(new System.Random(UnityEngine.Random.Range(1, 100))))
                         {
                             case 1:
-                                float cu = UnityEngine.Random.Range(0, 30);
-                                for (int e = 0; e < 6; e++)
+                                float cu = UnityEngine.Random.Range(0, 22.5f);
+                                var ring_ = SummonRingController.CreateSummoningRing("annihilate", spawnPos, 0.625f);
+                                ring_.SpinSpeed = 60;
+                                ring_.UpdateSpeed = 4;
+                                for (int e = 0; e < 8; e++)
                                 {
-                                    GameManager.Instance.StartCoroutine(QuickReticleNoAngleChange(spawnPos, (60f * e) + cu, this, 0.625f, 12, 7));
+                                    GameManager.Instance.StartCoroutine(QuickReticleNoAngleChange(spawnPos, (45f * e) + cu, this, 0.625f, 9, 12));
                                 }
+                                ring_.Invoke("SetToDestroy", 1);
+
                                 yield return base.Wait(1);
                                 i++;
                                 break;
@@ -310,31 +337,32 @@ namespace Planetside
 
                                 float f = this.RandomAngle(); 
                                 for (int e = 0; e < 6; e++)
-                                {                      
-                                    base.BulletBank.aiActor.StartCoroutine(QuickReticleNoAngleChange(spawnPos + MathToolbox.GetUnitOnCircle(f + (e * 60), Vector2.Distance(spawnPos, GameManager.Instance.PrimaryPlayer.sprite.WorldCenter)), (60 * e) + 0, this, 0.75f, 25, 3));
-                                    base.BulletBank.aiActor.StartCoroutine(QuickReticleNoAngleChange(spawnPos + MathToolbox.GetUnitOnCircle(f + (e * 60), Vector2.Distance(spawnPos, GameManager.Instance.PrimaryPlayer.sprite.WorldCenter)), (60 * e) + 180, this, 0.75f, 25, 3));
-                                }
-
-
-                                /*
-                                for (int e = 0; e < GameManager.Instance.AllPlayers.Length; e++)
                                 {
-                                    GameManager.Instance.StartCoroutine(QuickReticleRedirectTowardsPlayer(spawnPos, 0, this));
-                                    GameManager.Instance.StartCoroutine(QuickReticleRedirectTowardsPlayer(spawnPos, 0, this, 1f));
-                                    GameManager.Instance.StartCoroutine(QuickReticleRedirectTowardsPlayer(spawnPos, 0, this, 1.5f));
+
+
+                                    var v = MathToolbox.GetUnitOnCircle(f + (e * 60), Vector2.Distance(spawnPos, GameManager.Instance.PrimaryPlayer.sprite.WorldCenter));
+                                    var ring = SummonRingController.CreateSummoningRing("phi", spawnPos + v, 0.4f);
+                                    ring.SpinSpeed = 60;
+                                    ring.UpdateSpeed = 4;
+                                    base.BulletBank.aiActor.StartCoroutine(QuickReticleNoAngleChange(spawnPos + v, (60 * e) + 0, this, 0.75f, 25, 3));
+                                    base.BulletBank.aiActor.StartCoroutine(QuickReticleNoAngleChange(spawnPos + v, (60 * e) + 180, this, 0.75f, 25, 3));
+                                    ring.Invoke("SetToDestroy", 1);
                                 }
-                                */
                                 yield return base.Wait(1);
                                 i++;
                                 break;
                               case 3:
                                 for (int e = 0; e < GameManager.Instance.AllPlayers.Length; e++)
                                 {
+                                    var ring = SummonRingController.CreateSummoningRing("four", GameManager.Instance.AllPlayers[e].sprite.WorldCenter, 0.5f);
+                                    ring.SpinSpeed = 60;
+                                    ring.UpdateSpeed = 4;
                                     float Dir1 = UnityEngine.Random.value > 0.5f ? 0 : 45f;
                                     for (int q = 0; q < 4; q++)
                                     {
-                                        base.BulletBank.aiActor.StartCoroutine(QuickReticleNoAngleChange(GameManager.Instance.AllPlayers[e].sprite.WorldCenter, (90 * q) + Dir1, this, 0.75f, 11, 5));
+                                        base.BulletBank.aiActor.StartCoroutine(QuickReticleNoAngleChange(GameManager.Instance.AllPlayers[e].sprite.WorldCenter, (90 * q) + Dir1, this, 0.75f, 9, 3));
                                     }
+                                    ring.Invoke("SetToDestroy", 1);
                                 }
                                 yield return base.Wait(1);
                                 i++;
@@ -342,11 +370,16 @@ namespace Planetside
                             case 4:
                                 for (int e = 0; e < GameManager.Instance.AllPlayers.Length; e++)
                                 {
+                                    var ring = SummonRingController.CreateSummoningRing("Divide", GameManager.Instance.AllPlayers[e].sprite.WorldCenter, 0.66f);
+                                    ring.SpinSpeed = 60;
+                                    ring.UpdateSpeed = 4;
+
                                     float Dir1 = UnityEngine.Random.value > 0.5f ? 0 : 22.5f;
                                     for (int q = 0; q < 8; q++)
                                     {
                                         base.BulletBank.aiActor.StartCoroutine(QuickReticleNoAngleChange(GameManager.Instance.AllPlayers[e].sprite.WorldCenter, (45 * q) + Dir1, this, 0.75f, 18, 5));
                                     }
+                                    ring.Invoke("SetToDestroy", 1);
                                 }
                                 yield return base.Wait(1);
                                 i++;

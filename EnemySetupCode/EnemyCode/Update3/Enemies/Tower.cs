@@ -11,6 +11,7 @@ using Pathfinding;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using System.Reflection;
+using Planetside.Static_Storage;
 
 namespace Planetside
 {
@@ -400,8 +401,8 @@ namespace Planetside
 				EnemyDatabase.GetEntry("psog:tower").isInBossTab = false;
 				EnemyDatabase.GetEntry("psog:tower").isNormalEnemy = true;
 
-                companion.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableHitscan);
-                companion.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableOldKingSlamBullet);
+                companion.aiActor.bulletBank.Bullets.Add(StaticBulletEntries.UndodgeableHitscan);
+                companion.aiActor.bulletBank.Bullets.Add(StaticBulletEntries.UndodgeableOldKingSlamBullet);
                 companion.aiActor.knockbackDoer.SetImmobile(true, "Im a rock");
 
             }
@@ -611,7 +612,7 @@ namespace Planetside
 
             public class HitScan : Bullet
             {
-                public HitScan() : base(StaticUndodgeableBulletEntries.UndodgeableHitscan.Name, false, false, false)
+                public HitScan() : base(StaticBulletEntries.UndodgeableHitscan.Name, false, false, false)
                 {
 
                 }
@@ -643,7 +644,7 @@ namespace Planetside
 
                     for (int i = 0; i < 4; i++)
 					{
-						base.Fire(new Direction(aimDirection + (h * e), DirectionType.Absolute, -1f), new Speed(1.5f+(i*1.25f), SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.UndodgeableOldKingSlamBullet.Name, 15, 60));
+						base.Fire(new Direction(aimDirection + (h * e), DirectionType.Absolute, -1f), new Speed(1.5f+(i*1.25f), SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.UndodgeableOldKingSlamBullet.Name, 15, 60));
 					}
 					yield return this.Wait(15);
 				}

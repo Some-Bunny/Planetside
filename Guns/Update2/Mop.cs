@@ -50,11 +50,11 @@ namespace Planetside
             //GunExt.SetAnimationFPS(gun, gun.shootAnimation, 15);
             //GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 10);
             //GunExt.SetAnimationFPS(gun, gun.idleAnimation, 2);
-            gun.gunSwitchGroup = (PickupObjectDatabase.GetById(33) as Gun).gunSwitchGroup;
+            gun.gunSwitchGroup = (PickupObjectDatabase.GetById(404) as Gun).gunSwitchGroup;
 
 			for (int i = 0; i < 3; i++)
 			{
-				gun.AddProjectileModuleFrom(PickupObjectDatabase.GetById(33) as Gun, true, false);
+				gun.AddProjectileModuleFrom(PickupObjectDatabase.GetById(404) as Gun, true, false);
 			}
 
 			EnemyToolbox.AddSoundsToAnimationFrame(gun.spriteAnimator, gun.shootAnimation, new Dictionary<int, string>() { {0, "Play_ENM_wizardred_swing_01" } });
@@ -68,7 +68,7 @@ namespace Planetside
 			Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(gun.Volley.projectiles[0].projectiles[0]);
 			projectile.gameObject.SetActive(false);
 			gun.Volley.projectiles[0].projectiles[0] = projectile;
-			projectile.baseData.damage = 9f;
+			projectile.baseData.damage = 8.5f;
 			projectile.AdditionalScaleMultiplier *= 1.5f;
 			projectile.baseData.speed *= 1.25f;
 			projectile.gameObject.AddComponent<MopProjectile>();
@@ -88,7 +88,7 @@ namespace Planetside
 			gun.Volley.projectiles[1].shootStyle = ProjectileModule.ShootStyle.Automatic;
 			gun.Volley.projectiles[1].sequenceStyle = ProjectileModule.ProjectileSequenceStyle.Random;
 			gun.Volley.projectiles[1].cooldownTime = 0.5f;
-			gun.Volley.projectiles[1].angleVariance = 10f;
+			gun.Volley.projectiles[1].angleVariance = 9f;
 			gun.Volley.projectiles[1].numberOfShotsInClip = -1;
 			gun.gunClass = GunClass.SILLY;
 
@@ -97,7 +97,7 @@ namespace Planetside
 			gun.Volley.projectiles[1].projectiles[0] = projectile1;
 			projectile1.gameObject.AddComponent<MopProjectile>();
 
-			projectile1.baseData.damage = 4.5f;
+			projectile1.baseData.damage = 4f;
 			FakePrefab.MarkAsFakePrefab(projectile1.gameObject);
 			UnityEngine.Object.DontDestroyOnLoad(projectile1);
 			bool aa = gun.Volley.projectiles[1] != gun.DefaultModule;
@@ -147,9 +147,10 @@ namespace Planetside
 			Mop.MopID = gun.PickupObjectId;
 
 			gun.AddToSubShop(ItemBuilder.ShopType.Goopton, 1f);
+            Alexandria.ItemAPI.ItemBuilder.AddToGunslingKingTable(gun, 1);
 
 
-			ItemIDs.AddToList(gun.PickupObjectId);
+            ItemIDs.AddToList(gun.PickupObjectId);
 
             tk2dSpriteAnimationClip fireClip = gun.sprite.spriteAnimator.GetClipByName(gun.shootAnimation);
             float[] offsetsX = new float[] { 1.25f, -0.25f, -0.1875f, -0.125f, -0.0625f, -0.0625f, };
@@ -157,17 +158,10 @@ namespace Planetside
             for (int i = 0; i < offsetsX.Length && i < offsetsY.Length && i < fireClip.frames.Length; i++)
             {
                 int id = fireClip.frames[i].spriteId;
-                fireClip.frames[i].spriteCollection.spriteDefinitions[id].position0.x += offsetsX[i];
-                fireClip.frames[i].spriteCollection.spriteDefinitions[id].position0.y += offsetsY[i];
-                fireClip.frames[i].spriteCollection.spriteDefinitions[id].position1.x += offsetsX[i];
-                fireClip.frames[i].spriteCollection.spriteDefinitions[id].position1.y += offsetsY[i];
-                fireClip.frames[i].spriteCollection.spriteDefinitions[id].position2.x += offsetsX[i];
-                fireClip.frames[i].spriteCollection.spriteDefinitions[id].position2.y += offsetsY[i];
-                fireClip.frames[i].spriteCollection.spriteDefinitions[id].position3.x += offsetsX[i];
-                fireClip.frames[i].spriteCollection.spriteDefinitions[id].position3.y += offsetsY[i];
+				SpriteOffseter.MakeOffset(StaticSpriteDefinitions.Gun_Sheet_Data, fireClip.frames[i].spriteCollection.spriteDefinitions[id], 
+					new Vector3(offsetsX[i], offsetsY[i]), new string[4] {"PrimaryHand", "SecondaryHand", "Clip", "Casing"});
             }
 
-            
 
 
 			tk2dSpriteAnimationClip fireClip2 = gun.sprite.spriteAnimator.GetClipByName(gun.reloadAnimation);
@@ -176,14 +170,8 @@ namespace Planetside
 			for (int i = 0; i < offsetsX2.Length && i < offsetsY2.Length && i < fireClip2.frames.Length; i++)
 			{
 				int id = fireClip2.frames[i].spriteId;
-				fireClip2.frames[i].spriteCollection.spriteDefinitions[id].position0.x += offsetsX2[i]  ;
-				fireClip2.frames[i].spriteCollection.spriteDefinitions[id].position0.y += offsetsY2[i]  ;
-                fireClip2.frames[i].spriteCollection.spriteDefinitions[id].position1.x += offsetsX2[i]  ;
-                fireClip2.frames[i].spriteCollection.spriteDefinitions[id].position1.y += offsetsY2[i]  ;
-                fireClip2.frames[i].spriteCollection.spriteDefinitions[id].position2.x += offsetsX2[i]  ;
-                fireClip2.frames[i].spriteCollection.spriteDefinitions[id].position2.y += offsetsY2[i]  ;
-                fireClip2.frames[i].spriteCollection.spriteDefinitions[id].position3.x += offsetsX2[i]  ;
-                fireClip2.frames[i].spriteCollection.spriteDefinitions[id].position3.y += offsetsY2[i]  ;
+                SpriteOffseter.MakeOffset(StaticSpriteDefinitions.Gun_Sheet_Data, fireClip2.frames[i].spriteCollection.spriteDefinitions[id],
+				new Vector3(offsetsX2[i], offsetsY2[i]), new string[4] { "PrimaryHand", "SecondaryHand", "Clip", "Casing" });
             }
 			
 

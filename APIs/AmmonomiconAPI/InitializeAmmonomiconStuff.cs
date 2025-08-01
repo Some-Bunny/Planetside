@@ -23,7 +23,7 @@ namespace Planetside.APIs
                 }, Assembly.GetExecutingAssembly());
 
             AmmonomiconAPI.CustomActions.OnPreEquipmentPageBuild += BuildEquipmentPage;
-            AmmonomiconAPI.CustomActions.OnDeathPageFinalizing += BuilDeathRightPage;
+            //AmmonomiconAPI.CustomActions.OnDeathPageFinalizing += BuilDeathRightPage;
 
         }
         public static void BuilDeathRightPage(AmmonomiconPageRenderer ammonomiconPageRenderer, List<tk2dBaseSprite> tk2DBaseSprites)
@@ -35,6 +35,15 @@ namespace Planetside.APIs
             var player = AmmonomiconAPI.HelperTools.LastPlayerOpenedUI();
             if (player)
             {
+                foreach (var entry in player.passiveItems)
+                {
+                    if (entry is PerkPickupObject perk && perk.isDummy == false)
+                    {
+                        AddSprites(ammonomiconPageRenderer, player, component3, perk.CurrentStack, perk.PickupObjectId, ref tk2DBaseSprites);
+                        //AddEntryFast(ref list2, PickupObjectDatabase.GetById(perk.PickupObjectId), perk.CurrentStack);
+                    }
+                }
+                /*
                 if (CrossGameDataStorage.CrossGameStorage.AmountOfPerksToChooseFromOnRunStart > 0) { AddSprites(ammonomiconPageRenderer, player, component3, CrossGameDataStorage.CrossGameStorage.AmountOfPerksToChooseFromOnRunStart - 1, Patience.PatienceID, ref tk2DBaseSprites); }
                 if (player.GetComponent<GunslingerController>()) { AddSprites(ammonomiconPageRenderer, player, component3, player.GetComponent<GunslingerController>().Stack, Gunslinger.GunslingerID, ref tk2DBaseSprites); }
                 if (player.GetComponent<GreedController>()) { AddSprites(ammonomiconPageRenderer, player, component3, player.GetComponent<GreedController>().Stack, Greedy.GreedyID, ref tk2DBaseSprites); }
@@ -47,6 +56,7 @@ namespace Planetside.APIs
                 if (player.GetComponent<CorruptedWealthController>()) { AddSprites(ammonomiconPageRenderer, player, component3, player.GetComponent<CorruptedWealthController>().StackCount, CorruptedWealth.CorruptedWealthID, ref tk2DBaseSprites); }
                 if (player.GetComponent<UnbreakableSpiritController>()) { AddSprites(ammonomiconPageRenderer, player, component3, player.GetComponent<UnbreakableSpiritController>().Stacks, UnbreakableSpirit.UnbreakableSpiritID, ref tk2DBaseSprites); }
                 if (player.GetComponent<AllStatsUp.AllStatsTrackable>()) { AddSprites(ammonomiconPageRenderer, player, component3, player.GetComponent<AllStatsUp.AllStatsTrackable>().Stacks, AllStatsUp.AllStatsUpID, ref tk2DBaseSprites); }
+                */
             }
 
         }
@@ -96,6 +106,15 @@ namespace Planetside.APIs
                 var player = AmmonomiconAPI.HelperTools.LastPlayerOpenedUI();
                 if (player)
                 {
+                    foreach (var entry in player.passiveItems)
+                    {
+                        if (entry is PerkPickupObject perk && perk.isDummy == false)
+                        {
+                            AddEntryFast(ref list2, PickupObjectDatabase.GetById(perk.PickupObjectId), perk.CurrentStack);
+                        }
+                    }
+
+                    /*
                     if (player.GetComponent<GreedController>()) { AddEntryFast(ref list2, PickupObjectDatabase.GetById(Greedy.GreedyID), player.GetComponent<GreedController>().Stack); }
                     if (player.GetComponent<GunslingerController>()) { AddEntryFast(ref list2, PickupObjectDatabase.GetById(Gunslinger.GunslingerID), player.GetComponent<GunslingerController>().Stack); }
                     if (CrossGameDataStorage.CrossGameStorage.AmountOfPerksToChooseFromOnRunStart > 0) { AddEntryFast(ref list2, PickupObjectDatabase.GetById(Patience.PatienceID), CrossGameDataStorage.CrossGameStorage.AmountOfPerksToChooseFromOnRunStart - 1); }
@@ -108,6 +127,7 @@ namespace Planetside.APIs
                     if (player.GetComponent<CorruptedWealthController>()) { AddEntryFast(ref list2, PickupObjectDatabase.GetById(CorruptedWealth.CorruptedWealthID), player.GetComponent<CorruptedWealthController>().StackCount); }
                     if (player.GetComponent<UnbreakableSpiritController>()) { AddEntryFast(ref list2, PickupObjectDatabase.GetById(UnbreakableSpirit.UnbreakableSpiritID), player.GetComponent<UnbreakableSpiritController>().Stacks); }
                     if (player.GetComponent<AllStatsUp.AllStatsTrackable>()) { AddEntryFast(ref list2, PickupObjectDatabase.GetById(AllStatsUp.AllStatsUpID), player.GetComponent<AllStatsUp.AllStatsTrackable>().Stacks); }
+                    */
                 }
                 if (list2.Count > 0)
                 {

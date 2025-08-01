@@ -355,6 +355,7 @@ namespace Planetside
             this.damageMult = 1f;
         }
 
+        /*
         public override void MidGameDeserialize(List<object> data, ref int dataIndex)
         {
             base.MidGameDeserialize(data, ref dataIndex);
@@ -369,6 +370,7 @@ namespace Planetside
             data.Add(this.reloads);
             data.Add(this.activeReloadEnabled);
         }
+        */
 
         public override void InheritData(Gun source)
         {

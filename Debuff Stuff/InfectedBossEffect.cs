@@ -225,7 +225,7 @@ namespace Planetside
 						base.PostWwiseEvent("Play_ENM_cannonball_eyes_01", null);
 						for (int e = 0; e < 6; e++)
 						{
-							base.Fire(Offset.OverridePosition(base.BulletBank.aiActor.sprite.WorldCenter), new Direction(0f, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new Retaliation.RotatedBulletBasic(RNGSPIN, 0, 0, StaticUndodgeableBulletEntries.undodgeableBigBullet.Name, (e * 60) + OffsetF, 0.0875f));
+							base.Fire(Offset.OverridePosition(base.BulletBank.aiActor.sprite.WorldCenter), new Direction(0f, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new Retaliation.RotatedBulletBasic(RNGSPIN, 0, 0, StaticBulletEntries.undodgeableBigBullet.Name, (e * 60) + OffsetF, 0.0875f));
 						}
 						yield return this.Wait(40);
 
@@ -242,7 +242,7 @@ namespace Planetside
 						float Offseat = UnityEngine.Random.Range(0, 60);
 						for (int e = 0; e < 8; e++)
 						{
-							base.Fire(Offset.OverridePosition(base.BulletBank.aiActor.sprite.WorldCenter), new Direction(0f, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new Retaliation.RotatedBulletBasic(0, 0, 0, StaticUndodgeableBulletEntries.undodgeableBigBullet.Name, (e * 45) + Offseat, 0.12f));
+							base.Fire(Offset.OverridePosition(base.BulletBank.aiActor.sprite.WorldCenter), new Direction(0f, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new Retaliation.RotatedBulletBasic(0, 0, 0, StaticBulletEntries.undodgeableBigBullet.Name, (e * 45) + Offseat, 0.12f));
 						}
 						break;
 				}
@@ -298,7 +298,7 @@ namespace Planetside
 
 			public class CrossBullet : Bullet
 			{
-				public CrossBullet(Vector2 offset, int setupDelay, int setupTime) : base(StaticUndodgeableBulletEntries.undodgeableDefault.Name, false, false, false)
+				public CrossBullet(Vector2 offset, int setupDelay, int setupTime) : base(StaticBulletEntries.undodgeableDefault.Name, false, false, false)
 				{
 					this.m_offset = offset;
 					this.m_setupDelay = setupDelay;
@@ -327,7 +327,7 @@ namespace Planetside
 
 			public class WeakSpore : Bullet
 			{
-				public WeakSpore() : base(StaticUndodgeableBulletEntries.undodgeableSmallSpore.Name, false, false, false) { }
+				public WeakSpore() : base(StaticBulletEntries.undodgeableSmallSpore.Name, false, false, false) { }
 				public override IEnumerator Top()
 				{
 					yield return this.Wait(90);
@@ -338,7 +338,7 @@ namespace Planetside
 
 			public class Spore : Bullet
 			{
-				public Spore() : base(UnityEngine.Random.value > 0.33f ? StaticUndodgeableBulletEntries.undodgeableSmallSpore.Name : StaticUndodgeableBulletEntries.undodgeableLargeSpore.Name, false, false, false) { }
+				public Spore() : base(UnityEngine.Random.value > 0.33f ? StaticBulletEntries.undodgeableSmallSpore.Name : StaticBulletEntries.undodgeableLargeSpore.Name, false, false, false) { }
 				public override IEnumerator Top()
 				{
 					base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), UnityEngine.Random.Range(60, 150));
@@ -398,10 +398,10 @@ namespace Planetside
 			{
 				if (base.aiActor.bulletBank.Bullets == null) { base.aiActor.bulletBank.Bullets = new List<AIBulletBank.Entry>(); }
 
-				base.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableLargeSpore);
-				base.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
-				base.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableDefault);
-				base.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableBigBullet);
+				base.aiActor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableLargeSpore);
+				base.aiActor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableSmallSpore);
+				base.aiActor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableDefault);
+				base.aiActor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableBigBullet);
 			}
 
 			base.aiActor.healthHaver.OnPreDeath += HealthHaver_OnPreDeath;
@@ -600,8 +600,8 @@ namespace Planetside
 					AIBulletBank bulletBank = new AIBulletBank();
 					bulletBank.Bullets = new List<AIBulletBank.Entry>();
 
-					bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableLargeSpore);
-					bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
+					bulletBank.Bullets.Add(StaticBulletEntries.undodgeableLargeSpore);
+					bulletBank.Bullets.Add(StaticBulletEntries.undodgeableSmallSpore);
 
 					bulletBank.FixedPlayerRigidbody = actorToTrack.specRigidbody;
 					bulletBank.ActorName = actorToTrack.name ?? "Toddy";
@@ -614,8 +614,8 @@ namespace Planetside
 				{
 					if (actorToTrack.bulletBank.Bullets == null) { actorToTrack.bulletBank.Bullets = new List<AIBulletBank.Entry>(); }
 
-					actorToTrack.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableLargeSpore);
-					actorToTrack.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
+					actorToTrack.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableLargeSpore);
+					actorToTrack.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableSmallSpore);
 				}
 
 
@@ -644,7 +644,7 @@ namespace Planetside
 			}
 			public class Spore : Bullet
 			{
-				public Spore() : base(UnityEngine.Random.value > 0.33f ? StaticUndodgeableBulletEntries.undodgeableSmallSpore.Name : StaticUndodgeableBulletEntries.undodgeableLargeSpore.Name, false, false, false) { }
+				public Spore() : base(UnityEngine.Random.value > 0.33f ? StaticBulletEntries.undodgeableSmallSpore.Name : StaticBulletEntries.undodgeableLargeSpore.Name, false, false, false) { }
 				public override IEnumerator Top()
 				{
 					base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), UnityEngine.Random.Range(60, 180));

@@ -33,7 +33,7 @@ namespace Planetside
             ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("psychicdust"), data, obj);
             //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "Not What It Looks Like...";
-            string longDesc = "Gives very mild, yet still useful psychic abilities.\n\nDespite its very uncanny resemblance to something else, this dust IS actually magical, so totally nothing wrong with injesting some of it.";
+            string longDesc = "Gives very mild, yet still useful psychic abilities.\n\nDespite its very uncanny resemblance to something else, this dust IS actually magical, so there is nothing wrong with injesting it.\n\nHopefully.";
             activeitem.SetupItem(shortDesc, longDesc, "psog");
             activeitem.SetCooldownType(ItemBuilder.CooldownType.Timed, 5f);
             activeitem.consumable = false;

@@ -1288,7 +1288,7 @@ namespace BreakAbleAPI
         /// </summary>
         public static GameObject GenerateTransformObject(GameObject attacher, Vector2 attachpoint, string name = "shootPoint")
         {
-            GameObject shootpoint = new GameObject(name);
+            GameObject shootpoint = PrefabBuilder.BuildObject(name);
             shootpoint.transform.parent = attacher.transform;
             shootpoint.transform.position = attachpoint;
             return attacher.transform.Find(name).gameObject;
@@ -2037,14 +2037,16 @@ namespace BreakAbleAPI
         /// <param name="DoesGoopOnRest">If true, will spawn goop on itself when it is in a resting state.</param>
         /// <param name="GoopType">The goop it will spawn if DoesGoopOnRest is true.</param>
         /// <param name="GoopRadius">The radius of the spawned goop.</param>
-        public static DebrisObject[] GenerateDebrisObjects(string[] shardSpritePaths, bool debrisObjectsCanRotate = true, float LifeSpanMin = 0.33f, float LifeSpanMax = 2f, float AngularVelocity = 540, float AngularVelocityVariance = 180f, tk2dSprite shadowSprite = null, float Mass = 1, string AudioEventName = null, GameObject BounceVFX = null, int DebrisBounceCount = 0, bool DoesGoopOnRest = false, GoopDefinition GoopType = null, float GoopRadius = 1f, bool usesWorldShader = true)
+        public static DebrisObject[] GenerateDebrisObjects(string[] spriteNames, tk2dSpriteCollectionData tk2DSpriteCollectionData,  bool debrisObjectsCanRotate = true, float LifeSpanMin = 0.33f, float LifeSpanMax = 2f, float AngularVelocity = 540, float AngularVelocityVariance = 180f, tk2dSprite shadowSprite = null, float Mass = 1, string AudioEventName = null, GameObject BounceVFX = null, int DebrisBounceCount = 0, bool DoesGoopOnRest = false, GoopDefinition GoopType = null, float GoopRadius = 1f, bool usesWorldShader = true)
         {
             List<DebrisObject> DebrisObjectList = new List<DebrisObject>();
-            for (int i = 0; i < shardSpritePaths.Length; i++)
+            for (int i = 0; i < spriteNames.Length; i++)
             {
-                GameObject debrisObject = SpriteBuilder.SpriteFromResource(shardSpritePaths[i], null, false);
-                FakePrefab.MarkAsFakePrefab(debrisObject);
-                tk2dSprite tk2dsprite = debrisObject.GetComponent<tk2dSprite>();
+                var debrisObject = PrefabBuilder.BuildObject($"{spriteNames[i]}_debris_{i}");
+  
+                tk2dSprite tk2dsprite = debrisObject.AddComponent<tk2dSprite>();
+                tk2dsprite.SetSprite(tk2DSpriteCollectionData, tk2DSpriteCollectionData.GetSpriteIdByName(spriteNames[i]));
+
                 DebrisObject DebrisObj = debrisObject.AddComponent<DebrisObject>();
                 DebrisObj.canRotate = debrisObjectsCanRotate;
                 DebrisObj.lifespanMin = LifeSpanMin;

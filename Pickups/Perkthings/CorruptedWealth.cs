@@ -7,6 +7,7 @@ using System.Linq;
 using System.Collections;
 using SaveAPI;
 using Alexandria.PrefabAPI;
+using System.Security.Principal;
 
 namespace Planetside
 {
@@ -25,34 +26,42 @@ namespace Planetside
             mat.SetFloat("_EmissivePower", 100);
             mat.SetFloat("_EmissiveColorPower", 10);
             mat.SetColor("_OverrideColor", new Color(0.02f, 0.4f, 1, 0.6f));
+            this.StartCoroutine(CheckIsGuon());
+
         }
 
-        public void Update()
+        public IEnumerator CheckIsGuon()
         {
+            yield return null;
             var d = this.GetComponent<PlayerOrbitalItem>();
-            var D = this.GetComponentInChildren<PlayerOrbitalItem>();
             if (d != null)
             {
                 d.OrbitalPrefab = CorruptedWealth.VoidGlassStonePrefab.GetComponent<PlayerOrbital>();
+                yield break;
+                
             }
+            var D = this.GetComponentInChildren<PlayerOrbitalItem>();
             if (D != null)
             {
                 D.OrbitalPrefab = CorruptedWealth.VoidGlassStonePrefab.GetComponent<PlayerOrbital>();
             }
+            yield break;
         }
 
-        public CorruptedWealthController GetController(PlayerController P)
+
+
+
+        public CorruptedWealth GetController(PlayerController P)
         {
-            return P.GetComponent<CorruptedWealthController>();
+            return P.HasPerk(CorruptedWealth.CorruptedWealthID) as CorruptedWealth;
         }
 
 
         public override void Pickup(PlayerController player)
         {
-            CorruptedWealthController c = GetController(player);
+            CorruptedWealth c = GetController(player);
             switch (pickup)
             {
-
                 case PickupType.HP:
                     if (c != null)
                     {
@@ -82,7 +91,7 @@ namespace Planetside
         };
     }
 
-
+    /*
     class CorruptedWealthController : MonoBehaviour
     {
         public CorruptedWealthController()
@@ -185,7 +194,7 @@ namespace Planetside
 
                     //this.m_particleTimer += BraveTime.DeltaTime * (float)num2;
                     //if (this.m_particleTimer > 1f)
-                    /*
+                    
                     {
                         int num3 = Mathf.FloorToInt(this.m_particleTimer);
                         Vector2 vector = player.specRigidbody.HitboxPixelCollider.UnitBottomLeft;
@@ -202,7 +211,7 @@ namespace Planetside
                         GlobalSparksDoer.DoRandomParticleBurst(num3, vector, vector2, Vector3.down, 0f, 0.5f, 0.3f, 1, Color.magenta, GlobalSparksDoer.SparksType.DARK_MAGICKS);
                         //this.m_particleTimer -= Mathf.Floor(this.m_particleTimer);
                     }
-                    */
+                    
                 }
 
                 yield return null;
@@ -306,29 +315,7 @@ namespace Planetside
         {
             if (player)
             {    
-                if (AmountOfArmorConsumed > (int)player.healthHaver.Armor)
-                { AmountOfArmorConsumed = (int)player.healthHaver.Armor; }
 
-                if (LastStoredAmountOfHPConsumed != ActualHPPointsStored())
-                {
-                    SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.CORRUPTEDWEALTH_FLAG_HP, true);
-                    AkSoundEngine.PostEvent("Play_BOSS_Rat_Cheese_Jump_01", player.gameObject);
-
-                    GameObject vfx = SpawnManager.SpawnVFX((PickupObjectDatabase.GetById(577) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapVertical.effects.First().effects.First().effect, true);
-                    vfx.transform.position = player.sprite.WorldCenter;
-                    vfx.GetComponent<tk2dBaseSprite>().HeightOffGround = 22;
-                    vfx.transform.localScale *= 2;
-                    vfx.transform.localRotation = Quaternion.Euler(0, 0, Vector2.up.ToAngle());
-                    UnityEngine.Object.Destroy(vfx, 2);
-
-                    UpdateHearts();
-
-
-                }
-                if (player.carriedConsumables.KeyBullets == 0)
-                {
-                    AmountOfCorruptKeys = 0;
-                }
             }      
         }
 
@@ -362,14 +349,13 @@ namespace Planetside
             }
         }
 
-        public List<GameObject> objects = new List<GameObject>();
+ 
 
         public void ProcessDamageModsRedHP(float amount)
         {
             AmountOfHPConsumed += amount;
             RecalculateDamage();
         }
-        private int LastStoredAmountOfHPConsumed;
 
 
         public void RecalculateDamage()
@@ -384,8 +370,9 @@ namespace Planetside
             RecalculateDamage();
         }
 
-        
 
+        public List<GameObject> objects = new List<GameObject>();
+        private int LastStoredAmountOfHPConsumed;
         public int AmountOfCorruptBlanks;
         public int AmountOfCorruptKeys;
 
@@ -400,7 +387,7 @@ namespace Planetside
 
        
     }
-
+    */
 
 
     class CorruptedWealth : PerkPickupObject, IPlayerInteractable
@@ -427,6 +414,8 @@ namespace Planetside
             item.OutlineColor = new Color(0f, 0.2f, 1f);
             item.encounterTrackable.DoNotificationOnEncounter = false;
 
+            item.InitialPickupNotificationText = "All Pickups Are Risk/Reward.";
+            item.StackPickupNotificationText = "More Pain, More Gain.";
 
 
             SetupHeartVFX();
@@ -434,14 +423,14 @@ namespace Planetside
             BuildVoidGlassStone();
         }
 
-        public override CustomTrackedStats StatToIncreaseOnPickup => SaveAPI.CustomTrackedStats.AMOUNT_BOUGHT_CORRUPTEDWEALTH;
+        public override CustomDungeonFlags FlagToSetOnStack => CustomDungeonFlags.CORRUPTEDWEALTH_FLAG_STACK;
         public override List<PerkDisplayContainer> perkDisplayContainers => new List<PerkDisplayContainer>()
         {
                 new PerkDisplayContainer()
                 {
                     AmountToBuyBeforeReveal = 0,
-                    LockedString = "\"All pickups become corrupted.\"",
-                    UnlockedString = "\"All pickups become corrupted.\"",
+                    LockedString = "\"All pickups become are risk/reward.\"",
+                    UnlockedString = "\"All pickups become risk/reward.\"",
                     requiresFlag = false
                 },
                 new PerkDisplayContainer()
@@ -542,36 +531,35 @@ namespace Planetside
         public class VoidGlassGuonStoneController : MonoBehaviour
         {
             public PlayerOrbital self;
+            private CorruptedWealth Wealth;
             public void Start()
             {
-                self = GetComponent<PlayerOrbital>();
-                
+                self = GetComponent<PlayerOrbital>();        
                 SpeculativeRigidbody specRigidbody = self.specRigidbody;
                 specRigidbody.OnPreRigidbodyCollision += this.OnPreCollision;
                 foreach (PlayerController p in GameManager.Instance.AllPlayers)
                 {
-                    var GG = p.GetComponent<CorruptedWealthController>();
-                    if (GG != null)
+                    var perl = p.HasPerk(CorruptedWealthID);
+                    if (perl != null)
                     {
-                        c = GG;
+                        Wealth = (perl as CorruptedWealth);
+                        break;
                     }
                 }
             }
 
-            private CorruptedWealthController c;
 
             private void OnPreCollision(SpeculativeRigidbody myRigidbody, PixelCollider myCollider, SpeculativeRigidbody otherRigidbody, PixelCollider otherCollider)
             {
                 
                 PhysicsEngine.SkipCollision = true;
-                RoomHandler currentRoom = GameManager.Instance.BestActivePlayer.CurrentRoom;
+                RoomHandler currentRoom = self.Owner.CurrentRoom;
                 AIActor component = otherRigidbody.GetComponent<AIActor>();
                 if (component != null)
                 {
                     if (component.healthHaver && component.CenterPosition.GetAbsoluteRoom() == currentRoom)
                     {
-                        float M = 150 + c.StackCount * 75;
-                        component.healthHaver.ApplyDamage(M * BraveTime.DeltaTime, Vector2.zero, "Void Glass", CoreDamageTypes.Void, DamageCategory.DamageOverTime, false, null, false);
+                        component.healthHaver.ApplyDamage((150 + (Wealth.CurrentStack * 75)) * BraveTime.DeltaTime, Vector2.zero, "Void Glass", CoreDamageTypes.Void, DamageCategory.DamageOverTime, false, null, false);
                     }
                 }
             }
@@ -621,7 +609,6 @@ namespace Planetside
 
             heartorbitalVFX = deathmark;
         }
-
         public static void SetupHalfHeartVFX()
         {
             GameObject deathmark = ItemBuilder.AddSpriteToObject("corruptedHPVFX_Half", "Planetside/Resources/Guons/PickupGuons/HalfheartGuon/halfheartguon_001", null);
@@ -667,11 +654,7 @@ namespace Planetside
         public static GameObject heartorbitalVFX;
         public static GameObject halfheartorbitalvfx;
 
-        public new bool PrerequisitesMet()
-        {
-            EncounterTrackable component = base.GetComponent<EncounterTrackable>();
-            return component == null || component.PrerequisitesMet();
-        }
+        /*
         public override void Pickup(PlayerController player)
         {
             if (m_hasBeenPickedUp)
@@ -698,31 +681,336 @@ namespace Planetside
             UnityEngine.Object.Destroy(base.gameObject);
         }
 
+        */
 
-        public void Start()
+        public override void OnInitialPickup(PlayerController playerController)
         {
-            try
+            AmountOfHPConsumed = 0;
+            AmountOfArmorConsumed = 0;
+            AmountOfCorruptBlanks = 0;
+
+            playerController.healthHaver.OnDamaged += HealthHaver_OnDamaged;
+            playerController.OnUsedBlank += Player_OnUsedBlank;
+            playerController.LostArmor += LostArmorgus;
+            playerController.OnNewFloorLoaded += ONFL;
+
+
+            StatModifier item = new StatModifier
             {
-                GameManager.Instance.PrimaryPlayer.CurrentRoom.RegisterInteractable(this);
-                SpriteOutlineManager.AddOutlineToSprite(base.sprite, OutlineColor, 0.1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
-            }
-            catch (Exception er)
+                statToBoost = PlayerStats.StatType.Damage,
+                amount = 0,//(AmountOfHPConsumed / 4) * (1 + (StackCount / 0.33f)),
+                modifyType = StatModifier.ModifyMethod.ADDITIVE
+            };
+            playerController.ownerlessStatModifiers.Add(item);
+            playerController.stats.RecalculateStats(playerController, true, true);
+            HPBasedDamageMod = item;
+        }
+
+        public override void OnStack(PlayerController playerController)
+        {
+            RecalculateDamage();
+        }
+
+
+        public override void Update()
+        {
+            if (_Owner)
             {
-                ETGModConsole.Log(er.Message, false);
+                if (AmountOfArmorConsumed > (int)_Owner.healthHaver.Armor) { AmountOfArmorConsumed = (int)_Owner.healthHaver.Armor; }
+
+                if (LastStoredAmountOfHPConsumed != ActualHPPointsStored())
+                {
+                    SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.CORRUPTEDWEALTH_FLAG_HP, true);
+                    AkSoundEngine.PostEvent("Play_BOSS_Rat_Cheese_Jump_01", _Owner.gameObject);
+
+                    GameObject vfx = SpawnManager.SpawnVFX((PickupObjectDatabase.GetById(577) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapVertical.effects.First().effects.First().effect, true);
+                    vfx.transform.position = _Owner.sprite.WorldCenter;
+                    vfx.GetComponent<tk2dBaseSprite>().HeightOffGround = 22;
+                    vfx.transform.localRotation = Quaternion.Euler(0, 0, Vector2.up.ToAngle());
+                    UnityEngine.Object.Destroy(vfx, 2);
+
+                    UpdateHearts();
+
+
+                }
+                if (_Owner.carriedConsumables.KeyBullets == 0)
+                {
+                    AmountOfCorruptKeys = 0;
+                }
             }
         }
 
-       
 
-        private void Update()
+        public void ONFL(PlayerController player)
         {
-            if (!this.m_hasBeenPickedUp && !this.m_isBeingEyedByRat && base.ShouldBeTakenByRat(base.sprite.WorldCenter))
+            UpdateHearts();
+        }
+
+        public void LostArmorgus()
+        {
+            if (AmountOfArmorConsumed > 0)
             {
-                GameManager.Instance.Dungeon.StartCoroutine(base.HandleRatTheft());
+                GameManager.Instance.StartCoroutine(this.SaveFlawless());
+                if (Power == null)
+                {
+                    E = 5;
+                    Power = GameManager.Instance.StartCoroutine(this.ThePower());
+                }
+                else
+                {
+                    E = 5;
+                }
+                AmountOfArmorConsumed--;
+            }
+        }
+        private float E = 5;
+        private Coroutine Power;
+        private IEnumerator SaveFlawless()
+        {
+            SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.CORRUPTEDWEALTH_FLAG_ARMOR, true);
+            yield return new WaitForSeconds(0.1f);
+            if (Owner.CurrentRoom != null)
+            {
+                Owner.CurrentRoom.PlayerHasTakenDamageInThisRoom = false;
+            }
+            yield break;
+        }
+        private IEnumerator ThePower()
+        {
+            //m_ENM_gunnut_shoce_01
+            _Owner.PostProcessProjectile += Player_PostProcessProjectile;
+            _Owner.PostProcessBeamTick += Player_PostProcessBeamTick;
+            AkSoundEngine.PostEvent("Play_ITM_Macho_Brace_Active_01", _Owner.gameObject);
+
+            while (E > 0)
+            {
+                E -= Time.deltaTime;
+
+                if (_Owner && _Owner.specRigidbody)
+                {
+                    Vector2 unitDimensions = _Owner.specRigidbody.HitboxPixelCollider.UnitDimensions;
+                    Vector2 a = unitDimensions / 2f;
+                    int num2 = Mathf.RoundToInt((float)12f * 0.5f * Mathf.Min(30f, Mathf.Min(new float[]
+                    {
+                        unitDimensions.x * unitDimensions.y
+                    })));
+                    //int num3 = Mathf.FloorToInt(this.m_particleTimer);
+                    Vector2 vector = _Owner.specRigidbody.HitboxPixelCollider.UnitBottomLeft;
+                    Vector2 vector2 = _Owner.specRigidbody.HitboxPixelCollider.UnitTopRight;
+                    PixelCollider pixelCollider = _Owner.specRigidbody.GetPixelCollider(ColliderType.Ground);
+                    if (pixelCollider != null && pixelCollider.ColliderGenerationMode == PixelCollider.PixelColliderGeneration.Manual)
+                    {
+                        vector = Vector2.Min(vector, pixelCollider.UnitBottomLeft);
+                        vector2 = Vector2.Max(vector2, pixelCollider.UnitTopRight);
+                    }
+                    vector += Vector2.Min(a * 0.15f, new Vector2(0.25f, 0.25f));
+                    vector2 -= Vector2.Min(a * 0.15f, new Vector2(0.25f, 0.25f));
+                    vector2.y -= Mathf.Min(a.y * 0.1f, 0.1f);
+                    GlobalSparksDoer.DoRandomParticleBurst(1, vector, vector2, Vector3.up, 0f, 0.5f, 0.166f, 1, Color.cyan * 2, GlobalSparksDoer.SparksType.DARK_MAGICKS);
+
+                    //this.m_particleTimer += BraveTime.DeltaTime * (float)num2;
+                    //if (this.m_particleTimer > 1f)
+                    /*
+                    {
+                        int num3 = Mathf.FloorToInt(this.m_particleTimer);
+                        Vector2 vector = player.specRigidbody.HitboxPixelCollider.UnitBottomLeft;
+                        Vector2 vector2 = player.specRigidbody.HitboxPixelCollider.UnitTopRight;
+                        PixelCollider pixelCollider = player.specRigidbody.GetPixelCollider(ColliderType.Ground);
+                        if (pixelCollider != null && pixelCollider.ColliderGenerationMode == PixelCollider.PixelColliderGeneration.Manual)
+                        {
+                            vector = Vector2.Min(vector, pixelCollider.UnitBottomLeft);
+                            vector2 = Vector2.Max(vector2, pixelCollider.UnitTopRight);
+                        }
+                        vector += Vector2.Min(a * 0.15f, new Vector2(0.25f, 0.25f));
+                        vector2 -= Vector2.Min(a * 0.15f, new Vector2(0.25f, 0.25f));
+                        vector2.y -= Mathf.Min(a.y * 0.1f, 0.1f);
+                        GlobalSparksDoer.DoRandomParticleBurst(num3, vector, vector2, Vector3.down, 0f, 0.5f, 0.3f, 1, Color.magenta, GlobalSparksDoer.SparksType.DARK_MAGICKS);
+                        //this.m_particleTimer -= Mathf.Floor(this.m_particleTimer);
+                    }
+                    */
+                }
+
+                yield return null;
+            }
+            AkSoundEngine.PostEvent("Play_ITM_Macho_Brace_Fade_01", _Owner.gameObject);
+            _Owner.PostProcessProjectile -= Player_PostProcessProjectile;
+            _Owner.PostProcessBeamTick -= Player_PostProcessBeamTick;
+            Power = null;
+            yield break;
+        }
+
+
+        private void Player_PostProcessBeamTick(BeamController arg1, SpeculativeRigidbody arg2, float arg3)
+        {
+            arg1.projectile.ignoreDamageCaps = true;
+            arg1.projectile.baseData.speed *= 1.4f;
+            arg1.projectile.baseData.damage *= 1.2f;
+
+        }
+
+        private void Player_PostProcessProjectile(Projectile arg1, float arg2)
+        {
+            arg1.ignoreDamageCaps = true;
+            arg1.baseData.speed *= 1.4f;
+            arg1.baseData.damage *= 1.2f;
+            arg1.UpdateSpeed();
+
+        }
+
+        private void Player_OnUsedBlank(PlayerController arg1, int arg2)
+        {
+            if (AmountOfCorruptBlanks > 0)
+            {
+                AmountOfCorruptBlanks--;
+                SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.CORRUPTEDWEALTH_FLAG_BLANK, true);
+                GameManager.Instance.StartCoroutine(this.HandleSilence(arg1.sprite.WorldCenter, 30, 5, arg1));
+            }
+        }
+
+        private IEnumerator HandleSilence(Vector2 centerPoint, float maxRadius, float additionalTimeAtMaxRadius, PlayerController user)
+        {
+            GameObject vfx = SpawnManager.SpawnVFX((PickupObjectDatabase.GetById(536) as RelodestoneItem).ContinuousVFX, true);
+            vfx.transform.parent = user.transform;
+            vfx.transform.position = user.sprite.WorldCenter;
+            AkSoundEngine.PostEvent("Play_WPN_Life_Orb_Blast_01", user.gameObject);
+
+            List<Projectile> doNotWreck = new List<Projectile>();
+            float elapsed = 0f;
+
+            while (elapsed < additionalTimeAtMaxRadius + (CurrentStack * 1.25f))
+            {
+                elapsed += BraveTime.DeltaTime;
+                bool destroysEnemyBullets = true;
+
+                bool pvp_ENABLED = GameManager.PVP_ENABLED;
+                float? previousRadius2 = new float?(maxRadius);
+
+                doNotWreck = BlankHooks.DestroyBulletsInRangeSpecial(centerPoint, maxRadius, destroysEnemyBullets, pvp_ENABLED, doNotWreck, user, false, previousRadius2, false, null);
+
+                yield return null;
+            }
+
+
+            GameObject silencerVFX = (GameObject)ResourceCache.Acquire("Global VFX/BlankVFX_Ghost");
+
+            GameObject gameObject = GameObject.Instantiate(silencerVFX.gameObject, user.sprite.WorldCenter, Quaternion.identity);
+
+            Destroy(gameObject, 2.5f);
+
+            UnityEngine.Object.Destroy(vfx, 0);
+            yield break;
+        }
+
+
+        private void HealthHaver_OnDamaged(float resultValue, float maxValue, CoreDamageTypes damageTypes, DamageCategory damageCategory, Vector2 damageDirection)
+        {
+            if (_Owner.healthHaver.Armor == 0)
+            {
+                if (AmountOfHPConsumed > 0f) { AmountOfHPConsumed -= 0.5f; }
+                if (AmountOfHPConsumed < 0) { AmountOfHPConsumed = 0; }
+                if (AmountOfArmorConsumed < 0) { AmountOfArmorConsumed = 0; }
+
+                RecalculateDamage();
+                if (AmountOfHPConsumed > 0f)
+                {
+                    AkSoundEngine.PostEvent("Play_BOSS_lichA_crack_01", _Owner.gameObject);
+                    { AmountOfHPConsumed -= 0.5f; }
+                    _Owner.healthHaver.ForceSetCurrentHealth(_Owner.healthHaver.GetCurrentHealth() - 0.5f);
+                    RecalculateDamage();
+                }
+            }
+        }
+
+        public int ActualHPPointsStored()
+        {
+            return Mathf.CeilToInt(AmountOfHPConsumed * 2);
+        }
+
+
+
+
+        public void UpdateHearts()
+        {
+            LastStoredAmountOfHPConsumed = ActualHPPointsStored();
+            for (int i = 0; i < objects.Count; i++)
+            {
+                if (objects[i] != null) { Destroy(objects[i]); }
+            }
+            objects.Clear();
+            int UpRaise = 0;
+            int H = ActualHPPointsStored();
+            int r = ActualHPPointsStored();
+            for (int i = 0; i < H / 2; i++)
+            {
+                r -= 2;
+                GameObject gameObject = _Owner.PlayEffectOnActor(CorruptedWealth.heartorbitalVFX, new Vector3(0f, _Owner.specRigidbody.HitboxPixelCollider.UnitDimensions.y + 0.25f + (0.5f * UpRaise), 0f), true);
+                objects.Add(gameObject);
+                UpRaise++;
+            }
+            if (r > 0)
+            {
+                for (int i = 0; i < r; i++)
+                {
+                    r--;
+                    GameObject gameObject = _Owner.PlayEffectOnActor(CorruptedWealth.halfheartorbitalvfx, new Vector3(0f, _Owner.specRigidbody.HitboxPixelCollider.UnitDimensions.y + 0.25f + (0.5f * UpRaise), 0f), true);
+                    objects.Add(gameObject);
+                    UpRaise++;
+                }
             }
         }
 
 
-        private bool m_hasBeenPickedUp;
+
+        public void ProcessDamageModsRedHP(float amount)
+        {
+            AmountOfHPConsumed += amount;
+            RecalculateDamage();
+        }
+
+
+        public void RecalculateDamage()
+        {
+            HPBasedDamageMod.amount = (AmountOfHPConsumed / 15f) * (1 + ((float)CurrentStack / 3f));
+            _Owner.stats.RecalculateStats(_Owner, true, true);
+        }
+
+
+
+
+
+
+        public List<GameObject> objects = new List<GameObject>();
+        private int LastStoredAmountOfHPConsumed;
+        public int AmountOfCorruptBlanks;
+        public int AmountOfCorruptKeys;
+
+        public float AmountOfArmorConsumed;
+        public float AmountOfHPConsumed;
+
+        private StatModifier HPBasedDamageMod;
+        private Dictionary<int, GameObject> extantHearts = new Dictionary<int, GameObject>();
+
+
+        public override void MidGameSerialize(List<object> data)
+        {
+            base.MidGameSerialize(data);
+            data.Add(AmountOfCorruptBlanks);
+            data.Add(AmountOfCorruptKeys);
+            data.Add(AmountOfArmorConsumed);
+            data.Add(AmountOfHPConsumed);
+        }
+
+        public override void MidGameDeserialize(List<object> data)
+        {
+            base.MidGameDeserialize(data);
+            int i = 0;
+            AmountOfCorruptBlanks = (int)data[i++];
+            AmountOfCorruptKeys = (int)data[i++];
+            AmountOfArmorConsumed = (float)data[i++];
+            AmountOfHPConsumed = (float)data[i++];
+            UpdateHearts();
+            RecalculateDamage();
+        }
+
     }
 }

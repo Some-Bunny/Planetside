@@ -49,7 +49,7 @@ namespace Planetside.DungeonPlaceables
             obj.gameObject.SetLayerRecursively(LayerMask.NameToLayer("FG_Reflection"));
 
             var brekable = obj.AddComponent<MajorBreakable>();
-            brekable.HitPoints = 90;
+            brekable.HitPoints = 65;
             brekable.destroyedOnBreak = true;
             brekable.ImmuneToBeastMode = true;
             brekable.ScaleWithEnemyHealth = true;
@@ -406,22 +406,29 @@ namespace Planetside.DungeonPlaceables
         private IEnumerator DoKill(StaticVFXStorage.MourningStarVFXController mourningStarVFXController)
         {
             float e = 0;
-            var vec = EnemyBlessed.sprite.GetBounds().size;
-            var vec1 = EnemyBlessed.transform.position;
-            var vec2 = EnemyBlessed.sprite.WorldBottomCenter;
-            yield return new WaitForSeconds(0.125f);
-            while (e < 1)
+            if (EnemyBlessed)
             {
-                EnemyBlessed.transform.localScale = Vector3.Lerp(Vector3.one, new Vector3(0f, 3f), e);
-                EnemyBlessed.sprite.SortingOrder = -1000;
-                EnemyBlessed.sprite.HeightOffGround = Mathf.Lerp(2, 20, e);
-                EnemyBlessed.transform.position = Vector3.Lerp(vec1, vec2, e);
-                EnemyBlessed.specRigidbody.Reinitialize();
+                var vec = EnemyBlessed.sprite.GetBounds().size;
+                var vec1 = EnemyBlessed.transform.position;
+                var vec2 = EnemyBlessed.sprite.WorldBottomCenter;
+                yield return new WaitForSeconds(0.125f);
+                while (e < 1)
+                {
+                    if (EnemyBlessed != null) 
+                    {
+                        EnemyBlessed.transform.localScale = Vector3.Lerp(Vector3.one, new Vector3(0f, 3f), e);
+                        EnemyBlessed.sprite.SortingOrder = -1000;
+                        EnemyBlessed.sprite.HeightOffGround = Mathf.Lerp(2, 20, e);
+                        EnemyBlessed.transform.position = Vector3.Lerp(vec1, vec2, e);
+                        EnemyBlessed.specRigidbody.Reinitialize();
+                    }
 
-                e += Time.deltaTime * 2f;
-                yield return null;
+
+                    e += Time.deltaTime * 2f;
+                    yield return null;
+                }
+                EnemyBlessed?.EraseFromExistenceWithRewards();
             }
-            EnemyBlessed.EraseFromExistenceWithRewards();
             mourningStarVFXController.Dissipate();
             yield break;
         }

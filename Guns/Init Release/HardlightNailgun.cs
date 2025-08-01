@@ -65,8 +65,8 @@ namespace Planetside
             UnityEngine.Object.DontDestroyOnLoad(spear);
             spear.baseData.damage = 13.5f;
             spear.baseData.speed *= 3f;
-            spear.baseData.force = 0f;
-            spear.baseData.range = 10;
+            spear.baseData.force = 5f;
+            spear.baseData.range = 11;
 
 
             Projectile replacementProjectile = spear.projectile;
@@ -90,7 +90,7 @@ namespace Planetside
 
 
             gun.barrelOffset.transform.localPosition = new Vector3(0.75f, .625f, 0f);
-            gun.DefaultModule.angleVariance = 4f;
+            gun.DefaultModule.angleVariance = 3f;
             gun.encounterTrackable.EncounterGuid = "MUL-T GANG";
             gun.sprite.IsPerpendicular = true;
             Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(gun.DefaultModule.projectiles[0]);
@@ -98,7 +98,7 @@ namespace Planetside
             FakePrefab.MarkAsFakePrefab(projectile.gameObject);
             UnityEngine.Object.DontDestroyOnLoad(projectile);
             gun.DefaultModule.projectiles[0] = projectile;
-            projectile.baseData.damage = 18f;
+            projectile.baseData.damage = 19f;
             projectile.baseData.speed *= 1.25f;
             projectile.baseData.force *= 4f;
             projectile.baseData.range *= 4;

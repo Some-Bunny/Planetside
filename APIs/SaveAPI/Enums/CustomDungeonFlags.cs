@@ -101,6 +101,7 @@ namespace SaveAPI
         PITLORDPACT_FLAG_ITEM,
 
         UNBREAKABLESPIRIT_FLAG_STACK,
+        HOLLOWWALLS_FLAG_STACK,
 
     }
 }

@@ -79,7 +79,7 @@ namespace Planetside
 			UnityEngine.Object.DontDestroyOnLoad(projectile);
 			gun.DefaultModule.projectiles[0] = projectile;
 			projectile.transform.parent = gun.barrelOffset;
-            ItemAPI.GunTools.SetProjectileCollisionRight(projectile, "whistler_projectile_001", StaticSpriteDefinitions.Projectile_Sheet_Data, 8, 5, false, tk2dBaseSprite.Anchor.MiddleCenter);
+            Alexandria.Assetbundle.ProjectileBuilders.SetProjectileCollisionRight(projectile, "whistler_projectile_001", StaticSpriteDefinitions.Projectile_Sheet_Data, 8, 5, false, tk2dBaseSprite.Anchor.MiddleCenter);
 
             ImprovedAfterImage yes = projectile.gameObject.AddComponent<ImprovedAfterImage>();
 			yes.spawnShadows = true;
@@ -163,7 +163,9 @@ namespace Planetside
 
 			ETGMod.Databases.Items.Add(gun, false, "ANY");
 			Whistler.WhistlerID = gun.PickupObjectId;
-			ItemIDs.AddToList(gun.PickupObjectId);			
+            Alexandria.ItemAPI.ItemBuilder.AddToGunslingKingTable(gun, 1);
+
+            ItemIDs.AddToList(gun.PickupObjectId);			
 		}
 		public static int WhistlerID;
 	}

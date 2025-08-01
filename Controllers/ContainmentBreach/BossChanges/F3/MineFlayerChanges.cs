@@ -28,8 +28,8 @@ namespace Planetside
 			// Tip: To debug an enemy's BehaviorSpeculator, you can uncomment the line below. This will print all the behavior information to the console.
 			//ToolsEnemy.DebugInformation(behaviorSpec);
 
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableDefault);
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableMineflayerBounce);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableDefault);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableMineflayerBounce);
 
 			//scatterBullet
 
@@ -108,7 +108,7 @@ namespace Planetside
 						for (int l = -5; l < 5; l++)
 						{
 							
-							this.Fire(new Direction(12.5f * l, DirectionType.Aim, -1f), new Speed(H == false ? 7 : 4, SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.undodgeableDefault.Name, 10, H == false ? 60 : 150));
+							this.Fire(new Direction(12.5f * l, DirectionType.Aim, -1f), new Speed(H == false ? 7 : 4, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.undodgeableDefault.Name, 10, H == false ? 60 : 150));
 							H = !H;
 						}
 					}
@@ -227,8 +227,8 @@ namespace Planetside
 						for (int l = 0; l < 10; l++)
 						{
 							float direction = this.SubdivideArc(targetAngle - 50f, 100f, 5, l, false);
-							this.Fire(new Direction(direction, DirectionType.Absolute, -1f), new Speed(7f, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.undodgeableDefault.Name));
-							this.Fire(new Direction(direction, DirectionType.Absolute, -1f), new Speed(5f, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.undodgeableDefault.Name));
+							this.Fire(new Direction(direction, DirectionType.Absolute, -1f), new Speed(7f, SpeedType.Absolute), new Bullet(StaticBulletEntries.undodgeableDefault.Name));
+							this.Fire(new Direction(direction, DirectionType.Absolute, -1f), new Speed(5f, SpeedType.Absolute), new Bullet(StaticBulletEntries.undodgeableDefault.Name));
 						}
 					}
 					yield return this.Wait(21);
@@ -325,7 +325,7 @@ namespace Planetside
 
 			private class SlowDown : Bullet
 			{
-				public SlowDown() : base(StaticUndodgeableBulletEntries.undodgeableDefault.Name, false, false, false)
+				public SlowDown() : base(StaticBulletEntries.undodgeableDefault.Name, false, false, false)
 				{
 				}
 
@@ -379,7 +379,7 @@ namespace Planetside
 
 			private class ReflectBullet : Bullet
 			{
-				public ReflectBullet() : base(StaticUndodgeableBulletEntries.undodgeableMineflayerBounce.Name, false, false, false)
+				public ReflectBullet() : base(StaticBulletEntries.undodgeableMineflayerBounce.Name, false, false, false)
 				{
 					this.m_ticksLeft = -1;
 				}

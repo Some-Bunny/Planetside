@@ -15,6 +15,7 @@ using BreakAbleAPI;
 using NpcApi;
 using SaveAPI;
 using static Planetside.KillPillarsChanges.KillPillarChanges.ModifiedBossStatuesDirectionalWaveAllSimple;
+using Planetside.Static_Storage;
 
 namespace Planetside
 {
@@ -505,7 +506,7 @@ namespace Planetside
 						SuppressReloadAnim = false,
 						TimeBetweenShots = 0.3f,
 						PreventTargetSwitching = true,
-						OverrideBulletName = StaticUndodgeableBulletEntries.undodgeableSniper.Name,
+						OverrideBulletName = StaticBulletEntries.undodgeableSniper.Name,
 						OverrideAnimation = null,
 						OverrideDirectionalAnimation = null,
 						HideGun = false,
@@ -575,7 +576,7 @@ namespace Planetside
 						SuppressReloadAnim = false,
 						TimeBetweenShots = 0.5f,
 						PreventTargetSwitching = true,
-						OverrideBulletName = StaticUndodgeableBulletEntries.undodgeableSmallSpore.Name,
+						OverrideBulletName = StaticBulletEntries.undodgeableSmallSpore.Name,
 						OverrideAnimation = null,
 						OverrideDirectionalAnimation = null,
 						HideGun = false,
@@ -771,21 +772,21 @@ namespace Planetside
 				mat.SetFloat("_EmissivePower", 35);
 				companion.aiActor.sprite.renderer.material = mat;
 
-				companion.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
-				companion.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSniper);
-				companion.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableLargeSpore);
-				companion.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableBouncyBatBullet);
-				companion.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableDefault);
-				companion.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableMine);
-                companion.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableGrenade);
-                companion.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UnDodgeableMolotov);
+				companion.aiActor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableSmallSpore);
+				companion.aiActor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableSniper);
+				companion.aiActor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableLargeSpore);
+				companion.aiActor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableBouncyBatBullet);
+				companion.aiActor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableDefault);
+				companion.aiActor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableMine);
+                companion.aiActor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableGrenade);
+                companion.aiActor.bulletBank.Bullets.Add(StaticBulletEntries.UnDodgeableMolotov);
 
 
 
-                ArcProjectile arcProjectile_1 = StaticUndodgeableBulletEntries.undodgeableGrenade.BulletObject.GetComponent<ArcProjectile>();
+                ArcProjectile arcProjectile_1 = StaticBulletEntries.undodgeableGrenade.BulletObject.GetComponent<ArcProjectile>();
 	//			ETGModConsole.Log($"{arcProjectile_1.gravity} | {arcProjectile_1.startingZSpeed} | {arcProjectile_1.startingHeight}");
 
-                ArcProjectile arcProjectile_2 = StaticUndodgeableBulletEntries.UnDodgeableMolotov.BulletObject.GetComponent<ArcProjectile>();
+                ArcProjectile arcProjectile_2 = StaticBulletEntries.UnDodgeableMolotov.BulletObject.GetComponent<ArcProjectile>();
 				//ETGModConsole.Log($"{arcProjectile_1.gravity} | {arcProjectile_1.startingZSpeed} | {arcProjectile_1.startingHeight}");
 				arcProjectile_2.gravity = arcProjectile_1.gravity;
                 arcProjectile_2.startingZSpeed = arcProjectile_1.startingZSpeed;
@@ -1129,7 +1130,7 @@ namespace Planetside
 
             public class ShotgunBulletOne : Bullet
             {
-                public ShotgunBulletOne() : base(UnityEngine.Random.value > 0.33f ? StaticUndodgeableBulletEntries.undodgeableLargeSpore.Name : StaticUndodgeableBulletEntries.undodgeableSmallSpore.Name, false, false, false)
+                public ShotgunBulletOne() : base(UnityEngine.Random.value > 0.33f ? StaticBulletEntries.undodgeableLargeSpore.Name : StaticBulletEntries.undodgeableSmallSpore.Name, false, false, false)
                 {
 
                 }
@@ -1187,7 +1188,7 @@ namespace Planetside
 			}
 			public class ShotgunBulletOne : Bullet
 			{
-				public ShotgunBulletOne() : base(UnityEngine.Random.value > 0.33f ? StaticUndodgeableBulletEntries.undodgeableLargeSpore.Name: StaticUndodgeableBulletEntries.undodgeableSmallSpore.Name, false, false, false)
+				public ShotgunBulletOne() : base(UnityEngine.Random.value > 0.33f ? StaticBulletEntries.undodgeableLargeSpore.Name: StaticBulletEntries.undodgeableSmallSpore.Name, false, false, false)
 				{
 
 				}
@@ -1220,7 +1221,7 @@ namespace Planetside
 			}
 			public class ShotgunBulletOne : Bullet
 			{
-				public ShotgunBulletOne() : base(UnityEngine.Random.value > 0.33f? StaticUndodgeableBulletEntries.undodgeableLargeSpore.Name : StaticUndodgeableBulletEntries.undodgeableSmallSpore.Name, false, false, false)
+				public ShotgunBulletOne() : base(UnityEngine.Random.value > 0.33f? StaticBulletEntries.undodgeableLargeSpore.Name : StaticBulletEntries.undodgeableSmallSpore.Name, false, false, false)
 				{
 
 				}
@@ -1253,7 +1254,7 @@ namespace Planetside
 			public class RevolverBulletOne : Bullet
 			{
 				public float NewSpeed;
-				public RevolverBulletOne(float nS) : base(StaticUndodgeableBulletEntries.undodgeableSniper.Name, false, false, false)
+				public RevolverBulletOne(float nS) : base(StaticBulletEntries.undodgeableSniper.Name, false, false, false)
 				{
                     NewSpeed = nS;
 

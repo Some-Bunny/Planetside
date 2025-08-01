@@ -16,6 +16,8 @@ namespace Planetside
         public AIBulletBank bulletBank;
         public HealthHaver healthHaver;
 
+
+
         public void SetupOB(AIActor actor)
         {
             this.actor = actor;
@@ -27,8 +29,6 @@ namespace Planetside
         public virtual bool ShouldOverride()
         {
             if (SaveAPIManager.GetFlag(CustomDungeonFlags.HAS_TREADED_DEEPER) == false) { return false; }
-
-
             if (ContainmentBreachController.CurrentState == ContainmentBreachController.States.ALLOWED) { return true; }
             return false;
             //return true;

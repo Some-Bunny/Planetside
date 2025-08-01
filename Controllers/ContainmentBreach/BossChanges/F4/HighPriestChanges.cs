@@ -21,9 +21,9 @@ namespace Planetside
 
 			//ToolsEnemy.DebugInformation(behaviorSpec);
 
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableSweep);
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableMergoWave);
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableCross);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.UndodgeableSweep);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.UndodgeableMergoWave);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.UndodgeableCross);
 
 			ShootBehavior ShootBehavior1 = behaviorSpec.AttackBehaviorGroup.AttackBehaviors[1].Behavior as ShootBehavior;
 			ShootBehavior1.BulletScript = new CustomBulletScriptSelector(typeof(ModifiedHighPriestSweepAttacks1Left));
@@ -63,13 +63,13 @@ namespace Planetside
 				yield return this.Wait(60);
 				for (int i = 0; i < 12; i++)
 				{
-					this.Fire(new Direction(startAngle + (float)i * deltaAngle+3, DirectionType.Aim, -1f), new Speed(7f, SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.UndodgeableMergoWave.Name, 9, 45));
-					this.Fire(new Direction(startAngle + (float)i * deltaAngle-3, DirectionType.Aim, -1f), new Speed(7f, SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.UndodgeableMergoWave.Name, 9, 45));
-					this.Fire(new Direction(startAngle + (float)i * deltaAngle, DirectionType.Aim, -1f), new Speed(8f, SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.UndodgeableMergoWave.Name, 9, 45));
+					this.Fire(new Direction(startAngle + (float)i * deltaAngle+3, DirectionType.Aim, -1f), new Speed(7f, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.UndodgeableMergoWave.Name, 9, 45));
+					this.Fire(new Direction(startAngle + (float)i * deltaAngle-3, DirectionType.Aim, -1f), new Speed(7f, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.UndodgeableMergoWave.Name, 9, 45));
+					this.Fire(new Direction(startAngle + (float)i * deltaAngle, DirectionType.Aim, -1f), new Speed(8f, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.UndodgeableMergoWave.Name, 9, 45));
 
-					this.Fire(new Direction((startAngle + (float)i * deltaAngle) + 15, DirectionType.Aim, -1f), new Speed(4f, SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.UndodgeableMergoWave.Name, 12, 120));
-					this.Fire(new Direction((startAngle + (float)i * deltaAngle) + 21, DirectionType.Aim, -1f), new Speed(4f, SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.UndodgeableMergoWave.Name, 12, 120));
-					this.Fire(new Direction((startAngle + (float)i * deltaAngle) + 18, DirectionType.Aim, -1f), new Speed(5f, SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.UndodgeableMergoWave.Name, 12, 120));
+					this.Fire(new Direction((startAngle + (float)i * deltaAngle) + 15, DirectionType.Aim, -1f), new Speed(4f, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.UndodgeableMergoWave.Name, 12, 120));
+					this.Fire(new Direction((startAngle + (float)i * deltaAngle) + 21, DirectionType.Aim, -1f), new Speed(4f, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.UndodgeableMergoWave.Name, 12, 120));
+					this.Fire(new Direction((startAngle + (float)i * deltaAngle) + 18, DirectionType.Aim, -1f), new Speed(5f, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.UndodgeableMergoWave.Name, 12, 120));
 				}
 				yield break;
 			}
@@ -89,11 +89,11 @@ namespace Planetside
 					float d = (float)i / 105f;
 					if (i % 3==0)
                     {
-						this.Fire(new Offset("left hand"), new Direction(-65f - d * 230f * 3.5f, DirectionType.Absolute, -1f), new Speed(12f, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.UndodgeableCross.Name, false, false, false));
-						this.Fire(new Offset("right hand"), new Direction(-65f - d * 230f * 3.5f, DirectionType.Absolute, -1f), new Speed(12f, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.UndodgeableCross.Name, false, false, false));
+						this.Fire(new Offset("left hand"), new Direction(-65f - d * 230f * 3.5f, DirectionType.Absolute, -1f), new Speed(12f, SpeedType.Absolute), new Bullet(StaticBulletEntries.UndodgeableCross.Name, false, false, false));
+						this.Fire(new Offset("right hand"), new Direction(-65f - d * 230f * 3.5f, DirectionType.Absolute, -1f), new Speed(12f, SpeedType.Absolute), new Bullet(StaticBulletEntries.UndodgeableCross.Name, false, false, false));
 
-						this.Fire(new Offset("right hand"), new Direction(-115f + d * 230f * 3.5f, DirectionType.Absolute, -1f), new Speed(12f, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.UndodgeableCross.Name, false, false, false));
-						this.Fire(new Offset("left hand"), new Direction(-115f + d * 230f * 3.5f, DirectionType.Absolute, -1f), new Speed(12f, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.UndodgeableCross.Name, false, false, false));
+						this.Fire(new Offset("right hand"), new Direction(-115f + d * 230f * 3.5f, DirectionType.Absolute, -1f), new Speed(12f, SpeedType.Absolute), new Bullet(StaticBulletEntries.UndodgeableCross.Name, false, false, false));
+						this.Fire(new Offset("left hand"), new Direction(-115f + d * 230f * 3.5f, DirectionType.Absolute, -1f), new Speed(12f, SpeedType.Absolute), new Bullet(StaticBulletEntries.UndodgeableCross.Name, false, false, false));
 					}
 					yield return this.Wait(2);
 				}
@@ -165,7 +165,7 @@ namespace Planetside
 
 			public class SweepBullet : Bullet
 			{
-				public SweepBullet(int delay, bool Speed) : base(StaticUndodgeableBulletEntries.UndodgeableSweep.Name, false, false, false)
+				public SweepBullet(int delay, bool Speed) : base(StaticBulletEntries.UndodgeableSweep.Name, false, false, false)
 				{
 					this.m_delay = delay;
 					S = Speed;

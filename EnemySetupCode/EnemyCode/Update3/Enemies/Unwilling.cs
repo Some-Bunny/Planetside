@@ -12,6 +12,7 @@ using Pathfinding;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using BreakAbleAPI;
+using Planetside.Static_Storage;
 
 namespace Planetside
 {
@@ -249,7 +250,7 @@ namespace Planetside
 					{
 						Probability = 1f,
 						Behavior = new SuicideShotBehavior{
-						bulletBankName = StaticUndodgeableBulletEntries.UnwillingShot.Name,
+						bulletBankName = StaticBulletEntries.UnwillingShot.Name,
 						chargeAnim = "charge",
 						Range = 20,
 						degreesBetween = 5,
@@ -316,7 +317,7 @@ namespace Planetside
 				mat.SetFloat("_EmissivePower", 50);
 				companion.aiActor.sprite.renderer.material = mat;
 
-				companion.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UnwillingShot);
+				companion.aiActor.bulletBank.Bullets.Add(StaticBulletEntries.UnwillingShot);
 				companion.aiActor.bulletBank.Bullets[0].BulletObject.GetComponent<Projectile>().baseData.speed = 14f;
 
 				//companion.aiActor.healthHaver.persistsOnDeath = true;

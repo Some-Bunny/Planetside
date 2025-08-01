@@ -531,3 +531,4 @@ D:\reposSecondary\failsafes\Planetside\Assetbundle Stuff\Unity Projects\Planetsi
 D:\reposSecondary\failsafes\Planetside\Assetbundle Stuff\Unity Projects\PlanetsideSpritesBundle\obj\Debug\Assembly-CSharp.dll
 D:\reposSecondary\failsafes\Planetside\Assetbundle Stuff\Unity Projects\PlanetsideSpritesBundle\obj\Debug\Assembly-CSharp.pdb
 D:\reposSecondary\failsafes\Planetside\Assetbundle Stuff\Unity Projects\PlanetsideSpritesBundle\Temp\bin\Debug\dfScriptLite.dll
+D:\reposSecondary\failsafes\Planetside\Assetbundle Stuff\Unity Projects\PlanetsideSpritesBundle\Temp\bin\Debug\Newtonsoft.Json.dll

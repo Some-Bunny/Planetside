@@ -224,8 +224,9 @@ namespace Planetside
 				AdditionalComponent = typeof(VoidMuncherController),
 				RoomIconSpritePath = "Planetside/Resources/Shrines/voidMuncherRoomIcon.png"
 			};
-			iei.Build();
-			Actions.OnRunStart += OnRunStart;
+			
+            Alexandria.DungeonAPI.StaticReferences.customObjects.Add("PSOG_VoidMuncher", iei.Build());
+            Actions.OnRunStart += OnRunStart;
 
 		}
 

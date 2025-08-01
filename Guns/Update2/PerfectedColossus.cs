@@ -56,41 +56,20 @@ namespace Planetside
                 mod.numberOfShotsInClip = 40;
                 mod.ammoType = GameUIAmmoType.AmmoType.BEAM;
 
-                List<string> BeamAnimPaths = new List<string>()
-            {
-                "Planetside/Resources/Beams/ColossusPerfected/colossusbeam_mid_001",
-                "Planetside/Resources/Beams/ColossusPerfected/colossusbeam_mid_002",
-                "Planetside/Resources/Beams/ColossusPerfected/colossusbeam_mid_003",
-                "Planetside/Resources/Beams/ColossusPerfected/colossusbeam_mid_004",
-
-            };
-                List<string> StartAnimPaths = new List<string>()
-            {
-                "Planetside/Resources/Beams/ColossusPerfected/colossusbeam_start_001",
-                "Planetside/Resources/Beams/ColossusPerfected/colossusbeam_start_002",
-                "Planetside/Resources/Beams/ColossusPerfected/colossusbeam_start_003",
-                "Planetside/Resources/Beams/ColossusPerfected/colossusbeam_start_004",
-
-
-            };
                 
-            List<string> ImpactAnimPaths = new List<string>()
-            {
-                "Planetside/Resources/Beams/ColossusPerfected/colossusbeam_impact_001",
-                "Planetside/Resources/Beams/ColossusPerfected/colossusbeam_impact_002",
-                "Planetside/Resources/Beams/ColossusPerfected/colossusbeam_impact_003",
-                "Planetside/Resources/Beams/ColossusPerfected/colossusbeam_impact_004",
-
-            };
-
-            List<string> End = new List<string>()
-            {
-                "Planetside/Resources/Beams/ColossusPerfected/colossusbeam_end_001",
-
-            };
 
                 Projectile projectile = UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(86) as Gun).DefaultModule.projectiles[0]);
 
+                BasicBeamController beamComp = projectile.GenerateBeamPrefabBundle(
+                "colossusbeam_mid_001 1",
+                StaticSpriteDefinitions.Beam_Sheet_Data,
+                StaticSpriteDefinitions.Beam_Animation_Data,
+                "perfcolossus_mid", new Vector2(12, 8), new Vector2(0, 2), //Main
+                "perfcolossus_impact", new Vector2(12, 8), new Vector2(0, 2), //Impact
+                "perfcolossus_mid", new Vector2(12, 8), new Vector2(0, 2), //End Of beam
+                "perfcolossus_start", new Vector2(12, 8), new Vector2(0, 2), //Start Of Beam
+                true);
+                /*
                 BasicBeamController beamComp = projectile.GenerateBeamPrefab(
                     "Planetside/Resources/Beams/ColossusPerfected/colossusbeam_mid_001",
                     new Vector2(10, 2),
@@ -114,6 +93,7 @@ namespace Planetside
                     new Vector2(0, 4)
                     );
 
+                */
                 projectile.gameObject.SetActive(false);
                 FakePrefab.MarkAsFakePrefab(projectile.gameObject);
                 UnityEngine.Object.DontDestroyOnLoad(projectile);

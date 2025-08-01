@@ -32,7 +32,12 @@ namespace Planetside
             GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_2_Sheet_Data, "nemesisgun_idle_001");
             gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_2_Animation_Data;
             gun.sprite.SortingOrder = 1;
-
+            
+			gun.m_defaultSpriteID = StaticSpriteDefinitions.Gun_2_Sheet_Data.GetSpriteIdByName("nemesisgun_idle_001");
+            int num = (gun.DefaultSpriteID = StaticSpriteDefinitions.Gun_2_Sheet_Data.GetSpriteIdByName("nemesisgun_idle_001"));
+            gun.sprite.SetSprite(StaticSpriteDefinitions.Gun_2_Sheet_Data, num);
+            gun.m_sprite.SetSprite(StaticSpriteDefinitions.Gun_2_Sheet_Data, num);
+			gun.m_sprite = gun.sprite;
             gun.reloadAnimation = "nemesisRevolver_reload";
             gun.idleAnimation = "nemesisRevolver_idle";
             gun.shootAnimation = "nemesisRevolver_fire";

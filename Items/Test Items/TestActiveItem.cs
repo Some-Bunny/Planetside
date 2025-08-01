@@ -23,6 +23,7 @@ using SaveAPI;
 using System.IO;
 using Planetside;
 using FullInspector.Internal;
+using Planetside.Components.Effect_Components;
 
 //Garbage Code Incoming
 namespace Planetside
@@ -111,11 +112,46 @@ namespace Planetside
 
         public override void DoEffect(PlayerController user)
         {
+            SummonRingController.CreateSummoningRing("expulsion", user.sprite.WorldCenter, 1, true);
 
-            GameObject fart;
-            StaticReferences.StoredRoomObjects.TryGetValue("note1", out fart);
-            GameObject yes = UnityEngine.Object.Instantiate(fart, user.transform.position, Quaternion.identity);
-            user.CurrentRoom.RegisterInteractable(yes.GetComponent<NoteDoer>());
+            /*
+            ETGModConsole.Log(1);
+            GameObject partObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("Amogus"));
+            ETGModConsole.Log(2);
+
+            MeshRenderer rend = partObj.GetComponent<MeshRenderer>();
+            ETGModConsole.Log(3);
+
+            rend.allowOcclusionWhenDynamic = true;
+            ETGModConsole.Log(4);
+
+            partObj.transform.position = user.transform.position;
+            ETGModConsole.Log(5);
+
+            partObj.name = "VoidHole";
+            ETGModConsole.Log(6);
+
+            partObj.transform.localScale = Vector3.one* 2;
+
+            rend.allowOcclusionWhenDynamic = true;
+            ETGModConsole.Log(7);
+            rend.gameObject.AddComponent<VoidHoleController>();
+            ETGModConsole.Log(8);
+            rend.gameObject.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
+            ETGModConsole.Log(9);
+            rend.sharedMaterial.SetFloat("_HoleSize", 0f);
+            ETGModConsole.Log(10);
+            rend.materials[0].SetFloat("_HoleSize", 0f);
+            ETGModConsole.Log(11);
+            rend.sharedMaterials[0].SetFloat("_HoleSize", 0f);
+            ETGModConsole.Log(12);
+            */
+
+            return;
+            //GameObject fart;
+            //StaticReferences.StoredRoomObjects.TryGetValue("note1", out fart);
+            //GameObject yes = UnityEngine.Object.Instantiate(fart, user.transform.position, Quaternion.identity);
+            //user.CurrentRoom.RegisterInteractable(yes.GetComponent<NoteDoer>());
 
             //AkSoundEngine.PostEvent("Play_BossTheme", base.gameObject);
 
@@ -191,7 +227,7 @@ namespace Planetside
 
             //if (asset != null) //{ obj = asset.placedObjects[0].nonenemyBehaviour.gameObject; }
 
-
+            /*
             
             var forgeDungeon = DungeonDatabase.GetOrLoadByName("Base_Forge");
             string RoomString = "boss foyer (final)";
@@ -301,7 +337,7 @@ namespace Planetside
                 }
             }
             forgeDungeon = null;
-
+            */
 
             //ETGModConsole.Log(BraveTime.DeltaTime.ToString());
 

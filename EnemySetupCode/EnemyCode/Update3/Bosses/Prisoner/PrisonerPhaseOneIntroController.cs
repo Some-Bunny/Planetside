@@ -31,7 +31,7 @@ namespace Planetside
                 {
                     Vector2 roomCentreLeft = area.UnitCenter - (new Vector2(area.UnitLeft, 0));
                     Vector2 roomCentreRight = area.UnitCenter + (new Vector2(area.UnitLeft, 0));
-                    for (int i = -1; i < 2; i++)
+                    for (int i = -3; i < 4; i++)
                     {
                         GameObject chainOnj = GameObject.Instantiate(PrisonerPhaseOne.PrisonerChainVFX, roomCentreLeft, Quaternion.identity);
                         Vector2 handPosLeft = Prisoner.transform.PositionVector2();
@@ -42,7 +42,7 @@ namespace Planetside
                         chainOnj.name = "handChainLeft" + i.ToString();
                         activeChainsandPos.Add(chainOnj, new Dictionary<Vector2, Vector2>() { { roomCentreLeft + new Vector2(0, 45f*i), handPosLeft } });
                     }
-                    for (int i = -1; i < 2; i++)
+                    for (int i = -3; i < 4; i++)
                     {
                         GameObject chainOnj = GameObject.Instantiate(PrisonerPhaseOne.PrisonerChainVFX, roomCentreRight, Quaternion.identity);
                         Vector2 handPosRight = Prisoner.transform.PositionVector2();

@@ -83,7 +83,7 @@ namespace Planetside
 			FakePrefab.MarkAsFakePrefab(projectile2.gameObject);
 			UnityEngine.Object.DontDestroyOnLoad(projectile2);
 			gun.DefaultModule.projectiles[0] = projectile2;
-			projectile2.baseData.damage = 50f;
+			projectile2.baseData.damage = 65f;
 			projectile2.baseData.speed *= 1f;
 			projectile2.baseData.force *= 5f;
 			projectile2.baseData.range *= 100f;
@@ -150,10 +150,12 @@ namespace Planetside
 						component.AdditionalScaleMultiplier *= 1.25f;
 						component.SetOwnerSafe(this.gun.CurrentOwner, "Player");
 						component.ignoreDamageCaps = true;
-						component.baseData.damage = 10f * dmg;
+						component.baseData.damage = 11.5f * dmg;
 						component.baseData.range *= 2f;
-						component.baseData.speed *= 2f;
-					}
+						component.baseData.speed *= 1.5f;
+						component.UpdateSpeed();
+
+                    }
 					HasCommitedWeaponSwitch = false;
 				}
 			}

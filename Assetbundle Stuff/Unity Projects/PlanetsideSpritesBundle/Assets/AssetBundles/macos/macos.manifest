@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 3347221398
+CRC: 1840831276
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -7,4 +7,8 @@ AssetBundleManifest:
       Dependencies: {}
     Info_1:
       Name: planetsidesprites
+      Dependencies:
+        Dependency_0: specialvfx
+    Info_2:
+      Name: specialvfx
       Dependencies: {}

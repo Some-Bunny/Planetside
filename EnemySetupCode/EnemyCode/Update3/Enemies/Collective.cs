@@ -12,6 +12,7 @@ using Pathfinding;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using BreakAbleAPI;
+using Planetside.Static_Storage;
 
 namespace Planetside
 {
@@ -415,12 +416,12 @@ namespace Planetside
 				spawnEnemy.spawnPosition = SpawnEnemyOnDeath.SpawnPosition.InsideRadius;
 
 				EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "death", new Dictionary<int, string> { { 7, "spawnBaddies" } });
-				companion.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableBouncyBatBullet);
+				companion.aiActor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableBouncyBatBullet);
 				companion.aiActor.bulletBank.Bullets[0].BulletObject.GetComponent<Projectile>().baseData.speed *= 1.2f;
 				companion.aiActor.bulletBank.Bullets[0].BulletObject.GetComponent<BounceProjModifier>().numberOfBounces += 2;
 
-				companion.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableLargeSpore);
-				companion.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
+				companion.aiActor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableLargeSpore);
+				companion.aiActor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableSmallSpore);
 
 
 			}
@@ -453,7 +454,7 @@ namespace Planetside
 
 			public class Spore : Bullet
 			{
-				public Spore(CrowdControl parent) : base(UnityEngine.Random.value > 0.4f ? StaticUndodgeableBulletEntries.undodgeableLargeSpore.Name : StaticUndodgeableBulletEntries.undodgeableSmallSpore.Name, false, false, false)
+				public Spore(CrowdControl parent) : base(UnityEngine.Random.value > 0.4f ? StaticBulletEntries.undodgeableLargeSpore.Name : StaticBulletEntries.undodgeableSmallSpore.Name, false, false, false)
 				{
 					this.parent = parent;
 				}
@@ -510,7 +511,7 @@ namespace Planetside
 
 			public class Basic: Bullet
 			{
-				public Basic() : base(StaticUndodgeableBulletEntries.undodgeableBouncyBatBullet.Name, false, false, false)
+				public Basic() : base(StaticBulletEntries.undodgeableBouncyBatBullet.Name, false, false, false)
 				{
 
 				}
@@ -523,7 +524,7 @@ namespace Planetside
 
 			public class CrossBullet : Bullet
 			{
-				public CrossBullet(Vector2 offset, int setupDelay, int setupTime) : base(StaticUndodgeableBulletEntries.undodgeableBouncyBatBullet.Name, false, false, false)
+				public CrossBullet(Vector2 offset, int setupDelay, int setupTime) : base(StaticBulletEntries.undodgeableBouncyBatBullet.Name, false, false, false)
 				{
 					this.m_offset = offset;
 					this.m_setupDelay = setupDelay;

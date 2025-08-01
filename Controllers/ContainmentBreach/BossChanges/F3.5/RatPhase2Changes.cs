@@ -21,13 +21,13 @@ namespace Planetside
             //ToolsEnemy.DebugInformation(behaviorSpec);
 
             //actor.MovementSpeed *= 0.75f; // Doubles the enemy movement speed
-            //actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableBig);
-            //actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableBigBullet);
+            //actor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableBig);
+            //actor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableBigBullet);
 
-            actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableDefault);
-            actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
-            actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UnDodgeableSpinner);
-            actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UnDodgeableBigOne);
+            actor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableDefault);
+            actor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableSmallSpore);
+            actor.bulletBank.Bullets.Add(StaticBulletEntries.UnDodgeableSpinner);
+            actor.bulletBank.Bullets.Add(StaticBulletEntries.UnDodgeableBigOne);
 
 
 
@@ -72,7 +72,7 @@ namespace Planetside
                             }
                             float num = -90f - ((float)k + (float)j * 0.5f) * deltaAngle;
                             Vector2 ellipsePointSmooth = BraveMathCollege.GetEllipsePointSmooth(Vector2.zero, 6f, 2f, num);
-                            base.Fire(new Offset(ellipsePointSmooth, 0f, string.Empty, DirectionType.Absolute), new Direction(num, DirectionType.Absolute, -1f), new Speed(12f, SpeedType.Absolute), new DelayedBullet(b ? "default_noramp" : StaticUndodgeableBulletEntries.undodgeableDefault.Name, j * 4));
+                            base.Fire(new Offset(ellipsePointSmooth, 0f, string.Empty, DirectionType.Absolute), new Direction(num, DirectionType.Absolute, -1f), new Speed(12f, SpeedType.Absolute), new DelayedBullet(b ? "default_noramp" : StaticBulletEntries.undodgeableDefault.Name, j * 4));
                         }
                     }
                     yield return base.Wait(60);
@@ -147,7 +147,7 @@ namespace Planetside
             
             public class WaftBullet : Bullet
             {
-                public WaftBullet() : base(StaticUndodgeableBulletEntries.undodgeableDefault.Name, false, false, false)
+                public WaftBullet() : base(StaticBulletEntries.undodgeableDefault.Name, false, false, false)
                 {
                 }
 
@@ -200,7 +200,7 @@ namespace Planetside
 
             public class LaserBullet : Bullet
             {
-                public LaserBullet() : base(StaticUndodgeableBulletEntries.undodgeableSmallSpore.Name, false, false, false)
+                public LaserBullet() : base(StaticBulletEntries.undodgeableSmallSpore.Name, false, false, false)
                 {
                 }
 
@@ -460,7 +460,7 @@ namespace Planetside
                         if (this.m_circleDummy.FireTick == base.Tick && remainingLife < 0)
                         {
                             Vector2 vector = this.m_circleDummy.Position - base.Position;
-                            TimedBullet timedBullet = new TimedBullet(StaticUndodgeableBulletEntries.undodgeableSmallSpore.Name, 30);
+                            TimedBullet timedBullet = new TimedBullet(StaticBulletEntries.undodgeableSmallSpore.Name, 30);
                             base.Fire(new Direction(vector.ToAngle(), DirectionType.Absolute, -1f), new Speed(vector.magnitude * 2f, SpeedType.Absolute), timedBullet);
                             timedBullet.Projectile.IgnoreTileCollisionsFor(1f);
                         }
@@ -577,9 +577,9 @@ namespace Planetside
                 {
                     float angle = base.SubdivideCircle(0f, 16, j, 1f, false);
                     Vector2 overridePosition = targetDummy.Position + BraveMathCollege.DegreesToVector(angle, 0.75f);
-                    base.Fire(Offset.OverridePosition(overridePosition), new ModifiedMetalGearRatTailgun1.TargetBullet(this, targetDummy, StaticUndodgeableBulletEntries.undodgeableDefault.Name));
+                    base.Fire(Offset.OverridePosition(overridePosition), new ModifiedMetalGearRatTailgun1.TargetBullet(this, targetDummy, StaticBulletEntries.undodgeableDefault.Name));
                 }
-                base.Fire(Offset.OverridePosition(targetDummy.Position), new ModifiedMetalGearRatTailgun1.TargetBullet(this, targetDummy, StaticUndodgeableBulletEntries.undodgeableDefault.Name));
+                base.Fire(Offset.OverridePosition(targetDummy.Position), new ModifiedMetalGearRatTailgun1.TargetBullet(this, targetDummy, StaticBulletEntries.undodgeableDefault.Name));
                 for (int k = 0; k < 4; k++)
                 {
                     float angle2 = (float)(k * 90);
@@ -587,7 +587,7 @@ namespace Planetside
                     {
                         float magnitude = 0.75f + Mathf.Lerp(0f, 1.5f, (float)l / 6f);
                         Vector2 overridePosition2 = targetDummy.Position + BraveMathCollege.DegreesToVector(angle2, magnitude);
-                        base.Fire(Offset.OverridePosition(overridePosition2), new ModifiedMetalGearRatTailgun1.TargetBullet(this, targetDummy, l == 5 ? StaticUndodgeableBulletEntries.undodgeableDefault.Name : "target"));
+                        base.Fire(Offset.OverridePosition(overridePosition2), new ModifiedMetalGearRatTailgun1.TargetBullet(this, targetDummy, l == 5 ? StaticBulletEntries.undodgeableDefault.Name : "target"));
                     }
                 }
                 for (int i = 0; i < 360; i++)
@@ -724,7 +724,7 @@ namespace Planetside
                             bool offset = flag;
                             float direction = base.SubdivideCircle(startAngle, numBullets, i2, 1f, offset);
 
-                            base.Fire(new Direction(direction, DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet(g ? StaticUndodgeableBulletEntries.undodgeableDefault.Name : "target", 15f, (6 * i) + 30, -1));
+                            base.Fire(new Direction(direction, DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet(g ? StaticBulletEntries.undodgeableDefault.Name : "target", 15f, (6 * i) + 30, -1));
                         }
                     }
                     yield return base.Wait(30);

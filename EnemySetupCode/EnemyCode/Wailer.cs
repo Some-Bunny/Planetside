@@ -780,7 +780,7 @@ namespace Planetside
 				{
 					if (this.Projectile.gameObject.GetComponent<Projectile>() != null)
 					{
-						OtherTools.CopyFields<UndodgeableProjectile>(this.Projectile.gameObject.GetComponent<Projectile>());
+						OtherTools.CopyFields<ThirdDimensionalProjectile>(this.Projectile.gameObject.GetComponent<Projectile>());
 					}
 					else
 					{

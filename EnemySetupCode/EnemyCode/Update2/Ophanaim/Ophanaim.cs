@@ -1720,7 +1720,7 @@ namespace Planetside
                 enemy.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("frogger"));
 				enemy.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("5729c8b5ffa7415bb3d01205663a33ef").bulletBank.GetBullet("suck"));
                 enemy.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("41ee1c8538e8474a82a74c4aff99c712").bulletBank.GetBullet("big"));
-                suckLessEntry = StaticUndodgeableBulletEntries.CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("5729c8b5ffa7415bb3d01205663a33ef").bulletBank.GetBullet("suck"), "suck_more");
+                suckLessEntry = StaticBulletEntries.CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("5729c8b5ffa7415bb3d01205663a33ef").bulletBank.GetBullet("suck"), "suck_more");
                 enemy.aiActor.bulletBank.Bullets.Add(suckLessEntry);
                 //==================
 
@@ -1970,7 +1970,7 @@ namespace Planetside
                     bulletb.Bullets = new List<AIBulletBank.Entry>()
                     {
                         EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("frogger"),
-                        StaticUndodgeableBulletEntries.UndodgeableFrogger
+                        StaticBulletEntries.UndodgeableFrogger
                     };
                     EyeBallMinion = vfxObj;
                 }

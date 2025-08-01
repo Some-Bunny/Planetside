@@ -77,10 +77,15 @@ namespace SaveAPI
                 {
                     encounterDatabaseEntry = EncounterDatabase.GetEntry(this.encounteredObjectGuid);
                 }
-                if (AdvancedGameStatsManager.Instance.GetFlag(this.customFlagToCheck) == this.requireCustomFlag)
+
+                if (this.requireCustomFlag)
                 {
-                    return true;
+                    if (AdvancedGameStatsManager.Instance.GetFlag(this.customFlagToCheck) == RequiredValueFlag)
+                    {
+                        return true;
+                    }
                 }
+
                 if (encounterDatabaseEntry != null)
                 {
                     int num3 = GameStatsManager.Instance.QueryEncounterable(encounterDatabaseEntry);
@@ -290,6 +295,9 @@ namespace SaveAPI
         public Type requiredPassiveFlag;
         public CustomTrackedMaximums customMaximumToCheck;
         public CustomTrackedStats customStatToCheck;
+
+        public bool RequiredValueFlag = true;
+
         public enum AdvancedPrerequisiteType
         {
             NONE,

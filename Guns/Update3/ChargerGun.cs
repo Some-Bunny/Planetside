@@ -75,8 +75,8 @@ namespace Planetside
 				projectile.AdditionalScaleMultiplier = 2f;
 				projectile.shouldRotate = true;
 				projectile.baseData.range = 1000f;
-				//projectile.gameObject.AddComponent<ChargerGunProjectile>();
-				projectile.SetProjectileSpriteRight("chargergun_projectile_001", 7, 3, false, tk2dBaseSprite.Anchor.MiddleCenter, 7, 3);
+                //projectile.gameObject.AddComponent<ChargerGunProjectile>();
+                Alexandria.Assetbundle.ProjectileBuilders.SetProjectileCollisionRight(projectile, "chargergun_projectile_001", StaticSpriteDefinitions.Projectile_Sheet_Data, 7, 3, false, tk2dBaseSprite.Anchor.MiddleCenter, 7, 3);
 				gun.DefaultModule.projectiles[0] = projectile;
 
 				projectile.objectImpactEventName = (PickupObjectDatabase.GetById(384) as Gun).DefaultModule.projectiles[0].objectImpactEventName;

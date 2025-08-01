@@ -138,7 +138,7 @@ namespace Planetside
             float r = BraveUtility.RandomAngle();
             for (int i =0; i < 4;i++)
             {
-                string s = IsBlue == true ? StaticUndodgeableBulletEntries.UndodgeableFrogger.Name : "frogger";
+                string s = IsBlue == true ? StaticBulletEntries.UndodgeableFrogger.Name : "frogger";
 
                 base.Fire(Offset.OverridePosition(this.BulletBank.GetComponent<tk2dBaseSprite>().WorldCenter), new Direction(r + (90*i), DirectionType.Absolute, -1f), new Speed(3f, SpeedType.Absolute), new SpeedChangingBullet(s, 15, 120));
             }
@@ -277,7 +277,7 @@ namespace Planetside
 
             if (base.BulletBank != null)
             {
-                string s = IsBlue == true ? StaticUndodgeableBulletEntries.UndodgeableFrogger.Name : "frogger";
+                string s = IsBlue == true ? StaticBulletEntries.UndodgeableFrogger.Name : "frogger";
 
                 base.PostWwiseEvent("Play_BOSS_doormimic_blast_01", null);
                 base.Fire(Offset.OverridePosition(this.BulletBank.sprite.WorldCenter), new Direction(Angle, DirectionType.Absolute, -1f), new Speed(3f, SpeedType.Absolute), new SpeedChangingBullet(s, 25, 90));
@@ -432,7 +432,7 @@ namespace Planetside
             if (base.BulletBank != null)
             {
                 base.PostWwiseEvent("Play_BOSS_doormimic_blast_01", null);
-                string s = IsBlue == true ? StaticUndodgeableBulletEntries.UndodgeableFrogger.Name : "frogger";
+                string s = IsBlue == true ? StaticBulletEntries.UndodgeableFrogger.Name : "frogger";
 
                 base.Fire(Offset.OverridePosition(this.BulletBank.sprite.WorldCenter), new Direction(f, DirectionType.Absolute, -1f), new Speed(7f, SpeedType.Absolute), new SpeedChangingBullet(s, 18, 75));
                 base.Fire(Offset.OverridePosition(this.BulletBank.sprite.WorldCenter), new Direction(f, DirectionType.Absolute, -1f), new Speed(8f, SpeedType.Absolute), new SpeedChangingBullet(s, 18, 75));

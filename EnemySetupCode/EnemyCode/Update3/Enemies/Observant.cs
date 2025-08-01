@@ -12,6 +12,7 @@ using Pathfinding;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using BreakAbleAPI;
+using Planetside.Static_Storage;
 
 namespace Planetside
 {
@@ -433,9 +434,9 @@ namespace Planetside
 				mat.SetFloat("_EmissiveColorPower", 3f);
 				mat.SetFloat("_EmissivePower", 80);
 				companion.aiActor.sprite.renderer.material = mat;
-				companion.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableHitscan);
-				companion.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
-				companion.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSniper);
+				companion.aiActor.bulletBank.Bullets.Add(StaticBulletEntries.UndodgeableHitscan);
+				companion.aiActor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableSmallSpore);
+				companion.aiActor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableSniper);
 			}
 		}
 
@@ -623,7 +624,7 @@ namespace Planetside
 			}
 			public class HitScan : Bullet
             {
-				public HitScan() : base(StaticUndodgeableBulletEntries.UndodgeableHitscan.Name, false, false, false)
+				public HitScan() : base(StaticBulletEntries.UndodgeableHitscan.Name, false, false, false)
 				{
 
 				}

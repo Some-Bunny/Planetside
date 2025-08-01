@@ -28,7 +28,7 @@ namespace Planetside
 			// Tip: To debug an enemy's BehaviorSpeculator, you can uncomment the line below. This will print all the behavior information to the console.
 			//ToolsEnemy.DebugInformation(behaviorSpec);
 
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableDonut);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableDonut);
 
 			BeholsterShootBehavior shootWave = behaviorSpec.AttackBehaviorGroup.AttackBehaviors[2].Behavior as BeholsterShootBehavior;
 			shootWave.BulletScript = new CustomBulletScriptSelector(typeof(ModifiedShootWave));
@@ -79,7 +79,7 @@ namespace Planetside
 				{
 					q++;
 					if (q > 2) { q = 0; Flip = !Flip; }
-					this.Fire(new Direction((float)(i * 6), DirectionType.Aim, -1f), new Speed(6.5f, SpeedType.Absolute), new Bullet(Flip == true ? StaticUndodgeableBulletEntries.undodgeableDonut.Name : "donut", false, false, false));
+					this.Fire(new Direction((float)(i * 6), DirectionType.Aim, -1f), new Speed(6.5f, SpeedType.Absolute), new Bullet(Flip == true ? StaticBulletEntries.undodgeableDonut.Name : "donut", false, false, false));
 				}	
 				q = -1;
 				Flip = true;
@@ -88,17 +88,17 @@ namespace Planetside
 				{
 					q++;
 					if (q > 2) { q = 0; Flip = !Flip; }
-					this.Fire(new Direction((float)(i * 5), DirectionType.Aim, -1f), new Speed(6.5f, SpeedType.Absolute), new Bullet(Flip == true ? StaticUndodgeableBulletEntries.undodgeableDonut.Name : "donut", false, false, false));
+					this.Fire(new Direction((float)(i * 5), DirectionType.Aim, -1f), new Speed(6.5f, SpeedType.Absolute), new Bullet(Flip == true ? StaticBulletEntries.undodgeableDonut.Name : "donut", false, false, false));
 				}
 				yield return this.Wait(75);
 				for (int i = 0; i <= 12; i++)
 				{
-					this.Fire(new Direction((float)(i * 30f), DirectionType.Aim, -1f), new Speed(6f, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.undodgeableDonut.Name, false, false, false));
+					this.Fire(new Direction((float)(i * 30f), DirectionType.Aim, -1f), new Speed(6f, SpeedType.Absolute), new Bullet(StaticBulletEntries.undodgeableDonut.Name, false, false, false));
 				}
 				yield return this.Wait(20);
 				for (int i = 0; i <= 12; i++)
 				{
-					this.Fire(new Direction((float)(i * 30f) + 15, DirectionType.Aim, -1f), new Speed(8f, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.undodgeableDonut.Name, false, false, false));
+					this.Fire(new Direction((float)(i * 30f) + 15, DirectionType.Aim, -1f), new Speed(8f, SpeedType.Absolute), new Bullet(StaticBulletEntries.undodgeableDonut.Name, false, false, false));
 				}
 				yield break;
 			}

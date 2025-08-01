@@ -2,7 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using AmmonomiconAPI;
 using Dungeonator;
+using HarmonyLib;
+using Planetside.Components;
+
 using SaveAPI;
 using UnityEngine;
 
@@ -20,8 +24,20 @@ namespace Planetside
 
     }
 
-    public class PerkPickupObject : PickupObject , IPlayerInteractable
+    public class PerkPickupObject : PassiveItem , IPlayerInteractable
     {
+
+        [HarmonyPatch(typeof(MinimapUIController), nameof(MinimapUIController.AddPassiveItemToDock))]
+        public class Patch_MinimapUIController_AddPassiveItemToDock
+        {
+            [HarmonyPrefix]
+            private static bool PatchOut(MinimapUIController __instance, PassiveItem item, PlayerController itemOwner)
+            {
+                if (item is PerkPickupObject) { return false; }
+
+                return true;
+            }
+        }
 
 
         public virtual List<PerkDisplayContainer> perkDisplayContainers
@@ -32,38 +48,50 @@ namespace Planetside
             }
         }
 
-        public virtual CustomTrackedStats StatToIncreaseOnPickup
+        public virtual CustomDungeonFlags FlagToSetOnStack
         {
             get
             {
-                return CustomTrackedStats.DUMMY_BOUGHT;
+                return CustomDungeonFlags.NONE;
             }
         }
-        public virtual CustomTrackedStats SessionStatToIncreaseOnPickup
+        
+
+        public int CurrentStack
         {
             get
             {
-                return CustomTrackedStats.DUMMY_BOUGHT;
+                return _CurrentStack;//return ConsumableStorage.PlayersWithConsumables[Own].AddConsumableAmount(perk.itemName, 1);
+
             }
         }
 
-        public float distortionMaxRadius = 30f;
-        public float distortionDuration = 2f;
-        public float distortionIntensity = 0.7f;
-        public float distortionThickness = 0.1f;
+        private int _CurrentStack = 0;
+
+        private float distortionMaxRadius = 30f;
+        private float distortionDuration = 2f;
+        private float distortionIntensity = 0.7f;
+        private float distortionThickness = 0.1f;
 
         public ModifiedDefaultLabelManager extantLabel;
 
+        public string InitialPickupNotificationText = "";
+        public string StackPickupNotificationText = "";
 
-        public virtual string GetAnimationState(PlayerController interactor, out bool shouldBeFlipped)
+        public Color OutlineColor;
+
+        //public Type PerkMonobehavior;
+
+
+        #region Generic Pick up stuff
+        public new string GetAnimationState(PlayerController interactor, out bool shouldBeFlipped)
         {
             shouldBeFlipped = false;
             return string.Empty;
         }
 
-        public Color OutlineColor;
 
-        public virtual float GetDistanceToPoint(Vector2 point)
+        public new float GetDistanceToPoint(Vector2 point)
         {
             if (!base.sprite)
             {
@@ -76,28 +104,14 @@ namespace Planetside
             return Mathf.Sqrt((point.x - num) * (point.x - num) + (point.y - num2) * (point.y - num2)) / 1.5f;
         }
 
-        public virtual float GetOverrideMaxDistance()
+        public new float GetOverrideMaxDistance()
         {
             return 1f;
         }
 
-        public virtual void Interact(PlayerController interactor)
-        {
-            if (extantLabel != null) { Destroy(extantLabel.gameObject); }
-            if (!this)
-            {
-                return;
-            }
-            if (RoomHandler.unassignedInteractableObjects.Contains(this))
-            {
-                RoomHandler.unassignedInteractableObjects.Remove(this);
-            }
-            SpriteOutlineManager.RemoveOutlineFromSprite(base.sprite, true);
-            SaveAPI.AdvancedGameStatsManager.Instance.RegisterStatChange(StatToIncreaseOnPickup, 1);
-            this.Pickup(interactor);
-        }
 
-        public virtual void OnEnteredRange(PlayerController interactor)
+
+        public new void OnEnteredRange(PlayerController interactor)
         {
             if (!this)
             {
@@ -117,7 +131,7 @@ namespace Planetside
             foreach (var enrty in this.perkDisplayContainers)
             {
                 bool req = enrty.requiresFlag == false ? false : SaveAPI.AdvancedGameStatsManager.Instance.GetFlag(enrty.FlagToTrack);
-                bool req2 = enrty.requiresStack == false ? false : SaveAPI.AdvancedGameStatsManager.Instance.GetPlayerStatValue(StatToIncreaseOnPickup) >= enrty.AmountToBuyBeforeReveal;
+                bool req2 = enrty.requiresStack == false ? false : GameStatsManager.Instance.m_encounteredTrackables[this.encounterTrackable.EncounterGuid].encounterCount >= enrty.AmountToBuyBeforeReveal;
                 if (req == true || req2 == true)
                 {
                     Text += "\n- " + enrty.UnlockedString;
@@ -131,7 +145,7 @@ namespace Planetside
 
         }
 
-        public virtual void OnExitRange(PlayerController interactor)
+        public new void OnExitRange(PlayerController interactor)
         {
             if (!this)
             {
@@ -143,9 +157,80 @@ namespace Planetside
             if (extantLabel != null) { extantLabel.Inv(); }
 
         }
+        public bool isDummy = false;
 
-        public override void Pickup(PlayerController player)
+        public PlayerController _Owner;
+
+        public override void Pickup(PlayerController interactor)
         {
+            bool isNotLoadScreen = GameManager.Instance.Dungeon != null;
+
+            string t = InitialPickupNotificationText;
+            this.encounterTrackable.SuppressInInventory = true;
+
+            base.Pickup(interactor);
+            m_owner = interactor;
+            _Owner = interactor;
+
+
+            if (interactor.passiveItems.Where(self => self.PickupObjectId == this.PickupObjectId).Count() == 1)
+            {
+                OnInitialPickup(interactor);
+                UpdateStack(interactor, true);
+            }
+            else
+            {
+                SaveAPIManager.SetFlag(FlagToSetOnStack, true);
+                t = StackPickupNotificationText;
+                isDummy = true;
+                (interactor.passiveItems.Where(self => self.PickupObjectId == PickupObjectId && (self as PerkPickupObject).isDummy == false).FirstOrDefault() as PerkPickupObject).UpdateStack(interactor);
+            }
+
+            if (isNotLoadScreen)
+            {
+                OtherTools.NotifyCustom(this.encounterTrackable.journalData.GetPrimaryDisplayName(), t,
+                this.sprite.collection.spriteDefinitions[this.sprite._spriteId].name,
+                this.sprite.collection,
+                UINotificationController.NotificationColor.GOLD);
+
+                Exploder.DoDistortionWave(interactor.sprite.WorldTopCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
+                AkSoundEngine.PostEvent("Play_OBJ_dice_bless_01", interactor.gameObject);
+            }
+
+
+
+
+            if (extantLabel != null) { Destroy(extantLabel.gameObject); }
+
+
+
+            PerkParticleSystemController cont = base.GetComponent<PerkParticleSystemController>();
+            if (cont != null) { cont.DoBigBurst(interactor); }
+            cont.Active = false;
+    
+
+            SpriteOutlineManager.RemoveOutlineFromSprite(base.sprite, true);
+        }
+        #endregion
+
+        
+        public void UpdateStack(PlayerController playerController, bool isFirstStack = false)
+        {
+            _CurrentStack++;
+            OnStack(playerController);
+        }
+
+        public virtual void OnInitialPickup(PlayerController playerController)
+        {
+
+        }
+        public virtual void OnStack(PlayerController playerController)
+        {
+
+        }
+        public override void Update()
+        {
+
         }
     }
 }

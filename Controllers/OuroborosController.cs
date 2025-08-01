@@ -55,7 +55,7 @@ namespace Planetside
 					var item = (BossEliteType)System.Activator.CreateInstance(bossEliteType);
 					bossEliteTypes.Add(item.GetType());
 				}
-				AIBulletBank.Entry entryCopy = StaticUndodgeableBulletEntries.CopyFields<AIBulletBank.Entry>(EnemyDatabase.GetOrLoadByGuid("465da2bb086a4a88a803f79fe3a27677").bulletBank.GetBullet("homing"));
+				AIBulletBank.Entry entryCopy = StaticBulletEntries.CopyFields<AIBulletBank.Entry>(EnemyDatabase.GetOrLoadByGuid("465da2bb086a4a88a803f79fe3a27677").bulletBank.GetBullet("homing"));
 				RobotechProjectile projectile = UnityEngine.Object.Instantiate<GameObject>(entryCopy.BulletObject).GetComponent<RobotechProjectile>();
 				projectile.gameObject.SetActive(false);
 				FakePrefab.MarkAsFakePrefab(projectile.gameObject);
@@ -67,7 +67,7 @@ namespace Planetside
 				entryCopy.SpawnShells = false;
 
 
-				AIBulletBank.Entry sewwpCopy = StaticUndodgeableBulletEntries.CopyFields<AIBulletBank.Entry>(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("sweep"));
+				AIBulletBank.Entry sewwpCopy = StaticBulletEntries.CopyFields<AIBulletBank.Entry>(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("sweep"));
 				sewwpCopy.Name = "sweepOuroboros";
 
 				BulletList.Add(sewwpCopy);

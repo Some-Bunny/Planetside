@@ -38,7 +38,7 @@ namespace Planetside
     {
         public const string GUID = "somebunny.etg.planetsideofgunymede";
         public const string NAME = "Planetside Of Gunymede Pre-Release";
-        public const string VERSION = "1.3.184";
+        public const string VERSION = "1.3.188";
         //9006FF
         public static readonly string TEXT_COLOR = "#00d0ff";
         //00d0ff
@@ -51,6 +51,7 @@ namespace Planetside
         public static AssetBundle ModAssets;
         public static AssetBundle TilesetAssets;
         public static AssetBundle SpriteCollectionAssets;
+        public static AssetBundle VFXAssets;
 
         public static Shader InverseGlowShader;
 
@@ -58,7 +59,7 @@ namespace Planetside
 
         #region DebugToggles
 
-        public static bool DebugMode = false;
+        public static bool DebugMode = true;
 
         private static bool RoomsActive = true;
         private static bool ControllersActive = true;
@@ -75,6 +76,7 @@ namespace Planetside
 
         public void Start()
         {
+            //
             new Harmony(GUID).PatchAll();
             ETGModMainBehaviour.WaitForGameManagerStart(GameManagerStart);
         }
@@ -87,7 +89,7 @@ namespace Planetside
             GunFilePath = this.FolderPath() + "/sprites";
             //ETGMod.Assets.SetupSpritesFromFolder(GunFilePath);
 
-            
+
             //ZipFilePath = this.Metadata.Archive;
             RoomFilePath = this.FolderPath() + "/rooms";
             FilePathFolder = this.FolderPath();
@@ -98,27 +100,19 @@ namespace Planetside
 
 
             //Asset bundle stuff
-            PlanetsideModule.ModAssets = AssetBundleLoader.LoadAssetBundleFromLiterallyAnywhere("planetsidebundle");
-            foreach (string str in PlanetsideModule.ModAssets.GetAllAssetNames())
-            {
-                //ETGModConsole.Log(PlanetsideModule.ModAssets.name + ": " + str, false);
-            }
-            AssetBundle tilesets = AssetBundleLoader.LoadAssetBundleFromLiterallyAnywhere("planetsidetilesets");
-            if (tilesets != null) { TilesetAssets = tilesets; }
+            ModAssets = AssetBundleLoader.LoadAssetBundleFromLiterallyAnywhere("planetsidebundle");
+            TilesetAssets = AssetBundleLoader.LoadAssetBundleFromLiterallyAnywhere("planetsidetilesets");
+            VFXAssets = AssetBundleLoader.LoadAssetBundleFromLiterallyAnywhere("specialvfx");
+            SpriteCollectionAssets = AssetBundleLoader.LoadAssetBundleFromLiterallyAnywhere("planetsidesprites");
 
-            AssetBundle spriteCollections = AssetBundleLoader.LoadAssetBundleFromLiterallyAnywhere("planetsidesprites");
-            if (spriteCollections != null) { SpriteCollectionAssets = spriteCollections; }
+
             StaticSpriteDefinitions.Init();
             AlphabetController.InitialiseAlphabet();
 
-            foreach (string str in PlanetsideModule.TilesetAssets.GetAllAssetNames())
-            {
-                //ETGModConsole.Log(PlanetsideModule.TilesetAssets.name + ": " + str, false);
-            }
-
+            InverseGlowShader = PlanetsideModule.ModAssets.LoadAsset<Shader>("InverseGlowShader");
+            ParticleBase.InitParticleBase();
             StaticVFXStorage.Init();
             StaticInformation.Init();
-            InverseGlowShader = PlanetsideModule.ModAssets.LoadAsset<Shader>("inverseglowshader");
             EasyGoopDefinitions.DefineDefaultGoops();
             PlanetsideModule.Strings = new AdvancedStringDB();
             PlanetsideCommands.Init();
@@ -159,12 +153,12 @@ namespace Planetside
             ExpandDungeonMusicAPI.InitHooks();
             AmmonomiconModification.InitializeAmmonomiconStuff();
 
-          
+
 
             #endregion
 
-  
-            
+
+
 
             if (EnemyChangesActive || DebugMode == false)
             {
@@ -244,6 +238,7 @@ namespace Planetside
 
             BurningSun.Add();
 
+
             StatiBlast.Add();
             Polarity.Add();
             PolarityForme.Add();
@@ -252,24 +247,29 @@ namespace Planetside
             SoulLantern.Add();
             VeteranShotgun.Add();
             VeteranerShotgun.Add();
+
+
             GTEE.Add();
             ShockChain.Add();
             Resault.Add();
             Immateria.Add();
+
             //Unlocked By Beating Loop 1
+
             ArmWarmer.Add();
             Oscillato.Add();
             OscillatoSynergyForme.Add();
+            //==
             RebarPuncher.Add();
             LaserChainsaw.Add();
             ExecutionersCrossbow.Add();
             ForgiveMePlease.Init();
             ForgiveMePlease.BuildPrefab();
             PortablePylon.Init();
-            
+
             //LoaderPylonController.Init();
             //LoaderPylonSynergyFormeController.Init();
-            
+
             DeadKingsDesparation.Init();
             DeadKingsDesparation.BuildPrefab();
 
@@ -282,7 +282,8 @@ namespace Planetside
 
             LeSackPickup.Init();
             NullPickupInteractable.Init();
-            RepairNode.Init();
+
+
 
             //=================      
             KineticStrike.Init();
@@ -342,6 +343,7 @@ namespace Planetside
             //ModifierNeedle.Init();
             TatteredRobe.Init();
             OrbOfPower.Init();
+
             NemesisGun.Add();
             NemesisRailgun.Add();
             NemesisShotgun.Add();
@@ -363,8 +365,8 @@ namespace Planetside
             Autocannon.Add();
             PunctureWound.Add();
             GunClassToken.Init();
-           // ShopDiscountItem.Init();
-            SawBladeGun.Add();
+            // ShopDiscountItem.Init();
+            //SawBladeGun.Add();
             CoinShot.Add();
 
             //Perks
@@ -381,6 +383,7 @@ namespace Planetside
             Gunslinger.Init();
             Patience.Init();
             CorruptedWealth.Init();
+            HollowWalls.Init();
 
             CandyHeart.Init();
             CanisterLauncher.Add();
@@ -399,11 +402,21 @@ namespace Planetside
             PointNull.Add();
             Kunai.Init();
             LeadBaton.Init();
+            StaticCharger.Add();
+
+            InitialiseSynergies.DoInitialisation();
+            SynergyFormInitialiser.AddSynergyForms();
+            InitialiseGTEE.DoInitialisation();
+            HoveringGunsAdder.AddHovers();
+            HotSwapper.Init();
+            CHROMA.Init();
+            GunWithNoName.Add();
+
+            RepairNode.Init();
             UmbraController.InitEffect();
 
-            //VengefulShell.Init();
-            //LaserWelder.Add();
-            //BoscoDesignator.Add();
+            TestActiveItem.Init();
+
             #region Enemies
             if (EnemiesActive || DebugMode == false)
             {
@@ -490,10 +503,7 @@ namespace Planetside
             }
             #endregion
 
-            InitialiseSynergies.DoInitialisation();
-            SynergyFormInitialiser.AddSynergyForms();
-            InitialiseGTEE.DoInitialisation();
-            HoveringGunsAdder.AddHovers();
+
 
             //MiniMap.Init();
 
@@ -726,7 +736,7 @@ namespace Planetside
             //new Hook(typeof(ConversationBarController).GetMethod("ShowBar", BindingFlags.Instance | BindingFlags.Public), typeof(PlanetsideModule).GetMethod("HAHA"));
 
 
-//            GameManager.Instance.StartCoroutine(FrameDelay());
+            //            GameManager.Instance.StartCoroutine(FrameDelay());
         }
 
         public IEnumerator FrameDelay()
@@ -794,11 +804,11 @@ namespace Planetside
         }
 
 
-        public void Awake() 
+        public void Awake()
         {
             SaveAPIManager.Setup("psog");
         }
-       
+
     }
 }
 

@@ -185,7 +185,7 @@ namespace Planetside
                     return;
                 case "guon":
 
-                    base.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.NemesisGuon);
+                    base.aiActor.bulletBank.Bullets.Add(StaticBulletEntries.NemesisGuon);
                     EnemyToolbox.GenerateShootPoint(base.aiActor.gameObject, base.aiActor.sprite.WorldCenter, "SpecialGuonPos");
                   
                     return;

@@ -8,6 +8,7 @@ using Dungeonator;
 using FullInspector;
 using System.Collections;
 using Brave.BulletScript;
+using Planetside.Static_Storage;
 
 namespace Planetside
 {
@@ -26,7 +27,7 @@ namespace Planetside
 		}
 		public class Mine : Bullet
 		{
-			public Mine() : base(StaticUndodgeableBulletEntries.undodgeableMine.Name, false, false, false)
+			public Mine() : base(StaticBulletEntries.undodgeableMine.Name, false, false, false)
 			{
 
 			}
@@ -76,7 +77,7 @@ namespace Planetside
 
 		public class Shrapnel : Bullet
 		{
-			public Shrapnel(bool fires) : base(StaticUndodgeableBulletEntries.undodgeableSmallSpore.Name, false, false, false)
+			public Shrapnel(bool fires) : base(StaticBulletEntries.undodgeableSmallSpore.Name, false, false, false)
 			{
 				FiresBullets = fires;
 			}
@@ -99,9 +100,9 @@ namespace Planetside
         public override IEnumerator Top()
         {
 
-            float airTime = base.BulletBank.GetBullet(StaticUndodgeableBulletEntries.undodgeableGrenade.Name).BulletObject.GetComponent<ArcProjectile>().GetTimeInFlight();
+            float airTime = base.BulletBank.GetBullet(StaticBulletEntries.undodgeableGrenade.Name).BulletObject.GetComponent<ArcProjectile>().GetTimeInFlight();
             Vector2 vector = this.BulletManager.PlayerPosition();
-            Bullet bullet2 = new Bullet(StaticUndodgeableBulletEntries.undodgeableGrenade.Name, false, false, false);
+            Bullet bullet2 = new Bullet(StaticBulletEntries.undodgeableGrenade.Name, false, false, false);
             float direction2 = (vector - base.Position).ToAngle();
             base.Fire(new Direction(direction2, DirectionType.Absolute, -1f), new Speed(1f, SpeedType.Absolute), bullet2);
             (bullet2.Projectile as ArcProjectile).AdjustSpeedToHit(vector);
@@ -114,7 +115,7 @@ namespace Planetside
     {
         public override IEnumerator Top()
         {
-            Bullet bullet = new Bullet(StaticUndodgeableBulletEntries.UnDodgeableMolotov.Name, false, false, false);
+            Bullet bullet = new Bullet(StaticBulletEntries.UnDodgeableMolotov.Name, false, false, false);
  
 
             base.Fire(new Direction(this.AimDirection, DirectionType.Aim, -1f), new Speed(1, SpeedType.Absolute), bullet);

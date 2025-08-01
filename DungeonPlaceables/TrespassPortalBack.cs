@@ -14,6 +14,7 @@ using MonoMod.RuntimeDetour;
 using MonoMod;
 using System.Collections.ObjectModel;
 using GungeonAPI;
+using UnityEngine.Playables;
 
 namespace Planetside
 {
@@ -29,6 +30,8 @@ namespace Planetside
             portal.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
             TrespassReturnPortalController romas = portal.AddComponent<TrespassReturnPortalController>();
             StaticReferences.StoredRoomObjects.Add("returnPortal", portal);
+            Alexandria.DungeonAPI.StaticReferences.customObjects.Add("PSOG_returnPortal", portal);
+
         }
     }
 

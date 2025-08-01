@@ -105,27 +105,42 @@ namespace Planetside
             base.OnDestroy();
         }
 
+        public StatModifier _;
+        public StatModifier __;
 
+        private bool LastFireCheck = false;
         public override void Update()
         {
             base.Update();
             if (base.LastOwner)
             {
                 var player = base.LastOwner;
-                this.RemoveStat(PlayerStats.StatType.RateOfFire);
-                this.RemoveStat(PlayerStats.StatType.Accuracy);
-                if (PlayerIsOnFire(player) == true)
+                bool currentFireCheck = PlayerIsOnFire(player);
+                if (LastFireCheck != currentFireCheck)
+                {
+                    LastFireCheck = currentFireCheck;
+                    if (LastFireCheck == true)
+                    {
+                        _ = this.AddStat(PlayerStats.StatType.RateOfFire, .2f, StatModifier.ModifyMethod.ADDITIVE);
+                        __ = this.AddStat(PlayerStats.StatType.Accuracy, 0.5f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+                        player.stats.RecalculateStats(player, true, false);
+                    }
+                    else
+                    {
+                        this.RemoveStat(_);
+                        this.RemoveStat(__);
+                        player.stats.RecalculateStats(player, true, false);
+                    }
+                }
+                if (currentFireCheck == true)
                 {
                     C++;
-                    this.AddStat(PlayerStats.StatType.RateOfFire, .2f, StatModifier.ModifyMethod.ADDITIVE);
-                    this.AddStat(PlayerStats.StatType.Accuracy, 0.5f, StatModifier.ModifyMethod.MULTIPLICATIVE);
-                    if(C == 10)
+                    if (C == 10)
                     {
                         C = 0;
                         GlobalSparksDoer.DoRadialParticleBurst(1, player.sprite.WorldBottomLeft, player.sprite.WorldTopRight, 30f, 2f, 1f, null, null, null, GlobalSparksDoer.SparksType.EMBERS_SWIRLING);
                     }
                 }
-                player.stats.RecalculateStats(player, true, false);
             }
         }
 
@@ -163,46 +178,11 @@ namespace Planetside
             vfx.transform.localRotation = Quaternion.Euler(0, 0, Vector2.up.ToAngle());
             vfx.transform.localScale = Vector3.one * 0.7f;
             Destroy(vfx, 1);
+            
         }
 
 
-        private void AddStat(PlayerStats.StatType statType, float amount, StatModifier.ModifyMethod method = StatModifier.ModifyMethod.ADDITIVE)
-        {
-            StatModifier statModifier = new StatModifier
-            {
-                amount = amount,
-                statToBoost = statType,
-                modifyType = method
-            };
-            bool flag = this.passiveStatModifiers == null;
-            if (flag)
-            {
-                this.passiveStatModifiers = new StatModifier[]
-                {
-                    statModifier
-                };
-            }
-            else
-            {
-                this.passiveStatModifiers = this.passiveStatModifiers.Concat(new StatModifier[]
-                {
-                    statModifier
-                }).ToArray<StatModifier>();
-            }
-        }
-        private void RemoveStat(PlayerStats.StatType statType)
-        {
-            List<StatModifier> list = new List<StatModifier>();
-            for (int i = 0; i < this.passiveStatModifiers.Length; i++)
-            {
-                bool flag = this.passiveStatModifiers[i].statToBoost != statType;
-                if (flag)
-                {
-                    list.Add(this.passiveStatModifiers[i]);
-                }
-            }
-            this.passiveStatModifiers = list.ToArray();
-        }
+
 
     }
 }

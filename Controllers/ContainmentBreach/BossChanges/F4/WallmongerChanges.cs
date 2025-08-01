@@ -28,10 +28,10 @@ namespace Planetside
 			// Tip: To debug an enemy's BehaviorSpeculator, you can uncomment the line below. This will print all the behavior information to the console.
 			//ToolsEnemy.DebugInformation(behaviorSpec);
 
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableOldKingHomingRingBulletSoundless);
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableDefault);
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableFrogger);
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableWallWave);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.UndodgeableOldKingHomingRingBulletSoundless);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableDefault);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.UndodgeableFrogger);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.UndodgeableWallWave);
 
 			//UndodgeableWallWave
 			DemonWallSpewBehavior spew = behaviorSpec.AttackBehaviorGroup.AttackBehaviors[0].Behavior as DemonWallSpewBehavior;
@@ -102,8 +102,8 @@ namespace Planetside
 
 					for (int o = 0; o < 10; o++)
                     {
-						base.Fire(new Offset(st), new Direction(aimDirection + (36*o), DirectionType.Absolute, -1f), new Speed(4f, SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.UndodgeableWallWave.Name, 8, 75));
-						base.Fire(new Offset(st), new Direction(aimDirection + (36 * o) + 18, DirectionType.Absolute, -1f), new Speed(2f, SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.UndodgeableWallWave.Name, 11, 120));
+						base.Fire(new Offset(st), new Direction(aimDirection + (36*o), DirectionType.Absolute, -1f), new Speed(4f, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.UndodgeableWallWave.Name, 8, 75));
+						base.Fire(new Offset(st), new Direction(aimDirection + (36 * o) + 18, DirectionType.Absolute, -1f), new Speed(2f, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.UndodgeableWallWave.Name, 11, 120));
 					}
 					yield return this.Wait(20);
 				}
@@ -123,7 +123,7 @@ namespace Planetside
 				bool l = UnityEngine.Random.value > 0.5f ? true : false;
 				for (int i = -4; i < 5; i++)
 				{
-					base.Fire(new Offset(transform), new Direction(-90 + (6*i), DirectionType.Absolute, -1f), new Speed(5.5f, SpeedType.Absolute), new Bullet(H.Contains(i) == l? StaticUndodgeableBulletEntries.UndodgeableWallWave.Name : "wave", i != 3, false, false));
+					base.Fire(new Offset(transform), new Direction(-90 + (6*i), DirectionType.Absolute, -1f), new Speed(5.5f, SpeedType.Absolute), new Bullet(H.Contains(i) == l? StaticBulletEntries.UndodgeableWallWave.Name : "wave", i != 3, false, false));
 				}
 			
 			}
@@ -192,7 +192,7 @@ namespace Planetside
 
 			private class WaveBullet : Bullet
 			{
-				public WaveBullet(bool r) : base(r == false ? StaticUndodgeableBulletEntries.undodgeableDefault.Name : "leap", false, false, false)
+				public WaveBullet(bool r) : base(r == false ? StaticBulletEntries.undodgeableDefault.Name : "leap", false, false, false)
 				{
 				}
 
@@ -236,7 +236,7 @@ namespace Planetside
 					bool offset = i % 2 == 1;
 					for (int j = 0; j < ((!offset) ? 12 : 11); j++)
 					{
-						this.Fire(new Offset(sign * this.SubdivideArc(2f, 9.5f, 12, j, offset), 0f, 0f, string.Empty, DirectionType.Absolute), new Direction(-90f, DirectionType.Absolute, -1f), new Speed(7f, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.UndodgeableFrogger.Name, false, false, false));
+						this.Fire(new Offset(sign * this.SubdivideArc(2f, 9.5f, 12, j, offset), 0f, 0f, string.Empty, DirectionType.Absolute), new Direction(-90f, DirectionType.Absolute, -1f), new Speed(7f, SpeedType.Absolute), new Bullet(StaticBulletEntries.UndodgeableFrogger.Name, false, false, false));
 					}
 					yield return this.Wait(12);
 				}
@@ -250,12 +250,12 @@ namespace Planetside
 					string transform = BraveUtility.RandomElement<string>(ModifiedDemonWallSpew1.shootPoints[index]);
 					for (int j = 0; j < 5; j++)
 					{
-						this.Fire(new Offset(transform), new Direction(this.SubdivideArc(-115f, 50f, 5, j, false), DirectionType.Absolute, -1f), new Speed(7f, SpeedType.Absolute), new Bullet(j==2 ? StaticUndodgeableBulletEntries.UndodgeableFrogger.Name : "wave", j != 2, false, false));
+						this.Fire(new Offset(transform), new Direction(this.SubdivideArc(-115f, 50f, 5, j, false), DirectionType.Absolute, -1f), new Speed(7f, SpeedType.Absolute), new Bullet(j==2 ? StaticBulletEntries.UndodgeableFrogger.Name : "wave", j != 2, false, false));
 					}
 					float aimDirection = this.GetAimDirection(transform);
 					if (UnityEngine.Random.value < 0.2f && BraveMathCollege.AbsAngleBetween(-90f, aimDirection) < 45f)
 					{
-						this.Fire(new Offset(transform), new Direction(aimDirection, DirectionType.Absolute, -1f), new Speed(6f, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.UndodgeableFrogger.Name, true, false, false));
+						this.Fire(new Offset(transform), new Direction(aimDirection, DirectionType.Absolute, -1f), new Speed(6f, SpeedType.Absolute), new Bullet(StaticBulletEntries.UndodgeableFrogger.Name, true, false, false));
 					}
 					yield return this.Wait(40);
 				}

@@ -54,7 +54,7 @@ namespace Planetside
 				projectile.baseData.damage = 7f;
 				projectile.baseData.speed = 12f;
 				projectile.gameObject.AddComponent<AirBlasterProjectile>();
-				projectile.SetProjectileSpriteRight("lilpew_projectile", 8, 3, false, tk2dBaseSprite.Anchor.MiddleCenter, 8, 3);
+                Alexandria.Assetbundle.ProjectileBuilders.SetProjectileCollisionRight(projectile, "lilpew_projectile", StaticSpriteDefinitions.Projectile_Sheet_Data, 8, 3, false, tk2dBaseSprite.Anchor.MiddleCenter, 8, 3);
 				projectile.shouldRotate = true;
 				FakePrefab.MarkAsFakePrefab(projectile.gameObject);
 				UnityEngine.Object.DontDestroyOnLoad(projectile);
@@ -75,6 +75,8 @@ namespace Planetside
 			gun.quality = PickupObject.ItemQuality.D;
 			gun.encounterTrackable.EncounterGuid = "air pew pewp pewp ewpe wpewpe wp";
 			ETGMod.Databases.Items.Add(gun, false, "ANY");
+
+			Alexandria.ItemAPI.ItemBuilder.AddToGunslingKingTable(gun, 1);
 			List<string> yes = new List<string>
 			{
 				"psog:air_blaster",

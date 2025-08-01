@@ -28,11 +28,11 @@ namespace Planetside
 			// Tip: To debug an enemy's BehaviorSpeculator, you can uncomment the line below. This will print all the behavior information to the console.
 			//ToolsEnemy.DebugInformation(behaviorSpec);
 
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableDefault);
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableMine);
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableBigBullet);
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableScatterBullet);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableDefault);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableMine);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableBigBullet);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableSmallSpore);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.UndodgeableScatterBullet);
 
 			//scatterBullet
 
@@ -94,7 +94,7 @@ namespace Planetside
 
 			private class ScatterBullet : Bullet
 			{
-				public ScatterBullet() : base(StaticUndodgeableBulletEntries.UndodgeableScatterBullet.Name, false, false, false)
+				public ScatterBullet() : base(StaticBulletEntries.UndodgeableScatterBullet.Name, false, false, false)
 				{
 				}
 
@@ -115,7 +115,7 @@ namespace Planetside
 
 			private class LittleScatterBullet : Bullet
 			{
-				public LittleScatterBullet() : base(StaticUndodgeableBulletEntries.undodgeableDefault.Name, false, false, false)
+				public LittleScatterBullet() : base(StaticBulletEntries.undodgeableDefault.Name, false, false, false)
 				{
 				}
 
@@ -158,7 +158,7 @@ namespace Planetside
 
 			public class HugeBullet : Bullet
 			{
-				public HugeBullet() : base(StaticUndodgeableBulletEntries.undodgeableMine.Name, false, false, false)
+				public HugeBullet() : base(StaticBulletEntries.undodgeableMine.Name, false, false, false)
 				{
 				}
 
@@ -184,8 +184,8 @@ namespace Planetside
 				
 					for (int k = 0; k < 6; k++)
 					{
-						base.Fire(new Direction(0f, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new RotatedBulletBasic(-20, 0, 0, StaticUndodgeableBulletEntries.undodgeableBigBullet.Name, (k * 60), 0.133f));
-						base.Fire(new Direction(0f, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new RotatedBulletBasic(20, 0, 0, StaticUndodgeableBulletEntries.undodgeableBigBullet.Name, (k * 60), 0.133f));
+						base.Fire(new Direction(0f, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new RotatedBulletBasic(-20, 0, 0, StaticBulletEntries.undodgeableBigBullet.Name, (k * 60), 0.133f));
+						base.Fire(new Direction(0f, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new RotatedBulletBasic(20, 0, 0, StaticBulletEntries.undodgeableBigBullet.Name, (k * 60), 0.133f));
 					}
 					this.Vanish(false);
 					yield break;
@@ -201,7 +201,7 @@ namespace Planetside
 						{
 							if (i / 4 % 3 == phase)
 							{
-								this.Fire(new Direction((float)(i * 10), DirectionType.Absolute, -1f), new Speed(10f, SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.undodgeableDefault.Name, 4, 90));
+								this.Fire(new Direction((float)(i * 10), DirectionType.Absolute, -1f), new Speed(10f, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.undodgeableDefault.Name, 4, 90));
 								yield return this.Wait(2);
 							}
 						}
@@ -258,7 +258,7 @@ namespace Planetside
 				}
 				public class WeakSpore : Bullet
 				{
-					public WeakSpore() : base(StaticUndodgeableBulletEntries.undodgeableSmallSpore.Name, false, false, false) { }
+					public WeakSpore() : base(StaticBulletEntries.undodgeableSmallSpore.Name, false, false, false) { }
 					public override IEnumerator Top()
 					{
 						yield return this.Wait(20);
@@ -319,8 +319,8 @@ namespace Planetside
 					float num2 = 40f;
 					for (int i = 0; i < 9; i++)
 					{
-						base.Fire(new Direction(num + num2 * (float)i, DirectionType.Absolute, -1f), new Speed(5f, SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.undodgeableDefault.Name, 8, 210));
-						base.Fire(new Direction((num + num2 * (float)i)+22.5f, DirectionType.Absolute, -1f), new Speed(3f, SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.undodgeableDefault.Name, 12, 120));
+						base.Fire(new Direction(num + num2 * (float)i, DirectionType.Absolute, -1f), new Speed(5f, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.undodgeableDefault.Name, 8, 210));
+						base.Fire(new Direction((num + num2 * (float)i)+22.5f, DirectionType.Absolute, -1f), new Speed(3f, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.undodgeableDefault.Name, 12, 120));
 					}
 					AkSoundEngine.PostEvent("Play_WPN_golddoublebarrelshotgun_shot_01", this.Projectile.gameObject);
 				}

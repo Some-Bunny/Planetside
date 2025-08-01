@@ -26,9 +26,7 @@ namespace Planetside
         {
             public void Start()
             {
-                riftakerAffectedProjectiles.Add(this);
-
-              
+                riftakerAffectedProjectiles.Add(this);     
             }
 
             public void Warp(RiftakerProjectile In, bool sound)

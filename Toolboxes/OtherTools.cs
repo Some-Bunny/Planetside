@@ -530,6 +530,10 @@ namespace Planetside
             sample.braveBulletScript = sample2.braveBulletScript;
             sample.TrapOwner = sample2.TrapOwner;
             sample.SuppressHitEffects = sample2.SuppressHitEffects;
+            if (sample is ThirdDimensionalProjectile third)
+            {
+                third.StartSpriteHeight = sample2.sprite.HeightOffGround;
+            }
             UnityEngine.Object.Destroy(sample2);
             return sample;
         }

@@ -643,8 +643,8 @@ namespace Planetside
 				mat.SetFloat("_EmissivePower", 80);
 				companion.aiActor.sprite.renderer.material = mat;
 
-                companion.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSniper);
-                companion.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableBigBullet);
+                companion.aiActor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableSniper);
+                companion.aiActor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableBigBullet);
 
             }
         }
@@ -792,7 +792,7 @@ namespace Planetside
 			}
 			public class BasicBigBall : Bullet
 			{
-				public BasicBigBall() : base(StaticUndodgeableBulletEntries.undodgeableBigBullet.Name, false, false, false)
+				public BasicBigBall() : base(StaticBulletEntries.undodgeableBigBullet.Name, false, false, false)
 				{
 
 				}

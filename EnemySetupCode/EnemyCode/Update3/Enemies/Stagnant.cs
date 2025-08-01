@@ -12,6 +12,7 @@ using Pathfinding;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using BreakAbleAPI;
+using Planetside.Static_Storage;
 
 namespace Planetside
 {
@@ -337,8 +338,10 @@ namespace Planetside
 				mat.SetFloat("_EmissiveColorPower", 3f);
 				mat.SetFloat("_EmissivePower", 60);
 				companion.aiActor.sprite.renderer.material = mat;
+                companion.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableSmallSpore);
 
-			}
+                companion.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableQuickHoming);
+            }
 		}
 
 
@@ -460,10 +463,10 @@ namespace Planetside
 		{
 			public override IEnumerator Top()
 			{
-				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
+				base.BulletBank.Bullets.Add(StaticBulletEntries.undodgeableSmallSpore);
 				for (int i = 0; i < 12; i++)
                 {
-					this.Fire(new Direction(UnityEngine.Random.Range(-180, 180), DirectionType.Aim, -1f), new Speed(5f, SpeedType.Absolute), new Spore());
+					this.Fire(new Direction(UnityEngine.Random.Range(-180, 180), DirectionType.Aim, -1f), new Speed(6f, SpeedType.Absolute), new Spore());
 				}
 				yield break;
 			}
@@ -488,19 +491,45 @@ namespace Planetside
 		{
 			public override IEnumerator Top()
 			{
-				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableQuickHoming);
-				this.Fire(new Direction(0, DirectionType.Aim, -1f), new Speed(0f, SpeedType.Absolute), new BasicBigBall());
-				yield break;
+				float a = this.AimDirection;
+				for (float i = 0; i < 1; i++)
+				{
+                    this.Fire(new Direction(a, DirectionType.Absolute, -1f), new Speed(2f, SpeedType.Absolute), new BasicBigBall());
+                    yield return this.Wait(6);
+
+                }
+                yield break;
 			}
 			public class BasicBigBall : Bullet
 			{
-				public BasicBigBall() : base("UndodgeablequickHoming", false, false, false)
+				public BasicBigBall() : base(StaticBulletEntries.undodgeableQuickHoming.Name, false, false, false)
 				{
-
-				}
+                }
 				public override IEnumerator Top()
 				{
 					this.ChangeSpeed(new Speed(11f, SpeedType.Absolute), 90);
+                    /*
+					float e = 0;
+                    (Projectile as ThirdDimensionalProjectile).MaxHeight = 2.5f;
+
+                    (Projectile as ThirdDimensionalProjectile).SetUnDodgeableState(true);
+                    (Projectile as ThirdDimensionalProjectile).SetHeight(-1);
+
+                    while (Projectile)
+					{
+                        if (Projectile is ThirdDimensionalProjectile third)
+                        {
+							e += Time.deltaTime * 1f;
+                            var h = Mathf.PingPong(e, 1.96f) - 0.98f;
+                            third.SetHeight(h);
+                        }
+						yield return null;
+                    }
+
+					yield break;
+					*/
+
+                    
 					for (int i = 0; i < 90; i++)
 					{
 						float aim = this.GetAimDirection(1f, 16f);
@@ -512,7 +541,8 @@ namespace Planetside
 						this.Direction += Mathf.MoveTowards(0f, delta, 6.75f - ((float)i * 0.075f));
 						yield return this.Wait(1);
 					}
-				}
+					
+                }
 			}
 		}
 

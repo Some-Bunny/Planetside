@@ -17,11 +17,11 @@ namespace Planetside
 		public override void DoOverride()
 		{
 			actor.MovementSpeed *= 0.75f; // Doubles the enemy movement speed
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableBig);
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableBigBullet);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableBig);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableBigBullet);
 
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableLargeSpore);
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableLargeSpore);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableSmallSpore);
 
 
 			ShootBehavior ShootBehavior1 = behaviorSpec.AttackBehaviorGroup.AttackBehaviors[0].Behavior as ShootBehavior;
@@ -115,7 +115,7 @@ namespace Planetside
 					GameManager.Instance.MainCameraController.DoScreenShake(aww.ss, new Vector2?(base.Position), false);
 					foreach (float h in log)
 					{
-						string bankName = (UnityEngine.Random.value > 0.33f) ? StaticUndodgeableBulletEntries.undodgeableLargeSpore.Name : StaticUndodgeableBulletEntries.undodgeableSmallSpore.Name;
+						string bankName = (UnityEngine.Random.value > 0.33f) ? StaticBulletEntries.undodgeableLargeSpore.Name : StaticBulletEntries.undodgeableSmallSpore.Name;
 						base.Fire(new Direction(h, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(35f, SpeedType.Absolute), new ModifiedBigEverywhereAttack.Cannonball());
 						if (h > 0)
 						{
@@ -128,7 +128,7 @@ namespace Planetside
 			}
 			public class Cannonball : Bullet
 			{
-				public Cannonball() : base(StaticUndodgeableBulletEntries.undodgeableBigBullet.Name, false, false, false)
+				public Cannonball() : base(StaticBulletEntries.undodgeableBigBullet.Name, false, false, false)
 				{
 
 				}
@@ -137,7 +137,7 @@ namespace Planetside
 				{
 					for (int i = 0; i < 600; i++)
 					{
-						string bankName = (UnityEngine.Random.value > 0.33f) ? StaticUndodgeableBulletEntries.undodgeableLargeSpore.Name : StaticUndodgeableBulletEntries.undodgeableSmallSpore.Name;
+						string bankName = (UnityEngine.Random.value > 0.33f) ? StaticBulletEntries.undodgeableLargeSpore.Name : StaticBulletEntries.undodgeableSmallSpore.Name;
 						base.Fire(new Direction(UnityEngine.Random.Range(150, 210), Brave.BulletScript.DirectionType.Relative, -1f), new Speed(0.6f, SpeedType.Absolute), new ModifiedPrimaryCannonScript.Spore(bankName, UnityEngine.Random.Range(75, 105)));
 						yield return this.Wait(1f);
 
@@ -255,7 +255,7 @@ namespace Planetside
 			}
 			public class Superball : Bullet
 			{
-				public Superball() : base(StaticUndodgeableBulletEntries.undodgeableBig.Name, false, false, false)
+				public Superball() : base(StaticBulletEntries.undodgeableBig.Name, false, false, false)
 				{
 				}
 				public override IEnumerator Top()
@@ -313,7 +313,7 @@ namespace Planetside
 
 				public override IEnumerator Top()
 				{
-					if (this.BulletName == StaticUndodgeableBulletEntries.undodgeableLargeSpore.Name)
+					if (this.BulletName == StaticBulletEntries.undodgeableLargeSpore.Name)
 					{
 						base.ChangeSpeed(new Speed(22, SpeedType.Absolute), 60);
 					}
@@ -346,7 +346,7 @@ namespace Planetside
 
 			public class Cannonball : Bullet
 			{
-				public Cannonball() : base(StaticUndodgeableBulletEntries.undodgeableBigBullet.Name, false, false, false)
+				public Cannonball() : base(StaticBulletEntries.undodgeableBigBullet.Name, false, false, false)
 				{
 
 				}
@@ -356,7 +356,7 @@ namespace Planetside
 					base.ChangeSpeed(new Speed(22f, SpeedType.Absolute), 60);
 					for (int i = 0; i < 600; i++)
 					{
-						string bankName = (UnityEngine.Random.value > 0.33f) ? StaticUndodgeableBulletEntries.undodgeableLargeSpore.Name : StaticUndodgeableBulletEntries.undodgeableSmallSpore.Name;
+						string bankName = (UnityEngine.Random.value > 0.33f) ? StaticBulletEntries.undodgeableLargeSpore.Name : StaticBulletEntries.undodgeableSmallSpore.Name;
 						base.Fire(new Direction(UnityEngine.Random.Range(150, 210), Brave.BulletScript.DirectionType.Relative, -1f), new Speed(1f, SpeedType.Absolute), new ModifiedPrimaryCannonScript.Spore(bankName, UnityEngine.Random.Range(360, 900)));
 						yield return this.Wait(8f);
 
@@ -374,7 +374,7 @@ namespace Planetside
 
 				public override IEnumerator Top()
 				{
-					if (this.BulletName == StaticUndodgeableBulletEntries.undodgeableLargeSpore.Name)
+					if (this.BulletName == StaticBulletEntries.undodgeableLargeSpore.Name)
 					{
 						base.ChangeSpeed(new Speed(0, SpeedType.Absolute), 150);
 					}
@@ -404,7 +404,7 @@ namespace Planetside
 				yield return this.Wait(20f);
 				for (int i = 0; i < 30; i++)
 				{
-					string bankName = (UnityEngine.Random.value > 0.33f) ? StaticUndodgeableBulletEntries.undodgeableLargeSpore.Name : StaticUndodgeableBulletEntries.undodgeableSmallSpore.Name;
+					string bankName = (UnityEngine.Random.value > 0.33f) ? StaticBulletEntries.undodgeableLargeSpore.Name : StaticBulletEntries.undodgeableSmallSpore.Name;
 					base.Fire(new Direction(UnityEngine.Random.Range(-180, 180), Brave.BulletScript.DirectionType.Relative, -1f), new Speed(UnityEngine.Random.Range(4, 8), SpeedType.Absolute), new ModifiedMegaCannon.Spore(bankName, UnityEngine.Random.Range(30, 120)));
 
 				}
@@ -417,7 +417,7 @@ namespace Planetside
 
 			public class Superball : Bullet
 			{
-				public Superball() : base(StaticUndodgeableBulletEntries.undodgeableBig.Name, false, false, false)
+				public Superball() : base(StaticBulletEntries.undodgeableBig.Name, false, false, false)
 				{
 				}
 				public override IEnumerator Top()
@@ -436,7 +436,7 @@ namespace Planetside
 					{
 						for (int i = 0; i < 60; i++)
 						{
-							string bankName = (UnityEngine.Random.value > 0.33f) ? StaticUndodgeableBulletEntries.undodgeableLargeSpore.Name : StaticUndodgeableBulletEntries.undodgeableSmallSpore.Name;
+							string bankName = (UnityEngine.Random.value > 0.33f) ? StaticBulletEntries.undodgeableLargeSpore.Name : StaticBulletEntries.undodgeableSmallSpore.Name;
 							base.Fire(new Direction(UnityEngine.Random.Range(-180, 180), Brave.BulletScript.DirectionType.Relative, -1f), new Speed(UnityEngine.Random.Range(7, 11), SpeedType.Absolute), new ModifiedMegaCannon.Spore(bankName, UnityEngine.Random.Range(30, 120)));
 
 						}
@@ -446,7 +446,7 @@ namespace Planetside
 			}
 			public class Cannonball : Bullet
 			{
-				public Cannonball() : base(StaticUndodgeableBulletEntries.undodgeableBigBullet.Name, false, false, false)
+				public Cannonball() : base(StaticBulletEntries.undodgeableBigBullet.Name, false, false, false)
 				{
 
 				}
@@ -456,7 +456,7 @@ namespace Planetside
 					yield return this.Wait(180f);
 					for (int i = 0; i < 4; i++)
 					{
-						string bankName = (UnityEngine.Random.value > 0.33f) ? StaticUndodgeableBulletEntries.undodgeableLargeSpore.Name : StaticUndodgeableBulletEntries.undodgeableSmallSpore.Name;
+						string bankName = (UnityEngine.Random.value > 0.33f) ? StaticBulletEntries.undodgeableLargeSpore.Name : StaticBulletEntries.undodgeableSmallSpore.Name;
 						base.Fire(new Direction(UnityEngine.Random.Range(-180, 180), Brave.BulletScript.DirectionType.Relative, -1f), new Speed(UnityEngine.Random.Range(2, 7), SpeedType.Absolute), new ModifiedMegaCannon.Spore(bankName, UnityEngine.Random.Range(180, 690)));
 					}
 					base.Vanish(false);
@@ -473,7 +473,7 @@ namespace Planetside
 
 				public override IEnumerator Top()
 				{
-					if (this.BulletName == StaticUndodgeableBulletEntries.undodgeableLargeSpore.Name)
+					if (this.BulletName == StaticBulletEntries.undodgeableLargeSpore.Name)
 					{
 						base.ChangeSpeed(new Speed(0, SpeedType.Absolute), 90);
 					}

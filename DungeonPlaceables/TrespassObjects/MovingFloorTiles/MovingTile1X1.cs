@@ -112,6 +112,8 @@ namespace Planetside
             };
             DungeonPlaceable placeable = BreakableAPIToolbox.GenerateDungeonPlaceable(dict);
             StaticReferences.StoredDungeonPlaceables.Add(Name, placeable);
+            Alexandria.DungeonAPI.StaticReferences.customPlaceables.Add($"PSOG_{Name}", placeable);
+
         }
 
     }

@@ -220,7 +220,7 @@ namespace Planetside
 		{
 			FriendlyHMPrime.BuildPrefab();
 
-			AIBulletBank.Entry MinigunEntry = StaticUndodgeableBulletEntries.CopyFields<AIBulletBank.Entry>(EnemyDatabase.GetOrLoadByGuid("ffca09398635467da3b1f4a54bcfda80").bulletBank.GetBullet("directedfire"));	
+			AIBulletBank.Entry MinigunEntry = StaticBulletEntries.CopyFields<AIBulletBank.Entry>(EnemyDatabase.GetOrLoadByGuid("ffca09398635467da3b1f4a54bcfda80").bulletBank.GetBullet("directedfire"));	
 			Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(519) as Gun).DefaultModule.projectiles[0]));
 			projectile.gameObject.SetActive(false);
 			FakePrefab.MarkAsFakePrefab(projectile.gameObject);
@@ -233,7 +233,7 @@ namespace Planetside
 
 			minigunEntry = MinigunEntry;
 
-			AIBulletBank.Entry MinigunEntryStronger = StaticUndodgeableBulletEntries.CopyFields<AIBulletBank.Entry>(EnemyDatabase.GetOrLoadByGuid("ffca09398635467da3b1f4a54bcfda80").bulletBank.GetBullet("directedfire"));
+			AIBulletBank.Entry MinigunEntryStronger = StaticBulletEntries.CopyFields<AIBulletBank.Entry>(EnemyDatabase.GetOrLoadByGuid("ffca09398635467da3b1f4a54bcfda80").bulletBank.GetBullet("directedfire"));
 			Projectile projectileTwo = UnityEngine.Object.Instantiate<Projectile>(UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(519) as Gun).DefaultModule.projectiles[0]));
 			projectileTwo.gameObject.SetActive(false);
 			FakePrefab.MarkAsFakePrefab(projectileTwo.gameObject);
@@ -247,7 +247,7 @@ namespace Planetside
 			minigunEntryTwo = MinigunEntryStronger;
 
 			/*
-			AIBulletBank.Entry MissileEntry = StaticUndodgeableBulletEntries.CopyFields<AIBulletBank.Entry>(EnemyDatabase.GetOrLoadByGuid("ffca09398635467da3b1f4a54bcfda80").bulletBank.GetBullet("directedfire"));
+			AIBulletBank.Entry MissileEntry = StaticBulletEntries.CopyFields<AIBulletBank.Entry>(EnemyDatabase.GetOrLoadByGuid("ffca09398635467da3b1f4a54bcfda80").bulletBank.GetBullet("directedfire"));
 
 			Projectile missileProjectile = UnityEngine.Object.Instantiate<Projectile>(UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(39) as Gun).DefaultModule.projectiles[0]));
 			missileProjectile.gameObject.SetActive(false);
@@ -268,7 +268,7 @@ namespace Planetside
 			//missileEntry = MissileEntry;
 
 
-			AIBulletBank.Entry TaserEntry = StaticUndodgeableBulletEntries.CopyFields<AIBulletBank.Entry>(EnemyDatabase.GetOrLoadByGuid("ffca09398635467da3b1f4a54bcfda80").bulletBank.GetBullet("directedfire"));
+			AIBulletBank.Entry TaserEntry = StaticBulletEntries.CopyFields<AIBulletBank.Entry>(EnemyDatabase.GetOrLoadByGuid("ffca09398635467da3b1f4a54bcfda80").bulletBank.GetBullet("directedfire"));
 
 			Projectile electricProjectile = UnityEngine.Object.Instantiate<Projectile>(UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(13) as Gun).DefaultModule.projectiles[0]));
 			FakePrefab.MarkAsFakePrefab(electricProjectile.gameObject);

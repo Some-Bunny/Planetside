@@ -132,7 +132,7 @@ namespace Planetside
 			{
 				public override IEnumerator Top()
 				{
-					this.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableOldKingHomingRingBullet);
+					this.BulletBank.Bullets.Add(StaticBulletEntries.UndodgeableOldKingHomingRingBullet);
 
 					base.Fire(new Offset("top 1"), new Direction(90f, DirectionType.Absolute, -1f), new Speed(7f, SpeedType.Absolute), new BossStatuesDirectionalWaveAllSimple.EggBullet());
 					base.Fire(new Offset("right 1"), new Direction(0f, DirectionType.Absolute, -1f), new Speed(7f, SpeedType.Absolute), new BossStatuesDirectionalWaveAllSimple.EggBullet());
@@ -150,7 +150,7 @@ namespace Planetside
 
 				public class BBullet : SpeedChangingBullet
 				{
-					public BBullet() : base(StaticUndodgeableBulletEntries.UndodgeableOldKingHomingRingBullet.Name, 10, 90)
+					public BBullet() : base(StaticBulletEntries.UndodgeableOldKingHomingRingBullet.Name, 10, 90)
 					{
 					}
 
@@ -183,7 +183,7 @@ namespace Planetside
 			{
 				public override IEnumerator Top()
 				{
-					this.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableQuickHoming);
+					this.BulletBank.Bullets.Add(StaticBulletEntries.undodgeableQuickHoming);
 					Vector2 fixedPosition = this.Position;
 					for (int k = 0; k < 8; k++)
 					{
@@ -196,8 +196,8 @@ namespace Planetside
 
 					for (int i = 0; i < 12; i++)
 					{
-						this.Fire(Offset.OverridePosition(fixedPosition), new Direction((float)(i * 30) + 15, DirectionType.Aim, -1f), new Speed(4, SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.undodgeableQuickHoming.Name, 13, 90));
-						this.Fire(Offset.OverridePosition(fixedPosition), new Direction((float)(i * 30), DirectionType.Aim, -1f), new Speed(7, SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.undodgeableQuickHoming.Name, 10, 60));
+						this.Fire(Offset.OverridePosition(fixedPosition), new Direction((float)(i * 30) + 15, DirectionType.Aim, -1f), new Speed(4, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.undodgeableQuickHoming.Name, 13, 90));
+						this.Fire(Offset.OverridePosition(fixedPosition), new Direction((float)(i * 30), DirectionType.Aim, -1f), new Speed(7, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.undodgeableQuickHoming.Name, 10, 60));
 
 					}
 
@@ -226,6 +226,8 @@ namespace Planetside
 
 			public void OverrideAllKillPillars(AIActor actor)
 			{
+				if (this.ShouldOverride() == false) { return; }
+
 				this.actor = actor;
 				this.controller = actor.gameObject.GetComponent<BossStatueController>();
 				this.allcontroller = this.controller.transform.parent.GetComponent<BossStatuesController>();
@@ -244,7 +246,7 @@ namespace Planetside
 				public override IEnumerator Top()
 				{
 					//this.EndOnBlank = true;
-					this.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableFrogger);
+					this.BulletBank.Bullets.Add(StaticBulletEntries.UndodgeableFrogger);
 					AkSoundEngine.PostEvent("Play_ENM_statue_ring_01", this.BulletBank.gameObject);
 
 					this.FireSpinningLine(0f);
@@ -334,7 +336,7 @@ namespace Planetside
 
 				public class LineBullet : Bullet
 				{
-					public LineBullet(int spawnTime) : base(StaticUndodgeableBulletEntries.UndodgeableFrogger.Name, false, false, true)
+					public LineBullet(int spawnTime) : base(StaticBulletEntries.UndodgeableFrogger.Name, false, false, true)
 					{
 						this.spawnTime = spawnTime;
 					}
@@ -360,7 +362,7 @@ namespace Planetside
 
 				public class CircleBullet : Bullet
 				{
-					public CircleBullet(int spawnTime) : base(StaticUndodgeableBulletEntries.UndodgeableFrogger.Name, false, false, false)
+					public CircleBullet(int spawnTime) : base(StaticBulletEntries.UndodgeableFrogger.Name, false, false, false)
 					{
 						this.spawnTime = spawnTime;
 					}

@@ -70,7 +70,7 @@ namespace Planetside
 
 			FuncannonProjectileComponent crossbowHandler = projectile.gameObject.AddComponent<FuncannonProjectileComponent>();
 			crossbowHandler.projectileToSpawn = (PickupObjectDatabase.GetById(197) as Gun).DefaultModule.projectiles[0];
-			projectile.SetProjectileSpriteRight("funcannon_projectile_001", 18, 6, false, tk2dBaseSprite.Anchor.MiddleCenter, 16, 6);
+            Alexandria.Assetbundle.ProjectileBuilders.SetProjectileCollisionRight(projectile, "funcannon_projectile_001", StaticSpriteDefinitions.Projectile_Sheet_Data, 18, 6, false, tk2dBaseSprite.Anchor.MiddleCenter, 16, 6);
 
 			PierceProjModifier spook = projectile.gameObject.AddComponent<PierceProjModifier>();
 			spook.penetratesBreakables = true;

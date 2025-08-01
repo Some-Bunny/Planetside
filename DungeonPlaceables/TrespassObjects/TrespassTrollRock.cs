@@ -54,6 +54,7 @@ namespace Planetside
             };
             DungeonPlaceable placeable = BreakableAPIToolbox.GenerateDungeonPlaceable(dict);
             StaticReferences.StoredDungeonPlaceables.Add("trespassTrollRock", placeable);
+            Alexandria.DungeonAPI.StaticReferences.customPlaceables.Add("the_tower_psog", placeable);
 
             Dictionary<GameObject, float> dict2 = new Dictionary<GameObject, float>()
             {

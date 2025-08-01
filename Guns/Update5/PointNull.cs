@@ -183,7 +183,7 @@ namespace Planetside
             dart.baseData.speed = 25;
 
             dart.shouldRotate = true;
-            dart.AnimateProjectileBundle("pointnull_shard", StaticSpriteDefinitions.Projectile_Sheet_Data, StaticSpriteDefinitions.Projectile_Animation_Data, "pointnull_shard",
+            Alexandria.Assetbundle.ProjectileBuilders.AnimateProjectileBundle(dart, "pointnull_shard", StaticSpriteDefinitions.Projectile_Sheet_Data, StaticSpriteDefinitions.Projectile_Animation_Data, "pointnull_shard",
             new List<IntVector2>() { new IntVector2(23, 11), new IntVector2(23, 11), new IntVector2(23, 11), new IntVector2(23, 11), new IntVector2(23, 11), new IntVector2(23, 11), },
             AnimateBullet.ConstructListOfSameValues(true, 6),
             AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.MiddleCenter, 6),

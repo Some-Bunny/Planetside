@@ -510,6 +510,9 @@
  <Reference Include="UnityEngine.SpatialTracking">
  <HintPath>D:/YooNiitee/2017.4.40f1/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
  </Reference>
+ <Reference Include="Newtonsoft.Json">
+ <HintPath>D:/reposSecondary/failsafes/Planetside/Assetbundle Stuff/Unity Projects/PlanetsideSpritesBundle/Assets/Newtonsoft.Json.dll</HintPath>
+ </Reference>
  <Reference Include="dfScriptLite">
  <HintPath>D:/reposSecondary/failsafes/Planetside/Assetbundle Stuff/Unity Projects/PlanetsideSpritesBundle/Assets/DFGUI/DataBinding/Plugins/dfScriptLite.dll</HintPath>
  </Reference>

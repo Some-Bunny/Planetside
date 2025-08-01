@@ -27,6 +27,10 @@ namespace Planetside
         public static tk2dSpriteCollectionData EnemySpecific_Sheet_Data;
         public static tk2dSpriteCollectionData NPC_Sheet_Data;
         public static tk2dSpriteCollectionData ProjectileImpact_Sheet_Data;
+        public static tk2dSpriteCollectionData Beam_Sheet_Data;
+
+        public static tk2dSpriteCollectionData SpecialVFX_Sheet_Data;
+
 
         public static tk2dSpriteAnimation VFX_Animation_Data;
         public static tk2dSpriteAnimation Gun_Animation_Data;
@@ -38,10 +42,10 @@ namespace Planetside
         public static tk2dSpriteAnimation EnemySpecific_Animation_Data;
         public static tk2dSpriteAnimation NPC_Animation_Data;
         public static tk2dSpriteAnimation ProjectileImpact_Animation_Data;
+        public static tk2dSpriteAnimation Beam_Animation_Data;
 
 
         public static dfAtlas PlanetsideUIAtlas;
-
         private static bool DebugMode = false;
         public static void Init()
         {
@@ -99,7 +103,6 @@ namespace Planetside
             if (RoomObject_Sheet_Data == null) { ETGModConsole.Log("RoomObject_Sheet_Data is NULL"); }
 
             RoomObject_Animation_Data = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("RoomObjectAnimation").GetComponent<tk2dSpriteAnimation>();
-
             EnemySpecific_Animation_Data = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("SpecificEnemyAnimation").GetComponent<tk2dSpriteAnimation>();
 
             NPC_Animation_Data = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("NPCSpriteAnimation").GetComponent<tk2dSpriteAnimation>();
@@ -108,10 +111,15 @@ namespace Planetside
 
             ProjectileImpact_Animation_Data = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("ProjectileImpactAnimation").GetComponent<tk2dSpriteAnimation>();
 
-            StaticSpriteDefinitions.SetupSpritesFromAssembly(Assembly.GetExecutingAssembly(), "Planetside/Guns/Jsons", Gun_Sheet_Data);
+            Beam_Sheet_Data = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("BeamCollection").GetComponent<tk2dSpriteCollectionData>();
+            Beam_Animation_Data = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("BeamAnimation").GetComponent<tk2dSpriteAnimation>();
+
+
+            SpecialVFX_Sheet_Data = PlanetsideModule.VFXAssets.LoadAsset<GameObject>("SpecialVFXCollection").GetComponent<tk2dSpriteCollectionData>();
+
+            //StaticSpriteDefinitions.SetupSpritesFromAssembly(Assembly.GetExecutingAssembly(), "Planetside/Guns/Jsons", Gun_Sheet_Data);
 
         }
-
         public static void SetupSpritesFromAssembly(Assembly asmb, string path, tk2dSpriteCollectionData data)
         {
             if (asmb != null)
@@ -185,8 +193,6 @@ namespace Planetside
                 }
             }
         }
-
-
         public static tk2dSpriteCollectionData DoFastSetup(string CollectionName, string MaterialName)
         {
             if (DebugMode) ETGModConsole.Log($"[Initializing {CollectionName} | {MaterialName}...]");

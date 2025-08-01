@@ -125,7 +125,7 @@ namespace Planetside
         }
 
 
-		public static IEnumerator VoidHoleShrinkage(VoidHoleController voidHoleController, GameObject partObj)
+		public static IEnumerator VoidHoleShrinkage(VoidHoleController voidHoleController)
         {
 			float elaWait = 0;
 			if (voidHoleController.gameObject == null) { yield break; }
@@ -135,8 +135,9 @@ namespace Planetside
                 if (voidHoleController.gameObject == null) { yield break; }
                 elaWait += BraveTime.DeltaTime;
 				float t = Mathf.Min((elaWait/1.5f), 1);
-				partObj.transform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one * 6.25f, t);
-				yield return null;
+
+				voidHoleController.SetScale(Vector3.Lerp(Vector3.zero, Vector3.one * 100f, t));// .transform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one * 6.25f, t);
+                yield return null;
 			}
 			elaWait = 0;
             if (voidHoleController.gameObject == null) { yield break; }
@@ -146,14 +147,16 @@ namespace Planetside
                 if (voidHoleController.gameObject == null) { yield break; }
                 elaWait += BraveTime.DeltaTime;
 				float t = Mathf.Min((elaWait / 20), 1);
-				voidHoleController.Radius = Mathf.Lerp(28.5f, 8.75f, t);
-				partObj.transform.localScale = Vector3.Lerp(Vector3.one * 6.25f, Vector3.one * 2, t);
-				yield return null;
+				//voidHoleController.Radius = Mathf.Lerp(28.5f, 8f, t);
+                voidHoleController.ChangeHoleSize(Mathf.Lerp(0.3f, 0.08f, t));
+
+                //partObj.transform.localScale = Vector3.Lerp(Vector3.one * 6.25f, Vector3.one * 2, t);
+                yield return null;
 			}
 			yield break;
         }
 
-		public static IEnumerator VoidHoleAway(VoidHoleController voidHoleController, GameObject partObj)
+		public static IEnumerator VoidHoleAway(VoidHoleController voidHoleController)
 		{
 			float elaWait = 0;
 			voidHoleController.CanHurt = false;
@@ -161,11 +164,12 @@ namespace Planetside
 			{
 				elaWait += BraveTime.DeltaTime;
 				float t = Mathf.Min(elaWait/3, 1);
-				voidHoleController.Radius = Mathf.Lerp(10f, 50f, t);
-				partObj.transform.localScale = Vector3.Lerp(Vector3.one * 3, Vector3.one * 10, t);
-				yield return null;
+				//voidHoleController.Radius = Mathf.Lerp(10f, 50, t);
+				voidHoleController.ChangeHoleSize(Mathf.Lerp(0.1f, 2, t));
+                //voidHoleController.transform.localScale = Vector3.Lerp(Vector3.one * 3, Vector3.one * 10, t);
+                yield return null;
 			}
-			UnityEngine.Object.Destroy(partObj);
+			UnityEngine.Object.Destroy(voidHoleController.gameObject);
 			yield break;
 		}
 
@@ -206,23 +210,28 @@ namespace Planetside
 			StaticVFXStorage.HighPriestClapVFXInverse.SpawnAtPosition(coolPortal.transform.position);
 			yield return new WaitForSeconds(1);
 
+
+            /*
 			GameObject partObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("Amogus"));
 			MeshRenderer rend = partObj.GetComponentInChildren<MeshRenderer>();
 			rend.allowOcclusionWhenDynamic = true;
 			partObj.transform.position = Shrine.GetComponent<tk2dBaseSprite>().WorldCenter.ToVector3ZisY().WithZ(50);
 			partObj.name = "VoidHole";
 			partObj.transform.localScale = Vector3.zero;
-			VoidHoleController voidHoleController = partObj.AddComponent<VoidHoleController>();
-			voidHoleController.trueCenter = Shrine.GetComponent<tk2dBaseSprite>().WorldCenter;
-			voidHoleController.CanHurt = false;
-			voidHoleController.Radius = 30;
-			GameManager.Instance.StartCoroutine(VoidHoleShrinkage(voidHoleController, partObj));
+			*/
+
+            var voidHoleController = VoidHoleController.SpawnVoidHole(Shrine.GetComponent<tk2dBaseSprite>().WorldCenter.ToVector3ZisY().WithZ(50), Vector2.zero);
+            voidHoleController.CanHurt = false;
+            voidHoleController.Radius = 30;
+            voidHoleController.ChangeHoleSize(0.285f);
+            voidHoleController.InitializeHole(null, 8, 2 * Time.deltaTime, 0.00333f * Time.deltaTime, Vector2.zero);
+            GameManager.Instance.StartCoroutine(VoidHoleShrinkage(voidHoleController));
 
 			disappearedFromRoomController.PlayerSuddenlyDisappearedFromRoom += (obj) =>
 			{
 				Room.UnsealRoom();
 				Room.EndTerrifyingDarkRoom(0);
-				UnityEngine.Object.Destroy(partObj);
+				UnityEngine.Object.Destroy(voidHoleController.gameObject);
 				UnityEngine.Object.Destroy(coolPortal);
 			};
 
@@ -261,7 +270,7 @@ namespace Planetside
 
                     user.CurrentRoom.UnsealRoom();
 					user.CurrentRoom.EndTerrifyingDarkRoom(2f);
-					GameManager.Instance.StartCoroutine(VoidHoleAway(voidHoleController, partObj));
+					GameManager.Instance.StartCoroutine(VoidHoleAway(voidHoleController));
 
 
 					GameObject silencerVFX = (GameObject)ResourceCache.Acquire("Global VFX/BlankVFX_Ghost");

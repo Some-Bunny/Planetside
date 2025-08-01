@@ -26,12 +26,12 @@ namespace Planetside
 			//The BehaviorSpeculator is responsible for almost everything an enemy does, from shooting a gun to teleporting.
 			// Tip: To debug an enemy's BehaviorSpeculator, you can uncomment the line below. This will print all the behavior information to the console.
 			//ToolsEnemy.DebugInformation(behaviorSpec);
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableOldKingHomingRingBulletSoundless);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.UndodgeableOldKingHomingRingBulletSoundless);
 
 			ShootBehavior ShootBehavior1 = behaviorSpec.AttackBehaviorGroup.AttackBehaviors[0].Behavior as ShootBehavior;
 			ShootBehavior1.BulletScript = new CustomBulletScriptSelector(typeof(ModifiedDraGunFlameKnifeSpray1));
 			ShootBehavior1.Cooldown *= 2.5f;
-			//actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableDonut);
+			//actor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableDonut);
 
 			//BeholsterShootBehavior shootWave = behaviorSpec.AttackBehaviorGroup.AttackBehaviors[2].Behavior as BeholsterShootBehavior;
 			//shootWave.BulletScript = new CustomBulletScriptSelector(typeof(ModifiedShootWave));
@@ -80,7 +80,7 @@ namespace Planetside
 				float sign = BraveUtility.RandomSign();
 				for (int i = 0; i < 7; i++)
 				{
-					this.Fire(new Direction((-45f + deltaAngle * (float)i + (float)UnityEngine.Random.Range(-2, 2)) * sign, DirectionType.Relative, -1f), new Speed(1f, SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.UndodgeableOldKingHomingRingBulletSoundless.Name, 10, 30 + (i*25)));
+					this.Fire(new Direction((-45f + deltaAngle * (float)i + (float)UnityEngine.Random.Range(-2, 2)) * sign, DirectionType.Relative, -1f), new Speed(1f, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.UndodgeableOldKingHomingRingBulletSoundless.Name, 10, 30 + (i*25)));
 					yield return this.Wait(2);
 				}
 				yield break;

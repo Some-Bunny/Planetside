@@ -28,10 +28,10 @@ namespace Planetside
 			// Tip: To debug an enemy's BehaviorSpeculator, you can uncomment the line below. This will print all the behavior information to the console.
 			//ToolsEnemy.DebugInformation(behaviorSpec);
 
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableDoorLordBurst);
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableDoorLordFlame);
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableOldKingHomingRingBulletSoundless);
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableDoorLordPuke);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.UndodgeableDoorLordBurst);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.UndodgeableDoorLordFlame);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.UndodgeableOldKingHomingRingBulletSoundless);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.UndodgeableDoorLordPuke);
 
 			ShootBehavior ShootBehavior1 = behaviorSpec.AttackBehaviorGroup.AttackBehaviors[2].Behavior as ShootBehavior;
 			ShootBehavior1.BulletScript = new CustomBulletScriptSelector(typeof(ModifiedBossDoorMimicBurst2));
@@ -107,7 +107,7 @@ namespace Planetside
 
 			public class PulseBullet : Bullet
 			{
-				public PulseBullet(float initialOffest) : base(StaticUndodgeableBulletEntries.UndodgeableDoorLordPuke.Name, false, false, false)
+				public PulseBullet(float initialOffest) : base(StaticBulletEntries.UndodgeableDoorLordPuke.Name, false, false, false)
 				{
 					this.m_initialOffest = initialOffest;
 				}
@@ -199,8 +199,8 @@ namespace Planetside
 					{
 						this.Fire(new Direction(this.SubdivideArc(startDirection, 80f, 5, j, offset), DirectionType.Absolute, -1f), new Speed(UnityEngine.Random.Range(4, 6), SpeedType.Absolute), new SpeedChangingBullet("teeth_wave", 12, 120));
 					}
-					this.Fire(new Direction(this.AimDirection - UnityEngine.Random.Range(39, 48), DirectionType.Absolute, -1f), new Speed(UnityEngine.Random.Range(8, 10), SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.UndodgeableOldKingHomingRingBulletSoundless.Name, false, false, false));
-					this.Fire(new Direction(this.AimDirection + UnityEngine.Random.Range(39, 48), DirectionType.Absolute, -1f), new Speed(UnityEngine.Random.Range(8, 10), SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.UndodgeableOldKingHomingRingBulletSoundless.Name, false, false, false));
+					this.Fire(new Direction(this.AimDirection - UnityEngine.Random.Range(39, 48), DirectionType.Absolute, -1f), new Speed(UnityEngine.Random.Range(8, 10), SpeedType.Absolute), new Bullet(StaticBulletEntries.UndodgeableOldKingHomingRingBulletSoundless.Name, false, false, false));
+					this.Fire(new Direction(this.AimDirection + UnityEngine.Random.Range(39, 48), DirectionType.Absolute, -1f), new Speed(UnityEngine.Random.Range(8, 10), SpeedType.Absolute), new Bullet(StaticBulletEntries.UndodgeableOldKingHomingRingBulletSoundless.Name, false, false, false));
 					yield return this.Wait(30);
 				}
 				yield break;
@@ -217,7 +217,7 @@ namespace Planetside
 			{
 				for (int i = 0; i < 60; i++)
 				{
-					this.Fire(new Offset((i % 2 != 0) ? "right eye" : "left eye"), new Direction(UnityEngine.Random.Range(-60f, 60f), DirectionType.Aim, -1f), new Speed(13f, SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.UndodgeableDoorLordFlame.Name, 6, 120));
+					this.Fire(new Offset((i % 2 != 0) ? "right eye" : "left eye"), new Direction(UnityEngine.Random.Range(-60f, 60f), DirectionType.Aim, -1f), new Speed(13f, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.UndodgeableDoorLordFlame.Name, 6, 120));
 					yield return this.Wait(8);
 				}
 				yield break;
@@ -251,7 +251,7 @@ namespace Planetside
 
 			public class BurstBullet : Bullet
 			{
-				public BurstBullet(Vector2 additionalVelocity) : base(StaticUndodgeableBulletEntries.UndodgeableDoorLordBurst.Name, false, false, false)
+				public BurstBullet(Vector2 additionalVelocity) : base(StaticBulletEntries.UndodgeableDoorLordBurst.Name, false, false, false)
 				{
 					this.m_addtionalVelocity = additionalVelocity;
 				}

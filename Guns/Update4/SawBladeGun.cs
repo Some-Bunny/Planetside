@@ -21,7 +21,7 @@ namespace Planetside
 
 		public static void Add()
 		{
-			Gun gun = ETGMod.Databases.Items.NewGun("sawgun", "nemesisgun");
+			Gun gun = ETGMod.Databases.Items.NewGun("sawgun", "sawgunthesenuts");
 			Game.Items.Rename("outdated_gun_mods:sawgun", "psog:sawgun");
 			gun.gameObject.AddComponent<SawBladeGun>();
 			gun.SetShortDescription("Reaped By Death");

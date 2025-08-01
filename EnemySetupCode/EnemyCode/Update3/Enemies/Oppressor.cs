@@ -15,6 +15,7 @@ using BreakAbleAPI;
 using static Planetside.Nemesis;
 using static Planetside.Tower;
 using static Planetside.PrisonerSecondSubPhaseController;
+using Planetside.Static_Storage;
 
 namespace Planetside
 {
@@ -868,21 +869,21 @@ namespace Planetside
 				companion.aiActor.sprite.renderer.material = mat;
 
 			
-				companion.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableBouncyBatBullet);
+				companion.aiActor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableBouncyBatBullet);
 				companion.aiActor.bulletBank.Bullets[0].BulletObject.GetComponent<Projectile>().baseData.speed *= 1.2f;
 				companion.aiActor.bulletBank.Bullets[0].BulletObject.GetComponent<BounceProjModifier>().numberOfBounces += 2;
 
-				companion.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableLargeSpore);
-				companion.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
+				companion.aiActor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableLargeSpore);
+				companion.aiActor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableSmallSpore);
 
-                companion.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableDirectedfireSoundless);
-                companion.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableQuickHoming);
-                companion.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableBig);
-                companion.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableBigBullet);
+                companion.aiActor.bulletBank.Bullets.Add(StaticBulletEntries.UndodgeableDirectedfireSoundless);
+                companion.aiActor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableQuickHoming);
+                companion.aiActor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableBig);
+                companion.aiActor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableBigBullet);
 
-                companion.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableMineflayerBounce);
+                companion.aiActor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableMineflayerBounce);
 
-                companion.aiActor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableDoorLordBurst);
+                companion.aiActor.bulletBank.Bullets.Add(StaticBulletEntries.UndodgeableDoorLordBurst);
 
             }
         }
@@ -905,7 +906,7 @@ namespace Planetside
             }
             public class Creep : Bullet
             {
-                public Creep() : base(StaticUndodgeableBulletEntries.undodgeableMineflayerBounce.Name, false, false, false)
+                public Creep() : base(StaticBulletEntries.undodgeableMineflayerBounce.Name, false, false, false)
                 {
                 }
                 public override IEnumerator Top()
@@ -951,7 +952,7 @@ namespace Planetside
             }
             public class Spin : Bullet
             {
-                public Spin(bool a) : base(StaticUndodgeableBulletEntries.UndodgeableDoorLordBurst.Name, false, false, false)
+                public Spin(bool a) : base(StaticBulletEntries.UndodgeableDoorLordBurst.Name, false, false, false)
                 {
                     b = a;
                 }
@@ -978,7 +979,7 @@ namespace Planetside
                     base.PostWwiseEvent("Play_Strafe_Shot");
                     for (int e = 0; e < 6; e++)
                     {
-                        base.Fire(new Direction((60 * e)+ (24*i), DirectionType.Absolute, -1f), new Speed(3, SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.undodgeableSmallSpore.Name, 13, 120));
+                        base.Fire(new Direction((60 * e)+ (24*i), DirectionType.Absolute, -1f), new Speed(3, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.undodgeableSmallSpore.Name, 13, 120));
 
                         GameObject vfx = SpawnManager.SpawnVFX((PickupObjectDatabase.GetById(228) as Gun).muzzleFlashEffects.effects[0].effects[0].effect, true);
                         vfx.transform.position = this.Position;
@@ -1014,7 +1015,7 @@ namespace Planetside
             }
             public class Creep : Bullet
             {
-                public Creep() : base(StaticUndodgeableBulletEntries.undodgeableMineflayerBounce.Name, false, false, false)
+                public Creep() : base(StaticBulletEntries.undodgeableMineflayerBounce.Name, false, false, false)
                 {
                 }
                 public override IEnumerator Top()
@@ -1117,7 +1118,7 @@ namespace Planetside
 
             public class NormalBullet : Bullet
             {
-                public NormalBullet() : base(StaticUndodgeableBulletEntries.UndodgeableDirectedfireSoundless.Name, false, false, false)
+                public NormalBullet() : base(StaticBulletEntries.UndodgeableDirectedfireSoundless.Name, false, false, false)
                 {
 
                 }
@@ -1306,7 +1307,7 @@ namespace Planetside
 
             public class NormalBullet : Bullet
             {
-                public NormalBullet() : base(StaticUndodgeableBulletEntries.UndodgeableDirectedfireSoundless.Name, false, false, false)
+                public NormalBullet() : base(StaticBulletEntries.UndodgeableDirectedfireSoundless.Name, false, false, false)
                 {
 
                 }
@@ -1377,7 +1378,7 @@ namespace Planetside
 
             public class MegaBulletThatBreaks : Bullet
             {
-                public MegaBulletThatBreaks() : base(StaticUndodgeableBulletEntries.undodgeableBig.Name, false, false, false)
+                public MegaBulletThatBreaks() : base(StaticBulletEntries.undodgeableBig.Name, false, false, false)
                 {
 
                 }
@@ -1392,8 +1393,8 @@ namespace Planetside
                         for (int l = 0; l < 3; l++)
                         {
 
-                            base.Fire(new Direction(30f * e, DirectionType.Aim, -1f), new Speed(4+l, SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.undodgeableSmallSpore.Name, 12, 60));
-                            base.Fire(new Direction((30f * e) + 15f, DirectionType.Aim, -1f), new Speed(4+l, SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.undodgeableLargeSpore.Name, 12, 180));
+                            base.Fire(new Direction(30f * e, DirectionType.Aim, -1f), new Speed(4+l, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.undodgeableSmallSpore.Name, 12, 60));
+                            base.Fire(new Direction((30f * e) + 15f, DirectionType.Aim, -1f), new Speed(4+l, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.undodgeableLargeSpore.Name, 12, 180));
                         }
                     }
                     base.Vanish(false);
@@ -1403,7 +1404,7 @@ namespace Planetside
 
             public class UndodgeableBullshit : Bullet
             {
-                public UndodgeableBullshit(int s) : base(StaticUndodgeableBulletEntries.undodgeableBigBullet.Name, false, false, false)
+                public UndodgeableBullshit(int s) : base(StaticBulletEntries.undodgeableBigBullet.Name, false, false, false)
                 {
                     speedUp = s;
                 }
@@ -1422,7 +1423,7 @@ namespace Planetside
             }
             public class Bastard : Bullet
             {
-                public Bastard() : base(StaticUndodgeableBulletEntries.undodgeableLargeSpore.Name, false, false, false)
+                public Bastard() : base(StaticBulletEntries.undodgeableLargeSpore.Name, false, false, false)
                 {
 
                 }

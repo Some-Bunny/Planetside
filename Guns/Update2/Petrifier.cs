@@ -60,7 +60,7 @@ namespace Planetside
 				projectile.hitEffects.enemy = ObjectMakers.MakeObjectIntoVFX((PickupObjectDatabase.GetById(53) as Gun).DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX);
 				projectile.hitEffects.deathAny = ObjectMakers.MakeObjectIntoVFX((PickupObjectDatabase.GetById(53) as Gun).DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX);
 				projectile.hitEffects.CenterDeathVFXOnProjectile = false;
-
+                /*
 				List<string> BeamAnimPaths = new List<string>()
 				{
 				"Planetside/Resources2/ProjectileTrails/Petrifier/petrifiermid_001",
@@ -94,8 +94,14 @@ namespace Planetside
 				30,
 				true
 				);
+				*/
 
-				EmmisiveTrail emis = projectile.gameObject.AddComponent<EmmisiveTrail>();
+                projectile.AddTrailToProjectileBundle(StaticSpriteDefinitions.Beam_Sheet_Data, "petrifierstart_001",
+				StaticSpriteDefinitions.Beam_Animation_Data,
+                "petrifier_mid", new Vector2(7, 5), new Vector2(0, 1), false, "petrifier_start");
+
+
+                EmmisiveTrail emis = projectile.gameObject.AddComponent<EmmisiveTrail>();
 				emis.EmissiveColorPower = 10;
 				emis.EmissivePower = 100;
 
@@ -138,7 +144,7 @@ namespace Planetside
 				*/
                 projectile.gameObject.SetActive(false);
 				projectileModule.projectiles[0] = projectile;
-				projectile.baseData.damage = 14f;
+				projectile.baseData.damage = 18f;
 				projectile.AdditionalScaleMultiplier = 1f;
 				FakePrefab.MarkAsFakePrefab(projectile.gameObject);
 				UnityEngine.Object.DontDestroyOnLoad(projectile);

@@ -119,7 +119,7 @@ namespace Planetside
             OrbMesh = Orb.GetComponentInChildren<MeshRenderer>();
             OrbMesh.allowOcclusionWhenDynamic = true;
             OrbMesh.material.SetTexture("_Floor_Tex", data.FloorTexture);
-            OrbMesh.material.SetFloat("_OutlineWidth", 3f);//This doesnt control the outline lol
+            OrbMesh.material.SetFloat("_OutlineWidth", 1.3f);//This doesnt control the outline lol
 
             OrbMesh.material.SetTexture("_Nebula", StaticTextures.NebulaTexture);
             if (parent_room != null)
@@ -148,7 +148,7 @@ namespace Planetside
             }
             AkSoundEngine.PostEvent("Play_PrisonerCharge", base.gameObject);
             elaWait = 0;
-            duraWait = 0.5f;
+            duraWait = 1.25f;
             while (elaWait < duraWait)
             {
                 elaWait += BraveTime.DeltaTime;
@@ -156,7 +156,16 @@ namespace Planetside
                 if (Orb.transform.localScale == null) { yield break; }
                 if (Orb.transform.localScale != null)
                 {
-                    Orb.transform.localScale = Vector3.Lerp(Vector3.one *2, Vector3.zero, Mathf.SmoothStep(0, 1, t));
+                    OrbMesh.material.SetFloat("_OutlineWidth", Mathf.Lerp(1.3f, 0, t));
+                    ParticleBase.EmitParticles("ShellraxEyeParticle", 1, new ParticleSystem.EmitParams()
+                    {
+                        position = OrbMesh.transform.position,
+                        startColor = Color.cyan.WithAlpha(0.25f),
+                        startLifetime = UnityEngine.Random.Range(0.5f, 0.75f),
+                        startSize = 0.125f,
+                        velocity = MathToolbox.GetUnitOnCircle(BraveUtility.RandomAngle(), UnityEngine.Random.Range(4.5f, 6.4f) * (1 - t))
+                    });
+                    //Orb.transform.localScale = Vector3.Lerp(Vector3.one *2, Vector3.zero, Mathf.SmoothStep(0, 1, t));
                     //Orb.transform.position = Vector3.Lerp(self.sprite.WorldTopCenter, self.sprite.WorldBottomCenter, MathToolbox.SinLerpTValue(t));
                 }
                 yield return null;
@@ -174,8 +183,8 @@ namespace Planetside
 
             mesh.material.SetTexture("_PortalTex", data.SecondaryFloorTexture);
             mesh.material.SetTextureScale("_PortalTex", new Vector2(0,0));
+            mesh.material.SetTextureScale("_PortalTex", new Vector2(0, 0));
 
-            mesh.material.SetVector("_Magnitudes", new Vector4(0.125f, 0.125f, 0.1f, 0.1f));
 
             Destroy(Orb);
             fuck.DoReverseDistortionWaveLocal(this.gameObject.transform.PositionVector2(), 1, 0.25f, 6, 1);
@@ -346,7 +355,7 @@ namespace Planetside
             statue.gameObject.AddComponent<TresspassLightController>();
 
             statue.DamageReduction = 1000;
-            Alexandria.DungeonAPI.StaticReferences.StoredRoomObjects.Add("portal_pillar_random", statue.gameObject);
+            Alexandria.DungeonAPI.StaticReferences.customObjects.Add("portal_pillar_random", statue.gameObject);
 
             Dictionary<GameObject, float> dict = new Dictionary<GameObject, float>()
             {
@@ -373,7 +382,7 @@ namespace Planetside
         public static GameObject OnAction(string ObjName, GameObject Original, JObject jObject)
         {
             if (ObjName != "portal_pillar_random") { return Original; }
-            Original = FakePrefab.Clone(Alexandria.DungeonAPI.StaticReferences.StoredRoomObjects[ObjName]);
+            Original = FakePrefab.Clone(Alexandria.DungeonAPI.StaticReferences.customObjects[ObjName]);
 
 
 

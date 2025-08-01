@@ -53,6 +53,7 @@ namespace Planetside
 				projectileModule.projectiles[0] = projectile;
 				projectile.baseData.damage = 7f;
 				projectile.AdditionalScaleMultiplier = 0.9f;
+                projectile.AddComponent<RecursionPreventer>();
 
                 Material mat1 = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
                 mat1.mainTexture = projectile.sprite.renderer.material.mainTexture;

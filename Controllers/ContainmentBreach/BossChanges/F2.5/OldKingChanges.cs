@@ -27,11 +27,11 @@ namespace Planetside
 			//The BehaviorSpeculator is responsible for almost everything an enemy does, from shooting a gun to teleporting.
 			// Tip: To debug an enemy's BehaviorSpeculator, you can uncomment the line below. This will print all the behavior information to the console.
 			//ToolsEnemy.DebugInformation(behaviorSpec);
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableOldKingSlamBullet);
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableOldKingSuckBullet);
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableOldKingHomingRingBullet);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.UndodgeableOldKingSlamBullet);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.UndodgeableOldKingSuckBullet);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.UndodgeableOldKingHomingRingBullet);
 
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableDefault);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableDefault);
 			//UndodgeableOldKingSlamBullet
 			SpinAttackBehavior shootWave = behaviorSpec.AttackBehaviorGroup.AttackBehaviors[0].Behavior as SpinAttackBehavior;
 			shootWave.BulletScript = new CustomBulletScriptSelector(typeof(ModifiedBulletKingCrazySpin1));
@@ -101,7 +101,7 @@ namespace Planetside
 
 			public class SmokeBullet : Bullet
 			{
-				public SmokeBullet(float angle) : base(StaticUndodgeableBulletEntries.UndodgeableOldKingHomingRingBullet.Name, false, false, true)
+				public SmokeBullet(float angle) : base(StaticBulletEntries.UndodgeableOldKingHomingRingBullet.Name, false, false, true)
 				{
 					this.m_angle = angle;
 				}
@@ -190,7 +190,7 @@ namespace Planetside
 
 			public class SuckBullet : Bullet
 			{
-				public SuckBullet(Vector2 centerPoint, float startAngle, int i, bool fli) : base(StaticUndodgeableBulletEntries.UndodgeableOldKingSuckBullet.Name, false, false, false)
+				public SuckBullet(Vector2 centerPoint, float startAngle, int i, bool fli) : base(StaticBulletEntries.UndodgeableOldKingSuckBullet.Name, false, false, false)
 				{
 					this.m_centerPoint = centerPoint;
 					this.m_startAngle = startAngle;
@@ -301,7 +301,7 @@ namespace Planetside
 
 			public class SpinningBullet : Bullet
 			{
-				public SpinningBullet(Vector2 centerPoint, float startAngle, float SpinSpeed = 0.16666667f) : base(StaticUndodgeableBulletEntries.UndodgeableOldKingSlamBullet.Name)
+				public SpinningBullet(Vector2 centerPoint, float startAngle, float SpinSpeed = 0.16666667f) : base(StaticBulletEntries.UndodgeableOldKingSlamBullet.Name)
 				{
 					this.centerPoint = centerPoint;
 					this.startAngle = startAngle;
@@ -354,7 +354,7 @@ namespace Planetside
 
 				for (int k = 0; k < 30; k++)
 				{
-					this.Fire(new Direction((float)k * 360f / 30f, DirectionType.Absolute, -1f), new Speed(12, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.undodgeableDefault.Name));
+					this.Fire(new Direction((float)k * 360f / 30f, DirectionType.Absolute, -1f), new Speed(12, SpeedType.Absolute), new Bullet(StaticBulletEntries.undodgeableDefault.Name));
 				}
 				yield break;
 			}
@@ -368,7 +368,7 @@ namespace Planetside
 
 		private class SlowDown : Bullet
 		{
-			public SlowDown(ModifiedBulletKingCrazySpin1 p, int W) : base(StaticUndodgeableBulletEntries.undodgeableDefault.Name, false, false, false)
+			public SlowDown(ModifiedBulletKingCrazySpin1 p, int W) : base(StaticBulletEntries.undodgeableDefault.Name, false, false, false)
 			{
 				parent = p;
 				WaitTime = W;

@@ -47,6 +47,14 @@ namespace Planetside
 		{
 			float procChance = 0.2f;
 			procChance *= effectChanceScalar;
+			if (sourceProjectile.PossibleSourceGun != null)
+			{
+				if (sourceProjectile.PossibleSourceGun.Volley.projectiles != null)
+				{
+                    procChance /= Mathf.Sqrt(sourceProjectile.PossibleSourceGun.Volley.projectiles.Count);
+                }
+            }
+			
 
 			if (UnityEngine.Random.value <= procChance && sourceProjectile.gameObject.GetComponent<RecursionPreventer>() == null)
 			{

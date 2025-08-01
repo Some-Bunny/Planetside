@@ -85,13 +85,33 @@ namespace Planetside
         public void Interact(PlayerController interactor)
         {
             base.Invoke("DeregisterInteractable", 0f);
-            WeightedRoom newRoom =  AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.HAS_TREADED_DEEPER) ? TrespassStone.trespassDeeperTable.SelectByWeight() : TrespassStone.trespassTable.SelectByWeight();
-            var floor = DungeonDatabase.GetOrLoadByName("Base_Abyss");
+
+            WeightedRoom newRoom = null;
+            if (AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.HAS_TREADED_DEEPER))
+            {
+                if (UnityEngine.Random.value < 0.3f)
+                {
+                    newRoom = TrespassStone.trespassTable.SelectByWeight();
+
+                }
+                else
+                {
+                    newRoom = TrespassStone.trespassDeeperTable.SelectByWeight();
+
+                }
+
+            }
+            else
+            {
+                newRoom = TrespassStone.trespassTable.SelectByWeight();
+            }
+
+                var floor = DungeonDatabase.GetOrLoadByName("Base_Abyss");
             int num = 5;
             RoomHandler room;
             do
             {
-                room = DungeonGenToolbox.AddCustomRuntimeRoomWithTileSet(floor, newRoom.room, false, false, false, null, DungeonData.LightGenerationStyle.STANDARD, false, false, 1, false);
+                room = DungeonGenToolbox.AddCustomRuntimeRoomWithTileSet(floor, newRoom.room, false, false, false, null, DungeonData.LightGenerationStyle.STANDARD, true, false, 1, false);
                 num--;
             }
             while (num > 0 && room == null);
@@ -111,7 +131,15 @@ namespace Planetside
             }
             else
             {
-
+                if (room != null)
+                {
+                    if (ContainmentBreachController.CurrentState == ContainmentBreachController.States.ENABLED)
+                    {
+                        room.area.runtimePrototypeData.usesCustomAmbient = true;
+                        room.area.runtimePrototypeData.customAmbient = new Color(0, 0.3f, 0.9f);
+                        room.area.runtimePrototypeData.customAmbientLowQuality = new Color(0, 0.3f, 0.9f);
+                    }
+                }
                 PortalUsed = true;
                 AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.TRESPASS_INTO_OTHER_PLACE, true);
                 AkSoundEngine.PostEvent("Stop_MUS_All", GameManager.Instance.gameObject);

@@ -28,10 +28,10 @@ namespace Planetside
 			// Tip: To debug an enemy's BehaviorSpeculator, you can uncomment the line below. This will print all the behavior information to the console.
 			//ToolsEnemy.DebugInformation(behaviorSpec);
 
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableAmmocondaBigBullet);
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableBigBullet);
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableRandomBullet);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.UndodgeableAmmocondaBigBullet);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableBigBullet);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableSmallSpore);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.UndodgeableRandomBullet);
 
 			BashelliskShootBehavior wavyBullets = behaviorSpec.AttackBehaviorGroup.AttackBehaviors[1].Behavior as BashelliskShootBehavior;
 			wavyBullets.BulletScript = new CustomBulletScriptSelector(typeof(ModifiedBashelliskSideWave1));
@@ -97,7 +97,7 @@ namespace Planetside
 			{
 				for (int i = 0; i < this.NumBullets; i++)
 				{
-					this.Fire(new Direction(this.GetAimDirection(1f, this.BulletSpeed) + (float)UnityEngine.Random.Range(-15f, 15f), DirectionType.Absolute, -1f), new Speed(this.BulletSpeed, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.UndodgeableRandomBullet.Name, false, false, false));
+					this.Fire(new Direction(this.GetAimDirection(1f, this.BulletSpeed) + (float)UnityEngine.Random.Range(-15f, 15f), DirectionType.Absolute, -1f), new Speed(this.BulletSpeed, SpeedType.Absolute), new Bullet(StaticBulletEntries.UndodgeableRandomBullet.Name, false, false, false));
 					yield return this.Wait(6);
 				}
 				yield break;
@@ -118,7 +118,7 @@ namespace Planetside
 
 			public class WaveBullet : Bullet
 			{
-				public WaveBullet() : base(StaticUndodgeableBulletEntries.UndodgeableAmmocondaBigBullet.Name, false, false, false)
+				public WaveBullet() : base(StaticBulletEntries.UndodgeableAmmocondaBigBullet.Name, false, false, false)
 				{
 				}
 
@@ -148,7 +148,7 @@ namespace Planetside
 				base.PostWwiseEvent("Play_ENM_cannonball_eyes_01", null);
 				for (int e = 0; e < 4; e++)
 				{
-					base.Fire(Offset.OverridePosition(base.BulletBank.aiActor.sprite.WorldCenter), new Direction(0f, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new ModifiedCircle.RotatedBulletBasic(RNGSPIN, 0, 0, StaticUndodgeableBulletEntries.undodgeableBigBullet.Name, (e * 90) + OffsetF, 0.133f));
+					base.Fire(Offset.OverridePosition(base.BulletBank.aiActor.sprite.WorldCenter), new Direction(0f, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new ModifiedCircle.RotatedBulletBasic(RNGSPIN, 0, 0, StaticBulletEntries.undodgeableBigBullet.Name, (e * 90) + OffsetF, 0.133f));
 				}
 				return null;
 			}
@@ -199,7 +199,7 @@ namespace Planetside
 			}
 			public class WeakSpore : Bullet
 			{
-				public WeakSpore() : base(StaticUndodgeableBulletEntries.undodgeableSmallSpore.Name, false, false, false) { }
+				public WeakSpore() : base(StaticBulletEntries.undodgeableSmallSpore.Name, false, false, false) { }
 				public override IEnumerator Top()
 				{
 					yield return this.Wait(30);

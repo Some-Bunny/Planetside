@@ -99,7 +99,7 @@ namespace Planetside
 
             projectile.baseData.speed = 3;
 
-            projectile.AnimateProjectileBundle("Riftaker_Out", StaticSpriteDefinitions.Projectile_Sheet_Data, StaticSpriteDefinitions.Projectile_Animation_Data, "Riftaker_Out",
+            Alexandria.Assetbundle.ProjectileBuilders.AnimateProjectileBundle(projectile, "Riftaker_Out", StaticSpriteDefinitions.Projectile_Sheet_Data, StaticSpriteDefinitions.Projectile_Animation_Data, "Riftaker_Out",
             new List<IntVector2>() { new IntVector2(36, 36), new IntVector2(36, 36), new IntVector2(36, 36), new IntVector2(36, 36), new IntVector2(36, 36), new IntVector2(36, 36), new IntVector2(36, 36), new IntVector2(36, 36), new IntVector2(36, 36), new IntVector2(36, 36), new IntVector2(36, 36), new IntVector2(36, 36), new IntVector2(36, 36), new IntVector2(36, 36), new IntVector2(36, 36), },
             AnimateBullet.ConstructListOfSameValues(true, 15),
             AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.LowerLeft, 15), 
@@ -109,7 +109,8 @@ namespace Planetside
             AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(1, 1), 15),
             new List<IntVector2?>() { new IntVector2(16, 16), new IntVector2(16, 16), new IntVector2(16, 16), new IntVector2(16, 16), new IntVector2(16, 16), new IntVector2(16, 16), new IntVector2(16, 16), new IntVector2(16, 16), new IntVector2(16, 16), new IntVector2(16, 16), new IntVector2(16, 16), new IntVector2(16, 16), new IntVector2(16, 16), new IntVector2(16, 16), new IntVector2(16, 16), },
             AnimateBullet.ConstructListOfSameValues<Projectile>(null, 15));
-
+            var rec = projectile.AddComponent<RecursionPreventer>();
+            rec.ChanceToNotPreventRecursion = 0.05f;
 
             EnemyToolbox.AddSoundsToAnimationFrame(projectile.sprite.spriteAnimator, "Riftaker_Out", new Dictionary<int, string>()
             {
@@ -143,13 +144,16 @@ namespace Planetside
             replacementProjectile.baseData.CustomAccelerationCurveDuration = 2f;
             replacementProjectile.baseData.speed = 12;
 
+            replacementProjectile.AddComponent<RecursionPreventer>();
+
+
             spook = replacementProjectile.gameObject.GetOrAddComponent<PierceProjModifier>();
             spook.penetration += 100;
 
             bouncy = replacementProjectile.gameObject.AddComponent<BounceProjModifier>();
             bouncy.numberOfBounces = 100;
 
-            replacementProjectile.AnimateProjectileBundle("Riftaker_In", StaticSpriteDefinitions.Projectile_Sheet_Data, StaticSpriteDefinitions.Projectile_Animation_Data, "Riftaker_In",
+            Alexandria.Assetbundle.ProjectileBuilders.AnimateProjectileBundle(replacementProjectile, "Riftaker_In", StaticSpriteDefinitions.Projectile_Sheet_Data, StaticSpriteDefinitions.Projectile_Animation_Data, "Riftaker_In",
             new List<IntVector2>() { new IntVector2(36, 36), new IntVector2(36, 36), new IntVector2(36, 36), new IntVector2(36, 36), new IntVector2(36, 36), new IntVector2(36, 36), new IntVector2(36, 36), new IntVector2(36, 36), new IntVector2(36, 36), new IntVector2(36, 36), new IntVector2(36, 36), new IntVector2(36, 36), new IntVector2(36, 36),  },
             AnimateBullet.ConstructListOfSameValues(true, 13),
             AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.LowerLeft, 13),
@@ -161,7 +165,7 @@ namespace Planetside
             AnimateBullet.ConstructListOfSameValues<Projectile>(null, 13));
 
 
-            replacementProjectile.AnimateProjectileBundle("Riftaker_In", StaticSpriteDefinitions.Projectile_Sheet_Data, StaticSpriteDefinitions.Projectile_Animation_Data, "Riftaker_Detonate",
+            Alexandria.Assetbundle.ProjectileBuilders.AnimateProjectileBundle(replacementProjectile, "Riftaker_In", StaticSpriteDefinitions.Projectile_Sheet_Data, StaticSpriteDefinitions.Projectile_Animation_Data, "Riftaker_Detonate",
             new List<IntVector2>() { new IntVector2(36, 36), new IntVector2(36, 36), new IntVector2(36, 36), new IntVector2(36, 36), new IntVector2(36, 36), new IntVector2(36, 36), new IntVector2(36, 36), new IntVector2(36, 36), new IntVector2(36, 36), new IntVector2(36, 36), new IntVector2(36, 36), new IntVector2(36, 36), new IntVector2(36, 36), new IntVector2(36, 36), new IntVector2(36, 36), new IntVector2(36, 36), new IntVector2(36, 36), new IntVector2(36, 36), },
             AnimateBullet.ConstructListOfSameValues(true, 18),
             AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.LowerLeft, 18),
@@ -189,6 +193,8 @@ namespace Planetside
 
             Projectile dart = UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(35) as Gun).DefaultModule.projectiles[0]);
             dart.gameObject.SetActive(false);
+            dart.AddComponent<RecursionPreventer>();
+
             FakePrefab.MarkAsFakePrefab(dart.gameObject);
             UnityEngine.Object.DontDestroyOnLoad(dart);
             var riftaker_dart = dart.gameObject.AddComponent<RiftakerProjectile.RiftakerAffectedProjectile>();
@@ -203,11 +209,11 @@ namespace Planetside
             bouncy = dart.gameObject.AddComponent<BounceProjModifier>();
             bouncy.numberOfBounces = 10;
 
-            dart.baseData.damage = 8;
+            dart.baseData.damage = 9;
             dart.baseData.speed = 10;
 
             dart.shouldRotate = true;
-            dart.AnimateProjectileBundle("Riftaker_Dart", StaticSpriteDefinitions.Projectile_Sheet_Data, StaticSpriteDefinitions.Projectile_Animation_Data, "Riftaker_Dart",
+            Alexandria.Assetbundle.ProjectileBuilders.AnimateProjectileBundle(dart, "Riftaker_Dart", StaticSpriteDefinitions.Projectile_Sheet_Data, StaticSpriteDefinitions.Projectile_Animation_Data, "Riftaker_Dart",
             new List<IntVector2>() { new IntVector2(12, 5), new IntVector2(12, 5), new IntVector2(12, 5), new IntVector2(12, 5), new IntVector2(12, 5), new IntVector2(12, 5), },
             AnimateBullet.ConstructListOfSameValues(true, 6),
             AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.LowerLeft, 6),

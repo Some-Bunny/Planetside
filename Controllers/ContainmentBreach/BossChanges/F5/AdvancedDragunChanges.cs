@@ -7,6 +7,7 @@ using FullInspector;
 using UnityEngine;
 using ItemAPI;
 using EnemyBulletBuilder;
+using SaveAPI;
 
 namespace Planetside
 {
@@ -15,8 +16,16 @@ namespace Planetside
 	public class AdvancedDragunChanges : OverrideBehavior
 	{
 
-		//2e6223e42e574775b56c6349921f42cb Advanced Dragun Knife
-		public override string OverrideAIActorGUID => "05b8afe0b6cc4fffa9dc6036fa24c8ec"; // Replace the GUID with whatever enemy you want to modify. This GUID is for the bullet kin.
+        public override bool ShouldOverride()
+        {
+            if (SaveAPIManager.GetFlag(CustomDungeonFlags.HAS_TREADED_DEEPER) == false) { return false; }
+            if (ContainmentBreachController.CurrentState == ContainmentBreachController.States.ENABLED) { return true; }
+            return false;
+            //return true;
+        }
+
+        //2e6223e42e574775b56c6349921f42cb Advanced Dragun Knife
+        public override string OverrideAIActorGUID => Alexandria.EnemyGUIDs.Advanced_Dragun_GUID; // Replace the GUID with whatever enemy you want to modify. This GUID is for the bullet kin.
 																						  // You can find a full list of GUIDs at https://github.com/ModTheGungeon/ETGMod/blob/master/Assembly-CSharp.Base.mm/Content/gungeon_id_map/enemies.txt
 		public override void DoOverride()
 		{
@@ -84,8 +93,8 @@ namespace Planetside
 
 
 
-            actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableFrogger);
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSkull);
+            actor.bulletBank.Bullets.Add(StaticBulletEntries.UndodgeableFrogger);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableSkull);
 
 
             DraGunRPGBehavior DraGunRPGBehavior1 = behaviorSpec.AttackBehaviorGroup.AttackBehaviors[0].Behavior as DraGunRPGBehavior;
@@ -135,7 +144,7 @@ namespace Planetside
 
 
 
-			SimultaneousAttackBehaviorGroup SimultaneousAttackBehaviorGroup3 = behaviorSpec.AttackBehaviorGroup.AttackBehaviors[10].Behavior as SimultaneousAttackBehaviorGroup;
+            SimultaneousAttackBehaviorGroup SimultaneousAttackBehaviorGroup3 = behaviorSpec.AttackBehaviorGroup.AttackBehaviors[10].Behavior as SimultaneousAttackBehaviorGroup;
 
 			if (SimultaneousAttackBehaviorGroup3.AttackBehaviors[0] is DraGunGlockBehavior ae)
 			{
@@ -287,11 +296,11 @@ namespace Planetside
 					{
 						if (!this.m_centerBullets[k] && this.m_platformCenters[k].y < this.m_rowHeight - 2f)
 						{
-							base.Fire(new Offset(this.m_platformCenters[k].x, (20.5f - this.m_rowHeight + this.m_platformCenters[k].y)-0.33f, 0f, string.Empty, DirectionType.Absolute), new Direction(-90f, DirectionType.Absolute, -1f), new Speed(4.33f, SpeedType.Absolute), new ModifiedDraGunNegativeSpace2.WiggleBullet(true, StaticUndodgeableBulletEntries.UndodgeableFrogger.Name));
-							base.Fire(new Offset(this.m_platformCenters[k].x + 0.33f, (20.5f - this.m_rowHeight + this.m_platformCenters[k].y) - 0.66f, 0f, string.Empty, DirectionType.Absolute), new Direction(-90f, DirectionType.Absolute, -1f), new Speed(4.33f, SpeedType.Absolute), new ModifiedDraGunNegativeSpace2.WiggleBullet(true, StaticUndodgeableBulletEntries.UndodgeableFrogger.Name));
-							base.Fire(new Offset(this.m_platformCenters[k].x - 0.33f, (20.5f - this.m_rowHeight + this.m_platformCenters[k].y) - 0.66f, 0f, string.Empty, DirectionType.Absolute), new Direction(-90f, DirectionType.Absolute, -1f), new Speed(4.33f, SpeedType.Absolute), new ModifiedDraGunNegativeSpace2.WiggleBullet(true, StaticUndodgeableBulletEntries.UndodgeableFrogger.Name));
-							base.Fire(new Offset(this.m_platformCenters[k].x, (20.5f - this.m_rowHeight + this.m_platformCenters[k].y)-0.66f, 0f, string.Empty, DirectionType.Absolute), new Direction(-90f, DirectionType.Absolute, -1f), new Speed(4.33f, SpeedType.Absolute), new ModifiedDraGunNegativeSpace2.WiggleBullet(true, StaticUndodgeableBulletEntries.UndodgeableFrogger.Name));
-							base.Fire(new Offset(this.m_platformCenters[k].x, (20.5f - this.m_rowHeight + this.m_platformCenters[k].y)-1f, 0f, string.Empty, DirectionType.Absolute), new Direction(-90f, DirectionType.Absolute, -1f), new Speed(4.33f, SpeedType.Absolute), new ModifiedDraGunNegativeSpace2.WiggleBullet(true, StaticUndodgeableBulletEntries.UndodgeableFrogger.Name));
+							base.Fire(new Offset(this.m_platformCenters[k].x, (20.5f - this.m_rowHeight + this.m_platformCenters[k].y)-0.33f, 0f, string.Empty, DirectionType.Absolute), new Direction(-90f, DirectionType.Absolute, -1f), new Speed(4.33f, SpeedType.Absolute), new ModifiedDraGunNegativeSpace2.WiggleBullet(true, StaticBulletEntries.UndodgeableFrogger.Name));
+							base.Fire(new Offset(this.m_platformCenters[k].x + 0.33f, (20.5f - this.m_rowHeight + this.m_platformCenters[k].y) - 0.66f, 0f, string.Empty, DirectionType.Absolute), new Direction(-90f, DirectionType.Absolute, -1f), new Speed(4.33f, SpeedType.Absolute), new ModifiedDraGunNegativeSpace2.WiggleBullet(true, StaticBulletEntries.UndodgeableFrogger.Name));
+							base.Fire(new Offset(this.m_platformCenters[k].x - 0.33f, (20.5f - this.m_rowHeight + this.m_platformCenters[k].y) - 0.66f, 0f, string.Empty, DirectionType.Absolute), new Direction(-90f, DirectionType.Absolute, -1f), new Speed(4.33f, SpeedType.Absolute), new ModifiedDraGunNegativeSpace2.WiggleBullet(true, StaticBulletEntries.UndodgeableFrogger.Name));
+							base.Fire(new Offset(this.m_platformCenters[k].x, (20.5f - this.m_rowHeight + this.m_platformCenters[k].y)-0.66f, 0f, string.Empty, DirectionType.Absolute), new Direction(-90f, DirectionType.Absolute, -1f), new Speed(4.33f, SpeedType.Absolute), new ModifiedDraGunNegativeSpace2.WiggleBullet(true, StaticBulletEntries.UndodgeableFrogger.Name));
+							base.Fire(new Offset(this.m_platformCenters[k].x, (20.5f - this.m_rowHeight + this.m_platformCenters[k].y)-1f, 0f, string.Empty, DirectionType.Absolute), new Direction(-90f, DirectionType.Absolute, -1f), new Speed(4.33f, SpeedType.Absolute), new ModifiedDraGunNegativeSpace2.WiggleBullet(true, StaticBulletEntries.UndodgeableFrogger.Name));
 
 							this.m_centerBullets[k] = true;
 						}
@@ -519,8 +528,8 @@ namespace Planetside
 				{
 					for (int n = 0; n < amount2; n++)
                     {
-						this.Fire(new Direction(le + (delta * l), DirectionType.Absolute, -1f), new Speed(1f + n, SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.UndodgeableFrogger.Name, 10f, 80, -1, false));
-						this.Fire(new Direction((le + (delta * l)) + delta/2, DirectionType.Absolute, -1f), new Speed(1f + (n*2), SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.UndodgeableFrogger.Name, 11f, 120, -1, false));
+						this.Fire(new Direction(le + (delta * l), DirectionType.Absolute, -1f), new Speed(1f + n, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.UndodgeableFrogger.Name, 10f, 80, -1, false));
+						this.Fire(new Direction((le + (delta * l)) + delta/2, DirectionType.Absolute, -1f), new Speed(1f + (n*2), SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.UndodgeableFrogger.Name, 11f, 120, -1, false));
 					}
 				}
 				yield break;
@@ -558,7 +567,7 @@ namespace Planetside
 
 			public class UziBullet : Bullet
 			{
-				public UziBullet(bool s) : base(StaticUndodgeableBulletEntries.UndodgeableFrogger.Name, false, false, false)
+				public UziBullet(bool s) : base(StaticBulletEntries.UndodgeableFrogger.Name, false, false, false)
 				{
 					Shoot = s;
 				}
@@ -569,17 +578,17 @@ namespace Planetside
 					if (Shoot == true) 
 					{
 						float r = RandomAngle();
-						this.Fire(new Direction(0f + r, DirectionType.Relative, -1f), new Speed(1f, SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.UndodgeableFrogger.Name, 9, 90));
-						this.Fire(new Direction(120f + r, DirectionType.Relative, -1f), new Speed(1f, SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.UndodgeableFrogger.Name, 9, 90));
-						this.Fire(new Direction(240f + r, DirectionType.Relative, -1f), new Speed(1f, SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.UndodgeableFrogger.Name, 9, 90));
+						this.Fire(new Direction(0f + r, DirectionType.Relative, -1f), new Speed(1f, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.UndodgeableFrogger.Name, 9, 90));
+						this.Fire(new Direction(120f + r, DirectionType.Relative, -1f), new Speed(1f, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.UndodgeableFrogger.Name, 9, 90));
+						this.Fire(new Direction(240f + r, DirectionType.Relative, -1f), new Speed(1f, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.UndodgeableFrogger.Name, 9, 90));
 					}
 					yield return this.Wait(75);
 					if (Shoot == true) 
 					{
 						float r = RandomAngle();
-						this.Fire(new Direction(0f+r, DirectionType.Relative, -1f), new Speed(1f, SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.UndodgeableFrogger.Name, 9, 90));
-						this.Fire(new Direction(120f+r, DirectionType.Relative, -1f), new Speed(1f, SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.UndodgeableFrogger.Name, 9, 90));
-						this.Fire(new Direction(240f +r, DirectionType.Relative, -1f), new Speed(1f, SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.UndodgeableFrogger.Name, 9, 90));
+						this.Fire(new Direction(0f+r, DirectionType.Relative, -1f), new Speed(1f, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.UndodgeableFrogger.Name, 9, 90));
+						this.Fire(new Direction(120f+r, DirectionType.Relative, -1f), new Speed(1f, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.UndodgeableFrogger.Name, 9, 90));
+						this.Fire(new Direction(240f +r, DirectionType.Relative, -1f), new Speed(1f, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.UndodgeableFrogger.Name, 9, 90));
 
 					}
 					yield return this.Wait(75);
@@ -607,7 +616,7 @@ namespace Planetside
 			}
 			public class DieBullet : SpeedChangingBullet
 			{
-				public DieBullet(bool dies) : base(StaticUndodgeableBulletEntries.UndodgeableFrogger.Name, 10, 180)
+				public DieBullet(bool dies) : base(StaticBulletEntries.UndodgeableFrogger.Name, 10, 180)
 				{
 					die = dies;
 				}
@@ -653,7 +662,7 @@ namespace Planetside
 						this.Fire(new Direction(75, DirectionType.Aim, -1f), new Speed(speed, SpeedType.Absolute), new DraGunSpotlight1.ArcBullet(target, t));
 						this.Fire(new Direction(-75, DirectionType.Aim, -1f), new Speed(speed, SpeedType.Absolute), new DraGunSpotlight1.ArcBullet(target, t));
 
-						this.Fire(new Direction(UnityEngine.Random.Range(-120, 120), DirectionType.Aim, -1f), new Speed(speed, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.undodgeableSkull.Name));
+						this.Fire(new Direction(UnityEngine.Random.Range(-120, 120), DirectionType.Aim, -1f), new Speed(speed, SpeedType.Absolute), new Bullet(StaticBulletEntries.undodgeableSkull.Name));
 
 						yield return this.Wait(30);
 					}
@@ -754,7 +763,7 @@ namespace Planetside
 					{
 						for (int j = 0; j < 7; j++)
 						{
-							this.Fire(new Direction(this.SubdivideArc(-30f, 60f, 7, j, false), DirectionType.Aim, -1f), new Speed(10f, SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.UndodgeableFrogger.Name, 7, 120));
+							this.Fire(new Direction(this.SubdivideArc(-30f, 60f, 7, j, false), DirectionType.Aim, -1f), new Speed(10f, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.UndodgeableFrogger.Name, 7, 120));
 						}
 					}
 					float direction = UnityEngine.Random.Range(-44f, 44f);
@@ -777,11 +786,11 @@ namespace Planetside
 
 					if (q == true)
 					{
-						this.Fire(new Direction(UnityEngine.Random.Range(-32f, -40f), DirectionType.Aim, -1f), new Speed(11f, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.UndodgeableFrogger.Name, false, false, false));
+						this.Fire(new Direction(UnityEngine.Random.Range(-32f, -40f), DirectionType.Aim, -1f), new Speed(11f, SpeedType.Absolute), new Bullet(StaticBulletEntries.UndodgeableFrogger.Name, false, false, false));
 					}
 					else
 					{
-						this.Fire(new Direction(UnityEngine.Random.Range(32f, 40f), DirectionType.Aim, -1f), new Speed(11f, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.UndodgeableFrogger.Name, false, false, false));
+						this.Fire(new Direction(UnityEngine.Random.Range(32f, 40f), DirectionType.Aim, -1f), new Speed(11f, SpeedType.Absolute), new Bullet(StaticBulletEntries.UndodgeableFrogger.Name, false, false, false));
 					}
 					q = !q;
 
@@ -843,7 +852,7 @@ namespace Planetside
 					bool q = UnityEngine.Random.value > 0.5f ? true : false;
 					for (int i = 0; i < 44; i++)
 					{
-						string a = q == true ? StaticUndodgeableBulletEntries.UndodgeableFrogger.Name : "default_novfx";
+						string a = q == true ? StaticBulletEntries.UndodgeableFrogger.Name : "default_novfx";
 						base.Fire(new Direction(base.SubdivideArc(-10f, 200f, 44, i, false), DirectionType.Absolute, -1f), new Speed(7f, SpeedType.Absolute), new Bullet(a, false, false, false));
 						base.Fire(new Direction(base.SubdivideArc(-10f, 200f, 44, i, false), DirectionType.Absolute, -1f), new Speed(6f, SpeedType.Absolute), new SpeedChangingBullet(a, 7, 60));
 
@@ -855,7 +864,7 @@ namespace Planetside
 					for (int i = 0; i < 44; i++)
 					{
 
-						string a = q == true ? StaticUndodgeableBulletEntries.UndodgeableFrogger.Name : "default_novfx";
+						string a = q == true ? StaticBulletEntries.UndodgeableFrogger.Name : "default_novfx";
 						base.Fire(new Direction(base.SubdivideArc(-10f, 200f, 44, i, false), DirectionType.Absolute, -1f), new Speed(1f, SpeedType.Absolute), new RocketBullet(a, 90));
 						base.Fire(new Direction(base.SubdivideArc(-10f, 200f, 44, i, false), DirectionType.Absolute, -1f), new Speed(1f, SpeedType.Absolute), new RocketBullet(a, 100));//SpeedChangingBullet(a, 7f, 210, -1, false));
 						r++;
@@ -868,7 +877,7 @@ namespace Planetside
 					for (int i = 0; i < 44; i++)
 					{
 
-						string a = q == true ? StaticUndodgeableBulletEntries.UndodgeableFrogger.Name : "default_novfx";
+						string a = q == true ? StaticBulletEntries.UndodgeableFrogger.Name : "default_novfx";
 						base.Fire(new Direction(base.SubdivideArc(-10f, 200f, 44, i, false), DirectionType.Absolute, -1f), new Speed(1f, SpeedType.Absolute), new RocketBullet(a, 190));
 						base.Fire(new Direction(base.SubdivideArc(-10f, 200f, 44, i, false), DirectionType.Absolute, -1f), new Speed(1f, SpeedType.Absolute), new RocketBullet(a, 200));//SpeedChangingBullet(a, 7f, 210, -1, false));
 						r++;

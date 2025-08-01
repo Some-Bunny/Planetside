@@ -42,8 +42,13 @@ namespace Planetside
        public void MarkCells()
         {
             PixelCollider primaryPixelCollider = speculativeRigidbody.PrimaryPixelCollider;
-            IntVector2 intVector = PhysicsEngine.PixelToUnitMidpoint(primaryPixelCollider.LowerLeft).ToIntVector2(VectorConversions.Floor) - new IntVector2(2,2);
-            IntVector2 intVector2 = PhysicsEngine.PixelToUnitMidpoint(primaryPixelCollider.UpperRight).ToIntVector2(VectorConversions.Floor) - new IntVector2(2, 2);
+
+            
+
+            IntVector2 intVector = PhysicsEngine.PixelToUnitMidpoint(primaryPixelCollider.LowerLeft).ToIntVector2(VectorConversions.Floor) + new IntVector2(-3, -3);
+            IntVector2 intVector2 = PhysicsEngine.PixelToUnitMidpoint(primaryPixelCollider.UpperRight).ToIntVector2(VectorConversions.Floor) + new IntVector2(3, 3);
+
+
             for (int i = intVector.x; i <= intVector2.x; i++)
             {
                 for (int j = intVector.y; j <= intVector2.y; j++)
@@ -91,7 +96,7 @@ namespace Planetside
                 defaultPath+"deturret_idle_010.png",
             };
 
-            AIBulletBank.Entry entry = StaticUndodgeableBulletEntries.CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("01972dee89fc4404a5c408d50007dad5").bulletBank.GetBullet("default"), "deturretShell");
+            AIBulletBank.Entry entry = StaticBulletEntries.CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("01972dee89fc4404a5c408d50007dad5").bulletBank.GetBullet("default"), "deturretShell");
 
             MajorBreakable deturretLeft = BreakableAPIToolbox.GenerateMajorBreakable("deturretLeft", idlePaths, 7, idlePaths, 18, 15000, true, 16, 16, -4, 0, true, null, null, true, null);
 
@@ -99,7 +104,11 @@ namespace Planetside
             AIBulletBank bulletBankLeft = deturretLeft.gameObject.AddComponent<AIBulletBank>();
 			DeturretController deturretC = deturretLeft.gameObject.AddComponent<DeturretController>();
 			deturretC.Speed = -60;
-			deturretC.speculativeRigidbody = deturretLeft.specRigidbody;
+
+			var mody_left = deturretC.gameObject.CreateFastBody(new IntVector2(80,80), new IntVector2(-40, -40), CollisionLayer.LowObstacle,  false, true);
+
+
+            deturretC.speculativeRigidbody = mody_left;
 			bulletBankLeft.Bullets = new List<AIBulletBank.Entry>();
 			bulletBankLeft.Bullets.Add(entry);
 
@@ -112,8 +121,11 @@ namespace Planetside
 			EnemyToolbox.GenerateShootPoint(deturretRight.gameObject, new Vector2(0.5f, 0.5f), "attachy");
 			AIBulletBank bulletBankRight = deturretRight.gameObject.AddComponent<AIBulletBank>();
 			DeturretController deturretR = deturretRight.gameObject.AddComponent<DeturretController>();
-			deturretR.Speed = 60;
-            deturretR.speculativeRigidbody = deturretRight.specRigidbody;
+
+            var mody_right = deturretR.gameObject.CreateFastBody(new IntVector2(80, 80), new IntVector2(-40, -40), CollisionLayer.LowObstacle, false, true);
+
+            deturretR.Speed = 60;
+            deturretR.speculativeRigidbody = mody_right;
 
             bulletBankRight.Bullets = new List<AIBulletBank.Entry>();
 			bulletBankRight.Bullets.Add(entry);

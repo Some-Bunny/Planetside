@@ -5,94 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
+using System.Collections;
+using static ChancebulonBlobProjectileAttack1;
 
 namespace Planetside
 {
-
-    class ContractController : MonoBehaviour
-    {
-
-        public Dictionary<int, Color> Boys = new Dictionary<int, Color>();
-
-        public ContractController()
-        {
-            this.hasBeenPickedup = false;
-        }
-        public void Start() { 
-            this.hasBeenPickedup = true;
-            
-            int h = UnityEngine.Random.Range(0, Contract.Contractors.Count);
-            Color c = new Color(UnityEngine.Random.Range(0F, 1F), UnityEngine.Random.Range(0, 1F), UnityEngine.Random.Range(0, 1F));
-            Boys.Add(h, c);
-            SpawnTheBoys(h, c);
-
-            GameManager.Instance.OnNewLevelFullyLoaded += this.OnNewFloorLoaded;
-        }
-        public void IncrementStack()
-        {
-            int h = UnityEngine.Random.Range(0, Contract.Contractors.Count);
-            Color c = new Color(UnityEngine.Random.Range(0F, 1F), UnityEngine.Random.Range(0, 1F), UnityEngine.Random.Range(0, 1F));
-            Boys.Add(h, c);
-            SpawnTheBoys(h, c);
-        }
-
-        private void OnNewFloorLoaded()
-        {
-            foreach (var entry in Boys)
-            {
-                SpawnTheBoys(entry.Key, entry.Value);
-
-            }
-            
-        }
-
-        public void OnDestroy()
-        {
-            GameManager.Instance.OnNewLevelFullyLoaded -= this.OnNewFloorLoaded;
-        }
-
-        private void SpawnTheBoys(int h, Color c)
-        {
-            RoomHandler absoluteRoom = base.transform.position.GetAbsoluteRoom();
-            IntVector2? randomAvailableCell = absoluteRoom.GetRandomAvailableCell(new IntVector2?(IntVector2.One * 4), new CellTypes?(CellTypes.FLOOR), false, null);
-            IntVector2? intVector = (randomAvailableCell == null) ? null : new IntVector2?(randomAvailableCell.GetValueOrDefault() + IntVector2.One);
-            AIActor aiactor = AIActor.Spawn(Contract.Contractors[h], intVector.Value, player.GetAbsoluteParentRoom(), true, AIActor.AwakenAnimationType.Default, true);
-
-            GameObject gameObject2 = UnityEngine.Object.Instantiate<GameObject>(StaticVFXStorage.TeleportVFX);
-            gameObject2.GetComponent<tk2dBaseSprite>().PlaceAtLocalPositionByAnchor(new Vector3(intVector.Value.x, intVector.Value.y), tk2dBaseSprite.Anchor.LowerCenter);
-            gameObject2.transform.position = gameObject2.transform.position.Quantize(0.0625f);
-            gameObject2.GetComponent<tk2dBaseSprite>().UpdateZDepth();
-
-
-            CompanionController comp = aiactor.gameActor.GetComponent<CompanionController>();
-            comp.Initialize(player);
-
-            aiactor.CompanionOwner = player;
-            aiactor.specRigidbody.Reinitialize();
-
-
-            CustomScarfDoer scorf = UnityEngine.Object.Instantiate<GameObject>(StaticVFXStorage.ScarfObject.gameObject).AddComponent<CustomScarfDoer>();
-            scorf.AttachTarget = aiactor;
-            scorf.ScarfMaterial = new Material(StaticVFXStorage.ScarfObject.ScarfMaterial);
-            scorf.StartWidth = 0.0625f;
-            scorf.EndWidth = 0.125f;
-            scorf.AnimationSpeed = 30f;
-            scorf.ScarfLength = 0.5f;
-            scorf.AngleLerpSpeed = 20;
-            scorf.BackwardZOffset = -0.2f;
-            scorf.CatchUpScale = 1.3f;
-            scorf.SinSpeed = 9f;
-            scorf.AmplitudeMod = 0.235f;
-            scorf.WavelengthMod = 1.3f;
-
-            scorf.ScarfMaterial.SetColor("_OverrideColor", c);
-
-            scorf.Initialize(aiactor);
-        }
-        public bool hasBeenPickedup;
-        public PlayerController player;
-    }
-
 
     class Contract : PerkPickupObject, IPlayerInteractable
     {
@@ -114,12 +31,11 @@ namespace Planetside
                     FlagToTrack = SaveAPI.CustomDungeonFlags.CONTRACT_FLAG_STACK
                 },
         };
-        public override CustomTrackedStats StatToIncreaseOnPickup => SaveAPI.CustomTrackedStats.AMOUNT_BOUGHT_CONTRACT;
+
 
         public static void Init()
         {
             string name = "Contractual Obligation";
-            //string resourcePath = "Planetside/Resources/PerkThings/contract.png";
             GameObject gameObject = new GameObject(name);
             Contract item = gameObject.AddComponent<Contract>();
 
@@ -127,7 +43,7 @@ namespace Planetside
             ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("contract"), data, gameObject);
             //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
             string shortDesc = "Everyone Has A Price.";
-            string longDesc = "Even the Gundead have a price for when they'll turn on their own.\nLuckily, to your advantage.";
+            string longDesc = "Even the Gundead have a price to turn against their own.\nLuckily, to your advantage.";
             item.SetupItem(shortDesc, longDesc, "psog");
             Contract.ContractID = item.PickupObjectId;
             item.quality = PickupObject.ItemQuality.EXCLUDED;
@@ -135,8 +51,11 @@ namespace Planetside
 
             PerkParticleSystemController particles = gameObject.AddComponent<PerkParticleSystemController>();
             particles.ParticleSystemColor = Color.white;
-            particles.ParticleSystemColor2 = Color.white;
+            particles.ParticleSystemColor2 = Color.cyan;
             item.OutlineColor = new Color(0.6f, 0.6f, 0.6f);
+
+            item.StackPickupNotificationText = "Hire an Additional Killer.";
+            item.InitialPickupNotificationText = "Hire a Friendly Contract Killer.";
 
 
             var actor = EnemyDatabase.GetOrLoadByGuid("5861e5a077244905a8c25c2b7b4d6ebb");
@@ -378,7 +297,6 @@ namespace Planetside
             Contractors.Add(aiactor);
 
         }
-
         public static void InitContractor3()
         {
             var actor = EnemyDatabase.GetOrLoadByGuid("df7fb62405dc4697b7721862c7b6b3cd");
@@ -502,64 +420,174 @@ namespace Planetside
         public static int ContractID;
 
         public static List<AIActor> Contractors = new List<AIActor>();
-        public new bool PrerequisitesMet()
+        public override CustomDungeonFlags FlagToSetOnStack => CustomDungeonFlags.CONTRACT_FLAG_STACK;
+
+
+
+
+        public override void OnInitialPickup(PlayerController playerController)
         {
-            EncounterTrackable component = base.GetComponent<EncounterTrackable>();
-            return component == null || component.PrerequisitesMet();
-        }
-        public override void Pickup(PlayerController player)
-        {
-            if (m_hasBeenPickedUp)
-                return;
-            base.HandleEncounterable(player);
-
-            SaveAPI.AdvancedGameStatsManager.Instance.RegisterStatChange(StatToIncreaseOnPickup, 1);
-
-            m_hasBeenPickedUp = true;
-            AkSoundEngine.PostEvent("Play_OBJ_dice_bless_01", player.gameObject);
-
-            PerkParticleSystemController cont = base.GetComponent<PerkParticleSystemController>();
-            if (cont != null) { cont.DoBigBurst(player); }
-
-            ContractController contract = player.gameObject.GetOrAddComponent<ContractController>();
-            contract.player = player;
-            if (contract.hasBeenPickedup == true)
-            { contract.IncrementStack(); SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.CONTRACT_FLAG_STACK, true); }
-
-            string BlurbText = contract.hasBeenPickedup == true ? "Hire an Additional Killer.": "Hire a Friendly Contract Killer.";
-
-
-            Exploder.DoDistortionWave(player.sprite.WorldTopCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
-            OtherTools.NotifyCustom("Contract", BlurbText, "contract", StaticSpriteDefinitions.Pickup_Sheet_Data, UINotificationController.NotificationColor.GOLD);
-
-            player.BloopItemAboveHead(base.sprite, "");
-            UnityEngine.Object.Destroy(base.gameObject);
+            GameManager.Instance.OnNewLevelFullyLoaded += this.OnNewFloorLoaded;
         }
 
-        public void Start()
+
+        public override void OnStack(PlayerController playerController)
         {
-            try
+            int h = UnityEngine.Random.Range(0, Contract.Contractors.Count);
+            Color c = new Color(UnityEngine.Random.Range(0F, 1F), UnityEngine.Random.Range(0, 1F), UnityEngine.Random.Range(0, 1F));
+            Boys.Add(new Tuple<int, Color>(h, c));
+            if (playerController.CurrentRoom == null) { return; }
+            SpawnTheBoys(h, c, playerController);
+        }
+        private Coroutine Coroutine;
+
+        public List<Tuple<int, Color>> Boys = new List<Tuple<int, Color>>();
+
+        private void OnNewFloorLoaded()
+        {
+            if (Coroutine != null) { this.StopCoroutine(Coroutine); Coroutine = null; }
+            Coroutine = this.StartCoroutine(Wait());
+        }
+        private IEnumerator Wait()
+        {
+            while(_Owner.CurrentRoom == null)
             {
-                GameManager.Instance.PrimaryPlayer.CurrentRoom.RegisterInteractable(this);
-                SpriteOutlineManager.AddOutlineToSprite(base.sprite, OutlineColor, 0.1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
+                yield return null;
             }
-            catch (Exception er)
+            ActiveBoys = new List<AIActor>();
+            foreach (var entry in Boys)
             {
-                ETGModConsole.Log(er.Message, false);
+                SpawnTheBoys(entry.First, entry.Second, _Owner);
             }
+            yield break;
         }
 
-      
-
-        private void Update()
+        public override void OnDestroy()
         {
-            if (!this.m_hasBeenPickedUp && !this.m_isBeingEyedByRat && base.ShouldBeTakenByRat(base.sprite.WorldCenter))
-            {
-                GameManager.Instance.Dungeon.StartCoroutine(base.HandleRatTheft());
-            }
+            base.OnDestroy();
+            GameManager.Instance.OnNewLevelFullyLoaded -= this.OnNewFloorLoaded;
         }
 
+        private void SpawnTheBoys(int h, Color c, PlayerController playerController)
+        {
+            RoomHandler absoluteRoom = playerController.CurrentRoom;
 
-        private bool m_hasBeenPickedUp;
+            IntVector2? randomAvailableCell = absoluteRoom?.GetRandomAvailableCell(new IntVector2?(IntVector2.One * 4), new CellTypes?(CellTypes.FLOOR), false, null);
+            IntVector2? intVector = (randomAvailableCell == null) ? null : new IntVector2?(randomAvailableCell.GetValueOrDefault() + IntVector2.One);
+            AIActor aiactor = AIActor.Spawn(Contract.Contractors[h], intVector != null ? intVector.Value : new IntVector2((int)playerController.transform.position.x, (int)playerController.transform.position.y), playerController.CurrentRoom, true, AIActor.AwakenAnimationType.Default, true);
+
+            GameObject gameObject2 = UnityEngine.Object.Instantiate<GameObject>(StaticVFXStorage.TeleportVFX);
+            gameObject2.GetComponent<tk2dBaseSprite>().PlaceAtLocalPositionByAnchor(new Vector3(intVector.Value.x, intVector.Value.y), tk2dBaseSprite.Anchor.LowerCenter);
+            gameObject2.transform.position = gameObject2.transform.position.Quantize(0.0625f);
+            gameObject2.GetComponent<tk2dBaseSprite>().UpdateZDepth();
+
+
+            CompanionController comp = aiactor.gameActor.GetComponent<CompanionController>();
+            comp.Initialize(playerController);
+
+            aiactor.CompanionOwner = playerController;
+            aiactor.specRigidbody.Reinitialize();
+
+
+            CustomScarfDoer scorf = UnityEngine.Object.Instantiate<GameObject>(StaticVFXStorage.ScarfObject.gameObject).AddComponent<CustomScarfDoer>();
+
+            scorf.AttachTarget = aiactor;
+            scorf.ScarfMaterial = new Material(StaticVFXStorage.ScarfObject.ScarfMaterial);
+            scorf.StartWidth = 0.0625f;
+            scorf.EndWidth = 0.125f;
+            scorf.AnimationSpeed = 30f;
+            scorf.ScarfLength = 0.5f;
+            scorf.AngleLerpSpeed = 20;
+            scorf.BackwardZOffset = -0.2f;
+            scorf.CatchUpScale = 1.3f;
+            scorf.SinSpeed = 9f;
+            scorf.AmplitudeMod = 0.235f;
+            scorf.WavelengthMod = 1.3f;
+
+            scorf.ScarfMaterial.SetColor("_OverrideColor", c);
+
+            scorf.Initialize(aiactor);
+            ActiveBoys.Add(aiactor);
+        }
+        private List<AIActor> ActiveBoys = new List<AIActor>();
+
+        public override void MidGameSerialize(List<object> data)
+        {
+            base.MidGameSerialize(data);
+            if (isDummy) { return; }
+            data.Add(Boys.Count);
+            Debug.Log($"Cerealizing...");
+
+            Debug.Log($"Count: {Boys.Count}");
+            foreach (var entry in Boys)
+            {
+                data.Add(entry.First);
+                Debug.Log($"Type: {entry.First}");
+
+                string Color = $"{entry.Second.r}|{entry.Second.g}|{entry.Second.b}|1";
+                Debug.Log($"Color: {Color}");
+
+                data.Add(Color);
+            }
+            Debug.Log($"Cerealizing End.");
+
+        }
+        public override void MidGameDeserialize(List<object> data)
+        {
+            base.MidGameDeserialize(data);
+            if (isDummy) { return; }
+            Debug.Log($"Decerealizing...");
+
+            int count = 0;
+            int amountOfBoys = (int)data[count++];
+            Debug.Log($"Count: {amountOfBoys}");
+
+            List<int> BoyType = new List<int>();
+            List<Color> BoyPride = new List<Color>();
+            for (int i = 0; i < amountOfBoys; i++)
+            {
+                int Type = (int)data[count++];
+                BoyType.Add(Type);
+                Debug.Log($"Type: {Type}");
+
+                Color c = new Color(1,1,1,1);
+                string colorString = (string)data[count++];
+                Debug.Log($"Color: {colorString}");
+
+                int colorSplit = 0;
+                foreach (var entry in colorString.Split('|'))
+                {
+                    float outInt;
+                    bool parsedInt = float.TryParse(entry, out outInt);
+                    if (parsedInt)
+                    {
+                        switch (colorSplit)
+                        {
+                            case 0:
+                                c.r = outInt; break;
+                            case 1:
+                                c.g = outInt; break;
+                            case 2:
+                                c.b = outInt; break;
+                            case 3:
+                                c.a = outInt; break;
+                        }
+                    }
+                    colorSplit++;
+                }
+                BoyPride.Add(c);
+            }
+            Debug.Log($"Decerealizing End.");
+
+            SetStuffUp(amountOfBoys, BoyType, BoyPride);
+        }
+        public void SetStuffUp(int amountOfBoys, List<int> BoyType, List<Color> BoyPride)
+        {
+            Boys = new List<Tuple<int, Color>>();
+            for (int i = 0; i < amountOfBoys; i++)
+            {
+                Boys.Add(new Tuple<int, Color>(BoyType[i], BoyPride[i]));
+            }
+        }
     }
 }

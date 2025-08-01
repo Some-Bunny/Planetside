@@ -23,15 +23,15 @@ namespace Planetside
             ScarfObject = scarf.ScarfPrefab;
             BloodiedScarfPoofVFX = scarf.BlinkpoofVfx;
 
-            var partObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("TheperkParticle"));//this is the name of the object which by default will be "Particle System"
-            PerkParticleObject = partObj;
-            FakePrefab.MarkAsFakePrefab(partObj);
-            PerkParticleSystem = partObj.GetComponent<ParticleSystem>();
-            FakePrefab.MarkAsFakePrefab(PerkParticleSystem.gameObject);
-            var main = PerkParticleSystem.main;
-            main.stopAction = ParticleSystemStopAction.None;
-            main.maxParticles = 2000;
-            main.duration = 1200;
+            //var partObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("TheperkParticle"));//this is the name of the object which by default will be "Particle System"
+            //PerkParticleObject = partObj;
+            //FakePrefab.MarkAsFakePrefab(partObj);
+            //PerkParticleSystem = partObj.GetComponent<ParticleSystem>();
+            //FakePrefab.MarkAsFakePrefab(PerkParticleSystem.gameObject);
+            //var main = PerkParticleSystem.main;
+            //main.stopAction = ParticleSystemStopAction.None;
+            //main.maxParticles = 2000;
+            //main.duration = 1200;
             JammedDeathVFX = (GameObject)BraveResources.Load("Global VFX/VFX_BlackPhantomDeath", ".prefab");
 
             var PerfpartObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("PerfectedParticles"));
@@ -40,7 +40,7 @@ namespace Planetside
             FakePrefab.MarkAsFakePrefab(PerfectedParticleSystem.gameObject);
 
 
-            var mainperf = PerkParticleSystem.main;
+            var mainperf = PerfectedParticleSystem.main;
             mainperf.stopAction = ParticleSystemStopAction.None;
             mainperf.maxParticles = 2000;
             mainperf.duration = 1200;
@@ -592,13 +592,13 @@ namespace Planetside
         public static GameObject BlueSynergyPoofVFX;
         public static GameObject HealingSparklesVFX;
 
-        public static ParticleSystem PerkParticleSystem;
+        //public static ParticleSystem PerkParticleSystem;
         public static ParticleSystem PerfectedParticleSystem;
         public static ParticleSystem PortalParticleSystem;
 
 
 
-        public static GameObject PerkParticleObject;
+        //public static GameObject PerkParticleObject;
 
         public static ParticleSystem CeramicParticleSystem;
         public static ParticleSystem BloodSplatterParticleSystem;

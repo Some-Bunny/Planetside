@@ -16,6 +16,7 @@ using System.Collections.ObjectModel;
 
 using UnityEngine.Serialization;
 using SaveAPI;
+using Alexandria.Assetbundle;
 
 namespace Planetside
 {
@@ -109,51 +110,18 @@ namespace Planetside
 			SpinningDeath.SpinningDeathID = item.PickupObjectId;
 			ItemIDs.AddToList(item.PickupObjectId);
 
-            List<string> BeamAnimPaths = new List<string>()
-            {
-				"Planetside/Resources/Beams/SpinningDeath/spinningDeath_mid_001",
-
-            };
-            List<string> StartAnimPaths = new List<string>()
-            {
-				"Planetside/Resources/Beams/SpinningDeath/spinningDeath_mid_001",
-
-			};
-			List<string> EndAnimPaths = new List<string>()
-			{"Planetside/Resources/Beams/SpinningDeath/spinningDeath_end_001",
-			};
-
-			List<string> ImpactAnimPaths = new List<string>()
-            {
-				"Planetside/Resources/Beams/SpinningDeath/spinningDeath_impact_001",
-				"Planetside/Resources/Beams/SpinningDeath/spinningDeath_impact_002",
-				"Planetside/Resources/Beams/SpinningDeath/spinningDeath_impact_001",
-				"Planetside/Resources/Beams/SpinningDeath/spinningDeath_impact_003",
-			};
+            
             Projectile projectile = UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(86) as Gun).DefaultModule.projectiles[0]);
 
-            BasicBeamController beamComp = projectile.GenerateBeamPrefab(
-				"Planetside/Resources/Beams/SpinningDeath/spinningDeath_mid_001",
-                new Vector2(5, 5),
-                new Vector2(0, 0),
-                BeamAnimPaths,
-                1,
-                //Beam Impact
-                ImpactAnimPaths,
-                1,
-                new Vector2(5, 5),
-                new Vector2(0, 0),
-				//End of the Beam
-				EndAnimPaths,
-                1,
-                null,
-                null,
-                //Start of the Beam
-                StartAnimPaths,
-                12,
-                new Vector2(5, 5),
-                new Vector2(0, 0)
-                );
+            BasicBeamController beamComp = projectile.GenerateBeamPrefabBundle(
+			"spinningDeath_mid_001",
+			StaticSpriteDefinitions.Beam_Sheet_Data,
+			StaticSpriteDefinitions.Beam_Animation_Data,
+            "spinndingdeath_mid", new Vector2(6, 6), new Vector2(0, 0), //Main
+            "spinndingdeath_impact", new Vector2(6, 6), new Vector2(0, 0), //Impact
+            "spinndingdeath_end", new Vector2(6, 6), new Vector2(0, 0), //End Of beam
+			null, null, null, //Start Of Beam
+			true);
             projectile.gameObject.SetActive(false);
 			projectile.baseData.damage = 26;
 			projectile.baseData.range = 2.25f;

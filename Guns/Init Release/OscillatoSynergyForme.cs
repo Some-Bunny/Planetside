@@ -71,7 +71,7 @@ namespace Planetside
 			Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(gun.Volley.projectiles[0].projectiles[0]);
 			projectile.gameObject.SetActive(false);
 			gun.Volley.projectiles[0].projectiles[0] = projectile;
-			projectile.baseData.damage = 3f;
+			projectile.baseData.damage = 4.5f;
 			projectile.baseData.speed *= 0.8f;
 			projectile.gameObject.AddComponent<OscillatorProjectile>();
 			PierceProjModifier spook = projectile.gameObject.AddComponent<PierceProjModifier>();

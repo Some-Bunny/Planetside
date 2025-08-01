@@ -1,115 +1,16 @@
 ﻿using Dungeonator;
+using HarmonyLib;
 using ItemAPI;
 using SaveAPI;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using tk2dRuntime.TileMap;
 using UnityEngine;
 
 namespace Planetside
 {
-    class GlassComponent : MonoBehaviour
-    {
-        public int Stack = 0;
-        public GlassComponent()
-        {
-            this.DamageMult = 1.75f;
-            this.DamageToGetFromOverHeal = 0.05f;
-            this.hasBeenPickedup = false;
-            this.LeniencyProtection = 0;
-        }
-        public void Start()
-        {
-            //
-            Stack = 1;
-            if (player.ForceZeroHealthState == true && player.healthHaver.Armor > 4)
-            {
-                player.healthHaver.Armor = 4;
-            }
-            else
-            {
-                float HPtOremove = (player.stats.GetStatValue(PlayerStats.StatType.Health));
-                OtherTools.ApplyStat(player, PlayerStats.StatType.Health, (-HPtOremove) + 1, StatModifier.ModifyMethod.ADDITIVE);
-                if (player.healthHaver.Armor > 1) { player.healthHaver.Armor = 1; }
-            }
-            if (this.hasBeenPickedup == false)
-            {
-                this.hasBeenPickedup = true;
-                StatModifier item = new StatModifier
-                {
-                    statToBoost = PlayerStats.StatType.Damage,
-                    amount = DamageMult,
-                    modifyType = StatModifier.ModifyMethod.MULTIPLICATIVE
-                };
-                this.DamageStat = item;
-                player.ownerlessStatModifiers.Add(item);
-                player.stats.RecalculateStats(player, true, true);
-            }
-            else
-            {
-                GiveDamage();
-            }
-
-        }
-        public void Update()
-        {
-            int ArmorAllowed = player.ForceZeroHealthState == true ? 4 : 2; //
-            ArmorAllowed += LeniencyProtection;
-            if (player.healthHaver.Armor > ArmorAllowed){
-                DoHurty();
-                OtherTools.NotifyCustom("A Glass Curse", "Prevented Armor Increase!", "glass", StaticSpriteDefinitions.Pickup_Sheet_Data, UINotificationController.NotificationColor.GOLD);
-                player.healthHaver.Armor = ArmorAllowed; 
-            }
-            if ((player.stats.GetStatValue(PlayerStats.StatType.Health) != 1 && player.stats.GetStatValue(PlayerStats.StatType.Health) >= 1)){
-                DoHurty();
-                float HPtOremove = (player.stats.GetStatValue(PlayerStats.StatType.Health));
-                OtherTools.ApplyStat(player, PlayerStats.StatType.Health, (-HPtOremove) + 1, StatModifier.ModifyMethod.ADDITIVE);
-                OtherTools.NotifyCustom("A Glass Curse", "Prevented Health Increase!", "glass", StaticSpriteDefinitions.Pickup_Sheet_Data, UINotificationController.NotificationColor.GOLD);
-            }
-        }
-
-        public void DoHurty(bool IsBigHeart = false)
-        {
-            if (player){
-                SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.GLASS_FLAG_OVERHEAL, true);
-                //if (IsBigHeart == true) { DamageMult += DamageToGetFromOverHeal*2; } else { DamageMult += DamageToGetFromOverHeal; }
-                AkSoundEngine.PostEvent("Play_OBJ_key_impact_01", player.gameObject);
-                GameObject vfx = UnityEngine.Object.Instantiate<GameObject>((PickupObjectDatabase.GetById(228) as Gun).DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX);
-                tk2dBaseSprite component = vfx.GetComponent<tk2dBaseSprite>();
-                component.PlaceAtPositionByAnchor(player.transform.position + new Vector3(0.375f, 0.375f), tk2dBaseSprite.Anchor.MiddleCenter);
-                //player.ownerlessStatModifiers.Remove(this.DamageStat);
-                GiveDamage();
-            }
-        }
-        public void GiveDamage()
-        {
-            StatModifier item = new StatModifier
-            {
-                statToBoost = PlayerStats.StatType.Damage,
-                amount = DamageToGetFromOverHeal,
-                modifyType = StatModifier.ModifyMethod.ADDITIVE
-            };
-            player.ownerlessStatModifiers.Add(item);
-            player.stats.RecalculateStats(player, true, true);
-        }
-
-        
-        public void IncrementStack()
-        {
-            Stack++;
-            this.DamageToGetFromOverHeal += 0.025f;
-            this.DamageMult += 0.2f;
-            this.DamageStat.amount = this.DamageMult;
-            player.stats.RecalculateStats(player, true, true);
-            if (LeniencyProtection != -1) {LeniencyProtection = -1;}
-        }
-        private StatModifier DamageStat;
-        public PlayerController player;
-        public bool hasBeenPickedup;
-        public float DamageMult;
-        public int LeniencyProtection;
-        public float DamageToGetFromOverHeal;
-    }
+    
     class Glass : PerkPickupObject, IPlayerInteractable
     {
 
@@ -127,6 +28,13 @@ namespace Planetside
                     AmountToBuyBeforeReveal = 1,
                     LockedString = AlphabetController.ConvertString("Glass Cannon"),
                     UnlockedString = "Very Low Health, Much Higher Damage.",
+                    requiresFlag = false
+                },
+                new PerkDisplayContainer()
+                {
+                    AmountToBuyBeforeReveal = 2,
+                    LockedString = AlphabetController.ConvertString("Limit Breaker"),
+                    UnlockedString = "Damage Caps become very lenient.",
                     requiresFlag = false
                 },
                 new PerkDisplayContainer()
@@ -151,7 +59,7 @@ namespace Planetside
                     FlagToTrack = SaveAPI.CustomDungeonFlags.GLASS_FLAG_STACK
                 },
         };
-        public override CustomTrackedStats StatToIncreaseOnPickup => SaveAPI.CustomTrackedStats.AMOUNT_BOUGHT_GLASS;
+        public override CustomDungeonFlags FlagToSetOnStack => CustomDungeonFlags.GLASS_FLAG_STACK;
         public static void Init()
         {
             string name = "Glass";
@@ -172,20 +80,51 @@ namespace Planetside
             particles.ParticleSystemColor2 = Color.blue;
             item.encounterTrackable.DoNotificationOnEncounter = false;
 
+            item.InitialPickupNotificationText = "Fragile, yet Fatal.";
+            item.StackPickupNotificationText = "Even More Fatal.";
 
 
-
+            Alexandria.DungeonAPI.DungeonHooks.OnPostDungeonGeneration += () =>
+            {
+                ConvertedEnemies.Clear();
+            };
             item.OutlineColor = new Color(0, 0.045f, 0.9f);
         }
+
+        public static List<AIActor> ConvertedEnemies = new List<AIActor>();
+
         public static int GlassID;
 
-
-        public new bool PrerequisitesMet()
+        
+        [HarmonyPatch(typeof(HealthHaver), nameof(HealthHaver.ApplyDamageDirectional))]
+        public class __
         {
-            EncounterTrackable component = base.GetComponent<EncounterTrackable>();
-            return component == null || component.PrerequisitesMet();
+            [HarmonyPrefix]
+            private static bool A(HealthHaver __instance, float damage, Vector2 direction, string damageSource, CoreDamageTypes damageTypes, DamageCategory damageCategory = DamageCategory.Normal, bool ignoreInvulnerabilityFrames = false, PixelCollider hitPixelCollider = null, bool ignoreDamageCaps = false)
+            {
+                if (__instance && __instance.gameActor != null && __instance.gameActor is AIActor enemy)
+                {
+                    if (!ConvertedEnemies.Contains(enemy))
+                    {
+                        foreach (var entry in GameManager.Instance.AllPlayers)
+                        {
+                            if (entry.HasPerk(GlassID) != null)
+                            {
+                                __instance.m_bossDpsCap *= 3f;
+                                __instance.m_damageCap *= 3f;
+                                break;
+                            }
+                        }
+                        ConvertedEnemies.Add(enemy);
+                    }
+                }
+                return true;
+            }
         }
 
+
+
+        /*
         public override void Pickup(PlayerController player)
         {
             if (m_hasBeenPickedUp)
@@ -208,31 +147,101 @@ namespace Planetside
             OtherTools.NotifyCustom("Glass", BlurbText, "glass", StaticSpriteDefinitions.Pickup_Sheet_Data, UINotificationController.NotificationColor.GOLD);
             UnityEngine.Object.Destroy(base.gameObject);
         }
+        */
 
-        public void Start()
+        public override void OnInitialPickup(PlayerController player)
         {
-            try
+            LeniencyProtection = 0;
+            if (player.ForceZeroHealthState == true && player.healthHaver.Armor > 4)
             {
-                GameManager.Instance.PrimaryPlayer.CurrentRoom.RegisterInteractable(this);
-                SpriteOutlineManager.AddOutlineToSprite(base.sprite, OutlineColor, 0.1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
+                player.healthHaver.Armor = 4;
             }
-            catch (Exception er)
+            else
             {
-                ETGModConsole.Log(er.Message, false);
+                float HPtOremove = (player.stats.GetStatValue(PlayerStats.StatType.Health));
+                OtherTools.ApplyStat(player, PlayerStats.StatType.Health, (-HPtOremove) + 1, StatModifier.ModifyMethod.ADDITIVE);
+                if (player.healthHaver.Armor > 1) { player.healthHaver.Armor = 1; }
+            }
+            StatModifier item = new StatModifier
+            {
+                statToBoost = PlayerStats.StatType.Damage,
+                amount = DamageMult,
+                modifyType = StatModifier.ModifyMethod.MULTIPLICATIVE
+            };
+            this.DamageStat = item;
+            player.ownerlessStatModifiers.Add(item);
+            player.stats.RecalculateStats(player, true, true);
+        }
+
+
+        public override void Update()
+        {
+            if (_Owner)
+            {
+                int ArmorAllowed = _Owner.ForceZeroHealthState == true ? 4 : 2; 
+                ArmorAllowed += LeniencyProtection;
+                if (_Owner.healthHaver.Armor > ArmorAllowed)
+                {
+                    DoHurty();
+                    OtherTools.NotifyCustom("A Glass Curse", "Prevented Armor Increase!", "glass", StaticSpriteDefinitions.Pickup_Sheet_Data, UINotificationController.NotificationColor.GOLD);
+                    _Owner.healthHaver.Armor = ArmorAllowed;
+                }
+                if ((_Owner.stats.GetStatValue(PlayerStats.StatType.Health) != 1 && _Owner.stats.GetStatValue(PlayerStats.StatType.Health) >= 1))
+                {
+                    DoHurty();
+                    float HPtOremove = (_Owner.stats.GetStatValue(PlayerStats.StatType.Health));
+                    OtherTools.ApplyStat(_Owner, PlayerStats.StatType.Health, (-HPtOremove) + 1, StatModifier.ModifyMethod.ADDITIVE);
+                    OtherTools.NotifyCustom("A Glass Curse", "Prevented Health Increase!", "glass", StaticSpriteDefinitions.Pickup_Sheet_Data, UINotificationController.NotificationColor.GOLD);
+                }
             }
         }
 
-      
-
-        private void Update()
+        public void DoHurty(bool IsBigHeart = false)
         {
-            if (!this.m_hasBeenPickedUp && !this.m_isBeingEyedByRat && base.ShouldBeTakenByRat(base.sprite.WorldCenter))
+            if (_Owner)
             {
-                GameManager.Instance.Dungeon.StartCoroutine(base.HandleRatTheft());
+                SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.GLASS_FLAG_OVERHEAL, true);
+                //if (IsBigHeart == true) { DamageMult += DamageToGetFromOverHeal*2; } else { DamageMult += DamageToGetFromOverHeal; }
+                AkSoundEngine.PostEvent("Play_OBJ_key_impact_01", _Owner.gameObject);
+                GameObject vfx = UnityEngine.Object.Instantiate<GameObject>((PickupObjectDatabase.GetById(228) as Gun).DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX);
+                tk2dBaseSprite component = vfx.GetComponent<tk2dBaseSprite>();
+                component.PlaceAtPositionByAnchor(_Owner.transform.position + new Vector3(0.375f, 0.375f), tk2dBaseSprite.Anchor.MiddleCenter);
+                //player.ownerlessStatModifiers.Remove(this.DamageStat);
+                GiveDamage(IsBigHeart);
             }
+        }
+        public void GiveDamage(bool IsBig = false)
+        {
+            StatModifier item = new StatModifier
+            {
+                statToBoost = PlayerStats.StatType.Damage,
+                amount = DamageToGetFromOverHeal * (IsBig ? 1.5f : 1),
+                modifyType = StatModifier.ModifyMethod.ADDITIVE
+            };
+            TotalAddedDamage += DamageToGetFromOverHeal * (IsBig ? 1.5f : 1);
+            _Owner.ownerlessStatModifiers.Add(item);
+            _Owner.stats.RecalculateStats(_Owner, true, true);
         }
 
 
-        private bool m_hasBeenPickedUp;
+        public void IncrementStack()
+        {
+            this.DamageToGetFromOverHeal += 0.025f;
+            this.DamageMult += 0.2f;
+            this.DamageStat.amount = this.DamageMult;
+            _Owner.stats.RecalculateStats(_Owner, true, true);
+            if (LeniencyProtection != -1) { LeniencyProtection = -1; }
+        }
+
+
+
+
+
+        private StatModifier DamageStat;
+        public float DamageMult = 1.75f;
+        public int LeniencyProtection = 0;
+        public float DamageToGetFromOverHeal = 0.05f;
+
+        private float TotalAddedDamage = 0;
     }
 }

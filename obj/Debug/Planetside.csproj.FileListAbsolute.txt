@@ -118,3 +118,7 @@ D:\reposSecondary\failsafes\Planetside\obj\Debug\Planetside.csproj.Up2Date
 D:\reposSecondary\failsafes\Planetside\obj\Debug\Planetside.dll
 D:\reposSecondary\failsafes\Planetside\obj\Debug\Planetside.pdb
 D:\reposSecondary\failsafes\Planetside\bin\Debug\AmmonomiconAPI.dll
+D:\reposSecondary\failsafes\Planetside\bin\Debug\UnityEngine.UIElementsModule.dll
+D:\reposSecondary\failsafes\Planetside\bin\Debug\UnityEngine.StyleSheetsModule.dll
+D:\reposSecondary\failsafes\Planetside\bin\Debug\UnityEngine.UIElementsModule.xml
+D:\reposSecondary\failsafes\Planetside\bin\Debug\UnityEngine.StyleSheetsModule.xml

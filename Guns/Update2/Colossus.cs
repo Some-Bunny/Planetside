@@ -61,64 +61,19 @@ namespace Planetside
                 mod.cooldownTime = 0.001f;
                 mod.numberOfShotsInClip = 40;
 
-
-                List<string> BeamAnimPaths = new List<string>()
-            {
-                "Planetside/Resources/Beams/Colossus/colossusbeam_mid_001",
-                "Planetside/Resources/Beams/Colossus/colossusbeam_mid_002",
-                "Planetside/Resources/Beams/Colossus/colossusbeam_mid_003",
-                "Planetside/Resources/Beams/Colossus/colossusbeam_mid_004",
-
-            };
-                List<string> StartAnimPaths = new List<string>()
-            {
-                "Planetside/Resources/Beams/Colossus/colossusbeam_start_001",
-                "Planetside/Resources/Beams/Colossus/colossusbeam_start_002",
-                "Planetside/Resources/Beams/Colossus/colossusbeam_start_003",
-                "Planetside/Resources/Beams/Colossus/colossusbeam_start_004",
-
-
-            };
-
-                List<string> ImpactAnimPaths = new List<string>()
-            {
-                "Planetside/Resources/Beams/Colossus/colossusbeam_impact_001",
-                "Planetside/Resources/Beams/Colossus/colossusbeam_impact_002",
-                "Planetside/Resources/Beams/Colossus/colossusbeam_impact_003",
-                "Planetside/Resources/Beams/Colossus/colossusbeam_impact_004",
-
-            };
-
-                List<string> End = new List<string>()
-            {
-                "Planetside/Resources/Beams/Colossus/colossusbeam_end_001",
-
-            };
-
                 Projectile projectile = UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(86) as Gun).DefaultModule.projectiles[0]);
 
-                BasicBeamController beamComp = projectile.GenerateBeamPrefab(
-                    "Planetside/Resources/Beams/Colossus/colossusbeam_mid_001",
-                    new Vector2(10, 2),
-                    new Vector2(0, 4),
-                    BeamAnimPaths,
-                    12,
-                    //Beam Impact
-                    ImpactAnimPaths,
-                    12,
-                    new Vector2(4, 4),
-                    new Vector2(7, 7),
-                    //End of the Beam
-                    null,
-                    -1,
-                    null,
-                    null,
-                    //Start of the Beam
-                    StartAnimPaths,
-                    12,
-                    new Vector2(10, 2),
-                    new Vector2(0, 4)
-                    );
+                BasicBeamController beamComp = projectile.GenerateBeamPrefabBundle(
+                "colossusbeam_mid_001",
+                StaticSpriteDefinitions.Beam_Sheet_Data,
+                StaticSpriteDefinitions.Beam_Animation_Data,
+                "colossus_mid", new Vector2(12, 8), new Vector2(0, 2), //Main
+                "colossus_impact", new Vector2(12, 8), new Vector2(0, 2), //Impact
+                "colossus_mid", new Vector2(12, 8), new Vector2(0, 2), //End Of beam
+                "colossus_start", new Vector2(12, 8), new Vector2(0, 2), //Start Of Beam
+                true);
+
+
 
                 projectile.gameObject.SetActive(false);
                 FakePrefab.MarkAsFakePrefab(projectile.gameObject);
@@ -186,7 +141,7 @@ namespace Planetside
 
 
                 int Length = 4;
-                Alexandria.Assetbundle.ProjectileBuilders.AnimateProjectileBundle(projectile, "PerfectedProjectile", StaticSpriteDefinitions.Projectile_Sheet_Data, StaticSpriteDefinitions.Projectile_Animation_Data, "PerfectedProjectile",
+                Alexandria.Assetbundle.ProjectileBuilders.AnimateProjectileBundle(perfProjectile, "PerfectedProjectile", StaticSpriteDefinitions.Projectile_Sheet_Data, StaticSpriteDefinitions.Projectile_Animation_Data, "PerfectedProjectile",
                  AnimateBullet.ConstructListOfSameValues<IntVector2>(new IntVector2(11, 11), Length),
                 AnimateBullet.ConstructListOfSameValues(true, Length),
                 AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.MiddleCenter, Length),

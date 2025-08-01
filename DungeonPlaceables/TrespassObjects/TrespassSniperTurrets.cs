@@ -131,7 +131,7 @@ namespace Planetside
                 for (int k = 0; k < 3; k++)
                 {
                     GameObject gameObject = SpawnManager.SpawnProjectile(this.bulletBank.Bullets[k].BulletObject, shootPosition.position, Quaternion.Euler(0f, 0f, ReturnDirection().ToAngle()), true);
-                    Projectile component = gameObject.GetComponent<Projectile>();
+                    Projectile component = gameObject.GetComponent<ThirdDimensionalProjectile>();
                     component.baseData.speed = 30;
                     component.UpdateSpeed();
                     component.Shooter = this.GetComponent<SpeculativeRigidbody>();
@@ -253,9 +253,9 @@ namespace Planetside
 
 
 
-            AIBulletBank.Entry entry1 = StaticUndodgeableBulletEntries.CopyBulletBankEntry(StaticUndodgeableBulletEntries.undodgeableBigBullet, "turretShot1");
-            AIBulletBank.Entry entry2 = StaticUndodgeableBulletEntries.CopyBulletBankEntry(StaticUndodgeableBulletEntries.undodgeableDefault, "turretShot2");
-            AIBulletBank.Entry entry3 = StaticUndodgeableBulletEntries.CopyBulletBankEntry(StaticUndodgeableBulletEntries.undodgeableSmallSpore, "turretShot3");
+            AIBulletBank.Entry entry1 = StaticBulletEntries.CopyBulletBankEntry(StaticBulletEntries.undodgeableBigBullet, "turretShot1");
+            AIBulletBank.Entry entry2 = StaticBulletEntries.CopyBulletBankEntry(StaticBulletEntries.undodgeableDefault, "turretShot2");
+            AIBulletBank.Entry entry3 = StaticBulletEntries.CopyBulletBankEntry(StaticBulletEntries.undodgeableSmallSpore, "turretShot3");
 
 
 

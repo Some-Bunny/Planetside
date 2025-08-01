@@ -32,7 +32,7 @@ namespace Planetside
                 { GenerateCopperpot().gameObject, 1f },
                 { GenerateSilverpot().gameObject, 0.1f },
                 { GenerateGoldpot().gameObject, 0.01f },
-                { GenerateGlitchpot().gameObject, 0.001f },
+                { GenerateGlitchpot().gameObject, 0.0005f },
                 { GenerateCreditpot().gameObject, 0.00333f }
             };
             DungeonPlaceable placeable = BreakableAPIToolbox.GenerateDungeonPlaceable(dict);
@@ -878,7 +878,7 @@ namespace Planetside
 
                         IntVector2 intVector = minorbreakable.specRigidbody.UnitCenter.ToIntVector2(VectorConversions.Floor);
                         RoomHandler roomFromPosition2 = GameManager.Instance.Dungeon.GetRoomFromPosition(intVector);
-                        int rng = UnityEngine.Random.Range(1, 11);
+                        int rng = UnityEngine.Random.Range(1, 10);
                         //Debug.Log("RNG Pot event chosen: " + rng);
                         switch (rng)
                         {

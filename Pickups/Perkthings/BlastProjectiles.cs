@@ -8,6 +8,7 @@ using UnityEngine;
 
 namespace Planetside
 {
+    /*
     class BlastProjectilesCheck : MonoBehaviour 
     {
         public int Stack = 0;
@@ -28,6 +29,7 @@ namespace Planetside
         public int Cap;
         public int MinToSpawn;
     }
+    */
 
     class BlastProjectiles : PerkPickupObject, IPlayerInteractable
     {
@@ -57,12 +59,10 @@ namespace Planetside
             FakePrefab.MarkAsFakePrefab(projectile.gameObject);
             UnityEngine.Object.DontDestroyOnLoad(projectile);
             projectile.baseData.damage = 9f;
-            projectile.baseData.speed *= 1f;
-            projectile.AdditionalScaleMultiplier = 1f;
             projectile.shouldRotate = true;
             projectile.pierceMinorBreakables = true;
-            projectile.baseData.range = 30f;
-            ItemAPI.GunTools.SetProjectileCollisionRight(projectile, "vengbullet", StaticSpriteDefinitions.Projectile_Sheet_Data, 8, 5, false, tk2dBaseSprite.Anchor.MiddleCenter);
+            projectile.baseData.range = 60f;
+            Alexandria.Assetbundle.ProjectileBuilders.SetProjectileCollisionRight(projectile, "vengbullet", StaticSpriteDefinitions.Projectile_Sheet_Data, 8, 5, false, tk2dBaseSprite.Anchor.MiddleCenter);
 
             OtherTools.EasyTrailComponent trail = projectile.gameObject.AddComponent<OtherTools.EasyTrailComponent>();
 
@@ -74,12 +74,14 @@ namespace Planetside
             trail.StartColor = new Color(1f, 1f, 0f, 0.6f);
             trail.EndColor = new Color(0.1f, 0f, 0f, 0f);
 
-           
+
+            item.StackPickupNotificationText = "More Projectiles Birthed.";
+            item.InitialPickupNotificationText = "Explosions Birth Vengeful Shells.";
 
             VengefulProjectile = projectile;
         }
+        public override CustomDungeonFlags FlagToSetOnStack => CustomDungeonFlags.EXPLOSIVEBIRTH_FLAG_STACK;
 
-        public override CustomTrackedStats StatToIncreaseOnPickup => SaveAPI.CustomTrackedStats.AMOUNT_BOUGHT_EXPLOSIVEBIRTH;
         public override List<PerkDisplayContainer> perkDisplayContainers => new List<PerkDisplayContainer>()
         {
                 new PerkDisplayContainer()
@@ -113,7 +115,7 @@ namespace Planetside
             EncounterTrackable component = base.GetComponent<EncounterTrackable>();
             return component == null || component.PrerequisitesMet();
         }
-
+        /*
         public override void Pickup(PlayerController player)
         {
             if (m_hasBeenPickedUp)
@@ -140,30 +142,22 @@ namespace Planetside
             UnityEngine.Object.Destroy(base.gameObject);
         }
 
+        */
 
+   
+        public int Cap;
+        public int MinToSpawn;
+    
 
-        public void Start()
+        public override void OnInitialPickup(PlayerController playerController)
         {
-            try
-            {
-                GameManager.Instance.PrimaryPlayer.CurrentRoom.RegisterInteractable(this);
-                SpriteOutlineManager.AddOutlineToSprite(base.sprite, OutlineColor, 0.1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
-            }
-            catch (Exception er)
-            {
-                ETGModConsole.Log(er.Message, false);
-            }
+            this.Cap = 12;
+            this.MinToSpawn = 3;
         }
-
-      
-
-        private void Update()
+        public override void OnStack(PlayerController playerController)
         {
-            if (!this.m_hasBeenPickedUp && !this.m_isBeingEyedByRat && base.ShouldBeTakenByRat(base.sprite.WorldCenter))
-            {
-                GameManager.Instance.Dungeon.StartCoroutine(base.HandleRatTheft());
-            }
+            Cap += 4;
+            MinToSpawn++;
         }
-        private bool m_hasBeenPickedUp;
     }
 }

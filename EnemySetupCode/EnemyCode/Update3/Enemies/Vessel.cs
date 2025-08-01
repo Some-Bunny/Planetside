@@ -12,6 +12,7 @@ using Pathfinding;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using System.Reflection;
+using Planetside.Static_Storage;
 
 namespace Planetside
 {
@@ -760,9 +761,9 @@ namespace Planetside
 
 			public override IEnumerator Top()
 			{
-				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
-				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableLargeSpore);
-				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSniper);
+				base.BulletBank.Bullets.Add(StaticBulletEntries.undodgeableSmallSpore);
+				base.BulletBank.Bullets.Add(StaticBulletEntries.undodgeableLargeSpore);
+				base.BulletBank.Bullets.Add(StaticBulletEntries.undodgeableSniper);
 
 				base.PostWwiseEvent("Play_ENM_creecher_burst_01");
 				for (int e = 0; e < 40; e++)
@@ -774,7 +775,7 @@ namespace Planetside
 
 			public class Spore : Bullet
 			{
-				public Spore() : base(UnityEngine.Random.value > 0.33f ? StaticUndodgeableBulletEntries.undodgeableSmallSpore.Name : StaticUndodgeableBulletEntries.undodgeableLargeSpore.Name, false, false, false) { }
+				public Spore() : base(UnityEngine.Random.value > 0.33f ? StaticBulletEntries.undodgeableSmallSpore.Name : StaticBulletEntries.undodgeableLargeSpore.Name, false, false, false) { }
 				public override IEnumerator Top()
 				{		
 					base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), UnityEngine.Random.Range(60, 150));
@@ -789,9 +790,9 @@ namespace Planetside
 		{
 			public override IEnumerator Top()
 			{
-				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
-				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableLargeSpore);
-				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSniper);
+				base.BulletBank.Bullets.Add(StaticBulletEntries.undodgeableSmallSpore);
+				base.BulletBank.Bullets.Add(StaticBulletEntries.undodgeableLargeSpore);
+				base.BulletBank.Bullets.Add(StaticBulletEntries.undodgeableSniper);
 
 				VesselController vesselCont = base.BulletBank.aiActor.GetComponentInChildren<VesselController>();
 
@@ -981,7 +982,7 @@ namespace Planetside
 
 			public class Spore : Bullet
 			{
-				public Spore() : base(UnityEngine.Random.value > 0.33f ? StaticUndodgeableBulletEntries.undodgeableSmallSpore.Name : StaticUndodgeableBulletEntries.undodgeableLargeSpore.Name, false, false, false) { }
+				public Spore() : base(UnityEngine.Random.value > 0.33f ? StaticBulletEntries.undodgeableSmallSpore.Name : StaticBulletEntries.undodgeableLargeSpore.Name, false, false, false) { }
 				public override IEnumerator Top()
 				{
 					base.ChangeSpeed(new Speed(12f, SpeedType.Absolute), 90);

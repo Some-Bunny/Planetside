@@ -1,4 +1,5 @@
-﻿using MonoMod.RuntimeDetour;
+﻿using Alexandria;
+using MonoMod.RuntimeDetour;
 using SaveAPI;
 using System;
 using System.Collections.Generic;
@@ -26,23 +27,18 @@ namespace Planetside
             
             try
             {
-                if (ContainmentBreachController.CurrentState == ContainmentBreachController.States.ALLOWED && SaveAPIManager.GetFlag(CustomDungeonFlags.HAS_TREADED_DEEPER) == true)
+                if (self.OverrideDisplayName == "#BOSSSTATUES_ENCNAME")
                 {
-                    if (self.OverrideDisplayName == "#BOSSSTATUES_ENCNAME")
+                    new KillPillarsChanges.KillPillarChanges().OverrideAllKillPillars(self);
+                    return;
+                }
+                var obehaviors = ToolsEnemy.overrideBehaviors.Where(ob => ob.OverrideAIActorGUID == self.EnemyGuid);
+                foreach (var obehavior in obehaviors)
+                {
+                    obehavior.SetupOB(self);
+                    if (obehavior.ShouldOverride())
                     {
-                        new KillPillarsChanges.KillPillarChanges().OverrideAllKillPillars(self);
-                    }
-                    else
-                    {
-                        var obehaviors = ToolsEnemy.overrideBehaviors.Where(ob => ob.OverrideAIActorGUID == self.EnemyGuid);
-                        foreach (var obehavior in obehaviors)
-                        {
-                            obehavior.SetupOB(self);
-                            if (obehavior.ShouldOverride() || self.EnemyGuid == "05b8afe0b6cc4fffa9dc6036fa24c8ec")
-                            {
-                                obehavior.DoOverride();
-                            }
-                        }
+                        obehavior.DoOverride();
                     }
                 }
             }

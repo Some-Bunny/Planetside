@@ -113,6 +113,7 @@
      <Compile Include="Assets\DFGUI\Tweening\Editor\TweenVector3Inspector.cs" />
      <Compile Include="Assets\DFGUI\Tweening\Editor\TweenVector4Inspector.cs" />
      <Compile Include="Assets\Editor\BuildAssetBundles.cs" />
+     <Compile Include="Assets\Editor\JsonReader.cs" />
      <Compile Include="Assets\TK2DROOT\tk2d\Editor\Camera\tk2dCameraAnchorEditor.cs" />
      <Compile Include="Assets\TK2DROOT\tk2d\Editor\Camera\tk2dCameraEditor.cs" />
      <Compile Include="Assets\TK2DROOT\tk2d\Editor\Fonts\tk2dFontBuilder.cs" />
@@ -414,6 +415,9 @@
  </Reference>
  <Reference Include="UnityEditor.OSXStandalone.Extensions">
  <HintPath>D:/YooNiitee/2017.4.40f1/Editor/Data/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll</HintPath>
+ </Reference>
+ <Reference Include="Newtonsoft.Json">
+ <HintPath>D:/reposSecondary/failsafes/Planetside/Assetbundle Stuff/Unity Projects/PlanetsideSpritesBundle/Assets/Newtonsoft.Json.dll</HintPath>
  </Reference>
  <Reference Include="dfScriptLite">
  <HintPath>D:/reposSecondary/failsafes/Planetside/Assetbundle Stuff/Unity Projects/PlanetsideSpritesBundle/Assets/DFGUI/DataBinding/Plugins/dfScriptLite.dll</HintPath>

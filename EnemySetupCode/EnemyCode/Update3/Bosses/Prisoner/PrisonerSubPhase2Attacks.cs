@@ -12,6 +12,8 @@ using GungeonAPI;
 using SaveAPI;
 using Random = System.Random;
 using Pathfinding;
+using Planetside.Static_Storage;
+using Planetside.Components.Effect_Components;
 
 
 namespace Planetside
@@ -20,6 +22,7 @@ namespace Planetside
     {
 		public class ChainRotatorsTwo : Script
 		{
+			public bool SetUnDodgeable = false;
 			public const int NumBullets = 9;
 			public const int BaseTurnSpeed = 540;
 			public const float MaxDist = 6f;
@@ -90,9 +93,6 @@ namespace Planetside
 			public override IEnumerator Top()
 			{
 				PrisonerPhaseOne.PrisonerController controller = base.BulletBank.aiActor.GetComponent<PrisonerPhaseOne.PrisonerController>();
-				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("31a3ea0c54a745e182e22ea54844a82d").bulletBank.GetBullet("sniper"));
-				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("463d16121f884984abe759de38418e48").bulletBank.GetBullet("link"));
-				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("463d16121f884984abe759de38418e48").bulletBank.GetBullet("ball"));
 				Divider = 60;
 				this.EndOnBlank = true;
 				float turnSign = (float)((BraveMathCollege.AbsAngleBetween(this.BulletBank.aiAnimator.FacingDirection, 0f) <= 90f) ? -1 : 1);
@@ -172,29 +172,47 @@ namespace Planetside
 					FireQuickBurst();
 					yield return this.Wait(60);
 				}
-				FireQuickBurst();
+                //FireQuickBurst();
+
+                var ring = SummonRingController.CreateSummoningRing("inversion", this.Position, 1, false);
+                ring.UpdateSpeed = 1;
+                ring.SpinSpeed = 30f;
+				controller.extantRings.Add(ring);
+                for (int i = 0; i < 60; i++)
+				{
+					float t = (float)i / (float)60;
+					this.TurnSpeed = Mathf.SmoothStep(30, 0, t) * turnSign;
+					yield return this.Wait(1);
+				}
+                base.PostWwiseEvent("Play_ENM_cannonball_eyes_01", null);
+                yield return this.Wait(30);
+				SetUnDodgeable = true;
+                ParticleBase.EmitParticles("WaveParticle", 1, new ParticleSystem.EmitParams()
+                {
+                    position = this.Position,
+                    startColor = Color.cyan.WithAlpha(0.333f),
+                    startLifetime = 0.5f,
+                    startSize = 64
+                });
+                yield return this.Wait(30);
+                ring.SetToDestroy();
+
+                FireQuickBurst();
 				for (int i = 0; i < 60; i++)
 				{
 					float t = (float)i / (float)60;
-					this.TurnSpeed = Mathf.SmoothStep(30, -15, t) * turnSign;
+					this.TurnSpeed = Mathf.SmoothStep(-0, -11.25f, t) * turnSign;
 					yield return this.Wait(1);
 				}
-				FireQuickBurst();
-				for (int i = 0; i < 60; i++)
-				{
-					float t = (float)i / (float)60;
-					this.TurnSpeed = Mathf.SmoothStep(-15, -30, t) * turnSign;
-					yield return this.Wait(1);
-				}
-				for (int i = 0; i < 3; i++)
+				for (int i = 0; i < 8; i++)
 				{
 					FireQuickBurst();
-					yield return this.Wait(60);
+					yield return this.Wait(75 - (5 * i));
 				}
 				for (int i = 0; i < 60; i++)
 				{
 					float t = (float)i / (float)60;
-					this.TurnSpeed = Mathf.SmoothStep(-30, 0, t) * turnSign;
+					this.TurnSpeed = Mathf.SmoothStep(-11.25f, 0, t) * turnSign;
 					yield return this.Wait(1);
 				}
 				base.PostWwiseEvent("Play_ENM_cannonball_eyes_01", null);
@@ -304,7 +322,8 @@ namespace Planetside
 							{
 								if (k % 6 == 0)
                                 {
-									base.Fire(Offset.OverridePosition(bulletLists[e][k].Position), new Direction(0, DirectionType.Aim, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet("link", 10, 90));
+									var angle = MathToolbox.ToAngle(GetPredictedTargetPosition(1, 1000) - bulletLists[e][k].Position);
+									base.Fire(Offset.OverridePosition(bulletLists[e][k].Position), new Direction(angle, DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.undodgeableChainLink.Name, 6.5f, 90));
 								}
 								bulletLists[e][k].Vanish();
 							}
@@ -319,15 +338,21 @@ namespace Planetside
 				base.PostWwiseEvent("Play_ENM_bulletking_skull_01", null);
 				for (int e = 0; e < 12; e++)
 				{
-					base.Fire(new Direction((30 * e)-3, DirectionType.Aim, -1f), new Speed(1.2f, SpeedType.Absolute), new ChainRotatorsTwo.BasicBullet());
-					base.Fire(new Direction((30 * e)+3, DirectionType.Aim, -1f), new Speed(1.2f, SpeedType.Absolute), new ChainRotatorsTwo.BasicBullet());
-					base.Fire(new Direction((30 * e), DirectionType.Aim, -1f), new Speed(1.6f, SpeedType.Absolute), new ChainRotatorsTwo.BasicBullet());
-				}
-			}
+                    base.Fire(new Direction((30 * e), DirectionType.Aim, -1f), new Speed(1.6f, SpeedType.Absolute), new ChainRotatorsTwo.BasicBullet());
+                    base.Fire(new Direction((30 * e), DirectionType.Aim, -1f), new Speed(1f, SpeedType.Absolute), new ChainRotatorsTwo.BasicBullet());
+                    base.Fire(new Direction((30 * e)-2, DirectionType.Aim, -1f), new Speed(1.2f, SpeedType.Absolute), new ChainRotatorsTwo.BasicBullet());
+					base.Fire(new Direction((30 * e)+2, DirectionType.Aim, -1f), new Speed(1.2f, SpeedType.Absolute), new ChainRotatorsTwo.BasicBullet());
+                    base.Fire(new Direction((30 * e) - 4, DirectionType.Aim, -1f), new Speed(0.8f, SpeedType.Absolute), new ChainRotatorsTwo.BasicBullet());
+                    base.Fire(new Direction((30 * e) + 4, DirectionType.Aim, -1f), new Speed(0.8f, SpeedType.Absolute), new ChainRotatorsTwo.BasicBullet());
+
+                    base.Fire(new Direction((30 * e) - 7, DirectionType.Aim, -1f), new Speed(0.3f, SpeedType.Absolute), new ChainRotatorsTwo.BasicBullet());
+                    base.Fire(new Direction((30 * e) + 7, DirectionType.Aim, -1f), new Speed(0.3f, SpeedType.Absolute), new ChainRotatorsTwo.BasicBullet());
+                }
+            }
 
 			private class SpinBullet : Bullet
 			{
-				public SpinBullet(ChainRotatorsTwo parentScript, float maxDist, float angleOffset, int Delay, bool isAngleDecider = false, bool SpawnsUnDodgeablesOnDeath = false) : base("link", false, false, false)
+				public SpinBullet(ChainRotatorsTwo parentScript, float maxDist, float angleOffset, int Delay, bool isAngleDecider = false, bool SpawnsUnDodgeablesOnDeath = false) : base(StaticBulletEntries.undodgeableChainLink.Name, false, false, false)
 				{
 					this.m_parentScript = parentScript;
 					this.m_maxDist = maxDist;
@@ -340,6 +365,7 @@ namespace Planetside
 				public override IEnumerator Top()
 				{
 					//this.lifeTime = 0;
+					(this.Projectile as ThirdDimensionalProjectile).SetUnDodgeableState(false);
 					this.ManualControl = true;
 					this.Projectile.specRigidbody.CollideWithTileMap = false;
 					this.Projectile.BulletScriptSettings.surviveRigidbodyCollisions = true;
@@ -349,8 +375,18 @@ namespace Planetside
 					this.Direction = m_angOffset + (Addon + 3);
 					while (!this.m_parentScript.Destroyed && !this.m_parentScript.IsEnded)
 					{
-
-						Lifetime++;
+						if (m_parentScript.SetUnDodgeable == true && (this.Projectile as ThirdDimensionalProjectile).IsUnDodgeable == false)
+						{
+                            (this.Projectile as ThirdDimensionalProjectile).SetUnDodgeableState(true);
+                            ParticleBase.EmitParticles("WaveParticle", 1, new ParticleSystem.EmitParams()
+                            {
+                                position = this.Projectile.sprite.WorldCenter,
+                                startColor = Color.cyan.WithAlpha(0.1f),
+                                startLifetime = 0.25f,
+                                startSize = 2
+                            });
+                        }
+                        Lifetime++;
 						if (this.m_parentScript.BulletBank.healthHaver.IsDead)
 						{
 							this.Vanish(false);
@@ -385,14 +421,12 @@ namespace Planetside
 			}
 			public class BasicBullet : Bullet
 			{
-				public BasicBullet(float SpeedIncrease = 7) : base("sniper", false, false, false)
+				public BasicBullet(float SpeedIncrease = 7) : base(StaticBulletEntries.undodgeableSniper.Name, false, false, false)
 				{
 					this.Inc = SpeedIncrease;
 				}
 				public override IEnumerator Top()
 				{
-					base.Projectile.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
-					SpawnManager.PoolManager.Remove(base.Projectile.transform);
 					base.ChangeSpeed(new Speed(base.Speed + Inc, SpeedType.Absolute), 60);
 					yield break;
 				}
@@ -404,8 +438,7 @@ namespace Planetside
 			public override IEnumerator Top()
 			{
 				bool ISDodgeAble = false;
-				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("ffca09398635467da3b1f4a54bcfda80").bulletBank.GetBullet("directedfire"));
-				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSniper);
+
 				PrisonerPhaseOne.PrisonerController controller = base.BulletBank.aiActor.GetComponent<PrisonerPhaseOne.PrisonerController>();
 				controller.MoveTowardsPositionMethod(1f, 4);
 				for (int i = -4; i < 5; i++)
@@ -579,7 +612,6 @@ namespace Planetside
 		{
 			public override IEnumerator Top()
 			{
-				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("f905765488874846b7ff257ff81d6d0c").bulletBank.GetBullet("spore2"));
 				Vector2 TopRight = base.BulletBank.aiActor.GetAbsoluteParentRoom().area.UnitTopRight;
 				Vector2 BottomLeft = base.BulletBank.aiActor.GetAbsoluteParentRoom().area.UnitBottomLeft;
 				Dictionary<Vector2, Vector2> wallcornerPositions = new Dictionary<Vector2, Vector2>()
@@ -613,6 +645,7 @@ namespace Planetside
 						wallcornerPositions.Remove(randomKey);
 					}
 					Dictionary<GameObject, Dictionary<Vector2, Vector2>> list = new Dictionary<GameObject, Dictionary<Vector2, Vector2>>();
+					/*
 					for (int i = 0; i < 2; i++)
 					{
 						float angle = i == 0 ? (base.Position - randomKey).ToAngle() : (base.Position - RandomValue).ToAngle();
@@ -636,24 +669,26 @@ namespace Planetside
 						if (i == 0) { gameObject.name = "CanSpawn"; }
 						list.Add(gameObject, i == 0 ? new Dictionary<Vector2, Vector2>() { { randomKey, RandomValue } } : new Dictionary<Vector2, Vector2>() { { RandomValue, randomKey } });
 					}
+					*/
 					string String = "NULL";
 					wallcornerstrings.TryGetValue(randomKey, out String);
 					bool JustForOne = false;
 					foreach (var listObj in list)
 					{
 						if (listObj.Key.name == "CanSpawn") { JustForOne = true; } else { JustForOne = false; }
-						GameManager.Instance.StartCoroutine(MoveReticlesSmoothly(listObj.Key, listObj.Value, String, JustForOne, ISDodgeAble));
 					}
-					yield return this.Wait(105f * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
+                    GameManager.Instance.StartCoroutine(MoveReticlesSmoothly(new Dictionary<Vector2, Vector2>() { { randomKey, RandomValue } }, String, true, ISDodgeAble));
+
+                    yield return this.Wait(135f * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
 				}
 				yield break;
 			}
 
-			private IEnumerator MoveReticlesSmoothly(GameObject tiledspriteObject, Dictionary<Vector2, Vector2> posDictionary, string placement, bool CanSpawn, bool isDodgeAble)
+			private IEnumerator MoveReticlesSmoothly(Dictionary<Vector2, Vector2> posDictionary, string placement, bool CanSpawn, bool isDodgeAble)
 			{
 				Vector2 TopRight = base.BulletBank.aiActor.GetAbsoluteParentRoom().area.UnitTopRight;
 				Vector2 BottomLeft = base.BulletBank.aiActor.GetAbsoluteParentRoom().area.UnitBottomLeft;
-				/*
+                /*
 				Dictionary<Vector2, Vector2> wallcornerPositions = new Dictionary<Vector2, Vector2>()
 				{
 					{new Vector2(BottomLeft.x, TopRight.y), TopRight },//Bottom wall
@@ -662,76 +697,119 @@ namespace Planetside
 					{TopRight, new Vector2(TopRight.x, BottomLeft.y) },//Right wall
 				};
 				*/
-				float elapsed = 0;
+                Dictionary<Vector2, Vector2> wallcornerPositions = new Dictionary<Vector2, Vector2>()
+                {
+                    {new Vector2(BottomLeft.x, TopRight.y), TopRight },//Bottom wall
+					{new Vector2(TopRight.x, BottomLeft.y), BottomLeft },//Top wall
+					{BottomLeft, new Vector2(BottomLeft.x, TopRight.y) },//Left wall
+					{TopRight, new Vector2(TopRight.x, BottomLeft.y) },//Right wall
+				};
+                //All of these are flipped. IDFK WHY BUT I NEED TO GET THE "TOP" to spawn it at THE BOTTOM AAAAAAAAAAAAAAAAA
+                Dictionary<string, Vector2> wallcornerstrings = new Dictionary<string, Vector2>()
+                {
+                    { "bottom" ,new Vector2(TopRight.x, BottomLeft.y)},
+                    { "top" ,new Vector2(BottomLeft.x, TopRight.y)},
+                    { "left" ,TopRight},
+                    { "right" ,BottomLeft}
+                };
+
+
+
+                var ring = SummonRingController.CreateSummoningRing("breakdown", this.Position, 1, false);
+                ring.UpdateSpeed = 5;
+                ring.SpinSpeed = 75f;
+                this.BulletBank.aiActor.GetComponent<PrisonerPhaseOne.PrisonerController>().extantRings.Add(ring);
+
+                Vector2 OneCorner = new Vector2();
+                wallcornerstrings.TryGetValue(placement, out OneCorner);
+                Vector2 OtherCorner = new Vector2();
+                wallcornerPositions.TryGetValue(OneCorner, out OtherCorner);
+
+                float e = 0;
+
+                float facingDir = 0;
+                if (placement == "bottom") { facingDir = 90; }
+                if (placement == "top") { facingDir = 270; }
+                if (placement == "left") { facingDir = 180; }
+                if (placement == "right") { facingDir = 0; }
+
+                float elapsed = 0;
 				float Time = 0.66f;
 				while (elapsed < Time)
 				{
 					float t = (float)elapsed / (float)Time;
-					if (tiledspriteObject != null)
-					{
-						tk2dTiledSprite tiledsprite = tiledspriteObject.GetComponent<tk2dTiledSprite>();
-						float ix = tiledsprite.transform.localRotation.eulerAngles.x;
-						float wai = tiledsprite.transform.localRotation.eulerAngles.y;
-						if (base.BulletBank.aiActor != null)
-						{
-							ix = tiledsprite.transform.localRotation.eulerAngles.x + base.BulletBank.aiActor.transform.localRotation.x;
-							wai = tiledsprite.transform.localRotation.eulerAngles.y + base.BulletBank.aiActor.transform.localRotation.y;
-						}
-						tiledsprite.transform.position = new Vector3(this.Position.x, this.Position.y, 0);
-						tiledsprite.HeightOffGround = -2;
-						tiledsprite.renderer.gameObject.layer = 23;
-						tiledsprite.transform.position.WithZ(tiledsprite.transform.position.z + 99999);
-						tiledsprite.UpdateZDepth();
-						Dictionary<Vector2, Vector2> Pos = posDictionary;
-						foreach (var yes in Pos)
-						{
-							float Dist = Vector2.Distance(tiledsprite.transform.position, yes.Key) + 4;
-							Vector2 vector3 = Vector2.Lerp(yes.Key, yes.Value, t);
-							float angle = (base.Position - vector3).ToAngle();
-							tiledsprite.transform.localRotation = Quaternion.Euler(ix, wai, angle);
-							tiledsprite.dimensions = new Vector2((Dist * 16) * t, 1f);
-							tiledsprite.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f + (5 * t));
-							ImprovedAfterImageForTiled yes1 = tiledsprite.gameObject.GetOrAddComponent<ImprovedAfterImageForTiled>();
-							yes1.spawnShadows = true;
-							yes1.shadowLifetime = 0.2f;
-							yes1.shadowTimeDelay = 0.005f;
-							yes1.dashColor = isDodgeAble == false ? new Color(0f, 1f, 1f, 1f) : new Color(1f, 0f, 0f, 1f);
-						}
-					}
-					elapsed += BraveTime.DeltaTime;
+                    ring.transform.position = this.Position;
+
+
+                    Vector2 Position = Vector2.Lerp(OneCorner, OtherCorner, UnityEngine.Random.value);
+                    ParticleBase.EmitParticles("ShellraxEyeParticle", 1, new ParticleSystem.EmitParams()
+                    {
+                        position = this.Position,
+                        velocity = (Position - this.Position).normalized * (UnityEngine.Random.Range(8, 15) * (1 + t)),
+                        startColor = Color.cyan,
+                        startLifetime = 0.8f,
+
+                    });
+
+                    if (t > (Time * 0.5f))
+                    {
+                        ParticleBase.EmitParticles("ShellraxEyeParticle", 1, new ParticleSystem.EmitParams()
+                        {
+                            position = Position,
+                            velocity = MathToolbox.GetUnitOnCircle(facingDir, (UnityEngine.Random.Range(4, 12) * (1 + t))),
+                            startColor = Color.cyan,
+                            startLifetime = 0.5f,
+                        });
+                    }
+                    elapsed += BraveTime.DeltaTime;
 					yield return null;
 				}
 				elapsed = 0;
-				Time = 0.375f;
-				base.PostWwiseEvent("Play_FlashTell");
-				while (elapsed < Time)
+				Time = 0.5f;
+                base.PostWwiseEvent("Play_NPC_Blessing_Synergy_Get_01");
+
+                base.PostWwiseEvent("Play_BOSS_omegaBeam_charge_01");
+                while (elapsed < Time)
 				{
-					float t = (float)elapsed / (float)Time;
-					if (tiledspriteObject != null)
-					{
-						tk2dTiledSprite tiledsprite = tiledspriteObject.GetComponent<tk2dTiledSprite>();
-						float ix = tiledsprite.transform.localRotation.eulerAngles.x;
-						float wai = tiledsprite.transform.localRotation.eulerAngles.y;
-						if (base.BulletBank.aiActor != null)
-						{
-							ix = tiledsprite.transform.localRotation.eulerAngles.x + base.BulletBank.aiActor.transform.localRotation.x;
-							wai = tiledsprite.transform.localRotation.eulerAngles.y + base.BulletBank.aiActor.transform.localRotation.y;
-						}
-						tiledsprite.transform.position = new Vector3(this.Position.x, this.Position.y, 0);
-						tiledsprite.HeightOffGround = -2;
-						tiledsprite.renderer.gameObject.layer = 23;
-						tiledsprite.transform.position.WithZ(tiledsprite.transform.position.z + 99999);
-						tiledsprite.UpdateZDepth();
-						Dictionary<Vector2, Vector2> Pos = posDictionary;
-						foreach (var yes in Pos)
-						{
-							Vector2 vector3 = Vector2.Lerp(yes.Value, yes.Key, t);
-							float angle = (base.Position - vector3).ToAngle();
-							tiledsprite.transform.localRotation = Quaternion.Euler(ix, wai, angle);
-							ImprovedAfterImageForTiled yes1 = tiledsprite.gameObject.GetOrAddComponent<ImprovedAfterImageForTiled>();
-						}
-					}
-					elapsed += BraveTime.DeltaTime;
+                    ring.transform.position = this.Position;
+                    float t = (float)elapsed / (float)Time;
+
+                    Vector2 Position = Vector2.Lerp(OneCorner, OtherCorner, UnityEngine.Random.value);
+                    ParticleBase.EmitParticles("ShellraxEyeParticle", 1, new ParticleSystem.EmitParams()
+                    {
+                        position = this.Position,
+                        velocity = (Position - this.Position).normalized * (UnityEngine.Random.Range(8, 15) * (4)),
+                        startColor = Color.cyan,
+                        startLifetime = 0.8f,
+
+                    });
+
+                    if (t > (Time * 0.5f))
+                    {
+                        ParticleBase.EmitParticles("ShellraxEyeParticle", 1, new ParticleSystem.EmitParams()
+                        {
+                            position = Position,
+                            velocity = MathToolbox.GetUnitOnCircle(facingDir, (UnityEngine.Random.Range(8, 15) * (4))),
+                            startColor = Color.cyan,
+                            startLifetime = 0.5f,
+                        });
+                    }
+
+                    e += BraveTime.DeltaTime;
+                    if (e > 0.1f)
+                    {
+                        ParticleBase.EmitParticles("WaveParticle", 1, new ParticleSystem.EmitParams()
+                        {
+                            position = this.Position,
+                            startColor = Color.cyan.WithAlpha(0.2f),
+                            startLifetime = 0.25f,
+                            startSize = 32
+                        });
+                        e = 0;
+                    }
+
+
+                    elapsed += BraveTime.DeltaTime;
 					yield return null;
 				}
 				foreach (GameObject reticles in base.BulletBank.aiActor.GetComponent<PrisonerPhaseOne.PrisonerController>().extantReticles)
@@ -743,7 +821,17 @@ namespace Planetside
 				{
 					this.FireWallBullets(placement, isDodgeAble);
 				}
-				yield break;
+
+                ring.SetToDestroy();
+                ParticleBase.EmitParticles("WaveParticle", 1, new ParticleSystem.EmitParams()
+                {
+                    position = this.Position,
+                    startColor = Color.cyan.WithAlpha(0.333f),
+                    startLifetime = 0.5f,
+                    startSize = 64
+                });
+
+                yield break;
 			}
 
 			private void FireWallBullets(string Placement, bool IsDodgeAble)
@@ -776,68 +864,48 @@ namespace Planetside
 				if (Placement == "top") { facingDir = 270; }
 				if (Placement == "left") { facingDir = 180; }
 				if (Placement == "right") { facingDir = 0; }
-
-				base.PostWwiseEvent("Play_RockBreaking", null);
+                base.PostWwiseEvent("Play_obj_cell_explode_01", null);
+                base.PostWwiseEvent("Play_RockBreaking", null);
 				for (int l = 0; l < Tiles; l++)
 				{
 					float t = (float)l / (float)Tiles;
 					Vector2 SpawnPos = Vector2.Lerp(OneCorner, OtherCorner, t);
 					if (Placement == "top") { SpawnPos = SpawnPos + new Vector2(0, 1.5f); }
 
-					if (UnityEngine.Random.value <= 0.15f)
-					{
-						GameObject dragunBoulder = EnemyDatabase.GetOrLoadByGuid("05b8afe0b6cc4fffa9dc6036fa24c8ec").GetComponent<DraGunController>().skyBoulder;
-						foreach (Component item in dragunBoulder.GetComponentsInChildren(typeof(Component)))
-						{
-							if (item is SkyRocket laser)
-							{
-								ExplosionData explosionData = laser.ExplosionData;
-								GameObject vfx = UnityEngine.Object.Instantiate<GameObject>(explosionData.effect, SpawnPos, Quaternion.identity);
-								tk2dBaseSprite component = vfx.GetComponent<tk2dBaseSprite>();
-								component.PlaceAtPositionByAnchor(SpawnPos, tk2dBaseSprite.Anchor.MiddleCenter);
-								component.HeightOffGround = 35f;
-								component.transform.rotation = Quaternion.Euler(0f, 0f, facingDir + 90);
-								component.UpdateZDepth();
-								tk2dSpriteAnimator component2 = component.GetComponent<tk2dSpriteAnimator>();
-								if (component2 != null)
-								{
-									component.usesOverrideMaterial = true;
-									if (IsDodgeAble == false) { component2.renderer.material.shader = PlanetsideModule.ModAssets.LoadAsset<Shader>("inverseglowshader"); }
-									component2.ignoreTimeScale = true;
-									component2.AlwaysIgnoreTimeScale = true;
-									component2.AnimateDuringBossIntros = true;
-									component2.alwaysUpdateOffscreen = true;
-									component2.playAutomatically = true;
-								}
-							}
-						}
-					}
-					if (l % 2 == 1)
+                    ParticleBase.EmitParticles("ShellraxEyeParticle", 1, new ParticleSystem.EmitParams()
+                    {
+                        position = SpawnPos,
+                        velocity = MathToolbox.GetUnitOnCircle(facingDir, (UnityEngine.Random.Range(32, 56))),
+                        startColor = Color.cyan,
+                        startLifetime = 0.5f,
+                    });
+
+
+                    if (l % 2 == 1)
                     {
 						int travelTime = UnityEngine.Random.Range(90, 360);
-						base.Fire(Offset.OverridePosition(SpawnPos), new Direction(facingDir, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(15f, SpeedType.Absolute), new WallSweepTwo.WallBullets(this, "spore2", facingDir, IsDodgeAble, travelTime));
-						base.Fire(Offset.OverridePosition(SpawnPos), new Direction(facingDir, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(16f, SpeedType.Absolute), new WallSweepTwo.WallBullets(this, "spore2", facingDir, IsDodgeAble, travelTime));
+						base.Fire(Offset.OverridePosition(SpawnPos), new Direction(facingDir, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(4f, SpeedType.Absolute), new WallSweepTwo.WallBullets(this, StaticBulletEntries.undodgeableLargeSpore.Name, facingDir, travelTime));
+						base.Fire(Offset.OverridePosition(SpawnPos), new Direction(facingDir, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(16f, SpeedType.Absolute), new WallSweepTwo.WallBullets(this, StaticBulletEntries.undodgeableLargeSpore.Name, facingDir,  travelTime));
 						//base.Fire(Offset.OverridePosition(SpawnPos), new Direction(facingDir, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(17f, SpeedType.Absolute), new WallSweepTwo.WallBullets(this, "spore2", facingDir, IsDodgeAble, travelTime));
-
 					}
+					else
+					{
+                        int travelTime = UnityEngine.Random.Range(90, 360);
+                        base.Fire(Offset.OverridePosition(SpawnPos), new Direction(facingDir, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(10f, SpeedType.Absolute), new WallSweepTwo.WallBullets(this, StaticBulletEntries.undodgeableSmallSpore.Name, facingDir, travelTime));
+                    }
 				}
 			}
 			public class WallBullets : Bullet
 			{
-				public WallBullets(WallSweepTwo parent, string bulletName, float angle, bool IsDodgeAble, int travelTime) : base(bulletName, true, false, false)
+				public WallBullets(WallSweepTwo parent, string bulletName, float angle,  int travelTime) : base(bulletName, true, false, false)
 				{
 					this.m_parent = parent;
 					this.Angle = angle;
-					this.IsDoge = IsDodgeAble;
 					this.travel = travelTime;
 				}
 				public override IEnumerator Top()
 				{
-					if (IsDoge == false)
-					{
-						base.Projectile.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
-						SpawnManager.PoolManager.Remove(base.Projectile.transform);
-					}
+
 					this.Projectile.IgnoreTileCollisionsFor(180f);
 					this.Projectile.specRigidbody.AddCollisionLayerIgnoreOverride(CollisionMask.LayerToMask(CollisionLayer.HighObstacle, CollisionLayer.LowObstacle));
 					base.ChangeSpeed(new Speed(3f, SpeedType.Absolute), UnityEngine.Random.Range(75, 300));
@@ -848,7 +916,6 @@ namespace Planetside
 				private int travel;
 				private WallSweepTwo m_parent;
 				private float Angle;
-				private bool IsDoge;
 			}
 		}
 		public class SimpleBlaststwo : Script
@@ -856,9 +923,8 @@ namespace Planetside
 			public override IEnumerator Top()
 			{
 				this.EndOnBlank = true;
-				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("1bc2a07ef87741be90c37096910843ab").bulletBank.GetBullet("icicle"));
-
-				PrisonerPhaseOne.PrisonerController controller = base.BulletBank.aiActor.GetComponent<PrisonerPhaseOne.PrisonerController>();
+				
+                PrisonerPhaseOne.PrisonerController controller = base.BulletBank.aiActor.GetComponent<PrisonerPhaseOne.PrisonerController>();
 				controller.MoveTowardsCenterMethod(2f);
 				yield return this.Wait(100f);
 
@@ -870,11 +936,11 @@ namespace Planetside
 					{
 						for (int e = 0; e < 12; e++)
 						{
-							base.Fire(new Direction(0f, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SimpleBlaststwo.RotatedBullet(-10, 0, 0, "icicle", this, (0 + (float)e * 30 + ((-10) / 12) * j), 0.07f, false));
+							base.Fire(new Direction(0f, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SimpleBlaststwo.RotatedBullet(-10, 0, 0, StaticBulletEntries.undodgeableIcicle.Name, this, (0 + (float)e * 30 + ((-10) / 12) * j), 0.07f));
 						}
 						for (int e = 0; e < 12; e++)
 						{
-							base.Fire(new Direction(0f, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SimpleBlaststwo.RotatedBullet(10, 0, 0, "icicle", this, (0 + (float)e * 30 + ((10) / 12) * j), 0.07f,  false));
+							base.Fire(new Direction(0f, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SimpleBlaststwo.RotatedBullet(10, 0, 0, StaticBulletEntries.undodgeableIcicle.Name, this, (0 + (float)e * 30 + ((10) / 12) * j), 0.07f));
 						}
 						yield return this.Wait(6f);
 					}
@@ -885,7 +951,7 @@ namespace Planetside
 			}
 			public class RotatedBullet : Bullet
 			{
-				public RotatedBullet(float spinspeed, float RevUp, float StartSpeenAgain, string BulletType, SimpleBlaststwo parent, float angle = 0f, float aradius = 0, bool IsdodgeAble = true) : base(BulletType, false, false, false)
+				public RotatedBullet(float spinspeed, float RevUp, float StartSpeenAgain, string BulletType, SimpleBlaststwo parent, float angle = 0f, float aradius = 0) : base(BulletType, false, false, false)
 				{
 					this.m_spinSpeed = spinspeed;
 					this.TimeToRevUp = RevUp;
@@ -896,16 +962,10 @@ namespace Planetside
 					this.m_radius = aradius;
 					this.m_bulletype = BulletType;
 					this.SuppressVfx = true;
-					this.isDodgeable = IsdodgeAble;
 				}
 
 				public override IEnumerator Top()
 				{
-					if (isDodgeable == false)
-					{
-						base.Projectile.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
-						SpawnManager.PoolManager.Remove(base.Projectile.transform);
-					}
 					base.Projectile.transform.localRotation = Quaternion.Euler(0f, 0f, this.m_angle);
 					base.ManualControl = true;
 					Vector2 centerPosition = base.Position;
@@ -953,10 +1013,7 @@ namespace Planetside
 			public override IEnumerator Top()
 			{
 				this.EndOnBlank = true;
-				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSniper);
-				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableQuickHoming);
 
-				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("31a3ea0c54a745e182e22ea54844a82d").bulletBank.GetBullet("sniper"));
 
 				PrisonerPhaseOne.PrisonerController controller = base.BulletBank.aiActor.GetComponent<PrisonerPhaseOne.PrisonerController>();
 				controller.MoveTowardsPositionMethod(2f, 11);
@@ -964,20 +1021,20 @@ namespace Planetside
 				Vector2 predictedPosition = BraveMathCollege.GetPredictedPosition(vector2, this.BulletManager.PlayerVelocity(), this.Position, 18f);
 				float CentreAngle = (predictedPosition - this.Position).ToAngle();
 				base.PostWwiseEvent("Play_BOSS_omegaBeam_charge_01");
-				base.BulletBank.aiActor.StartCoroutine(FlashReticles(CentreAngle - 180, 168, this));
-				base.BulletBank.aiActor.StartCoroutine(FlashReticles(CentreAngle - 180, -168, this));
+				base.BulletBank.aiActor.StartCoroutine(FlashReticles(CentreAngle - 180, 164, this));
+				base.BulletBank.aiActor.StartCoroutine(FlashReticles(CentreAngle - 180, -164, this));
 				for (int e = 0; e < 4; e++)
 				{
 					yield return this.Wait(30 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
 					base.PostWwiseEvent("Play_BOSS_omegaBeam_charge_01");
-					base.BulletBank.aiActor.StartCoroutine(SwipeLaser(CentreAngle - 180, -168, this, 1.5f - (0.5f * e)));
-					base.BulletBank.aiActor.StartCoroutine(SwipeLaser(CentreAngle - 180, 168, this, 1.5f - (0.5f * e)));
+					base.BulletBank.aiActor.StartCoroutine(SwipeLaser(CentreAngle - 180, -164, this, 1.5f - (0.375f * e)));
+					base.BulletBank.aiActor.StartCoroutine(SwipeLaser(CentreAngle - 180, 164, this, 1.5f - (0.375f * e)));
 				}
 				for (int e = 0; e < 8; e++)
 				{
 					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(CentreAngle, this, 0.75f));
-					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(CentreAngle, this, 0.75f, 15f));
-					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(CentreAngle, this, 0.75f, -15f));
+					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(CentreAngle, this, 0.75f, 18f));
+					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(CentreAngle, this, 0.75f, -18f));
 
 					yield return this.Wait(60 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
 				}
@@ -1001,9 +1058,12 @@ namespace Planetside
 					}
 					for (int h = 0; h < r; h++)
                     {
-						base.Fire(new Direction(6 * i, DirectionType.Aim, -1f), new Speed(i % 5 == 0 ? 7f + h: 9, SpeedType.Absolute), new SpeedChangingBullet(i % 5 == 0 ? StaticUndodgeableBulletEntries.undodgeableQuickHoming.Name : "sniper", 20, 90));
+						base.Fire(new Direction(6 * i, DirectionType.Aim, -1f), new Speed(i % 5 == 0 ? 7f + h: 9, SpeedType.Absolute), new SpeedChangingBullet(i % 5 == 0 ? StaticBulletEntries.undodgeableQuickHoming.Name : "sniper", 20, 90));
 					}
 				}
+
+
+
 				yield break;
 			}
 
@@ -1138,7 +1198,7 @@ namespace Planetside
 					for (int i = 0; i < 36; i++)
 					{
 						float t = (float)i / (float)36;
-						base.Fire(new Direction(Mathf.Lerp(StartAngle, StartAngle + AddOrSubtract, t), DirectionType.Absolute, -1f), new Speed(UnityEngine.Random.Range(28, 32), SpeedType.Absolute), new SweepJukeAttackTwo.BasicBulletDodge());
+						base.Fire(new Direction(Mathf.Lerp(StartAngle, StartAngle + AddOrSubtract, t), DirectionType.Absolute, -1f), new Speed(UnityEngine.Random.Range(12, 28), SpeedType.Absolute), new SweepJukeAttackTwo.BasicBulletDodge());
 					}
 					base.PostWwiseEvent("Play_BOSS_doormimic_zap_01");
 					yield return new WaitForSeconds(0.33f);
@@ -1177,9 +1237,7 @@ namespace Planetside
 					}
 					if (component2 != null)
 					{
-
 						float Pos = ((base.GetPredictedTargetPosition(0.6f, 34) - base.Position).ToAngle()) + Offset;
-
 						component2.transform.position = new Vector3(this.Position.x, this.Position.y, 0);
 						component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (5 * t));
 						component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (10 * t));
@@ -1188,7 +1246,6 @@ namespace Planetside
 						component2.renderer.gameObject.layer = 23;
 						component2.dimensions = new Vector2(1000f, 1f);
 						component2.UpdateZDepth();
-
 						Angle = Pos;
 					}
 					elapsed += BraveTime.DeltaTime;
@@ -1196,7 +1253,6 @@ namespace Planetside
 				}
 				elapsed = 0;
 				Time = 0.375f;
-				//base.PostWwiseEvent("Play_FlashTell");
 				while (elapsed < Time)
 				{
 					if (parent.IsEnded || parent.Destroyed)
@@ -1213,7 +1269,6 @@ namespace Planetside
 						component2.renderer.gameObject.layer = 23;
 						component2.UpdateZDepth();
                         component2.renderer.enabled = elapsed % 0.25f > 0.125f;
-
                     }
                     elapsed += BraveTime.DeltaTime;
 					yield return null;
@@ -1222,11 +1277,9 @@ namespace Planetside
 				base.PostWwiseEvent("Play_ENM_bulletking_skull_01", null);
 				for (int i = 0; i < 3; i++)
 				{
-					base.Fire(new Direction(Angle, DirectionType.Absolute, -1f), new Speed(40f, SpeedType.Absolute), new WallBulletNoDodge("sniperUndodgeable", Angle));
-					yield return new WaitForSeconds(0.025f);
-
+					base.Fire(new Direction(Angle, DirectionType.Absolute, -1f), new Speed(28 - (i * 9f), SpeedType.Absolute), new SpeedChangingBullet("sniperUndodgeable", 12, 90));
 				}
-				yield break;
+                yield break;
 			}
 
 
@@ -1273,54 +1326,84 @@ namespace Planetside
 			public override IEnumerator Top()
 			{
 				PrisonerPhaseOne.PrisonerController controller = base.BulletBank.aiActor.GetComponent<PrisonerPhaseOne.PrisonerController>();
-				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("41ee1c8538e8474a82a74c4aff99c712").bulletBank.GetBullet("big"));
-				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSniper);
+
 
 				controller.MoveTowardsPositionMethod(3f, 7);
+				List< SummonRingController > ringControllers = new List< SummonRingController >();
 				for (int e = 0; e < GameManager.Instance.AllPlayers.Length; e++)
 				{
-					float u = UnityEngine.Random.Range(15, 90);
+					var v = GameManager.Instance.AllPlayers[e].transform.PositionVector2();
+                    var ring = SummonRingController.CreateSummoningRing("division", v, 0.666f);
+                    controller.extantRings.Add(ring);
+
+                    ring.UpdateSpeed = 5;
+                    ring.SpinSpeed = 75f;
+                    ringControllers.Add(ring);
+
+                    float u = UnityEngine.Random.Range(60, 120);
 					float Dir = UnityEngine.Random.value > 0.5f ? 0 : 30f;
 					float M = UnityEngine.Random.value < 0.5f ? u : -u;
-					for (int i = 0; i < 12; i++)
+					for (int i = 0; i < 16; i++)
 					{
-						base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(GameManager.Instance.AllPlayers[e].transform.PositionVector2(), (30 * i) + Dir, this, M, 0.75f));
+						base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(v, (22.5f * i) + Dir, this, M, 0.75f));
 					}
 				}
 				yield return this.Wait(90);
-				for (int q = 0; q < 3; q++)
+				ringControllers.ForEach(r => r.SetToDestroy());
+                ringControllers.Clear();
+
+                for (int q = 0; q < 6; q++)
 				{
 					for (int e = 0; e < GameManager.Instance.AllPlayers.Length; e++)
 					{
-						float u = UnityEngine.Random.Range(15, 60);
+                        float u = UnityEngine.Random.Range(30, 60);
 						float Dir = UnityEngine.Random.Range(-180, 180);
 						float helpme = UnityEngine.Random.Range(180, -180);
 						float M = UnityEngine.Random.value < 0.5f ? u : -u;
-						for (int i = 0; i < 6; i++)
+
+                        var v = GameManager.Instance.AllPlayers[e].transform.PositionVector2() + MathToolbox.GetUnitOnCircle(helpme, 8);
+                        var ring = SummonRingController.CreateSummoningRing("division", v, 0.666f);
+                        controller.extantRings.Add(ring);
+                        ring.UpdateSpeed = 5;
+                        ring.SpinSpeed = 75f;
+                        ringControllers.Add(ring);
+                        for (int i = 0; i < 8; i++)
 						{
-							base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(GameManager.Instance.AllPlayers[e].transform.PositionVector2() + MathToolbox.GetUnitOnCircle(helpme, 8), (60 * i) + Dir, this, M, 0.75f));
+							base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(v, (45 * i) + Dir, this, M, 1));
 						}
 					}
-					yield return this.Wait(45);
+					yield return this.Wait(60 - (q * 7.5f));
 				}
+                yield return this.Wait(45);
+                ringControllers.ForEach(r => r.SetToDestroy());
+                ringControllers.Clear();
+                yield return this.Wait(15);
 
-				float f1 = this.RandomAngle();
-				float u1 = UnityEngine.Random.Range(15, 30);
+                float f1 = this.RandomAngle();
+				float u1 = UnityEngine.Random.Range(30, 60);
 				float M1 = UnityEngine.Random.value < 0.5f ? u1 : -u1;
 				Vector2 pos = this.BulletBank.aiActor.sprite.WorldCenter;
-				for (int e = 0; e < 10; e++)
-				{
-					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(pos, pos + MathToolbox.GetUnitOnCircle(f1 + (e * 36), Vector2.Distance(pos, GameManager.Instance.PrimaryPlayer.sprite.WorldCenter)), (36 * e) + 0, this, M1, 1.5f));
-					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(pos, pos + MathToolbox.GetUnitOnCircle(f1 + (e * 36) , Vector2.Distance(pos, GameManager.Instance.PrimaryPlayer.sprite.WorldCenter)), (36 * e) + 120, this, M1, 1.5f));
-					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(pos, pos + MathToolbox.GetUnitOnCircle(f1 + (e * 36) , Vector2.Distance(pos, GameManager.Instance.PrimaryPlayer.sprite.WorldCenter)), (36 * e) + 240, this, M1, 1.5f));
-				}
 
-				controller.MoveTowardsPositionMethod(1f, 5);
-				yield return this.Wait(150 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
-				yield break;
+
+				for (int e = 0; e < 8; e++)
+				{
+                    var ring = SummonRingController.CreateSummoningRing("split", pos, 0.5f);
+                    ring.UpdateSpeed = 5;
+                    ring.SpinSpeed = 75f;
+                    ringControllers.Add(ring);
+                    controller.extantRings.Add(ring);
+                    base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(pos, pos + MathToolbox.GetUnitOnCircle(f1 + (e * 45), Vector2.Distance(pos, GameManager.Instance.PrimaryPlayer.sprite.WorldCenter)), (45 * e) + 0, this, M1, 1.5f, ring));
+					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(pos, pos + MathToolbox.GetUnitOnCircle(f1 + (e * 45) , Vector2.Distance(pos, GameManager.Instance.PrimaryPlayer.sprite.WorldCenter)), (45 * e) + 90, this, M1, 1.5f));
+					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(pos, pos + MathToolbox.GetUnitOnCircle(f1 + (e * 45) , Vector2.Distance(pos, GameManager.Instance.PrimaryPlayer.sprite.WorldCenter)), (45 * e) + 180, this, M1, 1.5f));
+                    base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(pos, pos + MathToolbox.GetUnitOnCircle(f1 + (e * 45), Vector2.Distance(pos, GameManager.Instance.PrimaryPlayer.sprite.WorldCenter)), (45 * e) + 270, this, M1, 1.5f));
+
+                }
+
+                yield return this.Wait(150 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
+                yield break;
 			}
 
-			private IEnumerator QuickscopeNoobLerpPosition(Vector2 startPos,Vector3 endPos ,float aimDir, LaserCrossTwo parent, float rotSet, float chargeTime = 0.5f)
+			private IEnumerator QuickscopeNoobLerpPosition(Vector2 startPos,Vector3 endPos ,float aimDir, LaserCrossTwo parent, float rotSet, float chargeTime = 0.5f, SummonRingController summonRingController = null)
 			{
 
 				GameObject gameObject = SpawnManager.SpawnVFX(RandomPiecesOfStuffToInitialise.LaserReticle, false);
@@ -1354,7 +1437,14 @@ namespace Planetside
 						float throne1 = Mathf.Sin(t * (Mathf.PI / 2));
 						float Q = Mathf.Lerp(0, rotSet, throne1);
 
-						component2.transform.position = Vector3.Lerp(new Vector3(startPos.x, startPos.y, 0), endPos, MathToolbox.SinLerpTValue(t));
+						var ___ = Vector3.Lerp(new Vector3(startPos.x, startPos.y, 0), endPos, MathToolbox.SinLerpTValue(t));
+
+                        component2.transform.position = ___;
+						if (summonRingController != null)
+						{
+							summonRingController.transform.position = ___;
+
+                        }
 						component2.sprite.renderer.material.SetFloat("_EmissivePower", 10 * (5 * t));
 						component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.25f + (10 * t));
 						component2.transform.localRotation = Quaternion.Euler(0f, 0f, aimDir + Q);
@@ -1390,14 +1480,25 @@ namespace Planetside
                     elapsed += BraveTime.DeltaTime;
 					yield return null;
 				}
-				UnityEngine.Object.Destroy(component2.gameObject);
+				if (summonRingController != null)
+				{
+                    summonRingController.SetToDestroy();
+                }
+
+                UnityEngine.Object.Destroy(component2.gameObject);
 				base.PostWwiseEvent("Play_ENM_bulletking_skull_01", null);
 				for (int i = 0; i < 10; i++)
 				{
-					base.Fire(Offset.OverridePosition(endPos), new Direction(aimDir + rotSet, DirectionType.Absolute, -1f), new Speed(20f, SpeedType.Absolute), new WallBulletNoDodge("sniperUndodgeable"));
+					base.Fire(Offset.OverridePosition(endPos), new Direction(aimDir + rotSet, DirectionType.Absolute, -1f), new Speed(20f, SpeedType.Absolute), new WallBulletNoDodge(i == 0 ? "sniperUndodgeable" : StaticBulletEntries.undodgeableSmallSpore.Name));
 					yield return new WaitForSeconds(0.025f);
 				}
-				yield break;
+
+                for (int i = 1; i < 8; i++)
+                {
+                    base.Fire(Offset.OverridePosition(endPos), new Direction((aimDir + rotSet) + (45f * i), DirectionType.Absolute, -1f), new Speed(2, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.undodgeableSmallSpore.Name, 9, 90));
+                }
+
+                yield break;
 			}
 
 			private IEnumerator QuickscopeNoob(Vector2 startPos, float aimDir, LaserCrossTwo parent, float rotSet, float chargeTime = 0.5f)
@@ -1522,8 +1623,6 @@ namespace Planetside
 				}
 				public override IEnumerator Top()
 				{
-					base.Projectile.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
-					SpawnManager.PoolManager.Remove(base.Projectile.transform);
 					base.ChangeSpeed(new Speed(30f, SpeedType.Absolute), 150);
 					yield break;
 				}

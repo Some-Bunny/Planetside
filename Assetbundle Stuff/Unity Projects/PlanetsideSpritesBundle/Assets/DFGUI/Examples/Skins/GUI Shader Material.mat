@@ -2,46 +2,31 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 3
+  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: GUI Shader Material
   m_Shader: {fileID: 4800000, guid: f0158d23026963f4ba301b99ab9b050a, type: 3}
-  m_ShaderKeywords: []
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
   m_SavedProperties:
-    serializedVersion: 2
+    serializedVersion: 3
     m_TexEnvs:
-      data:
-        first:
-          name: _MainTex
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 1567c9bd0a567a14490f450ea5bdbc89, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
-      data:
-        first:
-          name: CameraSize
-        second: 1.37
-      data:
-        first:
-          name: _CameraSize
-        second: 2
-      data:
-        first:
-          name: ClipSize
-        second: 3.24000001
+    - CameraSize: 1.37
+    - ClipSize: 3.24
+    - _CameraSize: 2
     m_Colors:
-      data:
-        first:
-          name: _Color
-        second: {r: 1, g: 1, b: 1, a: 1}
-      data:
-        first:
-          name: CameraPos
-        second: {r: -19.586607, g: -8.12767982, b: -1, a: 0}
-      data:
-        first:
-          name: ClipInfo
-        second: {r: 2028782590, g: 2017511550, b: 0, a: 0}
+    - CameraPos: {r: -19.586607, g: -8.12768, b: -1, a: 0}
+    - ClipInfo: {r: 2.0287826e+9, g: 2.0175116e+9, b: 0, a: 0}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}

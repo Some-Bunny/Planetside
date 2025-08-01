@@ -78,8 +78,8 @@ namespace Planetside
 			Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(gun.DefaultModule.projectiles[0]); projectile.gameObject.SetActive(false);
 			FakePrefab.MarkAsFakePrefab(projectile.gameObject);
 			UnityEngine.Object.DontDestroyOnLoad(projectile);
-			//projectile.SetProjectileSpriteRight("collapserNeedle_001", 8, 5, false, tk2dBaseSprite.Anchor.MiddleCenter, 10, 7);
-            ItemAPI.GunTools.SetProjectileCollisionRight(projectile,"collapserNeedle_001", StaticSpriteDefinitions.Projectile_Sheet_Data, 8, 5, false, tk2dBaseSprite.Anchor.MiddleCenter);
+            //projectile.SetProjectileSpriteRight("collapserNeedle_001", 8, 5, false, tk2dBaseSprite.Anchor.MiddleCenter, 10, 7);
+            Alexandria.Assetbundle.ProjectileBuilders.SetProjectileCollisionRight(projectile,"collapserNeedle_001", StaticSpriteDefinitions.Projectile_Sheet_Data, 8, 5, false, tk2dBaseSprite.Anchor.MiddleCenter);
 
             ImprovedAfterImage yes = projectile.gameObject.AddComponent<ImprovedAfterImage>();
 			yes.spawnShadows = true;

@@ -60,7 +60,10 @@ namespace Planetside
 			Projectile component = ((Gun)ETGMod.Databases.Items[336]).DefaultModule.projectiles[0];
 			gun.gunSwitchGroup = (PickupObjectDatabase.GetById(16) as Gun).gunSwitchGroup;
 			Projectile replacementProjectile = component.projectile;
-			gun.DefaultModule.usesOptionalFinalProjectile = true;
+            replacementProjectile = UnityEngine.Object.Instantiate<Projectile>(replacementProjectile);
+            replacementProjectile.gameObject.SetActive(false);
+			replacementProjectile.baseData.damage = 8;
+            gun.DefaultModule.usesOptionalFinalProjectile = true;
 			PolarityProjectile pol1 = replacementProjectile.gameObject.AddComponent<PolarityProjectile>();
 			pol1.IsUp = true;
 
@@ -92,7 +95,7 @@ namespace Planetside
 			gun.DefaultModule.projectiles[0] = projectile;
 			projectile.transform.parent = gun.barrelOffset;
 			projectile.AdditionalScaleMultiplier *= 1.33f;
-			projectile.baseData.damage = 6.5f;
+			projectile.baseData.damage = 8f;
 			PolarityProjectile aaaaaaa = projectile.gameObject.AddComponent<PolarityProjectile>();
 			aaaaaaa.IsUp = false;
 			Polarity.PolarityID = gun.PickupObjectId;

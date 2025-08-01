@@ -47,10 +47,10 @@ namespace Planetside
             ShootBehavior ShootBehavior3 = behaviorSpec.AttackBehaviorGroup.AttackBehaviors[4].Behavior as ShootBehavior;
             ShootBehavior3.BulletScript = new CustomBulletScriptSelector(typeof(HelicopterFlames1Modified));
 
-            actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableDefault);
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableOldKingSuckBullet);//UndodgeableDirectedfire
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableDirectedfire);
-            actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableBig);
+            actor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableDefault);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.UndodgeableOldKingSuckBullet);//UndodgeableDirectedfire
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.UndodgeableDirectedfire);
+            actor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableBig);
 
 
         }
@@ -105,7 +105,7 @@ namespace Planetside
 
             public class BigBullet : Bullet
             {
-                public BigBullet() : base(StaticUndodgeableBulletEntries.undodgeableBig.Name, false, false, false)
+                public BigBullet() : base(StaticBulletEntries.undodgeableBig.Name, false, false, false)
                 {
                 }
 
@@ -142,7 +142,7 @@ namespace Planetside
 
             public class BigBullet : Bullet
             {
-                public BigBullet() : base(StaticUndodgeableBulletEntries.undodgeableBig.Name, false, false, false)
+                public BigBullet() : base(StaticBulletEntries.undodgeableBig.Name, false, false, false)
                 {
                 }
 
@@ -190,7 +190,7 @@ namespace Planetside
 
             private class LightningBullet : Bullet
             {
-                public LightningBullet(float direction, float sign, int maxRemainingBullets, int timeSinceLastTurn, Vector2? truePosition = null) : base(StaticUndodgeableBulletEntries.undodgeableDefault.Name, false, false, false)
+                public LightningBullet(float direction, float sign, int maxRemainingBullets, int timeSinceLastTurn, Vector2? truePosition = null) : base(StaticBulletEntries.undodgeableDefault.Name, false, false, false)
                 {
                     this.m_direction = direction;
                     this.m_sign = sign;
@@ -291,7 +291,7 @@ namespace Planetside
 
             private class FlameBullet : Bullet
             {
-                public FlameBullet(Vector2 goalPos, List<AIActor> spawnedActors, int flightTime) : base(StaticUndodgeableBulletEntries.UndodgeableOldKingSuckBullet.Name, false, false, false)
+                public FlameBullet(Vector2 goalPos, List<AIActor> spawnedActors, int flightTime) : base(StaticBulletEntries.UndodgeableOldKingSuckBullet.Name, false, false, false)
                 {
                     this.m_goalPos = goalPos;
                     this.m_flightTime = flightTime;

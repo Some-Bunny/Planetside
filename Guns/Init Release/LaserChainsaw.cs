@@ -68,55 +68,27 @@ namespace Planetside
 
 
 
-			List<string> BeamAnimPaths = new List<string>()
-			{
-				"Planetside/Resources/Beams/LaserChainsaw/chainsaw_mid_001",
-				"Planetside/Resources/Beams/LaserChainsaw/chainsaw_mid_002",
-				"Planetside/Resources/Beams/LaserChainsaw/chainsaw_mid_003",
-				"Planetside/Resources/Beams/LaserChainsaw/chainsaw_mid_004",
-			};
-			List<string> BeamEndPaths = new List<string>()
-			{
-				"Planetside/Resources/Beams/LaserChainsaw/chainsaw_end_001",
-				"Planetside/Resources/Beams/LaserChainsaw/chainsaw_end_002",
-				"Planetside/Resources/Beams/LaserChainsaw/chainsaw_end_003",
-				"Planetside/Resources/Beams/LaserChainsaw/chainsaw_end_004",
-			};
+
 
 			//BULLET STATS
 			Projectile projectile = UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(86) as Gun).DefaultModule.projectiles[0]);
-    
-			BasicBeamController beamComp = projectile.GenerateBeamPrefab(
-				"Planetside/Resources/Beams/LaserChainsaw/chainsaw_mid_001",
-				new Vector2(5, 3),
-				new Vector2(1, 1),
-				BeamAnimPaths,
-				30,
-                //Impact
-                null,
-				30,
-				null,
-				null,
-				//End
-				BeamEndPaths,
-				30,
-				new Vector2(5, 3),
-				new Vector2(1, 1),
-                //Beginning
-                null,
-				30,
-				null,
-				null,
-				false,
-				false
-				);
-			
+
+            BasicBeamController beamComp = projectile.GenerateBeamPrefabBundle(
+				"chainsaw_mid_001",
+				StaticSpriteDefinitions.Beam_Sheet_Data,
+				StaticSpriteDefinitions.Beam_Animation_Data,
+                "laserchainsaw_mid", new Vector2(8, 6), new Vector2(0, 1), //Main
+				null, null, null, //Impact
+                "laserchainsaw_end", new Vector2(8, 6), new Vector2(0, 1), //End Of beam
+				null, null, null, //Start Of Beam
+				true);
+
 
             projectile.gameObject.SetActive(false);
 
-			projectile.baseData.damage = 160f;
+			projectile.baseData.damage = 180f;
 			projectile.baseData.force *= 0.1f;
-			projectile.baseData.range = 4f;
+			projectile.baseData.range = 4.5f;
 			projectile.baseData.speed *= 1f;
 			//projectile.ignoreDamageCaps = true;
 

@@ -325,7 +325,20 @@ namespace Planetside
 
 
             GenericLootTable MasteryTable = LootTableTools.CreateLootTable();
-            MasteryTable.AddItemsToPool(new Dictionary<int, float> { {AllSeeingEye.AllSeeingEyeID, 1}, { AllStatsUp.AllStatsUpID, 1 }, { BlastProjectiles.BlastProjectilesID, 1 }, { ChaoticShift.ChaoticShiftID, 1 }, { Contract.ContractID, 1 }, { Glass.GlassID, 1 }, { Greedy.GreedyID, 1 }, { Gunslinger.GunslingerID, 1 }, { PitLordsPact.PitLordsPactID, 1 }, { UnbreakableSpirit.UnbreakableSpiritID, 1 }, { Patience.PatienceID, 1 }, { CorruptedWealth.CorruptedWealthID, 1 } });
+            MasteryTable.AddItemsToPool(new Dictionary<int, float>
+            { {AllSeeingEye.AllSeeingEyeID, 1}, 
+                { AllStatsUp.AllStatsUpID, 1 }, 
+                { BlastProjectiles.BlastProjectilesID, 1 }, 
+                { ChaoticShift.ChaoticShiftID, 0.9f }, 
+                { Contract.ContractID, 1 }, 
+                { Glass.GlassID, 1 }, 
+                { Greedy.GreedyID, 1 }, 
+                { Gunslinger.GunslingerID, 1 }, 
+                { PitLordsPact.PitLordsPactID, 1 }, 
+                { UnbreakableSpirit.UnbreakableSpiritID, 1 }, 
+                { Patience.PatienceID, 1 }, 
+                { CorruptedWealth.CorruptedWealthID, 1 }, 
+                { HollowWalls.ItemID, 1} });
             GameObject masteryShop = ItsDaFuckinShopApi.SetUpShop(
                   "masteryRewardTrader"
                 , "psog"
@@ -554,7 +567,7 @@ namespace Planetside
                             foreach (var enrty in perk.perkDisplayContainers)
                             {
                                 bool req = enrty.requiresFlag == false ? false : SaveAPI.AdvancedGameStatsManager.Instance.GetFlag(enrty.FlagToTrack);
-                                bool req2 = enrty.requiresStack == false ? false : SaveAPI.AdvancedGameStatsManager.Instance.GetPlayerStatValue(perk.StatToIncreaseOnPickup) >= enrty.AmountToBuyBeforeReveal;
+                                bool req2 = enrty.requiresStack == false ? false : GameStatsManager.Instance.m_encounteredTrackables[perk.encounterTrackable.EncounterGuid].encounterCount >= enrty.AmountToBuyBeforeReveal;
 
                                 if (req == true || req2 == true)
                                 {

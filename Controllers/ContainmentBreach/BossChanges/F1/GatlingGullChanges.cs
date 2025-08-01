@@ -21,15 +21,15 @@ namespace Planetside
 
 			//ToolsEnemy.DebugInformation(behaviorSpec);
 
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableDefault);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableDefault);
 
 			GatlingGullWalkAndShoot GatlingGullWalkAndShoot1 = behaviorSpec.AttackBehaviorGroup.AttackBehaviors[0].Behavior as GatlingGullWalkAndShoot;
-			GatlingGullWalkAndShoot1.OverrideBulletName = StaticUndodgeableBulletEntries.undodgeableDefault.Name;
+			GatlingGullWalkAndShoot1.OverrideBulletName = StaticBulletEntries.undodgeableDefault.Name;
 			GatlingGullWalkAndShoot1.AttackCooldown = (GatlingGullWalkAndShoot1.AttackCooldown) + 1;
 			GatlingGullWalkAndShoot1.AngleVariance = 36;
 
 			GatlingGullFanSpray GatlingGullFanSpray1= behaviorSpec.AttackBehaviorGroup.AttackBehaviors[1].Behavior as GatlingGullFanSpray;
-			GatlingGullFanSpray1.OverrideBulletName = StaticUndodgeableBulletEntries.undodgeableDefault.Name;
+			GatlingGullFanSpray1.OverrideBulletName = StaticBulletEntries.undodgeableDefault.Name;
 			GatlingGullFanSpray1.AttackCooldown = (GatlingGullWalkAndShoot1.AttackCooldown) + 1.5f;
 			GatlingGullFanSpray1.SprayAngle = 120;
 			GatlingGullFanSpray1.SpraySpeed = 200;
@@ -56,7 +56,7 @@ namespace Planetside
 					float angle = startAngle;
 					for (int j = 0; j < 24; j++)
 					{
-						this.Fire(new Direction(angle, DirectionType.Absolute, -1f), new Speed(10f, SpeedType.Absolute), new Bullet(r == true ? "defaultWithVfx" : StaticUndodgeableBulletEntries.undodgeableDefault.Name, false, false, false));
+						this.Fire(new Direction(angle, DirectionType.Absolute, -1f), new Speed(10f, SpeedType.Absolute), new Bullet(r == true ? "defaultWithVfx" : StaticBulletEntries.undodgeableDefault.Name, false, false, false));
 						angle += deltaAngle;
 						p++;
 						if (p > 8) { p = 0;r = !r; }

@@ -11,24 +11,7 @@ namespace Planetside
     class Patience : PerkPickupObject, IPlayerInteractable
     {
 
-        class PatienceController : MonoBehaviour
-        {
-            public PatienceController()
-            {
-                this.hasBeenPickedup = false;
-            }
-            public void Start() 
-            { this.hasBeenPickedup = true;
-                CrossGameDataStorage.CrossGameStorage.AmountOfPerksToChooseFromOnRunStart = 2;
-                CrossGameDataStorage.UpdateConfiguration();
-            }
-            public void IncrementStack()
-            {
-                CrossGameDataStorage.CrossGameStorage.AmountOfPerksToChooseFromOnRunStart += 1;
-                CrossGameDataStorage.UpdateConfiguration();
-            }
-            public bool hasBeenPickedup;
-        }
+
 
 
         public static void Init()
@@ -54,6 +37,8 @@ namespace Planetside
             item.encounterTrackable.DoNotificationOnEncounter = false;
 
 
+            item.InitialPickupNotificationText = "Does Something... Eventually.";
+            item.StackPickupNotificationText = "Patience is rewarded.";
 
             Actions.OnRunStart += OnRunStart;
         }
@@ -62,8 +47,8 @@ namespace Planetside
                 new PerkDisplayContainer()
                 {
                     AmountToBuyBeforeReveal = 0,
-                    LockedString = "\"Does nothing... But...\"",
-                    UnlockedString = "\"Does nothing... But...\"",
+                    LockedString = "\"Does Something... Eventually.\"",
+                    UnlockedString = "\"Does Something... Eventually.\"",
                     requiresFlag = false
                 },
                 new PerkDisplayContainer()
@@ -81,7 +66,7 @@ namespace Planetside
                     FlagToTrack = SaveAPI.CustomDungeonFlags.PATIENCE_FLAG_STACK
                 },
         };
-        public override CustomTrackedStats StatToIncreaseOnPickup => SaveAPI.CustomTrackedStats.AMOUNT_BOUGHT_PATIENCE;
+        public override CustomDungeonFlags FlagToSetOnStack => CustomDungeonFlags.PATIENCE_FLAG_STACK;
 
 
         public static void OnRunStart(PlayerController player, PlayerController player2, GameManager.GameMode gameMode)
@@ -119,7 +104,8 @@ namespace Planetside
                 ChaoticShift.ChaoticShiftID,
                 PitLordsPact.PitLordsPactID,
                 UnbreakableSpirit.UnbreakableSpiritID,
-                Gunslinger.GunslingerID
+                Gunslinger.GunslingerID,
+                HollowWalls.ItemID,
             };
 
             Exploder.DoDistortionWave(player.sprite.WorldTopCenter, 30, 0.5f, 50, 1);
@@ -139,7 +125,9 @@ namespace Planetside
                     ChaoticShift.ChaoticShiftID,
                     PitLordsPact.PitLordsPactID,
                     UnbreakableSpirit.UnbreakableSpiritID,
-                    Gunslinger.GunslingerID
+                    Gunslinger.GunslingerID,
+                    HollowWalls.ItemID,
+
                     };
                 }
 
@@ -191,65 +179,19 @@ namespace Planetside
 
         public static int PatienceID;
 
-        public new bool PrerequisitesMet()
+
+
+
+        public override void OnInitialPickup(PlayerController playerController)
         {
-            EncounterTrackable component = base.GetComponent<EncounterTrackable>();
-            return component == null || component.PrerequisitesMet();
-        }
-        public override void Pickup(PlayerController player)
-        {
-            if (m_hasBeenPickedUp)
-                return;
-            base.HandleEncounterable(player);
-
-            SaveAPI.AdvancedGameStatsManager.Instance.RegisterStatChange(StatToIncreaseOnPickup, 1);
-
-            m_hasBeenPickedUp = true;
-            PerkParticleSystemController cont = base.GetComponent<PerkParticleSystemController>();
-            if (cont != null) { cont.DoBigBurst(player); }
-
-            AkSoundEngine.PostEvent("Play_OBJ_dice_bless_01", player.gameObject);
-
-
-            PatienceController blast = player.gameObject.GetOrAddComponent<PatienceController>();
-            if (blast.hasBeenPickedup == true)
-            { blast.IncrementStack(); SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.PATIENCE_FLAG_STACK, true); }
-
-            Exploder.DoDistortionWave(player.sprite.WorldTopCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
-            player.BloopItemAboveHead(base.sprite, "");
-            string BlurbText = blast.hasBeenPickedup == true ? "But more..." : "Does nothing... But...";
-            OtherTools.NotifyCustom("Patience", BlurbText, "patience", StaticSpriteDefinitions.Pickup_Sheet_Data, UINotificationController.NotificationColor.GOLD);
-            UnityEngine.Object.Destroy(base.gameObject);
+            CrossGameDataStorage.CrossGameStorage.AmountOfPerksToChooseFromOnRunStart = 2;
+            CrossGameDataStorage.UpdateConfiguration();
         }
 
-
-        public void Start()
+        public override void OnStack(PlayerController playerController)
         {
-            try
-            {
-                GameManager.Instance.PrimaryPlayer.CurrentRoom.RegisterInteractable(this);
-                SpriteOutlineManager.AddOutlineToSprite(base.sprite, OutlineColor, 0.1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
-            }
-            catch (Exception er)
-            {
-                ETGModConsole.Log(er.Message, false);
-            }
+            CrossGameDataStorage.CrossGameStorage.AmountOfPerksToChooseFromOnRunStart += 1;
+            CrossGameDataStorage.UpdateConfiguration();
         }
-
-    
-
-        
-
-        private void Update()
-        {
-            if (!this.m_hasBeenPickedUp && !this.m_isBeingEyedByRat && base.ShouldBeTakenByRat(base.sprite.WorldCenter))
-            {
-                GameManager.Instance.Dungeon.StartCoroutine(base.HandleRatTheft());
-            }
-        }
-
-        
-
-        private bool m_hasBeenPickedUp;
     }
 }

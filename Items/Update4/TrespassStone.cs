@@ -60,9 +60,17 @@ namespace Planetside
                     prerequisiteOperation = DungeonPrerequisite.PrerequisiteOperation.GREATER_THAN,
                     useSessionStatValue = false,
                     advancedPrerequisiteType = CustomDungeonPrerequisite.AdvancedPrerequisiteType.CUSTOM_STAT_COMPARISION
+                },
+                new CustomDungeonPrerequisite()
+                {
+                    advancedPrerequisiteType = CustomDungeonPrerequisite.AdvancedPrerequisiteType.CUSTOM_FLAG,
+                    customFlagToCheck = CustomDungeonFlags.HAS_TREADED_DEEPER,
+                    requireFlag = true,
+                    RequiredValueFlag = false
                 }
             };
 
+            
             table.includedRooms.Add(roomer);
             table.includedRooms.Add(roomer2);
             table.includedRooms.Add(roomer3);
@@ -71,8 +79,19 @@ namespace Planetside
             table.includedRooms.Add(roomer6);
             table.includedRooms.Add(roomer7);
             table.includedRooms.Add(roomerTut);
-
             
+
+            table.includedRooms.Add(RoomTableTools.GenerateWeightedRoom(Alexandria.DungeonAPI.RoomFactory.BuildNewRoomFromResource("Planetside/Resources/TrespassRooms/trespassbasic_prisoners.newroom").room, 0.4f));
+            table.includedRooms.Add(RoomTableTools.GenerateWeightedRoom(Alexandria.DungeonAPI.RoomFactory.BuildNewRoomFromResource("Planetside/Resources/TrespassRooms/trespassbasic_scarilylarge.newroom").room, 1f));
+            table.includedRooms.Add(RoomTableTools.GenerateWeightedRoom(Alexandria.DungeonAPI.RoomFactory.BuildNewRoomFromResource("Planetside/Resources/TrespassRooms/trespassbasic_weirdshowoffthing.newroom").room, 1f));   
+            table.includedRooms.Add(RoomTableTools.GenerateWeightedRoom(Alexandria.DungeonAPI.RoomFactory.BuildNewRoomFromResource("Planetside/Resources/TrespassRooms/trespassbasic_anoutcast.newroom").room, 0.9f));           
+            table.includedRooms.Add(RoomTableTools.GenerateWeightedRoom(Alexandria.DungeonAPI.RoomFactory.BuildNewRoomFromResource("Planetside/Resources/TrespassRooms/trespassbasic_lockedaway.newroom").room, 0.8f));
+            table.includedRooms.Add(RoomTableTools.GenerateWeightedRoom(Alexandria.DungeonAPI.RoomFactory.BuildNewRoomFromResource("Planetside/Resources/TrespassRooms/trespassbasic_pitfalls.newroom").room, 0.5f));
+            table.includedRooms.Add(RoomTableTools.GenerateWeightedRoom(Alexandria.DungeonAPI.RoomFactory.BuildNewRoomFromResource("Planetside/Resources/TrespassRooms/trespassbasic_cubeworld.newroom").room, 0.4f));
+            table.includedRooms.Add(RoomTableTools.GenerateWeightedRoom(Alexandria.DungeonAPI.RoomFactory.BuildNewRoomFromResource("Planetside/Resources/TrespassRooms/trespassbasic_garden_of_forking_paths.newroom").room, 0.7f));
+            table.includedRooms.Add(RoomTableTools.GenerateWeightedRoom(Alexandria.DungeonAPI.RoomFactory.BuildNewRoomFromResource("Planetside/Resources/TrespassRooms/trespassbasic_thegates.newroom").room, 0.4f));
+            table.includedRooms.Add(RoomTableTools.GenerateWeightedRoom(Alexandria.DungeonAPI.RoomFactory.BuildNewRoomFromResource("Planetside/Resources/TrespassRooms/trespassbasic_thin.newroom").room, 0.9f));
+            table.includedRooms.Add(RoomTableTools.GenerateWeightedRoom(Alexandria.DungeonAPI.RoomFactory.BuildNewRoomFromResource("Planetside/Resources/TrespassRooms/trespassbasic_treadlightly.newroom").room, 0.7f));
 
 
             foreach (WeightedRoom weightRoom in table.includedRooms.elements)
@@ -113,7 +132,17 @@ namespace Planetside
             
             tableDeeper.includedRooms.Add(RoomTableTools.GenerateWeightedRoom(RoomFactory.BuildFromResource("Planetside/Resources/TrespassRooms/TrespassDeeperRooms/trollface.room").room, 0.4f));
 
-
+            tableDeeper.includedRooms.Add(RoomTableTools.GenerateWeightedRoom(Alexandria.DungeonAPI.RoomFactory.BuildNewRoomFromResource("Planetside/Resources/TrespassRooms/TrespassDeeperRooms/trespassroom_2bigwalls.newroom").room, 1f));
+            tableDeeper.includedRooms.Add(RoomTableTools.GenerateWeightedRoom(Alexandria.DungeonAPI.RoomFactory.BuildNewRoomFromResource("Planetside/Resources/TrespassRooms/TrespassDeeperRooms/trespassroom_5bats.newroom").room, 1f));
+            tableDeeper.includedRooms.Add(RoomTableTools.GenerateWeightedRoom(Alexandria.DungeonAPI.RoomFactory.BuildNewRoomFromResource("Planetside/Resources/TrespassRooms/TrespassDeeperRooms/trespassroom_suspiciouslyprisonerlike.newroom").room, 1f));
+            tableDeeper.includedRooms.Add(RoomTableTools.GenerateWeightedRoom(Alexandria.DungeonAPI.RoomFactory.BuildNewRoomFromResource("Planetside/Resources/TrespassRooms/TrespassDeeperRooms/trespassroom_a_void.newroom").room, 0.4f));
+            tableDeeper.includedRooms.Add(RoomTableTools.GenerateWeightedRoom(Alexandria.DungeonAPI.RoomFactory.BuildNewRoomFromResource("Planetside/Resources/TrespassRooms/TrespassDeeperRooms/trespassroom_asmallpocketinspace.newroom").room, 0.4f));
+            tableDeeper.includedRooms.Add(RoomTableTools.GenerateWeightedRoom(Alexandria.DungeonAPI.RoomFactory.BuildNewRoomFromResource("Planetside/Resources/TrespassRooms/TrespassDeeperRooms/trespassroom_potentiallyintentionallyimprisoned.newroom").room, 0.4f));
+            tableDeeper.includedRooms.Add(RoomTableTools.GenerateWeightedRoom(Alexandria.DungeonAPI.RoomFactory.BuildNewRoomFromResource("Planetside/Resources/TrespassRooms/TrespassDeeperRooms/trespassroom_weezer.newroom").room, 0.4f));
+            tableDeeper.includedRooms.Add(RoomTableTools.GenerateWeightedRoom(Alexandria.DungeonAPI.RoomFactory.BuildNewRoomFromResource("Planetside/Resources/TrespassRooms/TrespassDeeperRooms/trespass_fourofthemagain.newroom").room, 0.9f));
+            tableDeeper.includedRooms.Add(RoomTableTools.GenerateWeightedRoom(Alexandria.DungeonAPI.RoomFactory.BuildNewRoomFromResource("Planetside/Resources/TrespassRooms/TrespassDeeperRooms/trespass_pathway.newroom").room, 0.4f));
+            tableDeeper.includedRooms.Add(RoomTableTools.GenerateWeightedRoom(Alexandria.DungeonAPI.RoomFactory.BuildNewRoomFromResource("Planetside/Resources/TrespassRooms/TrespassDeeperRooms/trespass_TheBouncer.newroom").room, 0.5f));
+            tableDeeper.includedRooms.Add(RoomTableTools.GenerateWeightedRoom(Alexandria.DungeonAPI.RoomFactory.BuildNewRoomFromResource("Planetside/Resources/TrespassRooms/TrespassDeeperRooms/trespass_TheBoxesAndtentacles.newroom").room, 0.7f));
 
 
             foreach (WeightedRoom weightRoom in tableDeeper.includedRooms.elements)

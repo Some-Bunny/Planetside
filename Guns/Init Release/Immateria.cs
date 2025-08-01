@@ -69,17 +69,19 @@ namespace Planetside
                 projectileModule.angleVariance = 80;
                 projectileModule.numberOfShotsInClip = 12;
                 
-
+                
                 Projectile projectile = UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(88) as Gun).DefaultModule.projectiles[0]);
                 projectile.gameObject.SetActive(false);
+                FakePrefab.MarkAsFakePrefab(projectile.gameObject);
+                UnityEngine.Object.DontDestroyOnLoad(projectile);
+
                 projectile.baseData.damage = 8f;
-                projectile.AdditionalScaleMultiplier = 1f;
                 projectile.shouldRotate = false;
                 projectile.baseData.range = 1000f;
 				projectile.baseData.speed *= 0.55f;
 
 
-				projectile.AnimateProjectileBundle("immateria_projectile_idle", StaticSpriteDefinitions.Projectile_Sheet_Data, StaticSpriteDefinitions.Projectile_Animation_Data, "immateria_projectile_idle", 
+				Alexandria.Assetbundle.ProjectileBuilders.AnimateProjectileBundle(projectile, "immateria_projectile_idle", StaticSpriteDefinitions.Projectile_Sheet_Data, StaticSpriteDefinitions.Projectile_Animation_Data, "immateria_projectile_idle", 
 					new List<IntVector2>() {new IntVector2(12, 12), new IntVector2(12, 12), new IntVector2(12, 12), new IntVector2(12, 12), new IntVector2(12, 12), new IntVector2(12, 12), new IntVector2(12, 12)}, 
 					AnimateBullet.ConstructListOfSameValues(true, 7), AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.LowerLeft, 7), AnimateBullet.ConstructListOfSameValues(true, 7), AnimateBullet.ConstructListOfSameValues(false, 7),
 					AnimateBullet.ConstructListOfSameValues<Vector3?>(null, 7), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 7), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 7), AnimateBullet.ConstructListOfSameValues<Projectile>(null, 7));
@@ -90,19 +92,19 @@ namespace Planetside
                 spook.penetration = 5;
                 spook.penetratesBreakables = true;
 
-                projectile.objectImpactEventName = (PickupObjectDatabase.GetById(384) as Gun).DefaultModule.projectiles[0].objectImpactEventName;
-                projectile.enemyImpactEventName = (PickupObjectDatabase.GetById(384) as Gun).DefaultModule.projectiles[0].enemyImpactEventName;
+                projectile.objectImpactEventName = (PickupObjectDatabase.GetById(156) as Gun).DefaultModule.projectiles[0].objectImpactEventName;
+                projectile.enemyImpactEventName = (PickupObjectDatabase.GetById(156) as Gun).DefaultModule.projectiles[0].enemyImpactEventName;
 
                 //projectile.hitEffects.
 
-                projectile.hitEffects.overrideMidairDeathVFX = (PickupObjectDatabase.GetById(504) as Gun).DefaultModule.projectiles[0].hitEffects.enemy.effects[0].effects[0].effect;//(PickupObjectDatabase.GetById(593) as Gun).DefaultModule.projectiles[0].GetComponent<ExplosiveModifier>().explosionData.effect;
+                projectile.hitEffects.overrideMidairDeathVFX = (PickupObjectDatabase.GetById(670) as Gun).DefaultModule.projectiles[0].hitEffects.enemy.effects[0].effects[0].effect;//(PickupObjectDatabase.GetById(593) as Gun).DefaultModule.projectiles[0].GetComponent<ExplosiveModifier>().explosionData.effect;
                 projectile.hitEffects.alwaysUseMidair = true;
 
                 ImprovedAfterImage yes = projectile.gameObject.AddComponent<ImprovedAfterImage>();
                 yes.spawnShadows = true;
-                yes.shadowLifetime = 0.6f;
-                yes.shadowTimeDelay = 0.15f;
-                yes.dashColor = new Color(0.8f, 0f, 0.45f, 0.7f);
+                yes.shadowLifetime = 0.35f;
+                yes.shadowTimeDelay = 0.05f;
+                yes.dashColor = new Color(1f, 0.5f, 0.8f, 0.8f);
                 yes.name = "Gun Trail";
 
                 FakePrefab.MarkAsFakePrefab(projectile.gameObject);
@@ -111,9 +113,10 @@ namespace Planetside
                 {
                     projectileModule.ammoCost = 0;
                 }
-				projectile.gameObject.AddComponent<ImmateriaProjectile>();
+				var imma = projectile.gameObject.AddComponent<ImmateriaProjectile>();
                  var a = projectile.gameObject.AddComponent<WraparoundProjectile>();
 				a.Cap = 4;
+                imma.SFX = (PickupObjectDatabase.GetById(156) as Gun).DefaultModule.projectiles[0].objectImpactEventName;
             }
             gun.Volley.UsesShotgunStyleVelocityRandomizer = true;
 			gun.Volley.DecreaseFinalSpeedPercentMin = 0.5f;

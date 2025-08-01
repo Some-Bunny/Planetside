@@ -47,37 +47,22 @@ namespace Planetside
                 mod.sequenceStyle = ProjectileModule.ProjectileSequenceStyle.Random;
                 mod.cooldownTime = 0.001f;
                 mod.numberOfShotsInClip = 25;
-            List<string> BeamAnimPaths = new List<string>()
-            {
-                "Planetside/Resources/Beams/HeatSink/heatsinkbeam_mid_001",
-                "Planetside/Resources/Beams/HeatSink/heatsinkbeam_mid_002",
-                "Planetside/Resources/Beams/HeatSink/heatsinkbeam_mid_003",
-                "Planetside/Resources/Beams/HeatSink/heatsinkbeam_mid_004",
-                "Planetside/Resources/Beams/HeatSink/heatsinkbeam_mid_005",
-                "Planetside/Resources/Beams/HeatSink/heatsinkbeam_mid_006",
-                "Planetside/Resources/Beams/HeatSink/heatsinkbeam_mid_007",
-                "Planetside/Resources/Beams/HeatSink/heatsinkbeam_mid_008",
-                "Planetside/Resources/Beams/HeatSink/heatsinkbeam_mid_009",
-                "Planetside/Resources/Beams/HeatSink/heatsinkbeam_mid_010",
-                "Planetside/Resources/Beams/HeatSink/heatsinkbeam_mid_011",
-                "Planetside/Resources/Beams/HeatSink/heatsinkbeam_mid_012",
-            };                
-            List<string> ImpactAnimPaths = new List<string>()
-            {
-                "Planetside/Resources/Beams/HeatSink/heatsinkbeam_end_001",
-                "Planetside/Resources/Beams/HeatSink/heatsinkbeam_end_002",
-                "Planetside/Resources/Beams/HeatSink/heatsinkbeam_end_003",
-                "Planetside/Resources/Beams/HeatSink/heatsinkbeam_end_004",
-                "Planetside/Resources/Beams/HeatSink/heatsinkbeam_end_005",
-                "Planetside/Resources/Beams/HeatSink/heatsinkbeam_end_006",
-                "Planetside/Resources/Beams/HeatSink/heatsinkbeam_end_007",
-                "Planetside/Resources/Beams/HeatSink/heatsinkbeam_end_008",
-                "Planetside/Resources/Beams/HeatSink/heatsinkbeam_end_009",
-                "Planetside/Resources/Beams/HeatSink/heatsinkbeam_end_010",
-            };
+            
 
                 Projectile projectile = UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(86) as Gun).DefaultModule.projectiles[0]);
 
+                BasicBeamController beamComp = projectile.GenerateBeamPrefabBundle(
+                "heatsinkbeam_mid_001",
+                StaticSpriteDefinitions.Beam_Sheet_Data,
+                StaticSpriteDefinitions.Beam_Animation_Data,
+                "heatsink_mid", new Vector2(16, 12), new Vector2(0, 2), //Main
+                "heatsink_impact", new Vector2(16, 16), new Vector2(0, 0), //Impact
+                "heatsink_impact", new Vector2(16, 16), new Vector2(0, 0), //End Of beam
+                null, null, null, //Start Of Beam
+                true);
+
+
+                /*
                 BasicBeamController beamComp = projectile.GenerateBeamPrefab(
                     "Planetside/Resources/Beams/HeatSink/heatsinkbeam_mid_001",
                     new Vector2(16, 10),
@@ -100,6 +85,7 @@ namespace Planetside
                     new Vector2(10, 2),
                     new Vector2(0, 4)
                     );
+                */
 
                 projectile.gameObject.SetActive(false);
                 FakePrefab.MarkAsFakePrefab(projectile.gameObject);

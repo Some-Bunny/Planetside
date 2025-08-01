@@ -25,12 +25,12 @@ namespace Planetside
 
             //ToolsEnemy.DebugInformation(behaviorSpec);
 
-            actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableFrogger);
-            actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableBig);
-            actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableBulletKingSlam);
-            actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableOldKingSuckBullet);
-            actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableBig);
-            actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableSlam);
+            actor.bulletBank.Bullets.Add(StaticBulletEntries.UndodgeableFrogger);
+            actor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableBig);
+            actor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableBulletKingSlam);
+            actor.bulletBank.Bullets.Add(StaticBulletEntries.UndodgeableOldKingSuckBullet);
+            actor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableBig);
+            actor.bulletBank.Bullets.Add(StaticBulletEntries.UndodgeableSlam);
 
 
             OphanaimFlightBehavior ModifiedTHESUN = behaviorSpec.AttackBehaviorGroup.AttackBehaviors[0].Behavior as OphanaimFlightBehavior;
@@ -90,7 +90,7 @@ namespace Planetside
                 {
                     EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("frogger"),
                     suckLessEntry,
-                    StaticUndodgeableBulletEntries.undodgeableBulletKingSlam
+                    StaticBulletEntries.undodgeableBulletKingSlam
                 };
 
                 AdditionalBraveLight braveLight = star.gameObject.AddComponent<AdditionalBraveLight>();
@@ -227,7 +227,7 @@ namespace Planetside
             {
                 SpinBulletsController spinBulletsController = star.AddComponent<SpinBulletsController>();
                 spinBulletsController.ShootPoint = star.gameObject;
-                spinBulletsController.OverrideBulletName = StaticUndodgeableBulletEntries.undodgeableBulletKingSlam.Name;
+                spinBulletsController.OverrideBulletName = StaticBulletEntries.undodgeableBulletKingSlam.Name;
                 spinBulletsController.NumBullets = 3;
                 spinBulletsController.BulletMinRadius = 0.1f;
                 spinBulletsController.BulletMaxRadius = 0f;
@@ -241,7 +241,7 @@ namespace Planetside
             {
                 SpinBulletsController spinBulletsController = star.AddComponent<SpinBulletsController>();
                 spinBulletsController.ShootPoint = star.gameObject;
-                spinBulletsController.OverrideBulletName = StaticUndodgeableBulletEntries.undodgeableBulletKingSlam.Name;
+                spinBulletsController.OverrideBulletName = StaticBulletEntries.undodgeableBulletKingSlam.Name;
                 spinBulletsController.NumBullets = 2;
                 spinBulletsController.BulletMinRadius = 0.1f;
                 spinBulletsController.BulletMaxRadius = 0f;
@@ -254,7 +254,7 @@ namespace Planetside
 
             public class RotatingBullet : Bullet
             {
-                public RotatingBullet(Vector2 centerPoint, bool speeen, float startAngle, float spinspeed) : base(StaticUndodgeableBulletEntries.UndodgeableFrogger.Name, false, false, false)
+                public RotatingBullet(Vector2 centerPoint, bool speeen, float startAngle, float spinspeed) : base(StaticBulletEntries.UndodgeableFrogger.Name, false, false, false)
                 {
                     this.centerPoint = centerPoint;
                     this.yesToSpeenOneWay = speeen;
@@ -428,7 +428,7 @@ namespace Planetside
             public class SummonerBall : Bullet
             {
                 public SweepAttackModified parent;
-                public SummonerBall(SweepAttackModified p) : base(StaticUndodgeableBulletEntries.undodgeableBig.Name, false, false, false)
+                public SummonerBall(SweepAttackModified p) : base(StaticBulletEntries.undodgeableBig.Name, false, false, false)
                 {
                     parent = p;
                 }
@@ -444,7 +444,7 @@ namespace Planetside
                                 base.PostWwiseEvent("Play_BOSS_doormimic_flame_01");
                                 for (int q = 0; q < 2; q++)
                                 {
-                                    this.Fire(new Direction(parent.angle + (q * 180), Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(2), new SpeedChangingBullet(StaticUndodgeableBulletEntries.UndodgeableFrogger.Name, 6, 120));
+                                    this.Fire(new Direction(parent.angle + (q * 180), Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(2), new SpeedChangingBullet(StaticBulletEntries.UndodgeableFrogger.Name, 6, 120));
                                 }
                             }
                         }
@@ -791,7 +791,7 @@ namespace Planetside
             }
             public class RotatingBullet : Bullet
             {
-                public RotatingBullet(Vector2 centerPoint, bool speeen, float startAngle, float spinspeed) : base(StaticUndodgeableBulletEntries.UndodgeableFrogger.Name, false, false, false)
+                public RotatingBullet(Vector2 centerPoint, bool speeen, float startAngle, float spinspeed) : base(StaticBulletEntries.UndodgeableFrogger.Name, false, false, false)
                 {
                     this.centerPoint = centerPoint;
                     this.yesToSpeenOneWay = speeen;
@@ -1021,7 +1021,7 @@ namespace Planetside
             public class FireFire : Bullet
             {
 
-                public FireFire() : base(StaticUndodgeableBulletEntries.UndodgeableOldKingSuckBullet.Name, false, false, false)
+                public FireFire() : base(StaticBulletEntries.UndodgeableOldKingSuckBullet.Name, false, false, false)
                 {
                 }
                 public override IEnumerator Top()

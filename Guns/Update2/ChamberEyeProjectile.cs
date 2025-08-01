@@ -20,10 +20,6 @@ namespace Planetside
 {
 	internal class ChamberEyeProjectile : MonoBehaviour
 	{
-		public ChamberEyeProjectile()
-		{
-		}
-
         public void Start()
         {
             this.projectile = base.GetComponent<Projectile>();

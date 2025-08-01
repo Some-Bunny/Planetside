@@ -205,18 +205,21 @@ namespace Planetside
 			});
 
 
-			/*
+			
 			global::ETGModConsole.Commands.GetGroup("psog").AddUnit("uitoggle", delegate (string[] args)
 			{
-				if (!disabled)
+                GameUIRoot.Instance.ForceHideGunPanel = UIEnabled;
+                GameUIRoot.Instance.ForceHideItemPanel = UIEnabled;
+				if (UIEnabled)
 				{
-					ETGModConsole.Log("Ui is disabled");
-					GameUIRoot.Instance.HideCoreUI("disabled");
-					GameUIRoot.Instance.ForceHideGunPanel = true;
-					GameUIRoot.Instance.ForceHideItemPanel = true;
-				}
-			});
-			*/
-		}
+                    GameUIRoot.Instance.CoreUIHidden = new OverridableBool(false);
+                }
+                else
+				{
+                    GameUIRoot.Instance.HideCoreUI("disabled");
+                }
+            });
+        }
+		private static bool UIEnabled = true;
     }
 }

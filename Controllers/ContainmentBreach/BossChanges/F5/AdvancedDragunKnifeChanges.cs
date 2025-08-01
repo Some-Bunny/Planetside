@@ -26,12 +26,12 @@ namespace Planetside
 			//The BehaviorSpeculator is responsible for almost everything an enemy does, from shooting a gun to teleporting.
 			// Tip: To debug an enemy's BehaviorSpeculator, you can uncomment the line below. This will print all the behavior information to the console.
 			//ToolsEnemy.DebugInformation(behaviorSpec);
-			//actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableOldKingHomingRingBulletSoundless);
+			//actor.bulletBank.Bullets.Add(StaticBulletEntries.UndodgeableOldKingHomingRingBulletSoundless);
 
 			ShootBehavior ShootBehavior1 = behaviorSpec.AttackBehaviorGroup.AttackBehaviors[0].Behavior as ShootBehavior;
 			ShootBehavior1.BulletScript = new CustomBulletScriptSelector(typeof(ModifeidDraGunKnifeDaggers1));
 			ShootBehavior1.Cooldown *= 2f;
-			//actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableDonut);
+			//actor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableDonut);
 
 			//BeholsterShootBehavior shootWave = behaviorSpec.AttackBehaviorGroup.AttackBehaviors[2].Behavior as BeholsterShootBehavior;
 			//shootWave.BulletScript = new CustomBulletScriptSelector(typeof(ModifiedShootWave));

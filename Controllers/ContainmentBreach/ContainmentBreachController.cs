@@ -149,8 +149,8 @@ namespace Planetside
                 DontDestroyOnLoad(InfectionBulletBank.gameObject);
                 InfectionBulletBank.Bullets = new List<AIBulletBank.Entry>()
                 {
-                    StaticUndodgeableBulletEntries.undodgeableLargeSpore,
-                    StaticUndodgeableBulletEntries.undodgeableSmallSpore
+                    StaticBulletEntries.undodgeableLargeSpore,
+                    StaticBulletEntries.undodgeableSmallSpore
                 };
                 InfectionBulletBank.transforms = new List<Transform>();
                 InfectionBulletBank.m_cachedActorName = "Liminal Infection";
@@ -191,8 +191,6 @@ namespace Planetside
 
             if (CurrentState == States.ALLOWED)// && AdvancedGameStatsManager.Instance.GetSessionStatValue(CustomTrackedStats.INFECTION_FLOORS_ACTIVATED) == 1)
             {
-
-
                 dungeon.DungeonFloorName = GameUIRoot.Instance.GetComponent<dfLanguageManager>().GetValue(dungeon.DungeonFloorName) + "?";
                 dungeon.DungeonFloorLevelTextOverride = "Mixed Chamber";
                 var deco = dungeon.decoSettings;
@@ -557,6 +555,16 @@ namespace Planetside
                             {
                                 continue;
                             }
+
+                            if (sellCellController != null)
+                            {
+                                continue;
+                            }
+                            if (shope.name.Contains("Truth_Knower"))
+                            {
+                                continue;
+                            }
+
                             if (!shope.gameObject.name.ToLower().Contains("jailed"))
                             {
                                 if (!shope.gameObject.name.ToLower().Contains("bowlercell"))

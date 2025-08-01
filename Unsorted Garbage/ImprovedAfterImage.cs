@@ -164,7 +164,7 @@ namespace Planetside
             sprite.scale = base.sprite.scale;
             sprite.usesOverrideMaterial = true;
             sprite.IsPerpendicular = true;
-
+            sprite.transform.localScale = this.transform.localScale;
 
             if (sprite.renderer && IsRandomShader)
             {

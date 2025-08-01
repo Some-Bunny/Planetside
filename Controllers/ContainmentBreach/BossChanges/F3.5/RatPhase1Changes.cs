@@ -19,23 +19,23 @@ namespace Planetside
                                                                                                        // You can find a full list of GUIDs at https://github.com/ModTheGungeon/ETGMod/blob/master/Assembly-CSharp.Base.mm/Content/gungeon_id_map/enemies.txt
         public override void DoOverride()
 		{
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableCannonBullet);
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableSlam);
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableGroundDefault);
-            actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UnDodgeableCheese);
-            actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UnDodgeableDagger);
-            actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UnDodgeableTailProj);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.UndodgeableCannonBullet);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.UndodgeableSlam);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.UndodgeableGroundDefault);
+            actor.bulletBank.Bullets.Add(StaticBulletEntries.UnDodgeableCheese);
+            actor.bulletBank.Bullets.Add(StaticBulletEntries.UnDodgeableDagger);
+            actor.bulletBank.Bullets.Add(StaticBulletEntries.UnDodgeableTailProj);
 
-            actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UnDodgeablecheeseWedge0);
-            actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UnDodgeablecheeseWedge1);
-            actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UnDodgeablecheeseWedge2);
-            actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UnDodgeablecheeseWedge3);
-            actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UnDodgeablecheeseWedge4);
-            actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UnDodgeablecheeseWedge5);
-            actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UnDodgeablecheeseWedge6);
-            actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UnDodgeablecheeseWedge7);
+            actor.bulletBank.Bullets.Add(StaticBulletEntries.UnDodgeablecheeseWedge0);
+            actor.bulletBank.Bullets.Add(StaticBulletEntries.UnDodgeablecheeseWedge1);
+            actor.bulletBank.Bullets.Add(StaticBulletEntries.UnDodgeablecheeseWedge2);
+            actor.bulletBank.Bullets.Add(StaticBulletEntries.UnDodgeablecheeseWedge3);
+            actor.bulletBank.Bullets.Add(StaticBulletEntries.UnDodgeablecheeseWedge4);
+            actor.bulletBank.Bullets.Add(StaticBulletEntries.UnDodgeablecheeseWedge5);
+            actor.bulletBank.Bullets.Add(StaticBulletEntries.UnDodgeablecheeseWedge6);
+            actor.bulletBank.Bullets.Add(StaticBulletEntries.UnDodgeablecheeseWedge7);
 
-            actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UnDodgeableCheeseWheel);
+            actor.bulletBank.Bullets.Add(StaticBulletEntries.UnDodgeableCheeseWheel);
 
 
             ShootBehavior ShootBehavior1 = behaviorSpec.AttackBehaviorGroup.AttackBehaviors[0].Behavior as ShootBehavior;
@@ -68,17 +68,17 @@ namespace Planetside
                         yield return base.Wait(1);
                     }
                     Vector2 offset = BraveMathCollege.GetEllipsePoint(Vector2.zero, 1.39f, 0.92f, angle);
-                    base.Fire(new Offset(offset, 0f, string.Empty, DirectionType.Absolute), new Direction(angle - 2.5f, DirectionType.Absolute, -1f), new Speed(10f, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.UnDodgeableCheese.Name, true, false, false));
-                    base.Fire(new Offset(offset, 0f, string.Empty, DirectionType.Absolute), new Direction(angle, DirectionType.Absolute, -1f), new Speed(10f, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.UnDodgeableCheese.Name, true, false, false));
-                    base.Fire(new Offset(offset, 0f, string.Empty, DirectionType.Absolute), new Direction(angle + 2.5f, DirectionType.Absolute, -1f), new Speed(10f, SpeedType.Absolute), new Bullet(StaticUndodgeableBulletEntries.UnDodgeableCheese.Name, true, false, false));
+                    base.Fire(new Offset(offset, 0f, string.Empty, DirectionType.Absolute), new Direction(angle - 2.5f, DirectionType.Absolute, -1f), new Speed(10f, SpeedType.Absolute), new Bullet(StaticBulletEntries.UnDodgeableCheese.Name, true, false, false));
+                    base.Fire(new Offset(offset, 0f, string.Empty, DirectionType.Absolute), new Direction(angle, DirectionType.Absolute, -1f), new Speed(10f, SpeedType.Absolute), new Bullet(StaticBulletEntries.UnDodgeableCheese.Name, true, false, false));
+                    base.Fire(new Offset(offset, 0f, string.Empty, DirectionType.Absolute), new Direction(angle + 2.5f, DirectionType.Absolute, -1f), new Speed(10f, SpeedType.Absolute), new Bullet(StaticBulletEntries.UnDodgeableCheese.Name, true, false, false));
                     
-                    base.Fire(new Offset(offset, 0f, string.Empty, DirectionType.Absolute), new Direction((angle - 2.5f) + 20, DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.UnDodgeableCheese.Name, 16f, 60, -1, true));
-                    base.Fire(new Offset(offset, 0f, string.Empty, DirectionType.Absolute), new Direction(angle + 20, DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.UnDodgeableCheese.Name, 16f, 60, -1, true));
-                    base.Fire(new Offset(offset, 0f, string.Empty, DirectionType.Absolute), new Direction((angle + 2.5f) + 20, DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.UnDodgeableCheese.Name, 16f, 60, -1, true));
+                    base.Fire(new Offset(offset, 0f, string.Empty, DirectionType.Absolute), new Direction((angle - 2.5f) + 20, DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.UnDodgeableCheese.Name, 16f, 60, -1, true));
+                    base.Fire(new Offset(offset, 0f, string.Empty, DirectionType.Absolute), new Direction(angle + 20, DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.UnDodgeableCheese.Name, 16f, 60, -1, true));
+                    base.Fire(new Offset(offset, 0f, string.Empty, DirectionType.Absolute), new Direction((angle + 2.5f) + 20, DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.UnDodgeableCheese.Name, 16f, 60, -1, true));
 
-                    base.Fire(new Offset(offset, 0f, string.Empty, DirectionType.Absolute), new Direction((angle - 2.5f) + 30, DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.UnDodgeableCheese.Name, 16f, 120, -1, true));
-                    base.Fire(new Offset(offset, 0f, string.Empty, DirectionType.Absolute), new Direction(angle + 30, DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.UnDodgeableCheese.Name, 16f, 120, -1, true));
-                    base.Fire(new Offset(offset, 0f, string.Empty, DirectionType.Absolute), new Direction((angle + 2.5f) + 30, DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet(StaticUndodgeableBulletEntries.UnDodgeableCheese.Name, 16f, 120, -1, true));
+                    base.Fire(new Offset(offset, 0f, string.Empty, DirectionType.Absolute), new Direction((angle - 2.5f) + 30, DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.UnDodgeableCheese.Name, 16f, 120, -1, true));
+                    base.Fire(new Offset(offset, 0f, string.Empty, DirectionType.Absolute), new Direction(angle + 30, DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.UnDodgeableCheese.Name, 16f, 120, -1, true));
+                    base.Fire(new Offset(offset, 0f, string.Empty, DirectionType.Absolute), new Direction((angle + 2.5f) + 30, DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.UnDodgeableCheese.Name, 16f, 120, -1, true));
 
                     i++;
                 }

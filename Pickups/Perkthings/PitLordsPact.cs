@@ -10,6 +10,7 @@ using SaveAPI;
 
 namespace Planetside
 {
+    /*
     class PitLordsPactController : MonoBehaviour
     {
         public int Stacks = 0;
@@ -35,13 +36,7 @@ namespace Planetside
         {
             Stacks = 1;
             this.hasBeenPickedup = true;
-            GameManager.Instance.OnNewLevelFullyLoaded += this.OnNewFloorLoaded;
-            if (player != null)
-            {
-                OtherTools.ApplyStat(player, PlayerStats.StatType.Damage, 0.95f, StatModifier.ModifyMethod.MULTIPLICATIVE);
-                OtherTools.ApplyStat(player, PlayerStats.StatType.DamageToBosses, 0.95f, StatModifier.ModifyMethod.MULTIPLICATIVE);
-                OtherTools.ApplyStat(player, PlayerStats.StatType.KnockbackMultiplier, 2f, StatModifier.ModifyMethod.MULTIPLICATIVE);
-            }
+
         }
         public void Update()
         {
@@ -121,6 +116,7 @@ namespace Planetside
 
         public PlayerController player;
     }
+    */
 
     class PitLordsPact : PerkPickupObject, IPlayerInteractable
     {
@@ -154,7 +150,8 @@ namespace Planetside
             new Hook(typeof(PlayerController).GetMethod("Fall", BindingFlags.Instance | BindingFlags.NonPublic), typeof(PitLordsPact).GetMethod("FallHookPlayer"));
 
 
-           
+            item.InitialPickupNotificationText = "The Pit Lord rewards Offerings.";
+            item.StackPickupNotificationText = "More Lucrative Offerings.";
 
             GenericLootTable pitLordsPactPickupTable = LootTableTools.CreateLootTable();
             pitLordsPactPickupTable.AddItemsToPool(new Dictionary<int, float>() { { 70, 1f }, { 73, 0.7f }, { 120, 0.6f }, { 85, 0.6f }, { 565, 0.5f }, { 224, 0.5f }, { 67, 0.33f }, { LeSackPickup.SaccID, 0.02f }, { NullPickupInteractable.NollahID, 0.02f }, });
@@ -233,17 +230,12 @@ namespace Planetside
                     requiresStack = false
                 },
         };
-        public override CustomTrackedStats StatToIncreaseOnPickup => SaveAPI.CustomTrackedStats.AMOUNT_BOUGHT_PITLORDPACT;
+        public override CustomDungeonFlags FlagToSetOnStack => CustomDungeonFlags.PITLORDPACT_FLAG_STACK;
 
         public static GenericLootTable PitLordsPactTable;
         private static GenericLootTable PitLordsPactTableNoHP;
 
         public static int PitLordsPactID;
-        public new bool PrerequisitesMet()
-        {
-            EncounterTrackable component = base.GetComponent<EncounterTrackable>();
-            return component == null || component.PrerequisitesMet();
-        }
         public static void FallHookPlayer(Action<PlayerController> orig, PlayerController self)
         {
             orig(self);
@@ -251,9 +243,9 @@ namespace Planetside
             bool IsFallingIntoOtherRoom = (self.CurrentRoom != null && self.CurrentRoom.TargetPitfallRoom != null) || GetCurrentCellPitfallTarget(self) != null;
             bool GunpreventsDamage = self.CurrentGun && self.CurrentGun.gunName == "Mermaid Gun";
             bool IsPitimmune = self.ImmuneToPits.Value;
+            var pitLord = self.HasPerk(PitLordsPactID) as PitLordsPact;
 
-            PitLordsPactController pact = self.GetComponent<PitLordsPactController>();
-            if (pact != null && IsFallingIntoOtherRoom != true && IsFallingIntoElevatorShaft != true && GunpreventsDamage != true && IsPitimmune != true)
+            if (pitLord != null && IsFallingIntoOtherRoom != true && IsFallingIntoElevatorShaft != true && GunpreventsDamage != true && IsPitimmune != true)
             {
                 SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.PITLORDPACT_FLAG_FALLLIVING, true);
 
@@ -270,7 +262,7 @@ namespace Planetside
                 ExplosionData boomboom = StaticExplosionDatas.CopyFields(StaticExplosionDatas.genericSmallExplosion);//StaticExplosionDatas.genericSmallExplosion;
                 boomboom.damageToPlayer = 0;
                 boomboom.damageRadius = 8f;
-                boomboom.damage = pact.EnemySacrificeDamage * 3;
+                boomboom.damage = pitLord.EnemySacrificeDamage * 3;
                 boomboom.preventPlayerForce = true;
                 boomboom.ignoreList.Add(self.specRigidbody);
                 boomboom.playDefaultSFX = false;
@@ -291,9 +283,9 @@ namespace Planetside
                     }
                 }
             }
-            else if (pact != null && pact.SelfSacrificeWithPitLordAmuletCap >= pact.AmountSelfSacrificedWithPitLordAmulet && IsFallingIntoOtherRoom != true && IsFallingIntoElevatorShaft != true)
+            else if (pitLord != null && pitLord.SelfSacrificeWithPitLordAmuletCap > pitLord.AmountSelfSacrificedWithPitLordAmulet && IsFallingIntoOtherRoom != true && IsFallingIntoElevatorShaft != true)
             {
-                pact.AmountSelfSacrificedWithPitLordAmulet++;
+                pitLord.AmountSelfSacrificedWithPitLordAmulet++;
                 SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.PITLORDPACT_FLAG_FALLPLAYER_AMULET, true);
                 GameObject gameObject = SpawnManager.SpawnVFX(StaticVFXStorage.JammedDeathVFX, self.transform.position, Quaternion.identity, false);
                 AkSoundEngine.PostEvent("Play_WPN_Life_Orb_Blast_01", self.gameObject);
@@ -308,7 +300,7 @@ namespace Planetside
                 ExplosionData boomboom = StaticExplosionDatas.CopyFields(StaticExplosionDatas.genericSmallExplosion);//StaticExplosionDatas.genericSmallExplosion;
                 boomboom.damageToPlayer = 0;
                 boomboom.damageRadius = 12f;
-                boomboom.damage = pact.EnemySacrificeDamage * 5;
+                boomboom.damage = pitLord.EnemySacrificeDamage * 5;
                 boomboom.preventPlayerForce = true;
                 boomboom.ignoreList.Add(self.specRigidbody);
                 boomboom.playDefaultSFX = false;
@@ -326,7 +318,7 @@ namespace Planetside
                     component2.UpdateZDepth();
                 }
             }
-            else if (pact != null && pact.SelfSacrificeWithPitLordAmuletCap <= pact.AmountSelfSacrificedWithPitLordAmulet && IsFallingIntoOtherRoom != true && IsFallingIntoElevatorShaft != true)
+            else if (pitLord != null && pitLord.SelfSacrificeWithPitLordAmuletCap <= pitLord.AmountSelfSacrificedWithPitLordAmulet && IsFallingIntoOtherRoom != true && IsFallingIntoElevatorShaft != true)
             {
                 GameObject gameObject = SpawnManager.SpawnVFX(StaticVFXStorage.JammedDeathVFX, self.transform.position, Quaternion.identity, false);
                 AkSoundEngine.PostEvent("Play_WPN_Life_Orb_Blast_01", self.gameObject);
@@ -341,7 +333,7 @@ namespace Planetside
                 ExplosionData boomboom = StaticExplosionDatas.CopyFields(StaticExplosionDatas.genericSmallExplosion);//StaticExplosionDatas.genericSmallExplosion;
                 boomboom.damageToPlayer = 0;
                 boomboom.damageRadius = 6f;
-                boomboom.damage = pact.EnemySacrificeDamage/4;
+                boomboom.damage = pitLord.EnemySacrificeDamage;
                 boomboom.preventPlayerForce = true;
                 boomboom.ignoreList.Add(self.specRigidbody);
                 boomboom.playDefaultSFX = false;
@@ -357,8 +349,10 @@ namespace Planetside
             bool GunpreventsDamage = self.CurrentGun && self.CurrentGun.gunName == "Mermaid Gun";
             bool IsPitimmune = self.ImmuneToPits.Value;
 
-            PitLordsPactController pact = self.GetComponent<PitLordsPactController>();
-            if (pact != null && IsFallingIntoOtherRoom != true && IsFallingIntoElevatorShaft != true && GunpreventsDamage != true && IsPitimmune != true)
+            var pitLord = self.HasPerk(PitLordsPactID) as PitLordsPact;
+
+
+            if (pitLord != null && IsFallingIntoOtherRoom != true && IsFallingIntoElevatorShaft != true && GunpreventsDamage != true && IsPitimmune != true)
             {
                 GameObject gameObject = SpawnManager.SpawnVFX(StaticVFXStorage.JammedDeathVFX, self.transform.position, Quaternion.identity, false);
                 AkSoundEngine.PostEvent("Play_WPN_Life_Orb_Blast_01", self.gameObject);
@@ -373,7 +367,7 @@ namespace Planetside
                 ExplosionData boomboom = StaticExplosionDatas.CopyFields(StaticExplosionDatas.genericSmallExplosion);//StaticExplosionDatas.genericSmallExplosion;
                 boomboom.damageToPlayer = 0;
                 boomboom.damageRadius = 8f;
-                boomboom.damage = pact.EnemySacrificeDamage * 5;
+                boomboom.damage = pitLord.EnemySacrificeDamage * 5;
                 boomboom.preventPlayerForce = true;
                 boomboom.ignoreList.Add(self.specRigidbody);
                 boomboom.playDefaultSFX = false;
@@ -427,8 +421,9 @@ namespace Planetside
                 for (int i = 0; i < players.Length; i++)
                 {
                     PlayerController player = players[i];
-                    PitLordsPactController pact = player.GetComponent<PitLordsPactController>();
-                    if (pact != null)
+
+                    var pitLord = player.HasPerk(PitLordsPactID) as PitLordsPact;
+                    if (pitLord != null)
                     {
                         GameObject gameObject = SpawnManager.SpawnVFX(StaticVFXStorage.JammedDeathVFX, self.transform.position, Quaternion.identity, false);
                         AkSoundEngine.PostEvent("Play_WPN_Life_Orb_Blast_01", player.gameObject);
@@ -443,7 +438,7 @@ namespace Planetside
                         ExplosionData boomboom = StaticExplosionDatas.CopyFields(StaticExplosionDatas.genericSmallExplosion);//StaticExplosionDatas.genericSmallExplosion;
                         boomboom.damageToPlayer = 0;
                         boomboom.damageRadius = 8f;
-                        boomboom.damage = pact.EnemySacrificeDamage;
+                        boomboom.damage = pitLord.EnemySacrificeDamage;
                         boomboom.preventPlayerForce = true;
                         boomboom.ignoreList.Add(player.specRigidbody);
                         boomboom.playDefaultSFX = false;
@@ -480,8 +475,10 @@ namespace Planetside
             for (int i = 0; i < players.Length; i++)
             {
                 PlayerController player = players[i];
-                PitLordsPactController pact = player.GetComponent<PitLordsPactController>();
-                if (pact != null)
+
+                var pitLord = player.HasPerk(PitLordsPactID) as PitLordsPact;
+                
+                if (pitLord != null)
                 {
                     SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.PITLORDPACT_FLAG_FALLLIVING, true);
                     GameObject gameObject = SpawnManager.SpawnVFX(StaticVFXStorage.JammedDeathVFX, self.transform.position, Quaternion.identity, false);
@@ -494,15 +491,13 @@ namespace Planetside
                         component.UpdateZDepth();
                       
                     }
-                    ETGModConsole.Log("4");
                     ExplosionData boomboom = StaticExplosionDatas.CopyFields(StaticExplosionDatas.genericSmallExplosion);//StaticExplosionDatas.genericLargeExplosion;
                     boomboom.damageToPlayer = 0;
                     boomboom.damageRadius = 6.5f;
-                    boomboom.damage = pact.EnemySacrificeDamage;
+                    boomboom.damage = pitLord.EnemySacrificeDamage;
                     boomboom.preventPlayerForce = true;
                     boomboom.ignoreList.Add(player.specRigidbody);
                     boomboom.playDefaultSFX = false;
-                    ETGModConsole.Log("5");
                     Exploder.Explode(player.sprite.WorldCenter, boomboom, player.transform.PositionVector2());
 
                     if (UnityEngine.Random.value > self.healthHaver.GetMaxHealth()/100)
@@ -537,13 +532,14 @@ namespace Planetside
                 for (int i = 0; i < players.Length; i++)
                 {
                     PlayerController player = players[i];
-                    PitLordsPactController pact = player.GetComponent<PitLordsPactController>();
-                    if (pact != null && droppedGun.RespawnsIfPitfall == false)
+
+                    var pitLord = player.HasPerk(PitLordsPactID) as PitLordsPact;
+                    if (pitLord != null && droppedGun.RespawnsIfPitfall == false)
                     {
                         SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.PITLORDPACT_FLAG_ITEM, true);
-                        if (pact.AmountOfItemsSacrificed < pact.ItemSacrificablePerFloor)
+                        if (pitLord.AmountOfItemsSacrificed < pitLord.ItemSacrificablePerFloor)
                         {
-                            pact.AmountOfItemsSacrificed++;
+                            pitLord.AmountOfItemsSacrificed++;
                             PickupObject.ItemQuality quality = droppedGun.quality;
                             if (quality != PickupObject.ItemQuality.COMMON && quality != PickupObject.ItemQuality.SPECIAL && quality != PickupObject.ItemQuality.EXCLUDED)
                             {
@@ -599,6 +595,8 @@ namespace Planetside
                             }
                         }
                     }
+
+ 
                 }
             }
 
@@ -610,12 +608,13 @@ namespace Planetside
                 for (int i = 0; i < players.Length; i++)
                 {
                     PlayerController player = players[i];
-                    PitLordsPactController pact = player.GetComponent<PitLordsPactController>();
-                    if (pact != null && pickupObj.RespawnsIfPitfall == false)
+
+                    var pitLord = player.HasPerk(PitLordsPactID) as PitLordsPact;
+                    if (pitLord != null && pickupObj.RespawnsIfPitfall == false)
                     {
-                        if (pact.AmountOfItemsSacrificed <= pact.ItemSacrificablePerFloor)
+                        if (pitLord.AmountOfItemsSacrificed < pitLord.ItemSacrificablePerFloor)
                         {
-                            pact.AmountOfItemsSacrificed++;
+                            pitLord.AmountOfItemsSacrificed++;
                             PickupObject.ItemQuality quality = pickupObj.quality;
                             if (quality != PickupObject.ItemQuality.COMMON && quality != PickupObject.ItemQuality.SPECIAL && quality != PickupObject.ItemQuality.EXCLUDED)
                             {
@@ -683,6 +682,7 @@ namespace Planetside
                             }
                         }
                     }
+
                 }         
             }
         }
@@ -698,18 +698,19 @@ namespace Planetside
             for (int i = 0; i < players.Length; i++)
             {
                 PlayerController player = players[i];
-                PitLordsPactController pact = player.GetComponent<PitLordsPactController>();
-                if (pact != null)
+                var pitLord = player.HasPerk(PitLordsPactID) as PitLordsPact;
+                if (pitLord != null)
                 {
                     SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.PITLORDPACT_FLAG_TABLE, true);
                     AkSoundEngine.PostEvent("Play_OBJ_coin_medium_01", self.gameObject);
-                    LootEngine.SpawnCurrency((!player.sprite) ? player.specRigidbody.UnitCenter : player.sprite.WorldCenter, UnityEngine.Random.Range(pact.TablesSarificeBonusMax, pact.TablesSarificeBonusMax), false);
+                    LootEngine.SpawnCurrency((!player.sprite) ? player.specRigidbody.UnitCenter : player.sprite.WorldCenter, UnityEngine.Random.Range(pitLord.TablesSarificeBonusMax, pitLord.TablesSarificeBonusMax), false);
                 }
+ 
             }
             yield break;
         }
 
-
+        /*
         public override void Pickup(PlayerController player)
         {
             if (m_hasBeenPickedUp)
@@ -734,32 +735,109 @@ namespace Planetside
 
             UnityEngine.Object.Destroy(base.gameObject);
         }
+        */
 
-        public void Start()
+        public override void OnInitialPickup(PlayerController playerController)
         {
-            try
+            GameManager.Instance.OnNewLevelFullyLoaded += this.OnNewFloorLoaded;
+            if (playerController != null)
             {
-                GameManager.Instance.PrimaryPlayer.CurrentRoom.RegisterInteractable(this);
-                SpriteOutlineManager.AddOutlineToSprite(base.sprite, OutlineColor, 0.1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
+                OtherTools.ApplyStat(playerController, PlayerStats.StatType.Damage, 0.95f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+                OtherTools.ApplyStat(playerController, PlayerStats.StatType.DamageToBosses, 0.95f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+                OtherTools.ApplyStat(playerController, PlayerStats.StatType.KnockbackMultiplier, 2f, StatModifier.ModifyMethod.MULTIPLICATIVE);
             }
-            catch (Exception er)
+        }
+
+
+        public override void Update()
+        {
+            if (_Owner != null)
             {
-                ETGModConsole.Log(er.Message, false);
+                if (_Owner.CurrentRoom != null)
+                {
+                    List<AIActor> activeEnemies = _Owner.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
+                    if (activeEnemies != null && activeEnemies.Count >= 0)
+                    {
+                        for (int i = activeEnemies.Count - 1; i > -1; i--)
+                        {
+                            var ai = activeEnemies[i];
+                            if (ai != null && ai.specRigidbody != null)
+                            {
+                                if (EnemyIsOverPit(ai) == true && !ai.healthHaver.IsDead && !ai.IsFalling && ai.healthHaver != null && ai.isActiveAndEnabled == true)
+                                {
+                                    ai.healthHaver.ApplyDamage(EnemyAbovePitDamage * BraveTime.DeltaTime, Vector2.zero, "Pit Lords Wrath", CoreDamageTypes.None, DamageCategory.Environment, false, null, false);
+                                }
+                            }
+                        }
+                    }
+                }
+
             }
         }
 
-
-        private void Update()
+        public bool EnemyIsOverPit(AIActor aIActor)
         {
-            if (!this.m_hasBeenPickedUp && !this.m_isBeingEyedByRat && base.ShouldBeTakenByRat(base.sprite.WorldCenter))
-            {
-                GameManager.Instance.Dungeon.StartCoroutine(base.HandleRatTheft());
-            }
-        }
-        private bool m_hasBeenPickedUp;
+            if (aIActor == null) { return false; }
+            if (GameManager.Instance.Dungeon == null) { return false; }
 
-        public PitLordsPact()
-        {
+
+            Vector2 v = aIActor.specRigidbody == null ? aIActor.sprite.WorldCenter : aIActor.specRigidbody.GroundPixelCollider != null ? aIActor.specRigidbody.GroundPixelCollider.UnitCenter : aIActor.sprite.WorldCenter;
+            return GameManager.Instance.Dungeon.CellSupportsFalling(v);
         }
+
+        private void OnNewFloorLoaded()
+        {
+            AmountOfItemsSacrificed = 0;
+            AmountSelfSacrificedWithPitLordAmulet = 0;
+        }
+
+        public override void OnStack(PlayerController playerController)
+        {
+            this.EnemySacrificeDamage += 50;
+            this.EnemyAbovePitDamage += 3.75f;
+            this.EnemySacrificedBonus += 1;
+            this.ItemSacrificablePerFloor++;
+            this.TablesSarificeBonusMin++;
+            this.TablesSarificeBonusMax++;
+        }
+
+
+        public float EnemySacrificedBonus;
+        public float EnemySacrificeDamage = 50;
+
+        public float EnemyAbovePitDamage = 7.5f;
+
+        public int ItemSacrificablePerFloor = 1;
+        public int AmountOfItemsSacrificed;
+
+
+        public int TablesSarificeBonusMin = 2;
+        public int TablesSarificeBonusMax = 5;
+        public float TablesSarificeChance = 1;
+
+        public float SelfSacrificeWithPitLordAmuletCap = 2;
+        public float AmountSelfSacrificedWithPitLordAmulet;
+
+
+        public float TemporaryFlightTime = 1;
+
+        public bool hasBeenPickedup;
+
+
+        /*
+        this.EnemySacrificeDamage = 20;
+            this.EnemyAbovePitDamage = 3.33f;
+            this.EnemySacrificedBonus = 3;
+
+            this.ItemSacrificablePerFloor = 1;
+
+            this.TablesSarificeBonusMin = 1;
+            this.TablesSarificeBonusMax = 3;
+            this.TablesSarificeChance = 0.2f;
+
+            this.SelfSacrificeWithPitLordAmuletCap = 2;
+
+            this.TemporaryFlightTime = 1;
+        */
     }
 }

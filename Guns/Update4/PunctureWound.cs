@@ -33,6 +33,7 @@ namespace Planetside
             gun.shootAnimation = "puncturewound_fire";
             gun.reloadAnimation = "puncturewound_reload";
             gun.chargeAnimation = "puncturewound_charge";
+            gun.barrelOffset.transform.localScale = Vector3.one;
 
 
             gun.AddProjectileModuleFrom(PickupObjectDatabase.GetById(86) as Gun, true, false);
@@ -54,7 +55,7 @@ namespace Planetside
             gun.DefaultModule.ammoCost = 1;
             gun.DefaultModule.shootStyle = ProjectileModule.ShootStyle.Charged;
             gun.DefaultModule.sequenceStyle = ProjectileModule.ProjectileSequenceStyle.Random;
-            gun.reloadTime = 1.7f;
+            gun.reloadTime = 2.3f;
             gun.DefaultModule.cooldownTime = 1f;
             gun.DefaultModule.numberOfShotsInClip = 1;
             gun.barrelOffset.transform.localPosition = new Vector3(24f / 16f, 8f / 16f, 0f);
@@ -69,11 +70,11 @@ namespace Planetside
             FakePrefab.MarkAsFakePrefab(projectile.gameObject);
             UnityEngine.Object.DontDestroyOnLoad(projectile);
             gun.DefaultModule.projectiles[0] = projectile;
-            projectile.baseData.damage = 18;
-            projectile.baseData.force = 11f;
-            projectile.baseData.speed = 600f;
+            projectile.baseData.damage = 24;
+            projectile.baseData.force = 30f;
+            projectile.baseData.speed = 200f;
             projectile.AppliesFire = false;
-            projectile.baseData.range = 9;
+            projectile.baseData.range = 9f;
             projectile.sprite.renderer.enabled = false;
 
             projectile.hitEffects.tileMapHorizontal = ObjectMakers.MakeObjectIntoVFX((PickupObjectDatabase.GetById(146) as Gun).DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX);
@@ -84,33 +85,12 @@ namespace Planetside
             projectile.hitEffects.CenterDeathVFXOnProjectile = false;
             projectile.gameObject.AddComponent<PunctureWoundProjectile>();
 
-            List<string> BeamAnimPaths = new List<string>()
-            {
-                "Planetside/Resources2/ProjectileTrails/PunctureWound/puncturewound_trailmid_001",
-                "Planetside/Resources2/ProjectileTrails/PunctureWound/puncturewound_trailmid_002",
-                "Planetside/Resources2/ProjectileTrails/PunctureWound/puncturewound_trailmid_003",
-                "Planetside/Resources2/ProjectileTrails/PunctureWound/puncturewound_trailmid_004",
-            };
-            List<string> ImpactAnimPaths = new List<string>()
-            {
-                "Planetside/Resources2/ProjectileTrails/PunctureWound/puncturewound_startmid_001",
-                "Planetside/Resources2/ProjectileTrails/PunctureWound/puncturewound_startmid_002",
-                "Planetside/Resources2/ProjectileTrails/PunctureWound/puncturewound_startmid_003",
-                "Planetside/Resources2/ProjectileTrails/PunctureWound/puncturewound_startmid_004",
-            };
 
-               TrailController trail = projectile.AddTrailToProjectile(
-                "Planetside/Resources2/ProjectileTrails/PunctureWound/puncturewound_trailmid_001",
-                new Vector2(16, 8),
-                new Vector2(0, 4),
-                BeamAnimPaths, 20,
-                ImpactAnimPaths, 20,
-                0.1f,
-                30,
-                30,
-                true
-                );
+            projectile.AddTrailToProjectileBundle(StaticSpriteDefinitions.Beam_Sheet_Data, "puncturewound_trailmid_001", 
+                StaticSpriteDefinitions.Beam_Animation_Data,
+                "puncture_mid", new Vector2(16, 12), new Vector2(0, 2), false, "puncture_start");
 
+            
 
             EmmisiveTrail emis = projectile.gameObject.AddComponent<EmmisiveTrail>();
             emis.EmissiveColorPower = 10;
@@ -121,7 +101,7 @@ namespace Planetside
             ProjectileModule.ChargeProjectile chargeproj = new ProjectileModule.ChargeProjectile
             {
                 Projectile = projectile,
-                ChargeTime = 1f,
+                ChargeTime = 0.7f,
                 AdditionalWwiseEvent = "Play_OBJ_pastkiller_charge_01",
             };
             gun.DefaultModule.chargeProjectiles = new List<ProjectileModule.ChargeProjectile>

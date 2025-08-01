@@ -491,6 +491,34 @@ namespace ItemAPI
             return comp as T;
         }
 
+        public static T CopyFrom<T>(this object comp, T other) where T : class
+        {
+            Type type = comp.GetType();
+            if (type != other.GetType()) return null; // type mis-match
+            PropertyInfo[] pinfos = type.GetProperties();
+            foreach (var pinfo in pinfos)
+            {
+                if (pinfo.CanWrite)//i LOVE HARDCODING i LOVE HARDCODING
+                {
+                    try
+                    {
+                        pinfo.SetValue(comp, pinfo.GetValue(other, null), null);
+                    }
+                    catch { }
+                }
+                else
+                {
+                }
+            }
+
+            FieldInfo[] finfos = type.GetFields();
+            foreach (var finfo in finfos)
+            {
+                finfo.SetValue(comp, finfo.GetValue(other));
+            }
+            return comp as T;
+        }
+
         public static void SetColor(this tk2dSprite sprite, Color color)
         {
             sprite.renderer.material.SetColor("_OverrideColor", color);

@@ -8,6 +8,8 @@ using Brave.BulletScript;
 using Dungeonator;
 using System.Reflection;
 using GungeonAPI;
+using Planetside.Static_Storage;
+using Planetside.Components.Effect_Components;
 
 namespace Planetside
 {
@@ -25,7 +27,7 @@ namespace Planetside
             {
                 Controller = Actor.GetComponent<PrisonerPhaseOne.PrisonerController>();
                 FirstSubPhaseController = Actor.GetComponent<PrisonerFirstSubPhaseController>();
-                Actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSkull);
+                Actor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableSkull);
             }
         }   
         public void Update()
@@ -42,6 +44,10 @@ namespace Planetside
             {
                 HasTriggeredLastStand = true;
                 StartDeathSequence();
+            }
+            if (ringController)
+            {
+                ringController.transform.position = this.Actor.sprite.WorldCenter;
             }
         }
 
@@ -70,10 +76,14 @@ namespace Planetside
         {
             Vector2 positionToGoOffOf = Actor.sprite.WorldCenter;
             float elaWait = 0f;
+            ringController?.SetToDestroy();
             while (elaWait < 1f)
             {
                 if (controllerOfTheVoid) { controllerOfTheVoid.ChangeHoleSize(Mathf.Lerp(24, 50, elaWait)); }
-                if (controllerOfTheVoid) { controllerOfTheVoid.gameObject.transform.localScale = Vector3.Lerp(Vector3.one * 50, Vector3.one * 100, elaWait); }
+                if (controllerOfTheVoid) 
+                {
+                    controllerOfTheVoid.gameObject.transform.localScale = Vector3.Lerp(Vector3.one * 50, Vector3.one * 100, elaWait);
+                }
 
                 elaWait += BraveTime.DeltaTime;
                 yield return null;
@@ -105,7 +115,7 @@ namespace Planetside
             GameManager.Instance.StartCoroutine(DoInversePulse(portalObject));
             elaWait = 0f;
 
-            bool noteSpawned = false;
+            //bool noteSpawned = false;
 
             while (elaWait < 15f)
             {
@@ -114,6 +124,17 @@ namespace Planetside
                 float r = (float)elaWait / (float)5;
                 float r1 = Mathf.Sin(t * (Mathf.PI / 2));
                 if (r1 > 1) { r1 = 1; }
+
+                Vector3 _ = MathToolbox.GetUnitOnCircle(BraveUtility.RandomAngle(), UnityEngine.Random.Range(50, 75));
+
+                ParticleBase.EmitParticles("ShellraxEyeParticle", 1, new ParticleSystem.EmitParams()
+                {
+                    position = portalObject.transform.position + _,
+                    velocity = (portalObject.transform.position - (portalObject.transform.position + _)).normalized * (UnityEngine.Random.Range(22.5f, 35) * (1 + t)),
+                    startColor = Color.cyan,
+                    startLifetime = 0.5f + t,
+                });
+
 
                 if (CheckIfPlayerInVoidHole(Mathf.Lerp(1, 12, t1), base.aiActor.sprite.WorldCenter))
                 {
@@ -161,38 +182,22 @@ namespace Planetside
             elaWait = 0f;
             while (elaWait < 5f)
             {
-                
+                Vector3 _ = MathToolbox.GetUnitOnCircle(BraveUtility.RandomAngle(), UnityEngine.Random.Range(40, 60));
+
+                ParticleBase.EmitParticles("ShellraxEyeParticle", 1, new ParticleSystem.EmitParams()
+                {
+                    position = portalObject.transform.position + _,
+                    velocity = (portalObject.transform.position - (portalObject.transform.position + _)).normalized * (UnityEngine.Random.Range(22.5f, 35) * 2),
+                    startColor = Color.cyan,
+                    startLifetime = 1.5f,
+                });
+
+
                 if (CheckIfPlayerInVoidHole(12, base.aiActor.sprite.WorldCenter))
                 {
                     DoHoleFall(portalObject);
                     yield break;
-                    /*
-                    if (PlanetsideModule.PreRelease == false)
-                    {
-                        DoHoleFall(portalObject);
-                        yield break;
-                    }
-                    else
-                    {
-                        if (noteSpawned == false)
-                        {
-                            noteSpawned = !noteSpawned;
 
-                            GameObject bom = new GameObject();
-                            StaticReferences.StoredRoomObjects.TryGetValue("prisonerNote", out bom);
-                            var note = DungeonPlaceableUtility.InstantiateDungeonPlaceable(bom, base.aiActor.GetAbsoluteParentRoom(), new IntVector2((int)base.aiActor.sprite.WorldCenter.x, (int)base.aiActor.sprite.WorldCenter.y) - base.aiActor.GetAbsoluteParentRoom().area.basePosition, false).GetComponent<NoteDoer>();
-                            base.aiActor.transform.position.GetAbsoluteRoom().RegisterInteractable(note);
-                        }
-                        List<PlayerController> ps = ReturnPlayersInVoidHole(12, base.aiActor.sprite.WorldCenter);
-                        for (int i = 0; i < ps.Count; i++)
-                        {
-                            if (ps[i] != null)
-                            {
-                                ps[i].healthHaver.ApplyDamage(0.5f, ps[i].transform.position, "Deeps Grasp", CoreDamageTypes.Void, DamageCategory.Unstoppable, true, null, true);
-                            }
-                        }
-                    }
-                    */
                 }
                 DoSmallPush(80, base.aiActor.sprite.WorldCenter);
                 elaWait += BraveTime.DeltaTime;
@@ -215,6 +220,15 @@ namespace Planetside
                 portalObject.transform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one * 22.5f, 1-t1);
                 portalObject.GetComponent<MeshRenderer>().material.SetFloat("_OutlineWidth", Mathf.Lerp(0, 0.025f, 1-t1));
                 portalObject.GetComponent<MeshRenderer>().material.SetFloat("_OutlinePower", Mathf.Lerp(0, 100, 1-t1));
+
+                ParticleBase.EmitParticles("ShellraxEyeParticle", 1, new ParticleSystem.EmitParams()
+                {
+                    position = portalObject.transform.position,
+                    velocity = MathToolbox.GetUnitOnCircle(BraveUtility.RandomAngle(), UnityEngine.Random.Range(45f, 60)),
+                    startColor = Color.cyan,
+                    startLifetime = 1.5f,
+                });
+
                 if (hkjbsa == false && elaWait > 1.8f)
                 {
                     hkjbsa = true;
@@ -276,7 +290,7 @@ namespace Planetside
         public IEnumerator DoInversePulse(GameObject portal)
         {
             float elaWait = 0f;
-            float power = 0.25f;
+            float power = 0.125f;
             float delay = 1;
             for (int j = 0; j < 22; j++)
             {
@@ -287,7 +301,16 @@ namespace Planetside
                     elaWait += BraveTime.DeltaTime;
                     yield return null;
                 }
-                GameManager.Instance.StartCoroutine(fuck.DoReverseDistortionWaveLocal(portal.transform.position, power, 0.2f, 40f, delay / 2));
+
+                ParticleBase.EmitParticles("WaveParticle", 1, new ParticleSystem.EmitParams()
+                {
+                    position = portal.transform.position,
+                    startColor = Color.cyan.WithAlpha(0.2f),
+                    startLifetime = 0.5f,
+                    startSize = 32 + j
+                });
+
+                GameManager.Instance.StartCoroutine(fuck.DoReverseDistortionWaveLocal(portal.transform.position, power, 0.2f, 40f + (j * 2), delay * 1.25f));
                 AkSoundEngine.PostEvent("Play_PortalCall", portal.gameObject);
                 if (delay > 0.5f) { delay -= 0.05f; }
                 power += 0.0625f;
@@ -373,12 +396,21 @@ namespace Planetside
             return playerControllers;
         }
 
-
+        private SummonRingController ringController;
         private IEnumerator DoTransition()
         {
+            Controller.ClearRings();
+
             Exploder.DoDistortionWave(Actor.sprite.WorldCenter, 4, 0.2f, 50, 3f);
             Actor.specRigidbody.enabled = false;
             int lay = Actor.gameObject.layer;
+
+            var ring1 = SummonRingController.CreateSummoningRing("sealbreaker", this.Actor.sprite.WorldCenter, 1);
+            ring1.SpinSpeed = 30;
+            ring1.UpdateSpeed = 0.333f;
+            ringController = SummonRingController.CreateSummoningRing("sealbreakersealbreaker", this.Actor.sprite.WorldCenter, 1.3f, false, 0.12f, false, 0.5f);
+            ringController.SpinSpeed = -12;
+            ringController.UpdateSpeed = 1;
 
             float elaWait = 0f;
             while (elaWait < 1f)
@@ -386,6 +418,7 @@ namespace Planetside
                 elaWait += BraveTime.DeltaTime;
                 yield return null;
             }
+            ring1.SetToDestroy();
             Controller.MoveTowardsCenterMethod(3f);
             Actor.aiAnimator.PlayUntilFinished("subphaseoneanimation", true, null, -1f, false);
             Actor.renderer.material.shader = Shader.Find("Brave/Internal/SimpleAlphaFadeUnlit");
@@ -408,6 +441,8 @@ namespace Planetside
 
             if (PlanetsideModule.PrisonerDebug == false)
             {
+
+                /*
                 GameObject partObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("Amogus"));
                 MeshRenderer rend = partObj.GetComponentInChildren<MeshRenderer>();
                 rend.allowOcclusionWhenDynamic = true;
@@ -417,9 +452,14 @@ namespace Planetside
                 VoidHoleController voidHoleController = partObj.AddComponent<VoidHoleController>();
                 voidHoleController.trueCenter = Actor.sprite.WorldCenter;
                 voidHoleController.actorToFollow = Actor;
-
+                */
+                ringController.SetScale(8);
+                var voidHoleController = VoidHoleController.SpawnVoidHole(Actor.ParentRoom.GetCenterCell().ToVector3().WithZ(50), Vector2.zero);
                 voidHoleController.CanHurt = false;
                 voidHoleController.Radius = 30;
+                voidHoleController.ChangeHoleSize(0.285f);
+                voidHoleController.InitializeHole(null, 8, 2 * Time.deltaTime, 0.00333f * Time.deltaTime, Vector2.zero);
+
                 controllerOfTheVoid = voidHoleController;
 
                 EmergencyPlayerDisappearedFromRoom emergencyPlayerDisappeared = Actor.gameObject.AddComponent<EmergencyPlayerDisappearedFromRoom>();
@@ -430,7 +470,7 @@ namespace Planetside
                     {
                         obj.EndTerrifyingDarkRoom(1);
                     }
-                    if (partObj != null) { Destroy(partObj); }
+                    if (controllerOfTheVoid != null) { Destroy(controllerOfTheVoid.gameObject); }
                 };
 
                 GameManager.Instance.BestActivePlayer.CurrentRoom.BecomeTerrifyingDarkRoom(5f, 0.5f, 0.1f, "Play_ENM_darken_world_01");
@@ -438,7 +478,8 @@ namespace Planetside
                 {
                     float t = elaWait / 3;
                     float throne1 = Mathf.Sin(t * (Mathf.PI / 2));
-                    partObj.transform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one * 6.25f, throne1);
+                    controllerOfTheVoid.SetScale(Vector3.Lerp(Vector3.zero, Vector3.one * 100, throne1));
+                    
                     Actor.renderer.material.SetFloat("_Fade", 1 - t);
                     elaWait += BraveTime.DeltaTime;
                     yield return null;
@@ -452,12 +493,11 @@ namespace Planetside
                 {
                     elaWait += BraveTime.DeltaTime;
                     float t = Mathf.Min((elaWait / 20), 1);
-                    voidHoleController.Radius = Mathf.Lerp(28.5f, 8.75f, t);
-                    partObj.transform.localScale = Vector3.Lerp(Vector3.one * 6.25f, Vector3.one * 2, t);
+                    controllerOfTheVoid.ChangeHoleSize(Mathf.Lerp(0.3f, 0.0875f, t));
                     yield return null;
                 }
-                voidHoleController.actorToFollow = Actor;
-                voidHoleController.trueCenter = Actor.sprite.WorldCenter;
+                voidHoleController.FollowedObject = Actor.gameObject;
+                voidHoleController._Offset =new Vector3(2.25f, 3);
                 Actor.CollisionDamage = 0;
 
                 SubPhaseEnded = true;
@@ -502,7 +542,13 @@ namespace Planetside
 
                 Actor.CollisionDamage = 0;
 
-
+                var voidHoleController = VoidHoleController.SpawnVoidHole(Actor.ParentRoom.GetCenterCell().ToVector3().WithZ(50), Vector2.zero);
+                voidHoleController.CanHurt = false;
+                voidHoleController.Radius = 30;
+                voidHoleController.InitializeHole(null, 8, 2 * Time.deltaTime, 0.00333f * Time.deltaTime, Vector2.zero);
+                voidHoleController.ChangeHoleSize(0.0875f);
+                voidHoleController.transform.localScale = Vector2.one * 100;
+                /*
                 GameObject partObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("Amogus"));
                 MeshRenderer rend = partObj.GetComponentInChildren<MeshRenderer>();
                 rend.allowOcclusionWhenDynamic = true;
@@ -514,11 +560,12 @@ namespace Planetside
                 voidHoleController.CanHurt = false;
                 voidHoleController.Radius = 30;
                 voidHoleController.actorToFollow = Actor;
+                */
 
                 controllerOfTheVoid = voidHoleController;
 
-                voidHoleController.Radius = 8.75f;
-                partObj.transform.localScale = Vector3.one * 2;
+                //voidHoleController.Radius = 8.75f;
+                //partObj.transform.localScale = Vector3.one * 2;
 
                 EmergencyPlayerDisappearedFromRoom emergencyPlayerDisappeared = Actor.gameObject.AddComponent<EmergencyPlayerDisappearedFromRoom>();
                 emergencyPlayerDisappeared.roomAssigned = Actor.GetAbsoluteParentRoom();
@@ -528,7 +575,7 @@ namespace Planetside
                     {
                         obj.EndTerrifyingDarkRoom(1);
                     }
-                    if (partObj != null) { Destroy(partObj); }
+                    if (controllerOfTheVoid != null) { Destroy(controllerOfTheVoid.gameObject); }
                 };
 
                 for (int j = 0; j < Actor.behaviorSpeculator.AttackBehaviors.Count; j++)
@@ -598,10 +645,7 @@ namespace Planetside
             {
                 this.EndOnBlank = false;
                 Vector2 spawnPos = base.BulletBank.aiActor.ParentRoom.GetCenterCell().ToCenterVector2();
-                if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
-                {
-                    base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableDefault);
-                }
+
 
                 for (int l = 0; l < 12; l++)
                 {
@@ -681,15 +725,7 @@ namespace Planetside
                 Done = false;
                 this.EndOnBlank = false;
                 Vector2 spawnPos = base.BulletBank.aiActor.ParentRoom.GetCenterCell().ToCenterVector2();
-                if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
-                {
-                    base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableDefault);
-                    base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableBig);
-                    base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSniper);
-                    base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableDoorLordBurst);
-                    base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableBig);
 
-                }
                 this.EndOnBlank = false;
 
                 int e = 0;
@@ -704,8 +740,8 @@ namespace Planetside
                     }
                     if (H == Speed)
                     {
-                        H = 0; Speed -= 12;
-                        Speed = Mathf.Max(70, Speed);
+                        H = 0; Speed -= 10;
+                        Speed = Mathf.Max(60, Speed);
                         this.StartTask(SpawnBoulder());
                     }
                     e++; H++;
@@ -724,14 +760,14 @@ namespace Planetside
 
             public class MegaBoulder : Bullet
             {
-                public MegaBoulder() : base(StaticUndodgeableBulletEntries.undodgeableBig.Name, true, false, true)
+                public MegaBoulder() : base(StaticBulletEntries.undodgeableBig.Name, true, false, true)
                 {
                 }
                 public override IEnumerator Top()
                 {
                     this.Projectile.IgnoreTileCollisionsFor(180f);
                     this.Projectile.specRigidbody.AddCollisionLayerIgnoreOverride(CollisionMask.LayerToMask(CollisionLayer.HighObstacle, CollisionLayer.LowObstacle));
-                    base.ChangeSpeed(new Brave.BulletScript.Speed(20, SpeedType.Absolute),90);
+                    base.ChangeSpeed(new Brave.BulletScript.Speed(20, SpeedType.Absolute), 120);
                     yield break;
                 }
             }
@@ -775,7 +811,7 @@ namespace Planetside
                     if (l % 4 == 1)
                     {
                         int travelTime = UnityEngine.Random.Range(90, 360);
-                        base.Fire(Offset.OverridePosition(SpawnPos), new Direction(facingDir, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(UnityEngine.Random.Range(5.5f, 6.25f), SpeedType.Absolute), new WallBullets(StaticUndodgeableBulletEntries.UndodgeableDoorLordBurst.Name, facingDir));
+                        base.Fire(Offset.OverridePosition(SpawnPos), new Direction(facingDir, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(UnityEngine.Random.Range(5.5f, 6.25f), SpeedType.Absolute), new WallBullets(StaticBulletEntries.UndodgeableDoorLordBurst.Name, facingDir));
                     }
                 }
             }
@@ -788,6 +824,7 @@ namespace Planetside
                 }
                 public override IEnumerator Top()
                 {
+                    (this.Projectile as ThirdDimensionalProjectile).SetUnDodgeableState(true);
                     this.Projectile.IgnoreTileCollisionsFor(180f);
                     this.Projectile.specRigidbody.AddCollisionLayerIgnoreOverride(CollisionMask.LayerToMask(CollisionLayer.HighObstacle, CollisionLayer.LowObstacle));
                     base.ChangeDirection(new Brave.BulletScript.Direction(UnityEngine.Random.Range(-15, 15), DirectionType.Relative), UnityEngine.Random.Range(100, 300));

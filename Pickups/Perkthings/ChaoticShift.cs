@@ -19,7 +19,7 @@ namespace Planetside
     class FuckYoGunsUp : MonoBehaviour
     {
         public FuckYoGunsUp() { }
-        public ChaoticShiftController shiftController;
+        public ChaoticShift shiftController;
         public void Start()
         {
             BannedIDs.Add(self.PickupObjectId);
@@ -322,7 +322,7 @@ namespace Planetside
                                 FuckYoGunsUp guns = currentGunInList.gameObject.GetOrAddComponent<FuckYoGunsUp>();
                                 guns.self = currentGunInList;
                                 guns.player = player;
-                                guns.shiftController = this;
+                                //guns.shiftController = this;
                                 guns.AddModule();
                                 //RemoveOldModifier(currentGunInList);
                                 AddModifierIfPossible(currentGunInList);
@@ -367,9 +367,10 @@ namespace Planetside
             item.OutlineColor = new Color(0f, 0.2f, 0f);
             item.encounterTrackable.DoNotificationOnEncounter = false;
 
-
+            item.StackPickupNotificationText = "Another Gun Added.";
+            item.InitialPickupNotificationText = "All Weapons are Doubled.";
         }
-        public override CustomTrackedStats StatToIncreaseOnPickup => SaveAPI.CustomTrackedStats.AMOUNT_BOUGHT_CHAOTICSHIFT;
+        //public override CustomTrackedStats StatToIncreaseOnPickup => SaveAPI.CustomTrackedStats.AMOUNT_BOUGHT_CHAOTICSHIFT;
         public override List<PerkDisplayContainer> perkDisplayContainers => new List<PerkDisplayContainer>()
         {
                 new PerkDisplayContainer()
@@ -398,12 +399,10 @@ namespace Planetside
 
         public static int ChaoticShiftID;
 
+        public override CustomDungeonFlags FlagToSetOnStack => CustomDungeonFlags.CHAOTICSHIFT_FLAG_STACK;
 
-        public new bool PrerequisitesMet()
-        {
-            EncounterTrackable component = base.GetComponent<EncounterTrackable>();
-            return component == null || component.PrerequisitesMet();
-        }
+
+        /*
         public override void Pickup(PlayerController player)
         {
             if (m_hasBeenPickedUp)
@@ -430,31 +429,127 @@ namespace Planetside
 
             UnityEngine.Object.Destroy(base.gameObject);
         }
+        */
 
-        public void Start()
+
+        public override void OnInitialPickup(PlayerController playerController)
         {
-            try
+            if (statModifier == null)
             {
-                GameManager.Instance.PrimaryPlayer.CurrentRoom.RegisterInteractable(this);
-                SpriteOutlineManager.AddOutlineToSprite(base.sprite, OutlineColor, 0.1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
+                statModifier = new StatModifier()
+                {
+                    amount = 1,
+                    ignoredForSaveData = true,
+                    modifyType = StatModifier.ModifyMethod.MULTIPLICATIVE,
+                    statToBoost = PlayerStats.StatType.Damage,
+                    isMeatBunBuff = false,
+                };
             }
-            catch (Exception er)
+            RecalculateDamageNumber();
+            base.OnInitialPickup(playerController);
+            playerController.GunChanged += GunSwitched;
+        }
+
+
+
+        public override void OnStack(PlayerController playerController)
+        {
+            OtherTools.ApplyStat(playerController, PlayerStats.StatType.Damage, 0.1f, StatModifier.ModifyMethod.ADDITIVE);
+            OtherTools.ApplyStat(playerController, PlayerStats.StatType.AmmoCapacityMultiplier, .05f, StatModifier.ModifyMethod.ADDITIVE);
+            AmountOfModules++;
+            RecalculateDamageNumber();
+        }
+
+
+        public override void Update()
+        {
+            if (Owner)
             {
-                ETGModConsole.Log(er.Message, false);
+                List<Gun> gunList = Owner.inventory.AllGuns;
+                for (int i = 0; i < gunList.Count; i++)
+                {
+                    Gun currentGunInList = gunList[i];
+                    if (currentGunInList != null)
+                    {
+                        if (IsGunValid(currentGunInList))
+                        {
+
+                            if (currentGunInList.gameObject.GetComponent<FuckYoGunsUp>() != null)
+                            {
+                                FuckYoGunsUp guns = currentGunInList.gameObject.GetComponent<FuckYoGunsUp>();
+                                if (guns.AmountOfModulesCurrently != AmountOfModules && AmountOfModules >= guns.AmountOfModulesCurrently)
+                                {
+                                    guns.AddModule();
+                                }
+                            }
+                            else
+                            {
+                                FuckYoGunsUp guns = currentGunInList.gameObject.GetOrAddComponent<FuckYoGunsUp>();
+                                guns.self = currentGunInList;
+                                guns.player = Owner;
+                                guns.shiftController = this;
+                                guns.AddModule();
+                                AddModifierIfPossible(currentGunInList);
+
+                            }
+                        }
+                    }
+                }
             }
         }
 
-      
-        private void Update()
+        public void GunSwitched(Gun g1, Gun g2, bool b)
         {
-            if (!this.m_hasBeenPickedUp && !this.m_isBeingEyedByRat && base.ShouldBeTakenByRat(base.sprite.WorldCenter))
+            AddModifierIfPossible(g2);
+        }
+
+        public StatModifier statModifier;
+
+
+        public void AddModifierIfPossible(Gun g2)
+        {
+            if (IsGunValid(g2))
             {
-                GameManager.Instance.Dungeon.StartCoroutine(base.HandleRatTheft());
+                RecalculateDamageNumber();
+                RemoveOldModifier(g2);
+                if (!g2.currentGunStatModifiers.Contains(statModifier))
+                {
+                    g2.currentGunStatModifiers = g2.currentGunStatModifiers.Concat(new StatModifier[]
+                    {
+                        statModifier
+                    }).ToArray<StatModifier>();
+                }
             }
         }
 
 
+        public void RecalculateDamageNumber()
+        {
+            float BaseDamage = 1f;
+            for (int i = 0; i < AmountOfModules; i++)
+            {
+                BaseDamage *= 0.65f;
+            }
+            statModifier.modifyType = StatModifier.ModifyMethod.MULTIPLICATIVE; //They dont seem to get properly (???) set so im doing it here
+            statModifier.statToBoost = PlayerStats.StatType.Damage;
+            statModifier.amount = BaseDamage;
+            if (Owner == null) { return; }
+            Owner.stats.RecalculateStats(Owner, true, true);
+        }
 
-        private bool m_hasBeenPickedUp;
+        public void RemoveOldModifier(Gun gun)
+        {
+            List<StatModifier> L = gun.currentGunStatModifiers.ToList();
+            L.RemoveAll(self => self.isMeatBunBuff == true);
+            gun.currentGunStatModifiers = L.ToArray();
+        }
+
+        public bool IsGunValid(Gun g)
+        {
+            return !g.InfiniteAmmo && g.CanActuallyBeDropped(g.CurrentOwner as PlayerController);
+        }
+
+        public int AmountOfModules;
+
     }
 }

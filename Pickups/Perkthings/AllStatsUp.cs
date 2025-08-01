@@ -31,9 +31,9 @@ namespace Planetside
             particles.ParticleSystemColor2 = Color.red;
             item.OutlineColor = new Color(0.2f, 0f, 0f);
 
-
+            item.StackPickupNotificationText = "Grants a boost to most stats!";
+            item.InitialPickupNotificationText = "Grants a boost to most stats!";
         }
-        public override CustomTrackedStats StatToIncreaseOnPickup => SaveAPI.CustomTrackedStats.AMOUNT_BOUGHT_ALLSTATUP;
         public override List<PerkDisplayContainer> perkDisplayContainers => new List<PerkDisplayContainer>()
         {
                 new PerkDisplayContainer()
@@ -53,6 +53,7 @@ namespace Planetside
             EncounterTrackable component = base.GetComponent<EncounterTrackable>();
             return component == null || component.PrerequisitesMet();
         }
+        /*
         public override void Pickup(PlayerController player)
         {
             if (m_hasBeenPickedUp)
@@ -66,15 +67,15 @@ namespace Planetside
             AkSoundEngine.PostEvent("Play_OBJ_dice_bless_01", player.gameObject);
             OtherTools.ApplyStat(player, PlayerStats.StatType.Damage, 1.075f, StatModifier.ModifyMethod.MULTIPLICATIVE);
             OtherTools.ApplyStat(player, PlayerStats.StatType.MovementSpeed, 1.05f, StatModifier.ModifyMethod.MULTIPLICATIVE);
-            OtherTools.ApplyStat(player, PlayerStats.StatType.ChargeAmountMultiplier, 1.1f, StatModifier.ModifyMethod.MULTIPLICATIVE);
-            OtherTools.ApplyStat(player, PlayerStats.StatType.Accuracy, 0.9f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+            OtherTools.ApplyStat(player, PlayerStats.StatType.ChargeAmountMultiplier, 1.15f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+            OtherTools.ApplyStat(player, PlayerStats.StatType.Accuracy, 0.85f, StatModifier.ModifyMethod.MULTIPLICATIVE);
             OtherTools.ApplyStat(player, PlayerStats.StatType.Coolness, 1f, StatModifier.ModifyMethod.ADDITIVE);
             OtherTools.ApplyStat(player, PlayerStats.StatType.DamageToBosses, 1.025f, StatModifier.ModifyMethod.MULTIPLICATIVE);
-            OtherTools.ApplyStat(player, PlayerStats.StatType.RateOfFire, 1.05f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+            OtherTools.ApplyStat(player, PlayerStats.StatType.RateOfFire, 1.1f, StatModifier.ModifyMethod.MULTIPLICATIVE);
             OtherTools.ApplyStat(player, PlayerStats.StatType.KnockbackMultiplier, 1.15f, StatModifier.ModifyMethod.MULTIPLICATIVE);
             var stack = player.GetOrAddComponent<AllStatsTrackable>();
             stack.Stacks++;
-            Exploder.DoDistortionWave(player.sprite.WorldTopCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
+            //Exploder.DoDistortionWave(player.sprite.WorldTopCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
             player.BloopItemAboveHead(base.sprite, "");
 
             OtherTools.NotifyCustom("All Stats Up", "Grants a boost to most stats!", "lazyAllstatsUp", StaticSpriteDefinitions.Pickup_Sheet_Data, UINotificationController.NotificationColor.GOLD);
@@ -82,33 +83,24 @@ namespace Planetside
             //OtherTools.Notify("All Stats Up", "Grants a boost to most stats!","Planetside/Resources/PerkThings/lazyAllstatsUp", UINotificationController.NotificationColor.GOLD);
             UnityEngine.Object.Destroy(base.gameObject);
         }
+        */
 
-        public class AllStatsTrackable : MonoBehaviour { public int Stacks = 0; }
 
-        public void Start()
+        public override void OnStack(PlayerController player)
         {
-            try
-            {
-                GameManager.Instance.PrimaryPlayer.CurrentRoom.RegisterInteractable(this);
-                SpriteOutlineManager.AddOutlineToSprite(base.sprite, OutlineColor, 0.1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
-            }
-            catch (Exception er)
-            {
-                ETGModConsole.Log(er.Message, false);
-            }
+            OtherTools.ApplyStat(player, PlayerStats.StatType.Damage, 1.075f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+            OtherTools.ApplyStat(player, PlayerStats.StatType.MovementSpeed, 1.05f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+            OtherTools.ApplyStat(player, PlayerStats.StatType.ChargeAmountMultiplier, 1.15f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+            OtherTools.ApplyStat(player, PlayerStats.StatType.Accuracy, 0.85f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+            OtherTools.ApplyStat(player, PlayerStats.StatType.Coolness, 1f, StatModifier.ModifyMethod.ADDITIVE);
+            OtherTools.ApplyStat(player, PlayerStats.StatType.DamageToBosses, 1.025f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+            OtherTools.ApplyStat(player, PlayerStats.StatType.RateOfFire, 1.1f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+            OtherTools.ApplyStat(player, PlayerStats.StatType.KnockbackMultiplier, 1.15f, StatModifier.ModifyMethod.MULTIPLICATIVE);
         }
 
-     
-        private void Update()
-        {
-            if (!this.m_hasBeenPickedUp && !this.m_isBeingEyedByRat && base.ShouldBeTakenByRat(base.sprite.WorldCenter))
-            {
-                GameManager.Instance.Dungeon.StartCoroutine(base.HandleRatTheft());
-            }
-        }
 
-     
 
-        private bool m_hasBeenPickedUp;
+
+
     }
 }

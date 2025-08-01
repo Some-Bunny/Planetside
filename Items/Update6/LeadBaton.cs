@@ -267,8 +267,6 @@ namespace Planetside
                 {
                     AkSoundEngine.PostEvent("Play_ITM_Folding_Table_Use_01", base.Owner.gameObject);
                     AkSoundEngine.PostEvent("Play_ITM_Folding_Table_Use_01", base.Owner.gameObject);
-
-                    //m_WPN_baseball_charge_01
                     for (int i = 0; i < 16; i++)
                     {
                         GlobalSparksDoer.DoRandomParticleBurst(1, base.Owner.sprite.WorldCenter + new Vector2(-0.5f, 0.5f), base.Owner.sprite.WorldCenter + new Vector2(0.5f, 0.5f),

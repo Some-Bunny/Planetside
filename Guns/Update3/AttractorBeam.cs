@@ -60,64 +60,19 @@ namespace Planetside
                 mod.numberOfShotsInClip = 100;
                 mod.angleVariance = 0;
 
-            List<string> BeamAnimPaths = new List<string>()
-            {
-                "Planetside/Resources/Beams/TractorBeam/tractorbeam_mid_001",
-                "Planetside/Resources/Beams/TractorBeam/tractorbeam_mid_002",
-                "Planetside/Resources/Beams/TractorBeam/tractorbeam_mid_003",
-                "Planetside/Resources/Beams/TractorBeam/tractorbeam_mid_004",
-                "Planetside/Resources/Beams/TractorBeam/tractorbeam_mid_005",
-                "Planetside/Resources/Beams/TractorBeam/tractorbeam_mid_006",
-            };
-            List<string> StartAnimPaths = new List<string>()
-            {
-                "Planetside/Resources/Beams/TractorBeam/tractorbeam_start_001",
-                "Planetside/Resources/Beams/TractorBeam/tractorbeam_start_002",
-                "Planetside/Resources/Beams/TractorBeam/tractorbeam_start_003",
-                "Planetside/Resources/Beams/TractorBeam/tractorbeam_start_004",
-                "Planetside/Resources/Beams/TractorBeam/tractorbeam_start_005",
-                "Planetside/Resources/Beams/TractorBeam/tractorbeam_start_006",
-            };
-                
-            List<string> ImpactAnimPaths = new List<string>()
-            {
-                "Planetside/Resources/Beams/TractorBeam/tractorbeam_impact_001",
-                "Planetside/Resources/Beams/TractorBeam/tractorbeam_impact_002",
-                "Planetside/Resources/Beams/TractorBeam/tractorbeam_impact_003",
-                "Planetside/Resources/Beams/TractorBeam/tractorbeam_impact_004",
-                "Planetside/Resources/Beams/TractorBeam/tractorbeam_impact_005",
-                "Planetside/Resources/Beams/TractorBeam/tractorbeam_impact_006",
-            };
 
-            List<string> End = new List<string>()
-            {
-                "Planetside/Resources/Beams/TractorBeam/tractorbeam_mid_001",
-            };
 
                 Projectile projectile = UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(86) as Gun).DefaultModule.projectiles[0]);
+                BasicBeamController beamComp = projectile.GenerateBeamPrefabBundle(
+                "tractorbeam_mid_001",
+                StaticSpriteDefinitions.Beam_Sheet_Data,
+                StaticSpriteDefinitions.Beam_Animation_Data,
+                "tractorbeam_mid", new Vector2(12, 12), new Vector2(0, 0), //Main
+                "tractorbeam_impact", new Vector2(12, 12), new Vector2(0, 0), //Impact
+                "tractorbeam_mid", new Vector2(12, 12), new Vector2(0, 0), //End Of beam
+                "tractorbeam_start", new Vector2(16, 6), new Vector2(0, 0), //Start Of Beam
+                true);
 
-                BasicBeamController beamComp = projectile.GenerateBeamPrefab(
-                    "Planetside/Resources/Beams/TractorBeam/tractorbeam_mid_001",
-                    new Vector2(10, 10),
-                    new Vector2(0, -2),
-                    BeamAnimPaths,
-                    48,
-                    //Beam Impact
-                    ImpactAnimPaths,
-                    12,
-                    new Vector2(4, 4),
-                    new Vector2(7, 7),
-                    //End of the Beam
-                    null,
-                    -1,
-                    null,
-                    null,
-                    //Start of the Beam
-                    StartAnimPaths,
-                    12,
-                    new Vector2(10, 2),
-                    new Vector2(0, 4)
-                    );
 
                 projectile.gameObject.SetActive(false);
                 FakePrefab.MarkAsFakePrefab(projectile.gameObject);

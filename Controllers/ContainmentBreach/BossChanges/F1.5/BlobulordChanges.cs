@@ -28,10 +28,10 @@ namespace Planetside
 			// Tip: To debug an enemy's BehaviorSpeculator, you can uncomment the line below. This will print all the behavior information to the console.
 			//ToolsEnemy.DebugInformation(behaviorSpec);
 
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableSlam);
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.UndodgeableSpew);
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableLargeSpore);
-			actor.bulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.UndodgeableSlam);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.UndodgeableSpew);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableLargeSpore);
+			actor.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableSmallSpore);
 
 
 			ShootBehavior ShootBehavior1 = behaviorSpec.AttackBehaviorGroup.AttackBehaviors[3].Behavior as ShootBehavior;
@@ -160,7 +160,7 @@ namespace Planetside
 			}
 			public class Spore : Bullet
 			{
-				public Spore() : base(UnityEngine.Random.value > 0.33f ? StaticUndodgeableBulletEntries.undodgeableSmallSpore.Name : StaticUndodgeableBulletEntries.undodgeableLargeSpore.Name, false, false, false) { }
+				public Spore() : base(UnityEngine.Random.value > 0.33f ? StaticBulletEntries.undodgeableSmallSpore.Name : StaticBulletEntries.undodgeableLargeSpore.Name, false, false, false) { }
 				public override IEnumerator Top()
 				{
 					yield return this.Wait(30);
@@ -197,7 +197,7 @@ namespace Planetside
 
 			public class SlamBullet : Bullet
 			{
-				public SlamBullet(int spawnDelay, float speed) : base(StaticUndodgeableBulletEntries.UndodgeableSlam.Name, false, false, false)
+				public SlamBullet(int spawnDelay, float speed) : base(StaticBulletEntries.UndodgeableSlam.Name, false, false, false)
 				{
 					this.m_spawnDelay = spawnDelay;
 					this.m_speed = speed;
@@ -239,7 +239,7 @@ namespace Planetside
 			}
 			public class Spore : Bullet
 			{
-				public Spore() : base(StaticUndodgeableBulletEntries.UndodgeableSpew.Name, false, false, false) { }
+				public Spore() : base(StaticBulletEntries.UndodgeableSpew.Name, false, false, false) { }
 				public override IEnumerator Top()
 				{
 					yield return this.Wait(30);

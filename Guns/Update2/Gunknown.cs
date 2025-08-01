@@ -63,8 +63,9 @@ namespace Planetside
 				projectile.baseData.range = 0.00001f;
 				projectile.sprite.renderer.enabled = false;
 				projectile.gameObject.AddComponent<GunknownProjectile>();
+                projectile.AddComponent<RecursionPreventer>();
 
-				FakePrefab.MarkAsFakePrefab(projectile.gameObject);
+                FakePrefab.MarkAsFakePrefab(projectile.gameObject);
 				UnityEngine.Object.DontDestroyOnLoad(projectile);
 				gun.DefaultModule.projectiles[0] = projectile;
 				bool flag = projectileModule != gun.DefaultModule;

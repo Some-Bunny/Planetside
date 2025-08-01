@@ -35,7 +35,7 @@ namespace Planetside
             projectile.gameObject.SetActive(false);
             FakePrefab.MarkAsFakePrefab(projectile.gameObject);
             UnityEngine.Object.DontDestroyOnLoad(projectile);
-            projectile.baseData.damage = 22.5f;
+            projectile.baseData.damage = 18f;
             projectile.baseData.speed = 50f;
 			projectile.baseData.UsesCustomAccelerationCurve = true;
 			projectile.baseData.CustomAccelerationCurveDuration = 0.5f;
@@ -45,7 +45,7 @@ namespace Planetside
             projectile.pierceMinorBreakables = true;
             projectile.baseData.range = 1000f;
 
-            projectile.SetProjectileCollisionRight("kunaiprojectile", StaticSpriteDefinitions.Projectile_Sheet_Data, 16, 5, false, tk2dBaseSprite.Anchor.MiddleCenter);
+            Alexandria.Assetbundle.ProjectileBuilders.SetProjectileCollisionRight(projectile, "kunaiprojectile", StaticSpriteDefinitions.Projectile_Sheet_Data, 16, 5, false, tk2dBaseSprite.Anchor.MiddleCenter);
 
 
             var tro = projectile.gameObject.AddChild("trail object");
@@ -125,12 +125,13 @@ namespace Planetside
         public static Projectile KunaiProjectile;
         public static int ItemID;
 
-
+        private float GlobalCooldown = 0;
 		public override void Update()
 		{
 			base.Update();
 			if (Owner)
 			{
+                if (GlobalCooldown > 0) { GlobalCooldown -= BraveTime.DeltaTime; }
 				var l = KunaiCooldowns.Keys.ToList();
 				for (int i = l.Count - 1; i > -1; i--)
 				{
@@ -150,8 +151,10 @@ namespace Planetside
 
         public void Player_GunChanged(Gun oldGun, Gun newGun, bool arg3)
         {
+            if (GlobalCooldown > 0) { return; }
 			if (!KunaiCooldowns.ContainsKey(newGun.PickupObjectId))
 			{
+                GlobalCooldown = 0.333f;
                 base.Owner.StartCoroutine(DoYeet());
 				KunaiCooldowns.Add(newGun.PickupObjectId, 5);
             }

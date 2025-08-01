@@ -12,6 +12,8 @@ using Pathfinding;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using BreakAbleAPI;
+using Planetside.Static_Storage;
+using Alexandria.Assetbundle;
 
 namespace Planetside
 {
@@ -225,8 +227,21 @@ namespace Planetside
 				};
 
 				Projectile projectile = UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(86) as Gun).DefaultModule.projectiles[0]);
+                BasicBeamController beamComp = projectile.GenerateBeamPrefabBundle(
+				"inqBeam_mid_001",
+				StaticSpriteDefinitions.Beam_Sheet_Data,
+				StaticSpriteDefinitions.Beam_Animation_Data,
+                "inqBeam_mid_idle", new Vector2(16, 16), new Vector2(0, 0), //Main
+				null, new Vector2(16, 16), new Vector2(0, 0), //Impact
+                "inqBeam_end_idle", new Vector2(16, 16), new Vector2(0, 0), //End Of beam
+                "inqBeam_start_idle", new Vector2(16, 16), new Vector2(0, 0), //Start Of Beam
+				true, true,
+				"inqBeam_mid_start", "inqBeam_start_start", "inqBeam_end_start", 0.75f, 
+				true,
+                "inqBeam_mid_dissipate", "inqBeam_start_dissipate", "inqBeam_end_dissipate", 0.75f);
 
 
+                /*
 				BasicBeamController beamComp = projectile.GenerateBeamPrefab(
 					"Planetside/Resources/Beams/Inquistor/inqBeam_start_001",
 					new Vector2(16, 16),
@@ -259,9 +274,9 @@ namespace Planetside
 					BeamEndAnimPathsDiss, 9,
 					1
 					);
+				*/
 
-
-				projectile.gameObject.SetActive(false);
+                projectile.gameObject.SetActive(false);
 				FakePrefab.MarkAsFakePrefab(projectile.gameObject);
 				UnityEngine.Object.DontDestroyOnLoad(projectile);
 				projectile.gameObject.AddComponent<MarkForUndodgeAbleBeam>();
@@ -939,10 +954,10 @@ namespace Planetside
 			{
 				string shootPointCalc = (string)((BraveMathCollege.AbsAngleBetween(this.BulletBank.aiActor.aiAnimator.FacingDirection, 0f) <= 90f) ? "RightHandFire" : "LeftHandFire");
 				float Pos = (base.GetPredictedTargetPosition(0.6f, 34) - base.BulletBank.aiActor.transform.Find(shootPointCalc).PositionVector2()).ToAngle();
-				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableQuickHoming);
-				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
+				base.BulletBank.Bullets.Add(StaticBulletEntries.undodgeableQuickHoming);
+				base.BulletBank.Bullets.Add(StaticBulletEntries.undodgeableSmallSpore);
 
-				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableBig);
+				base.BulletBank.Bullets.Add(StaticBulletEntries.undodgeableBig);
 
 				for (int e = -3; e < 4; e++)
                 {
@@ -958,7 +973,7 @@ namespace Planetside
 			}
 			public class Def : Bullet
 			{
-				public Def(float delay = 0) : base(StaticUndodgeableBulletEntries.undodgeableQuickHoming.Name, false, false, false)
+				public Def(float delay = 0) : base(StaticBulletEntries.undodgeableQuickHoming.Name, false, false, false)
 				{
 					Delay = delay;
 				}
@@ -986,7 +1001,7 @@ namespace Planetside
 			}
 			public class Ballin : Bullet
 			{
-				public Ballin() : base(StaticUndodgeableBulletEntries.undodgeableBig.Name, false, false, false)
+				public Ballin() : base(StaticBulletEntries.undodgeableBig.Name, false, false, false)
 				{
 				}
 				public override IEnumerator Top()
@@ -1012,7 +1027,7 @@ namespace Planetside
 		{
 			public override IEnumerator Top()
 			{
-				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
+				base.BulletBank.Bullets.Add(StaticBulletEntries.undodgeableSmallSpore);
 				AIBeamShooter2[] beams = this.BulletBank.aiActor.GetComponents<AIBeamShooter2>();
 				yield return this.Wait(30);
 				int i = 0;
@@ -1036,7 +1051,7 @@ namespace Planetside
 			}
 			public class FakeBeamPart : Bullet
 			{
-				public FakeBeamPart() : base(StaticUndodgeableBulletEntries.undodgeableSmallSpore.Name, false, false, false)
+				public FakeBeamPart() : base(StaticBulletEntries.undodgeableSmallSpore.Name, false, false, false)
 				{
 				}
 				public override IEnumerator Top()
@@ -1055,25 +1070,25 @@ namespace Planetside
 		{
 			public override IEnumerator Top()
 			{
-				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableBig);
-				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSmallSpore);
-				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableBigBullet);
-				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableChainLink);
+				base.BulletBank.Bullets.Add(StaticBulletEntries.undodgeableBig);
+				base.BulletBank.Bullets.Add(StaticBulletEntries.undodgeableSmallSpore);
+				base.BulletBank.Bullets.Add(StaticBulletEntries.undodgeableBigBullet);
+				base.BulletBank.Bullets.Add(StaticBulletEntries.undodgeableChainLink);
 
 				string shootPointCalc = (string)((BraveMathCollege.AbsAngleBetween(this.BulletBank.aiActor.aiAnimator.FacingDirection, 0f) <= 90f) ? "RightHandFire" : "LeftHandFire");
 				float Pos = (base.GetPredictedTargetPosition(0.6f, 34) - base.BulletBank.aiActor.transform.Find(shootPointCalc).PositionVector2()).ToAngle();
-				this.Fire(Offset.OverridePosition(base.BulletBank.aiActor.transform.Find(shootPointCalc).position), new Direction(Pos, DirectionType.Absolute, -1f), new Speed(13f, SpeedType.Absolute), new Force.HelixBullet(false, 0 , StaticUndodgeableBulletEntries.undodgeableBig.Name, 0 ,0));
+				this.Fire(Offset.OverridePosition(base.BulletBank.aiActor.transform.Find(shootPointCalc).position), new Direction(Pos, DirectionType.Absolute, -1f), new Speed(13f, SpeedType.Absolute), new Force.HelixBullet(false, 0 , StaticBulletEntries.undodgeableBig.Name, 0 ,0));
 				for (int e = 0; e < 7; e++)
 				{
-					base.Fire(Offset.OverridePosition(base.BulletBank.aiActor.transform.Find(shootPointCalc).position), new Direction(Pos, DirectionType.Absolute, -1f), new Speed(13, SpeedType.Absolute), new Force.HelixBullet(false, (4 * e)+6, StaticUndodgeableBulletEntries.undodgeableChainLink.Name, -0.75f, 0.75f));
-					base.Fire(Offset.OverridePosition(base.BulletBank.aiActor.transform.Find(shootPointCalc).position), new Direction(Pos, DirectionType.Absolute, -1f), new Speed(13, SpeedType.Absolute), new Force.HelixBullet(true, (4 * e)+6, StaticUndodgeableBulletEntries.undodgeableChainLink.Name, - 0.75f, 0.75f));
+					base.Fire(Offset.OverridePosition(base.BulletBank.aiActor.transform.Find(shootPointCalc).position), new Direction(Pos, DirectionType.Absolute, -1f), new Speed(13, SpeedType.Absolute), new Force.HelixBullet(false, (4 * e)+6, StaticBulletEntries.undodgeableChainLink.Name, -0.75f, 0.75f));
+					base.Fire(Offset.OverridePosition(base.BulletBank.aiActor.transform.Find(shootPointCalc).position), new Direction(Pos, DirectionType.Absolute, -1f), new Speed(13, SpeedType.Absolute), new Force.HelixBullet(true, (4 * e)+6, StaticBulletEntries.undodgeableChainLink.Name, - 0.75f, 0.75f));
 
 				}
 				yield break;
 			}
 			public class BasicBigBall : Bullet
 			{
-				public BasicBigBall() : base(StaticUndodgeableBulletEntries.undodgeableBig.Name, false, false, false) { }
+				public BasicBigBall() : base(StaticBulletEntries.undodgeableBig.Name, false, false, false) { }
 				public override IEnumerator Top()
 				{
 					while (this.Projectile)
@@ -1123,7 +1138,7 @@ namespace Planetside
 					float startVal = 1;
 					for (int i = 0; i < 360; i++)
 					{
-						if (i % 45 == 0 && bullettype == StaticUndodgeableBulletEntries.undodgeableBig.Name)
+						if (i % 45 == 0 && bullettype == StaticBulletEntries.undodgeableBig.Name)
                         {
 							for (int t = 0; t < 12; t++)
 							{
@@ -1141,7 +1156,7 @@ namespace Planetside
 
 				public override void OnBulletDestruction(DestroyType destroyType, SpeculativeRigidbody hitRigidbody, bool preventSpawningProjectiles)
 				{
-					if (bullettype == StaticUndodgeableBulletEntries.undodgeableBig.Name)
+					if (bullettype == StaticBulletEntries.undodgeableBig.Name)
                     {
 						float H = UnityEngine.Random.Range(-180, 180);
 						base.PostWwiseEvent("Play_ENM_creecher_burst_01");
@@ -1167,7 +1182,7 @@ namespace Planetside
 
 			public class Big : Bullet
 			{
-				public Big() : base(StaticUndodgeableBulletEntries.undodgeableBigBullet.Name, false, false, false)
+				public Big() : base(StaticBulletEntries.undodgeableBigBullet.Name, false, false, false)
 				{
 
 				}
@@ -1201,7 +1216,7 @@ namespace Planetside
 		{
 			public override IEnumerator Top()
 			{
-				base.BulletBank.Bullets.Add(StaticUndodgeableBulletEntries.undodgeableSniper);
+				base.BulletBank.Bullets.Add(StaticBulletEntries.undodgeableSniper);
 				for (int i = -1; i < 2; i++)
 				{
 					float Angle = base.AimDirection + (20 * i);

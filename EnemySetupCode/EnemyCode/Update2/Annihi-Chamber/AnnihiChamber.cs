@@ -58,7 +58,7 @@ namespace Planetside
 				EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, Collection, mat, false);
 
 				companion.aiActor.knockbackDoer.weight = 200;
-				companion.aiActor.MovementSpeed = 1f;
+				companion.aiActor.MovementSpeed = 0.7f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
 				companion.aiActor.CollisionDamage = 1f;
 				companion.aiActor.IgnoreForRoomClear = false;
