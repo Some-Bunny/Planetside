@@ -39,6 +39,8 @@ namespace Planetside
             PrayerHell = RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/PrayerRooms/PrayerRoomHell.room").room;
             PrayerSewer = RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/PrayerRooms/PrayerRoomOubliette.room").room;
             PrayerAbbey = RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/PrayerRooms/PrayerRoomAbbey.room").room;
+            HellAbbey = Alexandria.DungeonAPI.RoomFactory.BuildNewRoomFromResource("Planetside/Resources/ShrineRooms/PrayerRooms/HellShrineRoom.newroom").room;
+
             warVase.SetupUnlockOnCustomStat(CustomTrackedStats.UMBRAL_ENEMIES_KILLED, 4, DungeonPrerequisite.PrerequisiteOperation.GREATER_THAN);
             PrayerAmulet.InitRooms();
 
@@ -54,6 +56,7 @@ namespace Planetside
         public static PrototypeDungeonRoom PrayerHell;
         public static PrototypeDungeonRoom PrayerSewer;
         public static PrototypeDungeonRoom PrayerAbbey;
+        public static PrototypeDungeonRoom HellAbbey;
 
 
         public static void InitRooms()
@@ -84,7 +87,28 @@ namespace Planetside
                 BaseInjection.AttachedInjectionData = new List<SharedInjectionData>();
             }
             BaseInjection.AttachedInjectionData.Add(injector);
+
+            Dungeon hell_ = DungeonDatabase.GetOrLoadByName("base_bullethell");
+            var Hell_Injections = hell_.PatternSettings.flows[0].sharedInjectionData[0];
+
+            MyInjectionData = new SharedInjectionData()
+            {
+                AttachedInjectionData = new List<SharedInjectionData> { },
+                UseInvalidWeightAsNoInjection = false,
+                ChanceToSpawnOne = 1000,
+                IgnoreUnmetPrerequisiteEntries = false,
+                InjectionData = new List<ProceduralFlowModifierData>()
+                {
+                    GenerateNewMrocData(HellAbbey, GlobalDungeonData.ValidTilesets.HELLGEON)
+                },
+                IsNPCCell = false,
+                OnlyOne = false,
+                PreventInjectionOfFailedPrerequisites = false,
+            };
+
+            Hell_Injections.AttachedInjectionData.Add(MyInjectionData);
         }
+        private static SharedInjectionData MyInjectionData;
 
         public override void Pickup(PlayerController player)
 		{

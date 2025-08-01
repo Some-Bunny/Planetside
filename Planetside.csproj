@@ -6012,5 +6012,8 @@
     <EmbeddedResource Include="Resources\TrespassRooms\trespassbasic_thin.newroom" />
     <EmbeddedResource Include="Resources\TrespassRooms\trespassbasic_treadlightly.newroom" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ShrineRooms\PrayerRooms\HellShrineRoom.newroom" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
