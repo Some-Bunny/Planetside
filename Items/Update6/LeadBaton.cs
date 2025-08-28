@@ -15,6 +15,8 @@ using static UnityEngine.UI.GridLayoutGroup;
 using System.ComponentModel;
 using static ETGMod;
 using Planetside.DungeonPlaceables;
+using Planetside.Toolboxes;
+using System.Security.Policy;
 
 namespace Planetside
 {
@@ -85,10 +87,8 @@ namespace Planetside
                         AkSoundEngine.PostEvent("Play_BatonHit", secretRoomDoor.gameObject);
                         secretRoomDoor.gameObject.DoHitStop(0.5f);
                         secretRoomDoor.ApplyDamage(1E+10f, Vector2.zero, false, true, true);
-
                         for (int i = 0; i < 100; i++)
                         {
-
                             GlobalSparksDoer.DoRandomParticleBurst(1, HotPos + new Vector2(-0.5f, 0.5f), HotPos + new Vector2(0.5f, 0.5f),
                             BraveUtility.RandomVector2(new Vector2(-1, -1), new Vector2(1, 1)),
                             0f,
@@ -98,15 +98,20 @@ namespace Planetside
                             new Color(0.7f, 0.9f, 0.7f, 1),
                             GlobalSparksDoer.SparksType.FLOATY_CHAFF);
                         }
-
                     }
-
                 }
             };
-
             customSlash = slash;
-
-
+            item.AddSynergy("Leader Baton", new List<PickupObject>()
+            {
+                Items.Heavy_Bullets,
+                Actives.Potion_Of_Lead_Skin,
+                Guns.Anvillian
+            });
+            item.AddSynergy("Silver Baton", new List<PickupObject>()
+            {
+                Items.Silver_Bullets
+            });
         }
 
         private static Projectile CaseyBaseProjectileLaunch = (PickupObjectDatabase.GetById(541) as Gun).DefaultModule.chargeProjectiles[0].Projectile.GetComponent<KilledEnemiesBecomeProjectileModifier>().BaseProjectile;
@@ -120,6 +125,9 @@ namespace Planetside
 
         public class LeadBatonSlash : CustomSlashData
         {
+
+            
+
             public override CustomSlashData ReturnClone()
             {
 
@@ -154,6 +162,35 @@ namespace Planetside
                 {
                     if (myAiActor && myAiActor.IsNormalEnemy && myAiActor.healthHaver && !myAiActor.healthHaver.IsBoss)
                     {
+                        if (Owner && Owner is PlayerController player && player.PlayerHasActiveSynergy("Silver Baton"))
+                        {
+                            if (myAiActor.GetComponent<UmbraController>() != null)
+                            {
+                                myAiActor.ForceDeath(Vector2.zero);
+                                ParticleBase.EmitParticles("WaveParticle", 1, new ParticleSystem.EmitParams()
+                                {
+                                    position = myAiActor.sprite.WorldCenter,
+                                    startSize = 8,
+                                    rotation = 0,
+                                    startLifetime = 0.5f,
+                                    startColor = new Color(1, 1, 1, 0.3f)
+                                });
+                            }
+                            else if (myAiActor.IsBlackPhantom)
+                            {
+                                myAiActor.healthHaver.ApplyDamage(damage * 2, Vector2.zero, "Additional Damage");
+                                myAiActor.UnbecomeBlackPhantom();
+                                ParticleBase.EmitParticles("WaveParticle", 1, new ParticleSystem.EmitParams()
+                                {
+                                    position = myAiActor.sprite.WorldCenter,
+                                    startSize = 8,
+                                    rotation = 0,
+                                    startLifetime = 0.5f,
+                                    startColor = new Color(1, 1, 1, 0.3f)
+                                });
+                            }
+                        }
+                       
 
                         AkSoundEngine.PostEvent("Play_BatonHit", myAiActor.gameObject);
                         myAiActor.gameObject.DoHitStop(0.3f);
@@ -301,6 +338,16 @@ namespace Planetside
 
         private void DoSwing()
         {
+            if (this.Owner.PlayerHasActiveSynergy("Leader Baton"))
+            {
+                customSlash.damage = 125;
+                customSlash.enemyKnockbackForce = 1000;
+            }
+            else
+            {
+                customSlash.damage = 75;
+                customSlash.enemyKnockbackForce = 400;
+            }
             CustomSlashDoer.DoSwordSlash(base.Owner.CurrentGun.PrimaryHandAttachPoint.position, base.Owner.CurrentGun.CurrentAngle, base.Owner, customSlash);
 
         }

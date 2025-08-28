@@ -321,8 +321,8 @@ namespace Planetside
                         {
                             case 1:
                                 float cu = UnityEngine.Random.Range(0, 22.5f);
-                                var ring_ = SummonRingController.CreateSummoningRing("annihilate", spawnPos, 0.625f);
-                                ring_.SpinSpeed = 60;
+                                var ring_ = SummonRingController.CreateSummoningRing("annihilate", spawnPos, 0.4375f);
+                                ring_.SpinSpeed = 30;
                                 ring_.UpdateSpeed = 4;
                                 for (int e = 0; e < 8; e++)
                                 {
@@ -341,8 +341,8 @@ namespace Planetside
 
 
                                     var v = MathToolbox.GetUnitOnCircle(f + (e * 60), Vector2.Distance(spawnPos, GameManager.Instance.PrimaryPlayer.sprite.WorldCenter));
-                                    var ring = SummonRingController.CreateSummoningRing("phi", spawnPos + v, 0.4f);
-                                    ring.SpinSpeed = 60;
+                                    var ring = SummonRingController.CreateSummoningRing("phi", spawnPos + v, 0.3f);
+                                    ring.SpinSpeed = 15;
                                     ring.UpdateSpeed = 4;
                                     base.BulletBank.aiActor.StartCoroutine(QuickReticleNoAngleChange(spawnPos + v, (60 * e) + 0, this, 0.75f, 25, 3));
                                     base.BulletBank.aiActor.StartCoroutine(QuickReticleNoAngleChange(spawnPos + v, (60 * e) + 180, this, 0.75f, 25, 3));
@@ -354,8 +354,8 @@ namespace Planetside
                               case 3:
                                 for (int e = 0; e < GameManager.Instance.AllPlayers.Length; e++)
                                 {
-                                    var ring = SummonRingController.CreateSummoningRing("four", GameManager.Instance.AllPlayers[e].sprite.WorldCenter, 0.5f);
-                                    ring.SpinSpeed = 60;
+                                    var ring = SummonRingController.CreateSummoningRing("four", GameManager.Instance.AllPlayers[e].sprite.WorldCenter, 0.4375f);
+                                    ring.SpinSpeed = 15;
                                     ring.UpdateSpeed = 4;
                                     float Dir1 = UnityEngine.Random.value > 0.5f ? 0 : 45f;
                                     for (int q = 0; q < 4; q++)
@@ -370,8 +370,8 @@ namespace Planetside
                             case 4:
                                 for (int e = 0; e < GameManager.Instance.AllPlayers.Length; e++)
                                 {
-                                    var ring = SummonRingController.CreateSummoningRing("Divide", GameManager.Instance.AllPlayers[e].sprite.WorldCenter, 0.66f);
-                                    ring.SpinSpeed = 60;
+                                    var ring = SummonRingController.CreateSummoningRing("Divide", GameManager.Instance.AllPlayers[e].sprite.WorldCenter, 0.4375f);
+                                    ring.SpinSpeed = 15;
                                     ring.UpdateSpeed = 4;
 
                                     float Dir1 = UnityEngine.Random.value > 0.5f ? 0 : 22.5f;

@@ -137,6 +137,11 @@ namespace Planetside
             var refraction = RefractionObject.AddComponent<RefractionEffect>();
             refraction.sprite = sprite;
             refraction.spriteAnimator = spriteAnimator;
+            List<string> mandatoryConsoleIDs = new List<string>
+            {
+                "psog:warp-techs_kit",
+                "psog:teleporting_gunfire"
+            };
         }
         public static int ItemID;
         public static GameObject RefractionObject;

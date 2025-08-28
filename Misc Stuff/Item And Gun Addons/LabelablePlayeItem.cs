@@ -7,7 +7,6 @@ namespace Planetside
 {
 	public class LabelablePlayerItem : PlayerItem
 	{
-		//Thank you Nevernamed!
 		public void SetLabel(string label)
 		{
 			this.currentLabel = label;

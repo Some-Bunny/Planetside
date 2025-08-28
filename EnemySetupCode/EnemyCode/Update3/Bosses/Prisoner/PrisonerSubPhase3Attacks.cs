@@ -1224,8 +1224,8 @@ namespace Planetside
                 for (int i = 0; i < 8; i++)
 				{
 
-                    var ring1 = SummonRingController.CreateSummoningRing("split", this.Position, 0.3f, false, 1.2f);
-                    ring1.SpinSpeed = 30;
+                    var ring1 = SummonRingController.CreateSummoningRing("split", this.Position, 0.25f, false, 1.2f);
+                    ring1.SpinSpeed = 15;
                     ring1.UpdateSpeed = 2;
 
 
@@ -1244,8 +1244,8 @@ namespace Planetside
                     for (int e = 0; e < AM; e++)
 					{
 
-                        var ring1 = SummonRingController.CreateSummoningRing("split", this.Position, 0.3f, false, 1.2f);
-                        ring1.SpinSpeed = 30;
+                        var ring1 = SummonRingController.CreateSummoningRing("split", this.Position, 0.25f, false, 1.2f);
+                        ring1.SpinSpeed = 15;
                         ring1.UpdateSpeed = 2;
 
                         base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(Position, Position + MathToolbox.GetUnitOnCircle(f1 + (e * (360/AM)), Vector2.Distance(Position, GameManager.Instance.PrimaryPlayer.sprite.WorldTopCenter)), ((360 / AM) * e) + 0, this, M1, 1f, ring1));
@@ -1260,8 +1260,8 @@ namespace Planetside
 
                 for (int i = 0; i < 6; i++)
                 {
-                    var ring1 = SummonRingController.CreateSummoningRing("annihilate", this.Position, 0.3f, false, 1.2f);
-                    ring1.SpinSpeed = 30;
+                    var ring1 = SummonRingController.CreateSummoningRing("annihilate", this.Position, 0.25f, false, 1.2f);
+                    ring1.SpinSpeed = 15;
                     ring1.UpdateSpeed = 2;
                     base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(Position, Position + MathToolbox.GetUnitOnCircle(f11 + (i * 60), Vector2.Distance(Position, Position + (Vector2.one * 2.5f))), (60 * i) + 0, this, M11, 1f, ring1));
                     base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(Position, Position + MathToolbox.GetUnitOnCircle(f11 + (i * 60), Vector2.Distance(Position, Position + (Vector2.one * 2.5f))), (60 * i) + 45, this, M11, 1f));

@@ -20,10 +20,279 @@ using static Planetside.Glass;
 using static Planetside.PrisonerSecondSubPhaseController;
 using Planetside.Static_Storage;
 using static ETGMod;
+using Alexandria.PrefabAPI;
+using Alexandria.cAPI;
+using Planetside.Toolboxes;
+using static UnityEngine.UI.GridLayoutGroup;
+using static Planetside.Inquisitor.Repel;
+using static Planetside.GunWithNoName;
 
 namespace Planetside
 {
+    public class KillEnergy : BraveBehaviour
+    {
+        public void Start()
+        {
 
+            ParticleBase.EmitParticles("HexParticleFull", 1, new ParticleSystem.EmitParams()
+            {
+                position = this.transform.position,
+                startSize = 6,
+                rotation = 0,
+                startLifetime = 0.3f,
+                startColor = new Color(1, 0.6f, 0f, 0.2f)
+            });
+        }
+
+
+
+        public void InvokeKill()
+        {
+            if (projectile)
+            {
+                ParticleBase.EmitParticles("HexParticleFull", 1, new ParticleSystem.EmitParams()
+                {
+                    position = this.transform.position,
+                    startSize = 6,
+                    rotation = 0,
+                    startLifetime = 0.3f,
+                    startColor = new Color(1, 0.6f, 0f, 0.2f)
+                });
+                projectile.DieInAir();
+            }
+            this.ClearLink();
+        }
+
+
+        private void Update()
+        {
+            if (base.projectile)
+            {
+                Projectile projectile = (!this.UseForcedLinkProjectile) ? this.GetLinkProjectile() : this.ForcedLinkProjectile;
+                if (projectile)
+                {
+                    this.UpdateLinkToProjectile(projectile);
+                }
+                else
+                {
+                    this.ClearLink();
+                }
+            }
+        }
+
+        public void UpdateLinkToProjectile(Projectile targetProjectile)
+        {
+            if (this.m_extantLink == null)
+            {
+                this.m_extantLink = SpawnManager.SpawnVFX(EnergyEffect, true).GetComponent<tk2dTiledSprite>();
+                if (this.DamagesPlayers && !this.m_hasSetBlackBullet)
+                {
+                    this.m_hasSetBlackBullet = true;
+                    Material material = this.m_extantLink.GetComponent<Renderer>().material;
+                    material.SetFloat("_BlackBullet", 0.995f);
+                    material.SetFloat("_EmissiveColorPower", 4.9f);
+                }
+            }
+            this.m_frameLinkProjectile = targetProjectile;
+            Vector2 unitCenter = base.projectile.specRigidbody.UnitCenter;
+            Vector2 unitCenter2 = targetProjectile.specRigidbody.UnitCenter;
+            this.m_extantLink.transform.position = unitCenter;
+            Vector2 vector = unitCenter2 - unitCenter;
+            float z = BraveMathCollege.Atan2Degrees(vector.normalized);
+            int num2 = Mathf.RoundToInt(vector.magnitude / 0.0625f);
+            this.m_extantLink.dimensions = new Vector2((float)num2, this.m_extantLink.dimensions.y);
+            this.m_extantLink.transform.rotation = Quaternion.Euler(0f, 0f, z);
+            this.m_extantLink.UpdateZDepth();
+            bool flag = this.ApplyLinearDamage(unitCenter, unitCenter2);
+        }
+
+
+        private IEnumerator HandleDamageCooldown(AIActor damagedTarget)
+        {
+            this.m_damagedEnemies.Add(damagedTarget);
+            yield return new WaitForSeconds(this.damageCooldown);
+            this.m_damagedEnemies.Remove(damagedTarget);
+            yield break;
+        }
+
+        private bool ApplyLinearDamage(Vector2 p1, Vector2 p2)
+        {
+            bool result = false;
+            if (this.DamagesEnemies)
+            {
+                for (int i = 0; i < StaticReferenceManager.AllEnemies.Count; i++)
+                {
+                    AIActor aiactor = StaticReferenceManager.AllEnemies[i];
+                    if (!this.m_damagedEnemies.Contains(aiactor))
+                    {
+                        if (aiactor && aiactor.HasBeenEngaged && aiactor.IsNormalEnemy && aiactor.specRigidbody)
+                        {
+                            Vector2 zero = Vector2.zero;
+                            bool flag = BraveUtility.LineIntersectsAABB(p1, p2, aiactor.specRigidbody.HitboxPixelCollider.UnitBottomLeft, aiactor.specRigidbody.HitboxPixelCollider.UnitDimensions, out zero);
+                            if (flag)
+                            {
+                                aiactor.healthHaver.ApplyDamage(this.damagePerHit, Vector2.zero, "Chain Lightning", this.damageTypes, DamageCategory.Normal, false, null, false);
+                                result = true;
+                                GameManager.Instance.StartCoroutine(this.HandleDamageCooldown(aiactor));
+                            }
+                        }
+                    }
+                }
+            }
+            if (this.DamagesPlayers)
+            {
+                for (int j = 0; j < GameManager.Instance.AllPlayers.Length; j++)
+                {
+                    PlayerController playerController = GameManager.Instance.AllPlayers[j];
+                    if (playerController && !playerController.IsGhost && playerController.healthHaver && playerController.healthHaver.IsAlive && playerController.healthHaver.IsVulnerable)
+                    {
+                        Vector2 zero2 = Vector2.zero;
+                        bool flag2 = BraveUtility.LineIntersectsAABB(p1, p2, playerController.specRigidbody.HitboxPixelCollider.UnitBottomLeft, playerController.specRigidbody.HitboxPixelCollider.UnitDimensions, out zero2);
+                        if (flag2)
+                        {
+                            playerController.healthHaver.ApplyDamage(0.5f, Vector2.zero, base.projectile.OwnerName, this.damageTypes, DamageCategory.Normal, false, null, false);
+                            result = true;
+                        }
+                    }
+                }
+            }
+            return result;
+        }
+
+        private void ClearLink()
+        {
+            if (this.m_extantLink != null)
+            {
+                SpawnManager.Despawn(this.m_extantLink.gameObject);
+                this.m_extantLink = null;
+            }
+        }
+
+        private Projectile GetLinkProjectile()
+        {
+            Projectile projectile = null;
+            float num = float.MaxValue;
+            float num2 = this.maximumLinkDistance * this.maximumLinkDistance;
+            for (int i = 0; i < StaticReferenceManager.AllProjectiles.Count; i++)
+            {
+                Projectile projectile2 = StaticReferenceManager.AllProjectiles[i];
+                if (projectile2 && projectile2 != base.projectile && (this.CanChainToAnyProjectile || projectile2.Owner == base.projectile.Owner))
+                {
+                    if (this.RequiresSameProjectileClass && !this.CanChainToAnyProjectile)
+                    {
+                        if (base.projectile.spriteAnimator && projectile2.spriteAnimator)
+                        {
+                            if (base.projectile.spriteAnimator.CurrentClip != projectile2.spriteAnimator.CurrentClip)
+                            {
+                                goto IL_28C;
+                            }
+                        }
+                        else if (base.projectile.spriteAnimator || projectile2.spriteAnimator)
+                        {
+                            goto IL_28C;
+                        }
+                        if (base.projectile.sprite && projectile2.sprite)
+                        {
+                            if (projectile2.sprite.spriteId != base.projectile.sprite.spriteId || projectile2.sprite.Collection != base.projectile.sprite.Collection)
+                            {
+                                goto IL_28C;
+                            }
+                        }
+                        else if (base.projectile.sprite || projectile2.sprite)
+                        {
+                            goto IL_28C;
+                        }
+                    }
+                    ChainLightningModifier component = projectile2.GetComponent<ChainLightningModifier>();
+                    if (component && component.m_frameLinkProjectile == null)
+                    {
+                        float sqrMagnitude = (component.specRigidbody.UnitCenter - base.specRigidbody.UnitCenter).sqrMagnitude;
+                        if (sqrMagnitude < num && sqrMagnitude < num2)
+                        {
+                            projectile = projectile2;
+                            num = sqrMagnitude;
+                        }
+                    }
+                    else if (this.CanChainToAnyProjectile && projectile2 && projectile2.specRigidbody && this && base.specRigidbody)
+                    {
+                        float sqrMagnitude2 = (projectile2.specRigidbody.UnitCenter - base.specRigidbody.UnitCenter).sqrMagnitude;
+                        if (sqrMagnitude2 < num && sqrMagnitude2 < num2)
+                        {
+                            projectile = projectile2;
+                            num = sqrMagnitude2;
+                        }
+                    }
+                }
+            IL_28C:;
+            }
+            if (projectile == null)
+            {
+                return null;
+            }
+            return projectile;
+        }
+
+
+
+        public CoreDamageTypes damageTypes;
+
+    
+        public bool RequiresSameProjectileClass;
+
+        public float maximumLinkDistance = 8f;
+
+        public float damagePerHit = 5f;
+
+        public float damageCooldown = 1f;
+
+        [NonSerialized]
+        public bool CanChainToAnyProjectile;
+
+        [NonSerialized]
+        public bool UseForcedLinkProjectile;
+
+        [NonSerialized]
+        public Projectile ForcedLinkProjectile;
+
+        [NonSerialized]
+        public Projectile BackLinkProjectile;
+
+        [NonSerialized]
+        public bool DamagesPlayers;
+
+        [NonSerialized]
+        public bool DamagesEnemies = true;
+
+        [Header("Dispersal")]
+        public bool UsesDispersalParticles;
+
+        [ShowInInspectorIf("UsesDispersalParticles", false)]
+        public float DispersalDensity = 3f;
+
+
+        public float DispersalMinCoherency = 0.2f;
+
+        [ShowInInspectorIf("UsesDispersalParticles", false)]
+        public float DispersalMaxCoherency = 1f;
+
+
+        [ShowInInspectorIf("UsesDispersalParticles", false)]
+        public GameObject DispersalParticleSystemPrefab;
+
+
+        private Projectile m_frameLinkProjectile;
+
+     
+        private tk2dTiledSprite m_extantLink;
+
+  
+        private bool m_hasSetBlackBullet;
+
+        private ParticleSystem m_dispersalParticles;
+
+        private HashSet<AIActor> m_damagedEnemies = new HashSet<AIActor>();
+
+    }
 	public class GWNN_Hitscan : Projectile
 	{
         Path myPathToDestiny;
@@ -124,11 +393,19 @@ namespace Planetside
                 this.DieInAir(); return; 
             }
             float DistTick = 0;
+            KillEnergy LastProjectile = null;
+            int a = 0;
+            Vector3 Angle = Vector3.zero;
             while (myPathToDestiny.Count > 0)
             {
+
+
+
                 var PathTo = myPathToDestiny.GetFirstCenterVector2();
                 var PathMe = lastPos;
-                DistTick = (Vector2.Distance(PathMe, PathTo) * 8);
+                DistTick = (Vector2.Distance(PathMe, PathTo) * 6);
+
+
                 this.LastVelocity = (PathTo.ToVector3ZUp() - PathMe);
                 for (float i = 0; i < DistTick; i++)
                 {
@@ -142,9 +419,33 @@ namespace Planetside
                         new Color(1, 0.4f, 0, 1),
                         GlobalSparksDoer.SparksType.FLOATY_CHAFF);
                 }
+
+                if (Owner != null && Owner is PlayerController player && player.PlayerHasActiveSynergy("Power Line"))
+                {
+                    var oldAngle = (PathMe - PathTo.ToVector3ZUp()).normalized;
+                    if (oldAngle != Angle)
+                    {
+                        Angle = oldAngle;
+                        var newProj = UnityEngine.Object.Instantiate<Projectile>(GunWithNoName.EnergyProjectile, lastPos, Quaternion.identity);
+                        newProj.SetOwnerSafe(player, "Player");
+                        var tether = newProj.GetComponent<KillEnergy>();
+                        if (LastProjectile != null)
+                        {
+                            tether.UseForcedLinkProjectile = true;
+                            tether.ForcedLinkProjectile = LastProjectile.GetComponent<Projectile>();
+                            tether.UpdateLinkToProjectile(LastProjectile.GetComponent<Projectile>());
+                        }
+                        tether.Invoke("InvokeKill", 3.5f + (0.125f * a));
+                        LastProjectile = tether;
+                        a++;
+
+                    }
+                }
                 lastPos = PathTo;
                 myPathToDestiny.RemoveFirst();
             }
+
+
             AkSoundEngine.PostEvent("Play_WPN_HLD_shot_03", this.gameObject);
             ParticleBase.EmitParticles("HexParticle", 1, new ParticleSystem.EmitParams()
             {
@@ -156,7 +457,23 @@ namespace Planetside
             });
             Vector2 unitCenter3 = MyTarget.specRigidbody.HitboxPixelCollider.UnitCenter;
             LastPosition = unitCenter3;
-            this.transform.position = unitCenter3;
+            if (LastProjectile != null)
+            {
+                var newProj = UnityEngine.Object.Instantiate<Projectile>(GunWithNoName.EnergyProjectile, lastPos, Quaternion.identity);
+                newProj.SetOwnerSafe(Owner, "Player");
+                var tether = newProj.GetComponent<KillEnergy>();
+                if (LastProjectile != null)
+                {
+                    tether.UseForcedLinkProjectile = true;
+                    tether.ForcedLinkProjectile = LastProjectile.GetComponent<Projectile>();
+                    tether.UpdateLinkToProjectile(LastProjectile.GetComponent<Projectile>());
+                }
+                tether.Invoke("InvokeKill", 3.5f + (0.125f * a));
+                LastProjectile = tether;
+            }
+
+                this.transform.position = unitCenter3;
+            this.transform.position = this.transform.position.WithZ(200);
             this.specRigidbody.Reinitialize();
             DistTick = (Vector2.Distance(lastPos, unitCenter3) * 8);
             for (float i = 0; i < DistTick; i++)
@@ -588,7 +905,7 @@ namespace Planetside
                     GunWithNoName.StoredGWNNs.Add(player, new List<GWNNSpawnedProjectile>());
                 }
 				GunWithNoName.StoredGWNNs[player].Add(this);
-                GunWithNoName.StoredGWNNs[player].ForEach(self => self.WaitTime += (Owner ? 0.0333f / Owner.stats.GetStatValue(PlayerStats.StatType.RateOfFire) : 0.025f));
+                GunWithNoName.StoredGWNNs[player].ForEach(self => self.WaitTime += (Owner ? 0.0333f / Owner.stats.GetStatValue(PlayerStats.StatType.RateOfFire) : 0.025f) *(Owner.PlayerHasActiveSynergy("Power Line") ? 4 : 1));
                 //Debug.Log((Owner != null ? Owner.CurrentGun.GetPrimaryCooldown() / Owner.stats.GetStatValue(PlayerStats.StatType.RateOfFire) : 0.0333f));
                 this.Invoke("Emit", 0.05f);
                 this.StartCoroutine(DoLerpParticle());
@@ -805,14 +1122,14 @@ namespace Planetside
 
     }
 
-	public class GunWithNoName : GunBehaviour
-	{
-		public static void Add()
-		{
-			Gun gun = ETGMod.Databases.Items.NewGun("Gun With No Name", "gunwithnoname");
-			Game.Items.Rename("outdated_gun_mods:gun_with_no_name", "psog:gun_with_no_name");
-			gun.gameObject.AddComponent<GunWithNoName>();
-			gun.SetShortDescription("...");
+    public class GunWithNoName : GunBehaviour
+    {
+        public static void Add()
+        {
+            Gun gun = ETGMod.Databases.Items.NewGun("Gun With No Name", "gunwithnoname");
+            Game.Items.Rename("outdated_gun_mods:gun_with_no_name", "psog:gun_with_no_name");
+            gun.gameObject.AddComponent<GunWithNoName>();
+            gun.SetShortDescription("...");
             gun.SetLongDescription("There is no hiding from the Gun With No Name.\n\nA silence has befallen the Proper. Gundead, by the dozens, line the halls and corridors, ready. The Gungeon will remain theirs to rule.\n\nBut there is no hiding from the Gun With No Name." +
                 "\n\nA lone gunslinger, revolvers for ribs and break-action for an arm, enters the room. The Gundead ready.\n\nBut there is no hiding from the Gun With No Name." +
                 "\n\nGundead on the ground fall to the ground. Gundead up high fall to the ground. Gundead in places the lone gunslinger never even looked towards fall to the ground. Just as soon as gunfights started, they would finish. Soon, interrupted only by lone footsteps, was silence.\n\nFor there is no hiding from the Gun With No Name.");
@@ -826,7 +1143,7 @@ namespace Planetside
             gun.idleAnimation = "gwnn_idle";
             gun.shootAnimation = "gwnn_fire";
 
-            EnemyToolbox.AddSoundsToAnimationFrame(gun.spriteAnimator, "gwnn_reload", new Dictionary<int, string>() 
+            EnemyToolbox.AddSoundsToAnimationFrame(gun.spriteAnimator, "gwnn_reload", new Dictionary<int, string>()
             {
                 {2 , "Play_wpn_chamberabbey_reload_01" },
                 {34 , "Play_TRP_spikes_shoot_02" }
@@ -843,7 +1160,7 @@ namespace Planetside
             UnityEngine.Object.DontDestroyOnLoad(projectile);
             projectile.baseData.damage = 0f;
             projectile.baseData.speed = 0f;
-			projectile.ManualControl = true;
+            projectile.ManualControl = true;
 
             ImprovedAfterImage yes = projectile.gameObject.AddComponent<ImprovedAfterImage>();
             yes.spawnShadows = true;
@@ -858,16 +1175,16 @@ namespace Planetside
 
             Alexandria.Assetbundle.ProjectileBuilders.AnimateProjectileBundle(projectile, "GWNN_charge", StaticSpriteDefinitions.Projectile_Sheet_Data, StaticSpriteDefinitions.Projectile_Animation_Data, "GWNN_charge",
             AnimateBullet.ConstructListOfSameValues<IntVector2>(new IntVector2(15, 14), amount),
-			AnimateBullet.ConstructListOfSameValues(false, amount),
-			AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.MiddleCenter, amount),
-			AnimateBullet.ConstructListOfSameValues(true, amount),
-			AnimateBullet.ConstructListOfSameValues(false, amount),
-			AnimateBullet.ConstructListOfSameValues<Vector3?>(new Vector2(0, 0), amount),
-			AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, amount),
-			AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, amount),
-			AnimateBullet.ConstructListOfSameValues<Projectile>(null, amount));
+            AnimateBullet.ConstructListOfSameValues(false, amount),
+            AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.MiddleCenter, amount),
+            AnimateBullet.ConstructListOfSameValues(true, amount),
+            AnimateBullet.ConstructListOfSameValues(false, amount),
+            AnimateBullet.ConstructListOfSameValues<Vector3?>(new Vector2(0, 0), amount),
+            AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, amount),
+            AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, amount),
+            AnimateBullet.ConstructListOfSameValues<Projectile>(null, amount));
             projectile.shouldRotate = false;
-			projectile.collidesWithEnemies = false;
+            projectile.collidesWithEnemies = false;
             projectile.baseData.range = 420;
 
             projectile.sprite.usesOverrideMaterial = true;
@@ -891,10 +1208,10 @@ namespace Planetside
             gun.DefaultModule.projectiles[0] = projectile;
 
             gun.gunClass = GunClass.PISTOL;
-			gun.barrelOffset.transform.localPosition = new Vector3(0.5f, 0.25f, 0f);
-			gun.reloadTime = 4f;
-			gun.SetBaseMaxAmmo(666);
-			gun.quality = PickupObject.ItemQuality.A;
+            gun.barrelOffset.transform.localPosition = new Vector3(0.5f, 0.25f, 0f);
+            gun.reloadTime = 4f;
+            gun.SetBaseMaxAmmo(666);
+            gun.quality = PickupObject.ItemQuality.A;
             gun.gunHandedness = GunHandedness.HiddenOneHanded;
             gun.carryPixelOffset = new IntVector2(-8, 8);
 
@@ -908,7 +1225,7 @@ namespace Planetside
             UnityEngine.Object.DontDestroyOnLoad(_Hitscan);
 
             //_Hitscan.AddComponent<PierceDeadActors>();
-            Alexandria.Assetbundle.ProjectileBuilders.SetProjectileCollisionRight(_Hitscan, 
+            Alexandria.Assetbundle.ProjectileBuilders.SetProjectileCollisionRight(_Hitscan,
             "lilpew_projectile", StaticSpriteDefinitions.Projectile_Sheet_Data, 4, 4, false, tk2dBaseSprite.Anchor.MiddleCenter, 4, 4);
 
 
@@ -933,32 +1250,113 @@ namespace Planetside
 
 
             ItemID = gun.PickupObjectId;
-			ItemIDs.AddToList(gun.PickupObjectId);
-            
+            ItemIDs.AddToList(gun.PickupObjectId);
+
 
             Actions.OnGameManagerUpdate += (_) =>
-			{
-				if (StoredGWNNs.Count == 0) {return; }
-				foreach (var entry in StoredGWNNs)
-				{
-					int count = entry.Value.Count;
+            {
+                if (StoredGWNNs.Count == 0) { return; }
+                foreach (var entry in StoredGWNNs)
+                {
+                    int count = entry.Value.Count;
 
                     for (int i = 0; i < count; i++)
-					{      
+                    {
                         float M = 1f + ((int)(i / 12) * 0.75f);
                         var proj = entry.Value[i];
-						proj.transform.position = entry.Key.sprite.WorldCenter.ToVector3ZUp(1) + (PositionsToTake[i % 12] * M);
+                        proj.transform.position = entry.Key.sprite.WorldCenter.ToVector3ZUp(1) + (PositionsToTake[i % 12] * M);
                         proj.Projectile.specRigidbody.Reinitialize();
                     }
-				}
-			};
+                }
+            };
+
+
+            EnergyProjectile = UnityEngine.Object.Instantiate<Projectile>(Guns.Marine_Sidearm.DefaultModule.projectiles[0]);
+            EnergyProjectile.gameObject.SetActive(false);
+            FakePrefab.MarkAsFakePrefab(EnergyProjectile.gameObject);
+            UnityEngine.Object.DontDestroyOnLoad(EnergyProjectile);
+            EnergyProjectile.baseData.damage = 20f;
+            EnergyProjectile.baseData.speed = 0f;
+            EnergyProjectile.ManualControl = true;
+            EnergyProjectile.collidesWithEnemies = false;
+            amount = 12;
+            Alexandria.Assetbundle.ProjectileBuilders.AnimateProjectileBundle(EnergyProjectile, "gwnn_energy", StaticSpriteDefinitions.Projectile_Sheet_Data, StaticSpriteDefinitions.Projectile_Animation_Data, "gwnn_energy",
+            AnimateBullet.ConstructListOfSameValues<IntVector2>(new IntVector2(20, 20), amount),
+            AnimateBullet.ConstructListOfSameValues(true, amount),
+            AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.MiddleCenter, amount),
+            AnimateBullet.ConstructListOfSameValues(true, amount),
+            AnimateBullet.ConstructListOfSameValues(false, amount),
+            AnimateBullet.ConstructListOfSameValues<Vector3?>(null, amount),
+            AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(16, 16), amount),
+            AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(2, 2), amount),
+            AnimateBullet.ConstructListOfSameValues<Projectile>(null, amount));
+
+            var lightning = EnergyProjectile.AddComponent<KillEnergy>();
+            lightning.CanChainToAnyProjectile = false;
+            lightning.DamagesEnemies = true;
+            lightning.damageTypes = CoreDamageTypes.None;
+            lightning.damagePerHit = 12;
+            lightning.damageCooldown = 0.3f;
+            lightning.UseForcedLinkProjectile = true;
+            EnergyProjectile.sprite.SortingOrder = -10;
+
+            EnergyProjectile.hitEffects.overrideMidairDeathVFX = Guns.Charge_Shot.DefaultModule.chargeProjectiles[0].Projectile.hitEffects.overrideMidairDeathVFX;
+            EnergyProjectile.hitEffects.alwaysUseMidair = true;
+
+            var energyEffect = PrefabBuilder.BuildObject("GWNN_Energy");
+            DontDestroyOnLoad(energyEffect);
+
+            var spr = energyEffect.gameObject.AddComponent<tk2dTiledSprite>();
+            spr.SetSprite(StaticSpriteDefinitions.VFX_Sheet_Data, "gwnn_tether_001");
+            spr.dimensions = new Vector2(20, 20);
+            spr.SortingOrder = -200;
+            spr.HeightOffGround = 30000;
+            spr.ShouldDoTilt = false;
+            spr.IsPerpendicular = false;
+            spr._anchor = tk2dBaseSprite.Anchor.MiddleLeft;
+            spr.gameObject.layer = LayerMask.NameToLayer("FG_Nonsense");
+            spr.ignoresTiltworldDepth = true;
+            spr.renderer.sortingLayerName = "Foreground";
+            var anima = energyEffect.gameObject.AddComponent<tk2dSpriteAnimator>();
+            anima.library = StaticSpriteDefinitions.VFX_Animation_Data;
+            anima.playAutomatically = true;
+            anima.DefaultClipId = StaticSpriteDefinitions.VFX_Animation_Data.GetClipIdByName("energytether");
+
+
+
+
+
+
+            spr.usesOverrideMaterial = true;
+            var mat = new Material(ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTiltedCutoutEmissive"));
+            mat.mainTexture = spr.renderer.material.mainTexture;
+            mat.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+            mat.SetFloat("_EmissivePower", 20);
+            mat.SetFloat("_EmissiveColorPower", 32);
+            spr.renderer.material = mat;
+
+            //lightning.LinkVFXPrefab = energyEffect;
+            EnergyEffect = energyEffect;
+            ImprovedSynergySetup.Add("Power Line", new List<PickupObject>() { gun },
+                new List<PickupObject>()
+                {
+                    Items.Shock_Rounds,
+                    Items.Battery_Bullets,
+                    PickupObjectDatabase.GetById(PortablePylon.PortablePylonID),
+                    PickupObjectDatabase.GetById(SurgeGrenade.SurgeGrenadeID),
+                    PickupObjectDatabase.GetById(StormBringer.StormBringerID),
+                });
 
         }
-		public static Projectile Hitscan;
-		public static int ItemID;
+
+        public static Projectile EnergyProjectile;
+        public static GameObject EnergyEffect;
+
+        public static Projectile Hitscan;
+        public static int ItemID;
         public static Dictionary<PlayerController, List<GWNNSpawnedProjectile>> StoredGWNNs = new Dictionary<PlayerController, List<GWNNSpawnedProjectile>>();
         public static Vector3[] PositionsToTake = new Vector3[12]
-		{
+        {
             MathToolbox.GetUnitOnCircle3(60, 1.3125f),
             MathToolbox.GetUnitOnCircle3(120, 1.3125f),
             MathToolbox.GetUnitOnCircle3(180, 1.3125f),
@@ -972,5 +1370,29 @@ namespace Planetside
             MathToolbox.GetUnitOnCircle3(330, 1.4375f),
             MathToolbox.GetUnitOnCircle3(30, 1.4375f),
         };
-	}
+
+        private bool SynergyToggle = false;
+        public override void Update()
+        {
+            base.Update();
+            if (gun.CurrentOwner && gun.CurrentOwner is PlayerController player)
+            {
+                SynergyToggle = player.PlayerHasActiveSynergy("Power Line");
+                if (SynergyToggle == false)
+                {
+                    gun.DefaultModule.cooldownTime = 0.1f;
+                }
+                else
+                {
+                    gun.DefaultModule.cooldownTime = 0.333f;
+                }
+                return;
+            }
+            gun.DefaultModule.cooldownTime = 0.1f;
+        }
+    }
+
+
+
+
 }

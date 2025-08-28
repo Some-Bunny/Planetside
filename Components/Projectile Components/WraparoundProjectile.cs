@@ -12,7 +12,6 @@ namespace Planetside
     {
         private bool isIgnoringTillExit = false;
         private bool lastFrameCheck;
-        private bool cachedMovementType;
         public void Start()
         {
             this.projectile = base.GetComponent<Projectile>();

@@ -884,26 +884,13 @@ namespace Planetside
 					}
 					if (advancedAdvancedPrerequisiteType == AdvancedAdvancedPrerequisiteType.SPEEDRUNSHOP)
 					{
-						if (TimeTraderSpawnController.ShopAllowedToSpawn == true)
-						{
-							return true;
-						}
-						else
-						{
-							return false;
-						}
-					}
-					if (advancedAdvancedPrerequisiteType == AdvancedAdvancedPrerequisiteType.SPEEDRUNSHOPDISALLOWED)
+                        return AdvancedGameStatsManager.Instance.GetSessionStatValue(CustomTrackedStats.ALLOW_TRADER) == 1;
+
+                    }
+                    if (advancedAdvancedPrerequisiteType == AdvancedAdvancedPrerequisiteType.SPEEDRUNSHOPDISALLOWED)
 					{
-						if (TimeTraderSpawnController.ShopAllowedToSpawn == false)
-						{
-							return true;
-						}
-						else
-						{
-							return false;
-						}
-					}
+                        return AdvancedGameStatsManager.Instance.GetSessionStatValue(CustomTrackedStats.ALLOW_TRADER) == 0;
+                    }
 				}
 
 				else

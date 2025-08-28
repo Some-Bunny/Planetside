@@ -16,6 +16,7 @@ using System.Collections.ObjectModel;
 
 using UnityEngine.Serialization;
 using Brave.BulletScript;
+using HarmonyLib;
 
 namespace Planetside
 {
@@ -39,22 +40,64 @@ namespace Planetside
 		}
 		public static int GunslingersRingID;
 
-		public override void Update()
+        [HarmonyPatch(typeof(GameUIRoot), nameof(GameUIRoot.UpdateGunDataInternal))]
+        public class NopeOutVisibility
+        {
+            public const string ERROR = "[color #ff0000][ERROR]: WEAPON JAM[/color]";
+            static void Postfix(GameUIRoot __instance, PlayerController targetPlayer, GunInventory inventory, int inventoryShift, GameUIAmmoController targetAmmoController, int labelTarget)
+            {
+                bool HasActiveRing = (PassiveItem.ActiveFlagItems[targetPlayer].ContainsKey(typeof(GunslingersRing)));
+                if (HasActiveRing == false || targetPlayer.CurrentGun == null) { return; }
+
+				string currentHex = ColorUtility.ToHtmlStringRGBA(gunClassRGB[targetPlayer.CurrentGun.gunClass]);
+				string Text = gunClassDecsiptions[targetPlayer.CurrentGun.gunClass];
+                __instance.m_gunNameVisibilityTimers[labelTarget] -= __instance.m_deltaTime;
+                if (__instance.m_gunNameVisibilityTimers[labelTarget] > 1f)
+                {
+                    __instance.gunNameLabels[labelTarget].processMarkup = true;
+                    __instance.gunNameLabels[labelTarget].IsVisible = true;
+                    __instance.gunNameLabels[labelTarget].Opacity = 1f;
+                    __instance.gunNameLabels[labelTarget].Text = $"[color #{currentHex}]+{Text}+[/color]\n" + __instance.gunNameLabels[labelTarget].Text;
+
+                }
+                else if (__instance.m_gunNameVisibilityTimers[labelTarget] > 0f)
+                {
+                    __instance.gunNameLabels[labelTarget].processMarkup = true;
+                    __instance.gunNameLabels[labelTarget].IsVisible = true;
+                    __instance.gunNameLabels[labelTarget].Opacity = __instance.m_gunNameVisibilityTimers[labelTarget];
+                    __instance.gunNameLabels[labelTarget].Text = $"[color #{currentHex}]+{Text}+[/color]\n" + $"{__instance.gunNameLabels[labelTarget].Text}";
+
+                }
+                else
+                {
+                    __instance.gunNameLabels[labelTarget].processMarkup = true;
+                    __instance.gunNameLabels[labelTarget].IsVisible = true;
+                    __instance.gunNameLabels[labelTarget].Opacity = 1;
+                    __instance.gunNameLabels[labelTarget].Text = $"[color #{currentHex}]+{Text}+";
+                }
+            }
+        }
+
+
+
+        public override void Update()
         {
 			if (base.Owner != null)
             {
-				List<AIActor> activeEnemies = base.Owner.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
-				Vector2 centerPosition = base.Owner.CenterPosition;
-				if (activeEnemies != null && activeEnemies.Count > 0)
+				if (base.Owner.CurrentRoom != null)
 				{
-                    foreach (AIActor aiactor in activeEnemies)
+                    List<AIActor> activeEnemies = base.Owner.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
+                    Vector2 centerPosition = base.Owner.CenterPosition;
+                    if (activeEnemies != null && activeEnemies.Count > 0)
                     {
-                        if (gunClassCharm.ContainsKey(base.Owner.gameActor.CurrentGun.gunClass))
+                        foreach (AIActor aiactor in activeEnemies)
                         {
-                            bool flag = aiactor != null && aiactor.specRigidbody != null && Vector2.Distance(aiactor.CenterPosition, centerPosition) < 2.5f && aiactor.healthHaver.GetMaxHealth() > 0f && base.Owner != null;
-                            if (flag)
+                            if (gunClassCharm.ContainsKey(base.Owner.gameActor.CurrentGun.gunClass))
                             {
-                                aiactor.ApplyEffect(Gungeon.Game.Items["charming_rounds"].GetComponent<BulletStatusEffectItem>().CharmModifierEffect);
+                                if (aiactor != null && Vector2.Distance(aiactor.CenterPosition, centerPosition) < 4)
+                                {
+                                    aiactor.ApplyEffect(DebuffStatics.charmingRoundsEffect);
+                                }
                             }
                         }
                     }
@@ -70,7 +113,7 @@ namespace Planetside
                 {
 					AoEDamageComponent Values = sourceProjectile.gameObject.AddComponent<AoEDamageComponent>();
 					Values.DamageperDamageEvent = 1f;
-					Values.Radius = 2f;
+					Values.Radius = 2.5f;
 					Values.TimeBetweenDamageEvents = 0.25f;
 					Values.DealsDamage = false;
 					Values.AreaIncreasesWithProjectileSizeStat = true;
@@ -78,19 +121,19 @@ namespace Planetside
 
                     if (sourceProjectile.PossibleSourceGun.gunClass == GunClass.POISON)
                     {
-                        Values.debuffs.Add(DebuffStatics.irradiatedLeadEffect, 0.2f);
+                        Values.debuffs.Add(DebuffStatics.irradiatedLeadEffect, 0.333f);
                     }
                     if (sourceProjectile.PossibleSourceGun.gunClass == GunClass.FIRE)
                     {
-                        Values.debuffs.Add(DebuffStatics.hotLeadEffect, 0.2f);
+                        Values.debuffs.Add(DebuffStatics.hotLeadEffect, 0.333f);
                     }
                     if (sourceProjectile.PossibleSourceGun.gunClass == GunClass.CHARM)
                     {
-                        Values.debuffs.Add(DebuffStatics.charmingRoundsEffect, 0.2f);
+                        Values.debuffs.Add(DebuffStatics.charmingRoundsEffect, 0.333f);
                     }
                     if (sourceProjectile.PossibleSourceGun.gunClass == GunClass.ICE)
                     {
-                        Values.debuffs.Add(DebuffStatics.frostBulletsEffect, 0.5f);
+                        Values.debuffs.Add(DebuffStatics.frostBulletsEffect, 1);
                     }
                 }
             }
@@ -136,6 +179,7 @@ namespace Planetside
 		}
 		public override DebrisObject Drop(PlayerController player)
 		{
+			PassiveItem.DecrementFlag(player, typeof(GunslingersRing));
 			player.GunChanged -= this.OnGunChanged;
 			player.PostProcessProjectile -= this.PostProcessProjectile;
 			this.RemoveStat(LastStoredStat);
@@ -148,7 +192,8 @@ namespace Planetside
 		}
 		public override void Pickup(PlayerController player)
 		{
-			player.PostProcessProjectile += this.PostProcessProjectile;
+            PassiveItem.IncrementFlag(player, typeof(GunslingersRing));
+            player.PostProcessProjectile += this.PostProcessProjectile;
 			player.GunChanged += this.OnGunChanged;
 			base.Pickup(player);
 		}
@@ -156,7 +201,8 @@ namespace Planetside
 		{
 			if (base.Owner != null)
             {
-				base.Owner.GunChanged -= this.OnGunChanged;
+                PassiveItem.DecrementFlag(base.Owner, typeof(GunslingersRing));
+                base.Owner.GunChanged -= this.OnGunChanged;
 				base.Owner.PostProcessProjectile -= this.PostProcessProjectile;
 				this.RemoveStat(LastStoredStat);
 				if (LastStoredImmunity != null)
@@ -239,13 +285,13 @@ namespace Planetside
 			}
 		}
 
-		private Dictionary<GunClass, Dictionary<PlayerStats.StatType, float>> gunClassStats = new Dictionary<GunClass, Dictionary<PlayerStats.StatType, float>>()
+		private static Dictionary<GunClass, Dictionary<PlayerStats.StatType, float>> gunClassStats = new Dictionary<GunClass, Dictionary<PlayerStats.StatType, float>>()
 		{
 			{GunClass.BEAM, new Dictionary<PlayerStats.StatType, float>{{ PlayerStats.StatType.PlayerBulletScale, 2f}}},
-			{GunClass.CHARGE, new Dictionary<PlayerStats.StatType, float>{{ PlayerStats.StatType.ChargeAmountMultiplier, 1.33f}}},			
+			{GunClass.CHARGE, new Dictionary<PlayerStats.StatType, float>{{ PlayerStats.StatType.ChargeAmountMultiplier, 1.5f}}},			
 			{GunClass.RIFLE, new Dictionary<PlayerStats.StatType, float>{{ PlayerStats.StatType.AdditionalClipCapacityMultiplier, 1.5f}}},
 			{GunClass.FULLAUTO, new Dictionary<PlayerStats.StatType, float>{{ PlayerStats.StatType.RateOfFire, 1.2f}}},
-			{GunClass.NONE, new Dictionary<PlayerStats.StatType, float>{{ PlayerStats.StatType.Damage, 1.15f}}},
+			{GunClass.NONE, new Dictionary<PlayerStats.StatType, float>{{ PlayerStats.StatType.Damage, 1.2f}}},
 			{GunClass.PISTOL, new Dictionary<PlayerStats.StatType, float>{{ PlayerStats.StatType.ReloadSpeed, 0.66f}}},
 			{GunClass.SHITTY, new Dictionary<PlayerStats.StatType, float>{{ PlayerStats.StatType.MoneyMultiplierFromEnemies, 1.15f}}},
 			{GunClass.SHOTGUN, new Dictionary<PlayerStats.StatType, float>{{ PlayerStats.StatType.Accuracy, 0.66f}}},
@@ -253,7 +299,7 @@ namespace Planetside
             {GunClass.ICE, new Dictionary<PlayerStats.StatType, float>{{ PlayerStats.StatType.Coolness, 2f}}},
         };
 
-		private Dictionary<GunClass, Color> gunClassRGB = new Dictionary<GunClass, Color>()
+		private static Dictionary<GunClass, Color> gunClassRGB = new Dictionary<GunClass, Color>()
 		{
 			{GunClass.BEAM, Color.blue},//DONE
 			{GunClass.CHARM, new Color(1, 0.2f, 1f)},//DONE
@@ -270,20 +316,39 @@ namespace Planetside
 			{GunClass.SHOTGUN, new Color(0.3f, 0.4f, 0.1f)},//DONE
 			{GunClass.SILLY, new Color(0.6f, 0.02f, 0.6f)},//DONE
         };
-        private Dictionary<GunClass, CoreDamageTypes> gunClassDebuffs = new Dictionary<GunClass, CoreDamageTypes>()
+        private static Dictionary<GunClass, CoreDamageTypes> gunClassDebuffs = new Dictionary<GunClass, CoreDamageTypes>()
         {
 			{GunClass.FIRE, CoreDamageTypes.Fire},
 			{GunClass.POISON, CoreDamageTypes.Poison },
 		};
-		private Dictionary<GunClass, float> gunClassExplo = new Dictionary<GunClass, float>()
+        private static Dictionary<GunClass, float> gunClassExplo = new Dictionary<GunClass, float>()
 		{
 			{GunClass.EXPLOSIVE, 0.1f},
 		};
-		private Dictionary<GunClass, float> gunClassCharm = new Dictionary<GunClass, float>()
+        private static Dictionary<GunClass, float> gunClassCharm = new Dictionary<GunClass, float>()
 		{
 			{GunClass.CHARM, 2.5f},
 		};
-		private PlayerStats.StatType LastStoredStat;
+
+        private static Dictionary<GunClass, string> gunClassDecsiptions = new Dictionary<GunClass, string>()
+        {
+            {GunClass.BEAM, "SIZE"},
+			{GunClass.CHARM, "LOVE"},
+			{GunClass.CHARGE, "CHARGE"},	
+			{GunClass.EXPLOSIVE, "BLAST RESIST"},
+            {GunClass.RIFLE, "CLIP"},
+			{GunClass.FIRE, "FIRE"},
+			{GunClass.FULLAUTO, "FIRERATE"},
+			{GunClass.ICE, "FREEZE" },
+            {GunClass.NONE, "DAMAGE"},
+			{GunClass.PISTOL, "RELOAD"},
+			{GunClass.POISON,"POISON"},
+			{GunClass.SHITTY, "MONEY"},
+			{GunClass.SHOTGUN, "ACCURACY"},
+			{GunClass.SILLY, "BOUNCE"},
+        };
+
+        private PlayerStats.StatType LastStoredStat;
 		private DamageTypeModifier LastStoredImmunity;
 	}
 }

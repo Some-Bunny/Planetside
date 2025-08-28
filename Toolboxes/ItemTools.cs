@@ -10,7 +10,41 @@ namespace Planetside
 {
 	public static class ItemTools
 	{
-		public static void Init()
+        public static PlayerItem GetRandomActiveOfQualities(System.Random usedRandom, List<int> excludedIDs, params PickupObject.ItemQuality[] qualities)
+        {
+            List<PlayerItem> list = new List<PlayerItem>();
+            for (int i = 0; i < PickupObjectDatabase.Instance.Objects.Count; i++)
+            {
+                if (PickupObjectDatabase.Instance.Objects[i] != null && PickupObjectDatabase.Instance.Objects[i] is PlayerItem)
+                {
+                    if (PickupObjectDatabase.Instance.Objects[i].quality != PickupObject.ItemQuality.EXCLUDED && PickupObjectDatabase.Instance.Objects[i].quality != PickupObject.ItemQuality.SPECIAL)
+                    {
+                        if (!(PickupObjectDatabase.Instance.Objects[i] is ContentTeaserItem))
+                        {
+                            if (Array.IndexOf<PickupObject.ItemQuality>(qualities, PickupObjectDatabase.Instance.Objects[i].quality) != -1)
+                            {
+                                if (!excludedIDs.Contains(PickupObjectDatabase.Instance.Objects[i].PickupObjectId))
+                                {
+                                    EncounterTrackable component = PickupObjectDatabase.Instance.Objects[i].GetComponent<EncounterTrackable>();
+                                    if (component && component.PrerequisitesMet())
+                                    {
+                                        list.Add(PickupObjectDatabase.Instance.Objects[i] as PlayerItem);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            int num = usedRandom.Next(list.Count);
+            if (num < 0 || num >= list.Count)
+            {
+                return null;
+            }
+            return list[num];
+        }
+
+        public static void Init()
 		{
 			AssetBundle assetBundle = ResourceManager.LoadAssetBundle("shared_auto_001");
 			string text = "assets/data/goops/water goop.asset";

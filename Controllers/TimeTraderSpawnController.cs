@@ -14,6 +14,7 @@ using MonoMod.RuntimeDetour;
 using MonoMod;
 using System.Collections.ObjectModel;
 using GungeonAPI;
+using SaveAPI;
 
 namespace Planetside
 {
@@ -25,7 +26,6 @@ namespace Planetside
             try
             {
                 TimeToBeat = 0;
-                ShopAllowedToSpawn = false;
                 new Hook(
                 typeof(RoomHandler).GetMethod("HandleBossClearReward", BindingFlags.Instance | BindingFlags.NonPublic),
                 typeof(TimeTraderSpawnController).GetMethod("HandleBossClearRewardHook", BindingFlags.Static | BindingFlags.Public));
@@ -80,23 +80,28 @@ namespace Planetside
 
         private void ResetFloorSpecificData()
         {
-            ShopAllowedToSpawn = false;
             if (GameStatsManager.Instance.IsInSession == true)
             {
                 TimeToBeat = GameStatsManager.Instance.GetSessionStatValue(TrackedStats.TIME_PLAYED) + (195 + (FloorMultiplier(GameManager.Instance.Dungeon)));
                 Debug.Log("Player must beat boss under time time: " + TimeToBeat + " for shop to spawn!");
             }
+            AdvancedGameStatsManager.Instance.SetStat(CustomTrackedStats.ALLOW_TRADER, 0);
         }
         public static void HandleBossClearRewardHook(Action<RoomHandler> orig, RoomHandler self)
         {
             orig(self);
-            if (GameStatsManager.Instance.GetSessionStatValue(TrackedStats.TIME_PLAYED) < TimeToBeat) { ShopAllowedToSpawn = true; Debug.Log("Shop allowed to spawn on next possible floor!");}
-            else { ShopAllowedToSpawn = false; Debug.Log("Shop not allowed to spawn on next possible floor!"); }
+            if (AdvancedGameStatsManager.Instance.GetSessionStatValue(CustomTrackedStats.ALLOW_TRADER) == 1) { return; }
+            if (GameStatsManager.Instance.GetSessionStatValue(TrackedStats.TIME_PLAYED) < TimeToBeat) 
+            {
+                AdvancedGameStatsManager.Instance.SetStat(CustomTrackedStats.ALLOW_TRADER, 1);
+                Debug.Log("Shop allowed to spawn on next possible floor!");
+                return;
+            }
+            AdvancedGameStatsManager.Instance.SetStat(CustomTrackedStats.ALLOW_TRADER, 0);
+            Debug.Log("Shop not allowed to spawn on next possible floor!");
         }
 
         
-
         private static float TimeToBeat;
-        public static bool ShopAllowedToSpawn;
     }
 }

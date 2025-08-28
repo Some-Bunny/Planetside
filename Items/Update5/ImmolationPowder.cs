@@ -180,10 +180,6 @@ namespace Planetside
             Destroy(vfx, 1);
             
         }
-
-
-
-
     }
 }
 

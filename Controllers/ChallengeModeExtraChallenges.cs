@@ -82,7 +82,7 @@ namespace Planetside
 
         public override bool IsValid(RoomHandler room)
         {          
-            return room.GetActiveEnemiesCount(RoomHandler.ActiveEnemyType.All) < 2 ? false : true;
+            return room.GetActiveEnemiesCount(RoomHandler.ActiveEnemyType.RoomClear) > 2;
         }
     }
     public class BulletStormChallengeModifier : ChallengeModifier
@@ -128,7 +128,7 @@ namespace Planetside
 
         public override bool IsValid(RoomHandler room)
         {
-            return room.GetActiveEnemiesCount(RoomHandler.ActiveEnemyType.All) < 2 ? false : true;
+            return room.GetActiveEnemiesCount(RoomHandler.ActiveEnemyType.RoomClear) > 2;
         }
         private float elapsed;
         public BulletStormChallengeModifier bulletStormChallengeModifier;

@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 980329394
+CRC: 382850572
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: f525b5256f5c773c9287c66c930979cd
+    Hash: e4450fdfe0cffc1ee73d31237f3c49e4
   TypeTreeHash:
     serializedVersion: 2
     Hash: 458548b0fa917ebe1d600c5fabf7780a
@@ -97,6 +97,7 @@ Assets:
 - Assets/Enemies/Barretina/BarretinaCollection Data/barretina material.mat
 - Assets/Bosses/Ophanaim/OphanaimCollection Data/ophanaim material.mat
 - Assets/Enemies/Shamber/ShamberCollection Data/shamber material.mat
+- Assets/RoomObjects/DeepTeleporterAnimation.prefab
 - Assets/Enemies/Fodder/fodder_die_009.png
 - Assets/Enemies/Fodder/fodder_die_010.png
 - Assets/VFX/Effects/VFXCollection Data/VFXCollection.prefab

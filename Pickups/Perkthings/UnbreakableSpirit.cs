@@ -247,8 +247,10 @@ namespace Planetside
             }
             if (Owner.ForceZeroHealthState)
             {
-                if (modifyDamageEvent.InitialDamage >= healthHaver.currentArmor)
+                if (healthHaver.Armor == 1)
                 {
+                    modifyDamageEvent.ModifiedDamage = 0;
+                    modifyDamageEvent.InitialDamage = 0;
                     SaveLife();
                 }
                 return;
@@ -272,7 +274,9 @@ namespace Planetside
         {
             AmountOfRespawns--;
             if (_Owner.ForceZeroHealthState == true)
-            { _Owner.healthHaver.Armor = 4; }
+            { 
+                _Owner.healthHaver.Armor = 4; 
+            }
             else
             {
                 _Owner.healthHaver.currentHealth = Mathf.Min(3, _Owner.healthHaver.AdjustedMaxHealth);

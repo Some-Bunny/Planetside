@@ -60,41 +60,7 @@ namespace Planetside
 				projectile.hitEffects.enemy = ObjectMakers.MakeObjectIntoVFX((PickupObjectDatabase.GetById(53) as Gun).DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX);
 				projectile.hitEffects.deathAny = ObjectMakers.MakeObjectIntoVFX((PickupObjectDatabase.GetById(53) as Gun).DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX);
 				projectile.hitEffects.CenterDeathVFXOnProjectile = false;
-                /*
-				List<string> BeamAnimPaths = new List<string>()
-				{
-				"Planetside/Resources2/ProjectileTrails/Petrifier/petrifiermid_001",
-				"Planetside/Resources2/ProjectileTrails/Petrifier/petrifiermid_002",
-				"Planetside/Resources2/ProjectileTrails/Petrifier/petrifiermid_003",
-				"Planetside/Resources2/ProjectileTrails/Petrifier/petrifiermid_004",
-				"Planetside/Resources2/ProjectileTrails/Petrifier/petrifiermid_005",
-				"Planetside/Resources2/ProjectileTrails/Petrifier/petrifiermid_006",
-				"Planetside/Resources2/ProjectileTrails/Petrifier/petrifiermid_007",
 
-				};
-				List<string> ImpactAnimPaths = new List<string>()
-				{
-				"Planetside/Resources2/ProjectileTrails/Petrifier/petrifierend_001",
-				"Planetside/Resources2/ProjectileTrails/Petrifier/petrifierend_002",
-				"Planetside/Resources2/ProjectileTrails/Petrifier/petrifierend_003",
-				"Planetside/Resources2/ProjectileTrails/Petrifier/petrifierend_004",
-				"Planetside/Resources2/ProjectileTrails/Petrifier/petrifierend_005",
-				"Planetside/Resources2/ProjectileTrails/Petrifier/petrifierend_006",
-				"Planetside/Resources2/ProjectileTrails/Petrifier/petrifierend_007",
-				};
-
-				projectile.AddTrailToProjectile(
-				"Planetside/Resources2/ProjectileTrails/Petrifier/petrifiermid_001",
-				new Vector2(7, 3),
-				new Vector2(0, 2),
-				BeamAnimPaths, 30,
-				ImpactAnimPaths, 30,
-				0.1f,
-				30,
-				30,
-				true
-				);
-				*/
 
                 projectile.AddTrailToProjectileBundle(StaticSpriteDefinitions.Beam_Sheet_Data, "petrifierstart_001",
 				StaticSpriteDefinitions.Beam_Animation_Data,
@@ -128,20 +94,7 @@ namespace Planetside
                 AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(0, 0), Length),
                 AnimateBullet.ConstructListOfSameValues<Projectile>(null, Length));
 
-                /*
-				projectile.AnimateProjectile(new List<string> {
-				"hotrod1",
-				"hotrod2",
-				"hotrod3",
-				"hotrod4",
-				}, 7, true, new List<IntVector2> {
-				new IntVector2(12, 4),
-				new IntVector2(12, 4),
-				new IntVector2(12, 4),
-				new IntVector2(12, 4)
 
-				}, AnimateBullet.ConstructListOfSameValues(false, 7), AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.MiddleCenter, 7), AnimateBullet.ConstructListOfSameValues(true, 7), AnimateBullet.ConstructListOfSameValues(false, 7), AnimateBullet.ConstructListOfSameValues<Vector3?>(null, 7), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 7), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 7), AnimateBullet.ConstructListOfSameValues<Projectile>(null, 7));
-				*/
                 projectile.gameObject.SetActive(false);
 				projectileModule.projectiles[0] = projectile;
 				projectile.baseData.damage = 18f;

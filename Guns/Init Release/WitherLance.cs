@@ -14,6 +14,8 @@ using MonoMod.RuntimeDetour;
 using MonoMod;
 using HutongGames.PlayMaker.Actions;
 using Alexandria.Assetbundle;
+using Planetside.Toolboxes;
+using HarmonyLib;
 
 namespace Planetside
 {
@@ -74,7 +76,7 @@ namespace Planetside
 
             RedStar = AddProjectile("spark_red_idle", 5f, 7f, new Color(255, 10, 10), WitherLanceProjectile.Types.BLAST, 125, 1, 2, 6);
             ExplosiveModifier explosiveModifier = RedStar.gameObject.GetOrAddComponent<ExplosiveModifier>();
-            explosiveModifier.explosionData = new ExplosionData()
+            RedStarData = new ExplosionData()
             {
                 breakSecretWalls = false,
                 comprehensiveDelay = 0,
@@ -88,7 +90,7 @@ namespace Planetside
                 doForce = true,
                 doScreenShake = false,
                 doStickyFriction = false,
-                effect = (PickupObjectDatabase.GetById(328) as Gun).DefaultModule.chargeProjectiles[0].Projectile.hitEffects.overrideMidairDeathVFX,
+                effect = Guns.Charge_Shot.DefaultModule.chargeProjectiles[0].Projectile.hitEffects.overrideMidairDeathVFX,
                 explosionDelay = 0,
                 force = 2,
                 forcePreventSecretWallDamage = false,
@@ -101,8 +103,9 @@ namespace Planetside
                 preventPlayerForce = false,
                 pushRadius = 1,
                 secretWallsRadius = 1,
-
+                ignoreList = new List<SpeculativeRigidbody>() { }
             };
+            explosiveModifier.explosionData = RedStarData;
             explosiveModifier.doExplosion = true;
             explosiveModifier.IgnoreQueues = true;
 
@@ -147,6 +150,10 @@ namespace Planetside
             CustomSynergies.Add("Cry Of The Sun", mandatoryConsoleIDs, BlessedSynergy, false);
             new Hook(typeof(HammerOfDawnController).GetMethod("ApplyBeamTickToEnemiesInRadius", BindingFlags.Instance | BindingFlags.NonPublic), typeof(WitherLance).GetMethod("ApplyBeamTickToEnemiesInRadiusHook"));
 
+            ImprovedSynergySetup.Add("Starsign",
+            new List<PickupObject> { gun, Guns.Crescent_Crossbow }, null, true);
+            var mod = Guns.Crescent_Crossbow.gameObject.AddComponent<CrescentModifier>();
+            mod.self = Guns.Crescent_Crossbow;
         }
         public static void ApplyBeamTickToEnemiesInRadiusHook(Action<HammerOfDawnController> orig, HammerOfDawnController self)
         {
@@ -180,59 +187,70 @@ namespace Planetside
             }
         }
 
-
         public static Projectile RedStar;
-
-		private static Projectile AddProjectile(string animationName, float Damage, float Speed, Color color, WitherLanceProjectile.Types type, int GunHitEffect, float AdditionalDamage = 1, float SpeedMinimum = 2, float SpeedMaximum = 4)
+        public static List<Projectile> AllStars = new List<Projectile>();
+        public static ExplosionData RedStarData;
+        private static Projectile AddProjectile(string animationName, float Damage, float Speed, Color color, WitherLanceProjectile.Types type, int GunHitEffect, float AdditionalDamage = 1, float SpeedMinimum = 2, float SpeedMaximum = 4)
 		{
-            Projectile projectile = UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(56) as Gun).DefaultModule.projectiles[0]);
-            projectile.gameObject.SetActive(false);
-            FakePrefab.MarkAsFakePrefab(projectile.gameObject);
-            UnityEngine.Object.DontDestroyOnLoad(projectile);
+            Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(Guns.Marine_Sidearm.DefaultModule.projectiles[0]);
+            
 
-            projectile.baseData.damage = Damage;
-            projectile.baseData.speed = Speed;
-            projectile.baseData.range = 125;
 
-            projectile.shouldRotate = false;
-            projectile.pierceMinorBreakables = true;
-            projectile.HasDefaultTint = true;
             var ef = projectile.gameObject.AddComponent<WitherLanceProjectile>();
+            ef.baseData = new ProjectileData();
+            ef.hitEffects = new ProjectileImpactVFXPool();
+            ef.baseData.CopyFrom<ProjectileData>(projectile.baseData);
+            ef.CopyFrom<Projectile>(projectile);
+            ef.hitEffects.CopyFrom<ProjectileImpactVFXPool>(projectile.hitEffects);
+
+            Destroy(projectile);
+
+            ef.gameObject.SetActive(false);
+            FakePrefab.MarkAsFakePrefab(ef.gameObject);
+            UnityEngine.Object.DontDestroyOnLoad(ef);
+
+            ef.baseData.damage = Damage;
+            ef.baseData.speed = Speed;
+            ef.baseData.range = 125;
+
+            ef.shouldRotate = false;
+            ef.pierceMinorBreakables = true;
+            ef.HasDefaultTint = true;
             ef.ownType = type;
             ef.AdditionalDamage = AdditionalDamage;
 			ef.SpeedMinimum = SpeedMinimum;
             ef.SpeedMaximum = SpeedMaximum;
-            projectile.shouldRotate = false;
+            ef.shouldRotate = false;
 
-            projectile.baseData.UsesCustomAccelerationCurve = true;
-            projectile.baseData.AccelerationCurve = AnimationCurve.Linear(0, 1, 0.6f, 0.1f);
+            ef.baseData.UsesCustomAccelerationCurve = true;
+            ef.baseData.AccelerationCurve = AnimationCurve.Linear(0, 1, 0.6f, 0.1f);
 
-            Alexandria.Assetbundle.ProjectileBuilders.AnimateProjectileBundle(projectile, animationName, StaticSpriteDefinitions.Projectile_Sheet_Data, StaticSpriteDefinitions.Projectile_Animation_Data, animationName,
+            Alexandria.Assetbundle.ProjectileBuilders.AnimateProjectileBundle(ef, animationName, StaticSpriteDefinitions.Projectile_Sheet_Data, StaticSpriteDefinitions.Projectile_Animation_Data, animationName,
 			new List<IntVector2>() { new IntVector2(7, 7), new IntVector2(7, 7), new IntVector2(7, 7), new IntVector2(7, 7), new IntVector2(7, 7) },
 			AnimateBullet.ConstructListOfSameValues(true, 5), AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.LowerLeft, 5), AnimateBullet.ConstructListOfSameValues(true, 5), AnimateBullet.ConstructListOfSameValues(false, 5),
 			AnimateBullet.ConstructListOfSameValues<Vector3?>(null, 5), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 5), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 5), AnimateBullet.ConstructListOfSameValues<Projectile>(null, 5));
 
 
-            projectile.objectImpactEventName = (PickupObjectDatabase.GetById(61) as Gun).DefaultModule.projectiles[0].objectImpactEventName;
-            projectile.enemyImpactEventName = (PickupObjectDatabase.GetById(61) as Gun).DefaultModule.projectiles[0].enemyImpactEventName;
-            
+            ef.objectImpactEventName = (PickupObjectDatabase.GetById(61) as Gun).DefaultModule.projectiles[0].objectImpactEventName;
+            ef.enemyImpactEventName = (PickupObjectDatabase.GetById(61) as Gun).DefaultModule.projectiles[0].enemyImpactEventName;
 
-            projectile.hitEffects.tileMapHorizontal = ObjectMakers.MakeObjectIntoVFX((PickupObjectDatabase.GetById(GunHitEffect) as Gun).DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX);
-            projectile.hitEffects.tileMapVertical = ObjectMakers.MakeObjectIntoVFX((PickupObjectDatabase.GetById(GunHitEffect) as Gun).DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX);
-            projectile.hitEffects.enemy = ObjectMakers.MakeObjectIntoVFX((PickupObjectDatabase.GetById(GunHitEffect) as Gun).DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX);
-            projectile.hitEffects.deathAny = ObjectMakers.MakeObjectIntoVFX((PickupObjectDatabase.GetById(GunHitEffect) as Gun).DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX);
 
-            HomingModifier HomingMod = projectile.gameObject.GetOrAddComponent<HomingModifier>();
+            ef.hitEffects.tileMapHorizontal = ObjectMakers.MakeObjectIntoVFX((PickupObjectDatabase.GetById(GunHitEffect) as Gun).DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX);
+            ef.hitEffects.tileMapVertical = ObjectMakers.MakeObjectIntoVFX((PickupObjectDatabase.GetById(GunHitEffect) as Gun).DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX);
+            ef.hitEffects.enemy = ObjectMakers.MakeObjectIntoVFX((PickupObjectDatabase.GetById(GunHitEffect) as Gun).DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX);
+            ef.hitEffects.deathAny = ObjectMakers.MakeObjectIntoVFX((PickupObjectDatabase.GetById(GunHitEffect) as Gun).DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX);
+
+            HomingModifier HomingMod = ef.gameObject.GetOrAddComponent<HomingModifier>();
             HomingMod.AngularVelocity = 240;
             HomingMod.HomingRadius = 10;
 
-            PierceProjModifier spook = projectile.gameObject.AddComponent<PierceProjModifier>();
+            PierceProjModifier spook = ef.gameObject.AddComponent<PierceProjModifier>();
             spook.penetration = 3;
             spook.penetratesBreakables = true;
 
-            var tro = projectile.gameObject.AddChild("trail object");
-            tro.transform.position = projectile.sprite.WorldCenter + new Vector2(0, -0.0625f);
-            tro.transform.localPosition = projectile.sprite.WorldCenter + new Vector2(0, -0.0625f);
+            var tro = ef.gameObject.AddChild("trail object");
+            tro.transform.position = ef.sprite.WorldCenter;
+            tro.transform.localPosition = ef.sprite.WorldCenter;
 
             TrailRenderer tr = tro.AddComponent<TrailRenderer>();
             tr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
@@ -245,20 +263,100 @@ namespace Planetside
             //======
             mat.SetColor("_Color", color * 0.7f);
             tr.startColor = Color.white;
-            tr.endColor = color * 0.7f;
+            tr.endColor = (color * 0.4f).WithAlpha(0.4f);
             //======
             tr.time = 0.1f;
             //======
-            tr.startWidth = 0.25f;
+            tr.startWidth = 0.2125f;
             tr.endWidth = 0f;
             tr.autodestruct = false;
 
-            var rend = projectile.gameObject.AddComponent<ProjectileTrailRendererController>();
+            var rend = ef.gameObject.AddComponent<ProjectileTrailRendererController>();
             rend.trailRenderer = tr;
             rend.desiredLength = 0.625f;
+            AllStars.Add(ef);
 
-            return projectile;
+            return ef;
         }
 		public static int WitherLanceID;
-	}
+
+
+        public class CrescentModifier : BraveBehaviour
+        {
+            public Gun self;
+
+            public void Start()
+            {
+                self.PostProcessProjectile += PPP;
+            }
+
+            public void PPP(Projectile projectile)
+            {
+                if (projectile.Owner != null && projectile.Owner is PlayerController player && player.PlayerHasActiveSynergy("Starsign"))
+                {
+                    var s = projectile.GetComponent<SpawnProjModifier>();
+                    if (s != null)
+                    {
+                        s.UsesMultipleCollisionSpawnProjectiles = true;
+                        s.PostprocessSpawnedProjectiles = true;
+                        s.collisionSpawnProjectiles = AllStars.ToArray();
+                    }
+                    int V = UnityEngine.Random.Range(0, 5);
+                    switch (V)
+                    {
+                        case 0:
+                            projectile.AdjustPlayerProjectileTint(Color.blue, 10);
+                            projectile.baseData.damage *= 1.3f;
+                            projectile.baseData.speed *= 0.7f;
+                            projectile.UpdateSpeed();
+                            break;
+                        case 1:
+                            projectile.AdjustPlayerProjectileTint(Color.green, 10);
+                            WraparoundProjectile wrap = projectile.gameObject.GetOrAddComponent<WraparoundProjectile>();
+                            wrap.Cap += 1;
+                            wrap.OnWrappedAround = (proj, pos1, pos2) =>
+                            {
+                                var h = Instantiate((PickupObjectDatabase.GetById(504) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapHorizontal.effects.First().effects.First().effect, pos1, Quaternion.identity);
+                                var h2 = Instantiate((PickupObjectDatabase.GetById(504) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapHorizontal.effects.First().effects.First().effect, pos1, Quaternion.identity);
+                                Destroy(h, 2);
+                                Destroy(h2, 2);
+                            };
+                            break;
+                        case 2:
+                            projectile.AdjustPlayerProjectileTint(Color.yellow, 10);
+                            projectile.baseData.speed *= 2f;
+                            projectile.UpdateSpeed();
+                            projectile.baseData.damage *= 0.85f;
+                            var pierce = projectile.GetOrAddComponent<PierceProjModifier>();
+                            pierce.penetration += 5;
+                            var modifier = projectile.GetOrAddComponent<HomingModifier>();
+                            modifier.AngularVelocity += 240;
+                            modifier.HomingRadius += 10;
+
+                            break;
+                        case 3:
+                            projectile.AdjustPlayerProjectileTint(Color.red, 10);
+                            projectile.baseData.speed *= 0.85f;
+                            projectile.UpdateSpeed();
+                            projectile.baseData.damage *= 1.2f;
+                            ExplosiveModifier explosiveModifier = projectile.gameObject.GetOrAddComponent<ExplosiveModifier>();
+                            explosiveModifier.explosionData = RedStarData;
+                            explosiveModifier.explosionData.ignoreList = new List<SpeculativeRigidbody>();
+                            explosiveModifier.doExplosion = true;
+                            explosiveModifier.IgnoreQueues = true;
+                            break;
+                        case 4:
+                            projectile.AdjustPlayerProjectileTint(Color.magenta, 10);
+                            projectile.PenetratesInternalWalls = true;
+                            projectile.BlackPhantomDamageMultiplier *= 1.5f;
+                            projectile.BossDamageMultiplier *= 1.2f;
+                            break;
+                    }
+                }
+            }
+        }
+
+
+
+    }
 }

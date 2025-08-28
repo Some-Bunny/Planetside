@@ -46,7 +46,6 @@ namespace Planetside
 			if (!arg2.aiActor.healthHaver.IsDead)
 			{
 				PlayerController player = arg1.PossibleSourceGun.CurrentOwner as PlayerController;
-                //UnityEngine.Object.Instantiate<GameObject>(PickupObjectDatabase.GetById(449).GetComponent<TeleporterPrototypeItem>().TelefragVFXPrefab, arg2.specRigidbody.UnitCenter, Quaternion.identity);		
                 var effect = UnityEngine.Object.Instantiate<GameObject>(StaticVFXStorage.TeleportTelefragVFX, arg2.specRigidbody.UnitCenter, Quaternion.identity);
                 Destroy(effect, 3);
 

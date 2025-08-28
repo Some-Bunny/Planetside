@@ -18,7 +18,7 @@ using UnityEngine.Serialization;
 
 namespace Planetside
 {
-	public class WitherLanceProjectile : MonoBehaviour
+	public class WitherLanceProjectile : Projectile
 	{
 
         public enum Types
@@ -32,22 +32,11 @@ namespace Planetside
 
         public Types ownType;
 
-		public WitherLanceProjectile()
-		{
-		}
-        public void Start()
+        public override void Start()
         {
-            this.projectile = base.GetComponent<Projectile>();
-            if (this.projectile)
-			{
-				this.projectile.baseData.speed *= UnityEngine.Random.Range(0.7f, 1.7f);
-
-				//this.projectile.collidesWithProjectiles = true;
-				//this.projectile.collidesOnlyWithPlayerProjectiles = true;
-                //this.projectile.UpdateCollisionMask();
-                this.projectile.StartCoroutine(Wait());
-                //this.projectile.specRigidbody.OnPreRigidbodyCollision += HandlePreCollision;
-            }
+            base.Start();
+            this.baseData.speed *= UnityEngine.Random.Range(0.7f, 1.7f);
+            this.StartCoroutine(Wait());
         }
 
         public float AdditionalDamage = 1;
@@ -71,8 +60,9 @@ namespace Planetside
             yield break;
         }
 
-        public void OnDestroy()
+        public override void OnDestroy()
         {
+            base.OnDestroy();
             if (this.gameObject)
             {
                 var transform = this.gameObject.transform.Find("trail object");
@@ -86,44 +76,51 @@ namespace Planetside
 
         private bool Detached = false;
 
-        public void Update()
+        public override void Update()
         {
+            base.Update();
             if (Active == true)
             {
                 if (SpecialProjectile == null && Detached == false)
                 {
                     Detached = true;
-                    projectile.OverrideMotionModule = null;
+                    this.OverrideMotionModule = null;
 
-                    var self = projectile;
+                    bool Upgrade = (projectile.Owner != null && projectile.Owner is PlayerController player && player.PlayerHasActiveSynergy("Starsign"));
+
                     switch (ownType)
                     {
                         case WitherLanceProjectile.Types.BLAST:
-                            self.baseData.damage *= 1.2f;
-                            self.damageTypes = CoreDamageTypes.Fire;
+                            this.baseData.damage *= Upgrade ? 1.4f : 1.2f;
+                            this.damageTypes = CoreDamageTypes.Fire;
+                            var k = this.GetComponent<ExplosiveModifier>();
+                            if (k != null)
+                            {
+                                k.explosionData.ignoreList = new List<SpeculativeRigidbody>();
+                            }
                             return;
                         case WitherLanceProjectile.Types.FAST:
-                            HomingModifier HomingMod = self.gameObject.GetOrAddComponent<HomingModifier>();
+                            HomingModifier HomingMod = this.gameObject.GetOrAddComponent<HomingModifier>();
                             HomingMod.AngularVelocity += 120;
-                            HomingMod.HomingRadius += 3;
-                            PierceProjModifier spook = self.gameObject.GetOrAddComponent<PierceProjModifier>();
-                            spook.penetration += 2;
+                            HomingMod.HomingRadius += Upgrade ? 6 : 3;
+                            PierceProjModifier spook = this.gameObject.GetOrAddComponent<PierceProjModifier>();
+                            spook.penetration += Upgrade ? 5 : 2;
                             spook.penetratesBreakables = true;
                             return;
                         case WitherLanceProjectile.Types.NORMAL:
-                            self.baseData.range += 5;
-                            BounceProjModifier BounceProjMod = self.gameObject.GetOrAddComponent<BounceProjModifier>();
+                            this.baseData.range += Upgrade ? 12 : 5;
+                            BounceProjModifier BounceProjMod = this.gameObject.GetOrAddComponent<BounceProjModifier>();
                             BounceProjMod.bouncesTrackEnemies = false;
-                            BounceProjMod.numberOfBounces += 2;
+                            BounceProjMod.numberOfBounces += Upgrade ? 5 : 2;
                             return;
                         case WitherLanceProjectile.Types.SPARKLY:
-                            self.PenetratesInternalWalls = true;
-                            self.BlackPhantomDamageMultiplier *= 1.5f;
-                            self.BossDamageMultiplier *= 1.2f;
+                            this.PenetratesInternalWalls = true;
+                            this.BlackPhantomDamageMultiplier *= Upgrade ? 2.5f : 1.5f;
+                            this.BossDamageMultiplier *= Upgrade ? 1.3f : 1.2f;
                             return;
                         case WitherLanceProjectile.Types.GREEN:
-                            WraparoundProjectile wrap = self.gameObject.GetOrAddComponent<WraparoundProjectile>();
-                            wrap.Cap += 1;
+                            WraparoundProjectile wrap = this.gameObject.GetOrAddComponent<WraparoundProjectile>();
+                            wrap.Cap += Upgrade ? 3 : 1;
                             wrap.OnWrappedAround = (proj, pos1, pos2) =>
                             {
                                 var h = Instantiate((PickupObjectDatabase.GetById(504) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapHorizontal.effects.First().effects.First().effect, pos1, Quaternion.identity);
@@ -133,24 +130,25 @@ namespace Planetside
                             };
                             return;
                     }
-
                 }
             }
             else
             {
                 foreach (Projectile proj in StaticReferenceManager.AllProjectiles)
                 {
-                    if (proj.GetComponent<BasicBeamController>() != null && BeamToolbox.PosIsNearAnyBoneOnBeam(proj.GetComponent<BasicBeamController>(), proj.sprite.WorldCenter, 1.1f) && proj.Owner != null && proj.Owner is PlayerController)
+                    var beam = proj.GetComponent<BasicBeamController>();
+                    if (beam != null && BeamToolbox.PosIsNearAnyBoneOnBeam(beam, proj.sprite.WorldCenter, 1.1f) && proj.Owner != null && proj.Owner is PlayerController)
                     {
 
                     }
                     else
-                    {               
-                        if (proj.GetComponent<WitherLanceProjectile>() == null && ReturnResult(proj) == true)
+                    {
+                        bool isWither = (proj is WitherLanceProjectile);
+                        if (isWither == false)
                         {
                             if (Vector2.Distance(proj.sprite.WorldCenter, projectile.sprite.WorldCenter) < 1.6f && proj.Owner != null && proj.Owner is PlayerController)
                             {
-                                if (doMagic == true)
+                                if (ReturnResult(proj) == true && doMagic == true)
                                 {
                                     var h = Instantiate(projectile.hitEffects.deathAny.effects.First().effects.First().effect, projectile.sprite.WorldCenter, Quaternion.identity);
                                     Destroy(h, 2);
@@ -172,6 +170,7 @@ namespace Planetside
                                     Active = true;
                                     SpecialProjectile = proj.gameObject;
                                 }
+
                             }
                         }
                     }
@@ -194,7 +193,6 @@ namespace Planetside
 
         private GameObject SpecialProjectile;
         private bool Active = false;
-        public Projectile projectile;
     }
 
 
@@ -214,8 +212,8 @@ namespace Planetside
             {
                 alternateOrbitTarget = this.GetComponent<SpeculativeRigidbody>(),
                 usesAlternateOrbitTarget = true,
-                MaxRadius = 1.6f,
-                MinRadius = 1.5f,
+                MaxRadius = 2f,
+                MinRadius = 1.2f,
                 lifespan = 9999,
             };
             for (int i = 0; i < Stars.Count; i++)
@@ -225,13 +223,10 @@ namespace Planetside
                 {
                     orbit.m_currentAngle = (360 / Stars.Count) * i;
                 }
-            }
-
-           
+            }      
         }
         public List<Projectile> Stars = new List<Projectile>();
         public int AttachersCap = 8;
-
     }
 }
 

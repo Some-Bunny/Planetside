@@ -1224,88 +1224,90 @@ namespace Planetside
                 cooldown -= Time.deltaTime;
                 return;
             }
-
-            if (_Owner.CurrentGun != null)
+            if (_Owner)
             {
-                if (_Owner.CurrentGun.CurrentAmmo > 0 && _Owner.CurrentGun.InfiniteAmmo == false && _Owner.CurrentGun.LocalInfiniteAmmo == false)
+                if (_Owner.CurrentGun != null)
                 {
-                    bool wasPressed = _Owner.m_activeActions.ReloadAction.State;
-                    if (wasPressed)
+                    if (_Owner.CurrentGun.CurrentAmmo > 0 && _Owner.CurrentGun.InfiniteAmmo == false && _Owner.CurrentGun.LocalInfiniteAmmo == false)
                     {
-                        if (effectInst == null)
+                        bool wasPressed = _Owner.m_activeActions.ReloadAction.State;
+                        if (wasPressed)
                         {
-                            effectInst = UnityEngine.Object.Instantiate(Gunslinger.GunslingerMagDumpVFX, _Owner.transform).GetComponent<tk2dSpriteAnimator>();
-                            effectInst.gameObject.layer = 20;
-                            AkSoundEngine.PostEvent("Play_ENM_Grip_Master_Lockon_01", _Owner.gameObject);
+                            if (effectInst == null)
+                            {
+                                effectInst = UnityEngine.Object.Instantiate(Gunslinger.GunslingerMagDumpVFX, _Owner.transform).GetComponent<tk2dSpriteAnimator>();
+                                effectInst.gameObject.layer = 20;
+                                AkSoundEngine.PostEvent("Play_ENM_Grip_Master_Lockon_01", _Owner.gameObject);
 
+                            }
+
+                            TimerToDeath += Time.deltaTime;
+                            if (TimerToDeath >= 3)
+                            {
+                                TimerToDeath = 0;
+                                effectInst.PlayAndDestroyObject("chamber_vanish");
+                                effectInst = null;
+                                SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.GUNSLINGER_FLAG_MAGDUMP, true);
+
+                                int amount = _Owner.CurrentGun.ammo;
+
+                                _Owner.CurrentGun.ammo = 0;
+                                GameObject vfx = SpawnManager.SpawnVFX((PickupObjectDatabase.GetById(365) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapVertical.effects.First().effects.First().effect, true);
+                                vfx.transform.position = _Owner.sprite.WorldCenter;
+                                vfx.GetComponent<tk2dBaseSprite>().HeightOffGround = 22;
+                                UnityEngine.Object.Destroy(vfx, 1);
+                                AkSoundEngine.PostEvent("Play_ENM_Grip_Master_Eject_01", _Owner.gameObject);
+                                cooldown = 0.5f;
+
+                                amount /= 5;
+                                amount = Mathf.Max(1, amount);
+                                amount = Mathf.Min(20, amount);
+
+
+                                var proj = this.ProjectileInterface.GetProjectile(_Owner);
+
+                                if (proj.GetComponent<BeamController>() != null)
+                                {
+                                    this.StartCoroutine(this.HandleFireShortBeam(proj, _Owner, _Owner.FacingDirection, (float)amount / 8f, null, null));
+                                }
+                                else
+                                {
+                                    this.StartCoroutine(DoBurst(amount, proj, _Owner.CurrentGun.Volley.projectiles.Count, _Owner.CurrentGun.DefaultModule.cooldownTime, _Owner.CurrentGun.DefaultModule.angleVariance));
+                                }
+                            }
+                            if (effectInst)
+                            {
+                                effectInst.transform.position = _Owner.sprite.WorldCenter;
+                            }
                         }
-
-                        TimerToDeath += Time.deltaTime;
-                        if (TimerToDeath >= 3)
+                        else
                         {
-                            TimerToDeath = 0;
-                            effectInst.PlayAndDestroyObject("chamber_vanish");
-                            effectInst = null;
-                            SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.GUNSLINGER_FLAG_MAGDUMP, true);
-
-                            int amount = _Owner.CurrentGun.ammo;
-
-                            _Owner.CurrentGun.ammo = 0;
-                            GameObject vfx = SpawnManager.SpawnVFX((PickupObjectDatabase.GetById(365) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapVertical.effects.First().effects.First().effect, true);
-                            vfx.transform.position = _Owner.sprite.WorldCenter;
-                            vfx.GetComponent<tk2dBaseSprite>().HeightOffGround = 22;
-                            UnityEngine.Object.Destroy(vfx, 1);
-                            AkSoundEngine.PostEvent("Play_ENM_Grip_Master_Eject_01", _Owner.gameObject);
+                            if (TimerToDeath != 0)
+                            {
+                                TimerToDeath = 0;
+                            }
+                            if (effectInst)
+                            {
+                                AkSoundEngine.PostEvent("Play_ENM_Tarnisher_Spit_01", _Owner.gameObject);
+                                effectInst.PlayAndDestroyObject("chamber_vanish");
+                                effectInst = null;
+                            }
                             cooldown = 0.5f;
-
-                            amount /= 5;
-                            amount = Mathf.Max(1, amount);
-                            amount = Mathf.Min(20, amount);
-
-
-                            var proj = this.ProjectileInterface.GetProjectile(_Owner);
-
-                            if (proj.GetComponent<BeamController>() != null)
-                            {
-                                this.StartCoroutine(this.HandleFireShortBeam(proj, _Owner, _Owner.FacingDirection, (float)amount / 8f, null, null));
-                            }
-                            else
-                            {
-                                this.StartCoroutine(DoBurst(amount, proj, _Owner.CurrentGun.Volley.projectiles.Count, _Owner.CurrentGun.DefaultModule.cooldownTime, _Owner.CurrentGun.DefaultModule.angleVariance));
-                            }
-                        }
-                        if (effectInst)
-                        {
-                            effectInst.transform.position = _Owner.sprite.WorldCenter;
                         }
                     }
-                    else
+                }
+                else
+                {
+                    if (TimerToDeath != 0)
                     {
-                        if (TimerToDeath != 0)
-                        {
-                            TimerToDeath = 0;
-                        }
-                        if (effectInst)
-                        {
-                            AkSoundEngine.PostEvent("Play_ENM_Tarnisher_Spit_01", _Owner.gameObject);
-                            effectInst.PlayAndDestroyObject("chamber_vanish");
-                            effectInst = null;
-                        }
-                        cooldown = 0.5f;
+                        TimerToDeath = 0;
                     }
-                }
-            }
-            else
-            {
-                if (TimerToDeath != 0)
-                {
-                    TimerToDeath = 0;
-                }
-                if (effectInst)
-                {
-                    AkSoundEngine.PostEvent("Play_ENM_Grip_Master_Eject_01", _Owner.gameObject);
-                    effectInst.PlayAndDestroyObject("chamber_vanish");
-                    effectInst = null;
+                    if (effectInst)
+                    {
+                        AkSoundEngine.PostEvent("Play_ENM_Grip_Master_Eject_01", _Owner.gameObject);
+                        effectInst.PlayAndDestroyObject("chamber_vanish");
+                        effectInst = null;
+                    }
                 }
             }
         }

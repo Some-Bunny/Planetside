@@ -71,7 +71,6 @@ namespace Planetside
                                         sourceProjectile.transform.position = unitCenter3;
                                         sourceProjectile.baseData.damage *= 0.75f;
                                         StaticVFXStorage.SpiratTeleportVFX.SpawnAtPosition(sourceProjectile.transform.position);
-
                                     }
                                 }
                             }

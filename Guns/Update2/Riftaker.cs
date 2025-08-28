@@ -141,8 +141,8 @@ namespace Planetside
 
             replacementProjectile.baseData.UsesCustomAccelerationCurve = true;
             replacementProjectile.baseData.AccelerationCurve = AnimationCurve.Linear(0, 1f, 1f, 0f);
-            replacementProjectile.baseData.CustomAccelerationCurveDuration = 2f;
-            replacementProjectile.baseData.speed = 12;
+            replacementProjectile.baseData.CustomAccelerationCurveDuration = 2.5f;
+            replacementProjectile.baseData.speed = 10;
 
             replacementProjectile.AddComponent<RecursionPreventer>();
 
@@ -209,8 +209,9 @@ namespace Planetside
             bouncy = dart.gameObject.AddComponent<BounceProjModifier>();
             bouncy.numberOfBounces = 10;
 
-            dart.baseData.damage = 9;
-            dart.baseData.speed = 10;
+            dart.baseData.damage = 12;
+            dart.baseData.speed = 12.5f;
+            dart.baseData.force *= 0.1f;
 
             dart.shouldRotate = true;
             Alexandria.Assetbundle.ProjectileBuilders.AnimateProjectileBundle(dart, "Riftaker_Dart", StaticSpriteDefinitions.Projectile_Sheet_Data, StaticSpriteDefinitions.Projectile_Animation_Data, "Riftaker_Dart",

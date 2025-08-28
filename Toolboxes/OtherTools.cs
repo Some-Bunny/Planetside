@@ -336,6 +336,38 @@ namespace Planetside
 
     public static class OtherTools
     {
+
+        public static ProjectileTrailRendererController AddTrail(this Projectile projectile, Vector2 TrailOffset, float TrailTime = 0.25f, float Length = 6, Color? StartColor = null, Color? EndColor = null)
+        {
+            var tro_1 = projectile.gameObject.AddChild("trail object");
+            tro_1.transform.position = projectile.sprite.WorldCenter + TrailOffset;
+            tro_1.transform.localPosition = projectile.sprite.WorldCenter + TrailOffset;
+            TrailRenderer tr_1 = tro_1.AddComponent<TrailRenderer>();
+            tr_1.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            tr_1.receiveShadows = false;
+            var mat_1 = new Material(Shader.Find("Sprites/Default"));
+            tr_1.material = mat_1;
+            tr_1.minVertexDistance = 0.01f;
+            tr_1.numCapVertices = 640;
+
+            //======
+            mat_1.SetColor("_Color", StartColor ?? Color.white);
+            tr_1.startColor = StartColor ?? Color.white;
+            tr_1.endColor = EndColor ?? Color.white;
+            //======
+            tr_1.time = TrailTime;
+            //======
+            tr_1.startWidth = 0.1875f;
+            tr_1.endWidth = 0f;
+            tr_1.autodestruct = false;
+
+            var rend = projectile.gameObject.AddComponent<ProjectileTrailRendererController>();
+            rend.trailRenderer = tr_1;
+            rend.desiredLength = Length;
+            return rend;
+        }
+
+
         public static void DoHitStop(this GameObject parent, float Duration)
         {
             GameManager.Instance.StartCoroutine(HitStop(parent, Duration));
@@ -343,14 +375,14 @@ namespace Planetside
         private static IEnumerator HitStop(GameObject gameActor, float Duration)
         {
             float DeltaTime = Time.deltaTime;
-            BraveTime.SetTimeScaleMultiplier(0, gameActor.gameObject);
+            BraveTime.SetTimeScaleMultiplier(0, GameManager.Instance.gameObject);
             float e = 0;
             while (e < Duration)
             {
                 e += DeltaTime;
                 yield return null;
             }
-            BraveTime.SetTimeScaleMultiplier(1, gameActor.gameObject);
+            BraveTime.SetTimeScaleMultiplier(1, GameManager.Instance.gameObject);
             yield break;
         }
 

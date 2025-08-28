@@ -821,7 +821,6 @@ namespace Planetside
 
         public float TemporaryFlightTime = 1;
 
-        public bool hasBeenPickedup;
 
 
         /*

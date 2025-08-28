@@ -18,11 +18,78 @@ using static tk2dSpriteCollectionDefinition;
 using SynergyAPI;
 using Alexandria.PrefabAPI;
 using HutongGames.PlayMaker.Actions;
+using static UnityEngine.UI.GridLayoutGroup;
+using HarmonyLib;
 
 namespace Planetside
 {
     public class WarpMastersKit : PlayerItem
     {
+
+        public class BuffAfterWarpEffect : GameActorDecorationEffect 
+        {
+            public BuffAfterWarpEffect() 
+            {
+                this.duration = 5;
+                this.AffectsPlayers = true;
+                this.AffectsEnemies = false;
+                this.effectIdentifier = "WarpBuff";
+                this.stackMode = GameActorEffect.EffectStackingMode.Refresh;
+            }
+
+            public override void OnEffectApplied(GameActor actor, RuntimeGameActorEffectData effectData, float partialAmount = 1)
+            {
+                if (actor is PlayerController player)
+                {
+
+                    if (player.IsTemporaryEeveeForUnlock == true) { return; }
+                    if (player.characterIdentity == PlayableCharacters.Eevee) { return; }
+                    player.portalEeveeTex = (Texture2D)StaticTextures.NebulaTexture;
+                    player.IsTemporaryEeveeForUnlock = true;
+
+
+                    ParticleBase.EmitParticles("WaveParticle", 1, new ParticleSystem.EmitParams()
+                    {
+                        position = player.sprite.WorldCenter,
+                        startSize = 4,
+                        rotation = 0,
+                        startLifetime = 0.5f,
+                        startColor = new Color(0.15f, 0, 0.6f, 1)
+                    });
+                }
+                base.OnEffectApplied(actor, effectData, partialAmount);
+            }
+
+            public override void OnEffectRemoved(GameActor actor, RuntimeGameActorEffectData effectData)
+            {
+                if (actor is PlayerController player)
+                {
+                    if (player.characterIdentity == PlayableCharacters.Eevee) { return; }
+                    player.IsTemporaryEeveeForUnlock = false;
+
+                    ParticleBase.EmitParticles("WaveParticle", 1, new ParticleSystem.EmitParams()
+                    {
+                        position = player.sprite.WorldCenter,
+                        startSize = 4,
+                        rotation = 0,
+                        startLifetime = 0.5f,
+                        startColor = new Color(0.15f, 0f, 0.6f, 1)
+                    });
+                    for (int i = 0; i < 32; i++)
+                    {
+                        StaticVFXStorage.VoidParticleSystem.Emit(new ParticleSystem.EmitParams()
+                        {
+                            position = player.sprite.WorldCenter,
+                            rotation = BraveUtility.RandomAngle(),
+                            velocity = BraveUtility.RandomVector2(new Vector2(-8f, -8), new Vector2(8, 8)),
+                            startLifetime = 2
+                        }, 1);
+                    }
+                }
+                base.OnEffectRemoved(actor, effectData);
+            }
+
+        }
 
         public static void Init()
         {
@@ -67,7 +134,19 @@ namespace Planetside
             Explosion.preventPlayerForce = true;
             Explosion.effect = (PickupObjectDatabase.GetById(89) as Gun).DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX;
             Explosion.ignoreList = new List<SpeculativeRigidbody> { };
+
+            SynergyAPI.SynergyBuilder.AddItemToSynergy(activeitem, CustomSynergyType.TELEPORTER_ACCIDENT);
+
+            List<string> mandatoryConsoleIDs = new List<string>
+            {
+                "psog:warp-techs_kit",
+                "psog:teleporting_gunfire"
+            };
+            Alexandria.ItemAPI.CustomSynergies.Add("Warp Sickness", mandatoryConsoleIDs, null, true);
+
         }
+
+
         public static GameObject TeleporterToPlace;
         public static ExplosionData Explosion;
 
@@ -184,7 +263,6 @@ namespace Planetside
             var arrive = StaticSpriteDefinitions.RoomObject_Animation_Data.GetClipByName("teleportArrive_");
             arrive.frames[15].triggerEvent = true;
             arrive.frames[15].eventAudio = "Play_OBJ_teleport_arrive_01";
-
 
             return teleporter;
         }
@@ -307,6 +385,7 @@ namespace Planetside
 
         public static IEnumerator DoWarp(PlayerController playerController,  Vector2 startPoint, Vector2 endPoint, TeleportBack teleportBack)
         {
+            bool isSickWithIt = playerController.PlayerHasActiveSynergy("Warp Sickness");
 
             var startPos = startPoint;
             var endPos = endPoint;
@@ -380,7 +459,7 @@ namespace Planetside
                     {
                         float t_ = (float)i / DistTick;
                         Vector3 vector3 = Vector3.Lerp(playerController.transform.position, LastPos_2, t_);
-                        Explosion.damage = 11.1f * playerController.stats.GetStatValue(PlayerStats.StatType.Damage);
+                        Explosion.damage = 11.1f * playerController.stats.GetStatValue(PlayerStats.StatType.Damage) * (isSickWithIt ? 3 : 1);
                         Explosion.damage *= playerController.stats.GetStatValue(PlayerStats.StatType.DamageToBosses);
                         Explosion.damageRadius = 1.625f;
                         Explosion.ignoreList = new List<SpeculativeRigidbody> { playerController.specRigidbody };
@@ -417,9 +496,18 @@ namespace Planetside
 
             AkSoundEngine.PostEvent("Play_ITM_Macho_Brace_Trigger_01", playerController.gameObject);
             Explosion.damageRadius = 2.5f;
-            Explosion.damage = 25f * playerController.stats.GetStatValue(PlayerStats.StatType.Damage);
+            Explosion.damage = 25f * playerController.stats.GetStatValue(PlayerStats.StatType.Damage) * (isSickWithIt ? 3 : 1);
             Explosion.damage *= playerController.stats.GetStatValue(PlayerStats.StatType.DamageToBosses);
             Exploder.Explode(playerController.sprite.WorldTopCenter, Explosion, Vector3.zero, null, true);
+
+            if (isSickWithIt == true)
+            {
+                playerController.ApplyEffect(new BuffAfterWarpEffect() 
+                {
+                    AffectsPlayers = true,
+                   
+                });
+            }
 
             yield break;
         }

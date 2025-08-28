@@ -57,11 +57,13 @@ namespace Planetside
 			gun.DefaultModule.customAmmoType = gun2.DefaultModule.customAmmoType;
 			gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
 
-			Projectile component = ((Gun)ETGMod.Databases.Items[336]).DefaultModule.projectiles[0];
-			gun.gunSwitchGroup = (PickupObjectDatabase.GetById(16) as Gun).gunSwitchGroup;
-			Projectile replacementProjectile = component.projectile;
-            replacementProjectile = UnityEngine.Object.Instantiate<Projectile>(replacementProjectile);
-            replacementProjectile.gameObject.SetActive(false);
+            gun.gunSwitchGroup = (PickupObjectDatabase.GetById(16) as Gun).gunSwitchGroup;
+
+
+
+            Projectile replacementProjectile = UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(336) as Gun).DefaultModule.projectiles[0]);
+            FakePrefab.MarkAsFakePrefab(replacementProjectile.gameObject);
+            UnityEngine.Object.DontDestroyOnLoad(replacementProjectile); 
 			replacementProjectile.baseData.damage = 8;
             gun.DefaultModule.usesOptionalFinalProjectile = true;
 			PolarityProjectile pol1 = replacementProjectile.gameObject.AddComponent<PolarityProjectile>();
@@ -74,7 +76,6 @@ namespace Planetside
 			gun.DefaultModule.finalAmmoType = GameUIAmmoType.AmmoType.CUSTOM;
 			gun.DefaultModule.ammoCost = 1;
 			gun.DefaultModule.shootStyle = ProjectileModule.ShootStyle.Automatic;
-			gun.damageModifier = 1;
 			gun.reloadTime = 1.6f;
 			gun.DefaultModule.cooldownTime = 0.05f;
 			gun.DefaultModule.numberOfShotsInClip = 30;

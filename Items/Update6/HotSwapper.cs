@@ -15,6 +15,8 @@ using static UnityEngine.UI.GridLayoutGroup;
 using System.ComponentModel;
 using static ETGMod;
 using Planetside.DungeonPlaceables;
+using SynergyAPI;
+using static Planetside.Wailer;
 
 namespace Planetside
 {
@@ -36,11 +38,148 @@ namespace Planetside
             HotSwapper.ItemID = item.PickupObjectId;
             ItemAPI.ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.AdditionalClipCapacityMultiplier, 1.2f, StatModifier.ModifyMethod.MULTIPLICATIVE);
 
+            List<string> mandatoryConsoleIDs = new List<string>
+            {
+                "psog:hot_swapper",
+                "phoenix"
+            };
+            Alexandria.ItemAPI.CustomSynergies.Add("Rebirth", mandatoryConsoleIDs, null, true);
+            var phoenix = (PickupObjectDatabase.GetById(384) as Gun);
+            var syn = phoenix.gameObject.AddComponent<PhoenixSynergy>();
+            syn.GunSelf = phoenix;
 
-            
+            phoenix = (PickupObjectDatabase.GetById(736) as Gun);
+            syn = phoenix.gameObject.AddComponent<PhoenixSynergy>();
+            syn.GunSelf = phoenix;
 
+
+            phoenixProjectile = UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(35) as Gun).DefaultModule.projectiles[0]);
+            phoenixProjectile.gameObject.SetActive(false);
+            ItemAPI.FakePrefab.MarkAsFakePrefab(phoenixProjectile.gameObject);
+            UnityEngine.Object.DontDestroyOnLoad(phoenixProjectile);
+
+            phoenixProjectile.baseData.UsesCustomAccelerationCurve = true;
+            phoenixProjectile.baseData.AccelerationCurve = AnimationCurve.Linear(0, 1f, 0f, 1f);
+            phoenixProjectile.baseData.CustomAccelerationCurveDuration = 0.2f;
+            phoenixProjectile.baseData.speed = 35;
+            phoenixProjectile.baseData.damage = 40;
+            phoenixProjectile.shouldRotate = true;
+
+            phoenixProjectile.fireEffect = DebuffStatics.hotLeadEffect;
+            phoenixProjectile.FireApplyChance = 1;
+            phoenixProjectile.AppliesFire = true;
+
+            var spook = phoenixProjectile.gameObject.GetOrAddComponent<PierceProjModifier>();
+            spook.penetration = 5;
+
+            Alexandria.Assetbundle.ProjectileBuilders.AnimateProjectileBundle(phoenixProjectile, "phoenixRebirth", StaticSpriteDefinitions.Projectile_Sheet_Data, StaticSpriteDefinitions.Projectile_Animation_Data, "phoenixRebirth",
+            new List<IntVector2>() { new IntVector2(25, 31), new IntVector2(25, 31), new IntVector2(25, 31), new IntVector2(25, 31), new IntVector2(25, 31), new IntVector2(25, 31), new IntVector2(25, 31), new IntVector2(25, 31), new IntVector2(25, 31), },
+            AnimateBullet.ConstructListOfSameValues(true, 9),
+            AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.MiddleCenter, 9),
+            AnimateBullet.ConstructListOfSameValues(true, 9),
+            AnimateBullet.ConstructListOfSameValues(false, 9),
+            AnimateBullet.ConstructListOfSameValues<Vector3?>(null, 9),
+            AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 9),
+            AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 9),
+            AnimateBullet.ConstructListOfSameValues<Projectile>(null, 9));
+
+            phoenixProjectile.AddTrail(new Vector2(-0.125f, 0.5f), 0.2f, 7, Color.white * 3, Color.yellow * 2);
+            phoenixProjectile.AddTrail(new Vector2(-0.125f, -0.5f), 0.2f, 7, Color.white * 3, Color.yellow * 2);
+            phoenixProjectile.AddTrail(new Vector2(-0f, 0.25f), 0.875f, 5.5f, Color.white * 3, Color.yellow * 2);
+            phoenixProjectile.AddTrail(new Vector2(-0f, 0.25f), -0.875f, 5.5f, Color.white * 3, Color.yellow * 2);
+
+            var material = new Material(ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTiltedCutoutEmissive"));
+            phoenixProjectile.sprite.usesOverrideMaterial = true;
+            material.mainTexture = phoenixProjectile.sprite.renderer.material.mainTexture;
+            phoenixProjectile.sprite.renderer.material = material;
+            phoenixProjectile.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+            phoenixProjectile.sprite.renderer.material.SetFloat("_EmissivePower", 35);
+            phoenixProjectile.sprite.renderer.material.SetFloat("_EmissiveColorPower", 20);
 
         }
+        public static Projectile phoenixProjectile;
+
+        public class PhoenixSynergy : BraveBehaviour
+        {
+            public Gun GunSelf;
+            public void Start()
+            {
+                GunSelf.OnPreFireProjectileModifier += OverrideForSynergy;
+                GunSelf.OnPostFired += OPF;
+            }
+
+            public void OPF(PlayerController playerController, Gun gun)
+            {
+                if (ActivatePhoenix && Cooldown <= 0)
+                {
+                    Cooldown = 5f;
+                    AkSoundEngine.PostEvent("Play_OBJ_bloodybullet_proc_01", gun.gameObject);
+                    ActivatePhoenix = false;
+                }
+            }
+
+            public Projectile OverrideForSynergy(Gun gun, Projectile projectile, ProjectileModule projectileModule)
+            {
+                if (ActivatePhoenix && Cooldown <= 0)
+                {
+                    projectile = phoenixProjectile;
+                }
+                return projectile;
+            }
+            private float Cooldown;
+            private bool SynergyActive = false;
+            public void Update()
+            {
+                if (GunSelf && GunSelf.CurrentOwner != null && GunSelf.CurrentOwner is PlayerController player)
+                {    
+                    if (SynergyActive)
+                    {
+                        if (Cooldown > 0) { Cooldown -= Time.deltaTime; }
+                        else if (ActivatePhoenix)
+                        {
+                            Vector3 vector = GunSelf.sprite.WorldBottomLeft.ToVector3ZisY(0);
+                            Vector3 vector2 = GunSelf.sprite.WorldTopRight.ToVector3ZisY(0);
+                            float num = (vector2.y - vector.y) * (vector2.x - vector.x);
+                            float num2 = 15f * num;
+                            int num4 = Mathf.CeilToInt(Mathf.Max(1f, num2 * BraveTime.DeltaTime)); ;
+                            Vector3 direction = MathToolbox.GetUnitOnCircle(BraveUtility.RandomAngle(), 1);
+                            float magnitudeVariance = 0.2f;
+                            float? startLifetime = new float?(UnityEngine.Random.Range(0.1f, 0.4f));
+                            GlobalSparksDoer.DoRandomParticleBurst(num4, vector, vector2, direction, 0, magnitudeVariance, 0.333f, startLifetime, null, GlobalSparksDoer.SparksType.STRAIGHT_UP_FIRE);
+                        }
+                    }
+                    if (player.PlayerHasActiveSynergy("Rebirth") != SynergyActive)
+                    {
+                        SynergyActive = player.PlayerHasActiveSynergy("Rebirth");
+                        if (SynergyActive == true)
+                        {
+                            player.GunChanged += Player_GunChanged1;
+                        }
+                        else
+                        {
+                            player.GunChanged -= Player_GunChanged1;
+                        }
+                    }
+                }
+            }
+            public bool ActivatePhoenix;
+            private void Player_GunChanged1(Gun arg1, Gun arg2, bool arg3)
+            {
+               if (arg2 == this.GunSelf)
+               {
+                    ActivatePhoenix = true;
+                    Cooldown -= Time.timeSinceLevelLoad - CurTime;
+               }
+               else
+               {
+                    CurTime = Time.timeSinceLevelLoad;
+               }
+            }
+            private float CurTime;
+        }
+
+
+
         public float GraceTime = 1.5f;
         public static int ItemID;
         public override void Update()

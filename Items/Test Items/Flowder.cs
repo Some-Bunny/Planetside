@@ -26,6 +26,7 @@ using FullInspector.Internal;
 using UnityEngine.Video;
 using static FullInspector.Internal.fiLateBindings;
 using UnityEngine.Audio;
+using Alexandria.DungeonAPI;
 
 
 namespace Planetside
@@ -57,8 +58,10 @@ namespace Planetside
         }
         public override void DoEffect(PlayerController user)
         {
-            GameObject beetle = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("Centaur_Midpoly_Riggeda_0"));
-            beetle.transform.position = user.transform.position;
+            UnityEngine.Object.Instantiate(LoadHelper.LoadAssetFromAnywhere<GameObject>("npc_lostadventurer"), user.transform.position, Quaternion.identity);
+
+            //GameObject beetle = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("Centaur_Midpoly_Riggeda_0"));
+            //beetle.transform.position = user.transform.position;
 
             /*
             MeshRenderer renderer = beetle.GetComponentInChildren<MeshRenderer>();
@@ -67,9 +70,9 @@ namespace Planetside
             beetle.name = "ShopPortal";
             beetle.transform.localScale *= 2;
             */
-            beetle.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
+            //beetle.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
 
-            beetle.transform.rotation = Quaternion.Euler(300, 180, 180);// 180, 180);
+            //beetle.transform.rotation = Quaternion.Euler(300, 180, 180);// 180, 180);
             //GlobalMessageRadio.BroadcastMessage("eye_shot_1");
             //GameManager.Instance.LoadCustomFlowForDebug("NPCParadise", "Base_Castle", "tt_castle");
         }

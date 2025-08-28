@@ -69,6 +69,10 @@ MonoBehaviour:
     dataGUID: 
     managed: 0
     loadable: 0
+  - assetGUID: 3df21c063935848468ca914106fb95c7
+    dataGUID: 
+    managed: 0
+    loadable: 0
   fontIndex:
   - assetGUID: 063b15d80dbb4604d890600a64c79cf8
     dataGUID: e7a6b09a73c6b2b4f8060096ddbd3b5e
@@ -4511,6 +4515,9 @@ MonoBehaviour:
     - kunai
     - hotswapper
     - leadBaton
+    - lost_adventurer_shield_001
+    - lost_adventurer_sword_001
+    - lost_adventurer_sack_001
     spriteTextureGUIDs:
     - f4c963c92fd115b4f8d2875fddffbf60
     - b44a4a4559adee1428c46414201129cc
@@ -4569,6 +4576,9 @@ MonoBehaviour:
     - 6e68b9380440939438831377fcb35a16
     - 6a18b9adbb257ef46bcc47f31c1e9674
     - 8c9bda69242ae9a43baca8a8d19a448e
+    - acec1530de38b9f40ba20b20cba3ed54
+    - 3e89817dfcf8b3346aea458feb1257bb
+    - 74700508f8d77004babd6944d12704ea
     spriteTextureTimeStamps:
     - 1738023066.60829
     - 1738023066.60728
@@ -4627,6 +4637,9 @@ MonoBehaviour:
     - 1750472224.74929
     - 1751591075.77034
     - 1751591034.20931
+    - 1639794847.53539
+    - 1639794847.55437
+    - 1756148028.67036
     managedSpriteCollection: 0
     loadable: 0
     assetName: 
@@ -9057,6 +9070,25 @@ MonoBehaviour:
     - gunwithnoname_startshot_001
     - gunwithnoname_startshot_002
     - gunwithnoname_startshot_003
+    - phoenix_002
+    - phoenix_001
+    - phoenix_004
+    - phoenix_005
+    - phoenix_006
+    - phoenix_003
+    - phoenix_007
+    - gwnn_energyball_004
+    - gwnn_energyball_002
+    - gwnn_energyball_003
+    - gwnn_energyball_010
+    - gwnn_energyball_005
+    - gwnn_energyball_008
+    - gwnn_energyball_009
+    - gwnn_energyball_001
+    - gwnn_energyball_007
+    - gwnn_energyball_011
+    - gwnn_energyball_012
+    - gwnn_energyball_006
     spriteTextureGUIDs:
     - 82dcda28227bc70469ab873063d19fd5
     - b5e6125294fd1c9478b1a4b222fdc4be
@@ -9267,6 +9299,25 @@ MonoBehaviour:
     - 34ddd13244fce2f4b809f6cc2a942433
     - 07ddb1a7f13124a4f8147e681269ca5b
     - b1f1a53ba0ef6df4599c94b7f43e5430
+    - 3dfcf951d1b73e548b7866d99747c623
+    - 59c4b01338e1803489e98c998df50b24
+    - fc505063da37b074daa2d01d6c339658
+    - 620e78e4f71c54243af74e31b6530e63
+    - 6164d861a09ffa946b66ea57c31039f5
+    - 8c6954bbdc40955478713b8658748a72
+    - 00fc59fddd2dc9c4da09f5d38b77a48d
+    - 0cf269ac392bd9342baf61c64e0df8dd
+    - 7d0f9098958dc85428be03826dd52909
+    - 48cb92a31bf527f4aa837e5c285cb812
+    - 4bd75f1903e699c409fcd28db428a6c4
+    - f93874e0cc37c274e95861a50a314081
+    - a2b8effae2e70344cb9deff56a695499
+    - a9e107a0ca853e94b9ff508237a51b5f
+    - fd282b2ed9a6f304eb49e1b4333fcad0
+    - 6590994279d10034fb786185bce9e3f1
+    - 80a0191ca6d06e04693ae2c0920403f3
+    - d86d0932d3273c74781fabcf143ffdd8
+    - 215dd520159f49c42be761cfc1744ed3
     spriteTextureTimeStamps:
     - 1738023068.27022
     - 1738023068.26021
@@ -9477,6 +9528,25 @@ MonoBehaviour:
     - 1753119347.8588
     - 1753119347.87282
     - 1753119347.87482
+    - 1754328641.52274
+    - 1754328641.5206
+    - 1754328641.52774
+    - 1754328641.52974
+    - 1754328641.53174
+    - 1754328641.52574
+    - 1754328641.53474
+    - 1756073753.65102
+    - 1756073753.64502
+    - 1756073753.64802
+    - 1756073753.66704
+    - 1756073753.65403
+    - 1756073753.66203
+    - 1756073753.66504
+    - 1756073753.64306
+    - 1756073753.65903
+    - 1756073753.67004
+    - 1756073753.67304
+    - 1756073753.65603
     managedSpriteCollection: 0
     loadable: 0
     assetName: 
@@ -10222,6 +10292,35 @@ MonoBehaviour:
     - debris_normal_001
     - debris_normal_002
     - debris_normal_003
+    - deep_teleporter_003
+    - deep_teleporter_004
+    - deep_teleporter_017
+    - deep_teleporter_icon_001
+    - deep_teleporter_008
+    - deep_teleporter_009
+    - deep_teleporter_010
+    - deep_teleporter_005
+    - deep_teleporter_006
+    - deep_teleporter_007
+    - deep_teleporter_011
+    - deep_teleporter_012
+    - deep_teleporter_013
+    - deep_teleporter_014
+    - deep_teleporter_002
+    - deep_teleporter_001
+    - deep_teleporter_015
+    - deep_teleporter_016
+    - deep_teleporter_decor_007
+    - deep_teleporter_decor_008
+    - deep_teleporter_decor_003
+    - deep_teleporter_decor_004
+    - deep_teleporter_decor_005
+    - deep_teleporter_decor_002
+    - deep_teleporter_decor_010
+    - deep_teleporter_decor_011
+    - deep_teleporter_decor_009
+    - deep_teleporter_decor_001
+    - deep_teleporter_decor_006
     spriteTextureGUIDs:
     - 23c6a39626d58c94d85d5d5b1642ccf7
     - c8968b40667d1a6459270644e9bb90f3
@@ -10677,6 +10776,35 @@ MonoBehaviour:
     - 2f9a8af1099e8714fa7cba602d47795f
     - abe54c52f5676ff48926b4402f659106
     - 5713478f3c2b8c34a892c9a4eb1b28f7
+    - 136948876947c5141961339a5ffa4bea
+    - fe9da87c63c57664aa93489de8764986
+    - 0d77ba4cdee10d1478786bc5099363ae
+    - 5ec8c32a00a09ad4ead19eaf6c08f811
+    - 2cb3aeed696cd514c9a5d927974c0c0b
+    - 398923d070989614a9933eaca70184a7
+    - 90b97915ec3cb1d4bbbce75152ef1014
+    - f4303ada4dad6ec4da470efd5ef6b5cd
+    - 9c0f6a410275e264fada408ceff7a2a6
+    - a2db4f7ec78b1e549aa9ee262fcfe105
+    - 9e72f643284220d4d96fc4786b4ae497
+    - 6d26e20d11c0bd646b58ec8cb5f4a1a7
+    - 3ef1a4a741be8954ca9aaeffe22328ea
+    - f77f55104f73cab4985d66511b6bf09b
+    - c997a053c6c388b46909d05e936d4bc4
+    - 12f42bddb7514ca46b27e6818103bb2e
+    - 86d8716f7d16d3443a126f86593ce85e
+    - b4ecdbf4746ddc947ae3b39a68d01a04
+    - 66707c5f444aea544b0cdf9e36ee82fc
+    - 9d7827b7d807b054d8506e1124e085ed
+    - 8f0b339fdbfcb4643ba8e84d888b726c
+    - 08ce7d587ff9ef54f8a4cbb118c04e12
+    - 8ef7e3e336ab9b84b9323e09f10de5ca
+    - 96e1b55cc48faa148937211237da9acc
+    - 76232d3e6e5afc44c8afae5d9f49776e
+    - 9cf403d9650374f4383c1256a40da6d4
+    - 5fa5b7283a81eb24391cae96c8e34759
+    - d2633a04049cb3c48ba881533cf27419
+    - 7bd7a6d5a7927b547a6e1c75dcf3a895
     spriteTextureTimeStamps:
     - 1739376732.80184
     - 1739376732.80529
@@ -11132,6 +11260,35 @@ MonoBehaviour:
     - 1738023121.00415
     - 1738023121.00515
     - 1738023121.00515
+    - 1756167422.62092
+    - 1756167422.68363
+    - 1756167423.36974
+    - 1756167489.06584
+    - 1756167422.92818
+    - 1756167422.9892
+    - 1756167423.05026
+    - 1756167422.74203
+    - 1756167422.80651
+    - 1756167422.86715
+    - 1756167423.11117
+    - 1756167423.17232
+    - 1756167423.23335
+    - 1756167423.27513
+    - 1756167422.57169
+    - 1756167422.53569
+    - 1756167423.30258
+    - 1756167423.33163
+    - 1756175572.1561
+    - 1756175572.22579
+    - 1756175571.91838
+    - 1756175571.97429
+    - 1756175572.04081
+    - 1756175571.88035
+    - 1756175572.33837
+    - 1756175572.39944
+    - 1756175572.2768
+    - 1756175571.75155
+    - 1756175572.10198
     managedSpriteCollection: 0
     loadable: 0
     assetName: 
@@ -11351,6 +11508,47 @@ MonoBehaviour:
     - planetblade_slash_005
     - planetblade_slash_002
     - planetblade_slash_004
+    - gwnn_tether_004
+    - gwnn_tether_010
+    - gwnn_tether_011
+    - gwnn_tether_012
+    - gwnn_tether_013
+    - gwnn_tether_014
+    - gwnn_tether_015
+    - gwnn_tether_001
+    - gwnn_tether_003
+    - gwnn_tether_005
+    - gwnn_tether_002
+    - gwnn_tether_008
+    - gwnn_tether_009
+    - gwnn_tether_006
+    - gwnn_tether_007
+    - gwnn_tether_016
+    - gwnn_tether_start_001
+    - gwnn_tether_start_002
+    - gwnn_tether_start_003
+    - gwnn_tether_start_004
+    - gwnn_tether_start_005
+    - corrupt_ammo_use_003
+    - corrupt_ammo_use_004
+    - corrupt_ammo_use_005
+    - corrupt_ammo_use_006
+    - corrupt_armor_break_001
+    - corrupt_armor_break_002
+    - corrupt_armor_break_003
+    - corrupt_armor_break_004
+    - corrupt_armor_break_005
+    - corrupt_armor_break_006
+    - corrupt_ket_use_001
+    - corrupt_ket_use_004
+    - corrupt_ket_use_005
+    - corrupt_ket_use_002
+    - corrupt_ket_use_003
+    - corrupt_ammo_use_002
+    - corrupt_ammo_use_001
+    - corrupt_ket_use_006
+    - corrupt_ket_use_007
+    - corrupt_ket_use_008
     spriteTextureGUIDs:
     - eca28c23f3bbad849892a7a84325ac13
     - e1e4963a6b208ff4aa52af8f64f78f86
@@ -11502,6 +11700,47 @@ MonoBehaviour:
     - 17ad5aa91ff97df4cb5bba3c9cfd2db4
     - 0421ca6685c2b5f408b23d4f535498cd
     - 3fb8e3b3512df3d4888a07fbfb9a34e9
+    - c5fd1ab2dacfd6740832e9ba1611ce92
+    - fc2b485f5a686614db91628776ec0ab9
+    - 5a2b8737be0b8e340b62608268128a94
+    - 536b67a04bfd2bb4ea2e19d09c0ef466
+    - cf65d2370577c0e4cae4baa935a02f0e
+    - d6fb12c40dd58ce468619abc0c910d1d
+    - e209a29a9d5b7f048bf594c7fd85a9db
+    - c7b19ee25faa51348b73c1fedae07a00
+    - adabc796cb562544e90aa0fde44e5139
+    - 000b088dc1a50a843aa92390a3ccc4a6
+    - 65036c953eb8e4049b0301bab8ebefbe
+    - 5d561a42d5878614e88090f5600cd09b
+    - 219272d96c62a3c45b7b51951d5bc7ff
+    - d4d20d69a7685ec4c802afb7e23a7c8d
+    - 013da026920fa644192ef2653c7574d8
+    - fc0c840354f7b404cacc8b2eb9564bcf
+    - e9a27b66f1779f7448f5e051b1ff07c8
+    - 9da793539be4cbb40bb9cd92618f1c21
+    - ae5f96905e10d974cb15e488cf958d29
+    - 78a71e0ba1b75194db95cb105d6718a5
+    - b4c06c8dcb0bddf4d9d1921a319e916b
+    - 3c967a8e702b77742b97273ba8dc71d2
+    - 7869841c8e7022e448963f92fd8f6f48
+    - b2d7e68ecc0120343af2e7507d10cfed
+    - 28b8d69ee35f6a3419e30645d8b0577c
+    - 6c8a85e6aa496dc4e85dba20e2e6124f
+    - acfdd20a069fbe64696a9e35c652dbd4
+    - 6422e6de81844ea42bdd968927fad5f8
+    - 386a3f5d3d91bbd4287ad69a5671cfa3
+    - ebb7c3a38645c6344be32a8bf539444c
+    - bf7b194abdbc0274bac924fc344f2ea7
+    - 68701f1e4edd3ac4fb86c5f74226a5a1
+    - 0a36564d32ca8444f8f17e67b3cdd8e0
+    - a5c357422d5e66b4880bdff923073154
+    - 2c95e88e3cb1c754dadaf73da2ac6050
+    - eef873964f1104047844998d021b681d
+    - 342c6efd10773d94fa7b6053f5d60729
+    - f1bb76d7023749343afd9600b7042338
+    - 3f6c597b05a4af349b735f242b08c9e5
+    - 623bb09a651a07e4b8ba19788d662692
+    - 8952f804e4dae8e49aea1134d9d97cca
     spriteTextureTimeStamps:
     - 1738023070.98278
     - 1738023071.08478
@@ -11653,6 +11892,47 @@ MonoBehaviour:
     - 1659532256
     - 1659532256
     - 1659532256
+    - 1756079358.06818
+    - 1756079358.0862
+    - 1756079358.0882
+    - 1756079358.0912
+    - 1756079358.0932
+    - 1756079358.0962
+    - 1756079358.09821
+    - 1756079358.06117
+    - 1756079358.06618
+    - 1756079358.07118
+    - 1756079358.06317
+    - 1756079358.08019
+    - 1756079358.08219
+    - 1756079358.07519
+    - 1756079358.07719
+    - 1756079358.10221
+    - 1756079525.99947
+    - 1756079526.00351
+    - 1756079526.00548
+    - 1756079526.00848
+    - 1756079526.01148
+    - 1756136589.89979
+    - 1756136589.90058
+    - 1756136589.90186
+    - 1756136589.90439
+    - 1756133669.00209
+    - 1756133669.00509
+    - 1756133669.0071
+    - 1756133669.0081
+    - 1756133669.0111
+    - 1756133669.0141
+    - 1756137802.44839
+    - 1756137802.45539
+    - 1756137802.45839
+    - 1756137802.45039
+    - 1756137802.45339
+    - 1756136589.8965
+    - 1756136589.8945
+    - 1756137802.4614
+    - 1756137802.4644
+    - 1756137802.4664
     managedSpriteCollection: 0
     loadable: 0
     assetName: 

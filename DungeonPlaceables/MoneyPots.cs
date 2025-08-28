@@ -949,7 +949,7 @@ namespace Planetside
                                 renderer.allowOcclusionWhenDynamic = true;
                                 beetle.transform.position = minorbreakable.transform.position;
                                 beetle.transform.localScale = Vector3.one;
-                                beetle.name = "ShopPortal";
+                                beetle.name = "Beetle";
                                 beetle.transform.localScale *= 2;
                                 beetle.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
 
@@ -977,7 +977,7 @@ namespace Planetside
                                 break;
                             case 8:
                                 OtherTools.Notify("Time Shifts A Little...", "", "Planetside/Resources/PerkThings/somethingtoDoWithThrownGuns", UINotificationController.NotificationColor.PURPLE, true);
-                                TimeTraderSpawnController.ShopAllowedToSpawn = true;
+                                SaveAPI.AdvancedGameStatsManager.Instance.SetStat(SaveAPI.CustomTrackedStats.ALLOW_TRADER, 1);
                                 break;
                             case 9:
 

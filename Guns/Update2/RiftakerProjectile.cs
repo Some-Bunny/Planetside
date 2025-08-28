@@ -16,7 +16,6 @@ using System.Collections.ObjectModel;
 
 using UnityEngine.Serialization;
 using static Planetside.PrisonerSecondSubPhaseController;
-using System.ComponentModel;
 
 namespace Planetside
 {
@@ -234,6 +233,7 @@ namespace Planetside
 
         private float e_Sound = 0.3f;
 
+        private float eparticle = 0.1f;
 
         public void Update()
         {
@@ -263,12 +263,22 @@ namespace Planetside
                 AkSoundEngine.PostEvent("Stop_OBJ_cursepot_loop_01", base.gameObject);
             }
 
-            StaticVFXStorage.VoidParticleSystem.Emit(new ParticleSystem.EmitParams()
+            if (eparticle > 0)
             {
-                position = this.projectile.sprite.WorldCenter,
-                rotation = BraveUtility.RandomAngle(),
-                velocity = BraveUtility.RandomVector2(new Vector2(-0.025f, -0.025f), new Vector2(0.025f, 0.025f))
-            }, 1);
+                eparticle -= Time.deltaTime;
+            }
+            else
+            {
+                eparticle = 0.1f;
+
+                StaticVFXStorage.VoidParticleSystem.Emit(new ParticleSystem.EmitParams()
+                {
+                    position = this.projectile.sprite.WorldCenter,
+                    rotation = BraveUtility.RandomAngle(),
+                    velocity = BraveUtility.RandomVector2(new Vector2(-0.025f, -0.025f), new Vector2(0.025f, 0.025f))
+                }, 1);
+
+            }
 
             if (!In)
             {
@@ -303,7 +313,7 @@ namespace Planetside
                         else
                         {
 
-                            component.SendInDirection(MathToolbox.GetUnitOnCircle(BraveUtility.RandomAngle(), 1), true, true);
+                            component.SendInDirection(new Vector2(UnityEngine.Random.Range(-1.0f, 1.1f), UnityEngine.Random.Range(-1.0f, 1.1f)), true, true);
                         }
                     }
                 }
@@ -315,7 +325,7 @@ namespace Planetside
                 {
                     if (riftakerAffectedProjectiles[i].enabled)
                     {
-                        this.AdjustRigidbodyVelocity(riftakerAffectedProjectiles[i].Projectile.specRigidbody);
+                        this.AdjustRigidbodyVelocity(riftakerAffectedProjectiles[i]);
                     }
                 }
                 for (int i = 0; i < StaticReferenceManager.AllProjectiles.Count; i++)
@@ -336,22 +346,34 @@ namespace Planetside
         public float radius;
         private float radiusSquared;
 
-        private bool AdjustRigidbodyVelocity(SpeculativeRigidbody other)
+        private bool AdjustRigidbodyVelocity(RiftakerAffectedProjectile other)
         {
-            Vector2 a = other.UnitCenter - this.projectile.sprite.WorldCenter;
+            Vector2 a = other.Projectile.specRigidbody.UnitCenter - this.projectile.sprite.WorldCenter;
             float num = Vector2.SqrMagnitude(a);
             if (num < this.radiusSquared)
             {
                 float g = this.gravitationalForce;
-                Vector2 velocity = other.Velocity;
-                Projectile projectile = other.projectile;
+                Vector2 velocity = other.Projectile.specRigidbody.Velocity;
+                Projectile projectile = other.Projectile;
                 if (projectile)
                 {
                     bool playerOwner = projectile.Owner is PlayerController;
                     if (playerOwner == false)
                     {
                         return false;
+                    }/*
+                    var list = other.GetComponents(typeof(UnityEngine.Component)).ToList();
+                    bool can = false;
+                    foreach (var entry in list)
+                    {
+                        if (entry is BlackHoleDoer) { return false; }
+                        if (entry is ParticleCollapserSmallProjectile) { return false; }
+                        if (entry is ParticleCollapserLargeProjectile) { return false; }
+                        if (entry is RiftakerProjectile) { return false; }
                     }
+                    if (can == false) { return false; }
+                    */
+                    /*
                     if (other.GetComponent<BlackHoleDoer>() != null)
                     {
                         return false;
@@ -374,12 +396,13 @@ namespace Planetside
                     {
                         return false;
                     }
+                    */
 
-                    if (c.HeadTo == null)
+                    if (other.HeadTo == null)
                     {
-                        c.HeadTo = this;
+                        other.HeadTo = this;
                     }
-                    if (c.HeadTo != this)
+                    if (other.HeadTo != this)
                     {
                         return false;
                     }
@@ -391,7 +414,7 @@ namespace Planetside
                     g = this.gravitationalForce;
                 }
 
-                Vector2 frameAccelerationForRigidbody = this.GetFrameAccelerationForRigidbody(other.UnitCenter, Mathf.Sqrt(num), g, projectile.baseData.speed);
+                Vector2 frameAccelerationForRigidbody = this.GetFrameAccelerationForRigidbody(other.Projectile.specRigidbody.UnitCenter, Mathf.Sqrt(num), g, projectile.baseData.speed);
                 float d = Mathf.Clamp(BraveTime.DeltaTime, 0f, 0.02f);
                 Vector2 b = frameAccelerationForRigidbody * d;
                 Vector2 vector = velocity + b;
@@ -406,7 +429,7 @@ namespace Planetside
                     {
                         //projectile.Speed = Mathf.Max(vector.magnitude * 0.5f, 12f);
                         projectile.Direction = vector.normalized;
-                        other.Velocity = projectile.Direction * projectile.baseData.speed;
+                        other.Projectile.specRigidbody .Velocity = projectile.Direction * projectile.baseData.speed;
 
                         if (num < 1.25f)
                         {
@@ -462,25 +485,14 @@ namespace Planetside
                     {
                         return false;
                     }
-                    if (other.GetComponent<BlackHoleDoer>() != null)
+                    var list = other.GetComponents(typeof(UnityEngine.Component)).ToList();
+                    foreach (var entry in list)
                     {
-                        return false;
-                    }
-                    if (other.GetComponent<ParticleCollapserSmallProjectile>() != null)
-                    {
-                        return false;
-                    }
-                    if (other.GetComponent<ParticleCollapserLargeProjectile>() != null)
-                    {
-                        return false;
-                    }
-                    if (other.GetComponent<RiftakerProjectile>() != null)
-                    {
-                        return false;
-                    }
-                    if (other.GetComponent<RiftakerAffectedProjectile>() != null)
-                    {
-                        return false;
+                        if (entry is BlackHoleDoer) { return false; }
+                        if (entry is ParticleCollapserSmallProjectile) { return false; }
+                        if (entry is ParticleCollapserLargeProjectile) { return false; }
+                        if (entry is RiftakerProjectile) { return false; }
+                        if (entry is RiftakerAffectedProjectile) { return false; }
                     }
                     if (velocity == Vector2.zero)
                     {
@@ -566,65 +578,8 @@ namespace Planetside
         }
 
 
-        private IEnumerator HoldPortalOpen(MeshRenderer portal)
-        {
-            float elapsed = 0f;
-            float duration = 2;
-            while (elapsed < duration)
-            {
-                elapsed += BraveTime.DeltaTime;
-                float t = Mathf.Sin(elapsed * 0.67f);
-                if (portal == null) { yield break; }
-                if (portal.gameObject == null) { yield break; }
-                portal.material.SetFloat("_UVDistCutoff", Mathf.Lerp(elapsed / 2f, 0, t));
-                portal.material.SetFloat("_HoleEdgeDepth", Mathf.Lerp(12, 2, t));
-
-                if (player != null)
-                {
-                    float Rad = portal.material.GetFloat("_UVDistCutoff");
-                    float num = player != null ? player.stats.GetStatValue(PlayerStats.StatType.Damage) : 1;
-                    List<AIActor> activeEnemies = player.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
-                    Vector2 centerPosition = this.transform.position;
-                    if (activeEnemies != null && activeEnemies.Count >= 0)
-                    {
-                        for (int i = 0; i < activeEnemies.Count; i++)
-                        {
-                            /*
-                            AIActor aiactor = activeEnemies[i];
-                            bool ae = Vector2.Distance(aiactor.CenterPosition, centerPosition) < Rad * 16 && aiactor.healthHaver.GetMaxHealth() > 0f && aiactor != null && aiactor.specRigidbody != null && player != null;
-                            if (ae)
-                            {
-                                aiactor.healthHaver.ApplyDamage((20f * num) * BraveTime.DeltaTime, Vector2.zero, "fwomp", CoreDamageTypes.Electric, DamageCategory.Normal, false, null, false);
-                                if (player.PlayerHasActiveSynergy("Event Horizon"))
-                                {
-                                    if (!aiactor.healthHaver.IsBoss)
-                                    {
-                                        aiactor.knockbackDoer.weight = 150f;
-                                        Vector2 a = aiactor.transform.position - portal.transform.position;
-                                        aiactor.knockbackDoer.ApplyKnockback(-a, 1.33f * (Vector2.Distance(portal.transform.position, aiactor.transform.position) + 0.005f), false);
-                                    }
-                                }
-                            }
-                            */
-                        }
-                    }
-                }
-
-                else
-                {
-                    if (portal.gameObject != null) { Destroy(portal.gameObject); }
-                    yield break;
-                }
-                yield return null;
-            }
-            AkSoundEngine.PostEvent("Play_WPN_blackhole_impact_01", portal.gameObject);
-            if (portal.gameObject != null) { Destroy(portal.gameObject); }
-            yield break;
-        }
-
         public Projectile projectile;
         private PlayerController player;
-
     }
 }
 

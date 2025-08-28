@@ -132,6 +132,7 @@ namespace Planetside
         public Action<MajorBreakable> OnHitMajorBreakable = null;
         public Action<Projectile, GameActor> CustomReflectProjectile = null;
         public bool HitSecretRoomWalls = false;
+        public GameActor Owner;
     }
 
     public class BasicSlash : CustomSlashData
@@ -181,6 +182,7 @@ namespace Planetside
             }
             if (slashParameters.doVFX && slashParameters.VFX != null) slashParameters.VFX.SpawnAtPosition(position, angle, parentTransform, null, null, -0.05f);
             if (!string.IsNullOrEmpty(slashParameters.soundEvent) && owner != null && owner.gameObject != null) AkSoundEngine.PostEvent(slashParameters.soundEvent, owner.gameObject);
+            slashParameters.Owner = owner;
             GameManager.Instance.StartCoroutine(HandleSlash(position, angle, owner, slashParameters));
         }
         private static IEnumerator HandleSlash(Vector2 position, float angle, GameActor owner, CustomSlashData slashParameters)

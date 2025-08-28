@@ -1333,11 +1333,11 @@ namespace Planetside
 				for (int e = 0; e < GameManager.Instance.AllPlayers.Length; e++)
 				{
 					var v = GameManager.Instance.AllPlayers[e].transform.PositionVector2();
-                    var ring = SummonRingController.CreateSummoningRing("division", v, 0.666f);
+                    var ring = SummonRingController.CreateSummoningRing("division", v, 0.5f);
                     controller.extantRings.Add(ring);
 
                     ring.UpdateSpeed = 5;
-                    ring.SpinSpeed = 75f;
+                    ring.SpinSpeed = 45f;
                     ringControllers.Add(ring);
 
                     float u = UnityEngine.Random.Range(60, 120);
@@ -1362,10 +1362,10 @@ namespace Planetside
 						float M = UnityEngine.Random.value < 0.5f ? u : -u;
 
                         var v = GameManager.Instance.AllPlayers[e].transform.PositionVector2() + MathToolbox.GetUnitOnCircle(helpme, 8);
-                        var ring = SummonRingController.CreateSummoningRing("division", v, 0.666f);
+                        var ring = SummonRingController.CreateSummoningRing("division", v, 0.5f);
                         controller.extantRings.Add(ring);
                         ring.UpdateSpeed = 5;
-                        ring.SpinSpeed = 75f;
+                        ring.SpinSpeed = 45f;
                         ringControllers.Add(ring);
                         for (int i = 0; i < 8; i++)
 						{
@@ -1389,7 +1389,7 @@ namespace Planetside
 				{
                     var ring = SummonRingController.CreateSummoningRing("split", pos, 0.5f);
                     ring.UpdateSpeed = 5;
-                    ring.SpinSpeed = 75f;
+                    ring.SpinSpeed = 45f;
                     ringControllers.Add(ring);
                     controller.extantRings.Add(ring);
                     base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(pos, pos + MathToolbox.GetUnitOnCircle(f1 + (e * 45), Vector2.Distance(pos, GameManager.Instance.PrimaryPlayer.sprite.WorldCenter)), (45 * e) + 0, this, M1, 1.5f, ring));

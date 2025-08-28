@@ -1,4 +1,5 @@
 ﻿using Planetside.DungeonPlaceables;
+using Planetside.DungeonPlaceables.TrespassObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,6 +50,7 @@ namespace Planetside
             FadingBlocker.Init();
             MarkTileAsTrap.Init();
             //TrespassTrollRock.Init();
+            Deep_Teleporter.CreateTeleporter();
         }
     }
 }

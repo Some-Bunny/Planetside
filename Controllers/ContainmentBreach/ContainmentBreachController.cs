@@ -21,6 +21,7 @@ using static Dungeonator.ProceduralFlowModifierData;
 using static Planetside.RealityTearData;
 using Planetside.Controllers.ContainmentBreach.BossChanges.Misc;
 using Alexandria.PrefabAPI;
+using HarmonyLib;
 
 namespace Planetside
 {
@@ -565,6 +566,7 @@ namespace Planetside
                                 continue;
                             }
 
+
                             if (!shope.gameObject.name.ToLower().Contains("jailed"))
                             {
                                 if (!shope.gameObject.name.ToLower().Contains("bowlercell"))
@@ -572,6 +574,7 @@ namespace Planetside
                                     Destroy(shope.gameObject);
                                 }
                             }
+   
                         }
                     }
                 }
@@ -584,6 +587,41 @@ namespace Planetside
             {
                 CurrentState = States.DISABLED;
             }
+            
+        }        
+    }
+    [HarmonyPatch(typeof(PlaymakerEventInteractable), nameof(PlaymakerEventInteractable.Interact))]
+    public class Patch_PickupObject_ShouldBeTakenByRatSpawnProjModifier
+    {
+        [HarmonyPrefix]
+        private static bool Awake(PlaymakerEventInteractable __instance, PlayerController interactor)
+        {
+            if (ContainmentBreachController.CurrentState == ContainmentBreachController.States.ENABLED)
+            {
+                if (__instance.gameObject.name.ToLower().Contains("npc_lostadventurer_backpack"))
+                {
+                    var item = LootEngine.SpawnItem(PickupObjectDatabase.GetById(LostAdventurersBackpack.ID).gameObject, __instance.gameObject.transform.position, Vector2.zero, 0, false, false, false);
+                    item.GetComponent<PickupObject>().Pickup(interactor);
+                    UnityEngine.Object.Destroy(__instance.gameObject);
+                    return false;
+                }
+                if (__instance.gameObject.name.ToLower().Contains("npc_lostadventurer_shield"))
+                {
+                    var item = LootEngine.SpawnItem(PickupObjectDatabase.GetById(LostAdventurersShield.ID).gameObject, __instance.gameObject.transform.position, Vector2.zero, 0, false, false, false);
+                    item.GetComponent<PickupObject>().Pickup(interactor);
+                    UnityEngine.Object.Destroy(__instance.gameObject);
+                    return false;
+                }
+                if (__instance.gameObject.name.ToLower().Contains("npc_lostadventurer_sword"))
+                {
+                    var item = LootEngine.SpawnItem(PickupObjectDatabase.GetById(LostAdventurersSword.ID).gameObject, __instance.gameObject.transform.position, Vector2.zero, 0, false, false, false);
+                    item.GetComponent<PickupObject>().Pickup(interactor);
+                    UnityEngine.Object.Destroy(__instance.gameObject);
+                    return false;
+                }
+            }
+            return true;
         }
     }
+
 }

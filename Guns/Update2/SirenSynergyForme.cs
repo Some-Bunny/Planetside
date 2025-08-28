@@ -28,7 +28,7 @@ namespace Planetside
 
             GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_2_Sheet_Data, "fishcanroll_idle_001");
             gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_2_Animation_Data;
-            gun.sprite.SortingOrder = 1;
+            gun.sprite.SortingOrder = 2;
 
             gun.reloadAnimation = "sirencanroll_reload";
             gun.idleAnimation = "sirencanroll_idle";
@@ -45,13 +45,13 @@ namespace Planetside
 				projectileModule.ammoCost = 1;
 				projectileModule.shootStyle = ProjectileModule.ShootStyle.SemiAutomatic;
 				projectileModule.sequenceStyle = ProjectileModule.ProjectileSequenceStyle.Random;
-				projectileModule.cooldownTime = 0.4f;
+				projectileModule.cooldownTime = 0.3f;
 				projectileModule.angleVariance = 9f;
 				projectileModule.numberOfShotsInClip = 6;
 				Projectile projectile = UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(404) as Gun).DefaultModule.projectiles[0]);
 				projectile.gameObject.SetActive(false);
 				projectileModule.projectiles[0] = projectile;
-				projectile.baseData.damage = 8f;
+				projectile.baseData.damage = 13f;
 				projectile.AdditionalScaleMultiplier = 1f;
 				projectile.baseData.force *= 1;
 				projectile.baseData.speed *= 1;
@@ -69,13 +69,13 @@ namespace Planetside
                 int Length = 4;
                 Alexandria.Assetbundle.ProjectileBuilders.AnimateProjectileBundle(projectile, "fibsh", StaticSpriteDefinitions.Projectile_Sheet_Data, StaticSpriteDefinitions.Projectile_Animation_Data, "fibsh",
                  AnimateBullet.ConstructListOfSameValues<IntVector2>(new IntVector2(17, 17), Length),
-                AnimateBullet.ConstructListOfSameValues(true, Length),
+                AnimateBullet.ConstructListOfSameValues(false, Length),
                 AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.MiddleCenter, Length),
                 AnimateBullet.ConstructListOfSameValues(true, Length),
                 AnimateBullet.ConstructListOfSameValues(false, Length),
                 AnimateBullet.ConstructListOfSameValues<Vector3?>(null, Length),
-                AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(0, 0), Length),
                 AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(17, 17), Length),
+                AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(0, 0), Length),
                 AnimateBullet.ConstructListOfSameValues<Projectile>(null, Length));
 
                 /*

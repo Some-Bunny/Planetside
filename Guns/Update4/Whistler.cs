@@ -93,7 +93,7 @@ namespace Planetside
 			projectile.pierceMinorBreakables = true;
 			projectile.hitEffects.alwaysUseMidair = true;
 			projectile.hitEffects.overrideMidairDeathVFX = (PickupObjectDatabase.GetById(334) as Gun).DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX;
-			projectile.baseData.range = 1000000;
+			projectile.baseData.range = 10000;
 
 			projectile.objectImpactEventName = (PickupObjectDatabase.GetById(198) as Gun).DefaultModule.projectiles[0].objectImpactEventName;
 			projectile.enemyImpactEventName = (PickupObjectDatabase.GetById(198) as Gun).DefaultModule.projectiles[0].enemyImpactEventName;

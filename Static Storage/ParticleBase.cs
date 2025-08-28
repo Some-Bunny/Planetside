@@ -30,9 +30,7 @@ namespace Planetside
             foreach (var item in _ParticleSystems){UnityEngine.Object.DontDestroyOnLoad(item.Value);}
         }
 
-        //UnityEngine.Object.Instantiate(StaticVFXStorage.PerkParticleObject).GetComponent<ParticleSystem>()
-        //HexParticlesFull
-        //WaveParticlesInverse
+
         public static ParticleSystem ReturnParticleSystem(string name)
         {
             if (!_ParticleSystems.ContainsKey(name))

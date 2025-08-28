@@ -25,7 +25,49 @@ namespace Planetside
 
         public static void AddProceduralTeleporterToRoomHook(Action<RoomHandler> orig, RoomHandler roomHandler)
         {
-            if (GameManager.Instance.Dungeon.DungeonFloorName == "The Deep.") { return; }
+            if (GameManager.Instance.Dungeon.DungeonFloorName == "The Deep.") 
+            {
+                if (Minimap.Instance.HasTeleporterIcon(roomHandler))
+                {
+                    return;
+                }
+                GameObject objectToInstantiate = Alexandria.DungeonAPI.StaticReferences.customObjects["DeepTeleporter"];
+                DungeonData dungeonData = GameManager.Instance.Dungeon.data;
+                bool isStrict = true;
+                Func<CellData, bool> canContainTeleporter = (CellData a) => a != null && !a.isOccupied && !a.doesDamage && !a.containsTrap && !a.IsTrapZone && !a.cellVisualData.hasStampedPath && (!isStrict || !a.HasPitNeighbor(dungeonData)) && a.type == CellType.FLOOR;
+                roomHandler.ProcessTeleporterTiles(canContainTeleporter);
+                Func<CellData, bool> isInvalidFunction = (CellData a) => a == null || !a.cachedCanContainTeleporter || a.parentRoom != roomHandler;
+                Tuple<IntVector2, IntVector2> tuple = Carpetron.RawMaxSubmatrix(dungeonData.cellData, roomHandler.area.basePosition, roomHandler.area.dimensions, isInvalidFunction);
+                if (tuple.Second.x < 3 || tuple.Second.y < 3)
+                {
+                    isStrict = false;
+                    roomHandler.ProcessTeleporterTiles(canContainTeleporter);
+                    tuple = Carpetron.RawMaxSubmatrix(dungeonData.cellData, roomHandler.area.basePosition, roomHandler.area.dimensions, isInvalidFunction);
+                }
+                BraveUtility.DrawDebugSquare(tuple.First.ToVector2(), tuple.Second.ToVector2(), Color.red, 1000f);
+                if (tuple.Second.x >= 3 && tuple.Second.y >= 3)
+                {
+                    IntVector2 intVector = tuple.First;
+                    IntVector2 intVector2 = tuple.Second - tuple.First;
+                    int x = (intVector2.x % 2 != 1 && intVector2.x != 4) ? -1 : 0;
+                    int y = (intVector2.y % 2 != 1 && intVector2.y != 4) ? -1 : 0;
+                    while (intVector2.x > 3)
+                    {
+                        intVector.x++;
+                        intVector2.x -= 2;
+                    }
+                    while (intVector2.y > 3)
+                    {
+                        intVector.y++;
+                        intVector2.y -= 2;
+                    }
+                    intVector += new IntVector2(x, y);
+                    GameObject gameObject = DungeonPlaceableUtility.InstantiateDungeonPlaceable(objectToInstantiate, roomHandler, intVector, false, AIActor.AwakenAnimationType.Default, false);
+                    TeleporterController component = gameObject.GetComponent<TeleporterController>();
+                    roomHandler.RegisterInteractable(component);
+                }
+                return;
+            }
 
             if (roomHandler != null)
             {

@@ -230,7 +230,7 @@ public class ShamberController : BraveBehaviour
 
                     if (first != null)
                     {
-                        float num = this.m_bulletPositions[i].s + BraveTime.DeltaTime * Mathf.Max(30, (10 * this.m_bulletPositions[i].speed));
+                        float num = this.m_bulletPositions[i].s + BraveTime.DeltaTime * Mathf.Min(30, (10 * this.m_bulletPositions[i].speed));
                         this.m_bulletPositions[i].s = num;
 
                         Vector2 bulletPosition = this.GetBulletPosition(num, first, this.m_bulletPositions[i].Radius);
@@ -262,8 +262,7 @@ public class ShamberController : BraveBehaviour
         while (elapsed < duration)
         {
             elapsed += BraveTime.DeltaTime;
-            bool flag3 = copySprite && base.aiActor != null;
-            if (flag3)
+            if (copySprite && base.aiActor != null)
             {
                 Vector3 position = base.sprite.WorldCenter;
                 float t = elapsed / duration * (elapsed / duration);
@@ -274,8 +273,7 @@ public class ShamberController : BraveBehaviour
             }
             yield return null;
         }
-        bool flag4 = copySprite;
-        if (flag4)
+        if (copySprite != null)
         {
             UnityEngine.Object.Destroy(copySprite.gameObject);
         }
@@ -297,7 +295,9 @@ public class ShamberController : BraveBehaviour
 
     private Vector2 GetBulletPosition(float angle, Projectile projectile, float radius)
     {
-        return Vector2.MoveTowards(projectile.transform.PositionVector2(), this.aiActor.sprite.WorldCenter + new Vector2(Mathf.Cos(angle * 0.017453292f), Mathf.Sin(angle * 0.017453292f)) * radius, 25 * Time.deltaTime);
+        var v = this.aiActor.sprite.WorldCenter + new Vector2(Mathf.Cos(angle * 0.017453292f), Mathf.Sin(angle * 0.017453292f)) * radius;
+        var m = Vector2.Distance(v, projectile.transform.PositionVector2()) * 1.5f;
+        return Vector2.MoveTowards(projectile.transform.PositionVector2(), v, Mathf.Min(10f, m) * Time.deltaTime);
     }
 
 
@@ -324,7 +324,7 @@ public class ShamberController : BraveBehaviour
                     proj.baseData.range = 1000;
                     proj.ResetDistance();
                     proj.baseData.UsesCustomAccelerationCurve = true;
-                    proj.baseData.CustomAccelerationCurveDuration = 3f;
+                    proj.baseData.CustomAccelerationCurveDuration = 2.5f;
                     proj.baseData.AccelerationCurve = new AnimationCurve()
                     {
                         postWrapMode = WrapMode.ClampForever,
@@ -337,7 +337,7 @@ public class ShamberController : BraveBehaviour
                     };
                     proj.baseData.speed = Mathf.Min(this.m_bulletPositions[i].speed, 25);
                     proj.UpdateSpeed();
-                    proj.IgnoreTileCollisionsFor(0.5f);
+                    proj.IgnoreTileCollisionsFor(0.25f);
                 }
             }        
         }

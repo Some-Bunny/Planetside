@@ -18,6 +18,51 @@ namespace Planetside
 	internal static class EnemyToolbox
     {
 
+        public static void SpawnBulletScript(GameActor owner, Vector2 pos, AIBulletBank sourceBulletBank, BulletScriptSelector bulletScript, string ownerName, SpeculativeRigidbody sourceRigidbody = null, Vector2? direction = null, bool collidesWithEnemies = false, Action<Bullet, Projectile> OnBulletCreated = null)
+        {
+            GameObject gameObject = new GameObject("Temp BulletScript Spawner");
+            gameObject.transform.position = pos;
+
+            AIBulletBank aibulletBank = gameObject.AddComponent<AIBulletBank>();
+            aibulletBank.Bullets = new List<AIBulletBank.Entry>();
+
+            for (int i = 0; i < sourceBulletBank.Bullets.Count; i++)
+            {
+                aibulletBank.Bullets.Add(new AIBulletBank.Entry(sourceBulletBank.Bullets[i]));
+            }
+
+            aibulletBank.useDefaultBulletIfMissing = sourceBulletBank.useDefaultBulletIfMissing;
+            aibulletBank.transforms = new List<Transform>(sourceBulletBank.transforms);
+            aibulletBank.PlayVfx = false;
+            aibulletBank.PlayAudio = false;
+            aibulletBank.CollidesWithEnemies = collidesWithEnemies;
+            aibulletBank.gameActor = owner;
+
+            if (owner is AIActor)
+            {
+                aibulletBank.aiActor = (owner as AIActor);
+            }
+
+            aibulletBank.ActorName = ownerName;
+            if (OnBulletCreated != null)
+            {
+                aibulletBank.OnBulletSpawned += OnBulletCreated;
+            }
+
+            aibulletBank.SpecificRigidbodyException = sourceRigidbody;
+            if (direction != null)
+            {
+                aibulletBank.FixedPlayerPosition = new Vector2?(pos + direction.Value.normalized * 5f);
+            }
+
+            BulletScriptSource bulletScriptSource = gameObject.AddComponent<BulletScriptSource>();
+            bulletScriptSource.BulletManager = aibulletBank;
+            bulletScriptSource.BulletScript = bulletScript;
+            bulletScriptSource.Initialize();
+            BulletSourceKiller bulletSourceKiller = gameObject.AddComponent<BulletSourceKiller>();
+            bulletSourceKiller.BraveSource = bulletScriptSource;
+        }
+
         public static void AddOffset(this tk2dSpriteDefinition tk2DSprite, Vector3 Offset)
         {
             tk2DSprite.position0 += Offset;

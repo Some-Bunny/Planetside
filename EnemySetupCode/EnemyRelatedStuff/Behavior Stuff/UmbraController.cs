@@ -651,7 +651,8 @@ public class UmbraController : BraveBehaviour
                 GlobalSparksDoer.DoSingleParticle(this.transform.position, MathToolbox.GetUnitOnCircle(BraveUtility.RandomAngle(), UnityEngine.Random.Range(2.2f, 6.1f)), 0.25f, 4f, Color.red, GlobalSparksDoer.SparksType.FLOATY_CHAFF);
             }
             base.aiActor.PlayEffectOnActor(ResourceCache.Acquire("Global VFX/VFX_Curse") as GameObject, Vector3.zero, false, false, false);
-            SpawnManager.SpawnBulletScript(base.aiActor.gameActor, new CustomBulletScriptSelector(typeof(Baboomer)));
+            EnemyToolbox.SpawnBulletScript(base.aiActor, base.aiActor.sprite.WorldCenter, OuroborosController.BulletBankDummy.GetComponent<AIBulletBank>(), new CustomBulletScriptSelector(typeof(Baboomer)), "Reflection");
+
         }
 
         base.OnDestroy();
@@ -695,7 +696,9 @@ public class UmbraController : BraveBehaviour
             GameObject effect = UnityEngine.Object.Instantiate(StaticVFXStorage.DragunBoulderLandVFX, end, Quaternion.identity);
             Destroy(effect, 2.5f);
             AkSoundEngine.PostEvent("Play_ENM_bulletking_skull_01", t.gameObject);
-            SpawnManager.SpawnBulletScript(base.aiActor, new CustomBulletScriptSelector(typeof(SmallSlam)), end);
+            //SpawnManager.SpawnBulletScript(base.aiActor, new CustomBulletScriptSelector(typeof(SmallSlam)), end);
+            EnemyToolbox.SpawnBulletScript(base.aiActor, base.aiActor.sprite.WorldCenter, OuroborosController.BulletBankDummy.GetComponent<AIBulletBank>(), new CustomBulletScriptSelector(typeof(SmallSlam)), "Reflection");
+
         }
 
 
@@ -709,8 +712,9 @@ public class UmbraController : BraveBehaviour
 		public override IEnumerator Top()
 		{
 			base.PostWwiseEvent("Play_ENM_bulletking_slam_01", null);
-			base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("4d164ba3f62648809a4a82c90fc22cae").bulletBank.GetBullet("big_one"));
-			base.Fire(Offset.OverridePosition(base.Position + new Vector2(0f, 30f)), new Direction(-90f, DirectionType.Absolute, -1f), new Speed(30f, SpeedType.Absolute), new Baboomer.BigBullet());
+
+
+            base.Fire(Offset.OverridePosition(base.Position + new Vector2(0f, 30f)), new Direction(-90f, DirectionType.Absolute, -1f), new Speed(30f, SpeedType.Absolute), new Baboomer.BigBullet());
 
 			yield break;
 		}
@@ -728,7 +732,6 @@ public class UmbraController : BraveBehaviour
 
 			public override IEnumerator Top()
 			{
-				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("1bc2a07ef87741be90c37096910843ab").bulletBank.GetBullet("reversible"));
 				this.Projectile.specRigidbody.CollideWithTileMap = false;
 				this.Projectile.specRigidbody.CollideWithOthers = false;
 				yield return base.Wait(60);
@@ -743,7 +746,6 @@ public class UmbraController : BraveBehaviour
 			{
 				if (!preventSpawningProjectiles)
 				{
-					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("1bc2a07ef87741be90c37096910843ab").bulletBank.GetBullet("reversible"));
 					
 					float num = base.RandomAngle();
 					float Amount = 16;
@@ -781,11 +783,7 @@ public class UmbraController : BraveBehaviour
         public override IEnumerator Top()
         {
             base.PostWwiseEvent("Play_ENM_bulletking_slam_01", null);
-            if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
-            {
-                base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("da797878d215453abba824ff902e21b4").bulletBank.GetBullet("bigBullet"));
-                base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("sweep"));
-            }
+
             float Aim = base.AimDirection;
             float delta = 30f;
             base.Fire(new Direction(0, DirectionType.Absolute), new Speed(0, SpeedType.Absolute), new SmallSlam.OopsANull("bigBullet", this, -1));

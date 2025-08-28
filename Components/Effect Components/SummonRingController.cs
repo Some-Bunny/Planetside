@@ -29,12 +29,6 @@ namespace Planetside.Components.Effect_Components
             var cont = SummonRingPrefab.AddComponent<SummonRingController>();
             cont.RingOuter = Ring;
 
-            ImprovedAfterImage yes = SummonRingPrefab.gameObject.AddComponent<ImprovedAfterImage>();
-            yes.spawnShadows = true;
-            yes.shadowLifetime = 0.5f;
-            yes.shadowTimeDelay = 0.0333f;
-            yes.dashColor = new Color(0, 1, 1, 1f);
-
 
             Ring.usesOverrideMaterial = true;
             Material mat = new Material(ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTiltedCutoutEmissive"));
@@ -61,11 +55,6 @@ namespace Planetside.Components.Effect_Components
             mat.SetFloat("_EmissiveColorPower", 20);
             Ring.renderer.material = mat;
 
-            yes = miniRing.gameObject.AddComponent<ImprovedAfterImage>();
-            yes.spawnShadows = true;
-            yes.shadowLifetime = 0.333f;
-            yes.shadowTimeDelay = 0.0333f;
-            yes.dashColor = new Color(0, 1, 1, 1f);
 
 
             LetterObject = PrefabBuilder.BuildObject("LetterObject");
@@ -85,12 +74,6 @@ namespace Planetside.Components.Effect_Components
 
 
 
-
-            yes = letterSprite.gameObject.AddComponent<ImprovedAfterImage>();
-            yes.spawnShadows = true;
-            yes.shadowLifetime = 0.5f;
-            yes.shadowTimeDelay = 0.05f;
-            yes.dashColor = new Color(0, 0.25f, 0.25f, 1f);
         }
         public GameObject FollowObject = null;
 
@@ -102,22 +85,17 @@ namespace Planetside.Components.Effect_Components
             {
                 c.RingInner.SetSprite(StaticSpriteDefinitions.SpecialVFX_Sheet_Data.GetSpriteIdByName("redDemonRing"));
                 c.RingOuter.SetSprite(StaticSpriteDefinitions.SpecialVFX_Sheet_Data.GetSpriteIdByName("redDemonRing"));
-
-                c.RingInner.GetComponent<ImprovedAfterImage>().dashColor = new Color(1, 0, 0, 1);
-                c.RingOuter.GetComponent<ImprovedAfterImage>().dashColor = new Color(1, 0, 0, 1);
             }
 
             if (VisibleRings == false)
             {
-                c.RingInner.GetComponent<ImprovedAfterImage>().spawnShadows = false;
-                c.RingOuter.GetComponent<ImprovedAfterImage>().spawnShadows = false;
                 c.RingOuter.renderer.enabled = false;
                 c.RingInner.renderer.enabled = false;
             }
 
 
-            c.RingInner.GetComponent<ImprovedAfterImage>().shadowLifetime *= AfterImageTimeMultiplier;
-            c.RingOuter.GetComponent<ImprovedAfterImage>().shadowLifetime *= AfterImageTimeMultiplier;
+            //c.RingInner.GetComponent<ImprovedAfterImage>().shadowLifetime *= AfterImageTimeMultiplier;
+            //c.RingOuter.GetComponent<ImprovedAfterImage>().shadowLifetime *= AfterImageTimeMultiplier;
 
             int length = Text.Length;
             float split = 360 / length;
@@ -132,13 +110,13 @@ namespace Planetside.Components.Effect_Components
                     if (isRed)
                     {
                         _ = "red" + _;
-                        sprite.GetComponent<ImprovedAfterImage>().dashColor = new Color(0.25f, 0, 0, 1);
+                        //sprite.GetComponent<ImprovedAfterImage>().dashColor = new Color(0.25f, 0, 0, 1);
                     }
                     sprite.SetSprite(StaticSpriteDefinitions.SpecialVFX_Sheet_Data.GetSpriteIdByName(_));
                 }
                 sprite.transform.localPosition = MathToolbox.GetUnitOnCircle(split * i, 2.625f);
                 sprite.transform.localScale = Vector3.one * ScaleMultiplier;
-                sprite.GetComponent<ImprovedAfterImage>().shadowLifetime *= AfterImageTimeMultiplier;
+                //sprite.GetComponent<ImprovedAfterImage>().shadowLifetime *= AfterImageTimeMultiplier;
                 sprite.renderer.enabled = true;
 
                 c.ExtantLetters.Add(sprite);

@@ -336,7 +336,6 @@ namespace Planetside
 					},
 					new AttackBehaviorGroup.AttackGroupItem()
 					{
-
 					Probability = 2f,
 					Behavior = new TeleportBehavior{
 					AttackableDuringAnimation = true,
@@ -347,13 +346,13 @@ namespace Planetside
 					MaxHealthThreshold = 1f,
 					StayOnScreen = true,
 					AvoidWalls = true,
-					GoneTime = 1.4f,
+					GoneTime = 1.25f,
 					OnlyTeleportIfPlayerUnreachable = false,
 					MinDistanceFromPlayer = 6f,
 					MaxDistanceFromPlayer = 9f,
 					teleportInAnim = "reappear",
 					teleportOutAnim = "disappear",
-					AttackCooldown = 1f,
+					AttackCooldown = 0.5f,
 					InitialCooldown = 0.5f,
 					RequiresLineOfSight = false,
 					roomMax = new Vector2(0,0),
@@ -361,7 +360,7 @@ namespace Planetside
 					//teleportInBulletScript = new CustomBulletScriptSelector(typeof(TeleportScript)),
 					teleportOutBulletScript = new CustomBulletScriptSelector(typeof(TeleportScript)),
 					GlobalCooldown = 0.5f,
-					Cooldown = 6f,
+					Cooldown = 5f,
 
 					CooldownVariance = 0f,
 					InitialCooldownVariance = 0f,
@@ -380,8 +379,52 @@ namespace Planetside
 					},
 
 					},
+                    new AttackBehaviorGroup.AttackGroupItem()
+                    {
+                    Probability = 0.5f,
+                    Behavior = new TeleportBehavior{
+                    AttackableDuringAnimation = true,
+                    AllowCrossRoomTeleportation = false,
+                    teleportRequiresTransparency = false,
+                    hasOutlinesDuringAnim = true,
+                    ManuallyDefineRoom = false,
+                    MaxHealthThreshold = 1f,
+                    StayOnScreen = true,
+                    AvoidWalls = true,
+                    GoneTime = 0.75f,
+                    OnlyTeleportIfPlayerUnreachable = true,
+                    MinDistanceFromPlayer = 6f,
+                    MaxDistanceFromPlayer = 9f,
+                    teleportInAnim = "reappear",
+                    teleportOutAnim = "disappear",
+                    AttackCooldown = 0.5f,
+                    InitialCooldown = 0.5f,
+                    RequiresLineOfSight = false,
+                    roomMax = new Vector2(0,0),
+                    roomMin = new Vector2(0,0),
+					teleportOutBulletScript = new CustomBulletScriptSelector(typeof(TeleportScript)),
+                    GlobalCooldown = 0.5f,
+                    Cooldown = 2.5f,
 
-				};
+                    CooldownVariance = 0f,
+                    InitialCooldownVariance = 0f,
+                    goneAttackBehavior = null,
+                    IsBlackPhantom = false,
+                    GroupName = null,
+                    GroupCooldown = 0f,
+                    MinRange = 0,
+                    Range = 0,
+                    MinHealthThreshold = 0,
+                    MaxUsages = 0,
+                    AccumulateHealthThresholds = true,
+                    targetAreaStyle = null,
+                    HealthThresholds = new float[0],
+                    MinWallDistance = 0,
+                    },
+
+                    },
+
+                };
 			
 				bs.InstantFirstTick = behaviorSpeculator.InstantFirstTick;
 				bs.TickInterval = behaviorSpeculator.TickInterval;

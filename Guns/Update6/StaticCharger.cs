@@ -18,6 +18,7 @@ using System.Collections.ObjectModel;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Alexandria.Assetbundle;
+using Planetside.Toolboxes;
 
 namespace Planetside
 {
@@ -272,11 +273,27 @@ namespace Planetside
 			ETGMod.Databases.Items.Add(gun, false, "ANY");
             StaticCharger.ItemID = gun.PickupObjectId;
 			ItemIDs.AddToList(gun.PickupObjectId);
+
+
+            ImprovedSynergySetup.Add("Accumulator", 
+             new List<PickupObject> { gun } 
+            ,new List<PickupObject>() {
+                Items.Battery_Bullets,
+                Items.Shock_Rounds,
+            }, true);
+
+            ImprovedSynergySetup.Add("AA", new List<PickupObject> { gun, Guns.Shock_Rifle }, null, true);
+
+            AdvancedDualWieldSynergyProcessor advancedDualWieldSynergyProcessor = (PickupObjectDatabase.GetById(gun.PickupObjectId) as Gun).gameObject.AddComponent<AdvancedDualWieldSynergyProcessor>();
+            advancedDualWieldSynergyProcessor.PartnerGunID = Guns.Shock_Rifle.PickupObjectId;
+            advancedDualWieldSynergyProcessor.SynergyNameToCheck = "AA";
+            AdvancedDualWieldSynergyProcessor advancedDualWieldSynergyProcessor1 = (PickupObjectDatabase.GetById(Guns.Shock_Rifle.PickupObjectId) as Gun).gameObject.AddComponent<AdvancedDualWieldSynergyProcessor>();
+            advancedDualWieldSynergyProcessor1.PartnerGunID = gun.PickupObjectId;
+            advancedDualWieldSynergyProcessor1.SynergyNameToCheck = "AA";
         }
         public static int ItemID;
 
 
-        private bool HasReloaded;
 
         public override void Start()
         {
@@ -291,9 +308,18 @@ namespace Planetside
             {
                 if (___ == true)
                 {
-                    UpgradeLock = false;
-                    gun.CurrentStrengthTier = 0;
-                    AlterAnimations();
+                    if (gun.CurrentOwner is PlayerController player && player.PlayerHasActiveSynergy("Accumulator"))
+                    {
+                        UpgradeLock = false;
+                        gun.CurrentStrengthTier = Mathf.Max(0, gun.CurrentStrengthTier - 2);
+                        AlterAnimations();
+                    }
+                    else
+                    {
+                        UpgradeLock = false;
+                        gun.CurrentStrengthTier = 0;
+                        AlterAnimations();
+                    }
                 }
             };
         }

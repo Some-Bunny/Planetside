@@ -38,8 +38,6 @@ namespace Planetside
             gun.shootAnimation = "immateria_fire";
             gun.reloadAnimation = "immateria_reload";
 
-            //gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_BOSS_doormimic_blast_01";
-            //gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].triggerEvent = true;
             gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.reloadAnimation).frames[3].eventAudio = "Play_BOSS_dragun_spin_01";
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.reloadAnimation).frames[3].triggerEvent = true;
 

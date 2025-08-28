@@ -122,6 +122,12 @@ namespace Planetside
                 b.Bullets.Add(entryCopy);
                 b.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("homingPop"));
                 b.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("880bbe4ce1014740ba6b4e2ea521e49d").bulletBank.GetBullet("grenade"));
+
+                b.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("da797878d215453abba824ff902e21b4").bulletBank.GetBullet("bigBullet"));
+                b.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("sweep"));
+                b.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("4d164ba3f62648809a4a82c90fc22cae").bulletBank.GetBullet("big_one"));
+                b.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("1bc2a07ef87741be90c37096910843ab").bulletBank.GetBullet("reversible"));
+
                 b.transforms = new List<Transform>() { };
 
 				BulletBankDummy = b.gameObject;
@@ -1342,55 +1348,12 @@ namespace Planetside
 				Timer = IsBoss == true ? 2.25f : 0.75f;
 				if (base.aiActor != null)
 				{
-                    SpawnBulletScript(base.aiActor, base.aiActor.sprite.WorldCenter, OuroborosController.BulletBankDummy.GetComponent<AIBulletBank>(), (IsBoss == true ? new CustomBulletScriptSelector(typeof(EliteReflectBoss)) : new CustomBulletScriptSelector(typeof(EliteReflect))), "Reflection");
+                    EnemyToolbox.SpawnBulletScript(base.aiActor, base.aiActor.sprite.WorldCenter, OuroborosController.BulletBankDummy.GetComponent<AIBulletBank>(), (IsBoss == true ? new CustomBulletScriptSelector(typeof(EliteReflectBoss)) : new CustomBulletScriptSelector(typeof(EliteReflect))), "Reflection");
 				}
 			}
 		}
 
-        public static void SpawnBulletScript(GameActor owner, Vector2 pos, AIBulletBank sourceBulletBank, BulletScriptSelector bulletScript, string ownerName, SpeculativeRigidbody sourceRigidbody = null, Vector2? direction = null, bool collidesWithEnemies = false, Action<Bullet, Projectile> OnBulletCreated = null)
-        {
-            GameObject gameObject = new GameObject("Temp BulletScript Spawner");
-            gameObject.transform.position = pos;
 
-            AIBulletBank aibulletBank = gameObject.AddComponent<AIBulletBank>();
-            aibulletBank.Bullets = new List<AIBulletBank.Entry>();
-
-            for (int i = 0; i < sourceBulletBank.Bullets.Count; i++)
-            {
-                aibulletBank.Bullets.Add(new AIBulletBank.Entry(sourceBulletBank.Bullets[i]));
-            }
-
-            aibulletBank.useDefaultBulletIfMissing = sourceBulletBank.useDefaultBulletIfMissing;
-            aibulletBank.transforms = new List<Transform>(sourceBulletBank.transforms);
-            aibulletBank.PlayVfx = false;
-            aibulletBank.PlayAudio = false;
-            aibulletBank.CollidesWithEnemies = collidesWithEnemies;
-            aibulletBank.gameActor = owner;
-
-            if (owner is AIActor)
-            {
-                aibulletBank.aiActor = (owner as AIActor);
-            }
-
-            aibulletBank.ActorName = ownerName;
-            if (OnBulletCreated != null)
-            {
-                aibulletBank.OnBulletSpawned += OnBulletCreated;
-            }
-
-            aibulletBank.SpecificRigidbodyException = sourceRigidbody;
-            if (direction != null)
-            {
-                aibulletBank.FixedPlayerPosition = new Vector2?(pos + direction.Value.normalized * 5f);
-            }
-
-            BulletScriptSource bulletScriptSource = gameObject.AddComponent<BulletScriptSource>();
-            bulletScriptSource.BulletManager = aibulletBank;
-            bulletScriptSource.BulletScript = bulletScript;
-            bulletScriptSource.Initialize();
-            BulletSourceKiller bulletSourceKiller = gameObject.AddComponent<BulletSourceKiller>();
-            bulletSourceKiller.BraveSource = bulletScriptSource;
-        }
 
 
         public override void Update()

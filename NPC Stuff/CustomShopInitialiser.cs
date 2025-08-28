@@ -490,7 +490,10 @@ namespace Planetside
                 , new Vector3(1.375f, 2f)
                 , new Vector3(1.4375f, 3.4375f, 5.9375f)
                 , ItsDaFuckinShopApi.VoiceBoxes.ALIEN
-                , new Vector3[] { new Vector3(1.125f, 1.5625f, 1), new Vector3(2.625f, 0.875f, 1), new Vector3(4.125f, 1.5625f, 1), new Vector3(2.625f, 2.125f, 1) }
+                , new Vector3[] { 
+                    new Vector3(1.125f, 0.5625f+ 0.25f, 1), new Vector3(1.125f, 2.1625f + 0.25f, 1), 
+                    new Vector3(2.625f, 0.5625f+ 0.25f, 1), new Vector3(2.625f, 2.1625f+ 0.25f, 1),
+                    new Vector3(4.125f, 0.5625f+ 0.25f, 1), new Vector3(4.125f, 2.1625f+ 0.25f, 1), }
                 , 0.6f
                 , false
                 , null

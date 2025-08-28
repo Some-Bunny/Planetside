@@ -421,6 +421,23 @@ namespace Planetside
             SetupHeartVFX();
             SetupHalfHeartVFX();
             BuildVoidGlassStone();
+
+            var generic = PrefabBuilder.BuildObject("Corruption Generic VFX");
+            DontDestroyOnLoad(generic);
+            var spr = generic.AddComponent<tk2dSprite>();
+            spr.SetSprite(StaticSpriteDefinitions.VFX_Sheet_Data, "corrupt_armor_break_001");
+            var anima = generic.AddComponent<tk2dSpriteAnimator>();
+            anima.library = StaticSpriteDefinitions.VFX_Animation_Data;
+
+            spr.usesOverrideMaterial = true;
+            var mat = new Material(ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTiltedCutoutEmissive"));
+            mat.mainTexture = spr.renderer.material.mainTexture;
+            mat.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+            mat.SetFloat("_EmissivePower", 10);
+            mat.SetFloat("_EmissiveColorPower", 32);
+            spr.renderer.material = mat;
+
+            CorruptionVFXObject = anima;
         }
 
         public override CustomDungeonFlags FlagToSetOnStack => CustomDungeonFlags.CORRUPTEDWEALTH_FLAG_STACK;
@@ -490,6 +507,8 @@ namespace Planetside
                     FlagToTrack = SaveAPI.CustomDungeonFlags.CORRUPTEDWEALTH_FLAG_STACK
                 },
         };
+
+        public static tk2dSpriteAnimator CorruptionVFXObject;
 
 
         public static void BuildVoidGlassStone()
@@ -777,7 +796,9 @@ namespace Planetside
         }
         private IEnumerator ThePower()
         {
-            //m_ENM_gunnut_shoce_01
+            var obj = UnityEngine.Object.Instantiate<tk2dSpriteAnimator>(CorruptionVFXObject, Owner.sprite.WorldCenter, Quaternion.identity);
+            obj.PlayAndDestroyObject("corrupt_armor");
+
             _Owner.PostProcessProjectile += Player_PostProcessProjectile;
             _Owner.PostProcessBeamTick += Player_PostProcessBeamTick;
             AkSoundEngine.PostEvent("Play_ITM_Macho_Brace_Active_01", _Owner.gameObject);

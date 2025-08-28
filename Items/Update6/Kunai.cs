@@ -120,7 +120,46 @@ namespace Planetside
 
             KunaiProjectile = projectile;
             ThrowEffect = (PickupObjectDatabase.GetById(97) as Gun).muzzleFlashEffects.effects[0].effects[0].effect;
+
+            List<string> mandatoryConsoleIDs = new List<string>
+            {
+                "psog:kunai",
+                "katana_bullets"
+            };
+            Alexandria.ItemAPI.CustomSynergies.Add("Dragun Punch", mandatoryConsoleIDs, null, true);
+            List<string> mandatoryConsoleIDs_2 = new List<string>
+            {
+                "psog:kunai",
+                "kruller_glaive"
+            };
+            Alexandria.ItemAPI.CustomSynergies.Add("Convenient Option", mandatoryConsoleIDs_2, null, true);
+            KatanaSlash = (PickupObjectDatabase.GetById(822) as ComplexProjectileModifier);
+
+
+
+            var slash = ScriptableObject.CreateInstance<KunaiSpecialSlash>();
+            slash.projInteractMode = CustomSlashDoer.ProjInteractMode.REFLECTANDPOSTPROCESS;
+            slash.playerKnockbackForce = 0;
+            slash.enemyKnockbackForce = 20;
+            slash.doVFX = true;
+            slash.doHitVFX = true;
+            slash.slashRange = 2.5f;
+            slash.slashDegrees = 72;
+            slash.soundEvent = "Play_ENM_gunnut_swing_01";
+            slash.damage = 25;
+            slash.damagesBreakables = true;
+            slash.VFX = KatanaSlash.LinearChainExplosionData.effect.CreateQuickVFXPool()
+;
+            slash.hitVFX = (PickupObjectDatabase.GetById(539) as Gun).DefaultModule.chargeProjectiles[0].Projectile.hitEffects.enemy;
+            slash.HitSecretRoomWalls = true;
+            customSlash = slash;
+            GlaiveProjectile = (PickupObjectDatabase.GetById(656) as Gun).DefaultModule.chargeProjectiles[0].Projectile;
         }
+        public static KunaiSpecialSlash customSlash;
+        public static Projectile GlaiveProjectile;
+
+        public static ComplexProjectileModifier KatanaSlash;
+
         public static GameObject ThrowEffect;
         public static Projectile KunaiProjectile;
         public static int ItemID;
@@ -165,6 +204,11 @@ namespace Planetside
             var player = base.Owner;
             yield return new WaitForSeconds(0.05f);
 
+            if (this.Owner && this.Owner.PlayerHasActiveSynergy("Dragun Punch"))
+            {
+                CustomSlashDoer.DoSwordSlash(base.Owner.CurrentGun.PrimaryHandAttachPoint.position, base.Owner.CurrentGun.CurrentAngle, base.Owner, customSlash);
+            }
+
             for (int i = 0; i < 3; i++)
             {
                 AkSoundEngine.PostEvent("Play_BOSS_lichC_zap_01", player.gameObject);
@@ -172,14 +216,23 @@ namespace Planetside
                 float angle = i == 0 ? player.CurrentGun.CurrentAngle : ProjSpawnHelper.GetAccuracyAngled(player.CurrentGun.CurrentAngle, 10, player);
                 SpawnManager.SpawnVFX(ThrowEffect, player.gunAttachPoint.position, Quaternion.Euler(0,0, angle));
 
-                GameObject spawnedBulletOBJ = SpawnManager.SpawnProjectile(KunaiProjectile.gameObject, player.gunAttachPoint.position, Quaternion.Euler(0f, 0f, angle), true);
+                bool isGlaive = player.CurrentGun.PickupObjectId == 656;
+
+                GameObject spawnedBulletOBJ = SpawnManager.SpawnProjectile(isGlaive ? GlaiveProjectile.gameObject : KunaiProjectile.gameObject, player.gunAttachPoint.position, Quaternion.Euler(0f, 0f, angle), true);
                 Projectile component = spawnedBulletOBJ.GetComponent<Projectile>();
                 if (component != null)
                 {
+                    if (isGlaive)
+                    {
+                        component.baseData.damage *= 0.666f;
+                        component.baseData.speed *= 1.5f;
+                        component.UpdateSpeed();
+                    }
                     component.Owner = player;
                     component.Shooter = player.specRigidbody;
                     player.DoPostProcessProjectile(component);
                 }
+
                 yield return new WaitForSeconds(0.0625f);
             }
             yield break;
@@ -199,5 +252,107 @@ namespace Planetside
 
             return result;
 		}
-	}
+
+
+        public class KunaiSpecialSlash : CustomSlashData
+        {
+            public override CustomSlashData ReturnClone()
+            {
+
+                KunaiSpecialSlash newData = ScriptableObject.CreateInstance<KunaiSpecialSlash>();
+                newData.doVFX = this.doVFX;
+                newData.VFX = this.VFX;
+                newData.doHitVFX = this.doHitVFX;
+                newData.hitVFX = this.hitVFX;
+                newData.projInteractMode = this.projInteractMode;
+                newData.playerKnockbackForce = this.playerKnockbackForce;
+                newData.enemyKnockbackForce = this.enemyKnockbackForce;
+                newData.statusEffects = this.statusEffects;
+                newData.jammedDamageMult = this.jammedDamageMult;
+                newData.bossDamageMult = this.bossDamageMult;
+                newData.doOnSlash = this.doOnSlash;
+                newData.doPostProcessSlash = this.doPostProcessSlash;
+                newData.slashRange = this.slashRange;
+                newData.slashDegrees = this.slashDegrees;
+                newData.damage = this.damage;
+                newData.damagesBreakables = this.damagesBreakables;
+                newData.soundEvent = this.soundEvent;
+                newData.OnHitTarget = this.OnHitTarget;
+                newData.OnHitBullet = this.OnHitBullet;
+                newData.OnHitMinorBreakable = this.OnHitMinorBreakable;
+                newData.OnHitMajorBreakable = this.OnHitMajorBreakable;
+                return newData;
+            }
+
+            public override void OnHitEnemy(GameActor gameActor, bool b, float Angle, Vector2 arcOrigin, Vector2 contact)
+            {
+                if (gameActor is AIActor myAiActor && b == true)
+                {
+                    if (myAiActor && myAiActor.IsNormalEnemy && myAiActor.healthHaver)
+                    {
+                        myAiActor.behaviorSpeculator?.Stun(1.5f);
+                    }
+                }
+            }
+
+
+
+            public override void OnProjectileReflect(Projectile p, bool retargetReflectedBullet, GameActor newOwner, float minReflectedBulletSpeed, bool doPostProcessing = false, float scaleModifier = 1, float baseDamage = 10, float spread = 0, string sfx = null)
+            {
+                AkSoundEngine.PostEvent("Play_OBJ_metalskin_deflect_01", p.gameObject);
+
+                p.RemoveBulletScriptControl();
+
+                if ((bool)p.Owner && (bool)p.Owner.specRigidbody)
+                {
+                    p.specRigidbody.DeregisterSpecificCollisionException(p.Owner.specRigidbody);
+                }
+
+                p.Owner = newOwner;
+                p.SetNewShooter(newOwner.specRigidbody);
+                p.allowSelfShooting = false;
+                if (newOwner is AIActor)
+                {
+                    p.collidesWithPlayer = true;
+                    p.collidesWithEnemies = false;
+                }
+                else if (newOwner is PlayerController)
+                {
+                    p.collidesWithPlayer = false;
+                    p.collidesWithEnemies = true;
+                }
+                SpawnManager.PoolManager.Remove(p.transform);
+                float previousSpeed = p.baseData.speed;
+
+                p.baseData.damage = 2f + (p.baseData.speed * 0.1f);
+                p.baseData.speed = p.baseData.speed * 1.4f;
+                float speedMath = Mathf.Max(0, 60 - (previousSpeed * 3f));
+
+                p.UpdateSpeed();
+                if (newOwner is PlayerController)
+                {
+                    PlayerController playerController = newOwner as PlayerController;
+                    if (playerController != null)
+                    {
+                        p.Direction = MathToolbox.GetUnitOnCircle(playerController.CurrentGun.CurrentAngle + UnityEngine.Random.Range(-speedMath, speedMath), 1);
+                        p.baseData.damage *= playerController.stats.GetStatValue(PlayerStats.StatType.Damage);
+                        p.baseData.speed *= playerController.stats.GetStatValue(PlayerStats.StatType.ProjectileSpeed);
+                        p.UpdateSpeed();
+                        p.baseData.force *= playerController.stats.GetStatValue(PlayerStats.StatType.KnockbackMultiplier);
+                        p.baseData.range *= playerController.stats.GetStatValue(PlayerStats.StatType.RangeMultiplier);
+                        p.BossDamageMultiplier *= playerController.stats.GetStatValue(PlayerStats.StatType.DamageToBosses);
+                        p.RuntimeUpdateScale(playerController.stats.GetStatValue(PlayerStats.StatType.PlayerBulletScale));
+                        playerController.DoPostProcessProjectile(p);
+                    }
+                }
+
+              
+                p.AdjustPlayerProjectileTint(new Color(1, 0.6f, 0), 10);
+                p.UpdateCollisionMask();
+                p.Reflected();
+                p.SendInDirection(p.Direction, resetDistance: true);
+            }
+        }
+
+    }
 }

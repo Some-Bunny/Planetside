@@ -38,7 +38,7 @@ namespace Planetside
     {
         public const string GUID = "somebunny.etg.planetsideofgunymede";
         public const string NAME = "Planetside Of Gunymede Pre-Release";
-        public const string VERSION = "1.3.188";
+        public const string VERSION = "1.3.189";
         //9006FF
         public static readonly string TEXT_COLOR = "#00d0ff";
         //00d0ff
@@ -59,7 +59,7 @@ namespace Planetside
 
         #region DebugToggles
 
-        public static bool DebugMode = true;
+        public static bool DebugMode = false;
 
         private static bool RoomsActive = true;
         private static bool ControllersActive = true;
@@ -68,7 +68,7 @@ namespace Planetside
         private static bool NPCsActive = true;
         private static bool PlaceablesActive = true;
         private static bool EnemyChangesActive = true;
-        public static bool PrisonerDebug = false;
+        public static bool PrisonerDebug = true;
 
         #endregion
 
@@ -85,7 +85,6 @@ namespace Planetside
         {
             #region Basic Initialization
             StaticShaders.InitShaders();
-
             GunFilePath = this.FolderPath() + "/sprites";
             //ETGMod.Assets.SetupSpritesFromFolder(GunFilePath);
 
@@ -414,6 +413,10 @@ namespace Planetside
 
             RepairNode.Init();
             UmbraController.InitEffect();
+
+            LostAdventurersSword.Init();
+            LostAdventurersBackpack.Init();
+            LostAdventurersShield.Init();
 
             TestActiveItem.Init();
 

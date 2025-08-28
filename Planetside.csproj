@@ -127,6 +127,7 @@
     <Compile Include="DungeonPlaceables\MarkTileAsTrap.cs" />
     <Compile Include="DungeonPlaceables\NoTeleporterPlaceable.cs" />
     <Compile Include="DungeonPlaceables\TheHelpfulPad.cs" />
+    <Compile Include="DungeonPlaceables\TrespassObjects\DeepTeleporter.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\MovingFloorTiles\MovingTile2X2.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TrespassBloodDecals.cs" />
     <Compile Include="DungeonPlaceables\TrespassObjects\TearInReality.cs" />
@@ -243,6 +244,9 @@
     <Compile Include="Hooks, Actions and Patches\PickupHooks.cs" />
     <Compile Include="Hooks, Actions and Patches\ExplosionHooks.cs" />
     <Compile Include="Hooks, Actions and Patches\TitleDioramaHooks.cs" />
+    <Compile Include="Items\Update6\LostAdventurersShield.cs" />
+    <Compile Include="Items\Update6\LostAdventurersBackpack.cs" />
+    <Compile Include="Items\Update6\LostAdventurersSword.cs" />
     <Compile Include="Items\Update6\CHROMA.cs" />
     <Compile Include="Items\Update6\HotSwapper.cs" />
     <Compile Include="Items\Update6\LeadBaton.cs" />
@@ -319,6 +323,7 @@
     <Compile Include="TheAbyss\AbyssFloorSetup.cs" />
     <Compile Include="TheAbyss\AbyssFlows.cs" />
     <Compile Include="TheAbyss\ModPrefabs.cs" />
+    <Compile Include="Toolboxes\AllItems.cs" />
     <Compile Include="Toolboxes\Dictionary.cs" />
     <Compile Include="Toolboxes\EnemyToolbox.cs" />
     <Compile Include="Toolboxes\Extensions\Easing.cs" />
@@ -326,6 +331,7 @@
     <Compile Include="Toolboxes\Extensions\SpriteOffseter.cs" />
     <Compile Include="Toolboxes\Extensions\StatModificationForItem.cs" />
     <Compile Include="Toolboxes\GUID_Maker.cs" />
+    <Compile Include="Toolboxes\ImprovedSynergySetup.cs" />
     <Compile Include="Toolboxes\RaycastToolbox.cs" />
     <Compile Include="Toolboxes\SpapisSuperCoolAdvancedCodeToolbox.cs" />
     <Compile Include="Toolboxes\SpriteTrimmer.cs" />

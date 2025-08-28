@@ -331,7 +331,7 @@ namespace Planetside.DungeonPlaceables
                 }
             }
         }
-
+        private bool hasAlreadySpawned = false;
         private void Room_Entered(PlayerController p)
         {
             this.Invoke("SpawnTheGuy", UnityEngine.Random.Range(0.4f, 0.7f));
@@ -435,8 +435,9 @@ namespace Planetside.DungeonPlaceables
 
         private void SpawnTheGuy()
         {
+            if (hasAlreadySpawned == true) { return; }
             if (this == null) { return; }
-
+            hasAlreadySpawned = true;
             EnemyBlessed = AIActor.Spawn(EnemyDatabase.GetOrLoadByGuid(EnemyGUIDToSpawn), new IntVector2(Mathf.RoundToInt(this.transform.position.x + EnemySpawnOffset.x), Mathf.RoundToInt(this.transform.position.y + EnemySpawnOffset.y)), this.transform.position.GetAbsoluteRoom(), false, AIActor.AwakenAnimationType.Default, false);
             EnemyBlessed.reinforceType = ReinforceType.Instant;
             EnemyBlessed.HandleReinforcementFallIntoRoom(0.01f);

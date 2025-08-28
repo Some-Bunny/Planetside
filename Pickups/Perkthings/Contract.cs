@@ -516,31 +516,31 @@ namespace Planetside
             base.MidGameSerialize(data);
             if (isDummy) { return; }
             data.Add(Boys.Count);
-            Debug.Log($"Cerealizing...");
+            //Debug.Log($"Cerealizing...");
 
-            Debug.Log($"Count: {Boys.Count}");
+            //Debug.Log($"Count: {Boys.Count}");
             foreach (var entry in Boys)
             {
                 data.Add(entry.First);
-                Debug.Log($"Type: {entry.First}");
+                //Debug.Log($"Type: {entry.First}");
 
                 string Color = $"{entry.Second.r}|{entry.Second.g}|{entry.Second.b}|1";
-                Debug.Log($"Color: {Color}");
+                //Debug.Log($"Color: {Color}");
 
                 data.Add(Color);
             }
-            Debug.Log($"Cerealizing End.");
+            //Debug.Log($"Cerealizing End.");
 
         }
         public override void MidGameDeserialize(List<object> data)
         {
             base.MidGameDeserialize(data);
             if (isDummy) { return; }
-            Debug.Log($"Decerealizing...");
+           // Debug.Log($"Decerealizing...");
 
             int count = 0;
             int amountOfBoys = (int)data[count++];
-            Debug.Log($"Count: {amountOfBoys}");
+            //Debug.Log($"Count: {amountOfBoys}");
 
             List<int> BoyType = new List<int>();
             List<Color> BoyPride = new List<Color>();
@@ -548,11 +548,11 @@ namespace Planetside
             {
                 int Type = (int)data[count++];
                 BoyType.Add(Type);
-                Debug.Log($"Type: {Type}");
+               // Debug.Log($"Type: {Type}");
 
                 Color c = new Color(1,1,1,1);
                 string colorString = (string)data[count++];
-                Debug.Log($"Color: {colorString}");
+                //Debug.Log($"Color: {colorString}");
 
                 int colorSplit = 0;
                 foreach (var entry in colorString.Split('|'))
@@ -577,7 +577,7 @@ namespace Planetside
                 }
                 BoyPride.Add(c);
             }
-            Debug.Log($"Decerealizing End.");
+            //Debug.Log($"Decerealizing End.");
 
             SetStuffUp(amountOfBoys, BoyType, BoyPride);
         }

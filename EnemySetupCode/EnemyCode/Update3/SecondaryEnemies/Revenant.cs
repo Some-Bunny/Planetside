@@ -147,7 +147,7 @@ namespace Planetside
 
                 Material matShader = new Material(Shader.Find("Brave/Internal/SimpleAlphaFadeUnlit"));
                 matShader.mainTexture = companion.sprite.renderer.material.mainTexture;
-                matShader.SetFloat("_Fade", 0.125f);
+                matShader.SetFloat("_Fade", 0.2f);
                 companion.sprite.renderer.material = matShader;
 
             }
@@ -161,15 +161,6 @@ namespace Planetside
 
 		public class RevenantHide : BraveBehaviour
 		{
-			private void Start()
-			{
-				base.aiActor.healthHaver.OnPreDeath += (obj) =>
-				{ 
-
-
-				};
-            }
-			private RoomHandler roomHandler;
 			private bool isFading = false;
 			public void Update()
 			{
@@ -184,8 +175,8 @@ namespace Planetside
 				float e = 0;
 				while (e < 1)
 				{
-					e += Time.deltaTime * 2;
-					this.aiActor.sprite.renderer.material.SetFloat("_Fade", Mathf.Lerp(0.125f, 0, e));
+					e += Time.deltaTime * 1.5f;
+					this.aiActor.sprite.renderer.material.SetFloat("_Fade", Mathf.Lerp(0.2f, 0, e));
 					yield return null;
 				}
 				this.aiActor.EraseFromExistence();

@@ -46,7 +46,13 @@ namespace Planetside
 		{
 			try
 			{
-				if (UnityEngine.Random.value < 0.5f * effectChanceScalar && sourceProjectile.gameObject.GetComponent<RecursionPreventer>() == null)
+                float e = 0.5f;
+                if (Owner.GetEffect("WarpBuff") != null)
+                {
+                    e = 2;
+                }
+
+				if (UnityEngine.Random.value < e * effectChanceScalar && sourceProjectile.gameObject.GetComponent<RecursionPreventer>() == null)
 				{
                     if (base.Owner.CurrentRoom != null)
                     {
@@ -77,6 +83,8 @@ namespace Planetside
             Destroy(gameObject, 1.5f);
             AkSoundEngine.PostEvent("Play_ENM_bullat_tackle_01", gameObject);
 
+
+
             GameObject spawnedBulletOBJ = SpawnManager.SpawnProjectile(proj.PossibleSourceGun.DefaultModule.GetCurrentProjectile().gameObject, startPosition, Quaternion.Euler(0f, 0f, (enemy.sprite.WorldCenter - startPosition).ToAngle()), true);
             Projectile projectile = spawnedBulletOBJ.GetComponent<Projectile>();
             if (projectile != null)
@@ -89,6 +97,12 @@ namespace Planetside
 				projectile.IgnoreTileCollisionsFor(3);
 				projectile.baseData.range *= 2.5f;
 				projectile.pierceMinorBreakables = true;
+                if (Owner.GetEffect("WarpBuff") != null)
+                {
+                    projectile.baseData.speed *= 2f;
+                    projectile.baseData.damage *= 1.1f;
+
+                }
             }
         }
 
