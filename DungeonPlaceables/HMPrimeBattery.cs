@@ -12,6 +12,7 @@ using Planetside;
 using BreakAbleAPI;
 using System.Collections;
 using SaveAPI;
+using Alexandria.PrefabAPI;
 
 namespace Planetside
 {
@@ -27,6 +28,7 @@ namespace Planetside
             noteSelf = base.gameObject.GetComponent<NoteDoer>();
             noteSelf.Start();
 
+            /*
             base.gameObject.GetComponent<tk2dBaseSprite>().usesOverrideMaterial = true;
             Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
             mat.mainTexture = base.gameObject.GetComponent<tk2dBaseSprite>().renderer.material.mainTexture;
@@ -35,7 +37,7 @@ namespace Planetside
             mat.SetFloat("_EmissivePower", 100);
             mat.SetFloat("_EmissiveThresholdSensitivity", 0.05f);
             base.gameObject.GetComponent<tk2dBaseSprite>().renderer.material = mat;
-
+            */
             if (self != null)
             {
                 RoomHandler instanceRoom = GameManager.Instance.Dungeon.data.GetAbsoluteRoomFromPosition(base.transform.position.IntXY(VectorConversions.Floor));
@@ -154,6 +156,7 @@ namespace Planetside
     {
         public static void Init()
         {
+            /*
             string defaultPath = "Planetside/Resources/DungeonObjects/HMPrimeBattery/";
             string[] idlePaths = new string[]
             {
@@ -176,14 +179,42 @@ namespace Planetside
                 defaultPath+"hmprime_use_008.png",
                 defaultPath+"hmprime_use_009.png",
             };
+            */
             ETGMod.Databases.Strings.Core.Set("#HM_PRIME_NOTE_TROLL", 
                 "The object left on the ground looks like a large, volatile battery.\n\nMaybe you should stand back...");
 
 
-            MajorBreakable note3 = BreakableAPIToolbox.GenerateMajorBreakable("hmPrimeBattery", idlePaths, 2, breakPaths, 2, 15000, true, 10, 16, -1, -4, true, null, null, true, null);
-            NoteDoer finishedNote3 = BreakableAPIToolbox.GenerateNoteDoer(note3, BreakableAPIToolbox.GenerateTransformObject(note3.gameObject, new Vector2(0.25f, 0.25f), "noteattachPoint").transform, "#HM_PRIME_NOTE_TROLL", false, NoteDoer.NoteBackgroundType.LETTER);
-            EnemyToolbox.AddSoundsToAnimationFrame(note3.spriteAnimator, "break", new Dictionary<int, string> { { 0, "Play_ENM_hammer_target_01" }, { 2, "Play_ENM_hammer_target_01" }, { 5, "Play_ENM_hammer_target_01" } });
-            EnemyToolbox.AddEventTriggersToAnimation(note3.spriteAnimator, "break", new Dictionary<int, string> { { 0, "BigBoomSoon" },{7, "DIE" } });
+            //MajorBreakable note3 = BreakableAPIToolbox.GenerateMajorBreakable("hmPrimeBattery", idlePaths, 2, breakPaths, 2, 15000, true, 10, 16, -1, -4, true, null, null, true, null);
+
+
+            var Battery = PrefabBuilder.BuildObject("HM Prime Battery");
+            Battery.layer = 20;
+            var sprite = Battery.AddComponent<tk2dSprite>();
+            var animator = Battery.AddComponent<tk2dSpriteAnimator>();
+            animator.library = StaticSpriteDefinitions.RoomObject_Animation_Data;
+            animator.playAutomatically = true;
+            animator.defaultClipId = StaticSpriteDefinitions.RoomObject_Animation_Data.GetClipIdByName("hmprime_battery_idle");
+            sprite.usesOverrideMaterial = true;
+            Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+            mat.mainTexture = sprite.renderer.material.mainTexture;
+            mat.SetColor("_EmissiveColor", new Color32(0, 255, 54, 255));
+            mat.SetFloat("_EmissiveColorPower", 12f);
+            mat.SetFloat("_EmissivePower", 10);
+            sprite.renderer.material = mat;
+            Battery.CreateFastBody(new IntVector2(10, 14), new IntVector2(0, -3), CollisionLayer.PlayerBlocker);
+            Battery.CreateFastBody(new IntVector2(10, 14), new IntVector2(0, -3), CollisionLayer.EnemyBlocker);
+            Battery.CreateFastBody(new IntVector2(10, 14), new IntVector2(0, -3), CollisionLayer.BulletBlocker);
+
+            var majorBreakable = Battery.AddComponent<MajorBreakable>();
+            majorBreakable.HitPoints = 15000;
+            majorBreakable.sprite = sprite;
+            majorBreakable.spriteAnimator = animator;
+            majorBreakable.DamageReduction = 1000;
+
+
+            NoteDoer finishedNote3 = BreakableAPIToolbox.GenerateNoteDoer(majorBreakable, BreakableAPI_Bundled.GenerateTransformObject(majorBreakable.gameObject, new Vector2(0.25f, 0.25f), "noteattachPoint").transform, "#HM_PRIME_NOTE_TROLL", false, NoteDoer.NoteBackgroundType.LETTER);
+            EnemyToolbox.AddSoundsToAnimationFrame(majorBreakable.spriteAnimator, "hmprime_battery_boom", new Dictionary<int, string> { { 0, "Play_ENM_hammer_target_01" }, { 2, "Play_ENM_hammer_target_01" }, { 5, "Play_ENM_hammer_target_01" } });
+            EnemyToolbox.AddEventTriggersToAnimation(majorBreakable.spriteAnimator, "hmprime_battery_boom", new Dictionary<int, string> { { 0, "BigBoomSoon" },{7, "DIE" } });
             finishedNote3.gameObject.AddComponent<HMPrimeBatteryController>();
             StaticReferences.StoredRoomObjects.Add("hmprimeBattery", finishedNote3.gameObject);
 

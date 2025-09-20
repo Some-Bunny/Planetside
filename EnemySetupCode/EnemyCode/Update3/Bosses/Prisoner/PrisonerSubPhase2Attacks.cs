@@ -1033,8 +1033,8 @@ namespace Planetside
 				for (int e = 0; e < 8; e++)
 				{
 					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(CentreAngle, this, 0.75f));
-					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(CentreAngle, this, 0.75f, 18f));
-					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(CentreAngle, this, 0.75f, -18f));
+					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(CentreAngle, this, 0.75f, 15f));
+					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(CentreAngle, this, 0.75f, -15f));
 
 					yield return this.Wait(60 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
 				}
@@ -1054,7 +1054,7 @@ namespace Planetside
 					int r = 2;
 					if (i % 5 == 0)
                     {
-						r = 6;
+						r = 9;
 					}
 					for (int h = 0; h < r; h++)
                     {
@@ -1090,7 +1090,7 @@ namespace Planetside
 				ImprovedAfterImageForTiled yes1 = component2.gameObject.GetOrAddComponent<ImprovedAfterImageForTiled>();
 				yes1.spawnShadows = true;
 				yes1.shadowLifetime = 0.2f;
-				yes1.shadowTimeDelay = 0.005f;
+				yes1.shadowTimeDelay = 0.05f;
 				yes1.dashColor = new Color(1f, 0f, 0f, 1f);
 				float elapsed = 0;
 				while (elapsed < Time)
@@ -1143,7 +1143,7 @@ namespace Planetside
 				ImprovedAfterImageForTiled yes1 = component2.gameObject.GetOrAddComponent<ImprovedAfterImageForTiled>();
 				yes1.spawnShadows = true;
 				yes1.shadowLifetime = 0.2f;
-				yes1.shadowTimeDelay = 0.005f;
+				yes1.shadowTimeDelay = 0.05f;
 				yes1.dashColor = new Color(1f, 0f, 0f, 1f);
 
 				float elapsed = 0;
@@ -1275,9 +1275,9 @@ namespace Planetside
 				}
 				UnityEngine.Object.Destroy(component2.gameObject);
 				base.PostWwiseEvent("Play_ENM_bulletking_skull_01", null);
-				for (int i = 0; i < 3; i++)
+				for (int i = 0; i < 6; i++)
 				{
-					base.Fire(new Direction(Angle, DirectionType.Absolute, -1f), new Speed(28 - (i * 9f), SpeedType.Absolute), new SpeedChangingBullet("sniperUndodgeable", 12, 90));
+					base.Fire(new Direction(Angle, DirectionType.Absolute, -1f), new Speed(20 - (i * 3f), SpeedType.Absolute), new SpeedChangingBullet("sniperUndodgeable", 11, 120));
 				}
                 yield break;
 			}
@@ -1385,17 +1385,17 @@ namespace Planetside
 				Vector2 pos = this.BulletBank.aiActor.sprite.WorldCenter;
 
 
-				for (int e = 0; e < 8; e++)
+				for (int e = 0; e < 6; e++)
 				{
                     var ring = SummonRingController.CreateSummoningRing("split", pos, 0.5f);
                     ring.UpdateSpeed = 5;
                     ring.SpinSpeed = 45f;
                     ringControllers.Add(ring);
                     controller.extantRings.Add(ring);
-                    base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(pos, pos + MathToolbox.GetUnitOnCircle(f1 + (e * 45), Vector2.Distance(pos, GameManager.Instance.PrimaryPlayer.sprite.WorldCenter)), (45 * e) + 0, this, M1, 1.5f, ring));
-					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(pos, pos + MathToolbox.GetUnitOnCircle(f1 + (e * 45) , Vector2.Distance(pos, GameManager.Instance.PrimaryPlayer.sprite.WorldCenter)), (45 * e) + 90, this, M1, 1.5f));
-					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(pos, pos + MathToolbox.GetUnitOnCircle(f1 + (e * 45) , Vector2.Distance(pos, GameManager.Instance.PrimaryPlayer.sprite.WorldCenter)), (45 * e) + 180, this, M1, 1.5f));
-                    base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(pos, pos + MathToolbox.GetUnitOnCircle(f1 + (e * 45), Vector2.Distance(pos, GameManager.Instance.PrimaryPlayer.sprite.WorldCenter)), (45 * e) + 270, this, M1, 1.5f));
+                    base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(pos, pos + MathToolbox.GetUnitOnCircle(f1 + (e * 60), Vector2.Distance(pos, GameManager.Instance.PrimaryPlayer.sprite.WorldCenter)), (45 * e) + 0, this, M1, 1.5f, ring));
+					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(pos, pos + MathToolbox.GetUnitOnCircle(f1 + (e * 60) , Vector2.Distance(pos, GameManager.Instance.PrimaryPlayer.sprite.WorldCenter)), (45 * e) + 90, this, M1, 1.5f));
+					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(pos, pos + MathToolbox.GetUnitOnCircle(f1 + (e * 60) , Vector2.Distance(pos, GameManager.Instance.PrimaryPlayer.sprite.WorldCenter)), (45 * e) + 180, this, M1, 1.5f));
+                    base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(pos, pos + MathToolbox.GetUnitOnCircle(f1 + (e * 60), Vector2.Distance(pos, GameManager.Instance.PrimaryPlayer.sprite.WorldCenter)), (45 * e) + 270, this, M1, 1.5f));
 
                 }
 
@@ -1487,15 +1487,15 @@ namespace Planetside
 
                 UnityEngine.Object.Destroy(component2.gameObject);
 				base.PostWwiseEvent("Play_ENM_bulletking_skull_01", null);
-				for (int i = 0; i < 10; i++)
+				for (int i = 0; i < 9; i++)
 				{
-					base.Fire(Offset.OverridePosition(endPos), new Direction(aimDir + rotSet, DirectionType.Absolute, -1f), new Speed(20f, SpeedType.Absolute), new WallBulletNoDodge(i == 0 ? "sniperUndodgeable" : StaticBulletEntries.undodgeableSmallSpore.Name));
+					base.Fire(Offset.OverridePosition(endPos), new Direction(aimDir + rotSet, DirectionType.Absolute, -1f), new Speed(16f, SpeedType.Absolute), new WallBulletNoDodge(i == 0 ? "sniperUndodgeable" : StaticBulletEntries.undodgeableSmallSpore.Name));
 					yield return new WaitForSeconds(0.025f);
 				}
 
-                for (int i = 1; i < 8; i++)
+                for (int i = 0; i < 6; i++)
                 {
-                    base.Fire(Offset.OverridePosition(endPos), new Direction((aimDir + rotSet) + (45f * i), DirectionType.Absolute, -1f), new Speed(2, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.undodgeableSmallSpore.Name, 9, 90));
+                    base.Fire(Offset.OverridePosition(endPos), new Direction((aimDir + rotSet) + (60f * i), DirectionType.Absolute, -1f), new Speed(2, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.undodgeableSmallSpore.Name, 9, 90));
                 }
 
                 yield break;

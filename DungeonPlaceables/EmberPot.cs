@@ -12,6 +12,8 @@ using System.Reflection;
 using Planetside;
 using BreakAbleAPI;
 using Planetside.Controllers.ContainmentBreach.BossChanges.Misc;
+using Alexandria.PrefabAPI;
+using Planetside.Static_Storage;
 
 namespace Planetside
 {
@@ -19,6 +21,7 @@ namespace Planetside
     {
         public static void Init()
         {
+            /*
             string defaultPath = "Planetside/Resources/DungeonObjects/EmberPot/";
             string[] idlePaths = new string[]
             {
@@ -33,8 +36,28 @@ namespace Planetside
             };
             string shadowPath = "Planetside/Resources/DungeonObjects/EmberPot/emberpotshadow.png";
             MinorBreakable breakable = BreakableAPIToolbox.GenerateMinorBreakable("Ember_Pot", idlePaths, 2, breakPaths, 4, "Play_OBJ_pot_shatter_01", true, 13, 14, 1, 1);
-            BreakableAPIToolbox.GenerateShadow(shadowPath, "emberpot_shadow", breakable.gameObject.transform, new Vector3(0, -0.125f));
+            */
 
+            //BreakableAPIToolbox.GenerateShadow(shadowPath, "emberpot_shadow", breakable.gameObject.transform, new Vector3(0, -0.125f));
+
+            var EmberPot = PrefabBuilder.BuildObject("Ember Pot");
+            EmberPot.layer = 20;
+            var sprite = EmberPot.AddComponent<tk2dSprite>();
+            var animator = EmberPot.AddComponent<tk2dSpriteAnimator>();
+            animator.library = StaticSpriteDefinitions.RoomObject_Animation_Data;
+            animator.playAutomatically = true;
+            animator.defaultClipId = StaticSpriteDefinitions.RoomObject_Animation_Data.GetClipIdByName("emberpot_idle");
+            sprite.usesOverrideMaterial = true;
+            Material mat = new Material(StaticShaders.Default_Object_Shader);
+            sprite.renderer.material = mat;
+            EmberPot.CreateFastBody(new IntVector2(13, 15), new IntVector2(1, 1), CollisionLayer.PlayerBlocker);
+            EmberPot.CreateFastBody(new IntVector2(13, 15), new IntVector2(1, 1), CollisionLayer.EnemyBlocker);
+            EmberPot.CreateFastBody(new IntVector2(13, 15), new IntVector2(1, 1), CollisionLayer.BulletBlocker);
+            EmberPot.CreateFastBody(new IntVector2(13, 15), new IntVector2(1, 1), CollisionLayer.BeamBlocker);
+            var breakable = EmberPot.AddComponent<MinorBreakable>();
+            sprite.IsPerpendicular = false;
+
+            breakable.breakAnimName = "emberpot_break";
             breakable.stopsBullets = true;
             breakable.OnlyPlayerProjectilesCanBreak = false;
             breakable.OnlyBreaksOnScreen = false;
@@ -46,6 +69,7 @@ namespace Planetside
             breakable.goopRadius = 3f;
             breakable.goopType = EasyGoopDefinitions.FireDef;
 
+            /*
             string shardDefaultPath = "Planetside/Resources/DungeonObjects/EmberPot/";
             string[] shardPaths = new string[]
             {
@@ -56,9 +80,34 @@ namespace Planetside
                 shardDefaultPath+"Shards/emberpot_shard5.png",
                 shardDefaultPath+"Shards/emberpot_shard6.png"
             };
-            DebrisObject[] shardObjects = BreakableAPIToolbox.GenerateDebrisObjects(shardPaths, true, 1, 5, 720, 540, null, 1.5f, null, null, 0, false);
-            ShardCluster potShardCluster = BreakableAPIToolbox.GenerateShardCluster(shardObjects, 0.35f, 1.2f, 6, 9, 0.8f);
+            */
+            //DebrisObject[] shardObjects = BreakableAPI_Bundled.GenerateDebrisObjects(shardPaths, StaticSpriteDefinitions.RoomObject_Animation_Data, true, 1, 5, 720, 540, null, 1.5f, null, null, 0, false);
+            /*
+            var EmberShard = PrefabBuilder.BuildObject("Ember Pot Shard");
+            EmberShard.layer = 20;
+            sprite = EmberShard.AddComponent<tk2dSprite>();
+            animator = EmberShard.AddComponent<tk2dSpriteAnimator>();
+            animator.library = StaticSpriteDefinitions.RoomObject_Animation_Data;
+            animator.playAutomatically = true;
+            animator.defaultClipId = StaticSpriteDefinitions.RoomObject_Animation_Data.GetClipIdByName("emberpot_idle");
+            sprite.usesOverrideMaterial = true;
+            mat = new Material(StaticShaders.Default_Shader);
+            sprite.renderer.material = mat;
 
+
+            */
+
+            DebrisObject shardObject = BreakableAPI_Bundled.GenerateDebrisObject("emberpot_shard1", StaticSpriteDefinitions.RoomObject_Sheet_Data, true, 1, 5, 720, 540, null, 0.5f, null, null, 0, false);
+            animator = shardObject.AddComponent<tk2dSpriteAnimator>();
+            animator.library = StaticSpriteDefinitions.RoomObject_Animation_Data;
+            animator.playAutomatically = true;
+            animator.defaultClipId = StaticSpriteDefinitions.RoomObject_Animation_Data.GetClipIdByName("emberpot_shard");
+            ShardCluster potShardCluster = BreakableAPIToolbox.GenerateShardCluster(new DebrisObject[]
+            {
+                shardObject
+            }, 0.35f, 1.2f, 6, 9, 0.8f);
+
+            /*
             string emberDefPath = "Planetside/Resources/DungeonObjects/EmberPot/Embers/";
             string[] emberSmallPaths = new string[]
             {
@@ -78,7 +127,11 @@ namespace Planetside
                 emberDefPath+"embermedium_002.png",
                 emberDefPath+"embermedium_003.png",
             };
+            */
             GameObject poofVFX = (PickupObjectDatabase.GetById(336) as Gun).DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX;
+
+
+            /*
             DebrisObject smallEmber = BreakableAPIToolbox.GenerateAnimatedDebrisObject(emberSmallPaths, 6, tk2dSpriteAnimationClip.WrapMode.Loop, true, 0.5f, 3, 1080, 540, null, 0.7f, null, poofVFX, 0, false,null, 0.7f);
             DebrisObject tinyEmber = BreakableAPIToolbox.GenerateAnimatedDebrisObject(emberTinyPaths, 7, tk2dSpriteAnimationClip.WrapMode.Loop, true, 0.4f, 2, 1600, 800, null, 0.5f, null, poofVFX, 0, false, null, 0.5f);
             DebrisObject mediumEmber = BreakableAPIToolbox.GenerateAnimatedDebrisObject(emberMediumPaths, 5, tk2dSpriteAnimationClip.WrapMode.Loop, true, 0.5f, 3, 1080, 540, null, 0.7f, null, poofVFX, 0, false, null, 0.9f);
@@ -88,7 +141,20 @@ namespace Planetside
             ShardCluster emberClusterOne = BreakableAPIToolbox.GenerateShardCluster(new DebrisObject[] { smallEmber, tinyEmber, mediumEmber, smallEmberTwo, tinyEmberTwo, mediumEmberTwo }, 1f, 1.5f, 4, 7, 0.8f);
             ShardCluster emberClusterTwo = BreakableAPIToolbox.GenerateShardCluster(new DebrisObject[] { smallEmber, tinyEmber, mediumEmber, smallEmberTwo, tinyEmberTwo, mediumEmberTwo }, 1f, 2f, 4, 7, 1f);
             ShardCluster emberClusterThree = BreakableAPIToolbox.GenerateShardCluster(new DebrisObject[] { smallEmber, tinyEmber, mediumEmber, smallEmberTwo, tinyEmberTwo, mediumEmberTwo }, 1f, 2.5f, 4, 7, 1.2f);
-            ShardCluster[] array = new ShardCluster[] { potShardCluster, emberClusterOne, emberClusterTwo, emberClusterThree };
+            */
+
+            ShardCluster emberClusterOne = BreakableAPIToolbox.GenerateShardCluster(new DebrisObject[] 
+            {
+                GenerateFastEmber("Ember_1", "embersmall_001", "ember_small"),
+                GenerateFastEmber("Ember_2", "embertiny_001", "ember_tiny"),
+                GenerateFastEmber("Ember_3", "embermedium_001", "ember_medium"),
+
+            }, 1f, 1.5f, 13, 22, 0.8f);
+
+            //SND_OBJ_pot_shatter_01
+            EnemyToolbox.AddSoundsToAnimationFrame(breakable.spriteAnimator, "emberpot_break", new Dictionary<int, string> { { 0, "Play_OBJ_pot_shatter_01" } });
+
+            ShardCluster[] array = new ShardCluster[] { potShardCluster, emberClusterOne};
             breakable.shardClusters = array;
             //breakable.OnBreak += OnBroken; //Code that runs when the breakable is broken. If doesnt have any arguments so im not sure how useful it can be
             breakable.amountToRain = 30;
@@ -105,6 +171,13 @@ namespace Planetside
             breakable.MaxParticlesOnBurst = 10;
             breakable.MinParticlesOnBurst = 4;
             breakable.gameObject.AddComponent<TheGames.Marker>();
+
+            var grenadeBoxShadow = PrefabBuilder.BuildObject("Ember Pot Shadow");
+            sprite = grenadeBoxShadow.AddComponent<tk2dSprite>();
+            sprite.SetSprite(StaticSpriteDefinitions.RoomObject_Sheet_Data, "emberpotshadow");
+            sprite.transform.localPosition = new Vector3(0, -.125f);
+            sprite.IsPerpendicular = false;
+            grenadeBoxShadow.gameObject.transform.SetParent(breakable.transform, false);
 
             /*
             string defaultTablePath = "Planetside/Resources/DungeonObjects/megaTable/";
@@ -180,5 +253,17 @@ namespace Planetside
 
             //StaticReferences.StoredRoomObjects.Add("test", breakable.gameObject);
         }
+
+        private static DebrisObject GenerateFastEmber(string Name, string SpriteName, string AnimationName)
+        {
+            DebrisObject shardObject = BreakableAPI_Bundled.GenerateDebrisObject(SpriteName, StaticSpriteDefinitions.RoomObject_Sheet_Data, true, 1.5f, 5, 720, 540, null, 0.7f, null, null, 0, false);
+            shardObject.gameObject.name = Name;
+            var animator = shardObject.AddComponent<tk2dSpriteAnimator>();
+            animator.library = StaticSpriteDefinitions.RoomObject_Animation_Data;
+            animator.playAutomatically = true;
+            animator.defaultClipId = StaticSpriteDefinitions.RoomObject_Animation_Data.GetClipIdByName(AnimationName);
+            return shardObject;
+        }
+
     }
 }

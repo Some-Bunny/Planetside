@@ -192,7 +192,7 @@ namespace Planetside
             tk2d.Collection = StaticSpriteDefinitions.RoomObject_Sheet_Data;
             tk2d.SetSprite(StaticSpriteDefinitions.RoomObject_Sheet_Data.GetSpriteIdByName("smallteleporter_glow_001"));
             tk2d.renderer.enabled = false;
-
+            tk2d.HeightOffGround = 2;
             tk2d.usesOverrideMaterial = true;
             tk2d.gameObject.SetLayerRecursively(LayerMask.NameToLayer("FG_Critical"));
 

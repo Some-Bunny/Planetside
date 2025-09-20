@@ -23,20 +23,24 @@ namespace Planetside
 		public BurningSunProjectile()
 		{
 		}
+
+        public static List<BurningSunProjectile> burningSunProjectiles = new List<BurningSunProjectile>();
+
         public void Start()
         {
+            burningSunProjectiles.Add(this);
             this.projectile = base.GetComponent<Projectile>();
             if (this.projectile != null)
             {
 				AkSoundEngine.PostEvent("Play_Burn", this.projectile.gameObject);
 				this.ShockRing(projectile);
                 projectile.OnDestruction += this.EndRingEffect;
-				lightObject = new GameObject("light");
-				AdditionalBraveLight braveLight = lightObject.AddComponent<AdditionalBraveLight>();
+				var _lightObject = new GameObject("light");
+                lightObject = _lightObject.AddComponent<AdditionalBraveLight>();
 				lightObject.transform.position = projectile.sprite.WorldCenter;
-				braveLight.LightColor = new Color(1, 0.12f, 0);
-				braveLight.LightIntensity = 0f;
-				braveLight.LightRadius = 0f;
+                lightObject.LightColor = new Color(1, 0.12f, 0);
+                lightObject.LightIntensity = 0f;
+                lightObject.LightRadius = 0f;
 				lightObject.gameObject.transform.parent = this.projectile.transform;
 
 			}
@@ -52,10 +56,13 @@ namespace Planetside
 				if (elapsed <= 1) 
 				{ 
 					this.elapsed += BraveTime.DeltaTime;
-					lightObject.GetComponent<AdditionalBraveLight>().LightIntensity = Mathf.Lerp(0f, 5f, elapsed);
-					lightObject.GetComponent<AdditionalBraveLight>().LightRadius = Mathf.Lerp(0f, 4f, elapsed);
+                    lightObject.LightIntensity = Mathf.Lerp(0f, 5f, elapsed);
+                    lightObject.LightRadius = Mathf.Lerp(0f, 4f, elapsed);
 				}
-				if (!GameManager.Instance.IsPaused) { Exploder.DoDistortionWave(this.projectile.sprite.WorldCenter, 0.025f, 0.25f, 6, 0.5f); }
+				if (!GameManager.Instance.IsPaused) 
+                {
+                    Exploder.DoDistortionWave(this.projectile.sprite.WorldCenter, 0.025f / burningSunProjectiles.Count, 0.25f, 6, 0.5f); 
+                }
 			}
 
             Elapsed = Elapsed += BraveTime.DeltaTime;
@@ -83,11 +90,18 @@ namespace Planetside
 			AkSoundEngine.PostEvent("Stop_Burn", projectile.gameObject);
 			AkSoundEngine.PostEvent("Play_BOSS_lichB_charge_01", projectile.gameObject);
 			DeadlyDeadlyGoopManager goopManagerForGoopType = DeadlyDeadlyGoopManager.GetGoopManagerForGoopType(EasyGoopDefinitions.FireDef);
-			goopManagerForGoopType.TimedAddGoopCircle(projectile.sprite.WorldCenter, 4f, 0.8f, false);
+            burningSunProjectiles.Remove(this);
+            goopManagerForGoopType.TimedAddGoopCircle(projectile.sprite.WorldCenter, 4f, 0.8f, false);
 		}
 		private HeatIndicatorController m_radialIndicator;
 
-		private void ShockRing(Projectile projectile)
+
+        public void OnDestroy()
+        {
+            burningSunProjectiles.Remove(this);
+        }
+
+        private void ShockRing(Projectile projectile)
 		{
 			this.m_radialIndicator = (UnityEngine.Object.Instantiate(StaticVFXStorage.RadialRing, projectile.sprite.WorldCenter, Quaternion.identity, projectile.transform)).GetComponent<HeatIndicatorController>();
 			this.m_radialIndicator.CurrentColor = Color.red.WithAlpha(0f);
@@ -237,7 +251,7 @@ namespace Planetside
             return false;
         }
 
-        private GameObject lightObject;
+        private AdditionalBraveLight lightObject;
 		private Projectile projectile;
 	}
 }

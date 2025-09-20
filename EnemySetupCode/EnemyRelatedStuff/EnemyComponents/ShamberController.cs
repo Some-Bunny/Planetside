@@ -9,41 +9,26 @@ using System.Collections;
 using Planetside;
 using Brave.BulletScript;
 using Alexandria;
+using Dungeonator;
+using HutongGames.PlayMaker.Actions;
 
 public class ShamberController : BraveBehaviour
 {
 
-	private ParticleSystem particle;
+	public ParticleSystem particle;
 	public void Start()
 	{
 
 		base.aiActor.spriteAnimator.AnimationEventTriggered += this.AnimationEventTriggered;
-
-		Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
-		mat.mainTexture = base.aiActor.sprite.renderer.material.mainTexture;
-		mat.SetColor("_EmissiveColor", new Color32(255, 255, 255, 255));
-		mat.SetFloat("_EmissivePower", 40);
-		mat.SetFloat("_EmissiveThresholdSensitivity", 1f);
-		mat.SetFloat("_EmissiveColorPower", 2f);
-
-
-		var pso = new GameObject("shamber particle");
-		pso.transform.position = base.aiActor.sprite.WorldCenter + new Vector2(0, -0.25f);
-		pso.transform.localRotation = Quaternion.Euler(0f, 0f, 0);
-		pso.transform.parent = base.aiActor.gameObject.transform;
-
-		var partObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("ShamberParticles"));//this is the name of the object which by default will be "Particle System"
-		partObj.transform.position = pso.transform.position;
-		partObj.transform.parent = pso.transform;
-
-		particle = partObj.GetComponent<ParticleSystem>();
 		var h = particle.main;
 		h.simulationSpace = ParticleSystemSimulationSpace.World;
-		base.sprite.renderer.material = mat;
 		base.healthHaver.OnPreDeath += this.OnPreDeath;
 	}
 
-	private void AnimationEventTriggered(tk2dSpriteAnimator animator, tk2dSpriteAnimationClip clip, int frameIdx)
+
+
+
+    private void AnimationEventTriggered(tk2dSpriteAnimator animator, tk2dSpriteAnimationClip clip, int frameIdx)
 	{
 		if (clip.GetFrame(frameIdx).eventInfo == "turnofftrail")
 		{
@@ -71,44 +56,13 @@ public class ShamberController : BraveBehaviour
 				particle.Stop();
             }
 		}
-        for (int i = this.m_bulletPositions.Count - 1; i >= 0; i--)
-        {
-            Projectile proj = this.m_bulletPositions[i].projectile;
-            if (proj)
-            {
-                proj.ManualControl = false;
-                proj.ResetDistance();
-                proj.collidesWithEnemies = base.aiActor != null ? base.aiActor.CanTargetEnemies : false;
-                proj.specRigidbody.CollideWithTileMap = true;
-                proj.collidesWithPlayer = base.aiActor != null ? base.aiActor.CanTargetPlayers : true;
-                proj.UpdateCollisionMask();
-                if (base.aiActor && base.aiActor.sprite)
-                {
-                    proj.Direction = proj.transform.PositionVector2() - this.aiActor.sprite.WorldCenter;
-                    if (proj.shouldRotate)
-                    {
-                        proj.transform.rotation = Quaternion.Euler(0f, 0f, (proj.transform.PositionVector2() - this.aiActor.sprite.WorldCenter).ToAngle());
-                    }
-                }
-                else
-                {
-                    proj.Direction = proj.transform.PositionVector2() - new Vector2(this.transform.position.x, this.transform.position.y);
-                    if (proj.shouldRotate)
-                    {
-                        proj.transform.rotation = Quaternion.Euler(0f, 0f, (proj.transform.PositionVector2() - new Vector2(this.transform.position.x, this.transform.position.y)).ToAngle());
-                    }
-                }
-                proj.baseData.speed = Mathf.Min(this.m_bulletPositions[i].speed * 1.66f, 25);
-                proj.UpdateSpeed();
-                proj.IgnoreTileCollisionsFor(0.5f);
-            }
-        }
-
+        ReleaseAllBullets();
         base.OnDestroy();
 	}
 
 	public bool CanSuckBullets()
     {
+        if (BulletsReleased) {return false;}
 		if (base.aiActor.isActiveAndEnabled == true && base.aiActor.HasDonePlayerEnterCheck == true && base.aiActor.healthHaver.IsDead == false && base.aiActor.HasBeenAwoken == true) { return true; }
 		return false;
     }
@@ -125,11 +79,143 @@ public class ShamberController : BraveBehaviour
     }
 
 
+    private bool ShouldCountForRoomProgress(RoomHandler handler, ref int amount)
+    {
+        List<AIActor> EnemyList = GetTheseActiveEnemies(handler, RoomHandler.ActiveEnemyType.RoomClear);
+        EnemyList.RemoveAll(self => self.EnemyGuid == this.aiActor.EnemyGuid);
+        amount = EnemyList.Count;
+
+        if (handler.remainingReinforcementLayers == null) { return false; }
+
+        bool remainingReinforcements = true;
+        if (handler.remainingReinforcementLayers.Count == 0) { remainingReinforcements = false; }
+
+
+
+
+        if (EnemyList.Count == 0 && remainingReinforcements == true) { return false; }
+        if (EnemyList.Count > 0 && remainingReinforcements == true) { return true; }
+
+
+        if (EnemyList.Count > 0 && remainingReinforcements == false) { return false; }
+        if (EnemyList.Count == 0 && remainingReinforcements == false) { return false; }
+        return false;
+    }
+    public List<AIActor> GetTheseActiveEnemies(RoomHandler room, RoomHandler.ActiveEnemyType type)
+    {
+        var outList = new List<AIActor>();
+        if (room.activeEnemies == null)
+        {
+            return outList;
+        }
+        if (type == RoomHandler.ActiveEnemyType.RoomClear)
+        {
+            for (int i = 0; i < room.activeEnemies.Count; i++)
+            {
+                if (!room.activeEnemies[i].IgnoreForRoomClear)
+                {
+                    outList.Add(room.activeEnemies[i]);
+                }
+            }
+        }
+        else
+        {
+            outList.AddRange(room.activeEnemies);
+        }
+        return outList;
+    }
+
+    private IEnumerator DoVomitSequence()
+    {
+        while (this.aiActor.IsGone)
+        {
+            yield return null;
+        }
+        if (particle)
+        {
+            particle.Stop();
+        }
+        yield return new WaitForSeconds(0.25f);
+        this.aiActor.behaviorSpeculator.InterruptAndDisable();
+        this.aiActor.aiAnimator.Play("vomit", AIAnimator.AnimatorState.StateEndType.Duration, 1.25f, -1, true, "");
+        this.aiActor.MovementSpeed = 0;
+        float e = 0;
+        AkSoundEngine.PostEvent("Play_ENM_cult_charge_01", this.gameObject);
+
+        while (e < 0.25f)
+        {
+            e += Time.deltaTime;
+            yield return null;
+        }
+        for (float i = 0; i < 3; i++)
+        {
+            ParticleBase.EmitParticles("WaveParticleInverse", 1, new ParticleSystem.EmitParams()
+            {
+                position = this.aiActor.sprite.WorldCenter - new Vector2(0.3125f, 0),
+                startLifetime = 0.3333f,
+                startColor = new Color(1, 1, 1, 0.1f + (0.05f * i)),
+                startSize = 20f,
+            });
+            AkSoundEngine.PostEvent("Play_ENM_bullet_dash_01", this.gameObject);
+            yield return new WaitForSeconds(0.25f);
+        }
+        yield return new WaitForSeconds(0.25f);
+        AkSoundEngine.PostEvent("Play_BOSS_Rat_Cheese_Burst_01", this.gameObject);
+        AkSoundEngine.PostEvent("Play_BOSS_Rat_Cheese_Burst_01", this.gameObject);
+
+        ParticleBase.EmitParticles("WaveParticle", 1, new ParticleSystem.EmitParams()
+        {
+            position = this.aiActor.sprite.WorldCenter - new Vector2(0.3125f, 0),
+            startLifetime = 0.3333f,
+            startColor = new Color(1, 1, 1, 0.3f),
+            startSize = 20f,
+        });
+
+        ReleaseAllBullets(true);
+        this.aiActor.aiAnimator.Play("expel", AIAnimator.AnimatorState.StateEndType.UntilFinished, -1, -1, true, "");
+        while (this.aiActor.aiAnimator.CurrentClipProgress < 0.5f)
+        {
+            yield return null;
+        }
+        for (int i = 0; i < base.aiAnimator.OtherAnimations.Count; i++)
+        {
+            if (base.aiAnimator.OtherAnimations[i].name == "death")
+            {
+                base.aiAnimator.OtherAnimations[i].anim.Type = DirectionalAnimation.DirectionType.Single;
+                base.aiAnimator.OtherAnimations[i].anim.Prefix = "fast";
+            }
+        }
+        base.healthHaver.SuppressDeathSounds = true;
+        AkSoundEngine.PostEvent("Play_BOSS_doormimic_vanish_01", this.gameObject);
+        base.healthHaver.ApplyDamage(100000f, Vector2.zero, "Death on Room Claer", CoreDamageTypes.None, DamageCategory.Unstoppable, true, null, false);
+
+        ParticleBase.EmitParticles("WaveParticle", 1, new ParticleSystem.EmitParams()
+        {
+            position = this.aiActor.sprite.WorldCenter - new Vector2(0.3125f, 0),
+            startLifetime = 0.2f,
+            startColor = new Color(1, 1, 1, 0.2f),
+            startSize = 20f,
+        });
+        yield break;
+    }
+    private Coroutine DoVomit;
     public void Update()
 	{
 		if (base.aiActor != null)
         {
-			if (CanSuckBullets() == true)
+            var room = base.aiActor.parentRoom;
+            if (room != null)
+            {
+                int amount = 1;
+                base.aiActor.IgnoreForRoomClear = ShouldCountForRoomProgress(room, ref amount);
+                if (amount == 0 && DoVomit == null)
+                {
+                    DoVomit = this.StartCoroutine(DoVomitSequence());
+                }
+            }
+
+
+            if (CanSuckBullets() == true)
 			{
 				ReadOnlyCollection<Projectile> allProjectiles = StaticReferenceManager.AllProjectiles;
 				if (allProjectiles != null && allProjectiles.Count > 0 && base.gameObject != null)
@@ -303,12 +389,19 @@ public class ShamberController : BraveBehaviour
 
 	private void OnPreDeath(Vector2 obj)
 	{
-		if (particle != null)
-		{
-			particle.Stop();
-		}
-		for (int i = this.m_bulletPositions.Count - 1; i > -1; i--)
-		{
+        if (particle != null)
+        {
+            particle.Stop();
+        }
+        ReleaseAllBullets();
+    }
+    private bool BulletsReleased = false;
+    public void ReleaseAllBullets(bool isForced = false)
+    {
+        if (BulletsReleased) { return; }
+        BulletsReleased = true;
+        for (int i = this.m_bulletPositions.Count - 1; i > -1; i--)
+        {
             if (this.m_bulletPositions[i] != null)
             {
                 Projectile proj = this.m_bulletPositions[i].projectile;
@@ -321,25 +414,34 @@ public class ShamberController : BraveBehaviour
                     proj.collidesWithPlayer = true;
                     proj.UpdateCollisionMask();
                     proj.Direction = proj.transform.PositionVector2() - this.aiActor.sprite.WorldCenter;
-                    proj.baseData.range = 1000;
+                    proj.baseData.range = 100;
                     proj.ResetDistance();
-                    proj.baseData.UsesCustomAccelerationCurve = true;
-                    proj.baseData.CustomAccelerationCurveDuration = 2.5f;
-                    proj.baseData.AccelerationCurve = new AnimationCurve()
+                    
+                    if (isForced)
+                    {                      
+                        proj.baseData.speed = Mathf.Min(this.m_bulletPositions[i].speed, 25);
+                    }
+                    else
                     {
-                        postWrapMode = WrapMode.ClampForever,
+                        proj.baseData.UsesCustomAccelerationCurve = true;
+                        proj.baseData.CustomAccelerationCurveDuration = 2.5f;
 
-                        keys = new Keyframe[] {
+                        proj.baseData.AccelerationCurve = new AnimationCurve()
+                        {
+                            postWrapMode = WrapMode.ClampForever,
+
+                            keys = new Keyframe[] {
                         new Keyframe(){time = 0.1f, value = 0.3f, inTangent = 0.5f, outTangent = 0.25f},
                         new Keyframe(){time = 0.5f, value = 0f},
                         new Keyframe(){time = 0.9f, value = 1.1f, inTangent = 0.5f, outTangent = 0.25f}
                         }
-                    };
-                    proj.baseData.speed = Mathf.Min(this.m_bulletPositions[i].speed, 25);
+                        };
+                        proj.baseData.speed = Mathf.Min(this.m_bulletPositions[i].speed, 25);
+                    }
                     proj.UpdateSpeed();
                     proj.IgnoreTileCollisionsFor(0.25f);
                 }
-            }        
+            }
         }
     }
 }

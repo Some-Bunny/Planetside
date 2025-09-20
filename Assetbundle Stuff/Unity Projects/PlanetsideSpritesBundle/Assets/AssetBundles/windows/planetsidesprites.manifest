@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2611065981
+CRC: 1386576778
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: e662c8135d69475784dcaf94d3d0ce87
+    Hash: 4fa18556a5eeb1467056f38717f4b614
   TypeTreeHash:
     serializedVersion: 2
     Hash: 458548b0fa917ebe1d600c5fabf7780a
@@ -44,6 +44,7 @@ Assets:
 - Assets/UI/Alphabet Letters/letter_17.png
 - Assets/UI/PlanetsideDFAtlas.prefab
 - Assets/Pickups/PickupCollection Data/pickup material.mat
+- Assets/Enemies/Shamber/ShamberCollection Data/ShamberAnimation.prefab
 - Assets/Enemies/ModderBullets/ModderBulletCollection Data/modderbullet material.mat
 - Assets/Ammonomicon/Ammonomicon Icons/glockulussheet.png
 - Assets/Projectiles/BeamCollection Data/BeamCollection.prefab
@@ -77,6 +78,7 @@ Assets:
 - Assets/Enemies/Fodder/fodder_idle_004.png
 - Assets/Enemies/Fodder/fodder_die_005.png
 - Assets/Enemies/Cursebulon/CursebulonCollection Data/curseBulon material.mat
+- Assets/Ammonomicon/Ammonomicon Icons/silveridolsheet.png
 - Assets/Projectiles/ProjectileImpactCollection Data/ProjectileImpactCollection.prefab
 - Assets/Enemies/Fodder/fodder_idle_007.png
 - Assets/Ammonomicon/Ammonomicon Icons/creationistTemplateTrespass.png
@@ -90,8 +92,10 @@ Assets:
 - Assets/UI/Alphabet Letters/letter_22.png
 - Assets/UI/Alphabet Letters/letter_06.png
 - Assets/Ammonomicon/Ammonomicon Icons/stagnantTrespass.png
+- Assets/Enemies/ProperCube/ProperCubeCollection Data/ProperCubeAnimation_Hollow.prefab
 - Assets/Ammonomicon/Ammonomicon Icons/detscavatorivonammo.png
 - Assets/UI/Alphabet Letters/letter_14.png
+- Assets/Ammonomicon/Ammonomicon Icons/snipeidolonsheet.png
 - Assets/Enemies/Fodder/fodder_die_001.png
 - Assets/Ammonomicon/Ammonomicon Icons/sheetcollectiveTrespass.png
 - Assets/Enemies/Barretina/BarretinaCollection Data/barretina material.mat
@@ -103,12 +107,15 @@ Assets:
 - Assets/VFX/Effects/VFXCollection Data/VFXCollection.prefab
 - Assets/Enemies/Fodder/fodder_idle_003.png
 - Assets/Ammonomicon/Ammonomicon Icons/bigcubeicon.png
+- Assets/Enemies/Arch Gunjurer/ArchGunjurerCollection Data/ArchGunjurerAnimation_Face.prefab
 - Assets/Bosses/earthmoverBosscard.png
 - Assets/Ammonomicon/Ammonomicon Icons/bankericon.png
 - Assets/Enemies/Fodder/FodderCollection Data/FodderCollection.prefab
 - Assets/Minibosses/Shellrax/ShellraxCollection Data/ShellraxCollection.prefab
 - Assets/Enemies/SpecificEnemyCollection Data/SpecificEnemyCollection.prefab
 - Assets/Items/Passive Items/Item_Collection Data/item_collection material.mat
+- Assets/RoomObjects/Trespass Objects/TrespassRoomObjectCollection Data/TrespassRoomObjectCollection.prefab
+- Assets/Enemies/ProperCube/ProperCubeCollection Data/ProperCubeAnimation_Forge.prefab
 - Assets/Minibosses/Bullet Banker/BulletBankerCollection Data/bulletbanker material.mat
 - Assets/Ammonomicon/Ammonomicon Icons/observantsheetTrespass.png
 - Assets/BossCards/bulletbanker_bosscard.png
@@ -146,6 +153,7 @@ Assets:
 - Assets/Ammonomicon/Ammonomicon Icons/blockadesheetTrespass.png
 - Assets/NPCs/NPCSpriteAnimation.prefab
 - Assets/Bosses/Fungannon/FungannonCollection Data/FungannonCollection.prefab
+- Assets/RoomObjects/Trespass Objects/TrespassRoomObjectAnimation.prefab
 - Assets/Guns (2)/Gun2Animation.prefab
 - Assets/Ammonomicon/Ammonomicon Icons/jammedguardicon.png
 - Assets/Ammonomicon/Ammonomicon Icons/coalleticon.png
@@ -178,7 +186,9 @@ Assets:
 - Assets/UI/Alphabet Letters/letter_15.png
 - Assets/Bosses/HM Prime/HMPrimeCollection Data/HMPrimeCollection.prefab
 - Assets/Enemies/Inquisitor/InquisitorCollection Data/inquisitor material.mat
+- Assets/Enemies/ProperCube/ProperCubeCollection Data/ProperCubeAnimation_Proper.prefab
 - Assets/Enemies/Detscavator/DetscavatorCollection Data/detscavator material.mat
+- Assets/Enemies/Arch Gunjurer/ArchGunjurerCollection Data/ArchGunjurerAnimation.prefab
 - Assets/BossCards/ophanaim_bosscard.png
 - Assets/Ammonomicon/Ammonomicon Icons/hmprimesheet.png
 - Assets/Enemies/Jammed Guardian/JammedGuardianCollection Data/jamguard material.mat
@@ -196,6 +206,7 @@ Assets:
 - Assets/Enemies/Shamber/ShamberCollection Data/ShamberCollection.prefab
 - Assets/Ammonomicon/Ammonomicon Icons/shamberammonomicoenrtytab.png
 - Assets/RoomObjects/RingCollection Data/rhingthing material.mat
+- Assets/Enemies/ProperCube/ProperCubeCollection Data/ProperCubeAnimation.prefab
 - Assets/Enemies/Coallet/CoalletCollection Data/coallet material.mat
 - Assets/Ammonomicon/Ammonomicon Icons/SomethingWickedAmmonomiconSheet.png
 Dependencies:

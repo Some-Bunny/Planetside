@@ -305,10 +305,10 @@ namespace Planetside
 			for (int i = 0; i < yes.Count; i++)
 			{
 				IPlayerInteractable touchy = yes[i];
-				if (touchy is TrespassDecorativePillarInetractable interaactableObj)
+				if (touchy is TrespassDecorativePillarInteractable interaactableObj)
 				{
 					tk2dSpriteAnimator animator2 = interaactableObj.GetComponent<tk2dSpriteAnimator>();
-					animator2.Play("break");
+					animator2.Play("vessel_break");
 				}
 			}
 			AkSoundEngine.PostEvent("Play_PortalOpen", shrine.gameObject);

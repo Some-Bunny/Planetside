@@ -172,7 +172,7 @@ namespace Planetside
 			}
 
 
-				float elapsed = 0f;
+			float elapsed = 0f;
 			float duration = 2f;
 			float RingSize = ringObject.CurrentRadius;
 			while (elapsed < duration)
@@ -197,11 +197,13 @@ namespace Planetside
 			{
 				Destroy(shopToSellOut);
 			}
-			if (this.gameObject.GetComponent<TalkDoerLite>() != null)
+			var talkTuah = this.gameObject.GetComponent<TalkDoerLite>();
+
+            if (talkTuah != null)
 			{
-				this.gameObject.GetComponent<TalkDoerLite>().placeableWidth = 0;
-				this.gameObject.GetComponent<TalkDoerLite>().placeableHeight = 0;
-				this.gameObject.GetComponent<TalkDoerLite>().enabled = false;
+                talkTuah.placeableWidth = 0;
+                talkTuah.placeableHeight = 0;
+                talkTuah.enabled = false;
 			}
 			if (this.gameObject.GetComponent<PlayMakerFSM>() != null)
 			{
@@ -351,8 +353,8 @@ namespace Planetside
 				companion.aiActor.specRigidbody.CollideWithOthers = true;
 				companion.aiActor.specRigidbody.CollideWithTileMap = true;
 				companion.aiActor.PreventFallingInPitsEver = true;
-				companion.aiActor.healthHaver.ForceSetCurrentHealth(950f);
-				companion.aiActor.healthHaver.SetHealthMaximum(950f);
+				companion.aiActor.healthHaver.ForceSetCurrentHealth(1100f);
+				companion.aiActor.healthHaver.SetHealthMaximum(1100f);
 				companion.aiActor.CollisionKnockbackStrength = 2f;
 				companion.aiActor.CanTargetPlayers = true;
 				companion.aiActor.procedurallyOutlined = true;
@@ -3593,13 +3595,13 @@ namespace Planetside
 					if (pruch > 3)
                     {
 						AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.HM_PRIME_DEFEATED_T4, true);//Done
-						Chest chest2 = GameManager.Instance.RewardManager.SpawnTotallyRandomChest(GameManager.Instance.PrimaryPlayer.CurrentRoom.GetRandomVisibleClearSpot(1, 1));
+						Chest chest2 = GameManager.Instance.RewardManager.SpawnTotallyRandomChest(GameManager.Instance.PrimaryPlayer.CurrentRoom.GetRandomVisibleClearSpot(4, 4));
 						chest2.IsLocked = false;
 						chest2.RegisterChestOnMinimap(chest2.GetAbsoluteParentRoom());
 					}
 					if (UnityEngine.Random.value <= (Mathf.Min(0.4f * pruch, 1)))
 					{
-						Chest chest2 = GameManager.Instance.RewardManager.SpawnTotallyRandomChest(GameManager.Instance.PrimaryPlayer.CurrentRoom.GetRandomVisibleClearSpot(1, 1));
+						Chest chest2 = GameManager.Instance.RewardManager.SpawnTotallyRandomChest(GameManager.Instance.PrimaryPlayer.CurrentRoom.GetRandomVisibleClearSpot(4, 4));
 						chest2.IsLocked = false;
 						chest2.RegisterChestOnMinimap(chest2.GetAbsoluteParentRoom());
 					}

@@ -1095,7 +1095,6 @@ namespace Planetside
 				this.FireShield(leftPos - this.Position);
 				this.FireShield(rightPos - this.Position);
 			}
-			//this.FireShield(this.BulletManager.PlayerPosition() - this.Position);
 			yield break;
 		}
 		private void FireShield(Vector2 endOffset)
@@ -1107,7 +1106,6 @@ namespace Planetside
 
 		}
 
-		// Token: 0x06000896 RID: 2198 RVA: 0x00027A94 File Offset: 0x00025C94
 		private void FireExpandingLine(Vector2 start, Vector2 end, int numBullets, Vector2 endOffset, float time)
 		{
 			start *= 0.5f;

@@ -23,14 +23,6 @@ namespace Planetside
             if (base.gameObject != null)
             {
                 self.InvulnerableToEnemyBullets = true;
-                tk2dBaseSprite sprite = base.gameObject.GetComponent<tk2dBaseSprite>();
-                Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
-                sprite.usesOverrideMaterial = true;
-                mat.mainTexture = sprite.renderer.material.mainTexture;
-                mat.SetColor("_EmissiveColor", new Color32(0, 255, 242, 255));
-                mat.SetFloat("_EmissiveColorPower", 1.55f);
-                mat.SetFloat("_EmissivePower", 70);
-                sprite.renderer.material = mat;
                 if (self != null)
                 {
                     self.OnBreak += WhenBroken;
@@ -128,6 +120,7 @@ namespace Planetside
     {
         public static void Init()
         {
+            /*
             string defaultPath = "Planetside/Resources/DungeonObjects/HolyChamberStatue/";
             string[] idlePaths = new string[]
             {
@@ -141,16 +134,75 @@ namespace Planetside
             };
             MajorBreakable statue = BreakableAPIToolbox.GenerateMajorBreakable("holy_statue", idlePaths, 1, null, 1, 75, true, 32, 32, 0 ,-4, true, null, null, true, null, prebreaks);
             BreakableAPIToolbox.GenerateShadow(defaultPath + "kalipedestalshadow.png", "pedestal_shadow", statue.gameObject.transform, new Vector3(0, -0.1875f));
-
-            statue.InvulnerableToEnemyBullets = true;
-
-            statue.minShardPercentSpeed = 0.5f; 
-            statue.maxShardPercentSpeed = 1.4f; 
-
-            statue.destroyedOnBreak = true; 
-            statue.handlesOwnPrebreakFrames = true;
+            */
+            var KaliStatue = Alexandria.PrefabAPI.PrefabBuilder.BuildObject("Kali Statue");
+            var sprite = KaliStatue.AddComponent<tk2dSprite>();
+            sprite.SetSprite(StaticSpriteDefinitions.RoomObject_Sheet_Data, "kalipedestal1");
 
 
+            var majorBreakable = KaliStatue.AddComponent<MajorBreakable>();
+            majorBreakable.sprite = sprite;
+
+            KaliStatue.CreateFastBody(new IntVector2(32, 40), new IntVector2(4, -4), CollisionLayer.HighObstacle);
+            KaliStatue.CreateFastBody(new IntVector2(32, 40), new IntVector2(4, -4), CollisionLayer.BeamBlocker);
+            KaliStatue.CreateFastBody(new IntVector2(32, 40), new IntVector2(4, -4), CollisionLayer.BulletBlocker);
+            KaliStatue.CreateFastBody(new IntVector2(32, 40), new IntVector2(4, -4), CollisionLayer.EnemyBlocker);
+            KaliStatue.CreateFastBody(new IntVector2(32, 40), new IntVector2(4, -4), CollisionLayer.PlayerBlocker);
+
+            sprite.usesOverrideMaterial = true;
+            Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+            mat.mainTexture = sprite.renderer.material.mainTexture;
+            mat.SetColor("_EmissiveColor", new Color32(0, 255, 242, 255));
+            mat.SetFloat("_EmissiveColorPower", 1.55f);
+            mat.SetFloat("_EmissivePower", 70);
+            sprite.renderer.material = mat;
+
+            majorBreakable.gameObject.AddComponent<PushImmunity>();
+
+
+            majorBreakable.InvulnerableToEnemyBullets = true;
+
+            majorBreakable.minShardPercentSpeed = 0.5f;
+            majorBreakable.maxShardPercentSpeed = 1.4f;
+
+            majorBreakable.destroyedOnBreak = true;
+            majorBreakable.handlesOwnPrebreakFrames = true;
+
+
+            majorBreakable.prebreakFrames = new BreakFrame[]
+            {
+                new BreakFrame{healthPercentage = 99, sprite = "kalipedestal_prebreak1" },
+                new BreakFrame{healthPercentage = 60, sprite = "kalipedestal_prebreak2" },
+                new BreakFrame{healthPercentage = 30, sprite = "kalipedestal_prebreak3" }
+            };
+
+            DebrisObject shard_1 = BreakableAPI_Bundled.GenerateDebrisObject("emberpot_shard1", StaticSpriteDefinitions.RoomObject_Sheet_Data, true, 1, 5, 240, 60, null, 1.5f, null, null, 0, false);
+            var animator = shard_1.AddComponent<tk2dSpriteAnimator>();
+            animator.library = StaticSpriteDefinitions.RoomObject_Animation_Data;
+            animator.playAutomatically = true;
+            animator.defaultClipId = StaticSpriteDefinitions.RoomObject_Animation_Data.GetClipIdByName("kalistatue_1");
+
+            DebrisObject shard_2 = BreakableAPI_Bundled.GenerateDebrisObject("emberpot_shard1", StaticSpriteDefinitions.RoomObject_Sheet_Data, true, 1, 5, 240, 60, null, 1.5f, null, null, 0, false);
+            animator = shard_2.AddComponent<tk2dSpriteAnimator>();
+            animator.library = StaticSpriteDefinitions.RoomObject_Animation_Data;
+            animator.playAutomatically = true;
+            animator.defaultClipId = StaticSpriteDefinitions.RoomObject_Animation_Data.GetClipIdByName("kalistatue_2");
+
+            DebrisObject shard_3 = BreakableAPI_Bundled.GenerateDebrisObject("emberpot_shard1", StaticSpriteDefinitions.RoomObject_Sheet_Data, true, 1, 5, 240, 60, null, 1.5f, null, null, 0, false);
+            animator = shard_3.AddComponent<tk2dSpriteAnimator>();
+            animator.library = StaticSpriteDefinitions.RoomObject_Animation_Data;
+            animator.playAutomatically = true;
+            animator.defaultClipId = StaticSpriteDefinitions.RoomObject_Animation_Data.GetClipIdByName("kalistatue_3");
+
+            ShardCluster potShardCluster = BreakableAPIToolbox.GenerateShardCluster(new DebrisObject[]
+            {
+                shard_1,
+                shard_2,
+                shard_3
+            }, 0.35f, 1.2f, 12, 22, 0.8f);
+
+
+            /*
             string shardDefaultPath = "Planetside/Resources/DungeonObjects/HolyChamberStatue/Shards/";
             string[] shardPathsTop = new string[]
             {
@@ -197,19 +249,22 @@ namespace Planetside
             ShardCluster shardObjectsCluster = BreakableAPIToolbox.GenerateShardCluster(shardObjectsPedestal, 0.1f, 1f, 1, 3, 0.8f);
             ShardCluster shardObjectsCluster1 = BreakableAPIToolbox.GenerateShardCluster(shardObjectsPedestal, 0.4f, 0.6f, 1, 3, 1f);
             ShardCluster shardObjectsCluster2 = BreakableAPIToolbox.GenerateShardCluster(shardObjectsPedestal, 0.9f, 0.2f, 1, 3, 1.4f);
+            */
 
-            ShardCluster[] array = new ShardCluster[] { shardObjectsTopCluster, shardObjectsTopCluster1, shardObjectsTopCluster2, shardObjectsCluster, shardObjectsCluster1, shardObjectsCluster2, shardObjectsPartCluster1, shardObjectsPartCluster2, shardObjectsPartCluster };
-            statue.shardClusters = array;
-            statue.gameObject.GetOrAddComponent<HolyChasmberShrineController>();
+
+
+            ShardCluster[] array = new ShardCluster[] { potShardCluster };
+            majorBreakable.shardClusters = array;
+            majorBreakable.gameObject.GetOrAddComponent<HolyChasmberShrineController>();
 
             Dictionary<GameObject, float> dict = new Dictionary<GameObject, float>()
             {
-                { statue.gameObject, 0.5f },
+                { majorBreakable.gameObject, 0.5f },
             };
 
             DungeonPlaceable placeable = BreakableAPIToolbox.GenerateDungeonPlaceable(dict);
             StaticReferences.StoredDungeonPlaceables.Add("holychamberstatue", placeable);
-            Alexandria.DungeonAPI.StaticReferences.customObjects.Add("psog:holychamberstatue", statue.gameObject);
+            Alexandria.DungeonAPI.StaticReferences.customObjects.Add("psog:holychamberstatue", majorBreakable.gameObject);
 
         }
     }

@@ -4059,7 +4059,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    fps: 30
+    fps: 16
     loopStart: 0
     wrapMode: 2
     minFidgetDuration: 1
@@ -4180,7 +4180,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    fps: 30
+    fps: 16
     loopStart: 0
     wrapMode: 2
     minFidgetDuration: 1

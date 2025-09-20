@@ -32,7 +32,7 @@ namespace NpcApi
 		public Func<CustomShopController, PlayerController, int, int> removeCurrency;
 		public Func<CustomShopController, CustomShopItemController, PickupObject, int> customPrice;
 		public Func<PlayerController, PickupObject, int, bool> OnPurchase;
-		public Func<PlayerController, PickupObject, int, bool> OnSteal;
+		public Func<CustomShopController, PlayerController, PickupObject, int, bool> OnSteal;
 		public bool CanReallyBeRobbed;
 
 		//public DungeonPrerequisite
@@ -75,11 +75,11 @@ namespace NpcApi
 			return true;
 		}
 
-		public bool OnStealMethod(PlayerController player, PickupObject item, int cost)
+		public bool OnStealMethod(CustomShopController shop, PlayerController player, PickupObject item, int cost)
 		{
 			if (OnSteal != null)
 			{
-				return OnSteal(player, item, cost);
+				return OnSteal(shop, player, item, cost);
 			}
 			return false;
 		}
@@ -240,7 +240,7 @@ namespace NpcApi
 		}
 
 		public void ActionAndFuncSetUp(Func<CustomShopController, PlayerController, int, bool> CustomCanBuySetUp, Func<CustomShopController, PlayerController, int, int> RemoveCurrencySetUp, Func<CustomShopController, CustomShopItemController, PickupObject, int> CustomPriceSetUp,
-			Func<PlayerController, PickupObject, int, bool> OnPurchase, Func<PlayerController, PickupObject, int, bool> OnSteal)
+			Func<PlayerController, PickupObject, int, bool> OnPurchase, Func<CustomShopController, PlayerController, PickupObject, int, bool> OnSteal)
 		{
 			this.customCanBuy = CustomCanBuySetUp;
 			this.removeCurrency = RemoveCurrencySetUp;

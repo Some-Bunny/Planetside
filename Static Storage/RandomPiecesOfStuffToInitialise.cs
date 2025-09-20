@@ -27,7 +27,7 @@ namespace Planetside
             this.m_sprite = base.GetComponent<tk2dSprite>();
             this.m_sprite.usesOverrideMaterial = true;
 
-
+			Height = this.m_sprite.HeightOffGround;
             //GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(base.gameObject);
             //gameObject.GetComponent<tk2dSprite>().renderer.material.shader = StaticShaders.TransparencyShader;//ShaderCache.Acquire("tk2d/BlendVertexColorUnlitTilted");
 
@@ -43,10 +43,13 @@ namespace Planetside
                 UnityEngine.Object.Destroy(obj.GetComponent<ExpandReticleRiserEffect>());
                 obj.GetComponent<tk2dSprite>().renderer.material.shader = StaticShaders.TransparencyShader;//ShaderCache.Acquire("tk2d/BlendVertexColorUnlitTilted");
                 this.m_risers[i] = obj.GetComponent<tk2dSprite>();
-				this.StartCoroutine(DoLoop(this.m_risers[i], (((float)i / (float)this.NumRisers)) * RiseTime));
+                this.m_risers[i].renderer.enabled = true;
+
+                this.StartCoroutine(DoLoop(this.m_risers[i], (((float)i / (float)this.NumRisers)) * RiseTime));
             }
             this.OnSpawned();
         }
+		private float Height;
         private void OnSpawned()
         {
             this.m_localElapsed = 0f;
@@ -116,7 +119,7 @@ namespace Planetside
                 float y = Mathf.Lerp(0f, this.RiserHeight, t);
                 Riser.transform.localPosition = Vector3.zero;
                 Riser.transform.position += Vector3.zero.WithY(y);
-				Riser.HeightOffGround = y;
+				Riser.HeightOffGround = Height + y;
                 Riser.SortingOrder = (int)(y * 16);
                 Riser.ForceRotationRebuild();
                 Riser.UpdateZDepth();
@@ -188,21 +191,9 @@ namespace Planetside
 
 
 			BuildSoulGuon();
-
-			BuildHeartGuon();
-			BuildHalfHeartGuon();
-			BuildAmmoGuon();
-			BuildHalfAmmoGuon();
-			BuildArmorGuon();
-			BuildKeyGuon();
-			BuildBlankguon();
-
 			BuildMedal();
-
 			BuildTargetReticle();
 			BuildCursePoof();
-			//BuildSW();
-			//BuildSpeakerObject();
 		}
 		public static GameObject LaserReticle;
 
@@ -378,234 +369,8 @@ namespace Planetside
 
 
 
-		public static void BuildHeartGuon()
-		{
-            GameObject gameObject = PrefabBuilder.BuildObject("HeartGuonOrbital");
-
-            tk2dSprite sprite = gameObject.AddComponent<tk2dSprite>();
-            sprite.collection = StaticSpriteDefinitions.Guon_Sheet_Data;
-            sprite.SetSprite(StaticSpriteDefinitions.Guon_Sheet_Data.GetSpriteIdByName("heartguon_001"));
-
-            tk2dSpriteAnimator animator = gameObject.AddComponent<tk2dSpriteAnimator>();
-            animator.library = StaticSpriteDefinitions.Guon_Animation_Data;
-            animator.defaultClipId = StaticSpriteDefinitions.Guon_Animation_Data.GetClipIdByName("heartguon_idle");
-            animator.playAutomatically = true;
-
-            sprite.CachedPerpState = tk2dBaseSprite.PerpendicularState.FLAT;
 
 
-            SpeculativeRigidbody speculativeRigidbody = gameObject.GetComponent<tk2dSprite>().SetUpSpeculativeRigidbody(IntVector2.Zero, new IntVector2(10, 10));
-			PlayerOrbital orbitalPrefab = gameObject.AddComponent<PlayerOrbital>();
-			speculativeRigidbody.CollideWithTileMap = false;
-			speculativeRigidbody.CollideWithOthers = true;
-			speculativeRigidbody.PrimaryPixelCollider.CollisionLayer = CollisionLayer.EnemyBulletBlocker;
-			orbitalPrefab.shouldRotate = false;
-			orbitalPrefab.orbitRadius = 2f;
-			orbitalPrefab.orbitDegreesPerSecond = 60;
-			//orbitalPrefab.perfectOrbitalFactor = 1000f;
-			orbitalPrefab.SetOrbitalTier(0);
-			HeartGuon = gameObject;
-
-		}
-		public static void BuildHalfHeartGuon()
-		{
-            GameObject gameObject = PrefabBuilder.BuildObject("HalfHeartGuonOrbital");
-
-            tk2dSprite sprite = gameObject.AddComponent<tk2dSprite>();
-            sprite.collection = StaticSpriteDefinitions.Guon_Sheet_Data;
-            sprite.SetSprite(StaticSpriteDefinitions.Guon_Sheet_Data.GetSpriteIdByName("halfheartguon_001"));
-
-            tk2dSpriteAnimator animator = gameObject.AddComponent<tk2dSpriteAnimator>();
-            animator.library = StaticSpriteDefinitions.Guon_Animation_Data;
-            animator.defaultClipId = StaticSpriteDefinitions.Guon_Animation_Data.GetClipIdByName("halfheartguon_idle");
-            animator.playAutomatically = true;
-
-            sprite.CachedPerpState = tk2dBaseSprite.PerpendicularState.FLAT;
-
-            SpeculativeRigidbody speculativeRigidbody = gameObject.GetComponent<tk2dSprite>().SetUpSpeculativeRigidbody(IntVector2.Zero, new IntVector2(10, 10));
-			PlayerOrbital orbitalPrefab = gameObject.AddComponent<PlayerOrbital>();
-			speculativeRigidbody.CollideWithTileMap = false;
-			speculativeRigidbody.CollideWithOthers = true;
-			speculativeRigidbody.PrimaryPixelCollider.CollisionLayer = CollisionLayer.EnemyBulletBlocker;
-			orbitalPrefab.shouldRotate = false;
-			orbitalPrefab.orbitRadius = 3f;
-			orbitalPrefab.orbitDegreesPerSecond = 60;
-			//orbitalPrefab.perfectOrbitalFactor = 1000f;
-			orbitalPrefab.SetOrbitalTier(0);
-			//UnityEngine.Object.DontDestroyOnLoad(gameObject);
-			//FakePrefab.MarkAsFakePrefab(gameObject);
-			//gameObject.SetActive(false);
-			HalfheartGuon = gameObject;
-			//UnityEngine.Object.DontDestroyOnLoad(HalfheartGuon);
-		}
-		public static void BuildAmmoGuon()
-		{
-            GameObject gameObject = PrefabBuilder.BuildObject("AmmoGuonOrbital");
-
-            tk2dSprite sprite = gameObject.AddComponent<tk2dSprite>();
-            sprite.collection = StaticSpriteDefinitions.Guon_Sheet_Data;
-            sprite.SetSprite(StaticSpriteDefinitions.Guon_Sheet_Data.GetSpriteIdByName("ammoguon_001"));
-
-            tk2dSpriteAnimator animator = gameObject.AddComponent<tk2dSpriteAnimator>();
-            animator.library = StaticSpriteDefinitions.Guon_Animation_Data;
-            animator.defaultClipId = StaticSpriteDefinitions.Guon_Animation_Data.GetClipIdByName("ammoguon_idle");
-            animator.playAutomatically = true;
-
-            sprite.CachedPerpState = tk2dBaseSprite.PerpendicularState.FLAT;
-
-
-            SpeculativeRigidbody speculativeRigidbody = gameObject.GetComponent<tk2dSprite>().SetUpSpeculativeRigidbody(IntVector2.Zero, new IntVector2(10, 10));
-			PlayerOrbital orbitalPrefab = gameObject.AddComponent<PlayerOrbital>();
-			speculativeRigidbody.CollideWithTileMap = false;
-			speculativeRigidbody.CollideWithOthers = true;
-			speculativeRigidbody.PrimaryPixelCollider.CollisionLayer = CollisionLayer.EnemyBulletBlocker;
-			orbitalPrefab.shouldRotate = false;
-			orbitalPrefab.orbitRadius = 2.5f;
-			orbitalPrefab.orbitDegreesPerSecond = 40;
-			//orbitalPrefab.perfectOrbitalFactor = 1000f;
-			orbitalPrefab.SetOrbitalTier(0);
-			//UnityEngine.Object.DontDestroyOnLoad(gameObject);
-			//FakePrefab.MarkAsFakePrefab(gameObject);
-			//gameObject.SetActive(false);
-			AmmoGuon = gameObject;
-			//UnityEngine.Object.DontDestroyOnLoad(AmmoGuon);
-
-
-		}
-		public static void BuildHalfAmmoGuon()
-		{
-            GameObject gameObject = PrefabBuilder.BuildObject("HalfAmmoGuonOrbital");
-
-            tk2dSprite sprite = gameObject.AddComponent<tk2dSprite>();
-            sprite.collection = StaticSpriteDefinitions.Guon_Sheet_Data;
-            sprite.SetSprite(StaticSpriteDefinitions.Guon_Sheet_Data.GetSpriteIdByName("halfammoguon_001"));
-
-            tk2dSpriteAnimator animator = gameObject.AddComponent<tk2dSpriteAnimator>();
-            animator.library = StaticSpriteDefinitions.Guon_Animation_Data;
-            animator.defaultClipId = StaticSpriteDefinitions.Guon_Animation_Data.GetClipIdByName("halfammoguon_idle");
-            animator.playAutomatically = true;
-            sprite.CachedPerpState = tk2dBaseSprite.PerpendicularState.FLAT;
-
-
-            SpeculativeRigidbody speculativeRigidbody = gameObject.GetComponent<tk2dSprite>().SetUpSpeculativeRigidbody(IntVector2.Zero, new IntVector2(10, 10));
-			PlayerOrbital orbitalPrefab = gameObject.AddComponent<PlayerOrbital>();
-			speculativeRigidbody.CollideWithTileMap = false;
-			speculativeRigidbody.CollideWithOthers = true;
-			speculativeRigidbody.PrimaryPixelCollider.CollisionLayer = CollisionLayer.EnemyBulletBlocker;
-			orbitalPrefab.shouldRotate = false;
-			orbitalPrefab.orbitRadius = 4.5f;
-			orbitalPrefab.orbitDegreesPerSecond = 40;
-			//orbitalPrefab.perfectOrbitalFactor = 1000f;
-			orbitalPrefab.SetOrbitalTier(0);
-			//UnityEngine.Object.DontDestroyOnLoad(gameObject);
-			//FakePrefab.MarkAsFakePrefab(gameObject);
-			//gameObject.SetActive(false);
-			HalfAmmoGuon = gameObject;
-			//UnityEngine.Object.DontDestroyOnLoad(HalfAmmoGuon);
-
-		}
-		public static void BuildArmorGuon()
-		{
-            GameObject gameObject = PrefabBuilder.BuildObject("ArmorGuonOrbital");
-
-            tk2dSprite sprite = gameObject.AddComponent<tk2dSprite>();
-            sprite.collection = StaticSpriteDefinitions.Guon_Sheet_Data;
-            sprite.SetSprite(StaticSpriteDefinitions.Guon_Sheet_Data.GetSpriteIdByName("armorguon_001"));
-
-            tk2dSpriteAnimator animator = gameObject.AddComponent<tk2dSpriteAnimator>();
-            animator.library = StaticSpriteDefinitions.Guon_Animation_Data;
-            animator.defaultClipId = StaticSpriteDefinitions.Guon_Animation_Data.GetClipIdByName("armorguon_idle");
-            animator.playAutomatically = true;
-            sprite.CachedPerpState = tk2dBaseSprite.PerpendicularState.FLAT;
-
-
-            SpeculativeRigidbody speculativeRigidbody = gameObject.GetComponent<tk2dSprite>().SetUpSpeculativeRigidbody(IntVector2.Zero, new IntVector2(10, 10));
-			PlayerOrbital orbitalPrefab = gameObject.AddComponent<PlayerOrbital>();
-			speculativeRigidbody.CollideWithTileMap = false;
-			speculativeRigidbody.CollideWithOthers = true;
-			speculativeRigidbody.PrimaryPixelCollider.CollisionLayer = CollisionLayer.EnemyBulletBlocker;
-			orbitalPrefab.shouldRotate = false;
-			orbitalPrefab.orbitRadius = 1.5f;
-			orbitalPrefab.orbitDegreesPerSecond = 40;
-			//orbitalPrefab.perfectOrbitalFactor = 1000f;
-			orbitalPrefab.SetOrbitalTier(0);
-			//UnityEngine.Object.DontDestroyOnLoad(gameObject);
-			//FakePrefab.MarkAsFakePrefab(gameObject);
-			//gameObject.SetActive(false);
-			ArmorGuon = gameObject;
-			//UnityEngine.Object.DontDestroyOnLoad(A);
-
-		}
-		public static void BuildKeyGuon()
-		{
-            GameObject gameObject = PrefabBuilder.BuildObject("KeyGuonOrbital");
-
-            tk2dSprite sprite = gameObject.AddComponent<tk2dSprite>();
-            sprite.collection = StaticSpriteDefinitions.Guon_Sheet_Data;
-            sprite.SetSprite(StaticSpriteDefinitions.Guon_Sheet_Data.GetSpriteIdByName("keyguon_001"));
-
-            tk2dSpriteAnimator animator = gameObject.AddComponent<tk2dSpriteAnimator>();
-            animator.library = StaticSpriteDefinitions.Guon_Animation_Data;
-            animator.defaultClipId = StaticSpriteDefinitions.Guon_Animation_Data.GetClipIdByName("keyguon_idle");
-            animator.playAutomatically = true;
-            sprite.CachedPerpState = tk2dBaseSprite.PerpendicularState.FLAT;
-
-
-            SpeculativeRigidbody speculativeRigidbody = gameObject.GetComponent<tk2dSprite>().SetUpSpeculativeRigidbody(IntVector2.Zero, new IntVector2(10, 10));
-			PlayerOrbital orbitalPrefab = gameObject.AddComponent<PlayerOrbital>();
-			speculativeRigidbody.CollideWithTileMap = false;
-			speculativeRigidbody.CollideWithOthers = true;
-			speculativeRigidbody.PrimaryPixelCollider.CollisionLayer = CollisionLayer.EnemyBulletBlocker;
-			orbitalPrefab.shouldRotate = false;
-			orbitalPrefab.orbitRadius = 1f;
-			orbitalPrefab.orbitDegreesPerSecond = 30;
-			//orbitalPrefab.perfectOrbitalFactor = 1000f;
-			orbitalPrefab.SetOrbitalTier(0);
-			//UnityEngine.Object.DontDestroyOnLoad(gameObject);
-			//FakePrefab.MarkAsFakePrefab(gameObject);
-			//gameObject.SetActive(false);
-			KeyGuon = gameObject;
-			//UnityEngine.Object.DontDestroyOnLoad(KeyGuon);
-		}
-		public static void BuildBlankguon()
-		{
-            GameObject gameObject = PrefabBuilder.BuildObject("BlankGuonOrbital");
-
-            tk2dSprite sprite = gameObject.AddComponent<tk2dSprite>();
-            sprite.collection = StaticSpriteDefinitions.Guon_Sheet_Data;
-            sprite.SetSprite(StaticSpriteDefinitions.Guon_Sheet_Data.GetSpriteIdByName("blankguon_001"));
-
-            tk2dSpriteAnimator animator = gameObject.AddComponent<tk2dSpriteAnimator>();
-            animator.library = StaticSpriteDefinitions.Guon_Animation_Data;
-            animator.defaultClipId = StaticSpriteDefinitions.Guon_Animation_Data.GetClipIdByName("blankguon_idle");
-            animator.playAutomatically = true;
-            sprite.CachedPerpState = tk2dBaseSprite.PerpendicularState.FLAT;
-
-
-            SpeculativeRigidbody speculativeRigidbody = gameObject.GetComponent<tk2dSprite>().SetUpSpeculativeRigidbody(IntVector2.Zero, new IntVector2(10, 10));
-			PlayerOrbital orbitalPrefab = gameObject.AddComponent<PlayerOrbital>();
-			speculativeRigidbody.CollideWithTileMap = false;
-			speculativeRigidbody.CollideWithOthers = true;
-			speculativeRigidbody.PrimaryPixelCollider.CollisionLayer = CollisionLayer.EnemyBulletBlocker;
-			orbitalPrefab.shouldRotate = false;
-			orbitalPrefab.orbitRadius = 5f;
-			orbitalPrefab.orbitDegreesPerSecond = 120;
-			//orbitalPrefab.perfectOrbitalFactor = 1000f;
-			orbitalPrefab.SetOrbitalTier(0);
-			//UnityEngine.Object.DontDestroyOnLoad(gameObject);
-			//FakePrefab.MarkAsFakePrefab(gameObject);
-			//gameObject.SetActive(false);
-			BlankGuon = gameObject;
-		}
-
-
-		public static GameObject KeyGuon;
-		public static GameObject HalfheartGuon;
-		public static GameObject HeartGuon;
-		public static GameObject AmmoGuon;
-		public static GameObject ArmorGuon;
-		public static GameObject HalfAmmoGuon;
-		public static GameObject BlankGuon;
 
 
 	}

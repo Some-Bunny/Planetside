@@ -126,13 +126,13 @@ namespace Planetside
                 "psog:kunai",
                 "katana_bullets"
             };
-            Alexandria.ItemAPI.CustomSynergies.Add("Dragun Punch", mandatoryConsoleIDs, null, true);
+            Alexandria.ItemAPI.CustomSynergies.Add("Dragun Punch", mandatoryConsoleIDs, null, false);
             List<string> mandatoryConsoleIDs_2 = new List<string>
             {
                 "psog:kunai",
                 "kruller_glaive"
             };
-            Alexandria.ItemAPI.CustomSynergies.Add("Convenient Option", mandatoryConsoleIDs_2, null, true);
+            Alexandria.ItemAPI.CustomSynergies.Add("Convenient Option", mandatoryConsoleIDs_2, null, false);
             KatanaSlash = (PickupObjectDatabase.GetById(822) as ComplexProjectileModifier);
 
 

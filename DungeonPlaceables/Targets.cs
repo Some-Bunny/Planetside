@@ -11,6 +11,8 @@ using MonoMod.RuntimeDetour;
 using System.Reflection;
 using Planetside;
 using BreakAbleAPI;
+using Alexandria.PrefabAPI;
+using Planetside.Static_Storage;
 
 namespace Planetside
 {
@@ -18,6 +20,7 @@ namespace Planetside
     {
         public static void Init()
         {
+            /*
             string defaultPath = "Planetside/Resources/DungeonObjects/Target/";
             string[] idlePaths1 = new string[]
             {
@@ -157,6 +160,74 @@ namespace Planetside
                 { targetThree.gameObject, 0.6f },
                 { targetFour.gameObject, 0.4f },
             };
+            */
+
+
+            var EmberPot = PrefabBuilder.BuildObject("Target Practice");
+            EmberPot.layer = Layers.FG_Critical;
+            var sprite = EmberPot.AddComponent<tk2dSprite>();
+            var animator = EmberPot.AddComponent<tk2dSpriteAnimator>();
+            animator.library = StaticSpriteDefinitions.RoomObject_Animation_Data;
+            animator.playAutomatically = true;
+            animator.defaultClipId = StaticSpriteDefinitions.RoomObject_Animation_Data.GetClipIdByName("target");
+            sprite.usesOverrideMaterial = true;
+            Material mat = new Material(StaticShaders.Default_Object_Shader);
+            sprite.renderer.material = mat;
+            EmberPot.CreateFastBody(new IntVector2(16, 12), new IntVector2(0, -1), CollisionLayer.PlayerBlocker);
+            EmberPot.CreateFastBody(new IntVector2(16, 12), new IntVector2(0, -1), CollisionLayer.EnemyBlocker);
+            EmberPot.CreateFastBody(new IntVector2(16, 12), new IntVector2(0, -1), CollisionLayer.BulletBlocker);
+            EmberPot.CreateFastBody(new IntVector2(16, 12), new IntVector2(0, -1), CollisionLayer.BeamBlocker);
+
+            var breakable = EmberPot.AddComponent<MinorBreakable>();
+            sprite.IsPerpendicular = false;
+            breakable.breakAudioEventName = "Play_obj_box_break_01";
+            breakable.stopsBullets = true;
+            breakable.OnlyPlayerProjectilesCanBreak = false;
+            breakable.OnlyBreaksOnScreen = false;
+            breakable.resistsExplosions = false;
+            breakable.canSpawnFairy = false;
+            breakable.chanceToRain = 1;
+            breakable.dropCoins = false;
+
+
+            var grenadeBoxShadow = PrefabBuilder.BuildObject("Target Shadow");
+            sprite = grenadeBoxShadow.AddComponent<tk2dSprite>();
+            sprite.SetSprite(StaticSpriteDefinitions.RoomObject_Sheet_Data, "emberpotshadow");
+            sprite.transform.localPosition = new Vector3(0, -.25f);
+            sprite.IsPerpendicular = false;
+            grenadeBoxShadow.gameObject.transform.SetParent(breakable.transform, false);
+
+
+            Dictionary<GameObject, float> dict = new Dictionary<GameObject, float>()
+            {
+                { breakable.gameObject, 1f },
+            };
+
+            DebrisObject shardObject = BreakableAPI_Bundled.GenerateDebrisObject("emberpot_shard1", StaticSpriteDefinitions.RoomObject_Sheet_Data, true, 1, 5, 360, 120, null, 1.5f, null, null, 0, false);
+            animator = shardObject.AddComponent<tk2dSpriteAnimator>();
+            animator.library = StaticSpriteDefinitions.RoomObject_Animation_Data;
+            animator.playAutomatically = true;
+            animator.defaultClipId = StaticSpriteDefinitions.RoomObject_Animation_Data.GetClipIdByName("target_wood");
+
+            animator.sprite.usesOverrideMaterial = true;
+            mat = new Material(StaticShaders.Default_Object_Shader);
+            animator.sprite.renderer.material = mat;
+
+            DebrisObject shardObject_2 = BreakableAPI_Bundled.GenerateDebrisObject("emberpot_shard1", StaticSpriteDefinitions.RoomObject_Sheet_Data, true, 1, 5, 360, 120, null, 0.3f, null, null, 0, false);
+            animator = shardObject_2.AddComponent<tk2dSpriteAnimator>();
+            animator.library = StaticSpriteDefinitions.RoomObject_Animation_Data;
+            animator.playAutomatically = true;
+            animator.defaultClipId = StaticSpriteDefinitions.RoomObject_Animation_Data.GetClipIdByName("target_cloth");
+            animator.sprite.usesOverrideMaterial = true;
+            mat = new Material(StaticShaders.Default_Object_Shader);
+            animator.sprite.renderer.material = mat;
+
+            ShardCluster paperCluster = BreakableAPIToolbox.GenerateShardCluster(new DebrisObject[] { shardObject }, 0.4f, 1f, 8, 15, 0.8f);
+            ShardCluster paperCluster_1 = BreakableAPIToolbox.GenerateShardCluster(new DebrisObject[] { shardObject_2 }, 0.4f, 1f, 5, 8, 0.4f);
+
+
+            breakable.shardClusters = new ShardCluster[] { paperCluster, paperCluster_1 };
+
 
             DungeonPlaceable placeable = BreakableAPIToolbox.GenerateDungeonPlaceable(dict);
             StaticReferences.StoredDungeonPlaceables.Add("targetPlaceable", placeable);

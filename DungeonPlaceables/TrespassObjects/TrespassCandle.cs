@@ -11,6 +11,8 @@ using MonoMod.RuntimeDetour;
 using System.Reflection;
 using Planetside;
 using BreakAbleAPI;
+using Alexandria.PrefabAPI;
+using Alexandria.cAPI;
 
 namespace Planetside
 {
@@ -18,55 +20,51 @@ namespace Planetside
     {
         public static void Init()
         {
-
-            string defaultPath = "Planetside/Resources/DungeonObjects/TrespassObjects/Candle/";
-            string[] animPaths = new string[]
-            {
-                defaultPath+"trespasscandle_idle_001.png",
-                defaultPath+"trespasscandle_idle_002.png",
-                defaultPath+"trespasscandle_idle_003.png",
-                defaultPath+"trespasscandle_idle_004.png",
-                defaultPath+"trespasscandle_idle_005.png",
-                defaultPath+"trespasscandle_idle_006.png",
-            };
-
-            string[] shardPaths = new string[]
-            {
-                defaultPath+"Debris/trespasscandle_debris_001.png",
-                defaultPath+"Debris/trespasscandle_debris_002.png",
-                defaultPath+"Debris/trespasscandle_debris_003.png",
-                defaultPath+"Debris/trespasscandle_debris_004.png",
-                defaultPath+"Debris/trespasscandle_debris_005.png",
-            };
-
-
-            DebrisObject[] shardObjects = BreakableAPIToolbox.GenerateDebrisObjects(shardPaths, true, 1, 5, 720, 540, null, 0.6f, null, null, 0, false);
-            for (int e = 0; e < shardObjects.Length; e++)
-            {
-                shardObjects[e].gameObject.AddComponent<TresspassUnlitShaderController>();
-            }
-
-            ShardCluster potShardCluster = BreakableAPIToolbox.GenerateShardCluster(shardObjects, 0.7f, 1.2f, 6, 9, 0.6f);
-         
-
+            DebrisObject shardObjects = BreakableAPI_Bundled.GenerateDebrisObject("trespasscandle_debris_001", StaticSpriteDefinitions.Trespass_Room_Object_Data, true, 1, 5, 720, 540, null, 0.6f, null, null, 0, false);
+            var animatorShard = shardObjects.AddComponent<tk2dSpriteAnimator>();
+            animatorShard.library = StaticSpriteDefinitions.Trespass_Room_Object_Animation;
+            animatorShard.playAutomatically = true;
+            animatorShard.defaultClipId = StaticSpriteDefinitions.Trespass_Room_Object_Animation.GetClipIdByName("candleDebris");
+            ShardCluster potShardCluster = BreakableAPIToolbox.GenerateShardCluster(new DebrisObject[] { shardObjects  }, 0.7f, 1.2f, 6, 9, 0.6f);  
             Dictionary<GameObject, float> dict = new Dictionary<GameObject, float>()
             {
-                { GenerateThing(potShardCluster, animPaths,defaultPath+"trespasscandle_idle_001.png" , 3).gameObject, 0.7f },
-                { GenerateThing(potShardCluster, animPaths, defaultPath+"trespasscandle_idle_001.png",7).gameObject, 0.8f },
-                { GenerateThing(potShardCluster, animPaths,defaultPath+"trespasscandle_idle_001.png", 5).gameObject, 0.6f },
+                { GenerateThing(potShardCluster, "candle_slow").gameObject, 0.7f },
+                { GenerateThing(potShardCluster, "candle_medium").gameObject, 0.8f },
+                { GenerateThing(potShardCluster, "candle_fast").gameObject, 0.6f },
             };
             DungeonPlaceable placeable = BreakableAPIToolbox.GenerateDungeonPlaceable(dict);
             StaticReferences.StoredDungeonPlaceables.Add("tresPassCandle", placeable);
             Alexandria.DungeonAPI.StaticReferences.customPlaceables.Add("PSOG_tresPassCandle", placeable);
-
         }
 
-        public static MinorBreakable GenerateThing(ShardCluster shardCluster, string[] animPaths,string breakStr, int FPS)
+        public static MinorBreakable GenerateThing(ShardCluster shardCluster, string animation)
         {
-            string shadowPath = "Planetside/Resources/DungeonObjects/EmberPot/emberpotshadow.png";
-            MinorBreakable breakable = BreakableAPIToolbox.GenerateMinorBreakable("TrespassCandle", animPaths, FPS, new string[] { breakStr }, 10, "Play_OBJ_box_cover_01",  true, 13, 14, 1, 1);
-            BreakableAPIToolbox.GenerateShadow(shadowPath, "moneyPot_shadow", breakable.gameObject.transform, new Vector3(0, -0.125f));
-            breakable.stopsBullets = true;
+            var newCandle = PrefabBuilder.BuildObject($"{animation}_candle");
+
+            var sprite = newCandle.AddComponent<tk2dSprite>();
+            sprite.SetSprite(StaticSpriteDefinitions.Trespass_Room_Object_Data, "trespasscandle_idle_001");
+            sprite.IsPerpendicular = false;
+
+            sprite.usesOverrideMaterial = true;
+            Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+            mat.mainTexture = sprite.renderer.material.mainTexture;
+            mat.SetColor("_EmissiveColor", new Color32(0, 255, 255, 255));
+            mat.SetFloat("_EmissiveColorPower", 8f);
+            mat.SetFloat("_EmissivePower", 4);
+            sprite.renderer.material = mat;
+
+            newCandle.CreateFastBody(new IntVector2(13, 14), new IntVector2(1, 1), CollisionLayer.LowObstacle);
+            newCandle.CreateFastBody(new IntVector2(13, 14), new IntVector2(1, 1), CollisionLayer.BulletBlocker);
+            newCandle.CreateFastBody(new IntVector2(13, 14), new IntVector2(1, 1), CollisionLayer.BeamBlocker);
+
+            var animator = newCandle.AddComponent<tk2dSpriteAnimator>();
+            animator.library = StaticSpriteDefinitions.Trespass_Room_Object_Animation;
+            animator.playAutomatically = true;
+            animator.defaultClipId = StaticSpriteDefinitions.Trespass_Room_Object_Animation.GetClipIdByName(animation);
+
+            var breakable = newCandle.AddComponent<MinorBreakable>();
+
+            breakable.stopsBullets = false;
             breakable.OnlyPlayerProjectilesCanBreak = false;
             breakable.OnlyBreaksOnScreen = false;
             breakable.resistsExplosions = false;
@@ -77,6 +75,8 @@ namespace Planetside
             breakable.breakStyle = MinorBreakable.BreakStyle.BURST;
             breakable.gameObject.AddComponent<TresspassLightController>();
             ShardCluster[] array = new ShardCluster[] { shardCluster };
+            breakable.IgnoredForPotShotsModifier = true;
+
             breakable.shardClusters = array;
             breakable.amountToRain = 30;
             breakable.EmitStyle = GlobalSparksDoer.EmitRegionStyle.RANDOM;
@@ -93,6 +93,7 @@ namespace Planetside
             breakable.sprite.SortingOrder = 0;
             breakable.sprite.HeightOffGround = -1;
             breakable.gameObject.layer = LayerMask.NameToLayer("FG_Critical");
+
 
             return breakable;
         }

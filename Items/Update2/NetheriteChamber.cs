@@ -105,7 +105,7 @@ namespace Planetside
             RemoveStat(MoneyMod);
             RemoveStat(HealthMod);
             RemoveStat(RoFMod);
-
+			lastItems = -1;
             DebrisObject result = base.Drop(player);
 			return result;
 		}
@@ -123,7 +123,7 @@ namespace Planetside
 		private void CalculateStats(PlayerController player)
 		{
 			var currentItems = player.passiveItems.Count;
-			if (currentItems != this.lastItems)	
+			if (this.lastItems != currentItems)	
 			{
                 RemoveStat(DamageMod);
                 RemoveStat(MoneyMod);
@@ -147,12 +147,12 @@ namespace Planetside
                 if (MasterRounds > 0)
                 {
                     HealthMod = this.AddStat(PlayerStats.StatType.Health, MasterRounds, StatModifier.ModifyMethod.ADDITIVE);
-                    MoneyMod = this.AddStat(PlayerStats.StatType.MoneyMultiplierFromEnemies, MasterRounds / 10, StatModifier.ModifyMethod.ADDITIVE);
-                    RoFMod = this.AddStat(PlayerStats.StatType.RateOfFire, MasterRounds / 10, StatModifier.ModifyMethod.ADDITIVE);
+                    MoneyMod = this.AddStat(PlayerStats.StatType.MoneyMultiplierFromEnemies, MasterRounds / 10f, StatModifier.ModifyMethod.ADDITIVE);
+                    RoFMod = this.AddStat(PlayerStats.StatType.RateOfFire, MasterRounds / 10f, StatModifier.ModifyMethod.ADDITIVE);
                 }
                 if (Chambers > 0)
                 {
-                    DamageMod = this.AddStat(PlayerStats.StatType.Damage, 0.25f, StatModifier.ModifyMethod.ADDITIVE);
+                    DamageMod = this.AddStat(PlayerStats.StatType.Damage, 0.25f * Chambers, StatModifier.ModifyMethod.ADDITIVE);
                 }
 
 
@@ -207,6 +207,6 @@ namespace Planetside
             }
             this.passiveStatModifiers = list.ToArray();
         }
-		private int lastItems;
+		private int lastItems = -1;
 	}
 }

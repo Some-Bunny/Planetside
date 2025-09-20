@@ -104,7 +104,7 @@ namespace SaveAPI
         HOLLOWWALLS_FLAG_STACK,
 
 
-        
+        TIMETRADER_ALLOWED
 
     }
 }

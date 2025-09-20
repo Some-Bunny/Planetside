@@ -19,6 +19,7 @@ namespace Planetside
     {
         public static void Init()
         {
+            /*
             string defaultPath = "Planetside/Resources/DungeonObjects/TrespassObjects/TrespassTentacleCube/";
             string[] idlePaths = new string[]
             {
@@ -37,6 +38,40 @@ namespace Planetside
             Dictionary<GameObject, float> dict = new Dictionary<GameObject, float>()
             {
                 { statue.gameObject, 0.5f },
+            };
+            */
+            var tearObject = Alexandria.PrefabAPI.PrefabBuilder.BuildObject("Tentacle Pillar");
+            var sprite = tearObject.AddComponent<tk2dSprite>();
+            sprite.SetSprite(StaticSpriteDefinitions.Trespass_Room_Object_Data, "pillartentacle_idle_001");
+            var animator = tearObject.AddComponent<tk2dSpriteAnimator>();
+            animator.library = StaticSpriteDefinitions.Trespass_Room_Object_Animation;
+            animator.playAutomatically = true;
+            animator.defaultClipId = StaticSpriteDefinitions.Trespass_Room_Object_Animation.GetClipIdByName("tentacle_pillar");
+            sprite.IsPerpendicular = false;
+            var majorBreakable = tearObject.AddComponent<MajorBreakable>();
+            majorBreakable.HitPoints = 15000;
+            majorBreakable.sprite = sprite;
+            majorBreakable.spriteAnimator = animator;
+
+            tearObject.CreateFastBody(new IntVector2(24, 32), new IntVector2(4, -4), CollisionLayer.HighObstacle);
+            tearObject.CreateFastBody(new IntVector2(24, 32), new IntVector2(4, -4), CollisionLayer.BeamBlocker);
+            tearObject.CreateFastBody(new IntVector2(24, 32), new IntVector2(4, -4), CollisionLayer.BulletBlocker);
+            tearObject.CreateFastBody(new IntVector2(24, 32), new IntVector2(4, -4), CollisionLayer.EnemyBlocker);
+            tearObject.CreateFastBody(new IntVector2(24, 32), new IntVector2(4, -4), CollisionLayer.PlayerBlocker);
+
+            sprite.usesOverrideMaterial = true;
+            Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+            mat.mainTexture = sprite.renderer.material.mainTexture;
+            mat.SetColor("_EmissiveColor", new Color32(0, 255, 255, 255));
+            mat.SetFloat("_EmissiveColorPower", 11f);
+            mat.SetFloat("_EmissivePower", 3);
+            sprite.renderer.material = mat;
+
+            majorBreakable.DamageReduction = 1000;
+            majorBreakable.gameObject.AddComponent<PushImmunity>();
+            Dictionary<GameObject, float> dict = new Dictionary<GameObject, float>()
+            {
+                { majorBreakable.gameObject, 0.5f },
             };
 
             DungeonPlaceable placeable = BreakableAPIToolbox.GenerateDungeonPlaceable(dict);

@@ -26,58 +26,119 @@ namespace Planetside
 
 
 
-	public class PickupGuonComponent : MonoBehaviour
+	public class PickupGuonComponent : BraveBehaviour
 	{
 		public PickupGuonComponent()
 		{
-			this.HitsBeforeDeath = 10;
-			this.player = GameManager.Instance.PrimaryPlayer;
-			this.Hits = 0;
-
-			this.IsAmmo = false;
-			this.IsHalfAmmo = false;
-			this.IsHeart = false;
-			this.IsHalfHeart = false;
-			this.IsBlank = false;
-			this.IsKey = false;
-			this.IsArmor = false;
-			this.DoPoof = true;
-			this.GivesStats = false;
+			this.HitsBeforeDeath = 15;
+            this.Hits = 0;
 		}
 
 
-		public void Awake()
-		{
-			this.actor = base.GetComponent<PlayerOrbital>();
-			this.player = base.GetComponent<PlayerController>();
-		}
+
 
 		public void Start()
 		{
-
-			if (DoPoof == true)
-            {
-				LootEngine.DoDefaultItemPoof(actor.transform.position, false, false);
-			}
-			PlayerController playerboi = GameManager.Instance.PrimaryPlayer;
-			if (this.actor == null)
-            {
-				this.actor = base.GetComponent<PlayerOrbital>();
-			}
-			if (this.player == null)
+			var str = SynergyToCheck();
+            bool HasSynergy = PlayerOwner != null && str != null && PlayerOwner.PlayerHasActiveSynergy(str);
+            switch (pickupType)
 			{
-				this.player = base.GetComponent<PlayerController>();
+				case PickupType.HALF_HEART:
+					HitsBeforeDeath = HasSynergy ? 60 : 45;
+					this.spriteAnimator.Play("halfheartguon_idle");
+                    Orbital.orbitRadius = 2;
+                    Orbital.orbitDegreesPerSecond = 90;
+                    break;
+                case PickupType.HEART:
+                    HitsBeforeDeath = HasSynergy ? 120 : 90;
+					this.spriteAnimator.Play("heartguon_idle");
+                    Orbital.orbitRadius = 3;
+                    Orbital.orbitDegreesPerSecond = 72;
+                    break;
+
+                case PickupType.ARMOR:
+                    HitsBeforeDeath = HasSynergy ? 200 : 100;
+                    this.spriteAnimator.Play("armorguon_idle");
+                    Orbital.orbitRadius = 1.8f;
+                    Orbital.orbitDegreesPerSecond = 90;
+                    break;
+
+                case PickupType.AMMO:
+                    HitsBeforeDeath = HasSynergy ? 120 : 90;
+                    this.spriteAnimator.Play("ammoguon_idle");
+                    Orbital.orbitRadius = 3;
+                    Orbital.orbitDegreesPerSecond = 90;
+                    break;
+                case PickupType.HALF_AMMO:
+                    HitsBeforeDeath = HasSynergy ? 80 : 60;
+                    this.spriteAnimator.Play("halfammoguon_idle");
+                    Orbital.orbitRadius = 4.5f;
+                    Orbital.orbitDegreesPerSecond = 75;
+                    break;
+
+                case PickupType.KEY:
+                    HitsBeforeDeath = HasSynergy ? 160 : 120;
+                    this.spriteAnimator.Play("keyguon_idle");
+                    Orbital.orbitRadius = 1.25f;
+                    Orbital.orbitDegreesPerSecond = 60;
+                    break;
+                case PickupType.BLANK:
+                    HitsBeforeDeath = HasSynergy ? 100 : 75;
+                    this.spriteAnimator.Play("blankguon_idle");
+                    Orbital.orbitRadius = 5f;
+                    Orbital.orbitDegreesPerSecond = 90;
+                    break;
+                //creditguon_idle
+                case PickupType.CREDIT:
+                    HitsBeforeDeath = HasSynergy ? 40 : 30;
+                    this.spriteAnimator.Play("creditguon_idle");
+                    Orbital.orbitRadius = 8.5f;
+                    Orbital.orbitDegreesPerSecond = 20;
+                    Orbital.sprite.usesOverrideMaterial = true;
+                    Material material = new Material(ShaderCache.Acquire("Brave/Internal/HologramShader"));
+                    material.SetFloat("_IsGreen", 1);
+                    Orbital.sprite.renderer.material = material;
+                    break;
+            }
+            Orbital.Initialize(PlayerOwner);
+            if (DoPoof == true)
+            {
+				LootEngine.DoDefaultItemPoof(this.transform.position, false, false);
 			}
-			PlayerOrbital playerOrbital2 = actor;
-			SpeculativeRigidbody specRigidbody = playerOrbital2.specRigidbody;
-			specRigidbody.OnPreRigidbodyCollision = (SpeculativeRigidbody.OnPreRigidbodyCollisionDelegate)Delegate.Combine(specRigidbody.OnPreRigidbodyCollision, new SpeculativeRigidbody.OnPreRigidbodyCollisionDelegate(this.OnPreCollision));
+            Orbital.specRigidbody.OnPreRigidbodyCollision += OnPreCollision;
+        }
 
-		}
-
-		public static void GuonInit(Action<PlayerOrbital, PlayerController> orig, PlayerOrbital self, PlayerController player)
+		public string SynergyToCheck()
 		{
-			orig(self, player);
-		}
+            switch (pickupType)
+            {
+                case PickupType.HALF_HEART:
+					return "More To Hearts";
+                case PickupType.HEART:
+					return "More To Hearts";
+
+                case PickupType.AMMO:
+                    return "More To Ammo";
+                case PickupType.HALF_AMMO:
+                    return "More To Ammo";
+
+
+                case PickupType.KEY:
+                    return "More To Keys";
+
+                case PickupType.BLANK:
+                    return "More To Blanks";
+
+                case PickupType.ARMOR:
+                    return "More To Armor";
+                case PickupType.CREDIT:
+                    return "More To Greed";
+
+                default:
+					return null;
+            }
+        }
+
 
         private bool Cooldown = false;
         public void C()
@@ -87,7 +148,6 @@ namespace Planetside
         private void OnPreCollision(SpeculativeRigidbody myRigidbody, PixelCollider myCollider, SpeculativeRigidbody other, PixelCollider otherCollider)
 		{
 			GameObject silencerVFX = (GameObject)ResourceCache.Acquire("Global VFX/BlankVFX_Ghost");
-			PlayerController player = this.player;
 
             if (Cooldown == false)
             {
@@ -96,160 +156,168 @@ namespace Planetside
                 this.Invoke("C", 0.15f);
             }
 
-            if (Hits == HitsBeforeDeath)
-            {
-				LootEngine.DoDefaultItemPoof(actor.sprite.WorldCenter, false, true);
-				UnityEngine.Object.Destroy(base.gameObject);
-				if (IsBlank == true)
-				{
-					AkSoundEngine.PostEvent("Play_OBJ_silenceblank_small_01", base.gameObject);
-					GameObject gameObject = new GameObject("silencer");
-					SilencerInstance silencerInstance = gameObject.AddComponent<SilencerInstance>();
-					float additionalTimeAtMaxRadius = 0.25f;
-					silencerInstance.TriggerSilencer(myRigidbody.sprite.WorldCenter, 25f, 3f, silencerVFX, 0f, 3f, 3f, 3f, 250f, 5f, additionalTimeAtMaxRadius, player, false, false);
-				}
-			}
-			if (IsBlank == true)
+			switch (pickupType)
 			{
-				this.random = UnityEngine.Random.Range(0.0f, 1.0f);
-				if (random <= 0.05f)
-                {
-					AkSoundEngine.PostEvent("Play_OBJ_silenceblank_small_01", base.gameObject);
-					GameObject gameObject = new GameObject("silencer");
-					SilencerInstance silencerInstance = gameObject.AddComponent<SilencerInstance>();
-					float additionalTimeAtMaxRadius = 0.25f;
-					silencerInstance.TriggerSilencer(myRigidbody.sprite.WorldCenter, 25f, 3f, silencerVFX, 0f, 3f, 3f, 3f, 250f, 5f, additionalTimeAtMaxRadius, player, false, false);
-				}
-			}
-			if (IsAmmo == true | IsHalfAmmo == true)
-			{
-				Projectile proj = other.GetComponent<Projectile>();
-				if (proj != null)
-                {
-					AIActor actor = proj.Owner as AIActor;
-					if (actor != null)
+				case PickupType.BLANK:
+                    if (Hits == HitsBeforeDeath | UnityEngine.Random.value <= 0.025f)
                     {
-						float CooldownIncrease = 0.02f;
-						if (IsHalfAmmo == true)
+
+                        LootEngine.DoDefaultItemPoof(PlayerOwner.sprite.WorldCenter, false, true);
+                        UnityEngine.Object.Destroy(base.gameObject);
+                        AkSoundEngine.PostEvent("Play_OBJ_silenceblank_small_01", base.gameObject);
+                        GameObject gameObject = new GameObject("silencer");
+                        SilencerInstance silencerInstance = gameObject.AddComponent<SilencerInstance>();
+                        float additionalTimeAtMaxRadius = 0.25f;
+                        silencerInstance.TriggerSilencer(myRigidbody.sprite.WorldCenter, 25f, 3f, silencerVFX, 0f, 3f, 3f, 3f, 250f, 5f, additionalTimeAtMaxRadius, PlayerOwner, false, false);
+                    }
+
+                    break;
+                case PickupType.AMMO:
+                    if (other.projectile != null)
+                    {
+                        AIActor actor = other.projectile.Owner as AIActor;
+                        if (actor != null)
                         {
-							CooldownIncrease = 0.01f;
+                            if (!actor.healthHaver.IsBoss)
+                            {
+                                actor.behaviorSpeculator.CooldownScale += 0.02f;
+                            }
                         }
-						if (!actor.healthHaver.IsBoss)
+                    }
+                    break;
+                case PickupType.HALF_AMMO:
+                    if (other.projectile != null)
+                    {
+                        AIActor actor = other.projectile.Owner as AIActor;
+                        if (actor != null)
                         {
-							actor.behaviorSpeculator.CooldownScale += CooldownIncrease;
-						}
-					}
-                }
-			}
-			if (IsHeart == true | IsHalfHeart == true)
-            {
-				Projectile proj = other.GetComponent<Projectile>();
-				if (proj != null)
-				{
-					AIActor actor = proj.Owner as AIActor;
-					if (actor != null)
-					{
-						if (!actor.healthHaver.IsBoss)
+                            if (!actor.healthHaver.IsBoss)
+                            {
+                                actor.behaviorSpeculator.CooldownScale += 0.01f;
+                            }
+                        }
+                    }
+                    break;
+				case PickupType.HEART:
+                    if (other.projectile)
+                    {
+                        AIActor actor = other.projectile.Owner as AIActor;
+                        if (actor != null && !actor.healthHaver.IsBoss)
                         {
-							this.random = UnityEngine.Random.Range(0.0f, 1.0f);
-							float rng = 0.05f;
-							if (IsHalfHeart == true)
-							{
-								rng = 0.035F;
-							}
-							if (random <= rng)
-							{
-								actor.ApplyEffect(GameManager.Instance.Dungeon.sharedSettingsPrefab.DefaultPermanentCharmEffect, 1f, null);
-								actor.gameObject.AddComponent<KillOnRoomClear>();
-								actor.IsHarmlessEnemy = true;
-								actor.IgnoreForRoomClear = true;
-								bool flag4 = actor.gameObject.GetComponent<SpawnEnemyOnDeath>();
-								if (flag4)
-								{
-									Destroy(actor.gameObject.GetComponent<SpawnEnemyOnDeath>());
+                            if (UnityEngine.Random.value <= 0.05f)
+                            {
+                                actor.ApplyEffect(GameManager.Instance.Dungeon.sharedSettingsPrefab.DefaultPermanentCharmEffect, 1f, null);
+                                actor.gameObject.AddComponent<KillOnRoomClear>();
+                                actor.IsHarmlessEnemy = true;
+                                actor.IgnoreForRoomClear = true;
+                                var _ = actor.gameObject.GetComponent<SpawnEnemyOnDeath>();
+                                if (_)
+                                {
+                                    Destroy(_);
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case PickupType.HALF_HEART:
+                    if (other.projectile)
+                    {
+                        AIActor actor = other.projectile.Owner as AIActor;
+                        if (actor != null && !actor.healthHaver.IsBoss)
+                        {
+                            if (UnityEngine.Random.value <= 0.025f)
+                            {
+                                actor.ApplyEffect(GameManager.Instance.Dungeon.sharedSettingsPrefab.DefaultPermanentCharmEffect, 1f, null);
+                                actor.gameObject.AddComponent<KillOnRoomClear>();
+                                actor.IsHarmlessEnemy = true;
+                                actor.IgnoreForRoomClear = true;
+                                var _ = actor.gameObject.GetComponent<SpawnEnemyOnDeath>();
+                                if (_)
+                                {
+                                    Destroy(_);
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case PickupType.ARMOR:
+                    if (other.projectile)
+                    {
+                        AIActor actor = other.projectile.Owner as AIActor;
+                        if (actor != null)
+                        {
+                            if (UnityEngine.Random.value <= 0.1f)
+                            {
+                                if (!actor.healthHaver.IsBoss)
+                                {
+                                    actor.behaviorSpeculator.Stun(4, true);
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case PickupType.CREDIT:
+                    if (other.projectile)
+                    {
+                        AIActor actor = other.projectile.Owner as AIActor;
+                        if (actor != null)
+                        {
+                            if (UnityEngine.Random.value <= 0.025f)
+                            {
+                                LootEngine.SpawnCurrency(this.sprite.WorldCenter, 1);
+                            }
+                        }
+                    }
+                    break;
 
-								}
-							}
-						}
-					}
-				}
-			}
-			if (IsArmor == true)
-			{
-				Projectile proj = other.GetComponent<Projectile>();
-				if (proj != null)
-				{
-					AIActor actor = proj.Owner as AIActor;
-					if (actor != null)
-					{
-						this.random = UnityEngine.Random.Range(0.0f, 1.0f);
-						if (random <= 0.08f)
-						{
-							if (!actor.healthHaver.IsBoss)
-							{
-								actor.behaviorSpeculator.Stun(4 , true);
-							}
-						}
-					}
-				}
-			}
+            }			
 		}
-		public float random;
 
-		public void Update()
-		{
-		
-		}
 
-		public void OnDestroy()
+
+		public override void OnDestroy()
         {
-			
+			base.OnDestroy();
 			if (Hits != HitsBeforeDeath)
             {
-
-				GuonStoneRespawner pick = player.gameObject.AddComponent<GuonStoneRespawner>();
-				pick.IsAmmo = this.IsAmmo;
-				pick.IsHalfAmmo = this.IsHalfAmmo;
-				pick.IsHeart = this.IsHeart;
-				pick.IsHalfHeart = this.IsHalfHeart;
-				pick.IsBlank = this.IsBlank;
-				pick.IsKey = this.IsKey;
-				pick.IsArmor = this.IsArmor;
+				GuonStoneRespawner pick = PlayerOwner.gameObject.AddComponent<GuonStoneRespawner>();
+                pick.pickupType = pickupType;
 				pick.Hits = this.Hits;
 				pick.HitsBeforeDeath = this.HitsBeforeDeath;
-				pick.player = this.player;
+				pick.player = this.PlayerOwner;
 			}
 		}
-		public bool IsHeart;
-		public bool IsHalfHeart;
-		public bool IsAmmo;
-		public bool IsHalfAmmo;
-		public bool IsKey;
-		public bool IsArmor;
-		public bool IsBlank;
-		public bool DoPoof;
-		public bool GivesStats;
 
-		public int HitsBeforeDeath = 10;
-		private PlayerOrbital actor;
-		public PlayerController player;
+		public PickupType pickupType;
+
+
+		public bool DoPoof;
+		public int HitsBeforeDeath = 15;
+
+        public PlayerOrbital Orbital;
+		public PlayerController PlayerOwner;
 		public int Hits;
+
+		public enum PickupType
+		{
+			HEART,
+			HALF_HEART,
+			AMMO,
+			HALF_AMMO,
+			KEY,
+			ARMOR,
+			BLANK,
+			CREDIT
+		}
+
 	}
 	public class GuonStoneRespawner : MonoBehaviour
     {
 		public GuonStoneRespawner()
 		{
 			this.HitsBeforeDeath = 10;
-			this.player = GameManager.Instance.PrimaryPlayer;
 			this.Hits = 0;
 
-			this.IsAmmo = false;
-			this.IsHalfAmmo = false;
-			this.IsHeart = false;
-			this.IsHalfHeart = false;
-			this.IsBlank = false;
-			this.IsKey = false;
-			this.IsArmor = false;
 
 		}
 		public void Start()
@@ -258,63 +326,19 @@ namespace Planetside
 		}
 		private void RespawnStones()
 		{
-			
-			GameObject obj = RandomPiecesOfStuffToInitialise.AmmoGuon;
-			if (this.IsAmmo == true)
-            {
-				obj = RandomPiecesOfStuffToInitialise.AmmoGuon;
-			}
-			if (this.IsHalfAmmo == true)
-			{
-				obj = RandomPiecesOfStuffToInitialise.HalfAmmoGuon;
-			}
-			if (this.IsHeart == true)
-			{
-				obj = RandomPiecesOfStuffToInitialise.HeartGuon;
-			}
-			if (this.IsHalfHeart == true)
-			{
-				obj = RandomPiecesOfStuffToInitialise.HalfheartGuon;
-			}
-			if (this.IsBlank == true)
-			{
-				obj = RandomPiecesOfStuffToInitialise.BlankGuon;
-			}
-			if (this.IsKey == true)
-			{
-				obj = RandomPiecesOfStuffToInitialise.KeyGuon;
-			}
-			if (this.IsArmor == true)
-			{
-				obj = RandomPiecesOfStuffToInitialise.ArmorGuon;
-			}
-			GameObject orb = PlayerOrbitalItem.CreateOrbital(player, obj, false);
-			PickupGuonComponent pick = orb.AddComponent<PickupGuonComponent>();
-			pick.IsAmmo = this.IsAmmo;
-			pick.IsHalfAmmo = this.IsHalfAmmo;
-			pick.IsHeart = this.IsHeart;
-			pick.IsHalfHeart = this.IsHalfHeart;
-			pick.IsBlank = this.IsBlank;
-			pick.IsKey = this.IsKey;
-			pick.IsArmor = this.IsArmor;
-			pick.Hits = this.Hits;
-			pick.HitsBeforeDeath = this.HitsBeforeDeath;
-			pick.player = this.player;
-			pick.DoPoof = false;
-			GameManager.Instance.OnNewLevelFullyLoaded -= this.RespawnStones;
+		
+			GameObject orb = PlayerOrbitalItem.CreateOrbital(player, ResourceGuonMaker.GuonDummy, false);
+			PickupGuonComponent pick = orb.GetOrAddComponent<PickupGuonComponent>();
+            pick.pickupType = pickupType;
+            pick.DoPoof = false;
+            pick.PlayerOwner = player;
+            GameManager.Instance.OnNewLevelFullyLoaded -= this.RespawnStones;
 			Destroy(this);
-
 		}
 
 		public int Hits;
 		public int HitsBeforeDeath = 10;
-		public bool IsHeart;
-		public bool IsHalfHeart;
-		public bool IsAmmo;
-		public bool IsHalfAmmo;
-		public bool IsKey;
-		public bool IsArmor;
-		public bool IsBlank;
+        public PickupGuonComponent.PickupType pickupType;
 		public PlayerController player;
 
 	}

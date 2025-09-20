@@ -47,9 +47,10 @@ namespace Planetside
                                 {
                                     component.Owner = p;
                                     component.Shooter = p.specRigidbody;
+                                    component.SendInDirection(MathToolbox.GetUnitOnCircle(BraveUtility.RandomAngle(), 1), true, true);
+                                    component.baseData.damage = Projectile.baseData.damage * 0.333f;
                                 }
-                                component.SendInDirection(MathToolbox.GetUnitOnCircle(BraveUtility.RandomAngle(), 1), true, true);
-                                component.baseData.damage = Projectile.baseData.damage * 0.333f;
+
                             }
                         }
 

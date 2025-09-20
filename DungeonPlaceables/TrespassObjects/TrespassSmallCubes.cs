@@ -12,6 +12,8 @@ using Planetside;
 using BreakAbleAPI;
 using System.Collections;
 using SaveAPI;
+using Alexandria.PrefabAPI;
+using Planetside.Static_Storage;
 
 namespace Planetside
 {
@@ -19,6 +21,9 @@ namespace Planetside
     {
         public static void Init()
         {
+            //SmallCube
+
+            /*
             string defaultPath = "Planetside/Resources/DungeonObjects/TrespassObjects/SmallCubes/";
 
             MajorBreakable cube1 = BreakableAPIToolbox.GenerateMajorBreakable("cube1", new string[] { defaultPath + "smallcube1.png" }, 1, new string[] { defaultPath + "smallcube1.png" }, 1, 15000, true, 0, 0, 1, -2, true, null, null, true, new List<CollisionLayer>() { CollisionLayer.EnemyBlocker, CollisionLayer.PlayerBlocker });
@@ -52,6 +57,26 @@ namespace Planetside
                 variable.Key.GetComponent<tk2dSprite>().SortingOrder = 2;
                 variable.Key.layer = 20;
             }
+            */
+
+
+            var Cube = PrefabBuilder.BuildObject("Small Cube");
+            Cube.layer = 20;
+            var sprite = Cube.AddComponent<tk2dSprite>();
+            sprite.SortingOrder = 2;
+            var animator = Cube.AddComponent<tk2dSpriteAnimator>();
+            animator.library = StaticSpriteDefinitions.Trespass_Room_Object_Animation;
+            animator.playAutomatically = true;
+            animator.defaultClipId = StaticSpriteDefinitions.Trespass_Room_Object_Animation.GetClipIdByName("SmallCube");
+            sprite.usesOverrideMaterial = true;
+            sprite.IsPerpendicular = false;
+            Material mat = new Material(StaticShaders.Default_Shader);
+            sprite.renderer.material = mat;
+
+            Dictionary<GameObject, float> dict = new Dictionary<GameObject, float>()
+            {
+                { Cube.gameObject, 1f },
+            };
 
             DungeonPlaceable placeable = BreakableAPIToolbox.GenerateDungeonPlaceable(dict);
 

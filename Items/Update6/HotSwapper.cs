@@ -188,16 +188,16 @@ namespace Planetside
 			if (Owner)
 			{
 				if (GraceTime > 0) { GraceTime -= Time.deltaTime; }
-                if (CurrentKillStreak > 0)
+                if (GunsUsedForKill.Contains(Owner.CurrentGun))
                 {
-                    if (UnityEngine.Random.value < CurrentKillStreak * Time.deltaTime)
+                    if (UnityEngine.Random.value < 12 * Time.deltaTime)
                     {
                         GlobalSparksDoer.DoRadialParticleBurst(1,
-                            Owner.sprite.WorldBottomLeft,
-                            Owner.sprite.WorldTopRight,
+                            Owner.CurrentGun.sprite.WorldBottomLeft,
+                            Owner.CurrentGun.sprite.WorldTopRight,
                             360,
-                            CurrentKillStreak + 0.5f,
-                            1f, null, null, null, GlobalSparksDoer.SparksType.EMBERS_SWIRLING);
+                            CurrentKillStreak + 0.25f,
+                            1f, null, null, null, GlobalSparksDoer.SparksType.STRAIGHT_UP_FIRE);
                     }
                 }
 			}
@@ -316,7 +316,8 @@ namespace Planetside
             }
             if (GunsUsedForKill.Contains(newGun))
             {
-                ResetKillStreak();
+                return;
+                //ResetKillStreak();
                 //KILL    
             }
             else
@@ -342,6 +343,14 @@ namespace Planetside
                 Exploder.DoRadialPush(Owner.gameObject.transform.PositionVector2(), 20, Power);
                 Exploder.DoRadialKnockback(Owner.gameObject.transform.PositionVector2(), 20, Power);
                 Exploder.DoRadialMinorBreakableBreak(Owner.gameObject.transform.PositionVector2(), Power);
+                ParticleBase.EmitParticles("WaveParticle", 1, new ParticleSystem.EmitParams()
+                {
+                    position = Owner.sprite.WorldCenter,
+                    startSize = .5f + Power,
+                    rotation = 0,
+                    startLifetime = 0.3f,
+                    startColor = Color.red.WithAlpha(0.4f)
+                });
                 AkSoundEngine.PostEvent("Play_Immolate", Owner.gameObject);
                 for (int i = 0; i < 24; i++)
                 {
@@ -376,10 +385,10 @@ namespace Planetside
             ParticleBase.EmitParticles("WaveParticle", 1, new ParticleSystem.EmitParams()
             {
                 position = Owner.sprite.WorldCenter,
-                startSize = 2,
+                startSize = 6,
                 rotation = 0,
-                startLifetime = 0.5f,
-                startColor = Color.white
+                startLifetime = 0.25f,
+                startColor = Color.white.WithAlpha(0.4f)
             });
             CurrentKillStreak = 0;
             GunsUsedForKill.Clear();
@@ -388,6 +397,12 @@ namespace Planetside
         private StatModifier FireRate;
         public void IncrementKill(Gun gun)
         {
+            if (GunsUsedForKill.Contains(gun))
+            {
+                ResetKillStreak();
+                return;
+            }
+
             if (Owner.inventory.AllGuns.Count < 2) { return; }
             GraceTime = 2;
             CurrentKillStreak++;
@@ -413,10 +428,10 @@ namespace Planetside
             ParticleBase.EmitParticles("WaveParticle", 1, new ParticleSystem.EmitParams()
             {
                 position = Owner.sprite.WorldCenter,
-                startSize = 2,
+                startSize = 3.5f,
                 rotation = 0,
-                startLifetime = 0.5f,
-                startColor = Color.red
+                startLifetime = 0.3f,
+                startColor = Color.red.WithAlpha(0.4f)
             });
         }
 

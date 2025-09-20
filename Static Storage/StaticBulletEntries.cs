@@ -8,6 +8,7 @@ using GungeonAPI;
 using Alexandria;
 using Planetside.Static_Storage;
 using Alexandria.Assetbundle;
+using static Planetside.Wailer;
 
 
 namespace Planetside
@@ -18,6 +19,7 @@ namespace Planetside
         {
             AIBulletBank.Entry entry = StaticBulletEntries.CopyFields<AIBulletBank.Entry>(entryToCopy);
             entry.Name = Name;
+            entry.preloadCount = Mathf.Max(entry.preloadCount, 25);
             Projectile projectile = UnityEngine.Object.Instantiate<GameObject>(entry.BulletObject).GetComponent<Projectile>();
             projectile.gameObject.SetLayerRecursively(18);
             projectile.transform.position = projectile.transform.position.WithZ(210.5125f);
@@ -41,6 +43,8 @@ namespace Planetside
         {
             AIBulletBank.Entry entry = StaticBulletEntries.CopyFields<AIBulletBank.Entry>(entryToCopy);
             entry.Name = Name;
+            entry.preloadCount = Mathf.Max(entry.preloadCount, 25);
+
             Projectile projectile = UnityEngine.Object.Instantiate<GameObject>(entry.BulletObject).GetComponent<Projectile>();
             projectile.gameObject.SetLayerRecursively(18);
             projectile.transform.position = projectile.transform.position.WithZ(210.5125f);
@@ -425,11 +429,13 @@ namespace Planetside
                 Projectile proj = entry.BulletObject.GetComponent<Projectile>();
 
 
-
-                EmmisiveTrail emis = proj.gameObject.AddComponent<EmmisiveTrail>();
+                //EmmisiveTrail emis = proj.gameObject.AddComponent<EmmisiveTrail>();
+                /*
                 emis.EmissiveColorPower = 10;
                 emis.EmissivePower = 100;
+                */
                 proj.shouldRotate = true;
+
                 /*
                 List<string> BeamAnimPaths = new List<string>()
                 {
@@ -468,7 +474,15 @@ namespace Planetside
                 StaticSpriteDefinitions.Beam_Animation_Data,
                 "undodgeablehitscan_mid", new Vector2(12, 10), new Vector2(0, 1), false, "undodgeablehitscan_start");
 
-                UndodgeableHitscan = entry;
+                Material glowshader = new Material(ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTiltedCutoutEmissive"));
+
+                proj.sprite.usesOverrideMaterial = true;
+                glowshader.mainTexture = proj.sprite.renderer.material.mainTexture;
+                glowshader.SetFloat("_EmissivePower", 20);
+                glowshader.SetFloat("_EmissiveColorPower", 20);
+                proj.sprite.renderer.material = glowshader;
+
+               UndodgeableHitscan = entry;
             }
 
 

@@ -25,14 +25,10 @@ namespace Planetside.DungeonPlaceables
 {
     public class Idol : MonoBehaviour
     {
-        //m_ENM_wizard_summon_01
-        //SND_ENM_spawn_appear_01
-        //m_ENM_squidface_cast_01
+
         public static void Init()
         {
             GameObject obj = PrefabBuilder.BuildObject("BlessedIdol");
-            //ItemAPI.FakePrefab.MarkAsFakePrefab(obj);
-            //DontDestroyOnLoad(obj);
 
             var tk2d = obj.AddComponent<tk2dSprite>();
             tk2d.Collection = StaticSpriteDefinitions.RoomObject_Sheet_Data;
@@ -181,6 +177,49 @@ namespace Planetside.DungeonPlaceables
             goopie.majorBreakable = brekable;
             goopie.lineRenderer = lineRenderer;
 
+            Alexandria.ItemAPI.SpriteBuilder.AddSpriteToCollection(StaticSpriteDefinitions.RoomObject_Sheet_Data.GetSpriteDefinition("blessedidol_001"), Alexandria.ItemAPI.SpriteBuilder.ammonomiconCollection);
+
+            var encounterTrackable = goopie.gameObject.AddComponent<EncounterTrackable>();
+            encounterTrackable.journalData = new JournalEntry();
+            encounterTrackable.EncounterGuid = "psog:silver_idol";
+            encounterTrackable.prerequisites = new DungeonPrerequisite[0];
+            encounterTrackable.journalData.SuppressKnownState = false;
+            encounterTrackable.journalData.IsEnemy = true;
+            encounterTrackable.journalData.SuppressInAmmonomicon = false;
+            encounterTrackable.ProxyEncounterGuid = "";
+            encounterTrackable.journalData.AmmonomiconSprite = "blessedidol_001";
+            encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("silveridolsheet");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\shamberammonomicoenrtytab.png");
+            PlanetsideModule.Strings.Enemies.Set("#SILVER_IDOL_NAME", "Silver Idol");
+            PlanetsideModule.Strings.Enemies.Set("#SILVER_IDOL_SHORT", "Heavenly Protection");
+            PlanetsideModule.Strings.Enemies.Set("#SILVER_IDOL_LONGDESC", "When a specially valued Gundead nears death, the others create an Idol to link their spirit to, so they can continue to serve the Gungeon even in death.\n\nWhile somewhat resistant to gunfire, they are not resistant to a good, strong push onto the ground.");
+            encounterTrackable.journalData.PrimaryDisplayName = "#SILVER_IDOL_NAME";
+            encounterTrackable.journalData.NotificationPanelDescription = "#SILVER_IDOL_SHORT";
+            encounterTrackable.journalData.AmmonomiconFullEntry = "#SILVER_IDOL_LONGDESC";
+            //EnemyBuilder.AddEnemyToDatabase(enemy.gameObject, "psog:shamber");
+            EnemyDatabaseEntry item = new EnemyDatabaseEntry
+            {
+                myGuid = "psog:silver_idol",
+                placeableWidth = 2,
+                placeableHeight = 2,
+                isNormalEnemy = true,
+                path = "psog:silver_idol",
+                isInBossTab = false,
+                encounterGuid = "psog:silver_idol"
+            };
+            EnemyDatabase.Instance.Entries.Add(item);
+            EncounterDatabaseEntry encounterDatabaseEntry = new EncounterDatabaseEntry(encounterTrackable)
+            {
+                path = "psog:silver_idol",
+                myGuid = "psog:silver_idol"
+            };
+            EncounterDatabase.Instance.Entries.Add(encounterDatabaseEntry);
+
+            EnemyDatabase.GetEntry("psog:silver_idol").ForcedPositionInAmmonomicon = 100;
+            EnemyDatabase.GetEntry("psog:silver_idol").isInBossTab = false;
+            EnemyDatabase.GetEntry("psog:silver_idol").isNormalEnemy = true;
+            encounterTrackable.DoNotificationOnEncounter = false;
+            goopie.trackable = encounterTrackable;
+
 
             Alexandria.DungeonAPI.StaticReferences.customObjects.Add("PSOG_Idol", obj);
             StaticReferences.StoredRoomObjects.Add("PSOG_Idol", obj.gameObject);
@@ -218,7 +257,7 @@ namespace Planetside.DungeonPlaceables
         public MajorBreakable majorBreakable;
         public tk2dSprite sprite;
         public tk2dSpriteAnimator animator;
-
+        public EncounterTrackable trackable;
         public void Start()
         {
             MarkCells();
@@ -251,6 +290,8 @@ namespace Planetside.DungeonPlaceables
             }
             majorBreakable.OnBreak += () =>
             {
+                room.Entered -= Room_Entered;
+                trackable?.HandleEncounter();
                 ExecuteTheGuy();
                 DeadlyDeadlyGoopManager.GetGoopManagerForGoopType(Alexandria.Misc.GoopUtility.BloodDef).TimedAddGoopCircle(this.sprite.WorldBottomCenter, 3.5f, 0.5f);
                 AkSoundEngine.PostEvent("Play_RockBreaking", base.gameObject);
@@ -309,7 +350,6 @@ namespace Planetside.DungeonPlaceables
             };
 
             room.Entered += Room_Entered;
-
             E = BraveUtility.RandomAngle();
         }
 
@@ -406,28 +446,33 @@ namespace Planetside.DungeonPlaceables
         private IEnumerator DoKill(StaticVFXStorage.MourningStarVFXController mourningStarVFXController)
         {
             float e = 0;
-            if (EnemyBlessed)
+            var enemy = EnemyBlessed;
+
+            if (enemy)
             {
-                var vec = EnemyBlessed.sprite.GetBounds().size;
-                var vec1 = EnemyBlessed.transform.position;
-                var vec2 = EnemyBlessed.sprite.WorldBottomCenter;
+                var vec = enemy.sprite.GetBounds().size;
+                var vec1 = enemy.transform.position;
+                var vec2 = enemy.sprite.WorldBottomCenter;
                 yield return new WaitForSeconds(0.125f);
                 while (e < 1)
                 {
-                    if (EnemyBlessed != null) 
+                    if (enemy != null) 
                     {
-                        EnemyBlessed.transform.localScale = Vector3.Lerp(Vector3.one, new Vector3(0f, 3f), e);
-                        EnemyBlessed.sprite.SortingOrder = -1000;
-                        EnemyBlessed.sprite.HeightOffGround = Mathf.Lerp(2, 20, e);
-                        EnemyBlessed.transform.position = Vector3.Lerp(vec1, vec2, e);
-                        EnemyBlessed.specRigidbody.Reinitialize();
+                        enemy.transform.localScale = Vector3.Lerp(Vector3.one, new Vector3(0f, 3f), e);
+                        enemy.sprite.SortingOrder = -1000;
+                        enemy.sprite.HeightOffGround = Mathf.Lerp(2, 20, e);
+                        enemy.transform.position = Vector3.Lerp(vec1, vec2, e);
+                        enemy.specRigidbody.Reinitialize();
                     }
 
 
                     e += Time.deltaTime * 2f;
                     yield return null;
                 }
-                EnemyBlessed?.EraseFromExistenceWithRewards();
+                if (enemy != null)
+                {
+                    enemy.EraseFromExistenceWithRewards();
+                }
             }
             mourningStarVFXController.Dissipate();
             yield break;
@@ -586,13 +631,6 @@ namespace Planetside.DungeonPlaceables
 
             List<AIActor> EnemyList = GetTheseActiveEnemies(room, RoomHandler.ActiveEnemyType.All);
 
-            /*
-            for (int i = EnemyList.Count - 1; i > -1; i--)
-            {
-                if (EnemyList[i].GetComponent<EnergyShieldProtection>() != null | EnemyList[i].GetComponent<EnergyShieldBehavior>() != null) { if (DebugCheck2 == true) { Debug.Log("D1"); } EnemyList.RemoveAt(i); }
-            }
-            */
-
             if (EnemyList.Count == 0 && remainingReinforcements == true) {  return false; }
             if (EnemyList.Count > 0 && remainingReinforcements == true) {  return true; }
 
@@ -623,6 +661,11 @@ namespace Planetside.DungeonPlaceables
                 outList.AddRange(room.activeEnemies);
             }
             return outList;
+        }
+
+        public void OnDestroy()
+        {
+            room.Entered -= Room_Entered;
         }
     }
 }

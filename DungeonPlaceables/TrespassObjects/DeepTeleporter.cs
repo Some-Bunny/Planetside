@@ -39,11 +39,11 @@ namespace Planetside.DungeonPlaceables.TrespassObjects
             UnityEngine.Object.DontDestroyOnLoad(teleporter);
             TeleporterController existingTeleporterController = ResourceManager.LoadAssetBundle("brave_resources_001").LoadAsset<GameObject>("Teleporter_Gungeon_01").GetComponentInChildren<TeleporterController>();
             teleporter.layer = 20;
-
+            
             var sprite = teleporter.gameObject.AddComponent<tk2dSprite>();
             sprite.Collection = StaticSpriteDefinitions.RoomObject_Sheet_Data;
             sprite.SetSprite(StaticSpriteDefinitions.RoomObject_Sheet_Data, "deep_teleporter_001");
-
+            sprite.IsPerpendicular = false;
             var animator = teleporter.gameObject.AddComponent<tk2dSpriteAnimator>();
             animator.library = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("DeepTeleporterAnimation").GetComponent<tk2dSpriteAnimation>();
             //animator.defaultClipId = StaticSpriteDefinitions.RoomObject_Animation_Data.GetClipIdByName("miniteleporter_place");
@@ -100,6 +100,7 @@ namespace Planetside.DungeonPlaceables.TrespassObjects
             sprite = extant.gameObject.AddComponent<tk2dSprite>();
             sprite.Collection = StaticSpriteDefinitions.RoomObject_Sheet_Data;
             sprite.SetSprite(StaticSpriteDefinitions.RoomObject_Sheet_Data, "deep_teleporter_decor_001");
+            sprite.IsPerpendicular = false;
 
             var cool = extant.gameObject.AddComponent<tk2dSpriteAnimator>();
             cool.library = animator.library;

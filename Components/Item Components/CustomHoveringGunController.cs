@@ -48,7 +48,7 @@ namespace Planetside
             }
             if (this.Position == CustomHoveringGunController.HoverPosition.CIRCULATE)
             {
-                this.SetOrbitalTier(PlayerOrbital.CalculateTargetTier(this.m_owner, this));
+                this.SetOrbitalTier(PlayerOrbital.CalculateTargetTier(this.m_owner, this) + 10);
                 this.SetOrbitalTierIndex(PlayerOrbital.GetNumberOfOrbitalsInTier(this.m_owner, this.GetOrbitalTier()));
                 this.m_owner.orbitals.Add(this);
                 this.m_ownerCenterAverage = attachObject != null ? attachObject.transform.PositionVector2() : this.m_owner.CenterPosition;

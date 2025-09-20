@@ -884,12 +884,13 @@ namespace Planetside
 					}
 					if (advancedAdvancedPrerequisiteType == AdvancedAdvancedPrerequisiteType.SPEEDRUNSHOP)
 					{
-                        return AdvancedGameStatsManager.Instance.GetSessionStatValue(CustomTrackedStats.ALLOW_TRADER) == 1;
+                        return AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.TIMETRADER_ALLOWED);
+                        
 
                     }
                     if (advancedAdvancedPrerequisiteType == AdvancedAdvancedPrerequisiteType.SPEEDRUNSHOPDISALLOWED)
 					{
-                        return AdvancedGameStatsManager.Instance.GetSessionStatValue(CustomTrackedStats.ALLOW_TRADER) == 0;
+                        return AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.TIMETRADER_ALLOWED) == false;
                     }
 				}
 

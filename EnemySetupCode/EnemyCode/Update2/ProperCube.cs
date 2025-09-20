@@ -11,6 +11,14 @@ using Brave.BulletScript;
 using Pathfinding;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
+using static AkSoundEngine;
+using HarmonyLib;
+using static Planetside.ProperCube.TrapperCubeBehaviour;
+using Alexandria.PrefabAPI;
+using Planetside.Static_Storage;
+using UnityEngine.Playables;
+
+
 
 namespace Planetside
 {
@@ -18,26 +26,198 @@ namespace Planetside
 	{
 		public static GameObject prefab;
 		public static readonly string guid = "proper_cube";
-		public static void Init()
-		{
-			ProperCube.BuildPrefab();
-		}
 
-		public static void BuildPrefab()
+
+        public static void Init(bool North, bool South, bool East, bool West, string AdditionalNameAddon = null, bool isDupe = false)
 		{
             tk2dSpriteCollectionData Collection = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("ProperCubeCollection").GetComponent<tk2dSpriteCollectionData>();
-            Material mat = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Material>("propercube material");
 
-            if (prefab == null || !EnemyBuilder.Dictionary.ContainsKey(guid))
+            string Myguid = guid;
+            if (AdditionalNameAddon != null)
             {
-				prefab = EnemyBuilder.BuildPrefabBundle("Toddy Enemy", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(8, 9),  false);
-				var companion = prefab.AddComponent<EnemyBehavior>();
+                Myguid += AdditionalNameAddon;
+            }
+            if (prefab == null || !EnemyBuilder.Dictionary.ContainsKey(Myguid))
+            {
+				prefab = EnemyBuilder.BuildPrefabBundle("Trapper Cube", Myguid, Collection, 68, new IntVector2(0, 0), new IntVector2(8, 9),  false);
+				var companion = prefab.GetComponent<AIActor>();
+				var trapper = prefab.AddComponent<TrapperCubeBehaviour>();
 
-                EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, Collection, mat, false);
+                companion.GetComponent<TeleportationImmunity>();
+
+                if (!isDupe)
+                {
+                    var UpDown = PrefabBuilder.BuildObject("TrapperCube Dirt UpDown");
+                    UpDown.layer = 20;
+                    var sprite = UpDown.AddComponent<tk2dSprite>();
+                    sprite.SortingOrder = 2;
+                    sprite.HeightOffGround = -1.75f;
+                    sprite.IsPerpendicular = false;
+                    var animator = UpDown.AddComponent<tk2dSpriteAnimator>();
+                    animator.library = StaticSpriteDefinitions.RoomObject_Animation_Data;
+                    animator.playAutomatically = true;
+                    animator.defaultClipId = StaticSpriteDefinitions.RoomObject_Animation_Data.GetClipIdByName("dirt_updown");
+                    sprite.usesOverrideMaterial = true;
+                    Material mat = new Material(StaticShaders.Default_Shader);
+                    sprite.renderer.material = mat;
+                    Alexandria.DungeonAPI.StaticReferences.customObjects.Add("psog_dirt_updown", UpDown);
+
+                    var LeftRight = PrefabBuilder.BuildObject("TrapperCube Dirt LeftRight");
+                    LeftRight.layer = 20;
+                    sprite = LeftRight.AddComponent<tk2dSprite>();
+                    sprite.SortingOrder = 2;
+                    sprite.HeightOffGround = -1.75f;
+                    sprite.IsPerpendicular = false;
+                    animator = LeftRight.AddComponent<tk2dSpriteAnimator>();
+                    animator.library = StaticSpriteDefinitions.RoomObject_Animation_Data;
+                    animator.playAutomatically = true;
+                    animator.defaultClipId = StaticSpriteDefinitions.RoomObject_Animation_Data.GetClipIdByName("dirt_leftright");
+                    sprite.usesOverrideMaterial = true;
+                    mat = new Material(StaticShaders.Default_Shader);
+                    sprite.renderer.material = mat;
+                    Alexandria.DungeonAPI.StaticReferences.customObjects.Add("psog_dirt_leftright", LeftRight);
+
+                    var Mid = PrefabBuilder.BuildObject("TrapperCube Dirt M");
+                    Mid.layer = 20;
+                    sprite = Mid.AddComponent<tk2dSprite>();
+                    sprite.IsPerpendicular = false;
+                    sprite.SetSprite(StaticSpriteDefinitions.RoomObject_Sheet_Data, "trappercube_dirt_001");
+                    sprite.usesOverrideMaterial = true;
+                    mat = new Material(StaticShaders.Default_Shader);
+                    sprite.renderer.material = mat;
+                    Alexandria.DungeonAPI.StaticReferences.customObjects.Add("psog_dirt_m", Mid);
+
+                }
+
+
+
+                //EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, Collection, mat, false);
+                var h = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("ProperCubeAnimation_Proper").GetComponent<tk2dSpriteAnimation>();
+                var h1 = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("ProperCubeAnimation_Hollow").GetComponent<tk2dSpriteAnimation>();
+                var h2 = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("ProperCubeAnimation_Forge").GetComponent<tk2dSpriteAnimation>();
+
+				EnemyToolbox.AddSoundsToAnimationFrame(h, "charge", new Dictionary<int, string>() { { 0, "Play_OBJ_chalice_clank_01" } });
+                EnemyToolbox.AddSoundsToAnimationFrame(h1, "charge", new Dictionary<int, string>() { { 0, "Play_OBJ_chalice_clank_01" } });
+                EnemyToolbox.AddSoundsToAnimationFrame(h2, "charge", new Dictionary<int, string>() { { 0, "Play_OBJ_chalice_clank_01" } });
+
+                EnemyToolbox.AddEventTriggersToAnimation(h, "charge", new Dictionary<int, string>() { { 0, "DoWoke" } });
+                EnemyToolbox.AddEventTriggersToAnimation(h1, "charge", new Dictionary<int, string>() { { 0, "DoWoke" } });
+                EnemyToolbox.AddEventTriggersToAnimation(h2, "charge", new Dictionary<int, string>() { { 0, "DoWoke" } });
+
+                EnemyToolbox.AddSoundsToAnimationFrame(h, "impact_north", new Dictionary<int, string>() { { 0, "Play_BOSS_wall_slam_01" } });
+                EnemyToolbox.AddSoundsToAnimationFrame(h1, "impact_north", new Dictionary<int, string>() { { 0, "Play_BOSS_wall_slam_01" } });
+                EnemyToolbox.AddSoundsToAnimationFrame(h2, "impact_north", new Dictionary<int, string>() { { 0, "Play_BOSS_wall_slam_01" } });
+
+                EnemyToolbox.AddSoundsToAnimationFrame(h, "impact_south", new Dictionary<int, string>() { { 0, "Play_BOSS_wall_slam_01" } });
+                EnemyToolbox.AddSoundsToAnimationFrame(h1, "impact_south", new Dictionary<int, string>() { { 0, "Play_BOSS_wall_slam_01" } });
+                EnemyToolbox.AddSoundsToAnimationFrame(h2, "impact_south", new Dictionary<int, string>() { { 0, "Play_BOSS_wall_slam_01" } });
+
+                EnemyToolbox.AddSoundsToAnimationFrame(h, "impact_east", new Dictionary<int, string>() { { 0, "Play_BOSS_wall_slam_01" } });
+                EnemyToolbox.AddSoundsToAnimationFrame(h1, "impact_east", new Dictionary<int, string>() { { 0, "Play_BOSS_wall_slam_01" } });
+                EnemyToolbox.AddSoundsToAnimationFrame(h2, "impact_east", new Dictionary<int, string>() { { 0, "Play_BOSS_wall_slam_01" } });
+
+                EnemyToolbox.AddSoundsToAnimationFrame(h, "impact_west", new Dictionary<int, string>() { { 0, "Play_BOSS_wall_slam_01" } });
+                EnemyToolbox.AddSoundsToAnimationFrame(h1, "impact_west", new Dictionary<int, string>() { { 0, "Play_BOSS_wall_slam_01" } });
+                EnemyToolbox.AddSoundsToAnimationFrame(h2, "impact_west", new Dictionary<int, string>() { { 0, "Play_BOSS_wall_slam_01" } });
+
+
+
+                EnemyToolbox.AddEventTriggersToAnimation(h, "impact_north", new Dictionary<int, string>() { { 0, "HitWall" } });
+                EnemyToolbox.AddEventTriggersToAnimation(h1, "impact_north", new Dictionary<int, string>() { { 0, "HitWall" } });
+                EnemyToolbox.AddEventTriggersToAnimation(h2, "impact_north", new Dictionary<int, string>() { { 0, "HitWall" } });
+
+                EnemyToolbox.AddEventTriggersToAnimation(h, "impact_south", new Dictionary<int, string>() { { 0, "HitWall" } });
+                EnemyToolbox.AddEventTriggersToAnimation(h1, "impact_south", new Dictionary<int, string>() { { 0, "HitWall" } });
+                EnemyToolbox.AddEventTriggersToAnimation(h2, "impact_south", new Dictionary<int, string>() { { 0, "HitWall" } });
+
+                EnemyToolbox.AddEventTriggersToAnimation(h, "impact_east", new Dictionary<int, string>() { { 0, "HitWall" } });
+                EnemyToolbox.AddEventTriggersToAnimation(h1, "impact_east", new Dictionary<int, string>() { { 0, "HitWall" } });
+                EnemyToolbox.AddEventTriggersToAnimation(h2, "impact_east", new Dictionary<int, string>() { { 0, "HitWall" } });
+
+                EnemyToolbox.AddEventTriggersToAnimation(h, "impact_west", new Dictionary<int, string>() { { 0, "HitWall" } });
+                EnemyToolbox.AddEventTriggersToAnimation(h1, "impact_west", new Dictionary<int, string>() { { 0, "HitWall" } });
+                EnemyToolbox.AddEventTriggersToAnimation(h2, "impact_west", new Dictionary<int, string>() { { 0, "HitWall" } });
+
+
+
+                EnemyToolbox.AddSoundsToAnimationFrame(h, "death", new Dictionary<int, string>() { { 1, "Play_ENM_rock_blast_01" } });
+                EnemyToolbox.AddSoundsToAnimationFrame(h1, "death", new Dictionary<int, string>() { { 1, "Play_ENM_rock_blast_01" } });
+                EnemyToolbox.AddSoundsToAnimationFrame(h2, "death", new Dictionary<int, string>() { { 1, "Play_ENM_rock_blast_01" } });
+
+                EnemyToolbox.AddEventTriggersToAnimation(h, "death", new Dictionary<int, string>() { { 1, "Boom" } });
+                EnemyToolbox.AddEventTriggersToAnimation(h1, "death", new Dictionary<int, string>() { { 1, "Boom" } });
+                EnemyToolbox.AddEventTriggersToAnimation(h2, "death", new Dictionary<int, string>() { { 1, "Boom" } });
+
+
+                #region Variants
+                cubeVariants.Add(
+				new CubeVariant(new GlobalDungeonData.ValidTilesets[] 
+				{
+					GlobalDungeonData.ValidTilesets.GUNGEON
+				},
+				h, 
+				10, 
+				3, 
+				"FireParticle_BG", 
+				new ParticleSystem.EmitParams() 
+				{
+                    startLifetime = 0.5f,
+                    velocity = Vector3.up * 0.5f,
+                }, 
+				12,
+				new IntVector2(45, 210)));
+
+               cubeVariants.Add(
+               new CubeVariant(new GlobalDungeonData.ValidTilesets[]
+               {
+                    GlobalDungeonData.ValidTilesets.CATACOMBGEON
+               },
+               h1,
+               8,
+               3,
+               "DarkMagics_BG",
+               new ParticleSystem.EmitParams()
+               {
+                   startLifetime = 2f,
+                   velocity = Vector3.up * 0.1f,
+				   startColor = Color.cyan,
+                   startSize = 0.3125f
+               },
+               5,
+               new IntVector2(45, 315)));
+
+               cubeVariants.Add(
+               new CubeVariant(new GlobalDungeonData.ValidTilesets[]
+               {
+                    GlobalDungeonData.ValidTilesets.FORGEGEON
+               },
+               h2,
+               6,
+               2,
+               "DarkMagics_BG",
+               new ParticleSystem.EmitParams()
+               {
+                   startLifetime = 1f,
+                   velocity = Vector3.up * 0.5f,
+				   startSize = 0.25f,
+				   startColor = Color.gray
+               },
+               32,
+               new IntVector2(75, 450)));
+				#endregion
+                companion.gameObject.layer = 22;
+                companion.sprite.SortingOrder = 2;
+
+
+                companion.aiActor.spriteAnimator.Library = h;
+                companion.aiActor.spriteAnimator.library = h;
+                companion.aiActor.aiAnimator.spriteAnimator = companion.aiActor.spriteAnimator;
 
 
                 prefab.AddComponent<KillOnRoomClear>();
-				companion.aiActor.knockbackDoer.weight = 800;
+				companion.knockbackDoer.knockbackMultiplier = 0;
+
+                companion.aiActor.knockbackDoer.weight = 800;
 				companion.aiActor.MovementSpeed = 0f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
 				companion.aiActor.CollisionDamage = 1f;
@@ -62,7 +242,7 @@ namespace Planetside
 					SpecifyBagelFrame = string.Empty,
 					BagelColliderNumber = 0,
 					ManualOffsetX = 2,
-					ManualOffsetY = 2,
+					ManualOffsetY = 0,
 					ManualWidth = 12,
 					ManualHeight = 16,
 					ManualDiameter = 0,
@@ -82,7 +262,7 @@ namespace Planetside
 					SpecifyBagelFrame = string.Empty,
 					BagelColliderNumber = 0,
                     ManualOffsetX = 2,
-                    ManualOffsetY = 2,
+                    ManualOffsetY = 0,
                     ManualWidth = 12,
                     ManualHeight = 16,
                     ManualDiameter = 0,
@@ -95,234 +275,66 @@ namespace Planetside
 
 				});
 				companion.aiActor.CorpseObject = EnemyDatabase.GetOrLoadByGuid("43426a2e39584871b287ac31df04b544").CorpseObject;
-				companion.aiActor.PreventBlackPhantom = false;
 				AIAnimator aiAnimator = companion.aiAnimator;
-				aiAnimator.OtherAnimations = new List<AIAnimator.NamedDirectionalAnimation>
-				{
-					new AIAnimator.NamedDirectionalAnimation
-					{
-					name = "die",
-					anim = new DirectionalAnimation
-						{
-							Type = DirectionalAnimation.DirectionType.TwoWayHorizontal,
-							Flipped = new DirectionalAnimation.FlipType[2],
-							AnimNames = new string[]
-							{
-
-						   "die_left",
-						   "die_right"
-
-							}
-
-						}
-					}
-				};
-				aiAnimator.IdleAnimation = new DirectionalAnimation
-				{
-					Type = DirectionalAnimation.DirectionType.TwoWayHorizontal,
-					Flipped = new DirectionalAnimation.FlipType[2],
-					AnimNames = new string[]
-					{
-						"idle_left",
-						"idle_right"
-					}
-				};
-				aiAnimator.OtherAnimations = new List<AIAnimator.NamedDirectionalAnimation>
-				{
-					new AIAnimator.NamedDirectionalAnimation
-					{
-					name = "charge",
-					anim = new DirectionalAnimation
-						{
-							Type = DirectionalAnimation.DirectionType.TwoWayHorizontal,
-							Flipped = new DirectionalAnimation.FlipType[2],
-							AnimNames = new string[]
-							{
-
-						   "charge_left",
-						   "charge_right"
-
-							}
-
-						}
-					}
-				};
-				aiAnimator.OtherAnimations = new List<AIAnimator.NamedDirectionalAnimation>
-				{
-					new AIAnimator.NamedDirectionalAnimation
-					{
-					name = "dash",
-					anim = new DirectionalAnimation
-						{
-							Type = DirectionalAnimation.DirectionType.TwoWayHorizontal,
-							Flipped = new DirectionalAnimation.FlipType[2],
-							AnimNames = new string[]
-							{
-
-						   "dash_left",
-						   "dash_right"
-
-							}
-
-						}
-					}
-				};
-				aiAnimator.OtherAnimations = new List<AIAnimator.NamedDirectionalAnimation>
-				{
-					new AIAnimator.NamedDirectionalAnimation
-					{
-					name = "impact",
-					anim = new DirectionalAnimation
-						{
-							Type = DirectionalAnimation.DirectionType.TwoWayHorizontal,
-							Flipped = new DirectionalAnimation.FlipType[2],
-							AnimNames = new string[]
-							{
-
-						   "impact_left",
-						   "impact_right"
-							}
-
-						}
-					}
-				};
-				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awaken" }, new DirectionalAnimation.FlipType[0]);
-				companion.aiActor.AwakenAnimType = AwakenAnimationType.Awaken;
-				//bool flag3 = ProperCubeColection == null;
-				//if (flag3)
-				{
-					/*
-					ProperCubeColection = SpriteBuilder.ConstructCollection(prefab, "Toddy_Collection");
-					UnityEngine.Object.DontDestroyOnLoad(ProperCubeColection);
-					for (int i = 0; i < spritePaths.Length; i++)
-					{
-						SpriteBuilder.AddSpriteToCollection(spritePaths[i], ProperCubeColection);
-					}
-					*/
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
-					{
-
-					0,
-					1,
-					2,
-					3,
-					4
-
-					}, "idle_left", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 7f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
-					{
-					0,
-					1,
-					2,
-					3,
-					4
 
 
-					}, "idle_right", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 7f;
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
-					{
-					5,
-					6,
-					7,
-					8
+				aiAnimator.IdleAnimation = Alexandria.EnemyAPI.EnemyBuildingTools.AddNewDirectionAnimation(aiAnimator, "idle", new string[] { "idle" }, new DirectionalAnimation.FlipType[1]);
 
+				aiAnimator.OtherAnimations = new List<AIAnimator.NamedDirectionalAnimation>() { };
 
-					}, "charge_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
-					{
-					5,
-					6,
-					7,
-					8
+                Alexandria.EnemyAPI.EnemyBuildingTools.AddNewDirectionAnimation(
+					aiAnimator, "death",
+					new string[] { "death" },
+					new DirectionalAnimation.FlipType[1]);
 
+                Alexandria.EnemyAPI.EnemyBuildingTools.AddNewDirectionAnimation(
+					   aiAnimator, "charge",
+					   new string[] { "charge" },
+					   new DirectionalAnimation.FlipType[1]);
+				
+				Alexandria.EnemyAPI.EnemyBuildingTools.AddNewDirectionAnimation(
+						aiAnimator, "dash",
+						new string[] { "dash" },
+						new DirectionalAnimation.FlipType[1]);
 
-					}, "charge_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
+				Alexandria.EnemyAPI.EnemyBuildingTools.AddNewDirectionAnimation(
+						aiAnimator, "impact_north",
+						new string[] { "impact_north" },
+						new DirectionalAnimation.FlipType[1]);
+				Alexandria.EnemyAPI.EnemyBuildingTools.AddNewDirectionAnimation(
+						aiAnimator, "impact_south",
+						new string[] { "impact_south" },
+						new DirectionalAnimation.FlipType[1]);
+				Alexandria.EnemyAPI.EnemyBuildingTools.AddNewDirectionAnimation(
+						aiAnimator, "impact_east",
+						new string[] { "impact_east" },
+						new DirectionalAnimation.FlipType[1]);
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
-					{
-					9,
-					20
+				Alexandria.EnemyAPI.EnemyBuildingTools.AddNewDirectionAnimation(
+					aiAnimator, "impact_west",
+					new string[] { "impact_west" },
+					new DirectionalAnimation.FlipType[1]);
+                
 
-					}, "dash_left", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 7f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
-					{
-					9,
-					20
-									
-
-					}, "dash_right", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 7f;
-
-
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
-					{
-					10,
-					11,
-					12
-
-
-					}, "impact_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
-					{
-					10,
-					11,
-					12
-					}, "impact_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-
-
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
-					{
-
-				 13,
-				 14,
-				 15,
-				 16,
-				 17,
-				 18,
-				 19
+                EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awaken" }, new DirectionalAnimation.FlipType[] {DirectionalAnimation.FlipType.None}, DirectionalAnimation.DirectionType.Single);
+				companion.aiActor.AwakenAnimType = AwakenAnimationType.Spawn;
 
 
 
 
-					}, "die_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 19f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
-					{
-
-				 13,
-				 14,
-				 15,
-				 16,
-				 17,
-				 18,
-				 19
-
-					}, "die_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 19f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
-					{
-					10,
-					11,
-					12
-					}, "awaken", tk2dSpriteAnimationClip.WrapMode.Once).fps = 11f;
-				}
-				prefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("impact_right").frames[1].eventAudio = "Play_BOSS_wall_slam_01";
-				prefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("impact_right").frames[1].triggerEvent = true;
-				prefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("impact_left").frames[1].eventAudio = "Play_BOSS_wall_slam_01";
-				prefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("impact_left").frames[1].triggerEvent = true;
-				var bs = prefab.GetComponent<BehaviorSpeculator>();
+                var bs = prefab.GetComponent<BehaviorSpeculator>();
 				prefab.GetComponent<ObjectVisibilityManager>();
 				BehaviorSpeculator behaviorSpeculator = EnemyDatabase.GetOrLoadByGuid("43426a2e39584871b287ac31df04b544").behaviorSpeculator;
 				bs.OverrideBehaviors = behaviorSpeculator.OverrideBehaviors;
 				bs.OtherBehaviors = behaviorSpeculator.OtherBehaviors;
-				var shootpoint = new GameObject("fuck");
+                GameObject shootpoint = new GameObject("shootPoint");
 				shootpoint.transform.parent = companion.transform;
 				shootpoint.transform.position = companion.sprite.WorldCenter;
-				GameObject m_CachedGunAttachPoint = companion.transform.Find("fuck").gameObject;
-				GameObject gameObject = (GameObject)UnityEngine.Object.Instantiate(ResourceCache.Acquire("Global VFX/VFX_Item_Spawn_Poof"));
 
 
-
-			bs.TargetBehaviors = new List<TargetBehaviorBase>
-			{
+                bs.TargetBehaviors = new List<TargetBehaviorBase>
+				{
 				new TargetPlayerBehavior
 				{
 					Radius = 35f,
@@ -332,72 +344,64 @@ namespace Planetside
 					PauseOnTargetSwitch = false,
 					PauseTime = 0.25f,
 				}
-			};
+				};
 				bs.AttackBehaviors = new List<AttackBehaviorBase>() {
-				new EpicDashbehav() {
-					//CanChargeLeft = false,
-					//CanChargeRight = false,
-					primeAnim = "charge_left",
-					chargeAnim = "dash_left",
-					hitPlayerAnim = "impact_left",
-					endWhenChargeAnimFinishes = false,
-					hitAnim = "impact_left",
+				new SpecificDirectionDashBehaviour() {
+
+					primeAnim = "charge",
+					chargeAnim = "dash",
+					
+					ImpactAnimation_North = "impact_north",
+                    ImpactAnimation_South = "impact_south",
+                    ImpactAnimation_East = "impact_east",
+                    ImpactAnimation_West = "impact_west",
+
+					shootPoint = shootpoint,
+                    endWhenChargeAnimFinishes = false,
+					
 					switchCollidersOnCharge = false,
-					chargeSpeed = 20,
+					chargeSpeed = 14,
 					stopAtPits = true,
 					AttackCooldown = 0,
 					delayWallRecoil = true,
 					chargeRange = 999,
-					CanChargeDown = true,
-					CanChargeUp = true,
-					CanChargeLeft = false,
-					CanChargeRight = false,
+					CanChargeDown = South,
+					CanChargeUp = North,
+					CanChargeLeft = West,
+					CanChargeRight = East,
+					dashBulletScript = new CustomBulletScriptSelector(typeof(DashScript)),
 
-					//hitVfx = gameObject,
-					//trailVfx = gameObject,
-					//launchVfx = gameObject,
-					//hitWallVfxString = null,
-					//trailVfxParent = companion.transform,
-					//trailVfxString = null,
 
 					wallRecoilForce = 400,
-					
-
-				//trailVfxString = trail_{0},
-
-			}
-				};
-				/*
-				bs.AttackBehaviors = new List<AttackBehaviorBase>() {
-				new ShootBeamBehavior() {
-					//ShootPoint = m_CachedGunAttachPoint,
-
-					firingTime = 3f,
-					stopWhileFiring = true,
-					//beam
-					//BulletScript = new CustomBulletScriptSelector(typeof(SkellScript)),
-					//LeadAmount = 0f,
-					AttackCooldown = 5f,
-					//InitialCooldown = 4f,
-					RequiresLineOfSight = true,
-					//StopDuring = ShootBehavior.StopType.Attack,
-					//Uninterruptible = true,
-
+					m_primeAnimTime = 1
 				}
 				};
-				*/
 
 
-				bs.InstantFirstTick = behaviorSpeculator.InstantFirstTick;
+
+                bs.InstantFirstTick = behaviorSpeculator.InstantFirstTick;
 				bs.TickInterval = behaviorSpeculator.TickInterval;
 				bs.PostAwakenDelay = behaviorSpeculator.PostAwakenDelay;
 				bs.RemoveDelayOnReinforce = behaviorSpeculator.RemoveDelayOnReinforce;
 				bs.OverrideStartingFacingDirection = behaviorSpeculator.OverrideStartingFacingDirection;
 				bs.StartingFacingDirection = behaviorSpeculator.StartingFacingDirection;
 				bs.SkipTimingDifferentiator = behaviorSpeculator.SkipTimingDifferentiator;
-				Game.Enemies.Add("psog:youngling_cube", companion.aiActor);
-				SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Enemies/ProperCube/toddy_idle_001.png", SpriteBuilder.ammonomiconCollection);
-				if (companion.GetComponent<EncounterTrackable>() != null)
+
+                string Name = "psog:youngling_cube";
+                if (AdditionalNameAddon != null)
+                {
+                    Name += AdditionalNameAddon;
+                }
+
+
+                Game.Enemies.Add(Name, companion.aiActor);
+				
+                if (!isDupe)
+                {
+                    SpriteBuilder.AddSpriteToCollection(Collection.GetSpriteDefinition("trappercube_proper_idle_001"), SpriteBuilder.ammonomiconCollection);
+                }
+
+                if (companion.GetComponent<EncounterTrackable>() != null)
 				{
 					UnityEngine.Object.Destroy(companion.GetComponent<EncounterTrackable>());
 				}
@@ -409,131 +413,242 @@ namespace Planetside
 				companion.encounterTrackable.journalData.IsEnemy = true;
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
-				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Enemies/ProperCube/toddy_idle_001";
+				companion.encounterTrackable.journalData.AmmonomiconSprite = "trappercube_proper_idle_001";
 				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("bigcubeicon");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\bigcubeicon.png");
-                PlanetsideModule.Strings.Enemies.Set("#TODDY", "Youngling Cube");
+                PlanetsideModule.Strings.Enemies.Set("#TODDY", "Trapper Cube");
 				PlanetsideModule.Strings.Enemies.Set("#TODDY_SHORTDESC", "Smash And Dash");
-				PlanetsideModule.Strings.Enemies.Set("#TODDY_LONGDESC", "A very small, yet lively stone cube ripped from the walls of the earlier chambers of the Gungeon.");
+				PlanetsideModule.Strings.Enemies.Set("#TODDY_LONGDESC", "A chunk of the Gungeons brickwork, animated and carved with skulls. Leave gashes on the ground on they've travelled.");
 				companion.encounterTrackable.journalData.PrimaryDisplayName = "#TODDY";
 				companion.encounterTrackable.journalData.NotificationPanelDescription = "#TODDY_SHORTDESC";
 				companion.encounterTrackable.journalData.AmmonomiconFullEntry = "#TODDY_LONGDESC";
-				EnemyBuilder.AddEnemyToDatabase(companion.gameObject, "psog:youngling_cube");
-				EnemyDatabase.GetEntry("psog:youngling_cube").ForcedPositionInAmmonomicon = 85;
+                if (!isDupe)
+                {
+                    EnemyBuilder.AddEnemyToDatabase(companion.gameObject, "psog:youngling_cube");
+                }
+                EnemyDatabase.GetEntry("psog:youngling_cube").ForcedPositionInAmmonomicon = 85;
 				EnemyDatabase.GetEntry("psog:youngling_cube").isInBossTab = false;
 				EnemyDatabase.GetEntry("psog:youngling_cube").isNormalEnemy = true;
-				//EnemyBuilder.SetupEntry(companion.aiActor, "Hells Bells", "These urns of past Gundead can be seen scattered around the Gungeon, with Gungeonners showing little respect to the contents inside.", "Planetside/Resources/Ammocom/johan", "Planetside/Resources/Fodder/fodder_idle_001", "Fodder");
-				/*
-				SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Fodder/fodder_idle_001.png", SpriteBuilder.ammonomiconCollection);
-				//FOR BOSSES USE BOSS ICONS
-				if (companion.GetComponent<EncounterTrackable>() != null)
-				{
-					UnityEngine.Object.Destroy(companion.GetComponent<EncounterTrackable>());
-				}
-				companion.encounterTrackable = companion.gameObject.AddComponent<EncounterTrackable>();
-				companion.encounterTrackable.journalData = new JournalEntry();
-				companion.encounterTrackable.EncounterGuid = "psog:fodder";
-				companion.encounterTrackable.prerequisites = new DungeonPrerequisite[0];
-				companion.encounterTrackable.journalData.SuppressKnownState = false;
-				companion.encounterTrackable.journalData.IsEnemy = true;
-				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
-				companion.encounterTrackable.ProxyEncounterGuid = "";
-				companion.encounterTrackable.journalData.enemyPortraitSprite = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\johan.png");
-				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Fodder/fodder_idle_001.png";
 
-				PlanetsideModule.Strings.Enemies.Set("#FODDER", "Fodder");
-				PlanetsideModule.Strings.Enemies.Set("#FODDER_SHORTDESC", "Hells Bells");
-				PlanetsideModule.Strings.Enemies.Set("#FODDER_LONGDESC", "Some Bunny will never add ammonomicon descriptions for enemi- PFFFFFFFFFFT");
-				companion.encounterTrackable.journalData.PrimaryDisplayName = "#FODDER";
-				companion.encounterTrackable.journalData.NotificationPanelDescription = "#FODDER_SHORTDESC";
-				companion.encounterTrackable.journalData.AmmonomiconFullEntry = "#FODDER_LONGDESC";
-				//EnemyBuilder.AddEnemyToDatabase2(companion.gameObject, "psog:fodder", true, true);
-				EnemyDatabase.GetEntry("psog:fodder").ForcedPositionInAmmonomicon = 10000;
-				EnemyDatabase.GetEntry("psog:fodder").isInBossTab = false;
-				EnemyDatabase.GetEntry("psog:fodder").isNormalEnemy = true;
-				*/
+                companion.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("poundLarge"));
+                companion.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("poundSmall"));
+                companion.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("1bc2a07ef87741be90c37096910843ab").bulletBank.GetBullet("reversible"));
 
-			}
-		}
+
+            }
+        }
 
 
 
-		private static string[] spritePaths = new string[]
+        public class DashScript : Script
+        {
+            public override IEnumerator Top()
+            {
+                base.EndOnBlank = false;
+				var cube = base.BulletBank.aiActor.GetComponent<TrapperCubeBehaviour>();
+                int ShotIntervalSmall= cube.MyVariant.ShotIntervals.x;
+                int ShotIntervalLarge = cube.MyVariant.ShotIntervals.y;
+				string BulletType = cube.MyVariant.largeBulletType;
+
+
+                int ShotIntervalSmall_l = cube.MyVariant.bulletLingerTimes.x;
+                int ShotIntervalLarge_l = cube.MyVariant.bulletLingerTimes.y;
+
+                if (!base.BulletBank.aiActor.healthHaver.IsDead && base.BulletBank.aiActor != null && base.BulletBank.aiActor.healthHaver.GetCurrentHealth() >= 1)
+                {
+                    float i = 0;
+                    for (; ; )
+                    {
+                        
+						if (i % ShotIntervalLarge == 1)
+						{
+                            base.PostWwiseEvent("Play_Vertebreak_Shot", null);
+
+                            var v = base.BulletBank.aiActor.Velocity.ToAngle() + 180;
+                            base.Fire(new Direction(v, DirectionType.Absolute, -1f), new Speed(3, SpeedType.Absolute), new DelayedBullet(ShotIntervalLarge_l, BulletType));
+
+                        }
+                        if (i % ShotIntervalSmall == 1)
+						{
+                            base.Fire(new Direction(BraveUtility.RandomAngle(), DirectionType.Absolute, -1f), new Speed(2, SpeedType.Absolute), new DelayedBullet(ShotIntervalSmall_l, "poundSmall"));
+                        }
+						
+                        yield return this.Wait(1f * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
+                        i++;
+                    }
+                }
+
+            }
+            public class DelayedBullet : Bullet
+            {
+                public DelayedBullet(float Wait, string bulletType) : base(bulletType, false, false, false)
+                {
+                    base.SuppressVfx = true;
+                    this.Waittime = Wait;
+                }
+                public override IEnumerator Top()
+                {
+                    if (this.Projectile.spriteAnimator != null)
+					{
+                        this.Projectile.spriteAnimator.Play();
+                    }
+                    base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 30);
+                    yield return this.Wait(Waittime);
+					this.Vanish();
+                    yield break;
+                }
+                private float Waittime;
+            }
+
+        }
+
+
+        public class TrapperCubeBehaviour : BraveBehaviour
 		{
-			//idle
-			"Planetside/Resources/Enemies/ProperCube/toddy_idle_001.png",
-			"Planetside/Resources/Enemies/ProperCube/toddy_idle_002.png",
-			"Planetside/Resources/Enemies/ProperCube/toddy_idle_003.png",
-			"Planetside/Resources/Enemies/ProperCube/toddy_idle_004.png",
-			"Planetside/Resources/Enemies/ProperCube/toddy_idle_005.png",
-			//prime
-			"Planetside/Resources/Enemies/ProperCube/toddy_charge_001.png",
-			"Planetside/Resources/Enemies/ProperCube/toddy_charge_002.png",
-			"Planetside/Resources/Enemies/ProperCube/toddy_charge_003.png",
-			"Planetside/Resources/Enemies/ProperCube/toddy_charge_004.png",
-			//charge
-			"Planetside/Resources/Enemies/ProperCube/toddy_dash_001.png",
-			//hit
-			"Planetside/Resources/Enemies/ProperCube/toddy_impact_001.png",
-			"Planetside/Resources/Enemies/ProperCube/toddy_impact_002.png",
-			"Planetside/Resources/Enemies/ProperCube/toddy_impact_003.png",
-
-			//death
-			"Planetside/Resources/Enemies/ProperCube/toddy_die_001.png",
-			"Planetside/Resources/Enemies/ProperCube/toddy_die_002.png",
-			"Planetside/Resources/Enemies/ProperCube/toddy_die_003.png",
-			"Planetside/Resources/Enemies/ProperCube/toddy_die_004.png",
-			"Planetside/Resources/Enemies/ProperCube/toddy_die_005.png",
-			"Planetside/Resources/Enemies/ProperCube/toddy_die_006.png",
-			"Planetside/Resources/Enemies/ProperCube/toddy_die_007.png",
-
-			"Planetside/Resources/Enemies/ProperCube/toddy_dash_002.png",
-
-
-		};
-
-		public class EnemyBehavior : BraveBehaviour
-		{
-
-			private RoomHandler m_StartRoom;
-
-			public void Update()
+			public class CubeVariant
 			{
-				m_StartRoom = aiActor.GetAbsoluteParentRoom();
-				if (!base.aiActor.HasBeenEngaged)
+				public CubeVariant(GlobalDungeonData.ValidTilesets[] validTilesets, tk2dSpriteAnimation library, int Interval_LargeBullet, int Interval_SmallBullet,  string particle, ParticleSystem.EmitParams emitParams, float AmountOverTime, IntVector2 BulletLingerTimes, string LargeBulletType = "reversible")
 				{
-					CheckPlayerRoom();
-				}
-			}
-			private void CheckPlayerRoom()
+                    TileSets = validTilesets;
+                    AnimationLibrary = library;
+					ShotIntervals = new IntVector2(Interval_SmallBullet, Interval_LargeBullet);
+					bulletLingerTimes = BulletLingerTimes;
+
+
+                    sparks = particle;
+                    EmitParams = emitParams;
+					amountOverTime = AmountOverTime;
+					largeBulletType = LargeBulletType; 
+                }
+				public GlobalDungeonData.ValidTilesets[] TileSets;
+				public tk2dSpriteAnimation AnimationLibrary;
+				public IntVector2 ShotIntervals;
+                public IntVector2 bulletLingerTimes;
+
+                public ParticleSystem.EmitParams EmitParams;
+                public string sparks;
+                public float amountOverTime;
+
+                public string largeBulletType;
+
+            }
+
+			public static List<CubeVariant> cubeVariants = new List<CubeVariant>()
 			{
-				if (GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() != null && GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() == m_StartRoom)
+
+			};
+            public static CubeVariant Default = new CubeVariant(
+				new GlobalDungeonData.ValidTilesets[0], 
+				null, 
+				6, 
+				2,
+                "FireParticle_BG", 
+				new ParticleSystem.EmitParams() 
 				{
-					GameManager.Instance.StartCoroutine(LateEngage());
-				}
-				else
-				{
-					base.aiActor.HasBeenEngaged = false;
-				}
-			}
-			private IEnumerator LateEngage()
+					//startColor = Color.gray,
+					startLifetime = 0.5f,
+					velocity = Vector3.up * 0.5f,
+					//startSize = 0.0625f
+				},
+				8,
+				new IntVector2(45, 375)
+				);
+
+
+            public void Update()
 			{
-				yield return new WaitForSeconds(0.5f);
-				if (GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() != null && GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() == m_StartRoom)
+				if (MyVariant != null)
 				{
-					base.aiActor.HasBeenEngaged = true;
-				}
-				yield break;
-			}
+
+                    if (UnityEngine.Random.value < MyVariant.amountOverTime * BraveTime.DeltaTime)
+					{
+                        var p = MyVariant.EmitParams;
+                        p.position = this.aiActor.sprite.WorldCenter + new Vector2(0, 0.6875f) + BraveUtility.RandomVector2(new Vector2(-0.0625f, -0.0625f), new Vector2(0.0625f, 0.0625f));
+						ParticleBase.EmitParticles(MyVariant.sparks, 1, p);
+
+                    }
+                }
+
+                if (base.aiActor.spriteAnimator.currentClip != null && base.aiActor.spriteAnimator.currentClip.name == "dash")
+				{
+
+                    var v = base.aiActor.Velocity.normalized;
+					var v_1 = new Vector2(base.aiActor.Velocity.y, base.aiActor.Velocity.x).normalized;
+
+                    ParticleBase.EmitParticles("ChaffParticle_BG", 1, new ParticleSystem.EmitParams()
+                    {
+                        position = this.aiActor.sprite.WorldCenter + (v * 0.5f) + v_1 * UnityEngine.Random.Range(-0.5f, 0.5f),
+                        startLifetime = (UnityEngine.Random.value * 0.625f) + 1.1f,
+                        startColor = new Color(0.05f, 0.05f, 0.05f, 1),
+                        startSize = 0.125f,
+                    });
+                }
+            }
+
 			private void Start()
 			{
 				this.aiActor.knockbackDoer.SetImmobile(true, "nope.");
-				m_StartRoom = aiActor.GetAbsoluteParentRoom();
 				base.aiActor.healthHaver.OnPreDeath += (obj) =>
 				{
-					AkSoundEngine.PostEvent("Play_OBJ_rock_break_01", base.aiActor.gameObject);
-					LootEngine.DoDefaultItemPoof(base.aiActor.sprite.WorldCenter, false, true);
+					
 				};
-			}
+                DetermineVariant();
+
+                if (MyVariant != null)
+				{
+					if (MyVariant.AnimationLibrary != null)
+					{
+                        this.aiActor.spriteAnimator.library = MyVariant.AnimationLibrary;
+                        this.aiActor.spriteAnimator.Library = MyVariant.AnimationLibrary;
+                    }
+                }
+                base.aiActor.spriteAnimator.AnimationEventTriggered += this.AnimationEventTriggered;
+            }
+
+			private void AnimationEventTriggered(tk2dSpriteAnimator animator, tk2dSpriteAnimationClip clip, int frameIdx)
+			{
+
+				if (clip.GetFrame(frameIdx).eventInfo.Contains("DoWoke"))
+				{
+                    ParticleBase.EmitParticles("WaveParticle", 1, new ParticleSystem.EmitParams()
+                    {
+                        position = this.aiActor.sprite.WorldCenter + new Vector2(0.3125f, 0),
+                        startLifetime = 0.25f,
+                        startColor = new Color(1, 0, 0, 0.4f),
+                        startSize = 4f,
+                    });
+                    ParticleBase.EmitParticles("WaveParticle", 1, new ParticleSystem.EmitParams()
+                    {
+                        position = this.aiActor.sprite.WorldCenter - new Vector2(0.3125f, 0),
+                        startLifetime = 0.25f,
+                        startColor = new Color(1, 0, 0, 0.4f),
+                        startSize = 4f,
+                    });
+                }
+                if (clip.GetFrame(frameIdx).eventInfo.Contains("HitWall"))
+                {
+                    var t =UnityEngine.Object.Instantiate(StaticVFXStorage.SeriousCannonImpact, this.aiActor.sprite.WorldCenter, Quaternion.identity);
+                    Destroy(t, 2.5f);
+                }
+                if (clip.GetFrame(frameIdx).eventInfo.Contains("Boom"))
+                {
+                    var t = UnityEngine.Object.Instantiate(StaticVFXStorage.BigShotgunExplosion, this.aiActor.sprite.WorldCenter, Quaternion.identity);
+                    Destroy(t, 2.5f);
+                }
+            }
+
+            private void DetermineVariant()
+			{
+
+                var t = cubeVariants.Where(self => self.TileSets.Contains(GameManager.Instance.Dungeon.tileIndices.tilesetId));
+                if (t != null && t.Count() > 0)
+				{
+                    MyVariant = t.FirstOrDefault();
+					return;
+                }
+                MyVariant = Default;
+            }
+			public CubeVariant MyVariant;
+
 		}
 	}
 }

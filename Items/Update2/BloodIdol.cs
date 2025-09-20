@@ -13,7 +13,10 @@ using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
 using SaveAPI;
-
+using Planetside.Toolboxes;
+using HarmonyLib;
+using MonoMod.Cil;
+using Mono.Cecil.Cil;
 
 namespace Planetside
 {
@@ -43,11 +46,48 @@ namespace Planetside
             BloodIdol.BloodIdolID = activeitem.PickupObjectId;
             SynergyAPI.SynergyBuilder.AddItemToSynergy(activeitem, CustomSynergyType.BLOOD_LOCKET);
             GameManager.Instance.RainbowRunForceExcludedIDs.Add(activeitem.PickupObjectId);
-
+            activeitem.AddSynergy("Sacrifices Must Be Made", new List<PickupObject>()
+            {
+                Items.Bullet_Idol
+            }, false);
 
             ItemIDs.AddToList(activeitem.PickupObjectId);
         }
         public static int BloodIdolID;
+
+
+        [HarmonyPatch]
+        private static class OnDamagedPassiveItemPlayerTookDamagePatch
+        {
+            [HarmonyPatch(typeof(OnDamagedPassiveItem), nameof(OnDamagedPassiveItem.PlayerTookDamage))]
+            [HarmonyILManipulator]
+            private static void GameUIAmmoControllerUpdateUIGunIL(ILContext il)
+            {
+                ILCursor cursor = new ILCursor(il);
+
+                if (!cursor.TryGotoNext(MoveType.Before,
+                    instr => instr.MatchCallvirt<Dungeonator.RoomHandler>("ApplyActionToNearbyEnemies")))
+                    return;
+
+
+                cursor.Emit(OpCodes.Ldarg_0);
+                cursor.Emit(OpCodes.Call, typeof(OnDamagedPassiveItemPlayerTookDamagePatch).GetMethod(nameof(ModifyNote), BindingFlags.Static | BindingFlags.NonPublic));
+            }
+            private static void ModifyNote(OnDamagedPassiveItem Passive)
+            {
+                Passive.Owner.CurrentRoom.ApplyActionToNearbyEnemies(Passive.Owner.CenterPosition, 100f, delegate (AIActor enemy, float dist)
+                {
+                    if (enemy && enemy.healthHaver)
+                    {
+                        if (Passive.PickupObjectId == Items.Bullet_Idol.PickupObjectId && Passive.Owner.PlayerHasActiveSynergy("Sacrifices Must Be Made"))
+                        {
+                            SaveAPIManager.RegisterStatChange(CustomTrackedStats.BLODD_IDOL_KILLS, 2);
+                        }
+                    }
+                });
+            }
+        }
+
         public override bool CanBeUsed(PlayerController user)
         {
            

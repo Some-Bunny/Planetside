@@ -15,6 +15,7 @@ using MonoMod;
 using System.Collections.ObjectModel;
 using GungeonAPI;
 using SaveAPI;
+using HarmonyLib;
 
 namespace Planetside
 {
@@ -26,9 +27,9 @@ namespace Planetside
             try
             {
                 TimeToBeat = 0;
-                new Hook(
-                typeof(RoomHandler).GetMethod("HandleBossClearReward", BindingFlags.Instance | BindingFlags.NonPublic),
-                typeof(TimeTraderSpawnController).GetMethod("HandleBossClearRewardHook", BindingFlags.Static | BindingFlags.Public));
+                //new Hook(
+                //typeof(RoomHandler).GetMethod("HandleBossClearReward", BindingFlags.Instance | BindingFlags.NonPublic),
+                //typeof(TimeTraderSpawnController).GetMethod("HandleBossClearRewardHook", BindingFlags.Static | BindingFlags.Public));
 
                 List<ProceduralFlowModifierData.FlowModifierPlacementType> flowModifierPlacementTypes = new List<ProceduralFlowModifierData.FlowModifierPlacementType>()
                 { ProceduralFlowModifierData.FlowModifierPlacementType.END_OF_CHAIN};
@@ -53,7 +54,20 @@ namespace Planetside
                 ShrineFactory.registeredShrines.TryGetValue("psog:toolate", out TooLate);
 
                 RoomFactory.AddInjection(RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/ShopRooms/TimeTraderShopMinesEmpty.room").room, "Too Late For Special Shop", flowModifierPlacementTypes, 0, dungeonPrerequisitesOther, "Too Late For Special Shop", 1, 1,TooLate, -0.75f, -0.75f);
-                DungeonHooks.OnPostDungeonGeneration += this.ResetFloorSpecificData;
+                DungeonHooks.OnPostDungeonGeneration += () => 
+                {
+                    if (GameStatsManager.Instance.IsInSession == true)
+                    {
+                        TimeToBeat = GameStatsManager.Instance.GetSessionStatValue(TrackedStats.TIME_PLAYED) + (195 + (FloorMultiplier(GameManager.Instance.Dungeon)));
+                        Debug.Log("Player must beat boss under time time: " + TimeToBeat + " for shop to spawn!");
+                        AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.TIMETRADER_ALLOWED, false);
+                    }
+                };
+                Actions.OnPreRunStart += (_) =>
+                {
+                    AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.TIMETRADER_ALLOWED, false);
+                };
+
                 Debug.Log("Finished TimeTraderSpawnController setup without failure!");
 
             }
@@ -64,7 +78,7 @@ namespace Planetside
             }
         }
 
-
+        
         public static float FloorMultiplier(Dungeon floor)
         {
             if (floor.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.CASTLEGEON) { return 0; }
@@ -78,30 +92,24 @@ namespace Planetside
             return 0f;
         }
 
-        private void ResetFloorSpecificData()
-        {
-            if (GameStatsManager.Instance.IsInSession == true)
-            {
-                TimeToBeat = GameStatsManager.Instance.GetSessionStatValue(TrackedStats.TIME_PLAYED) + (195 + (FloorMultiplier(GameManager.Instance.Dungeon)));
-                Debug.Log("Player must beat boss under time time: " + TimeToBeat + " for shop to spawn!");
-            }
-            AdvancedGameStatsManager.Instance.SetStat(CustomTrackedStats.ALLOW_TRADER, 0);
-        }
-        public static void HandleBossClearRewardHook(Action<RoomHandler> orig, RoomHandler self)
-        {
-            orig(self);
-            if (AdvancedGameStatsManager.Instance.GetSessionStatValue(CustomTrackedStats.ALLOW_TRADER) == 1) { return; }
-            if (GameStatsManager.Instance.GetSessionStatValue(TrackedStats.TIME_PLAYED) < TimeToBeat) 
-            {
-                AdvancedGameStatsManager.Instance.SetStat(CustomTrackedStats.ALLOW_TRADER, 1);
-                Debug.Log("Shop allowed to spawn on next possible floor!");
-                return;
-            }
-            AdvancedGameStatsManager.Instance.SetStat(CustomTrackedStats.ALLOW_TRADER, 0);
-            Debug.Log("Shop not allowed to spawn on next possible floor!");
-        }
 
-        
+        [HarmonyPatch(typeof(RoomHandler), nameof(RoomHandler.HandleBossClearReward))]
+        public class Patch_RoomHandler_HandleBossClearReward
+        {
+            [HarmonyPostfix]
+            private static void Awake(RoomHandler __instance)
+            {
+                if (AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.TIMETRADER_ALLOWED) == true) { return; }
+                if (GameStatsManager.Instance.GetSessionStatValue(TrackedStats.TIME_PLAYED) <= TimeToBeat)
+                {
+                    AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.TIMETRADER_ALLOWED, true);
+                    Debug.Log("Shop allowed to spawn on next possible floor!");
+                    return;
+                }
+                AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.TIMETRADER_ALLOWED, false);
+                Debug.Log("Shop not allowed to spawn on next possible floor!");
+            }
+        }        
         private static float TimeToBeat;
     }
 }

@@ -26,6 +26,7 @@ using Planetside.Static_Storage;
 using Planetside.NPC_Stuff;
 using AmmonomiconAPI;
 using Planetside.APIs;
+using Planetside.Controllers;
 
 namespace Planetside
 {
@@ -38,7 +39,7 @@ namespace Planetside
     {
         public const string GUID = "somebunny.etg.planetsideofgunymede";
         public const string NAME = "Planetside Of Gunymede Pre-Release";
-        public const string VERSION = "1.3.189";
+        public const string VERSION = "1.3.190";
         //9006FF
         public static readonly string TEXT_COLOR = "#00d0ff";
         //00d0ff
@@ -68,7 +69,7 @@ namespace Planetside
         private static bool NPCsActive = true;
         private static bool PlaceablesActive = true;
         private static bool EnemyChangesActive = true;
-        public static bool PrisonerDebug = true;
+        public static bool PrisonerDebug = false;
 
         #endregion
 
@@ -108,7 +109,7 @@ namespace Planetside
             StaticSpriteDefinitions.Init();
             AlphabetController.InitialiseAlphabet();
 
-            InverseGlowShader = PlanetsideModule.ModAssets.LoadAsset<Shader>("InverseGlowShader");
+            InverseGlowShader = PlanetsideModule.ModAssets.LoadAsset<Shader>("InverseGlowShaderUpdated");
             ParticleBase.InitParticleBase();
             StaticVFXStorage.Init();
             StaticInformation.Init();
@@ -251,6 +252,8 @@ namespace Planetside
             GTEE.Add();
             ShockChain.Add();
             Resault.Add();
+            ResaultBlue.Add();
+
             Immateria.Add();
 
             //Unlocked By Beating Loop 1
@@ -358,6 +361,7 @@ namespace Planetside
             //Forgotten Rounds
             ForgottenRoundOubliette.Init();
             ForgottenRoundAbbey.Init();
+            ForgottenRoundRat.Init();
             ForgottenRoundRNG.Init();
             SporeBullets.Init();
             OrbitalInsertion.Init();
@@ -427,7 +431,11 @@ namespace Planetside
                 Fungannon.Init();
                 Coallet.Init();
                 Shamber.Init();
-                ProperCube.Init();
+
+                ProperCube.Init(true, true, false, false);
+                ProperCube.Init(false, false, true, true, "leftRight", true);
+
+
                 Detscavator.Init();
 
                 Creationist.Init();
@@ -461,7 +469,9 @@ namespace Planetside
                 //Servont.Init();
 
                 THREarthmover.Init();
-                Revenant_Enemy.Init();
+                Revenant_Enemy.Init(true);
+                Revenant_Enemy.Init(false);
+
 
                 An3sBullet.Init();
                 HunterBullet.Init();
@@ -588,6 +598,9 @@ namespace Planetside
                 ETGModMainBehaviour.Instance.gameObject.AddComponent<ChallengeModeExtraChallenges>();
                 ETGModMainBehaviour.Instance.gameObject.AddComponent<HellShrinesController>();
                 ETGModMainBehaviour.Instance.gameObject.AddComponent<NemesisSpawnController>();
+                ETGModMainBehaviour.Instance.gameObject.AddComponent<ResourcefulRatMasteryController>();
+
+                
                 PlanetsideQOL.Init();
                 PlanetsideBalanceChanges.Init();
             }

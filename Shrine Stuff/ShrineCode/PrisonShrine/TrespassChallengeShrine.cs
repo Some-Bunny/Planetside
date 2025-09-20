@@ -16,13 +16,15 @@ using Gungeon;
 using ItemAPI;
 using System.Collections.ObjectModel;
 using Pathfinding;
+using Alexandria.DungeonAPI;
 
 namespace Planetside
 {
-	public static class TrespassChallengeShrine
-	{
+	public class TrespassChallengeShrine : DungeonPlaceableBehaviour, IPlayerInteractable
+    {
 		public static void Add()
 		{
+            /*
 			string defaultPath = "Planetside/Resources/DungeonObjects/TrespassObjects/TrespassContainer/";
 			ShrineFactory iei = new ShrineFactory
 			{
@@ -72,10 +74,64 @@ namespace Planetside
 				defaultPath+"trespassContainer_break_009.png",
 			};
 			GameObject self = iei.BuildWithAnimations(L, 6, H, 16);
+			*/
 
 
-		
-			WeightedWaves = new WeightedTypeCollection<List<string>>();
+
+            var tearObject = Alexandria.PrefabAPI.PrefabBuilder.BuildObject("Void Container");
+            var sprite = tearObject.AddComponent<tk2dSprite>();
+            sprite.SetSprite(StaticSpriteDefinitions.RoomObject_Sheet_Data, "trespassContainer_idle_001");
+            var animator = tearObject.AddComponent<tk2dSpriteAnimator>();
+            animator.library = StaticSpriteDefinitions.Trespass_Room_Object_Animation;
+            animator.playAutomatically = true;
+            animator.defaultClipId = StaticSpriteDefinitions.Trespass_Room_Object_Animation.GetClipIdByName("trespassContainer_idle");
+
+            var majorBreakable = tearObject.AddComponent<MajorBreakable>();
+            majorBreakable.HitPoints = 15000;
+            majorBreakable.sprite = sprite;
+            majorBreakable.spriteAnimator = animator;
+
+            tearObject.CreateFastBody(new IntVector2(26, 30), new IntVector2(3, -4), CollisionLayer.HighObstacle);
+            tearObject.CreateFastBody(new IntVector2(26, 30), new IntVector2(3, -4), CollisionLayer.BeamBlocker);
+            tearObject.CreateFastBody(new IntVector2(26, 30), new IntVector2(3, -4), CollisionLayer.BulletBlocker);
+            tearObject.CreateFastBody(new IntVector2(26, 30), new IntVector2(3, -4), CollisionLayer.EnemyBlocker);
+            tearObject.CreateFastBody(new IntVector2(26, 30), new IntVector2(3, -4), CollisionLayer.PlayerBlocker);
+
+
+
+
+            var holder = tearObject.gameObject.AddComponent<TearHolderController>();
+            holder.self = majorBreakable;
+
+            Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+            sprite.usesOverrideMaterial = true;
+            mat.mainTexture = sprite.renderer.material.mainTexture;
+            mat.SetColor("_EmissiveColor", new Color32(0, 255, 255, 255));
+            mat.SetFloat("_EmissiveColorPower", 8f);
+            mat.SetFloat("_EmissivePower", 4);
+            sprite.renderer.material = mat;
+
+            majorBreakable.DamageReduction = 1000;
+
+
+
+            var shrine = majorBreakable.gameObject.AddComponent<TrespassChallengeShrine>();
+			shrine.talkPoint = EnemyToolbox.GenerateShootPoint(shrine.gameObject, new Vector2(1.25f, 0.5f), "TalkTuah").transform;
+
+            var roomIcon = Alexandria.PrefabAPI.PrefabBuilder.BuildObject("Void Container");
+			var spr = roomIcon.AddComponent<tk2dSprite>();
+			spr.SetSprite(StaticSpriteDefinitions.Trespass_Room_Object_Data, "iconsmiley");
+
+            shrine.MinimapIconprefab = roomIcon;
+            //majorBreakable.gameObject.AddComponent<DungeonPlaceableBehaviour>();
+            majorBreakable.DamageReduction = 1000;
+
+
+
+
+			GungeonAPI.StaticReferences.StoredRoomObjects.Add("TrespassChallengeShrine", majorBreakable.gameObject);
+
+            WeightedWaves = new WeightedTypeCollection<List<string>>();
 			WeightedWaves.elements = new WeightedType<List<string>>[]
 			{
 				GenerateQuickWeightedString(new List<string>(){Inquisitor.guid, Inquisitor.guid}, 0.25f),
@@ -93,11 +149,141 @@ namespace Planetside
             };		
 		}
 
+        private void Start()
+        {
+            SpriteOutlineManager.AddOutlineToSprite(base.sprite, Color.black, 1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
+            this.talkPoint = base.transform.Find("talkpoint");
+
+            instanceRoom = GameManager.Instance.Dungeon.data.GetAbsoluteRoomFromPosition(base.transform.position.IntXY(VectorConversions.Floor));
+            if (instanceRoom == null) { return; }
+            if (!instanceRoom.interactableObjects.Contains(this))
+            {
+                instanceRoom.RegisterInteractable(this);
+            }
+
+            this.instanceMinimapIcon = Minimap.Instance.RegisterRoomIcon(instanceRoom, MinimapIconprefab ?? (GameObject)BraveResources.Load("Global Prefabs/Minimap_Shrine_Icon", ".prefab"), false);
+        }
+        public RoomHandler instanceRoom;
+        public GameObject instanceMinimapIcon;
+        public GameObject MinimapIconprefab;
+		public Transform talkPoint;
+		private RoomHandler m_parentRoom;
+        public bool Used = false;
+        
+
+
+        public void Interact(PlayerController interactor)
+        {
+            if (!TextBoxManager.HasTextBox(this.talkPoint))
+            {
+                base.StartCoroutine(this.HandleConversation(interactor));
+            }
+        }
+
+        private IEnumerator HandleConversation(PlayerController interactor)
+        {
+            if (this.talkPoint == null) { ETGModConsole.Log("talkPoint is NULL"); }
+            if (this.talkPoint.position == null) { ETGModConsole.Log("talkPoint.position is NULL"); }
+            //if (this.text == null) { ETGModConsole.Log("text is NULL"); }
+
+            TextBoxManager.ShowStoneTablet(this.talkPoint.position, this.talkPoint, -1f, "You feel an ominous energy coming from this... thing.", true, false);
+            int selectedResponse = -1;
+            interactor.SetInputOverride("shrineConversation");
+            yield return null;
+            if (Used)
+            {
+                GameUIRoot.Instance.DisplayPlayerConversationOptions(interactor, null, "Leave.", string.Empty);
+            }
+            else
+            {
+                GameUIRoot.Instance.DisplayPlayerConversationOptions(interactor, null, "Break it open.", "Leave.");
+            }
+            while (!GameUIRoot.Instance.GetPlayerConversationResponse(out selectedResponse))
+            {
+                yield return null;
+            }
+            interactor.ClearInputOverride("shrineConversation");
+            TextBoxManager.ClearTextBox(this.talkPoint);
+            if (Used == false)
+            {
+                yield break;
+            }
+            if (selectedResponse == 0)
+            {
+				Accept(interactor, this.gameObject);
+            }
+            else
+            {
+                
+            }
+            yield break;
+        }
+
+        public void OnEnteredRange(PlayerController interactor)
+        {
+            SpriteOutlineManager.AddOutlineToSprite(base.sprite, Color.white, 1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
+            base.sprite.UpdateZDepth();
+        }
+
+        public void OnExitRange(PlayerController interactor)
+        {
+            SpriteOutlineManager.AddOutlineToSprite(base.sprite, Color.black, 1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
+        }
+
+        public string GetAnimationState(PlayerController interactor, out bool shouldBeFlipped)
+        {
+            shouldBeFlipped = false;
+            return string.Empty;
+        }
+
+        public float GetDistanceToPoint(Vector2 point)
+        {
+            float result;
+            if (base.sprite == null)
+            {
+                result = 100f;
+            }
+            else
+            {
+                Vector3 v = BraveMathCollege.ClosestPointOnRectangle(point, base.specRigidbody.UnitBottomLeft, base.specRigidbody.UnitDimensions);
+                result = Vector2.Distance(point, v) / 1.5f;
+            }
+            return result;
+        }
+
+        public float GetOverrideMaxDistance()
+        {
+            return -1f;
+        }
 
 
 
 
-		public static WeightedTypeCollection<List<string>> WeightedWaves;
+        public void ConfigureOnPlacement(RoomHandler room)
+        {
+            this.m_parentRoom = room;
+            this.RegisterMinimapIcon();
+
+        }
+
+        public void RegisterMinimapIcon()
+        {
+            this.instanceMinimapIcon = Minimap.Instance.RegisterRoomIcon(this.m_parentRoom, this.MinimapIconprefab, false);
+        }
+
+        public void GetRidOfMinimapIcon()
+        {
+            if (this.instanceMinimapIcon != null)
+            {
+                Minimap.Instance.DeregisterRoomIcon(this.m_parentRoom, this.instanceMinimapIcon);
+                this.instanceMinimapIcon = null;
+            }
+        }
+
+
+
+
+        public static WeightedTypeCollection<List<string>> WeightedWaves;
 		private static WeightedType<List<string>> GenerateQuickWeightedString(List<string> str, float weight)
         {
 			WeightedType<List<string>> weightedType = new WeightedType<List<string>>();
@@ -106,10 +292,7 @@ namespace Planetside
 			return weightedType;
 		}
 
-		public static bool CanUse(PlayerController player, GameObject shrine)
-		{
-			return shrine.GetComponent<CustomShrineController>().numUses == 0;
-		}
+
 
 	
 

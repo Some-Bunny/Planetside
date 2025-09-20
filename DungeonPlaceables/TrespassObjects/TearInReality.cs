@@ -91,8 +91,6 @@ namespace Planetside
 
         public void Start()
         {
-            self = base.gameObject.GetComponent<MajorBreakable>();
-
             if (IsRandom == true) { data = BraveUtility.RandomElement<RealityTearData>(TearInReality.realityTearDatas); }
             else
             {
@@ -188,7 +186,7 @@ namespace Planetside
 
             Destroy(Orb);
             fuck.DoReverseDistortionWaveLocal(this.gameObject.transform.PositionVector2(), 1, 0.25f, 6, 1);
-            self.spriteAnimator.PlayAndDestroyObject("break");
+            self.spriteAnimator.PlayAndDestroyObject("pillarofsalt_break");
 
             //Destroy(this.gameObject);
             yield break;
@@ -329,37 +327,47 @@ namespace Planetside
                 },
             };
 
-            string defaultPath = "Planetside/Resources/DungeonObjects/TrespassObjects/PillarOfSalt/";
-            string[] idlePaths = new string[]
-            {
-                defaultPath+"pillarsofsalt.png",
-            };
-            string[] death = new string[]
-            {
-                defaultPath+"pillarsofsalt_break_001.png",
-                defaultPath+"pillarsofsalt_break_002.png",
-                defaultPath+"pillarsofsalt_break_003.png",
-                defaultPath+"pillarsofsalt_break_004.png",
-                defaultPath+"pillarsofsalt_break_005.png",
-                defaultPath+"pillarsofsalt_break_006.png",
-                defaultPath+"pillarsofsalt_break_007.png",
-                defaultPath+"pillarsofsalt_break_008.png",
-                defaultPath+"pillarsofsalt_break_009.png",
-                defaultPath+"pillarsofsalt_break_010.png",
 
-            };
-            MajorBreakable statue = BreakableAPIToolbox.GenerateMajorBreakable("trespass_big_light", idlePaths, 5, death, 16, 15000, true, 26, 30, 3, -4, true, null, null, true, null);
-            BreakableAPIToolbox.GenerateShadow("Planetside/Resources/DungeonObjects/TrespassObjects/TrespassBigLight/tresspasslightBigShadow.png", "trespassPot_shadow", statue.gameObject.transform, new Vector3(0.125f, -0.25f));
+            var tearObject = Alexandria.PrefabAPI.PrefabBuilder.BuildObject("Reality Lens");
+            var sprite = tearObject.AddComponent<tk2dSprite>();
+            sprite.SetSprite(StaticSpriteDefinitions.Trespass_Room_Object_Data, "pillarsofsalt_break_001");
+            var animator = tearObject.AddComponent<tk2dSpriteAnimator>();
+            sprite.IsPerpendicular = false;
 
-            statue.gameObject.AddComponent<TearHolderController>();
-            statue.gameObject.AddComponent<TresspassLightController>();
 
-            statue.DamageReduction = 1000;
-            Alexandria.DungeonAPI.StaticReferences.customObjects.Add("portal_pillar_random", statue.gameObject);
+            var majorBreakable = tearObject.AddComponent<MajorBreakable>();
+            majorBreakable.HitPoints = 15000;
+            majorBreakable.sprite = sprite;
+            majorBreakable.spriteAnimator = animator;
+
+            tearObject.CreateFastBody(new IntVector2(26, 30), new IntVector2(3, -4), CollisionLayer.HighObstacle);
+            tearObject.CreateFastBody(new IntVector2(26, 30), new IntVector2(3, -4), CollisionLayer.BeamBlocker);
+            tearObject.CreateFastBody(new IntVector2(26, 30), new IntVector2(3, -4), CollisionLayer.BulletBlocker);
+            tearObject.CreateFastBody(new IntVector2(26, 30), new IntVector2(3, -4), CollisionLayer.EnemyBlocker);
+            tearObject.CreateFastBody(new IntVector2(26, 30), new IntVector2(3, -4), CollisionLayer.PlayerBlocker);
+
+            animator.library = StaticSpriteDefinitions.Trespass_Room_Object_Animation;
+
+            //MajorBreakable statue = BreakableAPIToolbox.GenerateMajorBreakable("trespass_big_light", idlePaths, 5, death, 16, 15000, true, 26, 30, 3, -4, true, null, null, true, null);
+            //BreakableAPIToolbox.GenerateShadow("Planetside/Resources/DungeonObjects/TrespassObjects/TrespassBigLight/tresspasslightBigShadow.png", "trespassPot_shadow", statue.gameObject.transform, new Vector3(0.125f, -0.25f));
+
+            var holder = tearObject.gameObject.AddComponent<TearHolderController>();
+            holder.self = majorBreakable;
+
+            Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+            sprite.usesOverrideMaterial = true;
+            mat.mainTexture = sprite.renderer.material.mainTexture;
+            mat.SetColor("_EmissiveColor", new Color32(0, 255, 255, 255));
+            mat.SetFloat("_EmissiveColorPower", 8f);
+            mat.SetFloat("_EmissivePower", 4);
+            sprite.renderer.material = mat;
+
+            majorBreakable.DamageReduction = 1000;
+            Alexandria.DungeonAPI.StaticReferences.customObjects.Add("portal_pillar_random", tearObject.gameObject);
 
             Dictionary<GameObject, float> dict = new Dictionary<GameObject, float>()
             {
-                { statue.gameObject, 0.5f },
+                { tearObject.gameObject, 1 },
             };
 
             DungeonPlaceable placeable = BreakableAPIToolbox.GenerateDungeonPlaceable(dict);
@@ -383,8 +391,6 @@ namespace Planetside
         {
             if (ObjName != "portal_pillar_random") { return Original; }
             Original = FakePrefab.Clone(Alexandria.DungeonAPI.StaticReferences.customObjects[ObjName]);
-
-
 
             var tearHolder = Original.GetComponent<TearHolderController>();
 
@@ -441,37 +447,56 @@ namespace Planetside
 
         public static void GenerateSeparatePillar(RealityTearData.Floor f, string name)
         {
-            string defaultPath = "Planetside/Resources/DungeonObjects/TrespassObjects/PillarOfSalt/";
-            string[] idlePaths = new string[]
-            {
-                defaultPath+"pillarsofsalt.png",
-            };
-            string[] death = new string[]
-            {
-                defaultPath+"pillarsofsalt_break_001.png",
-                defaultPath+"pillarsofsalt_break_002.png",
-                defaultPath+"pillarsofsalt_break_003.png",
-                defaultPath+"pillarsofsalt_break_004.png",
-                defaultPath+"pillarsofsalt_break_005.png",
-                defaultPath+"pillarsofsalt_break_006.png",
-                defaultPath+"pillarsofsalt_break_007.png",
-                defaultPath+"pillarsofsalt_break_008.png",
-                defaultPath+"pillarsofsalt_break_009.png",
-                defaultPath+"pillarsofsalt_break_010.png",
-            };
-            MajorBreakable statue = BreakableAPIToolbox.GenerateMajorBreakable("trespass_big_light", idlePaths, 5, death, 16, 15000, true, 26, 30, 3, -4, true, null, null, true, null);
-            BreakableAPIToolbox.GenerateShadow("Planetside/Resources/DungeonObjects/TrespassObjects/TrespassBigLight/tresspasslightBigShadow.png", "trespassPot_shadow", statue.transform, new Vector3(0.125f, -0.25f));
 
-            TearHolderController tearHolderController = statue.gameObject.AddComponent<TearHolderController>();
+            var tearObject = Alexandria.PrefabAPI.PrefabBuilder.BuildObject($"Reality Lens {name}");
+            var sprite = tearObject.AddComponent<tk2dSprite>();
+            sprite.SetSprite(StaticSpriteDefinitions.Trespass_Room_Object_Data, "pillarsofsalt_break_001");
+            var animator = tearObject.AddComponent<tk2dSpriteAnimator>();
+
+
+            var majorBreakable = tearObject.AddComponent<MajorBreakable>();
+            majorBreakable.HitPoints = 15000;
+            majorBreakable.sprite = sprite;
+            majorBreakable.spriteAnimator = animator;
+
+            tearObject.CreateFastBody(new IntVector2(26, 30), new IntVector2(3, -4), CollisionLayer.HighObstacle);
+            tearObject.CreateFastBody(new IntVector2(26, 30), new IntVector2(3, -4), CollisionLayer.BeamBlocker);
+            tearObject.CreateFastBody(new IntVector2(26, 30), new IntVector2(3, -4), CollisionLayer.BulletBlocker);
+            tearObject.CreateFastBody(new IntVector2(26, 30), new IntVector2(3, -4), CollisionLayer.EnemyBlocker);
+            tearObject.CreateFastBody(new IntVector2(26, 30), new IntVector2(3, -4), CollisionLayer.PlayerBlocker);
+
+            animator.library = StaticSpriteDefinitions.Trespass_Room_Object_Animation;
+
+            //MajorBreakable statue = BreakableAPIToolbox.GenerateMajorBreakable("trespass_big_light", idlePaths, 5, death, 16, 15000, true, 26, 30, 3, -4, true, null, null, true, null);
+            //BreakableAPIToolbox.GenerateShadow("Planetside/Resources/DungeonObjects/TrespassObjects/TrespassBigLight/tresspasslightBigShadow.png", "trespassPot_shadow", statue.gameObject.transform, new Vector3(0.125f, -0.25f));
+
+            var holder = tearObject.gameObject.AddComponent<TearHolderController>();
+            holder.self = majorBreakable;
+
+            Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+            sprite.usesOverrideMaterial = true;
+            mat.mainTexture = sprite.renderer.material.mainTexture;
+            mat.SetColor("_EmissiveColor", new Color32(0, 255, 255, 255));
+            mat.SetFloat("_EmissiveColorPower", 8f);
+            mat.SetFloat("_EmissivePower", 4);
+            sprite.renderer.material = mat;
+
+            majorBreakable.DamageReduction = 1000;
+
+            //MajorBreakable statue = BreakableAPIToolbox.GenerateMajorBreakable("trespass_big_light", idlePaths, 5, death, 16, 15000, true, 26, 30, 3, -4, true, null, null, true, null);
+            //BreakableAPIToolbox.GenerateShadow("Planetside/Resources/DungeonObjects/TrespassObjects/TrespassBigLight/tresspasslightBigShadow.png", "trespassPot_shadow", statue.transform, new Vector3(0.125f, -0.25f));
+
+            TearHolderController tearHolderController = tearObject.gameObject.AddComponent<TearHolderController>();
             tearHolderController.IsRandom = false;
             tearHolderController.assigned = f;
-       
 
-            statue.gameObject.AddComponent<TresspassLightController>();
 
-            statue.DamageReduction = 1000;
+            //statue.gameObject.AddComponent<TresspassLightController>();
+
+
+            majorBreakable.DamageReduction = 1000;
             Dictionary<GameObject, float> dict = new Dictionary<GameObject, float>()
-            { { statue.gameObject, 1f }};
+            { { tearObject.gameObject, 1f }};
             DungeonPlaceable placeable = BreakableAPIToolbox.GenerateDungeonPlaceable(dict);
             StaticReferences.StoredDungeonPlaceables.Add(name, placeable);
         }

@@ -12,6 +12,8 @@ using Planetside;
 using BreakAbleAPI;
 using System.Collections;
 using SaveAPI;
+using Alexandria.PrefabAPI;
+using Planetside.Static_Storage;
 
 namespace Planetside
 {
@@ -19,6 +21,8 @@ namespace Planetside
     {
         public static void Init()
         {
+
+            /*
             string defaultPath = "Planetside/Resources/DungeonObjects/TrespassObjects/SmallCubes/";
             string defaultPathShadow = "Planetside/Resources/DungeonObjects/TrespassObjects/TrespassLight/";
             MajorBreakable cube1 = BreakableAPIToolbox.GenerateMajorBreakable("cube1", new string[] { defaultPath + "cube1.png" }, 1, new string[] { defaultPath + "cube1.png" }, 1, 15000, true, 14, 14, 1, -2, true, null, null, true, new List<CollisionLayer>() { CollisionLayer.EnemyBlocker, CollisionLayer.PlayerBlocker });
@@ -34,11 +38,24 @@ namespace Planetside
             cube1.gameObject.AddComponent<TresspassUnlitShaderController>();
             cube2.gameObject.AddComponent<TresspassUnlitShaderController>();
             cube3.gameObject.AddComponent<TresspassUnlitShaderController>();
+            */
+
+            var Cube = PrefabBuilder.BuildObject("Cube");
+            Cube.layer = 20;
+            var sprite = Cube.AddComponent<tk2dSprite>();
+            sprite.IsPerpendicular = false;
+            var animator = Cube.AddComponent<tk2dSpriteAnimator>();
+            animator.library = StaticSpriteDefinitions.Trespass_Room_Object_Animation;
+            animator.playAutomatically = true;
+            animator.defaultClipId = StaticSpriteDefinitions.Trespass_Room_Object_Animation.GetClipIdByName("LargeCube");
+            sprite.usesOverrideMaterial = true;
+            Material mat = new Material(StaticShaders.Default_Shader);
+            sprite.renderer.material = mat;
+            Cube.CreateFastBody(new IntVector2(14, 12), new IntVector2(2, -2), CollisionLayer.PlayerBlocker);
+            Cube.CreateFastBody(new IntVector2(14, 12), new IntVector2(2, -2), CollisionLayer.EnemyBlocker);
             Dictionary<GameObject, float> dict = new Dictionary<GameObject, float>()
             {
-                { cube1.gameObject, 0.8f },
-                { cube2.gameObject, 0.5f },
-                { cube3.gameObject, 0.4f },
+                { Cube, 1 },
             };
             DungeonPlaceable placeable = BreakableAPIToolbox.GenerateDungeonPlaceable(dict);
             StaticReferences.StoredDungeonPlaceables.Add("tresPassRandomCubes", placeable);

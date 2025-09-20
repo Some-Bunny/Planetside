@@ -1252,7 +1252,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -1324,7 +1324,7 @@ MonoBehaviour:
     flipped: 0
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 0
+    colliderType: 1
     customColliders: []
     metadata:
       type: 0
@@ -1354,14 +1354,14 @@ MonoBehaviour:
   SpriteIDsWithAttachPoints: 
   SpriteDefinedAttachPoints: []
   premultipliedAlpha: 0
-  material: {fileID: 0}
+  material: {fileID: 2100000, guid: 66b72f01fda19aa418f634a236281f8b, type: 2}
   materials:
   - {fileID: 2100000, guid: 66b72f01fda19aa418f634a236281f8b, type: 2}
   textures:
   - {fileID: 2800000, guid: 1c5d60d13d64e394d992ead5ec0b908b, type: 3}
   pngTextures: []
   materialPngTextureId: 00000000
-  textureFilterMode: 1
+  textureFilterMode: 0
   textureMipMaps: 0
   allowMultipleAtlases: 0
   spriteCollectionGUID: 7d5f86cb760b08a4bb378dd6f59e122a
@@ -1370,7 +1370,7 @@ MonoBehaviour:
   loadable: 0
   invOrthoSize: 2
   halfTargetHeight: 8
-  buildKey: 116953441
+  buildKey: 1124027356
   dataGuid: bb3335eafcd6b0f48a2692061427e355
   managedSpriteCollection: 0
   hasPlatformData: 0

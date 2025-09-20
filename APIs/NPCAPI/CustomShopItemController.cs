@@ -32,7 +32,7 @@ namespace NpcApi
 		public Func<CustomShopController, PlayerController, int, int> removeCurrency;
 		public Func<CustomShopController, CustomShopItemController, PickupObject, int> customPrice;
 		public Func<PlayerController, PickupObject, int, bool> OnPurchase;
-		public Func<PlayerController, PickupObject, int, bool> OnSteal;
+		public Func<CustomShopController, PlayerController, PickupObject, int, bool> OnSteal;
 		public string customPriceSprite;
 
 		public new bool Locked { get; set; }
@@ -469,6 +469,7 @@ namespace NpcApi
 				{
 					player.DidUnstealthyAction();
 					this.m_baseParentShop.NotifyStealFailed();
+				
 					return;
 				}
 			}
@@ -580,8 +581,7 @@ namespace NpcApi
 					}
 					if (OnSteal != null)
 					{
-						OnSteal(player, this.item, this.ModifiedPrice);
-
+						OnSteal(this.m_parentShop, player, this.item, this.ModifiedPrice);
 					}
 				}
 				else
@@ -623,6 +623,10 @@ namespace NpcApi
 				player.DidUnstealthyAction();
 				this.m_baseParentShop.NotifyStealFailed();
 			}
+			if (OnSteal != null)
+			{
+				OnSteal(this.m_baseParentShop, player, this.item, ModifiedPrice);
+			}
 			GameUIRoot.Instance.DeregisterDefaultLabel(base.transform);
 			AkSoundEngine.PostEvent("Play_OBJ_item_purchase_01", base.gameObject);
 		}
@@ -641,7 +645,22 @@ namespace NpcApi
 			GameUIRoot.Instance.DeregisterDefaultLabel(base.transform);
 		}
 
-		public new string GetAnimationState(PlayerController interactor, out bool shouldBeFlipped)
+        public void ForceItemOutOfStock()
+        {
+            this.pickedUp = true;
+            if (this.m_parentShop != null)
+            {
+                this.m_parentShop.PurchaseItem(this, false, true);
+            }
+            if (this.m_baseParentShop != null)
+            {
+                this.m_baseParentShop.PurchaseItem(this, false, true);
+            }
+            GameUIRoot.Instance.DeregisterDefaultLabel(base.transform);
+        }
+
+
+        public new string GetAnimationState(PlayerController interactor, out bool shouldBeFlipped)
 		{
 			shouldBeFlipped = false;
 			return string.Empty;

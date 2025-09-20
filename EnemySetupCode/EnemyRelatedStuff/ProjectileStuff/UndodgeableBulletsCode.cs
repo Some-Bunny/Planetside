@@ -7,6 +7,8 @@ using System.Text;
 using UnityEngine;
 using System.Reflection;
 using static UnityEngine.ParticleSystem;
+using Brave.BulletScript;
+using Dungeonator;
 
 namespace Planetside
 {
@@ -203,8 +205,13 @@ namespace Planetside
                 {
                     _ParticleTick = 0;
                     
-                    GlobalSparksDoer.DoSingleParticle(this.sprite.WorldCenter, Vector3.zero, sprite.GetBounds().size.x, 0.333f, Color.cyan * 3, GlobalSparksDoer.SparksType.SOLID_SPARKLES);
-
+                    //GlobalSparksDoer.DoSingleParticle(this.sprite.WorldCenter, Vector3.zero, sprite.GetBounds().size.x, 0.333f, Color.cyan * 3, GlobalSparksDoer.SparksType.SOLID_SPARKLES);
+                    ParticleBase.EmitParticles("WaveParticle", 1, new EmitParams()
+                    {
+                        startSize = 4,
+                        startLifetime = 0.33f,
+                        startColor = IsUnDodgeable ? Color.cyan.WithAlpha(0.2f) : Color.red.WithAlpha(0.2f),
+                    });
                 }
             }
             if (CurrentHeight <= -0.5f && CurrentHeight >= -0.75f)
@@ -214,8 +221,13 @@ namespace Planetside
                 {
                     _ParticleTick = 0;
                     //GlobalSparksDoer.DoSingleParticle(this.sprite.WorldCenter, MathToolbox.GetUnitOnCircle(BraveUtility.RandomAngle(), UnityEngine.Random.Range(1.5f, 1.75f)), 0.125f, 0.75f, Color.blue, GlobalSparksDoer.SparksType.FLOATY_CHAFF);
-                    GlobalSparksDoer.DoSingleParticle(this.sprite.WorldCenter, Vector3.zero, sprite.GetBounds().size.x, 0.333f, Color.blue * 3, GlobalSparksDoer.SparksType.SOLID_SPARKLES);
-
+                    //GlobalSparksDoer.DoSingleParticle(this.sprite.WorldCenter, Vector3.zero, sprite.GetBounds().size.x, 0.333f, Color.blue * 3, GlobalSparksDoer.SparksType.SOLID_SPARKLES);
+                    ParticleBase.EmitParticles("WaveParticle", 1, new EmitParams()
+                    {
+                        startSize = 4,
+                        startLifetime = 0.33f,
+                        startColor = IsUnDodgeable ? Color.cyan.WithAlpha(0.2f) : Color.red.WithAlpha(0.2f),
+                    });
                 }
             }
 
@@ -604,6 +616,12 @@ namespace Planetside
             {
                 return orig(self, rigidbody, hitPixelCollider, out killedTarget, player, alreadyPlayerDelayed);
             }
+        }
+
+        public override void HandleDestruction(CollisionData lcr, bool allowActorSpawns = true, bool allowProjectileSpawns = true)
+        {
+            this.sprite.renderer.material.SetFloat("_IsBlue", IsUnDodgeable ? 1 : 0);
+            base.HandleDestruction(lcr, allowActorSpawns, allowProjectileSpawns);
         }
     }
 }

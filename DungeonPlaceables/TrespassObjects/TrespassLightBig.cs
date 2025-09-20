@@ -62,6 +62,7 @@ namespace Planetside
     {
         public static void Init()
         {
+            /*
             string defaultPath = "Planetside/Resources/DungeonObjects/TrespassObjects/TrespassBigLight/";
             string[] idlePaths = new string[]
             {
@@ -75,14 +76,42 @@ namespace Planetside
             };
             MajorBreakable statue = BreakableAPIToolbox.GenerateMajorBreakable("trespass_big_light", idlePaths, 5, null, 1, 15000, true, 28, 32, 4, -4, true, null, null, true, null);
             BreakableAPIToolbox.GenerateShadow(defaultPath + "tresspasslightBigShadow.png", "trespass_decorative_pillar_shadow", statue.gameObject.transform, new Vector3(0.125f, -0.25f));
+            */
 
-            statue.gameObject.AddComponent<TresspassLightController>();
-            statue.DamageReduction = 1000;
-            statue.gameObject.AddComponent<PushImmunity>();
+            var tearObject = Alexandria.PrefabAPI.PrefabBuilder.BuildObject("Trespass Large Light");
+            var sprite = tearObject.AddComponent<tk2dSprite>();
+            sprite.SetSprite(StaticSpriteDefinitions.Trespass_Room_Object_Data, "tresspasslightBig_001");
+            var animator = tearObject.AddComponent<tk2dSpriteAnimator>();
+            animator.library = StaticSpriteDefinitions.Trespass_Room_Object_Animation;
+            animator.playAutomatically = true;
+            animator.defaultClipId = StaticSpriteDefinitions.Trespass_Room_Object_Animation.GetClipIdByName("trespass_Light_Large");
+            sprite.IsPerpendicular = false;
+
+            var majorBreakable = tearObject.AddComponent<MajorBreakable>();
+            majorBreakable.HitPoints = 15000;
+            majorBreakable.sprite = sprite;
+            majorBreakable.spriteAnimator = animator;
+
+            tearObject.CreateFastBody(new IntVector2(28, 32), new IntVector2(4, -4), CollisionLayer.HighObstacle);
+            tearObject.CreateFastBody(new IntVector2(28, 32), new IntVector2(4, -4), CollisionLayer.BeamBlocker);
+            tearObject.CreateFastBody(new IntVector2(28, 32), new IntVector2(4, -4), CollisionLayer.BulletBlocker);
+            tearObject.CreateFastBody(new IntVector2(28, 32), new IntVector2(4, -4), CollisionLayer.EnemyBlocker);
+            tearObject.CreateFastBody(new IntVector2(28, 32), new IntVector2(4, -4), CollisionLayer.PlayerBlocker);
+
+            sprite.usesOverrideMaterial = true;
+            Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+            mat.mainTexture = sprite.renderer.material.mainTexture;
+            mat.SetColor("_EmissiveColor", new Color32(0, 255, 255, 255));
+            mat.SetFloat("_EmissiveColorPower", 11f);
+            mat.SetFloat("_EmissivePower", 3);
+            sprite.renderer.material = mat;
+
+            majorBreakable.DamageReduction = 1000;
+            majorBreakable.gameObject.AddComponent<PushImmunity>();
 
             Dictionary<GameObject, float> dict = new Dictionary<GameObject, float>()
             {
-                { statue.gameObject, 0.5f },
+                { majorBreakable.gameObject, 0.5f },
             };
 
             DungeonPlaceable placeable = BreakableAPIToolbox.GenerateDungeonPlaceable(dict);

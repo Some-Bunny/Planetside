@@ -956,7 +956,7 @@ namespace Planetside
             ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("somethingtoDoWithThrownGuns"), data, gameObject);
             //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
             string shortDesc = "Advanced Combat";
-            string longDesc = "Despite Gun-Throwing as a combat technique being fully abandoned out of redundancy, some have harnessed its untapped potential, conquering the Gungeons depths without ever firing a single shot with their own hands.";
+            string longDesc = "Despite Gun-Throwing as a combat technique becoming completely redundant, some have harnessed its untapped potential, conquering the Gungeons depths without ever firing a single shot with their own hands.";
             item.SetupItem(shortDesc, longDesc, "psog");
             Gunslinger.GunslingerID = item.PickupObjectId;
             item.quality = PickupObject.ItemQuality.EXCLUDED;
@@ -990,7 +990,7 @@ namespace Planetside
             GunslingerMagDumpVFX = BrokenArmorVFXObject;
 
 
-            item.InitialPickupNotificationText = "Massive Boost To Thrown Weapons.";
+            item.InitialPickupNotificationText = "Thrown Weapons Are Stronger.";
             item.StackPickupNotificationText = "Thrown Weapons Are Even Stronger.";
         }
 

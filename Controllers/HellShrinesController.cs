@@ -209,12 +209,7 @@ namespace Planetside
                     yield return null;
                 }
 
-                /*
-                for (int i = 0; i < 15; i++)
-                {
-                    SpawnManager.SpawnVFX((PickupObjectDatabase.GetById(538) as SilverBulletsPassiveItem).SynergyPowerVFX, self.sprite.WorldCenter.ToVector3ZisY(0f) + new Vector3(UnityEngine.Random.Range(-0.5f, 0.5f), UnityEngine.Random.Range(-0.5f, 0.5f), 100), Quaternion.identity).GetComponent<tk2dBaseSprite>().PlaceAtPositionByAnchor(base.sprite.WorldCenter.ToVector3ZisY(0f), tk2dBaseSprite.Anchor.MiddleCenter);
-                }
-                */
+
                 AkSoundEngine.PostEvent("Play_OBJ_dice_bless_01", this.gameObject);
 
                 IPlayerInteractable[] interfaces = this.gameObject.GetInterfaces<IPlayerInteractable>();

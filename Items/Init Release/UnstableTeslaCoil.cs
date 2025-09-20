@@ -94,32 +94,33 @@ namespace Planetside
                 if (isInCombat)
                 {
                     List<AIActor> activeEnemies = base.Owner.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
-                    bool flag5 = activeEnemies != null && activeEnemies.Count >= 0;
-                    if (flag5)
+                    if (activeEnemies != null && activeEnemies.Count >= 0)
                     {
                         foreach (AIActor ai in activeEnemies)
                         {
                             if (ActorIsActive(ai) == true)
                             {
-                                bool flag8 = ai && ai != null && Vector2.Distance(ai.CenterPosition, base.Owner.sprite.WorldCenter) < 7;
-                                if (flag8)
+                                var d = Vector2.Distance(ai.CenterPosition, base.Owner.sprite.WorldCenter) < 7;
+                                if (ai != null && d)
                                 {
-                                    if (!Shit.ContainsKey(ai))
+                                    if (d)
                                     {
-                                        GameObject obj = SpawnManager.SpawnVFX(LinkVFXPrefab, false).GetComponent<tk2dTiledSprite>().gameObject;
-                                        Shit.Add(ai, obj);
+                                        if (!Shit.ContainsKey(ai))
+                                        {
+                                            GameObject obj = SpawnManager.SpawnVFX(LinkVFXPrefab, false).GetComponent<tk2dTiledSprite>().gameObject;
+                                            Shit.Add(ai, obj);
+                                        }
                                     }
-                                }
-                                bool fuckoff = ai && ai != null && Vector2.Distance(ai.CenterPosition, base.Owner.sprite.WorldCenter) > 7f;
-                                if (fuckoff)
-                                {
-                                    if (Shit.ContainsKey(ai))
+                                    else
                                     {
-                                        GameObject obj;
-                                        Shit.TryGetValue(ai, out obj);
-                                        SpawnManager.Despawn(obj);
-                                        Shit.Remove(ai);
-                                    }
+                                        if (Shit.ContainsKey(ai))
+                                        {
+                                            GameObject obj;
+                                            Shit.TryGetValue(ai, out obj);
+                                            SpawnManager.Despawn(obj);
+                                            Shit.Remove(ai);
+                                        }
+                                    }        
                                 }
                             }             
                         }     

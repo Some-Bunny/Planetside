@@ -72,7 +72,7 @@ namespace Planetside.Toolboxes
             return advancedSynergyEntry;
         }
 
-        public static AdvancedSynergyEntry AddSynergy(this PickupObject mandatoryItem, string name, List<PickupObject> optionalItems = null, bool affectedByLichesEye = true)
+        public static AdvancedSynergyEntry AddSynergy(this PickupObject mandatoryItem, string name, List<PickupObject> optionalItems = null, bool affectedByLichesEye = false)
         {
             if (mandatoryItem == null)
             {

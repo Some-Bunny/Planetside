@@ -330,76 +330,36 @@ namespace Planetside
         public static void OpenHook(Action<Chest, PlayerController> orig, Chest self, PlayerController player)
         {
 
-            var perl = player.HasPerk(CorruptedWealth.CorruptedWealthID) as CorruptedWealth;
-            if (perl != null)
+            var perk = player.HasPerk(CorruptedWealth.CorruptedWealthID) as CorruptedWealth;
+            if (perk != null)
             {
-                if (perl.AmountOfCorruptKeys > 0)
-                {
-                    perl.AmountOfCorruptKeys--;
-                }
-                float MA = perl.AmountOfCorruptKeys;
-                if (MA > 0)
+                float amountKeysCurrent = perk.AmountOfCorruptKeys;
+                if (amountKeysCurrent > 1)
                 {
                     SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.CORRUPTEDWEALTH_FLAG_KEY, true);
-
                     var obj = UnityEngine.Object.Instantiate<tk2dSpriteAnimator>(CorruptedWealth.CorruptionVFXObject, self.sprite.WorldCenter, Quaternion.identity);
                     obj.PlayAndDestroyObject("corrupt_key");
                     AkSoundEngine.PostEvent("Play_BOSS_DragunGold_Crackle_01", player.gameObject);
-                }
-                for (int i = 0; i < MA; i++)
-                {
-                    if (player.carriedConsumables.KeyBullets == 0) { return; }
-                    //float H = i + 0.5f / MA;
-                    //PickupObject pickupObject = self.lootTable.GetSingleItemForPlayer(player, 0);
-                    //Vector2 t = MathToolbox.GetUnitOnCircle(Vector2.down.ToAngle() + Mathf.Lerp(-90, 90, H), 2.5f);
-                    //DebrisObject j = LootEngine.SpawnItem(pickupObject.gameObject, self.sprite.WorldCenter - new Vector2(0.5f, 1), t, 0.5f, true, false, false);
-                    if (self.contents == null)
+                    for (int i = 0; i < amountKeysCurrent; i++)
                     {
-                        self.contents = new List<PickupObject>();
+                        if (self.contents == null)
+                        {
+                            self.contents = new List<PickupObject>();
+                        }
+                        self.contents.Add(self.lootTable.GetItemsForPlayer(player, 0, null).First());
+                        perk.AmountOfCorruptKeys--;
+                        if (i > 0)
+                        {
+                            player.carriedConsumables.KeyBullets--;
+                        }
                     }
-                    self.contents.Add(self.lootTable.GetItemsForPlayer(player, 0, null).First());
-
-                    perl.AmountOfCorruptKeys--;
-                    player.carriedConsumables.KeyBullets--;
+                }
+                else
+                {
+                    perk.AmountOfCorruptKeys--;
                 }
             }
             orig(self, player);
-
-            /*
-                CorruptedWealthController cont = player.GetComponent<CorruptedWealthController>();
-            if (cont != null)
-            {
-                if (self.IsLocked == false && self.IsLockBroken == false)
-                {
-                    if (cont.AmountOfCorruptKeys > 0)
-                    {
-                        cont.AmountOfCorruptKeys--;
-                    }
-                    float MA = cont.AmountOfCorruptKeys;
-                    if (MA > 0)
-                    {
-                        SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.CORRUPTEDWEALTH_FLAG_KEY, true);
-                        GameObject vfx = SpawnManager.SpawnVFX(StaticVFXStorage.MachoBraceDustupVFX, true);
-                        vfx.transform.position = self.sprite.WorldCenter;
-                        vfx.GetComponent<tk2dBaseSprite>().HeightOffGround = 22;
-                        vfx.transform.localScale *= 1.25f;
-                        UnityEngine.Object.Destroy(vfx, 2);
-
-                        AkSoundEngine.PostEvent("Play_BOSS_DragunGold_Crackle_01", player.gameObject);
-                    }
-                    for (int i = 0; i < MA; i++)
-                    {
-                        if (player.carriedConsumables.KeyBullets == 0) { return; }
-                        float H = i + 0.5f / MA;
-                        PickupObject pickupObject = self.lootTable.GetSingleItemForPlayer(player, 0);
-                        Vector2 t = MathToolbox.GetUnitOnCircle(Vector2.down.ToAngle() + Mathf.Lerp(-90, 90, H), 2.5f);
-                        DebrisObject j = LootEngine.SpawnItem(pickupObject.gameObject, self.sprite.WorldCenter - new Vector2(0.5f, 1), t, 0.5f, true, false, false);
-                        cont.AmountOfCorruptKeys--;
-                        player.carriedConsumables.KeyBullets--;
-                    }
-                }
-            }    
-            */
         }
 
 

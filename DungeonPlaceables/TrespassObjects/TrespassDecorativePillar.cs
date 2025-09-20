@@ -16,28 +16,24 @@ using System.Collections;
 namespace Planetside
 {
 
-    public class TrespassDecorativePillarInetractable : BraveBehaviour, IPlayerInteractable
+    public class TrespassDecorativePillarInteractable : BraveBehaviour, IPlayerInteractable
     {
-        public MajorBreakable self;
 
         private void Start()
         {
-            self = base.gameObject.GetComponent<MajorBreakable>();
-            this.m_room = GameManager.Instance.Dungeon.data.GetAbsoluteRoomFromPosition(base.transform.position.IntXY(VectorConversions.Floor));
-            this.m_room.RegisterInteractable(this);
+            m_room = GameManager.Instance.Dungeon.data.GetAbsoluteRoomFromPosition(base.transform.position.IntXY(VectorConversions.Floor));
+            m_room.RegisterInteractable(this);
         }
 
 
         public void OnEnteredRange(PlayerController interactor)
         {
-            //SpriteOutlineManager.RemoveOutlineFromSprite(base.sprite, true);
-            //SpriteOutlineManager.AddOutlineToSprite(base.sprite, Color.white);
+
         }
 
         public void OnExitRange(PlayerController interactor)
         {
-            //SpriteOutlineManager.RemoveOutlineFromSprite(base.sprite, true);
-            //SpriteOutlineManager.AddOutlineToSprite(base.sprite, Color.black);
+
         }
 
 
@@ -53,8 +49,7 @@ namespace Planetside
 
         public void Interact(PlayerController interactor)
         {
-            //self.spriteAnimator.Play("break");
-            //this.m_room.DeregisterInteractable(this);
+
         }
 
         public string GetAnimationState(PlayerController interactor, out bool shouldBeFlipped)
@@ -84,6 +79,7 @@ namespace Planetside
     {
         public static void Init()
         {
+            /*
             string defaultPath = "Planetside/Resources/DungeonObjects/TrespassObjects/TrespassBigObject/";
             string[] idlePaths = new string[]
             {
@@ -113,13 +109,43 @@ namespace Planetside
             };
             MajorBreakable statue = BreakableAPIToolbox.GenerateMajorBreakable("trespass_decorative_pillar", idlePaths, 6, breakPaths, 10, 15000, true, 24, 24, 4, -4, true, null, null, true, null);
             BreakableAPIToolbox.GenerateShadow("Planetside/Resources/DungeonObjects/TrespassObjects/TrespassContainer/trespassContainer_shadow.png", "trespass_decorative_pillar_shadow", statue.gameObject.transform, new Vector3(0, -0.1875f));
+            */
 
-            statue.gameObject.AddComponent<TresspassLightController>();
-            statue.gameObject.AddComponent<TrespassDecorativePillarInetractable>();
-            statue.gameObject.AddComponent<DungeonPlaceableBehaviour>();
-            statue.DamageReduction = 1000;
+            //statue.gameObject.AddComponent<TresspassLightController>();
 
-            StaticReferences.StoredRoomObjects.Add("trespassDecorativePillar", statue.gameObject);
+            var tearObject = Alexandria.PrefabAPI.PrefabBuilder.BuildObject("Micro Void Containers");
+            var sprite = tearObject.AddComponent<tk2dSprite>();
+            sprite.SetSprite(StaticSpriteDefinitions.Trespass_Room_Object_Data, "vesselLock_idle_001");
+            var animator = tearObject.AddComponent<tk2dSpriteAnimator>();
+            animator.library = StaticSpriteDefinitions.Trespass_Room_Object_Animation;
+            animator.playAutomatically = true;
+            animator.defaultClipId = StaticSpriteDefinitions.Trespass_Room_Object_Animation.GetClipIdByName("vessel_idle");
+            sprite.IsPerpendicular = false;
+
+            var majorBreakable = tearObject.AddComponent<MajorBreakable>();
+            majorBreakable.HitPoints = 15000;
+            majorBreakable.sprite = sprite;
+            majorBreakable.spriteAnimator = animator;
+            majorBreakable.DamageReduction = 1000;
+
+            tearObject.CreateFastBody(new IntVector2(24, 24), new IntVector2(4, -4), CollisionLayer.HighObstacle);
+            tearObject.CreateFastBody(new IntVector2(24, 24), new IntVector2(4, -4), CollisionLayer.BeamBlocker);
+            tearObject.CreateFastBody(new IntVector2(24, 24), new IntVector2(4, -4), CollisionLayer.BulletBlocker);
+            tearObject.CreateFastBody(new IntVector2(24, 24), new IntVector2(4, -4), CollisionLayer.EnemyBlocker);
+            tearObject.CreateFastBody(new IntVector2(24, 24), new IntVector2(4, -4), CollisionLayer.PlayerBlocker);
+
+            sprite.usesOverrideMaterial = true;
+            Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+            mat.mainTexture = sprite.renderer.material.mainTexture;
+            mat.SetColor("_EmissiveColor", new Color32(0, 255, 255, 255));
+            mat.SetFloat("_EmissiveColorPower", 11f);
+            mat.SetFloat("_EmissivePower", 3);
+            sprite.renderer.material = mat;
+
+            tearObject.gameObject.AddComponent<TrespassDecorativePillarInteractable>();
+            tearObject.gameObject.AddComponent<DungeonPlaceableBehaviour>();
+
+            StaticReferences.StoredRoomObjects.Add("trespassDecorativePillar", tearObject.gameObject);
         }
     }
 }

@@ -2107,7 +2107,7 @@ namespace Planetside
 				ImprovedAfterImageForTiled yes1 = component2.gameObject.GetOrAddComponent<ImprovedAfterImageForTiled>();
 				yes1.spawnShadows = true;
 				yes1.shadowLifetime = 0.2f;
-				yes1.shadowTimeDelay = 0.005f;
+				yes1.shadowTimeDelay = 0.05f;
 				yes1.dashColor = new Color(1f, 0f, 0f, 1f);
 				float elapsed = 0;
 				while (elapsed < Time)
@@ -2160,7 +2160,7 @@ namespace Planetside
 				ImprovedAfterImageForTiled yes1 = component2.gameObject.GetOrAddComponent<ImprovedAfterImageForTiled>();
 				yes1.spawnShadows = true;
 				yes1.shadowLifetime = 0.2f;
-				yes1.shadowTimeDelay = 0.005f;
+				yes1.shadowTimeDelay = 0.05f;
 				yes1.dashColor = new Color(1f, 0f, 0f, 1f);
 
 				float elapsed = 0;
@@ -2295,7 +2295,7 @@ namespace Planetside
 				base.PostWwiseEvent("Play_ENM_bulletking_skull_01", null);
                 for (int e = 1; e < 8; e++)
 				{
-                    base.Fire(new Direction(Angle, DirectionType.Absolute, -1f), new Speed(25f + (2.5f*e), SpeedType.Absolute), new WallBulletNoDodge(e == 1 ? StaticBulletEntries.undodgeableSniper.Name : StaticBulletEntries.undodgeableSmallSpore.Name, Angle));
+                    base.Fire(new Direction(Angle, DirectionType.Absolute, -1f), new Speed(25f + (2.5f*e), SpeedType.Absolute), new WallBulletNoDodge(e == 7 ? StaticBulletEntries.undodgeableSniper.Name : StaticBulletEntries.undodgeableSmallSpore.Name, Angle));
                 }
                 yield break;
 			}

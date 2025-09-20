@@ -13,6 +13,9 @@ using Planetside;
 using BreakAbleAPI;
 using Brave.BulletScript;
 using System.Collections;
+using Alexandria.PrefabAPI;
+using Alexandria.cAPI;
+using Planetside.Static_Storage;
 
 namespace Planetside
 {
@@ -30,6 +33,7 @@ namespace Planetside
         }
         public void OnBreak()
         {
+            AkSoundEngine.PostEvent("Play_CHR_pit_fall_01", base.gameObject);
             Vector2 SpawnPos = self.sprite.WorldCenter;
             GameObject vfx = UnityEngine.Object.Instantiate<GameObject>(StaticVFXStorage.DragunBoulderLandVFX, SpawnPos, Quaternion.identity);
             tk2dBaseSprite component = vfx.GetComponent<tk2dBaseSprite>();
@@ -73,15 +77,66 @@ namespace Planetside
     {
         public static void Init()
         {
+            /*
             string defaultPath = "Planetside/Resources/DungeonObjects/GrenadeBox/";
             string[] idlePaths = new string[]
             {
                 defaultPath+"grenadebox.png",
             };
-          
-            string shadowPath = "Planetside/Resources/DungeonObjects/GrenadeBox/grenadeboxshadow.png";
-            MinorBreakable breakable = BreakableAPIToolbox.GenerateMinorBreakable("Box_Of_Grenades", idlePaths, 1, idlePaths, 10, "Play_OBJ_boulder_break_01", true, 28, 14, 0, -4);
-            BreakableAPIToolbox.GenerateShadow(shadowPath, "Box_Of_Grenades_shadow", breakable.gameObject.transform, new Vector3(0f, -0.125f));
+            */
+            //string shadowPath = "Planetside/Resources/DungeonObjects/GrenadeBox/grenadeboxshadow.png";
+            //MinorBreakable breakable = BreakableAPIToolbox.GenerateMinorBreakable("Box_Of_Grenades", idlePaths, 1, idlePaths, 10, "Play_OBJ_boulder_break_01", true, 28, 14, 0, -4);
+
+            var grenadeBox = PrefabBuilder.BuildObject("Grenade Box");
+
+            var sprite = grenadeBox.AddComponent<tk2dSprite>();
+            sprite.SetSprite(StaticSpriteDefinitions.RoomObject_Sheet_Data, "grenadebox1");
+
+            sprite.usesOverrideMaterial = true;
+            Material mat = new Material(StaticShaders.Default_Object_Shader);
+            sprite.renderer.material = mat;
+
+            grenadeBox.CreateFastBody(new IntVector2(32, 24), new IntVector2(0, 0), CollisionLayer.LowObstacle);
+            grenadeBox.CreateFastBody(new IntVector2(32, 24), new IntVector2(0, 0), CollisionLayer.BulletBlocker);
+
+            var animator = grenadeBox.AddComponent<tk2dSpriteAnimator>();
+            animator.library = StaticSpriteDefinitions.RoomObject_Animation_Data;
+            animator.playAutomatically = true;
+            animator.defaultClipId = StaticSpriteDefinitions.RoomObject_Animation_Data.GetClipIdByName("grenadebox");
+
+            var breakable = grenadeBox.AddComponent<MinorBreakable>();
+
+            breakable.stopsBullets = false;
+            breakable.OnlyPlayerProjectilesCanBreak = false;
+            breakable.OnlyBreaksOnScreen = false;
+            breakable.resistsExplosions = false;
+            breakable.canSpawnFairy = false;
+            breakable.chanceToRain = 1;
+            breakable.dropCoins = false;
+            breakable.goopsOnBreak = false;
+            breakable.breakStyle = MinorBreakable.BreakStyle.BURST;
+            breakable.gameObject.AddComponent<TresspassLightController>();
+            breakable.IgnoredForPotShotsModifier = true;
+
+            breakable.amountToRain = 0;
+            breakable.EmitStyle = GlobalSparksDoer.EmitRegionStyle.RANDOM;
+            breakable.ParticleColor = Color.white;
+            breakable.ParticleLifespan = 2;
+            breakable.ParticleMagnitude = 1;
+            breakable.ParticleMagnitudeVariance = 1;
+            breakable.ParticleSize = 0.1f;
+            breakable.ParticleType = GlobalSparksDoer.SparksType.FLOATY_CHAFF;
+            breakable.hasParticulates = true;
+            breakable.MaxParticlesOnBurst = 10;
+            breakable.MinParticlesOnBurst = 4;
+
+            breakable.sprite.SortingOrder = 0;
+            breakable.sprite.HeightOffGround = -1;
+            breakable.gameObject.layer = LayerMask.NameToLayer("FG_Critical");
+
+
+
+            breakable.breakAudioEventName = "Play_obj_box_break_01";
 
             breakable.stopsBullets = true;
             breakable.OnlyPlayerProjectilesCanBreak = false;
@@ -95,6 +150,7 @@ namespace Planetside
             breakable.gameObject.AddComponent<BoxOfGrenadesController>();
             breakable.gameObject.AddComponent<AIBulletBank>();
 
+            /*
             string shardDefaultPath = "Planetside/Resources/DungeonObjects/GrenadeBox/";
             string[] shardPaths = new string[]
             {
@@ -116,15 +172,31 @@ namespace Planetside
             };
             DebrisObject[] shardObjects = BreakableAPIToolbox.GenerateDebrisObjects(shardPaths, true, 1, 5, 720, 540, null, 0.9f, null, null, 0, false);
             ShardCluster potShardCluster = BreakableAPIToolbox.GenerateShardCluster(shardObjects, 1f, 3f, 10, 18, 0.9f);
+            */
 
- 
-            ShardCluster[] array = new ShardCluster[] { potShardCluster};
+            DebrisObject shardObjects = BreakableAPI_Bundled.GenerateDebrisObject("grenadeshard1", StaticSpriteDefinitions.RoomObject_Sheet_Data, true, 1, 5, 720, 540, null, 0.6f, null, null, 0, false);
+            var animatorShard = shardObjects.AddComponent<tk2dSpriteAnimator>();
+            animatorShard.library = StaticSpriteDefinitions.RoomObject_Animation_Data;
+            animatorShard.playAutomatically = true;
+            animatorShard.defaultClipId = StaticSpriteDefinitions.RoomObject_Animation_Data.GetClipIdByName("grenadeboxshard");
+            animatorShard.sprite.usesOverrideMaterial = true;
+            mat = new Material(StaticShaders.Default_Object_Shader);
+            animator.sprite.renderer.material = mat;
+            ShardCluster potShardCluster = BreakableAPIToolbox.GenerateShardCluster(new DebrisObject[] { shardObjects }, 0.7f, 1.2f, 12, 18, 0.6f);
+
+            ShardCluster[] array = new ShardCluster[] { potShardCluster };
             breakable.shardClusters = array;
             //breakable.OnBreak += OnBroken; //Code that runs when the breakable is broken. If doesnt have any arguments so im not sure how useful it can be
 
 
+            var grenadeBoxShadow = PrefabBuilder.BuildObject("Grenade Box Shadow");
+            sprite = grenadeBoxShadow.AddComponent<tk2dSprite>();
+            sprite.SetSprite(StaticSpriteDefinitions.RoomObject_Sheet_Data, "grenadeboxshadow");
+            sprite.transform.localPosition = new Vector3(0, -.125f);
+            sprite.IsPerpendicular = false;
 
-      
+            grenadeBoxShadow.gameObject.transform.SetParent(breakable.transform, false);   
+
             StaticReferences.StoredRoomObjects.Add("box_of_grenades", breakable.gameObject);
             Alexandria.DungeonAPI.StaticReferences.customObjects.Add("psog:box_of_grenades", breakable.gameObject);
 

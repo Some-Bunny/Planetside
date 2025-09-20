@@ -34,7 +34,11 @@ namespace Planetside.Static_Storage
         }
 
         public static Shader Hologram_Shader = ShaderCache.Acquire("Brave/Internal/HologramShader");
-        public static Shader Default_Shader = ShaderCache.Acquire("Sprites/Default");
+        public static Shader Default_Shader = ShaderCache.Acquire("tk2d/BlendVertexColor");
+
+        public static Shader Default_Object_Shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTilted");
+
+
         public static Shader Space_Fog_Shader = ShaderCache.Acquire("Brave/Internal/SpaceFogShader");
         public static Shader Gonner_Shader = ShaderCache.Acquire("tk2d/CutoutVertexColorTiltedGonner");
         public static Shader Displacer_Beast_Shader = ShaderCache.Acquire("Brave/DisplacerBeast");
@@ -46,6 +50,7 @@ namespace Planetside.Static_Storage
         public static Shader SpaceFog_Shader = ShaderCache.Acquire("Brave/Internal/SpaceFogShader");
         public static Shader TransparencyShader = Shader.Find("Brave/Internal/SimpleAlphaFadeUnlit");
         public static Shader CursePotCircleShader = ShaderCache.Acquire("Brave/Effects/Curse Pot Circle");
+        public static Shader Default_Shader_Basic = ShaderCache.Acquire("Sprites/Default");
 
         public static Material FloorTileMaterial;
         public static Material FloorTileMaterial_Transparency;

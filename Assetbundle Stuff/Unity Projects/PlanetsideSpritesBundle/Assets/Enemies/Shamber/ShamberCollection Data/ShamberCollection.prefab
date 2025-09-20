@@ -79,14 +79,14 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.011722656, y: 0.011722656}
-    - {x: 0.13671485, y: 0.011722656}
-    - {x: 0.011722656, y: 0.1562461}
-    - {x: 0.13671485, y: 0.1562461}
+    - {x: 0.011722656, y: 0.005861328}
+    - {x: 0.011722656, y: 0.06835742}
+    - {x: 0.1562461, y: 0.005861328}
+    - {x: 0.1562461, y: 0.06835742}
     normalizedUvs:
     - {x: 0, y: 0}
-    - {x: 1, y: 0}
     - {x: 0, y: 1}
+    - {x: 1, y: 0}
     - {x: 1, y: 1}
     indices: 000000000300000001000000020000000300000000000000
     material: {fileID: 2100000, guid: bd223706e91b4464e97d72cae21f1bbf, type: 2}
@@ -97,7 +97,7 @@ MonoBehaviour:
     regionY: 0
     regionW: 0
     regionH: 0
-    flipped: 0
+    flipped: 1
     complexGeometry: 0
     physicsEngine: 0
     colliderType: 1
@@ -151,14 +151,14 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.011722656, y: 0.1796914}
-    - {x: 0.13671485, y: 0.1796914}
-    - {x: 0.011722656, y: 0.32421485}
-    - {x: 0.13671485, y: 0.32421485}
+    - {x: 0.1796914, y: 0.005861328}
+    - {x: 0.1796914, y: 0.06835742}
+    - {x: 0.32421485, y: 0.005861328}
+    - {x: 0.32421485, y: 0.06835742}
     normalizedUvs:
     - {x: 0, y: 0}
-    - {x: 1, y: 0}
     - {x: 0, y: 1}
+    - {x: 1, y: 0}
     - {x: 1, y: 1}
     indices: 000000000300000001000000020000000300000000000000
     material: {fileID: 2100000, guid: bd223706e91b4464e97d72cae21f1bbf, type: 2}
@@ -169,7 +169,7 @@ MonoBehaviour:
     regionY: 0
     regionW: 0
     regionH: 0
-    flipped: 0
+    flipped: 1
     complexGeometry: 0
     physicsEngine: 0
     colliderType: 1
@@ -223,14 +223,14 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.011722656, y: 0.34766015}
-    - {x: 0.13671485, y: 0.34766015}
-    - {x: 0.011722656, y: 0.4921836}
-    - {x: 0.13671485, y: 0.4921836}
+    - {x: 0.34766015, y: 0.005861328}
+    - {x: 0.34766015, y: 0.06835742}
+    - {x: 0.4921836, y: 0.005861328}
+    - {x: 0.4921836, y: 0.06835742}
     normalizedUvs:
     - {x: 0, y: 0}
-    - {x: 1, y: 0}
     - {x: 0, y: 1}
+    - {x: 1, y: 0}
     - {x: 1, y: 1}
     indices: 000000000300000001000000020000000300000000000000
     material: {fileID: 2100000, guid: bd223706e91b4464e97d72cae21f1bbf, type: 2}
@@ -241,7 +241,7 @@ MonoBehaviour:
     regionY: 0
     regionW: 0
     regionH: 0
-    flipped: 0
+    flipped: 1
     complexGeometry: 0
     physicsEngine: 0
     colliderType: 1
@@ -295,14 +295,14 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.011722656, y: 0.51562893}
-    - {x: 0.13671485, y: 0.51562893}
-    - {x: 0.011722656, y: 0.6601523}
-    - {x: 0.13671485, y: 0.6601523}
+    - {x: 0.51562893, y: 0.005861328}
+    - {x: 0.51562893, y: 0.06835742}
+    - {x: 0.6601523, y: 0.005861328}
+    - {x: 0.6601523, y: 0.06835742}
     normalizedUvs:
     - {x: 0, y: 0}
-    - {x: 1, y: 0}
     - {x: 0, y: 1}
+    - {x: 1, y: 0}
     - {x: 1, y: 1}
     indices: 000000000300000001000000020000000300000000000000
     material: {fileID: 2100000, guid: bd223706e91b4464e97d72cae21f1bbf, type: 2}
@@ -313,7 +313,7 @@ MonoBehaviour:
     regionY: 0
     regionW: 0
     regionH: 0
-    flipped: 0
+    flipped: 1
     complexGeometry: 0
     physicsEngine: 0
     colliderType: 1
@@ -367,14 +367,14 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.011722656, y: 0.6835977}
-    - {x: 0.13671485, y: 0.6835977}
-    - {x: 0.011722656, y: 0.82812107}
-    - {x: 0.13671485, y: 0.82812107}
+    - {x: 0.6835977, y: 0.005861328}
+    - {x: 0.6835977, y: 0.06835742}
+    - {x: 0.82812107, y: 0.005861328}
+    - {x: 0.82812107, y: 0.06835742}
     normalizedUvs:
     - {x: 0, y: 0}
-    - {x: 1, y: 0}
     - {x: 0, y: 1}
+    - {x: 1, y: 0}
     - {x: 1, y: 1}
     indices: 000000000300000001000000020000000300000000000000
     material: {fileID: 2100000, guid: bd223706e91b4464e97d72cae21f1bbf, type: 2}
@@ -385,7 +385,7 @@ MonoBehaviour:
     regionY: 0
     regionW: 0
     regionH: 0
-    flipped: 0
+    flipped: 1
     complexGeometry: 0
     physicsEngine: 0
     colliderType: 1
@@ -439,14 +439,14 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.011722656, y: 0.85156643}
-    - {x: 0.011722656, y: 0.97655857}
-    - {x: 0.1562461, y: 0.85156643}
-    - {x: 0.1562461, y: 0.97655857}
+    - {x: 0.85156643, y: 0.005861328}
+    - {x: 0.97655857, y: 0.005861328}
+    - {x: 0.85156643, y: 0.07812305}
+    - {x: 0.97655857, y: 0.07812305}
     normalizedUvs:
     - {x: 0, y: 0}
-    - {x: 0, y: 1}
     - {x: 1, y: 0}
+    - {x: 0, y: 1}
     - {x: 1, y: 1}
     indices: 000000000300000001000000020000000300000000000000
     material: {fileID: 2100000, guid: bd223706e91b4464e97d72cae21f1bbf, type: 2}
@@ -457,7 +457,7 @@ MonoBehaviour:
     regionY: 0
     regionW: 0
     regionH: 0
-    flipped: 1
+    flipped: 0
     complexGeometry: 0
     physicsEngine: 0
     colliderType: 1
@@ -511,14 +511,14 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.16016015, y: 0.011722656}
-    - {x: 0.28515235, y: 0.011722656}
-    - {x: 0.16016015, y: 0.1562461}
-    - {x: 0.28515235, y: 0.1562461}
+    - {x: 0.011722656, y: 0.08008008}
+    - {x: 0.011722656, y: 0.14257617}
+    - {x: 0.1562461, y: 0.08008008}
+    - {x: 0.1562461, y: 0.14257617}
     normalizedUvs:
     - {x: 0, y: 0}
-    - {x: 1, y: 0}
     - {x: 0, y: 1}
+    - {x: 1, y: 0}
     - {x: 1, y: 1}
     indices: 000000000300000001000000020000000300000000000000
     material: {fileID: 2100000, guid: bd223706e91b4464e97d72cae21f1bbf, type: 2}
@@ -529,7 +529,7 @@ MonoBehaviour:
     regionY: 0
     regionW: 0
     regionH: 0
-    flipped: 0
+    flipped: 1
     complexGeometry: 0
     physicsEngine: 0
     colliderType: 1
@@ -583,14 +583,14 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.16016015, y: 0.1796914}
-    - {x: 0.28515235, y: 0.1796914}
-    - {x: 0.16016015, y: 0.32421485}
-    - {x: 0.28515235, y: 0.32421485}
+    - {x: 0.1796914, y: 0.08008008}
+    - {x: 0.1796914, y: 0.14257617}
+    - {x: 0.32421485, y: 0.08008008}
+    - {x: 0.32421485, y: 0.14257617}
     normalizedUvs:
     - {x: 0, y: 0}
-    - {x: 1, y: 0}
     - {x: 0, y: 1}
+    - {x: 1, y: 0}
     - {x: 1, y: 1}
     indices: 000000000300000001000000020000000300000000000000
     material: {fileID: 2100000, guid: bd223706e91b4464e97d72cae21f1bbf, type: 2}
@@ -601,7 +601,7 @@ MonoBehaviour:
     regionY: 0
     regionW: 0
     regionH: 0
-    flipped: 0
+    flipped: 1
     complexGeometry: 0
     physicsEngine: 0
     colliderType: 1
@@ -655,14 +655,14 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.16016015, y: 0.34766015}
-    - {x: 0.28515235, y: 0.34766015}
-    - {x: 0.16016015, y: 0.4921836}
-    - {x: 0.28515235, y: 0.4921836}
+    - {x: 0.34766015, y: 0.08008008}
+    - {x: 0.34766015, y: 0.14257617}
+    - {x: 0.4921836, y: 0.08008008}
+    - {x: 0.4921836, y: 0.14257617}
     normalizedUvs:
     - {x: 0, y: 0}
-    - {x: 1, y: 0}
     - {x: 0, y: 1}
+    - {x: 1, y: 0}
     - {x: 1, y: 1}
     indices: 000000000300000001000000020000000300000000000000
     material: {fileID: 2100000, guid: bd223706e91b4464e97d72cae21f1bbf, type: 2}
@@ -673,7 +673,7 @@ MonoBehaviour:
     regionY: 0
     regionW: 0
     regionH: 0
-    flipped: 0
+    flipped: 1
     complexGeometry: 0
     physicsEngine: 0
     colliderType: 1
@@ -727,14 +727,14 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.16016015, y: 0.51562893}
-    - {x: 0.28515235, y: 0.51562893}
-    - {x: 0.16016015, y: 0.6601523}
-    - {x: 0.28515235, y: 0.6601523}
+    - {x: 0.51562893, y: 0.08008008}
+    - {x: 0.51562893, y: 0.14257617}
+    - {x: 0.6601523, y: 0.08008008}
+    - {x: 0.6601523, y: 0.14257617}
     normalizedUvs:
     - {x: 0, y: 0}
-    - {x: 1, y: 0}
     - {x: 0, y: 1}
+    - {x: 1, y: 0}
     - {x: 1, y: 1}
     indices: 000000000300000001000000020000000300000000000000
     material: {fileID: 2100000, guid: bd223706e91b4464e97d72cae21f1bbf, type: 2}
@@ -745,7 +745,7 @@ MonoBehaviour:
     regionY: 0
     regionW: 0
     regionH: 0
-    flipped: 0
+    flipped: 1
     complexGeometry: 0
     physicsEngine: 0
     colliderType: 1
@@ -799,14 +799,14 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.16016015, y: 0.6835977}
-    - {x: 0.28515235, y: 0.6835977}
-    - {x: 0.16016015, y: 0.82812107}
-    - {x: 0.28515235, y: 0.82812107}
+    - {x: 0.6835977, y: 0.08008008}
+    - {x: 0.6835977, y: 0.14257617}
+    - {x: 0.82812107, y: 0.08008008}
+    - {x: 0.82812107, y: 0.14257617}
     normalizedUvs:
     - {x: 0, y: 0}
-    - {x: 1, y: 0}
     - {x: 0, y: 1}
+    - {x: 1, y: 0}
     - {x: 1, y: 1}
     indices: 000000000300000001000000020000000300000000000000
     material: {fileID: 2100000, guid: bd223706e91b4464e97d72cae21f1bbf, type: 2}
@@ -817,7 +817,7 @@ MonoBehaviour:
     regionY: 0
     regionW: 0
     regionH: 0
-    flipped: 0
+    flipped: 1
     complexGeometry: 0
     physicsEngine: 0
     colliderType: 1
@@ -871,14 +871,14 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.011722656, y: 0.011722656}
-    - {x: 0.13671485, y: 0.011722656}
-    - {x: 0.011722656, y: 0.1562461}
-    - {x: 0.13671485, y: 0.1562461}
+    - {x: 0.011722656, y: 0.005861328}
+    - {x: 0.011722656, y: 0.06835742}
+    - {x: 0.1562461, y: 0.005861328}
+    - {x: 0.1562461, y: 0.06835742}
     normalizedUvs:
     - {x: 0, y: 0}
-    - {x: 1, y: 0}
     - {x: 0, y: 1}
+    - {x: 1, y: 0}
     - {x: 1, y: 1}
     indices: 000000000300000001000000020000000300000000000000
     material: {fileID: 2100000, guid: bd223706e91b4464e97d72cae21f1bbf, type: 2}
@@ -889,7 +889,7 @@ MonoBehaviour:
     regionY: 0
     regionW: 0
     regionH: 0
-    flipped: 0
+    flipped: 1
     complexGeometry: 0
     physicsEngine: 0
     colliderType: 1
@@ -943,14 +943,14 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.1796914, y: 0.85156643}
-    - {x: 0.1796914, y: 0.97655857}
-    - {x: 0.32421485, y: 0.85156643}
-    - {x: 0.32421485, y: 0.97655857}
+    - {x: 0.85156643, y: 0.0898457}
+    - {x: 0.97655857, y: 0.0898457}
+    - {x: 0.85156643, y: 0.16210742}
+    - {x: 0.97655857, y: 0.16210742}
     normalizedUvs:
     - {x: 0, y: 0}
-    - {x: 0, y: 1}
     - {x: 1, y: 0}
+    - {x: 0, y: 1}
     - {x: 1, y: 1}
     indices: 000000000300000001000000020000000300000000000000
     material: {fileID: 2100000, guid: bd223706e91b4464e97d72cae21f1bbf, type: 2}
@@ -961,7 +961,7 @@ MonoBehaviour:
     regionY: 0
     regionW: 0
     regionH: 0
-    flipped: 1
+    flipped: 0
     complexGeometry: 0
     physicsEngine: 0
     colliderType: 1
@@ -1015,10 +1015,10 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.30859765, y: 0.011722656}
-    - {x: 0.30859765, y: 0.13671485}
-    - {x: 0.4531211, y: 0.011722656}
-    - {x: 0.4531211, y: 0.13671485}
+    - {x: 0.011722656, y: 0.15429883}
+    - {x: 0.011722656, y: 0.21679492}
+    - {x: 0.1562461, y: 0.15429883}
+    - {x: 0.1562461, y: 0.21679492}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 0, y: 1}
@@ -1087,14 +1087,14 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.30859765, y: 0.16016015}
-    - {x: 0.43358985, y: 0.16016015}
-    - {x: 0.30859765, y: 0.3046836}
-    - {x: 0.43358985, y: 0.3046836}
+    - {x: 0.1796914, y: 0.15429883}
+    - {x: 0.1796914, y: 0.21679492}
+    - {x: 0.32421485, y: 0.15429883}
+    - {x: 0.32421485, y: 0.21679492}
     normalizedUvs:
     - {x: 0, y: 0}
-    - {x: 1, y: 0}
     - {x: 0, y: 1}
+    - {x: 1, y: 0}
     - {x: 1, y: 1}
     indices: 000000000300000001000000020000000300000000000000
     material: {fileID: 2100000, guid: bd223706e91b4464e97d72cae21f1bbf, type: 2}
@@ -1105,7 +1105,7 @@ MonoBehaviour:
     regionY: 0
     regionW: 0
     regionH: 0
-    flipped: 0
+    flipped: 1
     complexGeometry: 0
     physicsEngine: 0
     colliderType: 1
@@ -1159,14 +1159,14 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.30859765, y: 0.3281289}
-    - {x: 0.43358985, y: 0.3281289}
-    - {x: 0.30859765, y: 0.47265235}
-    - {x: 0.43358985, y: 0.47265235}
+    - {x: 0.34766015, y: 0.15429883}
+    - {x: 0.34766015, y: 0.21679492}
+    - {x: 0.4921836, y: 0.15429883}
+    - {x: 0.4921836, y: 0.21679492}
     normalizedUvs:
     - {x: 0, y: 0}
-    - {x: 1, y: 0}
     - {x: 0, y: 1}
+    - {x: 1, y: 0}
     - {x: 1, y: 1}
     indices: 000000000300000001000000020000000300000000000000
     material: {fileID: 2100000, guid: bd223706e91b4464e97d72cae21f1bbf, type: 2}
@@ -1177,7 +1177,7 @@ MonoBehaviour:
     regionY: 0
     regionW: 0
     regionH: 0
-    flipped: 0
+    flipped: 1
     complexGeometry: 0
     physicsEngine: 0
     colliderType: 1
@@ -1231,14 +1231,14 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.30859765, y: 0.49609765}
-    - {x: 0.43358985, y: 0.49609765}
-    - {x: 0.30859765, y: 0.64062107}
-    - {x: 0.43358985, y: 0.64062107}
+    - {x: 0.51562893, y: 0.15429883}
+    - {x: 0.51562893, y: 0.21679492}
+    - {x: 0.6601523, y: 0.15429883}
+    - {x: 0.6601523, y: 0.21679492}
     normalizedUvs:
     - {x: 0, y: 0}
-    - {x: 1, y: 0}
     - {x: 0, y: 1}
+    - {x: 1, y: 0}
     - {x: 1, y: 1}
     indices: 000000000300000001000000020000000300000000000000
     material: {fileID: 2100000, guid: bd223706e91b4464e97d72cae21f1bbf, type: 2}
@@ -1249,7 +1249,7 @@ MonoBehaviour:
     regionY: 0
     regionW: 0
     regionH: 0
-    flipped: 0
+    flipped: 1
     complexGeometry: 0
     physicsEngine: 0
     colliderType: 1
@@ -1303,14 +1303,14 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.30859765, y: 0.66406643}
-    - {x: 0.43358985, y: 0.66406643}
-    - {x: 0.30859765, y: 0.8085898}
-    - {x: 0.43358985, y: 0.8085898}
+    - {x: 0.6835977, y: 0.15429883}
+    - {x: 0.6835977, y: 0.21679492}
+    - {x: 0.82812107, y: 0.15429883}
+    - {x: 0.82812107, y: 0.21679492}
     normalizedUvs:
     - {x: 0, y: 0}
-    - {x: 1, y: 0}
     - {x: 0, y: 1}
+    - {x: 1, y: 0}
     - {x: 1, y: 1}
     indices: 000000000300000001000000020000000300000000000000
     material: {fileID: 2100000, guid: bd223706e91b4464e97d72cae21f1bbf, type: 2}
@@ -1321,7 +1321,7 @@ MonoBehaviour:
     regionY: 0
     regionW: 0
     regionH: 0
-    flipped: 0
+    flipped: 1
     complexGeometry: 0
     physicsEngine: 0
     colliderType: 1
@@ -1375,10 +1375,10 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.34766015, y: 0.8320352}
-    - {x: 0.47265235, y: 0.8320352}
-    - {x: 0.34766015, y: 0.97655857}
-    - {x: 0.47265235, y: 0.97655857}
+    - {x: 0.85156643, y: 0.17383008}
+    - {x: 0.97655857, y: 0.17383008}
+    - {x: 0.85156643, y: 0.2460918}
+    - {x: 0.97655857, y: 0.2460918}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 1, y: 0}
@@ -1447,10 +1447,10 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.45703515, y: 0.16016015}
-    - {x: 0.45703515, y: 0.28515235}
-    - {x: 0.60155857, y: 0.16016015}
-    - {x: 0.60155857, y: 0.28515235}
+    - {x: 0.011722656, y: 0.22851758}
+    - {x: 0.011722656, y: 0.29101366}
+    - {x: 0.1562461, y: 0.22851758}
+    - {x: 0.1562461, y: 0.29101366}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 0, y: 1}
@@ -1519,10 +1519,10 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.34766015, y: 0.8320352}
-    - {x: 0.47265235, y: 0.8320352}
-    - {x: 0.34766015, y: 0.97655857}
-    - {x: 0.47265235, y: 0.97655857}
+    - {x: 0.85156643, y: 0.17383008}
+    - {x: 0.97655857, y: 0.17383008}
+    - {x: 0.85156643, y: 0.2460918}
+    - {x: 0.97655857, y: 0.2460918}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 1, y: 0}
@@ -1591,14 +1591,14 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.30859765, y: 0.66406643}
-    - {x: 0.43358985, y: 0.66406643}
-    - {x: 0.30859765, y: 0.8085898}
-    - {x: 0.43358985, y: 0.8085898}
+    - {x: 0.6835977, y: 0.15429883}
+    - {x: 0.6835977, y: 0.21679492}
+    - {x: 0.82812107, y: 0.15429883}
+    - {x: 0.82812107, y: 0.21679492}
     normalizedUvs:
     - {x: 0, y: 0}
-    - {x: 1, y: 0}
     - {x: 0, y: 1}
+    - {x: 1, y: 0}
     - {x: 1, y: 1}
     indices: 000000000300000001000000020000000300000000000000
     material: {fileID: 2100000, guid: bd223706e91b4464e97d72cae21f1bbf, type: 2}
@@ -1609,7 +1609,7 @@ MonoBehaviour:
     regionY: 0
     regionW: 0
     regionH: 0
-    flipped: 0
+    flipped: 1
     complexGeometry: 0
     physicsEngine: 0
     colliderType: 1
@@ -1663,10 +1663,10 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.4765664, y: 0.011722656}
-    - {x: 0.4765664, y: 0.13671485}
-    - {x: 0.6210898, y: 0.011722656}
-    - {x: 0.6210898, y: 0.13671485}
+    - {x: 0.1796914, y: 0.22851758}
+    - {x: 0.1796914, y: 0.29101366}
+    - {x: 0.32421485, y: 0.22851758}
+    - {x: 0.32421485, y: 0.29101366}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 0, y: 1}
@@ -1735,14 +1735,14 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.45703515, y: 0.30859765}
-    - {x: 0.5820273, y: 0.30859765}
-    - {x: 0.45703515, y: 0.4531211}
-    - {x: 0.5820273, y: 0.4531211}
+    - {x: 0.34766015, y: 0.22851758}
+    - {x: 0.34766015, y: 0.29101366}
+    - {x: 0.4921836, y: 0.22851758}
+    - {x: 0.4921836, y: 0.29101366}
     normalizedUvs:
     - {x: 0, y: 0}
-    - {x: 1, y: 0}
     - {x: 0, y: 1}
+    - {x: 1, y: 0}
     - {x: 1, y: 1}
     indices: 000000000300000001000000020000000300000000000000
     material: {fileID: 2100000, guid: bd223706e91b4464e97d72cae21f1bbf, type: 2}
@@ -1753,7 +1753,7 @@ MonoBehaviour:
     regionY: 0
     regionW: 0
     regionH: 0
-    flipped: 0
+    flipped: 1
     complexGeometry: 0
     physicsEngine: 0
     colliderType: 1
@@ -1807,14 +1807,14 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.45703515, y: 0.4765664}
-    - {x: 0.5820273, y: 0.4765664}
-    - {x: 0.45703515, y: 0.6210898}
-    - {x: 0.5820273, y: 0.6210898}
+    - {x: 0.51562893, y: 0.22851758}
+    - {x: 0.51562893, y: 0.29101366}
+    - {x: 0.6601523, y: 0.22851758}
+    - {x: 0.6601523, y: 0.29101366}
     normalizedUvs:
     - {x: 0, y: 0}
-    - {x: 1, y: 0}
     - {x: 0, y: 1}
+    - {x: 1, y: 0}
     - {x: 1, y: 1}
     indices: 000000000300000001000000020000000300000000000000
     material: {fileID: 2100000, guid: bd223706e91b4464e97d72cae21f1bbf, type: 2}
@@ -1825,7 +1825,7 @@ MonoBehaviour:
     regionY: 0
     regionW: 0
     regionH: 0
-    flipped: 0
+    flipped: 1
     complexGeometry: 0
     physicsEngine: 0
     colliderType: 1
@@ -1879,14 +1879,14 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.45703515, y: 0.6445352}
-    - {x: 0.5820273, y: 0.6445352}
-    - {x: 0.45703515, y: 0.7851523}
-    - {x: 0.5820273, y: 0.7851523}
+    - {x: 0.6835977, y: 0.3769551}
+    - {x: 0.6835977, y: 0.43945116}
+    - {x: 0.8242148, y: 0.3769551}
+    - {x: 0.8242148, y: 0.43945116}
     normalizedUvs:
     - {x: 0, y: 0}
-    - {x: 1, y: 0}
     - {x: 0, y: 1}
+    - {x: 1, y: 0}
     - {x: 1, y: 1}
     indices: 000000000300000001000000020000000300000000000000
     material: {fileID: 2100000, guid: bd223706e91b4464e97d72cae21f1bbf, type: 2}
@@ -1897,7 +1897,7 @@ MonoBehaviour:
     regionY: 0
     regionW: 0
     regionH: 0
-    flipped: 0
+    flipped: 1
     complexGeometry: 0
     physicsEngine: 0
     colliderType: 1
@@ -1951,14 +1951,14 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.49609765, y: 0.8085977}
-    - {x: 0.6210898, y: 0.8085977}
-    - {x: 0.49609765, y: 0.9492148}
-    - {x: 0.6210898, y: 0.9492148}
+    - {x: 0.8476602, y: 0.42578322}
+    - {x: 0.8476602, y: 0.48827928}
+    - {x: 0.9882773, y: 0.42578322}
+    - {x: 0.9882773, y: 0.48827928}
     normalizedUvs:
     - {x: 0, y: 0}
-    - {x: 1, y: 0}
     - {x: 0, y: 1}
+    - {x: 1, y: 0}
     - {x: 1, y: 1}
     indices: 000000000300000001000000020000000300000000000000
     material: {fileID: 2100000, guid: bd223706e91b4464e97d72cae21f1bbf, type: 2}
@@ -1969,7 +1969,7 @@ MonoBehaviour:
     regionY: 0
     regionW: 0
     regionH: 0
-    flipped: 0
+    flipped: 1
     complexGeometry: 0
     physicsEngine: 0
     colliderType: 1
@@ -2023,10 +2023,10 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.6054727, y: 0.30859765}
-    - {x: 0.6054727, y: 0.43358985}
-    - {x: 0.7460898, y: 0.30859765}
-    - {x: 0.7460898, y: 0.43358985}
+    - {x: 0.011722656, y: 0.45117384}
+    - {x: 0.011722656, y: 0.5136699}
+    - {x: 0.15233985, y: 0.45117384}
+    - {x: 0.15233985, y: 0.5136699}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 0, y: 1}
@@ -2095,10 +2095,10 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.62500393, y: 0.16016015}
-    - {x: 0.62500393, y: 0.28515235}
-    - {x: 0.76562107, y: 0.16016015}
-    - {x: 0.76562107, y: 0.28515235}
+    - {x: 0.17578515, y: 0.45117384}
+    - {x: 0.17578515, y: 0.5136699}
+    - {x: 0.31640235, y: 0.45117384}
+    - {x: 0.31640235, y: 0.5136699}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 0, y: 1}
@@ -2167,10 +2167,10 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.6445352, y: 0.011722656}
-    - {x: 0.6445352, y: 0.13671485}
-    - {x: 0.7851523, y: 0.011722656}
-    - {x: 0.7851523, y: 0.13671485}
+    - {x: 0.33984765, y: 0.45117384}
+    - {x: 0.33984765, y: 0.5136699}
+    - {x: 0.48046485, y: 0.45117384}
+    - {x: 0.48046485, y: 0.5136699}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 0, y: 1}
@@ -2239,14 +2239,14 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.6054727, y: 0.45703515}
-    - {x: 0.7304648, y: 0.45703515}
-    - {x: 0.6054727, y: 0.5976523}
-    - {x: 0.7304648, y: 0.5976523}
+    - {x: 0.5039102, y: 0.45117384}
+    - {x: 0.5039102, y: 0.5136699}
+    - {x: 0.6445273, y: 0.45117384}
+    - {x: 0.6445273, y: 0.5136699}
     normalizedUvs:
     - {x: 0, y: 0}
-    - {x: 1, y: 0}
     - {x: 0, y: 1}
+    - {x: 1, y: 0}
     - {x: 1, y: 1}
     indices: 000000000300000001000000020000000300000000000000
     material: {fileID: 2100000, guid: bd223706e91b4464e97d72cae21f1bbf, type: 2}
@@ -2257,7 +2257,7 @@ MonoBehaviour:
     regionY: 0
     regionW: 0
     regionH: 0
-    flipped: 0
+    flipped: 1
     complexGeometry: 0
     physicsEngine: 0
     colliderType: 1
@@ -2311,14 +2311,14 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.6054727, y: 0.6210977}
-    - {x: 0.7304648, y: 0.6210977}
-    - {x: 0.6054727, y: 0.7617148}
-    - {x: 0.7304648, y: 0.7617148}
+    - {x: 0.6679727, y: 0.45117384}
+    - {x: 0.6679727, y: 0.5136699}
+    - {x: 0.8085898, y: 0.45117384}
+    - {x: 0.8085898, y: 0.5136699}
     normalizedUvs:
     - {x: 0, y: 0}
-    - {x: 1, y: 0}
     - {x: 0, y: 1}
+    - {x: 1, y: 0}
     - {x: 1, y: 1}
     indices: 000000000300000001000000020000000300000000000000
     material: {fileID: 2100000, guid: bd223706e91b4464e97d72cae21f1bbf, type: 2}
@@ -2329,7 +2329,7 @@ MonoBehaviour:
     regionY: 0
     regionW: 0
     regionH: 0
-    flipped: 0
+    flipped: 1
     complexGeometry: 0
     physicsEngine: 0
     colliderType: 1
@@ -2383,10 +2383,154 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.6445352, y: 0.7851602}
-    - {x: 0.7695273, y: 0.7851602}
-    - {x: 0.6445352, y: 0.9257773}
-    - {x: 0.7695273, y: 0.9257773}
+    - {x: 0.8320352, y: 0.50000197}
+    - {x: 0.8320352, y: 0.56249803}
+    - {x: 0.9726523, y: 0.50000197}
+    - {x: 0.9726523, y: 0.56249803}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: bd223706e91b4464e97d72cae21f1bbf, type: 2}
+    materialId: 0
+    sourceTextureGUID: 71ec4dcb908518a4893b9a60f862e587
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: shamber_vomitbullets_002
+    boundsData:
+    - {x: 1, y: 1.15625, z: 0}
+    - {x: 2, y: 2.3125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1, y: 1.15625, z: 0}
+    - {x: 2, y: 2.3125, z: 0}
+    boundsDataCenter: {x: 1, y: 1.15625, z: 0}
+    boundsDataExtents: {x: 2, y: 2.3125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1, y: 1.15625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2, y: 2.3125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2, y: 0, z: 0}
+    - {x: 0, y: 2.3125, z: 0}
+    - {x: 2, y: 2.3125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2, y: 0, z: 0}
+    position2: {x: 0, y: 2.3125, z: 0}
+    position3: {x: 2, y: 2.3125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.6835977, y: 0.22851758}
+    - {x: 0.6835977, y: 0.29101366}
+    - {x: 0.82812107, y: 0.22851758}
+    - {x: 0.82812107, y: 0.29101366}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: bd223706e91b4464e97d72cae21f1bbf, type: 2}
+    materialId: 0
+    sourceTextureGUID: 38e86fa905201f148b089ec7579b8075
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: shamber_vomitbullets_003
+    boundsData:
+    - {x: 1, y: 1.15625, z: 0}
+    - {x: 2, y: 2.3125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1, y: 1.15625, z: 0}
+    - {x: 2, y: 2.3125, z: 0}
+    boundsDataCenter: {x: 1, y: 1.15625, z: 0}
+    boundsDataExtents: {x: 2, y: 2.3125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1, y: 1.15625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2, y: 2.3125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2, y: 0, z: 0}
+    - {x: 0, y: 2.3125, z: 0}
+    - {x: 2, y: 2.3125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2, y: 0, z: 0}
+    position2: {x: 0, y: 2.3125, z: 0}
+    position3: {x: 2, y: 2.3125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.85156643, y: 0.25781447}
+    - {x: 0.97655857, y: 0.25781447}
+    - {x: 0.85156643, y: 0.33007616}
+    - {x: 0.97655857, y: 0.33007616}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 1, y: 0}
@@ -2395,7 +2539,7 @@ MonoBehaviour:
     indices: 000000000300000001000000020000000300000000000000
     material: {fileID: 2100000, guid: bd223706e91b4464e97d72cae21f1bbf, type: 2}
     materialId: 0
-    sourceTextureGUID: 71ec4dcb908518a4893b9a60f862e587
+    sourceTextureGUID: 4f6352649f535f34a8b9278acf6f8eba
     extractRegion: 0
     regionX: 0
     regionY: 0
@@ -2431,15 +2575,809 @@ MonoBehaviour:
     polygonCollider2D: []
     edgeCollider2D: []
     attachPoints: []
+  - name: shamber_vomitbullets_005
+    boundsData:
+    - {x: 1, y: 1.15625, z: 0}
+    - {x: 2, y: 2.3125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1, y: 1.15625, z: 0}
+    - {x: 2, y: 2.3125, z: 0}
+    boundsDataCenter: {x: 1, y: 1.15625, z: 0}
+    boundsDataExtents: {x: 2, y: 2.3125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1, y: 1.15625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2, y: 2.3125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2, y: 0, z: 0}
+    - {x: 0, y: 2.3125, z: 0}
+    - {x: 2, y: 2.3125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2, y: 0, z: 0}
+    position2: {x: 0, y: 2.3125, z: 0}
+    position3: {x: 2, y: 2.3125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.011722656, y: 0.30273634}
+    - {x: 0.011722656, y: 0.3652324}
+    - {x: 0.1562461, y: 0.30273634}
+    - {x: 0.1562461, y: 0.3652324}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: bd223706e91b4464e97d72cae21f1bbf, type: 2}
+    materialId: 0
+    sourceTextureGUID: 0822b22e62519204f8b8d1ee5c238a32
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: shamber_vomitbullets_006
+    boundsData:
+    - {x: 1, y: 1.15625, z: 0}
+    - {x: 2, y: 2.3125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1, y: 1.15625, z: 0}
+    - {x: 2, y: 2.3125, z: 0}
+    boundsDataCenter: {x: 1, y: 1.15625, z: 0}
+    boundsDataExtents: {x: 2, y: 2.3125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1, y: 1.15625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2, y: 2.3125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2, y: 0, z: 0}
+    - {x: 0, y: 2.3125, z: 0}
+    - {x: 2, y: 2.3125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2, y: 0, z: 0}
+    position2: {x: 0, y: 2.3125, z: 0}
+    position3: {x: 2, y: 2.3125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.1796914, y: 0.30273634}
+    - {x: 0.1796914, y: 0.3652324}
+    - {x: 0.32421485, y: 0.30273634}
+    - {x: 0.32421485, y: 0.3652324}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: bd223706e91b4464e97d72cae21f1bbf, type: 2}
+    materialId: 0
+    sourceTextureGUID: 80d6b3b33485f4f418c0691899ac2f5e
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: shamber_vomitbullets_007
+    boundsData:
+    - {x: 1, y: 1.15625, z: 0}
+    - {x: 2, y: 2.3125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1, y: 1.15625, z: 0}
+    - {x: 2, y: 2.3125, z: 0}
+    boundsDataCenter: {x: 1, y: 1.15625, z: 0}
+    boundsDataExtents: {x: 2, y: 2.3125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1, y: 1.15625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2, y: 2.3125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2, y: 0, z: 0}
+    - {x: 0, y: 2.3125, z: 0}
+    - {x: 2, y: 2.3125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2, y: 0, z: 0}
+    position2: {x: 0, y: 2.3125, z: 0}
+    position3: {x: 2, y: 2.3125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.34766015, y: 0.30273634}
+    - {x: 0.34766015, y: 0.3652324}
+    - {x: 0.4921836, y: 0.30273634}
+    - {x: 0.4921836, y: 0.3652324}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: bd223706e91b4464e97d72cae21f1bbf, type: 2}
+    materialId: 0
+    sourceTextureGUID: 72ccadc911d7a8d4998375fec93a5a23
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: shamber_vomitbullets_008
+    boundsData:
+    - {x: 1, y: 1.15625, z: 0}
+    - {x: 2, y: 2.3125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1, y: 1.15625, z: 0}
+    - {x: 2, y: 2.3125, z: 0}
+    boundsDataCenter: {x: 1, y: 1.15625, z: 0}
+    boundsDataExtents: {x: 2, y: 2.3125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1, y: 1.15625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2, y: 2.3125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2, y: 0, z: 0}
+    - {x: 0, y: 2.3125, z: 0}
+    - {x: 2, y: 2.3125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2, y: 0, z: 0}
+    position2: {x: 0, y: 2.3125, z: 0}
+    position3: {x: 2, y: 2.3125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.51562893, y: 0.30273634}
+    - {x: 0.51562893, y: 0.3652324}
+    - {x: 0.6601523, y: 0.30273634}
+    - {x: 0.6601523, y: 0.3652324}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: bd223706e91b4464e97d72cae21f1bbf, type: 2}
+    materialId: 0
+    sourceTextureGUID: 6e1dcefc5559f2d4bb1b511baa7abc17
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: shamber_vomitbullets_009
+    boundsData:
+    - {x: 1, y: 1.15625, z: 0}
+    - {x: 2, y: 2.3125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1, y: 1.15625, z: 0}
+    - {x: 2, y: 2.3125, z: 0}
+    boundsDataCenter: {x: 1, y: 1.15625, z: 0}
+    boundsDataExtents: {x: 2, y: 2.3125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1, y: 1.15625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2, y: 2.3125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2, y: 0, z: 0}
+    - {x: 0, y: 2.3125, z: 0}
+    - {x: 2, y: 2.3125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2, y: 0, z: 0}
+    position2: {x: 0, y: 2.3125, z: 0}
+    position3: {x: 2, y: 2.3125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.6835977, y: 0.30273634}
+    - {x: 0.6835977, y: 0.3652324}
+    - {x: 0.82812107, y: 0.30273634}
+    - {x: 0.82812107, y: 0.3652324}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: bd223706e91b4464e97d72cae21f1bbf, type: 2}
+    materialId: 0
+    sourceTextureGUID: 6b750b27b4f1e8f4d81114ecac70956e
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: shamber_vomitbullets_010
+    boundsData:
+    - {x: 1, y: 1.15625, z: 0}
+    - {x: 2, y: 2.3125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1, y: 1.15625, z: 0}
+    - {x: 2, y: 2.3125, z: 0}
+    boundsDataCenter: {x: 1, y: 1.15625, z: 0}
+    boundsDataExtents: {x: 2, y: 2.3125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1, y: 1.15625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2, y: 2.3125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2, y: 0, z: 0}
+    - {x: 0, y: 2.3125, z: 0}
+    - {x: 2, y: 2.3125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2, y: 0, z: 0}
+    position2: {x: 0, y: 2.3125, z: 0}
+    position3: {x: 2, y: 2.3125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.85156643, y: 0.34179884}
+    - {x: 0.97655857, y: 0.34179884}
+    - {x: 0.85156643, y: 0.41406053}
+    - {x: 0.97655857, y: 0.41406053}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: bd223706e91b4464e97d72cae21f1bbf, type: 2}
+    materialId: 0
+    sourceTextureGUID: 84d9f7b811182d140b216f05ee7ac0f8
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: shamber_vomitbullets_011
+    boundsData:
+    - {x: 1, y: 1.15625, z: 0}
+    - {x: 2, y: 2.3125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1, y: 1.15625, z: 0}
+    - {x: 2, y: 2.3125, z: 0}
+    boundsDataCenter: {x: 1, y: 1.15625, z: 0}
+    boundsDataExtents: {x: 2, y: 2.3125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1, y: 1.15625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2, y: 2.3125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2, y: 0, z: 0}
+    - {x: 0, y: 2.3125, z: 0}
+    - {x: 2, y: 2.3125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2, y: 0, z: 0}
+    position2: {x: 0, y: 2.3125, z: 0}
+    position3: {x: 2, y: 2.3125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.011722656, y: 0.3769551}
+    - {x: 0.011722656, y: 0.43945116}
+    - {x: 0.1562461, y: 0.3769551}
+    - {x: 0.1562461, y: 0.43945116}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: bd223706e91b4464e97d72cae21f1bbf, type: 2}
+    materialId: 0
+    sourceTextureGUID: 24019072dd4d7dd4d82e112c9a493f01
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: shamber_vomitbullets_012
+    boundsData:
+    - {x: 1, y: 1.15625, z: 0}
+    - {x: 2, y: 2.3125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1, y: 1.15625, z: 0}
+    - {x: 2, y: 2.3125, z: 0}
+    boundsDataCenter: {x: 1, y: 1.15625, z: 0}
+    boundsDataExtents: {x: 2, y: 2.3125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1, y: 1.15625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2, y: 2.3125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2, y: 0, z: 0}
+    - {x: 0, y: 2.3125, z: 0}
+    - {x: 2, y: 2.3125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2, y: 0, z: 0}
+    position2: {x: 0, y: 2.3125, z: 0}
+    position3: {x: 2, y: 2.3125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.1796914, y: 0.3769551}
+    - {x: 0.1796914, y: 0.43945116}
+    - {x: 0.32421485, y: 0.3769551}
+    - {x: 0.32421485, y: 0.43945116}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: bd223706e91b4464e97d72cae21f1bbf, type: 2}
+    materialId: 0
+    sourceTextureGUID: b1950d148b7018246ac9d36cad4fcffc
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: shamber_vomitbullets_001
+    boundsData:
+    - {x: 1, y: 1.15625, z: 0}
+    - {x: 2, y: 2.3125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1, y: 1.15625, z: 0}
+    - {x: 2, y: 2.3125, z: 0}
+    boundsDataCenter: {x: 1, y: 1.15625, z: 0}
+    boundsDataExtents: {x: 2, y: 2.3125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1, y: 1.15625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2, y: 2.3125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2, y: 0, z: 0}
+    - {x: 0, y: 2.3125, z: 0}
+    - {x: 2, y: 2.3125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2, y: 0, z: 0}
+    position2: {x: 0, y: 2.3125, z: 0}
+    position3: {x: 2, y: 2.3125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.011722656, y: 0.005861328}
+    - {x: 0.011722656, y: 0.06835742}
+    - {x: 0.1562461, y: 0.005861328}
+    - {x: 0.1562461, y: 0.06835742}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: bd223706e91b4464e97d72cae21f1bbf, type: 2}
+    materialId: 0
+    sourceTextureGUID: 76a02f112fb288c4693db016fe36dea4
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: shamber_vomitbullets_013
+    boundsData:
+    - {x: 1, y: 1.15625, z: 0}
+    - {x: 2, y: 2.3125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1, y: 1.15625, z: 0}
+    - {x: 2, y: 2.3125, z: 0}
+    boundsDataCenter: {x: 1, y: 1.15625, z: 0}
+    boundsDataExtents: {x: 2, y: 2.3125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1, y: 1.15625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2, y: 2.3125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2, y: 0, z: 0}
+    - {x: 0, y: 2.3125, z: 0}
+    - {x: 2, y: 2.3125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2, y: 0, z: 0}
+    position2: {x: 0, y: 2.3125, z: 0}
+    position3: {x: 2, y: 2.3125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.34766015, y: 0.3769551}
+    - {x: 0.34766015, y: 0.43945116}
+    - {x: 0.4921836, y: 0.3769551}
+    - {x: 0.4921836, y: 0.43945116}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: bd223706e91b4464e97d72cae21f1bbf, type: 2}
+    materialId: 0
+    sourceTextureGUID: e336d73985df90249a76aa809ba1bb19
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: shamber_vomitbullets_004
+    boundsData:
+    - {x: 1, y: 1.15625, z: 0}
+    - {x: 2, y: 2.3125, z: 0}
+    untrimmedBoundsData:
+    - {x: 1, y: 1.15625, z: 0}
+    - {x: 2, y: 2.3125, z: 0}
+    boundsDataCenter: {x: 1, y: 1.15625, z: 0}
+    boundsDataExtents: {x: 2, y: 2.3125, z: 0}
+    untrimmedBoundsDataCenter: {x: 1, y: 1.15625, z: 0}
+    untrimmedBoundsDataExtents: {x: 2, y: 2.3125, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 2, y: 0, z: 0}
+    - {x: 0, y: 2.3125, z: 0}
+    - {x: 2, y: 2.3125, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 2, y: 0, z: 0}
+    position2: {x: 0, y: 2.3125, z: 0}
+    position3: {x: 2, y: 2.3125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.51562893, y: 0.3769551}
+    - {x: 0.51562893, y: 0.43945116}
+    - {x: 0.6601523, y: 0.3769551}
+    - {x: 0.6601523, y: 0.43945116}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: bd223706e91b4464e97d72cae21f1bbf, type: 2}
+    materialId: 0
+    sourceTextureGUID: c2197a2836772fc48991b02715a3e61a
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  SpriteIDsWithAttachPoints: 
+  SpriteDefinedAttachPoints: []
   premultipliedAlpha: 0
-  material: {fileID: 0}
+  material: {fileID: 2100000, guid: bd223706e91b4464e97d72cae21f1bbf, type: 2}
   materials:
   - {fileID: 2100000, guid: bd223706e91b4464e97d72cae21f1bbf, type: 2}
   textures:
   - {fileID: 2800000, guid: 9005b864f2e2cc14898381a28378cf7b, type: 3}
   pngTextures: []
   materialPngTextureId: 00000000
-  textureFilterMode: 1
+  textureFilterMode: 0
   textureMipMaps: 0
   allowMultipleAtlases: 0
   spriteCollectionGUID: d184ec561e3a9ad479786d74c99daab1
@@ -2448,7 +3386,7 @@ MonoBehaviour:
   loadable: 0
   invOrthoSize: 2
   halfTargetHeight: 8
-  buildKey: 929576494
+  buildKey: 362640956
   dataGuid: 8e96eabfaf19f764fbb870239ed62601
   managedSpriteCollection: 0
   hasPlatformData: 0

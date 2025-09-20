@@ -24,6 +24,7 @@ using static ETGMod;
 using PathologicalGames;
 using static Planetside.BoxOfGrenadesController;
 using AK.Wwise;
+using static Planetside.RiftakerProjectile;
 
 namespace Planetside
 {
@@ -528,14 +529,14 @@ namespace Planetside
                         if (UnityEngine.Random.value <= specialChance && BossCheck == false)
                         {
                             var SpecialElite = specialEliteTypes[UnityEngine.Random.Range(0, specialEliteTypes.Count)];
-							if (self.aiActor.gameObject.GetComponent(SpecialElite) == null)
-							{
+                            if (self.aiActor.gameObject.GetComponent(SpecialElite) == null)
+                            {
                                 self.aiActor.gameObject.AddComponent(SpecialElite);
                             }
                         }
                         else
                         {
-							var elite = basicEliteTypes[UnityEngine.Random.Range(0, basicEliteTypes.Count)];
+                            var elite = basicEliteTypes[UnityEngine.Random.Range(0, basicEliteTypes.Count)];
                             if (self.aiActor.gameObject.GetComponent(elite) == null)
                             {
                                 self.aiActor.gameObject.AddComponent(elite);
@@ -546,38 +547,39 @@ namespace Planetside
 
                 if (self != null && self.aiActor != null && EnemyIsValid(self.aiActor) == true)
                 {
-					if (self.aiActor.bulletBank == null)
-					{
-						AIBulletBank bulletBank = self.aiActor.gameObject.AddComponent<AIBulletBank>();
-                        
+                    if (self.aiActor.bulletBank == null)
+                    {
+                        AIBulletBank bulletBank = self.aiActor.gameObject.AddComponent<AIBulletBank>();
+
                         bulletBank.Bullets = new List<AIBulletBank.Entry>();
 
-						foreach (AIBulletBank.Entry entry in BulletList)
-						{
-							bulletBank.Bullets.Add(entry);
-						}
+                        foreach (AIBulletBank.Entry entry in BulletList)
+                        {
+                            bulletBank.Bullets.Add(entry);
+                        }
                         bulletBank.FixedPlayerRigidbody = self.aiActor.specRigidbody;
-						bulletBank.ActorName = self.aiActor.name != null ? self.aiActor.name : "Toddy";
+                        bulletBank.ActorName = self.aiActor.name != null ? self.aiActor.name : "Toddy";
 
                     }
-					else
+                    else
                     {
-						foreach (AIBulletBank.Entry entry in BulletList)
-						{
-							self.aiActor.bulletBank.Bullets.Add(entry);
-						}
-					}
+                        foreach (AIBulletBank.Entry entry in BulletList)
+                        {
+                            self.aiActor.bulletBank.Bullets.Add(entry);
+                        }
+                    }
 
                     //if (self.aiActor.CenterPosition == null) { ETGModConsole.Log("self.aiActor.CenterPosition is NULL"); }
 
                     EnemyToolbox.GenerateShootPoint(self.aiActor.gameObject, self.aiActor.CenterPosition, "SkullAttackPointOuroboros");
-					if (self.OtherBehaviors == null)
+                    if (self.OtherBehaviors == null)
                     {
-						//self.OtherBehaviors = new List<BehaviorBase>();
+                        //self.OtherBehaviors = new List<BehaviorBase>();
                     }
-				}
-				
-			}
+                }
+
+
+            }
 		}
 
 		private static bool EnemyISFUCKINGKILLPILLARFUCKYOUFUCKYOU(AIActor aI)
@@ -589,14 +591,21 @@ namespace Planetside
 
 		public static bool EnemyIsValid(AIActor aI)
 		{
-            if (aI.gameObject.GetComponent<ChaoticShiftedElite>() != null) { return false; }
-            if (aI.gameObject.GetComponent<FrenzyElite>() != null) { return false; }
+			if (EnemiesThatLiterallyShouldNeverGetModifiedInAnyWay.Contains(aI.EnemyGuid)) { return false; }
+
+
+            var Components = aI.gameObject.GetComponents(typeof(UnityEngine.Component)).ToList();
+            foreach (var entry in Components)
+            {
+                if (entry is ChaoticShiftedElite) { return false; }
+                if (entry is FrenzyElite) { return false; }
+                if (entry is MirrorImageController) { return false; }
+                if (entry is DisplacedImageController) { return false; }
+                if (entry is CompanionController) { return false; }
+            }
+
             if (aI.IgnoreForRoomClear == true) { return false; }
-            if (aI.IgnoreForRoomClear == true) { return false; }
-			if (aI.gameObject.GetComponent<MirrorImageController>() != null) { return false; }
-			if (aI.gameObject.GetComponent<DisplacedImageController>() != null) { return false; ; }
 			if (aI.CompanionOwner != null) { return false;}
-			if (aI.gameObject.GetComponent<CompanionController>() != null) { return false; }
 			if (StaticInformation.ModderBulletGUIDs.Contains(aI.EnemyGuid)) { return false; }
 			if (aI.EnemyGuid == "3f11bbbc439c4086a180eb0fb9990cb4") { return false; }
 			if (aI.gameObject.GetComponent<BossStatueController>() != null || aI.gameObject.GetComponentInChildren<BossStatueController>() != null) { return false; }
@@ -718,7 +727,12 @@ namespace Planetside
 			EnemyGuidDatabase.Entries["rat"],
 			EnemyGuidDatabase.Entries["rat_candle"],
 			EnemyGuidDatabase.Entries["dragun_egg_slimeguy"],
-		};
+			Alexandria.EnemyGUIDs.Portable_Turret_GUID,
+            Alexandria.EnemyGUIDs.Turkey_GUID,
+            Alexandria.EnemyGUIDs.Turtle_GUID,
+            Alexandria.EnemyGUIDs.Super_Space_Turtle_GUID,
+            Alexandria.EnemyGUIDs.Synergy_Super_Space_Turtle_GUID,
+        };
 
 
 		private static List<string> EnemiesThatLiterallyShouldNeverGetModifiedInAnyWay = new List<string>()
@@ -738,7 +752,12 @@ namespace Planetside
 
 			EnemyGuidDatabase.Entries["ammoconda_ball"],
 			EnemyGuidDatabase.Entries["mine_flayers_claymore"],
-		};
+            Alexandria.EnemyGUIDs.Portable_Turret_GUID,
+            Alexandria.EnemyGUIDs.Turkey_GUID,
+            Alexandria.EnemyGUIDs.Turtle_GUID,
+            Alexandria.EnemyGUIDs.Super_Space_Turtle_GUID,
+            Alexandria.EnemyGUIDs.Synergy_Super_Space_Turtle_GUID,
+        };
 
 
 		/*

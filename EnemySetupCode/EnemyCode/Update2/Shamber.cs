@@ -19,19 +19,10 @@ namespace Planetside
 	{
 		public static GameObject prefab;
 		public static readonly string guid = "shamber_psog";
-		public static GameObject shootpoint;
-		//private static tk2dSpriteCollectionData ShamberCollection;
 
-		public static Texture2D ShamberParticleTexture;
 
 
 		public static void Init()
-		{
-			Shamber.BuildPrefab();
-			ShamberParticleTexture = ResourceExtractor.GetTextureFromResource("Planetside/Resources2/ParticleTextures/shamberparticles.png");
-
-		}
-		public static void BuildPrefab()
 		{
             tk2dSpriteCollectionData Collection = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("ShamberCollection").GetComponent<tk2dSpriteCollectionData>();
             Material mat = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Material>("shamber material");
@@ -43,16 +34,32 @@ namespace Planetside
 				prefab = EnemyBuilder.BuildPrefabBundle("Shamber", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(0, 0), false, true);
 				var enemy = prefab.AddComponent<EnemyBehavior>();
 
-                EnemyToolbox.QuickAssetBundleSpriteSetup(enemy.aiActor, Collection, mat);
 
 
-                prefab.AddComponent<ShamberController>();
-				prefab.AddComponent<KillOnRoomClear>();
-				enemy.aiActor.IgnoreForRoomClear = true;
+
+                enemy.sprite.usesOverrideMaterial = true;
+                mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+                mat.mainTexture = enemy.aiActor.sprite.renderer.material.mainTexture;
+                mat.SetColor("_EmissiveColor", new Color32(255, 255, 255, 255));
+                mat.SetFloat("_EmissivePower", 40);
+                mat.SetFloat("_EmissiveThresholdSensitivity", 1f);
+                mat.SetFloat("_EmissiveColorPower", 2f);
+                enemy.sprite.renderer.material = mat;
+
+                var shamebr = prefab.AddComponent<ShamberController>();
+                //prefab.AddComponent<KillOnRoomClear>();
+
+
+                var partObj = UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("ShamberParticles"));//this is the name of the object which by default will be "Particle System"
+                partObj.transform.parent = enemy.transform;
+                partObj.transform.position = enemy.aiActor.sprite.WorldCenter + new Vector2(0, -0.25f);
+				shamebr.particle = partObj.GetComponent<ParticleSystem>();
+
+                enemy.aiActor.IgnoreForRoomClear = true;
 				enemy.aiActor.knockbackDoer.weight = 35;
 				enemy.aiActor.MovementSpeed = 0.9f;
 				enemy.aiActor.healthHaver.PreventAllDamage = false;
-				enemy.aiActor.CollisionDamage = 1f;
+				enemy.aiActor.CollisionDamage = 0f;
 				enemy.aiActor.aiAnimator.HitReactChance = 0f;
 				enemy.aiActor.specRigidbody.CollideWithOthers = true;
 				enemy.aiActor.specRigidbody.CollideWithTileMap = true;
@@ -68,260 +75,73 @@ namespace Planetside
 				enemy.aiActor.HasShadow = true;
 
 				AIAnimator aiAnimator = enemy.aiAnimator;
-				aiAnimator.OtherAnimations = new List<AIAnimator.NamedDirectionalAnimation>
-				{
-					new AIAnimator.NamedDirectionalAnimation
-					{
-					name = "die",
-					anim = new DirectionalAnimation
-						{
-							Type = DirectionalAnimation.DirectionType.TwoWayHorizontal,
-							Flipped = new DirectionalAnimation.FlipType[2],
-							AnimNames = new string[]
-							{
-
-						   "die_left",
-						   "die_right"
-
-							}
-
-						}
-					}
-				};
-				aiAnimator.IdleAnimation = new DirectionalAnimation
-				{
-					Type = DirectionalAnimation.DirectionType.TwoWayHorizontal,
-					Flipped = new DirectionalAnimation.FlipType[2],
-					AnimNames = new string[]
-					{
-						"idle_left",
-						"idle_right"
-					}
-				};
-				aiAnimator.MoveAnimation = new DirectionalAnimation
-				{
-					Type = DirectionalAnimation.DirectionType.TwoWayHorizontal,
-					Flipped = new DirectionalAnimation.FlipType[2],
-					AnimNames = new string[]
-						{
-						"run_left",
-						"run_right"
-						}
-				};
-				aiAnimator.OtherAnimations = new List<AIAnimator.NamedDirectionalAnimation>
-				{
-					new AIAnimator.NamedDirectionalAnimation
-					{
-					name = "attack",
-					anim = new DirectionalAnimation
-						{
-							Type = DirectionalAnimation.DirectionType.TwoWayHorizontal,
-							Flipped = new DirectionalAnimation.FlipType[2],
-							AnimNames = new string[]
-							{
-					   "attack_right",
-					   "attack_left",
-
-							}
-
-						}
-					}
-				};
-				DirectionalAnimation done = new DirectionalAnimation
-				{
-					Type = DirectionalAnimation.DirectionType.Single,
-					Prefix = "warpout",
-					AnimNames = new string[1],
-					Flipped = new DirectionalAnimation.FlipType[1]
-				};
-				aiAnimator.OtherAnimations = new List<AIAnimator.NamedDirectionalAnimation>
-				{
-					new AIAnimator.NamedDirectionalAnimation
-					{
-						name = "warpout",
-						anim = done
-					}
-				};
-				DirectionalAnimation aa = new DirectionalAnimation
-				{
-					Type = DirectionalAnimation.DirectionType.Single,
-					Prefix = "waprin",
-					AnimNames = new string[1],
-					Flipped = new DirectionalAnimation.FlipType[1]
-				};
-				aiAnimator.OtherAnimations = new List<AIAnimator.NamedDirectionalAnimation>
-				{
-					new AIAnimator.NamedDirectionalAnimation
-					{
-						name = "waprin",
-						anim = aa
-					}
-				};
-				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awaken" }, new DirectionalAnimation.FlipType[0]);
-				enemy.aiActor.AwakenAnimType = AwakenAnimationType.Awaken;
-				//bool flag3 = ShamberCollection == null;
-				//if (flag3)
-				{
-					/*
-					ShamberCollection = SpriteBuilder.ConstructCollection(prefab, "ArchGunjurer_Collection");
-					UnityEngine.Object.DontDestroyOnLoad(ShamberCollection);
-					for (int i = 0; i < spritePaths.Length; i++)
-					{
-						SpriteBuilder.AddSpriteToCollection(spritePaths[i], ShamberCollection);
-					}
-					*/
-					SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-					{
-
-					0,
-					1,
-					2,
-					3,
-					4,
-					5,
-					6,
-					7,
-					8,
-					9,
-					10
-
-					}, "idle_left", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 9f;
-					SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-					{
-
-					0,
-					1,
-					2,
-					3,
-					4,
-					5,
-					6,
-					7,
-					8,
-					9,
-					10
 
 
-					}, "idle_right", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 9f;
-					SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-					{
+                var h = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("ShamberAnimation").GetComponent<tk2dSpriteAnimation>();
+                enemy.aiActor.spriteAnimator.Library = h;
+                enemy.aiActor.spriteAnimator.library = h;
+                enemy.aiActor.aiAnimator.spriteAnimator = enemy.aiActor.spriteAnimator;
+                aiAnimator.IdleAnimation = Alexandria.EnemyAPI.EnemyBuildingTools.AddNewDirectionAnimation(aiAnimator, "idle", new string[] { "idle" }, new DirectionalAnimation.FlipType[1]);
 
-					0,
-					1,
-					2,
-					3,
-					4,
-					5,
-					6,
-					7,
-					8,
-					9,
-					10
+                Alexandria.EnemyAPI.EnemyBuildingTools.AddNewDirectionAnimation(
+                    aiAnimator, "death",
+                    new string[] { "death" },
+                    new DirectionalAnimation.FlipType[1]);
 
-
-					}, "run_left", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 9f;
-					SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-					{
-
-					0,
-					1,
-					2,
-					3,
-					4,
-					5,
-					6,
-					7,
-					8,
-					9,
-					10
-
-
-					}, "run_right", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 9f;
-					SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-					{
-
-				 20,
-				 21,
-				 22,
-				 23,
-				 24,
-
-					}, "waprin", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-					SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-					{
-
-				 11,
-				 12,
-				 13,
-				 14,
-				 13,
-				 14,
-				 13,
-				 14,
-				 13,
-				 14,
-				 15,
-				 16,
-				 17,
-				 18,
-				 19
-
-					}, "warpout", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
-					SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-					{
-
-				 25,
-				 26,
-				 27,
-				 28,
-				 29,
-				 30,
-				 31,
-				 32
+                Alexandria.EnemyAPI.EnemyBuildingTools.AddNewDirectionAnimation(
+                    aiAnimator, "awaken",
+                    new string[] { "awaken" },
+                    new DirectionalAnimation.FlipType[1]);
 
 
 
+                Alexandria.EnemyAPI.EnemyBuildingTools.AddNewDirectionAnimation(
+                    aiAnimator, "fadein",
+                    new string[] { "fadein" },
+                    new DirectionalAnimation.FlipType[1]);
 
-					}, "die_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
-					SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-					{
 
-				 25,
-				 26,
-				 27,
-				 28,
-				 29,
-				 30,
-				 31,
-				 32
+                Alexandria.EnemyAPI.EnemyBuildingTools.AddNewDirectionAnimation(
+                    aiAnimator, "fadeout",
+                    new string[] { "fadeout" },
+                    new DirectionalAnimation.FlipType[1]);
 
-					}, "die_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
-					SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-					{
 
-				 20,
-				 21,
-				 22,
-				 23,
-				 24,
+                Alexandria.EnemyAPI.EnemyBuildingTools.AddNewDirectionAnimation(
+                    aiAnimator, "vomit",
+                    new string[] { "vomit" },
+                    new DirectionalAnimation.FlipType[1]);
 
-					}, "awaken", tk2dSpriteAnimationClip.WrapMode.Once).fps = 11f;
-				}
 
-				var intro = prefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("waprin");
+                Alexandria.EnemyAPI.EnemyBuildingTools.AddNewDirectionAnimation(
+                    aiAnimator, "expel",
+                    new string[] { "expel" },
+                    new DirectionalAnimation.FlipType[1]);
+
+
+                Alexandria.EnemyAPI.EnemyBuildingTools.AddNewDirectionAnimation(
+                    aiAnimator, "fast",
+                    new string[] { "fast" },
+                    new DirectionalAnimation.FlipType[1]);
+
+
+                enemy.aiActor.AwakenAnimType = AwakenAnimationType.Spawn;
+
+
+
+				var intro = enemy.spriteAnimator.GetClipByName("fadein");
 				intro.frames[1].eventInfo = "turnontrail";
 				intro.frames[1].triggerEvent = true;
 
-				var clip1 = prefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("warpout");
+				var clip1 = enemy.spriteAnimator.GetClipByName("fadeout");
 				clip1.frames[8].eventInfo = "turnofftrail";
 				clip1.frames[8].triggerEvent = true;
 
-				prefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("warpout").frames[3].eventAudio = "Play_VO_gorgun_laugh_01";
-				prefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("warpout").frames[3].triggerEvent = true;
-				prefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("die_right").frames[1].eventAudio = "Play_BOSS_doormimic_vanish_01";
-				prefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("die_right").frames[1].triggerEvent = true;
-				prefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("die_left").frames[1].eventAudio = "Play_BOSS_doormimic_vanish_01";
-				prefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("die_left").frames[1].triggerEvent = true;
+                enemy.spriteAnimator.GetClipByName("fadeout").frames[3].eventAudio = "Play_VO_gorgun_laugh_01";
+                enemy.spriteAnimator.GetClipByName("fadeout").frames[3].triggerEvent = true;
+                enemy.spriteAnimator.GetClipByName("death").frames[1].eventAudio = "Play_BOSS_doormimic_vanish_01";
+                enemy.spriteAnimator.GetClipByName("death").frames[1].triggerEvent = true;
+
 
 				enemy.aiActor.specRigidbody.PixelColliders.Clear();
 				enemy.aiActor.specRigidbody.PixelColliders.Add(new PixelCollider
@@ -342,7 +162,6 @@ namespace Planetside
 					ManualRightX = 0,
 					ManualRightY = 0
 				});
-
 				enemy.aiActor.specRigidbody.PixelColliders.Add(new PixelCollider
 				{
 
@@ -365,10 +184,9 @@ namespace Planetside
 
 				enemy.aiActor.PreventBlackPhantom = false;
 
-				shootpoint = new GameObject("fuck");
+				var shootpoint = new GameObject("fuck");
 				shootpoint.transform.parent = enemy.transform;
 				shootpoint.transform.position = new Vector3(0,0);
-				GameObject shootpoint1 = enemy.transform.Find("fuck").gameObject;
 
 				var bs = prefab.GetComponent<BehaviorSpeculator>();
 				BehaviorSpeculator behaviorSpeculator = EnemyDatabase.GetOrLoadByGuid("01972dee89fc4404a5c408d50007dad5").behaviorSpeculator;
@@ -386,7 +204,6 @@ namespace Planetside
 						PauseOnTargetSwitch = false,
 						PauseTime = 0.25f
 					},
-
 				};
 
 				bs.AttackBehaviors = new List<AttackBehaviorBase>() {
@@ -405,8 +222,8 @@ namespace Planetside
 					OnlyTeleportIfPlayerUnreachable = false,
 					MinDistanceFromPlayer = 4.25f,
 					MaxDistanceFromPlayer = -1f,
-					teleportInAnim = "waprin",
-					teleportOutAnim = "warpout",
+					teleportInAnim = "fadein",
+					teleportOutAnim = "fadeout",
 					AttackCooldown = 0f,
 					InitialCooldown = 4f,
 					RequiresLineOfSight = false,
@@ -458,7 +275,7 @@ namespace Planetside
                 enemy.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("1bc2a07ef87741be90c37096910843ab").bulletBank.GetBullet("reversible"));
 
 
-                SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Ammocom/shamberammonomiconICON", SpriteBuilder.ammonomiconCollection);
+                SpriteBuilder.AddSpriteToCollection(Collection.GetSpriteDefinition("shamber_idle_001"), SpriteBuilder.ammonomiconCollection);
 				if (enemy.GetComponent<EncounterTrackable>() != null)
 				{
 					UnityEngine.Object.Destroy(enemy.GetComponent<EncounterTrackable>());
@@ -471,7 +288,7 @@ namespace Planetside
 				enemy.encounterTrackable.journalData.IsEnemy = true;
 				enemy.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				enemy.encounterTrackable.ProxyEncounterGuid = "";
-				enemy.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Ammocom/shamberammonomiconICON";
+				enemy.encounterTrackable.journalData.AmmonomiconSprite = "shamber_idle_001";
 				enemy.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("shamberammonomicoenrtytab");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\shamberammonomicoenrtytab.png");
                 PlanetsideModule.Strings.Enemies.Set("#SHAMBER", "Shamber");
 				PlanetsideModule.Strings.Enemies.Set("#SHAMBER_SHORT", "Tee Hee Hee!");
@@ -487,47 +304,7 @@ namespace Planetside
 
 		}
 
-		private static string[] spritePaths = new string[]
-        {
-			//Idle
-			"Planetside/Resources/Enemies/Shamber/shamber_idle_001.png",
-			"Planetside/Resources/Enemies/Shamber/shamber_idle_002.png",
-			"Planetside/Resources/Enemies/Shamber/shamber_idle_003.png",
-			"Planetside/Resources/Enemies/Shamber/shamber_idle_004.png",
-			"Planetside/Resources/Enemies/Shamber/shamber_idle_005.png",
-			"Planetside/Resources/Enemies/Shamber/shamber_idle_006.png",
-			"Planetside/Resources/Enemies/Shamber/shamber_idle_007.png",
-			"Planetside/Resources/Enemies/Shamber/shamber_idle_008.png",
-			"Planetside/Resources/Enemies/Shamber/shamber_idle_009.png",
-			"Planetside/Resources/Enemies/Shamber/shamber_idle_010.png",
-			"Planetside/Resources/Enemies/Shamber/shamber_idle_011.png",
-			//Fade Out
-			"Planetside/Resources/Enemies/Shamber/shamber_fadeout_001.png",
-			"Planetside/Resources/Enemies/Shamber/shamber_fadeout_002.png",
-			"Planetside/Resources/Enemies/Shamber/shamber_fadeout_003.png",
-			"Planetside/Resources/Enemies/Shamber/shamber_fadeout_004.png",
-			"Planetside/Resources/Enemies/Shamber/shamber_fadeout_005.png",
-			"Planetside/Resources/Enemies/Shamber/shamber_fadeout_006.png",
-			"Planetside/Resources/Enemies/Shamber/shamber_fadeout_007.png",
-			"Planetside/Resources/Enemies/Shamber/shamber_fadeout_008.png",
-			"Planetside/Resources/Enemies/Shamber/shamber_fadeout_009.png",
 
-			"Planetside/Resources/Enemies/Shamber/shamber_fadein_001.png",
-			"Planetside/Resources/Enemies/Shamber/shamber_fadein_002.png",
-			"Planetside/Resources/Enemies/Shamber/shamber_fadein_003.png",
-			"Planetside/Resources/Enemies/Shamber/shamber_fadein_004.png",
-			"Planetside/Resources/Enemies/Shamber/shamber_fadein_005.png",
-
-			"Planetside/Resources/Enemies/Shamber/shamber_death_001.png",
-			"Planetside/Resources/Enemies/Shamber/shamber_death_002.png",
-			"Planetside/Resources/Enemies/Shamber/shamber_death_003.png",
-			"Planetside/Resources/Enemies/Shamber/shamber_death_004.png",
-			"Planetside/Resources/Enemies/Shamber/shamber_death_005.png",
-			"Planetside/Resources/Enemies/Shamber/shamber_death_006.png",
-			"Planetside/Resources/Enemies/Shamber/shamber_death_007.png",
-			"Planetside/Resources/Enemies/Shamber/shamber_death_008.png",
-
-		};
 
 		public class EnemyBehavior : BraveBehaviour
 		{

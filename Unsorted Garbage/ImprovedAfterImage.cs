@@ -56,6 +56,7 @@ namespace Planetside
 
         public void LateUpdate()
         {
+            if (this.gameObject == null) {  return; }
             if (this.spawnShadows && !this.m_previousFrameSpawnShadows)
             {
                 this.m_spawnTimer = this.shadowTimeDelay;
@@ -138,6 +139,11 @@ namespace Planetside
 
         private void SpawnNewShadow()
         {
+
+            if (this.sprite == null)
+            {
+                return;
+            }
             if (this.m_inactiveShadows == null)
             {
                 return;
@@ -147,6 +153,9 @@ namespace Planetside
             {
                 this.CreateInactiveShadow();
             }
+
+
+
 
             LinkedListNode<ImprovedAfterImage.Shadow> first = this.m_inactiveShadows.First;
             tk2dSprite sprite = first.Value.sprite;

@@ -76,7 +76,7 @@ MonoBehaviour:
   atlasWidth: 256
   atlasHeight: 256
   forceSquareAtlas: 0
-  atlasWastage: 29.414368
+  atlasWastage: 22.557068
   allowMultipleAtlases: 0
   removeDuplicates: 1
   textureParams:
@@ -2846,7 +2846,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: 120f42a979bbc2f47b73c1ce11d4ebbe, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -2906,7 +2906,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: 4271e3613fc57e24ca4f588384b29d62, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -2966,7 +2966,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: f7e9bd95f3bf9cf4d846eb8278f58676, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -3026,7 +3026,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: 4fc0a0315309c41469aba72efb65587d, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -3086,7 +3086,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: c031d2bad4e314140aa03c45b4d3012d, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -3146,7 +3146,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: 5bd930d60051d7a49a08597d3da9d436, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -3206,7 +3206,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: 58e75570402c1964cbaf94adda5e054d, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -3266,7 +3266,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: f47d2d27d4242f647ad9372d1c73bd42, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -3326,7 +3326,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: 07f704f30b2896447aa0a537f4acc30c, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -3386,7 +3386,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: b6ff89cd96b1de245ac61d6c7bef873c, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -3446,7 +3446,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: 32a050e4e06f4824b8d07dd31a6b1849, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -3506,7 +3506,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: 3a3fcf707fed0ea4589b17a04a5d8c94, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -3566,7 +3566,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: e8134d4c20d05324e9f3018441fa2c20, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -3626,7 +3626,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: 83e994fcd97d15849b5c2b775eec9110, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -3686,7 +3686,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: 92974eae4b422e4499db7a2b1449f45a, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -3746,7 +3746,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: c34199d8bb916424eae5a854575ea69b, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -3806,7 +3806,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: 26fc56cbb9bf79c4d9ae850ab8b776f6, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -3866,7 +3866,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: 56602e6c44867c3418ed9ab1afa62cac, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -3926,7 +3926,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: a62a4e05683b29b489045f0512c15457, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -3986,7 +3986,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: 94cdcc4e11b12dd429d4e5fd44c3d51b, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -4046,7 +4046,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: ffbff6690ec3bd74383f2b2a01d3202a, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -4106,7 +4106,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: b0e1e4b154ba9b249a33956348af8a19, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -4166,7 +4166,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: 2bac1a827675fc443adb198613bbec68, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -4226,7 +4226,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: 2e259d903f241794c84018a07e63c184, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -4286,7 +4286,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: 22901ffd3febd1549bd140335132373c, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -4346,7 +4346,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: 45e2fc7da9b8fac48bc820240920de6c, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -4406,7 +4406,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: 1d1fddf85c3249e4ea77e1b29a1654b4, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -4466,7 +4466,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: 9cd8c8590064e764e830d7941dddaef7, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -4526,7 +4526,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: 4858227a05ec3e646a1f254cc5d5cfc2, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -4586,7 +4586,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: dd0776771d0f509458139d79ef07aedb, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -4646,7 +4646,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: 183e6f6a3087b4f448597f7d5ef96cf1, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -4706,7 +4706,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: 3eedc7718fdaa24448e254db08d30ce7, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -4766,7 +4766,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: 6a36510e17e901f429b7a2364734f2f2, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -4826,7 +4826,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: 335124de72add2f48b6c7f63757a01cc, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -4886,7 +4886,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: 56d92c326acbb1646bddd8529d03a9ee, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -4946,7 +4946,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: 58bb2466a9915334a8e23bc80073c630, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -5006,7 +5006,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: 029279f041786c5479ef850ce0c485ad, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -5066,7 +5066,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: 813215101ce677f4aa1ef37e1cecebf7, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -5126,7 +5126,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: e1e0edbc597ee674ea1be01825b76f53, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -5186,7 +5186,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: cebb351135a2eef4a8ee073fd065de1a, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -5246,7 +5246,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: 5672f59d3a653e1428d70fcda868e979, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -5306,7 +5306,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: 117b655a4b1e2324e9b41d7d731cb121, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -5366,7 +5366,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: 8041b13fb13164a4dab015254dae71df, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -5426,7 +5426,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: 94eeeb1b0fd6dd84e8ab8781bbc2f118, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -5486,7 +5486,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: 01058ef67304c5242b604b5e3acd0b54, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -5546,7 +5546,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: 2bc299b2abbf96e4896787b9b3889073, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -5606,7 +5606,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: 87d301267e572ae4292ef525353c108a, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -5666,7 +5666,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: 9a9b78659cb0cfb4ba3caa8e51a62ed8, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -5726,7 +5726,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: 17325401c9ef4974eaa33d6b81dd3d87, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -5786,7 +5786,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: f56f8679ad3a0484f9c2e3dcfe2fe9ee, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -5846,7 +5846,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: 617fdb842bbcf7045a9c9981693dbb8b, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -5906,7 +5906,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: dddd194b55e8ff74989fb14122c14b7c, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -5966,7 +5966,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: a0d69678a3ff9df4793d2c7b39505617, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -6026,7 +6026,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: 97b7c7e43215c014abac8fbc2ca65044, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -6086,7 +6086,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: 4a59444f73718e841ac8ed3106236baf, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -6146,7 +6146,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: f5e18231bbbb12c4e8a9b8481eb0a780, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -6206,7 +6206,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: 9e757571f338a0a4d9171c4e316bb8e8, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -6266,7 +6266,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: 644cb63275011704e98808d9c8964d44, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -6326,7 +6326,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: 2a262aac194dc7148967218c1ed0e763, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -6386,7 +6386,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     texture: {fileID: 2800000, guid: cdb31b1c93f4ecc4bb2a8b9330dee328, type: 3}
     materialId: 0
-    anchor: 6
+    anchor: 3
     anchorX: 0
     anchorY: 0
     overrideMesh: {fileID: 0}
@@ -8470,7 +8470,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -8530,7 +8530,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -8590,7 +8590,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -8650,7 +8650,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -8710,7 +8710,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -8770,7 +8770,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -8830,7 +8830,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -8890,7 +8890,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -8950,7 +8950,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -9010,7 +9010,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -9070,7 +9070,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -9130,7 +9130,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -9190,7 +9190,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -9250,7 +9250,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -9310,7 +9310,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -9370,7 +9370,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -9430,7 +9430,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -9490,7 +9490,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -9550,7 +9550,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -9610,7 +9610,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -9670,7 +9670,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -9730,7 +9730,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -9790,7 +9790,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -9850,7 +9850,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -9910,7 +9910,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -9970,7 +9970,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -10030,7 +10030,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -10090,7 +10090,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -10150,7 +10150,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -10210,7 +10210,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -10270,7 +10270,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -10330,7 +10330,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -10390,7 +10390,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -10450,7 +10450,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -10510,7 +10510,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -10570,7 +10570,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -10630,7 +10630,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -10690,7 +10690,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -10750,7 +10750,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -10810,7 +10810,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -10870,7 +10870,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -10930,7 +10930,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -10990,7 +10990,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -11050,7 +11050,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -11110,7 +11110,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -11170,7 +11170,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -11230,7 +11230,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -11290,7 +11290,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -11350,7 +11350,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -11390,7 +11390,7 @@ MonoBehaviour:
   anisoLevel: 1
   physicsEngine: 0
   physicsDepth: 0.1
-  disableTrimming: 0
+  disableTrimming: 1
   disableRotation: 0
   normalGenerationMode: 0
   padAmount: 2

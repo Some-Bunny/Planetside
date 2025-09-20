@@ -41,6 +41,7 @@ namespace Planetside
             RemoveStat(DamageMod);
             RemoveStat(MoneyMod);
             RemoveStat(HealthMod);
+			lastItems = -1;
             DebrisObject result = base.Drop(player);
 			return result;
 		}
@@ -55,7 +56,7 @@ namespace Planetside
 		private void CalculateStats(PlayerController player)
 		{
 			var currentItems = player.passiveItems.Count;
-			if (currentItems != this.lastItems)
+			if (this.lastItems != currentItems)
 			{
                 bool Q = SaveAPIManager.GetFlag(CustomDungeonFlags.BROKEN_CHAMBER_RUN_COMPLETED);
                 bool W = SaveAPIManager.GetFlag(CustomDungeonFlags.BEAT_LOOP_1);
@@ -102,11 +103,11 @@ namespace Planetside
 				if (MasterRounds > 0)
 				{
                     HealthMod = this.AddStat(PlayerStats.StatType.Health, MasterRounds, StatModifier.ModifyMethod.ADDITIVE);
-                    MoneyMod = this.AddStat(PlayerStats.StatType.MoneyMultiplierFromEnemies, MasterRounds / 10, StatModifier.ModifyMethod.ADDITIVE);
+                    MoneyMod = this.AddStat(PlayerStats.StatType.MoneyMultiplierFromEnemies, MasterRounds / 10f, StatModifier.ModifyMethod.ADDITIVE);
                 }
                 if (Chambers > 0)
                 {
-                    DamageMod = this.AddStat(PlayerStats.StatType.Damage, 0.2f, StatModifier.ModifyMethod.ADDITIVE);
+                    DamageMod = this.AddStat(PlayerStats.StatType.Damage, 0.2f * Chambers, StatModifier.ModifyMethod.ADDITIVE);
                 }
 
 
@@ -160,6 +161,6 @@ namespace Planetside
 			}
 			this.passiveStatModifiers = list.ToArray();
 		}
-		private int lastItems;
+		private int lastItems = -1;
 	}
 }

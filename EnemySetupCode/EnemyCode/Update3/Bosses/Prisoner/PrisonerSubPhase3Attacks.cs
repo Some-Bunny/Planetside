@@ -988,32 +988,37 @@ namespace Planetside
 				float CentreAngle = (predictedPosition - this.Position).ToAngle();
 				base.PostWwiseEvent("Play_BOSS_omegaBeam_charge_01");
 				float f = 75;
-                for (int e = 0; e < 15; e++)
+                for (int e = 0; e < 20; e++)
 				{
                     bool b = BraveUtility.RandomBool();
                     base.PostWwiseEvent("Play_AbyssBlast");
                     for (int j = 0; j < 12; j++)
                     {
-                        base.Fire(Offset.OverridePosition(this.Position + MathToolbox.GetUnitOnCircle(30*j, 9)), new Direction(30 * j, DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new TheGear(b == true ? 22.5f : -22.5f, StaticBulletEntries.UndodgeableDoorLordBurst.Name, this, this.Position, (float)j * 30, 0.05f));
+                        base.Fire(Offset.OverridePosition(this.Position + MathToolbox.GetUnitOnCircle(30*j, 20)), new Direction(30 * j, DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new TheGear(b == true ? 22.5f : -22.5f, StaticBulletEntries.UndodgeableDoorLordBurst.Name, this, this.Position, (float)j * 30, 0.05f));
                     }
-					if (e == 1 | e == 6| e == 11)
+					if (e % 5 == 1)
 					{
 						float F = this.AimDirection;
-                        base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(this.Position, F, this, 120, false, 0.5f));
-                        base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(this.Position, F, this, 240, false, 0.5f));
-                        base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(this.Position, F, this, 360, false, 0.5f));
+                        base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(this.Position, F, this, 0, false, 0.5f));
+                        base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(this.Position, F, this, 45, false, 0.5f));
+                        base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(this.Position, F, this, 90, false, 0.5f));
+                        base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(this.Position, F, this, 135, false, 0.5f));
+                        base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(this.Position, F, this, 180, false, 0.5f));
+                        base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(this.Position, F, this, 225, false, 0.5f));
+                        base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(this.Position, F, this, 270, false, 0.5f));
+                        base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(this.Position, F, this, 315, false, 0.5f));
                     }
-					
+
                     yield return this.Wait(Mathf.Max(50, f - (5f * e)));
                 }
-                for (int r = 0; r < 5; r++)
+                for (int r = 0; r < 6; r++)
 				{
                     float F2 = this.AimDirection;
-                    for (int e = 0; e < 3; e++)
+                    for (int e = 0; e < 5; e++)
                     {
-                        base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(this.Position, F2, this, 120 * e, false, 0.75f));
+                        base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(this.Position, F2, this, 72 * e, false, 0.75f));
                     }
-                    yield return this.Wait(15 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier()) ;
+                    yield return this.Wait(12 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier()) ;
 
                 }
                 yield return this.Wait(120 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
@@ -1164,7 +1169,7 @@ namespace Planetside
                 }
                 UnityEngine.Object.Destroy(component2.gameObject);
                 base.PostWwiseEvent("Play_ENM_bulletking_skull_01", null);
-                base.Fire(Offset.OverridePosition(startPos), new Direction(aimDir + rotSet, DirectionType.Absolute, -1f), new Speed(600, SpeedType.Absolute), new HitScan());
+                base.Fire(Offset.OverridePosition(startPos), new Direction(aimDir + rotSet, DirectionType.Absolute, -1f), new Speed(250, SpeedType.Absolute), new HitScan());
 
                 yield break;
             }
@@ -1221,7 +1226,7 @@ namespace Planetside
 				float u11 = UnityEngine.Random.Range(60, 120);
 				float M11 = UnityEngine.Random.value < 0.5f ? u11 : -u11;
                 Position = base.BulletBank.aiActor.sprite.WorldCenter;
-                for (int i = 0; i < 8; i++)
+                for (int i = 0; i < 6; i++)
 				{
 
                     var ring1 = SummonRingController.CreateSummoningRing("split", this.Position, 0.25f, false, 1.2f);
@@ -1229,9 +1234,9 @@ namespace Planetside
                     ring1.UpdateSpeed = 2;
 
 
-                    base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(Position, Position + MathToolbox.GetUnitOnCircle(f11 + (i * 45), Vector2.Distance(Position, Position + (Vector2.one * 2.5f))), (45 * i) + 0, this, M11, 1f, ring1));
-					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(Position, Position + MathToolbox.GetUnitOnCircle(f11 + (i * 45), Vector2.Distance(Position, Position + (Vector2.one * 2.5f))), (45 * i) + 120, this, M11, 1f));
-					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(Position, Position + MathToolbox.GetUnitOnCircle(f11 + (i * 45), Vector2.Distance(Position, Position + (Vector2.one * 2.5f))), (45 * i) + 240, this, M11, 1f));
+                    base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(Position, Position + MathToolbox.GetUnitOnCircle(f11 + (i * 60), Vector2.Distance(Position, Position + (Vector2.one * 2.5f))), (45 * i) + 0, this, M11, 1f, ring1));
+					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(Position, Position + MathToolbox.GetUnitOnCircle(f11 + (i * 60), Vector2.Distance(Position, Position + (Vector2.one * 2.5f))), (45 * i) + 120, this, M11, 1f));
+					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(Position, Position + MathToolbox.GetUnitOnCircle(f11 + (i * 60), Vector2.Distance(Position, Position + (Vector2.one * 2.5f))), (45 * i) + 240, this, M11, 1f));
 				}
 				yield return this.Wait(100 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
 				int AM = 3;
@@ -1264,13 +1269,12 @@ namespace Planetside
                     ring1.SpinSpeed = 15;
                     ring1.UpdateSpeed = 2;
                     base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(Position, Position + MathToolbox.GetUnitOnCircle(f11 + (i * 60), Vector2.Distance(Position, Position + (Vector2.one * 2.5f))), (60 * i) + 0, this, M11, 1f, ring1));
-                    base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(Position, Position + MathToolbox.GetUnitOnCircle(f11 + (i * 60), Vector2.Distance(Position, Position + (Vector2.one * 2.5f))), (60 * i) + 45, this, M11, 1f));
-                    base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(Position, Position + MathToolbox.GetUnitOnCircle(f11 + (i * 60), Vector2.Distance(Position, Position + (Vector2.one * 2.5f))), (60 * i) + 90, this, M11, 1f));
-                    base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(Position, Position + MathToolbox.GetUnitOnCircle(f11 + (i * 60), Vector2.Distance(Position, Position + (Vector2.one * 2.5f))), (60 * i) + 135, this, M11, 1f));
+                    base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(Position, Position + MathToolbox.GetUnitOnCircle(f11 + (i * 60), Vector2.Distance(Position, Position + (Vector2.one * 2.5f))), (60 * i) + 60, this, M11, 1f));
+                    base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(Position, Position + MathToolbox.GetUnitOnCircle(f11 + (i * 60), Vector2.Distance(Position, Position + (Vector2.one * 2.5f))), (60 * i) + 120, this, M11, 1f));
                     base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(Position, Position + MathToolbox.GetUnitOnCircle(f11 + (i * 60), Vector2.Distance(Position, Position + (Vector2.one * 2.5f))), (60 * i) + 180, this, M11, 1f));
-                    base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(Position, Position + MathToolbox.GetUnitOnCircle(f11 + (i * 60), Vector2.Distance(Position, Position + (Vector2.one * 2.5f))), (60 * i) + 225, this, M11, 1f));
-                    base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(Position, Position + MathToolbox.GetUnitOnCircle(f11 + (i * 60), Vector2.Distance(Position, Position + (Vector2.one * 2.5f))), (60 * i) + 270, this, M11, 1f));
-                    base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(Position, Position + MathToolbox.GetUnitOnCircle(f11 + (i * 60), Vector2.Distance(Position, Position + (Vector2.one * 2.5f))), (60 * i) + 315, this, M11, 1f));
+                    base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(Position, Position + MathToolbox.GetUnitOnCircle(f11 + (i * 60), Vector2.Distance(Position, Position + (Vector2.one * 2.5f))), (60 * i) + 240, this, M11, 1f));
+                    base.BulletBank.aiActor.StartCoroutine(QuickscopeNoobLerpPosition(Position, Position + MathToolbox.GetUnitOnCircle(f11 + (i * 60), Vector2.Distance(Position, Position + (Vector2.one * 2.5f))), (60 * i) + 300, this, M11, 1f));
+
                 }
                 yield return this.Wait(100 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
 

@@ -53,10 +53,10 @@ namespace Planetside
 
             Controller.ClearRings();
 
-            var ring1 = SummonRingController.CreateSummoningRing("sealbreaker", this.Actor.sprite.WorldCenter, 1);
+            var ring1 = SummonRingController.CreateSummoningRing("sealbreaker", this.Actor.sprite.WorldCenter, 1, false, 0.7f, false);
             ring1.SpinSpeed = 30;
             ring1.UpdateSpeed = 2;
-            var ring2 = SummonRingController.CreateSummoningRing("sealbreakersealbreaker", this.Actor.sprite.WorldCenter, 2f);
+            var ring2 = SummonRingController.CreateSummoningRing("sealbreakersealbreaker", this.Actor.sprite.WorldCenter, 2f, false, 0.7f, false);
             ring2.SpinSpeed = -30;
             ring2.UpdateSpeed = 2;
 
@@ -83,7 +83,7 @@ namespace Planetside
             }
             elaWait = 0f;
 
-            if (PlanetsideModule.PrisonerDebug == false)
+            if (PlanetsideModule.PrisonerDebug == false || PlanetsideModule.DebugMode == false)
             {
 
 

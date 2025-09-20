@@ -236,6 +236,7 @@ namespace Planetside
 
         public IEnumerator DoResistShield(AIActor enemy, DamageTypeModifier r, EnemyBuffShrineController s)
         {
+            yield return new WaitForSeconds(UnityEngine.Random.Range(0.025f, 0.4f));
             if (enemy == null) { yield break; }
             if (s != null) { s.enemiesToAvoid.Add(enemy); }
 

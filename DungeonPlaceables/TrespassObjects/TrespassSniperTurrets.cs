@@ -14,6 +14,9 @@ using BreakAbleAPI;
 using Brave.BulletScript;
 using System.Collections;
 using UnityEngine.Playables;
+using Alexandria.PrefabAPI;
+using Planetside.Static_Storage;
+using HutongGames.PlayMaker.Actions;
 
 namespace Planetside
 {
@@ -242,15 +245,6 @@ namespace Planetside
     {
         public static void Init()
         {
-            string defaultFrontPath = "Planetside/Resources/DungeonObjects/TrespassObjects/TrespassSniper/Down/";
-            string[] idlePaths = new string[]
-            {
-                defaultFrontPath+"sniperturret_front_idle1.png",
-                defaultFrontPath+"sniperturret_front_idle2.png",
-                defaultFrontPath+"sniperturret_front_idle1.png",
-                defaultFrontPath+"sniperturret_front_idle4.png",
-            };
-
 
 
             AIBulletBank.Entry entry1 = StaticBulletEntries.CopyBulletBankEntry(StaticBulletEntries.undodgeableBigBullet, "turretShot1");
@@ -259,23 +253,41 @@ namespace Planetside
 
 
 
-            MajorBreakable sniperTurretDefaultaFront = BreakableAPIToolbox.GenerateMajorBreakable("sniperTurretDefaultaFront", idlePaths, 5, idlePaths, 18, 15000,  true, 0, 0, 0, 0, true, null, null, true, null);
-			EnemyToolbox.GenerateShootPoint(sniperTurretDefaultaFront.gameObject, new Vector2(0.4375f, 0.875f), "laserPoint");
-            AIBulletBank bulletBankLeft = sniperTurretDefaultaFront.gameObject.AddComponent<AIBulletBank>();
-            TrespassSniperTurretsController t = sniperTurretDefaultaFront.gameObject.AddComponent<TrespassSniperTurretsController>();
-            sniperTurretDefaultaFront.gameObject.AddComponent<TresspassLightController>();
+            //MajorBreakable sniperTurretDefaultaFront = BreakableAPIToolbox.GenerateMajorBreakable("sniperTurretDefaultaFront", idlePaths, 5, idlePaths, 18, 15000,  true, 0, 0, 0, 0, true, null, null, true, null);
+            var Turret_Front = PrefabBuilder.BuildObject("Trespass Turret Front");
+            Turret_Front.layer = Layers.FG_Critical;
+            var sprite = Turret_Front.AddComponent<tk2dSprite>();
+            sprite.SortingOrder = 2;
+            var animator = Turret_Front.AddComponent<tk2dSpriteAnimator>();
+            animator.library = StaticSpriteDefinitions.Trespass_Room_Object_Animation;
+            animator.playAutomatically = true;
+            animator.defaultClipId = StaticSpriteDefinitions.Trespass_Room_Object_Animation.GetClipIdByName("trespassTurret_front");
+            sprite.usesOverrideMaterial = true;
+            Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+            mat.mainTexture = sprite.renderer.material.mainTexture;
+            mat.SetColor("_EmissiveColor", new Color32(0, 255, 255, 255));
+            mat.SetFloat("_EmissiveColorPower", 8f);
+            mat.SetFloat("_EmissivePower", 4);
+            sprite.renderer.material = mat;
+            sprite.IsPerpendicular = false;
+
+            BreakableAPI_Bundled.GenerateTransformObject(Turret_Front.gameObject, new Vector2(0.5f, 0.875f), "laserPoint");
+            AIBulletBank bulletBankLeft = Turret_Front.gameObject.AddComponent<AIBulletBank>();
+            TrespassSniperTurretsController t = Turret_Front.gameObject.AddComponent<TrespassSniperTurretsController>();
+            Turret_Front.gameObject.AddComponent<TresspassLightController>();
             t.muzzleFlashPrefab = (PickupObjectDatabase.GetById(576) as Gun).muzzleFlashEffects.effects[0].effects[0].effect;
-            sniperTurretDefaultaFront.gameObject.AddComponent<PushImmunity>();
+            Turret_Front.gameObject.AddComponent<PushImmunity>();
 
             t.DirectionToFire = Vector2.down.ToAngle();
-            bulletBankLeft.Bullets = new List<AIBulletBank.Entry>();
-			bulletBankLeft.Bullets.Add(entry1);
-            bulletBankLeft.Bullets.Add(entry2);
-            bulletBankLeft.Bullets.Add(entry3);
+            bulletBankLeft.Bullets = new List<AIBulletBank.Entry>()
+            {
+                entry1,
+                entry2,
+                entry3
+            };
+            StaticReferences.StoredRoomObjects.Add("TrespassSniperTurretFront", Turret_Front.gameObject);
 
-            StaticReferences.StoredRoomObjects.Add("TrespassSniperTurretFront", sniperTurretDefaultaFront.gameObject);
-
-            Alexandria.DungeonAPI.StaticReferences.customObjects.Add("PSOG_TrespassSniperTurretFront", sniperTurretDefaultaFront.gameObject);
+            Alexandria.DungeonAPI.StaticReferences.customObjects.Add("PSOG_TrespassSniperTurretFront", Turret_Front.gameObject);
 
 
 
@@ -285,6 +297,7 @@ namespace Planetside
 
         public static void MakeLeft(AIBulletBank.Entry entry1, AIBulletBank.Entry entry2, AIBulletBank.Entry entry3)
         {
+            /*
             string defaultFrontPath = "Planetside/Resources/DungeonObjects/TrespassObjects/TrespassSniper/Left/";
             string[] idlePaths = new string[]
             {
@@ -294,25 +307,45 @@ namespace Planetside
                 defaultFrontPath+"sniperturret_left_idle4.png",
             };
             MajorBreakable sniperTurretDefaultaFront = BreakableAPIToolbox.GenerateMajorBreakable("sniperTurretDefaultaFront", idlePaths, 5, idlePaths, 18, 15000, true, 0, 0, 0, 0, true, null, null, true, null);
-            EnemyToolbox.GenerateShootPoint(sniperTurretDefaultaFront.gameObject, new Vector2(0.5f, 0.875f), "laserPoint");
-            AIBulletBank bulletBankLeft = sniperTurretDefaultaFront.gameObject.AddComponent<AIBulletBank>();
-            TrespassSniperTurretsController t = sniperTurretDefaultaFront.gameObject.AddComponent<TrespassSniperTurretsController>();
-            sniperTurretDefaultaFront.gameObject.AddComponent<TresspassLightController>();
+            */
+            var Turret_Left = PrefabBuilder.BuildObject("Trespass Turret Front");
+            Turret_Left.layer = Layers.FG_Critical;
+            var sprite = Turret_Left.AddComponent<tk2dSprite>();
+            sprite.SortingOrder = 2;
+            var animator = Turret_Left.AddComponent<tk2dSpriteAnimator>();
+            animator.library = StaticSpriteDefinitions.Trespass_Room_Object_Animation;
+            animator.playAutomatically = true;
+            animator.defaultClipId = StaticSpriteDefinitions.Trespass_Room_Object_Animation.GetClipIdByName("trespassTurret_left");
+            sprite.usesOverrideMaterial = true;
+            Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+            mat.mainTexture = sprite.renderer.material.mainTexture;
+            mat.SetColor("_EmissiveColor", new Color32(0, 255, 255, 255));
+            mat.SetFloat("_EmissiveColorPower", 8f);
+            mat.SetFloat("_EmissivePower", 4);
+            sprite.renderer.material = mat;
+            sprite.IsPerpendicular = false;
+            BreakableAPI_Bundled.GenerateTransformObject(Turret_Left.gameObject, new Vector2(0.5f, 0.875f), "laserPoint");
+            AIBulletBank bulletBankLeft = Turret_Left.gameObject.AddComponent<AIBulletBank>();
+            TrespassSniperTurretsController t = Turret_Left.gameObject.AddComponent<TrespassSniperTurretsController>();
+            Turret_Left.gameObject.AddComponent<TresspassLightController>();
             t.DirectionToFire = Vector2.right.ToAngle();
             t.muzzleFlashPrefab = (PickupObjectDatabase.GetById(576) as Gun).muzzleFlashEffects.effects[0].effects[0].effect;
 
-            bulletBankLeft.Bullets = new List<AIBulletBank.Entry>();
-            bulletBankLeft.Bullets.Add(entry1);
-            bulletBankLeft.Bullets.Add(entry2);
-            bulletBankLeft.Bullets.Add(entry3);
-            sniperTurretDefaultaFront.gameObject.AddComponent<PushImmunity>();
+            bulletBankLeft.Bullets = new List<AIBulletBank.Entry>()
+            {
+                entry1,
+                entry2,
+                entry3
+            };
+            Turret_Left.gameObject.AddComponent<PushImmunity>();
 
-            StaticReferences.StoredRoomObjects.Add("TrespassSniperTurretLeft", sniperTurretDefaultaFront.gameObject);
-            Alexandria.DungeonAPI.StaticReferences.customObjects.Add("PSOG_TrespassSniperTurretLeft", sniperTurretDefaultaFront.gameObject);
+            StaticReferences.StoredRoomObjects.Add("TrespassSniperTurretLeft", Turret_Left.gameObject);
+            Alexandria.DungeonAPI.StaticReferences.customObjects.Add("PSOG_TrespassSniperTurretLeft", Turret_Left.gameObject);
 
         }
         public static void MakeRight(AIBulletBank.Entry entry1, AIBulletBank.Entry entry2, AIBulletBank.Entry entry3)
         {
+            /*
             string defaultFrontPath = "Planetside/Resources/DungeonObjects/TrespassObjects/TrespassSniper/Right/";
             string[] idlePaths = new string[]
             {
@@ -323,21 +356,43 @@ namespace Planetside
 
             };
             MajorBreakable sniperTurretDefaultaFront = BreakableAPIToolbox.GenerateMajorBreakable("sniperTurretDefaultaFront", idlePaths, 5, idlePaths, 18, 15000, true, 0, 0, 0, 0, true, null, null, true, null);
-            EnemyToolbox.GenerateShootPoint(sniperTurretDefaultaFront.gameObject, new Vector2(0.5f, 0.875f), "laserPoint");
-            AIBulletBank bulletBankLeft = sniperTurretDefaultaFront.gameObject.AddComponent<AIBulletBank>();
-            TrespassSniperTurretsController t = sniperTurretDefaultaFront.gameObject.AddComponent<TrespassSniperTurretsController>();
-            sniperTurretDefaultaFront.gameObject.AddComponent<TresspassLightController>();
+            */
+
+            var Turret_Right = PrefabBuilder.BuildObject("Trespass Turret Front");
+            Turret_Right.layer = Layers.FG_Critical;
+            var sprite = Turret_Right.AddComponent<tk2dSprite>();
+            sprite.SortingOrder = 2;
+            var animator = Turret_Right.AddComponent<tk2dSpriteAnimator>();
+            animator.library = StaticSpriteDefinitions.Trespass_Room_Object_Animation;
+            animator.playAutomatically = true;
+            animator.defaultClipId = StaticSpriteDefinitions.Trespass_Room_Object_Animation.GetClipIdByName("trespassTurret_right");
+            sprite.usesOverrideMaterial = true;
+            Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+            mat.mainTexture = sprite.renderer.material.mainTexture;
+            mat.SetColor("_EmissiveColor", new Color32(0, 255, 255, 255));
+            mat.SetFloat("_EmissiveColorPower", 8f);
+            mat.SetFloat("_EmissivePower", 4);
+            sprite.renderer.material = mat;
+            sprite.IsPerpendicular = false;
+            BreakableAPI_Bundled.GenerateTransformObject(Turret_Right.gameObject, new Vector2(0.5f, 0.875f), "laserPoint");
+
+
+            AIBulletBank bulletBankLeft = Turret_Right.gameObject.AddComponent<AIBulletBank>();
+            TrespassSniperTurretsController t = Turret_Right.gameObject.AddComponent<TrespassSniperTurretsController>();
+            Turret_Right.gameObject.AddComponent<TresspassLightController>();
             t.DirectionToFire = Vector2.left.ToAngle();
             t.muzzleFlashPrefab = (PickupObjectDatabase.GetById(576) as Gun).muzzleFlashEffects.effects[0].effects[0].effect;
+           
+            bulletBankLeft.Bullets = new List<AIBulletBank.Entry>()
+            {
+                entry1,
+                entry2,
+                entry3
+            };
+            Turret_Right.gameObject.AddComponent<PushImmunity>();
 
-            bulletBankLeft.Bullets = new List<AIBulletBank.Entry>();
-            bulletBankLeft.Bullets.Add(entry1);
-            bulletBankLeft.Bullets.Add(entry2);
-            bulletBankLeft.Bullets.Add(entry3);
-            sniperTurretDefaultaFront.gameObject.AddComponent<PushImmunity>();
-
-            StaticReferences.StoredRoomObjects.Add("TrespassSniperTurretRight", sniperTurretDefaultaFront.gameObject);
-            Alexandria.DungeonAPI.StaticReferences.customObjects.Add("PSOG_TrespassSniperTurretRight", sniperTurretDefaultaFront.gameObject);
+            StaticReferences.StoredRoomObjects.Add("TrespassSniperTurretRight", Turret_Right.gameObject);
+            Alexandria.DungeonAPI.StaticReferences.customObjects.Add("PSOG_TrespassSniperTurretRight", Turret_Right.gameObject);
 
         }
     }

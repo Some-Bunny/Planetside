@@ -363,6 +363,7 @@ namespace Planetside
                 yield return null;
             }
             GameManager.Instance.LoadCustomLevel("tt_abyss");
+            GameManager.IsBossIntro = false;
 
             yield break;
         }
@@ -405,10 +406,10 @@ namespace Planetside
             Actor.specRigidbody.enabled = false;
             int lay = Actor.gameObject.layer;
 
-            var ring1 = SummonRingController.CreateSummoningRing("sealbreaker", this.Actor.sprite.WorldCenter, 1);
+            var ring1 = SummonRingController.CreateSummoningRing("sealbreaker", this.Actor.sprite.WorldCenter, 1.2f, false, 0.25f, false);
             ring1.SpinSpeed = 30;
             ring1.UpdateSpeed = 0.333f;
-            ringController = SummonRingController.CreateSummoningRing("sealbreakersealbreaker", this.Actor.sprite.WorldCenter, 1.3f, false, 0.12f, false, 0.5f);
+            ringController = SummonRingController.CreateSummoningRing("sealbreakersealbreaker", this.Actor.sprite.WorldCenter, 1.2f, false, 0.25f, false);
             ringController.SpinSpeed = -12;
             ringController.UpdateSpeed = 1;
 
@@ -439,7 +440,7 @@ namespace Planetside
 
 
 
-            if (PlanetsideModule.PrisonerDebug == false)
+            if (PlanetsideModule.PrisonerDebug == false || PlanetsideModule.DebugMode == false)
             {
 
                 /*
@@ -765,6 +766,7 @@ namespace Planetside
                 }
                 public override IEnumerator Top()
                 {
+                    (this.Projectile as ThirdDimensionalProjectile).SetUnDodgeableState(true);
                     this.Projectile.IgnoreTileCollisionsFor(180f);
                     this.Projectile.specRigidbody.AddCollisionLayerIgnoreOverride(CollisionMask.LayerToMask(CollisionLayer.HighObstacle, CollisionLayer.LowObstacle));
                     base.ChangeSpeed(new Brave.BulletScript.Speed(20, SpeedType.Absolute), 120);

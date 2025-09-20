@@ -8,6 +8,10 @@ using System.Collections;
 using SaveAPI;
 using Alexandria.PrefabAPI;
 using System.Security.Principal;
+using HarmonyLib;
+using MonoMod.Cil;
+using System.Reflection;
+using Mono.Cecil.Cil;
 
 namespace Planetside
 {
@@ -673,34 +677,6 @@ namespace Planetside
         public static GameObject heartorbitalVFX;
         public static GameObject halfheartorbitalvfx;
 
-        /*
-        public override void Pickup(PlayerController player)
-        {
-            if (m_hasBeenPickedUp)
-                return;
-            base.HandleEncounterable(player);
-
-            SaveAPI.AdvancedGameStatsManager.Instance.RegisterStatChange(StatToIncreaseOnPickup, 1);
-
-            m_hasBeenPickedUp = true;
-            PerkParticleSystemController cont = base.GetComponent<PerkParticleSystemController>();
-            if (cont != null) { cont.DoBigBurst(player); }
-            CorruptedWealthController blast = player.gameObject.GetOrAddComponent<CorruptedWealthController>();
-            blast.player = player;
-            if (blast.hasBeenPickedup == true)
-            { blast.IncrementStack(); SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.CORRUPTEDWEALTH_FLAG_STACK, true); }
-
-            AkSoundEngine.PostEvent("Play_OBJ_dice_bless_01", player.gameObject);
-
-            Exploder.DoDistortionWave(player.sprite.WorldTopCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
-            player.BloopItemAboveHead(base.sprite, "");
-            string BlurbText = blast.hasBeenPickedup == true ? "More Pain, More Gain." : "All Pickups Are Corrupted.";
-            OtherTools.NotifyCustom("Corrupted Wealth", BlurbText, "corrputed_wealth", StaticSpriteDefinitions.Pickup_Sheet_Data, UINotificationController.NotificationColor.GOLD);
-
-            UnityEngine.Object.Destroy(base.gameObject);
-        }
-
-        */
 
         public override void OnInitialPickup(PlayerController playerController)
         {
@@ -829,26 +805,6 @@ namespace Planetside
                     vector2.y -= Mathf.Min(a.y * 0.1f, 0.1f);
                     GlobalSparksDoer.DoRandomParticleBurst(1, vector, vector2, Vector3.up, 0f, 0.5f, 0.166f, 1, Color.cyan * 2, GlobalSparksDoer.SparksType.DARK_MAGICKS);
 
-                    //this.m_particleTimer += BraveTime.DeltaTime * (float)num2;
-                    //if (this.m_particleTimer > 1f)
-                    /*
-                    {
-                        int num3 = Mathf.FloorToInt(this.m_particleTimer);
-                        Vector2 vector = player.specRigidbody.HitboxPixelCollider.UnitBottomLeft;
-                        Vector2 vector2 = player.specRigidbody.HitboxPixelCollider.UnitTopRight;
-                        PixelCollider pixelCollider = player.specRigidbody.GetPixelCollider(ColliderType.Ground);
-                        if (pixelCollider != null && pixelCollider.ColliderGenerationMode == PixelCollider.PixelColliderGeneration.Manual)
-                        {
-                            vector = Vector2.Min(vector, pixelCollider.UnitBottomLeft);
-                            vector2 = Vector2.Max(vector2, pixelCollider.UnitTopRight);
-                        }
-                        vector += Vector2.Min(a * 0.15f, new Vector2(0.25f, 0.25f));
-                        vector2 -= Vector2.Min(a * 0.15f, new Vector2(0.25f, 0.25f));
-                        vector2.y -= Mathf.Min(a.y * 0.1f, 0.1f);
-                        GlobalSparksDoer.DoRandomParticleBurst(num3, vector, vector2, Vector3.down, 0f, 0.5f, 0.3f, 1, Color.magenta, GlobalSparksDoer.SparksType.DARK_MAGICKS);
-                        //this.m_particleTimer -= Mathf.Floor(this.m_particleTimer);
-                    }
-                    */
                 }
 
                 yield return null;
@@ -996,9 +952,215 @@ namespace Planetside
         }
 
 
+        [HarmonyPatch(typeof(PunchoutAIActor.ThrowAmmoState), nameof(PunchoutAIActor.ThrowAmmoState.BoxThrow))]
+        public class Patch_PunchoutAIActorThrowAmmoStateBoxThrow
+        {
+            [HarmonyPostfix]
 
 
 
+
+            private static void Awake(PunchoutAIActor.ThrowAmmoState __instance)
+            {
+                if (PerkHelper.GetGlobalStacksFromAllPlayers(CorruptedWealthID) > 0)
+                {
+                    var sprite = __instance.ActorEnemy.BoxAnimator.sprite;
+                    sprite.usesOverrideMaterial = true;
+                    Material mat = sprite.renderer.material;
+                    mat.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
+                    mat.SetFloat("_EmissivePower", 100);
+                    mat.SetFloat("_EmissiveColorPower", 10);
+                    mat.SetColor("_OverrideColor", new Color(0.02f, 0.4f, 1, 0.6f));
+                    sprite.renderer.material = mat;
+                    __instance.Damage = 30;
+                    __instance.ReturnDamage = 30;
+
+
+                    AIAnimator.NamedVFXPool _ = __instance.ActorEnemy.Opponent.aiAnimator.OtherVFX.Where(self => self.name == "box_hit").FirstOrDefault();
+                    if (_ != null)
+                    {
+                        var obj = _.vfxPool.effects[0].effects[0].effect;
+                        if (obj)
+                        {
+                            ApplyPretty(obj, ref OldMaterial_1);
+                        }
+                    }
+
+                    _ = __instance.ActorEnemy.aiAnimator.OtherVFX.Where(self => self.name == "box_hit_right").FirstOrDefault();
+                    if (_ != null)
+                    {
+                        var obj = _.vfxPool.effects[0].effects[0].effect;
+                        if (obj)
+                        {
+                            ApplyPretty(obj,ref OldMaterial_2);
+                        }
+                    }
+                    _ = __instance.ActorEnemy.aiAnimator.OtherVFX.Where(self => self.name == "box_hit_left").FirstOrDefault();
+                    if (_ != null)
+                    {
+                        var obj = _.vfxPool.effects[0].effects[0].effect;
+                        if (obj)
+                        {
+                            ApplyPretty(obj, ref OldMaterial_3);
+                        }
+                    }
+                }
+                else
+                {
+                    AIAnimator.NamedVFXPool _ = __instance.ActorEnemy.Opponent.aiAnimator.OtherVFX.Where(self => self.name == "box_hit").FirstOrDefault();
+                    if (_ != null)
+                    {
+                        var obj = _.vfxPool.effects[0].effects[0].effect;
+                        if (obj)
+                        {
+                            ResetMaterial(obj, OldMaterial_1);
+                        }
+                    }
+
+                    _ = __instance.ActorEnemy.aiAnimator.OtherVFX.Where(self => self.name == "box_hit_right").FirstOrDefault();
+                    if (_ != null)
+                    {
+                        var obj = _.vfxPool.effects[0].effects[0].effect;
+                        if (obj)
+                        {
+                            ResetMaterial(obj, OldMaterial_2);
+                        }
+                    }
+                    _ = __instance.ActorEnemy.aiAnimator.OtherVFX.Where(self => self.name == "box_hit_left").FirstOrDefault();
+                    if (_ != null)
+                    {
+                        var obj = _.vfxPool.effects[0].effects[0].effect;
+                        if (obj)
+                        {
+                            ResetMaterial(obj, OldMaterial_3);
+                        }
+                    }
+                }
+
+            }
+            public static Material OldMaterial_1;
+            public static Material OldMaterial_2;
+            public static Material OldMaterial_3;
+            public static void ApplyPretty(GameObject note, ref Material material)
+            {          
+                var sprite = note.GetComponent<tk2dSprite>();
+                if (sprite == null)
+                {
+
+                    sprite = note.GetComponentInChildren<tk2dSprite>();
+                }
+                if (sprite == null)
+                    return;
+                if (material == null)
+                {
+                    material = sprite.renderer.material;
+                }
+                sprite.usesOverrideMaterial = true;
+                Material mat = sprite.renderer.material;
+                mat.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
+                mat.SetFloat("_EmissivePower", 100);
+                mat.SetFloat("_EmissiveColorPower", 10);
+                mat.SetColor("_OverrideColor", new Color(0.02f, 0.4f, 1, 0.6f));
+                sprite.renderer.material = mat;
+            }
+            public static void ResetMaterial(GameObject note, Material material)
+            {
+                var sprite = note.GetComponent<tk2dSprite>();
+                if (sprite == null)
+                {
+                    sprite = note.GetComponentInChildren<tk2dSprite>();
+                }
+                if (sprite == null)
+                    return;
+                if(material == null)
+                    return;
+
+                sprite.renderer.material = material;
+            }
+        }
+        /*
+        [HarmonyPatch]
+        private static class PunchoutAIActorDoBoxShells
+        {
+            [HarmonyPatch(typeof(PunchoutAIActor), nameof(PunchoutAIActor.DoBoxShells))]
+            [HarmonyILManipulator]
+            private static void GameUIAmmoControllerUpdateUIGunIL(ILContext il)
+            {
+                ETGModConsole.Log("_1");
+                ILCursor cursor = new ILCursor(il);
+                if (!cursor.TryGotoNext(MoveType.After,
+                    instr => instr.MatchCall<SpawnManager>("SpawnVFX")))
+                    return;
+                ETGModConsole.Log("_2");
+
+                if (!cursor.TryGotoNext(MoveType.Before,
+                    instr => instr.MatchCallvirt<UnityEngine.GameObject>("GetComponent")))
+                    return;
+                ETGModConsole.Log("_3");
+
+
+
+                cursor.Emit(OpCodes.Ldloc_0);
+                cursor.Emit(OpCodes.Call, typeof(PunchoutAIActorDoBoxShells).GetMethod(nameof(ApplyPretty), BindingFlags.Static | BindingFlags.Public));
+            }
+            public static void ApplyPretty(GameObject note)
+            {
+                Debug.Log(note);
+                if (PerkHelper.GetGlobalStacksFromAllPlayers(CorruptedWealthID) > 0)
+                {
+                    Debug.Log(1);
+
+                    var sprite = note.GetComponent<tk2dSprite>();
+                    
+                    if (sprite == null)
+                    {
+                        
+                        sprite = note.GetComponentInChildren<tk2dSprite>();
+                    }
+                    
+                    if (sprite == null)
+                        return;
+                     
+                    sprite.usesOverrideMaterial = true;
+                    Material mat = sprite.renderer.material;
+                    mat.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
+                    mat.SetFloat("_EmissivePower", 100);
+                    mat.SetFloat("_EmissiveColorPower", 10);
+                    mat.SetColor("_OverrideColor", new Color(0.02f, 0.4f, 1, 0.6f));
+                    sprite.renderer.material = mat;
+                    Debug.Log(6);
+                }
+            }
+        }
+
+        [HarmonyPatch]
+        private static class PunchoutAIActorDoBoxShellsBack
+        {
+            [HarmonyPatch(typeof(PunchoutAIActor), nameof(PunchoutAIActor.DoBoxShellsBack))]
+            [HarmonyILManipulator]
+            private static void GameUIAmmoControllerUpdateUIGunIL(ILContext il)
+            {
+                ETGModConsole.Log("_11");
+
+                ILCursor cursor = new ILCursor(il);
+                if (!cursor.TryGotoNext(MoveType.After,
+                    instr => instr.MatchCall<SpawnManager>("SpawnVFX")))
+                    return;
+                ETGModConsole.Log("_21");
+
+                if (!cursor.TryGotoNext(MoveType.Before,
+                    instr => instr.MatchCallvirt<UnityEngine.GameObject>("GetComponent")))
+                    return;
+                ETGModConsole.Log("_31");
+
+
+
+                cursor.Emit(OpCodes.Ldloc_0);
+                cursor.Emit(OpCodes.Call, typeof(PunchoutAIActorDoBoxShells).GetMethod(nameof(PunchoutAIActorDoBoxShells.ApplyPretty), BindingFlags.Static | BindingFlags.Public));
+            }
+        }
+
+        */
 
         public List<GameObject> objects = new List<GameObject>();
         private int LastStoredAmountOfHPConsumed;

@@ -14,6 +14,8 @@ using BreakAbleAPI;
 using Brave.BulletScript;
 using System.Collections;
 using static Dungeonator.CellVisualData;
+using Alexandria.PrefabAPI;
+using Planetside.Static_Storage;
 
 namespace Planetside
 {
@@ -81,48 +83,72 @@ namespace Planetside
     {
         public static void Init()
         {
-            string defaultPath = "Planetside/Resources/Enemies/Deturret/";
-            string[] idlePaths = new string[]
-            {
-                defaultPath+"deturret_idle_001.png",
-                defaultPath+"deturret_idle_002.png",
-                defaultPath+"deturret_idle_003.png",
-                defaultPath+"deturret_idle_004.png",
-                defaultPath+"deturret_idle_005.png",
-                defaultPath+"deturret_idle_006.png",
-                defaultPath+"deturret_idle_007.png",
-                defaultPath+"deturret_idle_008.png",
-                defaultPath+"deturret_idle_009.png",
-                defaultPath+"deturret_idle_010.png",
-            };
-
             AIBulletBank.Entry entry = StaticBulletEntries.CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("01972dee89fc4404a5c408d50007dad5").bulletBank.GetBullet("default"), "deturretShell");
 
-            MajorBreakable deturretLeft = BreakableAPIToolbox.GenerateMajorBreakable("deturretLeft", idlePaths, 7, idlePaths, 18, 15000, true, 16, 16, -4, 0, true, null, null, true, null);
 
-			EnemyToolbox.GenerateShootPoint(deturretLeft.gameObject, new Vector2(0.5f, 0.5f), "attachy");
-            AIBulletBank bulletBankLeft = deturretLeft.gameObject.AddComponent<AIBulletBank>();
-			DeturretController deturretC = deturretLeft.gameObject.AddComponent<DeturretController>();
+            var DeturretLeft = PrefabBuilder.BuildObject("Deturret Left");
+            DeturretLeft.layer = 20;
+            var sprite = DeturretLeft.AddComponent<tk2dSprite>();
+            var animator = DeturretLeft.AddComponent<tk2dSpriteAnimator>();
+            animator.library = StaticSpriteDefinitions.RoomObject_Animation_Data;
+            animator.playAutomatically = true;
+            animator.defaultClipId = StaticSpriteDefinitions.RoomObject_Animation_Data.GetClipIdByName("deturret_left");
+            sprite.usesOverrideMaterial = true;
+            Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+            mat.mainTexture = sprite.renderer.material.mainTexture;
+            mat.SetColor("_EmissiveColor", new Color32(255, 222, 0, 255));
+            mat.SetFloat("_EmissiveColorPower", 3f);
+            mat.SetFloat("_EmissivePower", 1);
+            sprite.renderer.material = mat;
+            DeturretLeft.CreateFastBody(new IntVector2(16, 16), new IntVector2(0, -4), CollisionLayer.PlayerBlocker);
+            DeturretLeft.CreateFastBody(new IntVector2(16, 16), new IntVector2(0, -4), CollisionLayer.EnemyBlocker);
+            DeturretLeft.CreateFastBody(new IntVector2(16, 16), new IntVector2(0, -4), CollisionLayer.BulletBlocker);
+
+
+
+            BreakableAPI_Bundled.GenerateTransformObject(DeturretLeft.gameObject, new Vector2(0.5f, 0.5f), "attachy");
+            AIBulletBank bulletBankLeft = DeturretLeft.gameObject.AddComponent<AIBulletBank>();
+			DeturretController deturretC = DeturretLeft.gameObject.AddComponent<DeturretController>();
 			deturretC.Speed = -60;
 
 			var mody_left = deturretC.gameObject.CreateFastBody(new IntVector2(80,80), new IntVector2(-40, -40), CollisionLayer.LowObstacle,  false, true);
-
-
             deturretC.speculativeRigidbody = mody_left;
 			bulletBankLeft.Bullets = new List<AIBulletBank.Entry>();
 			bulletBankLeft.Bullets.Add(entry);
 
+            StaticReferences.StoredRoomObjects.Add("deturretLeft", DeturretLeft);
+            Alexandria.DungeonAPI.StaticReferences.customObjects.Add("psog:deturretLeft", DeturretLeft);
 
-            StaticReferences.StoredRoomObjects.Add("deturretLeft", deturretLeft.gameObject);
-            Alexandria.DungeonAPI.StaticReferences.customObjects.Add("psog:deturretLeft", deturretLeft.gameObject);
-
-
+            /*
             MajorBreakable deturretRight = BreakableAPIToolbox.GenerateMajorBreakable("deturretRight", idlePaths.Reverse().ToArray(), 7, idlePaths, 18, 15000, true, 16, 16, -4, 0, true, null, null, true, null);
 			EnemyToolbox.GenerateShootPoint(deturretRight.gameObject, new Vector2(0.5f, 0.5f), "attachy");
 			AIBulletBank bulletBankRight = deturretRight.gameObject.AddComponent<AIBulletBank>();
 			DeturretController deturretR = deturretRight.gameObject.AddComponent<DeturretController>();
+			*/
 
-            var mody_right = deturretR.gameObject.CreateFastBody(new IntVector2(80, 80), new IntVector2(-40, -40), CollisionLayer.LowObstacle, false, true);
+            var DeturretRight = PrefabBuilder.BuildObject("Deturret Right");
+            DeturretRight.layer = 20;
+            sprite = DeturretRight.AddComponent<tk2dSprite>();
+            animator = DeturretRight.AddComponent<tk2dSpriteAnimator>();
+            animator.library = StaticSpriteDefinitions.RoomObject_Animation_Data;
+            animator.playAutomatically = true;
+            animator.defaultClipId = StaticSpriteDefinitions.RoomObject_Animation_Data.GetClipIdByName("deturret_right");
+            sprite.usesOverrideMaterial = true;
+            mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+            mat.mainTexture = sprite.renderer.material.mainTexture;
+            mat.SetColor("_EmissiveColor", new Color32(255, 222, 0, 255));
+            mat.SetFloat("_EmissiveColorPower", 3f);
+            mat.SetFloat("_EmissivePower", 1);
+            sprite.renderer.material = mat;
+            DeturretRight.CreateFastBody(new IntVector2(16, 20), new IntVector2(0, -4), CollisionLayer.PlayerBlocker);
+            DeturretRight.CreateFastBody(new IntVector2(16, 20), new IntVector2(0, -4), CollisionLayer.EnemyBlocker);
+            DeturretRight.CreateFastBody(new IntVector2(16, 20), new IntVector2(0, -4), CollisionLayer.BulletBlocker);
+            DeturretController deturretR = DeturretRight.gameObject.AddComponent<DeturretController>();
+            AIBulletBank bulletBankRight = DeturretRight.gameObject.AddComponent<AIBulletBank>();
+            BreakableAPI_Bundled.GenerateTransformObject(DeturretRight.gameObject, new Vector2(0.5f, 0.5f), "attachy");
+
+
+            var mody_right = DeturretRight.gameObject.CreateFastBody(new IntVector2(80, 80), new IntVector2(-40, -40), CollisionLayer.LowObstacle, false, true);
 
             deturretR.Speed = 60;
             deturretR.speculativeRigidbody = mody_right;
@@ -130,8 +156,8 @@ namespace Planetside
             bulletBankRight.Bullets = new List<AIBulletBank.Entry>();
 			bulletBankRight.Bullets.Add(entry);
 
-			StaticReferences.StoredRoomObjects.Add("deturretRight", deturretRight.gameObject);
-            Alexandria.DungeonAPI.StaticReferences.customObjects.Add("psog:deturretRight", deturretRight.gameObject);
+			StaticReferences.StoredRoomObjects.Add("deturretRight", DeturretRight);
+            Alexandria.DungeonAPI.StaticReferences.customObjects.Add("psog:deturretRight", DeturretRight);
 
         }
     }

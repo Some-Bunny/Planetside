@@ -192,12 +192,35 @@ namespace Planetside
 
 			if (animator.OtherAnimations == null){
 				animator.OtherAnimations = new List<AIAnimator.NamedDirectionalAnimation>{greg};}
-			else{animator.OtherAnimations.Add(greg);}
+            animator.OtherAnimations.Add(greg); 
 			return newDirectionalAnimation;
         }
 
+        public static DirectionalAnimation AddNewDirectionAnimation(AIAnimator animator, string Prefix, string NamedDirectionPrefix, string[] animationNames, DirectionalAnimation.FlipType[] flipType, DirectionalAnimation.DirectionType directionType = DirectionalAnimation.DirectionType.Single)
+        {
+            DirectionalAnimation newDirectionalAnimation = new DirectionalAnimation
+            {
+                Type = directionType,
+                Prefix = Prefix,
+                AnimNames = animationNames,
+                Flipped = flipType
+            };
+            AIAnimator.NamedDirectionalAnimation greg = new AIAnimator.NamedDirectionalAnimation
+            {
+                name = NamedDirectionPrefix,
+                anim = newDirectionalAnimation
+            };
 
-		public static void AddEventTriggersToAnimation(tk2dSpriteAnimator animator, string animationName, Dictionary<int, string> frameAndEventName)
+            if (animator.OtherAnimations == null)
+            {
+                animator.OtherAnimations = new List<AIAnimator.NamedDirectionalAnimation> { greg };
+            }
+            animator.OtherAnimations.Add(greg);
+            return newDirectionalAnimation;
+        }
+
+
+        public static void AddEventTriggersToAnimation(tk2dSpriteAnimator animator, string animationName, Dictionary<int, string> frameAndEventName)
         {
 			foreach (var value in frameAndEventName)
             {
@@ -239,6 +262,23 @@ namespace Planetside
 				animator.GetClipByName(animationName).frames[value.Key].triggerEvent = true;
 			}
 		}
+        public static void AddSoundsToAnimationFrame(tk2dSpriteAnimation animator, string animationName, Dictionary<int, string> frameAndSoundName)//int frame, string soundName)
+        {
+            foreach (var value in frameAndSoundName)
+            {
+                animator.GetClipByName(animationName).frames[value.Key].eventAudio = value.Value;
+                animator.GetClipByName(animationName).frames[value.Key].triggerEvent = true;
+            }
+        }
+        public static void AddEventTriggersToAnimation(tk2dSpriteAnimation animator, string animationName, Dictionary<int, string> frameAndEventName)
+        {
+            foreach (var value in frameAndEventName)
+            {
+                var clip = animator.GetClipByName(animationName);
+                clip.frames[value.Key].eventInfo = value.Value;
+                clip.frames[value.Key].triggerEvent = true;
+            }
+        }
 
 
         public static void MarkAnimationAsSpawn(tk2dSpriteAnimator animator, string animationName)//int frame, string soundName)
@@ -283,7 +323,7 @@ namespace Planetside
 		public static GameObject GenerateShootPoint(GameObject attacher, Vector2 attachpoint, string name = "shootPoint")
         {
 			GameObject shootpoint = new GameObject(name);
-			shootpoint.transform.parent = attacher.transform;
+			shootpoint.transform.SetParent(attacher.transform);
 			shootpoint.transform.position = attachpoint;
 			return attacher.transform.Find(name).gameObject;
 		}

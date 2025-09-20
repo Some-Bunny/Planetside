@@ -67,7 +67,7 @@ namespace Planetside
 
         void DoEventChecks()
         {
-            if (GameManager.Instance.Dungeon.tileIndices.tilesetId != GlobalDungeonData.ValidTilesets.RATGEON || GameManager.Instance.Dungeon.tileIndices.tilesetId != GlobalDungeonData.ValidTilesets.HELLGEON)
+            if (GameManager.Instance.Dungeon.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.CATACOMBGEON)
             {
                 if (currentSWState == States.ALLOWED)
                 {
@@ -109,9 +109,7 @@ namespace Planetside
                 currentSWState = States.DISABLED;
                 TrapDefusalKit.RemoveTrapDefuseOverride("somethingwicked");
                 ResetMusic(GameManager.Instance.Dungeon);
-            }
-
-            
+            }        
         }
 
 
@@ -123,37 +121,27 @@ namespace Planetside
                 try
                 {
                     roomHandler.ClearReinforcementLayers();
-                    /*
-                    List<AIActor> activeEnemies = roomHandler.GetActiveEnemies(RoomHandler.ActiveEnemyType.RoomClear);
-                    if (activeEnemies != null && activeEnemies.Count > 0)
+
+
+                    List<AIActor> e = roomHandler.activeEnemies;
+                    if (e != null)
                     {
-                        for (int i = 0; i < activeEnemies.Count; i++)
+                        if (e.Count > 0)
                         {
-                            if (activeEnemies[i] != null)
+                            for (int i = e.Count - 1; i > -1; i--)
                             {
-                                roomHandler.DeregisterEnemy(activeEnemies[i], false);
-                                UnityEngine.Object.Destroy(activeEnemies[i].gameObject);
-                            }
-                        }
-                    }
-                    */
-                    List<AIActor> e = PlanetsideReflectionHelper.ReflectGetField<List<AIActor>>(typeof(RoomHandler), "activeEnemies", roomHandler);
-                    if (e != null && e.Count > 0)
-                    {
-                        for (int i = 0; i < e.Count; i++)
-                        {
-                            if (e[i] != null)
-                            {
-                                UnityEngine.Object.Destroy(e[i].gameObject);
+                                if (e[i] != null)
+                                {
+                                    UnityEngine.Object.Destroy(e[i].gameObject);
+                                }
                             }
                         }
                     }
 
-                    ReadOnlyCollection<IPlayerInteractable> yes = roomHandler.GetRoomInteractables();
-                    for (int i = 0; i < yes.Count; i++)
+                    ReadOnlyCollection<IPlayerInteractable> Interactables = roomHandler.GetRoomInteractables();
+                    for (int i = 0; i < Interactables.Count; i++)
                     {
-                        IPlayerInteractable touchy = yes[i];
-                        if (touchy is TeleporterController interaactableObj)
+                        if (Interactables[i] is TeleporterController interaactableObj)
                         {
                             roomHandler.DeregisterInteractable(interaactableObj);
                             interaactableObj.enabled = false;
@@ -167,8 +155,7 @@ namespace Planetside
 
 
                     BaseShopController[] componentsInChildren = GameManager.Instance.Dungeon.data.Entrance.hierarchyParent.parent.GetComponentsInChildren<BaseShopController>(true);
-                    bool flag3 = componentsInChildren != null && componentsInChildren.Length != 0;
-                    if (flag3)
+                    if (componentsInChildren != null && componentsInChildren.Length != 0)
                     {
 
                         foreach (BaseShopController shope in componentsInChildren)
@@ -189,8 +176,7 @@ namespace Planetside
                         }
                     }
                     GunberMuncherController[] muncher = GameManager.Instance.Dungeon.data.Entrance.hierarchyParent.parent.GetComponentsInChildren<GunberMuncherController>(true);
-                    bool muncjyflag = muncher != null && muncher.Length != 0;
-                    if (muncjyflag)
+                    if (muncher != null && muncher.Length != 0)
                     {
                         foreach (GunberMuncherController shope in muncher)
                         {
@@ -199,8 +185,7 @@ namespace Planetside
                     }
 
                     SellCellController[] sellcreep = GameManager.Instance.Dungeon.data.Entrance.hierarchyParent.parent.GetComponentsInChildren<SellCellController>(true);
-                    bool sellcreepflag = sellcreep != null && sellcreep.Length != 0;
-                    if (sellcreepflag)
+                    if (sellcreep != null && sellcreep.Length != 0)
                     {
                         foreach (SellCellController shope in sellcreep)
                         {

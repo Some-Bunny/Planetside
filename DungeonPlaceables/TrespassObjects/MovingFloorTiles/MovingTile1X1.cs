@@ -11,6 +11,7 @@ using System.Reflection;
 using Planetside;
 using BreakAbleAPI;
 using System.Collections;
+using Gungeon;
 
 
 namespace Planetside
@@ -22,7 +23,7 @@ namespace Planetside
         public MajorBreakable self;
         public bool T;
         public RoomEventTriggerCondition Trigger;
-
+        public string DestroyAnimation = "1x1_brick_move";
         public void Start()
         {
             self = base.gameObject.GetComponent<MajorBreakable>();
@@ -60,7 +61,7 @@ namespace Planetside
                 elapsed += BraveTime.DeltaTime;
                 yield return null;
             }
-            self.spriteAnimator.PlayAndDestroyObject("break");
+            self.spriteAnimator.PlayAndDestroyObject(DestroyAnimation);
             yield break;
         }
     }
@@ -69,46 +70,57 @@ namespace Planetside
     {
         public static void Init()
         {
-            string defaultPath = "Planetside/Resources/DungeonObjects/TrespassObjects/MovingFloorTiles/OneByOne/";
-            string[] breakPaths = new string[]
-            {
-                defaultPath+"pillar1x1_break_001.png",
-                defaultPath+"pillar1x1_break_002.png",
-                defaultPath+"pillar1x1_break_003.png",
-                defaultPath+"pillar1x1_break_004.png",
-                defaultPath+"pillar1x1_break_005.png",
-                defaultPath+"pillar1x1_break_006.png",
-                defaultPath+"pillar1x1_break_007.png",
-                defaultPath+"pillar1x1_break_008.png",
-                defaultPath+"pillar1x1_break_009.png",
-                defaultPath+"pillar1x1_break_010.png",
-                defaultPath+"pillar1x1_break_011.png",
-                defaultPath+"pillar1x1_break_012.png",
-                defaultPath+"pillar1x1_break_013.png",
-                defaultPath+"pillar1x1_break_014.png",
-                defaultPath+"pillar1x1_break_015.png",
-                defaultPath+"pillar1x1_break_016.png",
-                defaultPath+"pillar1x1_break_017.png",
-                defaultPath+"pillar1x1_break_018.png",
-            };
-            GenerateCube(new string[] { defaultPath + "pillar1x1_idle.png" }, breakPaths, false, "trespassSmallMovingBlock_D0");
-            GenerateCube(new string[] { defaultPath + "pillar1x1_idle.png" }, breakPaths, true, "trespassSmallMovingBlock_D1");
+            GenerateCube(false, "trespassSmallMovingBlock_D0");
+            GenerateCube(true, "trespassSmallMovingBlock_D1");
 
         }
 
-        public static void GenerateCube(string[] idleP, string[] breakP, bool delay, string Name)
+        public static void GenerateCube(bool delay, string Name)
         {
+            /*
             MajorBreakable statue = BreakableAPIToolbox.GenerateMajorBreakable("trespass_light", idleP, 14, breakP, 13, 15000, true, 16, 24, 4, -4, true, null, null, true, null);
             TresspassLightController t = statue.gameObject.AddComponent<TresspassLightController>();
             t.GlowIntensity = 30;
+            */
 
-            MovingBlockController cont = statue.gameObject.AddComponent<MovingBlockController>();
+            var tearObject = Alexandria.PrefabAPI.PrefabBuilder.BuildObject($"Trespass Moving Block {Name}");
+            var sprite = tearObject.AddComponent<tk2dSprite>();
+            sprite.SetSprite(StaticSpriteDefinitions.Trespass_Room_Object_Data, "pillar1x1_break_001");
+
+            var animator = tearObject.AddComponent<tk2dSpriteAnimator>();
+
+
+            var majorBreakable = tearObject.AddComponent<MajorBreakable>();
+            majorBreakable.HitPoints = 15000;
+            majorBreakable.sprite = sprite;
+            majorBreakable.spriteAnimator = animator;
+
+            tearObject.CreateFastBody(new IntVector2(16, 24), new IntVector2(3, -4), CollisionLayer.HighObstacle);
+            tearObject.CreateFastBody(new IntVector2(16, 24), new IntVector2(3, -4), CollisionLayer.BeamBlocker);
+            tearObject.CreateFastBody(new IntVector2(16, 24), new IntVector2(3, -4), CollisionLayer.BulletBlocker);
+            tearObject.CreateFastBody(new IntVector2(16, 24), new IntVector2(3, -4), CollisionLayer.EnemyBlocker);
+            tearObject.CreateFastBody(new IntVector2(16, 24), new IntVector2(3, -4), CollisionLayer.PlayerBlocker);
+
+            animator.library = StaticSpriteDefinitions.Trespass_Room_Object_Animation;
+
+
+            Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+            sprite.usesOverrideMaterial = true;
+            mat.mainTexture = sprite.renderer.material.mainTexture;
+            mat.SetColor("_EmissiveColor", new Color32(0, 255, 255, 255));
+            mat.SetFloat("_EmissiveColorPower", 12f);
+            mat.SetFloat("_EmissivePower", 11);
+            sprite.renderer.material = mat;
+
+            majorBreakable.DamageReduction = 1000;
+
+            MovingBlockController cont = tearObject.gameObject.AddComponent<MovingBlockController>();
             cont.Trigger = RoomEventTriggerCondition.ON_ENEMIES_CLEARED;
             cont.T = delay;
-            statue.DamageReduction = 1000;
+            majorBreakable.DamageReduction = 1000;
             Dictionary<GameObject, float> dict = new Dictionary<GameObject, float>()
             {
-                { statue.gameObject, 1f },
+                { majorBreakable.gameObject, 1f },
             };
             DungeonPlaceable placeable = BreakableAPIToolbox.GenerateDungeonPlaceable(dict);
             StaticReferences.StoredDungeonPlaceables.Add(Name, placeable);

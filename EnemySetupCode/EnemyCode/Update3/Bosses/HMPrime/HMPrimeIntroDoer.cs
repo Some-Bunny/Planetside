@@ -33,6 +33,18 @@ namespace Planetside
             base.aiActor.healthHaver.flashesOnDamage = true;
             base.aiActor.healthHaver.IsVulnerable = true;
 
+            GameLevelDefinition lastLoadedLevelDefinition = GameManager.Instance.GetLastLoadedLevelDefinition();
+            if (lastLoadedLevelDefinition != null)
+            {
+                base.aiActor.healthHaver.m_damageCap = lastLoadedLevelDefinition.damageCap;
+                float num = 1f;
+                if (GameManager.Instance.CurrentGameType == GameManager.GameType.COOP_2_PLAYER)
+                {
+                    num = (GameManager.Instance.COOP_ENEMY_HEALTH_MULTIPLIER + 2f) / 2f;
+                }
+                base.aiActor.healthHaver.m_bossDpsCap = lastLoadedLevelDefinition.bossDpsCap * num;
+            }
+
             if (base.aiActor.aiAnimator != null)
             {
                 GameUIBossHealthController gameUIBossHealthController = GameUIRoot.Instance.bossController;

@@ -3,11 +3,15 @@
   "WorkspaceRootPath": "D:\\reposSecondary\\failsafes\\Planetside\\Assetbundle Stuff\\Unity Projects\\PlanetsideSpritesBundle\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{39389EDC-B04F-DAEA-DAB6-B43C3D4C2D31}|Assembly-CSharp-Editor.csproj|D:\\reposSecondary\\failsafes\\Planetside\\Assetbundle Stuff\\Unity Projects\\PlanetsideSpritesBundle\\assets\\editor\\buildassetbundles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{2DCC9A25-C5B4-E08C-780B-CE81D6D5C908}|Assembly-CSharp.csproj|d:\\repossecondary\\failsafes\\planetside\\assetbundle stuff\\unity projects\\planetsidespritesbundle\\assets\\tk2droot\\tk2d\\code\\sprites\\tk2dsprite.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2DCC9A25-C5B4-E08C-780B-CE81D6D5C908}|Assembly-CSharp.csproj|solutionrelative:assets\\tk2droot\\tk2d\\code\\sprites\\tk2dsprite.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{39389EDC-B04F-DAEA-DAB6-B43C3D4C2D31}|Assembly-CSharp-Editor.csproj|d:\\repossecondary\\failsafes\\planetside\\assetbundle stuff\\unity projects\\planetsidespritesbundle\\assets\\editor\\buildassetbundles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{39389EDC-B04F-DAEA-DAB6-B43C3D4C2D31}|Assembly-CSharp-Editor.csproj|solutionrelative:assets\\editor\\buildassetbundles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{39389EDC-B04F-DAEA-DAB6-B43C3D4C2D31}|Assembly-CSharp-Editor.csproj|d:\\repossecondary\\failsafes\\planetside\\assetbundle stuff\\unity projects\\planetsidespritesbundle\\assets\\tk2droot\\tk2d\\editor\\sprites\\tk2dspriteanimatoreditor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{39389EDC-B04F-DAEA-DAB6-B43C3D4C2D31}|Assembly-CSharp-Editor.csproj|D:\\reposSecondary\\failsafes\\Planetside\\Assetbundle Stuff\\Unity Projects\\PlanetsideSpritesBundle\\assets\\tk2droot\\tk2d\\editor\\sprites\\tk2dspriteanimatoreditor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{39389EDC-B04F-DAEA-DAB6-B43C3D4C2D31}|Assembly-CSharp-Editor.csproj|solutionrelative:assets\\tk2droot\\tk2d\\editor\\sprites\\tk2dspriteanimatoreditor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -66,7 +70,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 10,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -78,7 +82,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
+              "Title": "tk2dSprite.cs",
+              "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Assetbundle Stuff\\Unity Projects\\PlanetsideSpritesBundle\\Assets\\TK2DROOT\\tk2d\\Code\\Sprites\\tk2dSprite.cs",
+              "RelativeDocumentMoniker": "Assets\\TK2DROOT\\tk2d\\Code\\Sprites\\tk2dSprite.cs",
+              "ToolTip": "D:\\reposSecondary\\failsafes\\Planetside\\Assetbundle Stuff\\Unity Projects\\PlanetsideSpritesBundle\\Assets\\TK2DROOT\\tk2d\\Code\\Sprites\\tk2dSprite.cs",
+              "RelativeToolTip": "Assets\\TK2DROOT\\tk2d\\Code\\Sprites\\tk2dSprite.cs",
+              "ViewState": "AQIAAF8AAAAAAAAAAAAcwHMAAAAgAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-14T20:53:21.321Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "JsonReader.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Assetbundle Stuff\\Unity Projects\\PlanetsideSpritesBundle\\Assets\\Editor\\JsonReader.cs",
               "RelativeDocumentMoniker": "Assets\\Editor\\JsonReader.cs",
@@ -90,7 +107,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "tk2dSpriteGuiUtility.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Assetbundle Stuff\\Unity Projects\\PlanetsideSpritesBundle\\Assets\\TK2DROOT\\tk2d\\Editor\\tk2dSpriteGuiUtility.cs",
               "RelativeDocumentMoniker": "Assets\\TK2DROOT\\tk2d\\Editor\\tk2dSpriteGuiUtility.cs",
@@ -102,7 +119,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "tk2dSpriteCollectionData.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Assetbundle Stuff\\Unity Projects\\PlanetsideSpritesBundle\\Assets\\TK2DROOT\\tk2d\\Code\\Sprites\\tk2dSpriteCollectionData.cs",
               "RelativeDocumentMoniker": "Assets\\TK2DROOT\\tk2d\\Code\\Sprites\\tk2dSpriteCollectionData.cs",
@@ -114,7 +131,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "AttachPointData.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Assetbundle Stuff\\Unity Projects\\PlanetsideSpritesBundle\\Assets\\TK2DROOT\\tk2dUI\\Editor\\AttachPointData.cs",
               "RelativeDocumentMoniker": "Assets\\TK2DROOT\\tk2dUI\\Editor\\AttachPointData.cs",
@@ -126,7 +143,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "dfEditorUtil.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Assetbundle Stuff\\Unity Projects\\PlanetsideSpritesBundle\\Assets\\DFGUI\\DFGUI\\Editor\\dfEditorUtil.cs",
               "RelativeDocumentMoniker": "Assets\\DFGUI\\DFGUI\\Editor\\dfEditorUtil.cs",
@@ -138,7 +155,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "dfControlInspector.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Assetbundle Stuff\\Unity Projects\\PlanetsideSpritesBundle\\Assets\\DFGUI\\DFGUI\\Editor\\dfControlInspector.cs",
               "RelativeDocumentMoniker": "Assets\\DFGUI\\DFGUI\\Editor\\dfControlInspector.cs",
@@ -150,7 +167,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "tk2dSpriteAnimatorEditor.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Assetbundle Stuff\\Unity Projects\\PlanetsideSpritesBundle\\Assets\\TK2DROOT\\tk2d\\Editor\\Sprites\\tk2dSpriteAnimatorEditor.cs",
               "RelativeDocumentMoniker": "Assets\\TK2DROOT\\tk2d\\Editor\\Sprites\\tk2dSpriteAnimatorEditor.cs",
@@ -158,12 +175,11 @@
               "RelativeToolTip": "Assets\\TK2DROOT\\tk2d\\Editor\\Sprites\\tk2dSpriteAnimatorEditor.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAEAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-14T22:47:40.38Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-14T22:47:40.38Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "tk2dSpriteAnimation.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Assetbundle Stuff\\Unity Projects\\PlanetsideSpritesBundle\\Assets\\TK2DROOT\\tk2d\\Code\\Sprites\\tk2dSpriteAnimation.cs",
               "RelativeDocumentMoniker": "Assets\\TK2DROOT\\tk2d\\Code\\Sprites\\tk2dSpriteAnimation.cs",
@@ -175,7 +191,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "BuildAssetBundles.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Assetbundle Stuff\\Unity Projects\\PlanetsideSpritesBundle\\Assets\\Editor\\BuildAssetBundles.cs",
               "RelativeDocumentMoniker": "Assets\\Editor\\BuildAssetBundles.cs",
@@ -188,7 +204,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "tk2dSpriteCollectionBuilder.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Assetbundle Stuff\\Unity Projects\\PlanetsideSpritesBundle\\Assets\\TK2DROOT\\tk2d\\Editor\\Sprites\\tk2dSpriteCollectionBuilder.cs",
               "RelativeDocumentMoniker": "Assets\\TK2DROOT\\tk2d\\Editor\\Sprites\\tk2dSpriteCollectionBuilder.cs",
@@ -200,7 +216,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "tk2dSpriteAnimationClipEditor.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Assetbundle Stuff\\Unity Projects\\PlanetsideSpritesBundle\\Assets\\TK2DROOT\\tk2d\\Editor\\Sprites\\SpriteAnimationEditor\\tk2dSpriteAnimationClipEditor.cs",
               "RelativeDocumentMoniker": "Assets\\TK2DROOT\\tk2d\\Editor\\Sprites\\SpriteAnimationEditor\\tk2dSpriteAnimationClipEditor.cs",
@@ -212,7 +228,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "tk2dAtlasBuilder.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Assetbundle Stuff\\Unity Projects\\PlanetsideSpritesBundle\\Assets\\TK2DROOT\\tk2d\\Editor\\Sprites\\Atlas\\tk2dAtlasBuilder.cs",
               "RelativeDocumentMoniker": "Assets\\TK2DROOT\\tk2d\\Editor\\Sprites\\Atlas\\tk2dAtlasBuilder.cs",
@@ -224,7 +240,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "tk2dBaseSprite.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Assetbundle Stuff\\Unity Projects\\PlanetsideSpritesBundle\\Assets\\TK2DROOT\\tk2d\\Code\\Sprites\\tk2dBaseSprite.cs",
               "RelativeDocumentMoniker": "Assets\\TK2DROOT\\tk2d\\Code\\Sprites\\tk2dBaseSprite.cs",
@@ -236,7 +252,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "tk2dSpriteCollection.cs",
               "DocumentMoniker": "D:\\reposSecondary\\failsafes\\Planetside\\Assetbundle Stuff\\Unity Projects\\PlanetsideSpritesBundle\\Assets\\TK2DROOT\\tk2d\\Code\\Sprites\\tk2dSpriteCollection.cs",
               "RelativeDocumentMoniker": "Assets\\TK2DROOT\\tk2d\\Code\\Sprites\\tk2dSpriteCollection.cs",

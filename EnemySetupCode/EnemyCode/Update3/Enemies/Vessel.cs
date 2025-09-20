@@ -108,16 +108,20 @@ namespace Planetside
         }
 		private IEnumerator DoChainBreakAway(AIActor enemy)
 		{
-			Vector2 vector = base.aiActor.sprite.WorldCenter;
+			var myEnemy = base.aiActor;
+
+            if (myEnemy == null) { yield break; }
+
+            Vector2 vector = myEnemy.sprite.WorldCenter;
 			Vector2 vector2 = enemy.sprite.WorldCenter;
 			int num2 = Mathf.Max(Mathf.CeilToInt(Vector2.Distance(vector, vector2)), 1)*2;
 			for (int i = 0; i < num2; i++)
 			{
 				if (enemy == null) { yield break; }
-				if (base.aiActor == null) { yield break; }
+				if (myEnemy == null) { yield break; }
 
 				float t = (float)i / (float)num2;
-				Vector3 vector3 = Vector3.Lerp(enemy.sprite.WorldCenter, base.aiActor.sprite.WorldCenter, t);
+				Vector3 vector3 = Vector3.Lerp(enemy.sprite.WorldCenter, myEnemy.sprite.WorldCenter, t);
 				GameObject gameObject = SpawnManager.SpawnVFX(StaticVFXStorage.BlueSynergyPoofVFX, false);
 				gameObject.transform.position = vector3;
 				gameObject.transform.localScale *= 0.75f - (t*0.5f);

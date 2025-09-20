@@ -45,6 +45,12 @@ namespace Planetside
         }
 
 
+        public override void OnDestroy()
+        {
+            this.ClearLink();
+            base.OnDestroy();
+        }
+
 
         public void InvokeKill()
         {
@@ -1159,7 +1165,7 @@ namespace Planetside
             FakePrefab.MarkAsFakePrefab(projectile.gameObject);
             UnityEngine.Object.DontDestroyOnLoad(projectile);
             projectile.baseData.damage = 0f;
-            projectile.baseData.speed = 0f;
+            projectile.baseData.speed = 0.5f;
             projectile.ManualControl = true;
 
             ImprovedAfterImage yes = projectile.gameObject.AddComponent<ImprovedAfterImage>();
@@ -1185,7 +1191,9 @@ namespace Planetside
             AnimateBullet.ConstructListOfSameValues<Projectile>(null, amount));
             projectile.shouldRotate = false;
             projectile.collidesWithEnemies = false;
-            projectile.baseData.range = 420;
+            projectile.baseData.range = 42000;
+            projectile.specRigidbody.CollideWithOthers = false;
+            projectile.specRigidbody.CollideWithTileMap = false;
 
             projectile.sprite.usesOverrideMaterial = true;
             Material mater = projectile.sprite.GetCurrentSpriteDef().material = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
@@ -1236,7 +1244,7 @@ namespace Planetside
             hit.baseData = new ProjectileData();
             hit.CopyFrom<Projectile>(_Hitscan);
             hit.baseData.CopyFrom<ProjectileData>(_Hitscan.baseData);
-            hit.baseData.damage = 5.75f;
+            hit.baseData.damage = 5.25f;
             hit.baseData.speed = 0.01f;
             Destroy(_Hitscan);
             Hitscan = hit;

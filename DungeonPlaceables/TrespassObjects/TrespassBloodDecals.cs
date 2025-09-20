@@ -11,6 +11,9 @@ using System.Reflection;
 using Planetside;
 using BreakAbleAPI;
 using System.Collections;
+using Alexandria.PrefabAPI;
+using FullInspector;
+using Planetside.Static_Storage;
 
 
 namespace Planetside
@@ -19,36 +22,40 @@ namespace Planetside
     {
         public static void Init()
         {
-            string defaultPath = "Planetside/Resources/DungeonObjects/TrespassObjects/TrespassDecals/BloodSmall/";
-            Dictionary<GameObject, float> decal2x2List = new Dictionary<GameObject, float>()
-            {
-                { BreakableAPIToolbox.GenerateDecalObject("blood_spallter_1", new string[] {defaultPath+ "bloodsplatter_001.png" }, 1), 1f },
-                { BreakableAPIToolbox.GenerateDecalObject("blood_spallter_2", new string[] {defaultPath+ "bloodsplatter_002.png" }, 1), 1f },
-                { BreakableAPIToolbox.GenerateDecalObject("blood_spallter_3", new string[] {defaultPath+ "bloodsplatter_003.png" }, 1), 1f },
-                { BreakableAPIToolbox.GenerateDecalObject("blood_spallter_4", new string[] {defaultPath+ "bloodsplatter_004.png" }, 1), 1f },
-                { BreakableAPIToolbox.GenerateDecalObject("blood_spallter_5", new string[] {defaultPath+ "bloodsplatter_005.png" }, 1), 1f },
-                { BreakableAPIToolbox.GenerateDecalObject("blood_spallter_6", new string[] {defaultPath+ "bloodsplatter_006.png" }, 1), 1f },
-            };
-            foreach(var Entry in decal2x2List)
-            {
-                Entry.Key.gameObject.GetOrAddComponent<TresspassUnlitShaderController>();
-            }
-            DungeonPlaceable placeable = BreakableAPIToolbox.GenerateDungeonPlaceable(decal2x2List);
+
+
+            var splatterSmall = PrefabBuilder.BuildObject("Small Blood Splatter");
+            splatterSmall.layer = 20;
+            var sprite = splatterSmall.AddComponent<tk2dSprite>();
+            var animator = splatterSmall.AddComponent<tk2dSpriteAnimator>();
+            animator.library = StaticSpriteDefinitions.Trespass_Room_Object_Animation;
+            animator.playAutomatically = true;
+            animator.defaultClipId = StaticSpriteDefinitions.Trespass_Room_Object_Animation.GetClipIdByName("bloodSplatter_small");       
+            sprite.usesOverrideMaterial = true;
+            Material mat = new Material(StaticShaders.Default_Shader);
+            sprite.renderer.material = mat;
+            sprite.IsPerpendicular = false;
+
+
+            DungeonPlaceable placeable = BreakableAPIToolbox.GenerateDungeonPlaceable(new Dictionary<GameObject, float>() { { splatterSmall, 1 } });
             StaticReferences.StoredDungeonPlaceables.Add("smallRandomBloodDecal", placeable);
             Alexandria.DungeonAPI.StaticReferences.customPlaceables.Add("PSOG_smallRandomBloodDecal", placeable);
 
-            string defaultPath2 = "Planetside/Resources/DungeonObjects/TrespassObjects/TrespassDecals/Blood/";
-            Dictionary<GameObject, float> decal2x2ListBlood = new Dictionary<GameObject, float>()
-            {
-                { BreakableAPIToolbox.GenerateDecalObject("blood_spallter_1", new string[] { defaultPath2 + "blooddecal_1.png" }, 1), 1f },
-                { BreakableAPIToolbox.GenerateDecalObject("blood_spallter_1", new string[] { defaultPath2 + "blooddecal_2.png" }, 1), 1f },
-                { BreakableAPIToolbox.GenerateDecalObject("blood_spallter_1", new string[] { defaultPath2 + "blooddecal_3.png" }, 1), 1f },
-            };
-            foreach (var Entry in decal2x2ListBlood)
-            {
-                Entry.Key.gameObject.GetOrAddComponent<TresspassUnlitShaderController>();
-            }
-            DungeonPlaceable placeable2 = BreakableAPIToolbox.GenerateDungeonPlaceable(decal2x2List);
+
+            var splatterLarge = PrefabBuilder.BuildObject("Large Blood Splatter");
+            splatterSmall.layer = 20;
+            sprite = splatterLarge.AddComponent<tk2dSprite>();
+            animator = splatterLarge.AddComponent<tk2dSpriteAnimator>();
+            animator.library = StaticSpriteDefinitions.Trespass_Room_Object_Animation;
+            animator.playAutomatically = true;
+            animator.defaultClipId = StaticSpriteDefinitions.Trespass_Room_Object_Animation.GetClipIdByName("bloodSplatter_large");
+            sprite.usesOverrideMaterial = true;
+            mat = new Material(StaticShaders.Default_Shader);
+            sprite.renderer.material = mat;
+            sprite.IsPerpendicular = false;
+
+
+            DungeonPlaceable placeable2 = BreakableAPIToolbox.GenerateDungeonPlaceable(new Dictionary<GameObject, float>() { { splatterLarge, 1 } });
             StaticReferences.StoredDungeonPlaceables.Add("RandomBloodDecal", placeable2);
             Alexandria.DungeonAPI.StaticReferences.customPlaceables.Add("PSOG_RandomBloodDecal", placeable);
         }

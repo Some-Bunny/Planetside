@@ -88,7 +88,7 @@ namespace Planetside
 
         public void Interact(PlayerController interactor)
         {
-            self.spriteAnimator.Play("break");
+            self.spriteAnimator.Play("trespassContainer_break");
             this.m_room.DeregisterInteractable(this);
         }
 
@@ -119,41 +119,52 @@ namespace Planetside
     {
         public static void Init()
         {
-            string defaultPath = "Planetside/Resources/DungeonObjects/TrespassObjects/TrespassContainer/";
-            string[] idlePaths = new string[]
-            {
-                defaultPath+"trespassContainer_idle_001.png",
-                defaultPath+"trespassContainer_idle_002.png",
-                defaultPath+"trespassContainer_idle_003.png",
-                defaultPath+"trespassContainer_idle_004.png",
-                defaultPath+"trespassContainer_idle_005.png",
-                defaultPath+"trespassContainer_idle_006.png",
-                defaultPath+"trespassContainer_idle_007.png",
-                defaultPath+"trespassContainer_idle_008.png",
-            };
-            string[] breakPaths = new string[]
-            {
-                defaultPath+"trespassContainer_break_001.png",
-                defaultPath+"trespassContainer_break_002.png",
-                defaultPath+"trespassContainer_break_003.png",
-                defaultPath+"trespassContainer_break_004.png",
-                defaultPath+"trespassContainer_break_005.png",
-                defaultPath+"trespassContainer_break_006.png",
-                defaultPath+"trespassContainer_break_007.png",
-                defaultPath+"trespassContainer_break_008.png",
-                defaultPath+"trespassContainer_break_009.png",
-            };
-            MajorBreakable statue = BreakableAPIToolbox.GenerateMajorBreakable("trespass_container", idlePaths, 6, breakPaths, 16, 15000, true, 28, 24, 2, -4, true, null, null, true, null);
-            BreakableAPIToolbox.GenerateShadow(defaultPath + "trespassContainer_shadow.png", "trespass_container_shadow", statue.gameObject.transform, new Vector3(0f, -0.1875f));
 
-            statue.gameObject.AddComponent<TresspassLightController>();
-            statue.gameObject.AddComponent<TrespassContainterInteractable>();
-            statue.gameObject.AddComponent<DungeonPlaceableBehaviour>();
-            statue.DamageReduction = 1000;
-            EnemyToolbox.AddEventTriggersToAnimation(statue.spriteAnimator, "break", new Dictionary<int, string> { {4, "SpawnPickups"}, { 7, "SpawnItem" } });
+            var tearObject = Alexandria.PrefabAPI.PrefabBuilder.BuildObject("Void Container");
+            var sprite = tearObject.AddComponent<tk2dSprite>();
+            sprite.SetSprite(StaticSpriteDefinitions.Trespass_Room_Object_Data, "trespassContainer_idle_001");
+            sprite.IsPerpendicular = false;
+
+            var animator = tearObject.AddComponent<tk2dSpriteAnimator>();
+            animator.library = StaticSpriteDefinitions.Trespass_Room_Object_Animation;
+            animator.playAutomatically = true;
+            animator.defaultClipId = StaticSpriteDefinitions.Trespass_Room_Object_Animation.GetClipIdByName("trespassContainer_idle");
+
+            var majorBreakable = tearObject.AddComponent<MajorBreakable>();
+            majorBreakable.HitPoints = 15000;
+            majorBreakable.sprite = sprite;
+            majorBreakable.spriteAnimator = animator;
+
+            tearObject.CreateFastBody(new IntVector2(26, 30), new IntVector2(3, -4), CollisionLayer.HighObstacle);
+            tearObject.CreateFastBody(new IntVector2(26, 30), new IntVector2(3, -4), CollisionLayer.BeamBlocker);
+            tearObject.CreateFastBody(new IntVector2(26, 30), new IntVector2(3, -4), CollisionLayer.BulletBlocker);
+            tearObject.CreateFastBody(new IntVector2(26, 30), new IntVector2(3, -4), CollisionLayer.EnemyBlocker);
+            tearObject.CreateFastBody(new IntVector2(26, 30), new IntVector2(3, -4), CollisionLayer.PlayerBlocker);
 
 
-            StaticReferences.StoredRoomObjects.Add("trespassContainer", statue.gameObject);
+
+
+            var holder = tearObject.gameObject.AddComponent<TearHolderController>();
+            holder.self = majorBreakable;
+
+            Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+            sprite.usesOverrideMaterial = true;
+            mat.mainTexture = sprite.renderer.material.mainTexture;
+            mat.SetColor("_EmissiveColor", new Color32(0, 255, 255, 255));
+            mat.SetFloat("_EmissiveColorPower", 8f);
+            mat.SetFloat("_EmissivePower", 4);
+            sprite.renderer.material = mat;
+
+            majorBreakable.DamageReduction = 1000;
+
+
+
+            majorBreakable.gameObject.AddComponent<TrespassContainterInteractable>();
+            majorBreakable.gameObject.AddComponent<DungeonPlaceableBehaviour>();
+            majorBreakable.DamageReduction = 1000;
+            EnemyToolbox.AddEventTriggersToAnimation(majorBreakable.spriteAnimator, "trespassContainer_break", new Dictionary<int, string> { {4, "SpawnPickups"}, { 6, "SpawnItem" } });
+
+            StaticReferences.StoredRoomObjects.Add("trespassContainer", majorBreakable.gameObject);
         }
     }
 }

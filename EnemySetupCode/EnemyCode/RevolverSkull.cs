@@ -59,7 +59,13 @@ namespace Planetside
 				companion.aiActor.PathableTiles = CellTypes.PIT | CellTypes.FLOOR;
 
                 EnemyToolbox.AddShadowToAIActor(companion.aiActor, StaticEnemyShadows.defaultShadow, new Vector2(0.5f, 0.125f), "shadowPos");
-
+                
+				mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+                mat.mainTexture = companion.aiActor.sprite.renderer.material.mainTexture;
+                mat.SetColor("_EmissiveColor", new Color32(255, 0, 0, 255));
+                mat.SetFloat("_EmissiveColorPower", 1.55f);
+                mat.SetFloat("_EmissivePower", 100);
+                companion.sprite.renderer.material = mat;
 
                 companion.aiActor.specRigidbody.PixelColliders.Clear();
 				companion.aiActor.specRigidbody.PixelColliders.Add(new PixelCollider
@@ -435,16 +441,6 @@ namespace Planetside
 			}
 			private void Start()
 			{
-				if (!base.aiActor.IsBlackPhantom)
-                {
-					Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
-					mat.mainTexture = base.aiActor.sprite.renderer.material.mainTexture;
-					mat.SetColor("_EmissiveColor", new Color32(255, 0, 0, 255));
-					mat.SetFloat("_EmissiveColorPower", 1.55f);
-					mat.SetFloat("_EmissivePower", 100);
-					aiActor.sprite.renderer.material = mat;
-				}
-
 
                 m_StartRoom = aiActor.GetAbsoluteParentRoom();
 				base.aiActor.healthHaver.OnPreDeath += (obj) =>

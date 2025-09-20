@@ -7,6 +7,9 @@ using UnityEngine;
 using SynergyAPI;
 using Alexandria.DungeonAPI;
 using Alexandria.Misc;
+using HarmonyLib;
+using MonoMod.Cil;
+using System.Reflection;
 
 namespace Planetside
 {
@@ -48,15 +51,7 @@ namespace Planetside
                 }
             }
         }
-        public static int ForgottenRoundOublietteID;
-
-		public override void Pickup(PlayerController player)
-		{base.Pickup(player);}
-		public override DebrisObject Drop(PlayerController player)
-		{
-			DebrisObject result = base.Drop(player);
-			return result;
-		}		
+        public static int ForgottenRoundOublietteID;	
 	}
 	public class ForgottenRoundAbbey : BasicStatPickup
 	{
@@ -98,20 +93,100 @@ namespace Planetside
         }
         public static int ForgottenRoundAbbeyID;
 
-		public override void Pickup(PlayerController player)
-		{ base.Pickup(player); }
-		public override DebrisObject Drop(PlayerController player)
-		{
-			DebrisObject result = base.Drop(player);
-			return result;
-		}
 	}
-	public class ForgottenRoundRNG : BasicStatPickup
+    public class ForgottenRoundRat: BasicStatPickup
+    {
+        public static void Init()
+        {
+            string name = "Forgotten Round 3";
+            GameObject gameObject = new GameObject(name);
+            ForgottenRoundRat warVase = gameObject.AddComponent<ForgottenRoundRat>();
+            var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("forgottenroundrat1"), data, gameObject);
+            //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
+            string shortDesc = "Forgotten Third Chamber";
+            string longDesc = "This exceptional, yet false artifact indicates mastery of the third hidden chamber.\n\nAll the power of this forgotten round comes from the piece of cheese adorned atop it.";
+            ItemBuilder.SetupItem(warVase, shortDesc, longDesc, "psog", "Forgotten Round");
+            warVase.quality = PickupObject.ItemQuality.SPECIAL;
+            warVase.IsMasteryToken = true;
+            warVase.ForcedPositionInAmmonomicon = 4;
+            warVase.AddAsChamberGunMastery("PlanetsideOfGunymede", 32768);
+            SynergyAPI.SynergyBuilder.AddItemToSynergy(warVase, CustomSynergyType.MASTERS_CHAMBERS);
+
+            ItemBuilder.AddPassiveStatModifier(warVase, PlayerStats.StatType.Damage, 0.1f, StatModifier.ModifyMethod.ADDITIVE);
+            ForgottenRoundRat.ForgottenRoundRatID = warVase.PickupObjectId;
+            EncounterDatabase.GetEntry(warVase.encounterTrackable.EncounterGuid).usesPurpleNotifications = true;
+            NoPunch = warVase.encounterTrackable.journalData.AmmonomiconFullEntry;
+            Punch = "#PSOG_RAT_ROUND_PUNCHOUT_WIN";
+            //item.encounterTrackable.journalData.AmmonomiconFullEntry
+
+            SpriteBuilder.AddSpriteToCollection(StaticSpriteDefinitions.Passive_Item_Sheet_Data.GetSpriteDefinition("forgottenroundrat2"), SpriteBuilder.ammonomiconCollection);
+
+
+            var dataItem = AmmonomiconAPI.HelperTools.CreateJournalEntryData("Forgotten Round", "forgottenroundrat2", "Forgotten Third Chamber", "This exceptional, yet false artifact indicates mastery of the third hidden chamber.\n\nA crown worthy of an unbeatable fighter.", false);
+            var en = AmmonomiconAPI.HelperTools.CreateDummyEncounterDatabaseEntry(dataItem, "ratMasterySecondary");
+
+            EncounterDatabase.Instance.Entries.Add(en);
+        }
+        public static string NoPunch;
+        public static string Punch;
+
+        public void SetSprite(bool isPunchedout)
+        {
+            if (isPunchedout)
+            {
+                this.sprite.SetSprite("forgottenroundrat2");
+                this.encounterTrackable.journalData.AmmonomiconFullEntry = Punch;
+                this.encounterTrackable.journalData.m_cachedAmmonomiconFullEntry = Punch;
+                this.encounterTrackable.journalData.AmmonomiconSprite = "forgottenroundrat2";
+                this.encounterTrackable.EncounterGuid = "ratMasterySecondary";
+            }
+            else
+            {
+                this.sprite.SetSprite("forgottenroundrat1");
+                this.encounterTrackable.journalData.AmmonomiconFullEntry = NoPunch;
+                this.encounterTrackable.journalData.m_cachedAmmonomiconFullEntry = NoPunch;
+                this.encounterTrackable.journalData.AmmonomiconSprite = "forgottenroundrat2";
+            }
+
+        }
+        /*
+        [HarmonyPatch]
+        private static class AmmonomiconPageRendererInitializeEquipmentPageLeft
+        {
+            [HarmonyPatch(typeof(AmmonomiconPageRenderer), nameof(AmmonomiconPageRenderer.InitializeEquipmentPageLeft))]
+            [HarmonyILManipulator]
+            private static void GameUIAmmoControllerUpdateUIGunIL(ILContext il)
+            {
+                ETGModConsole.Log("fraeak");
+
+                ILCursor cursor = new ILCursor(il);
+                if (!cursor.TryGotoNext(MoveType.After,
+                    instr => instr.MatchLdstr("Passive Items Panel")))
+                    return;
+
+
+
+                ETGModConsole.Log("Holy  Molly!");
+                if (!cursor.TryGotoNext(MoveType.Before,
+                    instr => instr.MatchLdloc(2)))
+                    return;
+                ETGModConsole.Log("a");
+
+                //cursor.Emit(OpCodes.Ldloc_3);
+                //cursor.Emit(OpCodes.Call, typeof(PunchoutControllerPlaceNotePatch).GetMethod(nameof(ModifyNote), BindingFlags.Static | BindingFlags.NonPublic));
+            }
+            
+        }
+        */
+
+        public static int ForgottenRoundRatID;
+    }
+    public class ForgottenRoundRNG : BasicStatPickup
 	{
 		public static void Init()
 		{
-			string name = "Forgotten Round 3";
-			//string resourcePath = "Planetside/Resources/forgottenroundrng.png";
+			string name = "Forgotten Round 4";
 			GameObject gameObject = new GameObject(name);
 			ForgottenRoundRNG warVase = gameObject.AddComponent<ForgottenRoundRNG>();
             var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
@@ -126,7 +201,6 @@ namespace Planetside
             warVase.AddAsChamberGunMastery("PlanetsideOfGunymede", 2048);
 			Alexandria.DungeonAPI.MasteryOverrideHandler.RegisterFloorForMasterySpawn(MasteryOverrideHandler.ViableRegisterFloors.RNG);
 
-            //warVase.AddAsChamberGunMastery("PlanetsideOfGunymede", 2048);
             SynergyAPI.SynergyBuilder.AddItemToSynergy(warVase, CustomSynergyType.MASTERS_CHAMBERS);
 
 			ItemBuilder.AddPassiveStatModifier(warVase, PlayerStats.StatType.Damage, 0.1f, StatModifier.ModifyMethod.ADDITIVE);
@@ -146,13 +220,5 @@ namespace Planetside
             }
         }
         public static int ForgottenRoundRNGID;
-
-		public override void Pickup(PlayerController player)
-		{ base.Pickup(player); }
-		public override DebrisObject Drop(PlayerController player)
-		{
-			DebrisObject result = base.Drop(player);
-			return result;
-		}
 	}
 }

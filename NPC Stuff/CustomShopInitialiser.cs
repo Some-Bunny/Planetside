@@ -501,7 +501,7 @@ namespace Planetside
                 , null
                 , null
                 , null
-                , null
+                , OnRobbed
                 , null
                 , ""
                 , true
@@ -514,7 +514,9 @@ namespace Planetside
                 , false
                 , 0.1f
                 , null);
+            timedShop.GetComponent<CustomShopController>().StealChance = 0;
             StaticReferences.StoredRoomObjects.Add("timedShop", timedShop);
+            
             Alexandria.DungeonAPI.StaticReferences.customObjects.Add("psog:timedShop", timedShop);
 
 
@@ -548,6 +550,19 @@ namespace Planetside
                 -0.3125f,
                 3.25f);
             */
+        }
+        public static bool OnRobbed(CustomShopController shop, PlayerController playerController, PickupObject pickupObject, int a)
+        {
+            playerController.DidUnstealthyAction();
+            shop.NotifyStealFailed();
+            foreach (var entry in shop.m_itemControllers)
+            {
+                if (entry != null)
+                {
+                    (entry as CustomShopItemController).ForceItemOutOfStock();
+                }
+            }
+            return true;
         }
     }
 

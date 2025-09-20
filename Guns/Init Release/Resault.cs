@@ -82,34 +82,7 @@ namespace Planetside
             FakePrefab.MarkAsFakePrefab(Plus10);
             UnityEngine.Object.DontDestroyOnLoad(Plus10);
             Resault.Plus10AMMOVFXPrefab = Plus10;
-            /*
-			//+20
-            var Plus20 = ItemBuilder.AddSpriteToObjectAssetbundle("Plus 20", Collection.GetSpriteIdByName("plus20ammo"), Collection);
-            FakePrefab.MarkAsFakePrefab(Plus20);
-            UnityEngine.Object.DontDestroyOnLoad(Plus20);
-            Resault.Plus20AMMOVFXPrefab = Plus20;
-            //+4
-            var Plus4 = ItemBuilder.AddSpriteToObjectAssetbundle("Plus 4", Collection.GetSpriteIdByName("plus4ammo"), Collection);
-            FakePrefab.MarkAsFakePrefab(Plus4);
-            UnityEngine.Object.DontDestroyOnLoad(Plus4);
-            Resault.Plus4AMMOVFXPrefab = Plus4;
 
-            //+16
-            var Plus16 = ItemBuilder.AddSpriteToObjectAssetbundle("Plus 16", Collection.GetSpriteIdByName("plus16ammosyn"), Collection);
-            FakePrefab.MarkAsFakePrefab(Plus16);
-            UnityEngine.Object.DontDestroyOnLoad(Plus16);
-            Resault.Plus16AMMOVFXPrefab = Plus16;
-            //+40
-            var Plus40 = ItemBuilder.AddSpriteToObjectAssetbundle("Plus 40", Collection.GetSpriteIdByName("plus40ammosyn"), Collection);
-            FakePrefab.MarkAsFakePrefab(Plus40);
-            UnityEngine.Object.DontDestroyOnLoad(Plus40);
-            Resault.Plus40AMMOVFXPrefab = Plus40;
-            //+80
-            var Plus80 = ItemBuilder.AddSpriteToObjectAssetbundle("Plus 80", Collection.GetSpriteIdByName("plus80ammosyn"), Collection);
-            FakePrefab.MarkAsFakePrefab(Plus80);
-            UnityEngine.Object.DontDestroyOnLoad(Plus80);
-            Resault.Plus80AMMOVFXPrefab = Plus80;
-			*/
 
             Resault.ResaultID = gun.PickupObjectId;
 			List<string> yah = new List<string>
@@ -144,41 +117,38 @@ namespace Planetside
 		{
 			bool canAmmo = false;
 			orig(self, player);
-			if (player.HasPickupID(ResaultID))
-			{
-				for (int i = 0; i < player.inventory.AllGuns.Count; i++)
-				{
-					Gun g = player.inventory.AllGuns[i];
-                    if (g.PickupObjectId == ResaultID)
-					{
-                        if (canAmmo)
+            for (int i = 0; i < player.inventory.AllGuns.Count; i++)
+            {
+                Gun g = player.inventory.AllGuns[i];
+                if (g.PickupObjectId == ResaultID)
+                {
+                    if (canAmmo)
+                    {
+                        if (self.mode == AmmoPickup.AmmoPickupMode.FULL_AMMO && player.CurrentGun != null && player.CurrentGun == g)
                         {
-                            if (self.mode == AmmoPickup.AmmoPickupMode.FULL_AMMO && player.CurrentGun != null && player.CurrentGun == g)
-                            {
-                                DoVFX(g, 20, "plus20ammo", "plus80ammosyn", player);
+                            DoVFX(g, 20, "plus20ammo", "plus80ammosyn", player);
 
-                            }
-                            else if (self.mode == AmmoPickup.AmmoPickupMode.SPREAD_AMMO && player.CurrentGun != null)
-                            {
-                                if (player.CurrentGun == g)
-                                {
-                                    DoVFX(g, 10, "plus10ammo", "plus40ammosyn", player);
-                                }
-                                else
-                                {
-                                    DoVFX(g, 4, "plus10ammo", "plus16ammosyn", player);
-                                }
-                            }
-                            canAmmo = false;
                         }
-                        else
+                        else if (self.mode == AmmoPickup.AmmoPickupMode.SPREAD_AMMO && player.CurrentGun != null)
                         {
-                            canAmmo = true;
+                            if (player.CurrentGun == g)
+                            {
+                                DoVFX(g, 10, "plus10ammo", "plus40ammosyn", player);
+                            }
+                            else
+                            {
+                                DoVFX(g, 4, "plus10ammo", "plus16ammosyn", player);
+                            }
                         }
+                        canAmmo = false;
                     }
-				}				
-			}
-		}
+                    else
+                    {
+                        canAmmo = true;
+                    }
+                }
+            }
+        }
 
 		public static void DoVFX(Gun g, int ammoAmount, string VFX, string SynergyVFX, PlayerController player)
 		{
@@ -197,53 +167,68 @@ namespace Planetside
 		}
 		public override void OnPostFired(PlayerController player, Gun bruhgun)
 		{
-            int currentAmmo = bruhgun.CurrentAmmo;
-            if (currentAmmo >= 25)
+			int currentMax = player.CurrentGun.GetBaseMaxAmmo();
+            if (currentMax > 25)
             {
-                player.CurrentGun.SetBaseMaxAmmo(player.CurrentGun.GetBaseMaxAmmo() - 1);
+				int AmountOfAmmoToRemove = 1;
+                if (isInfAmmoSynergy == true)
+                {
+					AmountOfAmmoToRemove *= 4;
+                }
+                player.CurrentGun.SetBaseMaxAmmo(Mathf.Max(currentMax - AmountOfAmmoToRemove, 25));
+
             }
-		}
+        }
 		public override void PostProcessProjectile(Projectile projectile)
 		{
-			PlayerController player = this.gun.CurrentOwner as PlayerController;
-			if (player.PlayerHasActiveSynergy("Infinite Ammo?"))
-            {
-				projectile.baseData.damage *= 1.25f;
-            }
 			projectile.OnWillKillEnemy = (Action<Projectile, SpeculativeRigidbody>)Delegate.Combine(projectile.OnWillKillEnemy, new Action<Projectile, SpeculativeRigidbody>(this.OnKill));
 		}
 		private void OnKill(Projectile arg1, SpeculativeRigidbody arg2)
 		{
 			PlayerController player = arg1.Owner as PlayerController;
 
-			bool flag = !arg2.aiActor.healthHaver.IsDead && arg2.aiActor != null && arg2.aiActor.GetComponent<MarkResault>() == null;
-			if (flag)
+			if (arg2.aiActor != null && arg2.aiActor.GetComponent<MarkResault>() == null)
 			{
 				arg2.aiActor.gameObject.AddComponent<MarkResault>();
 				int AmmoRegained = 10;
-				int ae = player.PlayerHasActiveSynergy("Infinite Ammo?") ? 20 : 5;
+				int ae = isInfAmmoSynergy == true ? 20 : 5;
 				AkSoundEngine.PostEvent("Play_OBJ_spears_clank_01", base.gameObject);
 				GameObject original = Resault.Plus10AMMOVFXPrefab;
 				
 				var spr = original.GetComponent<tk2dSprite>();
 				this.gun.SetBaseMaxAmmo(gun.GetBaseMaxAmmo() + AmmoRegained);
                 this.gun.ammo += player.PlayerHasActiveSynergy("Recycling") ? ae * 2 : ae;
-                player.BloopItemAboveHead(spr, player.PlayerHasActiveSynergy("Infinite Ammo?") ? "plus40ammosyn" : "plus10ammo");
+                player.BloopItemAboveHead(spr, isInfAmmoSynergy == true ? "plus40ammosyn" : "plus10ammo");
 
 			}
 		}
 
+        public override void Update()
+        {
+            base.Update();
+			if (gun.CurrentOwner != null && gun.CurrentOwner is PlayerController player)
+			{
+				var b = player.PlayerHasActiveSynergy("Infinite Ammo?");
+				if (b != isInfAmmoSynergy)
+				{
+					isInfAmmoSynergy = b;
+					if (b == true)
+					{
+						gun.DefaultModule.ammoCost = 4;
 
+                    }
+					else
+					{
+                        gun.DefaultModule.ammoCost = 1;
+                    }
+                }
+            }
+        }
 
-		private static GameObject Plus10AMMOVFXPrefab;
-		//private static GameObject Plus20AMMOVFXPrefab;
-		//private static GameObject Plus4AMMOVFXPrefab;
+		private bool isInfAmmoSynergy = false;
 
-		//private static GameObject Plus16AMMOVFXPrefab;
-		//private static GameObject Plus40AMMOVFXPrefab;
-		//private static GameObject Plus80AMMOVFXPrefab;
-
+        private static GameObject Plus10AMMOVFXPrefab;
 	}
-	public class MarkResault : BraveBehaviour{}
+	public class MarkResault : MonoBehaviour{}
 }
 

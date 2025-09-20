@@ -12,6 +12,9 @@ using System.Reflection;
 using Planetside;
 using BreakAbleAPI;
 using Planetside.Controllers.ContainmentBreach.BossChanges.Misc;
+using Alexandria.PrefabAPI;
+using Alexandria.cAPI;
+using Planetside.Static_Storage;
 
 namespace Planetside
 {
@@ -19,7 +22,7 @@ namespace Planetside
     {
         public static void Init()
         {
-
+            /*
             string defaultPath = "Planetside/Resources/DungeonObjects/TrespassObjects/TrespassPots/";
             string[] shardPaths = new string[]
             {
@@ -38,11 +41,37 @@ namespace Planetside
             {
                 shardObjects[e].gameObject.AddComponent<TresspassUnlitShaderController>();
             }
+            */
 
-            ShardCluster potShardCluster = BreakableAPIToolbox.GenerateShardCluster(shardObjects, 0.7f, 1.2f, 6, 9, 0.6f);
-            string shadowPath = "Planetside/Resources/DungeonObjects/EmberPot/emberpotshadow.png";
-            MinorBreakable breakable = BreakableAPIToolbox.GenerateMinorBreakable("TrespassPot1", new string[] {defaultPath+ "trespasspot1_idle.png" }, 2, new string[] { defaultPath + "trespasspot1_break.png" }, 10, "Play_OBJ_pot_shatter_01", true, 13, 14, 1, 1);
-            BreakableAPIToolbox.GenerateShadow(shadowPath, "trespassPot_shadow", breakable.gameObject.transform, new Vector3(0, -0.125f));
+            DebrisObject shardObjects = BreakableAPI_Bundled.GenerateDebrisObject("shard1", StaticSpriteDefinitions.Trespass_Room_Object_Data, true, 1, 5, 720, 540, null, 0.6f, null, null, 0, false);
+            var animatorShard = shardObjects.AddComponent<tk2dSpriteAnimator>();
+            animatorShard.library = StaticSpriteDefinitions.Trespass_Room_Object_Animation;
+            animatorShard.playAutomatically = true;
+            animatorShard.defaultClipId = StaticSpriteDefinitions.Trespass_Room_Object_Animation.GetClipIdByName("pot_shards");
+            ShardCluster potShardCluster = BreakableAPIToolbox.GenerateShardCluster(new DebrisObject[] { shardObjects }, 0.7f, 1.2f, 6, 9, 0.6f);
+
+            //string shadowPath = "Planetside/Resources/DungeonObjects/EmberPot/emberpotshadow.png";
+
+
+
+            //MinorBreakable breakable = BreakableAPIToolbox.GenerateMinorBreakable("TrespassPot1", new string[] {defaultPath+ "trespasspot1_idle.png" }, 2, new string[] { defaultPath + "trespasspot1_break.png" }, 10, "Play_OBJ_pot_shatter_01", true, 13, 14, 1, 1);
+            //BreakableAPIToolbox.GenerateShadow(shadowPath, "trespassPot_shadow", breakable.gameObject.transform, new Vector3(0, -0.125f));
+
+
+            var newCandle = PrefabBuilder.BuildObject($"Trespass Pot 1");
+            var sprite = newCandle.AddComponent<tk2dSprite>();
+            sprite.SetSprite(StaticSpriteDefinitions.Trespass_Room_Object_Data, "trespasspot1_idle");
+            sprite.usesOverrideMaterial = true;
+            var mat = new Material(StaticShaders.Default_Shader);
+            mat.mainTexture = sprite.renderer.material.mainTexture;
+            sprite.renderer.material = mat;
+            newCandle.CreateFastBody(new IntVector2(13, 14), new IntVector2(1, 1), CollisionLayer.LowObstacle);
+            newCandle.CreateFastBody(new IntVector2(13, 14), new IntVector2(1, 1), CollisionLayer.BulletBlocker);
+            newCandle.CreateFastBody(new IntVector2(13, 14), new IntVector2(1, 1), CollisionLayer.BeamBlocker);
+
+            var breakable = newCandle.AddComponent<MinorBreakable>();
+            sprite.IsPerpendicular = false;
+
 
             breakable.stopsBullets = true;
             breakable.OnlyPlayerProjectilesCanBreak = false;
@@ -73,9 +102,23 @@ namespace Planetside
             breakable.sprite.SortingOrder = 0;
             breakable.sprite.HeightOffGround = -1;
             breakable.gameObject.layer = LayerMask.NameToLayer("FG_Critical");
+            breakable.breakAudioEventName = "Play_OBJ_pot_shatter_01";
 
-            MinorBreakable breakable2 = BreakableAPIToolbox.GenerateMinorBreakable("TrespassPot2", new string[] { defaultPath + "trespasspot2_idle.png" }, 2, new string[] { defaultPath + "trespasspot2_break.png" }, 10, "Play_OBJ_pot_shatter_01", true, 13, 14, 1, 1);
-            BreakableAPIToolbox.GenerateShadow(shadowPath, "trespassPot_shadow", breakable2.gameObject.transform, new Vector3(0, -0.125f));
+            //MinorBreakable breakable2 = BreakableAPIToolbox.GenerateMinorBreakable("TrespassPot2", new string[] { defaultPath + "trespasspot2_idle.png" }, 2, new string[] { defaultPath + "trespasspot2_break.png" }, 10, "Play_OBJ_pot_shatter_01", true, 13, 14, 1, 1);
+            //BreakableAPIToolbox.GenerateShadow(shadowPath, "trespassPot_shadow", breakable2.gameObject.transform, new Vector3(0, -0.125f));
+
+            newCandle = PrefabBuilder.BuildObject($"Trespass Pot 2");
+            sprite = newCandle.AddComponent<tk2dSprite>();
+            sprite.SetSprite(StaticSpriteDefinitions.Trespass_Room_Object_Data, "trespasspot2_idle");
+            sprite.usesOverrideMaterial = true;
+            mat = new Material(StaticShaders.Default_Shader);
+            mat.mainTexture = sprite.renderer.material.mainTexture;
+            sprite.renderer.material = mat;
+            newCandle.CreateFastBody(new IntVector2(13, 14), new IntVector2(1, 1), CollisionLayer.LowObstacle);
+            newCandle.CreateFastBody(new IntVector2(13, 14), new IntVector2(1, 1), CollisionLayer.BulletBlocker);
+            newCandle.CreateFastBody(new IntVector2(13, 14), new IntVector2(1, 1), CollisionLayer.BeamBlocker);
+
+            var breakable2 = newCandle.AddComponent<MinorBreakable>();
 
             breakable2.stopsBullets = true;
             breakable2.OnlyPlayerProjectilesCanBreak = false;
@@ -104,11 +147,27 @@ namespace Planetside
             breakable2.sprite.SortingOrder = 0;
             breakable2.sprite.HeightOffGround = -1;
             breakable2.gameObject.layer = LayerMask.NameToLayer("FG_Critical");
+            breakable2.breakAudioEventName = "Play_OBJ_pot_shatter_01";
+            sprite.IsPerpendicular = false;
 
 
 
-            MinorBreakable breakable3 = BreakableAPIToolbox.GenerateMinorBreakable("TrespassPot3", new string[] { defaultPath + "trespasspot3_idle.png" }, 2, new string[] { defaultPath + "trespasspot3_break.png" }, 10, "Play_OBJ_pot_shatter_01", true, 13, 14, 1, 1);
-            BreakableAPIToolbox.GenerateShadow(shadowPath, "trespassPot_shadow", breakable3.gameObject.transform, new Vector3(0, -0.125f));
+            //MinorBreakable breakable3 = BreakableAPIToolbox.GenerateMinorBreakable("TrespassPot3", new string[] { defaultPath + "trespasspot3_idle.png" }, 2, new string[] { defaultPath + "trespasspot3_break.png" }, 10, "Play_OBJ_pot_shatter_01", true, 13, 14, 1, 1);
+            //BreakableAPIToolbox.GenerateShadow(shadowPath, "trespassPot_shadow", breakable3.gameObject.transform, new Vector3(0, -0.125f));
+
+            newCandle = PrefabBuilder.BuildObject($"Trespass Pot 3");
+            sprite = newCandle.AddComponent<tk2dSprite>();
+            sprite.SetSprite(StaticSpriteDefinitions.Trespass_Room_Object_Data, "trespasspot3_idle");
+            sprite.usesOverrideMaterial = true;
+            mat = new Material(StaticShaders.Default_Shader);
+            mat.mainTexture = sprite.renderer.material.mainTexture;
+            sprite.renderer.material = mat;
+            newCandle.CreateFastBody(new IntVector2(13, 14), new IntVector2(1, 1), CollisionLayer.LowObstacle);
+            newCandle.CreateFastBody(new IntVector2(13, 14), new IntVector2(1, 1), CollisionLayer.BulletBlocker);
+            newCandle.CreateFastBody(new IntVector2(13, 14), new IntVector2(1, 1), CollisionLayer.BeamBlocker);
+
+            var breakable3 = newCandle.AddComponent<MinorBreakable>();
+
 
             breakable3.stopsBullets = true;
             breakable3.OnlyPlayerProjectilesCanBreak = false;
@@ -137,6 +196,8 @@ namespace Planetside
             breakable3.sprite.SortingOrder = 0;
             breakable3.sprite.HeightOffGround = -1;
             breakable3.gameObject.layer = LayerMask.NameToLayer("FG_Critical");
+            breakable3.breakAudioEventName = "Play_OBJ_pot_shatter_01";
+            sprite.IsPerpendicular = false;
 
             Dictionary<GameObject, float> dict = new Dictionary<GameObject, float>()
             {

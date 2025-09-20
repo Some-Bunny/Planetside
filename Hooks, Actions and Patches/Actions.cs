@@ -46,6 +46,18 @@ namespace Planetside
 
         public static void FloorReachedHook(Action<Dungeon> orig, Dungeon self)
 		{
+            var gameManager = GameManager.Instance;
+            var gameStatsManager = GameStatsManager.Instance;
+            if (gameManager != null && gameStatsManager != null && gameStatsManager.IsInSession == true)
+            {
+                if (gameStatsManager.GetSessionStatValue(TrackedStats.TIME_PLAYED) < 0.15f)
+                {
+                    if (OnPreRunStart != null)
+                    {
+                        OnPreRunStart(gameManager.CurrentGameMode);
+                    }
+                }
+            }
             orig(self);
             self.StartCoroutine(DelayChecks(self));
 		}
@@ -70,6 +82,7 @@ namespace Planetside
         }
 
         public static Action<PlayerController, PlayerController, GameManager.GameMode> OnRunStart;
+        public static Action<GameManager.GameMode> OnPreRunStart;
 
 
 
@@ -103,7 +116,10 @@ namespace Planetside
 
         public static IEnumerator StartHookDungeon(Func<Dungeon, IEnumerator> orig, Dungeon self)
 		{
-            PreDungeonTrueStart?.Invoke(self);
+            if (PreDungeonTrueStart != null)
+            {
+                PreDungeonTrueStart(self);
+            }
             IEnumerator origEnum = orig(self);
 			while (origEnum.MoveNext())
 			{

@@ -368,11 +368,11 @@ namespace Planetside
         }
 
 
-        public static void DoHitStop(this GameObject parent, float Duration)
+        public static void DoHitStop(this GameObject parent, float Duration, Action OnHitStopEnd = null)
         {
-            GameManager.Instance.StartCoroutine(HitStop(parent, Duration));
+            GameManager.Instance.StartCoroutine(HitStop(parent, Duration, OnHitStopEnd));
         }
-        private static IEnumerator HitStop(GameObject gameActor, float Duration)
+        private static IEnumerator HitStop(GameObject gameActor, float Duration, Action OnHitStopEnd = null)
         {
             float DeltaTime = Time.deltaTime;
             BraveTime.SetTimeScaleMultiplier(0, GameManager.Instance.gameObject);
@@ -383,6 +383,8 @@ namespace Planetside
                 yield return null;
             }
             BraveTime.SetTimeScaleMultiplier(1, GameManager.Instance.gameObject);
+            if (OnHitStopEnd != null)
+                OnHitStopEnd.Invoke();
             yield break;
         }
 

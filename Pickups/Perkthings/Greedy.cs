@@ -451,27 +451,32 @@ namespace Planetside
         {
             float elapsed = 0f;
             bool isCaught = false;
-
+            var pickupMover = coins.gameObject.GetOrAddComponent<PickupMover>();
+            pickupMover.acceleration = 0;
+            pickupMover.maxSpeed = 0f;
+            pickupMover.minRadius = 0;
 
             while (elapsed < lifeTime * 0.75f)
             {
                 if (coins == null) { yield break; }
                 var Player = GameManager.Instance.GetActivePlayerClosestToPoint(coins.transform.position);
-                if (MathToolbox.IsCloserThan(Player.transform.position, coins.transform.position, 3))
+                if (Player)
                 {
-                    if (isCaught == false)
+                    if (MathToolbox.IsCloserThan(Player.transform.position, coins.transform.position, 3))
                     {
-                        PickupMover pickupMover = coins.gameObject.GetOrAddComponent<PickupMover>();
-                        if (pickupMover.specRigidbody)
+                        if (isCaught == false)
                         {
-                            pickupMover.specRigidbody.CollideWithTileMap = false;
+                            pickupMover.acceleration = 20f;
+                            pickupMover.maxSpeed = 15f;
+                            pickupMover.minRadius = 0.01f;
+                            pickupMover.moveIfRoomUnclear = true;
+                            pickupMover.stopPathingOnContact = false;
+                            isCaught = true;
                         }
-                        pickupMover.acceleration = 20f;
-                        pickupMover.maxSpeed = 15f;
-                        pickupMover.minRadius = 0.01f;
-                        pickupMover.moveIfRoomUnclear = true;
-                        pickupMover.stopPathingOnContact = false;
-                        isCaught = true;
+                    }
+                    else
+                    {
+                        elapsed += BraveTime.DeltaTime;
                     }
                 }
                 else
@@ -496,22 +501,25 @@ namespace Planetside
             {
                 if (coins == null) { yield break; }
                 var Player = GameManager.Instance.GetActivePlayerClosestToPoint(coins.transform.position);
-                if (MathToolbox.IsCloserThan(Player.transform.position, coins.transform.position, 3))
+                if (Player)
                 {
-                    if (isCaught == false)
+                    if (MathToolbox.IsCloserThan(Player.transform.position, coins.transform.position, 3))
                     {
-                        PickupMover pickupMover = coins.gameObject.GetOrAddComponent<PickupMover>();
-                        if (pickupMover.specRigidbody)
+                        if (isCaught == false)
                         {
-                            pickupMover.specRigidbody.CollideWithTileMap = false;
+
+                            pickupMover.m_shouldPath = true;
+                            pickupMover.acceleration = 20f;
+                            pickupMover.maxSpeed = 5f;
+                            pickupMover.minRadius = -1f;
+                            pickupMover.moveIfRoomUnclear = true;
+                            pickupMover.stopPathingOnContact = false;
+                            isCaught = true;
                         }
-                        pickupMover.m_shouldPath = true;
-                        pickupMover.acceleration = 20f;
-                        pickupMover.maxSpeed = 5f;
-                        pickupMover.minRadius = -1f;
-                        pickupMover.moveIfRoomUnclear = true;
-                        pickupMover.stopPathingOnContact = false;
-                        isCaught = true;
+                    }
+                    else
+                    {
+                        elapsed += BraveTime.DeltaTime;
                     }
                 }
                 else
@@ -531,7 +539,10 @@ namespace Planetside
                         DoParticlePoof(coins, elapsed / 2, new Vector2(1, 1));
 
                     }
-                    coins.renderer.enabled = enabled;
+                    if (coins)
+                    {
+                        coins.renderer.enabled = enabled;
+                    }
                 }
                 else if (coins == null)
                 {
