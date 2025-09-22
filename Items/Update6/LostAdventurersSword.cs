@@ -7,6 +7,7 @@ using UnityEngine;
 using System.Collections;
 using SaveAPI;
 using Brave.BulletScript;
+using Alexandria.Misc;
 
 namespace Planetside
 {
@@ -25,7 +26,8 @@ namespace Planetside
             item.quality = PickupObject.ItemQuality.SPECIAL;
             ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.Curse, 2f, StatModifier.ModifyMethod.ADDITIVE);
             ID = item.PickupObjectId;
-		}
+            item.RemovePickupFromLootTables();
+        }
 
         public FleePlayerData data = new FleePlayerData()
         {

@@ -7,6 +7,7 @@ using UnityEngine;
 using System.Collections;
 using SaveAPI;
 using Brave.BulletScript;
+using Alexandria.Misc;
 
 namespace Planetside
 {
@@ -26,6 +27,7 @@ namespace Planetside
             ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.Curse, 1, StatModifier.ModifyMethod.ADDITIVE);
             ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.AdditionalItemCapacity, 2, StatModifier.ModifyMethod.ADDITIVE);
             ID = item.PickupObjectId;
+			item.RemovePickupFromLootTables();
 		}
 		public static int ID;
 		public override void Pickup(PlayerController player)

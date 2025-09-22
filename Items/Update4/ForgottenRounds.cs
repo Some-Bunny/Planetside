@@ -39,6 +39,7 @@ namespace Planetside
             ForgottenRoundOubliette.ForgottenRoundOublietteID = warVase.PickupObjectId;
 			EncounterDatabase.GetEntry(warVase.encounterTrackable.EncounterGuid).usesPurpleNotifications = true;
             CustomActions.OnRewardPedestalDetermineContents += OnMasteryDetermineContents;
+            warVase.RemovePickupFromLootTables();
         }
 
         public static void OnMasteryDetermineContents(RewardPedestal pedestal, PlayerController determiner, CustomActions.ValidPedestalContents valids)
@@ -79,6 +80,7 @@ namespace Planetside
             ForgottenRoundAbbey.ForgottenRoundAbbeyID = warVase.PickupObjectId;
 			EncounterDatabase.GetEntry(warVase.encounterTrackable.EncounterGuid).usesPurpleNotifications = true;
             CustomActions.OnRewardPedestalDetermineContents += OnMasteryDetermineContents;
+            warVase.RemovePickupFromLootTables();
         }
 
         public static void OnMasteryDetermineContents(RewardPedestal pedestal, PlayerController determiner, CustomActions.ValidPedestalContents valids)
@@ -125,6 +127,7 @@ namespace Planetside
 
             var dataItem = AmmonomiconAPI.HelperTools.CreateJournalEntryData("Forgotten Round", "forgottenroundrat2", "Forgotten Third Chamber", "This exceptional, yet false artifact indicates mastery of the third hidden chamber.\n\nA crown worthy of an unbeatable fighter.", false);
             var en = AmmonomiconAPI.HelperTools.CreateDummyEncounterDatabaseEntry(dataItem, "ratMasterySecondary");
+            warVase.RemovePickupFromLootTables();
 
             EncounterDatabase.Instance.Entries.Add(en);
         }
@@ -207,6 +210,7 @@ namespace Planetside
 			ForgottenRoundRNG.ForgottenRoundRNGID = warVase.PickupObjectId;
 			EncounterDatabase.GetEntry(warVase.encounterTrackable.EncounterGuid).usesPurpleNotifications = true;
             CustomActions.OnRewardPedestalDetermineContents += OnMasteryDetermineContents;
+            warVase.RemovePickupFromLootTables();
         }
 
         public static void OnMasteryDetermineContents(RewardPedestal pedestal, PlayerController determiner, CustomActions.ValidPedestalContents valids)

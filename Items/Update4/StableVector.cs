@@ -25,7 +25,6 @@ namespace Planetside
 		public static void Init()
 		{
 			string itemName = "The Anchor";
-			//string resourceName = "Planetside/Resources/stableVector.png";
 			GameObject obj = new GameObject(itemName);
 			var item = obj.AddComponent<StableVector>();
             var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;

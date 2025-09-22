@@ -7,6 +7,7 @@ using UnityEngine;
 using System.Collections;
 using SaveAPI;
 using Brave.BulletScript;
+using Alexandria.Misc;
 
 namespace Planetside
 {
@@ -26,8 +27,9 @@ namespace Planetside
 			item.ArmorToGainOnInitialPickup = 1;
             ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.Curse, 2, StatModifier.ModifyMethod.ADDITIVE);
             ID = item.PickupObjectId;
-		}
-		public static int ID;
+            item.RemovePickupFromLootTables();
+        }
+        public static int ID;
 		public override void Pickup(PlayerController player)
 		{
 			base.Pickup(player);

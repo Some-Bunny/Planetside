@@ -565,7 +565,10 @@ namespace Planetside
                             {
                                 continue;
                             }
-
+                            if (shope.gameObject.name.ToLower().Contains("red") && shope.gameObject.name.ToLower().Contains("button"))
+                            {
+                                continue;
+                            }
 
                             if (!shope.gameObject.name.ToLower().Contains("jailed"))
                             {

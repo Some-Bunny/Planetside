@@ -15,6 +15,7 @@ using MonoMod;
 using GungeonAPI;
 using Pathfinding;
 using SaveAPI;
+using Alexandria.Misc;
 
 namespace Planetside
 {
@@ -158,6 +159,7 @@ namespace Planetside
                 weightRoom.room.CustomMusicEvent = "Play_MUS_Dungeon_State_NPC";
             }
             trespassDeeperTable = tableDeeper;
+            activeitem.RemovePickupFromLootTables();
         }
 
         public static GenericRoomTable trespassTable;

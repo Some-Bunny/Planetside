@@ -1183,8 +1183,11 @@ namespace Planetside
 		public override void Start()
 		{
 			base.Start();
-			base.aiActor.knockbackDoer.SetImmobile(true, "Elite.");
-			if (IsBoss == true)
+			if (base.aiActor.knockbackDoer)
+			{
+                base.aiActor.knockbackDoer.SetImmobile(true, "Elite.");
+            }
+            if (IsBoss == true)
 			{
 				Cooldown = 15f;
             }

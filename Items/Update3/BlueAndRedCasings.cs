@@ -38,8 +38,6 @@ namespace Planetside
             item.RespawnsIfPitfall = true;
             BlueCasingID = item.PickupObjectId;
             EncounterDatabase.GetEntry(item.encounterTrackable.EncounterGuid).usesPurpleNotifications = true;
-
-
         }
         public static int BlueCasingID;
         public override DebrisObject Drop(PlayerController player)

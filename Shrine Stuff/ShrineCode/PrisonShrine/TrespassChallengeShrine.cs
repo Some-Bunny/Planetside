@@ -17,6 +17,7 @@ using ItemAPI;
 using System.Collections.ObjectModel;
 using Pathfinding;
 using Alexandria.DungeonAPI;
+using BreakAbleAPI;
 
 namespace Planetside
 {
@@ -24,58 +25,6 @@ namespace Planetside
     {
 		public static void Add()
 		{
-            /*
-			string defaultPath = "Planetside/Resources/DungeonObjects/TrespassObjects/TrespassContainer/";
-			ShrineFactory iei = new ShrineFactory
-			{
-				name = "TrespassChallengeShrine",
-				modID = "psog",
-				text = "You feel an ominous energy coming from this statue.",
-				spritePath = defaultPath + "trespassContainer_idle_001.png",
-				acceptText = "Close the vessel.",
-				declineText = "Leave.",
-				OnAccept = Accept,
-				OnDecline = null,
-				CanUse = CanUse,
-				offset = new Vector3(0, 0, 0),
-				talkPointOffset = new Vector3(0, 3, 0),
-				isToggle = false,
-				isBreachShrine = false,
-				shadowPath = defaultPath + "trespassContainer_shadow.png",
-				ShadowOffsetX = 0f,
-				ShadowOffsetY = -0.125f,		
-				usesCustomColliderOffsetAndSize = true,
-				colliderSize = new IntVector2(32, 24),
-				colliderOffset = new IntVector2(1, 0),
-				RoomIconSpritePath = "Planetside/Resources/Shrines/iconsmiley.png",
-				AdditionalComponent = typeof(TresspassLightController)
-			};
-			string[] L = new string[]
-			{
-				defaultPath+"trespassContainer_idle_001.png",
-				defaultPath+"trespassContainer_idle_002.png",
-				defaultPath+"trespassContainer_idle_003.png",
-				defaultPath+"trespassContainer_idle_004.png",
-				defaultPath+"trespassContainer_idle_005.png",
-				defaultPath+"trespassContainer_idle_006.png",
-				defaultPath+"trespassContainer_idle_007.png",
-				defaultPath+"trespassContainer_idle_008.png",
-			};
-			string[] H = new string[]
-			{
-				defaultPath+"trespassContainer_break_001.png",
-				defaultPath+"trespassContainer_break_002.png",
-				defaultPath+"trespassContainer_break_003.png",
-				defaultPath+"trespassContainer_break_004.png",
-				defaultPath+"trespassContainer_break_005.png",
-				defaultPath+"trespassContainer_break_006.png",
-				defaultPath+"trespassContainer_break_007.png",
-				defaultPath+"trespassContainer_break_008.png",
-				defaultPath+"trespassContainer_break_009.png",
-			};
-			GameObject self = iei.BuildWithAnimations(L, 6, H, 16);
-			*/
-
 
 
             var tearObject = Alexandria.PrefabAPI.PrefabBuilder.BuildObject("Void Container");
@@ -100,8 +49,8 @@ namespace Planetside
 
 
 
-            var holder = tearObject.gameObject.AddComponent<TearHolderController>();
-            holder.self = majorBreakable;
+            //var holder = tearObject.gameObject.AddComponent<TearHolderController>();
+            //holder.self = majorBreakable;
 
             Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
             sprite.usesOverrideMaterial = true;
@@ -116,9 +65,9 @@ namespace Planetside
 
 
             var shrine = majorBreakable.gameObject.AddComponent<TrespassChallengeShrine>();
-			shrine.talkPoint = EnemyToolbox.GenerateShootPoint(shrine.gameObject, new Vector2(1.25f, 0.5f), "TalkTuah").transform;
+			shrine.talkPoint = BreakableAPI_Bundled.GenerateTransformObject(shrine.gameObject, new Vector2(1.25f, 0.5f), "TalkTuah").transform;
 
-            var roomIcon = Alexandria.PrefabAPI.PrefabBuilder.BuildObject("Void Container");
+            var roomIcon = Alexandria.PrefabAPI.PrefabBuilder.BuildObject("Void Container Room Icon");
 			var spr = roomIcon.AddComponent<tk2dSprite>();
 			spr.SetSprite(StaticSpriteDefinitions.Trespass_Room_Object_Data, "iconsmiley");
 
@@ -152,7 +101,6 @@ namespace Planetside
         private void Start()
         {
             SpriteOutlineManager.AddOutlineToSprite(base.sprite, Color.black, 1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
-            this.talkPoint = base.transform.Find("talkpoint");
 
             instanceRoom = GameManager.Instance.Dungeon.data.GetAbsoluteRoomFromPosition(base.transform.position.IntXY(VectorConversions.Floor));
             if (instanceRoom == null) { return; }
@@ -167,7 +115,6 @@ namespace Planetside
         public GameObject instanceMinimapIcon;
         public GameObject MinimapIconprefab;
 		public Transform talkPoint;
-		private RoomHandler m_parentRoom;
         public bool Used = false;
         
 
@@ -204,7 +151,7 @@ namespace Planetside
             }
             interactor.ClearInputOverride("shrineConversation");
             TextBoxManager.ClearTextBox(this.talkPoint);
-            if (Used == false)
+            if (Used == true)
             {
                 yield break;
             }
@@ -261,21 +208,21 @@ namespace Planetside
 
         public void ConfigureOnPlacement(RoomHandler room)
         {
-            this.m_parentRoom = room;
+            instanceRoom = room;
             this.RegisterMinimapIcon();
 
         }
 
         public void RegisterMinimapIcon()
         {
-            this.instanceMinimapIcon = Minimap.Instance.RegisterRoomIcon(this.m_parentRoom, this.MinimapIconprefab, false);
+            this.instanceMinimapIcon = Minimap.Instance.RegisterRoomIcon(this.instanceRoom, this.MinimapIconprefab, false);
         }
 
         public void GetRidOfMinimapIcon()
         {
             if (this.instanceMinimapIcon != null)
             {
-                Minimap.Instance.DeregisterRoomIcon(this.m_parentRoom, this.instanceMinimapIcon);
+                Minimap.Instance.DeregisterRoomIcon(this.instanceRoom, this.instanceMinimapIcon);
                 this.instanceMinimapIcon = null;
             }
         }
@@ -296,14 +243,14 @@ namespace Planetside
 
 	
 
-		public static void Accept(PlayerController user, GameObject shrine)
+		public void Accept(PlayerController user, GameObject shrine)
 		{
-			shrine.GetComponent<CustomShrineController>().numUses++;
-			Minimap.Instance.DeregisterRoomIcon(shrine.GetComponent<SimpleShrine>().instanceRoom, shrine.GetComponent<SimpleShrine>().instanceMinimapIcon);
-			tk2dSpriteAnimator animator = shrine.GetComponent<tk2dSpriteAnimator>();
+			Used = true;
+			GetRidOfMinimapIcon();
+            tk2dSpriteAnimator animator = this.GetComponent<tk2dSpriteAnimator>();
 			animator.Play("use");
 			GameManager.Instance.StartCoroutine(DoDelayStuff(shrine, user));
-			shrine.GetComponent<SimpleShrine>().instanceRoom.DeregisterInteractable(shrine.GetComponent<SimpleShrine>());
+            instanceRoom.DeregisterInteractable(this);
 
         }
 
@@ -348,6 +295,9 @@ namespace Planetside
 				elaWait += BraveTime.DeltaTime;
 				float t = Mathf.Min(elaWait/3, 1);
 				//voidHoleController.Radius = Mathf.Lerp(10f, 50, t);
+
+
+
 				voidHoleController.ChangeHoleSize(Mathf.Lerp(0.1f, 2, t));
                 //voidHoleController.transform.localScale = Vector3.Lerp(Vector3.one * 3, Vector3.one * 10, t);
                 yield return null;
@@ -419,7 +369,19 @@ namespace Planetside
 			};
 
 
-			AkSoundEngine.PostEvent("Play_PortalOpen", coolPortal.gameObject);
+            for (int i = 0; i < 24; i++)
+            {
+                ParticleBase.EmitParticles("BlueOrbParticle", 1, new ParticleSystem.EmitParams()
+                {
+                    startLifetime = UnityEngine.Random.Range(1.25f, 5f),
+                    velocity = MathToolbox.GetUnitOnCircle(BraveUtility.RandomAngle(), UnityEngine.Random.Range(2.5f, 12.5f)),
+                    startSize = UnityEngine.Random.Range(0.25f, 1.5f),
+                    position = coolPortal.transform.position
+                });
+            }
+
+
+            AkSoundEngine.PostEvent("Play_PortalOpen", coolPortal.gameObject);
 			AkSoundEngine.PostEvent("Play_PortalOpen", coolPortal.gameObject);
 			Exploder.DoDistortionWave(coolPortal.transform.position, 1.5f, 0.25f, 30, 2f);
 			UnityEngine.Object.Destroy(Shrine);
@@ -447,7 +409,7 @@ namespace Planetside
 				if (WavesSpawned == 3)
                 {
 					portalVisuals.ConstantlyPulsates = false;
-                    portalVisuals.LTS(Vector3.one * 2.5f, Vector3.zero, 1.2f);
+                    portalVisuals.LTS(Vector3.one * 2.5f, Vector3.zero, 1.2f, true);
                     portalVisuals.LSV(0.3f, 0f, 1.25f, "_OutlineWidth");
                     portalVisuals.LSV(105f, 10f, 3f, "_OutlinePower");
 
@@ -487,16 +449,28 @@ namespace Planetside
 				yield return new WaitForSeconds(1);
 				AkSoundEngine.PostEvent("Play_PortalOpen", portal.gameObject);
 				AkSoundEngine.PostEvent("Play_PortalOpen", portal.gameObject);
-				Exploder.DoDistortionWave(portal.transform.position, 1.5f, 0.25f, 30, 2f);
+				Exploder.DoDistortionWave(portal.transform.position, 1.5f, 0.25f, 50, 2f);
 				portalVisualsController.ConstantlyPulsates = true;
-				portalVisualsController.TimeBetweenPulses -= 0.3f;
+				portalVisualsController.TimeBetweenPulses -= 0.333f;
 
 				portalVisualsController.LSV(portalVisualsController.ReturnKeyWordValue("_OutlineWidth"), portalVisualsController.ReturnKeyWordValue("_OutlineWidth")+ 0.1f, 1.25f, "_OutlineWidth");
 				portalVisualsController.LSV(portalVisualsController.ReturnKeyWordValue("_OutlinePower"), portalVisualsController.ReturnKeyWordValue("_OutlinePower")+30f, 1f, "_OutlinePower");
 
+                for (int i = 0; i < 24; i++)
+                {
+                    ParticleBase.EmitParticles("BlueOrbParticle", 1, new ParticleSystem.EmitParams()
+                    {
+                        startLifetime = UnityEngine.Random.Range(1.25f, 5f),
+                        velocity = MathToolbox.GetUnitOnCircle(BraveUtility.RandomAngle(), UnityEngine.Random.Range(2.5f, 12.5f)),
+                        startSize = UnityEngine.Random.Range(0.25f, 1.5f),
+                        position = portal.transform.position
+                    });
+                }
 
-			}
-			PlanetsideReflectionHelper.ReflectSetField<DungeonFloorMusicController.DungeonMusicState>(typeof(DungeonFloorMusicController), "m_currentState", DungeonFloorMusicController.DungeonMusicState.ACTIVE_SIDE_A, GameManager.Instance.DungeonMusicController);
+
+                //BlueOrbParticle
+            }
+            PlanetsideReflectionHelper.ReflectSetField<DungeonFloorMusicController.DungeonMusicState>(typeof(DungeonFloorMusicController), "m_currentState", DungeonFloorMusicController.DungeonMusicState.ACTIVE_SIDE_A, GameManager.Instance.DungeonMusicController);
 			GameManager.Instance.DungeonMusicController.SwitchToActiveMusic(null);
 
 			List<string> WAVE = WeightedWaves.SelectByWeight().Shuffle();
@@ -569,7 +543,7 @@ namespace Planetside
 		public PortalVisualsController()
         {
 			ConstantlyPulsates = false;
-			TimeBetweenPulses = 1;
+			TimeBetweenPulses = 2.5f;
 		}
 		public bool ConstantlyPulsates;
 		public float TimeBetweenPulses;
@@ -590,7 +564,7 @@ namespace Planetside
 					ela = 0;
 					if (ConstantlyPulsates == true)
 					{
-						Exploder.DoDistortionWave(gameObject.transform.position, 3f, 0.05f, 20, 0.5f);
+						Exploder.DoDistortionWave(gameObject.transform.position, 1f, 0.1f, 35, 1f);
 					}
 				}
 			}
@@ -618,9 +592,9 @@ namespace Planetside
 			yield break;
 		}
 
-		public void LTS(Vector3 prevSize, Vector3 afterSize, float duration)
+		public void LTS(Vector3 prevSize, Vector3 afterSize, float duration, bool DoParticles = false)
 		{
-			GameManager.Instance.StartCoroutine(LerpToSize(prevSize, afterSize, duration));
+			GameManager.Instance.StartCoroutine(LerpToSize(prevSize, afterSize, duration, DoParticles));
         }
 
 		
@@ -630,7 +604,7 @@ namespace Planetside
 
 		}
 
-		private IEnumerator LerpToSize(Vector3 prevSize, Vector3 afterSize, float duration)
+		private IEnumerator LerpToSize(Vector3 prevSize, Vector3 afterSize, float duration,  bool DoParticles)
 		{
 
             if (this == null) { yield break; }
@@ -652,7 +626,22 @@ namespace Planetside
 					if (gameObject != null)
 					{
 						gameObject.transform.localScale = Vector3.Lerp(prevSize, afterSize, t);
-					}
+
+						if (DoParticles)
+						{
+                            ParticleBase.EmitParticles("BlueOrbParticle", 1, new ParticleSystem.EmitParams()
+                            {
+                                startLifetime = UnityEngine.Random.Range(1.25f, 3.125f) + duration - elaWait,
+                                velocity = MathToolbox.GetUnitOnCircle(BraveUtility.RandomAngle(), UnityEngine.Random.Range(2.5f, 12.5f)),
+                                startSize = UnityEngine.Random.Range(0.5f, 0.5f) * (1.25f - (elaWait / duration)),
+                                position = this.transform.position
+                            });
+                        }
+
+
+
+
+                    }
 					yield return null;
 				}
 			}

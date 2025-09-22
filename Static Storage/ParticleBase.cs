@@ -31,8 +31,10 @@ namespace Planetside
                 {"ChaffParticle_BG", ((GameObject)UnityEngine.Object.Instantiate(ResourceCache.Acquire("Global VFX/ChaffSystem"), Vector3.zero, Quaternion.identity)).GetComponent<ParticleSystem>() },
                 {"FireParticle_BG", ((GameObject)UnityEngine.Object.Instantiate(ResourceCache.Acquire("Global VFX/GlobalFireSystem"), Vector3.zero, Quaternion.identity)).GetComponent<ParticleSystem>() },
                 {"DarkMagics_BG", ((GameObject)UnityEngine.Object.Instantiate(ResourceCache.Acquire("Global VFX/DarkMagicSystem"), Vector3.zero, Quaternion.identity)).GetComponent<ParticleSystem>() },
+                {"BlueOrbParticle", UnityEngine.Object.Instantiate(PlanetsideModule.ModAssets.LoadAsset<GameObject>("PortalClose").GetComponent<ParticleSystem>()) },
 
             };
+            _ParticleSystems["BlueOrbParticle"].gameObject.SetLayerRecursively(LayerMask.NameToLayer("Unoccluded"));
             foreach (var item in _ParticleSystems){UnityEngine.Object.DontDestroyOnLoad(item.Value);}
         }
 
