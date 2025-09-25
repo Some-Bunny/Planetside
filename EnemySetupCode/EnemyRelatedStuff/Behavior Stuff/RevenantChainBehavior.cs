@@ -79,6 +79,7 @@ namespace Planetside
         private float Timer = 0;
 
         private PlayerController playerController;
+        private PlayerOrbital Orbital = null;
 
 
         public void Start()
@@ -132,6 +133,47 @@ namespace Planetside
             {
                 var _otherBody = (otherBody as SpeculativeRigidbody);
                 var _otherPixelCollider = (otherPixelCollider as PixelCollider);
+                if (_otherBody.GetComponent<PlayerOrbital>() != null)
+                {
+                    if (currentState == State.Go)
+                    {
+                        Orbital = _otherBody.GetComponent<PlayerOrbital>();
+                        ParticleBase.EmitParticles("WaveParticle", 1, new ParticleSystem.EmitParams()
+                        {
+                            position = this.sprite.WorldCenter,
+                            startSize = 8,
+                            rotation = 0,
+                            startLifetime = 0.25f,
+                            startColor = new Color(1, 0.03f, 0).WithAlpha(1f),
+                            angularVelocity = 0
+                        });
+                        for (int i = 0; i < 16; i++)
+                        {
+                            Vector2 Launch = MathToolbox.GetUnitOnCircle(MathToolbox.ToAngle(Velocity) + UnityEngine.Random.Range(-22.5f, 22.5f), 1);
+                            ParticleBase.EmitParticles("ShellraxEyeParticle", 1, new ParticleSystem.EmitParams()
+                            {
+                                position = this.sprite.WorldCenter,
+                                rotation = 0,
+                                startLifetime = UnityEngine.Random.Range(0.375f, 1.25f),
+                                startColor = new Color(1, 0.03f, 0).WithAlpha(1f),
+                                angularVelocity = 0,
+                                velocity = Launch.normalized * UnityEngine.Random.Range(-2, -5),
+                                startSize = 0.5f
+                            });
+                        }
+                        AkSoundEngine.PostEvent("Play_BOSS_lichC_morph_01", this.gameObject);
+                        AkSoundEngine.PostEvent("Play_OBJ_hook_shot_01", this.gameObject);
+                        AkSoundEngine.PostEvent("Play_WPN_saw_impact_01", this.gameObject);
+                        AkSoundEngine.PostEvent("Play_ENM_shelleton_impact_02", this.gameObject);
+                        currentState = State.Retract;
+                        Timer = 0;
+                        VelocityMult = 3f;
+                        revenantChainBehavior.RecieveChainInformation(State.Retract);
+                    }
+                    return;
+                }
+
+
                 if (_otherBody.aiActor != null)
                 {
                     PhysicsEngine.SkipCollision = true;
@@ -385,7 +427,7 @@ namespace Planetside
 
                     if (vector_2.magnitude < 0.5f)
                     {
-                        revenantChainBehavior.RecieveChainInformation(playerController != null ? State.Destroy : State.DestroyNoPlayer);
+                        revenantChainBehavior.RecieveChainInformation(Orbital != null ? State.DestroyOrbital :  playerController != null ? State.Destroy : State.DestroyNoPlayer);
 
                         Destroy(this.gameObject);
                     }
@@ -496,7 +538,8 @@ namespace Planetside
             Attach,
             Retract,
             Destroy,
-            DestroyNoPlayer
+            DestroyNoPlayer,
+            DestroyOrbital
         }
     }
 
@@ -963,6 +1006,26 @@ namespace Planetside
                         return;
                     }
                     break;
+                case RevenantChainAttacher.State.DestroyOrbital:
+                    if (m_bulletSource)
+                    {
+                        m_bulletSource.ForceStop();
+                    }
+                    if (this.IsBulletScript && BulletScript_Shoot_Orbital != null)
+                    {
+                        if (!this.m_bulletSource)
+                        {
+                            this.m_bulletSource = this.ShootPoint.GetOrAddComponent<BulletScriptSource>();
+                        }
+                        this.m_bulletSource.BulletManager = this.m_bulletBank;
+                        this.m_bulletSource.BulletScript = this.BulletScript_Shoot_Orbital;
+                        this.m_bulletSource.Initialize();
+                        this.state = State.Retract;
+                        return;
+                    }
+                    break;
+
+
                 case RevenantChainAttacher.State.Attach:
                     if (m_bulletSource)
                     {
@@ -1120,7 +1183,7 @@ namespace Planetside
 
         public BulletScriptSelector BulletScript_Shoot_When_Chain;
         public BulletScriptSelector BulletScript_Shoot_When_Missed;
-
+        public BulletScriptSelector BulletScript_Shoot_Orbital;
 
 
 

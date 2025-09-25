@@ -104,6 +104,13 @@ namespace Planetside
             breakable.gameObject.layer = LayerMask.NameToLayer("FG_Critical");
             breakable.breakAudioEventName = "Play_OBJ_pot_shatter_01";
 
+            var grenadeBoxShadow = PrefabBuilder.BuildObject("Trespass Pot Shadow 1");
+            sprite = grenadeBoxShadow.AddComponent<tk2dSprite>();
+            sprite.SetSprite(StaticSpriteDefinitions.RoomObject_Sheet_Data, "emberpotshadow");
+            sprite.HeightOffGround = breakable.sprite.HeightOffGround - 0.5f;
+            grenadeBoxShadow.gameObject.transform.SetParent(breakable.transform, false);
+            sprite.gameObject.transform.localPosition = new Vector3(0, -.125f);
+
             //MinorBreakable breakable2 = BreakableAPIToolbox.GenerateMinorBreakable("TrespassPot2", new string[] { defaultPath + "trespasspot2_idle.png" }, 2, new string[] { defaultPath + "trespasspot2_break.png" }, 10, "Play_OBJ_pot_shatter_01", true, 13, 14, 1, 1);
             //BreakableAPIToolbox.GenerateShadow(shadowPath, "trespassPot_shadow", breakable2.gameObject.transform, new Vector3(0, -0.125f));
 
@@ -149,6 +156,13 @@ namespace Planetside
             breakable2.gameObject.layer = LayerMask.NameToLayer("FG_Critical");
             breakable2.breakAudioEventName = "Play_OBJ_pot_shatter_01";
             sprite.IsPerpendicular = false;
+
+            grenadeBoxShadow = PrefabBuilder.BuildObject("Trespass Pot Shadow 2");
+            sprite = grenadeBoxShadow.AddComponent<tk2dSprite>();
+            sprite.SetSprite(StaticSpriteDefinitions.RoomObject_Sheet_Data, "emberpotshadow");
+            sprite.HeightOffGround = breakable2.sprite.HeightOffGround - 0.5f;
+            grenadeBoxShadow.gameObject.transform.SetParent(breakable2.transform, false);
+            sprite.gameObject.transform.localPosition = new Vector3(0, -.125f);
 
 
 
@@ -199,6 +213,14 @@ namespace Planetside
             breakable3.breakAudioEventName = "Play_OBJ_pot_shatter_01";
             sprite.IsPerpendicular = false;
 
+            grenadeBoxShadow = PrefabBuilder.BuildObject("Trespass Pot Shadow 3");
+            sprite = grenadeBoxShadow.AddComponent<tk2dSprite>();
+            sprite.SetSprite(StaticSpriteDefinitions.RoomObject_Sheet_Data, "emberpotshadow");
+            sprite.HeightOffGround = breakable3.sprite.HeightOffGround - 0.5f;
+            grenadeBoxShadow.gameObject.transform.SetParent(breakable3.transform, false);
+            sprite.gameObject.transform.localPosition = new Vector3(0, -.125f);
+
+
             Dictionary<GameObject, float> dict = new Dictionary<GameObject, float>()
             {
                 { breakable.gameObject, 0.7f },
@@ -208,7 +230,6 @@ namespace Planetside
             DungeonPlaceable placeable = BreakableAPIToolbox.GenerateDungeonPlaceable(dict);
             StaticReferences.StoredDungeonPlaceables.Add("tresPassPots", placeable);
             Alexandria.DungeonAPI.StaticReferences.customPlaceables.Add("PSOG_tresPassPots", placeable);
-
         }
     }
 }

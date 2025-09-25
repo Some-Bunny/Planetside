@@ -176,8 +176,8 @@ namespace Planetside
 
                         ImprovedAfterImage yes = projectile_2.gameObject.AddComponent<ImprovedAfterImage>();
                         yes.spawnShadows = true;
-                        yes.shadowLifetime = 0.333f;
-                        yes.shadowTimeDelay = 0.0333f;
+                        yes.shadowLifetime = 0.5f;
+                        yes.shadowTimeDelay = 0.0125f;
                         yes.dashColor = new Color(0f, 0.4f, 1, 0.4f);
                         yes.name = "Gun Trail";
 

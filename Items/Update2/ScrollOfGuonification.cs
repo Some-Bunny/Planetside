@@ -197,8 +197,8 @@ namespace Planetside
                 {
                     E += 120 * BraveTime.DeltaTime;
                     var m = MathToolbox.GetUnitOnCircle(E, 1.5f);
-                    GlobalSparksDoer.DoSingleParticle(_Dispenser.sprite.WorldCenter + m, Vector3.up * UnityEngine.Random.Range(0.2f, 0.4f), 0.1f, 0.5f, Color.cyan, GlobalSparksDoer.SparksType.FLOATY_CHAFF);
-                    GlobalSparksDoer.DoSingleParticle(_Dispenser.sprite.WorldCenter + (m * -1), Vector3.up * UnityEngine.Random.Range(0.2f, 0.4f), 0.1f, 0.5f, Color.cyan, GlobalSparksDoer.SparksType.FLOATY_CHAFF);
+                    GlobalSparksDoer.DoSingleParticle((_Dispenser.sprite.WorldCenter - new Vector2(0, 1)) + m, Vector3.up * UnityEngine.Random.Range(0.2f, 0.4f), 0.1f, 0.5f, Color.cyan, GlobalSparksDoer.SparksType.FLOATY_CHAFF);
+                    GlobalSparksDoer.DoSingleParticle((_Dispenser.sprite.WorldCenter - new Vector2(0, 1)) + (m * -1), Vector3.up * UnityEngine.Random.Range(0.2f, 0.4f), 0.1f, 0.5f, Color.cyan, GlobalSparksDoer.SparksType.FLOATY_CHAFF);
                     return;
                 }
             }
@@ -288,13 +288,13 @@ namespace Planetside
                 LootEngine.DoDefaultSynergyPoof(_Orbital.transform.position, false);
                 AkSoundEngine.PostEvent("Play_WPN_blackhole_shot_01", base.gameObject);
                 AkSoundEngine.PostEvent("Play_ENV_time_shatter_01", base.gameObject);
-                var HoleObject = PickupObjectDatabase.GetById(155).GetComponent<SpawnObjectPlayerItem>();
-                var synergyobject = HoleObject.objectToSpawn;
-                BlackHoleDoer component2 = synergyobject.GetComponent<BlackHoleDoer>();
-                GameObject onj = UnityEngine.Object.Instantiate<GameObject>(component2.HellSynergyVFX, new Vector3(base.transform.position.x + 1f, base.transform.position.y, base.transform.position.z + 5f), Quaternion.Euler(0f, 0f, 0f));
-                MeshRenderer component3 = onj.GetComponent<MeshRenderer>();
-                base.StartCoroutine(this.HoldPortalOpen(onj.GetComponent<MeshRenderer>(), _Orbital.transform.position, user));
-                component3.material.SetTexture("_PortalTex", StaticTextures.NebulaTexture);
+
+                GameObject onj = UnityEngine.Object.Instantiate<GameObject>(Actives.Singularity.objectToSpawn.GetComponent<BlackHoleDoer>().HellSynergyVFX, 
+                    new Vector3(base.transform.position.x + 1f, base.transform.position.y, base.transform.position.z + 5f), Quaternion.Euler(0f, 0f, 0f));
+                
+                MeshRenderer meshRenderer = onj.GetComponent<MeshRenderer>();
+                base.StartCoroutine(this.HoldPortalOpen(meshRenderer, _Orbital.transform.position, user));
+                meshRenderer.material.SetTexture("_PortalTex", StaticTextures.NebulaTexture);
                 UnityEngine.Object.Destroy(_Orbital.gameObject);
 				_Orbital = null;
                 return;

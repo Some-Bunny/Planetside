@@ -62,31 +62,6 @@ namespace Planetside
                 true);
 
 
-                /*
-                BasicBeamController beamComp = projectile.GenerateBeamPrefab(
-                    "Planetside/Resources/Beams/HeatSink/heatsinkbeam_mid_001",
-                    new Vector2(16, 10),
-                    new Vector2(0, 3),
-                    BeamAnimPaths,
-                    12,
-                    //Beam Impact
-                    ImpactAnimPaths,
-                    30,
-                    new Vector2(16, 16),
-                    new Vector2(0, 0),
-                    //End of the Beam
-                    ImpactAnimPaths,
-                    30,
-                    new Vector2(16, 16),
-                    new Vector2(0, 0),
-                    //Start of the Beam
-                    null,
-                    12,
-                    new Vector2(10, 2),
-                    new Vector2(0, 4)
-                    );
-                */
-
                 projectile.gameObject.SetActive(false);
                 FakePrefab.MarkAsFakePrefab(projectile.gameObject);
                 UnityEngine.Object.DontDestroyOnLoad(projectile);

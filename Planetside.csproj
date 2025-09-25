@@ -5844,5 +5844,8 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\ShrineRooms\PrayerRooms\HellShrineRoom.newroom" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ShrineRooms\PrayerRooms\Amulet_Deep.newroom" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

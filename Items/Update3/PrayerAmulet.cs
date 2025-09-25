@@ -40,7 +40,7 @@ namespace Planetside
             PrayerSewer = RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/PrayerRooms/PrayerRoomOubliette.room").room;
             PrayerAbbey = RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/PrayerRooms/PrayerRoomAbbey.room").room;
             HellAbbey = Alexandria.DungeonAPI.RoomFactory.BuildNewRoomFromResource("Planetside/Resources/ShrineRooms/PrayerRooms/HellShrineRoom.newroom").room;
-
+            PrayerDeep = Alexandria.DungeonAPI.RoomFactory.BuildNewRoomFromResource("Planetside/Resources/ShrineRooms/PrayerRooms/Amulet_Deep.newroom").room;
             warVase.SetupUnlockOnCustomStat(CustomTrackedStats.UMBRAL_ENEMIES_KILLED, 4, DungeonPrerequisite.PrerequisiteOperation.GREATER_THAN);
             PrayerAmulet.InitRooms();
 
@@ -57,6 +57,7 @@ namespace Planetside
         public static PrototypeDungeonRoom PrayerSewer;
         public static PrototypeDungeonRoom PrayerAbbey;
         public static PrototypeDungeonRoom HellAbbey;
+        public static PrototypeDungeonRoom PrayerDeep;
 
 
         public static void InitRooms()
@@ -105,10 +106,27 @@ namespace Planetside
                 OnlyOne = false,
                 PreventInjectionOfFailedPrerequisites = false,
             };
-
             Hell_Injections.AttachedInjectionData.Add(MyInjectionData);
+
+
+            DeepInjectionData = new SharedInjectionData()
+            {
+                AttachedInjectionData = new List<SharedInjectionData> { },
+                UseInvalidWeightAsNoInjection = false,
+                ChanceToSpawnOne = 1000,
+                IgnoreUnmetPrerequisiteEntries = false,
+                InjectionData = new List<ProceduralFlowModifierData>()
+                {
+                    GenerateNewMrocData(PrayerDeep)
+                },
+                IsNPCCell = false,
+                OnlyOne = false,
+                PreventInjectionOfFailedPrerequisites = false,
+            };
+
         }
         private static SharedInjectionData MyInjectionData;
+        public static SharedInjectionData DeepInjectionData;
 
         public override void Pickup(PlayerController player)
 		{
@@ -172,6 +190,46 @@ namespace Planetside
             };
             return PrayerRoomMines;
         }
+        public static ProceduralFlowModifierData GenerateNewMrocData(PrototypeDungeonRoom RequiredRoom)
+        {
+            string name = RequiredRoom.name.ToString();
+            if (RequiredRoom.name.ToString() == null)
+            {
+                name = "EmergencyAnnotationName";
+            }
+            ProceduralFlowModifierData PrayerRoomMines = new ProceduralFlowModifierData()
+            {
+                annotation = name,
+                DEBUG_FORCE_SPAWN = false,
+                OncePerRun = false,
+                placementRules = new List<ProceduralFlowModifierData.FlowModifierPlacementType>()
+                {
+                    ProceduralFlowModifierData.FlowModifierPlacementType.END_OF_CHAIN
+                },
+                roomTable = null,
+                exactRoom = RequiredRoom,
+                IsWarpWing = false,
+                RequiresMasteryToken = false,
+                chanceToLock = 0,
+                selectionWeight = 2,
+                chanceToSpawn = 1,
+                RequiredValidPlaceable = null,
+                prerequisites = new DungeonPrerequisite[]
+                {
+                    new DungeonGenToolbox.AdvancedDungeonPrerequisite
+                    {
+                       advancedAdvancedPrerequisiteType = DungeonGenToolbox.AdvancedDungeonPrerequisite.AdvancedAdvancedPrerequisiteType.PASSIVE_ITEM_FLAG,
+                       requiredPassiveFlag = typeof(PrayerAmulet),
+                       requireTileset = false
+                    }
+                },
+                CanBeForcedSecret = false,
+                RandomNodeChildMinDistanceFromEntrance = 0,
+                exactSecondaryRoom = null,
+                framedCombatNodes = 0,
 
+            };
+            return PrayerRoomMines;
+        }
     }
 }

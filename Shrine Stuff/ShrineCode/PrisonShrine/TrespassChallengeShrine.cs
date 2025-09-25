@@ -49,8 +49,7 @@ namespace Planetside
 
 
 
-            //var holder = tearObject.gameObject.AddComponent<TearHolderController>();
-            //holder.self = majorBreakable;
+
 
             Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
             sprite.usesOverrideMaterial = true;

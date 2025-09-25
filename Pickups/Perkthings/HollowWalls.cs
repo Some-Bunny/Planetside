@@ -39,7 +39,10 @@ namespace Planetside
             MyFlowData = GenerateNewMrocData();
 
             Dungeon hell_ = DungeonDatabase.GetOrLoadByName("base_bullethell");
+            Dungeon rng_ = DungeonDatabase.GetOrLoadByName("base_nakatomi");
+
             var Hell_Injections = hell_.PatternSettings.flows[0].sharedInjectionData[0];
+            var RNG_Injections = hell_.PatternSettings.flows[0].sharedInjectionData[0];
 
 
             MyInjectionData = new SharedInjectionData()
@@ -58,15 +61,18 @@ namespace Planetside
             };
 
             Hell_Injections.AttachedInjectionData.Add(MyInjectionData);
+            RNG_Injections.AttachedInjectionData.Add(MyInjectionData);
+
 
             hell_ = null;
+            rng_ = null;
 
             AssetBundle sharedAssets2 = ResourceManager.LoadAssetBundle("shared_auto_002");
             var BaseSharedInjection = sharedAssets2.LoadAsset<SharedInjectionData>("Base Shared Injection Data");
             BaseSharedInjection.AttachedInjectionData.Add(MyInjectionData);
         }
 
-        private static SharedInjectionData MyInjectionData;
+        public static SharedInjectionData MyInjectionData;
         private static ProceduralFlowModifierData MyFlowData;
 
         public override List<PerkDisplayContainer> perkDisplayContainers => new List<PerkDisplayContainer>()
@@ -170,7 +176,6 @@ namespace Planetside
             {
                 AmountOfPickups++;
             }
-
         }
 
         private void AddLoot()
@@ -180,7 +185,7 @@ namespace Planetside
                 RoomHandler roomHandler = GameManager.Instance.Dungeon.data.rooms[i];
                 if (roomHandler.connectedRooms.Count != 0)
                 {
-                    if (roomHandler.area.PrototypeRoomCategory == PrototypeDungeonRoom.RoomCategory.SECRET&& roomHandler.RevealedOnMap == false)
+                    if (roomHandler.area.PrototypeRoomCategory == PrototypeDungeonRoom.RoomCategory.SECRET && roomHandler.RevealedOnMap == false)
                     {
                         for (int q = 0; q < AmountOfPickups; q++)
                         {
@@ -192,7 +197,6 @@ namespace Planetside
                                 StaticReferenceManager.AllDebris.Add(pickup);
                             }
                         }
-
                     }         
                 }
             }

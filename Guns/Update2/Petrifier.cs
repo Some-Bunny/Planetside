@@ -152,16 +152,53 @@ namespace Planetside
                 }
 			}
 		}
-		public int ExtraClipBonus;
 
-		public void AddExtraFinalShots()
+
+        public override void OnPlayerPickup(PlayerController playerOwner)
+        {
+            base.OnPlayerPickup(playerOwner);
+            playerOwner.inventory.OnGunChanged += GunSwapped;
+        }
+        public override void OnDropped()
+        {
+            if (this.PlayerOwner)
+            {
+                PlayerOwner.inventory.OnGunChanged -= GunSwapped;
+            }
+            base.OnDropped();
+        }
+
+        private void GunSwapped(Gun previous, Gun current, Gun previousSecondary, Gun currentSecondary, bool newGun)
+        {
+			if (current == this.gun)
+			{
+				this.Invoke("Delay", 0.05f);
+            }
+        }
+
+		public void Delay()
+		{
+            foreach (ProjectileModule mod in this.gun.Volley.projectiles)
+            {
+                mod.numberOfShotsInClip = this.GetModNumberOfShotsInClipWithDefSize(this.gun.CurrentOwner as PlayerController, mod, 2) + ProcessedClipShots;
+            }
+        }
+
+
+
+
+        public int ExtraClipBonus;
+        public int ProcessedClipShots;
+
+        public void AddExtraFinalShots()
         {
 			if (this.gun.CurrentOwner as PlayerController == null) { return; }
 			foreach (ProjectileModule mod in this.gun.Volley.projectiles)
             {
 				mod.numberOfShotsInClip = this.GetModNumberOfShotsInClipWithDefSize(this.gun.CurrentOwner as PlayerController, mod, 2) + ExtraClipBonus;
 			}
-			ExtraClipBonus = 0;
+			ProcessedClipShots = ExtraClipBonus;
+            ExtraClipBonus = 0;
 		}
 
 		public int GetModNumberOfShotsInClipWithDefSize(GameActor owner, ProjectileModule mod,int clipSizeDefault)

@@ -177,6 +177,7 @@ namespace Planetside
             sprite.SetSprite(StaticSpriteDefinitions.RoomObject_Sheet_Data, "emberpotshadow");
             sprite.transform.localPosition = new Vector3(0, -.125f);
             sprite.IsPerpendicular = false;
+            sprite.HeightOffGround = breakable.sprite.HeightOffGround - 0.5f;
             grenadeBoxShadow.gameObject.transform.SetParent(breakable.transform, false);
 
             /*

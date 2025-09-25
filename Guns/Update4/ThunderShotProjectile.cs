@@ -29,7 +29,7 @@ namespace Planetside
             this.Player = projectile.Owner as PlayerController;
             if (this.projectile != null)
             {
-                if (Player != null && Player.PlayerHasActiveSynergy("KA-BLEWY!") == true) { this.projectile.baseData.damage *= 0.66f; }
+                if (Player != null && Player.PlayerHasActiveSynergy("KA-BLEWY!") == true) { this.projectile.baseData.damage *= 0.9f; }
                 this.projectile.OnHitEnemy += OnHitEnemy;
             }
         }

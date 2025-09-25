@@ -65,7 +65,7 @@ namespace Planetside
 
 				m_CachedFlow.subtypeRestrictions = new List<DungeonFlowSubtypeRestriction>(0);
 				m_CachedFlow.flowInjectionData = new List<ProceduralFlowModifierData>(0);
-				m_CachedFlow.sharedInjectionData = new List<SharedInjectionData>() { };//{ BaseSharedInjectionData };
+				m_CachedFlow.sharedInjectionData = new List<SharedInjectionData>() { HollowWalls.MyInjectionData, PrayerAmulet.DeepInjectionData };//{ BaseSharedInjectionData };
 
 				m_CachedFlow.Initialize();
 
@@ -176,7 +176,10 @@ namespace Planetside
 				m_CachedFlow.phantomRoomTable = null;
 				m_CachedFlow.subtypeRestrictions = new List<DungeonFlowSubtypeRestriction>(0);
 				m_CachedFlow.flowInjectionData = new List<ProceduralFlowModifierData>(0);
-				m_CachedFlow.sharedInjectionData = new List<SharedInjectionData>() { BaseSharedInjectionData };
+				m_CachedFlow.sharedInjectionData = new List<SharedInjectionData>() 
+				{
+					BaseSharedInjectionData
+				};
 
 				m_CachedFlow.Initialize();
 

@@ -355,6 +355,7 @@ namespace Planetside
                                 Chainprefab = hook,
                                 BulletScript_Shoot_When_Chain = new CustomBulletScriptSelector(typeof(Attack_Sexo)),
                                 BulletScript_Shoot_When_Missed = new CustomBulletScriptSelector(typeof(Attack_Curvers)),
+                                BulletScript_Shoot_Orbital = new CustomBulletScriptSelector(typeof(Monolith)),
                                 MoveSpeedModifier = 0,
                                 CooldownVariance = 2,
                                 InitialCooldown = 2.25f,
@@ -545,13 +546,37 @@ namespace Planetside
             public override IEnumerator Top()
             {
                 float aim = this.AimDirection;
+                base.PostWwiseEvent("Play_ENM_Grip_Master_Swipe_01", null);
 
+                for (float i = 0; i < 3; i++)
+                {
+                    ParticleBase.EmitParticles("WaveParticleInverse", 1, new ParticleSystem.EmitParams()
+                    {
+                        position = this.Position,
+                        startSize = 32,
+                        rotation = 0,
+                        startLifetime = 0.5f,
+                        startColor = new Color(1, 0.2f, 0).WithAlpha(0.4f),
+                        angularVelocity = 0
+                    });
+                    yield return Wait(15);
+                }
+                base.PostWwiseEvent("Play_BOSS_RatMech_Cannon_01", null);
+                ParticleBase.EmitParticles("WaveParticle", 1, new ParticleSystem.EmitParams()
+                {
+                    position = this.Position,
+                    startSize = 48,
+                    rotation = 0,
+                    startLifetime = 0.75f,
+                    startColor = new Color(1, 0.2f, 0).WithAlpha(0.2f),
+                    angularVelocity = 0
+                });
                 for (float i = 0; i < 210; i++)
                 {
-                    if (i % 6 == 0)
+                    if (i % 5 == 0)
                         base.PostWwiseEvent("Play_ENM_ironmaiden_blast_01", null);
 
-                    aim = Mathf.MoveTowardsAngle(aim, this.AimDirection, 1.25f);
+                    aim = Mathf.MoveTowardsAngle(aim, this.AimDirection, 1f);
 
                     var a = Mathf.Max(30, 180 - (i * 2));
 

@@ -28,15 +28,6 @@ namespace Planetside
 
 	public class PickupGuonComponent : BraveBehaviour
 	{
-		public PickupGuonComponent()
-		{
-			this.HitsBeforeDeath = 15;
-            this.Hits = 0;
-		}
-
-
-
-
 		public void Start()
 		{
 			var str = SynergyToCheck();
@@ -57,7 +48,7 @@ namespace Planetside
                     break;
 
                 case PickupType.ARMOR:
-                    HitsBeforeDeath = HasSynergy ? 200 : 100;
+                    HitsBeforeDeath = HasSynergy ? 160 : 120;
                     this.spriteAnimator.Play("armorguon_idle");
                     Orbital.orbitRadius = 1.8f;
                     Orbital.orbitDegreesPerSecond = 90;
@@ -121,8 +112,6 @@ namespace Planetside
                     return "More To Ammo";
                 case PickupType.HALF_AMMO:
                     return "More To Ammo";
-
-
                 case PickupType.KEY:
                     return "More To Keys";
 
@@ -286,7 +275,8 @@ namespace Planetside
 				pick.HitsBeforeDeath = this.HitsBeforeDeath;
 				pick.player = this.PlayerOwner;
 			}
-		}
+            PlayerOwner.orbitals.Remove(Orbital);
+        }
 
 		public PickupType pickupType;
 
@@ -317,8 +307,6 @@ namespace Planetside
 		{
 			this.HitsBeforeDeath = 10;
 			this.Hits = 0;
-
-
 		}
 		public void Start()
         {
@@ -331,7 +319,11 @@ namespace Planetside
 			PickupGuonComponent pick = orb.GetOrAddComponent<PickupGuonComponent>();
             pick.pickupType = pickupType;
             pick.DoPoof = false;
+            
             pick.PlayerOwner = player;
+            pick.Hits = this.Hits;
+            pick.HitsBeforeDeath = this.HitsBeforeDeath;
+
             GameManager.Instance.OnNewLevelFullyLoaded -= this.RespawnStones;
 			Destroy(this);
 		}
