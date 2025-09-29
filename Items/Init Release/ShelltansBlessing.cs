@@ -57,33 +57,19 @@ namespace Planetside
             ShelltansBlessing.ShelltainsBlessingID = item.PickupObjectId;
             ItemIDs.AddToList(item.PickupObjectId);
 
-            GameObject blessingObj = ItemBuilder.AddSpriteToObject("shelltansBlessingVFX", "Planetside/Resources/VFX/ShelltansBlessing/blessing_001", null);
-            FakePrefab.MarkAsFakePrefab(blessingObj);
-            UnityEngine.Object.DontDestroyOnLoad(blessingObj);
-            tk2dSpriteAnimator animator = blessingObj.GetOrAddComponent<tk2dSpriteAnimator>();
-            tk2dSpriteAnimation animation = blessingObj.AddComponent<tk2dSpriteAnimation>();
 
-            tk2dSpriteCollectionData DeathMarkcollection = SpriteBuilder.ConstructCollection(blessingObj, ("ShelltansBlessing_Collection"));
+            var debuffCollection = StaticSpriteDefinitions.VFX_Sheet_Data;
+            var BrokenArmorVFXObject = ItemBuilder.AddSpriteToObjectAssetbundle("ShelltansBlessing", debuffCollection.GetSpriteIdByName("blessing_001"), debuffCollection);//new GameObject("Broken Armor");//SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Debuffs/brokenarmor", new GameObject("BrokenArmorEffect"));
+            FakePrefab.MarkAsFakePrefab(BrokenArmorVFXObject);
+            UnityEngine.Object.DontDestroyOnLoad(BrokenArmorVFXObject);
+            BrokenArmorVFXObject.GetOrAddComponent<tk2dBaseSprite>();
+            tk2dSpriteAnimator animator = BrokenArmorVFXObject.GetOrAddComponent<tk2dSpriteAnimator>();
+            animator.library = StaticSpriteDefinitions.VFX_Animation_Data;
+            animator.DefaultClipId = animator.GetClipIdByName("shelltan_blessing");
+            animator.playAutomatically = true;
+            ShelltansBlessingVFX = BrokenArmorVFXObject;
 
-            tk2dSpriteAnimationClip idleClip = new tk2dSpriteAnimationClip() { name = "start", frames = new tk2dSpriteAnimationFrame[0], fps = 15 };
-            List<tk2dSpriteAnimationFrame> frames = new List<tk2dSpriteAnimationFrame>();
 
-            for (int i = 1; i < 10; i++)
-            {
-                tk2dSpriteCollectionData collection = DeathMarkcollection;
-                int frameSpriteId = SpriteBuilder.AddSpriteToCollection($"Planetside/Resources/VFX/ShelltansBlessing/blessing_00{i}", collection);
-                tk2dSpriteDefinition frameDef = collection.spriteDefinitions[frameSpriteId];
-                frameDef.ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.LowerLeft);
-                frames.Add(new tk2dSpriteAnimationFrame { spriteId = frameSpriteId, spriteCollection = collection });
-            }
-            idleClip.frames = frames.ToArray();
-            idleClip.wrapMode = tk2dSpriteAnimationClip.WrapMode.Once;
-            animator.Library = animation;
-            animator.Library.clips = new tk2dSpriteAnimationClip[] { idleClip };
-            animator.DefaultClipId = animator.GetClipIdByName("start");
-            animator.playAutomatically = false;
-
-            ShelltansBlessingVFX = blessingObj;
             new Hook(typeof(AdvancedShrineController).GetMethod("DoShrineEffect", BindingFlags.Instance | BindingFlags.NonPublic), typeof(ShelltansBlessing).GetMethod("DoShrineEffectHook"));
             GameManager.Instance.RainbowRunForceExcludedIDs.Add(item.PickupObjectId);
 

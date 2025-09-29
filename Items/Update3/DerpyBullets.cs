@@ -30,9 +30,9 @@ namespace Planetside
             ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("derpybullets"), data, obj);
             //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "Zig Zaggy";
-			string longDesc = "These unusual bullets had an excess amount of rubber added to them to create incredibly bouncy bullets, however the end result ended up with the poor things unable to stand up straight and end up just flopping from left to right.";
+			string longDesc = "Damage up. These unusual bullets had an excess amount of rubber added to them to create incredibly bouncy bullets, however the end result ended up with the poor things unable to stand up straight and end up just flopping from left to right.";
 			ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
-			ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.Damage, 1.4f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+			ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.Damage, 1.3f, StatModifier.ModifyMethod.MULTIPLICATIVE);
 			ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.RangeMultiplier, 3f, StatModifier.ModifyMethod.MULTIPLICATIVE);
 
 			item.quality = PickupObject.ItemQuality.C;
@@ -44,35 +44,13 @@ namespace Planetside
 		public static int DerpyBulletsID;
 		private void PostProcessProjectile(Projectile sourceProjectile, float effectChanceScalar)
 		{
-			try
-			{
-				DerpyMovementModule move = new DerpyMovementModule();
-				move.TimeDelay = UnityEngine.Random.Range(0.025f, 0.5f);
-
-				sourceProjectile.OverrideMotionModule = move;
-			}
-			catch (Exception ex)
-			{
-				ETGModConsole.Log(ex.Message, false);
-				ETGModConsole.Log("If you see this pop up, write a message in the comment section of ModWorkShop AND include a list of all items/guns you have/had during the run.");
-			}
+			sourceProjectile.StartCoroutine(HandleDerpyMovement(sourceProjectile));
 		}
 		private void PostProcessBeam(BeamController obj)
 		{
-
-			try
-			{
-
-
-				obj.projectile.OverrideMotionModule = new DerpyMovementModule();
-			}
-			catch (Exception ex)
-			{
-				ETGModConsole.Log(ex.Message, false);
-				ETGModConsole.Log("If you see this pop up, write a message in the comment section of ModWorkShop AND include a list of all items/guns you have/had during the run.");
-			}
-		}
-		public override DebrisObject Drop(PlayerController player)
+            obj.projectile.OverrideMotionModule = new DerpyMovementModule();
+        }
+        public override DebrisObject Drop(PlayerController player)
 		{
 			DebrisObject result = base.Drop(player);
 			player.PostProcessProjectile -= this.PostProcessProjectile;
@@ -95,5 +73,34 @@ namespace Planetside
 				base.OnDestroy();
 			}
 		}
+
+		public IEnumerator HandleDerpyMovement(Projectile projectile)
+		{
+			float waitAmount = UnityEngine.Random.Range(0.025f, 0.075f);
+			int RotationsBeforeFlip = 1;
+			float Rotate = BraveUtility.RandomBool() ? 90 : -90;
+			while (projectile)
+			{
+				if (waitAmount > 0)
+				{
+                    waitAmount -= BraveTime.DeltaTime;
+
+                }
+				else
+				{
+                    waitAmount = UnityEngine.Random.Range(0.025f, 0.075f);
+                    projectile.SendInDirection(projectile.Direction.Rotate(Rotate), false);
+					RotationsBeforeFlip--;
+					if (RotationsBeforeFlip == 0)
+					{
+						RotationsBeforeFlip = 2;
+                        Rotate *= -1;
+                    }
+                }
+
+				yield return null;
+			}
+		}
+
 	}
 }

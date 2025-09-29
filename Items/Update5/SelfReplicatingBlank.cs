@@ -23,14 +23,13 @@ namespace Planetside
             ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("selfreplicatingblank"), data, gameObject);
             //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
             string shortDesc = "Osis";
-			string longDesc = "Blanks used in combat will be refunded, as long as you don't get hit. Consecutive blanks have a lower chance to be refunded.\n\nThis blank is actually an extremely rare fungus, which is able to spread and multiply as long as its left to its own devices.";
+			string longDesc = "Blanks used in combat will be refunded, as long as you avoid getting hit. Consecutive blanks have a lower chance to be refunded.\n\nThis blank is actually an extremely rare fungus, which is able to spread and multiply as long as its left to its own devices.";
 			ItemBuilder.SetupItem(warVase, shortDesc, longDesc, "psog");
 			warVase.quality = PickupObject.ItemQuality.A;
 			//warVase.IgnoredByRat = true;
 			//warVase.RespawnsIfPitfall = true;
             SelfReplicatingBlank.SelfReplicatingBlankID = warVase.PickupObjectId;
 			warVase.BlanksUsed = 0;
-            warVase.CanRefundBlanks = false;
             warVase.associatedItemChanceMods = new LootModData[]
             {
                 LootTableTools.GenerateLootModData(EcholocationAmmolet.EcholocationAmmoletID, 3),
@@ -70,14 +69,6 @@ namespace Planetside
             shardObject3.name = "Spore_Debris_Small";
 
             cluster = BreakableAPIToolbox.GenerateShardCluster(new DebrisObject[] { shardObject, shardObject , shardObject, shardObject2, shardObject3 }, 0.35f, 1.2f, 8, 12, 0.8f);
-
-            //List<string> mandatoryConsoleIDs = new List<string>
-            //{
-
-                //"psog:immolation_powder",
-              //  "psog:revenant"
-            //};
-            //CustomSynergies.Add("Ashes To Ashes, To Ashes", mandatoryConsoleIDs, null, false);
         }
 
         public static ShardCluster cluster;
@@ -96,27 +87,22 @@ namespace Planetside
 
 
 		public int BlanksUsed;
-        public bool CanRefundBlanks;
         public bool Succ = false;
 
-        private void OnEnteredCombat(){CanRefundBlanks = true; }
+        private void OnEnteredCombat(){ }
 
         private void Player_OnRoomClearEvent(PlayerController obj)
 		{
-			if (CanRefundBlanks == true)
-			{
-				for (int i = 1; i < BlanksUsed + 1; i++)
-				{
-					float C = 1 / (float)i;
-                    if (UnityEngine.Random.value < C)
-					{
-						obj.Blanks++;
-					}
-				}
-			}
+            for (int i = 1; i < BlanksUsed + 1; i++)
+            {
+                float C = 1 / (float)i;
+                if (UnityEngine.Random.value < C)
+                {
+                    obj.Blanks++;
+                }
+            }
             GameManager.Instance.StartCoroutine(SuccMethod(this));
             BlanksUsed = 0;
-            CanRefundBlanks = false;
         }
         public static IEnumerator SuccMethod(SelfReplicatingBlank self)
         {
@@ -129,40 +115,36 @@ namespace Planetside
 
         private void Player_OnReceivedDamage(PlayerController obj)
 		{
-            if (CanRefundBlanks == true)
+
+            BlanksUsed = 0;
+            for (int i = 0; i < StaticReferenceManager.AllDebris.Count; i++)
             {
-                for (int i = 0; i < StaticReferenceManager.AllDebris.Count; i++)
+                DebrisObject debrisObject = StaticReferenceManager.AllDebris[i];
+                //ETGModConsole.Log(debrisObject.name);
+                if (debrisObject.name.Contains("Spore_Debris", true))
                 {
-                    DebrisObject debrisObject = StaticReferenceManager.AllDebris[i];
-                    //ETGModConsole.Log(debrisObject.name);
-                    if (debrisObject.name.Contains("Spore_Debris", true))
+                    GameObject gameObject = (GameObject)UnityEngine.Object.Instantiate(ResourceCache.Acquire("Global VFX/VFX_Synergy_Poof_001"), debrisObject.sprite.WorldCenter, Quaternion.identity);
+                    tk2dBaseSprite component = gameObject.GetComponent<tk2dBaseSprite>();
+                    component.HeightOffGround = 35f;
+                    component.UpdateZDepth();
+                    tk2dSpriteAnimator component2 = component.GetComponent<tk2dSpriteAnimator>();
+                    if (component2 != null)
                     {
-                        GameObject gameObject = (GameObject)UnityEngine.Object.Instantiate(ResourceCache.Acquire("Global VFX/VFX_Synergy_Poof_001"), debrisObject.sprite.WorldCenter, Quaternion.identity);
-                        tk2dBaseSprite component = gameObject.GetComponent<tk2dBaseSprite>();
-                        component.HeightOffGround = 35f;
-                        component.UpdateZDepth();
-                        tk2dSpriteAnimator component2 = component.GetComponent<tk2dSpriteAnimator>();
-                        if (component2 != null)
-                        {
-                            component.scale *= 0.5f;
-                            component2.ignoreTimeScale = true;
-                            component2.AlwaysIgnoreTimeScale = true;
-                            component2.AnimateDuringBossIntros = true;
-                            component2.alwaysUpdateOffscreen = true;
-                            component2.playAutomatically = true;
-                        }
-                        Destroy(gameObject, 1.5f);
-                        Destroy(debrisObject.gameObject, 0.1f);
+                        component.scale *= 0.5f;
+                        component2.ignoreTimeScale = true;
+                        component2.AlwaysIgnoreTimeScale = true;
+                        component2.AnimateDuringBossIntros = true;
+                        component2.alwaysUpdateOffscreen = true;
+                        component2.playAutomatically = true;
                     }
+                    Destroy(gameObject, 1.5f);
+                    Destroy(debrisObject.gameObject, 0.1f);
                 }
             }
-            CanRefundBlanks = false;
-            BlanksUsed = 0;
         }
 
 		private void Player_OnUsedBlank(PlayerController arg1, int arg2)
 		{
-			if (CanRefundBlanks == false) { return; }
             SpawnSpores(arg1);
             BlanksUsed++;
         }

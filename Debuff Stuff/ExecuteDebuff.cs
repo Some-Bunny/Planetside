@@ -27,6 +27,7 @@ namespace Planetside
 
         public static GameObject BuildVFX()
         {
+            /*
             var debuffCollection = StaticSpriteDefinitions.VFX_Sheet_Data;
             var BrokenArmorVFXObject = ItemBuilder.AddSpriteToObjectAssetbundle("Execute", debuffCollection.GetSpriteIdByName("lockedin1"), debuffCollection);//new GameObject("Broken Armor");//SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Debuffs/brokenarmor", new GameObject("BrokenArmorEffect"));
             FakePrefab.MarkAsFakePrefab(BrokenArmorVFXObject);
@@ -54,6 +55,19 @@ namespace Planetside
 
             animator.DefaultClipId = animator.GetClipIdByName("start");
             animator.playAutomatically = true;
+            */
+
+            var debuffCollection = StaticSpriteDefinitions.VFX_Sheet_Data;
+            var BrokenArmorVFXObject = ItemBuilder.AddSpriteToObjectAssetbundle("Execute VFX", debuffCollection.GetSpriteIdByName("lockedin1"), debuffCollection);//new GameObject("Broken Armor");//SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Debuffs/brokenarmor", new GameObject("BrokenArmorEffect"));
+            FakePrefab.MarkAsFakePrefab(BrokenArmorVFXObject);
+            UnityEngine.Object.DontDestroyOnLoad(BrokenArmorVFXObject);
+            var sprite = BrokenArmorVFXObject.GetOrAddComponent<tk2dBaseSprite>();
+            tk2dSpriteAnimator animator = BrokenArmorVFXObject.GetOrAddComponent<tk2dSpriteAnimator>();
+            animator.library = StaticSpriteDefinitions.VFX_Animation_Data;
+            animator.DefaultClipId = animator.GetClipIdByName("execute_effect");
+            animator.playAutomatically = true;
+            sprite.usesOverrideMaterial = true;
+
 
             animator.sprite.usesOverrideMaterial = true;
             Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
@@ -63,7 +77,6 @@ namespace Planetside
             mat.SetFloat("_EmissivePower", 20);
             animator.sprite.renderer.material = mat;
 
-            clip.loopStart = 3;
             LockInVFXPrefab = BrokenArmorVFXObject;
             return LockInVFXPrefab;
         }

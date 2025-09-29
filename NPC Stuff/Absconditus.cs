@@ -1078,6 +1078,11 @@ namespace Planetside.NPC_Stuff
             yield return new WaitForSeconds(1.125f);
             AkSoundEngine.PostEvent("Play_OBJ_key_pickup_01", playerController.gameObject);
             playerController.carriedConsumables.KeyBullets++;
+            var I = playerController.HasPerk(CorruptedWealth.CorruptedWealthID);
+            if (I != null)
+            {
+                (I as CorruptedWealth).AmountOfCorruptKeys++;
+            }
             yield break;
         }
 

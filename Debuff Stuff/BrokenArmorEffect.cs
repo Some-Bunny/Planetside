@@ -25,6 +25,7 @@ namespace Planetside
 
         public static GameObject BuildVFX()
         {
+            /*
             var debuffCollection = StaticSpriteDefinitions.VFX_Sheet_Data;
             var BrokenArmorVFXObject = ItemBuilder.AddSpriteToObjectAssetbundle("Broken Armor", debuffCollection.GetSpriteIdByName("brokenarmor1"), debuffCollection);//new GameObject("Broken Armor");//SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Debuffs/brokenarmor", new GameObject("BrokenArmorEffect"));
             FakePrefab.MarkAsFakePrefab(BrokenArmorVFXObject);
@@ -53,6 +54,19 @@ namespace Planetside
             animator.DefaultClipId = animator.GetClipIdByName("start");
             animator.playAutomatically = true;
             clip.loopStart = 11;
+            */
+            var debuffCollection = StaticSpriteDefinitions.VFX_Sheet_Data;
+            var BrokenArmorVFXObject = ItemBuilder.AddSpriteToObjectAssetbundle("Broken Armor VFX", debuffCollection.GetSpriteIdByName("brokenarmor_start_1"), debuffCollection);//new GameObject("Broken Armor");//SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Debuffs/brokenarmor", new GameObject("BrokenArmorEffect"));
+            FakePrefab.MarkAsFakePrefab(BrokenArmorVFXObject);
+            UnityEngine.Object.DontDestroyOnLoad(BrokenArmorVFXObject);
+            var sprite = BrokenArmorVFXObject.GetOrAddComponent<tk2dBaseSprite>();
+            tk2dSpriteAnimator animator = BrokenArmorVFXObject.GetOrAddComponent<tk2dSpriteAnimator>();
+            animator.library = StaticSpriteDefinitions.VFX_Animation_Data;
+            animator.DefaultClipId = animator.GetClipIdByName("broken_armor_effect");
+            animator.playAutomatically = true;
+            sprite.usesOverrideMaterial = true;
+
+
             BrokenArmorVFX = BrokenArmorVFXObject;
             return BrokenArmorVFX;
         }

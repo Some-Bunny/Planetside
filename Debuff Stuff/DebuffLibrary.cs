@@ -227,7 +227,7 @@ namespace Planetside
 			effectIdentifier = "Heat Stroke",
 			AffectsEnemies = true,
 			resistanceType = EffectResistanceType.Fire,
-			duration = 0.2f,
+			duration = 1000,
 			TintColor = new Color(0, 0, 0, 0),
 			AppliesTint = true,
 			AppliesDeathTint = false,
@@ -235,7 +235,7 @@ namespace Planetside
             OverheadVFX = HeatStrokeEffect.BuildVFX(),
 			maxStackedDuration = 1,
 			
-			stackMode = GameActorEffect.EffectStackingMode.Stack
+			stackMode = GameActorEffect.EffectStackingMode.DarkSoulsAccumulate
         };
 		public static BrokenArmorEffect brokenArmor = new BrokenArmorEffect
 		{

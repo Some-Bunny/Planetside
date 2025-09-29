@@ -19,6 +19,7 @@ using MonoMod.Utils;
 using Brave.BulletScript;
 using GungeonAPI;
 using SaveAPI;
+using System.ComponentModel;
 
 namespace Planetside
 {
@@ -41,95 +42,32 @@ namespace Planetside
             testActive.quality = PickupObject.ItemQuality.B;
             testActive.SetupUnlockOnCustomFlag(CustomDungeonFlags.DEFEAT_OPHANAIM, true);
 
-            GameObject gameobject2 = ItemBuilder.AddSpriteToObject("SunWispObject", "Planetside/Resources/VFX/Sun/sunflare_chargeup_1", null);
-            FakePrefab.MarkAsFakePrefab(gameobject2);
-            UnityEngine.Object.DontDestroyOnLoad(gameobject2);
-            tk2dSpriteAnimator animator = gameobject2.AddComponent<tk2dSpriteAnimator>();
+           
 
-            //=====================================
-            
-            tk2dSpriteAnimationClip animationClip = new tk2dSpriteAnimationClip();
-            animationClip.fps = 12;
-            animationClip.wrapMode = tk2dSpriteAnimationClip.WrapMode.Loop;
-            animationClip.name = "spawn";
-            GameObject spriteObject = new GameObject("SunSpawn");
-            ItemBuilder.AddSpriteToObject("SunSpawn", $"Planetside/Resources/VFX/Sun/sunflare_chargeup_1", spriteObject);
-            tk2dSpriteAnimationFrame starterFrame = new tk2dSpriteAnimationFrame();
-            starterFrame.spriteId = spriteObject.GetComponent<tk2dSprite>().spriteId;
-            starterFrame.spriteCollection = spriteObject.GetComponent<tk2dSprite>().Collection;
-            tk2dSpriteAnimationFrame[] frameArray = new tk2dSpriteAnimationFrame[]
-            {
-                starterFrame
-            };
-            animationClip.frames = frameArray;
-            for (int i = 2; i < 13; i++)
-            {
-                GameObject spriteForObject = new GameObject("spriteForObject");
-                ItemBuilder.AddSpriteToObject("SunSpawn", $"Planetside/Resources/VFX/Sun/sunflare_chargeup_{i}", spriteForObject);
-                tk2dSpriteAnimationFrame frame = new tk2dSpriteAnimationFrame();
-                frame.spriteId = spriteForObject.GetComponent<tk2dBaseSprite>().spriteId;
-                frame.spriteCollection = spriteForObject.GetComponent<tk2dBaseSprite>().Collection;
-                animationClip.frames = animationClip.frames.Concat(new tk2dSpriteAnimationFrame[] { frame }).ToArray();
-            }
-            
-            //=====================================
-            tk2dSpriteAnimationClip fireanim = new tk2dSpriteAnimationClip();
-            fireanim.fps = 11;
-            fireanim.wrapMode = tk2dSpriteAnimationClip.WrapMode.Loop;
-            fireanim.name = "fire";
-            GameObject spriteObject1 = new GameObject("SunFire");
-            ItemBuilder.AddSpriteToObject("SunFire", $"Planetside/Resources/VFX/Sun/sunflare_fire_001", spriteObject1);
-            tk2dSpriteAnimationFrame starterFrame1 = new tk2dSpriteAnimationFrame();
-            starterFrame1.spriteId = spriteObject1.GetComponent<tk2dSprite>().spriteId;
-            starterFrame1.spriteCollection = spriteObject1.GetComponent<tk2dSprite>().Collection;
-            tk2dSpriteAnimationFrame[] frameArray1 = new tk2dSpriteAnimationFrame[]
-            {
-                starterFrame1
-            };
-            fireanim.frames = frameArray1;
-            for (int i = 2; i < 5; i++)
-            {
-                GameObject spriteForObject1 = new GameObject("spriteForObject");
-                ItemBuilder.AddSpriteToObject("SunFire", $"Planetside/Resources/VFX/Sun/sunflare_fire_00{i}", spriteForObject1);
-                tk2dSpriteAnimationFrame frame1 = new tk2dSpriteAnimationFrame();
-                frame1.spriteId = spriteForObject1.GetComponent<tk2dBaseSprite>().spriteId;
-                frame1.spriteCollection = spriteForObject1.GetComponent<tk2dBaseSprite>().Collection;
-                fireanim.frames = fireanim.frames.Concat(new tk2dSpriteAnimationFrame[] { frame1 }).ToArray();
-            }
-            //=====================================
-            
+            var debuffCollection = StaticSpriteDefinitions.VFX_Sheet_Data;
+            var BrokenArmorVFXObject = ItemBuilder.AddSpriteToObjectAssetbundle("Wisp Sun", debuffCollection.GetSpriteIdByName("sunflare_fire_001"), debuffCollection);//new GameObject("Broken Armor");//SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Debuffs/brokenarmor", new GameObject("BrokenArmorEffect"));
+            FakePrefab.MarkAsFakePrefab(BrokenArmorVFXObject);
+            UnityEngine.Object.DontDestroyOnLoad(BrokenArmorVFXObject);
+            var sprite = BrokenArmorVFXObject.GetOrAddComponent<tk2dBaseSprite>();
+            tk2dSpriteAnimator animator = BrokenArmorVFXObject.GetOrAddComponent<tk2dSpriteAnimator>();
+            animator.library = StaticSpriteDefinitions.VFX_Animation_Data;
+            animator.DefaultClipId = animator.GetClipIdByName("sun_start");
+            animator.playAutomatically = true;
+            sprite.usesOverrideMaterial = true;
+            Material material = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+            material.SetTexture("_MainTex", sprite.renderer.material.GetTexture("_MainTex"));
+            material.SetColor("_EmissiveColor", new Color32(255, 241, 204, 255));
+            material.SetFloat("_EmissiveColorPower", 5f);
+            material.SetFloat("_EmissivePower", 37.5f);
+            sprite.renderer.material = material;
 
-            tk2dSpriteAnimationClip despawn = new tk2dSpriteAnimationClip();
-            despawn.fps = 12;
-            despawn.wrapMode = tk2dSpriteAnimationClip.WrapMode.Once;
-            despawn.name = "despawn";
-            GameObject spriteObject2 = new GameObject("SunDespawn");
-            ItemBuilder.AddSpriteToObject("SunDespawn", $"Planetside/Resources/VFX/Sun/sunflare_chargeup_11", spriteObject2);
-            tk2dSpriteAnimationFrame starterFrame2 = new tk2dSpriteAnimationFrame();
-            starterFrame2.spriteId = spriteObject2.GetComponent<tk2dSprite>().spriteId;
-            starterFrame2.spriteCollection = spriteObject2.GetComponent<tk2dSprite>().Collection;
-            tk2dSpriteAnimationFrame[] frameArray2 = new tk2dSpriteAnimationFrame[]
-            {
-                starterFrame2
-            };
-            despawn.frames = frameArray2;
-            for (int i = 10; i > 1; i--)
-            {
-                GameObject spriteForObject2 = new GameObject("spriteForObject");
-                ItemBuilder.AddSpriteToObject("SunSpawn", $"Planetside/Resources/VFX/Sun/sunflare_chargeup_{i}", spriteForObject2);
-                tk2dSpriteAnimationFrame frame2 = new tk2dSpriteAnimationFrame();
-                frame2.spriteId = spriteForObject2.GetComponent<tk2dBaseSprite>().spriteId;
-                frame2.spriteCollection = spriteForObject2.GetComponent<tk2dBaseSprite>().Collection;
-                despawn.frames = despawn.frames.Concat(new tk2dSpriteAnimationFrame[] { frame2 }).ToArray();
-            }
-            //=====================================
+            WispInABottleController wispCont = BrokenArmorVFXObject.gameObject.AddComponent<WispInABottleController>();
+            wispCont.Sprite = sprite;
+            wispCont.Animator = animator;
 
-            animator.Library = animator.gameObject.AddComponent<tk2dSpriteAnimation>();
-            animator.Library.clips = new tk2dSpriteAnimationClip[] { animationClip , fireanim , despawn };
-            animator.DefaultClipId = animator.GetClipIdByName("fire");
-            animator.playAutomatically = false;
 
-            WispInABottle.SunPrefab = gameobject2;
+
+            WispInABottle.SunPrefab = BrokenArmorVFXObject;
 
             testActive.AddToSubShop(ItemBuilder.ShopType.Goopton, 1f);
             SynergyAPI.SynergyBuilder.AddItemToSynergy(testActive, CustomSynergyType.FLAIR_GUN);
@@ -152,14 +90,15 @@ namespace Planetside
         {
             tk2dSprite component = GameObject.Instantiate(WispInABottle.SunPrefab, user.specRigidbody.UnitTopCenter, Quaternion.identity, user.transform).GetComponent<tk2dSprite>();
             component.transform.position.WithZ(transform.position.z + 99999);
-            component.GetComponent<tk2dBaseSprite>().PlaceAtPositionByAnchor(user.CenterPosition, tk2dBaseSprite.Anchor.MiddleCenter);
-            user.sprite.AttachRenderer(component.GetComponent<tk2dBaseSprite>());
-            component.PlaceAtPositionByAnchor(base.LastOwner.sprite.WorldTopCenter, tk2dBaseSprite.Anchor.LowerCenter);
+            component.PlaceAtPositionByAnchor(user.CenterPosition, tk2dBaseSprite.Anchor.MiddleCenter);
+            
+            user.sprite.AttachRenderer(component);
+            
+            component.PlaceAtPositionByAnchor(user.sprite.WorldTopCenter, tk2dBaseSprite.Anchor.LowerCenter);
             component.scale = Vector3.one;
-            WispInABottleController wispCont = component.gameObject.AddComponent<WispInABottleController>();
-            wispCont.player = user;
-            wispCont.self = component;
+            component.GetComponent<WispInABottleController>().player = user;
         }
+        
        
     }
 }
@@ -172,41 +111,22 @@ namespace Planetside
         {
             this.SpawnDuration = 1f;
             this.Duration = 10f;
-            this.player = GameManager.Instance.PrimaryPlayer;
-            this.self = WispInABottle.SunPrefab.GetComponent<tk2dBaseSprite>();
         }
         public void Start()
         {
             AkSoundEngine.PostEvent("Play_BOSS_lichB_charge_01", player.gameObject);
-            self.GetComponent<tk2dSpriteAnimator>().PlayForDuration("spawn", SpawnDuration);
-
-            Material sharedMaterial = self.sprite.renderer.sharedMaterial;
-            self.sprite.usesOverrideMaterial = true;
-            Material material = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
-            material.SetTexture("_MainTex", sharedMaterial.GetTexture("_MainTex"));
-            material.SetColor("_EmissiveColor", new Color32(255, 241, 204, 255));
-            material.SetFloat("_EmissiveColorPower", 5f);
-            material.SetFloat("_EmissivePower", 37.5f);
-            self.sprite.renderer.material = material;
+            Animator.PlayForDuration("sun_start", SpawnDuration);
 
         }
         public void Update()
         {
             this.elapsed += BraveTime.DeltaTime;
-            if (player == null)
-            {
-                ETGModConsole.Log("player is NULL");
-            }
-            if (self == null)
-            {
-                ETGModConsole.Log("object is NULL (how the hell?)");
-            }
             if (this.elapsed >= SpawnDuration && this.elapsed <= SpawnDuration + Duration && DurationOver != true)
             {
                 if (HasTriggeredFireAnim != true)
                 {
                     HasTriggeredFireAnim = true;
-                    self.GetComponent<tk2dSpriteAnimator>().Play("fire");
+                    Animator.Play("sun_aaa");
                     AkSoundEngine.PostEvent("Play_BOSS_doormimic_flame_01", player.gameObject);
                     AkSoundEngine.PostEvent("Play_Burn", player.gameObject);
                 }
@@ -215,21 +135,34 @@ namespace Planetside
                 if (secondaryElapsed >= 0.2f)
                 {
                     secondaryElapsed = 0;
-                    Exploder.DoDistortionWave(self.sprite.WorldCenter, 0.1f, 0.25f, 6, 0.5f);
-                    List<AIActor> activeEnemies = player.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
-                    Vector2 centerPosition = player.sprite.WorldCenter;
-                    if (activeEnemies != null)
+                    Exploder.DoDistortionWave(Sprite.WorldCenter, 0.1f, 0.25f, 6, 0.5f);
+                    ParticleBase.EmitParticles("WaveParticle", 1, new ParticleSystem.EmitParams()
                     {
-                        for (int i = 0; i < activeEnemies.Count; i++)
-                        {
-                            AIActor aiactor = activeEnemies[i];
-                            if (Vector2.Distance(aiactor.CenterPosition, centerPosition) < 20 && aiactor.healthHaver.GetMaxHealth() > 0f && aiactor != null && aiactor.specRigidbody != null && player != null)
-                            {
-                                aiactor.ApplyEffect(DebuffLibrary.HeatStroke, 1f, null);
+                        position = Sprite.WorldTopCenter,
+                        startSize = 12,
+                        rotation = 0,
+                        startLifetime = 0.5f,
+                        startColor = new Color(1, 0.6f, 0f, 0.1f)
+                    });
 
+
+                    if (player.CurrentRoom != null)
+                    {
+                        List<AIActor> activeEnemies = player.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
+                        Vector2 centerPosition = player.sprite.WorldCenter;
+                        if (activeEnemies != null)
+                        {
+                            for (int i = 0; i < activeEnemies.Count; i++)
+                            {
+                                AIActor aiactor = activeEnemies[i];
+                                if (Vector2.Distance(aiactor.CenterPosition, centerPosition) < 20 && aiactor.healthHaver.GetMaxHealth() > 0f && aiactor != null)
+                                {
+                                    aiactor.ApplyEffect(DebuffLibrary.HeatStroke, 1f, null);
+                                }
                             }
                         }
                     }
+
                 }
             }
             if (this.elapsed >= Duration + SpawnDuration && DurationOver != true)
@@ -237,7 +170,7 @@ namespace Planetside
                 DurationOver = true;
                 AkSoundEngine.PostEvent("Stop_Burn", player.gameObject);
                 AkSoundEngine.PostEvent("Play_BOSS_lichB_charge_01", player.gameObject);
-                self.GetComponent<tk2dSpriteAnimator>().PlayAndDestroyObject("despawn");
+                Animator.PlayAndDestroyObject("sun_stop");
             }
         }
         public void OnDestroy()
@@ -245,9 +178,13 @@ namespace Planetside
             AkSoundEngine.PostEvent("Stop_Burn", player.gameObject);
         }
 
-        public tk2dBaseSprite self;
+        public tk2dBaseSprite Sprite;
+        public tk2dSpriteAnimator Animator;
+
 
         public PlayerController player;
+
+
         public float Duration;
         public float SpawnDuration;
 

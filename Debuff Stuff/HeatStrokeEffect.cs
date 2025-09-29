@@ -26,6 +26,7 @@ namespace Planetside
 
         public static GameObject BuildVFX()
         {
+            /*
             var debuffCollection = StaticSpriteDefinitions.VFX_Sheet_Data;
             var BrokenArmorVFXObject = ItemBuilder.AddSpriteToObjectAssetbundle("Heat Stroke", debuffCollection.GetSpriteIdByName("heatstrokeicon7"), debuffCollection);//new GameObject("Broken Armor");//SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Debuffs/brokenarmor", new GameObject("BrokenArmorEffect"));
             FakePrefab.MarkAsFakePrefab(BrokenArmorVFXObject);
@@ -50,33 +51,110 @@ namespace Planetside
             animator.DefaultClipId = animator.GetClipIdByName("start");
             animator.playAutomatically = true;
             clip.loopStart = 6;
+            */
+
+            var debuffCollection = StaticSpriteDefinitions.VFX_Sheet_Data;
+            var BrokenArmorVFXObject = ItemBuilder.AddSpriteToObjectAssetbundle("Heat Stroke", debuffCollection.GetSpriteIdByName("heatstrokeicon1"), debuffCollection);//new GameObject("Broken Armor");//SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Debuffs/brokenarmor", new GameObject("BrokenArmorEffect"));
+            FakePrefab.MarkAsFakePrefab(BrokenArmorVFXObject);
+            UnityEngine.Object.DontDestroyOnLoad(BrokenArmorVFXObject);
+            var sprite = BrokenArmorVFXObject.GetOrAddComponent<tk2dBaseSprite>();
+            tk2dSpriteAnimator animator = BrokenArmorVFXObject.GetOrAddComponent<tk2dSpriteAnimator>();
+            animator.library = StaticSpriteDefinitions.VFX_Animation_Data;
+            animator.DefaultClipId = animator.GetClipIdByName("heatstroke_effect");
+            animator.playAutomatically = true;
+            sprite.usesOverrideMaterial = true;
+
             heatstrokeVFXObject = BrokenArmorVFXObject;
             return heatstrokeVFXObject;
         }
 
-       
+        public float customDuration = 1;
+        private float HeatDuration = 0;
 
         public override void OnEffectApplied(GameActor actor, RuntimeGameActorEffectData effectData, float partialAmount = 1)
         {
-			//base.OnEffectRemoved(actor, effectData);
+            HeatDuration = 0.1f;
+            customDuration = 1;
+            actor.specRigidbody.OnPreMovement += ModifyVelocity;
+        }
+        private float Power;
+        public void ModifyVelocity(SpeculativeRigidbody myRigidbody)
+        {
+
+            myRigidbody.Velocity *= Mathf.Max(0.01f, (1 - Power));
         }
 
-		public override void EffectTick(GameActor actor, RuntimeGameActorEffectData effectData)
+
+        public override void EffectTick(GameActor actor, RuntimeGameActorEffectData effectData)
 		{
-	
-		}
-		public override void OnEffectRemoved(GameActor actor, RuntimeGameActorEffectData effectData)
-		{
-			if (this.AffectsEnemies && actor is AIActor)
+            base.EffectTick(actor, effectData);
+            if (customDuration > 0)
             {
-				BulletStatusEffectItem Firecomponent = PickupObjectDatabase.GetById(295).GetComponent<BulletStatusEffectItem>();
-				GameActorFireEffect gameActorFire = Firecomponent.FireModifierEffect;
-				actor.ApplyEffect(gameActorFire, 1f, null);
-                actor.healthHaver.ApplyDamage(2, Vector2.zero, "THE SUN", CoreDamageTypes.Fire, DamageCategory.Normal, false, null, false);
-                actor.behaviorSpeculator.Stun(0.4f, true);
+                customDuration -= BraveTime.DeltaTime;
+                HeatDuration += BraveTime.DeltaTime;
+                if (actor.aiActor && !actor.aiActor.healthHaver.IsBoss)
+                {
+                    actor.behaviorSpeculator.CooldownScale += BraveTime.DeltaTime * 0.05f;
+                }
             }
+            else
+            {
+                HeatDuration -= BraveTime.DeltaTime * 4;
+                if(actor.aiActor && !actor.aiActor.healthHaver.IsBoss)
+                {
+                    actor.behaviorSpeculator.CooldownScale -= BraveTime.DeltaTime * 0.2f;
+                }
+            }
+            //Debug.Log($"{HeatDuration} | {customDuration}");
+
+            if (HeatDuration <= 0)
+            {
+                //Debug.Log("DIE");
+                actor.RemoveEffect(this);
+                this.OnEffectRemoved(actor, effectData);
+                return;
+            }
+            Power = HeatDuration * 0.001f;
+            if (HeatDuration >= 7.5f && UnityEngine.Random.value < Power)
+            {
+                actor.behaviorSpeculator.Stun(0.1f, true);
+            }
+            if (HeatDuration >= 10f && UnityEngine.Random.value < Power)
+            {
+                actor.ApplyEffect(DebuffStatics.hotLeadEffect, 1f, null);
+            }
+            if (HeatDuration > 2.5f)
+            {
+                actor.healthHaver.ApplyDamage((HeatDuration - 2.5f) * BraveTime.DeltaTime, Vector2.zero, "THE SUN", CoreDamageTypes.Fire, DamageCategory.Normal, false, null, false);
+            }
+        }
+        public override void OnEffectRemoved(GameActor actor, RuntimeGameActorEffectData effectData)
+		{
+            ParticleBase.EmitParticles("WaveParticle", 1, new ParticleSystem.EmitParams()
+            {
+                position = actor.sprite.WorldTopCenter,
+                startSize = 5,
+                rotation = 0,
+                startLifetime = 0.3f,
+                startColor = new Color(1, 0.6f, 0f, 0.2f)
+            });
+            actor.specRigidbody.OnPreMovement -= ModifyVelocity;
             base.OnEffectRemoved(actor, effectData);
 			actor.healthHaver.OnPreDeath -= effectData.OnActorPreDeath;
 		}
-	}
+
+        public override void OnDarkSoulsAccumulate(GameActor actor, RuntimeGameActorEffectData effectData, float partialAmount = 1, Projectile sourceProjectile = null)
+        {
+            for (int i = 0; i < actor.m_activeEffects.Count; i++)
+            {
+                if (actor.m_activeEffects[i].effectIdentifier == effectIdentifier && actor.m_activeEffects[i] is HeatStrokeEffect heatStroke)
+                {
+                    heatStroke.customDuration += 0.35f;
+                }
+            }
+            base.OnDarkSoulsAccumulate(actor, effectData, partialAmount, sourceProjectile);
+        }
+
+
+    }
 }
