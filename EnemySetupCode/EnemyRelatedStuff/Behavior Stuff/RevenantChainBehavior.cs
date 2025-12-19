@@ -133,6 +133,11 @@ namespace Planetside
             {
                 var _otherBody = (otherBody as SpeculativeRigidbody);
                 var _otherPixelCollider = (otherPixelCollider as PixelCollider);
+                if (_otherBody.projectile)
+                {
+                    PhysicsEngine.SkipCollision = true;
+                    return;
+                }
                 if (_otherBody.GetComponent<PlayerOrbital>() != null)
                 {
                     if (currentState == State.Go)

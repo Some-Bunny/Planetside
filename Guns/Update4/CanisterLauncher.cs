@@ -40,10 +40,8 @@ namespace Planetside
 
 
 
-            for (int i = 0; i < 1; i++)
-			{
-				gun.AddProjectileModuleFrom(PickupObjectDatabase.GetById(43) as Gun, true, false);
-			}
+            gun.AddProjectileModuleFrom(PickupObjectDatabase.GetById(43) as Gun, true, false);
+
             EnemyToolbox.AddSoundsToAnimationFrame(gun.GetComponent<tk2dSpriteAnimator>(), gun.shootAnimation, new Dictionary<int, string> { { 0, "Play_Grenade_shot_01" }, { 5, "Play_OBJ_lock_unlock_01" } });
 
             EnemyToolbox.AddSoundsToAnimationFrame(gun.GetComponent<tk2dSpriteAnimator>(), gun.reloadAnimation, new Dictionary<int, string> { { 1, "Play_OBJ_hook_pull_03" }, { 4, "Play_OBJ_lock_unlock_01" },  { 8, "Play_WPN_pillow_reload_01" } });
@@ -60,19 +58,19 @@ namespace Planetside
 				projectile.gameObject.SetActive(false);
 				projectileModule.projectiles[0] = projectile;
 				projectile.baseData.damage = 20f;
-				projectile.AdditionalScaleMultiplier = 4f;
+				projectile.AdditionalScaleMultiplier = 1f;
 				projectile.baseData.range += 5;
 				projectile.baseData.speed *= 0.75f;
                 BounceProjModifier bouncy = projectile.gameObject.AddComponent<BounceProjModifier>();
                 bouncy.numberOfBounces = 2;
 
                 projectile.collidesWithProjectiles = true;
+                projectile.collidesWithEnemies = true;	
 
                 FakePrefab.MarkAsFakePrefab(projectile.gameObject);
 				UnityEngine.Object.DontDestroyOnLoad(projectile);
 				gun.DefaultModule.projectiles[0] = projectile;
-				bool flag = projectileModule != gun.DefaultModule;
-				if (flag)
+				if (projectileModule != gun.DefaultModule)
 				{
 					projectileModule.ammoCost = 0;
 				}
@@ -83,12 +81,13 @@ namespace Planetside
 				projectile.baseData.AccelerationCurve = AnimationCurve.Linear(0, 1, 1, 0.3f);
 
 
-                projectile.gameObject.GetOrAddComponent<CanisterLauncherProjectile>();
+                var proj = projectile.gameObject.GetOrAddComponent<CanisterLauncherProjectile>();
+                proj.projectile = projectile;
                 ExplosiveModifier explosiveModifier = projectile.gameObject.GetOrAddComponent<ExplosiveModifier>();
 				explosiveModifier.explosionData = new ExplosionData(){
 					breakSecretWalls = false,
 					comprehensiveDelay = 0,
-					damage = 15,
+					damage = 25,
 					damageRadius = 3,
 					damageToPlayer = 0,
 					debrisForce = 1000,
@@ -123,36 +122,13 @@ namespace Planetside
                 AnimateBullet.ConstructListOfSameValues(true, Length),
                 AnimateBullet.ConstructListOfSameValues(false, Length),
                 AnimateBullet.ConstructListOfSameValues<Vector3?>(null, Length),
-                AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(-2, -2), Length),
                 AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(12, 12), Length),
+                AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(-2, -2), Length),
                 AnimateBullet.ConstructListOfSameValues<Projectile>(null, Length));
 
-                /*
-                projectile.AnimateProjectile(new List<string> {
-                "canister_001",
-                "canister_002",
-                "canister_003",
-                "canister_004",
-                "canister_005",
-                "canister_006",
-                "canister_007",
-                "canister_008",
-            }, 13, true, new List<IntVector2> {
-				new IntVector2(8, 8),
-                new IntVector2(8, 8),       
-                new IntVector2(8, 8),
-                new IntVector2(8, 8),
-                new IntVector2(8, 8),
-                new IntVector2(8, 8),
-                new IntVector2(8, 8),
-                new IntVector2(8, 8),
-            }, AnimateBullet.ConstructListOfSameValues(false, 8), AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.MiddleCenter, 8), AnimateBullet.ConstructListOfSameValues(true, 8), AnimateBullet.ConstructListOfSameValues(false, 8),
-			   AnimateBullet.ConstructListOfSameValues<Vector3?>(null, 8), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 8), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 8), AnimateBullet.ConstructListOfSameValues<Projectile>(null, 8));
-				projectile.SetProjectileSpriteRight("canister_001", 8, 8, false, tk2dBaseSprite.Anchor.MiddleCenter, 8, 8);
-				*/
+
                 projectile.shouldRotate = false;
                 
-                SpriteOutlineManager.AddOutlineToSprite(projectile.sprite, Color.black, 0.1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
 
             }
             gun.barrelOffset.transform.localPosition = new Vector3(0.75f, 0.375f, 0f);

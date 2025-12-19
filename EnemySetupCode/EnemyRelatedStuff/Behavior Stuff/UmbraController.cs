@@ -539,7 +539,7 @@ public class UmbraController : BraveBehaviour
         //AkSoundEngine.PostEvent("Play_ENM_cannonarmor_charge_01", this.aiActor.gameObject);
         AkSoundEngine.PostEvent("Play_ENM_cannonball_intro_01", this.aiActor.gameObject);
 
-        this.aiActor.healthHaver.invulnerabilityPeriod = 1.5f;
+        this.aiActor.healthHaver.invulnerabilityPeriod = 3.5f;
         float cached = this.aiActor.MovementSpeed;
 		this.aiActor.MovementSpeed = 0;
         umbraEffect.StartUp();
@@ -660,8 +660,6 @@ public class UmbraController : BraveBehaviour
 
     public IEnumerator DoAttackOfDoom(Vector3 start, Vector3 end)
     {
-        //m_ENM_statue_glow_01
-
         var t = UnityEngine.Object.Instantiate(UmbralLockOnFloor, end, Quaternion.identity).GetComponent<LockOnFloor>();
         t.SetState(true);
         var m = MathToolbox.GetUnitOnCircle(BraveUtility.RandomAngle(), 1).normalized * 8;
@@ -696,9 +694,7 @@ public class UmbraController : BraveBehaviour
             GameObject effect = UnityEngine.Object.Instantiate(StaticVFXStorage.DragunBoulderLandVFX, end, Quaternion.identity);
             Destroy(effect, 2.5f);
             AkSoundEngine.PostEvent("Play_ENM_bulletking_skull_01", t.gameObject);
-            //SpawnManager.SpawnBulletScript(base.aiActor, new CustomBulletScriptSelector(typeof(SmallSlam)), end);
             EnemyToolbox.SpawnBulletScript(base.aiActor, base.aiActor.sprite.WorldCenter, OuroborosController.BulletBankDummy.GetComponent<AIBulletBank>(), new CustomBulletScriptSelector(typeof(SmallSlam)), "Reflection");
-
         }
 
 

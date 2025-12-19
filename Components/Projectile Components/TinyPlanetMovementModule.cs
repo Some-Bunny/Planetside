@@ -47,7 +47,6 @@ namespace Planetside
 		}
 
 
-
 		public override void Move(Projectile source, Transform projectileTransform, tk2dBaseSprite projectileSprite, SpeculativeRigidbody specRigidbody, ref float m_timeElapsed, ref Vector2 m_currentDirection, bool Inverted, bool shouldRotate)
 		{
 
@@ -64,6 +63,7 @@ namespace Planetside
 			}
 			m_timeElapsed += BraveTime.DeltaTime;
 			float radius = this.m_radius + (m_timeElapsed*5);
+			radius = Mathf.Min(MaxRadius, radius);
 			float num = source.Speed * BraveTime.DeltaTime;
 			float num2 = num / (OrbitTightness * radius) * 360f;
 			if (this.ForceInvert)
@@ -144,24 +144,41 @@ namespace Planetside
 
 		public override Vector2 GetBoneOffset(BasicBeamController.BeamBone bone, BeamController sourceBeam, bool inverted)
 		{
-			PlayerController playerController = sourceBeam.Owner as PlayerController;
-			Vector2 vector = playerController.unadjustedAimPoint.XY() - playerController.CenterPosition;
-			float num = vector.ToAngle();
-			Vector2 barrel = playerController.CurrentGun.barrelOffset.transform.position;
-			Vector2 b = bone.Position - barrel;
-			Vector2 vector2;
-			{
-				float aaaa = bone.PosX;
-				float num2 = aaaa / this.m_beamOrbitRadiusCircumference * 360f + num;
-				float Fard = 1f * (aaaa) * 2;
-				float x = Mathf.Cos(0.0174532924f * num2) * Fard;
-				float y = Mathf.Sin(0.0174532924f * num2) * Fard;
-				bone.RotationAngle = num2 + 72f;
-				vector2 = new Vector2(x, y) - b;
-			}
-			
-			return vector2;
-		}
+            if (sourceBeam.IsReflectedBeam)
+            {
+                return Vector2.zero;
+            }
+            PlayerController playerController = sourceBeam.Owner as PlayerController;
+            Vector2 vector = playerController.unadjustedAimPoint.XY() - playerController.CenterPosition;
+            float num = vector.ToAngle();
+            Vector2 b = bone.Position - playerController.CenterPosition;
+            Vector2 vector2;
+			float m = Mathf.PingPong(Time.timeSinceLevelLoad, 2) * 0.5f;
+            if (bone.PosX < this.m_beamOrbitRadiusCircumference)
+            {
+                float num2 = bone.PosX / (this.m_beamOrbitRadiusCircumference) * 360f + num;
+                float x = Mathf.Cos(0.017453292f * num2) * this.BeamOrbitRadius * m;
+                float y = Mathf.Sin(0.017453292f * num2) * this.BeamOrbitRadius * m;
+                bone.RotationAngle = num2 + 90f;
+                vector2 = new Vector2(x, y) - b;
+            }
+            else
+            {
+                bone.RotationAngle = num;
+                vector2 = vector.normalized * (bone.PosX - (this.m_beamOrbitRadiusCircumference) + (this.BeamOrbitRadius * m)) - b;
+            }
+            if (this.StackHelix)
+            {
+                float num3 = 3f;
+                float num4 = 1f;
+                float num5 = 6f;
+                int num6 = (!(inverted ^ this.ForceInvert)) ? 1 : -1;
+                float num7 = bone.PosX - num5 * (Time.timeSinceLevelLoad % 600000f);
+                float to = (float)num6 * num4 * Mathf.Sin(num7 * 3.1415927f / num3);
+                vector2 += BraveMathCollege.DegreesToVector(bone.RotationAngle + 90f, Mathf.SmoothStep(0f, to, bone.PosX));
+            }
+            return vector2;
+        }
 
 		private static Dictionary<int, List<TinyPlanetMotionModule>> m_currentOrbiters = new Dictionary<int, List<TinyPlanetMotionModule>>();
 

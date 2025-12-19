@@ -61,7 +61,7 @@ namespace Planetside
 			
 			float elapsed = 0f;
 			float duration = 2f;
-			AkSoundEngine.PostEvent("Play_ENM_blobulord_charge_01", objectToLookOutFor);
+			//AkSoundEngine.PostEvent("Play_ENM_blobulord_charge_01", objectToLookOutFor);
 			while (elapsed < duration)
 			{
 				if (objectToLookOutFor.gameObject == null) { break; }
@@ -84,7 +84,7 @@ namespace Planetside
 					data.ignoreList.Add(playerController.specRigidbody);
 				}
 			}
-			data.damage = 9f * (player != null ? player.stats.GetStatValue(PlayerStats.StatType.Damage) : 1);
+			data.damage = 8.5f * (player != null ? player.stats.GetStatValue(PlayerStats.StatType.Damage) : 1);
 			data.damageRadius = 2.25f;
 			data.doScreenShake = false;
 			data.playDefaultSFX = false;
@@ -94,46 +94,52 @@ namespace Planetside
 			{
 				Exploder.Explode(objectToLookOutFor.transform.position, data, objectToLookOutFor.transform.position);
 				AkSoundEngine.PostEvent("Play_ENM_mushroom_cloud_01", objectToLookOutFor);
-				for (int i = 0; i < UnityEngine.Random.Range(2, 4); i++)
-				{
-					GameObject spawnedBulletOBJ = SpawnManager.SpawnProjectile(SporeBullets.sporeProjectile.gameObject, objectToLookOutFor.transform.position, Quaternion.Euler(0f, 0f, UnityEngine.Random.Range(-180, 180)), true);
-					Projectile component = spawnedBulletOBJ.GetComponent<Projectile>();
-					if (component != null)
-					{
-						component.Owner = player;
-						component.Shooter = player.specRigidbody;
-						component.specRigidbody.RegisterTemporaryCollisionException(parent.specRigidbody, 0.5f);
 
-                     
-
-                    }
-				}
-				if (player.PlayerHasActiveSynergy("Big Fungus"))
+				if (UnityEngine.Random.value < 0.5f)
 				{
-                    for (int i = 0; i < UnityEngine.Random.Range(4, 7); i++)
+                    for (int i = 0; i < UnityEngine.Random.Range(1, 3); i++)
                     {
-                        GameObject spawnedBulletOBJ = SpawnManager.SpawnProjectile((PickupObjectDatabase.GetById(197) as Gun).DefaultModule.projectiles[0].gameObject, objectToLookOutFor.transform.position, Quaternion.Euler(0f, 0f, UnityEngine.Random.Range(-180, 180)), true);
+                        GameObject spawnedBulletOBJ = SpawnManager.SpawnProjectile(SporeBullets.sporeProjectile.gameObject, objectToLookOutFor.transform.position, Quaternion.Euler(0f, 0f, UnityEngine.Random.Range(-180, 180)), true);
                         Projectile component = spawnedBulletOBJ.GetComponent<Projectile>();
                         if (component != null)
                         {
                             component.Owner = player;
                             component.Shooter = player.specRigidbody;
                             component.specRigidbody.RegisterTemporaryCollisionException(parent.specRigidbody, 0.5f);
-                            component.SpawnedFromOtherPlayerProjectile = true;
-                            component.gameObject.AddComponent<RecursionPreventer>();
-                            component.baseData.damage *= player.stats.GetStatValue(PlayerStats.StatType.Damage);
-                            component.baseData.speed *= .300f;
-                            player.DoPostProcessProjectile(component);
-                            component.AdditionalScaleMultiplier = 0.8f;
-                            component.baseData.range = 100f;
-                            component.AdditionalScaleMultiplier *= UnityEngine.Random.Range(0.5f, 1.5f);
-                            component.StartCoroutine(this.Speed(component, UnityEngine.Random.Range(8, 30), UnityEngine.Random.Range(4, 20), UnityEngine.Random.Range(0.03f, 0.1f)));
-                            HomingModifier homing = component.gameObject.AddComponent<HomingModifier>();
-                            homing.HomingRadius = 10f;
-                            homing.AngularVelocity = 60;
+
+
+                        }
+                    }
+                    if (player.PlayerHasActiveSynergy("Big Fungus"))
+                    {
+                        for (int i = 0; i < UnityEngine.Random.Range(3, 7); i++)
+                        {
+                            GameObject spawnedBulletOBJ = SpawnManager.SpawnProjectile((PickupObjectDatabase.GetById(197) as Gun).DefaultModule.projectiles[0].gameObject, objectToLookOutFor.transform.position, Quaternion.Euler(0f, 0f, UnityEngine.Random.Range(-180, 180)), true);
+                            Projectile component = spawnedBulletOBJ.GetComponent<Projectile>();
+                            if (component != null)
+                            {
+                                component.Owner = player;
+                                component.Shooter = player.specRigidbody;
+                                component.specRigidbody.RegisterTemporaryCollisionException(parent.specRigidbody, 0.5f);
+                                component.SpawnedFromOtherPlayerProjectile = true;
+                                component.gameObject.AddComponent<RecursionPreventer>();
+                                component.baseData.damage *= player.stats.GetStatValue(PlayerStats.StatType.Damage);
+                                component.baseData.speed *= .300f;
+                                player.DoPostProcessProjectile(component);
+                                component.AdditionalScaleMultiplier = 0.8f;
+                                component.baseData.range = 100f;
+                                component.AdditionalScaleMultiplier *= UnityEngine.Random.Range(0.5f, 1.5f);
+                                component.StartCoroutine(this.Speed(component, UnityEngine.Random.Range(8, 30), UnityEngine.Random.Range(4, 20), UnityEngine.Random.Range(0.03f, 0.1f)));
+                                HomingModifier homing = component.gameObject.AddComponent<HomingModifier>();
+                                homing.HomingRadius = 10f;
+                                homing.AngularVelocity = 60;
+                            }
                         }
                     }
                 }
+
+
+				
 				Destroy(objectToLookOutFor);
 			}
 			yield break;
@@ -272,7 +278,7 @@ namespace Planetside
 		{
 			try
 			{
-				float procChance = 0.22f;
+				float procChance = 0.12f;
 				procChance *= effectChanceScalar;
 				SporeBulletsComponent cont = sourceProjectile.gameObject.GetComponent<SporeBulletsComponent>();
                 RecursionPreventer rec = sourceProjectile.gameObject.GetComponent<RecursionPreventer>();
@@ -300,7 +306,7 @@ namespace Planetside
 
 			try
 			{
-				float procChance = 0.22f;
+				float procChance = 0.08f;
 				if (UnityEngine.Random.value <= procChance)
 				{
 					GameObject spawnedBulletOBJ = SpawnManager.SpawnProjectile(sporeProjectile.gameObject, base.Owner.transform.position, Quaternion.Euler(0f, 0f, base.Owner.FacingDirection + UnityEngine.Random.Range(-10, 10)), true);

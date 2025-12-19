@@ -243,13 +243,16 @@ namespace Planetside
 
 		private GenericLootTable GetRewardValue()
 		{
-			if (Kills > 11)
+			if (Kills >= 10)
             {return DeathWarrant.largeKillsTable;}
-			else if (Kills > 6)
+			else if (Kills >= 7)
 			{return DeathWarrant.mediumKillsTable;}
-			else if (Kills > 2)
+			else if (Kills >= 4)
 			{return DeathWarrant.smallKillsTable;}
-			return null;
+            else if (Kills >= 2)
+            { return DeathWarrant.poopKillsTable; }
+
+            return null;
 		}
 
 		private void OnDestroy()
@@ -379,7 +382,11 @@ namespace Planetside
 			DeathWarrant.DeathWarrantID = item.PickupObjectId;
 			ItemIDs.AddToList(item.PickupObjectId);
 
-			smallKillsTable = LootTableTools.CreateLootTable();
+
+            poopKillsTable = LootTableTools.CreateLootTable();
+            poopKillsTable.AddItemsToPool(new Dictionary<int, float>() { { Pickups.Casing_1.PickupObjectId, 1 } });
+
+            smallKillsTable = LootTableTools.CreateLootTable();
 			smallKillsTable.AddItemsToPool(new Dictionary<int, float>() { { 68, 1 }, { 70, 0.4f } });
 
 			mediumKillsTable = LootTableTools.CreateLootTable();
@@ -388,8 +395,9 @@ namespace Planetside
 			largeKillsTable = LootTableTools.CreateLootTable();
 			largeKillsTable.AddItemsToPool(new Dictionary<int, float>() { { 70, 1f }, { 73, 0.7f }, { 120, 0.8f }, { 85, 0.5f }, { 67, 0.5f }, { 224, 0.5f } });
 		}
+        public static GenericLootTable poopKillsTable;
 
-		public static GenericLootTable smallKillsTable;
+        public static GenericLootTable smallKillsTable;
 		public static GenericLootTable mediumKillsTable;
 		public static GenericLootTable largeKillsTable;
 

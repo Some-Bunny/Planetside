@@ -21,6 +21,7 @@ namespace Planetside
             entry.Name = Name;
             entry.preloadCount = Mathf.Max(entry.preloadCount, 25);
             Projectile projectile = UnityEngine.Object.Instantiate<GameObject>(entry.BulletObject).GetComponent<Projectile>();
+            projectile.name = entry.Name;
             projectile.gameObject.SetLayerRecursively(18);
             projectile.transform.position = projectile.transform.position.WithZ(210.5125f);
 
@@ -46,6 +47,8 @@ namespace Planetside
             entry.preloadCount = Mathf.Max(entry.preloadCount, 25);
 
             Projectile projectile = UnityEngine.Object.Instantiate<GameObject>(entry.BulletObject).GetComponent<Projectile>();
+            projectile.name = entry.Name;
+
             projectile.gameObject.SetLayerRecursively(18);
             projectile.transform.position = projectile.transform.position.WithZ(210.5125f);
 
@@ -500,7 +503,7 @@ namespace Planetside
             }
 
             {
-                undodgeableDonut = CopyBulletBankEntryToBlue(EnemyDatabase.GetOrLoadByGuid("fa76c8cfdf1c4a88b55173666b4bc7fb").bulletBank.GetBullet("hugeBullet"), "undodgeableMine");
+                undodgeableMine = CopyBulletBankEntryToBlue(EnemyDatabase.GetOrLoadByGuid("fa76c8cfdf1c4a88b55173666b4bc7fb").bulletBank.GetBullet("hugeBullet"), "undodgeableMine");
                 
             }
 
@@ -634,48 +637,37 @@ namespace Planetside
                 UnDodgeableTailProj = CopyBulletBankEntryToBlue(EnemyDatabase.GetOrLoadByGuid(Alexandria.EnemyGUIDs.Resourceful_Rat_Boss_GUID).bulletBank.GetBullet("tail"), "UnDodgeableTailProj", "DNC", null, false);
                 
             }
-            {
-                UnDodgeablecheeseWedge0 = CopyBulletBankEntryToBlue(EnemyDatabase.GetOrLoadByGuid(Alexandria.EnemyGUIDs.Resourceful_Rat_Boss_GUID).bulletBank.GetBullet("cheeseWedge0"), "UnDodgeablecheeseWedge0", "DNC", null, false);
-                
-            }
-            {
-                UnDodgeablecheeseWedge1 = CopyBulletBankEntryToBlue(EnemyDatabase.GetOrLoadByGuid(Alexandria.EnemyGUIDs.Resourceful_Rat_Boss_GUID).bulletBank.GetBullet("cheeseWedge1"), "UnDodgeablecheeseWedge1", "DNC", null, false);
-                
-            }
-            {
-                UnDodgeablecheeseWedge2 = CopyBulletBankEntryToBlue(EnemyDatabase.GetOrLoadByGuid(Alexandria.EnemyGUIDs.Resourceful_Rat_Boss_GUID).bulletBank.GetBullet("cheeseWedge2"), "UnDodgeablecheeseWedge2", "DNC", null, false);
-                
-            }
-            {
-                UnDodgeablecheeseWedge3 = CopyBulletBankEntryToBlue(EnemyDatabase.GetOrLoadByGuid(Alexandria.EnemyGUIDs.Resourceful_Rat_Boss_GUID).bulletBank.GetBullet("cheeseWedge3"), "UnDodgeablecheeseWedge3", "DNC", null, false);
-            }
-            {
-                UnDodgeablecheeseWedge4 = CopyBulletBankEntryToBlue(EnemyDatabase.GetOrLoadByGuid(Alexandria.EnemyGUIDs.Resourceful_Rat_Boss_GUID).bulletBank.GetBullet("cheeseWedge4"), "UnDodgeablecheeseWedge4", "DNC", null, false);
+            UnDodgeablecheeseWedge0 = CopyBulletBankEntryToBlue(EnemyDatabase.GetOrLoadByGuid(Alexandria.EnemyGUIDs.Resourceful_Rat_Boss_GUID).bulletBank.GetBullet("cheeseWedge0"), "UnDodgeablecheeseWedge0", "DNC", null, false);
 
-            }
-            {
-                UnDodgeablecheeseWedge5 = CopyBulletBankEntryToBlue(EnemyDatabase.GetOrLoadByGuid(Alexandria.EnemyGUIDs.Resourceful_Rat_Boss_GUID).bulletBank.GetBullet("cheeseWedge5"), "UnDodgeablecheeseWedge5", "DNC", null, false);
-            }
-            {
-                UnDodgeablecheeseWedge6 = CopyBulletBankEntryToBlue(EnemyDatabase.GetOrLoadByGuid(Alexandria.EnemyGUIDs.Resourceful_Rat_Boss_GUID).bulletBank.GetBullet("cheeseWedge6"), "UnDodgeablecheeseWedge6", "DNC", null, false);
-            }
-            {
-                UnDodgeablecheeseWedge7 = CopyBulletBankEntryToBlue(EnemyDatabase.GetOrLoadByGuid(Alexandria.EnemyGUIDs.Resourceful_Rat_Boss_GUID).bulletBank.GetBullet("cheeseWedge7"), "UnDodgeablecheeseWedge7", "DNC", null, false);
-            }
-            {
-                UnDodgeableCheeseWheel = CopyBulletBankEntryToBlue(EnemyDatabase.GetOrLoadByGuid(Alexandria.EnemyGUIDs.Resourceful_Rat_Boss_GUID).bulletBank.GetBullet("cheeseWheel"), "UnDodgeableCheeseWheel", "DNC", null, false);
-            }
+            UnDodgeablecheeseWedge1 = CopyBulletBankEntryToBlue(EnemyDatabase.GetOrLoadByGuid(Alexandria.EnemyGUIDs.Resourceful_Rat_Boss_GUID).bulletBank.GetBullet("cheeseWedge1"), "UnDodgeablecheeseWedge1", "DNC", null, false);
+
+            UnDodgeablecheeseWedge2 = CopyBulletBankEntryToBlue(EnemyDatabase.GetOrLoadByGuid(Alexandria.EnemyGUIDs.Resourceful_Rat_Boss_GUID).bulletBank.GetBullet("cheeseWedge2"), "UnDodgeablecheeseWedge2", "DNC", null, false);
+
+            UnDodgeablecheeseWedge3 = CopyBulletBankEntryToBlue(EnemyDatabase.GetOrLoadByGuid(Alexandria.EnemyGUIDs.Resourceful_Rat_Boss_GUID).bulletBank.GetBullet("cheeseWedge3"), "UnDodgeablecheeseWedge3", "DNC", null, false);
+
+            UnDodgeablecheeseWedge4 = CopyBulletBankEntryToBlue(EnemyDatabase.GetOrLoadByGuid(Alexandria.EnemyGUIDs.Resourceful_Rat_Boss_GUID).bulletBank.GetBullet("cheeseWedge4"), "UnDodgeablecheeseWedge4", "DNC", null, false);
+
+            UnDodgeablecheeseWedge5 = CopyBulletBankEntryToBlue(EnemyDatabase.GetOrLoadByGuid(Alexandria.EnemyGUIDs.Resourceful_Rat_Boss_GUID).bulletBank.GetBullet("cheeseWedge5"), "UnDodgeablecheeseWedge5", "DNC", null, false);
+
+            UnDodgeablecheeseWedge6 = CopyBulletBankEntryToBlue(EnemyDatabase.GetOrLoadByGuid(Alexandria.EnemyGUIDs.Resourceful_Rat_Boss_GUID).bulletBank.GetBullet("cheeseWedge6"), "UnDodgeablecheeseWedge6", "DNC", null, false);
+
+            UnDodgeablecheeseWedge7 = CopyBulletBankEntryToBlue(EnemyDatabase.GetOrLoadByGuid(Alexandria.EnemyGUIDs.Resourceful_Rat_Boss_GUID).bulletBank.GetBullet("cheeseWedge7"), "UnDodgeablecheeseWedge7", "DNC", null, false);
+
+            UnDodgeableCheeseWheel = CopyBulletBankEntryToBlue(EnemyDatabase.GetOrLoadByGuid(Alexandria.EnemyGUIDs.Resourceful_Rat_Boss_GUID).bulletBank.GetBullet("cheeseWheel"), "UnDodgeableCheeseWheel", "DNC", null, false);
+
             {
                 AIBulletBank.Entry entry = CopyBulletBankEntryToBlue(EnemyDatabase.GetOrLoadByGuid(Alexandria.EnemyGUIDs.Resourceful_Rat_Mech_Boss_GUID).bulletBank.GetBullet("spinner"), "UnDodgeableSpinner", "DNC", null, false);
                 entry.BulletObject.gameObject.AddComponent<MarkForUndodgeAbleBullet>();
                 UnDodgeableSpinner = entry;
             }
-            {
-                UnDodgeableBigOne = CopyBulletBankEntryToBlue(EnemyDatabase.GetOrLoadByGuid(Alexandria.EnemyGUIDs.Resourceful_Rat_Mech_Boss_GUID).bulletBank.GetBullet("big_one"), "UnDodgeableBigOne", "DNC", null, false);
-            }
-            {
-                UnDodgeableMolotov = CopyBulletBankEntryToBlue(EnemyDatabase.GetOrLoadByGuid(Alexandria.EnemyGUIDs.Black_Stache_GUID).bulletBank.GetBullet("molotov"), "UnDodgeableMolotov", "DNC", null, false);
-            }
+            UnDodgeableBigOne = CopyBulletBankEntryToBlue(EnemyDatabase.GetOrLoadByGuid(Alexandria.EnemyGUIDs.Resourceful_Rat_Mech_Boss_GUID).bulletBank.GetBullet("big_one"), "UnDodgeableBigOne", "DNC", null, false);
+
+            UnDodgeableMolotov = CopyBulletBankEntryToBlue(EnemyDatabase.GetOrLoadByGuid(Alexandria.EnemyGUIDs.Black_Stache_GUID).bulletBank.GetBullet("molotov"), "UnDodgeableMolotov", "DNC", null, false);
+
+            TreadnaughtHoming = CopyBulletBankEntryToBlue(EnemyDatabase.GetOrLoadByGuid(Alexandria.EnemyGUIDs.Treadnaught_GUID).bulletBank.GetBullet("homingBullet"), "UnDodgeableTreadnughthomingBullet", "DNC", null, false);
+
+
+
         }
 
 
@@ -776,5 +768,8 @@ namespace Planetside
 
         public static AIBulletBank.Entry undodgeableBouncyBatBullet;
         public static AIBulletBank.Entry NemesisGuon;
+
+        public static AIBulletBank.Entry TreadnaughtHoming;
+
     }
 }

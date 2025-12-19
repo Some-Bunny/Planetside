@@ -82,7 +82,7 @@ namespace Planetside
                         projectile.gameObject.SetActive(false);
                         FakePrefab.MarkAsFakePrefab(projectile.gameObject);
                         UnityEngine.Object.DontDestroyOnLoad(projectile);
-                        projectile.baseData.damage = 4f;
+                        projectile.baseData.damage = 4.25f;
                         projectile.baseData.speed = 25f;
                         projectile.AppliesFreeze = false;
                         projectile.baseData.range = 20;
@@ -126,7 +126,7 @@ namespace Planetside
                         projectile_1.gameObject.SetActive(false);
                         FakePrefab.MarkAsFakePrefab(projectile_1.gameObject);
                         UnityEngine.Object.DontDestroyOnLoad(projectile_1);
-                        projectile_1.baseData.damage = 7.5f;
+                        projectile_1.baseData.damage = 6.5f;
                         projectile_1.baseData.speed  = 30f;
                         projectile_1.AppliesFreeze = false;
                         projectile_1.baseData.range = 25;
@@ -168,7 +168,7 @@ namespace Planetside
                         projectile_2.gameObject.SetActive(false);
                         FakePrefab.MarkAsFakePrefab(projectile_2.gameObject);
                         UnityEngine.Object.DontDestroyOnLoad(projectile_2);
-                        projectile_2.baseData.damage = 13.5f;
+                        projectile_2.baseData.damage = 11f;
                         projectile_2.baseData.speed = 33.3f;
                         projectile_2.baseData.range = 30;
                         projectile_2.baseData.force = 8;
@@ -194,7 +194,7 @@ namespace Planetside
                         projectile_3.gameObject.SetActive(false);
                         FakePrefab.MarkAsFakePrefab(projectile_3.gameObject);
                         UnityEngine.Object.DontDestroyOnLoad(projectile_3);
-                        projectile_3.baseData.damage = 18.75f;
+                        projectile_3.baseData.damage = 16f;
                         projectile_3.baseData.speed = 50f;
                         projectile_3.AppliesStun = true;
                         projectile_3.StunApplyChance = 0.05f;
@@ -223,7 +223,7 @@ namespace Planetside
                         projectile_4.gameObject.SetActive(false);
                         FakePrefab.MarkAsFakePrefab(projectile_4.gameObject);
                         UnityEngine.Object.DontDestroyOnLoad(projectile_4);
-                        projectile_4.baseData.damage = 25f;
+                        projectile_4.baseData.damage = 22f;
                         projectile_4.AppliesStun = true;
                         projectile_4.StunApplyChance = 0.08f;
                         projectile_4.AppliedStunDuration = 1.5f;
@@ -245,7 +245,7 @@ namespace Planetside
                         projectile_5.gameObject.SetActive(false);
                         FakePrefab.MarkAsFakePrefab(projectile_5.gameObject);
                         UnityEngine.Object.DontDestroyOnLoad(projectile_5);
-                        projectile_5.baseData.damage = 33f;
+                        projectile_5.baseData.damage = 26f;
                         projectile_5.AppliesStun = true;
                         projectile_5.StunApplyChance = 0.11f;
                         projectile_5.AppliedStunDuration = 2f;
@@ -298,12 +298,17 @@ namespace Planetside
         public override void Start()
         {
             base.Start();
+            
             gun.OnAutoReload += (_, __) =>
             {
-                UpgradeLock = false;
-                gun.CurrentStrengthTier = 0;
-                AlterAnimations(true);
+                if (UpgradeLock == true)
+                {
+                    UpgradeLock = false;
+                    gun.CurrentStrengthTier = 0;
+                    AlterAnimations(true);
+                }
             };
+            
             gun.OnReloadPressed += (_, __, ___) =>
             {
                 if (___ == true)
@@ -394,6 +399,7 @@ namespace Planetside
 
         public void OFA(PlayerController playerController, Gun g)
         {
+
             if (playerController.IsInCombat)
             {
                 UpgradeGunThisRoom = false;

@@ -41,7 +41,7 @@ namespace Planetside
 
             GunWarrant.GunWarrantID = item.PickupObjectId;
             ItemIDs.AddToList(item.PickupObjectId);
-            new Hook(typeof(BaseShopController).GetMethod("DoSetup", BindingFlags.Instance | BindingFlags.NonPublic), typeof(GunWarrant).GetMethod("DoSetupHook"));
+            new Hook(typeof(BaseShopController).GetMethod("HandleEnter", BindingFlags.Instance | BindingFlags.NonPublic), typeof(GunWarrant).GetMethod("HandleEnterHook"));
 
             Alexandria.NPCAPI.CustomDiscountManager.DiscountsToAdd.Add(new Alexandria.NPCAPI.ShopDiscount()
             {
@@ -86,26 +86,25 @@ namespace Planetside
 
         public static int GunWarrantID;
 
-        public static void DoSetupHook(Action<BaseShopController> orig, BaseShopController self)
+        public static void HandleEnterHook(Action<BaseShopController, PlayerController> orig, BaseShopController self, PlayerController playerController)
         {
-            orig(self);
-            PlayerController[] players = GameManager.Instance.AllPlayers;
-            for (int i = 0; i < players.Length; i++)
+            if (!self.m_hasBeenEntered)
             {
-                PlayerController player = players[i];
-                if (player.HasPassiveItem(GunWarrantID))
+                PlayerController[] players = GameManager.Instance.AllPlayers;
+                for (int i = 0; i < players.Length; i++)
                 {
-                    //Yes I got lazy here, fight me
-                    ProcessShop(self);
+                    PlayerController player = players[i];
+                    if (player.HasPassiveItem(GunWarrantID))
+                    {
+                        //Yes I got lazy here, fight me
+                        ProcessShop(self);
+                        break;
+                    }
                 }
-            }             
+            }
+            orig(self, playerController);         
         }
 
-
-        private void Warrant()
-        {
-            //GameManager.Instance.StartCoroutine(this.GunWarrantTime(base.Owner));
-        }
 
         private IEnumerator GunWarrantTime(PlayerController player)
         {
@@ -120,7 +119,6 @@ namespace Planetside
         }
         public override DebrisObject Drop(PlayerController player)
 		{
-            //player.OnEnteredCombat = (Action)Delegate.Remove(player.OnEnteredCombat, new Action(this.Warrant));
             DebrisObject result = base.Drop(player);	
 			return result;
 		}
@@ -134,26 +132,25 @@ namespace Planetside
                 {
                     player.inventory.AllGuns[i].GainAmmo(Mathf.FloorToInt((float)player.inventory.AllGuns[i].AdjustedMaxAmmo));
                 }
-                var t = FindObjectsOfType<BaseShopController>();
+                var t = FindObjectsOfType(typeof(BaseShopController));
                 if (t != null && t.Count() > 0)
                 {
                     foreach (var self in t)
                     {
-                        ProcessShop(self);
+                        ProcessShop(self as BaseShopController);
                     }
                 }
             }
-            //player.OnEnteredCombat = (Action)Delegate.Combine(player.OnEnteredCombat, new Action(this.Warrant));
             base.Pickup(player);
 		}
 
         public static void ProcessShop(BaseShopController self)
         {
-
             if (self.baseShopType == BaseShopController.AdditionalShopType.NONE && self.cat == true)
             {
-                Type type = typeof(BaseShopController); FieldInfo _property = type.GetField("m_shopItems", BindingFlags.NonPublic | BindingFlags.Instance); _property.GetValue(self);
-                List<GameObject> uses = (List<GameObject>)_property.GetValue(self);
+                //Type type = typeof(BaseShopController); 
+                //FieldInfo _property = type.GetField("m_shopItems", BindingFlags.NonPublic | BindingFlags.Instance); _property.GetValue(self);
+                List<GameObject> uses = self.m_shopItems;//(List<GameObject>)_property.GetValue(self);
                 Gun gun = PickupObjectDatabase.GetRandomGun();
                 GameObject gunObj = gun.gameObject;
 
@@ -196,8 +193,11 @@ namespace Planetside
             }
             if (self.baseShopType == BaseShopController.AdditionalShopType.BLACKSMITH)
             {
-                Type type = typeof(BaseShopController); FieldInfo _property = type.GetField("m_shopItems", BindingFlags.NonPublic | BindingFlags.Instance); _property.GetValue(self);
-                List<GameObject> uses = (List<GameObject>)_property.GetValue(self);
+
+                //Type type = typeof(BaseShopController); 
+                //FieldInfo _property = type.GetField("m_shopItems", BindingFlags.NonPublic | BindingFlags.Instance); _property.GetValue(self);
+
+                List<GameObject> uses = self.m_shopItems; //(List<GameObject>)_property.GetValue(self);
                 Gun gun = PickupObjectDatabase.GetRandomGun();
                 GameObject gunObj = gun.gameObject;
 

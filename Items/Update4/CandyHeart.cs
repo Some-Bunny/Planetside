@@ -30,7 +30,7 @@ namespace Planetside
             ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("candyheart"), data, obj);
             //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "My Sweet Heart";
-            string longDesc = "Hearts and armor are cheaper.\n\nA tacky heart-shaped candy with 'You're sweet <3' written on it.\n\nSadly, like most Gungeoneers, you have no one to give it to.";
+            string longDesc = "Hearts and armor are cheaper.\n\nA tacky heart-shaped candy with 'You're sweet <3' written on it.\n\nLike most Gungeoneers, you have no one to give it to.";
             ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
 			item.quality = PickupObject.ItemQuality.D;
             CandyHeart.CandyHeartID = item.PickupObjectId;

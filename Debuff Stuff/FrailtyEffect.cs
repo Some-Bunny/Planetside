@@ -15,6 +15,7 @@ using MonoMod;
 
 using Brave.BulletScript;
 using GungeonAPI;
+using Alexandria.Misc;
 
 namespace Planetside
 {
@@ -156,6 +157,7 @@ namespace Planetside
                     vector += Vector2.Min(a * 0.15f, new Vector2(0.25f, 0.25f));
                     vector2 -= Vector2.Min(a * 0.15f, new Vector2(0.25f, 0.25f));
                     vector2.y -= Mathf.Min(a.y * 0.1f, 0.1f);
+                   
                     GlobalSparksDoer.DoRandomParticleBurst(num3, vector, vector2, Vector3.down, 0f, 0.5f, 0.3f, 1, Color.magenta, GlobalSparksDoer.SparksType.DARK_MAGICKS);
                     this.m_particleTimer -= Mathf.Floor(this.m_particleTimer);
                 }

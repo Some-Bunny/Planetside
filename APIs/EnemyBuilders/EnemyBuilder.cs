@@ -10,6 +10,7 @@ using UnityEngine;
 using DirectionType = DirectionalAnimation.DirectionType;
 using FlipType = DirectionalAnimation.FlipType;
 using FullInspector;
+using static AIAnimator;
 
 namespace ItemAPI
 {
@@ -131,7 +132,8 @@ namespace ItemAPI
 
             sprite.SetUpSpeculativeRigidbody(hitboxOffset, hitBoxSize).CollideWithOthers = true;
             prefab.AddComponent<tk2dSpriteAnimator>();
-            prefab.AddComponent<AIAnimator>();
+            AIAnimator aiAnimator = prefab.AddComponent<AIAnimator>();
+            aiAnimator.OtherVFX = new List<NamedVFXPool>(0);
             prefab.GetOrAddComponent<ObjectVisibilityManager>();
 
             //setup knockback
@@ -383,7 +385,8 @@ namespace ItemAPI
             prefab.GetOrAddComponent<BraveBehaviour>().sprite = sprite;
             sprite.SetUpSpeculativeRigidbody(hitboxOffset, hitBoxSize).CollideWithOthers = true;
             prefab.AddComponent<tk2dSpriteAnimator>();
-            prefab.AddComponent<AIAnimator>();
+            AIAnimator aiAnimator = prefab.AddComponent<AIAnimator>();
+            aiAnimator.OtherVFX = new List<NamedVFXPool>(0);
             prefab.GetOrAddComponent<ObjectVisibilityManager>();
 
 

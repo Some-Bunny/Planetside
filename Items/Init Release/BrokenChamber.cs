@@ -21,8 +21,8 @@ namespace Planetside
             var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
             ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("brokenchamber"), data, gameObject); 
 			
-			string shortDesc = "A bad omen looms...";
-			string longDesc = "A broken, forgotten chamber. Dark power seeps from it.\n\nYou feel uneasy carrying it, yet you feel like you must keep it, and take it very, very far.";
+			string shortDesc = "A Bad Omen";
+			string longDesc = "A broken, forgotten chamber. Dark power seeps from it.\n\nYou feel uneasy carrying it, yet you feel like you must keep it, and take it deep, deep below.";
 			ItemBuilder.SetupItem(warVase, shortDesc, longDesc, "psog");
 			warVase.quality = PickupObject.ItemQuality.EXCLUDED;
 			warVase.CanBeDropped = false;

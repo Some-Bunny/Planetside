@@ -25,7 +25,6 @@ namespace Planetside
 		}
         public void Start()
         {
-            this.projectile = base.GetComponent<Projectile>();
             if (this.projectile != null)
             {
                 projectile.OnDestruction += this.Kaboom;
@@ -39,14 +38,13 @@ namespace Planetside
             Projectile p = otherRigidbody.projectile;
             if (p != null)
             {
-                PhysicsEngine.SkipCollision = true;
+                //PhysicsEngine.SkipCollision = true;
                 AIActor enemy = p.Owner as AIActor;
                 PlayerController player = p.Owner as PlayerController;
                 this.projectile.DieInAir(false);
                 if (p.Owner == enemy)
                 {
 
-                    //DoReflect(p, GameManager.Instance.PrimaryPlayer, 30, BraveUtility.RandomAngle(), 1, 20);
                 }
                 else if (p.Owner == player)
                 {
@@ -154,7 +152,7 @@ namespace Planetside
             p.Reflected();
         }
 
-		private Projectile projectile;
+		public Projectile projectile;
 	}
 }
 

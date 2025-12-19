@@ -351,7 +351,7 @@ namespace Planetside
             {
                 float t = elaWait * 0.8f;
                 portal.transform.localScale = Vector3.Lerp(scale, Vector3.one * 100f, t);
-                elaWait += BraveTime.DeltaTime;
+                elaWait += GameManager.INVARIANT_DELTA_TIME;
                 yield return null;
             }
             AkSoundEngine.PostEvent("Play_PrisonerLaugh", portal.gameObject);

@@ -64,7 +64,7 @@ namespace Planetside
                 projectile.gameObject.SetActive(false);
                 FakePrefab.MarkAsFakePrefab(projectile.gameObject);
                 UnityEngine.Object.DontDestroyOnLoad(projectile);
-                projectile.baseData.damage = 22.5f;
+                projectile.baseData.damage = 18.75f;
                 projectile.baseData.force = 2f;
                 projectile.baseData.range *= 50;
                 projectile.baseData.speed *= 2f;
@@ -172,13 +172,6 @@ namespace Planetside
             this.basicBeamController = base.GetComponent<BasicBeamController>();
             if (basicBeamController == null) {return; }
             this.projectile.OnHitEnemy += OHE;
-            /*
-            if (this.projectile.Owner is PlayerController)
-            {
-                this.owner = (this.projectile.Owner as PlayerController);
-                this.owner.PostProcessBeam += Owner_PostProcessBeam;
-            }
-            */
         }
 
         public void OHE(Projectile projectile, SpeculativeRigidbody speculativeRigidbody, bool f)
@@ -186,7 +179,7 @@ namespace Planetside
             float amount = basicBeamController.GetBoneCount();
             if (speculativeRigidbody.aiActor)
             {
-                speculativeRigidbody.aiActor.healthHaver.ApplyDamage(amount * 0.5f * BraveTime.DeltaTime, Vector2.zero, "oner", CoreDamageTypes.None, DamageCategory.Normal);
+                speculativeRigidbody.aiActor.healthHaver.ApplyDamage(amount * 0.2f * BraveTime.DeltaTime, Vector2.zero, "oner", CoreDamageTypes.None, DamageCategory.Normal);
             }
         }
 
@@ -195,20 +188,16 @@ namespace Planetside
             if (obj is BasicBeamController)
             {
                 BasicBeamController basicBeamController = obj as BasicBeamController;
-                basicBeamController.DamageModifier = 1 + (basicBeamController.m_bones.Count());
+                basicBeamController.DamageModifier = 1f + (basicBeamController.m_bones.Count());
             }
         }
 
         public void OnDestroy()
         {
-            //if (owner)
-            //{
-                //this.owner.PostProcessBeam -= Owner_PostProcessBeam;
-            //}
+
         }
 
         private Projectile projectile;
         private BasicBeamController basicBeamController;
-        //private PlayerController owner;
     }
 }

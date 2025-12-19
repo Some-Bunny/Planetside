@@ -111,11 +111,13 @@ namespace Planetside
             float AngleToSeek = intVector2FromDirection.ToVector2().ToAngle();
             Func<SpeculativeRigidbody, bool> rigidbodyExcluder = (SpeculativeRigidbody otherRigidbody) => otherRigidbody.minorBreakable && !otherRigidbody.minorBreakable.stopsBullets;
             int rayMask2 = CollisionMask.LayerToMask(CollisionLayer.HighObstacle, CollisionLayer.BulletBlocker, CollisionLayer.BulletBreakable);
-            RaycastResult raycastResult2;
+            CollisionData raycastResult2;
             Vector2 PotentialWallPos = new Vector2();
-            if (PhysicsEngine.Instance.Raycast(table.sprite.WorldCenter, MathToolbox.GetUnitOnCircle(AngleToSeek, 1), 1000, out raycastResult2, true, false, rayMask2, null, false, rigidbodyExcluder, null))
+
+            //, false, rigidbodyExcluder, null)
+            if ( PhysicsEngine.Instance.RigidbodyCast(table.specRigidbody, MathToolbox.GetUnitOnCircle(AngleToSeek, 1600).ToIntVector2(), out raycastResult2, true, false, rayMask2, false))
             { PotentialWallPos = raycastResult2.Contact;}
-            RaycastResult.Pool.Free(ref raycastResult2);
+            //RaycastResult.Pool.Free(ref raycastResult2);
             List<AIActor> potentialEnemiesToTelefrag = new List<AIActor>() { };
             List<AIActor> activeEnemies = base.Owner.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
             if (base.Owner.CurrentRoom.GetRoomInteractables().Contains(table))
@@ -159,6 +161,7 @@ namespace Planetside
                 if (table != null)
                 {
                     table.transform.position = truePos;
+                    table.specRigidbody.Reinitialize();
                 }
                 Exploder.DoDistortionWave(truePos, 2, 0.5f, 0.1f, 0.1f);
                 elapsed += BraveTime.DeltaTime;
@@ -171,6 +174,8 @@ namespace Planetside
                     base.Owner.CurrentRoom.RegisterInteractable(table);
                 }
                 table.transform.position = enemyToFuckingObliterate != null ? enemyToFuckingObliterate.transform.PositionVector2() : newPos;
+                table.specRigidbody.Reinitialize();
+
                 GameObject teleportVFX2 = UnityEngine.Object.Instantiate<GameObject>(StaticVFXStorage.TeleportVFX);
                 teleportVFX2.GetComponent<tk2dBaseSprite>().PlaceAtLocalPositionByAnchor(table.transform.PositionVector2() + new Vector2(0f, -0.5f), tk2dBaseSprite.Anchor.LowerCenter);
                 teleportVFX2.transform.position = teleportVFX.transform.position.Quantize(0.0625f);
@@ -183,7 +188,7 @@ namespace Planetside
                         if (base.Owner != null && base.Owner.PlayerHasActiveSynergy("Collapsing Potential Vectors") && UnityEngine.Random.value < 0.1f)
                         {
                             PickupObject pickupObject = LootEngine.GetItemOfTypeAndQuality<PickupObject>(PickupObject.ItemQuality.COMMON, TableTechTelefrag.TelefragTable, false);
-                            LootEngine.SpawnItem(pickupObject.gameObject, enemyToFuckingObliterate.transform.position, Vector2.up, 0f, true, false, false);
+                            LootEngine.SpawnItem(pickupObject.gameObject, table.transform.position, Vector2.up, 0f, true, false, false);
                         }
                         enemyToFuckingObliterate.healthHaver.ApplyDamage(10000, Vector2.zero, "Tabled", CoreDamageTypes.Electric, DamageCategory.Normal, false, null, false);
                         UnityEngine.Object.Instantiate<GameObject>(PickupObjectDatabase.GetById(449).GetComponent<TeleporterPrototypeItem>().TelefragVFXPrefab, table.sprite.WorldCenter, Quaternion.identity);       
@@ -191,7 +196,7 @@ namespace Planetside
                     else
                     {
                         enemyToFuckingObliterate.healthHaver.ApplyDamage(75, Vector2.zero, "Tabled", CoreDamageTypes.Electric, DamageCategory.Normal, false, null, false);
-                        table.majorBreakable.ApplyDamage(100000, enemyToFuckingObliterate.transform.position, true);
+                        table.majorBreakable.ApplyDamage(100000, table.transform.position, true);
                     }
                 }
             }

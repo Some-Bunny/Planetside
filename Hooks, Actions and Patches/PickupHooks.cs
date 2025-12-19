@@ -333,31 +333,34 @@ namespace Planetside
             var perk = player.HasPerk(CorruptedWealth.CorruptedWealthID) as CorruptedWealth;
             if (perk != null)
             {
-                float amountKeysCurrent = perk.AmountOfCorruptKeys;
-                if (amountKeysCurrent > 1)
+                if (self.ChestIdentifier != Chest.SpecialChestIdentifier.NORMAL )
                 {
-                    SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.CORRUPTEDWEALTH_FLAG_KEY, true);
-                    var obj = UnityEngine.Object.Instantiate<tk2dSpriteAnimator>(CorruptedWealth.CorruptionVFXObject, self.sprite.WorldCenter, Quaternion.identity);
-                    obj.PlayAndDestroyObject("corrupt_key");
-                    AkSoundEngine.PostEvent("Play_BOSS_DragunGold_Crackle_01", player.gameObject);
-                    for (int i = 0; i < amountKeysCurrent; i++)
+                    float amountKeysCurrent = perk.AmountOfCorruptKeys;
+                    if (amountKeysCurrent > 1)
                     {
-                        if (self.contents == null)
+                        SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.CORRUPTEDWEALTH_FLAG_KEY, true);
+                        var obj = UnityEngine.Object.Instantiate<tk2dSpriteAnimator>(CorruptedWealth.CorruptionVFXObject, self.sprite.WorldCenter, Quaternion.identity);
+                        obj.PlayAndDestroyObject("corrupt_key");
+                        AkSoundEngine.PostEvent("Play_BOSS_DragunGold_Crackle_01", player.gameObject);
+                        for (int i = 0; i < amountKeysCurrent; i++)
                         {
-                            self.contents = new List<PickupObject>();
-                        }
-                        self.contents.Add(self.lootTable.GetItemsForPlayer(player, 0, null).First());
-                        perk.AmountOfCorruptKeys--;
-                        if (i > 0)
-                        {
-                            player.carriedConsumables.KeyBullets--;
+                            if (self.contents == null)
+                            {
+                                self.contents = new List<PickupObject>();
+                            }
+                            self.contents.Add(self.lootTable.GetItemsForPlayer(player, 0, null).First());
+                            perk.AmountOfCorruptKeys--;
+                            if (i > 0)
+                            {
+                                player.carriedConsumables.KeyBullets--;
+                            }
                         }
                     }
-                }
-                else
-                {
-                    perk.AmountOfCorruptKeys--;
-                }
+                    else
+                    {
+                        perk.AmountOfCorruptKeys--;
+                    }
+                }        
             }
             orig(self, player);
         }
@@ -416,7 +419,7 @@ namespace Planetside
         {
             orig(self, player);
             var perl = player.HasPerk(CorruptedWealth.CorruptedWealthID) as CorruptedWealth;
-            if (perl != null)
+            if (perl != null && self.IsRatKey == false)
             {
                 perl.AmountOfCorruptKeys++;
             }

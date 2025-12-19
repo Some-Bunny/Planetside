@@ -113,7 +113,7 @@ namespace Planetside
             Projectile projectile2 = UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(2) as Gun).DefaultModule.projectiles[0]);
             projectile2.gameObject.SetActive(false);
             FakePrefab.MarkAsFakePrefab(projectile2.gameObject);
-            projectile2.baseData.damage = 7.5f;
+            projectile2.baseData.damage = 6f;
             projectile2.baseData.speed *= 0.7f;
             projectile2.baseData.range *= 3;
 
@@ -236,7 +236,7 @@ namespace Planetside
             Projectile projectile2 = UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(30) as Gun).DefaultModule.projectiles[0]);
             projectile2.gameObject.SetActive(false);
             FakePrefab.MarkAsFakePrefab(projectile2.gameObject);
-            projectile2.baseData.damage = 10;
+            projectile2.baseData.damage = 9;
             projectile2.baseData.speed *= 1f;
             projectile2.baseData.range *= 3;
 
@@ -354,7 +354,7 @@ namespace Planetside
             Projectile projectile2 = UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(49) as Gun).DefaultModule.projectiles[0]);
             projectile2.gameObject.SetActive(false);
             FakePrefab.MarkAsFakePrefab(projectile2.gameObject);
-            projectile2.baseData.damage = 35;
+            projectile2.baseData.damage = 30;
             projectile2.baseData.speed *= 1f;
             projectile2.baseData.range *= 3;
 
@@ -378,7 +378,7 @@ namespace Planetside
                     tagr.EmptiesClip = true;
                     tagr.UseLaserSight = true;
                     tagr.Cooldown = 6f;
-                    tagr.TimeBetweenShots = 0.5f;
+                    tagr.TimeBetweenShots = 1f;
                     tagr.WeaponType = WeaponType.AIShooterProjectile;
                     tagr.OverrideBulletName = "nyeahh";
                 }

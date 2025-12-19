@@ -56,7 +56,9 @@ namespace Planetside
 				this.specRigidbody.enabled = false;
 				this.aiActor.IgnoreForRoomClear = true;
 				this.aiActor.IsGone = true;
-				if (this.aiShooter)
+                this.aiActor.ImmuneToAllEffects = true;
+
+                if (this.aiShooter)
 				{
 					this.aiShooter.ToggleGunAndHandRenderers(false, "GuardIsSpawning");
 				}
@@ -94,7 +96,8 @@ namespace Planetside
 				this.aiActor.State = AIActor.ActorState.Normal;
 				this.StartIntro();
 				m_isFinished = true;
-				yield break;
+                this.aiActor.ImmuneToAllEffects = false;
+                yield break;
 			}
 			public override bool IsFinished
 			{
@@ -160,7 +163,9 @@ namespace Planetside
 				this.specRigidbody.enabled = false;
 				this.aiActor.IgnoreForRoomClear = true;
 				this.aiActor.IsGone = true;
-				if (this.aiShooter)
+                this.aiActor.ImmuneToAllEffects = true;
+
+                if (this.aiShooter)
 				{
 					this.aiShooter.ToggleGunAndHandRenderers(false, "GuardIsSpawning");
 				}
@@ -214,7 +219,8 @@ namespace Planetside
 				this.aiActor.HasBeenEngaged = true;
 				this.aiActor.State = AIActor.ActorState.Normal;
 				m_isFinished = true;
-				yield break;
+                this.aiActor.ImmuneToAllEffects = false;
+                yield break;
 			}
 			public override bool IsFinished
 			{

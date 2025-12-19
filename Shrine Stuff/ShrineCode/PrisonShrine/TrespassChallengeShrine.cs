@@ -397,7 +397,7 @@ namespace Planetside
                 {
 					GameManager.Instance.DungeonMusicController.SwitchToActiveMusic(null);
 					user.CurrentRoom.SealRoom();
-					user.CurrentRoom.BecomeTerrifyingDarkRoom(3f, 0.1f, 0.05f, "Play_ENM_darken_world_01");
+					user.CurrentRoom.BecomeTerrifyingDarkRoom(3f, 0.3f, 0.25f, "Play_ENM_darken_world_01");
 				}
 				yield return new WaitForSeconds(0.75f);
 			}

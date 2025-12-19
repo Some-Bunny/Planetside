@@ -56,11 +56,11 @@ namespace Planetside
 				enemy.aiActor.specRigidbody.CollideWithOthers = true;
 				enemy.aiActor.specRigidbody.CollideWithTileMap = true;
 				enemy.aiActor.PreventFallingInPitsEver = false;
-				enemy.aiActor.healthHaver.ForceSetCurrentHealth(1150f);
+				enemy.aiActor.healthHaver.ForceSetCurrentHealth(1350f);
 				enemy.aiActor.SetIsFlying(true, "Gamemode: Creative", true, true);
 				enemy.aiActor.CollisionKnockbackStrength = 10f;
 				enemy.aiActor.CanTargetPlayers = true;
-				enemy.aiActor.healthHaver.SetHealthMaximum(1150f, null, false);
+				enemy.aiActor.healthHaver.SetHealthMaximum(1350f, null, false);
 
                 EnemyToolbox.AddShadowToAIActor(enemy.aiActor, StaticEnemyShadows.massiveShadow, new Vector2(4f, 0.25f), "shadowPos");
 
