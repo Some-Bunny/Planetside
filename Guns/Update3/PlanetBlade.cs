@@ -28,7 +28,7 @@ namespace Planetside
 
             GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_2_Sheet_Data, "planetblade_idle_001");
             gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_2_Animation_Data;
-            gun.sprite.SortingOrder = 1;
+            gun.sprite.SortingOrder = 2;
 
             gun.reloadAnimation = "planetblade_reload";
             gun.idleAnimation = "planetblade_idle";

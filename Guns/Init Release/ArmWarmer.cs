@@ -106,6 +106,7 @@ namespace Planetside
 	{
 		public static void Add()
 		{
+
 			Gun gun = ETGMod.Databases.Items.NewGun("Arm Warmer", "heartthing");
 			Game.Items.Rename("outdated_gun_mods:arm_warmer", "psog:arm_warmer");
 			gun.gameObject.AddComponent<ArmWarmer>();
@@ -114,7 +115,7 @@ namespace Planetside
 
             GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_2_Sheet_Data, "heartthing_idle_001");
             gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_2_Animation_Data;
-            gun.sprite.SortingOrder = 1;
+            gun.sprite.SortingOrder = 2;
 
             gun.reloadAnimation = "armwarmer_reload";
             gun.idleAnimation = "armwarmer_idle";

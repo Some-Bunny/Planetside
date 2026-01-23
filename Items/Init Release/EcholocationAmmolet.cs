@@ -30,6 +30,7 @@ namespace Planetside
             ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.AdditionalBlanksPerFloor, 1f, StatModifier.ModifyMethod.ADDITIVE);
             ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
             item.quality = PickupObject.ItemQuality.A;
+            item.sprite.SortingOrder = 3;
 
             item.AddToSubShop(ItemBuilder.ShopType.OldRed, 1f);
             SynergyAPI.SynergyBuilder.AddItemToSynergy(item, CustomSynergyType.MINOR_BLANKABLES);

@@ -616,9 +616,9 @@ namespace Planetside
                                         if (UnityEngine.Random.value <= 0.5f)
                                         {
                                             OtherTools.ApplyStat(user, PlayerStats.StatType.MovementSpeed, 1.1f, StatModifier.ModifyMethod.MULTIPLICATIVE);
-                                            PlayerOrbitalItem.CreateOrbital(user, RandomPiecesOfStuffToInitialise.SoulSynergyGuon, false);
-                                            PlayerOrbitalItem.CreateOrbital(user, RandomPiecesOfStuffToInitialise.SoulSynergyGuon, false);
-                                            PlayerOrbitalItem.CreateOrbital(user, RandomPiecesOfStuffToInitialise.SoulSynergyGuon, false);
+                                            PlayerOrbitalItem.CreateOrbital(user, Revenant.SoulSynergyGuon, false);
+                                            PlayerOrbitalItem.CreateOrbital(user, Revenant.SoulSynergyGuon, false);
+                                            PlayerOrbitalItem.CreateOrbital(user, Revenant.SoulSynergyGuon, false);
                                             ImprovedAfterImage yes = user.gameObject.AddComponent<ImprovedAfterImage>();
                                             yes.spawnShadows = true;
                                             yes.shadowLifetime = 0.5f;

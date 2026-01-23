@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3006840407
+CRC: 1302152892
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 519ec43c8add225ab3ae6cff88ef5797
+    Hash: 9275fa4e37153b8970cc743bc8ac2f35
   TypeTreeHash:
     serializedVersion: 2
     Hash: 71e1c6464f3f49e3166f25e1b5360a04
@@ -26,24 +26,28 @@ ClassTypes:
 - Class: 213
   Script: {instanceID: 0}
 Assets:
+- Assets/UI/UIElements/Clips/SawGun_002.png
+- Assets/UI/UIElements/Clips/Whistler_001.png
 - Assets/UI/UIElements/Clips/EndOfEverythingClip_001.png
 - Assets/UI/Ammonomicon/bookmark_psog_004.png
 - Assets/UI/Ammonomicon/bookmark_psog_001.png
 - Assets/UI/UIElements/Clips/pointnullclip_001.png
 - Assets/UI/UIElements/Clips/gunknownclipfull.png
+- Assets/UI/ClipAtlas.png
 - Assets/UI/UIElements/Clips/RiftakerOut_001.png
 - Assets/UI/UIElements/Clips/EndOfEverythingClip_002.png
 - Assets/UI/Ammonomicon/bookmark_psog_select_001.png
-- Assets/UI/PlanetsideDFAtlas.mat
 - Assets/UI/UIElements/Clips/pointnullclip_002.png
 - Assets/UI/UIElements/Clips/gunknownclipemptyl.png
 - Assets/UI/UIElements/Clips/RiftakerIn_001.png
 - Assets/UI/Ammonomicon/bookmark_psog_hover_001.png
+- Assets/UI/UIElements/Clips/SawGun_001.png
 - Assets/UI/PlanetsideDFAtlas.png
 - Assets/UI/Ammonomicon/bookmark_psog_select_002.png
 - Assets/UI/UIElements/Clips/RiftakerIn_002.png
 - Assets/SpecialVFX/SpecialVFXCollection Data/SpecialVFXCollection.prefab
 - Assets/UI/Ammonomicon/bookmark_psog_002.png
+- Assets/UI/UIElements/Clips/Whistler_002.png
 - Assets/UI/UIElements/Clips/RiftakerOut_002.png
 - Assets/UI/Ammonomicon/bookmark_psog_003.png
 - Assets/UI/Ammonomicon/bookmark_psog_select_003.png

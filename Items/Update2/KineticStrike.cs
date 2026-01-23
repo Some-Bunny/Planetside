@@ -12,6 +12,8 @@ using System.Collections;
 using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
+using Alexandria.PrefabAPI;
+using Alexandria;
 
 
 namespace Planetside
@@ -41,29 +43,66 @@ namespace Planetside
             activeitem.gameObject.AddComponent<BoomhildrItemPool>();
 
             var Collection = StaticSpriteDefinitions.Oddments_Sheet_Data;
-            var Kinetic = ItemBuilder.AddSpriteToObjectAssetbundle("Kinetic Strike Stuff", Collection.GetSpriteIdByName("redmarksthespot"), Collection);
-            FakePrefab.MarkAsFakePrefab(Kinetic);
-            UnityEngine.Object.DontDestroyOnLoad(Kinetic);
 
-            KineticStrike.spriteIds.Add(Collection.GetSpriteIdByName("redmarksthespot"));
-            KineticStrike.spriteIds.Add(Collection.GetSpriteIdByName("kineticstrike"));
-            KineticStrike.StrikePrefab = Kinetic;
+            GameObject _TargetReticle = PrefabBuilder.BuildObject("Kinetic Strike Target Reticle");
+            tk2dSprite sprite = _TargetReticle.AddComponent<tk2dSprite>();
+            sprite.collection = StaticSpriteDefinitions.Oddments_Sheet_Data;
+            sprite.SetSprite(StaticSpriteDefinitions.Oddments_Sheet_Data.GetSpriteIdByName("redmarksthespot"));
+            sprite.CachedPerpState = tk2dBaseSprite.PerpendicularState.FLAT;
+            sprite.sprite.usesOverrideMaterial = true;
+            Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+            mat.mainTexture = sprite.sprite.renderer.material.mainTexture;
+            mat.SetColor("_EmissiveColor", new Color32(255, 0, 0, 255));
+            mat.SetFloat("_EmissiveColorPower", 1.55f);
+            mat.SetFloat("_EmissivePower", 50);
+            sprite.sprite.renderer.material = mat;
+            ExpandReticleRiserEffect rRE = _TargetReticle.AddComponent<ExpandReticleRiserEffect>();
+            rRE.RiserHeight = 2;
+            rRE.RiseTime = 1;
+            rRE.NumRisers = 3;
+            KineticStrikeTargetReticle = _TargetReticle;
 
-            activeitem.AddToSubShop(ItemBuilder.ShopType.Trorc, 1f);
-            SynergyAPI.SynergyBuilder.AddItemToSynergy(activeitem, CustomSynergyType.MISSILE_BOW);
 
-            KineticStrike.KineticBombardmentID = activeitem.PickupObjectId;
-            ItemIDs.AddToList(activeitem.PickupObjectId);
+            GameObject _Impact = PrefabBuilder.BuildObject("Kinetic Strike Impact");
+            sprite = _Impact.AddComponent<tk2dSprite>();
+            sprite.collection = StaticSpriteDefinitions.Oddments_Sheet_Data;
+            sprite.SetSprite(StaticSpriteDefinitions.Oddments_Sheet_Data.GetSpriteIdByName("kineticstrike"));
+            sprite.CachedPerpState = tk2dBaseSprite.PerpendicularState.FLAT;
+            sprite.sprite.usesOverrideMaterial = true;
+            sprite.usesOverrideMaterial = true;
+            sprite.OverrideMaterialMode = tk2dBaseSprite.SpriteMaterialOverrideMode.OVERRIDE_MATERIAL_COMPLEX;
+            sprite.sprite.usesOverrideMaterial = true;
+            sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitCutoutUber");
+            sprite.renderer.material.EnableKeyword("_BurnAmount");
+            ImpactPrefab = _Impact;
 
+            GameObject _Fall = PrefabBuilder.BuildObject("Kinetic Strike Falldown");
+            sprite = _Fall.AddComponent<tk2dSprite>();
+            sprite.collection = StaticSpriteDefinitions.Oddments_Sheet_Data;
+            sprite.SetSprite(StaticSpriteDefinitions.Oddments_Sheet_Data.GetSpriteIdByName("kineticstrikeaerial2"));
+            sprite.CachedPerpState = tk2dBaseSprite.PerpendicularState.FLAT;
+            sprite.sprite.usesOverrideMaterial = true;
+            sprite.usesOverrideMaterial = true;
+            sprite.OverrideMaterialMode = tk2dBaseSprite.SpriteMaterialOverrideMode.OVERRIDE_MATERIAL_COMPLEX;
+            sprite.sprite.usesOverrideMaterial = true;
+            sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitCutoutUber");
+            sprite.renderer.material.EnableKeyword("_BurnAmount");
+
+            ImprovedAfterImage yeah = _Fall.AddComponent<ImprovedAfterImage>();
+            yeah.dashColor = new Color(3f, 1.8f, 0f);
+            yeah.spawnShadows = true;
+            yeah.shadowTimeDelay = 0.01f;
+            yeah.shadowLifetime = 1.5f;
+            FalldownPrefab = _Fall;
         }
         public static int KineticBombardmentID;
+        public static GameObject KineticStrikeTargetReticle;
+        public static GameObject ImpactPrefab;
+        public static GameObject FalldownPrefab;
 
-        public static GameObject StrikePrefab;
-        public static List<int> spriteIds = new List<int>();
-        public override void Pickup(PlayerController player)
-        {
-            base.Pickup(player);
-        }
+
+
+
 
         public override bool CanBeUsed(PlayerController user)
         {
@@ -98,27 +137,26 @@ namespace Planetside
 
         public override void DoEffect(PlayerController user)
         {
-            if (HasTriggeredCrossHair != true)
+            if (HasTriggeredCrossHair == false)
             {
                 GameManager.Instance.StartCoroutine(ClearCooldown());
-                CrossHair = UnityEngine.Object.Instantiate<GameObject>(RandomPiecesOfStuffToInitialise.KineticStrikeTargetReticle, user.sprite.WorldCenter, Quaternion.identity);
+                CrossHair = UnityEngine.Object.Instantiate<GameObject>(KineticStrikeTargetReticle, user.sprite.WorldCenter, Quaternion.identity).GetComponent<tk2dBaseSprite>();
 
                 AkSoundEngine.PostEvent("Play_OBJ_supplydrop_activate_01", gameObject);
                 this.m_currentAngle = BraveMathCollege.Atan2Degrees(user.unadjustedAimPoint.XY() - user.CenterPosition);
                 this.m_currentDistance = 5f;
                 this.UpdateReticlePosition();
             }
-            else if(HasTriggeredCrossHair == true)
+            else 
             {
                 HasTriggeredCrossHair = false;
                 GameManager.Instance.StartCoroutine(this.DoStrike(user.CurrentRoom, user));
-                Destroy(CrossHair.gameObject);
             }
         }
 
         private IEnumerator ClearCooldown()
         {
-            yield return new WaitForSeconds(0.1f);
+            yield return null;
             HasTriggeredCrossHair = true;
             base.ClearCooldowns();
             yield break;
@@ -138,55 +176,73 @@ namespace Planetside
                 Destroy(CrossHair.gameObject);
             }
         }
+        float T = 0;
+
         private void UpdateReticlePosition()
         {
-            tk2dBaseSprite sprite = CrossHair.GetComponent<tk2dBaseSprite>();
+            if (CrossHair == null) { return; }
             if (BraveInput.GetInstanceForPlayer(base.LastOwner.PlayerIDX).IsKeyboardAndMouse(false))
             {
                 Vector2 vector = base.LastOwner.unadjustedAimPoint.XY();
-                Vector2 vector2 = vector - sprite.GetBounds().extents.XY();
-                sprite.transform.position = vector2;
-                aimpoint = vector2 + new Vector2(0.625f, 0.625f);
+                Vector2 vector2 = vector - CrossHair.GetBounds().extents.XY();
+                CrossHair.transform.position = vector2 + new Vector2(1.3125f, 1.3125f);
+                aimpoint = vector2 + new Vector2(1.3125f, 1.3125f);
             }
             else
             {
                 BraveInput instanceForPlayer = BraveInput.GetInstanceForPlayer(base.LastOwner.PlayerIDX);
-                Vector2 vector3 = base.LastOwner.CenterPosition + (Quaternion.Euler(0f, 0f, this.m_currentAngle) * Vector2.right).XY() * this.m_currentDistance;
+                var _ = base.LastOwner.CenterPosition + (Quaternion.Euler(0f, 0f, this.m_currentAngle) * Vector2.right).XY() * this.m_currentDistance;
+                Vector2 vector3 = _;
                 vector3 += instanceForPlayer.ActiveActions.Aim.Vector * 25f * BraveTime.DeltaTime;
                 this.m_currentAngle = BraveMathCollege.Atan2Degrees(vector3 - base.LastOwner.CenterPosition);
                 this.m_currentDistance = Vector2.Distance(vector3, base.LastOwner.CenterPosition);
                 this.m_currentDistance = Mathf.Min(this.m_currentDistance, this.maxDistance);
-                vector3 = base.LastOwner.CenterPosition + (Quaternion.Euler(0f, 0f, this.m_currentAngle) * Vector2.right).XY() * this.m_currentDistance;
-                Vector2 vector4 = vector3 - sprite.GetBounds().extents.XY();
-                sprite.transform.position = vector4;
-                aimpoint = vector4 + new Vector2(0.625f, 0.625f);
+                vector3 = _;
+                CrossHair.transform.position = vector3 + new Vector2(1.3125f, 1.3125f);
+                aimpoint = vector3 + new Vector2(1.3125f, 1.3125f);
+            }
+            T -= Time.deltaTime;
+            if (T < 0)
+            {
+                ParticleBase.EmitParticles("WaveParticle", 1, new ParticleSystem.EmitParams()
+                {
+                    position = aimpoint,
+                    startSize = 9,
+                    rotation = 0,
+                    startLifetime = 0.75f,
+                    startColor = Color.red.WithAlpha(0.333f)
+                });
+                T = 0.5f;
+                var v = aimpoint + new Vector2(0, 100);
+                var sdit = Vector2.Distance(aimpoint, v);
+                for (float i = 0; i < sdit; i++)
+                {
+                    ParticleBase.EmitParticles("ShellraxEyeParticle", 1, new ParticleSystem.EmitParams()
+                    {
+                        position = Vector3.Lerp(aimpoint, v, i / sdit),
+                        startColor = Color.red,
+                        startLifetime = UnityEngine.Random.Range(0.75f, 1) * (1 - (i / sdit)) ,
+                        startSize = 0.33f
+                    });
+                }
+
             }
         }
 
         private bool HasTriggeredCrossHair;
-        private GameObject CrossHair;
+        private tk2dBaseSprite CrossHair;
         private IEnumerator DoStrike(RoomHandler room, PlayerController player)
         {
             HasTriggeredCrossHair = false;
-            Vector2 LOL = aimpoint;// + new Vector2(-0.125f ,1.25f);
-            GameObject fuck = UnityEngine.Object.Instantiate<GameObject>(KineticStrike.StrikePrefab, LOL, Quaternion.identity);
-            tk2dSprite ahfuck = fuck.GetComponent<tk2dSprite>();
-            fuck.GetComponent<tk2dBaseSprite>().SetSprite(KineticStrike.spriteIds[0]);
-            AkSoundEngine.PostEvent("Play_WPN_dawnhammer_charge_01", fuck);
-            ahfuck.usesOverrideMaterial = true;
+            Vector2 HitPoint = aimpoint;
 
-            Material mat = ahfuck.GetCurrentSpriteDef().material = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
-            mat.mainTexture = ahfuck.renderer.material.mainTexture;
-            mat.SetColor("_EmissiveColor", new Color32(255, 0, 0, 255));
-            mat.SetFloat("_EmissiveColorPower", 1.55f);
-            mat.SetFloat("_EmissivePower", 50);
-            ahfuck.renderer.material = mat;
 
-            ExpandReticleRiserEffect rRE = fuck.gameObject.AddComponent<ExpandReticleRiserEffect>();
-            rRE.RiserHeight = 2;
-            rRE.RiseTime = 1;
-            rRE.NumRisers = 3;
+            tk2dBaseSprite _SpriteReticle = CrossHair;
+            CrossHair = null;
 
+            AkSoundEngine.PostEvent("Play_WPN_dawnhammer_charge_01", _SpriteReticle.gameObject);
+
+           
             TextMaker text = player.gameObject.AddComponent<TextMaker>();
             text.TextSize = 4;
             text.Color = Color.red;
@@ -198,53 +254,71 @@ namespace Planetside
             text.offset = new Vector3(-1.25f, 3f);
             text.GameObjectToAttachTo = player.gameObject;
 
-            Transform copySprite = ahfuck.transform;
             bool Playsound = false;
             float ela = 0f;
+            float Y = 0f;
             float dura = 10f;
+            tk2dBaseSprite Falldown = null;
             while (ela < dura)
             {
+                if (Y < 0)
+                {
+                    Y = 0.9f * (1 - Mathf.Min(ela / dura, 0.75f)) ;
+                    this.StartCoroutine(DoLaser(Y));
+                }
+
+
+
                 float Timer = dura - ela;
-                text.ChangeText("Kinetic Impact In:\n\n" + Timer.ToString() + " Seconds");
+                text.ChangeText($"Kinetic Impact In:\n\n{Math.Round(Timer, 2)} Seconds");
                 if (ela > 9 && Playsound == false)
                 {
                     Playsound = true;
-                    AkSoundEngine.PostEvent("Play_BOSS_RatMech_Whistle_01", fuck);
+                    AkSoundEngine.PostEvent("Play_BOSS_RatMech_Whistle_01", _SpriteReticle.gameObject);
+
+                    Falldown = UnityEngine.Object.Instantiate<GameObject>(FalldownPrefab, HitPoint + new Vector2(0, 100), Quaternion.identity).GetComponent<tk2dBaseSprite>();
+                }
+                if (Falldown)
+                {
+                    Falldown.transform.position = Vector3.Lerp(HitPoint + new Vector2(0, 100), HitPoint, ela - 9);
+                    GlobalSparksDoer.DoRadialParticleBurst(3, Falldown.WorldBottomLeft, Falldown.WorldTopRight, 30f, 0.2f, 0.1f, null, 3.5f, null, GlobalSparksDoer.SparksType.STRAIGHT_UP_FIRE);
+                    GlobalSparksDoer.DoRadialParticleBurst(12, Falldown.WorldBottomLeft, Falldown.WorldTopRight, 30f, 0.2f, 0.1f, null, 8f, null, GlobalSparksDoer.SparksType.EMBERS_SWIRLING);
                 }
                 ela += BraveTime.DeltaTime;
+                Y -= BraveTime.DeltaTime;
                 float t = ela / dura * (ela / dura);
-                copySprite.localScale = Vector3.Lerp(Vector3.one, new Vector3(0f, 0f, 0f), t);
+                _SpriteReticle.transform.localScale = Vector3.Lerp(Vector3.one, new Vector3(0f, 0f, 0f), t);
                 yield return null;
             }
 
-            Destroy(fuck);
-            GameObject fuck1 = UnityEngine.Object.Instantiate<GameObject>(KineticStrike.StrikePrefab, LOL - new Vector2(0.125f, 1.25f), Quaternion.identity);
-            fuck1.GetComponent<tk2dBaseSprite>().PlaceAtLocalPositionByAnchor(LOL, tk2dBaseSprite.Anchor.LowerCenter);
-            tk2dSprite troll = fuck1.GetComponent<tk2dSprite>();
-            fuck1.GetComponent<tk2dBaseSprite>().SetSprite(KineticStrike.spriteIds[1]);
+            Destroy(_SpriteReticle.gameObject);
+            if (Falldown)
+            {
+                Destroy(Falldown.gameObject);
+            }
+            Pixelator.Instance.FadeToColor(0.01f, new Color(1,1,1, 0.3f), false, 0f);
+            Pixelator.Instance.FadeToColor(0.75f, new Color(1, 1, 1, 0.3f), true, 0f);
+
+            tk2dBaseSprite _Impact = UnityEngine.Object.Instantiate<GameObject>(ImpactPrefab, HitPoint, Quaternion.identity).GetComponent<tk2dBaseSprite>();
+            GameObject epicwin = UnityEngine.Object.Instantiate<GameObject>(EnemyDatabase.GetOrLoadByGuid(EnemyGUIDs.HM_Absolution_GUID).GetComponent<BossFinalRogueDeathController>().DeathStarExplosionVFX, HitPoint, Quaternion.identity);
             
-            GameObject epicwin = UnityEngine.Object.Instantiate<GameObject>(EnemyDatabase.GetOrLoadByGuid("b98b10fca77d469e80fb45f3c5badec5").GetComponent<BossFinalRogueDeathController>().DeathStarExplosionVFX);
-            epicwin.GetComponent<tk2dBaseSprite>().PlaceAtLocalPositionByAnchor(LOL, tk2dBaseSprite.Anchor.LowerCenter);
-            epicwin.transform.position = LOL.Quantize(0.0625f);
-            epicwin.GetComponent<tk2dBaseSprite>().UpdateZDepth();
+
+            ExplosionData defaultSmallExplosionData = StaticExplosionDatas.CopyFields(StaticExplosionDatas.genericLargeExplosion);
+            this.KineticBomb.effect = defaultSmallExplosionData.effect;
+            this.KineticBomb.ignoreList = defaultSmallExplosionData.ignoreList;
+            this.KineticBomb.ss = defaultSmallExplosionData.ss;
+            Exploder.Explode(HitPoint, this.KineticBomb, Vector2.zero, null, false, CoreDamageTypes.None, false);
 
 
-            this.Boom(LOL - new Vector2(0.125f, 1.25f));
-
-            AkSoundEngine.PostEvent("Play_OBJ_nuke_blast_01", fuck);
+            AkSoundEngine.PostEvent("Play_OBJ_nuke_blast_01", _Impact.gameObject);
             text.ChangeText("Kinetic Impact Delivered.\n\n     Reloading Payload.");
             text.ChangeOffset(new Vector3(-2, 3f));
 
             yield return new WaitForSeconds(5f);
-            troll.usesOverrideMaterial = true;
-            troll.OverrideMaterialMode = tk2dBaseSprite.SpriteMaterialOverrideMode.OVERRIDE_MATERIAL_COMPLEX;
-            troll.sprite.usesOverrideMaterial = true;
-            troll.renderer.material.EnableKeyword("_BurnAmount");
-            troll.renderer.material.shader = ShaderCache.Acquire("Brave/LitCutoutUber");
+            
 
 
-            Material targetMaterial = troll.renderer.material;
-            Destroy(epicwin);
+            Material targetMaterial = _Impact.renderer.material;
             ela = 0f;
             dura = 5f;
             while (ela < dura)
@@ -258,17 +332,32 @@ namespace Planetside
             {
                 Destroy(text);
             }
-            Destroy(fuck1);
+            Destroy(_Impact.gameObject);
+            Destroy(epicwin);
+
             yield break;
         }
-        public void Boom(Vector3 position)
+
+        private IEnumerator DoLaser(float Duration)
         {
-            ExplosionData defaultSmallExplosionData = StaticExplosionDatas.CopyFields(StaticExplosionDatas.genericSmallExplosion);//StaticExplosionDatas.genericSmallExplosion;
-            this.KineticBomb.effect = defaultSmallExplosionData.effect;
-            this.KineticBomb.ignoreList = defaultSmallExplosionData.ignoreList;
-            this.KineticBomb.ss = defaultSmallExplosionData.ss;
-            Exploder.Explode(position, this.KineticBomb, Vector2.zero, null, false, CoreDamageTypes.None, false);
+            var v = aimpoint + new Vector2(0, 100);
+            var sdit = Vector2.Distance(aimpoint, v) * 2f;
+            float w = Duration / 500f;
+
+            for (float i = 0; i < sdit; i++)
+            {
+                ParticleBase.EmitParticles("ShellraxEyeParticle", 1, new ParticleSystem.EmitParams()
+                {
+                    position = Vector3.Lerp(v, aimpoint, i / sdit),
+                    startColor = Color.red,
+                    startLifetime = UnityEngine.Random.Range(0.75f, 1) * (1 - (i / sdit)),
+                    startSize = 0.4f
+                });
+                yield return new WaitForSeconds(w);
+            }
+            yield break;
         }
+
         private ExplosionData KineticBomb = new ExplosionData
         {
             damageRadius = 4.2f,

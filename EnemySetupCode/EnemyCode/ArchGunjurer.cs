@@ -17,6 +17,7 @@ using ChallengeAPI;
 using static Planetside.Oppressor.HeartBurnOne;
 using Alexandria.PrefabAPI;
 using static UmbraController;
+using Planetside.Controllers;
 
 namespace Planetside
 {
@@ -618,7 +619,7 @@ namespace Planetside
                 mat2.SetFloat("_EmissivePower", 100);
                 companion.aiActor.sprite.renderer.material = mat2;
 
-                SpriteBuilder.AddSpriteToCollection(Collection.GetSpriteDefinition("archgunjurernew_idle_001"), SpriteBuilder.ammonomiconCollection);
+                SpriteBuilder.AddSpriteToCollection(Collection.GetSpriteDefinition(FoolMode.isFoolish ? "archgunjurernewface_idle_001" : "archgunjurernew_idle_001"), SpriteBuilder.ammonomiconCollection);
 				if (companion.GetComponent<EncounterTrackable>() != null)
 				{
 					UnityEngine.Object.Destroy(companion.GetComponent<EncounterTrackable>());
@@ -631,8 +632,8 @@ namespace Planetside
 				companion.encounterTrackable.journalData.IsEnemy = true;
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
-				companion.encounterTrackable.journalData.AmmonomiconSprite = "archgunjurernew_idle_001";
-				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("archgunjurericon");// ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\archgunjurericon.png");
+				companion.encounterTrackable.journalData.AmmonomiconSprite = FoolMode.isFoolish ? "archgunjurernewface_idle_001" : "archgunjurernew_idle_001";
+				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>(FoolMode.isFoolish ? "archgunjurericonsilly" : "archgunjurericon");// ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\archgunjurericon.png");
                 PlanetsideModule.Strings.Enemies.Set("#THE_JURER", "Arch Gunjurer");
 				PlanetsideModule.Strings.Enemies.Set("#THE_JURER_SHORTDESC", "Master Of The Gun");
 				PlanetsideModule.Strings.Enemies.Set("#THE_JURER_LONGDESC", "A very high ranking Gunjurer, they are able to create and cast bullets without the use of a wand. All Gungeoneers are advised to never, under any circumstance, give them a wand.");
@@ -688,7 +689,7 @@ namespace Planetside
 			{
                 base.aiActor.spriteAnimator.AnimationEventTriggered += this.AnimationEventTriggered;
 
-                if (UnityEngine.Random.value < 0.005f)
+                if (UnityEngine.Random.value < 0.005f | FoolMode.isFoolish)
 				{
                     this.aiActor.spriteAnimator.library = SecondaryLibrary;
                     this.aiActor.spriteAnimator.Library = SecondaryLibrary;
@@ -712,7 +713,7 @@ namespace Planetside
                 var g = this.aiActor.behaviorSpeculator.AttackBehaviors[0] as AttackBehaviorGroup;
                 foreach (var entry in g.AttackBehaviors)
                 {
-                    if (entry.NickName == (v > 0.04f ? RolledAttack.ToString() : value.ToString()))
+                    if (entry.NickName == (v > (FoolMode.isFoolish ? 0.25f : 0.04f) ? RolledAttack.ToString() : value.ToString()))
                     {
                         entry.Probability = 1; continue;
                     }

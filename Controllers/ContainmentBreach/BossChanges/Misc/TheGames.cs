@@ -28,8 +28,11 @@ namespace Planetside.Controllers.ContainmentBreach.BossChanges.Misc
             if (GameManager.Instance.Dungeon.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.CATACOMBGEON) 
             {
                 if (Amount < 6) { return; }
-                if (UnityEngine.Random.value < 0.0025f)
+                bool _ = FoolMode.isFoolish && UnityEngine.Random.value < 0.4f;
+                if (UnityEngine.Random.value < 0.0025f | _)
                 {
+                    if (ActiveThisSession) { return; }
+                    ActiveThisSession = true;
                     Minimap.Instance.PreventAllTeleports = true;
                     Minimap.Instance.TemporarilyPreventMinimap = true;
                     NevernamedsDarknessHandler.EnableDarkness(0, 0);
@@ -38,6 +41,7 @@ namespace Planetside.Controllers.ContainmentBreach.BossChanges.Misc
                 }
             }
         }
+        private static bool ActiveThisSession = false;
 
 
         public IEnumerator DoCheck()
@@ -89,15 +93,29 @@ namespace Planetside.Controllers.ContainmentBreach.BossChanges.Misc
                 PlayerController player = GameManager.Instance.AllPlayers[i];
                 if (player != null)
                 {
-                    if (self.transform?.parent?.gameObject?.GetComponent<MirrorController>() == null && self.transform?.parent?.gameObject?.GetComponent<KickableObject>() == null)
+                    //self.transform?.parent?.gameObject?.GetComponent<MirrorController>() 
+                    if (self.transform.parent != null)
                     {
-                        if (self.GetComponent<MoneyPots.MoneyPotBehavior>() == null && self.GetComponent<Marker>() == null && UnityEngine.Random.value < Amount / 5000)
+                        if (UnityEngine.Random.value < Amount / 5000f)
                         {
-                            Vector2 position = self.transform.position;
-                            DungeonPlaceable bom = ScriptableObject.CreateInstance<DungeonPlaceable>();
-                            StaticReferences.StoredDungeonPlaceables.TryGetValue("tresPassPots", out bom);
-                            var obj = bom.InstantiateObject(position.GetAbsoluteRoom(), position.ToIntVector2() - position.GetAbsoluteRoom().area.basePosition);
-                            Destroy(self.gameObject);
+                            bool fail = false;
+                            var c = self.transform.parent.GetComponents(typeof(Component));
+                            foreach (var entry in c)
+                            {
+                                if (entry is MirrorController | entry is KickableObject | entry is MoneyPots.MoneyPotBehavior | entry is Marker)
+                                {
+                                    fail = true;
+                                    break;
+                                }
+                            }
+                            if (!fail)
+                            {
+                                Vector2 position = self.transform.position;
+                                DungeonPlaceable bom = ScriptableObject.CreateInstance<DungeonPlaceable>();
+                                StaticReferences.StoredDungeonPlaceables.TryGetValue("tresPassPots", out bom);
+                                var obj = bom.InstantiateObject(position.GetAbsoluteRoom(), position.ToIntVector2() - position.GetAbsoluteRoom().area.basePosition);
+                                Destroy(self.gameObject);
+                            }
                         }
                     }
                 }

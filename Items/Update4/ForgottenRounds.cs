@@ -162,7 +162,6 @@ namespace Planetside
 			ForgottenRoundRNG warVase = gameObject.AddComponent<ForgottenRoundRNG>();
             var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
             ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("forgottenroundrng"), data, gameObject);
-            //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
             string shortDesc = "Forgotten Fourth Chamber";
 			string longDesc = "Increases damage. This extraordinary, yet false artifact indicates mastery of the fourth hidden chamber.\n\nWhile plotting his masters return, Agunim decorated this false round with his own likeness as a means to test his magics, and armanents, on potential sacrifices.";
 			ItemBuilder.SetupItem(warVase, shortDesc, longDesc, "psog", "Forgotten Round");

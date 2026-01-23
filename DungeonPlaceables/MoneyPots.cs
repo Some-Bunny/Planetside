@@ -20,6 +20,7 @@ using PathologicalGames;
 using Planetside.Controllers.ContainmentBreach.BossChanges.Misc;
 using Alexandria.PrefabAPI;
 using Alexandria.cAPI;
+using Planetside.Controllers;
 
 namespace Planetside
 {
@@ -29,11 +30,11 @@ namespace Planetside
         {
             Dictionary<GameObject, float> dict = new Dictionary<GameObject, float>()
             {
-                { GenerateCopperpot().gameObject, 1f },
-                { GenerateSilverpot().gameObject, 0.1f },
-                { GenerateGoldpot().gameObject, 0.01f },
-                { GenerateGlitchpot().gameObject, 0.0005f },
-                { GenerateCreditpot().gameObject, 0.00333f }
+                { GenerateCopperpot().gameObject, FoolMode.isFoolish ? 0.2f : 1f },
+                { GenerateSilverpot().gameObject, FoolMode.isFoolish ? 0.05f : 0.1f },
+                { GenerateGoldpot().gameObject, FoolMode.isFoolish ? 0 : 0.01f },
+                { GenerateGlitchpot().gameObject,FoolMode.isFoolish ? 0.01f : 0.0005f },
+                { GenerateCreditpot().gameObject,  FoolMode.isFoolish ? 0.1f : 0.00333f }
             };
             DungeonPlaceable placeable = BreakableAPIToolbox.GenerateDungeonPlaceable(dict);
             StaticReferences.StoredDungeonPlaceables.Add("moneyPotRandom", placeable);

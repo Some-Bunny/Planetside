@@ -20,13 +20,14 @@ namespace Planetside
 
         public static void InitTimeTraderTable()
         {
+            
             TimeShopKeeperTable = LootTableTools.CreateLootTable();
             //Guns
-            TimeShopKeeperTable.AddItemsToPool(new Dictionary<int, float> { { 107, 1.5f }, { 210, 0.8f }, { 761, 0.8f }, { 516, 1 }, { 748, 1 }, { 395, 0.9f }, { 275, 1.2f }, { 52, 0.8f }, { 31, 1 }, { 6, 0.8f }, { 17, 1 }, { 327, 1 }, { 81, 0.8f }, { 360, 1 }, { 274, 0.7f }, { 198, 1.2f }, { 100, 0.8f }, { 362, 1.2f }, { 186, 1f }, { 363, 1f }, { 339, 1.1f }, { 130, 1 }, { 341, 2 }, { 33, 2 }, { 292, 2 }, { 90, 1.5f }, { 444, 1 }, { 474, 1 }, { 177, 1.3f }, { 3, 2 }, { 329, 1 } });
+            TimeShopKeeperTable.AddItemsToPool(new Dictionary<int, float> { { Guns.Raiden_Coil.PickupObjectId, 1.2f }, { Guns.Gunbow.PickupObjectId, 0.8f }, { Guns.High_Kaliber.PickupObjectId, 0.8f }, { Guns.Triple_Gun.PickupObjectId, 1 }, { Guns.Sunlight_Javelin.PickupObjectId, 1 }, { Guns.Staff_Of_Firepower.PickupObjectId, 0.9f }, { Guns.Flare_Gun.PickupObjectId, 1.2f }, { Guns.Crescent_Crossbow.PickupObjectId, 0.8f }, { Guns.Klobbe.PickupObjectId, 1 }, { Guns.Zorgun.PickupObjectId, 0.8f }, { Guns.Heck_Blaster.PickupObjectId, 1 }, { 327, 1 }, { 81, 0.8f }, { 360, 1 }, { 274, 0.7f }, { 198, 1.2f }, { 100, 0.8f }, { 362, 1.2f }, { 186, 1f }, { 363, 1f }, { 339, 1.1f }, { 130, 1 }, { Guns.Buzzkill.PickupObjectId, 1.5f }, { Guns.Tear_Jerker.PickupObjectId, 1.5f }, { Guns.Molotov_Launcher.PickupObjectId, 1.33f }, { Guns.Eye_Of_The_Beholster.PickupObjectId, 1.33f }, { 444, 1 }, { 474, 1 }, { 177, 1.3f }, { 3, 1.5f }, { 329, 1 } });
             //Items
-            TimeShopKeeperTable.AddItemsToPool(new Dictionary<int, float> { { 448, 1 }, { 298, 1 }, { 447, 1 }, { 403, 1 }, { 253, 1 }, { 437, 2 }, { 259, 2 }, { 170, 1.5f }, { 306, 1.5f }, { 465, 1.5f }, { 138, 2 }, { 287, 2 }, { 489, 1 }, { 452, 1 }, { 533, 1.5f }, { 524, 1 }, { 521, 1 }, { 640, 1.2f }, { 630, 1.5f }, { 567, 1.5f }, { 457, 1 }, { 109, 1 }, { 219, 0.8f }, { 222, 0.8f }, { 463, 1 } });
+            TimeShopKeeperTable.AddItemsToPool(new Dictionary<int, float> { { 448, 1 }, { 298, 1 }, { 447, 1 }, { 403, 1 }, { 253, 1 }, { 437, 1.2f }, { 259, 1.2f }, { 170, 1.5f }, { 306, 1.5f }, { 465, 1.5f }, { 138, 2 }, { 287, 2 }, { 489, 1 }, { 452, 1 }, { 533, 1.5f }, { 524, 1 }, { 521, 1 }, { 640, 1.2f }, { 630, 1.5f }, { 567, 1.5f }, { 457, 1 }, { 109, 1 }, { 219, 0.8f }, { 222, 0.8f }, { 463, 1 } });
             //Modded Items
-            TimeShopKeeperTable.AddItemsToPool(new Dictionary<int, float> { { EcholocationAmmolet.EcholocationAmmoletID, 1 }, { DeathWarrant.DeathWarrantID, 1 }, { OffWorldMedicine.OffWorldMedicineID, 1 }, { AoEBullets.AuraBulletsID, 1.5f } });
+            TimeShopKeeperTable.AddItemsToPool(new Dictionary<int, float> { { DiasukesPolymorphine.DiasukesPolymorphineID, 0.8f }, { CHROMA.ItemID, 0.5f }, { NeutroniumCore.ID, 1.2f }, { EcholocationAmmolet.EcholocationAmmoletID, 1 }, { DeathWarrant.DeathWarrantID, 1 }, { OffWorldMedicine.OffWorldMedicineID, 1 }, { AoEBullets.AuraBulletsID, 1.2f } });
             //TRoll
             //timeshopkeepertable.AddItemsToPool(new Dictionary<int, float> { { 348, 0.3f }, { 351, 0.3f }, { 349, 0.3f }, { 350, 0.3f } });
         }

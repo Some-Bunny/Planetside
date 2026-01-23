@@ -48,6 +48,7 @@ namespace Planetside
             activeitem.consumable = false;
             activeitem.quality = PickupObject.ItemQuality.B;
             activeitem.AddToSubShop(ItemBuilder.ShopType.Cursula, 1f);
+
             SynergyAPI.SynergyBuilder.AddItemToSynergy(activeitem, CustomSynergyType.ZOMBIE_AMMO);
 
             ForgiveMePlease.NeverForgiveMeID = activeitem.PickupObjectId;

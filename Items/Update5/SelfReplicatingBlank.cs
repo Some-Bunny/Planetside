@@ -26,8 +26,9 @@ namespace Planetside
 			string longDesc = "Blanks used in combat will be refunded, as long as you avoid getting hit. Consecutive blanks have a lower chance to be refunded.\n\nThis blank is actually an extremely rare fungus, which is able to spread and multiply as long as its left to its own devices.";
 			ItemBuilder.SetupItem(warVase, shortDesc, longDesc, "psog");
 			warVase.quality = PickupObject.ItemQuality.A;
-			//warVase.IgnoredByRat = true;
-			//warVase.RespawnsIfPitfall = true;
+            warVase.AddToSubShop(ItemAPI.ItemBuilder.ShopType.OldRed, 1.2f);
+
+
             SelfReplicatingBlank.SelfReplicatingBlankID = warVase.PickupObjectId;
 			warVase.BlanksUsed = 0;
             warVase.associatedItemChanceMods = new LootModData[]

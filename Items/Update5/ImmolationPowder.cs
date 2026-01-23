@@ -161,6 +161,7 @@ namespace Planetside
             {
                 currentRoom.ApplyActionToNearbyEnemies(user.sprite.WorldCenter, 3.5f, new Action<AIActor, float>(this.ProcessEnemy));
             }
+
             AkSoundEngine.PostEvent("Play_Immolate", user.gameObject);
             GlobalSparksDoer.DoRadialParticleBurst(30, user.sprite.WorldBottomLeft, user.sprite.WorldTopRight, 30f, 2f, 1f, null, null, null, GlobalSparksDoer.SparksType.EMBERS_SWIRLING);
             var vfx = user.PlayEffectOnActor((PickupObjectDatabase.GetById(370) as Gun).muzzleFlashEffects.effects[0].effects[0].effect, new Vector3(1 ,-1.375f));

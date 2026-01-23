@@ -441,7 +441,7 @@ namespace Planetside
                             tether.ForcedLinkProjectile = LastProjectile.GetComponent<Projectile>();
                             tether.UpdateLinkToProjectile(LastProjectile.GetComponent<Projectile>());
                         }
-                        tether.Invoke("InvokeKill", 3.5f + (0.125f * a));
+                        tether.Invoke("InvokeKill", 5f + (0.125f * a));
                         LastProjectile = tether;
                         a++;
 
@@ -1143,7 +1143,7 @@ namespace Planetside
 
             GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_2_Sheet_Data, "gwnn_ammonomicon");
             gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_2_Animation_Data;
-            gun.sprite.SortingOrder = 1;
+            gun.sprite.SortingOrder = 2;
 
             gun.reloadAnimation = "gwnn_reload";
             gun.idleAnimation = "gwnn_idle";
@@ -1244,7 +1244,7 @@ namespace Planetside
             hit.baseData = new ProjectileData();
             hit.CopyFrom<Projectile>(_Hitscan);
             hit.baseData.CopyFrom<ProjectileData>(_Hitscan.baseData);
-            hit.baseData.damage = 5.25f;
+            hit.baseData.damage = 5f;
             hit.baseData.speed = 0.01f;
             Destroy(_Hitscan);
             Hitscan = hit;
@@ -1303,7 +1303,7 @@ namespace Planetside
             lightning.CanChainToAnyProjectile = false;
             lightning.DamagesEnemies = true;
             lightning.damageTypes = CoreDamageTypes.None;
-            lightning.damagePerHit = 12;
+            lightning.damagePerHit = 10;
             lightning.damageCooldown = 0.3f;
             lightning.UseForcedLinkProjectile = true;
             EnergyProjectile.sprite.SortingOrder = -10;

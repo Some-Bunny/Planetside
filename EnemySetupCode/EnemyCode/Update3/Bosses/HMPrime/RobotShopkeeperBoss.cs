@@ -345,6 +345,9 @@ namespace Planetside
 				var companion = robotShopkeeperprefab.AddComponent<HMPrimeController>();
                 EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, Collection, matRobot, false);
 
+                Alexandria.ItemAPI.AlexandriaTags.SetTag(companion.aiActor, "robotic_mechanical");
+
+
                 companion.aiActor.knockbackDoer.weight = 10000;
 				companion.aiActor.MovementSpeed = 1.8f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
@@ -1994,9 +1997,14 @@ namespace Planetside
 				companion.aiActor.enabled = false;
 				companion.aiActor.behaviorSpeculator.enabled = false;
 
-				//==================
-			}
-		}
+                companion.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("amuletRing"));
+                companion.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("poundSmall"));
+                companion.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("quickHoming"));
+                companion.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("ffca09398635467da3b1f4a54bcfda80").bulletBank.GetBullet("directedfire"));
+
+                //==================
+            }
+        }
 		public static bool RobotShopkeeperCustomCanBuy(CustomShopController shop, PlayerController player, int cost)
 		{
 			int total = Mathf.RoundToInt(GameStatsManager.Instance.GetPlayerStatValue(TrackedStats.META_CURRENCY));
@@ -2026,17 +2034,16 @@ namespace Planetside
         {
 			public override IEnumerator Top()
             {
-				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("ffca09398635467da3b1f4a54bcfda80").bulletBank.GetBullet("directedfire"));
 				int amount = base.BulletBank.aiActor.GetComponent<RobotShopkeeperEngageDoer>().AmountOfPurchases;
-				for (int e = (-1 - amount); e < (2+amount); e++)
+				for (int e = (-2 - amount); e < (3+amount); e++)
                 {
-					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(true, base.AimDirection, (9+amount)*e, this, 0.75f));
+					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(true, base.AimDirection, (9.6f + amount)*e, this, 0.75f));
 					yield return this.Wait(1);
 				}
 				yield return this.Wait(30 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
-                for (int e = (-1 - amount); e < (2 + amount); e++)
+                for (int e = (-2 - amount); e < (3 + amount); e++)
 				{
-					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(false, base.AimDirection, (9 + amount) * e, this, 0.75f));
+					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(false, base.AimDirection, (9.6f + amount) * e, this, 0.75f));
 					yield return this.Wait(1);
 				}
 				yield return this.Wait(45 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
@@ -2057,7 +2064,7 @@ namespace Planetside
 				amount = amount * 2;
 				for (int e = (-1 - amount); e < (2 + amount); e++)
 				{
-					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(true, base.AimDirection, (6 + amount) * e, this, 1f));
+					base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob(true, base.AimDirection, (7 + amount) * e, this, 1f));
 					yield return this.Wait(2.5f);
 				}
 				yield return this.Wait(120);
@@ -2078,7 +2085,9 @@ namespace Planetside
 
 			public class BasicBullet : Bullet
 			{ public BasicBullet() : base("directedfire", false, false, false) { } }
-			private IEnumerator QuickscopeNoob(bool isLeft, float aimDir, float offset ,CleanSweeps parent, float chargeTime = 0.5f)
+            public class __ : Bullet
+            { public __() : base("poundSmall", false, false, false) { } }
+            private IEnumerator QuickscopeNoob(bool isLeft, float aimDir, float offset ,CleanSweeps parent, float chargeTime = 0.5f)
 			{
 				Vector2 positionLeft = base.BulletBank.aiActor.transform.Find("LeftGun_Down(Left)").transform.PositionVector2();
 				Vector2 positionRight = base.BulletBank.aiActor.transform.Find("RightGun_Down(Right)").transform.PositionVector2();
@@ -2152,6 +2161,7 @@ namespace Planetside
 				}
 				base.PostWwiseEvent("Play_CombineShot", null);
 				base.Fire(Offset.OverridePosition(isLeft == true ? base.BulletBank.aiActor.transform.Find("LeftGun_Down(Left)").transform.PositionVector2() : base.BulletBank.aiActor.transform.Find("RightGun_Down(Right)").transform.PositionVector2()), new Direction(die, DirectionType.Absolute, -1f), new Speed(36f, SpeedType.Absolute), new BasicBullet());
+                base.Fire(Offset.OverridePosition(isLeft == true ? base.BulletBank.aiActor.transform.Find("LeftGun_Down(Left)").transform.PositionVector2() : base.BulletBank.aiActor.transform.Find("RightGun_Down(Right)").transform.PositionVector2()), new Direction(die, DirectionType.Absolute, -1f), new Speed(30f, SpeedType.Absolute), new __());
                 elapsed = 0;
                 Time = 0.33f;
                 while (elapsed < Time)
@@ -2452,8 +2462,6 @@ namespace Planetside
 			
 			public override IEnumerator Top()
 			{
-				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("amuletRing"));
-				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("poundSmall"));
 				yield return this.Wait(126 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
                 AIBeamShooter2[] beams = this.BulletBank.aiActor.GetComponents<AIBeamShooter2>();
 				for (int e = 0; e < 4; e++)
@@ -2656,17 +2664,17 @@ namespace Planetside
 				int amount = base.BulletBank.aiActor.GetComponent<RobotShopkeeperEngageDoer>().AmountOfPurchases;
 				for (int i = 0; i < 4; i++)
 				{
-					this.Fire(Offset.OverridePosition(positionLeft), new Direction(UnityEngine.Random.Range(-10, 10), DirectionType.Absolute, -1f), new EatMissiles.HomingBullet(3, 20 - (amount * 2)));
+					this.Fire(Offset.OverridePosition(positionLeft), new Direction(UnityEngine.Random.Range(-10, 10), DirectionType.Absolute, -1f), new EatMissiles.HomingBullet(amount, 3, 20 - (amount * 2)));
 					yield return this.Wait(24 - (amount*2));
-					this.Fire(Offset.OverridePosition(positionRight), new Direction(UnityEngine.Random.Range(-10, 10), DirectionType.Aim, -1f), new EatMissiles.HomingBullet(3, 20 - (amount*2)));
+					this.Fire(Offset.OverridePosition(positionRight), new Direction(UnityEngine.Random.Range(-10, 10), DirectionType.Aim, -1f), new EatMissiles.HomingBullet(amount, 3, 20 - (amount*2)));
 					yield return this.Wait(24 - (amount*2));
 				}
 				if (amount > 3)
 				{
 					for (int i = 0; i < 2; i++)
 					{
-						this.Fire(Offset.OverridePosition(positionLeft), new Direction(UnityEngine.Random.Range(-30, 30), DirectionType.Absolute, -1f), new EatMissiles.HomingBullet(3, 20 - (amount * 2), 3, 22));
-						this.Fire(Offset.OverridePosition(positionRight), new Direction(UnityEngine.Random.Range(-30, 30), DirectionType.Aim, -1f), new EatMissiles.HomingBullet(3, 20 - (amount * 2), 3, 22));
+						this.Fire(Offset.OverridePosition(positionLeft), new Direction(UnityEngine.Random.Range(-30, 30), DirectionType.Absolute, -1f), new EatMissiles.HomingBullet(amount, 3, 20 - (amount * 2), 3, 22));
+						this.Fire(Offset.OverridePosition(positionRight), new Direction(UnityEngine.Random.Range(-30, 30), DirectionType.Aim, -1f), new EatMissiles.HomingBullet(amount, 3, 20 - (amount * 2), 3, 22));
 						yield return this.Wait(20);
 					}
 				}
@@ -2689,14 +2697,16 @@ namespace Planetside
 			}
 			private class HomingBullet : Bullet
 			{
-				public HomingBullet(int fireDelay = 0, int delay = 20, float StartSpeed = 6, float ChargeSpeed = 22) : base("missile", false, false, false)
+				public HomingBullet(int Tier, int fireDelay = 0, int delay = 20, float StartSpeed = 6, float ChargeSpeed = 22) : base("missile", false, false, false)
 				{
 					this.m_fireDelay = fireDelay;
 					this.projectileSpawnDelay = delay;
 					this.ChargeUpSpeed = ChargeSpeed;
 					this.startSpeed = StartSpeed;
-				}
+                    _Tier = Tier;
 
+                }
+				private int _Tier;
 				public override void Initialize()
 				{
 					this.Projectile.spriteAnimator.StopAndResetFrameToDefault();
@@ -2708,7 +2718,6 @@ namespace Planetside
 
 				public override IEnumerator Top()
 				{
-					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("quickHoming"));
 
 					if (this.m_fireDelay > 0)
 					{
@@ -2751,8 +2760,24 @@ namespace Planetside
 
 				public override void OnBulletDestruction(Bullet.DestroyType destroyType, SpeculativeRigidbody hitRigidbody, bool preventSpawningProjectiles)
 				{
-					if (preventSpawningProjectiles)
+					if (!preventSpawningProjectiles)
 					{
+						if (_Tier == 4)
+						{
+                            for (int i = 0; i < 5; i++)
+                            {
+                                this.Fire(new Direction(72f * i, DirectionType.Aim, -1f), new Speed(10f), new SpeedChangingBullet("amuletRing", 5.5f, 120));
+                                this.Fire(new Direction(72f * i, DirectionType.Aim, -1f), new Speed(8f), new SpeedChangingBullet("poundSmall", 5.5f, 120));
+                            }
+                        }
+						if (_Tier > 1)
+						{
+							for (int i = 0; i < 16; i++)
+							{
+                                this.Fire(new Direction(22.5f * i, DirectionType.Aim, -1f), new Speed(i % 2 == 0 ? 2 : 2 + _Tier), new SpeedChangingBullet("poundSmall", 0, 60, 150 + (150 * _Tier)));
+                            }
+                        }
+
 						return;
 					}
 					base.PostWwiseEvent("Play_WPN_smallrocket_impact_01", null);

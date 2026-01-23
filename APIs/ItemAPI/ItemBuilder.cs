@@ -8,6 +8,7 @@ using System.Reflection;
 using System.IO;
 using System.Collections;
 using MonoMod.RuntimeDetour;
+using Planetside;
 
 namespace ItemAPI
 {
@@ -86,6 +87,7 @@ namespace ItemAPI
             sprite.SetSprite(data, CollectionID);
             sprite.SortingOrder = 0;
             sprite.IsPerpendicular = true;
+            sprite.sprite.SortingOrder = 3;
 
             obj.GetComponent<BraveBehaviour>().sprite = sprite;
 

@@ -27,7 +27,7 @@ namespace Planetside
 
             GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "puncturewound_idle_001");
             gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
-            gun.sprite.SortingOrder = 1;
+            gun.sprite.SortingOrder = 2;
 
             gun.idleAnimation = "puncturewound_idle";
             gun.shootAnimation = "puncturewound_fire";
@@ -116,6 +116,8 @@ namespace Planetside
             ETGMod.Databases.Items.Add(gun, false, "ANY");
             PunctureWoundID = gun.PickupObjectId;
             ItemIDs.AddToList(gun.PickupObjectId);
+            gun.AddToSubShop(ItemAPI.ItemBuilder.ShopType.Goopton, 1);
+
         }
         public static int PunctureWoundID;
         private void AnimationEventTriggered(tk2dSpriteAnimator animator, tk2dSpriteAnimationClip clip, int frameIdx)

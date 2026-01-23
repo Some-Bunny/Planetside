@@ -55,7 +55,7 @@ namespace Planetside
 				companion.aiActor.healthHaver.SetHealthMaximum(30f, null, false);
 				companion.aiActor.specRigidbody.PixelColliders.Clear();
 
-                EnemyToolbox.AddShadowToAIActor(companion.aiActor, StaticEnemyShadows.defaultShadow, new Vector2(0.5f, -0.125f), "shadowPos");
+                EnemyToolbox.AddShadowToAIActor(companion.aiActor, StaticEnemyShadows.defaultShadow, new Vector2(0.5f, -0.25f), "shadowPos");
 
                 companion.aiActor.specRigidbody.PixelColliders.Add(new PixelCollider
 

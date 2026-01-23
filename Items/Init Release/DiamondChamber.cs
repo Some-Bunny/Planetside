@@ -26,7 +26,8 @@ namespace Planetside
 			ItemBuilder.SetupItem(chamber, shortDesc, longDesc, "psog");
 			chamber.quality = PickupObject.ItemQuality.S;
 			chamber.SetupUnlockOnCustomFlag(CustomDungeonFlags.BROKEN_CHAMBER_RUN_COMPLETED, true);
-			DiamondChamber.DiamondChamberID = chamber.PickupObjectId;
+            chamber.sprite.SortingOrder = 3;
+            DiamondChamber.DiamondChamberID = chamber.PickupObjectId;
 			ItemIDs.AddToList(chamber.PickupObjectId);
 		}
 		public static int DiamondChamberID;

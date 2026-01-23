@@ -12,6 +12,8 @@ using Brave.BulletScript;
 using GungeonAPI;
 using SaveAPI;
 using Pathfinding;
+using Alexandria.NPCAPI;
+using NpcApi;
 
 namespace Planetside
 {
@@ -46,6 +48,7 @@ namespace Planetside
 				var companion = fuckyouprefab.AddComponent<EnemyBehavior>();
                 EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, Collection, mat);
 
+                Alexandria.ItemAPI.AlexandriaTags.SetTag(companion.aiActor, "skeleton");
 
                 companion.aiActor.knockbackDoer.weight = 200;
 				companion.aiActor.MovementSpeed = 0f;
@@ -56,22 +59,14 @@ namespace Planetside
 				companion.aiActor.specRigidbody.CollideWithOthers = true;
 				companion.aiActor.specRigidbody.CollideWithTileMap = true;
 				companion.aiActor.PreventFallingInPitsEver = true;
-				companion.aiActor.healthHaver.ForceSetCurrentHealth(525f);
-				companion.aiActor.healthHaver.SetHealthMaximum(525f);
+				companion.aiActor.healthHaver.ForceSetCurrentHealth(600f);
+				companion.aiActor.healthHaver.SetHealthMaximum(600f);
 				companion.aiActor.CollisionKnockbackStrength = 2f;
 				companion.aiActor.procedurallyOutlined = false;
 				companion.aiActor.CanTargetPlayers = true;
 				companion.aiActor.procedurallyOutlined = true;
 				companion.aiActor.gameObject.AddComponent<ObjectVisibilityManager>();
-				///	
-				//PlanetsideModule.Strings.Enemies.Set("#SHELLRAX", "SHELLRAX");
-				//PlanetsideModule.Strings.Enemies.Set("#????", "???");
-				//PlanetsideModule.Strings.Enemies.Set("#SUBTITLE", "FAILED DEMI-LICH");
-				//PlanetsideModule.Strings.Enemies.Set("#QUOTE", "");
-				//companion.aiActor.healthHaver.overrideBossName = "#SHELLRAX";
-				//companion.aiActor.OverrideDisplayName = "#SHELLRAX";
-				//companion.aiActor.ActorName = "#SHELLRAX";
-				//companion.aiActor.name = "#SHELLRAX";
+
 				fuckyouprefab.name = companion.aiActor.OverrideDisplayName;
 
 				EnemyToolbox.AddShadowToAIActor(companion.aiActor, StaticEnemyShadows.largeShadow, new Vector2(1.625f, 0.25f), "shadowPos");
@@ -641,6 +636,25 @@ namespace Planetside
 					{
 
 					Probability = 0f,
+                    Behavior = new ShootBehavior{
+                    ShootPoint = m_CachedGunAttachPoint,
+                    BulletScript = new CustomBulletScriptSelector(typeof(OMEGADEATHSCRIPTOFDOOM)),
+                    LeadAmount = 0f,
+                    AttackCooldown = 1f,
+                    Cooldown = 3f,
+                    TellAnimation = "ribopen",
+                    FireAnimation = "attackandclose",
+                    RequiresLineOfSight = true,
+                    MultipleFireEvents = true,
+                                        InitialCooldown = 0.5f,
+					//EnabledDuringAttack = new PowderSkullSpinBulletsBehavior(),
+					//StopDuring = ShootBehavior.StopType.Attack,
+						Uninterruptible = false,
+                        },
+                        NickName = "Death Laser"
+
+                    },
+					/*
 					Behavior = new CustomBeholsterLaserBehavior{
 					UsesBeamProjectileWithoutModule = false,
 					InitialCooldown = 0f,
@@ -677,7 +691,7 @@ namespace Planetside
 						NickName = "Death Laser"
 
 					},
-
+					*/
 
 					new AttackBehaviorGroup.AttackGroupItem()
 					{
@@ -844,7 +858,14 @@ namespace Planetside
                 companion.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("465da2bb086a4a88a803f79fe3a27677").bulletBank.GetBullet("homing"));
                 companion.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("da797878d215453abba824ff902e21b4").bulletBank.GetBullet("snakeBullet"));
                 companion.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("4d164ba3f62648809a4a82c90fc22cae").bulletBank.GetBullet("big_one"));
+				var entry = EnemyDatabase.GetOrLoadByGuid("ffca09398635467da3b1f4a54bcfda80").bulletBank.GetBullet("directedfire");
 
+                companion.bulletBank.Bullets.Add(StaticBulletEntries.CopyBulletBankEntry(entry,"shellfire", null));
+
+                companion.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("frogger"));
+
+
+                
 
                 SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Shellrax/shellrax_idle_001", SpriteBuilder.ammonomiconCollection);
 				if (companion.GetComponent<EncounterTrackable>() != null)
@@ -932,7 +953,6 @@ namespace Planetside
 			}
 		}
 
-		//public static ParticleSystem ShellraxEyeController;
 		public static List<int> Lootdrops = new List<int>
 		{
 			73,
@@ -1089,19 +1109,22 @@ namespace Planetside
 			base.PostWwiseEvent("Play_BOSS_doormimic_blast_01", null);
             RoomHandler room = this.BulletBank.aiActor.ParentRoom;
 			for (int i = 0; i < 2; i++)
-            {
+			{
 				Vector2 leftPos = BraveUtility.RandomVector2(new Vector2(room.area.UnitLeft + 2f, room.area.UnitBottom + 2f), new Vector2(room.area.UnitCenter.x - 2f, room.area.UnitTop - 2f));
 				Vector2 rightPos = BraveUtility.RandomVector2(new Vector2(room.area.UnitCenter.x + 2f, room.area.UnitBottom + 2f), new Vector2(room.area.UnitRight - 2f, room.area.UnitTop - 2f));
 				this.FireShield(leftPos - this.Position);
-				this.FireShield(rightPos - this.Position);
-			}
+				if (i == 0)
+				{
+                    this.FireShield(rightPos - this.Position);
+                }
+            }
 			yield break;
 		}
 		private void FireShield(Vector2 endOffset)
 		{
-			float time = UnityEngine.Random.Range(30, 300);
-			this.FireExpandingLine(new Vector2(-0.5f, 0f), new Vector2(0.5f, 0f), 5, endOffset, time);
-			this.FireExpandingLine(new Vector2(0f, -0.5f), new Vector2(0f, 0.5f), 5, endOffset, time);
+			float time = UnityEngine.Random.Range(60, 450);
+			this.FireExpandingLine(new Vector2(-0.75f, 0f), new Vector2(0.75f, 0f), 9, endOffset, time);
+			this.FireExpandingLine(new Vector2(0f, -0.75f), new Vector2(0f, 0.75f), 9, endOffset, time);
 			this.FireNonExpandingLine(new Vector2(0f, 0f), new Vector2(0f, 0f), 1, endOffset, time);
 
 		}
@@ -1201,24 +1224,24 @@ namespace Planetside
 					var Enemy = EnemyDatabase.GetOrLoadByGuid("e21ac9492110493baef6df02a2682a0d");
 					AIActor.Spawn(Enemy.aiActor, this.Projectile.sprite.WorldCenter, GameManager.Instance.PrimaryPlayer.CurrentRoom, true, AIActor.AwakenAnimationType.Default, true);
 					float num = base.RandomAngle();
-					float Amount = 12;
+					float Amount = 16;
 					float Angle = 360 / Amount;
 					for (int i = 0; i < Amount; i++)
 					{
-						base.Fire(new Direction(num + Angle * (float)i + 10, DirectionType.Absolute, -1f), new Speed(5f, SpeedType.Absolute), new BurstBullet());
+						base.Fire(new Direction(num + Angle * (float)i + 10, DirectionType.Absolute, -1f), new Speed(i % 2 == 0 ? 1 : 3.33f, SpeedType.Absolute), new BurstBullet());
 					}
 					return;
 				}
 			}
 			public class BurstBullet : Bullet
 			{
-				public BurstBullet() : base("reversible", false, false, false)
+				public BurstBullet() : base("amuletRing", false, false, false)
 				{
 				}
 				public override IEnumerator Top()
 				{
 					base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 60);
-					yield return base.Wait(60);
+					yield return base.Wait(450);
 					base.Vanish(false);
 					yield break;
 				}
@@ -1276,26 +1299,29 @@ namespace Planetside
 	{
 		public override IEnumerator Top()
 		{
-			for (int u = 0; u < 4; u++)
+			for (int u = 0; u < 5; u++)
             {
 				base.PostWwiseEvent("Play_BOSS_lichB_charge_01", null);
 				string BulletType = "amuletRing";
-				float radius = UnityEngine.Random.Range(0.03f, 0.09f);
+				float radius = UnityEngine.Random.Range(0.05f, 0.09f);
 				float delta = 10f;
 				float startDirection = AimDirection;
 				for (int j = 0; j < 6; j++)
 				{
-					base.Fire(new Direction(-90f, DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SemiCirclesOfDoom.TheGear(30,BulletType, this, startDirection + (float)j * delta, radius - 0.01f));
-					base.Fire(new Direction(-90+delta, DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SemiCirclesOfDoom.TheGear(30, BulletType, this, (startDirection + (float)j * delta), radius- 0.005f));
-					base.Fire(new Direction(-90+(delta*2), DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SemiCirclesOfDoom.TheGear(30, BulletType, this, (startDirection + (float)j * delta), radius));
-				}
-				for (int j = 0; j < 6; j++)
+					base.Fire(new Direction(-90f - delta, DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SemiCirclesOfDoom.TheGear(24, BulletType, this, startDirection + (float)j * delta, radius - 0.02f));
+					base.Fire(new Direction(-90+delta, DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SemiCirclesOfDoom.TheGear(24, BulletType, this, (startDirection + (float)j * delta), radius- 0.0175f));
+					base.Fire(new Direction(-90+(delta*3), DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SemiCirclesOfDoom.TheGear(24, BulletType, this, (startDirection + (float)j * delta), radius - 0.015f));
+                    base.Fire(new Direction(-90 + (delta * 5), DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SemiCirclesOfDoom.TheGear(24, BulletType, this, (startDirection + (float)j * delta), radius- 0.0125f));
+                }
+                for (int j = 0; j < 6; j++)
 				{
-					base.Fire(new Direction(-90f, DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SemiCirclesOfDoom.TheGear(30, BulletType, this, (startDirection + (float)j * delta)+180, radius - 0.01f));
-					base.Fire(new Direction(-90 + delta, DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SemiCirclesOfDoom.TheGear(30, BulletType, this, (startDirection + (float)j * delta) + 180, radius -0.005f));
-					base.Fire(new Direction(-90 + (delta * 2), DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SemiCirclesOfDoom.TheGear(30, BulletType, this, (startDirection + (float)j * delta) + 180, radius));
-				}
-				BulletType = "bigBullet";
+					base.Fire(new Direction(-90f - delta, DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SemiCirclesOfDoom.TheGear(24, BulletType, this, (startDirection + (float)j * delta)+180, radius - 0.02f));
+					base.Fire(new Direction(-90 + delta, DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SemiCirclesOfDoom.TheGear(24, BulletType, this, (startDirection + (float)j * delta) + 180, radius -0.0175f));
+					base.Fire(new Direction(-90 + (delta * 3), DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SemiCirclesOfDoom.TheGear(24, BulletType, this, (startDirection + (float)j * delta) + 180, radius - 0.015f));
+                    base.Fire(new Direction(-90 + (delta * 5), DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SemiCirclesOfDoom.TheGear(24, BulletType, this, (startDirection + (float)j * delta) + 180, radius - 0.0125f));
+
+                }
+                BulletType = "bigBullet";
 				base.Fire(new Direction(-90f, DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SemiCirclesOfDoom.TheGear(0, BulletType, this, startDirection + (float)+0, 0));
 
 				yield return base.Wait(60);
@@ -1319,33 +1345,55 @@ namespace Planetside
 				base.ManualControl = true;
 				Vector2 centerPosition = base.Position;
 				float radius = 0f;
-				for (int i = 0; i < 300; i++)
+                bool HasDiverted = false;
+                for (int i = 0; i < 300; i++)
 				{
 					if (i == 40)
 					{
-						base.ChangeSpeed(new Speed(base.Speed + 11f, SpeedType.Absolute), 120);
+						base.ChangeSpeed(new Speed(base.Speed + 9f, SpeedType.Absolute), 120);
 						base.ChangeDirection(new Direction(this.m_parent.GetAimDirection(1f, 10f), DirectionType.Absolute, -1f), 20);
 						base.StartTask(this.ChangeSpinSpeedTask(180f, 240));
 					}
-					bool HasDiverted = false;
-					if (i > 100 && i < 140 && UnityEngine.Random.value < 0.02f && m_bulletype == "bigBullet" && HasDiverted == false)
+					if (i > 100 && i < 140 && UnityEngine.Random.value < 0.015f && m_bulletype == "bigBullet" && HasDiverted == false)
 					{
-						HasDiverted = true;
+                        base.PostWwiseEvent("Play_WPN_Life_Orb_Capture_01", null);
+                        HasDiverted = true;
 						float speed = base.Speed;
 						this.Direction = base.AimDirection;
-						this.Speed = speed * 0.75f;
 						base.ManualControl = false;
-						yield break;
-					}
-					base.UpdateVelocity();
-					centerPosition += this.Velocity / 60f;
-					if (i < 50)
+						this.ChangeSpeedTask(new Brave.BulletScript.Speed(18), 180);
+                        ParticleBase.EmitParticles("WaveParticle", 1, new ParticleSystem.EmitParams()
+                        {
+                            position = this.Projectile.transform.position,
+                            startSize = 16,
+                            rotation = 0,
+                            startLifetime = 0.5f,
+                            startColor = Color.red.WithAlpha(0.6f)
+                        });
+                        for (int j = 0; j < 8; j++)
+                        {
+                            base.Fire(new Direction(45f * j, DirectionType.Aim, -1f), new Speed(6f, SpeedType.Absolute), new SpeedChangingBullet("poundSmall", 4, 120));
+                        }
+
+
+                    }
+					if (HasDiverted)
 					{
-						radius += m_radius;
-					}
-					this.m_angle += this.m_spinSpeed / 60f;
-					base.Position = centerPosition + BraveMathCollege.DegreesToVector(this.m_angle, radius);
-					yield return base.Wait(1);
+						this.ChangeDirection(new Direction(Mathf.MoveTowardsAngle(this.Direction, base.AimDirection, 1)));
+                        yield return base.Wait(1);
+                    }
+                    else
+					{
+                        base.UpdateVelocity();
+                        centerPosition += this.Velocity / 60f;
+                        if (i < 50)
+                        {
+                            radius += m_radius;
+                        }
+                        this.m_angle += this.m_spinSpeed / 60f;
+                        base.Position = centerPosition + BraveMathCollege.DegreesToVector(this.m_angle, radius);
+                        yield return base.Wait(1);
+                    }
 				}
 				base.Vanish(false);
 				yield break;
@@ -1384,31 +1432,36 @@ namespace Planetside
             {
 				Vector2 targetPos = base.GetPredictedTargetPosition((float)(((double)UnityEngine.Random.value >= 0.5) ? 1 : 0), 12f);
 				float startingDirection = UnityEngine.Random.Range(-75, 75);
-				for (int j = 0; j < 9; j++)
+				for (int j = 0; j < 13; j++)
 				{
-					base.Fire(new Direction(startingDirection, DirectionType.Aim, -1f), new Speed(7f+e, SpeedType.Absolute), new Slammo.SnakeBullet(j * 2, targetPos));
+					base.Fire(new Direction(startingDirection, DirectionType.Aim, -1f), new Speed(5f+e, SpeedType.Absolute), new Slammo.SnakeBullet(j * 2, targetPos, true));
 				}
 			}
 
-			for (int e = 0; e < 11; e++)
+			for (int e = 0; e < 9; e++)
 			{
-				Vector2 targetPos = base.GetPredictedTargetPosition((float)(((double)UnityEngine.Random.value >= 0.5) ? 1 : 0), 12f);
+				var _ = new Vector2(UnityEngine.Random.Range(-8, 8), UnityEngine.Random.Range(-8, 8));
+
+                Vector2 targetPos = base.GetPredictedTargetPosition((float)(((double)UnityEngine.Random.value >= 0.5) ? 1 : 0), 12f);
 				float startingDirection = UnityEngine.Random.Range(-180, 180);
-				for (int j = 0; j < 4; j++)
+				for (int j = 0; j < 5; j++)
 				{
-					base.Fire(new Direction(startingDirection, DirectionType.Aim, -1f), new Speed(4f + e, SpeedType.Absolute), new Slammo.SnakeBullet(j * 2, targetPos));
+					base.Fire(new Direction(startingDirection, DirectionType.Aim, -1f), new Speed(3f + e, SpeedType.Absolute), new Slammo.SnakeBullet(j * 2, targetPos + _, false, "poundSmall"));
 				}
 			}
 			yield break;
 		}
 		public class SnakeBullet : Bullet
 		{
-			public SnakeBullet(int delay, Vector2 target) : base("snakeBullet", false, false, false)
+			public SnakeBullet(int delay, Vector2 target, bool bs = false, string name = "snakeBullet") : base(name, false, false, false)
 			{
 				this.delay = delay;
 				this.target = target;
-			}
+				bigSnake = bs;
 
+            }
+
+			bool bigSnake = false;
 			public override IEnumerator Top()
 			{
 				base.ManualControl = true;
@@ -1423,6 +1476,31 @@ namespace Planetside
 						float value = BraveMathCollege.ClampAngle180(num - this.Direction);
 						this.Direction += Mathf.Clamp(value, -8f, 8f);
 					}
+					if (bigSnake)
+					{
+						if (i == 120 - delay)
+						{
+                            this.target = this.BulletBank.aiActor.TargetRigidbody.transform.position;
+                        }
+
+                        if (i > 120 && i < 160)
+                        {
+                            float num = (this.target - truePosition).ToAngle();
+                            float value = BraveMathCollege.ClampAngle180(num - this.Direction);
+                            this.Direction += Mathf.Clamp(value, -8f, 8f);
+                        }
+                        if (i == 220 - delay)
+                        {
+                            this.target = this.BulletBank.aiActor.TargetRigidbody.transform.position;
+                        }
+                        if (i > 220 && i < 260)
+                        {
+                            float num = (this.target - truePosition).ToAngle();
+                            float value = BraveMathCollege.ClampAngle180(num - this.Direction);
+                            this.Direction += Mathf.Clamp(value, -8f, 8f);
+                        }
+                    }
+
 					truePosition += BraveMathCollege.DegreesToVector(this.Direction, this.Speed / 60f);
 					base.Position = truePosition + BraveMathCollege.DegreesToVector(this.Direction - 90f, offsetMagnitude);
 					yield return base.Wait(1);
@@ -1474,7 +1552,7 @@ namespace Planetside
 		{
 			base.PostWwiseEvent("Play_BOSS_lichB_spew_01", null);
 
-            int AAmountToShoot = UnityEngine.Random.Range(4, 6);
+            int AAmountToShoot = UnityEngine.Random.Range(4, 7);
 			for (int i = 0; i < AAmountToShoot; i++)
             {
 				Exploder.DoDistortionWave(base.BulletBank.sprite.WorldCenter, 2, 0.03f, 15, 0.7f);
@@ -1482,29 +1560,41 @@ namespace Planetside
 				this.Direction = base.AimDirection;
 
 				List<float> list = new List<float> { };
-				for (int e = 0; e < 40; e++)
+				for (float e = 0; e < 80; e++)
                 {
-					list.Add(9 * e);
+					list.Add(4.5f * e);
 				}
-				list.Shuffle<float>();
-				for (int l = 0; l < 20; l++)
+				//list.Shuffle<float>();
+
+				var _ = UnityEngine.Random.Range(3, 7);
+
+                int Step = _ * 2;
+
+
+				for (int l = 0; l < 80; l++)
 				{
-					float yah = list[l];
-					base.Fire(new Direction(yah, DirectionType.Absolute, -1f), new Speed(9f, SpeedType.Absolute), new CirclesWithOpenings.Yees(30));
-				}
-				for (int l = 20; l < 40; l++)
-				{
-					float yah = list[l];
-					base.Fire(new Direction(yah, DirectionType.Absolute, -1f), new Speed(9, SpeedType.Absolute), new CirclesWithOpenings.Yees(60));
-				}
-				yield return this.Wait(75);
+                    float yah = list[l];
+                    if ((l % Step) < _)
+					{
+                        base.Fire(new Direction(yah, DirectionType.Absolute, -1f), new Speed(9, SpeedType.Absolute), new CirclesWithOpenings.Yees(60));
+                        base.Fire(new Direction(yah, DirectionType.Absolute, -1f), new Speed(9, SpeedType.Absolute), new CirclesWithOpenings.Yees(62, "poundSmall"));
+                    }
+					else
+					{
+
+                        base.Fire(new Direction(yah, DirectionType.Absolute, -1f), new Speed(9f, SpeedType.Absolute), new CirclesWithOpenings.Yees(30));
+                        base.Fire(new Direction(yah, DirectionType.Absolute, -1f), new Speed(9f, SpeedType.Absolute), new CirclesWithOpenings.Yees(32, "poundSmall"));
+                    }
+                }
+                base.Fire(new Direction(BraveUtility.RandomAngle(), DirectionType.Aim, -1f), new Speed(3f, SpeedType.Absolute), new Bullet("homing", false, false, false));
+                yield return this.Wait(90);
 			}
 			yield break;
 		}
 
 		public class Yees : Bullet
 		{
-			public Yees(float Wait) : base("snakeBullet", false, false, false)
+			public Yees(float Wait, string name = "snakeBullet") : base(name, false, false, false)
 			{
 				base.SuppressVfx = true;
 				this.Waittime = Wait;
@@ -1512,10 +1602,9 @@ namespace Planetside
 			public override IEnumerator Top()
 			{
 				float speed = base.Speed;
-				base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 30);
-				//this.Direction += 180f;
+				base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 45);
 				yield return this.Wait(Waittime);
-				base.ChangeSpeed(new Speed(13f, SpeedType.Absolute), 45);
+				base.ChangeSpeed(new Speed(6.5f, SpeedType.Absolute), 60);
 				yield break;
 			}
 			private float Waittime;
@@ -1555,95 +1644,159 @@ namespace Planetside
 
 
             base.PostWwiseEvent("Play_BOSS_lichB_spew_01", null);
-			Exploder.DoDistortionWave(base.BulletBank.sprite.WorldCenter, 2, 0.08f, 15, 1f);
+			Exploder.DoDistortionWave(base.BulletBank.sprite.WorldCenter, 2, 0.5f, 40, 0.75f);
+
+            base.PostWwiseEvent("Play_ENM_kali_shockwave_01", null);
+
+            float Anim = this.AimDirection;
+
+			for (int i = -8; i < 9; i++)
+			{
+				this.StartTask(Stream((22.5f * i) + Anim - 11.25f, (180 + (2 * i)) + Anim));
+			}
+
+			
 			base.EndOnBlank = false;
 			if (!base.BulletBank.aiActor.healthHaver.IsDead && base.BulletBank.aiActor != null && base.BulletBank.aiActor.healthHaver.GetCurrentHealth() >= 1)
 			{
 				float i = 0;
-				for (; ; )
+				int m = 120;
+                int m_ = 60;
+                for (; ; )
 				{
-					base.PostWwiseEvent("Play_ENM_kali_shockwave_01", null);
-					this.Direction = base.AimDirection;
-					float basevalue = Mathf.Lerp(14, 28, base.BulletBank.aiActor.healthHaver.GetCurrentHealthPercentage());
-					if (i > 18)
-					{
-						basevalue = 12;
 
-					}
-					List<float> list = new List<float> { };
-					for (int e = 0; e < 30; e++)
+                    if (i % 6 == 0)
+                    {
+                        base.PostWwiseEvent("Play_Strafe_Shot");
+                    }
+					if (i > 120)
 					{
-						list.Add(12 * e);
-					}
-					list.Shuffle<float>();
-					for (int l = 0; l < 15; l++)
+						m_++;
+						if (m_ >= m)
+						{
+							m_ = 0;
+							m = Mathf.Max(m - 10, 50);
+                            var dist = Vector2.Distance(base.Position, GameManager.Instance.PrimaryPlayer.transform.position);
+                            Exploder.DoDistortionWave(base.BulletBank.sprite.WorldCenter, 1, 0.1f, 40, 0.75f);
+                            base.PostWwiseEvent("Play_ENM_kali_shockwave_01", null);
+                            float aim = AimDirection;
+                            float t = (90 - (dist * 2)) * (BraveUtility.RandomBool() ? 1 : -1);
+                            for (int l = 0; l < 6; l++)
+                            {
+                                base.Fire(new Direction(0, DirectionType.Absolute, -1f), new Speed(0, SpeedType.Absolute), new CirclesOfDeath(t, l * 3, this, 180 + aim, dist));
+                            }
+                        }
+                        
+                    }
+					if (i > 600 && i % 200 == 0)
 					{
-						float yah = list[l];
-						base.Fire(new Direction(yah, DirectionType.Absolute, -1f), new Speed(9-(i/9), SpeedType.Absolute), new OMEGADEATHSCRIPTOFDOOM.DelayedBullet(basevalue));
-					}
-					for (int l = 15; l < 30; l++)
-					{
-						float yah = list[l];
-						base.Fire(new Direction(yah, DirectionType.Absolute, -1f), new Speed(9-(i / 9), SpeedType.Absolute), new OMEGADEATHSCRIPTOFDOOM.DelayedBullet(basevalue * 2));
-					}
-					yield return this.Wait(basevalue * 2.5f * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
-
-					i++;
+                        base.Fire(new Direction(BraveUtility.RandomAngle(), DirectionType.Aim, -1f), new Speed(3f, SpeedType.Absolute), new Bullet("homing", false, false, false));
+                    }
+                    i++;
+					yield return Wait(1);
 				}
 			}
 			
+			yield break;
 		}
-		public class DelayedBullet : Bullet
+
+		public IEnumerator Stream(float Separation, float StartPoint)
 		{
-			public DelayedBullet(float Wait) : base("snakeBullet", false, false, false)
-			{
-				base.SuppressVfx = true;
-				this.Waittime = Wait;
-			}
-			public override IEnumerator Top()
-			{
-				float speed = base.Speed;
-				base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 30);
-				yield return this.Wait(Waittime);
-				base.ChangeSpeed(new Speed(speed*1.4f, SpeedType.Absolute), 45);
-				yield break;
-			}
-			private float Waittime;
-
+            if (!base.BulletBank.aiActor.healthHaver.IsDead && base.BulletBank.aiActor != null && base.BulletBank.aiActor.healthHaver.GetCurrentHealth() >= 1)
+            {
+                float i = 0;
+                float t = StartPoint;
+                for (; ; )
+                {
+                    i++;
+					if (i > 15 && i < 120)
+					{
+						float q = (i - 15) / 105;
+                        t = Mathf.LerpAngle(Separation, StartPoint, 1 - (q * q));
+					}
+                    if (i % 3 == 0)
+					{
+						float __ = Mathf.Min(i / 30, 30);
+                        float p = i > 216 ? Mathf.PingPong(i * 0.05f * Mathf.Min((i / 216), 2), 4) - 2 : 0;
+                        base.Fire(new Direction(t + UnityEngine.Random.Range(-1.1f, 2.1f) + p, DirectionType.Absolute, -1f), new Speed(UnityEngine.Random.Range(22.1f, 25.1f) + __, SpeedType.Absolute), new SpeedChangingBullet("shellfire", 26 + __, 120));
+                    }
+                    yield return Wait(1);
+                }
+            }
+            
+            yield break;
 		}
 
-	}
+
+        public class CirclesOfDeath : Bullet
+        {
+            public CirclesOfDeath(float spinspeed, float delay,OMEGADEATHSCRIPTOFDOOM parent, float angle = 0f, float aradius = 0) : base("frogger", false, false, false)
+            {
+                this.m_parent = parent;
+                this.m_angle = angle;
+                this.m_radius = aradius;
+                this.SuppressVfx = true;
+                this.m_spinSpeed = spinspeed;
+				Delay = delay;
+            }
+			float Delay;
+            public override IEnumerator Top()
+            {
+                base.ManualControl = true;
+				this.Projectile.IgnoreTileCollisionsFor(1000);
+                Vector2 centerPosition = base.Position;
+				this.Projectile.ImmuneToBlanks = true;
+                this.Projectile.ImmuneToSustainedBlanks = true;
+
+                //base.Position = centerPosition + BraveMathCollege.DegreesToVector(this.m_angle, m_radius);
+                yield return Wait(Delay);
+				float t = 0;
+                for (float i = 0; i < 900; i++)
+                {
+					if (i < 30)
+					{
+						t = Mathf.Lerp(0, m_radius, i / 30);
+					}
+                    base.UpdateVelocity();                    
+                    this.m_angle += this.m_spinSpeed / 60f;
+                    base.Position = centerPosition + BraveMathCollege.DegreesToVector(this.m_angle,t);
+                    yield return base.Wait(1);
+                }
+                base.Vanish(false);
+                yield break;
+            }
+
+
+            private const float ExpandSpeed = 4.5f;
+            private const float SpinSpeed = 40f;
+            private OMEGADEATHSCRIPTOFDOOM m_parent;
+            private float m_angle;
+            private float m_spinSpeed;
+            private float m_radius;
+        }
+    }
 
 
 
 	public class EnemyBehavior : BraveBehaviour
 	{
 
-		private RoomHandler m_StartRoom;
 		private bool HasTriggeredDesparation;
 		private bool IsActuallyDead;
 
-		private ParticleSystem mehaglow;
+		private ParticleSystem SuperGlowParticle;
 
 
 		public void Update()
 		{
-
-			bool flag = base.aiActor && base.aiActor.healthHaver;
-			if (flag)
+			if (HasTriggeredDesparation) { return; }
+			if (base.aiActor && base.aiActor.healthHaver)
 			{
 				if (base.healthHaver.GetCurrentHealth() <= 1 && HasTriggeredDesparation == false)
 				{
 					HasTriggeredDesparation = true;
 					ConvertToDark();
 				}
-
-			}
-
-			m_StartRoom = aiActor.GetAbsoluteParentRoom();
-			if (!base.aiActor.HasBeenEngaged)
-			{
-				CheckPlayerRoom();
 			}
 		}
 
@@ -1665,20 +1818,18 @@ namespace Planetside
 		{
 			List<string> Text = new List<string>
 			{
-				"Ashes to ashes, dust to dust!",
-				"You are not welcome here, mortal",
-				"I will return you from whence you came!",
-				"I will send you screaming into the night!",
-				"I can smell your fear."
-			};
-			TextBoxManager.ShowTextBox(base.aiActor.sprite.WorldTopCenter, base.aiActor.transform, 1.5f, BraveUtility.RandomElement<string>(Text), string.Empty, false, TextBoxManager.BoxSlideOrientation.NO_ADJUSTMENT, false, false);
-			AkSoundEngine.PostEvent("Play_VO_lichA_chuckle_01", base.gameObject);
+                "{wj}I WILL NOT LET HIM DOWN!{w}",
+                "{wj}YOU WILL FALL BEFORE I DO!{w}",
+                "{wj}I SHALL REND YOU APART!{w}"
+            };
+			TextBoxManager.ShowTextBox(base.aiActor.sprite.WorldTopCenter, base.aiActor.transform, 1.5f, BraveUtility.RandomElement<string>(Text), ItsDaFuckinShopApi.ReturnVoiceBox(ItsDaFuckinShopApi.VoiceBoxes.OX), false, TextBoxManager.BoxSlideOrientation.NO_ADJUSTMENT, false, false);
+			AkSoundEngine.PostEvent("Play_Snipeilodon_Death", base.gameObject);
 
 			yield return new WaitForSeconds(1f);
 			isTelerting = true;
 			base.aiAnimator.PlayUntilFinished("TeleportOut", true, null, -1f, false);
 			base.aiActor.specRigidbody.CollideWithOthers = false;
-			yield return new WaitForSeconds(1f);
+			yield return new WaitForSeconds(1);
 			CellArea area = base.aiActor.ParentRoom.area;
 			Vector2 Center = area.UnitCenter;
 			Vector2 b = base.aiActor.specRigidbody.UnitBottomCenter - base.aiActor.transform.position.XY();
@@ -1688,13 +1839,9 @@ namespace Planetside
 			base.aiActor.specRigidbody.Reinitialize();
 			base.aiActor.specRigidbody.CollideWithOthers = true;
 			isTelerting = false;
-			yield return new WaitForSeconds(1f);
+			yield return new WaitForSeconds(1);
 
 			GameObject thing = base.aiActor.transform.Find("attach").gameObject;
-			if (thing == null)
-			{
-				ETGModConsole.Log("why?");
-			}
 			thing.gameObject.layer = 23;
 			base.aiActor.sprite.HeightOffGround = 0;
 			tk2dSprite spriter = thing.GetComponent<tk2dSprite>();//.renderer.enabled = false;
@@ -1702,7 +1849,6 @@ namespace Planetside
 			spriter.sprite.renderer.sortingLayerName = "Foregound";
 			spriter.renderer.enabled = false;
 			ParticleSystem yes = thing.AddComponent<ParticleSystem>();
-			//yes.CopyFrom<ParticleSystem>(particle);
 			yes.Play();
 			yes.name = "death glow";
 			yes.transform.position = thing.transform.position;
@@ -1781,10 +1927,8 @@ namespace Planetside
 			particleRenderer.sortingLayerName = "Foregound";
 			particleRenderer.maskInteraction = SpriteMaskInteraction.None;
 			yes.gameObject.layer = 23;
+			SuperGlowParticle = yes;
 
-			mehaglow = yes;
-
-			base.aiActor.healthHaver.IsVulnerable = true;
 			base.healthHaver.minimumHealth = 0;
 			base.aiActor.healthHaver.SetHealthMaximum(base.aiActor.healthHaver.GetMaxHealth() * 3);
 			base.healthHaver.FullHeal();
@@ -1797,39 +1941,40 @@ namespace Planetside
 			}
 			List<string> Anger = new List<string>
 			{
-				"You little WORM!",
-				"I will burn you to ash!",
-				"I will tear your sinew from bone!",
-			};
+                "{wj}BREAK BENEATH ME!{w}",
+                "{wj}BURN UNDER MY RADIANT LIGHT!{w}"
+            };
 
 			List<string> Pain = new List<string>
 			{
-				"My pain will turn upon you tenfold!",
-				"Agh! That stings!",
-				"SUBMIT AND DIE!",
-				"Curses upon you!",
-				"You can't kill me!",
-				"Bones break, but my hatred is eternal!"
-			};
+                "{wj}YOU WILL DIE FIRST!{w}",
+                "{wj}I WILL NOT BREAK!{w}",
+                "{wj}DIE!{w}",
+                "{wj}RETURN TO NOTHING!{w}"
+            };
 
-			TextBoxManager.ShowTextBox(base.aiActor.sprite.WorldTopCenter, base.aiActor.transform, 1f, BraveUtility.RandomElement<string>(Anger), string.Empty, false, TextBoxManager.BoxSlideOrientation.NO_ADJUSTMENT, false, false);
+			TextBoxManager.ShowTextBox(base.aiActor.sprite.WorldTopCenter, base.aiActor.transform, 1f, BraveUtility.RandomElement<string>(Anger), ItsDaFuckinShopApi.ReturnVoiceBox(ItsDaFuckinShopApi.VoiceBoxes.OX), false, TextBoxManager.BoxSlideOrientation.NO_ADJUSTMENT, false, false);
 			Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+            mat.mainTexture = base.aiActor.sprite.renderer.material.mainTexture;
+            base.aiActor.sprite.renderer.material = mat;
+
+			yield return new WaitForSeconds(6);
+			base.aiActor.healthHaver.IsVulnerable = true;
+
 			for (int i = 0; i < 20; i++)
-            {
+			{
 				if (IsActuallyDead != true)
-                {
-					if (UnityEngine.Random.value <= 0.03f)
+				{
+					if (UnityEngine.Random.value <= 0.12f)
 					{
-						TextBoxManager.ShowTextBox(base.aiActor.sprite.WorldTopCenter, base.aiActor.transform, 1.5f, BraveUtility.RandomElement<string>(Pain), string.Empty, false, TextBoxManager.BoxSlideOrientation.NO_ADJUSTMENT, false, false);
+						TextBoxManager.ShowTextBox(base.aiActor.sprite.WorldTopCenter, base.aiActor.transform, 1.5f, BraveUtility.RandomElement<string>(Pain), ItsDaFuckinShopApi.ReturnVoiceBox(ItsDaFuckinShopApi.VoiceBoxes.OX), false, TextBoxManager.BoxSlideOrientation.NO_ADJUSTMENT, false, false);
 					}
 					emm.rateOverTime = 15 * i;
 					yield return new WaitForSeconds(1f);
-					mat.mainTexture = base.aiActor.sprite.renderer.material.mainTexture;
-					mat.SetColor("_EmissiveColor", new Color32(255, 141, 0, 255));
-					mat.SetFloat("_EmissiveColorPower", 1.55f);
-					mat.SetFloat("_EmissivePower", 100 + (10 * i));
-					mat.SetFloat("_EmissiveThresholdSensitivity", 0.05f * i);
-					base.aiActor.sprite.renderer.material = mat;
+                    base.aiActor.sprite.renderer.material.SetColor("_EmissiveColor", new Color32(255, 141, 0, 255));
+                    base.aiActor.sprite.renderer.material.SetFloat("_EmissiveColorPower", 1.55f);
+                    base.aiActor.sprite.renderer.material.SetFloat("_EmissivePower", 100 + (10 * i));
+                    base.aiActor.sprite.renderer.material.SetFloat("_EmissiveThresholdSensitivity", 0.05f * i);
 					base.aiActor.healthHaver.ApplyDamage(base.healthHaver.GetMaxHealth() / 20, Vector2.zero, "Shellrax fucking dies", CoreDamageTypes.None, DamageCategory.Normal, false, null, false);
 				}
 			}
@@ -1849,36 +1994,17 @@ namespace Planetside
 			{
 				AttackBehaviorGroup.AttackGroupItem attackGroupItem = attackGroup.AttackBehaviors[i];
 				if (attackGroupItem.NickName == "Death Laser")
-                {
+				{
 					attackGroupItem.Probability = 100;
 				}
 			}
 		}
-		private void CheckPlayerRoom()
-		{
-			if (GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() != null && GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() == m_StartRoom)
-			{
-				GameManager.Instance.StartCoroutine(LateEngage());
-			}
-			else
-			{
-				base.aiActor.HasBeenEngaged = false;
-			}
-		}
-		private IEnumerator LateEngage()
-		{
-			yield return new WaitForSeconds(0.5f);
-			if (GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() != null && GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() == m_StartRoom)
-			{
-				base.aiActor.HasBeenEngaged = true;
-			}
-			yield break;
-		}
+
 
 		private ParticleSystem EyeParticle;
 
 		private ParticleSystem MakeEyePartcile()
-        {
+		{
 			Transform thing = base.aiActor.transform.Find("eye");
 			if (thing == null)
 			{
@@ -1898,16 +2024,16 @@ namespace Planetside
 			particleRenderer.gameObject.layer = 23;
 
 			return system;
-        }
+		}
 
 
 		private void AnimationEventTriggered(tk2dSpriteAnimator animator, tk2dSpriteAnimationClip clip, int frameIdx)
 		{
-			
+
 			if (clip.GetFrame(frameIdx).eventInfo == "enableparticles")
 			{
 				if (EyeParticle != null)
-                {
+				{
 					EyeParticle.Play();
 				}
 			}
@@ -1923,20 +2049,20 @@ namespace Planetside
 			if (clip.GetFrame(frameIdx).eventInfo == "enableparticlesspecial")
 			{
 				if (isTelerting != true && EyeParticle != null)
-                {
+				{
 					EyeParticle.Play();
 
 				}
 			}
 			if (clip.GetFrame(frameIdx).eventInfo == "disableparticles")
 			{
-				if (EyeParticle!= null)
-                {
+				if (EyeParticle != null)
+				{
 					EyeParticle.Stop();
 				}
-				if (mehaglow != null)
+				if (SuperGlowParticle != null)
 				{
-					mehaglow.Stop();
+					SuperGlowParticle.Stop();
 				}
 			}
 			if (clip.GetFrame(frameIdx).eventInfo == "Disablerender")
@@ -1957,16 +2083,16 @@ namespace Planetside
 
 		private void Start()
 		{
-            EyeParticle = MakeEyePartcile();
+			EyeParticle = MakeEyePartcile();
 
-            IsActuallyDead = false;
+			IsActuallyDead = false;
 			isTelerting = false;
 			base.healthHaver.minimumHealth = 1;
 			base.aiActor.spriteAnimator.AnimationEventTriggered += this.AnimationEventTriggered;
 
-			base.aiActor.gameObject.layer = 22;			
+			base.aiActor.gameObject.layer = 22;
 			base.aiActor.sprite.HeightOffGround = 0;
-			
+
 
 			if (!base.aiActor.IsBlackPhantom)
 			{
@@ -1985,19 +2111,20 @@ namespace Planetside
 				Exploder.DoDistortionWave(base.aiActor.sprite.WorldCenter, 2, 0.15f, 30, 1f);
 				List<string> DEATH = new List<string>
 				{
-					"...to a mortal?... ugh...",
-					"No! Not again!",
-					"The creeping light...",
-					"This is not my end... I will return!",
-					"With my final breath, I curse you!"
-				};
-				TextBoxManager.ShowTextBox(base.aiActor.sprite.WorldTopCenter, base.aiActor.transform, 3, BraveUtility.RandomElement<string>(DEATH), string.Empty, false, TextBoxManager.BoxSlideOrientation.NO_ADJUSTMENT, false, false);		
+                    "{wj}NO!{w}",
+                    "{wj}I SEE THE LIGHT!{w}",
+                    "{wj}FORGIVE ME!{w}",
+                    "{wj}NO, NOT NOW!{w}"
+                };
+				TextBoxManager.ShowTextBox(base.aiActor.sprite.WorldTopCenter, base.aiActor.transform, 3, BraveUtility.RandomElement<string>(DEATH), ItsDaFuckinShopApi.ReturnVoiceBox(ItsDaFuckinShopApi.VoiceBoxes.OX), false, TextBoxManager.BoxSlideOrientation.NO_ADJUSTMENT, false, false);
 				AkSoundEngine.PostEvent("Play_VO_lichC_death_01", base.gameObject);
+				this.StartCoroutine(BurnUp());
+
 			};
 			base.healthHaver.healthHaver.OnDeath += (obj) =>
 			{
-                AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.SHELLRAX_DEFEATED, true);//Done
-                float itemsToSpawn = UnityEngine.Random.Range(3, 6);
+				AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.SHELLRAX_DEFEATED, true);//Done
+				float itemsToSpawn = UnityEngine.Random.Range(3, 6);
 				float spewItemDir = 360 / itemsToSpawn;
 				for (int i = 0; i < itemsToSpawn; i++)
 				{
@@ -2015,6 +2142,35 @@ namespace Planetside
 
 		}
 
+		private IEnumerator BurnUp()
+		{
+
+			float t = 2.5f;
+
+            while (this.aiActor)
+			{
+				if (t < 0) { break; }
+				t -= BraveTime.DeltaTime;
+				float e = t / 2.5f;
+
+				float x = UnityEngine.Random.Range(Mathf.Lerp(0, -2, e), Mathf.Lerp(0, 2, e));
+                float y = UnityEngine.Random.Range(0, Mathf.Lerp(0, 3.4f, e));
+
+				SuperGlowParticle.Emit(new ParticleSystem.EmitParams()
+				{
+					position = this.sprite.WorldBottomCenter + new Vector2(x, y)
+				}, 1);
+                x = UnityEngine.Random.Range(Mathf.Lerp(0, -2, e), Mathf.Lerp(0, 2, e));
+                y = UnityEngine.Random.Range(0, Mathf.Lerp(0, 3.4f, e));
+                SuperGlowParticle.Emit(new ParticleSystem.EmitParams()
+                {
+                    position = this.sprite.WorldBottomCenter + new Vector2(x, y)
+                }, 1);
+
+                yield return null;
+			}
+			yield break;
+		}
 
 	}
 

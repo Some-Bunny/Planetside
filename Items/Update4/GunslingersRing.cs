@@ -35,7 +35,10 @@ namespace Planetside
 			string longDesc = "Grants powers tuned to your currently held gun.\n\nAn old ring worn by a gunslinger of similar skill to the Lich.\n\nThe gem on the ring shifts colors when the bearer wields different weapons.";
 			ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
 			item.quality = PickupObject.ItemQuality.A;
-			GunslingersRing.GunslingersRingID = item.PickupObjectId;
+            item.AddToSubShop(ItemAPI.ItemBuilder.ShopType.Cursula, 1f);
+
+
+            GunslingersRing.GunslingersRingID = item.PickupObjectId;
 			ItemIDs.AddToList(item.PickupObjectId);
 		}
 		public static int GunslingersRingID;

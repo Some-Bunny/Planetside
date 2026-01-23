@@ -96,7 +96,11 @@ namespace Planetside
     {
 
 
-
+        public static bool IsActuallyOubiletteEntranceRoom(this SpeculativeRigidbody body)
+        {
+            //NOTE: checking the name against "secret exit collider" is how vanilla gungeon blocks projectiles from the Oubilette entrance...rip
+            return body.name.StartsWith("secret exit collider");
+        }
 
 
         public static Material Copy(this Material orig, Texture2D textureOverride = null, Shader shaderOverride = null)

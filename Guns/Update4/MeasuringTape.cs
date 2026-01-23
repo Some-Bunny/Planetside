@@ -25,7 +25,7 @@ namespace Planetside
 
             GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_2_Sheet_Data, "measuringtape_idle_001");
             gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_2_Animation_Data;
-            gun.sprite.SortingOrder = 1;
+            gun.sprite.SortingOrder = 2;
 
             gun.reloadAnimation = "measuringtape_reload";
             gun.idleAnimation = "measuringtape_idle";

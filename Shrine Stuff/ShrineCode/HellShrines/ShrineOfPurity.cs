@@ -12,36 +12,65 @@ using Dungeonator;
 using System.Reflection;
 using MonoMod.RuntimeDetour;
 using SaveAPI;
+using BreakAbleAPI;
+using System.Collections;
+using DaikonForge.Tween;
 
 namespace Planetside
 {
-	public static class ShrineOfPurity
-	{
+	public class ShrineOfPurity : DungeonPlaceableBehaviour, IPlayerInteractable
+    {
 
 		public static void Add()
 		{
-			ShrineFactory aa = new ShrineFactory
-			{
-
-				name = "ShrineOfPurity",
-				modID = "psog",
-				text = "A shrine that purifies a hell-bound curse, at a cost.",
-				spritePath = "Planetside/Resources/Shrines/HellShrines/shrineofpurity.png",
-				acceptText = "Cleanse a single, unspecified Curse.",
-				declineText = "Leave",
-				OnAccept = Accept,
-				OnDecline = null,
-				CanUse = CanUse,
-				offset = new Vector3(-1, -1, 0),
-				talkPointOffset = new Vector3(0, 3, 0),
-				isToggle = false,
-				isBreachShrine = false,
+            var tearObject = Alexandria.PrefabAPI.PrefabBuilder.BuildObject("Shrine Of Purity");
+            var sprite = tearObject.AddComponent<tk2dSprite>();
+            sprite.SetSprite(StaticSpriteDefinitions.RoomObject_Sheet_Data, "shrineofpurity");
+            tearObject.layer = Layers.FG_Nonsense;
+            sprite.HeightOffGround = -1.35f;
+            sprite.SortingOrder = 1;
+            sprite.IsPerpendicular = false;
 
 
-			};
-			aa.Build();
+            Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+            sprite.usesOverrideMaterial = true;
+            mat.mainTexture = sprite.renderer.material.mainTexture;
+            mat.SetColor("_EmissiveColor", new Color32(0, 255, 255, 255));
+            mat.SetFloat("_EmissiveColorPower", 0f);
+            mat.SetFloat("_EmissivePower", 0);
+            sprite.renderer.material = mat;
 
-			SpriteBuilder.AddSpriteToCollection(spriteDefinition1, SpriteBuilder.ammonomiconCollection);
+
+            //this.modID + ":" + this.name
+
+            var shrine = tearObject.gameObject.AddComponent<ShrineOfPurity>();
+            shrine.talkPoint = BreakableAPI_Bundled.GenerateTransformObject(shrine.gameObject, new Vector2(2f, 2f), "TalkTuah").transform;
+            shrine.sprite = sprite;
+
+            //majorBreakable.gameObject.AddComponent<DungeonPlaceableBehaviour>();
+            //ShrineFactory.registeredShrines.Add("psog:ShrineOfPurity", tearObject);
+
+            var _  = Alexandria.PrefabAPI.PrefabBuilder.BuildObject("Pretty");
+            sprite = _.AddComponent<tk2dSprite>();
+            sprite.SetSprite(StaticSpriteDefinitions.RoomObject_Sheet_Data, "shrineofpurityoutside");
+            sprite.gameObject.layer = Layers.FG_Nonsense;
+            sprite.HeightOffGround = -1;
+            sprite.SortingOrder = 1;
+            sprite.IsPerpendicular = false;
+
+            sprite.transform.SetParent(tearObject.transform, false);
+
+            mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+            sprite.usesOverrideMaterial = true;
+            mat.mainTexture = sprite.renderer.material.mainTexture;
+            mat.SetColor("_EmissiveColor", new Color32(0, 255, 255, 255));
+            mat.SetFloat("_EmissiveColorPower", 0f);
+            mat.SetFloat("_EmissivePower", 0);
+            sprite.renderer.material = mat;
+
+            StaticReferences.StoredRoomObjects.Add("psog:shrineofpurity", tearObject);
+
+            SpriteBuilder.AddSpriteToCollection(spriteDefinition1, SpriteBuilder.ammonomiconCollection);
 
 		}
 		public static string spriteDefinition1 = "Planetside/Resources/ShrineIcons/PurityIcon";
@@ -126,259 +155,209 @@ namespace Planetside
 					//bolster.playeroue = player;
 				}
 			}
-			shrine.GetComponent<CustomShrineController>().numUses++;
-		}
-		public class UltraDarkness : BraveBehaviour
-		{
-			public UltraDarkness()
+            ParticleBase.EmitParticles("WaveParticle", 1, new ParticleSystem.EmitParams()
             {
-				this.playeroue = base.GetComponent<PlayerController>();
-			}
-			public void Start()
-			{
-				playeroue.OnRoomClearEvent += this.RoomCleared;
-				playeroue.OnEnteredCombat += this.EnteredCombat;
-			}
-			private void EnteredCombat()
+                position = player.transform.position,
+                startSize = 12,
+                rotation = 0,
+                startLifetime = 0.25f,
+                startColor = Color.white.WithAlpha(0.333f)
+            });
+        }
+
+        private void Start()
+        {
+            SpriteOutlineManager.AddOutlineToSprite(base.sprite, Color.black, 1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
+            instanceRoom = GameManager.Instance.Dungeon.data.GetAbsoluteRoomFromPosition(base.transform.position.IntXY(VectorConversions.Floor));
+            if (instanceRoom == null) { return; }
+            instanceRoom.OnEnemiesCleared += () =>
             {
-				AkSoundEngine.PostEvent("Play_ENM_darken_world_01", base.gameObject);
-				NevernamedsDarknessHandler.EnableDarkness(15f, 1.5f);
-				//RoomHandler absoluteRoom = base.transform.position.GetAbsoluteRoom();
-				//absoluteRoom.BecomeTerrifyingDarkRoom(1f, 0.15f, 0.3f, "Play_ENM_darken_world_01");
-			}
+                instanceRoom.RegisterInteractable(this);
+                this.StartCoroutine(DoCandles());
+            };
 
-			public override void OnDestroy()
-			{
-				if (playeroue != null)
-				{
-					playeroue.OnRoomClearEvent -= this.RoomCleared;
-					playeroue.OnEnteredCombat -= this.EnteredCombat;
-				}
-				base.OnDestroy();
-			}
+            this.instanceMinimapIcon = Minimap.Instance.RegisterRoomIcon(instanceRoom, MinimapIconprefab ?? (GameObject)BraveResources.Load("Global Prefabs/Minimap_Shrine_Icon", ".prefab"), false);
+        }
+        public RoomHandler instanceRoom;
+        public GameObject instanceMinimapIcon;
+        public GameObject MinimapIconprefab;
+        public Transform talkPoint;
+        public bool Used = false;
 
-			private void RoomCleared(PlayerController obj)
-			{
-				AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.DEDARKEN, true);
-				AkSoundEngine.PostEvent("Play_ENM_lighten_world_01", base.gameObject);
-				NevernamedsDarknessHandler.DisableDarkness(1.5f);
-				//RoomHandler absoluteRoom = base.transform.position.GetAbsoluteRoom();
-				//absoluteRoom.EndTerrifyingDarkRoom();
-				OtherTools.Notify("Curse Of Darkness cleansed", "You are free now.", "Planetside/Resources/ShrineIcons/PurityIcon");
-				playeroue.OnRoomClearEvent -= this.RoomCleared;
-				playeroue.OnEnteredCombat -= this.EnteredCombat;
-				IntVector2 bestRewardLocation = playeroue.CurrentRoom.GetBestRewardLocation(IntVector2.One * 3, RoomHandler.RewardLocationStyle.CameraCenter, true);
-				Chest chest2 = GameManager.Instance.RewardManager.SpawnRewardChestAt(bestRewardLocation, -1f, PickupObject.ItemQuality.EXCLUDED);
-				chest2.RegisterChestOnMinimap(chest2.GetAbsoluteParentRoom());
-				chest2.IsLocked = false;
-				bool A = SaveAPIManager.GetFlag(CustomDungeonFlags.DEBOLSTER);
-				bool S = SaveAPIManager.GetFlag(CustomDungeonFlags.DEJAM);
-				bool D = SaveAPIManager.GetFlag(CustomDungeonFlags.DEPETRIFY);
-				bool F = SaveAPIManager.GetFlag(CustomDungeonFlags.DEDARKEN);
-				Material outlineMaterial1 = SpriteOutlineManager.GetOutlineMaterial(chest2.sprite);
-				if (outlineMaterial1 != null)
-				{
-					outlineMaterial1.SetColor("_OverrideColor", new Color(30f, 30f, 30f));
-				}
-				if (A == true && S == true && D == true && F == true)
-				{
-					AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.DECURSE_HELL_SHRINE_UNLOCK, true);
-				}
-				Destroy(this);
-			}
-			public PlayerController playeroue;
 
-		}
+        public List<Vector2> V = new List<Vector2>();
 
-		public class UltraJammed : BraveBehaviour
-		{
-			public UltraJammed()
-			{
-				this.playeroue = base.GetComponent<PlayerController>();
-			}
-			public void Start()
-			{
-				playeroue.OnRoomClearEvent += this.RoomCleared;
-				ETGMod.AIActor.OnPreStart = (Action<AIActor>)Delegate.Combine(ETGMod.AIActor.OnPreStart, new Action<AIActor>(this.AIActorMods));
-			}
-
-			public override void OnDestroy()
-			{
-				if (playeroue != null)
+        public IEnumerator DoCandles()
+        {
+            var attachPoints = sprite.collection.spriteDefinitions[sprite.spriteId].GetAttachPoints(sprite.collection, sprite.spriteId).ToList();
+            attachPoints = attachPoints.Shuffle();
+            foreach (var entry in attachPoints)
+            {
+                yield return new WaitForSeconds(UnityEngine.Random.Range(0.05f, 0.15f));
+                V.Add(entry.position);
+                var p = this.transform.position + entry.position;
+                AkSoundEngine.PostEvent("Play_Immolate", this.gameObject);
+                GlobalSparksDoer.DoRadialParticleBurst(4, p, p, 30f, 2f, 1f, null, null, null, GlobalSparksDoer.SparksType.STRAIGHT_UP_FIRE);
+                ParticleBase.EmitParticles("WaveParticle", 1, new ParticleSystem.EmitParams()
                 {
-					playeroue.OnRoomClearEvent -= this.RoomCleared;
-				}
-				ETGMod.AIActor.OnPreStart = (Action<AIActor>)Delegate.Remove(ETGMod.AIActor.OnPreStart, new Action<AIActor>(this.AIActorMods));
-				base.OnDestroy();
-			}
-			public void AIActorMods(AIActor target)
-			{
-				if (!target.healthHaver.IsBoss)
+                    position = p,
+                    startSize = 4,
+                    rotation = 0,
+                    startLifetime = 0.1f,
+                    startColor = Color.red.WithAlpha(0.333f)
+                });
+            }
+            yield return null;
+        }
+
+
+        public void FixedUpdate()
+        {
+            if (Used) { return; }
+            foreach (var entry in V)
+            {
+                var p = this.transform.position + entry.ToVector3ZisY() + new Vector3(-0.125f, 0.125f);
+                if (UnityEngine.Random.value < 0.05f)
                 {
-					if (!target.IsBlackPhantom)
-					{
-						target.BecomeBlackPhantom();
-					}
-					else
-					{
-						target.gameObject.AddComponent<UmbraController>();
-					}
-				}
-				
-			}
-			private void RoomCleared(PlayerController obj)
-			{
-				AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.DEJAM, true);
-				OtherTools.Notify("Curse Of Jamnation cleansed", "You are free now.", "Planetside/Resources/ShrineIcons/PurityIcon");
-				playeroue.OnRoomClearEvent -= this.RoomCleared;
-				ETGMod.AIActor.OnPreStart = (Action<AIActor>)Delegate.Remove(ETGMod.AIActor.OnPreStart, new Action<AIActor>(this.AIActorMods));
-				IntVector2 bestRewardLocation = playeroue.CurrentRoom.GetBestRewardLocation(IntVector2.One * 3, RoomHandler.RewardLocationStyle.CameraCenter, true);
-				Chest chest2 = GameManager.Instance.RewardManager.SpawnRewardChestAt(bestRewardLocation, -1f, PickupObject.ItemQuality.EXCLUDED);
-				chest2.RegisterChestOnMinimap(chest2.GetAbsoluteParentRoom());
-				chest2.IsLocked = false;
-				bool A = SaveAPIManager.GetFlag(CustomDungeonFlags.DEBOLSTER);
-				bool S = SaveAPIManager.GetFlag(CustomDungeonFlags.DEJAM);
-				bool D = SaveAPIManager.GetFlag(CustomDungeonFlags.DEPETRIFY);
-				bool F = SaveAPIManager.GetFlag(CustomDungeonFlags.DEDARKEN);
-				Material outlineMaterial1 = SpriteOutlineManager.GetOutlineMaterial(chest2.sprite);
-				if (outlineMaterial1 != null)
-				{
-					outlineMaterial1.SetColor("_OverrideColor", new Color(30f, 30f, 30f));
-				}
-				if (A == true && S == true && D == true && F == true)
-				{
-					AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.DECURSE_HELL_SHRINE_UNLOCK, true);
-				}
-				Destroy(this);
-			}
-			public PlayerController playeroue;
-
-		}
-
-		public class UltraPetrify : BraveBehaviour
-		{
-			public UltraPetrify()
-			{
-				this.playeroue = base.GetComponent<PlayerController>();
-			}
-			public void Start()
-			{
-				playeroue.OnRoomClearEvent += this.RoomCleared;
-				ETGMod.AIActor.OnPreStart = (Action<AIActor>)Delegate.Combine(ETGMod.AIActor.OnPreStart, new Action<AIActor>(this.AIActorMods));
-			}
-
-			public override void OnDestroy()
-			{
-				if (playeroue != null)
+                    GlobalSparksDoer.DoRadialParticleBurst(1, p, p, 30f, 2f, 1f, null, null, null, GlobalSparksDoer.SparksType.STRAIGHT_UP_FIRE);
+                }
+                if (UnityEngine.Random.value < 0.1f)
                 {
-					playeroue.OnRoomClearEvent -= this.RoomCleared;
-				}
-				ETGMod.AIActor.OnPreStart = (Action<AIActor>)Delegate.Remove(ETGMod.AIActor.OnPreStart, new Action<AIActor>(this.AIActorMods));
-				base.OnDestroy();
-			}
-			public void AIActorMods(AIActor target)
-			{
-				if (!target.healthHaver.IsBoss)
+                    GlobalSparksDoer.DoRadialParticleBurst(1, p, p, 30f, 2f, 1f, null, null, null, GlobalSparksDoer.SparksType.EMBERS_SWIRLING);
+                }
+            }
+        }
+
+
+        public void Interact(PlayerController interactor)
+        {
+            if (!TextBoxManager.HasTextBox(this.talkPoint))
+            {
+                base.StartCoroutine(this.HandleConversation(interactor));
+            }
+        }
+
+        private IEnumerator HandleConversation(PlayerController interactor)
+        {
+            if (this.talkPoint == null) { ETGModConsole.Log("talkPoint is NULL"); }
+            if (this.talkPoint.position == null) { ETGModConsole.Log("talkPoint.position is NULL"); }
+            //if (this.text == null) { ETGModConsole.Log("text is NULL"); }
+
+            string Text = "";
+            bool b = CursesController.CheckIfAnyCurseActive() == true && !interactor.IsInCombat;
+            if (b)//player.gameObject.GetComponent<ShrineOfDarkness.DarknessTime>() != null || player.gameObject.GetComponent<ShrineOfCurses.JamTime>() != null || player.gameObject.GetComponent<ShrineOfPetrification.PetrifyTime>() != null || player.gameObject.GetComponent<ShrineOfSomething.SomethingTime>() != null)
+            {
+                Text = "The silver pedestal vibrates at your presense.";
+            }
+            else
+            {
+                Text = "A ritual circle, with a silver pedestal at its center.\nYou have nothing to offer.";
+            }
+
+
+            TextBoxManager.ShowStoneTablet(this.talkPoint.position, this.talkPoint, -1f, Text, true, false);
+            int selectedResponse = -1;
+            interactor.SetInputOverride("shrineConversation");
+            yield return null;
+            if (Used)
+            {
+                GameUIRoot.Instance.DisplayPlayerConversationOptions(interactor, null, "The cleansing spirits that have once resided here have left.", string.Empty);
+            }
+            else
+            {
+                if (b)
                 {
-					if (target != null && !OtherTools.BossBlackList.Contains(target.aiActor.encounterTrackable.EncounterGuid))
-					{
-						PetrifyThing pet = target.gameObject.AddComponent<PetrifyThing>();
-						pet.Time = 17.5f;
-					}
-				}				
-			}
-			private void RoomCleared(PlayerController obj)
-			{
-				AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.DEPETRIFY, true);
-				OtherTools.Notify("Curse Of Petrification cleansed", "You are free now.", "Planetside/Resources/ShrineIcons/PurityIcon");
-
-				playeroue.OnRoomClearEvent -= this.RoomCleared;
-				ETGMod.AIActor.OnPreStart = (Action<AIActor>)Delegate.Remove(ETGMod.AIActor.OnPreStart, new Action<AIActor>(this.AIActorMods));
-				IntVector2 bestRewardLocation = playeroue.CurrentRoom.GetBestRewardLocation(IntVector2.One * 3, RoomHandler.RewardLocationStyle.CameraCenter, true);
-				Chest chest2 = GameManager.Instance.RewardManager.SpawnRewardChestAt(bestRewardLocation, -1f, PickupObject.ItemQuality.EXCLUDED);
-				chest2.RegisterChestOnMinimap(chest2.GetAbsoluteParentRoom());
-				
-				chest2.IsLocked = false;
-				bool A = SaveAPIManager.GetFlag(CustomDungeonFlags.DEBOLSTER);
-				bool S = SaveAPIManager.GetFlag(CustomDungeonFlags.DEJAM);
-				bool D = SaveAPIManager.GetFlag(CustomDungeonFlags.DEPETRIFY);
-				bool F = SaveAPIManager.GetFlag(CustomDungeonFlags.DEDARKEN);
-
-				Material outlineMaterial1 = SpriteOutlineManager.GetOutlineMaterial(chest2.sprite);
-				if (outlineMaterial1 != null)
+                    GameUIRoot.Instance.DisplayPlayerConversationOptions(interactor, null, "Give up a random curse.", "Leave.");
+                }
+                else
                 {
-					outlineMaterial1.SetColor("_OverrideColor", new Color(30f, 30f, 30f));
-				}
-				if (A == true && S == true && D == true && F == true)
-				{
-					AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.DECURSE_HELL_SHRINE_UNLOCK, true);
-				}
-				Destroy(this);
-			}
-			public PlayerController playeroue;
+                    GameUIRoot.Instance.DisplayPlayerConversationOptions(interactor, null, "Leave.", "");
+                }
+            }
+            while (!GameUIRoot.Instance.GetPlayerConversationResponse(out selectedResponse))
+            {
+                yield return null;
+            }
+            interactor.ClearInputOverride("shrineConversation");
+            TextBoxManager.ClearTextBox(this.talkPoint);
+            if (Used == true)
+            {
+                yield break;
+            }
+            if (selectedResponse == 0 && b)
+            {
+                Accept(interactor, this.gameObject);
+            }
+            else
+            {
 
-		}
+            }
+            yield break;
+        }
 
-		public class UltraBolster : BraveBehaviour
-		{
-			public UltraBolster()
-			{
-				this.playeroue = base.GetComponent<PlayerController>();
-			}
-			public void Start()
-			{
-				playeroue.OnRoomClearEvent += this.RoomCleared;
-				ETGMod.AIActor.OnPreStart = (Action<AIActor>)Delegate.Combine(ETGMod.AIActor.OnPreStart, new Action<AIActor>(this.AIActorMods));
-			}
-			public void AIActorMods(AIActor target)
-			{
-				if (target != null && !OtherTools.BossBlackList.Contains(target.aiActor.encounterTrackable.EncounterGuid))
-				{
-					target.behaviorSpeculator.CooldownScale /= 0.25f;
-					target.MovementSpeed *= 1.45f;
+        public void OnEnteredRange(PlayerController interactor)
+        {
+            SpriteOutlineManager.AddOutlineToSprite(base.sprite, Color.white, 1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
+            base.sprite.UpdateZDepth();
+        }
 
-				}
-			}
-			public override void OnDestroy()
-			{
-				if (playeroue != null)
-				{
-					playeroue.OnRoomClearEvent -= this.RoomCleared;
-				}
-				ETGMod.AIActor.OnPreStart = (Action<AIActor>)Delegate.Remove(ETGMod.AIActor.OnPreStart, new Action<AIActor>(this.AIActorMods));
-				base.OnDestroy();
-			}
+        public void OnExitRange(PlayerController interactor)
+        {
+            SpriteOutlineManager.AddOutlineToSprite(base.sprite, Color.black, 1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
+        }
 
-			private void RoomCleared(PlayerController obj)
-			{
-				AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.DEBOLSTER, true);
-				OtherTools.Notify("Curse Of Bolstering cleansed", "You are free now.", "Planetside/Resources/ShrineIcons/PurityIcon");
-				playeroue.OnRoomClearEvent -= this.RoomCleared;
-				ETGMod.AIActor.OnPreStart = (Action<AIActor>)Delegate.Remove(ETGMod.AIActor.OnPreStart, new Action<AIActor>(this.AIActorMods));
-				IntVector2 bestRewardLocation = playeroue.CurrentRoom.GetBestRewardLocation(IntVector2.One * 3, RoomHandler.RewardLocationStyle.CameraCenter, true);
-				Chest chest2 = GameManager.Instance.RewardManager.SpawnRewardChestAt(bestRewardLocation, -1f, PickupObject.ItemQuality.EXCLUDED);
-				chest2.RegisterChestOnMinimap(chest2.GetAbsoluteParentRoom());
-				chest2.IsLocked = false;
-				bool A = SaveAPIManager.GetFlag(CustomDungeonFlags.DEBOLSTER);
-				bool S = SaveAPIManager.GetFlag(CustomDungeonFlags.DEJAM);
-				bool D = SaveAPIManager.GetFlag(CustomDungeonFlags.DEPETRIFY);
-				bool F = SaveAPIManager.GetFlag(CustomDungeonFlags.DEDARKEN);
-				Material outlineMaterial1 = SpriteOutlineManager.GetOutlineMaterial(chest2.sprite);
-				if (outlineMaterial1 != null)
-				{
-					outlineMaterial1.SetColor("_OverrideColor", new Color(30f, 30f, 30f));
-				}
+        public string GetAnimationState(PlayerController interactor, out bool shouldBeFlipped)
+        {
+            shouldBeFlipped = false;
+            return string.Empty;
+        }
 
-				if (A ==true && S == true && D == true && F == true)
-				{
-					AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.DECURSE_HELL_SHRINE_UNLOCK, true);
-				}
-				Destroy(this);
-			}
-			public PlayerController playeroue;
-		}
+        public float GetDistanceToPoint(Vector2 point)
+        {
+            float result;
+            if (base.sprite == null)
+            {
+                result = 100f;
+            }
+            else
+            {
+                result = Vector2.Distance(point, base.sprite.WorldCenter) / 1.5f;
+            }
+            return result;
+        }
 
-	}
+        public float GetOverrideMaxDistance()
+        {
+            return -1f;
+        }
+
+
+
+
+        public void ConfigureOnPlacement(RoomHandler room)
+        {
+            instanceRoom = room;
+            this.RegisterMinimapIcon();
+
+        }
+
+        public void RegisterMinimapIcon()
+        {
+            this.instanceMinimapIcon = Minimap.Instance.RegisterRoomIcon(this.instanceRoom, this.MinimapIconprefab, false);
+        }
+
+        public void GetRidOfMinimapIcon()
+        {
+            if (this.instanceMinimapIcon != null)
+            {
+                Minimap.Instance.DeregisterRoomIcon(this.instanceRoom, this.instanceMinimapIcon);
+                this.instanceMinimapIcon = null;
+            }
+        }
+
+
+
+    }
 }
 
 

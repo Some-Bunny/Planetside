@@ -29,7 +29,7 @@ namespace Planetside
 
             GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_2_Sheet_Data, "lockongun_idle_001");
             gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_2_Animation_Data;
-            gun.sprite.SortingOrder = 1;
+            gun.sprite.SortingOrder = 2;
 
             gun.reloadAnimation = "lockongun_reload";
             gun.idleAnimation = "lockongun_idle";
@@ -169,8 +169,10 @@ namespace Planetside
 
 			LockOnGun.LockOnGunID = gun.PickupObjectId;
 			ItemIDs.AddToList(gun.PickupObjectId);
-		}
-		public static int LockOnGunID;
+            gun.AddToSubShop(ItemAPI.ItemBuilder.ShopType.Trorc, 1);
+
+        }
+        public static int LockOnGunID;
 
 		public static GameObject LockOnPrefab;
 		public static List<int> spriteIds = new List<int>();

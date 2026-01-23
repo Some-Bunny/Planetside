@@ -26,12 +26,10 @@ namespace Planetside
 		public static void Init()
 		{
 			string itemName = "Favouritism";
-			//string resourceName = "Planetside/Resources/favouritism.png";
 			GameObject obj = new GameObject(itemName);
 			var item = obj.AddComponent<GunClassToken>();
             var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
             ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("favouritism"), data, obj);
-            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "Gee, Why Do You Get Two?";
 			string longDesc = "Increases rate of fire. Adds favouritism to any weapons you may find.\n\nA necklace made my someone who really, *really* preferred a certain type of weaponry.";
 			ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");

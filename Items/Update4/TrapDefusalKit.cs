@@ -36,8 +36,10 @@ namespace Planetside
 			item.quality = PickupObject.ItemQuality.B;
 			TrapDefusalKit.TrapDefusalKitID = item.PickupObjectId;
 			ItemIDs.AddToList(item.PickupObjectId);
+            item.AddToSubShop(ItemAPI.ItemBuilder.ShopType.Trorc, 1);
+            item.AddToSubShop(ItemAPI.ItemBuilder.ShopType.Cursula, 0.5f);
 
-			new Hook(typeof(ProjectileTrapController).GetMethod("ShootProjectileInDirection", BindingFlags.Instance | BindingFlags.NonPublic), typeof(TrapDefusalKit).GetMethod("ShootProjectileInDirectionHook"));
+            new Hook(typeof(ProjectileTrapController).GetMethod("ShootProjectileInDirection", BindingFlags.Instance | BindingFlags.NonPublic), typeof(TrapDefusalKit).GetMethod("ShootProjectileInDirectionHook"));
 			new Hook(typeof(BasicTrapController).GetMethod("Update", BindingFlags.Instance | BindingFlags.Public), typeof(TrapDefusalKit).GetMethod("UpdateHook"));
 			new Hook(typeof(CartTurretController).GetMethod("Fire", BindingFlags.Instance | BindingFlags.NonPublic), typeof(TrapDefusalKit).GetMethod("FireHook"));		
 			new Hook(typeof(PathMover).GetMethod("Update", BindingFlags.Instance | BindingFlags.Public), typeof(TrapDefusalKit).GetMethod("UpdateHookPathingTrapController"));

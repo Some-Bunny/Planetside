@@ -7,6 +7,7 @@ using MonoMod.RuntimeDetour;
 using ItemAPI;
 using NpcApi;
 using System.Collections;
+using Planetside.Controllers;
 
 namespace Planetside
 {
@@ -22,7 +23,7 @@ namespace Planetside
         {
 
             var Collection = StaticSpriteDefinitions.Oddments_Sheet_Data;
-            var logoObj = ItemBuilder.AddSpriteToObjectAssetbundle("Big Ass Logo", Collection.GetSpriteIdByName("logo"), Collection);
+            var logoObj = ItemBuilder.AddSpriteToObjectAssetbundle("Big Ass Logo", Collection.GetSpriteIdByName(FoolMode.isFoolish ? "logofunmode" : "logo"), Collection);
             FakePrefab.MarkAsFakePrefab(logoObj);
             UnityEngine.Object.DontDestroyOnLoad(logoObj);
             logoObj.transform.position = logoObj.transform.position.WithZ(1);

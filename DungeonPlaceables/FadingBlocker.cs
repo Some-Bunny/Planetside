@@ -16,13 +16,11 @@ using Planetside.Static_Storage;
 using UnityEngine.Playables;
 using Newtonsoft.Json.Linq;
 using ChallengeAPI;
+using Pathfinding;
 
 namespace Planetside
 {
 
-
-    //SND_OBJ_gate_open_01
-    //m_OBJ_boulder_break_03
     public class FadingBlocker : BraveBehaviour
     {
         public static void Init()
@@ -154,7 +152,8 @@ namespace Planetside
             IntVector2 intVec2 = new IntVector2((int)this.transform.position.x, (int)this.transform.position.y);
             roomHandler = GameManager.Instance.Dungeon.GetRoomFromPosition(intVec2);
 
-            this.Invoke("Inv", 0.1f);
+            MarkCells(true);
+
             if (roomHandler != null)
             {
                 if (WaveClearRequirement == -1)
@@ -224,7 +223,6 @@ namespace Planetside
 
         private void Inv()
         {
-            MarkCells(true);
         }
 
         public void MarkCells(bool Occuiped)
@@ -247,6 +245,7 @@ namespace Planetside
                     }
                 }
             }
+            Pathfinder.Instance.RecalculateRoomClearances(roomHandler);
         }
         private bool isLowered = true;
         private float ParticleDelay = 0.05f;
@@ -290,6 +289,7 @@ namespace Planetside
         public IEnumerator DestroyBlocker()
         {  
             yield return new WaitForSeconds(DelayWaitTime);
+            yield return new WaitForSeconds(UnityEngine.Random.Range(0.01f, 0.15f));
             if (DestroysObjectOnBreak)
             {
                 this.spriteAnimator.PlayAndDestroyObject(AnimationKey+"_movingblock_godown");

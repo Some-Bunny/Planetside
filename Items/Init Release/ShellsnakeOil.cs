@@ -64,6 +64,8 @@ namespace Planetside
                 ItemIsValidForDiscount = Can
              });
             Alexandria.Misc.CustomActions.OnShopItemStarted += OSIS;
+            item.AddToSubShop(ItemAPI.ItemBuilder.ShopType.Goopton, 1);
+
         }
 
         public class RandomBoolComp : MonoBehaviour { public void Start() { B = BraveUtility.RandomBool(); rng = UnityEngine.Random.value; } public bool B; public float rng; }

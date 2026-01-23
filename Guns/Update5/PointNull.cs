@@ -29,7 +29,7 @@ namespace Planetside
 
             GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "pointgunknown_idle_001");
             gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
-            gun.sprite.SortingOrder = 1;
+            gun.sprite.SortingOrder = 2;
 
             gun.idleAnimation = "pointnull_idle";
             gun.shootAnimation = "pointnull_fire";
@@ -87,7 +87,7 @@ namespace Planetside
 			gun.gunClass = GunClass.CHARGE;
 
 			gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
-            gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("PointNull", StaticSpriteDefinitions.PlanetsideUIAtlas, "pointnullclip_001", "pointnullclip_002");
+            gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("PointNull", StaticSpriteDefinitions.PlanetsideClipUIAtlas, "pointnullclip_001", "pointnullclip_002");
 
 
             gun.quality = PickupObject.ItemQuality.EXCLUDED;

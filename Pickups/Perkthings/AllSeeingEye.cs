@@ -8,6 +8,7 @@ using SaveAPI;
 using static Planetside.PrisonerSecondSubPhaseController;
 using static UnityEngine.UI.GridLayoutGroup;
 using System.ComponentModel;
+using Planetside.Controllers;
 
 namespace Planetside
 {
@@ -19,9 +20,9 @@ namespace Planetside
 			string name = "All-Seeing Eye";
 			GameObject gameObject = new GameObject(name);
 			AllSeeingEye item = gameObject.AddComponent<AllSeeingEye>();
-
 			var data = StaticSpriteDefinitions.Pickup_Sheet_Data;
-			ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("allSeeingEye"), data, gameObject);
+            bool Stare = FoolMode.isFoolish | UnityEngine.Random.value < 0.25f;
+			ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName(Stare ? "allSeeingEyeFun" : "allSeeingEye"), data, gameObject);
 			//ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
 			string shortDesc = "Eye For Secrets.";
 			string longDesc = "A Gungeoneers eye, torn out and blessed.\n\nKnows more than you do.";

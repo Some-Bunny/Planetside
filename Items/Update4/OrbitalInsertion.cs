@@ -37,6 +37,7 @@ namespace Planetside
             activeitem.SetCooldownType(ItemBuilder.CooldownType.Damage, 10f);
             activeitem.consumable = true;
             activeitem.quality = PickupObject.ItemQuality.S;
+            activeitem.AddToSubShop(ItemAPI.ItemBuilder.ShopType.Trorc, 0.8f);
 
             OrbitalInsertion.OrbitalInsertionID = activeitem.PickupObjectId;
             ItemIDs.AddToList(activeitem.PickupObjectId);

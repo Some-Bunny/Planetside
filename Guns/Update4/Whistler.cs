@@ -32,25 +32,18 @@ namespace Planetside
 
             GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "whistler_idle_001");
             gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
-            gun.sprite.SortingOrder = 1;
+            gun.sprite.SortingOrder = 2;
 
 
-            gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
-            gun.sprite.SortingOrder = 1;
 
             gun.idleAnimation = "whistler_idle";
             gun.shootAnimation = "whistler_fire";
             gun.reloadAnimation = "whistler_reload";
 			gun.chargeAnimation = "whistler_charge";
+            gun.emptyAnimation = "whistler_empty";
+            gun.emptyReloadAnimation = "whistler_reload";
 
-            //GunExt.SetupSprite(gun, null, "whistler_idle_001", 8);
 
-
-
-            //GunExt.SetAnimationFPS(gun, gun.shootAnimation, 24);
-            //GunExt.SetAnimationFPS(gun, gun.reloadAnimation, 6);
-            //GunExt.SetAnimationFPS(gun, gun.idleAnimation, 1);
-            //GunExt.SetAnimationFPS(gun, gun.chargeAnimation, 3);
 
             GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(56) as Gun, true, false);
 			gun.SetBaseMaxAmmo(45);
@@ -71,8 +64,6 @@ namespace Planetside
 			Gun cricket = PickupObjectDatabase.GetById(180) as Gun;
 			gun.gunSwitchGroup = cricket.gunSwitchGroup;
 
-			//gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.chargeAnimation).wrapMode = tk2dSpriteAnimationClip.WrapMode.LoopSection;
-			//gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.chargeAnimation).loopStart = 3;
 	
 			Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(gun.DefaultModule.projectiles[0]); projectile.gameObject.SetActive(false);
 			FakePrefab.MarkAsFakePrefab(projectile.gameObject);
@@ -103,7 +94,7 @@ namespace Planetside
             mat_1.mainTexture = projectile.sprite.renderer.material.mainTexture;
             mat_1.SetColor("_EmissiveColor", new Color32(153, 0, 255, 255));
             mat_1.SetFloat("_EmissiveColorPower", 1.55f);
-            mat_1.SetFloat("_EmissivePower", 100);
+            mat_1.SetFloat("_EmissivePower", 20);
             projectile.sprite.renderer.material = mat_1;
 
             PierceProjModifier spook = projectile.gameObject.GetOrAddComponent<PierceProjModifier>();
@@ -134,8 +125,10 @@ namespace Planetside
 				whistler1
 			};
 
+            gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
+            gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("psog:whistler", StaticSpriteDefinitions.PlanetsideClipUIAtlas, "Whistler_001", "Whistler_002");
 
-			gun.sprite.usesOverrideMaterial = true;
+            gun.sprite.usesOverrideMaterial = true;
 
 			Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
 			mat.SetColor("_EmissiveColor", new Color32(153, 0, 255, 255));

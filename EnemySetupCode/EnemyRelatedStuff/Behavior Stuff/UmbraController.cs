@@ -322,14 +322,19 @@ public class UmbraController : BraveBehaviour
 
 
 
-            E += 360 * Time.deltaTime;
+            
+        }
+
+        public void FixedUpdate()
+        {
+            E += 360 * Time.fixedDeltaTime;
             var m = Owner.sprite.WorldCenter.ToVector3ZisY() + MathToolbox.GetUnitOnCircle3(E, radius);
             var m_2 = Owner.sprite.WorldCenter.ToVector3ZisY() + MathToolbox.GetUnitOnCircle3(E + 120, radius);
             var m_3 = Owner.sprite.WorldCenter.ToVector3ZisY() + MathToolbox.GetUnitOnCircle3(E + 240, radius);
 
             GlobalSparksDoer.DoSingleParticle(m.WithZ(0), Vector3.up * UnityEngine.Random.Range(0.025f, 0.075f), 0.25f, 0.5f, Color.red, GlobalSparksDoer.SparksType.FLOATY_CHAFF);
             GlobalSparksDoer.DoSingleParticle(m_2.WithZ(0), Vector3.up * UnityEngine.Random.Range(0.025f, 0.075f), 0.25f, 0.5f, Color.red, GlobalSparksDoer.SparksType.FLOATY_CHAFF);
-            GlobalSparksDoer.DoSingleParticle(m_3.WithZ(0), Vector3.up * UnityEngine.Random.Range(0.025f, 0.075f),  0.25f, 0.5f, Color.red, GlobalSparksDoer.SparksType.FLOATY_CHAFF);
+            GlobalSparksDoer.DoSingleParticle(m_3.WithZ(0), Vector3.up * UnityEngine.Random.Range(0.025f, 0.075f), 0.25f, 0.5f, Color.red, GlobalSparksDoer.SparksType.FLOATY_CHAFF);
 
 
 
@@ -337,6 +342,7 @@ public class UmbraController : BraveBehaviour
             Vector2 vector2 = InnerEye.transform.position - new Vector3(1.5f, 0.75f);
             GlobalSparksDoer.DoRandomParticleBurst(2, vector, vector2, MathToolbox.GetUnitOnCircle(BraveUtility.RandomAngle(), UnityEngine.Random.Range(1, 4)), 0f, 0.5f, 0.125f, 1f, Color.black, GlobalSparksDoer.SparksType.BLACK_PHANTOM_SMOKE);
         }
+
 
 		public bool IsDying;
 

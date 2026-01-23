@@ -48,6 +48,9 @@ namespace SaveAPI
 
         PORTALS_SKIPPED,
 
-        ALLOW_TRADER
+        ALLOW_TRADER,
+
+        TEST_VALUE_D,
+        TEST_VALUE_M,
     }
 }

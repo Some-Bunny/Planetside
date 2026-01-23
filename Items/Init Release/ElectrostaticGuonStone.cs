@@ -30,6 +30,7 @@ namespace Planetside
             
             string shortDesc = "Batteries Included";
             string longDesc = "This enchanted battery releases bursts of power on collision." + "\n\nOriginally stuffed into an old battery-powered device, a bored gunjurer made it float for the kicks.";
+            item.sprite.SortingOrder = 3;
 
             ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
 

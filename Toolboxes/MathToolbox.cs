@@ -30,6 +30,38 @@ namespace Planetside
 
     public static class MathToolbox
     {
+        public static int PushAgainstWalls(this SpeculativeRigidbody body, IntVector2 pushDirection)
+        {
+            if (PhysicsEngine.Instance.OverlapCast(body, null, true, false, null, null, false, null, null))
+                return 0;
+            Vector2 vector = body.transform.position.XY();
+            for (int pixels = 1; pixels <= 64; ++pixels)
+            {
+                body.transform.position = vector + PhysicsEngine.PixelToUnit(pushDirection * pixels);
+                body.Reinitialize();
+                if (PhysicsEngine.Instance.OverlapCast(body, null, true, false, null, null, false, null, null))
+                {
+                    --pixels;
+                    body.transform.position = vector + PhysicsEngine.PixelToUnit(pushDirection * pixels);
+                    body.Reinitialize();
+                    return pixels;
+                }
+            }
+            Debug.LogError("FREEZE AVERTED!  TELL CAPTAIN PRETZEL!  (you're welcome) 148");
+            return -1;
+        }
+        public static bool IsAgainstWall(this SpeculativeRigidbody body, IntVector2 pushDirection, int pixels = 1)
+        {
+            if (PhysicsEngine.Instance.OverlapCast(body, null, true, false, null, null, false, null, null))
+                return true;
+            Vector2 oldPos = body.transform.position.XY();
+            body.transform.position = oldPos + PhysicsEngine.PixelToUnit(pushDirection * pixels);
+            body.Reinitialize();
+            bool result = PhysicsEngine.Instance.OverlapCast(body, null, true, false, null, null, false, null, null);
+            body.transform.position = oldPos;
+            body.Reinitialize();
+            return result;
+        }
         public static float EaseIn(float t)
         {
             return t * t;

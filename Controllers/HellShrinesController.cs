@@ -126,14 +126,14 @@ namespace Planetside
 
                         //ETGModConsole.Log("selected room: "+ room.GetRoomName());
 
-                        IntVector2 randomVisibleClearSpot = room.GetRandomVisibleClearSpot(3, 3);
+                        IntVector2 randomVisibleClearSpot = room.GetRandomVisibleClearSpot(4, 4);
                         if (randomVisibleClearSpot != IntVector2.Zero)
                         {
 
                             GameObject original;
-                            ShrineFactory.registeredShrines.TryGetValue("psog:shrineofpurity", out original);
+                            StaticReferences.StoredRoomObjects.TryGetValue("psog:shrineofpurity", out original);
                             GameObject gObj = UnityEngine.Object.Instantiate<GameObject>(original, new Vector3((float)randomVisibleClearSpot.x, (float)randomVisibleClearSpot.y), Quaternion.identity);
-                            gObj.gameObject.AddComponent<PurityShrineController>();
+                            //gObj.gameObject.AddComponent<PurityShrineController>();
                             //ETGModConsole.Log("PLACED SHRINE OF PURITY");
                         }
                     }

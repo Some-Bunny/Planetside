@@ -29,7 +29,7 @@ namespace Planetside
             
 			GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "sawcon_idle_001");
             gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
-            gun.sprite.SortingOrder = 1;
+            gun.sprite.SortingOrder = 2;
 
             gun.reloadAnimation = "sawcon_reload";
             gun.idleAnimation = "sawcon_idle";
@@ -229,7 +229,8 @@ namespace Planetside
 
 
             //new Hook(typeof(CerebralBoreProjectile).GetMethod("OnDestroy", BindingFlags.Instance | BindingFlags.NonPublic), typeof(Sawcon).GetMethod("OnDestroyHook"));
-
+            gun.AddToSubShop(ItemAPI.ItemBuilder.ShopType.Cursula, 1);
+            gun.AddToSubShop(ItemAPI.ItemBuilder.ShopType.Trorc, 1);
         }
 
         public static void HandleBoringHook(Action<CerebralBoreProjectile> orig, CerebralBoreProjectile self)

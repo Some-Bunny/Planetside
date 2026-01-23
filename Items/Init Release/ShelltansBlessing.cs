@@ -26,12 +26,14 @@ namespace Planetside
             var item = obj.AddComponent<ShelltansBlessing>();
             var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
             ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("shelltansblessing"), data, obj);
+            item.sprite.SortingOrder = 3;
+
             //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "Defiled";
             string longDesc = "A piece of a long-defiled Shelltan shrine." +
                 "\n\nAlthough its power is weak, the power originally found within still lingers, waiting...";
             ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.Curse, 1f, StatModifier.ModifyMethod.ADDITIVE);
-            ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.Damage, 0.875f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+            ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.Damage, 0.8f, StatModifier.ModifyMethod.MULTIPLICATIVE);
             ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.RateOfFire, 1.5f, StatModifier.ModifyMethod.MULTIPLICATIVE);
 
 
@@ -81,7 +83,7 @@ namespace Planetside
             {
                 self.GetRidOfMinimapIcon();
                 AkSoundEngine.PostEvent("Play_OBJ_shrine_accept_01", self.gameObject);
-                OtherTools.Notify("Shelltan senses your faith.", "His Power Is Gained.", "Planetside/Resources/ShrineIcons/HeresyIcons/ShelltanIcon");
+                OtherTools.Notify("Shelltan senses your faith.", "His Power Is Gained!", "Planetside/Resources/ShrineIcons/HeresyIcons/ShelltanIcon");
                 OtherTools.ApplyStat(player, PlayerStats.StatType.Damage, 0.5f, StatModifier.ModifyMethod.MULTIPLICATIVE);
                 OtherTools.ApplyStat(player, PlayerStats.StatType.DamageToBosses, 0.9f, StatModifier.ModifyMethod.MULTIPLICATIVE);
                 OtherTools.ApplyStat(player, PlayerStats.StatType.RateOfFire, 1.75f, StatModifier.ModifyMethod.MULTIPLICATIVE);
@@ -108,31 +110,33 @@ namespace Planetside
                 {
                     if (!enemy.IsBoss)
                     {
-                        float anotherGoddamnCluculation = player.CurrentGun.InfiniteAmmo == false ? Mathf.Max(Mathf.Min((float)player.CurrentGun.AdjustedMaxAmmo / 750f, 0.5f), 0.025f) : 0;
+                        //float anotherGoddamnCluculation = player.CurrentGun.InfiniteAmmo == false ? m : 0;
                         if (player.CurrentGun.InfiniteAmmo == false)
                         {
-                            float Value = Mathf.Min(1, 0.05f + anotherGoddamnCluculation);
-                            if (UnityEngine.Random.value <= Value)
+                            float m = (1 - Mathf.Sqrt((float)player.CurrentGun.AdjustedMaxAmmo / 1000f) * 0.45f);
+
+                            if (UnityEngine.Random.value <= m)
                             {
                                 AkSoundEngine.PostEvent("Play_OBJ_ammo_pickup_01", player.gameObject);
-                                GameObject lightning = player.PlayEffectOnActor(ShelltansBlessingVFX, new Vector3(0f, -1f, 0f));
-                                lightning.transform.position.WithZ(transform.position.z + 99999);
-                                lightning.GetComponent<tk2dBaseSprite>().PlaceAtPositionByAnchor(player.CenterPosition + new Vector2(0, 1.25f), tk2dBaseSprite.Anchor.MiddleCenter);
-                                player.sprite.AttachRenderer(lightning.GetComponent<tk2dBaseSprite>());
-                                lightning.GetComponent<tk2dSpriteAnimator>().PlayAndDestroyObject("start");
+                               
+                                
+                                GameObject lightning = player.PlayEffectOnActor(ShelltansBlessingVFX, new Vector3(0f, 1.25f, 0f));
+                                lightning.GetComponent<tk2dSpriteAnimator>().PlayAndDestroyObject("shelltan_blessing");
+                                
+                                
                                 if (player.PlayerHasActiveSynergy("Invigorated"))
                                 {
                                     for (int i = 0; i < player.inventory.AllGuns.Count; i++)
                                     {
                                         if (player.inventory.AllGuns[i] && player.CurrentGun != player.inventory.AllGuns[i])
                                         {
-                                            player.inventory.AllGuns[i].GainAmmo(Mathf.FloorToInt((float)player.inventory.AllGuns[i].AdjustedMaxAmmo * 0.02f));
+                                            player.inventory.AllGuns[i].GainAmmo(Mathf.CeilToInt((float)player.inventory.AllGuns[i].AdjustedMaxAmmo * 0.02f));
                                         }
                                     }
                                 }
                                 else
                                 {
-                                    player.inventory.CurrentGun.GainAmmo(Mathf.FloorToInt((float)player.inventory.CurrentGun.AdjustedMaxAmmo * 0.04f));
+                                    player.inventory.CurrentGun.GainAmmo(Mathf.CeilToInt((float)player.inventory.CurrentGun.AdjustedMaxAmmo * 0.04f));
                                 }
                                 player.CurrentGun.ForceImmediateReload(false);
                             }
@@ -143,24 +147,23 @@ namespace Planetside
                         if (player.CurrentGun.InfiniteAmmo == false)
                         {
                             AkSoundEngine.PostEvent("Play_OBJ_ammo_pickup_01", player.gameObject);
-                            GameObject lightning = player.PlayEffectOnActor(ShelltansBlessingVFX, new Vector3(0f, -1f, 0f));
-                            lightning.transform.position.WithZ(transform.position.z + 99999);
-                            lightning.GetComponent<tk2dBaseSprite>().PlaceAtPositionByAnchor(player.CenterPosition + new Vector2(0, 1.25f), tk2dBaseSprite.Anchor.MiddleCenter);
-                            player.sprite.AttachRenderer(lightning.GetComponent<tk2dBaseSprite>());
-                            lightning.GetComponent<tk2dSpriteAnimator>().PlayAndDestroyObject("start");
+                            
+                            GameObject lightning = player.PlayEffectOnActor(ShelltansBlessingVFX, new Vector3(0f, 1.25f, 0f));
+                            lightning.GetComponent<tk2dSpriteAnimator>().PlayAndDestroyObject("shelltan_blessing");
+
                             if (player.PlayerHasActiveSynergy("Invigorated"))
                             {
                                 for (int i = 0; i < player.inventory.AllGuns.Count; i++)
                                 {
                                     if (player.inventory.AllGuns[i] && player.CurrentGun != player.inventory.AllGuns[i])
                                     {
-                                        player.inventory.AllGuns[i].GainAmmo(Mathf.FloorToInt((float)player.inventory.AllGuns[i].AdjustedMaxAmmo * 0.2f));
+                                        player.inventory.AllGuns[i].GainAmmo(Mathf.CeilToInt((float)player.inventory.AllGuns[i].AdjustedMaxAmmo * 0.2f));
                                     }
                                 }
                             }
                             else
                             {
-                                player.inventory.CurrentGun.GainAmmo(Mathf.FloorToInt((float)player.inventory.CurrentGun.AdjustedMaxAmmo * 0.1f));
+                                player.inventory.CurrentGun.GainAmmo(Mathf.CeilToInt((float)player.inventory.CurrentGun.AdjustedMaxAmmo * 0.1f));
                             }
                             player.CurrentGun.ForceImmediateReload(false);
                         }

@@ -201,7 +201,7 @@ namespace Planetside
                 sprite.renderer.sharedMaterial.SetColor("_DashColor", this.dashColor);
                 sprite.renderer.sharedMaterial.SetFloat("_AllColorsToggle", 0f);
             }
-
+            sprite.SortingOrder -= 1;
             sprite.HeightOffGround = this.targetHeight;
             sprite.UpdateZDepth();
 

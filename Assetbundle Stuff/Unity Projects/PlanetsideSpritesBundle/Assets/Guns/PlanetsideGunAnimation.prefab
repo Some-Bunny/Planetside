@@ -5021,7 +5021,7 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    fps: 3
+    fps: 12
     loopStart: 2
     wrapMode: 1
     minFidgetDuration: 1
@@ -5031,25 +5031,6 @@ MonoBehaviour:
     - spriteCollection: {fileID: 114765906313500336, guid: c333b89a3d37c564abe3ed7a43354520,
         type: 2}
       spriteId: 323
-      invulnerableFrame: 0
-      groundedFrame: 1
-      requiresOffscreenUpdate: 0
-      eventAudio: 
-      eventVfx: 
-      eventStopVfx: 
-      eventLerpEmissive: 0
-      eventLerpEmissiveTime: 0.5
-      eventLerpEmissivePower: 30
-      forceMaterialUpdate: 0
-      finishedSpawning: 0
-      triggerEvent: 0
-      eventInfo: 
-      eventInt: 0
-      eventFloat: 0
-      eventOutline: 0
-    - spriteCollection: {fileID: 114765906313500336, guid: c333b89a3d37c564abe3ed7a43354520,
-        type: 2}
-      spriteId: 315
       invulnerableFrame: 0
       groundedFrame: 1
       requiresOffscreenUpdate: 0
@@ -5114,6 +5095,25 @@ MonoBehaviour:
     - spriteCollection: {fileID: 114765906313500336, guid: c333b89a3d37c564abe3ed7a43354520,
         type: 2}
       spriteId: 336
+      invulnerableFrame: 0
+      groundedFrame: 1
+      requiresOffscreenUpdate: 0
+      eventAudio: 
+      eventVfx: 
+      eventStopVfx: 
+      eventLerpEmissive: 0
+      eventLerpEmissiveTime: 0.5
+      eventLerpEmissivePower: 30
+      forceMaterialUpdate: 0
+      finishedSpawning: 0
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+      eventOutline: 0
+    - spriteCollection: {fileID: 114765906313500336, guid: c333b89a3d37c564abe3ed7a43354520,
+        type: 2}
+      spriteId: 904
       invulnerableFrame: 0
       groundedFrame: 1
       requiresOffscreenUpdate: 0
@@ -5405,26 +5405,7 @@ MonoBehaviour:
       eventOutline: 0
     - spriteCollection: {fileID: 114765906313500336, guid: c333b89a3d37c564abe3ed7a43354520,
         type: 2}
-      spriteId: 326
-      invulnerableFrame: 0
-      groundedFrame: 1
-      requiresOffscreenUpdate: 0
-      eventAudio: 
-      eventVfx: 
-      eventStopVfx: 
-      eventLerpEmissive: 0
-      eventLerpEmissiveTime: 0.5
-      eventLerpEmissivePower: 30
-      forceMaterialUpdate: 0
-      finishedSpawning: 0
-      triggerEvent: 0
-      eventInfo: 
-      eventInt: 0
-      eventFloat: 0
-      eventOutline: 0
-    - spriteCollection: {fileID: 114765906313500336, guid: c333b89a3d37c564abe3ed7a43354520,
-        type: 2}
-      spriteId: 324
+      spriteId: 323
       invulnerableFrame: 0
       groundedFrame: 1
       requiresOffscreenUpdate: 0
@@ -5442,8 +5423,8 @@ MonoBehaviour:
       eventFloat: 0
       eventOutline: 0
     fps: 8
-    loopStart: 2
-    wrapMode: 2
+    loopStart: 14
+    wrapMode: 1
     minFidgetDuration: 1
     maxFidgetDuration: 2
   - name: mop_fire
@@ -21470,5 +21451,31 @@ MonoBehaviour:
     fps: 7
     loopStart: 0
     wrapMode: 2
+    minFidgetDuration: 1
+    maxFidgetDuration: 2
+  - name: whistler_empty
+    frames:
+    - spriteCollection: {fileID: 114765906313500336, guid: c333b89a3d37c564abe3ed7a43354520,
+        type: 2}
+      spriteId: 312
+      invulnerableFrame: 0
+      groundedFrame: 1
+      requiresOffscreenUpdate: 0
+      eventAudio: 
+      eventVfx: 
+      eventStopVfx: 
+      eventLerpEmissive: 0
+      eventLerpEmissiveTime: 0.5
+      eventLerpEmissivePower: 30
+      forceMaterialUpdate: 0
+      finishedSpawning: 0
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+      eventOutline: 0
+    fps: 8
+    loopStart: 2
+    wrapMode: 0
     minFidgetDuration: 1
     maxFidgetDuration: 2

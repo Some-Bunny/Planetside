@@ -38,8 +38,9 @@ namespace Planetside
 			ItemIDs.AddToList(ammolet.PickupObjectId);
 			SynergyAPI.SynergyBuilder.AddItemToSynergy(ammolet, CustomSynergyType.MINOR_BLANKABLES);
 			SynergyAPI.SynergyBuilder.AddItemToSynergy(ammolet, CustomSynergyType.RELODESTAR);
+            ammolet.sprite.SortingOrder = 3;
 
-			ammolet.SetupUnlockOnCustomFlag(CustomDungeonFlags.HIGHER_CURSE_DRAGUN_KILLED, true);
+            ammolet.SetupUnlockOnCustomFlag(CustomDungeonFlags.HIGHER_CURSE_DRAGUN_KILLED, true);
 		}
 
 		public static int FrailtyAmmoletID;

@@ -14,6 +14,7 @@ using MonoMod.RuntimeDetour;
 using MonoMod;
 using SaveAPI;
 using Alexandria.Assetbundle;
+using Planetside.Controllers;
 
 namespace Planetside
 {
@@ -21,15 +22,19 @@ namespace Planetside
 	{
 		public static void Add()
 		{
-			Gun gun = ETGMod.Databases.Items.NewGun("Funcannon", "funcannon");
-			Game.Items.Rename("outdated_gun_mods:funcannon", "psog:funcannon");
+
+			string Name = FoolMode.isFoolish ? "Fungannon" : "Funcannon";
+            string ShortName = FoolMode.isFoolish ? "fungannon" : "funcannon";
+
+            Gun gun = ETGMod.Databases.Items.NewGun(Name, "funcannon");
+			Game.Items.Rename($"outdated_gun_mods:{ShortName}", $"psog:{ShortName}");
 			gun.gameObject.AddComponent<Funcannon>();
 			gun.SetShortDescription("Fungal Warfare");
 			gun.SetLongDescription("A mushroom that has completely enveloped an old pirate cannon.\n\nFolk tale claims of a hidden pirate-themed Chamber in the Gungeon, with this being crucial evidence.");
 
             GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_2_Sheet_Data, "funcannon_idle_001");
             gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_2_Animation_Data;
-            gun.sprite.SortingOrder = 1;
+            gun.sprite.SortingOrder = 2;
 
             gun.reloadAnimation = "funcannon_reload";
             gun.idleAnimation = "funcannon_idle";
@@ -38,13 +43,13 @@ namespace Planetside
 
             GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(39) as Gun, true, false);
 			gun.gunSwitchGroup = (PickupObjectDatabase.GetById(755) as Gun).gunSwitchGroup;
-			/*
-			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_PET_junk_splat_03";
-			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].triggerEvent = true;
-			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.reloadAnimation).frames[0].eventAudio = "Play_OBJ_wax_splat_01";
-			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.reloadAnimation).frames[0].triggerEvent = true;
-			*/
-			gun.DefaultModule.ammoCost = 1;
+
+            gun.spriteAnimator.GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_ENM_cannonball_blast_01";
+            gun.spriteAnimator.GetClipByName(gun.shootAnimation).frames[0].triggerEvent = true;
+            gun.spriteAnimator.GetClipByName(gun.shootAnimation).frames[1].eventAudio = "Play_PET_junk_splat_03";
+            gun.spriteAnimator.GetClipByName(gun.shootAnimation).frames[1].triggerEvent = true;
+
+            gun.DefaultModule.ammoCost = 1;
 			gun.DefaultModule.shootStyle = ProjectileModule.ShootStyle.SemiAutomatic;
 			gun.DefaultModule.sequenceStyle = ProjectileModule.ProjectileSequenceStyle.Random;
 			gun.reloadTime = 2.9f;
@@ -63,13 +68,15 @@ namespace Planetside
 			projectile.AdditionalScaleMultiplier *= 1f;
 			projectile.shouldRotate = true;
 			projectile.pierceMinorBreakables = true;
-			gun.gunClass = GunClass.EXPLOSIVE;
+
+            gun.gunClass = GunClass.EXPLOSIVE;
 
 			gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
 			gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Funcannon", "Planetside/Resources/GunClips/Funcannon/funcannonfull", "Planetside/Resources/GunClips/Funcannon/funcannonempty");
 
 			FuncannonProjectileComponent crossbowHandler = projectile.gameObject.AddComponent<FuncannonProjectileComponent>();
-			crossbowHandler.projectileToSpawn = (PickupObjectDatabase.GetById(197) as Gun).DefaultModule.projectiles[0];
+            crossbowHandler.m_projectile = projectile;
+
             Alexandria.Assetbundle.ProjectileBuilders.SetProjectileCollisionRight(projectile, "funcannon_projectile_001", StaticSpriteDefinitions.Projectile_Sheet_Data, 18, 6, false, tk2dBaseSprite.Anchor.MiddleCenter, 16, 6);
 
 			PierceProjModifier spook = projectile.gameObject.AddComponent<PierceProjModifier>();
@@ -80,11 +87,16 @@ namespace Planetside
 			gun.AddToSubShop(ItemBuilder.ShopType.Goopton, 1f);
 
 
+            FuncannonSpores = UnityEngine.Object.Instantiate<Projectile>(Guns.Pea_Shooter.DefaultModule.projectiles[0]);
+            FakePrefab.MarkAsFakePrefab(FuncannonSpores.gameObject);
+			var c = FuncannonSpores.gameObject.AddComponent<RecursionPreventer>();
 
-			Funcannon.FuncannonID = gun.PickupObjectId;
+            Funcannon.FuncannonID = gun.PickupObjectId;
 			ItemIDs.AddToList(gun.PickupObjectId);
-		}
-		public static int FuncannonID;
+
+        }
+        public static int FuncannonID;
+		public static Projectile FuncannonSpores;
 	}
 }
 
@@ -94,7 +106,6 @@ namespace Planetside
 	{
 		private void Start()
 		{
-			this.m_projectile = base.GetComponent<Projectile>();
 			this.m_projectile.OnDestruction += M_projectile_OnDestruction;
 		}
 
@@ -102,7 +113,7 @@ namespace Planetside
 		{
 			for (int i = 0; i < 24; i++)
 			{
-                this.SpawnProjectile(this.projectileToSpawn, this.m_projectile.sprite.WorldCenter, UnityEngine.Random.Range(-180, 180), null);
+                this.SpawnProjectile(this.m_projectile.sprite.WorldCenter, UnityEngine.Random.Range(-180, 180));
             }
         }
 
@@ -112,13 +123,13 @@ namespace Planetside
 			if (this.elapsed > 0.0333f)
 			{
 				elapsed = 0;
-                this.SpawnProjectile(this.projectileToSpawn, this.m_projectile.sprite.WorldCenter,  UnityEngine.Random.Range(-180, 180), null);
+                this.SpawnProjectile(this.m_projectile.sprite.WorldCenter,  UnityEngine.Random.Range(-180, 180));
 			}
 		}
 
-		private void SpawnProjectile(Projectile proj, Vector3 spawnPosition, float zRotation, SpeculativeRigidbody collidedRigidbody = null)
+		private void SpawnProjectile(Vector3 spawnPosition, float zRotation)
 		{
-			GameObject gameObject = SpawnManager.SpawnProjectile(proj.gameObject, spawnPosition, Quaternion.Euler(0f, 0f, zRotation), true);
+			GameObject gameObject = SpawnManager.SpawnProjectile(Funcannon.FuncannonSpores.gameObject, spawnPosition, Quaternion.Euler(0f, 0f, zRotation), true);
 			Projectile component = gameObject.GetComponent<Projectile>();
 			if (component != null)
 			{
@@ -133,8 +144,7 @@ namespace Planetside
                     }
                 }
 
-                component.gameObject.AddComponent<RecursionPreventer>();
-				component.baseData.damage = UnityEngine.Random.Range(1.8f, 4.2f);
+                component.baseData.damage = UnityEngine.Random.Range(1.8f, 4.2f);
 				component.baseData.speed = UnityEngine.Random.Range(0.4f, 3.1f);
                 component.UpdateSpeed();
 
@@ -150,8 +160,7 @@ namespace Planetside
 			}
 		}
 
-		private Projectile m_projectile;
-		public Projectile projectileToSpawn;
+		public Projectile m_projectile;
 		private float elapsed;
 	}
 }

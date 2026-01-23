@@ -557,7 +557,14 @@ namespace Planetside
 			bs.SkipTimingDifferentiator = behaviorSpeculator.SkipTimingDifferentiator;
 			Game.Enemies.Add("psog:"+guid, companion.aiActor);
 
-			PlanetsideModule.Strings.Enemies.Set("#DisplayName"+ DisplayName, DisplayName);
+
+            bs.aiActor.sprite.usesOverrideMaterial = true;
+            bs.aiActor.sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
+            bs.aiActor.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+            bs.aiActor.sprite.renderer.material.SetFloat("_EmissivePower", 25);
+            bs.aiActor.sprite.renderer.material.SetFloat("_EmissiveColorPower", 5f);
+
+            PlanetsideModule.Strings.Enemies.Set("#DisplayName"+ DisplayName, DisplayName);
 			companion.aiActor.OverrideDisplayName = "#DisplayName" + DisplayName;
 			companion.aiActor.ActorName = "#DisplayName" + DisplayName;
 			companion.aiActor.name = "#DisplayName" + DisplayName;
@@ -567,35 +574,16 @@ namespace Planetside
 		private class BulletEnemyBehavior : BraveBehaviour
 		{
 
-			private RoomHandler m_StartRoom;
 			private void Update()
 			{
-				if (!base.aiActor.HasBeenEngaged) { CheckPlayerRoom(); }
 			}
-			private void CheckPlayerRoom()
-			{
 
-				if (GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() != null && GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() == m_StartRoom)
-				{
-					base.aiActor.HasBeenEngaged = true;
-				}
-			}
 
 			
 			private void Start()
 			{
-				base.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("465da2bb086a4a88a803f79fe3a27677").bulletBank.GetBullet("homing"));
-				
-				if (base.aiActor != null && !base.aiActor.IsBlackPhantom)
-				{
-					base.aiActor.sprite.usesOverrideMaterial = true;
-					base.aiActor.sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
-					base.aiActor.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
-					base.aiActor.sprite.renderer.material.SetFloat("_EmissivePower", 40);
-					base.aiActor.sprite.renderer.material.SetFloat("_EmissiveColorPower", 1.2f);
-				}
+				base.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("465da2bb086a4a88a803f79fe3a27677").bulletBank.GetBullet("homing"));			
 				base.aiActor.spriteAnimator.AnimationEventTriggered += this.AnimationEventTriggered;
-				m_StartRoom = aiActor.GetAbsoluteParentRoom();
 				base.aiActor.healthHaver.OnPreDeath += (obj) =>{AkSoundEngine.PostEvent("Play_ENM_highpriest_blast_01", base.aiActor.gameObject);};
 			}
 			private void AnimationEventTriggered(tk2dSpriteAnimator animator, tk2dSpriteAnimationClip clip, int frameIdx)

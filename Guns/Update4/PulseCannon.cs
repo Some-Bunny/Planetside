@@ -24,11 +24,11 @@ namespace Planetside
             Game.Items.Rename("outdated_gun_mods:radial_pulsecannon", "psog:radial_pulsecannon");
             gun.gameObject.AddComponent<PulseCannon>();
             gun.SetShortDescription("Good For Frying Dwarves");
-            gun.SetLongDescription("A downscaled version of a pulse cannon that would be attached to a colossal battle-tower. They were decommisioned after a rise of employees reporting their legs were getting cut off.");
+            gun.SetLongDescription("A small segment of an automated defense system, decommisioned after miners were repeatedly getting their legs cut off.");
 
             GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "pulsecannon_idle_001");
             gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
-            gun.sprite.SortingOrder = 1;
+            gun.sprite.SortingOrder = 2;
 
             gun.reloadAnimation = "pulsecannon_reload";
             gun.idleAnimation = "pulsecannon_idle";

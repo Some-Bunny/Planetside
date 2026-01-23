@@ -42,7 +42,8 @@ namespace Planetside
             testActive.quality = PickupObject.ItemQuality.B;
             testActive.SetupUnlockOnCustomFlag(CustomDungeonFlags.DEFEAT_OPHANAIM, true);
 
-           
+            testActive.AddToSubShop(ItemAPI.ItemBuilder.ShopType.Goopton, 1);
+
 
             var debuffCollection = StaticSpriteDefinitions.VFX_Sheet_Data;
             var BrokenArmorVFXObject = ItemBuilder.AddSpriteToObjectAssetbundle("Wisp Sun", debuffCollection.GetSpriteIdByName("sunflare_fire_001"), debuffCollection);//new GameObject("Broken Armor");//SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Debuffs/brokenarmor", new GameObject("BrokenArmorEffect"));

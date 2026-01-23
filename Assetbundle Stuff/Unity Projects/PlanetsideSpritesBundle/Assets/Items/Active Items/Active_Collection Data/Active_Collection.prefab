@@ -2647,7 +2647,7 @@ MonoBehaviour:
     polygonCollider2D: []
     edgeCollider2D: []
     attachPoints: []
-  - name: CHROMA
+  - name: psog_CHROMA
     boundsData:
     - {x: 0.6875, y: 0.5, z: 0}
     - {x: 1.375, y: 1, z: 0}
@@ -2692,7 +2692,7 @@ MonoBehaviour:
     flipped: 1
     complexGeometry: 0
     physicsEngine: 0
-    colliderType: 1
+    colliderType: 0
     customColliders: []
     metadata:
       type: 0
@@ -2722,7 +2722,7 @@ MonoBehaviour:
   SpriteIDsWithAttachPoints: 
   SpriteDefinedAttachPoints: []
   premultipliedAlpha: 0
-  material: {fileID: 2100000, guid: 4a64f3af1f868bf429048d08baae6958, type: 2}
+  material: {fileID: 0}
   materials:
   - {fileID: 2100000, guid: 4a64f3af1f868bf429048d08baae6958, type: 2}
   textures:
@@ -2738,7 +2738,7 @@ MonoBehaviour:
   loadable: 0
   invOrthoSize: 2
   halfTargetHeight: 8
-  buildKey: 715573737
+  buildKey: 428609335
   dataGuid: c071907477a0ab041bed2f648eb93cdc
   managedSpriteCollection: 0
   hasPlatformData: 0

@@ -48,7 +48,7 @@ namespace Planetside
                         {
                             if (player.IsOnFire)
                             {
-                                projectile.baseData.damage *= 1.15f;
+                                projectile.baseData.damage *= 1.33f;
                                 projectile.OnHitEnemy += HandleHit;
                             }
                         }

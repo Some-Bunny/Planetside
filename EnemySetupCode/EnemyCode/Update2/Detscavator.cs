@@ -40,6 +40,7 @@ namespace Planetside
 
                 EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, Collection, mat);
 
+                Alexandria.ItemAPI.AlexandriaTags.SetTag(companion.aiActor, "robotic_mechanical");
 
                 companion.aiActor.knockbackDoer.weight = 800;
 				companion.aiActor.MovementSpeed = 0f;

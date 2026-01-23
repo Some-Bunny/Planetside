@@ -29,7 +29,7 @@ namespace Planetside
 			GunExt.SetLongDescription(gun, "A lantern filled with the souls that came before and after its time. Who knows how old it is, and if it even was manufactured by human hands...");
             GunInt.SetupSprite(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "soullantern_idle_001");
             gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
-            gun.sprite.SortingOrder = 1;
+            gun.sprite.SortingOrder = 2;
 
             gun.idleAnimation = "soullantern_idle";
             gun.shootAnimation = "soullantern_fire";

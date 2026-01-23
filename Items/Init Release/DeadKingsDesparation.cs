@@ -39,6 +39,7 @@ namespace Planetside
             activeitem.consumable = false;
             activeitem.quality = PickupObject.ItemQuality.A;
 
+            activeitem.sprite.SortingOrder = 3;
 
 
             var Collection = StaticSpriteDefinitions.Oddments_Sheet_Data;

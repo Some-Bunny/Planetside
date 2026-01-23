@@ -57,7 +57,7 @@ MonoBehaviour:
     region:
       serializedVersion: 2
       x: 0
-      y: 0.421875
+      y: 0
       width: 0.109375
       height: 0.171875
     border:
@@ -73,8 +73,8 @@ MonoBehaviour:
   - name: bookmark_psog_002
     region:
       serializedVersion: 2
-      x: 0.10546875
-      y: 0
+      x: 0
+      y: 0.1875
       width: 0.109375
       height: 0.171875
     border:
@@ -90,8 +90,8 @@ MonoBehaviour:
   - name: bookmark_psog_003
     region:
       serializedVersion: 2
-      x: 0.10546875
-      y: 0.1875
+      x: 0
+      y: 0.375
       width: 0.109375
       height: 0.171875
     border:
@@ -108,7 +108,7 @@ MonoBehaviour:
     region:
       serializedVersion: 2
       x: 0
-      y: 0.609375
+      y: 0.5625
       width: 0.109375
       height: 0.171875
     border:
@@ -125,7 +125,7 @@ MonoBehaviour:
     region:
       serializedVersion: 2
       x: 0
-      y: 0.796875
+      y: 0.75
       width: 0.109375
       height: 0.171875
     border:
@@ -142,7 +142,7 @@ MonoBehaviour:
     region:
       serializedVersion: 2
       x: 0.1171875
-      y: 0.375
+      y: 0
       width: 0.109375
       height: 0.171875
     border:
@@ -158,8 +158,8 @@ MonoBehaviour:
   - name: bookmark_psog_select_002
     region:
       serializedVersion: 2
-      x: 0.22265625
-      y: 0
+      x: 0.1171875
+      y: 0.1875
       width: 0.109375
       height: 0.171875
     border:
@@ -175,8 +175,8 @@ MonoBehaviour:
   - name: bookmark_psog_select_003
     region:
       serializedVersion: 2
-      x: 0.22265625
-      y: 0.1875
+      x: 0.1171875
+      y: 0.375
       width: 0.109375
       height: 0.171875
     border:
@@ -204,176 +204,6 @@ MonoBehaviour:
     rotated: 0
     sizeInPixels: {x: 28, y: 22}
     textureGUID: 63bda38e8923ffb4db68bab61088b7ec
-    deleted: 0
-    texture: {fileID: 0}
-  - name: EndOfEverythingClip_001
-    region:
-      serializedVersion: 2
-      x: 0
-      y: 0
-      width: 0.09765625
-      height: 0.1953125
-    border:
-      m_Left: 0
-      m_Right: 0
-      m_Top: 0
-      m_Bottom: 0
-    rotated: 0
-    sizeInPixels: {x: 25, y: 25}
-    textureGUID: 7b64ca0105cc89040bff9e6df5ade3a1
-    deleted: 0
-    texture: {fileID: 0}
-  - name: EndOfEverythingClip_002
-    region:
-      serializedVersion: 2
-      x: 0
-      y: 0.2109375
-      width: 0.09765625
-      height: 0.1953125
-    border:
-      m_Left: 0
-      m_Right: 0
-      m_Top: 0
-      m_Bottom: 0
-    rotated: 0
-    sizeInPixels: {x: 25, y: 25}
-    textureGUID: aae7e4a5863a10d4f8db2802d21fe73f
-    deleted: 0
-    texture: {fileID: 0}
-  - name: gunknownclipemptyl
-    region:
-      serializedVersion: 2
-      x: 0.30859375
-      y: 0.375
-      width: 0.04296875
-      height: 0.125
-    border:
-      m_Left: 0
-      m_Right: 0
-      m_Top: 0
-      m_Bottom: 0
-    rotated: 0
-    sizeInPixels: {x: 11, y: 16}
-    textureGUID: 269ac8e7c31c57648b6f914a2963109e
-    deleted: 0
-    texture: {fileID: 0}
-  - name: gunknownclipfull
-    region:
-      serializedVersion: 2
-      x: 0.30859375
-      y: 0.515625
-      width: 0.04296875
-      height: 0.125
-    border:
-      m_Left: 0
-      m_Right: 0
-      m_Top: 0
-      m_Bottom: 0
-    rotated: 0
-    sizeInPixels: {x: 11, y: 16}
-    textureGUID: 75246f9375a7ee0428f8697dc6eb6436
-    deleted: 0
-    texture: {fileID: 0}
-  - name: pointnullclip_001
-    region:
-      serializedVersion: 2
-      x: 0.265625
-      y: 0.671875
-      width: 0.05859375
-      height: 0.1171875
-    border:
-      m_Left: 0
-      m_Right: 0
-      m_Top: 0
-      m_Bottom: 0
-    rotated: 0
-    sizeInPixels: {x: 15, y: 15}
-    textureGUID: 67176e939d5a30d47b1607f69be28be5
-    deleted: 0
-    texture: {fileID: 0}
-  - name: pointnullclip_002
-    region:
-      serializedVersion: 2
-      x: 0.265625
-      y: 0.8046875
-      width: 0.05859375
-      height: 0.1171875
-    border:
-      m_Left: 0
-      m_Right: 0
-      m_Top: 0
-      m_Bottom: 0
-    rotated: 0
-    sizeInPixels: {x: 15, y: 15}
-    textureGUID: e5efd2d7d42c9bb4f8283bf34275f6eb
-    deleted: 0
-    texture: {fileID: 0}
-  - name: RiftakerIn_001
-    region:
-      serializedVersion: 2
-      x: 0.1171875
-      y: 0.75
-      width: 0.06640625
-      height: 0.1328125
-    border:
-      m_Left: 0
-      m_Right: 0
-      m_Top: 0
-      m_Bottom: 0
-    rotated: 0
-    sizeInPixels: {x: 17, y: 17}
-    textureGUID: 16702828c6970da4db8c34e2e9fc5923
-    deleted: 0
-    texture: {fileID: 0}
-  - name: RiftakerIn_002
-    region:
-      serializedVersion: 2
-      x: 0.19140625
-      y: 0.75
-      width: 0.06640625
-      height: 0.1328125
-    border:
-      m_Left: 0
-      m_Right: 0
-      m_Top: 0
-      m_Bottom: 0
-    rotated: 0
-    sizeInPixels: {x: 17, y: 17}
-    textureGUID: ae0750ab03a19b541a340ddbb36639ce
-    deleted: 0
-    texture: {fileID: 0}
-  - name: RiftakerOut_001
-    region:
-      serializedVersion: 2
-      x: 0.234375
-      y: 0.375
-      width: 0.06640625
-      height: 0.1328125
-    border:
-      m_Left: 0
-      m_Right: 0
-      m_Top: 0
-      m_Bottom: 0
-    rotated: 0
-    sizeInPixels: {x: 17, y: 17}
-    textureGUID: 92e9d25562813f540bbdbf8a09d6f164
-    deleted: 0
-    texture: {fileID: 0}
-  - name: RiftakerOut_002
-    region:
-      serializedVersion: 2
-      x: 0.234375
-      y: 0.5234375
-      width: 0.06640625
-      height: 0.1328125
-    border:
-      m_Left: 0
-      m_Right: 0
-      m_Top: 0
-      m_Bottom: 0
-    rotated: 0
-    sizeInPixels: {x: 17, y: 17}
-    textureGUID: 2e16a76ddb1465a4cafefc6422298a31
     deleted: 0
     texture: {fileID: 0}
   generator: 0

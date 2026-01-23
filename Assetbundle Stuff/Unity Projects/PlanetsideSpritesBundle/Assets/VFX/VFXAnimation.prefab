@@ -4369,6 +4369,25 @@ MonoBehaviour:
       eventOutline: 0
     - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
         type: 2}
+      spriteId: 209
+      invulnerableFrame: 0
+      groundedFrame: 1
+      requiresOffscreenUpdate: 0
+      eventAudio: 
+      eventVfx: 
+      eventStopVfx: 
+      eventLerpEmissive: 0
+      eventLerpEmissiveTime: 0.5
+      eventLerpEmissivePower: 30
+      forceMaterialUpdate: 0
+      finishedSpawning: 0
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+      eventOutline: 0
+    - spriteCollection: {fileID: 114565106134125884, guid: 77a5ce36bf1cffd4da8595222828e4ed,
+        type: 2}
       spriteId: 211
       invulnerableFrame: 0
       groundedFrame: 1
@@ -4424,9 +4443,9 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
-    fps: 12
+    fps: 18
     loopStart: 0
-    wrapMode: 0
+    wrapMode: 2
     minFidgetDuration: 1
     maxFidgetDuration: 2
   - name: frailty_effect

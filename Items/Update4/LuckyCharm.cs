@@ -26,12 +26,10 @@ namespace Planetside
 		public static void Init()
 		{
 			string itemName = "Lucky Charm";
-			//string resourceName = "Planetside/Resources/luckycharm.png";
 			GameObject obj = new GameObject(itemName);
 			var item = obj.AddComponent<LuckyCharm>();
             var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
             ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("luckycharm"), data, obj);
-            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "You feelin' lucky punk?";
 			string longDesc = "Tips the scales of fortune *slightly* in your favor in many, yet fairly small ways.\n\nA charm with a 4 leaf clover attached to it. Unsurprisingly not affiliated with the cereal brand.";
 			ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
@@ -41,9 +39,10 @@ namespace Planetside
 			new Hook(typeof(FloorRewardData).GetMethod("GetShopTargetQuality", BindingFlags.Instance | BindingFlags.Public), typeof(LuckyCharm).GetMethod("DreamLuckShops"));
 			new Hook(typeof(Chest).GetMethod("Initialize", BindingFlags.Instance | BindingFlags.NonPublic), typeof(LuckyCharm).GetMethod("DisableFuses"));
 			ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.Coolness, 1, StatModifier.ModifyMethod.ADDITIVE);
+            item.AddToSubShop(ItemAPI.ItemBuilder.ShopType.Cursula, 1f);
 
 
-			CustomFloorRewardData = new FloorRewardData();
+            CustomFloorRewardData = new FloorRewardData();
 
 			//Average Money MAX
 			CustomFloorRewardData.AverageCurrencyDropsThisFloor = 60f;

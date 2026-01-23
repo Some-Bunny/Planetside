@@ -31,7 +31,7 @@ namespace Planetside
 
             GunInt.SetupSprite(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "hammerofstorms_idle_001", 12, "hammerofstorms_ammonomicon_001");
             gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
-            gun.sprite.SortingOrder = 1;
+            gun.sprite.SortingOrder = 2;
 
             gun.idleAnimation = "lightninghammer_idle";
             gun.shootAnimation = "lightninghammer_fire";
@@ -209,9 +209,9 @@ namespace Planetside
                 if (obj1.GetFrame(obj2).eventInfo.Contains("Charge"))
                 {
                     LightningController c = new LightningController();
-                    c.MajorNodesCount = UnityEngine.Random.Range(5, 10);
+                    c.MajorNodesCount = UnityEngine.Random.Range(8, 12);
                     c.Thickness = 1;
-                    c.MajorNodeSplitoffChance = 0.24f;
+                    c.MajorNodeSplitoffChance = 0.165f;
 
                     c.OnPostStrike += (obj4) =>
                     {
@@ -221,7 +221,7 @@ namespace Planetside
                         Destroy(lightObj, 0.25f);
                     };
                     c.LightningPreDelay = 0f;
-                    c.GenerateLightning(obj.GetComponentInChildren<Gun>().barrelOffset.position + new Vector3(UnityEngine.Random.Range(-10, 10), 25), obj.GetComponentInChildren<Gun>().barrelOffset.position);
+                    c.GenerateLightning(gun.barrelOffset.position + new Vector3(UnityEngine.Random.Range(-10, 10), 25), gun.barrelOffset.position);
                 }
             };
         }

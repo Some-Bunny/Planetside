@@ -596,8 +596,12 @@ namespace Planetside
 				mat.SetFloat("_EmissivePower", 45);
 				companion.aiActor.sprite.renderer.material = mat;
 
-				//EnemyBuilder.SetupEntry(companion.aiActor, "Hells Bells", "These urns of past Gundead can be seen scattered around the Gungeon, with Gungeonners showing little respect to the contents inside.", "Planetside/Resources/Ammocom/johan", "Planetside/Resources/Fodder/fodder_idle_001", "Fodder");
-				/*
+                companion.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableSmallSpore);
+                companion.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableLargeSpore);
+                companion.bulletBank.Bullets.Add(StaticBulletEntries.undodgeableSniper);
+
+                //EnemyBuilder.SetupEntry(companion.aiActor, "Hells Bells", "These urns of past Gundead can be seen scattered around the Gungeon, with Gungeonners showing little respect to the contents inside.", "Planetside/Resources/Ammocom/johan", "Planetside/Resources/Fodder/fodder_idle_001", "Fodder");
+                /*
 				SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Fodder/fodder_idle_001.png", SpriteBuilder.ammonomiconCollection);
 				//FOR BOSSES USE BOSS ICONS
 				if (companion.GetComponent<EncounterTrackable>() != null)
@@ -627,7 +631,7 @@ namespace Planetside
 				EnemyDatabase.GetEntry("psog:fodder").isNormalEnemy = true;
 				*/
 
-			}
+            }
 		}
 
 
@@ -765,9 +769,7 @@ namespace Planetside
 
 			public override IEnumerator Top()
 			{
-				base.BulletBank.Bullets.Add(StaticBulletEntries.undodgeableSmallSpore);
-				base.BulletBank.Bullets.Add(StaticBulletEntries.undodgeableLargeSpore);
-				base.BulletBank.Bullets.Add(StaticBulletEntries.undodgeableSniper);
+
 
 				base.PostWwiseEvent("Play_ENM_creecher_burst_01");
 				for (int e = 0; e < 40; e++)
@@ -794,9 +796,6 @@ namespace Planetside
 		{
 			public override IEnumerator Top()
 			{
-				base.BulletBank.Bullets.Add(StaticBulletEntries.undodgeableSmallSpore);
-				base.BulletBank.Bullets.Add(StaticBulletEntries.undodgeableLargeSpore);
-				base.BulletBank.Bullets.Add(StaticBulletEntries.undodgeableSniper);
 
 				VesselController vesselCont = base.BulletBank.aiActor.GetComponentInChildren<VesselController>();
 
@@ -913,7 +912,7 @@ namespace Planetside
 				}
 				elapsed = 0;
 				Time = 0.375f;
-				base.PostWwiseEvent("Play_FlashTell");
+				//base.PostWwiseEvent("Play_FlashTell");
 				while (elapsed < Time)
 				{
 
@@ -961,7 +960,6 @@ namespace Planetside
 					{
 						base.Fire(new Direction(Angle, DirectionType.Absolute, -1f), new Speed(25f + (15 + e), SpeedType.Absolute), new UndodgeableBullshit());
 					}
-
 				}
 				yield break;
 			}

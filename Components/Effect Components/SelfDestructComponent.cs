@@ -27,9 +27,8 @@ namespace Planetside
         {
             if (PoofVFX == true)
             {
-                LootEngine.DoDefaultPurplePoof(base.gameObject.transform.position, false);
+                LootEngine.DoDefaultSynergyPoof(base.gameObject.transform.position, false);
             }
-            //base.StartCoroutine(this.HandleTimedDestroy());
         }
         public void Update()
         {
@@ -38,7 +37,7 @@ namespace Planetside
             {
                 if (PoofVFX == true)
                 {
-                    LootEngine.DoDefaultPurplePoof(base.gameObject.transform.position, false);
+                    LootEngine.DoDefaultSynergyPoof(base.gameObject.transform.position, false);
                 }
                 UnityEngine.Object.Destroy(base.gameObject);
             }

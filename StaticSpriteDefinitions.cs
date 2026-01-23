@@ -48,6 +48,8 @@ namespace Planetside
 
 
         public static dfAtlas PlanetsideUIAtlas;
+        public static dfAtlas PlanetsideClipUIAtlas;
+
         private static bool DebugMode = false;
         public static void Init()
         {
@@ -55,6 +57,12 @@ namespace Planetside
             GameObject obj = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("PlanetsideDFAtlas");
             UnityEngine.Object.DontDestroyOnLoad(obj);
             PlanetsideUIAtlas = obj.GetComponent<dfAtlas>();
+            PlanetsideUIAtlas.Material = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Material>("PlanetsideDFAtlasMat");
+
+            obj = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("ClipAtlas");
+            UnityEngine.Object.DontDestroyOnLoad(obj);
+            PlanetsideClipUIAtlas = obj.GetComponent<dfAtlas>();
+            PlanetsideClipUIAtlas.Material =  PlanetsideModule.SpriteCollectionAssets.LoadAsset<Material>("ClipAtlasMat");
 
             Modder_Bullet_Sheet_Data = DoFastSetup("ModderBulletCollection", "modderbullet material.mat");
             if (Modder_Bullet_Sheet_Data == null) { ETGModConsole.Log("Modder_Bullet_Sheet_Data is NULL"); }

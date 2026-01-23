@@ -39,6 +39,7 @@ namespace Planetside
 				var companion = prefab.AddComponent<EnemyBehavior>();
                 EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, Collection, mat);
 
+                Alexandria.ItemAPI.AlexandriaTags.SetTag(companion.aiActor, "skeleton");
 
                 companion.aiActor.knockbackDoer.weight = 50;
 				companion.aiActor.MovementSpeed = 2f;

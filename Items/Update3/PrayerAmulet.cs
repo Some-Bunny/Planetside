@@ -30,6 +30,7 @@ namespace Planetside
             warVase.quality = PickupObject.ItemQuality.C;
 			PrayerAmulet.PrayerAmuletID = warVase.PickupObjectId;
 			ItemIDs.AddToList(warVase.PickupObjectId);
+            warVase.AddToSubShop(ItemAPI.ItemBuilder.ShopType.Cursula, 1);
 
             PrayerKeep = RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/PrayerRooms/PrayerRoomKeep.room").room;
             PrayerProper = RoomFactory.BuildFromResource("Planetside/Resources/ShrineRooms/PrayerRooms/PrayerRoomProper.room").room;

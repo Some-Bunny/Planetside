@@ -32,8 +32,9 @@ namespace Planetside
 			ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
 			item.quality = PickupObject.ItemQuality.B;
 			BabyGoodCandleKin.BuildPrefab();
+            item.sprite.SortingOrder = 3;
 
-			item.CompanionGuid = BabyGoodCandleKin.guid;//new List<string>() { BabyGoodCandleKin.guid, BabyGoodCandleKin.guid };
+            item.CompanionGuid = BabyGoodCandleKin.guid;//new List<string>() { BabyGoodCandleKin.guid, BabyGoodCandleKin.guid };
 			//item.CompanionComponentsToTransfer = new List<Component> { new PetInteractable(), new PetInteractable() };
 
 			BabyGoodCandleKin.BabyGoodCandleKinID = item.PickupObjectId;

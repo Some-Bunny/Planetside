@@ -34,6 +34,7 @@ namespace Planetside
 				prefab = EnemyBuilder.BuildPrefabBundle("Shamber", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(0, 0), false, true);
 				var enemy = prefab.AddComponent<EnemyBehavior>();
 
+                Alexandria.ItemAPI.AlexandriaTags.SetTag(enemy.aiActor, "ghost");
 
 
 
@@ -64,10 +65,10 @@ namespace Planetside
 				enemy.aiActor.specRigidbody.CollideWithOthers = true;
 				enemy.aiActor.specRigidbody.CollideWithTileMap = true;
 				enemy.aiActor.PreventFallingInPitsEver = false;
-				enemy.aiActor.healthHaver.ForceSetCurrentHealth(50f);
+				enemy.aiActor.healthHaver.ForceSetCurrentHealth(65f);
 				enemy.aiActor.CollisionKnockbackStrength = 10f;
 				enemy.aiActor.CanTargetPlayers = true;
-				enemy.aiActor.healthHaver.SetHealthMaximum(50f, null, false);
+				enemy.aiActor.healthHaver.SetHealthMaximum(65f, null, false);
 				enemy.aiActor.PathableTiles = CellTypes.PIT | CellTypes.FLOOR;
 				enemy.aiActor.SetIsFlying(true, "Gamemode: Creative", true, true);
 

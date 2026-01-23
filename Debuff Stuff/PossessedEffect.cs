@@ -28,33 +28,7 @@ namespace Planetside
 
         public static GameObject BuildVFX()
         {
-            /*
-            var debuffCollection = StaticSpriteDefinitions.VFX_Sheet_Data;
-            var BrokenArmorVFXObject = ItemBuilder.AddSpriteToObjectAssetbundle("Possessed", debuffCollection.GetSpriteIdByName("possesedeffect_idle_005"), debuffCollection);//new GameObject("Broken Armor");//SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Debuffs/brokenarmor", new GameObject("BrokenArmorEffect"));
-            FakePrefab.MarkAsFakePrefab(BrokenArmorVFXObject);
-            UnityEngine.Object.DontDestroyOnLoad(BrokenArmorVFXObject);
-            BrokenArmorVFXObject.GetOrAddComponent<tk2dBaseSprite>();
-            tk2dSpriteAnimator animator = BrokenArmorVFXObject.GetOrAddComponent<tk2dSpriteAnimator>();
-            var clip = SpriteBuilder.AddAnimation(animator, debuffCollection, new List<int>()
-            {
-                debuffCollection.GetSpriteIdByName("possesedeffect_idle_001"),
-                debuffCollection.GetSpriteIdByName("possesedeffect_idle_002"),
-                debuffCollection.GetSpriteIdByName("possesedeffect_idle_003"),
-                debuffCollection.GetSpriteIdByName("possesedeffect_idle_004"),
-                debuffCollection.GetSpriteIdByName("possesedeffect_idle_005"),
-                debuffCollection.GetSpriteIdByName("possesedeffect_idle_006"),
-                debuffCollection.GetSpriteIdByName("possesedeffect_idle_007"),
-                debuffCollection.GetSpriteIdByName("possesedeffect_idle_008"),
-                debuffCollection.GetSpriteIdByName("possesedeffect_idle_009"),
-                debuffCollection.GetSpriteIdByName("possesedeffect_idle_010"),
-                debuffCollection.GetSpriteIdByName("possesedeffect_idle_011"),
 
-            }, "start", tk2dSpriteAnimationClip.WrapMode.LoopSection, 12);
-
-            animator.DefaultClipId = animator.GetClipIdByName("start");
-            animator.playAutomatically = true;
-            clip.loopStart = 3;
-            */
             var debuffCollection = StaticSpriteDefinitions.VFX_Sheet_Data;
             var BrokenArmorVFXObject = ItemBuilder.AddSpriteToObjectAssetbundle("Possessed VFX", debuffCollection.GetSpriteIdByName("possesedeffect_idle_001"), debuffCollection);//new GameObject("Broken Armor");//SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Debuffs/brokenarmor", new GameObject("BrokenArmorEffect"));
             FakePrefab.MarkAsFakePrefab(BrokenArmorVFXObject);
@@ -87,9 +61,9 @@ namespace Planetside
 
         public float QuickDamage(GameActor actor)
         {
-            float Damage = actor.healthHaver != null ? actor.healthHaver.maximumHealth / 6.25f : 6.25f;
-            Damage = Mathf.Max(3, Damage);
-            Damage = Mathf.Min(20, Damage);
+            float Damage = actor.healthHaver != null ? Mathf.Sqrt(actor.healthHaver.maximumHealth) : 6.25f;
+            Damage = Mathf.Max(1.5f, Damage);
+            Damage = Mathf.Min(12, Damage);
             return Damage;
         }
 

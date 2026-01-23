@@ -28,7 +28,7 @@ namespace Planetside
 
             GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "bulldog_idle_001");
             gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
-            gun.sprite.SortingOrder = 1;
+            gun.sprite.SortingOrder = 2;
 
             gun.idleAnimation = "thundershot_idle";
             gun.shootAnimation = "thundershot_fire";
@@ -115,7 +115,7 @@ namespace Planetside
             ThunderShot.fleeData = new FleePlayerData();
             ThunderShot.fleeData.StartDistance = 100f;
             gun.gunClass = GunClass.EXPLOSIVE;
-
+            gun.AddToSubShop(ItemAPI.ItemBuilder.ShopType.Trorc, 1);
         }
         public static int ThunderShotID;
 

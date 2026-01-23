@@ -22,10 +22,8 @@ namespace Planetside
         public static void Init()
         {
             string itemName = "Jammed Jar";
-            //string resourceName = "Planetside/Resources/JammedJarIDK/cursejar_001.png";
             GameObject obj = new GameObject(itemName);
             JammedJar activeitem = obj.AddComponent<JammedJar>();
-            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             var data = StaticSpriteDefinitions.Active_Item_Sheet_Data;
             ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("cursejar_001"), data, obj);
 

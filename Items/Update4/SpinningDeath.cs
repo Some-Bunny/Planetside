@@ -109,8 +109,9 @@ namespace Planetside
 
 			SpinningDeath.SpinningDeathID = item.PickupObjectId;
 			ItemIDs.AddToList(item.PickupObjectId);
+            item.AddToSubShop(ItemAPI.ItemBuilder.ShopType.Trorc, 1);
 
-            
+
             Projectile projectile = UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(86) as Gun).DefaultModule.projectiles[0]);
 
             BasicBeamController beamComp = projectile.GenerateBeamPrefabBundle(
@@ -166,7 +167,7 @@ namespace Planetside
             {
                 "psog:shockchain"
             };
-            CustomSynergies.Add("Overclocked", mandatoryConsoleIDs, optionalConsoleIDs2, true);
+            CustomSynergies.Add("Overclock", mandatoryConsoleIDs, optionalConsoleIDs2, true);
         }
 
 
@@ -179,7 +180,7 @@ namespace Planetside
 			SpinningDeathController cont = sourceProjectile.gameObject.GetComponent<SpinningDeathController>();
             ShockChainProjectile sh = sourceProjectile.gameObject.GetComponent<ShockChainProjectile>();
 
-			if (sh != null && Owner.PlayerHasActiveSynergy("Overclocked"))
+			if (sh != null && Owner.PlayerHasActiveSynergy("Overclock"))
 			{
                 AkSoundEngine.PostEvent("Play_EnergySwirl", sourceProjectile.gameObject);
                 PierceProjModifier spook = sourceProjectile.gameObject.GetOrAddComponent<PierceProjModifier>();

@@ -1781,9 +1781,9 @@ namespace Planetside
 					TeleporterPrototypeItem teleporter = PickupObjectDatabase.GetById(449).GetComponent<TeleporterPrototypeItem>();
 					UnityEngine.Object.Instantiate<GameObject>(teleporter.TelefragVFXPrefab, base.aiActor.sprite.WorldCenter, Quaternion.identity);
 
+					
 
-
-				}
+                }
 			}
 			private IEnumerator PortalDoer(MeshRenderer portal)
 			{

@@ -39,7 +39,7 @@ namespace Planetside
     {
         public const string GUID = "somebunny.etg.planetsideofgunymede";
         public const string NAME = "Planetside Of Gunymede Pre-Release";
-        public const string VERSION = "1.3.194";
+        public const string VERSION = "1.3.195";
         //9006FF
         public static readonly string TEXT_COLOR = "#00d0ff";
         //00d0ff
@@ -84,6 +84,11 @@ namespace Planetside
         public void GameManagerStart(GameManager gameManager)
         {
             #region Basic Initialization
+
+            //Initialise World-Stuff here
+            CrossGameDataStorage.Start();
+
+            FoolMode.StartUp();
             StaticShaders.InitShaders();
             GunFilePath = this.FolderPath() + "/sprites";
             //ETGMod.Assets.SetupSpritesFromFolder(GunFilePath);
@@ -94,8 +99,7 @@ namespace Planetside
             FilePathFolder = this.FolderPath();
             //metadata = this.Metadata;
 
-            //Initialise World-Stuff here
-            CrossGameDataStorage.Start();
+
 
 
             //Asset bundle stuff
@@ -368,8 +372,9 @@ namespace Planetside
             PunctureWound.Add();
             GunClassToken.Init();
             // ShopDiscountItem.Init();
-            //SawBladeGun.Add();
+            SawBladeGun.Add();
             CoinShot.Add();
+            NeutroniumCore.Init();
 
             //Perks
             AllSeeingEyeMiniPickup.Init();
@@ -421,7 +426,7 @@ namespace Planetside
             LostAdventurersBackpack.Init();
             LostAdventurersShield.Init();
 
-            TestActiveItem.Init();
+            //TestActiveItem.Init();
 
             #region Enemies
             if (EnemiesActive || DebugMode == false)
@@ -482,7 +487,7 @@ namespace Planetside
                 ApacheBullet.Init();
                 NeighborinoBullet.Init();
                 BleakBullet.Init();
-                KingBullet.Init();
+                QueenBullet.Init();
                 PandaBullet.Init();
                 RetrashBullet.Init();
                 KyleBullet.Init();
@@ -491,6 +496,9 @@ namespace Planetside
                 WowBullet.Init();
                 TurboBullet.Init();
                 SpcreatBullet.Init();
+                MarcyBullet.Init();
+                LordRiceBullet.Init();
+                PretzelBullet.Init();
 
                 GoldenRevolverBullet.Init();
                 NotSoAIBullet.Init();
@@ -648,17 +656,13 @@ namespace Planetside
                 "Now With 100% Less Nulls!",
                 "You Lost The Game.",
                 "WEAK.",
-                //"*Don't Download Some Bunnys Content Pack, you can't even have it on Bepinex anyway :D",
                 "weeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "If you see this, you owe me 10 bucks you nerd.",
-                //"https://www.youtube.com/watch?v=qn0YdT_pQF8",
-                //"https://www.youtube.com/watch?v=EGXPAoyP_cg",
                 "Ashes To Ashes, To Ashes (To Ashes)",
                 "Deadbolt Is Underrated!",
                 "You're Gonna Need A Bigger Gun",
                 "oh no",
                 "is that supposed to be like that???",
-                //"I'm so lonely.",
                 "I removed an item from the item pool, which one is it? ;)",
                 "Peter Griffin!",
                 "Hey VSauce!",
@@ -713,7 +717,12 @@ namespace Planetside
                 "Check out Astronautilus!",
                 "Check out Star Of Providence!",
                 "Check Out ZeroRanger!",
-                "Check Out Animal Well!."
+                "Check Out Animal Well!",
+                "Abandon everything you hold dear.",
+                "This is it.",
+                "When the fajitas come out sizzlin'",
+                "GREEN FRAUD",
+                "DESTROY"
             };
             Random r = new Random();
             int index = r.Next(RandomFunnys.Count);

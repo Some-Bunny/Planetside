@@ -84,6 +84,7 @@ namespace Planetside
                 
                 var companion = prefab.AddComponent<RevenantHide>();
                 companion.isaHider = isFaker;
+                Alexandria.ItemAPI.AlexandriaTags.SetTag(companion.aiActor, "skeleton");
 
                 prefab.AddComponent<TeleportationImmunity>();
 
@@ -348,8 +349,8 @@ namespace Planetside
                             new RevenantChainBehavior()
                             {
                                 ShootPoint = shootpoint,
-                                AttackCooldown = 3f,
-                                Cooldown = 4f,
+                                AttackCooldown = 1.5f,
+                                Cooldown = 3f,
                                 RequiresLineOfSight = true,
                                 Uninterruptible = true,
                                 Chainprefab = hook,
@@ -358,7 +359,7 @@ namespace Planetside
                                 BulletScript_Shoot_Orbital = new CustomBulletScriptSelector(typeof(Monolith)),
                                 MoveSpeedModifier = 0,
                                 CooldownVariance = 2,
-                                InitialCooldown = 2.25f,
+                                InitialCooldown = 1.25f,
                                 FireAnimation = "hook_in",
                                 ChargeAnimation = "charge",
                                 ChargeTime = 2.5f

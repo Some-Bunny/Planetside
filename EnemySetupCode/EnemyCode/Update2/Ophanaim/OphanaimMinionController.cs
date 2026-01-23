@@ -10,6 +10,7 @@ using Dungeonator;
 using System.Linq;
 using Brave.BulletScript;
 using DirectionType = Brave.BulletScript.DirectionType;
+using static Planetside.MinionShotPredictive;
 
 namespace Planetside
 {
@@ -28,7 +29,16 @@ namespace Planetside
                 var onnn = UnityEngine.Object.Instantiate<GameObject>(Ophanaim.SolarClap, obj1.transform.position, Quaternion.identity, null);
                 Destroy(onnn, 1.5f);
             };
+            if (bodyPartController.MainBody.IsBlackPhantom)
+            {
+                bodyPartController.sprite.usesOverrideMaterial = true;
+                Material material = bodyPartController.sprite.renderer.material;
+                material.shader = ShaderCache.Acquire("Brave/LitCutoutUberPhantom");
+                material.SetFloat("_PhantomGradientScale", bodyPartController.MainBody.BlackPhantomProperties.GradientScale);
+                material.SetFloat("_PhantomContrastPower", bodyPartController.MainBody.BlackPhantomProperties.ContrastPower);
+                material.SetFloat("_ApplyFade", 0f);
 
+            }
             GlobalMessageRadio.RegisterObjectToRadio(this.gameObject, new List<string>() { "eye_gun_laser", "eye_gun_simple", "eye_gun_predict", "eye_shot_hide", "eye_shot_appear", "eye_gun_laser_blue", "eye_gun_simple_blue", "eye_gun_predict_blue" }, OnMessageRecieved);
             SpriteOutlineManager.AddOutlineToSprite(this.sprite, new Color(10f, 10f, 10f), 0.1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
         }
@@ -136,11 +146,14 @@ namespace Planetside
         public override IEnumerator Top()
         {
             float r = BraveUtility.RandomAngle();
+            var cen = this.BulletBank.GetComponent<tk2dBaseSprite>();
+            var b = BulletBank.GetComponent<AdvancedBodyPartController>().MainBody.IsBlackPhantom;
+
             for (int i =0; i < 4;i++)
             {
                 string s = IsBlue == true ? StaticBulletEntries.UndodgeableFrogger.Name : "frogger";
 
-                base.Fire(Offset.OverridePosition(this.BulletBank.GetComponent<tk2dBaseSprite>().WorldCenter), new Direction(r + (90*i), DirectionType.Absolute, -1f), new Speed(3f, SpeedType.Absolute), new SpeedChangingBullet(s, 15, 120));
+                base.Fire(Offset.OverridePosition(cen.WorldCenter), new Direction(r + (90*i), DirectionType.Absolute, -1f), new Speed(3f, SpeedType.Absolute), new OphanaimSpeedChangingBullet(s, 15, 120, b));
             }
             yield break;
         }
@@ -278,13 +291,14 @@ namespace Planetside
             if (base.BulletBank != null)
             {
                 string s = IsBlue == true ? StaticBulletEntries.UndodgeableFrogger.Name : "frogger";
+                var b = BulletBank.GetComponent<AdvancedBodyPartController>().MainBody.IsBlackPhantom;
 
                 base.PostWwiseEvent("Play_BOSS_doormimic_blast_01", null);
-                base.Fire(Offset.OverridePosition(this.BulletBank.sprite.WorldCenter), new Direction(Angle, DirectionType.Absolute, -1f), new Speed(3f, SpeedType.Absolute), new SpeedChangingBullet(s, 25, 90));
-                base.Fire(Offset.OverridePosition(this.BulletBank.sprite.WorldCenter), new Direction(Angle, DirectionType.Absolute, -1f), new Speed(5f, SpeedType.Absolute), new SpeedChangingBullet(s, 25, 90));
-                base.Fire(Offset.OverridePosition(this.BulletBank.sprite.WorldCenter), new Direction(Angle, DirectionType.Absolute, -1f), new Speed(7f, SpeedType.Absolute), new SpeedChangingBullet(s, 25, 90));
-                base.Fire(Offset.OverridePosition(this.BulletBank.sprite.WorldCenter),new Direction(Angle, DirectionType.Absolute, -1f), new Speed(9f, SpeedType.Absolute), new SpeedChangingBullet(s, 25, 90));
-                base.Fire(Offset.OverridePosition(this.BulletBank.sprite.WorldCenter), new Direction(Angle, DirectionType.Absolute, -1f), new Speed(11f, SpeedType.Absolute), new SpeedChangingBullet(s, 25, 90));
+                base.Fire(Offset.OverridePosition(this.BulletBank.sprite.WorldCenter), new Direction(Angle, DirectionType.Absolute, -1f), new Speed(3f, SpeedType.Absolute), new OphanaimSpeedChangingBullet(s, 25, 90, b));
+                base.Fire(Offset.OverridePosition(this.BulletBank.sprite.WorldCenter), new Direction(Angle, DirectionType.Absolute, -1f), new Speed(5f, SpeedType.Absolute), new OphanaimSpeedChangingBullet(s, 25, 90, b));
+                base.Fire(Offset.OverridePosition(this.BulletBank.sprite.WorldCenter), new Direction(Angle, DirectionType.Absolute, -1f), new Speed(7f, SpeedType.Absolute), new OphanaimSpeedChangingBullet(s, 25, 90, b));
+                base.Fire(Offset.OverridePosition(this.BulletBank.sprite.WorldCenter),new Direction(Angle, DirectionType.Absolute, -1f), new Speed(9f, SpeedType.Absolute), new OphanaimSpeedChangingBullet(s, 25, 90, b));
+                base.Fire(Offset.OverridePosition(this.BulletBank.sprite.WorldCenter), new Direction(Angle, DirectionType.Absolute, -1f), new Speed(11f, SpeedType.Absolute), new OphanaimSpeedChangingBullet(s, 25, 90, b));
 
             }
             yield break;
@@ -434,12 +448,44 @@ namespace Planetside
                 base.PostWwiseEvent("Play_BOSS_doormimic_blast_01", null);
                 string s = IsBlue == true ? StaticBulletEntries.UndodgeableFrogger.Name : "frogger";
 
-                base.Fire(Offset.OverridePosition(this.BulletBank.sprite.WorldCenter), new Direction(f, DirectionType.Absolute, -1f), new Speed(7f, SpeedType.Absolute), new SpeedChangingBullet(s, 18, 75));
-                base.Fire(Offset.OverridePosition(this.BulletBank.sprite.WorldCenter), new Direction(f, DirectionType.Absolute, -1f), new Speed(8f, SpeedType.Absolute), new SpeedChangingBullet(s, 18, 75));
-                base.Fire(Offset.OverridePosition(this.BulletBank.sprite.WorldCenter), new Direction(f, DirectionType.Absolute, -1f), new Speed(9f, SpeedType.Absolute), new SpeedChangingBullet(s, 18, 75));
+                var b = BulletBank.GetComponent<AdvancedBodyPartController>().MainBody.IsBlackPhantom;
+
+                base.Fire(Offset.OverridePosition(this.BulletBank.sprite.WorldCenter), new Direction(f, DirectionType.Absolute, -1f), new Speed(7f, SpeedType.Absolute), new OphanaimSpeedChangingBullet(s, 18, 75, b));
+                base.Fire(Offset.OverridePosition(this.BulletBank.sprite.WorldCenter), new Direction(f, DirectionType.Absolute, -1f), new Speed(8f, SpeedType.Absolute), new OphanaimSpeedChangingBullet(s, 18, 75, b));
+                base.Fire(Offset.OverridePosition(this.BulletBank.sprite.WorldCenter), new Direction(f, DirectionType.Absolute, -1f), new Speed(9f, SpeedType.Absolute), new OphanaimSpeedChangingBullet(s, 18, 75, b));
             }
             yield break;
         }
-    }
 
+
+        public class OphanaimSpeedChangingBullet : Bullet
+        {
+
+            public OphanaimSpeedChangingBullet(string name, float newSpeed, int term, bool Jammed, bool suppressVfx = false) : base(name, suppressVfx, false, Jammed)
+            {
+                this.m_newSpeed = newSpeed;
+                this.m_term = term;
+                this.m_destroyTimer = -1;
+            }
+
+            public override IEnumerator Top()
+            {
+                base.ChangeSpeed(new Speed(this.m_newSpeed, SpeedType.Absolute), this.m_term);
+                if (this.m_destroyTimer < 0)
+                {
+                    yield break;
+                }
+                yield return base.Wait(this.m_term + this.m_destroyTimer);
+                base.Vanish(false);
+                yield break;
+            }
+
+            private float m_newSpeed;
+
+            private int m_term;
+
+            private int m_destroyTimer;
+        }
+    }
+   
 }

@@ -98,6 +98,7 @@
     <Compile Include="Controllers\ContainmentBreach\BossChanges\F2\GorgunChanges.cs" />
     <Compile Include="Controllers\ContainmentBreach\BossChanges\Misc\TheGames.cs" />
     <Compile Include="Controllers\CrossGameDataStorage.cs" />
+    <Compile Include="Controllers\FoolMode.cs" />
     <Compile Include="Controllers\HellShrinesController.cs" />
     <Compile Include="Controllers\GlobalMessageRadio.cs" />
     <Compile Include="Controllers\NemesisSpawnController.cs" />
@@ -164,6 +165,9 @@
     <Compile Include="DungeonPlaceables\TrespassPortalReturn.cs" />
     <Compile Include="DungeonPlaceables\TrespassPortalBack.cs" />
     <Compile Include="EnemySetupCode\EnemyAPI %28The one that modifies behaviors%29\OverrideBehavior.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\PretzelBullet.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\LordRiceBullet.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\MarcyBullet.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\Update3\SecondaryEnemies\Revenant.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\DallanBullet.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\QadayBullet.cs" />
@@ -247,6 +251,7 @@
     <Compile Include="Hooks, Actions and Patches\PickupHooks.cs" />
     <Compile Include="Hooks, Actions and Patches\ExplosionHooks.cs" />
     <Compile Include="Hooks, Actions and Patches\TitleDioramaHooks.cs" />
+    <Compile Include="Items\Update6\NeutroniumCore.cs" />
     <Compile Include="Items\Update6\LostAdventurersShield.cs" />
     <Compile Include="Items\Update6\LostAdventurersBackpack.cs" />
     <Compile Include="Items\Update6\LostAdventurersSword.cs" />
@@ -524,7 +529,7 @@
     <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\KyleBullet.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\RetrashBullet.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\PandaBullet.cs" />
-    <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\KingBullet.cs" />
+    <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\QueenBullet.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\BleakBullet.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\ApacheBullet.cs" />
     <Compile Include="EnemySetupCode\EnemyCode\ModderBullets\NeighborinoBullet.cs" />

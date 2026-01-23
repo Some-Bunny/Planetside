@@ -54,7 +54,9 @@ namespace Planetside
             primaryGunSavedID = 69420,
             secondaryGunSavedID = 69420,
 
-            AmountOfPerksToChooseFromOnRunStart = 0
+            AmountOfPerksToChooseFromOnRunStart = 0,
+            FoolModeMonth = 0,
+            FoolModeDay = 0,
         };
         public struct Configuration
         {
@@ -63,6 +65,8 @@ namespace Planetside
             public int AmountOfPerksToChooseFromOnRunStart;
             public int primaryGunSavedID;
             public int secondaryGunSavedID;
+            public int FoolModeMonth;
+            public int FoolModeDay;
 
         }
     }

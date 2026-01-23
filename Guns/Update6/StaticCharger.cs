@@ -34,7 +34,7 @@ namespace Planetside
 
             GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_2_Sheet_Data, "bigCharger001_idle_001");
             gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_2_Animation_Data;
-            gun.sprite.SortingOrder = 1;
+            gun.sprite.SortingOrder = 2;
 
             gun.idleAnimation = "staticharger_idle_0";
             gun.shootAnimation = "staticharger_fire_0";
@@ -407,8 +407,19 @@ namespace Planetside
             }
         }
 
+        public void OnDestroy()
+        {
+            if (Owner && Owner is PlayerController P)
+            {
+                gun.OnFinishAttack -= OFA;
+                P.OnRoomClearEvent -= ORCE;
+            }
+        }
+
+
         public void ORCE(PlayerController playerController)
         {
+            if (!gun) { return; }
             if (UpgradeLock && gun.CurrentStrengthTier > 0) { return; }
             if (UpgradeGunThisRoom == true && gun.CurrentStrengthTier < 5)
             {

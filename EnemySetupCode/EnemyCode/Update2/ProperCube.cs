@@ -40,10 +40,12 @@ namespace Planetside
             if (prefab == null || !EnemyBuilder.Dictionary.ContainsKey(Myguid))
             {
 				prefab = EnemyBuilder.BuildPrefabBundle("Trapper Cube", Myguid, Collection, 68, new IntVector2(0, 0), new IntVector2(8, 9),  false);
-				var companion = prefab.GetComponent<AIActor>();
+				
+                var companion = prefab.GetComponent<AIActor>();
 				var trapper = prefab.AddComponent<TrapperCubeBehaviour>();
+                Alexandria.ItemAPI.AlexandriaTags.SetTag(companion.aiActor, "sliding_cube");
 
-                companion.GetComponent<TeleportationImmunity>();
+                companion.AddComponent<TeleportationImmunity>();
 
                 if (!isDupe)
                 {
@@ -156,7 +158,7 @@ namespace Planetside
 					GlobalDungeonData.ValidTilesets.GUNGEON
 				},
 				h, 
-				10, 
+				15, 
 				3, 
 				"FireParticle_BG", 
 				new ParticleSystem.EmitParams() 
@@ -173,7 +175,7 @@ namespace Planetside
                     GlobalDungeonData.ValidTilesets.CATACOMBGEON
                },
                h1,
-               8,
+               10,
                3,
                "DarkMagics_BG",
                new ParticleSystem.EmitParams()

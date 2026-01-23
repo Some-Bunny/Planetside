@@ -27,7 +27,7 @@ namespace Planetside
 
 		public static void BuildPrefab()
 		{
-			//
+			
 			bool flag = prefab != null || EnemyBuilder.Dictionary.ContainsKey(guid);
 			bool flag2 = flag;
 			if (!flag2)

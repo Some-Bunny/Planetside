@@ -18,13 +18,13 @@ namespace Planetside
             Game.Items.Rename("outdated_gun_mods:" + shorthandName, "psog:" + shorthandName);
             var behav = gun.gameObject.AddComponent<HardlightNailgun>();
             gun.SetShortDescription("Hammer To A Gunfight");
-            gun.SetLongDescription("On reloading, activating the active reload switches modes. \n\nA revolutionary nailgun that nails together materials with solid light! This one was weaponized.");
+            gun.SetLongDescription("Triggering the active reload switches weapon mode. \n\nA revolutionary nailgun that nails together materials with solid light! This one was weaponized.");
 
 
 
             GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "hardlightnailgun_idle_001");
             gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
-            gun.sprite.SortingOrder = 1;
+            gun.sprite.SortingOrder = 2;
 
             gun.idleAnimation = "hardlightnailgun_idle";
             gun.shootAnimation = "hardlightnailgun_fire";

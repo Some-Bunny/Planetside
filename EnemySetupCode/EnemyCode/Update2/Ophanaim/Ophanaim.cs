@@ -1531,30 +1531,31 @@ namespace Planetside
                         UsesBeamProjectileWithoutModule = true,
                         beamSelection = ShootBeamBehavior.BeamSelection.Specify,
                         specificBeamShooters = new List<AIBeamShooter2>() { A },
-                        trackingType = CustomBeholsterLaserBehavior.TrackingType.ConstantTurn,
-                        DoesSpeedLerp = true,
-                        InitialStartingSpeed = 0,
-                        TimeToStayAtZeroSpeedAt = 0.5f,
-                        TimeToReachFullSpeed = 1f,
-                        LocksFacingDirection = true,
-                        maxTurnRate = 0,
-                        maxUnitForCatchUp = 0f,
+                    trackingType = CustomBeholsterLaserBehavior.TrackingType.Follow,
+                    DoesSpeedLerp = true,
+                    InitialStartingSpeed = 0,
+                    TimeToStayAtZeroSpeedAt = 0.5f,
+                    TimeToReachFullSpeed = 1f,
+                    LocksFacingDirection = false,
 
-                        minDegreesForCatchUp = 0,
-                        minUnitForCatchUp = 0f,
-                        minUnitForOvershoot = 0,
+                    maxTurnRate = 3,
+                    maxUnitForCatchUp = 3f,
 
-                        turnRateAcceleration = 24,
+                    minDegreesForCatchUp = 5,
+                    minUnitForCatchUp = 2f,
+                    minUnitForOvershoot = 1,
 
-                        unitCatchUpSpeed = 0,
-                        unitOvershootSpeed = 0,
-                        unitOvershootTime = 0,
+                    turnRateAcceleration = 2,
 
-                        degreeCatchUpSpeed = 0,
+                    unitCatchUpSpeed = 2,
+                    unitOvershootSpeed = -2,
+                    unitOvershootTime = 0.25f,
 
-                        useDegreeCatchUp = enemy.transform,
-                        useUnitCatchUp = true,
-                        useUnitOvershoot = true,
+                    degreeCatchUpSpeed = 4,
+
+                    useDegreeCatchUp = enemy.transform,
+                    useUnitCatchUp = false,
+                    useUnitOvershoot = false,
 
 
                         ShootPoint = mainbeamShootpoint.transform,
@@ -1948,8 +1949,8 @@ namespace Planetside
 
                     });
                     HealthHaver healthHaver = vfxObj.AddComponent<HealthHaver>();
-                    healthHaver.SetHealthMaximum(100);
-                    healthHaver.ForceSetCurrentHealth(100);
+                    healthHaver.SetHealthMaximum(140);
+                    healthHaver.ForceSetCurrentHealth(140);
                     healthHaver.flashesOnDamage = true;
                     vfxObj.GetOrAddComponent<GameActor>();
 
@@ -2586,7 +2587,7 @@ namespace Planetside
 
                 AIBeamShooter2[] beams = this.BulletBank.aiActor.GetComponents<AIBeamShooter2>();
                 yield return this.Wait(90);
-                GlobalMessageRadio.BroadcastMessage("eye_gun_laser");
+                GlobalMessageRadio.BroadcastMessage("eye_gun_predict");
                 yield return this.Wait(30);
 
                 int i = 0;
@@ -2616,15 +2617,16 @@ namespace Planetside
                                     vector2 = raycastResult2.Contact;
                                 }
                                 RaycastResult.Pool.Free(ref raycastResult2);
-                                int num2 = Mathf.Max(Mathf.CeilToInt(Vector2.Distance(vector, vector2)), 1);
-                                num2 /= 2;
+                                float num2 = Mathf.Max(Mathf.Ceil(Vector2.Distance(vector, vector2)), 1);
+                                num2 *= 0.7f;
                                 for (int e = 0; e < num2; e++)
                                 {
                                     float t = (float)e / (float)num2;
                                     Vector3 vector3 = Vector3.Lerp(vector, vector2, t);
-                                    this.Fire(Offset.OverridePosition(vector3), new Direction(beam.LaserBeam.Direction.ToAngle() + 90, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(0), new FireSplit.FireFire());
-                                    this.Fire(Offset.OverridePosition(vector3), new Direction(beam.LaserBeam.Direction.ToAngle() - 90, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(0), new FireSplit.FireFire());
-
+                                    this.Fire(Offset.OverridePosition(vector3), new Direction(beam.LaserBeam.Direction.ToAngle() + UnityEngine.Random.Range(80, 101), Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(0), new FireSplit.FireFire());
+                                    this.Fire(Offset.OverridePosition(vector3), new Direction(beam.LaserBeam.Direction.ToAngle() - UnityEngine.Random.Range(80, 101), Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(0), new FireSplit.FireFire());
+                                    this.Fire(Offset.OverridePosition(vector3), new Direction(beam.LaserBeam.Direction.ToAngle() + UnityEngine.Random.Range(85, 96), Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(2), new FireSplit.FireFire());
+                                    this.Fire(Offset.OverridePosition(vector3), new Direction(beam.LaserBeam.Direction.ToAngle() - UnityEngine.Random.Range(85,96), Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(2), new FireSplit.FireFire());
                                 }
                             }
                         }
@@ -2714,8 +2716,8 @@ namespace Planetside
                 public override IEnumerator Top()
                 {
                     this.Projectile.IgnoreTileCollisionsFor(90f);
-                    yield return this.Wait(30);
-                    base.ChangeSpeed(new Speed(9f, SpeedType.Absolute), 120);
+                    yield return this.Wait(UnityEngine.Random.Range(20, 45));
+                    base.ChangeSpeed(new Speed(UnityEngine.Random.Range(7, 11), SpeedType.Absolute), 120);
                     yield return this.Wait(300);
                     base.Vanish(false);
                     yield break;
@@ -2745,13 +2747,13 @@ namespace Planetside
                 int i = 0;
                 while (beams != null || beams.Length > 0)
                 {
-                    if (i % 40 == 0)
+                    if (i % 60 == 0)
+                    {
+                    }
+                    if (i % 60 == 0)
                     {
                         GlobalMessageRadio.BroadcastMessage("eye_gun_simple");
-                    }
-                    if (i % 80 == 0)
-                    {
-                        GlobalMessageRadio.BroadcastMessage("eye_gun_predict");
+                        GlobalMessageRadio.BroadcastMessage("eye_gun_laser");
 
                         foreach (AIBeamShooter2 beam in beams)
                         {
@@ -2772,14 +2774,14 @@ namespace Planetside
                                     vector2 = raycastResult2.Contact;
                                 }
                                 RaycastResult.Pool.Free(ref raycastResult2);
-                                int num2 = Mathf.Max(Mathf.CeilToInt(Vector2.Distance(vector, vector2)), 1);
-                                num2 /= 3;
+                                float num2 = Mathf.Max(Mathf.Ceil(Vector2.Distance(vector, vector2)), 1);
+                                num2 *= 0.4f;
                                 for (int e = 0; e < num2; e++)
                                 {
                                     float t = (float)e / (float)num2;
                                     Vector3 vector3 = Vector3.Lerp(vector, vector2, t);
-                                    this.Fire(Offset.OverridePosition(vector3), new Direction(beam.LaserBeam.Direction.ToAngle() + 90, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(0), new FireSplit.FireFire());
-                                    this.Fire(Offset.OverridePosition(vector3), new Direction(beam.LaserBeam.Direction.ToAngle() - 90, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(0), new FireSplit.FireFire());
+                                    this.Fire(Offset.OverridePosition(vector3), new Direction(beam.LaserBeam.Direction.ToAngle() + UnityEngine.Random.Range(85, 95), Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(0), new FireSplit.FireFire());
+                                    this.Fire(Offset.OverridePosition(vector3), new Direction(beam.LaserBeam.Direction.ToAngle() - UnityEngine.Random.Range(85, 95), Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(0), new FireSplit.FireFire());
                                 }
                             }
                         }
@@ -3650,16 +3652,16 @@ namespace Planetside
                     star.transform.position = centerPoint + BraveMathCollege.DegreesToVector(a, 0.6f * dist).ToVector3ZisY();
                 };
                 yield return base.Wait(30);
-                for (int i = 0; i < 1350; i++)
+                for (int i = 0; i < 1200; i++)
                 {
-                    float t = (float)i / (float)750;
+                    float t = (float)i / (float)600;
                     orbiter.BulletMaxRadius = (float)Mathf.Lerp(0, 12, (float)t);
                     orbiter.BulletMinRadius = (float)Mathf.Lerp(0, 1, (float)t);
                     orbiter.Update();
-                    if (i == 1050){ base.PostWwiseEvent("Play_ENM_CannonArmor_Charge_01", null); this.StartTask(DoBlast(braveLight)); }
-                    if (i > 1050)
+                    if (i == 900){ base.PostWwiseEvent("Play_ENM_CannonArmor_Charge_01", null); this.StartTask(DoBlast(braveLight)); }
+                    if (i > 900)
                     {
-                        float ads = i - 1050;
+                        float ads = i - 900;
                         float t2 = (float)ads / (float)240;
                         m = Mathf.Lerp(1, 0, MathToolbox.SinLerpTValue(t2));
                     }
@@ -3667,21 +3669,21 @@ namespace Planetside
                     if (i >= 300)
                     {
                         float ads = i - 300;
-                        float t2 = (float)ads/ (float)750;
+                        float t2 = (float)ads/ (float)600;
                         orbiter2.BulletMaxRadius = (float)Mathf.Lerp(0, 9, (float)t2);
                         orbiter2.BulletMinRadius = (float)Mathf.Lerp(0, 1, (float)t2);
                         orbiter3.BulletMaxRadius = (float)Mathf.Lerp(0, 3.25f, (float)t2);
                         orbiter3.BulletMinRadius = (float)Mathf.Lerp(0, 1, (float)t2);
                     }
 
-                    if (i % 45 == 0 && i < 1050)
+                    if (i % 45 == 0 && i < 900)
                     {
                         base.PostWwiseEvent("Play_BOSS_lichB_charge_01", null);
                         float startingDirection = UnityEngine.Random.Range(-120f, 120f);
                         Vector2 targetPos = base.GetPredictedTargetPosition((float)(((double)UnityEngine.Random.value >= 0.5) ? 1 : 0), 12f);
-                        for (int j = 0; j < 5; j++)
+                        for (int j = 0; j < 10; j++)
                         {
-                            base.Fire(Offset.OverridePosition(star.transform.PositionVector2()), new Direction(startingDirection, Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(5f, SpeedType.Absolute), new SnakeBullet(j * 5, targetPos));
+                            base.Fire(Offset.OverridePosition(star.transform.PositionVector2()), new Direction(startingDirection, Brave.BulletScript.DirectionType.Aim, -1f), new Speed(4f, SpeedType.Absolute), new SnakeBullet(j * 5, targetPos));
                         }
                     }
                     yield return base.Wait(1);
@@ -3711,7 +3713,6 @@ namespace Planetside
                 }
                 Vector2 pos = starObject.transform.PositionVector2();
                 Exploder.DoDistortionWave(pos, 12f, 1f, 40, 0.7f);
-                base.PostWwiseEvent("Play_BOSS_RatMech_Stomp_01", null);
                 base.PostWwiseEvent("Play_BOSS_RatMech_Stomp_01", null);
                 base.PostWwiseEvent("Play_BOSS_RatMech_Stomp_01", null);
 

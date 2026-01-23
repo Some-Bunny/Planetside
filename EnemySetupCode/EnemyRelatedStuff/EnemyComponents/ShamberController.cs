@@ -68,8 +68,9 @@ public class ShamberController : BraveBehaviour
     }
 
     private List<ShamberCont> m_bulletPositions = new List<ShamberCont>();
+    private List<Projectile> m_CaughtBullets = new List<Projectile>();
 
-	public class ShamberCont
+    public class ShamberCont
 	{
 		public Projectile projectile;
         public float s;
@@ -225,7 +226,9 @@ public class ShamberController : BraveBehaviour
 						Projectile proj = allProjectiles[i];
 						if (proj != null && proj.Owner != this.aiActor)
                         {
-							
+							if (m_CaughtBullets.Contains(proj)) { continue; }
+
+
                             BeamController beamController = proj.GetComponent<BeamController>();
 							BasicBeamController basicBeamController = proj.GetComponent<BasicBeamController>();
 							bool isNotBeam = basicBeamController == null && beamController == null;
@@ -238,64 +241,62 @@ public class ShamberController : BraveBehaviour
                                 {
                                     if (m_bulletPositions.Count() < 300)
                                     {
-                                        if (proj != null)
+                                        m_CaughtBullets.Add(proj);
+                                        if (proj.Owner != null)
                                         {
-                                            if (proj.Owner != null)
+                                            proj?.specRigidbody?.DeregisterSpecificCollisionException(proj.Owner.specRigidbody);
+
+                                            if (proj.Owner is PlayerController player)
                                             {
-                                                proj?.specRigidbody?.DeregisterSpecificCollisionException(proj.Owner.specRigidbody);
-
-                                                if (proj.Owner is PlayerController player)
-                                                {
-                                                    proj.sprite.color = new Color(1f, 0.1f, 0.1f);
-                                                    proj.MakeLookLikeEnemyBullet(false);
-                                                }
-
-                                                if (proj.Owner is AIActor enemy)
-                                                {
-                                                    switch (enemy.EnemyGuid)
-                                                    {
-                                                        case "b1770e0f1c744d9d887cc16122882b4f":
-                                                            proj.DieInAir();
-                                                            break;
-                                                        case "d5a7b95774cd41f080e517bea07bf495":
-                                                            proj.DieInAir();
-                                                            break;
-                                                    }
-                                                }
+                                                proj.sprite.color = new Color(1f, 0.1f, 0.1f);
+                                                proj.MakeLookLikeEnemyBullet(false);
                                             }
 
-
-
-                                            proj.Shooter = base.aiActor.specRigidbody;
-                                            proj.Owner = base.aiActor;
-                                            proj.specRigidbody.Velocity = Vector2.zero;
-                                            proj.ManualControl = true;
-                                            float s = proj.baseData.speed;
-                                            proj.baseData.speed = 0;
-                                            proj.UpdateSpeed();
-                                            proj.baseData.speed = s;
-                                            proj.specRigidbody.CollideWithTileMap = false;
-                                            proj.ResetDistance();
-                                            proj.collidesWithEnemies = base.aiActor.CanTargetEnemies;
-                                            proj.collidesWithPlayer = true;
-                                            proj.UpdateCollisionMask();
-                                            proj.RemovePlayerOnlyModifiers();
-                                            if (proj.BulletScriptSettings != null)
+                                            if (proj.Owner is AIActor enemy)
                                             {
-                                                proj.BulletScriptSettings.preventPooling = true;
-
+                                                switch (enemy.EnemyGuid)
+                                                {
+                                                    case "b1770e0f1c744d9d887cc16122882b4f":
+                                                        proj.DieInAir();
+                                                        break;
+                                                    case "d5a7b95774cd41f080e517bea07bf495":
+                                                        proj.DieInAir();
+                                                        break;
+                                                }
                                             }
-                                            proj.RemoveBulletScriptControl();
-
-                                            float second = BraveMathCollege.ClampAngle360((proj.transform.PositionVector2() - base.aiActor.sprite.WorldCenter).ToAngle());
-                                            this.m_bulletPositions.Add(new ShamberCont()
-                                            {
-                                                speed = s,
-                                                s = second,
-                                                projectile = proj,
-                                                Radius = Mathf.Min(3, 1.25f + (m_bulletPositions.Count() == 0f ? 0f : (float)m_bulletPositions.Count() * 0.025f))
-                                            });
                                         }
+
+
+
+                                        proj.Shooter = base.aiActor.specRigidbody;
+                                        proj.Owner = base.aiActor;
+                                        proj.specRigidbody.Velocity = Vector2.zero;
+                                        proj.ManualControl = true;
+                                        float s = proj.baseData.speed;
+                                        proj.baseData.speed = 0;
+                                        proj.UpdateSpeed();
+                                        proj.baseData.speed = s;
+                                        proj.specRigidbody.CollideWithTileMap = false;
+                                        proj.ResetDistance();
+                                        proj.collidesWithEnemies = base.aiActor.CanTargetEnemies;
+                                        proj.collidesWithPlayer = true;
+                                        proj.UpdateCollisionMask();
+                                        proj.RemovePlayerOnlyModifiers();
+                                        if (proj.BulletScriptSettings != null)
+                                        {
+                                            proj.BulletScriptSettings.preventPooling = true;
+
+                                        }
+                                        proj.RemoveBulletScriptControl();
+
+                                        float second = BraveMathCollege.ClampAngle360((proj.transform.PositionVector2() - base.aiActor.sprite.WorldCenter).ToAngle());
+                                        this.m_bulletPositions.Add(new ShamberCont()
+                                        {
+                                            speed = s,
+                                            s = second,
+                                            projectile = proj,
+                                            Radius = Mathf.Min(3, 1.25f + (m_bulletPositions.Count() == 0f ? 0f : (float)(m_bulletPositions.Count()) * 0.025f))
+                                        });
                                     }
                                     else
                                     {

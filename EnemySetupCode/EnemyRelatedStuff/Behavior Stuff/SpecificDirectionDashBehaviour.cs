@@ -59,15 +59,17 @@ namespace Planetside
 
         private IEnumerator Wait()
         {
-            yield return new WaitForSeconds(0.05f);
-            DelayPlaceDirt();
+            yield return new WaitForSeconds(0.1f);
+            if (GameManager.Instance.PrimaryPlayer.CurrentRoom == null | GameManager.Instance.PrimaryPlayer.CurrentRoom == GameManager.Instance.Dungeon.data.Entrance) 
+            {
+                DelayPlaceDirt();
+            }
             yield break;
         }
 
 
         public void DelayPlaceDirt()
         {
-            if (this.m_aiActor.State != AIActor.ActorState.Normal) { return; }
             var centerpoint = this.m_aiActor.sprite.WorldCenter - new Vector2(0, 0.3125f);
             UnityEngine.Object.Instantiate(Alexandria.DungeonAPI.StaticReferences.customObjects["psog_dirt_m"], centerpoint, Quaternion.identity);
 

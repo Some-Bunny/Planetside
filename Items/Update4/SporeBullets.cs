@@ -15,6 +15,7 @@ using MonoMod;
 using System.Collections.ObjectModel;
 
 using UnityEngine.Serialization;
+using Planetside.Controllers;
 
 
 
@@ -201,7 +202,7 @@ namespace Planetside
             List<string> mandatoryConsoleIDs = new List<string>
             {
                 "psog:spore_shot",
-				"psog:funcannon"
+				FoolMode.isFoolish ? "psog:fungannon" :  "psog:funcannon"
             };
             CustomSynergies.Add("Big Fungus", mandatoryConsoleIDs, null, true);
 

@@ -121,14 +121,15 @@ namespace Planetside
             GameObject obj = new GameObject(itemName);
             var item = obj.AddComponent<CHROMA>();
             var data = StaticSpriteDefinitions.Active_Item_Sheet_Data;
-            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("CHROMA"), data, obj);
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("psog_CHROMA"), data, obj);
             string shortDesc = "The Trinity";
-            string longDesc = "Splits your gun into 3.\n\nAble to refrect reality, this mineral is formed when pockets of the Aimless Void touch the meta-layers of the Universe.\nThe lives of hundreds of Gundead are used to even risk extracting it from the Void.";
+            string longDesc = "Splits your gun into 3.\n\nAble to refract reality, this mineral is formed when the Aimless Void touches the meta-layers of the Universe.\nThe lives of hundreds of Gundead are used to even risk extracting it from the Void.";
             ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
             ItemBuilder.SetCooldownType(item, ItemBuilder.CooldownType.Timed, 1);
             item.consumable = true;
             item.quality = PickupObject.ItemQuality.S;
             ItemID = item.PickupObjectId;
+            item.AddToSubShop(ItemBuilder.ShopType.Trorc, 1f);
 
 
             RefractionObject = PrefabBuilder.BuildObject("RefractionObject");
@@ -137,11 +138,7 @@ namespace Planetside
             var refraction = RefractionObject.AddComponent<RefractionEffect>();
             refraction.sprite = sprite;
             refraction.spriteAnimator = spriteAnimator;
-            List<string> mandatoryConsoleIDs = new List<string>
-            {
-                "psog:warp-techs_kit",
-                "psog:teleporting_gunfire"
-            };
+
         }
         public static int ItemID;
         public static GameObject RefractionObject;
@@ -206,7 +203,7 @@ namespace Planetside
             });
 
             float e = 0;
-            while (e < 5)
+            while (e < 4)
             {
                 GlobalSparksDoer.DoRandomParticleBurst(1, 
                     Gun.sprite.WorldCenter + new Vector2(-0.125f, -0.125f),
@@ -319,10 +316,10 @@ namespace Planetside
                     position = Gun.sprite.WorldCenter,
                     startSize = 8,
                     rotation = 0,
-                    startLifetime = 0.25f,
+                    startLifetime = 0.5f,
                     startColor = color
                 });
-                yield return new WaitForSeconds(0.0125f);
+                yield return new WaitForSeconds(0.025f);
 
             }
             

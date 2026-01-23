@@ -23,7 +23,6 @@ namespace Planetside
 		public static void Init()
 		{
 			string itemName = "Injector Rounds";
-			//string resourceName = "Planetside/Resources/injectorrounds.png";
 			GameObject obj = new GameObject(itemName);
 			var item = obj.AddComponent<InjectorRounds>();
             var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
@@ -34,8 +33,9 @@ namespace Planetside
 			ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
 			ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.ProjectileSpeed, 1.15f, StatModifier.ModifyMethod.MULTIPLICATIVE);
 			ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.Damage, 1.1f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+            item.AddToSubShop(ItemAPI.ItemBuilder.ShopType.Trorc, 1);
 
-			item.quality = PickupObject.ItemQuality.C;
+            item.quality = PickupObject.ItemQuality.C;
 			List<string> mandatoryConsoleIDs = new List<string>
 			{
 				"psog:injector_rounds",

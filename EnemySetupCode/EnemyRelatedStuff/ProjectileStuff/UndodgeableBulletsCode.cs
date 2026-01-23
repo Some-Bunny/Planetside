@@ -187,14 +187,18 @@ namespace Planetside
         }
 
 
+        public void OnDisable()
+        {
+            SetUnDodgeableState(true);
+        }
+
+
         private Vector3 LastHeightPosition;
         private float ParticleTick = 0.01f;
         private float _ParticleTick = 0f;
 
         public override void Update()
         {            
-            //this.transform.position = LastHeightPosition;
-            //this.specRigidbody.Reinitialize();
             base.Update();
             this.sprite.renderer.material.SetFloat("_IsBlue", IsUnDodgeable ? 1 : 0);
             LastHeightPosition = this.transform.position;
@@ -214,7 +218,7 @@ namespace Planetside
                     });
                 }
             }
-            if (CurrentHeight <= -0.5f && CurrentHeight >= -0.75f)
+            if (CurrentHeight <= -0.5f && CurrentHeight >= -0.5f)
             {
                 _ParticleTick += Time.deltaTime;
                 if (_ParticleTick > ParticleTick)

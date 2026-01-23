@@ -79,11 +79,12 @@ namespace ItemAPI
             FakePrefab.MarkAsFakePrefab(bgSpriteObject);
             UnityEngine.Object.DontDestroyOnLoad(bgSpriteObject);
 
-            dfTiledSprite fgSprite = fgSpriteObject.SetupDfSpriteFromTexture<dfTiledSprite>(atlas, name_full);
+            dfTiledSprite fgSprite = fgSpriteObject.DoSetupDfSpriteFromTexture<dfTiledSprite>(atlas, name_full);
             fgSprite.zindex = 7;
 
-            dfTiledSprite bgSprite = bgSpriteObject.SetupDfSpriteFromTexture<dfTiledSprite>(atlas, name_empty);
+            dfTiledSprite bgSprite = bgSpriteObject.DoSetupDfSpriteFromTexture<dfTiledSprite>(atlas, name_empty);
             bgSprite.zindex = 5;
+
             GameUIAmmoType uiammotype = new GameUIAmmoType
             {
                 ammoBarBG = bgSprite,
@@ -100,11 +101,11 @@ namespace ItemAPI
         }
 
 
-        public static T SetupDfSpriteFromTexture<T>(this GameObject obj, dfAtlas atlas, string texture_Name) where T : dfSprite
+        public static T DoSetupDfSpriteFromTexture<T>(this GameObject obj, dfAtlas atlas, string texture_Name) where T : dfSprite
         {
             T sprite = obj.GetOrAddComponent<T>();
             sprite.Atlas = atlas;
-            sprite.SpriteName = texture_Name;
+            sprite.SpriteName = texture_Name;            
             return sprite;
         }
 

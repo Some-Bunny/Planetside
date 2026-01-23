@@ -28,7 +28,7 @@ namespace Planetside
 
             GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_2_Sheet_Data, "yourhonordeath_fire_001");
             gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_2_Animation_Data;
-            gun.sprite.SortingOrder = 1;
+            gun.sprite.SortingOrder = 2;
 
             gun.reloadAnimation = "GTEE_win";
             gun.idleAnimation = "GTEE_win";
@@ -53,7 +53,7 @@ namespace Planetside
 			gun.DefaultModule.burstShotCount = 1;
 
             gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
-            gun.DefaultModule.finalCustomAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("GTEE", StaticSpriteDefinitions.PlanetsideUIAtlas, "EndOfEverythingClip_001", "EndOfEverythingClip_002");
+            gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("GTEE", StaticSpriteDefinitions.PlanetsideClipUIAtlas, "EndOfEverythingClip_001", "EndOfEverythingClip_002");
 
             Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(gun.DefaultModule.projectiles[0]);
 			projectile.gameObject.SetActive(false);
@@ -61,7 +61,6 @@ namespace Planetside
 			UnityEngine.Object.DontDestroyOnLoad(projectile);
 			gun.DefaultModule.projectiles[0] = projectile;
 			projectile.baseData.damage = 1f;
-			projectile.baseData.speed *= 1f;
 			projectile.AdditionalScaleMultiplier *= 1f;
 			projectile.shouldRotate = true;
 			EndOfEverything fuck = projectile.GetComponent<EndOfEverything>();

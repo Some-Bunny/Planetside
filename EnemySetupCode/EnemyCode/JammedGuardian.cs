@@ -161,6 +161,7 @@ namespace Planetside
 				prefab = EnemyBuilder.BuildPrefabBundle("Jammed Guardian", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(0, 0), false, true);
 				var companion = prefab.AddComponent<EnemyBehavior>();
                 EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, Collection, mat);
+                Alexandria.ItemAPI.AlexandriaTags.SetTag(companion.aiActor, "skeleton");
 
                 companion.aiActor.knockbackDoer.weight = 10000;
 				companion.aiActor.MovementSpeed = 1.75f;

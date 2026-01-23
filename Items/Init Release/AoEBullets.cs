@@ -29,7 +29,8 @@ namespace Planetside
             var item = obj.AddComponent<AoEBullets>();
             var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
             ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("aurabullets"), data, obj);
-            
+            item.sprite.SortingOrder = 3;
+
             string shortDesc = "Radiant";
             string longDesc = "Makes bullets deal damage to enemies near them." +
                 "\n\nThese bullets contain a very rare and powerful radioactive isotope. Don't lick them!";

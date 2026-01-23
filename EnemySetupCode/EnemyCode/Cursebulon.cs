@@ -14,6 +14,7 @@ using UnityEngine.Serialization;
 using static tk2dSpriteDefinition;
 using PathologicalGames;
 
+
 namespace Planetside
 {
 	public class Cursebulon : AIActor
@@ -41,7 +42,7 @@ namespace Planetside
 				prefab = EnemyBuilder.BuildPrefabBundle("Cursebulon", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(8, 9), false);
                 var companion = prefab.AddComponent<EnemyBehavior>();
                 EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, Collection, mat, false);
-
+				Alexandria.ItemAPI.AlexandriaTags.SetTag(companion.aiActor, "blobulon");
 
                 companion.aiActor.knockbackDoer.weight = 25;
 				companion.aiActor.MovementSpeed = 4.75f;

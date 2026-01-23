@@ -16,6 +16,7 @@ using System.Collections;
 using static Dungeonator.CellVisualData;
 using Alexandria.PrefabAPI;
 using Planetside.Static_Storage;
+using Planetside.Controllers;
 
 namespace Planetside
 {
@@ -92,7 +93,7 @@ namespace Planetside
             var animator = DeturretLeft.AddComponent<tk2dSpriteAnimator>();
             animator.library = StaticSpriteDefinitions.RoomObject_Animation_Data;
             animator.playAutomatically = true;
-            animator.defaultClipId = StaticSpriteDefinitions.RoomObject_Animation_Data.GetClipIdByName("deturret_left");
+            animator.defaultClipId = StaticSpriteDefinitions.RoomObject_Animation_Data.GetClipIdByName(FoolMode.isFoolish ? "deturret_right" :"deturret_left");
             sprite.usesOverrideMaterial = true;
             Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
             mat.mainTexture = sprite.renderer.material.mainTexture;
@@ -132,7 +133,7 @@ namespace Planetside
             animator = DeturretRight.AddComponent<tk2dSpriteAnimator>();
             animator.library = StaticSpriteDefinitions.RoomObject_Animation_Data;
             animator.playAutomatically = true;
-            animator.defaultClipId = StaticSpriteDefinitions.RoomObject_Animation_Data.GetClipIdByName("deturret_right");
+            animator.defaultClipId = StaticSpriteDefinitions.RoomObject_Animation_Data.GetClipIdByName(FoolMode.isFoolish ? "deturret_left" : "deturret_right");
             sprite.usesOverrideMaterial = true;
             mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
             mat.mainTexture = sprite.renderer.material.mainTexture;

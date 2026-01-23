@@ -601,15 +601,7 @@ namespace Planetside.DungeonPlaceables
 
                 if (effectCooldown > 0) { effectCooldown -= Time.deltaTime; }
 
-                EnemyBlessed.IgnoreForRoomClear = ShouldCountForRoomProgress();
-                E += 90 * Time.deltaTime;
-                var m = this.sprite.WorldBottomCenter + MathToolbox.GetUnitOnCircle(E, 0.75f);
-                var m_2 = EnemyBlessed.sprite.WorldBottomCenter + MathToolbox.GetUnitOnCircle(E, 0.75f);
-                var m_3 = EnemyBlessed.sprite.WorldBottomCenter + MathToolbox.GetUnitOnCircle(E+180, 0.75f);
-
-                GlobalSparksDoer.DoRandomParticleBurst(1, m, m, Vector3.up, 1f, 0.05f, 0.05f, 1, Color.white, GlobalSparksDoer.SparksType.FLOATY_CHAFF);
-                GlobalSparksDoer.DoRandomParticleBurst(1, m_2, m_2, Vector3.up, 1f, 0.05f, 0.05f, 1, Color.white, GlobalSparksDoer.SparksType.FLOATY_CHAFF);
-                GlobalSparksDoer.DoRandomParticleBurst(1, m_3, m_3, Vector3.up, 1f, 0.05f, 0.05f, 1, Color.white, GlobalSparksDoer.SparksType.FLOATY_CHAFF);
+               
 
                 lineRenderer.positionCount = 2;
                 lineRenderer.SetPosition(0, this.sprite.WorldCenter);
@@ -621,6 +613,23 @@ namespace Planetside.DungeonPlaceables
                 lineRenderer.enabled = false;
             }
         }
+
+        public void FixedUpdate()
+        {
+            if (GameManager.Instance.IsPaused == false && EnemyBlessed != null)
+            {
+                EnemyBlessed.IgnoreForRoomClear = ShouldCountForRoomProgress();
+                E += 90 * Time.fixedDeltaTime;
+                var m = this.sprite.WorldBottomCenter + MathToolbox.GetUnitOnCircle(E, 0.75f);
+                var m_2 = EnemyBlessed.sprite.WorldBottomCenter + MathToolbox.GetUnitOnCircle(E, 0.75f);
+                var m_3 = EnemyBlessed.sprite.WorldBottomCenter + MathToolbox.GetUnitOnCircle(E + 180, 0.75f);
+
+                GlobalSparksDoer.DoRandomParticleBurst(1, m, m, Vector3.up, 1f, 0.05f, 0.05f, 1, Color.white, GlobalSparksDoer.SparksType.FLOATY_CHAFF);
+                GlobalSparksDoer.DoRandomParticleBurst(1, m_2, m_2, Vector3.up, 1f, 0.05f, 0.05f, 1, Color.white, GlobalSparksDoer.SparksType.FLOATY_CHAFF);
+                GlobalSparksDoer.DoRandomParticleBurst(1, m_3, m_3, Vector3.up, 1f, 0.05f, 0.05f, 1, Color.white, GlobalSparksDoer.SparksType.FLOATY_CHAFF);
+            }
+        }
+
 
         private bool ShouldCountForRoomProgress()
         {

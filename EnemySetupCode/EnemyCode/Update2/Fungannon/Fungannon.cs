@@ -14,6 +14,7 @@ using DirectionType = DirectionalAnimation.DirectionType;
 using static DirectionalAnimation;
 using EnemyBulletBuilder;
 using SaveAPI;
+using Planetside.Controllers;
 namespace Planetside
 {
 	class Fungannon : AIActor
@@ -40,6 +41,7 @@ namespace Planetside
 				FungannonController pain = prefab.AddComponent<FungannonController>();
                 EnemyToolbox.QuickAssetBundleSpriteSetup(enemy.aiActor, Collection, mat, false);
 
+                Alexandria.ItemAPI.AlexandriaTags.SetTag(enemy.aiActor, "mushroom");
 
                 AIAnimator aiAnimator = enemy.aiAnimator;
 
@@ -892,7 +894,11 @@ namespace Planetside
 				GenericIntroDoer miniBossIntroDoer = prefab.AddComponent<GenericIntroDoer>();
 				prefab.AddComponent<FungannonIntroController>();
 
-				miniBossIntroDoer.triggerType = GenericIntroDoer.TriggerType.PlayerEnteredRoom;
+
+                string Name = FoolMode.isFoolish ? "Funcannon" : "Fungannon";
+                string NameBig = FoolMode.isFoolish ? "FUNCANNON" : "FUNGANNON";
+
+                miniBossIntroDoer.triggerType = GenericIntroDoer.TriggerType.PlayerEnteredRoom;
 				miniBossIntroDoer.initialDelay = 0.15f;
 				miniBossIntroDoer.cameraMoveSpeed = 14;
 				miniBossIntroDoer.specifyIntroAiAnimator = null;
@@ -910,8 +916,8 @@ namespace Planetside
 				miniBossIntroDoer.restrictPlayerMotionToRoom = false;
 				miniBossIntroDoer.fusebombLock = false;
 				miniBossIntroDoer.AdditionalHeightOffset = 0;
-				PlanetsideModule.Strings.Enemies.Set("#FUNGANNON_NAME", "FUNGANNON");
-				PlanetsideModule.Strings.Enemies.Set("#FUNGANNON_NAME_SMALL", "Fungannon");
+				PlanetsideModule.Strings.Enemies.Set("#FUNGANNON_NAME", NameBig);
+				PlanetsideModule.Strings.Enemies.Set("#FUNGANNON_NAME_SMALL", Name);
 
 				PlanetsideModule.Strings.Enemies.Set("SPORANGIO_WAR", "SPORANGIO-WAR");
 				PlanetsideModule.Strings.Enemies.Set("#QUOTE", "");
@@ -955,7 +961,7 @@ namespace Planetside
 				enemy.encounterTrackable.ProxyEncounterGuid = "";
 				enemy.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Ammocom/ammonimiconasdsadsa";
 				enemy.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("ammoentryshrrom");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\ammoentryshrrom.png");
-                PlanetsideModule.Strings.Enemies.Set("#FUNGANNONAMMONOMICON", "Fungannon");
+                PlanetsideModule.Strings.Enemies.Set("#FUNGANNONAMMONOMICON", Name);
 				PlanetsideModule.Strings.Enemies.Set("#FUNGANNONAMMONOMICONSHORT", "Sporangio-War");
 				PlanetsideModule.Strings.Enemies.Set("#FUNGANNONAMMONOMICONLONG", "The eldest of the Fungal species that roam the Gungeon. With their great cannons on their heads, and an appetite matched by few, many Gungeoneers tend to avoid them, with little surviving a close-quarters match against the collosal beasts.");
 				enemy.encounterTrackable.journalData.PrimaryDisplayName = "#FUNGANNONAMMONOMICON";
@@ -1744,7 +1750,7 @@ namespace Planetside
 					for (int i = 0; i < 600; i++)
 					{
 						string bankName = (UnityEngine.Random.value > 0.33f) ? "spore2" : "spore1";
-						base.Fire(new Direction(UnityEngine.Random.Range(150, 210), Brave.BulletScript.DirectionType.Relative, -1f), new Speed(4, SpeedType.Absolute), new PrimaryCannonScript.Spore(bankName, UnityEngine.Random.Range(30, 120)));
+						base.Fire(new Direction(UnityEngine.Random.Range(150, 210), Brave.BulletScript.DirectionType.Relative, -1f), new Speed(4, SpeedType.Absolute), new PrimaryCannonScript.Spore(bankName, UnityEngine.Random.Range(120, 300)));
 						yield return this.Wait(2f);
 
 					}

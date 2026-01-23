@@ -76,7 +76,7 @@ MonoBehaviour:
   atlasWidth: 1024
   atlasHeight: 2048
   forceSquareAtlas: 0
-  atlasWastage: 48.000954
+  atlasWastage: 47.706795
   allowMultipleAtlases: 0
   removeDuplicates: 1
   textureParams:
@@ -22449,7 +22449,7 @@ MonoBehaviour:
     colliderColor: 0
     attachPoints:
     - name: PrimaryHand
-      position: {x: 4, y: 6, z: 0}
+      position: {x: 3, y: 8, z: 0}
       angle: 0
     - name: Clip
       position: {x: 9, y: 3, z: 0}
@@ -22518,7 +22518,7 @@ MonoBehaviour:
     colliderColor: 0
     attachPoints:
     - name: PrimaryHand
-      position: {x: 3, y: 5, z: 0}
+      position: {x: 3, y: 15, z: 0}
       angle: 0
     - name: Clip
       position: {x: 9, y: 2, z: 0}
@@ -22587,7 +22587,7 @@ MonoBehaviour:
     colliderColor: 0
     attachPoints:
     - name: PrimaryHand
-      position: {x: 4, y: 6, z: 0}
+      position: {x: 3, y: 8, z: 0}
       angle: 0
     - name: Clip
       position: {x: 9, y: 3, z: 0}
@@ -22656,7 +22656,7 @@ MonoBehaviour:
     colliderColor: 0
     attachPoints:
     - name: PrimaryHand
-      position: {x: 4, y: 5, z: 0}
+      position: {x: 3, y: 5, z: 0}
       angle: 0
     - name: Clip
       position: {x: 9, y: 2, z: 0}
@@ -22725,7 +22725,7 @@ MonoBehaviour:
     colliderColor: 0
     attachPoints:
     - name: PrimaryHand
-      position: {x: 4, y: 6, z: 0}
+      position: {x: 3, y: 8, z: 0}
       angle: 0
     - name: Clip
       position: {x: 9, y: 3, z: 0}
@@ -22794,7 +22794,7 @@ MonoBehaviour:
     colliderColor: 0
     attachPoints:
     - name: PrimaryHand
-      position: {x: 4, y: 7, z: 0}
+      position: {x: 3, y: 8, z: 0}
       angle: 0
     - name: Clip
       position: {x: 9, y: 3, z: 0}
@@ -22863,7 +22863,7 @@ MonoBehaviour:
     colliderColor: 0
     attachPoints:
     - name: PrimaryHand
-      position: {x: 4, y: 6, z: 0}
+      position: {x: 3, y: 8, z: 0}
       angle: 0
     - name: Clip
       position: {x: 9, y: 3, z: 0}
@@ -22932,7 +22932,7 @@ MonoBehaviour:
     colliderColor: 0
     attachPoints:
     - name: PrimaryHand
-      position: {x: 4, y: 6, z: 0}
+      position: {x: 3, y: 8, z: 0}
       angle: 0
     - name: Clip
       position: {x: 9, y: 3, z: 0}
@@ -23001,7 +23001,7 @@ MonoBehaviour:
     colliderColor: 0
     attachPoints:
     - name: PrimaryHand
-      position: {x: 4, y: 6, z: 0}
+      position: {x: 3, y: 8, z: 0}
       angle: 0
     - name: Clip
       position: {x: 9, y: 3, z: 0}
@@ -23070,7 +23070,7 @@ MonoBehaviour:
     colliderColor: 0
     attachPoints:
     - name: PrimaryHand
-      position: {x: 4, y: 6, z: 0}
+      position: {x: 3, y: 8, z: 0}
       angle: 0
     - name: Clip
       position: {x: 9, y: 3, z: 0}
@@ -23139,7 +23139,7 @@ MonoBehaviour:
     colliderColor: 0
     attachPoints:
     - name: PrimaryHand
-      position: {x: 4, y: 6, z: 0}
+      position: {x: 3, y: 8, z: 0}
       angle: 0
     - name: Clip
       position: {x: 9, y: 3, z: 0}
@@ -23208,7 +23208,7 @@ MonoBehaviour:
     colliderColor: 0
     attachPoints:
     - name: PrimaryHand
-      position: {x: 4, y: 5, z: 0}
+      position: {x: 3, y: 8, z: 0}
       angle: 0
     - name: Clip
       position: {x: 9, y: 2, z: 0}
@@ -23346,13 +23346,13 @@ MonoBehaviour:
     colliderColor: 0
     attachPoints:
     - name: PrimaryHand
-      position: {x: 4, y: 6, z: 0}
+      position: {x: 3, y: 8, z: 0}
       angle: 0
     - name: Clip
-      position: {x: 9, y: 3, z: 0}
+      position: {x: 13, y: 6, z: 0}
       angle: 0
     - name: Casing
-      position: {x: 9, y: 3, z: 0}
+      position: {x: 13, y: 6, z: 0}
       angle: 0
   - name: whistler_reload_015
     disableTrimming: 0
@@ -23484,7 +23484,7 @@ MonoBehaviour:
     colliderColor: 0
     attachPoints:
     - name: PrimaryHand
-      position: {x: 4, y: 6, z: 0}
+      position: {x: 3, y: 8, z: 0}
       angle: 0
     - name: Casing
       position: {x: 9, y: 3, z: 0}
@@ -23553,13 +23553,13 @@ MonoBehaviour:
     colliderColor: 0
     attachPoints:
     - name: PrimaryHand
-      position: {x: 4, y: 6, z: 0}
+      position: {x: 3, y: 8, z: 0}
       angle: 0
     - name: Clip
-      position: {x: 9, y: 3, z: 0}
+      position: {x: 14, y: 6, z: 0}
       angle: 0
     - name: Casing
-      position: {x: 9, y: 3, z: 0}
+      position: {x: 14, y: 6, z: 0}
       angle: 0
   - name: whistler_reload_007
     disableTrimming: 0
@@ -23622,7 +23622,7 @@ MonoBehaviour:
     colliderColor: 0
     attachPoints:
     - name: PrimaryHand
-      position: {x: 4, y: 6, z: 0}
+      position: {x: 3, y: 8, z: 0}
       angle: 0
     - name: Clip
       position: {x: 9, y: 3, z: 0}
@@ -23691,7 +23691,7 @@ MonoBehaviour:
     colliderColor: 0
     attachPoints:
     - name: PrimaryHand
-      position: {x: 4, y: 6, z: 0}
+      position: {x: 3, y: 8, z: 0}
       angle: 0
     - name: Clip
       position: {x: 9, y: 3, z: 0}
@@ -23760,7 +23760,7 @@ MonoBehaviour:
     colliderColor: 0
     attachPoints:
     - name: PrimaryHand
-      position: {x: 4, y: 6, z: 0}
+      position: {x: 3, y: 8, z: 0}
       angle: 0
     - name: Clip
       position: {x: 9, y: 3, z: 0}
@@ -23829,7 +23829,7 @@ MonoBehaviour:
     colliderColor: 0
     attachPoints:
     - name: PrimaryHand
-      position: {x: 4, y: 6, z: 0}
+      position: {x: 3, y: 8, z: 0}
       angle: 0
     - name: Clip
       position: {x: 9, y: 3, z: 0}
@@ -23898,7 +23898,7 @@ MonoBehaviour:
     colliderColor: 0
     attachPoints:
     - name: PrimaryHand
-      position: {x: 4, y: 6, z: 0}
+      position: {x: 3, y: 8, z: 0}
       angle: 0
     - name: Clip
       position: {x: 9, y: 3, z: 0}
@@ -23967,7 +23967,7 @@ MonoBehaviour:
     colliderColor: 0
     attachPoints:
     - name: PrimaryHand
-      position: {x: 4, y: 6, z: 0}
+      position: {x: 3, y: 8, z: 0}
       angle: 0
     - name: Clip
       position: {x: 9, y: 3, z: 0}
@@ -24036,7 +24036,7 @@ MonoBehaviour:
     colliderColor: 0
     attachPoints:
     - name: PrimaryHand
-      position: {x: 2, y: 5, z: 0}
+      position: {x: 12, y: 14, z: 0}
       angle: 0
     - name: Clip
       position: {x: 9, y: 2, z: 0}
@@ -24105,7 +24105,7 @@ MonoBehaviour:
     colliderColor: 0
     attachPoints:
     - name: PrimaryHand
-      position: {x: 4, y: 5, z: 0}
+      position: {x: 3, y: 15, z: 0}
       angle: 0
     - name: Clip
       position: {x: 9, y: 2, z: 0}
@@ -62770,7 +62770,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -62842,7 +62842,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -62914,7 +62914,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -62986,7 +62986,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -63058,7 +63058,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -63130,7 +63130,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -63202,7 +63202,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -63274,7 +63274,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -63346,7 +63346,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -63418,7 +63418,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -63490,7 +63490,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -63562,7 +63562,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -63634,7 +63634,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -63706,7 +63706,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -63778,7 +63778,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -63850,7 +63850,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
+    colliderType: 1
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -63871,6 +63871,75 @@ MonoBehaviour:
       angle: 0
     - name: Casing
       position: {x: 11, y: 15, z: 0}
+      angle: 0
+  - name: whistler_fire_004
+    disableTrimming: 0
+    additive: 0
+    scale: {x: 1, y: 1, z: 1}
+    texture: {fileID: 2800000, guid: 903f6b2b0d3fb9741be053ac0183d5c8, type: 3}
+    materialId: 0
+    anchor: 6
+    anchorX: 0
+    anchorY: 0
+    overrideMesh: {fileID: 0}
+    doubleSidedSprite: 0
+    customSpriteGeometry: 0
+    geometryIslands: []
+    dice: 0
+    diceUnitX: 64
+    diceUnitY: 64
+    diceFilter: 0
+    type: 0
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    weight: 1
+    pad: 1
+    extraPadding: 0
+    source: 0
+    fromSpriteSheet: 0
+    hasSpriteSheetId: 0
+    spriteSheetId: 0
+    spriteSheetX: 0
+    spriteSheetY: 0
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    regionId: 0
+    colliderType: 1
+    colliderData: []
+    boxColliderMin: {x: 0, y: 0}
+    boxColliderMax: {x: 0, y: 0}
+    polyColliderIslands: []
+    polyColliderCap: 1
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    colliderColor: 0
+    attachPoints:
+    - name: PrimaryHand
+      position: {x: 3, y: 16, z: 0}
+      angle: 0
+    - name: Casing
+      position: {x: 13, y: 14, z: 0}
+      angle: 0
+    - name: Clip
+      position: {x: 14, y: 14, z: 0}
       angle: 0
   spriteCollection: {fileID: 114765906313500336, guid: c333b89a3d37c564abe3ed7a43354520,
     type: 2}
@@ -63907,7 +63976,7 @@ MonoBehaviour:
   normalGenerationMode: 0
   padAmount: 3
   autoUpdate: 1
-  editorDisplayScale: 14.410013
+  editorDisplayScale: 14.5900135
   version: 4
   metadata:
     type: 0

@@ -22,7 +22,7 @@ namespace Planetside
 
             GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_Sheet_Data, "riftakernew_idle_003");
             gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_Animation_Data;
-            gun.sprite.SortingOrder = 1;
+            gun.sprite.SortingOrder = 2;
 
             gun.idleAnimation = "riftakernew_idle";
             gun.shootAnimation = "riftakernew_fire";
@@ -181,13 +181,13 @@ namespace Planetside
             gun.DefaultModule.usesOptionalFinalProjectile = true;
             gun.DefaultModule.numberOfFinalProjectiles = 1;
             gun.DefaultModule.finalProjectile = replacementProjectile;
-            gun.DefaultModule.finalCustomAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Riftaker(Out)", StaticSpriteDefinitions.PlanetsideUIAtlas, "RiftakerOut_001", "RiftakerOut_002");
+            gun.DefaultModule.finalCustomAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Riftaker(Out)", StaticSpriteDefinitions.PlanetsideClipUIAtlas, "RiftakerOut_001", "RiftakerOut_002");
             gun.DefaultModule.finalAmmoType = (PickupObjectDatabase.GetById(696) as Gun).DefaultModule.ammoType;
             gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
             gun.DefaultModule.customAmmoType = (PickupObjectDatabase.GetById(35) as Gun).DefaultModule.customAmmoType;
 
 
-            gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Riftaker(In)", StaticSpriteDefinitions.PlanetsideUIAtlas, "RiftakerIn_001", "RiftakerIn_002");
+            gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Riftaker(In)", StaticSpriteDefinitions.PlanetsideClipUIAtlas, "RiftakerIn_001", "RiftakerIn_002");
 
 
 

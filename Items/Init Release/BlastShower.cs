@@ -34,6 +34,7 @@ namespace Planetside
             activeitem.quality = PickupObject.ItemQuality.C;
             activeitem.AddToSubShop(ItemBuilder.ShopType.Goopton, 1f);
             activeitem.gameObject.AddComponent<RustyItemPool>();
+            activeitem.sprite.SortingOrder = 3;
 
             List<string> mandatoryConsoleIDs = new List<string>
             {

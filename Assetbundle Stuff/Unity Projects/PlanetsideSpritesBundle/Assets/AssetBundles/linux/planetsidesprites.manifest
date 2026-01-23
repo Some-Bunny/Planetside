@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 888797524
+CRC: 2888658379
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: a49ed5316cc6731ec6e43dd8c2b5f5a5
+    Hash: 589ba00c0d22b9746a06b3f2734f43d3
   TypeTreeHash:
     serializedVersion: 2
     Hash: 458548b0fa917ebe1d600c5fabf7780a
@@ -39,6 +39,7 @@ Assets:
 - Assets/Ammonomicon/Ammonomicon Icons/ammoentryshrrom.png
 - Assets/Minibosses/AnnihiChamber/AnnihiChamberCollection Data/annihichamber material.mat
 - Assets/Enemies/Skullvenant/SkullvenantCollection Data/SkullvenantCollection.prefab
+- Assets/Ammonomicon/Ammonomicon Icons/archgunjurericonsilly.png
 - Assets/Enemies/Fodder/FodderCollection Data/atlas0.png
 - Assets/Enemies/Fodder/fodder_die_004.png
 - Assets/UI/Alphabet Letters/letter_17.png
@@ -112,12 +113,14 @@ Assets:
 - Assets/Ammonomicon/Ammonomicon Icons/bankericon.png
 - Assets/Enemies/Fodder/FodderCollection Data/FodderCollection.prefab
 - Assets/Minibosses/Shellrax/ShellraxCollection Data/ShellraxCollection.prefab
+- Assets/UI/PlanetsideDFAtlasMat.mat
 - Assets/Enemies/SpecificEnemyCollection Data/SpecificEnemyCollection.prefab
 - Assets/Items/Passive Items/Item_Collection Data/item_collection material.mat
 - Assets/RoomObjects/Trespass Objects/TrespassRoomObjectCollection Data/TrespassRoomObjectCollection.prefab
 - Assets/Enemies/ProperCube/ProperCubeCollection Data/ProperCubeAnimation_Forge.prefab
 - Assets/Minibosses/Bullet Banker/BulletBankerCollection Data/bulletbanker material.mat
 - Assets/Ammonomicon/Ammonomicon Icons/observantsheetTrespass.png
+- Assets/UI/ClipAtlas.prefab
 - Assets/BossCards/bulletbanker_bosscard.png
 - Assets/RoomObjects/RoomObjectCollection Data/roomobject material.mat
 - Assets/Enemies/Detscavator/DetscavatorCollection Data/DetscavatorCollection.prefab
@@ -129,6 +132,7 @@ Assets:
 - Assets/Bosses/Fungannon/FungannonCollection Data/fungannon material.mat
 - Assets/Ammonomicon/Ammonomicon Icons/sheetvesselTrespass.png
 - Assets/Ammonomicon/Ammonomicon Icons/sheetOppressorTrespass.png
+- Assets/UI/ClipAtlasMat.mat
 - Assets/UI/Alphabet Letters/letter_03.png
 - Assets/Enemies/ProperCube/ProperCubeCollection Data/propercube material.mat
 - Assets/Enemies/Barretina/BarretinaCollection Data/BarretinaCollection.prefab

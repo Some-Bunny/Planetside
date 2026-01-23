@@ -47,6 +47,7 @@ namespace Planetside
             tk2dSpriteAnimator animator = BrokenArmorVFXObject.GetOrAddComponent<tk2dSpriteAnimator>();
             animator.library = StaticSpriteDefinitions.VFX_Animation_Data;
             animator.Library = StaticSpriteDefinitions.VFX_Animation_Data;
+            item.AddToSubShop(ItemAPI.ItemBuilder.ShopType.Cursula, 1.1f);
 
             animator.sprite.usesOverrideMaterial = true;
 
@@ -77,29 +78,33 @@ namespace Planetside
             slash.HitSecretRoomWalls = true;
             slash.OnHitMajorBreakable += (obj1) =>
             {
-                var secretRoomDoor = (obj1 as MajorBreakable);
-                if (secretRoomDoor != null)
+                if (obj1)
                 {
-                    var HotPos = secretRoomDoor.sprite != null ? secretRoomDoor.sprite.WorldCenter : secretRoomDoor.transform.position.XY();
-                    Impact.SpawnAtPosition(HotPos);
-                    if (secretRoomDoor.IsSecretDoor | secretRoomDoor.GetComponent<Idol>())
+                    var secretRoomDoor = (obj1 as MajorBreakable);
+                    if (secretRoomDoor != null)
                     {
-                        AkSoundEngine.PostEvent("Play_BatonHit", secretRoomDoor.gameObject);
-                        secretRoomDoor.gameObject.DoHitStop(0.5f);
-                        secretRoomDoor.ApplyDamage(1E+10f, Vector2.zero, false, true, true);
-                        for (int i = 0; i < 100; i++)
+                        var HotPos = secretRoomDoor.sprite != null ? secretRoomDoor.sprite.WorldCenter : secretRoomDoor.transform.position.XY();
+                        Impact.SpawnAtPosition(HotPos);
+                        if (secretRoomDoor.IsSecretDoor | secretRoomDoor.GetComponent<Idol>())
                         {
-                            GlobalSparksDoer.DoRandomParticleBurst(1, HotPos + new Vector2(-0.5f, 0.5f), HotPos + new Vector2(0.5f, 0.5f),
-                            BraveUtility.RandomVector2(new Vector2(-1, -1), new Vector2(1, 1)),
-                            0f,
-                            5f,
-                            0.1f,
-                            2.5f,
-                            new Color(0.7f, 0.9f, 0.7f, 1),
-                            GlobalSparksDoer.SparksType.FLOATY_CHAFF);
+                            AkSoundEngine.PostEvent("Play_BatonHit", secretRoomDoor.gameObject);
+                            secretRoomDoor.gameObject.DoHitStop(0.5f);
+                            secretRoomDoor.ApplyDamage(1E+10f, Vector2.zero, false, true, true);
+                            for (int i = 0; i < 100; i++)
+                            {
+                                GlobalSparksDoer.DoRandomParticleBurst(1, HotPos + new Vector2(-0.5f, 0.5f), HotPos + new Vector2(0.5f, 0.5f),
+                                BraveUtility.RandomVector2(new Vector2(-1, -1), new Vector2(1, 1)),
+                                0f,
+                                5f,
+                                0.1f,
+                                2.5f,
+                                new Color(0.7f, 0.9f, 0.7f, 1),
+                                GlobalSparksDoer.SparksType.FLOATY_CHAFF);
+                            }
                         }
                     }
                 }
+                
             };
             customSlash = slash;
             item.AddSynergy("Leader Baton", new List<PickupObject>()

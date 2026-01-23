@@ -107,6 +107,7 @@ namespace Planetside
             WarpMastersKit.WarpMasterKitID = activeitem.PickupObjectId;
             ItemIDs.AddToList(activeitem.PickupObjectId);
             TeleporterToPlace = CreateTeleporter();
+            activeitem.AddToSubShop(ItemAPI.ItemBuilder.ShopType.Goopton, 1.3f);
 
             SynergyAPI.SynergyBuilder.AddItemToSynergy(activeitem, CustomSynergyType.TELEPORTER_ACCIDENT);
 

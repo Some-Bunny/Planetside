@@ -37,8 +37,9 @@ namespace Planetside
             ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
 			item.quality = PickupObject.ItemQuality.B;
 			item.SetupUnlockOnCustomFlag(CustomDungeonFlags.HIGHER_CURSE_DRAGUN_KILLED, true);
+            item.sprite.SortingOrder = 3;
 
-			FrailtyRounds.FrailtyRoundsID = item.PickupObjectId;
+            FrailtyRounds.FrailtyRoundsID = item.PickupObjectId;
 			ItemIDs.AddToList(item.PickupObjectId);
 
 		}

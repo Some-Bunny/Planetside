@@ -17,6 +17,7 @@ using static Planetside.Inquisitor;
 using UnityEngine.Playables;
 using Alexandria.PrefabAPI;
 using static Planetside.EnemyBuffShrineController;
+using System.Diagnostics;
 
 
 namespace Planetside
@@ -108,6 +109,8 @@ namespace Planetside
 
         private Dictionary<AIActor, Action<Vector2>> AllEnemies = new Dictionary<AIActor, Action<Vector2>>();
 
+        private List<Tuple<AIActor, GameActorEffect>> FUCK = new List<Tuple<AIActor, GameActorEffect>>();
+
         public void Update()
         {
             if (this && currentRoom != null)
@@ -121,15 +124,37 @@ namespace Planetside
                         AIActor enemy = aiactorList[i];
                         if (enemy)
                         {
+                            if (!enemy.healthHaver.IsDead)
+                            {
+                                List<GameActorEffect> list = enemy.m_activeEffects;
+                                if (list != null | list.Count > 0)
+                                {
+                                    for (int e = 0; e < list.Count; e++)
+                                    {
+                                        var debuff = list[e];
+                                        if (debuff.GetType() == EffectToCleanse())
+                                        {
+                                            var res = new DamageTypeModifier();
+                                            res.damageMultiplier = 0;
+                                            res.damageType = EffectToResist();
+                                            enemy.healthHaver.damageTypeModifiers.Add(res);
+                                            FUCK.Add(new Tuple<AIActor, GameActorEffect>(enemy, debuff));
+                                            GameManager.Instance.StartCoroutine(this.DoResistShield(debuff, res, enemy, this));
+                                        }
+                                    }
+                                }
+                            }
+
+
                             if (enemy.EnemyGuid == FodderEnemy.guid) { continue; }
                             if (!AllEnemies.ContainsKey(enemy))
                             {
                                 var tag = enemy.GetComponent<TripleTag>();
                                 if (tag == null) { tag = enemy.gameObject.AddComponent<TripleTag>(); }
 
-                                if (tag.effectTypes.Contains(this.ownType)) { goto Skip; }
-
+                                if (tag.effectTypes.Contains(this.ownType)) { continue; }
                                 tag.effectTypes.Add(this.ownType);
+
 
                                 Action<Vector2> action = (_) =>
                                 {
@@ -141,10 +166,14 @@ namespace Planetside
                                     {
                                         am = __.effectTypes.Count;
                                     }
+                                    else
+                                    {
+                                        return;
+                                    }
                                     ParticleBase.EmitParticles("WaveParticle", 1, new ParticleSystem.EmitParams()
                                     {
                                         position = enemy.sprite.WorldCenter,
-                                        startColor = ColorTouse().WithAlpha(0.75f),
+                                        startColor = ColorTouse().WithAlpha(0.6f),
                                         startLifetime = 0.5f,
                                         startSize = 6
                                     });
@@ -166,7 +195,7 @@ namespace Planetside
                                         }
                                     }
 
-                                    var amount = Vector2.Distance(this.GemTransform.position, enemy.sprite.WorldCenter) * 3;
+                                    var amount = Vector2.Distance(this.GemTransform.position, enemy.sprite.WorldCenter) * 1.5f;
                                     var m = MathToolbox.GetUnitOnCircle(BraveUtility.RandomAngle(), 1).normalized * 5;
 
 
@@ -177,79 +206,72 @@ namespace Planetside
                                         {
                                             position = Vector3.Lerp(this.GemTransform.position, enemy.sprite.WorldCenter, t) + (m.ToVector3ZUp() * MathToolbox.EaseInAndBack(t)),
                                             startColor = ColorTouse().WithAlpha(0.25f),
-                                            startLifetime = UnityEngine.Random.Range(0.5f, 0.75f),
-                                            startSize = 0.45f
+                                            startLifetime = UnityEngine.Random.Range(0.75f, 1),
+                                            startSize = 0.5f
                                         });
 
                                     }
-
-
-                
+                                    Destroy(__);
                                 };
                                 enemy.healthHaver.OnDeath += action;
                                 AllEnemies.Add(enemy, action);
                             }
-                            Skip:
-                            List<GameActorEffect> list = enemy.m_activeEffects;//PlanetsideReflectionHelper.ReflectGetField<List<GameActorEffect>>(typeof(AIActor), "m_activeEffects", enemy);
-                            if (list != null | list.Count > 0)
-                            {
-                                for (int e = 0; e < list.Count; e++)
-                                {
-                                    if (!enemy.healthHaver.IsDead)
-                                    {
-                                        var debuff = list[e];
-                                        if (debuff.GetType() == EffectToCleanse())
-                                        {
-                                            enemy.RemoveEffect(debuff.effectIdentifier);
-
-                                            if (!this.enemiesToAvoid.Contains(enemy))
-                                            {
-                                                var res = new DamageTypeModifier();
-                                                res.damageMultiplier = 0;
-                                                res.damageType = EffectToResist();
-                                                if (gem)
-                                                {
-                                                    ParticleBase.EmitParticles("WaveParticle", 1, new ParticleSystem.EmitParams()
-                                                    {
-                                                        position = this.GemTransform.position,
-                                                        startColor = ColorTouse().WithAlpha(0.75f),
-                                                        startLifetime = 0.5f,
-                                                        startSize = 4
-                                                    });
-                                                }
-                                                AkSoundEngine.PostEvent("Play_OBJ_dead_again_01", enemy.gameObject);
-                                                GameManager.Instance.StartCoroutine(this.DoResistShield(enemy, res, this));
-                                            }
-                                        }
-                                    }
-                                }
-                            }                  
                         }
                     }
                 }
             }
+
         }
 
-
-
-        public List<AIActor> enemiesToAvoid = new List<AIActor>();
-
-        public IEnumerator DoResistShield(AIActor enemy, DamageTypeModifier r, EnemyBuffShrineController s)
+        public void LateUpdate()
         {
-            yield return new WaitForSeconds(UnityEngine.Random.Range(0.025f, 0.4f));
+            foreach (var entry in FUCK)
+            {
+                entry.First.RemoveEffect(entry.Second.effectIdentifier);
+            }
+            FUCK.Clear();
+        }
+
+        public static List<AIActor> enemiesToAvoid = new List<AIActor>();
+
+        public IEnumerator DoResistShield(GameActorEffect debuff, DamageTypeModifier damageTypeModifier, AIActor enemy,  EnemyBuffShrineController s)
+        {
+            yield return null;
             if (enemy == null) { yield break; }
-            if (s != null) { s.enemiesToAvoid.Add(enemy); }
+            if (enemiesToAvoid.Contains(enemy)) { yield break; };
+            float _ = UnityEngine.Random.Range(0.01f, 0.025f);
+            enemy.healthHaver.damageTypeModifiers.Remove(damageTypeModifier);
+            var res = new DamageTypeModifier();
+            res.damageMultiplier = 0;
+            res.damageType = EffectToResist();
+            enemy.healthHaver.damageTypeModifiers.Add(res);
+            enemiesToAvoid.Add(enemy);
+
+            yield return new WaitForSeconds(_);
+            if (gem)
+            {
+                ParticleBase.EmitParticles("WaveParticle", 1, new ParticleSystem.EmitParams()
+                {
+                    position = this.GemTransform.position,
+                    startColor = ColorTouse().WithAlpha(0.75f),
+                    startLifetime = 0.5f,
+                    startSize = 4
+                });
+            }
+            AkSoundEngine.PostEvent("Play_OBJ_dead_again_01", enemy.gameObject);
+
+
 
             ParticleBase.EmitParticles("WaveParticle", 1, new ParticleSystem.EmitParams()
             {
                 position = enemy.sprite.WorldCenter,
-                startColor = ColorTouse().WithAlpha(0.75f),
+                startColor = ColorTouse().WithAlpha(0.6f),
                 startLifetime = 0.5f,
                 startSize = 4
             });
 
-            var amount = Vector2.Distance(this.GemTransform.position, enemy.sprite.WorldCenter) * 3;
-            var m = MathToolbox.GetUnitOnCircle(BraveUtility.RandomAngle(), 1).normalized * 6;
+            var amount = Vector2.Distance(this.GemTransform.position, enemy.sprite.WorldCenter) * 2.5f;
+            var m = MathToolbox.GetUnitOnCircle(BraveUtility.RandomAngle(), 1).normalized * 5;
 
 
             for (int i = 0; i < amount; i++)
@@ -266,25 +288,25 @@ namespace Planetside
             }
 
 
-            enemy.healthHaver.damageTypeModifiers.Add(r);
             float e = 0;
-            float d = 3.5f;
+            float d = 4.5f;
             var cl = ColorTouse();
             var cl2 = enemy.sprite.color;
 
             while (e < d) 
             {
                 if (enemy == null) { yield break; }
-                enemy.sprite.color = Color.Lerp(cl, cl2, e);// LerpColor(cl, cl2, e);
+                enemy.sprite.color = Color.Lerp(cl, cl2, e);
                 enemy.sprite.UpdateColors();
                 e += BraveTime.DeltaTime;
                 yield return null;
             }
             if (enemy == null) { yield break; }
-            if (s != null) { s.enemiesToAvoid.Remove(enemy); }
+
+            if (s != null) { enemiesToAvoid.Remove(enemy); }
 
             enemy.sprite.color = cl2;
-            enemy.healthHaver.damageTypeModifiers.Remove(r);
+            enemy.healthHaver.damageTypeModifiers.Remove(res);
             yield break;
         }
 
@@ -301,15 +323,34 @@ namespace Planetside
 
         public override void OnDestroy()
         {
-
+            foreach (var entry in AllEnemies)
+            {
+                if (entry.Key != null)
+                {
+                    entry.Key.healthHaver.OnDeath -= entry.Value;
+                    var t = entry.Key.GetComponent<TripleTag>();
+                    if (t)
+                    {
+                        Destroy(t);
+                    }
+                }
+            }
         }
 
         public CoreDamageTypes EffectToResist()
         {
-            if (this.ownType == EffectType.FIRE) { return CoreDamageTypes.Fire; }
-            if (this.ownType == EffectType.POISON) { return CoreDamageTypes.Poison; }
-            if (this.ownType == EffectType.ICE) { return CoreDamageTypes.Ice; }
-            return CoreDamageTypes.Fire;
+
+            switch (this.ownType)
+            {
+                case EffectType.FIRE:
+                    return CoreDamageTypes.Fire;
+                case EffectType.POISON:
+                    return CoreDamageTypes.Poison;
+                case EffectType.ICE:
+                    return CoreDamageTypes.Ice;
+                default:
+                    return CoreDamageTypes.Fire;
+            }
         }
 
         public GoopDefinition GoopToSpawn()
@@ -429,45 +470,7 @@ namespace Planetside
 
         public static void GenerateIceShrine(ShardCluster[] array)
         {
-            /*
-            string defaultPath = "Planetside/Resources/DungeonObjects/EnemyBuffShrine/";
-            var gem = VFXToolbox.CreateVFX("ice_gem", new List<string>()
-            {
-                defaultPath + "Gems/ice_gem_idle_001.png",
-                defaultPath + "Gems/ice_gem_idle_002.png",
-                defaultPath + "Gems/ice_gem_idle_003.png",
-                defaultPath + "Gems/ice_gem_idle_004.png",
-                defaultPath + "Gems/ice_gem_idle_005.png",
-            }, 7, new IntVector2(10, 10), tk2dBaseSprite.Anchor.LowerLeft, true, 3, -1, null, false, tk2dSpriteAnimationClip.WrapMode.Loop);
-            string[] idlePaths = new string[]
-            {
-                defaultPath+"enemybuffshrine_idle_001.png",
-            };
-            Dictionary<float, string> prebreaks = new Dictionary<float, string>()
-            {
-                {90, defaultPath+"enemybuffshrine_idle_002.png"},
-                {35, defaultPath+"enemybuffshrine_idle_003.png"},
-            };
-            
-            
-            
-            
-            MajorBreakable statue = BreakableAPIToolbox.GenerateMajorBreakable("enemy_buff_totem", idlePaths, 1, null, 1, 25, true, 16, 16, 0, -4, true, null, null, true, null, prebreaks);
-            statue.shardClusters = array;
 
-            statue.ScaleWithEnemyHealth = true;
-            statue.destroyedOnBreak = true;
-            statue.handlesOwnPrebreakFrames = true;
-            BreakableAPIToolbox.GenerateShadow(defaultPath + "enemybuffshrine_shadow.png", "pedestal_shadow", statue.gameObject.transform, new Vector3(0, -0.1875f));
-            BreakableAPIToolbox.GenerateTransformObject(statue.gameObject, new Vector2(0.5f, 3.5f), "gemPoint");
-            var enemyBuffer = statue.gameObject.AddComponent<EnemyBuffShrineController>();
-            enemyBuffer.gemObjectToSpawn = gem;
-            enemyBuffer.ownType = EnemyBuffShrineController.EffectType.ICE;
-            statue.distributeShards = true;
-            statue.shardBreakStyle = MinorBreakable.BreakStyle.CONE;
-            statue.maxShardPercentSpeed = 0.5f;
-            statue.minShardPercentSpeed = 1.5f;
-            */
 
             var gem = PrefabBuilder.BuildObject("gem [Ice]");
             var spriteGem = gem.AddComponent<tk2dSprite>();
@@ -486,10 +489,14 @@ namespace Planetside
             sprite.SortingOrder = 4;
             spriteGem.SortingOrder = 5;
 
-            var specBody = shrineObject.CreateFastBody(new IntVector2(18, 18), new IntVector2(-1, -5), CollisionLayer.BulletBlocker);
-            shrineObject.CreateFastBody(new IntVector2(18, 18), new IntVector2(-1, -5), CollisionLayer.BeamBlocker);
-            shrineObject.CreateFastBody(new IntVector2(18, 18), new IntVector2(-1, -5), CollisionLayer.EnemyBlocker);
-            shrineObject.CreateFastBody(new IntVector2(18, 18), new IntVector2(-1, -5), CollisionLayer.EnemyBulletBlocker);
+            shrineObject.layer = Layers.FG_Critical;
+            sprite.HeightOffGround = 0.25f;
+            sprite.SortingOrder = 4;
+
+            var specBody = shrineObject.CreateFastBody(new IntVector2(18, 22), new IntVector2(-1, -5), CollisionLayer.BulletBlocker);
+            shrineObject.CreateFastBody(new IntVector2(18, 22), new IntVector2(-1, -5), CollisionLayer.BeamBlocker);
+            shrineObject.CreateFastBody(new IntVector2(18, 22), new IntVector2(-1, -5), CollisionLayer.EnemyBlocker);
+            shrineObject.CreateFastBody(new IntVector2(18, 22), new IntVector2(-1, -5), CollisionLayer.EnemyBulletBlocker);
 
             MajorBreakable statue = shrineObject.AddComponent<MajorBreakable>();
             statue.HitPoints = 25;
@@ -527,7 +534,8 @@ namespace Planetside
             statue.minShardPercentSpeed = 1.5f;
             var shadowSprite = PrefabBuilder.BuildObject("_Shadow").gameObject.AddComponent<tk2dSprite>();
             shadowSprite.SetSprite(StaticSpriteDefinitions.RoomObject_Sheet_Data, "enemybuffshrine_shadow");
-            shadowSprite.transform.SetParent(statue.transform);
+            shadowSprite.transform.position = statue.transform.position + new Vector3(0, -0.25f);
+            shadowSprite.transform.SetParent(statue.transform, true);
 
 
             StaticReferences.StoredRoomObjects.Add("ice_buffer_statue", statue.gameObject);
@@ -555,10 +563,14 @@ namespace Planetside
             sprite.SortingOrder = 4;
             spriteGem.SortingOrder = 5;
 
-            var specBody = shrineObject.CreateFastBody(new IntVector2(18, 18), new IntVector2(-1, -5), CollisionLayer.BulletBlocker);
-            shrineObject.CreateFastBody(new IntVector2(18, 18), new IntVector2(-1, -5), CollisionLayer.BeamBlocker);
-            shrineObject.CreateFastBody(new IntVector2(18, 18), new IntVector2(-1, -5), CollisionLayer.EnemyBlocker);
-            shrineObject.CreateFastBody(new IntVector2(18, 18), new IntVector2(-1, -5), CollisionLayer.EnemyBulletBlocker);
+            shrineObject.layer = Layers.FG_Critical;
+            sprite.HeightOffGround = 0.25f;
+            sprite.SortingOrder = 4;
+
+            var specBody = shrineObject.CreateFastBody(new IntVector2(18, 22), new IntVector2(-1, -5), CollisionLayer.BulletBlocker);
+            shrineObject.CreateFastBody(new IntVector2(18, 22), new IntVector2(-1, -5), CollisionLayer.BeamBlocker);
+            shrineObject.CreateFastBody(new IntVector2(18, 22), new IntVector2(-1, -5), CollisionLayer.EnemyBlocker);
+            shrineObject.CreateFastBody(new IntVector2(18, 22), new IntVector2(-1, -5), CollisionLayer.EnemyBulletBlocker);
 
             MajorBreakable statue = shrineObject.AddComponent<MajorBreakable>();
             statue.HitPoints = 25;
@@ -583,6 +595,7 @@ namespace Planetside
             statue.handlesOwnPrebreakFrames = true;
 
 
+
             //BreakableAPI_Bundled.GenerateTransformObject(statue.gameObject, new Vector2(0.5f, 3.5f), "gemPoint");
             var enemyBuffer = statue.gameObject.AddComponent<EnemyBuffShrineController>();
             enemyBuffer.gemObjectToSpawn = gem;
@@ -598,10 +611,11 @@ namespace Planetside
             statue.minShardPercentSpeed = 1.5f;
             var shadowSprite = PrefabBuilder.BuildObject("_Shadow").gameObject.AddComponent<tk2dSprite>();
             shadowSprite.SetSprite(StaticSpriteDefinitions.RoomObject_Sheet_Data, "enemybuffshrine_shadow");
-            shadowSprite.transform.SetParent(statue.transform);
+            shadowSprite.transform.position = statue.transform.position + new Vector3(0, -0.25f);
+            shadowSprite.transform.SetParent(statue.transform, true);
 
-            
-            
+
+
             StaticReferences.StoredRoomObjects.Add("poison_buffer_statue", statue.gameObject);
             Alexandria.DungeonAPI.StaticReferences.customObjects.Add("psog:poison_buffer_statue", statue.gameObject);
         }
@@ -609,42 +623,6 @@ namespace Planetside
 
         public static void GenerateFireShrine(ShardCluster[] array)
         {
-            /*
-            string defaultPath = "Planetside/Resources/DungeonObjects/EnemyBuffShrine/";
-            var gem = VFXToolbox.CreateVFX("fire_gem", new List<string>() 
-            {
-                defaultPath + "Gems/fire_gem_idle_001.png",
-                defaultPath + "Gems/fire_gem_idle_002.png",
-                defaultPath + "Gems/fire_gem_idle_003.png",
-                defaultPath + "Gems/fire_gem_idle_004.png",
-                defaultPath + "Gems/fire_gem_idle_005.png",
-            }, 7 ,new IntVector2(10 , 10), tk2dBaseSprite.Anchor.LowerLeft, true, 3, -1, null, false, tk2dSpriteAnimationClip.WrapMode.Loop);
-            string[] idlePaths = new string[]
-            {
-                defaultPath+"enemybuffshrine_idle_001.png",
-            };
-            Dictionary<float, string> prebreaks = new Dictionary<float, string>()
-            {
-                {90, defaultPath+"enemybuffshrine_idle_002.png"},
-                {35, defaultPath+"enemybuffshrine_idle_003.png"},
-            };
-            MajorBreakable statue = BreakableAPIToolbox.GenerateMajorBreakable("enemy_buff_totem", idlePaths, 1, null, 1, 25, true, 16, 16, 0, -4, true, null, null, true, null, prebreaks);
-            statue.shardClusters = array;
-
-            statue.ScaleWithEnemyHealth = true;
-            statue.destroyedOnBreak = true;
-            statue.handlesOwnPrebreakFrames = true;
-            BreakableAPIToolbox.GenerateShadow(defaultPath + "enemybuffshrine_shadow.png", "pedestal_shadow", statue.gameObject.transform, new Vector3(0, -0.1875f));
-            BreakableAPIToolbox.GenerateTransformObject(statue.gameObject, new Vector2(0.5f, 3.5f), "gemPoint");
-            var enemyBuffer =  statue.gameObject.AddComponent<EnemyBuffShrineController>();
-            enemyBuffer.gemObjectToSpawn = gem;
-            enemyBuffer.ownType = EnemyBuffShrineController.EffectType.FIRE;
-
-            statue.distributeShards = true;
-            statue.shardBreakStyle = MinorBreakable.BreakStyle.CONE;
-            statue.maxShardPercentSpeed = 0.5f;
-            statue.minShardPercentSpeed = 1.5f;
-            */
 
 
             var gem = PrefabBuilder.BuildObject("gem [Fire]");
@@ -662,10 +640,15 @@ namespace Planetside
             var sprite = shrineObject.AddComponent<tk2dSprite>();
             sprite.SetSprite(StaticSpriteDefinitions.RoomObject_Sheet_Data, "enemybuffshrine_idle_001");
 
-            var specBody = shrineObject.CreateFastBody(new IntVector2(18, 18), new IntVector2(-1, -5), CollisionLayer.BulletBlocker);
-            shrineObject.CreateFastBody(new IntVector2(18, 18), new IntVector2(-1, -5), CollisionLayer.BeamBlocker);
-            shrineObject.CreateFastBody(new IntVector2(18, 18), new IntVector2(-1, -5), CollisionLayer.EnemyBlocker);
-            shrineObject.CreateFastBody(new IntVector2(18, 18), new IntVector2(-1, -5), CollisionLayer.EnemyBulletBlocker);
+            shrineObject.layer = Layers.FG_Critical;
+            sprite.HeightOffGround = 0.25f;
+            sprite.SortingOrder = 4;
+
+
+            var specBody = shrineObject.CreateFastBody(new IntVector2(18, 22), new IntVector2(-1, -5), CollisionLayer.BulletBlocker);
+            shrineObject.CreateFastBody(new IntVector2(18, 22), new IntVector2(-1, -5), CollisionLayer.BeamBlocker);
+            shrineObject.CreateFastBody(new IntVector2(18, 22), new IntVector2(-1, -5), CollisionLayer.EnemyBlocker);
+            shrineObject.CreateFastBody(new IntVector2(18, 22), new IntVector2(-1, -5), CollisionLayer.EnemyBulletBlocker);
 
             MajorBreakable statue = shrineObject.AddComponent<MajorBreakable>();
             statue.HitPoints = 25;
@@ -703,8 +686,8 @@ namespace Planetside
             statue.minShardPercentSpeed = 1.5f;
             var shadowSprite = PrefabBuilder.BuildObject("_Shadow").gameObject.AddComponent<tk2dSprite>();
             shadowSprite.SetSprite(StaticSpriteDefinitions.RoomObject_Sheet_Data, "enemybuffshrine_shadow");
-            shadowSprite.transform.SetParent(statue.transform);
-
+            shadowSprite.transform.position = statue.transform.position + new Vector3(0, -0.25f);
+            shadowSprite.transform.SetParent(statue.transform, true);
 
             StaticReferences.StoredRoomObjects.Add("fire_buffer_statue", statue.gameObject);
             Alexandria.DungeonAPI.StaticReferences.customObjects.Add("psog:fire_buffer_statue", statue.gameObject);

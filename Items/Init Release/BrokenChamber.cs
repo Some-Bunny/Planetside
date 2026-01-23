@@ -19,9 +19,10 @@ namespace Planetside
 			GameObject gameObject = new GameObject(name);
 			BrokenChamber warVase = gameObject.AddComponent<BrokenChamber>();
             var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
-            ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("brokenchamber"), data, gameObject); 
-			
-			string shortDesc = "A Bad Omen";
+            ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("brokenchamber"), data, gameObject);
+            warVase.sprite.SortingOrder = 3;
+
+            string shortDesc = "A Bad Omen";
 			string longDesc = "A broken, forgotten chamber. Dark power seeps from it.\n\nYou feel uneasy carrying it, yet you feel like you must keep it, and take it deep, deep below.";
 			ItemBuilder.SetupItem(warVase, shortDesc, longDesc, "psog");
 			warVase.quality = PickupObject.ItemQuality.EXCLUDED;

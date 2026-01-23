@@ -190,50 +190,15 @@ namespace Planetside
 			bundle = null;
 
 
-			BuildSoulGuon();
+			//BuildSoulGuon();
 			BuildMedal();
-			BuildTargetReticle();
 			BuildCursePoof();
 		}
 		public static GameObject LaserReticle;
 
 
-		public static void BuildTargetReticle()
-		{
 
-            GameObject gameObject = PrefabBuilder.BuildObject("Kinetic Strike Target Reticle");
-
-            tk2dSprite sprite = gameObject.AddComponent<tk2dSprite>();
-            sprite.collection = StaticSpriteDefinitions.Oddments_Sheet_Data;
-            sprite.SetSprite(StaticSpriteDefinitions.Oddments_Sheet_Data.GetSpriteIdByName("redmarksthespot"));
-
-
-
-            //KineticStrikeTargetReticle = SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/KineticStrike/redmarksthespot", new GameObject("Kinetic Strike Target Reticle"));
-            //KineticStrikeTargetReticle.SetActive(false);
-            //FakePrefab.MarkAsFakePrefab(KineticStrikeTargetReticle);
-            //UnityEngine.Object.DontDestroyOnLoad(KineticStrikeTargetReticle);
-
-            tk2dSprite bS = gameObject.GetOrAddComponent<tk2dSprite>();
-			bS.CachedPerpState = tk2dBaseSprite.PerpendicularState.FLAT;
-
-            bS.sprite.usesOverrideMaterial = true;
-
-
-            Material mat = bS.sprite.GetCurrentSpriteDef().material = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
-			mat.mainTexture = bS.sprite.renderer.material.mainTexture;
-			mat.SetColor("_EmissiveColor", new Color32(255, 0, 0, 255));
-			mat.SetFloat("_EmissiveColorPower", 1.55f);
-			mat.SetFloat("_EmissivePower", 50);
-            bS.sprite.renderer.material = mat;
-
-            ExpandReticleRiserEffect rRE = bS.gameObject.AddComponent<ExpandReticleRiserEffect>();
-			rRE.RiserHeight = 2;
-			rRE.RiseTime = 1;
-			rRE.NumRisers = 3;
-			KineticStrikeTargetReticle = gameObject;
-        }
-		public static GameObject KineticStrikeTargetReticle;
+		
 
 
 		
@@ -317,44 +282,7 @@ namespace Planetside
 		}
 		public static GameObject SomethingWicked;
 
-		public static void BuildSoulGuon()
-        {
-			GameObject gameObject = SpriteBuilder.SpriteFromResource("Planetside/Resources/Guons/SoulGuon/guoner.png");
-			gameObject.name = $"Soul Guon";
-			SpeculativeRigidbody speculativeRigidbody = gameObject.GetComponent<tk2dSprite>().SetUpSpeculativeRigidbody(IntVector2.Zero, new IntVector2(10, 10));
-			PlayerOrbital orbitalPrefab = gameObject.AddComponent<PlayerOrbital>();
-			speculativeRigidbody.CollideWithTileMap = false;
-			speculativeRigidbody.CollideWithOthers = true;
-			speculativeRigidbody.PrimaryPixelCollider.CollisionLayer = CollisionLayer.EnemyBulletBlocker;
-			orbitalPrefab.shouldRotate = false;
-			orbitalPrefab.orbitRadius = 4f;
-			orbitalPrefab.orbitDegreesPerSecond = 40;
-			orbitalPrefab.SetOrbitalTier(0);
-
-
-			ImprovedAfterImage yeah = gameObject.AddComponent<ImprovedAfterImage>();
-			yeah.dashColor = new Color(0, 0.7f, 1);
-			yeah.spawnShadows = true;
-			yeah.shadowTimeDelay = 0.05f;
-			yeah.shadowLifetime = 0.15f;
-
-			PlayerOrbital si = gameObject.GetComponent<PlayerOrbital>();
-
-			si.sprite.usesOverrideMaterial = true;
-			si.sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitCutoutUber");
-			Material mat = si.sprite.GetCurrentSpriteDef().material = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
-			mat.mainTexture = si.sprite.renderer.material.mainTexture;
-			mat.SetColor("_EmissiveColor", new Color32(255, 255, 255, 255));
-			mat.SetFloat("_EmissiveColorPower", 1.55f);
-			mat.SetFloat("_EmissivePower", 100);
-			si.sprite.renderer.material = mat;
-
-			SoulSynergyGuon = gameObject;
-			UnityEngine.Object.DontDestroyOnLoad(SoulSynergyGuon);
-			FakePrefab.MarkAsFakePrefab(SoulSynergyGuon);
-			SoulSynergyGuon.SetActive(false);
-		}
-		public static GameObject SoulSynergyGuon;
+		
 		public static string vfxNamefrailty = "FrailtyVFX";
 		public static GameObject MedalObject;
 		public static void BuildMedal()

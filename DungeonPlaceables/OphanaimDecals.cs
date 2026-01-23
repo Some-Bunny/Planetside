@@ -14,6 +14,7 @@ using System.Collections;
 using Alexandria.cAPI;
 using Alexandria.PrefabAPI;
 using Planetside.Static_Storage;
+using Planetside.Controllers;
 
 
 namespace Planetside
@@ -49,7 +50,7 @@ namespace Planetside
             }
             */
 
-
+            /*
             var OphanaimDecal_1 = PrefabBuilder.BuildObject("Ophanaim Decal (1)");
             OphanaimDecal_1.SetLayerRecursively(LayerMask.NameToLayer("BG_Critical"));
             var sprite = OphanaimDecal_1.AddComponent<tk2dSprite>();
@@ -94,15 +95,43 @@ namespace Planetside
 
             mat = new Material(StaticShaders.Default_Object_Shader);
             sprite.renderer.material = mat;
+            */
+
+            var OphanaimDecal_1 = GenerateDecal(1);
+            var OphanaimDecal_2 = GenerateDecal(2);
+            var OphanaimDecal_3 = GenerateDecal(3);
+            var OphanaimDecal_4 = GenerateDecal(4);
 
 
-            Dictionary<GameObject, float> decal2x2List = new Dictionary<GameObject, float>()
+            Dictionary<GameObject, float> decal2x2List = new Dictionary<GameObject, float>();
+            if (FoolMode.isFoolish)
             {
+                var OphanaimDecal_5 = GenerateDecal(5);
+                var OphanaimDecal_6 = GenerateDecal(6);
+                var OphanaimDecal_7 = GenerateDecal(7);
+                decal2x2List = new Dictionary<GameObject, float>()
+                {
+                { OphanaimDecal_1, 0.2f },
+                { OphanaimDecal_2, 0.1f },
+                { OphanaimDecal_3, 0.1f },
+                { OphanaimDecal_4, 0.1f },
+                { OphanaimDecal_5, 0.2f },
+                { OphanaimDecal_6, 0.4f },
+                { OphanaimDecal_7, 0.6f },
+
+                };
+            }
+            else
+            {
+                decal2x2List = new Dictionary<GameObject, float>()
+                {
                 { OphanaimDecal_1, 2f },
                 { OphanaimDecal_2, 0.8f },
                 { OphanaimDecal_3, 0.1f },
                 { OphanaimDecal_4, 0.3f },
-            };
+                };
+            }
+            
             DungeonPlaceable placeable = BreakableAPIToolbox.GenerateDungeonPlaceable(decal2x2List);
             StaticReferences.StoredDungeonPlaceables.Add("ophanaimRandom2x2Decal", placeable);
 
@@ -111,5 +140,21 @@ namespace Planetside
             StaticReferences.StoredRoomObjects.Add("ophanaim2x2Decal_3", OphanaimDecal_3);
             StaticReferences.StoredRoomObjects.Add("ophanaim2x2Decal_4", OphanaimDecal_4);
         }
+    
+        public static GameObject GenerateDecal(int order)
+        {
+            var OphanaimDecal_4 = PrefabBuilder.BuildObject($"Ophanaim Decal ({order})");
+            OphanaimDecal_4.SetLayerRecursively(LayerMask.NameToLayer("BG_Critical"));
+            var sprite = OphanaimDecal_4.AddComponent<tk2dSprite>();
+            sprite.SetSprite(StaticSpriteDefinitions.RoomObject_Sheet_Data, $"ophanaim_tile_00{order}");
+            sprite.SortingOrder = 2;
+            sprite.HeightOffGround = -1.75f;
+            sprite.usesOverrideMaterial = true;
+            sprite.IsPerpendicular = false;
+            var mat = new Material(StaticShaders.Default_Object_Shader);
+            sprite.renderer.material = mat;
+            return OphanaimDecal_4;
+        }
     }
+
 }
