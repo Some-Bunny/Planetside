@@ -254,6 +254,11 @@ namespace Planetside
                 Text = "A ritual circle, with a silver pedestal at its center.\nYou have nothing to offer.";
             }
 
+            if (Used)
+            {
+                Text = "The cleansing spirits that have once resided here have left.";
+            }
+
 
             TextBoxManager.ShowStoneTablet(this.talkPoint.position, this.talkPoint, -1f, Text, true, false);
             int selectedResponse = -1;
@@ -261,7 +266,7 @@ namespace Planetside
             yield return null;
             if (Used)
             {
-                GameUIRoot.Instance.DisplayPlayerConversationOptions(interactor, null, "The cleansing spirits that have once resided here have left.", string.Empty);
+                GameUIRoot.Instance.DisplayPlayerConversationOptions(interactor, null, "Leave.", string.Empty);
             }
             else
             {
@@ -287,6 +292,7 @@ namespace Planetside
             if (selectedResponse == 0 && b)
             {
                 Accept(interactor, this.gameObject);
+                Used = true;
             }
             else
             {

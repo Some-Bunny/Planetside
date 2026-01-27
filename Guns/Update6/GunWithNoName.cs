@@ -887,7 +887,7 @@ namespace Planetside
             }
             Pathfinder.Instance.GetPath(new IntVector2((int)this.transform.position.x, (int)this.transform.position.y),
                 new IntVector2((int)MyTarget.specRigidbody.UnitCenter.x, (int)MyTarget.specRigidbody.UnitCenter.y),
-                out myPathToDestiny, null, CellTypes.WALL | CellTypes.FLOOR, null, null, true);
+                out myPathToDestiny, null, CellTypes.WALL | CellTypes.FLOOR | CellTypes.PIT, null, null, true);
         }
     }
 
@@ -1043,7 +1043,7 @@ namespace Planetside
                     Path myPath = null;
                     Pathfinder.Instance.GetPath(new IntVector2((int)this.transform.position.x, (int)this.transform.position.y),
                         new IntVector2((int)Target.specRigidbody.UnitCenter.x, (int)Target.specRigidbody.UnitCenter.y),
-                        out myPath, null, CellTypes.WALL | CellTypes.FLOOR, null, null, true);
+                        out myPath, null, CellTypes.WALL | CellTypes.FLOOR | CellTypes.PIT, null, null, true);
                     if (myPath != null)
                     {
                         Vector3 lastPos = this.transform.position;
@@ -1236,8 +1236,6 @@ namespace Planetside
             Alexandria.Assetbundle.ProjectileBuilders.SetProjectileCollisionRight(_Hitscan,
             "lilpew_projectile", StaticSpriteDefinitions.Projectile_Sheet_Data, 4, 4, false, tk2dBaseSprite.Anchor.MiddleCenter, 4, 4);
 
-
-
             _Hitscan.baseData.range = 10000;
             var hit = _Hitscan.gameObject.AddComponent<GWNN_Hitscan>();
             _Hitscan.sprite.renderer.enabled = false;
@@ -1317,12 +1315,12 @@ namespace Planetside
             var spr = energyEffect.gameObject.AddComponent<tk2dTiledSprite>();
             spr.SetSprite(StaticSpriteDefinitions.VFX_Sheet_Data, "gwnn_tether_001");
             spr.dimensions = new Vector2(20, 20);
-            spr.SortingOrder = -200;
-            spr.HeightOffGround = 30000;
+            spr.SortingOrder = -2;
+            spr.HeightOffGround = 30;
             spr.ShouldDoTilt = false;
             spr.IsPerpendicular = false;
             spr._anchor = tk2dBaseSprite.Anchor.MiddleLeft;
-            spr.gameObject.layer = LayerMask.NameToLayer("FG_Nonsense");
+            spr.gameObject.layer = Layers.FG_Critical;
             spr.ignoresTiltworldDepth = true;
             spr.renderer.sortingLayerName = "Foreground";
             var anima = energyEffect.gameObject.AddComponent<tk2dSpriteAnimator>();

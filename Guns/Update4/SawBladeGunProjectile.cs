@@ -175,6 +175,7 @@ namespace Planetside
 
         public override void OnRigidbodyCollision(CollisionData rigidbodyCollision)
         {
+            
             base.OnRigidbodyCollision(rigidbodyCollision);
         }
 
@@ -205,8 +206,8 @@ namespace Planetside
                 if (otherRigidbody.IsActuallyOubiletteEntranceRoom())
                 {
                     TemporaryDisabler = true;
+                    this.Invoke("DoWait", Time.deltaTime);
                     PhysicsEngine.SkipCollision = true;
-                    LastVelocity *= -1;
                     DoBonkParticles(32);
                     AkSoundEngine.PostEvent("Play_MetalImpactHit", this.gameObject);
                     ParticleBase.EmitParticles("WaveParticle", 1, new ParticleSystem.EmitParams()
@@ -219,6 +220,13 @@ namespace Planetside
                     });
                     specRigidbody.RegisterTemporaryCollisionException(otherRigidbody, 1);
 
+                    //ForColliderCheck = previousNormal;
+                    //previousNormal = previousNormal.Value.Rotate(this._Direction * -1);
+                    //_LastVelocity.Rotate(this._Direction * -1);
+                    _LastVelocity *= -1;
+                    _Direction *= -1;
+
+
                     return;
                 }
 
@@ -229,17 +237,22 @@ namespace Planetside
 
                     if (c2 is DungeonDoorController door)
                     {
-                        ForColliderCheck = previousNormal;
-                        previousNormal = previousNormal.Value.Rotate(this._Direction * -1);
-                        newVelocity = previousNormal.Value.Rotate(this._Direction).normalized;
+                        //ForColliderCheck = previousNormal;
+                        //previousNormal = previousNormal.Value.Rotate(this._Direction * -1);
+                        //_LastVelocity.Rotate(this._Direction * -1);
+
+                        _LastVelocity *= -1;
+                        _Direction *= -1;
+
                         foreach (var d in door.doorModules)
                         {
                           
-                            specRigidbody.RegisterTemporaryCollisionException(d.rigidbody, 1);
+                            specRigidbody.RegisterTemporaryCollisionException(d.rigidbody, 0.3f);
                         }
+                        Returns = true;
 
                         PhysicsEngine.SkipCollision = true;
-                        Returns = true;
+                        break;
                     }
 
                    
@@ -253,7 +266,11 @@ namespace Planetside
                         {
                             PhysicsEngine.SkipCollision = true;
                             Returns = true;
-                            LastVelocity *= -1;
+
+                            _LastVelocity *= -1;
+                            _Direction *= -1;
+
+
                             DoBonkParticles(32);
                             AkSoundEngine.PostEvent("Play_MetalImpactHit", this.gameObject);
                             ParticleBase.EmitParticles("WaveParticle", 1, new ParticleSystem.EmitParams()
@@ -264,7 +281,8 @@ namespace Planetside
                                 startLifetime = 0.333f,
                                 startColor = Color.white * 0.4f
                             });
-                            specRigidbody.RegisterTemporaryCollisionException(breakable.specRigidbody, 1);
+                            specRigidbody.RegisterTemporaryCollisionException(breakable.specRigidbody, 0.3f);
+                            break;
 
                         }
 
@@ -272,36 +290,49 @@ namespace Planetside
 
                     if (c2 is DungeonDoorSubsidiaryBlocker blocker)
                     {
-                        ForColliderCheck = previousNormal;
-                        previousNormal = previousNormal.Value.Rotate(this._Direction * -1);
-                        newVelocity = previousNormal.Value.Rotate(this._Direction).normalized;
 
 
-                        specRigidbody.RegisterTemporaryCollisionException(blocker.parentDoor.specRigidbody, 1);
+                        specRigidbody.RegisterTemporaryCollisionException(blocker.parentDoor.specRigidbody, 0.3f);
                         foreach (var d in blocker.parentDoor.doorModules)
                         {
-                            specRigidbody.RegisterTemporaryCollisionException(d.rigidbody, 1);
+                            specRigidbody.RegisterTemporaryCollisionException(d.rigidbody, 0.3f);
                         }
                         PhysicsEngine.SkipCollision = true;
                         Returns = true;
+
+
+                        //ForColliderCheck = previousNormal;
+                        //previousNormal = previousNormal.Value.Rotate(this._Direction * -1);
+                        _LastVelocity *= -1;
+                        _Direction *= -1;
+                        break;
 
                     }
                     if (c2 is ForgeCrushDoorController crusher)
                     {
                         if (crusher.m_isCrushing)
                         {
-                            ForColliderCheck = previousNormal;
-                            previousNormal = previousNormal.Value.Rotate(this._Direction * -1);
-                            newVelocity = previousNormal.Value.Rotate(this._Direction).normalized;
+
                             PhysicsEngine.SkipCollision = true;
-                            specRigidbody.RegisterTemporaryCollisionException(crusher.specRigidbody, 1);
+                            specRigidbody.RegisterTemporaryCollisionException(crusher.specRigidbody, 0.3f);
                             Returns = true;
+
+                            
+
+                            _LastVelocity *= -1;
+                            _Direction *= -1;
+
+                            //ForColliderCheck = previousNormal;
+                            //previousNormal = previousNormal.Value.Rotate(this._Direction * -1);
+                            //_LastVelocity.Rotate(this._Direction * -1);
+                            break;
                         }
                     }
                 }
                 if (Returns)
                 {
                     TemporaryDisabler = true;
+                    this.Invoke("DoWait", Time.deltaTime);
                     return;
                 }
             }
@@ -366,6 +397,11 @@ namespace Planetside
             }
         }
 
+
+        private void DoWait()
+        {
+            TemporaryDisabler = false;
+        }
 
         public override void OnPreTileCollision(SpeculativeRigidbody myrigidbody, PixelCollider mypixelcollider, PhysicsEngine.Tile tile, PixelCollider tilepixelcollider)
         {
@@ -437,8 +473,8 @@ namespace Planetside
             }
             //AkSoundEngine.PostEvent("Play_MetalImpactHit", this.gameObject);
 
-            TemporaryDisabler = false;
-            newVelocity = previousNormal.Value.Rotate(this._Direction);
+            //TemporaryDisabler = false;
+            _LastVelocity = previousNormal.Value.Rotate(this._Direction);
         }
 
 
@@ -463,7 +499,6 @@ namespace Planetside
         private Vector2? ForColliderCheck;
         private Vector2? previousNormal;
 
-        private Vector2 newVelocity;
         
         private float _Direction;
         private bool isAttached = false;
@@ -499,7 +534,7 @@ namespace Planetside
 
 
                 this.m_timeElapsed += this.LocalDeltaTime;
-                base.specRigidbody.Velocity = newVelocity * this.m_currentSpeed;
+                base.specRigidbody.Velocity = _LastVelocity * this.m_currentSpeed;
                 this.m_currentSpeed *= 1f - this.baseData.damping * this.LocalDeltaTime;
                 this.LastVelocity = base.specRigidbody.Velocity;
                 //_SpeculativeRigidbody.Velocity = LastVelocity;
@@ -521,28 +556,31 @@ namespace Planetside
             if (this.specRigidbody.IsAgainstWall(-this.previousNormal.Value.ToIntVector2()))
                 return; // if we're already up against a wall, no adjustments are needed
                         // move slightly towards the direction we're supposed to be going
-            
-            
+
             Vector2 _newVelocity = -this.previousNormal.Value.normalized;//.Rotate(_Direction * -1);
-            
-            
-            
+
+
+
             this.specRigidbody.transform.position += (0.0625f * _newVelocity).ToVector3ZUp(0f);
             this.specRigidbody.Reinitialize();
             this.projectile.specRigidbody.Reinitialize();
 
 
             // snap to the wall in the opposite direction we've overshot from
-            int pixelsAdjusted = this.specRigidbody.PushAgainstWalls(-newVelocity.normalized.ToIntVector2());
+            int pixelsAdjusted = this.specRigidbody.PushAgainstWalls(-_LastVelocity.normalized.ToIntVector2());
             this.projectile.specRigidbody.Reinitialize();
+
             // set the new normal to our current velocity
 
             ForColliderCheck = null;// this.previousNormal;
             this.previousNormal = _newVelocity.normalized;
             DoBonkParticles(16);
 
-            newVelocity = previousNormal.Value.Rotate(this._Direction);
+            _LastVelocity = previousNormal.Value.Rotate(this._Direction);
         }
+
+
+
 
         bool b = false;
 

@@ -51,7 +51,6 @@ public class UmbraController : BraveBehaviour
         }
 
     }
-
     public class LockOnEffect : MonoBehaviour
 	{
 		float Offset = 0.25f;
@@ -434,7 +433,19 @@ public class UmbraController : BraveBehaviour
         umbraEffect = base.aiActor.SmarterPlayEffectOnActor(UmbralEye, new Vector3(0, 1.5f, 3)).GetComponent<UmbraVFX>();
 		umbraEffect.Owner = base.aiActor;
 
+        
         this.StartCoroutine(DoWait());
+
+        base.aiActor.healthHaver.OnPreDeath += (_) =>
+        {
+            umbraEffect.gameObject.transform.SetParent(null, true);
+            umbraEffect.Kill();
+            if (umbraEffect.lockOnInst)
+            {
+                umbraEffect.lockOnInst.SetState(false);
+                Destroy(umbraEffect.lockOnInst, 0.5f);
+            }
+        };
 
 
         OnDeath = (A) =>

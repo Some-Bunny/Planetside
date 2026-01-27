@@ -116,10 +116,12 @@ namespace Planetside
             GameUIRoot.Instance.HideCoreUI("Trespassing");
             GameUIRoot.Instance.ForceHideGunPanel = true;
             GameUIRoot.Instance.ForceHideItemPanel = true;
+            SuperReaperController.PreventShooting = true;
             for (int j = 0; j < GameManager.Instance.AllPlayers.Length; j++)
             {
                 if (GameManager.Instance.AllPlayers[j])
                 {
+                    GameManager.Instance.AllPlayers[j].healthHaver.TriggerInvulnerabilityPeriod(2.5f);
                     GameManager.Instance.AllPlayers[j].SetInputOverride("Trespassing");
                 }
             }
@@ -150,6 +152,7 @@ namespace Planetside
             GameUIRoot.Instance.ForceHideItemPanel = false;
             GameUIRoot.Instance.ShowCoreUI("Trespassing");
             Minimap.Instance.TemporarilyPreventMinimap = false;
+            SuperReaperController.PreventShooting = false;
 
             yield break;
         }

@@ -321,6 +321,11 @@ namespace Planetside
 
         public void DoHoleFall(GameObject portal)
         {
+            foreach (var player in GameManager.Instance.AllPlayers)
+            {
+                player.healthHaver.TriggerInvulnerabilityPeriod(7.5f);
+            }
+            
             StaticReferenceManager.DestroyAllEnemyProjectiles();
             Minimap.Instance.ToggleMinimap(false, false);
             GameManager.IsBossIntro = true;

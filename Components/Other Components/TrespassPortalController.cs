@@ -85,6 +85,8 @@ namespace Planetside
         public void Interact(PlayerController interactor)
         {
             base.Invoke("DeregisterInteractable", 0f);
+            SuperReaperController.PreventShooting = true;
+
 
             WeightedRoom newRoom = null;
             if (AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.HAS_TREADED_DEEPER))
@@ -167,6 +169,7 @@ namespace Planetside
             {
                 if (GameManager.Instance.AllPlayers[j])
                 {
+                    GameManager.Instance.AllPlayers[j].healthHaver.TriggerInvulnerabilityPeriod(2.5f);
                     GameManager.Instance.AllPlayers[j].SetInputOverride("Trespassing");
                 }
             }
@@ -209,6 +212,8 @@ namespace Planetside
             //Pixelator.Instance.FadeToColor(1f, Color.black, false, 0f);
 
             Minimap.Instance.TemporarilyPreventMinimap = true;
+            yield return new WaitForSeconds(0.5f);
+            SuperReaperController.PreventShooting = false;
 
             yield break;
         }
