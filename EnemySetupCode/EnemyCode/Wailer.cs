@@ -593,8 +593,10 @@ namespace Planetside
 				EnemyDatabase.GetEntry("psog:wailer").ForcedPositionInAmmonomicon = 9;
 				EnemyDatabase.GetEntry("psog:wailer").isInBossTab = false;
 				EnemyDatabase.GetEntry("psog:wailer").isNormalEnemy = true;
-			}
-		}
+                companion.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("1bc2a07ef87741be90c37096910843ab").bulletBank.GetBullet("reversible"));
+
+            }
+        }
 
 		public class zappies : Script
 		{
@@ -801,15 +803,11 @@ namespace Planetside
 		{
 			public override IEnumerator Top()
 			{
-				if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
-				{
-					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("1bc2a07ef87741be90c37096910843ab").bulletBank.GetBullet("reversible"));
-				}
 				AkSoundEngine.PostEvent("Play_ENM_screamer_scream_01", this.BulletBank.aiActor.gameObject);
-				for (int k = 0; k < 20; k++)
+				for (int k = 0; k < 24; k++)
 				{
 					yield return this.Wait(4f);
-					this.Fire(new Direction(UnityEngine.Random.Range(0f, 360f), DirectionType.Aim, -1f), new Speed(UnityEngine.Random.Range(2f, 5f), SpeedType.Absolute), new ReverseBullet());
+					this.Fire(new Direction(UnityEngine.Random.Range(0f, 360f), DirectionType.Aim, -1f), new Speed(UnityEngine.Random.Range(3f, 6f), SpeedType.Absolute), new ReverseBullet());
 				}
 				yield break;
 			}
@@ -830,7 +828,7 @@ namespace Planetside
 				this.Direction += 180f;
 				this.Projectile.spriteAnimator.Play();
 				yield return this.Wait((UnityEngine.Random.Range(20, 50)));
-				this.ChangeSpeed(new Speed(Mathf.Max(speed * 4, 12), SpeedType.Absolute), (UnityEngine.Random.Range(20, 50)));
+				this.ChangeSpeed(new Speed(Mathf.Max(speed * 4, 16), SpeedType.Absolute), (UnityEngine.Random.Range(30, 75)));
 				yield return this.Wait(130);
 				//this.Vanish(true);
 				yield break;

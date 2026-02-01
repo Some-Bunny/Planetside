@@ -152,7 +152,6 @@ namespace Planetside
             IntVector2 intVec2 = new IntVector2((int)this.transform.position.x, (int)this.transform.position.y);
             roomHandler = GameManager.Instance.Dungeon.GetRoomFromPosition(intVec2);
 
-            MarkCells(true);
 
             if (roomHandler != null)
             {
@@ -177,7 +176,6 @@ namespace Planetside
                         entry.enabled = false;
                     }
                     isLowered = true;
-                    MarkCells(false);
                 }
                 if (obj2.GetFrame(obj3).eventInfo == "isNowLowering")
                 {
@@ -219,30 +217,37 @@ namespace Planetside
                         break;
                 }
             }
+            this.Invoke("InitializeDelayed", 0.15f);
         }
+        public void InitializeDelayed()
+        {
+            MarkCells(true);
+        }
+
+
 
         private void Inv()
         {
         }
 
+        private bool DoRandomizedDelay = false;
+
+
         public void MarkCells(bool Occuiped)
         {
-            PixelCollider primaryPixelCollider = this.Bodies[0].PrimaryPixelCollider;
-            IntVector2 intVector = PhysicsEngine.PixelToUnitMidpoint(primaryPixelCollider.LowerLeft).ToIntVector2(VectorConversions.Floor);
-            IntVector2 intVector2 = PhysicsEngine.PixelToUnitMidpoint(primaryPixelCollider.UpperRight).ToIntVector2(VectorConversions.Floor);
-            for (int i = intVector.x; i <= intVector2.x; i++)
+            IntVector2 b = base.transform.position.IntXY(VectorConversions.Floor);
+            for (int i = 0; i < 1; i++)
             {
-                for (int j = intVector.y; j <= intVector2.y; j++)
+                for (int j = 0; j < 1; j++)
                 {
-                    if (GameManager.Instance.Dungeon.data.cellData[i][j] != null)
-                    {
-                        var cell = GameManager.Instance.Dungeon.data.cellData[i][j];
-                        cell.isOccupied = Occuiped;
-                        cell.forceDisallowGoop = Occuiped;
-                        cell.PreventRewardSpawn = Occuiped;
-                        cell.containsTrap = Occuiped;
-                        cell.cellVisualData.floorType = Occuiped ? CellVisualData.CellFloorType.Stone : cellFloorType;
-                    }
+                    IntVector2 key = new IntVector2(i, j) + b;
+                    CellData cell = GameManager.Instance.Dungeon.data[key];
+                    cell.isOccupied = Occuiped;
+                    cell.forceDisallowGoop = Occuiped;
+                    cell.PreventRewardSpawn = Occuiped;
+                    cell.containsTrap = Occuiped;
+                    cell.cellVisualData.floorType = Occuiped ? CellVisualData.CellFloorType.Stone : cellFloorType;
+                    cell.type = Occuiped ? CellType.WALL : CellType.FLOOR;
                 }
             }
             Pathfinder.Instance.RecalculateRoomClearances(roomHandler);
@@ -289,7 +294,11 @@ namespace Planetside
         public IEnumerator DestroyBlocker()
         {  
             yield return new WaitForSeconds(DelayWaitTime);
-            yield return new WaitForSeconds(UnityEngine.Random.Range(0.01f, 0.15f));
+            if(DoRandomizedDelay)
+            {
+                yield return new WaitForSeconds(UnityEngine.Random.Range(0.01f, 0.15f));
+            }
+            MarkCells(false);
             if (DestroysObjectOnBreak)
             {
                 this.spriteAnimator.PlayAndDestroyObject(AnimationKey+"_movingblock_godown");
@@ -338,24 +347,30 @@ namespace Planetside
                 {
                     case GlobalDungeonData.ValidTilesets.CASTLEGEON:
                         AnimationKey = "keep";
+
                         break;
                     case GlobalDungeonData.ValidTilesets.GUNGEON:
                         AnimationKey = "proper";
+                        DoRandomizedDelay = true;
                         break;
                     case GlobalDungeonData.ValidTilesets.MINEGEON:
                         AnimationKey = "mines";
+                        DoRandomizedDelay = true;
                         break;
                     case GlobalDungeonData.ValidTilesets.CATACOMBGEON:
                         AnimationKey = "hollow";
+                        DoRandomizedDelay = true;
                         break;
                     case GlobalDungeonData.ValidTilesets.FORGEGEON:
                         AnimationKey = "forge";
                         break;
                     case GlobalDungeonData.ValidTilesets.HELLGEON:
                         AnimationKey = "hell";
+                        DoRandomizedDelay = true;
                         break;
                     case GlobalDungeonData.ValidTilesets.SEWERGEON:
                         AnimationKey = "sewer";
+                        DoRandomizedDelay = true;
                         break;
                     case GlobalDungeonData.ValidTilesets.CATHEDRALGEON:
                         AnimationKey = "abbey";

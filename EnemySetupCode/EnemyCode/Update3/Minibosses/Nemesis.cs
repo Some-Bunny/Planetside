@@ -73,15 +73,15 @@ namespace Planetside
 
 
 
-				companion.aiActor.healthHaver.ForceSetCurrentHealth(400f);
+				companion.aiActor.healthHaver.ForceSetCurrentHealth(425f);
 				companion.aiActor.CollisionKnockbackStrength = 0f;
 				companion.aiActor.procedurallyOutlined = true;
 				companion.aiActor.CanTargetPlayers = true;
+				companion.aiActor.HasShadow = true;
 
-				EnemyToolbox.AddShadowToAIActor(companion.aiActor, StaticEnemyShadows.defaultShadow, new Vector2(0.625f, -0.25f), "shadowPos");
 
 
-				companion.aiActor.healthHaver.SetHealthMaximum(400f, null, false);
+                companion.aiActor.healthHaver.SetHealthMaximum(425f, null, false);
 				companion.aiActor.specRigidbody.PixelColliders.Clear();
 				companion.aiActor.specRigidbody.PixelColliders.Add(new PixelCollider
 				{
@@ -123,8 +123,9 @@ namespace Planetside
 				companion.aiActor.CorpseObject = EnemyDatabase.GetOrLoadByGuid("43426a2e39584871b287ac31df04b544").CorpseObject;
 				companion.aiActor.PreventBlackPhantom = false;
 				AIAnimator aiAnimator = companion.aiAnimator;
+                EnemyToolbox.AddShadowToAIActor(companion.aiActor, StaticEnemyShadows.defaultShadow, new Vector2(0.625f, -0.0625f), "shadowPos");
 
-				aiAnimator.IdleAnimation = new DirectionalAnimation
+                aiAnimator.IdleAnimation = new DirectionalAnimation
 				{
 					Type = DirectionalAnimation.DirectionType.FourWay,
 					Prefix = "idle",
@@ -662,7 +663,7 @@ namespace Planetside
 				{
 					new UseFakeActiveBehavior
 					{
-						timeToHitThreshold = 2f,
+						timeToHitThreshold = 3f,
 						ChanceTouse = 0.8f,		
 						Enabled = true,
 					},
@@ -677,9 +678,9 @@ namespace Planetside
 					new SansTeleportBehavior()
                     {
                         AvoidWalls = true,
-                        Cooldown = 5,
+                        Cooldown = 4,
                         dodgeChance = 0f,
-                        timeToHitThreshold = 0.3f,
+                        timeToHitThreshold = 0.7f,
                         rollDistance = 6,
                         Enabled = false,
                         ManuallyDefineRoom = false,
@@ -692,9 +693,9 @@ namespace Planetside
 
                     new CustomDodgeRollBehavior
 					{
-						Cooldown = 3,
+						Cooldown = 2,
 						dodgeChance = 1f,
-						timeToHitThreshold = 0.35f,
+						timeToHitThreshold = 0.5f,
 						dodgeAnim = "dodgeroll",
 						rollDistance = 5,
 						Enabled = true,
@@ -783,14 +784,14 @@ namespace Planetside
 
 
 
-                ArcProjectile arcProjectile_1 = StaticBulletEntries.undodgeableGrenade.BulletObject.GetComponent<ArcProjectile>();
+                //ArcProjectile arcProjectile_1 = StaticBulletEntries.undodgeableGrenade.BulletObject.GetComponent<ArcProjectile>();
 	//			ETGModConsole.Log($"{arcProjectile_1.gravity} | {arcProjectile_1.startingZSpeed} | {arcProjectile_1.startingHeight}");
 
-                ArcProjectile arcProjectile_2 = StaticBulletEntries.UnDodgeableMolotov.BulletObject.GetComponent<ArcProjectile>();
+                //ArcProjectile arcProjectile_2 = StaticBulletEntries.UnDodgeableMolotov.BulletObject.GetComponent<ArcProjectile>();
 				//ETGModConsole.Log($"{arcProjectile_1.gravity} | {arcProjectile_1.startingZSpeed} | {arcProjectile_1.startingHeight}");
-				arcProjectile_2.gravity = arcProjectile_1.gravity;
-                arcProjectile_2.startingZSpeed = arcProjectile_1.startingZSpeed;
-                arcProjectile_2.startingHeight = arcProjectile_1.startingHeight;
+				//arcProjectile_2.gravity = arcProjectile_1.gravity;
+                //arcProjectile_2.startingZSpeed = arcProjectile_1.startingZSpeed;
+                //arcProjectile_2.startingHeight = arcProjectile_1.startingHeight;
 
 
                 companion.aiActor.bulletBank.Bullets[0].BulletObject.GetComponent<Projectile>().baseData.speed *= 2f;

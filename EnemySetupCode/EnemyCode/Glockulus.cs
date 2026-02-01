@@ -165,7 +165,7 @@ namespace Planetside
 						"attack_back_left"}, new DirectionalAnimation.FlipType[6], DirectionalAnimation.DirectionType.SixWay);
 
 
-                EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awaken" }, new DirectionalAnimation.FlipType[1]);
+                EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awaken" }, new DirectionalAnimation.FlipType[] {DirectionalAnimation.FlipType.None});
                 EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "death", new string[] { "death" }, new DirectionalAnimation.FlipType[0]);
 
 				List<int> idle_front = new List<int>()
@@ -267,11 +267,12 @@ namespace Planetside
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					0
-					}, "awaken", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
+					}, "awaken", tk2dSpriteAnimationClip.WrapMode.Once).fps = 1;
                     EnemyToolbox.MarkAnimationAsSpawn(companion.gameObject.GetComponent<tk2dSpriteAnimator>(), "awaken");
 
 
                 }
+				companion.aiActor.AwakenAnimType = AwakenAnimationType.Awaken;
 
                 EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "charge_back", new Dictionary<int, string> { { 0, "Charge" } });
 				EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "charge_back_right", new Dictionary<int, string> { { 0, "Charge" } });

@@ -45,12 +45,17 @@ namespace Planetside
 					foreach (PlayerController player in GameManager.Instance.AllPlayers)
                     {
 						if (Vector2.Distance(player.sprite.WorldCenter, base.Projectile.sprite.WorldCenter) < 3.1f)
-						{ Detonate(); }
+						{
+                            Detonate();
+							this.Vanish();
+                            yield break;
+						}
                     }
 					yield return this.Wait(1f);
 				}
 				Detonate();
-				yield break;
+                this.Vanish();
+                yield break;
 			}
 
 			public void Detonate()
@@ -65,13 +70,13 @@ namespace Planetside
 					}
 				}
 				
-				base.Vanish(true);
 				if (Ring != null)
                 {
 					UnityEngine.Object.Destroy(Ring);
 				}
-			}
-			public bool HasDetonated;
+                base.Vanish(true);
+            }
+            public bool HasDetonated;
 			public GameObject Ring;
 		}
 
@@ -449,13 +454,15 @@ namespace Planetside
 				{
 				   obj.gameObject.GetComponent<NemesisController>().GunSwitchTimer /= 5;
 				   obj.behaviorSpeculator.CooldownScale /= 2.5f;
+					obj.MovementSpeed *= 1.15f;
 				},
 				OnRemoved =(obj) =>
 				{
 					obj.gameObject.GetComponent<NemesisController>().GunSwitchTimer *= 5;
 					obj.behaviorSpeculator.CooldownScale *= 2.5f;
-				},
-				Cooldown = 20,
+                    obj.MovementSpeed /= 1.15f;
+                },
+				Cooldown = 18,
 				ActiveTime = 8
 			},
 			new FakeActiveContainer()
@@ -529,7 +536,7 @@ namespace Planetside
                 item_ID = 108,
                 OnActivated = (obj) =>
                 {
-                    SpawnManager.SpawnBulletScript(obj, obj.sprite.WorldCenter, obj.GetComponent<AIBulletBank>(), new CustomBulletScriptSelector(typeof(Bomb)), StringTableManager.GetEnemiesString("#TRAP", -1));
+                    SpawnManager.SpawnBulletScript(obj, obj.sprite.WorldCenter, obj.bulletBank, new CustomBulletScriptSelector(typeof(Bomb)), StringTableManager.GetEnemiesString("#TRAP", -1));
                 },
                 OnRemoved =(obj) =>
                 {
@@ -624,7 +631,6 @@ namespace Planetside
 			return BehaviorResult.Continue;
 		}
 
-		// Token: 0x06004BFD RID: 19453 RVA: 0x0019512A File Offset: 0x0019332A
 		public override ContinuousBehaviorResult ContinuousUpdate()
 		{
 			base.ContinuousUpdate();
@@ -637,7 +643,6 @@ namespace Planetside
 			return ContinuousBehaviorResult.Continue;
 		}
 
-		// Token: 0x06004BFE RID: 19454 RVA: 0x00195164 File Offset: 0x00193364
 		public override void Destroy()
 		{
 			StaticReferenceManager.ProjectileAdded -= this.ProjectileAdded;
@@ -645,7 +650,6 @@ namespace Planetside
 			base.Destroy();
 		}
 
-		// Token: 0x06004BFF RID: 19455 RVA: 0x00195190 File Offset: 0x00193390
 		private void ProjectileAdded(Projectile p)
 		{
 			if (!p)

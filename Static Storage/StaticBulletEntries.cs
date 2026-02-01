@@ -622,8 +622,21 @@ namespace Planetside
                 
             }
             {
-                undodgeableGrenade = CopyBulletBankEntryToBlue(EnemyDatabase.GetOrLoadByGuid("880bbe4ce1014740ba6b4e2ea521e49d").bulletBank.GetBullet("grenade"), "UndodgeableGrenade", "DNC", null, false);
-                
+                undodgeableGrenade = CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("8b913eea3d174184be1af362d441910d").bulletBank.GetBullet("grenade"), "UndodgeableGrenade", "DNC", null, false);
+                var proj = undodgeableGrenade.BulletObject.GetComponent<Projectile>();
+                DepthLookupManager.AssignRendererToSortingLayer(proj.sprite.renderer, DepthLookupManager.GungeonSortingLayer.FOREGROUND);
+                DepthLookupManager.UpdateRenderer(proj.sprite.renderer);
+                DepthLookupManager.UpdateRendererWithWorldYPosition(proj.sprite.renderer, 12);
+
+                proj.sprite.usesOverrideMaterial = true;
+
+
+                Material material = new Material(PlanetsideModule.InverseGlowShader);
+                //material.mainTexture = thirdDimensionalProjectile.sprite.renderer.material.mainTexture;
+                proj.sprite.renderer.material = material;
+                proj.sprite.renderer.material.SetFloat("_EmissiveColorPower", 6);
+                proj.sprite.renderer.material.SetFloat("_EmissivePower", 8);
+                proj.sprite.renderer.material.SetFloat("_IsBlue", 1);
             }
             {
                 UnDodgeableCheese = CopyBulletBankEntryToBlue(EnemyDatabase.GetOrLoadByGuid(Alexandria.EnemyGUIDs.Resourceful_Rat_Boss_GUID).bulletBank.GetBullet("cheese"), "UndodgeableCheese", "DNC", null, false);

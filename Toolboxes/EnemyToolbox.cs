@@ -314,9 +314,12 @@ namespace Planetside
 			actor.HasShadow = true;
 			actor.ShadowPrefab = shadowObject;
 			GameObject shadowPoint = new GameObject(name);
-			shadowPoint.transform.parent = actor.gameObject.transform;
-			shadowPoint.transform.position = attachpoint;
-			actor.ShadowParent = shadowPoint.transform;
+			shadowPoint.transform.SetParent(actor.gameObject.transform);
+            shadowPoint.transform.localPosition = Vector3.zero;
+            shadowPoint.transform.position = actor.gameObject.transform.position + new Vector3(attachpoint.x, attachpoint.y);
+
+
+            actor.ShadowParent = shadowPoint.transform;
 		}
 	
 

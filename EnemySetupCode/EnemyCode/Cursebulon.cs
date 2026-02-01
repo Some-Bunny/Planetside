@@ -60,6 +60,7 @@ namespace Planetside
 				companion.aiActor.CanTargetPlayers = true;
 				companion.aiActor.healthHaver.SetHealthMaximum(25f, null, false);
 				companion.aiActor.specRigidbody.PixelColliders.Clear();
+                companion.aiActor.AwakenAnimType = AwakenAnimationType.Awaken;
 
 
 
@@ -434,7 +435,7 @@ namespace Planetside
                 }
 				*/
 
-                EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awake", "awake" }, new DirectionalAnimation.FlipType[2], DirectionalAnimation.DirectionType.TwoWayHorizontal);
+                EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awaken", "awaken" }, new DirectionalAnimation.FlipType[2], DirectionalAnimation.DirectionType.TwoWayHorizontal);
 				companion.aiActor.AwakenAnimType = AwakenAnimationType.Awaken;
 				//bool flag3 = CurseblobCollection == null;
 				//if (flag3)
@@ -585,8 +586,12 @@ namespace Planetside
 				SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 				{
 					18,
-				}, "awake", tk2dSpriteAnimationClip.WrapMode.Once).fps = 4f;
-				var bs = prefab.GetComponent<BehaviorSpeculator>();
+				}, "awaken", tk2dSpriteAnimationClip.WrapMode.Once).fps = 1f;
+
+                EnemyToolbox.MarkAnimationAsSpawn(companion.gameObject.GetComponent<tk2dSpriteAnimator>(), "awaken");
+
+
+                var bs = prefab.GetComponent<BehaviorSpeculator>();
 				BehaviorSpeculator behaviorSpeculator = EnemyDatabase.GetOrLoadByGuid("01972dee89fc4404a5c408d50007dad5").behaviorSpeculator;
 				bs.OverrideBehaviors = behaviorSpeculator.OverrideBehaviors;
 				bs.OtherBehaviors = behaviorSpeculator.OtherBehaviors;

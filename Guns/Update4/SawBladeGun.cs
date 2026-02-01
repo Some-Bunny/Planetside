@@ -134,7 +134,7 @@ namespace Planetside
 
 			gun.encounterTrackable.EncounterGuid = "minjlokikjhnikjhnjmnkkojhnilnoiloknjhkjhniloikjhlo";
 			ETGMod.Databases.Items.Add(gun, false, "ANY");
-			NemesisGun.NemesisGunID = gun.PickupObjectId;
+			SawBladeGun.ID = gun.PickupObjectId;
 
             ProjectileModule.ChargeProjectile item2 = new ProjectileModule.ChargeProjectile
             {
@@ -169,7 +169,7 @@ namespace Planetside
             gun.AddToSubShop(ItemAPI.ItemBuilder.ShopType.Trorc, 1);
 
         }
-        public static int NemesisGunID;
+        public static int ID;
 
         public class FunSurprise : MonoBehaviour
         {

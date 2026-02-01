@@ -172,7 +172,8 @@ namespace Planetside
                 {
                     if (self && self.GetComponent<PushImmunity>() == null)
                     {
-                        float Dist = Vector2.Distance(self.sprite.WorldCenter, user.sprite.WorldCenter);
+                        var position = self.sprite != null ? self.sprite.WorldCenter.ToVector3ZUp() : self.transform.position;
+                        float Dist = Vector2.Distance(position, user.sprite.WorldCenter);
                         if (Dist < 3)
                         {
                             if (UnityEngine.Random.value < 0.05f + (bulletCount * .095f)){

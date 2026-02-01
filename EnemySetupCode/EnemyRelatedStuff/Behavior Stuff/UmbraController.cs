@@ -363,6 +363,7 @@ public class UmbraController : BraveBehaviour
     public void UnBecomeUmbra()
     {
         if (isOomfing) { return; }
+        base.aiActor.healthHaver.OnPreDeath -= OnPreKill;
         isOomfing = true;
         this.StartCoroutine(DoWaitForKill());
     }
@@ -412,6 +413,18 @@ public class UmbraController : BraveBehaviour
 
     private ImprovedAfterImage improvedAfterImage;
 
+
+    public void OnPreKill(Vector2 vector2)
+    {
+        umbraEffect.gameObject.transform.SetParent(null, true);
+        umbraEffect.Kill();
+        if (umbraEffect.lockOnInst)
+        {
+            umbraEffect.lockOnInst.SetState(false);
+            Destroy(umbraEffect.lockOnInst, 0.5f);
+        }
+    }
+
     public void Start()
 	{
 		base.aiActor.sprite.usesOverrideMaterial = true;
@@ -436,16 +449,7 @@ public class UmbraController : BraveBehaviour
         
         this.StartCoroutine(DoWait());
 
-        base.aiActor.healthHaver.OnPreDeath += (_) =>
-        {
-            umbraEffect.gameObject.transform.SetParent(null, true);
-            umbraEffect.Kill();
-            if (umbraEffect.lockOnInst)
-            {
-                umbraEffect.lockOnInst.SetState(false);
-                Destroy(umbraEffect.lockOnInst, 0.5f);
-            }
-        };
+        base.aiActor.healthHaver.OnPreDeath += OnPreKill;
 
 
         OnDeath = (A) =>

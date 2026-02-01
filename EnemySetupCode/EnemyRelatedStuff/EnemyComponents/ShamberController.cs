@@ -140,6 +140,7 @@ public class ShamberController : BraveBehaviour
         this.aiActor.behaviorSpeculator.InterruptAndDisable();
         this.aiActor.aiAnimator.Play("vomit", AIAnimator.AnimatorState.StateEndType.Duration, 1.25f, -1, true, "");
         this.aiActor.MovementSpeed = 0;
+        this.aiActor.healthHaver.IsVulnerable = false;
         float e = 0;
         AkSoundEngine.PostEvent("Play_ENM_cult_charge_01", this.gameObject);
 
@@ -186,6 +187,7 @@ public class ShamberController : BraveBehaviour
                 base.aiAnimator.OtherAnimations[i].anim.Prefix = "fast";
             }
         }
+        this.aiActor.healthHaver.IsVulnerable = true;
         base.healthHaver.SuppressDeathSounds = true;
         AkSoundEngine.PostEvent("Play_BOSS_doormimic_vanish_01", this.gameObject);
         base.healthHaver.ApplyDamage(100000f, Vector2.zero, "Death on Room Claer", CoreDamageTypes.None, DamageCategory.Unstoppable, true, null, false);
@@ -419,8 +421,10 @@ public class ShamberController : BraveBehaviour
                     proj.ResetDistance();
                     
                     if (isForced)
-                    {                      
-                        proj.baseData.speed = Mathf.Min(this.m_bulletPositions[i].speed, 25);
+                    {
+                        proj.baseData.UsesCustomAccelerationCurve = false;
+                        proj.baseData.CustomAccelerationCurveDuration = 2.5f;
+                        proj.baseData.speed = Mathf.Min(this.m_bulletPositions[i].speed, 45);
                     }
                     else
                     {

@@ -244,10 +244,15 @@ namespace Planetside.DungeonPlaceables
         private bool T;
         public float DelayWaitTime = 0.25f;
         public int WaveClearRequirement = -1;
+        private bool DoRandomizedDelay = false;
 
         public IEnumerator DestroyBlocker()
         {
             yield return new WaitForSeconds(DelayWaitTime);
+            if (DoRandomizedDelay)
+            {
+                yield return new WaitForSeconds(UnityEngine.Random.Range(0.01f, 0.15f));
+            }
             tk2DBaseSprite.renderer.enabled = true;
             this.spriteAnimator.Play(AnimationKey + "_movingfloor_pullup" + (isBottomBorder ? "_bb" : string.Empty));
             yield break;
@@ -361,18 +366,22 @@ namespace Planetside.DungeonPlaceables
                         break;
                     case GlobalDungeonData.ValidTilesets.GUNGEON:
                         AnimationKey = "proper";
+                        DoRandomizedDelay = true;
                         break;
                     case GlobalDungeonData.ValidTilesets.MINEGEON:
                         AnimationKey = "mines";
+                        DoRandomizedDelay = true;
                         break;
                     case GlobalDungeonData.ValidTilesets.CATACOMBGEON:
                         AnimationKey = "hollow";
+                        DoRandomizedDelay = true;
                         break;
                     case GlobalDungeonData.ValidTilesets.FORGEGEON:
                         AnimationKey = "forge";
                         break;
                     case GlobalDungeonData.ValidTilesets.HELLGEON:
                         AnimationKey = "hell";
+                        DoRandomizedDelay = true;
                         break;
                     case GlobalDungeonData.ValidTilesets.SEWERGEON:
                         AnimationKey = "sewer";
