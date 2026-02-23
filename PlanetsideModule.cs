@@ -27,6 +27,7 @@ using Planetside.NPC_Stuff;
 using AmmonomiconAPI;
 using Planetside.APIs;
 using Planetside.Controllers;
+using Alexandria;
 
 namespace Planetside
 {
@@ -39,7 +40,7 @@ namespace Planetside
     {
         public const string GUID = "somebunny.etg.planetsideofgunymede";
         public const string NAME = "Planetside Of Gunymede Pre-Release";
-        public const string VERSION = "1.3.197";
+        public const string VERSION = "1.3.198";
         //9006FF
         public static readonly string TEXT_COLOR = "#00d0ff";
         //00d0ff
@@ -66,8 +67,8 @@ namespace Planetside
         private static bool ControllersActive = true;
         private static bool EnemiesActive = true;
         private static bool ShrinesActive = true;
-        private static bool NPCsActive = true;
-        private static bool PlaceablesActive = true;
+        private static bool NPCsActive = false;
+        private static bool PlaceablesActive = false;
         private static bool EnemyChangesActive = true;
         public static bool PrisonerDebug = false;
 
@@ -135,6 +136,7 @@ namespace Planetside
             Tools.Init();
             NpcTools.Init();
 
+
             #region Hooks
             Actions.Init();
             PickupHooks.Init();
@@ -159,7 +161,6 @@ namespace Planetside
 
 
             #endregion
-
 
 
 
@@ -375,6 +376,7 @@ namespace Planetside
             SawBladeGun.Add();
             CoinShot.Add();
             NeutroniumCore.Init();
+            PileOfStardust.Init();
 
             //Perks
             AllSeeingEyeMiniPickup.Init();

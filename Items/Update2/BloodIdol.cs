@@ -95,12 +95,12 @@ namespace Planetside
         }
         public override void Pickup(PlayerController player)
         {
-            player.OnAnyEnemyReceivedDamage = (Action<float, bool, HealthHaver>)Delegate.Combine(player.OnAnyEnemyReceivedDamage, new Action<float, bool, HealthHaver>(this.OnEnemyDamaged));
+            player.OnAnyEnemyReceivedDamage += OnEnemyDamaged;
             base.Pickup(player);
         }
         public override void OnPreDrop(PlayerController user)
         {
-            user.OnAnyEnemyReceivedDamage = (Action<float, bool, HealthHaver>)Delegate.Remove(user.OnAnyEnemyReceivedDamage, new Action<float, bool, HealthHaver>(this.OnEnemyDamaged));
+            user.OnAnyEnemyReceivedDamage -= OnEnemyDamaged;
         }
         private void OnEnemyDamaged(float damage, bool fatal, HealthHaver enemy)
         {
@@ -110,13 +110,8 @@ namespace Planetside
            }
         }
 
-        private int kills;
-
         public override void Update()
         {
-            
-
-
             if (this.m_pickedUp)
             {
                 if (this.LastOwner == null)
@@ -147,7 +142,7 @@ namespace Planetside
         {
             if (base.LastOwner != null)
             {
-                base.LastOwner.OnAnyEnemyReceivedDamage = (Action<float, bool, HealthHaver>)Delegate.Remove(base.LastOwner.OnAnyEnemyReceivedDamage, new Action<float, bool, HealthHaver>(this.OnEnemyDamaged));
+                base.LastOwner.OnAnyEnemyReceivedDamage -= OnEnemyDamaged;
             }
             base.OnDestroy();
         }

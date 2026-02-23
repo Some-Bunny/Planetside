@@ -7,6 +7,7 @@ using FullInspector;
 using UnityEngine;
 using ItemAPI;
 using EnemyBulletBuilder;
+using Planetside.Misc_Stuff;
 
 namespace Planetside
 {
@@ -18,17 +19,6 @@ namespace Planetside
 																						  // You can find a full list of GUIDs at https://github.com/ModTheGungeon/ETGMod/blob/master/Assembly-CSharp.Base.mm/Content/gungeon_id_map/enemies.txt
 		public override void DoOverride()
 		{
-			// In this method, you can do whatever you want with the enemy using the fields "actor", "healthHaver", "behaviorSpec", and "bulletBank".
-
-			//actor.MovementSpeed *= 2; // Doubles the enemy movement speed
-
-			//healthHaver.SetHealthMaximum(healthHaver.GetMaxHealth() * 0.5f); // Halves the enemy health
-
-			//The BehaviorSpeculator is responsible for almost everything an enemy does, from shooting a gun to teleporting.
-			// Tip: To debug an enemy's BehaviorSpeculator, you can uncomment the line below. This will print all the behavior information to the console.
-			//ToolsEnemy.DebugInformation(behaviorSpec);
-			//SpinAttackBehavior 
-
 			SpinAttackBehavior SpinAttackBehavior1 = behaviorSpec.AttackBehaviorGroup.AttackBehaviors[0].Behavior as SpinAttackBehavior;
 			SpinAttackBehavior1.BulletScript = new CustomBulletScriptSelector(typeof(ModifeidBulletKingCrazySpin1));
 
@@ -148,7 +138,7 @@ namespace Planetside
 			public void DirectedShots(float x, float y, float direction)
 			{
 				direction -= 90f;
-				base.Fire(new Offset(x, y, 0f, string.Empty, DirectionType.Absolute), new Direction(direction, DirectionType.Absolute, -1f), new Speed(11, SpeedType.Absolute), new Bullet(StaticBulletEntries.UndodgeableDirectedfire.Name, false, false, false));
+				base.Fire(new Offset(x, y, 0f, string.Empty, DirectionType.Absolute), new Direction(direction, DirectionType.Absolute, -1f), new Speed(11, SpeedType.Absolute), new BlueBullet(StaticBulletEntries.UndodgeableDirectedfire.Name, false, false, false));
 			}
 		}
 
@@ -196,7 +186,8 @@ namespace Planetside
 
 				public override IEnumerator Top()
 				{
-					this.ManualControl = true;
+                    (Projectile as ThirdDimensionalProjectile).SetUnDodgeableState(true);
+                    this.ManualControl = true;
 					float radius = Vector2.Distance(this.centerPoint, this.Position);
 					float speed = this.Speed;
 					float spinAngle = this.startAngle;
@@ -236,8 +227,8 @@ namespace Planetside
 				}
 				for (int k = 0; k < 36; k++)
 				{
-					this.Fire(new Direction((float)k * 360f / 36f, DirectionType.Absolute, -1f), new Speed(7, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.undodgeableDefault.Name, 7, 60));
-					this.Fire(new Direction((float)k * 360f / 36f, DirectionType.Absolute, -1f), new Speed(6, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.undodgeableDefault.Name, 7, 60));
+					this.Fire(new Direction((float)k * 360f / 36f, DirectionType.Absolute, -1f), new Speed(7, SpeedType.Absolute), new BlueSpeedChangingBullet(StaticBulletEntries.undodgeableDefault.Name, 7, 60));
+					this.Fire(new Direction((float)k * 360f / 36f, DirectionType.Absolute, -1f), new Speed(6, SpeedType.Absolute), new BlueSpeedChangingBullet(StaticBulletEntries.undodgeableDefault.Name, 7, 60));
 
 				}
 				yield break;

@@ -230,6 +230,7 @@ namespace Planetside
 			AnimateBullet.ConstructListOfSameValues(true, 5), AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.LowerLeft, 5), AnimateBullet.ConstructListOfSameValues(true, 5), AnimateBullet.ConstructListOfSameValues(false, 5),
 			AnimateBullet.ConstructListOfSameValues<Vector3?>(null, 5), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 5), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 5), AnimateBullet.ConstructListOfSameValues<Projectile>(null, 5));
 
+            ef.sprite.renderer.enabled = false;
 
             ef.objectImpactEventName = (PickupObjectDatabase.GetById(61) as Gun).DefaultModule.projectiles[0].objectImpactEventName;
             ef.enemyImpactEventName = (PickupObjectDatabase.GetById(61) as Gun).DefaultModule.projectiles[0].enemyImpactEventName;
@@ -251,6 +252,7 @@ namespace Planetside
             var tro = ef.gameObject.AddChild("trail object");
             tro.transform.position = ef.sprite.WorldCenter;
             tro.transform.localPosition = ef.sprite.WorldCenter;
+            tro.layer = Layers.FG_Nonsense;
 
             TrailRenderer tr = tro.AddComponent<TrailRenderer>();
             tr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
@@ -261,23 +263,107 @@ namespace Planetside
             tr.numCapVertices = 20;
 
             //======
-            mat.SetColor("_Color", color * 0.7f);
-            tr.startColor = Color.white;
-            tr.endColor = (color * 0.4f).WithAlpha(0.4f);
+            mat.SetColor("_Color", color * 0.5f);
+            tr.startColor = Color.white * 0.5f;
+            tr.endColor = (color * 0.2f).WithAlpha(0.4f);
             //======
             tr.time = 0.1f;
+            tr.sortingOrder = 0;
             //======
             tr.startWidth = 0.2125f;
-            tr.endWidth = 0f;
+            tr.endWidth = 0.2125f;
             tr.autodestruct = false;
-
+            tr.widthCurve = new AnimationCurve()
+            {
+                keys = new Keyframe[] 
+                {
+                    new Keyframe()
+                    {
+                        time = 0,
+                        tangentMode = 0,
+                        value = 0,
+                    },
+                    new Keyframe()
+                    {
+                        time = 0.2f,
+                        tangentMode = 0,
+                        value = 0.2f,
+                    },
+                    new Keyframe()
+                    {
+                        time = 1f,
+                        tangentMode = 0,
+                        value = 0f,
+                    },
+                }
+            };
             var rend = ef.gameObject.AddComponent<ProjectileTrailRendererController>();
             rend.trailRenderer = tr;
             rend.desiredLength = 0.625f;
+            ef.AllTrails.Add(tr);
+
+            tro = ef.gameObject.AddChild("trail object small");
+            tro.transform.position = ef.sprite.WorldCenter;
+            tro.transform.localPosition = ef.sprite.WorldCenter;
+            tro.layer = Layers.FG_Nonsense;
+
+            tr = tro.AddComponent<TrailRenderer>();
+            tr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            tr.receiveShadows = false;
+            mat = new Material(Shader.Find("Sprites/Default"));
+            tr.material = mat;
+            tr.minVertexDistance = 0.01f;
+            tr.numCapVertices = 20;
+            tr.sortingOrder = -3;
+
+            //======
+            mat.SetColor("_Color", new Color(255, 255, 255));
+            tr.startColor = new Color(255, 255, 255);
+            tr.endColor = new Color(255, 255, 255).WithAlpha(0.4f);
+            //======
+            tr.time = 0.05f;
+            //======
+            tr.startWidth = 0.2125f;
+            tr.endWidth = 0.2125f;
+            tr.autodestruct = false;
+            tr.widthCurve = new AnimationCurve()
+            {
+                keys = new Keyframe[]
+                {
+                    new Keyframe()
+                    {
+                        time = 0,
+                        tangentMode = 0,
+                        value = 0,
+                    },
+                    new Keyframe()
+                    {
+                        time = 0.5f,
+                        tangentMode = 0,
+                        value = 0.1f,
+                    },
+                    new Keyframe()
+                    {
+                        time = 1f,
+                        tangentMode = 0,
+                        value = 0,
+                    },
+                }
+            };
+            rend = ef.gameObject.AddComponent<ProjectileTrailRendererController>();
+            rend.trailRenderer = tr;
+            rend.desiredLength = 0.25f;
+            ef.AllTrails.Add(tr);
+
+
             AllStars.Add(ef);
 
             return ef;
         }
+
+
+
+
 		public static int WitherLanceID;
 
 

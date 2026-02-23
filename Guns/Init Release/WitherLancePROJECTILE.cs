@@ -35,6 +35,10 @@ namespace Planetside
         public override void Start()
         {
             base.Start();
+            foreach (var item in AllTrails)
+            {
+                item.gameObject.layer = Layers.FG_Nonsense;
+            }
             this.baseData.speed *= UnityEngine.Random.Range(0.7f, 1.7f);
             this.StartCoroutine(Wait());
         }
@@ -193,8 +197,8 @@ namespace Planetside
 
         private GameObject SpecialProjectile;
         private bool Active = false;
+        public List<TrailRenderer> AllTrails = new List<TrailRenderer>();
     }
-
 
 
 

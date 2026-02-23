@@ -78,6 +78,7 @@ namespace Planetside
 				public Spore() : base(UnityEngine.Random.value > 0.33f ? StaticBulletEntries.undodgeableSmallSpore.Name : StaticBulletEntries.undodgeableLargeSpore.Name, false, false, false) { }
 				public override IEnumerator Top()
 				{
+					(Projectile as ThirdDimensionalProjectile).SetUnDodgeableState(true); // DO THIS **EVERYWHERE**
 					base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), UnityEngine.Random.Range(60, 150));
 					yield return this.Wait(450);
 					base.Vanish(false);
@@ -366,7 +367,8 @@ namespace Planetside
 				public Spore() : base(UnityEngine.Random.value > 0.33f ? StaticBulletEntries.undodgeableSmallSpore.Name : StaticBulletEntries.undodgeableLargeSpore.Name, false, false, false) { }
 				public override IEnumerator Top()
 				{
-					base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), UnityEngine.Random.Range(30, 120));
+                    (Projectile as ThirdDimensionalProjectile).SetUnDodgeableState(true);
+                    base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), UnityEngine.Random.Range(30, 120));
 					yield return this.Wait(450);
 					base.Vanish(false);
 					yield break;

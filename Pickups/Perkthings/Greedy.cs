@@ -401,7 +401,7 @@ namespace Planetside
         }
 
         private float Timer;
-        private bool BuffsActive = false;
+        //private bool BuffsActive = false;
         private int ActiveBuffs = 0;
         private Coroutine isNewStack;
         private IEnumerator GrantTemporaryBoost(PlayerController user, float StatIncreaseValue)

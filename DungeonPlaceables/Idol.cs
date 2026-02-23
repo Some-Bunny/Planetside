@@ -387,6 +387,28 @@ namespace Planetside.DungeonPlaceables
             EnemyBlessed.behaviorSpeculator?.Stun(1000, false);
             EnemyBlessed.MovementSpeed *= 0;
 
+           
+
+            AkSoundEngine.StopAll(EnemyBlessed.gameObject);
+
+            var behav = EnemyBlessed.GetEnemyBehavior<ConsumeTargetBehavior>();
+            if (behav != null)
+            {
+                behav.OnActorPreDeath();
+                behav.UnconsumePlayer(false);
+                AkSoundEngine.PostEvent("Stop_SND_obj", EnemyBlessed.gameObject);
+
+                AkSoundEngine.StopAll(EnemyBlessed.gameObject);
+            }
+            var behav2 = EnemyBlessed.GetEnemyBehavior<MirrorImageBehavior>();
+            if (behav2 != null)
+            {
+                behav2.m_allImages.ForEach(self =>
+                {
+                    self.aiActor.healthHaver.ApplyDamage(100000000, Vector2.zero, "Fuck off");
+                });
+            }
+
             var mourn = StaticVFXStorage.MourningStarVFXController.SpawnMourningStar(EnemyBlessed.sprite.WorldCenter, -1);
             mourn.DoesSound = true;
             mourn.DoesEmbers = false;

@@ -301,7 +301,21 @@ namespace Planetside
 				EnemyDatabase.GetEntry("psog:shamber").ForcedPositionInAmmonomicon = 27;
 				EnemyDatabase.GetEntry("psog:shamber").isInBossTab = false;
 				EnemyDatabase.GetEntry("psog:shamber").isNormalEnemy = true;
-			}
+
+                enemy.aiActor.EffectResistances = new ActorEffectResistance[]
+				{
+                    new ActorEffectResistance()
+                    {
+                        resistAmount = 1,
+                        resistType = EffectResistanceType.Fire
+                    },
+					new ActorEffectResistance()
+                    {
+                        resistAmount = 1,
+                        resistType = EffectResistanceType.Poison
+                    },
+                };
+            }
 
 		}
 
@@ -309,41 +323,14 @@ namespace Planetside
 
 		public class EnemyBehavior : BraveBehaviour
 		{
-			private RoomHandler m_StartRoom;
 
 			public void Update()
 			{
-				m_StartRoom = aiActor.GetAbsoluteParentRoom();
-				if (!base.aiActor.HasBeenEngaged)
-				{
-					CheckPlayerRoom();
-				}
+
 			}
-			private void CheckPlayerRoom()
-			{
-				if (GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() != null && GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() == m_StartRoom)
-				{
-					GameManager.Instance.StartCoroutine(LateEngage());
-				}
-				else
-				{
-					base.aiActor.HasBeenEngaged = false;
-				}
-			}
-			private IEnumerator LateEngage()
-			{
-				yield return new WaitForSeconds(0.5f);
-				if (GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() != null && GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() == m_StartRoom && GameManager.Instance.PrimaryPlayer.IsInCombat == true)
-				{
-					base.aiActor.HasBeenEngaged = true;
-					//ShamberController.BulletsEaten = 0;
-				}
-				yield break;
-			}
+
 			private void Start()
 			{
-				m_StartRoom = aiActor.GetAbsoluteParentRoom();
-				base.aiActor.healthHaver.OnPreDeath += (obj) => {  };
 			}
 		}
 	}

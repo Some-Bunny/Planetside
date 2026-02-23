@@ -7,6 +7,7 @@ using FullInspector;
 using UnityEngine;
 using ItemAPI;
 using EnemyBulletBuilder;
+using Planetside.Misc_Stuff;
 
 namespace Planetside
 {
@@ -56,7 +57,7 @@ namespace Planetside
 					float angle = startAngle;
 					for (int j = 0; j < 24; j++)
 					{
-						this.Fire(new Direction(angle, DirectionType.Absolute, -1f), new Speed(10f, SpeedType.Absolute), new Bullet(r == true ? "defaultWithVfx" : StaticBulletEntries.undodgeableDefault.Name, false, false, false));
+						this.Fire(new Direction(angle, DirectionType.Absolute, -1f), new Speed(10f, SpeedType.Absolute), new BlueBullet(r == true ? "defaultWithVfx" : StaticBulletEntries.undodgeableDefault.Name, false, false, false));
 						angle += deltaAngle;
 						p++;
 						if (p > 8) { p = 0;r = !r; }

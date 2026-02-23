@@ -13,6 +13,8 @@ using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
 using System.Collections.ObjectModel;
+using static UnityEngine.UI.CanvasScaler;
+using Planetside.DungeonPlaceables;
 
 
 
@@ -175,7 +177,8 @@ namespace Planetside
 
         public override void OnRigidbodyCollision(CollisionData rigidbodyCollision)
         {
-            
+
+
             base.OnRigidbodyCollision(rigidbodyCollision);
         }
 
@@ -184,7 +187,18 @@ namespace Planetside
 
         public override void OnPreCollision(SpeculativeRigidbody myRigidbody, PixelCollider myCollider, SpeculativeRigidbody otherRigidbody, PixelCollider otherCollider)
         {
+            /*
+            Debug.Log("======");
+            Debug.Log(otherRigidbody.gameObject);
+            Debug.Log("-");
 
+            foreach (var entry in otherRigidbody.gameObject.GetComponents(typeof(Component)))
+            {
+                Debug.Log(entry.GetType());
+                Debug.Log("-");
+            }
+            Debug.Log("======");
+            */
 
 
             if (specRigidbody.TemporaryCollisionExceptions != null)
@@ -241,15 +255,26 @@ namespace Planetside
                         //previousNormal = previousNormal.Value.Rotate(this._Direction * -1);
                         //_LastVelocity.Rotate(this._Direction * -1);
 
-                        _LastVelocity *= -1;
-                        _Direction *= -1;
-
+                        //_LastVelocity *= -1;
+                        //_Direction *= -1;
                         foreach (var d in door.doorModules)
                         {
                           
-                            specRigidbody.RegisterTemporaryCollisionException(d.rigidbody, 0.3f);
+                            specRigidbody.RegisterTemporaryCollisionException(d.rigidbody, this.LastVelocity.magnitude * BraveTime.DeltaTime * 3);
                         }
+
+                        foreach (var c_1 in door.GetComponentsInChildren<SpeculativeRigidbody>())
+                        {
+                            specRigidbody.RegisterTemporaryCollisionException(c_1, this.LastVelocity.magnitude * BraveTime.DeltaTime * 3);
+                        }
+
                         Returns = true;
+
+
+
+                        _LastVelocity = _LastVelocity.Rotate(this._Direction * -1);
+                        ForColliderCheck = previousNormal;
+                        previousNormal = previousNormal.Value.Rotate(this._Direction);
 
                         PhysicsEngine.SkipCollision = true;
                         break;
@@ -260,8 +285,40 @@ namespace Planetside
                 c = otherRigidbody.GetComponents(typeof(Component));
                 foreach (var c2 in c)
                 {
+
+                    if (c2 is FireplaceController fireplace)
+                    {
+                        PhysicsEngine.SkipCollision = true;
+                        Returns = true;
+
+                        _LastVelocity *= -1;
+                        _Direction *= -1;
+
+                        DoBonkParticles(32);
+                        specRigidbody.RegisterTemporaryCollisionException(fireplace.specRigidbody, 0.3f);
+                        break;
+                    }
+
                     if (c2 is MajorBreakable breakable)
                     {
+                        if (breakable.GetComponent<Idol>())
+                        {
+                            PhysicsEngine.SkipCollision = true;
+                            DoBonkParticles(32);
+                            AkSoundEngine.PostEvent("Play_MetalImpactHit", this.gameObject);
+                            ParticleBase.EmitParticles("WaveParticle", 1, new ParticleSystem.EmitParams()
+                            {
+                                position = sprite.WorldCenter,
+                                startSize = 16,
+                                rotation = 0,
+                                startLifetime = 0.333f,
+                                startColor = Color.white * 0.4f
+                            });
+                            breakable.ApplyDamage(1E+10f, Vector2.zero, false, true, true);
+                            break;
+                        }
+
+
                         if (breakable.IsSecretDoor)
                         {
                             PhysicsEngine.SkipCollision = true;
@@ -301,10 +358,14 @@ namespace Planetside
                         Returns = true;
 
 
+                        _LastVelocity = _LastVelocity.Rotate(this._Direction * -1);
+                        ForColliderCheck = previousNormal;
+                        previousNormal = previousNormal.Value.Rotate(this._Direction);
+
                         //ForColliderCheck = previousNormal;
                         //previousNormal = previousNormal.Value.Rotate(this._Direction * -1);
-                        _LastVelocity *= -1;
-                        _Direction *= -1;
+                        //_LastVelocity *= -1;
+                        //_Direction *= -1;
                         break;
 
                     }
@@ -317,14 +378,15 @@ namespace Planetside
                             specRigidbody.RegisterTemporaryCollisionException(crusher.specRigidbody, 0.3f);
                             Returns = true;
 
-                            
 
-                            _LastVelocity *= -1;
-                            _Direction *= -1;
 
-                            //ForColliderCheck = previousNormal;
-                            //previousNormal = previousNormal.Value.Rotate(this._Direction * -1);
-                            //_LastVelocity.Rotate(this._Direction * -1);
+                            //_LastVelocity *= -1;
+                            //_Direction *= -1;
+
+
+                            _LastVelocity = _LastVelocity.Rotate(this._Direction * -1);
+                            ForColliderCheck = previousNormal;
+                            previousNormal = previousNormal.Value.Rotate(this._Direction);
                             break;
                         }
                     }
@@ -332,7 +394,7 @@ namespace Planetside
                 if (Returns)
                 {
                     TemporaryDisabler = true;
-                    this.Invoke("DoWait", Time.deltaTime);
+                    //this.Invoke("DoWait", Time.deltaTime);
                     return;
                 }
             }
@@ -411,7 +473,7 @@ namespace Planetside
                 this.projectile.specRigidbody.CollideWithTileMap = true;
             }
         }
-        PhysicsEngine.Tile lastTile;
+            SpeculativeRigidbody lastTile;
 
 
         public static float RelAngleTo(float angle, float other)
@@ -429,7 +491,7 @@ namespace Planetside
                 return;
             if (ForColliderCheck != null && ForColliderCheck == tileCollision.Normal)
                 return;
-
+            lastTile = tileCollision.OtherRigidbody;
             if (previousNormal != null)
             {
                 ForColliderCheck = previousNormal;
@@ -473,7 +535,7 @@ namespace Planetside
             }
             //AkSoundEngine.PostEvent("Play_MetalImpactHit", this.gameObject);
 
-            //TemporaryDisabler = false;
+            TemporaryDisabler = false;
             _LastVelocity = previousNormal.Value.Rotate(this._Direction);
         }
 
@@ -595,9 +657,48 @@ namespace Planetside
                     AkSoundEngine.PostEvent("Play_SawLoop", this.gameObject);
                     AkSoundEngine.PostEvent("Play_SawStart", this.gameObject);
                 }
+                this.sprite.transform.Rotate(0, 0, 120 * this.LastVelocity.magnitude * BraveTime.DeltaTime);
 
+                /*
+                ParticleBase.EmitParticles("ShellraxEyeParticle", 1, new ParticleSystem.EmitParams()
+                {
+                    position = sprite.WorldCenter,
+                    rotation = 0,
+                    startLifetime = 0.25f,
+                    startSize = 0.125f,
+                    startColor = Color.red,
+                    velocity = _LastVelocity.normalized * 10
+                });
+                if (previousNormal != null)
+                {
+                    ParticleBase.EmitParticles("ShellraxEyeParticle", 1, new ParticleSystem.EmitParams()
+                    {
+                        position = sprite.WorldCenter,
+                        rotation = 0,
+                        startLifetime = 0.25f,
+                        startSize = 0.125f,
+                        startColor = Color.green,
+                        velocity = previousNormal.Value.normalized * 10
+                    });
+                }
+
+                if (ForColliderCheck != null)
+                {
+                    ParticleBase.EmitParticles("ShellraxEyeParticle", 1, new ParticleSystem.EmitParams()
+                    {
+                        position = sprite.WorldCenter,
+                        rotation = 0,
+                        startLifetime = 0.25f,
+                        startSize = 0.125f,
+                        startColor = Color.blue,
+                        velocity = previousNormal.Value.normalized * 5
+                    });
+                }
+
+                */
                 if (_ElapsedSaw > 0.5f)
                 {
+                    /*
                     var unit = (previousNormal.Value.Rotate(90) * transform.localScale.magnitude);
 
                     ParticleBase.EmitParticles("SawSpark", 1, new ParticleSystem.EmitParams()
@@ -616,6 +717,7 @@ namespace Planetside
                         startSize = 0.125f,
                         velocity = this.LastVelocity.normalized
                     });
+                    */
                 }
 
             }     

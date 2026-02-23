@@ -663,9 +663,6 @@ namespace Planetside
 		{
 			public static tk2dSpriteAnimation SecondaryLibrary;
             public static int RolledAttack;
-
-            private RoomHandler m_StartRoom;
-
             public List<RuneLockOnEffect> runeLockOnEffects=new List<RuneLockOnEffect>();
 
 			public void Update()

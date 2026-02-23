@@ -49,7 +49,7 @@ namespace Planetside
 			try
 			{
 				
-				int c = UnityEngine.Random.Range(0, 4);
+				int c = UnityEngine.Random.Range(0, 5);
 				switch (c)
 				{
 					case 0:
@@ -76,6 +76,13 @@ namespace Planetside
                             }
 						}
 						break;
+					case 1:
+						if (sourceProjectile.GetComponent<RecursionPreventer>())
+						{
+							return;
+						}
+                        sourceProjectile.StartCoroutine(DoProjectileSpilt(sourceProjectile));
+						break;
 				}
 			
 			}
@@ -85,6 +92,84 @@ namespace Planetside
 				//ETGModConsole.Log("If you see this pop up, write a message in the comment section of ModWorkShop AND include a list of all items/guns you have/had during the run.");
 			}
 		}
+
+
+		public IEnumerator DoProjectileSpilt(Projectile projectile)
+		{
+			float e = 0;
+
+			projectile.ResetDistance();
+
+			bool lastData = projectile.baseData.UsesCustomAccelerationCurve;
+            float lastDur = projectile.baseData.CustomAccelerationCurveDuration;
+            AnimationCurve lastCurve = projectile.baseData.AccelerationCurve;
+
+			projectile.m_timeElapsed = 0;
+            projectile.baseData.UsesCustomAccelerationCurve = true;
+			projectile.baseData.CustomAccelerationCurveDuration = 1f;
+			projectile.baseData.AccelerationCurve = AnimationCurve.EaseInOut(0, 1, 0.625f, 0);
+
+
+            while (e < 0.5f)
+            {
+                e += BraveTime.DeltaTime;
+                yield return null;
+            }
+
+            for (int i = 1; i < 4; i++)
+			{
+                ParticleBase.EmitParticles("WaveParticleInverse", 1, new ParticleSystem.EmitParams()
+                {
+                    position = projectile.sprite.WorldCenter,
+                    startSize = projectile.sprite.GetBounds().size.magnitude * 1 + (0.5f * i),
+                    rotation = 0,
+                    startLifetime = 0.5f,
+                    startColor = Color.white * 0.8f
+                });
+                e = 0;
+                while (e < 0.1666f)
+                {
+                    e += BraveTime.DeltaTime;
+                    yield return null;
+                }
+            }
+            ParticleBase.EmitParticles("WaveParticle", 1, new ParticleSystem.EmitParams()
+            {
+                position = projectile.sprite.WorldCenter,
+                startSize = projectile.sprite.GetBounds().size.magnitude * 8,
+                rotation = 0,
+                startLifetime = 0.3f,
+                startColor = Color.white * 0.8f
+            });
+
+			for (int i = 0; i < 2; i++)
+			{
+                GameObject spawnedBulletOBJ = SpawnManager.SpawnProjectile(projectile.gameObject, projectile.sprite.WorldCenter, Quaternion.Euler(0f, 0f, MathToolbox.ToAngle(projectile.Direction) + (i == 0 ? 90 : -90)), true);
+                Projectile component = spawnedBulletOBJ.GetComponent<Projectile>();
+                if (component != null)
+                {
+                    component.baseData.UsesCustomAccelerationCurve = lastData;
+                    component.baseData.CustomAccelerationCurveDuration = lastDur;
+                    component.baseData.AccelerationCurve = lastCurve;
+
+                    component.gameObject.AddComponent<RecursionPreventer>();
+                    component.Owner = this.Owner;
+                    component.Shooter = Owner.specRigidbody;
+                    component.baseData.damage *= 0.6f;
+					component.RuntimeUpdateScale(0.7f);
+                    component.UpdateSpeed();
+                    component.ResetDistance();
+
+
+                }
+            }
+            UnityEngine.Object.Destroy(projectile.gameObject);
+
+
+
+            yield break;
+		}
+
 		public AIActor GetNearestEnemy(List<AIActor> activeEnemies, Vector2 position, out float nearestDistance, string[] filter)
 		{
 			AIActor aiactor = null;

@@ -18,6 +18,71 @@ namespace Planetside
 	internal static class EnemyToolbox
     {
 
+		public static T GetEnemyBehavior<T>(this AIActor aIActor) where T : BehaviorBase
+		{
+			if (aIActor.behaviorSpeculator != null)
+			{
+                foreach (var item in aIActor.behaviorSpeculator.AttackBehaviors)
+                {
+                    if (item is T)
+                    {
+						return item as T;
+                    }
+					if (item is AttackBehaviorGroup group)
+					{
+						foreach (var item1 in group.AttackBehaviors)
+						{
+							if (item1.Behavior != null && item1.Behavior is T)
+							{
+								return item1 as T; 
+							}
+                        }
+                    }
+                }
+				if (aIActor.behaviorSpeculator.AttackBehaviorGroup != null)
+				{
+                    foreach (var item in aIActor.behaviorSpeculator.AttackBehaviorGroup.AttackBehaviors)
+                    {
+                        if (item is T)
+                        {
+                            return item as T;
+                        }
+                        
+                    }
+                }
+
+                foreach (var item in aIActor.behaviorSpeculator.MovementBehaviors)
+				{
+                    if (item is T)
+                    {
+                        return item as T;
+                    }
+                }
+                foreach (var item in aIActor.behaviorSpeculator.OverrideBehaviors)
+                {
+                    if (item is T)
+                    {
+                        return item as T;
+                    }
+                }
+                foreach (var item in aIActor.behaviorSpeculator.TargetBehaviors)
+                {
+                    if (item is T)
+                    {
+                        return item as T;
+                    }
+                }
+                foreach (var item in aIActor.behaviorSpeculator.OtherBehaviors)
+                {
+                    if (item is T)
+                    {
+                        return item as T;
+                    }
+                }
+            }
+            return null;
+        }
+
         public static void SpawnBulletScript(GameActor owner, Vector2 pos, AIBulletBank sourceBulletBank, BulletScriptSelector bulletScript, string ownerName, SpeculativeRigidbody sourceRigidbody = null, Vector2? direction = null, bool collidesWithEnemies = false, Action<Bullet, Projectile> OnBulletCreated = null)
         {
             GameObject gameObject = new GameObject("Temp BulletScript Spawner");

@@ -20,6 +20,7 @@ using static Planetside.PrisonerSubPhase2Attacks;
 using static ETGMod;
 using Planetside;
 using System.Security.Cryptography;
+using InControl;
 
 namespace Planetside
 {
@@ -3204,15 +3205,15 @@ namespace Planetside
                     float Dir =BraveUtility.RandomAngle();
                     float helpme = UnityEngine.Random.Range(180, -180);
                     float M = UnityEngine.Random.value < 0.5f ? 135 : -135;
-                    for (int i = 0; i < 10; i++)
+                    for (int i = 0; i < 12; i++)
                     {
                        
-                        base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob((36 * i) + Dir, this, M, 1f, b));
+                        base.BulletBank.aiActor.StartCoroutine(QuickscopeNoob((30 * i) + Dir, this, M, 1f, b));
                         b = !b;
                     }
                     GlobalMessageRadio.BroadcastMessage("eye_gun_simple");
 
-                    yield return this.Wait(75);
+                    yield return this.Wait(75 - (2 * q));
                 }
                 yield return this.Wait(120);
                 yield break;
@@ -3623,6 +3624,9 @@ namespace Planetside
                     EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("frogger"),
                     suckLessEntry
                 };
+
+
+
 
                 AdditionalBraveLight braveLight = star.gameObject.AddComponent<AdditionalBraveLight>();
                 braveLight.transform.position = star.sprite.WorldCenter;

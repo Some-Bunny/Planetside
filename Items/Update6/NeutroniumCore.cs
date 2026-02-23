@@ -11,6 +11,7 @@ using Alexandria.Misc;
 using HutongGames.PlayMaker.Actions;
 using static UnityEngine.UI.GridLayoutGroup;
 using static Planetside.AoEBullets;
+using Planetside.Toolboxes;
 
 namespace Planetside
 {
@@ -30,7 +31,8 @@ namespace Planetside
             ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.RangeMultiplier, 1.3f, StatModifier.ModifyMethod.MULTIPLICATIVE);
             ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.Damage, 1.2f, StatModifier.ModifyMethod.MULTIPLICATIVE);
             ID = item.PickupObjectId;
-		}
+
+        }
 		public static int ID;
 		public override void Pickup(PlayerController player)
 		{

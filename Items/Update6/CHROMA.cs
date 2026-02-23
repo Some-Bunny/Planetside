@@ -122,7 +122,7 @@ namespace Planetside
             var item = obj.AddComponent<CHROMA>();
             var data = StaticSpriteDefinitions.Active_Item_Sheet_Data;
             ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("psog_CHROMA"), data, obj);
-            string shortDesc = "The Trinity";
+            string shortDesc = "Trinity";
             string longDesc = "Splits your gun into 3.\n\nAble to refract reality, this mineral is formed when the Aimless Void touches the meta-layers of the Universe.\nThe lives of hundreds of Gundead are used to even risk extracting it from the Void.";
             ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
             ItemBuilder.SetCooldownType(item, ItemBuilder.CooldownType.Timed, 1);

@@ -251,6 +251,7 @@
     <Compile Include="Hooks, Actions and Patches\PickupHooks.cs" />
     <Compile Include="Hooks, Actions and Patches\ExplosionHooks.cs" />
     <Compile Include="Hooks, Actions and Patches\TitleDioramaHooks.cs" />
+    <Compile Include="Items\Update6\PileOfStardust.cs" />
     <Compile Include="Items\Update6\NeutroniumCore.cs" />
     <Compile Include="Items\Update6\LostAdventurersShield.cs" />
     <Compile Include="Items\Update6\LostAdventurersBackpack.cs" />
@@ -292,6 +293,7 @@
     <Compile Include="Items\Update4\Modifiers\ModifierNeedle.cs" />
     <Compile Include="Items\Update5\SurgeGrenade.cs" />
     <Compile Include="Misc Stuff\CustomNotificationHandler.cs" />
+    <Compile Include="Misc Stuff\StaticBlueBulletClasses.cs" />
     <Compile Include="NPC Stuff\Absconditus.cs" />
     <Compile Include="NPC Stuff\AlphabetLauncher.cs" />
     <Compile Include="NPC Stuff\Example Code\LilShit.cs" />

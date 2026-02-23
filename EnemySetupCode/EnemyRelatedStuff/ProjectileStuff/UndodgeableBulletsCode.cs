@@ -87,8 +87,8 @@ namespace Planetside
     {
         public override void Start()
         {
-            base.Start();
             InitMaterial(); //For instancing purposes
+            base.Start();
         }
         private bool InitedMat = false;
         private void InitMaterial()
@@ -96,6 +96,7 @@ namespace Planetside
             if (InitedMat) { return; }
             InitedMat = true;
             this.sprite.renderer.material = new Material(sprite.renderer.material); 
+            SetUnDodgeableState(true);
         }
         public void ForceHurtPlayer(PlayerController p, Projectile projectile)
         {
@@ -146,7 +147,7 @@ namespace Planetside
 
 
         public bool IsUnDodgeable = true;
-        private float CurrentDodgeState = 1;
+        //private float CurrentDodgeState = 1;
 
         public void SetHeight(float Height)
         {
@@ -196,6 +197,9 @@ namespace Planetside
         private Vector3 LastHeightPosition;
         private float ParticleTick = 0.01f;
         private float _ParticleTick = 0f;
+
+
+
 
         public override void Update()
         {            

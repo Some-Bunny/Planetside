@@ -76,7 +76,7 @@ namespace Planetside
 			yes.spawnShadows = true;
 			yes.shadowLifetime = 0.7f;
 			yes.shadowTimeDelay = 0.01f;
-			yes.dashColor = new Color(1.2f, 0f, 2f, 1f);
+			yes.dashColor = new Color(0.7f, 0f, 1f, 1f);
 
 			projectile.AdditionalScaleMultiplier *= 1;
 			projectile.baseData.damage = 3.5f;

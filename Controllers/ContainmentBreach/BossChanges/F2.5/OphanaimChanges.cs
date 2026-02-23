@@ -9,6 +9,7 @@ using ItemAPI;
 using EnemyBulletBuilder;
 using static Planetside.OldKingChanges;
 using static Planetside.Ophanaim;
+using InControl;
 
 namespace Planetside
 {
@@ -93,9 +94,22 @@ namespace Planetside
                     StaticBulletEntries.undodgeableBulletKingSlam
                 };
 
+                var spr = star.gameObject.GetComponentsInChildren<tk2dSprite>();
+                foreach (var entry in spr)
+                {
+                    entry.usesOverrideMaterial = true;
+                    Material material = new Material(PlanetsideModule.InverseGlowShader);
+                    //material.mainTexture = thirdDimensionalProjectile.sprite.renderer.material.mainTexture;
+                    entry.renderer.material = material;
+                    entry.renderer.material.SetFloat("_EmissiveColorPower", 6);
+                    entry.renderer.material.SetFloat("_EmissivePower", 8);
+                    entry.renderer.material.SetFloat("_IsBlue", 1);
+                }
+
+
                 AdditionalBraveLight braveLight = star.gameObject.AddComponent<AdditionalBraveLight>();
                 braveLight.transform.position = star.sprite.WorldCenter;
-                braveLight.LightColor = new Color(1, 0.82f, 0.625f);
+                braveLight.LightColor = new Color(0.6f, 0, 1);
                 braveLight.LightIntensity = 5f;
                 braveLight.LightRadius = 0f;
 
@@ -111,14 +125,14 @@ namespace Planetside
                 star.OnBeamUpdate += (obj1, obj2) =>
                 {
                     float gjkgj = obj2 - 0.33f;
-                    float t = Mathf.Min(1, (gjkgj / 5));
+                    float t = Mathf.Min(1, (gjkgj * 0.2f));
                     Vector3 centerPoint = star.transform.position;
                     float a = (this.BulletManager.PlayerPosition() - new Vector2(centerPoint.x, centerPoint.y)).ToAngle();
                     float playerDist = (this.BulletManager.PlayerPosition() - star.transform.PositionVector2()).magnitude;
-                    float dist = Mathf.Min(1, (Mathf.Min(12, playerDist) / 40));
+                    float dist = (Mathf.Min(12f, playerDist) * Time.deltaTime);
                     dist *= t;
                     dist *= m;
-                    star.transform.position = centerPoint + BraveMathCollege.DegreesToVector(a, 0.6f * dist).ToVector3ZisY();
+                    star.transform.position = centerPoint + BraveMathCollege.DegreesToVector(a, 0.5f * dist).ToVector3ZisY();
                 };
                 yield return base.Wait(30);
                 for (int i = 0; i < 1350; i++)
