@@ -105,7 +105,7 @@ namespace Planetside
                 },
                 IsNPCCell = false,
                 OnlyOne = false,
-                PreventInjectionOfFailedPrerequisites = false,
+                PreventInjectionOfFailedPrerequisites = true,
             };
             Hell_Injections.AttachedInjectionData.Add(MyInjectionData);
 

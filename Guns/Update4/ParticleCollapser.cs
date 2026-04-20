@@ -122,7 +122,7 @@ namespace Planetside
 
 
             int Length = 6;
-            Alexandria.Assetbundle.ProjectileBuilders.AnimateProjectileBundle(projectile, "collapserRift", StaticSpriteDefinitions.Projectile_Sheet_Data, StaticSpriteDefinitions.Projectile_Animation_Data, "collapserRift",
+            Alexandria.Assetbundle.ProjectileBuilders.AnimateProjectileBundle(CollapseProjectile, "collapserRift", StaticSpriteDefinitions.Projectile_Sheet_Data, StaticSpriteDefinitions.Projectile_Animation_Data, "collapserRift",
              AnimateBullet.ConstructListOfSameValues<IntVector2>(new IntVector2(9, 9), Length),
             AnimateBullet.ConstructListOfSameValues(true, Length),
             AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.MiddleCenter, Length),

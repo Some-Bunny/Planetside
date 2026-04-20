@@ -28,6 +28,7 @@ namespace Planetside
         public static tk2dSpriteCollectionData NPC_Sheet_Data;
         public static tk2dSpriteCollectionData ProjectileImpact_Sheet_Data;
         public static tk2dSpriteCollectionData Beam_Sheet_Data;
+        public static tk2dSpriteCollectionData Companion_Sheet_Data;
 
         public static tk2dSpriteCollectionData SpecialVFX_Sheet_Data;
         public static tk2dSpriteCollectionData Trespass_Room_Object_Data;
@@ -45,6 +46,7 @@ namespace Planetside
         public static tk2dSpriteAnimation ProjectileImpact_Animation_Data;
         public static tk2dSpriteAnimation Beam_Animation_Data;
         public static tk2dSpriteAnimation Trespass_Room_Object_Animation;
+        public static tk2dSpriteAnimation Companion_Animation;
 
 
         public static dfAtlas PlanetsideUIAtlas;
@@ -130,8 +132,9 @@ namespace Planetside
             Trespass_Room_Object_Data = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("TrespassRoomObjectCollection").GetComponent<tk2dSpriteCollectionData>();
             Trespass_Room_Object_Animation = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("TrespassRoomObjectAnimation").GetComponent<tk2dSpriteAnimation>();
 
-            //StaticSpriteDefinitions.SetupSpritesFromAssembly(Assembly.GetExecutingAssembly(), "Planetside/Guns/Jsons", Gun_Sheet_Data);
 
+            Companion_Sheet_Data = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("CompanionCollection").GetComponent<tk2dSpriteCollectionData>();
+            Companion_Animation = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("CompanionAnimation").GetComponent<tk2dSpriteAnimation>();
         }
         public static void SetupSpritesFromAssembly(Assembly asmb, string path, tk2dSpriteCollectionData data)
         {

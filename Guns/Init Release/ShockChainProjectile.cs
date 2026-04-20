@@ -196,7 +196,7 @@ namespace Planetside
 
         public float getCalculateddamage()
         {
-            float ElectricDamage = projectile.baseData.damage * 0.333f;
+            float ElectricDamage = projectile.baseData.damage * 0.2f;
             if (player == null) { return ElectricDamage; }
             if (player.PlayerHasActiveSynergy("Single A"))
             {

@@ -221,7 +221,7 @@ namespace Planetside
 					AvoidWalls = false,
 					GoneTime = 1f,
 					OnlyTeleportIfPlayerUnreachable = false,
-					MinDistanceFromPlayer = 4.25f,
+					MinDistanceFromPlayer = 5f,
 					MaxDistanceFromPlayer = -1f,
 					teleportInAnim = "fadein",
 					teleportOutAnim = "fadeout",
@@ -231,7 +231,7 @@ namespace Planetside
 					roomMax = new Vector2(0,0),
 					roomMin = new Vector2(0,0),
 					GlobalCooldown = 0.5f,
-					Cooldown = 5.5f,
+					Cooldown = 6f,
 					
 					CooldownVariance = 1.5f,
 					InitialCooldownVariance = 0f,

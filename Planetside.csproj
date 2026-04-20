@@ -65,6 +65,7 @@
     <Compile Include="Components\EmergencyPlayerDisappearedFromRoom.cs" />
     <Compile Include="Components\GlobalConsumableStorage.cs" />
     <Compile Include="Components\Item Components\CustomHoveringGunController.cs" />
+    <Compile Include="Components\Other Components\CustomDragunBoulderController.cs" />
     <Compile Include="Components\Other Components\TrespassPortalController.cs" />
     <Compile Include="Components\Projectile Components\TravelledDistanceComponent.cs" />
     <Compile Include="Components\Projectile Components\WraparoundProjectile.cs" />
@@ -123,6 +124,7 @@
     <Compile Include="DungeonGenStuff\ExpandTK2DDungeonAssembler.cs" />
     <Compile Include="DungeonPlaceables\AbyssFloorDoor.cs" />
     <Compile Include="DungeonPlaceables\BreakableAPI_Bundled.cs" />
+    <Compile Include="DungeonPlaceables\BuriedObject.cs" />
     <Compile Include="DungeonPlaceables\EnemyBuffShrine.cs" />
     <Compile Include="DungeonPlaceables\Gooper.cs" />
     <Compile Include="DungeonPlaceables\Idol.cs" />
@@ -211,6 +213,7 @@
     <Compile Include="EnemySetupCode\EnemyRelatedStuff\Behavior Stuff\RevenantChainBehavior.cs" />
     <Compile Include="Guns\Init Release\ResaultBlue.cs" />
     <Compile Include="Guns\Update6\GunWithNoName.cs" />
+    <Compile Include="Guns\Update6\UpturnedGun.cs" />
     <Compile Include="Guns\Update6\StaticCharger.cs" />
     <Compile Include="Guns\Update5\PointNull.cs" />
     <Compile Include="Guns\Update5\StormBringerProjectile.cs" />
@@ -251,6 +254,7 @@
     <Compile Include="Hooks, Actions and Patches\PickupHooks.cs" />
     <Compile Include="Hooks, Actions and Patches\ExplosionHooks.cs" />
     <Compile Include="Hooks, Actions and Patches\TitleDioramaHooks.cs" />
+    <Compile Include="Items\Update6\HiddenTreasure.cs" />
     <Compile Include="Items\Update6\PileOfStardust.cs" />
     <Compile Include="Items\Update6\NeutroniumCore.cs" />
     <Compile Include="Items\Update6\LostAdventurersShield.cs" />

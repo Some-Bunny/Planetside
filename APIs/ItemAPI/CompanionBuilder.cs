@@ -118,6 +118,68 @@ namespace ItemAPI
             return prefab;
         }
 
+        public static GameObject BuildPrefabBundled(string name, string guid,  IntVector2 hitboxOffset, IntVector2 hitBoxSize, bool usesAttackbehaviorGroup = false)
+        {
+            if (CompanionBuilder.companionDictionary.ContainsKey(guid))
+            {
+                Tools.PrintError("CompanionBuilder: Tried to create two companion prefabs with the same GUID!");
+                return null;
+            }
+            var prefab = GameObject.Instantiate(behaviorSpeculatorPrefab);
+            prefab.name = name;
+
+            //setup misc components
+            var sprite = prefab.AddComponent<tk2dSprite>();
+            //SpriteBuilder.SpriteFromResource(defaultSpritePath, prefab).GetComponent<tk2dSprite>();
+
+            sprite.SetUpSpeculativeRigidbody(hitboxOffset, hitBoxSize).CollideWithOthers = false;
+            prefab.AddComponent<tk2dSpriteAnimator>();
+            prefab.AddComponent<AIAnimator>();
+
+
+            //setup health haver
+            var healthHaver = prefab.AddComponent<HealthHaver>();
+            healthHaver.RegisterBodySprite(sprite);
+            healthHaver.PreventAllDamage = true;
+            healthHaver.SetHealthMaximum(15000);
+            healthHaver.FullHeal();
+
+            //setup AI Actor
+            var aiActor = prefab.AddComponent<AIActor>();
+            aiActor.State = AIActor.ActorState.Normal;
+            aiActor.EnemyGuid = guid;
+
+            //setup behavior speculator
+            var bs = prefab.GetComponent<BehaviorSpeculator>();
+
+            bs.MovementBehaviors = new List<MovementBehaviorBase>();
+            bs.AttackBehaviors = new List<AttackBehaviorBase>();
+
+            bs.TargetBehaviors = new List<TargetBehaviorBase>();
+            bs.OverrideBehaviors = new List<OverrideBehaviorBase>();
+            bs.OtherBehaviors = new List<BehaviorBase>();
+
+            //Add to enemy database
+            EnemyDatabaseEntry enemyDatabaseEntry = new EnemyDatabaseEntry()
+            {
+                myGuid = guid,
+                placeableWidth = 2,
+                placeableHeight = 2,
+                isNormalEnemy = false
+            };
+            EnemyDatabase.Instance.Entries.Add(enemyDatabaseEntry);
+            CompanionBuilder.companionDictionary.Add(guid, prefab);
+
+
+            //finalize
+            GameObject.DontDestroyOnLoad(prefab);
+            FakePrefab.MarkAsFakePrefab(prefab);
+            prefab.SetActive(false);
+
+            return prefab;
+        }
+
+
         public enum AnimationType { Move, Idle, Fidget, Flight, Hit, Talk, Other }
         public static tk2dSpriteAnimationClip AddAnimation(this GameObject obj, string name, string spriteDirectory, int fps, 
             AnimationType type, DirectionType directionType = DirectionType.None, FlipType flipType = FlipType.None)

@@ -110,8 +110,8 @@ namespace Planetside
                 companion.aiActor.healthHaver.SuppressDeathSounds = false;
 
                 EnemyToolbox.AddShadowToAIActor(companion.aiActor, StaticEnemyShadows.largeShadow, new Vector2(0.9375f, -0.25f), "shadowPos");
-                companion.aiActor.SetIsFlying(true, "Gamemode: Creative", true, true);
                 companion.aiActor.PathableTiles = CellTypes.PIT | CellTypes.FLOOR;
+                companion.aiActor.SetIsFlying(true, "Gamemode: Creative", true, true);
 
                 companion.aiActor.healthHaver.SetHealthMaximum(85f, null, false);
                 companion.aiActor.specRigidbody.PixelColliders.Clear();

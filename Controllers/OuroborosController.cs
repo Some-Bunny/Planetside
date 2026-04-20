@@ -25,6 +25,7 @@ using PathologicalGames;
 using static Planetside.BoxOfGrenadesController;
 using AK.Wwise;
 using static Planetside.RiftakerProjectile;
+using Planetside.Components.Other_Components;
 
 namespace Planetside
 {
@@ -705,7 +706,8 @@ namespace Planetside
             Coallet.guid,
 			Observant.guid,
 			EnemyGUIDs.Pinhead_GUID,
-			EnemyGUIDs.Tarnisher_GUID
+			EnemyGUIDs.Tarnisher_GUID,
+			ArchGunjurer.guid,
         };
 
       
@@ -937,9 +939,9 @@ namespace Planetside
         public override float HealthMultiplier => 1;
         public override float CooldownMultiplier => 0.9f;
         public override float MovementSpeedMultiplier => 0.7f;
-        public override Color EliteOutlineColor => new Color(8, 1.25f, 0);
-        public override Color EliteParticleColor => new Color(10, 2f, 0);
-        public override Color SecondaryEliteParticleColor => new Color(10, 2, 0);
+        public override Color EliteOutlineColor => new Color(8, 0, 0);
+        public override Color EliteParticleColor => new Color(8, 0, 0);
+        public override Color SecondaryEliteParticleColor => new Color(8, 0, 0);
         public override List<string> EnemyBlackList => new List<string>() 
 		{
                EnemyGUIDs.Blobulin_GUID,
@@ -1026,7 +1028,7 @@ namespace Planetside
         public override float DamageMultiplier => 1.35f;
         public override float HealthMultiplier => 1;
 		public override float CooldownMultiplier => 1.33f;
-		public override float MovementSpeedMultiplier => 1.2f;
+		public override float MovementSpeedMultiplier => 1.25f;
 		public override Color EliteOutlineColor => Color.yellow;
 		public override Color EliteParticleColor => Color.yellow;
 		public override Color SecondaryEliteParticleColor => Color.yellow;
@@ -1039,7 +1041,7 @@ namespace Planetside
 			{
 				if (aiActor.behaviorSpeculator) 
 				{
-					aiActor.behaviorSpeculator.LocalTimeScale *= IsBoss == true ? 1.2f : 1.125f;
+					aiActor.behaviorSpeculator.LocalTimeScale *= IsBoss == true ? 1.33f : 1.2f;
 					if (IsBoss == true)
 					{
 						aiActor.behaviorSpeculator.CooldownScale *= 1.1f;
@@ -1195,22 +1197,7 @@ namespace Planetside
 		public float Cooldown = 5;
 		private float Timer;
 
-		private IEnumerator IncreaseInSize(tk2dSprite CircleSprite, float SizeMultiplier = 1)
-		{
-			float elapsed = 0f;
-			float duration = 0.75f;
-			while (elapsed < duration)
-			{
-				elapsed += BraveTime.DeltaTime;
-				float t = Mathf.SmoothStep(0f, 1f, elapsed / duration);
-				if (CircleSprite != null && CircleSprite.gameObject != null)
-				{
-					CircleSprite.scale = Vector3.Lerp(Vector3.zero, Vector3.one * SizeMultiplier, t);
-				}
-				yield return null;
-			}
-			yield break;
-		}
+
 		public override void Update()
         {
             base.Update();
@@ -1222,35 +1209,9 @@ namespace Planetside
 					Timer = Cooldown;
 					if (base.aiActor != null)
 					{
-						GameObject dragunBoulder = EnemyDatabase.GetOrLoadByGuid("05b8afe0b6cc4fffa9dc6036fa24c8ec").GetComponent<DraGunController>().skyBoulder;
-						foreach (Component item in dragunBoulder.GetComponentsInChildren(typeof(Component)))
-						{
-							if (item is SkyRocket laser)
-							{
-								foreach (Component item2 in UnityEngine.Object.Instantiate<GameObject>(laser.SpawnObject, base.aiActor.CenterPosition, Quaternion.identity).GetComponentsInChildren(typeof(Component)))
-								{
-									if (item2 is DraGunBoulderController laser2)
-									{
-										laser2.LifeTime = IsBoss == true ? 25 : 12;
-										GameManager.Instance.Dungeon.StartCoroutine(this.IncreaseInSize(laser2.CircleSprite, IsBoss == true ? 0.8f : 0.5f));
-										SpeculativeRigidbody body = laser2.GetComponentInChildren<SpeculativeRigidbody>();
-										if (body)
-										{
-											List<PixelCollider> colliders = body.PixelColliders.ToList();
-											foreach (PixelCollider collider in colliders)
-											{
-												collider.ManualOffsetX = (int)(collider.ManualOffsetX * 0.5f);
-												collider.ManualOffsetY = (int)(collider.ManualOffsetY * 0.5f);
-												collider.ManualDiameter = (int)(collider.ManualDiameter * 0.5f);
-												collider.ManualHeight = (int)(collider.ManualHeight * 0.5f);
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
+						CustomDragunBoulderController.Instantiate(this.aiActor.sprite.WorldCenter, IsBoss == true ? 25 : 12, 0).UpdateScale(IsBoss ? 0.8f : 0.5f, 0.75f);
+                    }
+                }
 			}
 		}
     }
@@ -2057,33 +2018,37 @@ namespace Planetside
 						outlineMaterial1.SetColor("_OverrideColor", OverrideEliteOutlineColor != null ? OverrideEliteOutlineColor.Value : EliteOutlineColor);
 					}
 				}
-				if (DoParticles == true)
-				{
-                    if (base.aiActor.sprite && !GameManager.Instance.IsPaused && (UnityEngine.Random.value > 0.5f))
-                    {
-                        Vector3 vector = base.aiActor.sprite.WorldBottomLeft.ToVector3ZisY(0);
-                        Vector3 vector2 = base.aiActor.sprite.WorldTopRight.ToVector3ZisY(0);
-                        Vector3 position = new Vector3(UnityEngine.Random.Range(vector.x, vector2.x), UnityEngine.Random.Range(vector.y, vector2.y), UnityEngine.Random.Range(vector.z, vector2.z));
-                        ParticleSystem particleSystem = ParticleSystem;
-                        var trails = particleSystem.trails;
-                        trails.worldSpace = false;
-                        var main = particleSystem.main;
-                        main.startColor = new ParticleSystem.MinMaxGradient((OverrideEliteParticleColor != null ? OverrideEliteParticleColor.Value : EliteParticleColor != null ? EliteParticleColor : Color.white), ((OverrideSecondaryEliteParticleColor != null ? OverrideSecondaryEliteParticleColor.Value : SecondaryEliteParticleColor != null ? SecondaryEliteParticleColor : Color.white)));
-                        ParticleSystem.EmitParams emitParams = new ParticleSystem.EmitParams
-                        {
-                            position = position.WithZ(150),
-                            randomSeed = (uint)UnityEngine.Random.Range(1, 1000),
-
-                        };
-                        var emission = particleSystem.emission;
-                        emission.enabled = false;
-                        particleSystem.gameObject.SetActive(true);
-                        particleSystem.Emit(emitParams, 1);
-                    }
-
-                }
+				
             }			
 		}
+		public virtual void FixedUpdate()
+		{
+            if (DoParticles == true)
+            {
+                if (base.aiActor.sprite && !GameManager.Instance.IsPaused && (UnityEngine.Random.value > 0.7f))
+                {
+                    Vector3 vector = base.aiActor.sprite.WorldBottomLeft.ToVector3ZisY(0);
+                    Vector3 vector2 = base.aiActor.sprite.WorldTopRight.ToVector3ZisY(0);
+                    Vector3 position = new Vector3(UnityEngine.Random.Range(vector.x, vector2.x), UnityEngine.Random.Range(vector.y, vector2.y), UnityEngine.Random.Range(vector.z, vector2.z));
+                    ParticleSystem particleSystem = ParticleSystem;
+                    var trails = particleSystem.trails;
+                    trails.worldSpace = false;
+                    var main = particleSystem.main;
+                    main.startColor = new ParticleSystem.MinMaxGradient((OverrideEliteParticleColor != null ? OverrideEliteParticleColor.Value : EliteParticleColor != null ? EliteParticleColor : Color.white), ((OverrideSecondaryEliteParticleColor != null ? OverrideSecondaryEliteParticleColor.Value : SecondaryEliteParticleColor != null ? SecondaryEliteParticleColor : Color.white)));
+                    ParticleSystem.EmitParams emitParams = new ParticleSystem.EmitParams
+                    {
+                        position = position.WithZ(150),
+                        randomSeed = (uint)UnityEngine.Random.Range(1, 1000),
+
+                    };
+                    var emission = particleSystem.emission;
+                    emission.enabled = false;
+                    particleSystem.gameObject.SetActive(true);
+                    particleSystem.Emit(emitParams, 1);
+                }
+
+            }
+        }
 	}
 }
 namespace Planetside
@@ -2147,29 +2112,38 @@ namespace Planetside
 						outlineMaterial1.SetColor("_OverrideColor", EliteOutlineColor);
 					}
 				}
-				if (base.aiActor.sprite && !GameManager.Instance.IsPaused && (UnityEngine.Random.value > 0.5f) && DoParticles == true)
-				{
-					Vector3 vector = base.aiActor.sprite.WorldBottomLeft.ToVector3ZisY(0);
-					Vector3 vector2 = base.aiActor.sprite.WorldTopRight.ToVector3ZisY(0);
-					Vector3 position = new Vector3(UnityEngine.Random.Range(vector.x, vector2.x), UnityEngine.Random.Range(vector.y, vector2.y), UnityEngine.Random.Range(vector.z, vector2.z));
-					ParticleSystem particleSystem = ParticleSystem;
-					var trails = particleSystem.trails;
-					trails.worldSpace = false;
-					var main = particleSystem.main;
-                    main.startColor = new ParticleSystem.MinMaxGradient((OverrideEliteParticleColor != null ? OverrideEliteParticleColor.Value : EliteParticleColor != null ? EliteParticleColor : Color.white), ((OverrideSecondaryEliteParticleColor != null ? OverrideSecondaryEliteParticleColor.Value : SecondaryEliteParticleColor != null ? SecondaryEliteParticleColor : Color.white)));
-                    ParticleSystem.EmitParams emitParams = new ParticleSystem.EmitParams
-					{
-						position = position,
-						randomSeed = (uint)UnityEngine.Random.Range(1, 1000)
-					};
-					var emission = particleSystem.emission;
-					emission.enabled = false;
-					particleSystem.gameObject.SetActive(true);
-					particleSystem.Emit(emitParams, 1);
-				}
+				
 			}
 				
 		}
+
+		public virtual void FixedUpdate()
+		{
+			if (DoParticles == true)
+			{
+                if (base.aiActor.sprite && !GameManager.Instance.IsPaused && (UnityEngine.Random.value > 0.5f))
+                {
+                    Vector3 vector = base.aiActor.sprite.WorldBottomLeft.ToVector3ZisY(0);
+                    Vector3 vector2 = base.aiActor.sprite.WorldTopRight.ToVector3ZisY(0);
+                    Vector3 position = new Vector3(UnityEngine.Random.Range(vector.x, vector2.x), UnityEngine.Random.Range(vector.y, vector2.y), UnityEngine.Random.Range(vector.z, vector2.z));
+                    ParticleSystem particleSystem = ParticleSystem;
+                    var trails = particleSystem.trails;
+                    trails.worldSpace = false;
+                    var main = particleSystem.main;
+                    main.startColor = new ParticleSystem.MinMaxGradient((OverrideEliteParticleColor != null ? OverrideEliteParticleColor.Value : EliteParticleColor != null ? EliteParticleColor : Color.white), ((OverrideSecondaryEliteParticleColor != null ? OverrideSecondaryEliteParticleColor.Value : SecondaryEliteParticleColor != null ? SecondaryEliteParticleColor : Color.white)));
+                    ParticleSystem.EmitParams emitParams = new ParticleSystem.EmitParams
+                    {
+                        position = position,
+                        randomSeed = (uint)UnityEngine.Random.Range(1, 1000)
+                    };
+                    var emission = particleSystem.emission;
+                    emission.enabled = false;
+                    particleSystem.gameObject.SetActive(true);
+                    particleSystem.Emit(emitParams, 1);
+                }
+            }
+        }
+
 	}
 }
 
@@ -2227,29 +2201,34 @@ namespace Planetside
 						outlineMaterial1.SetColor("_OverrideColor", EliteOutlineColor);
 					}
 				}
-				if (base.aiActor.sprite && !GameManager.Instance.IsPaused && (UnityEngine.Random.value > 0.5f))
-				{
-					Vector3 vector = sprite.WorldBottomLeft.ToVector3ZisY(0);
-					Vector3 vector2 = sprite.WorldTopRight.ToVector3ZisY(0);
-					Vector3 position = new Vector3(UnityEngine.Random.Range(vector.x, vector2.x), UnityEngine.Random.Range(vector.y, vector2.y), UnityEngine.Random.Range(vector.z, vector2.z));
-					ParticleSystem particleSystem = ParticleSystem;
-					var trails = particleSystem.trails;
-					trails.worldSpace = false;
-					var main = particleSystem.main;
-					main.startColor = new ParticleSystem.MinMaxGradient(EliteParticleColor != null ? EliteParticleColor : Color.white, SecondaryEliteParticleColor != null ? SecondaryEliteParticleColor : Color.white);
-					ParticleSystem.EmitParams emitParams = new ParticleSystem.EmitParams
-					{
-						position = position,
-						randomSeed = (uint)UnityEngine.Random.Range(1, 1000)
-					};
-					var emission = particleSystem.emission;
-					emission.enabled = false;
-					particleSystem.gameObject.SetActive(true);
-					particleSystem.Emit(emitParams, 1);
-				}
+				
 			}
 
 		}
+		public virtual void FixedUpdate()
+		{
+            if (base.aiActor.sprite && !GameManager.Instance.IsPaused && (UnityEngine.Random.value > 0.5f))
+            {
+                Vector3 vector = sprite.WorldBottomLeft.ToVector3ZisY(0);
+                Vector3 vector2 = sprite.WorldTopRight.ToVector3ZisY(0);
+                Vector3 position = new Vector3(UnityEngine.Random.Range(vector.x, vector2.x), UnityEngine.Random.Range(vector.y, vector2.y), UnityEngine.Random.Range(vector.z, vector2.z));
+                ParticleSystem particleSystem = ParticleSystem;
+                var trails = particleSystem.trails;
+                trails.worldSpace = false;
+                var main = particleSystem.main;
+                main.startColor = new ParticleSystem.MinMaxGradient(EliteParticleColor != null ? EliteParticleColor : Color.white, SecondaryEliteParticleColor != null ? SecondaryEliteParticleColor : Color.white);
+                ParticleSystem.EmitParams emitParams = new ParticleSystem.EmitParams
+                {
+                    position = position,
+                    randomSeed = (uint)UnityEngine.Random.Range(1, 1000)
+                };
+                var emission = particleSystem.emission;
+                emission.enabled = false;
+                particleSystem.gameObject.SetActive(true);
+                particleSystem.Emit(emitParams, 1);
+            }
+        }
+
 	}
 }
 

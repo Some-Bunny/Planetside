@@ -28,6 +28,7 @@ using AmmonomiconAPI;
 using Planetside.APIs;
 using Planetside.Controllers;
 using Alexandria;
+using Planetside.Components.Other_Components;
 
 namespace Planetside
 {
@@ -40,7 +41,7 @@ namespace Planetside
     {
         public const string GUID = "somebunny.etg.planetsideofgunymede";
         public const string NAME = "Planetside Of Gunymede Pre-Release";
-        public const string VERSION = "1.3.198";
+        public const string VERSION = "1.3.199";
         //9006FF
         public static readonly string TEXT_COLOR = "#00d0ff";
         //00d0ff
@@ -68,7 +69,7 @@ namespace Planetside
         private static bool EnemiesActive = true;
         private static bool ShrinesActive = true;
         private static bool NPCsActive = false;
-        private static bool PlaceablesActive = false;
+        private static bool PlaceablesActive = true;
         private static bool EnemyChangesActive = true;
         public static bool PrisonerDebug = false;
 
@@ -88,6 +89,7 @@ namespace Planetside
 
             //Initialise World-Stuff here
             CrossGameDataStorage.Start();
+            CustomDragunBoulderController.Init();
 
             FoolMode.StartUp();
             StaticShaders.InitShaders();
@@ -377,6 +379,8 @@ namespace Planetside
             CoinShot.Add();
             NeutroniumCore.Init();
             PileOfStardust.Init();
+            UpturnedGun.Add();
+
 
             //Perks
             AllSeeingEyeMiniPickup.Init();
@@ -420,6 +424,8 @@ namespace Planetside
             HotSwapper.Init();
             CHROMA.Init();
             GunWithNoName.Add();
+            BoscoDesignator.Add();
+            HiddenTreasure.Init();
 
             RepairNode.Init();
             UmbraController.InitEffect();

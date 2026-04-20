@@ -617,6 +617,6 @@ namespace Planetside
         public static GameObject BlackHoleImpact;
 
         public static GameObject BigShotgunExplosion = Guns.Big_Shotgun.Volley.projectiles[0].projectiles[0].GetComponent<ExplosiveModifier>().explosionData.effect;
-
+        public static GameObject MildElectricImpactVFX = (PickupObjectDatabase.GetById(156) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapVertical.effects[0].effects[0].effect;
     }
 }

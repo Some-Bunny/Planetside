@@ -605,35 +605,29 @@ namespace ItemAPI
     {
         public virtual void Update()
         {
-            bool flag = this.Player != null;
-            if (flag)
+            if (this.Player != null)
             {
                 this.lastPlayer = this.Player;
-                bool flag2 = !this.everPickedUpByPlayer;
-                if (flag2)
+                if (!this.everPickedUpByPlayer)
                 {
                     this.everPickedUpByPlayer = true;
                 }
             }
-            bool flag3 = this.Player != null && !this.pickedUpLast;
-            if (flag3)
+            if (this.Player != null && !this.pickedUpLast)
             {
                 this.OnPickup(this.Player);
                 this.pickedUpLast = true;
             }
-            bool flag4 = this.Player == null && this.pickedUpLast;
-            if (flag4)
+            if (this.Player == null && this.pickedUpLast)
             {
-                bool flag5 = this.lastPlayer != null;
-                if (flag5)
+                if (this.lastPlayer != null)
                 {
                     this.OnPostDrop(this.lastPlayer);
                     this.lastPlayer = null;
                 }
                 this.pickedUpLast = false;
             }
-            bool flag6 = this.gun != null && !this.gun.IsReloading && !this.hasReloaded;
-            if (flag6)
+            if (this.gun != null && !this.gun.IsReloading && !this.hasReloaded)
             {
                 this.hasReloaded = true;
             }
@@ -641,7 +635,6 @@ namespace ItemAPI
             this.gun.OverrideNormalFireAudioEvent = this.overrrideNormalFireAudio;
         }
 
-        // Token: 0x060000B5 RID: 181 RVA: 0x000083DC File Offset: 0x000065DC
         public virtual void Start()
         {
             this.gun = base.GetComponent<Gun>();

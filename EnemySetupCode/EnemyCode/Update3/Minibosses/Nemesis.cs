@@ -873,7 +873,7 @@ namespace Planetside
 					base.StartTask(SwipeLaser(90, this, 0.75f - (0.125f * i), false, sp));
 					base.StartTask(SwipeLaser(-45, this, 0.75f - (0.125f * i), false, sp));
 					base.StartTask(SwipeLaser(-90, this, 0.75f - (0.125f * i), false, sp));
-					yield return this.Wait(90 - (12.5f*i) * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
+					yield return this.Wait(90f - (12.5f*i));
 
 				}
 				yield return this.Wait(45 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
@@ -931,8 +931,8 @@ namespace Planetside
 						component2.dimensions = new Vector2(1000f, 1f);
 						component2.UpdateZDepth();
 					}
-					elapsed += BraveTime.DeltaTime;
-					yield return null;
+					elapsed += UnityEngine.Time.fixedDeltaTime;
+                    yield return null;
 				}
 				elapsed = 0;
 				Time = 0.5f;
@@ -945,8 +945,8 @@ namespace Planetside
 						yield break;
 					}
                     component2.transform.position = new Vector3(CurrentBarrelPosition().x, CurrentBarrelPosition().y, 0);
-                    elapsed += BraveTime.DeltaTime;
-					yield return null;
+                    elapsed += UnityEngine.Time.fixedDeltaTime;
+                    yield return null;
 				}
 				UnityEngine.Object.Destroy(component2.gameObject);
                 if (Fires == true)
@@ -1069,8 +1069,8 @@ namespace Planetside
 						component2.dimensions = new Vector2(1000f, 1f);
 						component2.UpdateZDepth();
 					}
-					elapsed += BraveTime.DeltaTime;
-					yield return null;
+                    elapsed += UnityEngine.Time.fixedDeltaTime;
+                    yield return null;
 				}
 				elapsed = 0;
 				Time = 0.125f;
@@ -1084,8 +1084,8 @@ namespace Planetside
 					}
                     component2.transform.position = new Vector3(CurrentBarrelPosition().x, CurrentBarrelPosition().y, 0);
 
-                    elapsed += BraveTime.DeltaTime;
-					yield return null;
+                    elapsed += UnityEngine.Time.fixedDeltaTime;
+                    yield return null;
 				}
 				UnityEngine.Object.Destroy(component2.gameObject);
 				if (Fires == true)
@@ -1335,8 +1335,8 @@ namespace Planetside
 						component2.dimensions = new Vector2(1000f, 1f);
 						component2.UpdateZDepth();
 					}
-					elapsed += BraveTime.DeltaTime;
-					yield return null;
+                    elapsed += UnityEngine.Time.fixedDeltaTime;
+                    yield return null;
 				}
 				elapsed = 0;
 				Time = 0.3f;
@@ -1360,8 +1360,8 @@ namespace Planetside
                         bool enabled = elapsed % 0.1f > 0.05f;
                         component2.sprite.renderer.enabled = enabled;
                     }
-					elapsed += BraveTime.DeltaTime;
-					yield return null;
+                    elapsed += UnityEngine.Time.fixedDeltaTime;
+                    yield return null;
 				}
 				UnityEngine.Object.Destroy(component2.gameObject);
 				AkSoundEngine.PostEvent("Play_WPN_sniperrifle_shot_01", this.BulletBank.aiActor.gameObject);

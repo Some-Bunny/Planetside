@@ -13,6 +13,8 @@ using AnimationType = ItemAPI.BossBuilder.AnimationType;
 using System.Collections;
 using Brave.BulletScript;
 using HarmonyLib;
+using MonoMod.Cil;
+using Mono.Cecil.Cil;
 
 namespace Planetside
 {
@@ -162,6 +164,42 @@ namespace Planetside
         public static Action<RoomHandler, RoomEventTriggerCondition> OnReinforcementWaveTriggered;
         public static Action<Dungeon> PostDungeonTrueStart;
         public static Action<Dungeon> PreDungeonTrueStart;
+        public static Action<Exploder, ExplosionData, Vector3> OnExplosionCompleted;
+        public static Action<PlayerController> OnConsumableBlank;
+
+
+        [HarmonyPatch(typeof(Exploder), nameof(Exploder.HandleExplosion))]
+        public class Exploder_HandleExplosion
+        {
+            [HarmonyPostfix]
+            private static void HandleExplosion(Exploder __instance, Vector3 position, ExplosionData data, Vector2 sourceNormal, Action onExplosionBegin, bool ignoreQueues, CoreDamageTypes damageTypes, bool ignoreDamageCaps)
+            {
+                OnExplosionCompleted?.Invoke(__instance, data, position);
+            }
+        }
+
+        [HarmonyPatch]
+        private static class PlayerController_DoConsumableBlank_Patch
+        {
+            [HarmonyPatch(typeof(PlayerController), nameof(PlayerController.DoConsumableBlank))]
+            [HarmonyILManipulator]
+            private static void GameUIAmmoControllerUpdateUIGunIL(ILContext il)
+            {
+                ILCursor cursor = new ILCursor(il);
+
+                if (!cursor.TryGotoNext(MoveType.Before,
+                    instr => instr.MatchCall<PlayerController>("DoVibration")))
+                    return;
+
+                cursor.Emit(OpCodes.Ldarg_0);
+                cursor.Emit(OpCodes.Call, typeof(PlayerController_DoConsumableBlank_Patch).GetMethod("DoAction", BindingFlags.Static | BindingFlags.NonPublic));
+            }
+
+            private static void DoAction(PlayerController regenerationPassiveItem)
+            {
+                OnConsumableBlank?.Invoke(regenerationPassiveItem);
+            }
+        }
 
     }
 }

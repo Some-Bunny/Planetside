@@ -153,9 +153,6 @@ namespace Planetside
                             }
                         }
                     }
-
-
-
                     for (int j = 0; j < StaticReferenceManager.AllDebris.Count; j++)
                     {
                         this.AdjustDebrisVelocity(StaticReferenceManager.AllDebris[j]);

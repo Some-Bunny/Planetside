@@ -54,6 +54,7 @@ namespace Planetside
             MarkTileAsTrap.Init();
             //TrespassTrollRock.Init();
             Deep_Teleporter.CreateTeleporter();
+            BuriedObject.CreateBuriedTreasure();
 
             Dungeon orLoadByName2 = DungeonDatabase.GetOrLoadByName("base_gungeon");
             var b = orLoadByName2.PatternSettings.flows[0].sharedInjectionData[1].InjectionData[0].exactRoom.placedObjects[7].nonenemyBehaviour.gameObject;

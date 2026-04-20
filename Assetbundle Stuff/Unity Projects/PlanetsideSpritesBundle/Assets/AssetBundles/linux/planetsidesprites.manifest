@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1827183554
+CRC: 1975065844
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: f978af6dee844c324ea25a8aca11e591
+    Hash: eb44b21f3f583d986dbc8457434e4de5
   TypeTreeHash:
     serializedVersion: 2
     Hash: 458548b0fa917ebe1d600c5fabf7780a
@@ -38,6 +38,7 @@ Assets:
 - Assets/Guns (2)/Gun2Collection Data/Gun2Collection.prefab
 - Assets/Ammonomicon/Ammonomicon Icons/ammoentryshrrom.png
 - Assets/Minibosses/AnnihiChamber/AnnihiChamberCollection Data/annihichamber material.mat
+- Assets/Companions/CompanionCollection Data/CompanionCollection.prefab
 - Assets/Enemies/Skullvenant/SkullvenantCollection Data/SkullvenantCollection.prefab
 - Assets/Ammonomicon/Ammonomicon Icons/archgunjurericonsilly.png
 - Assets/Enemies/Fodder/FodderCollection Data/atlas0.png
@@ -178,6 +179,7 @@ Assets:
 - Assets/Enemies/Wailer/WailerCollection Data/WailerCollection.prefab
 - Assets/UI/Alphabet Letters/letter_20.png
 - Assets/VFX/Effects/VFXCollection Data/vfx material.mat
+- Assets/Companions/CompanionAnimation.prefab
 - Assets/UI/Alphabet Letters/letter_13.png
 - Assets/Guns/PlanetsideGunCollection Data/psoggun material.mat
 - Assets/NPCs/NPCSpriteCollection Data/NPCSpriteCollection.prefab

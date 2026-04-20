@@ -325,7 +325,6 @@ namespace Planetside
 			DebrisObject result = base.Drop(player);
 			player.PostProcessProjectile -= this.PostProcessProjectile;
 			player.PostProcessBeamTick -= this.PostProcessBeamTick;
-
 			return result;
 		}
 

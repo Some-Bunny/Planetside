@@ -29,16 +29,6 @@ namespace Planetside
 			ItemBuilder.AddPassiveStatModifier(warVase, PlayerStats.StatType.Health, 1, StatModifier.ModifyMethod.ADDITIVE);
 
 		}
-		public static int PrisonItemID;
-
-		public override void Pickup(PlayerController player)
-		{
-			base.Pickup(player);
-		}
-		public override DebrisObject Drop(PlayerController player)
-		{
-			DebrisObject result = base.Drop(player);
-			return result;
-		}		
+		public static int PrisonItemID;	
 	}
 }

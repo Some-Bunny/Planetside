@@ -1652,7 +1652,7 @@ namespace Planetside
 
 			for (int i = -8; i < 9; i++)
 			{
-				this.StartTask(Stream((22.5f * i) + Anim - 11.25f, (180 + (2 * i)) + Anim));
+				this.StartTask(Stream((22.5f * i) + Anim - 11.25f, (180 + i) + Anim));
 			}
 
 			
@@ -1676,14 +1676,14 @@ namespace Planetside
 						{
 							m_ = 0;
 							m = Mathf.Max(m - 10, 50);
-                            var dist = Vector2.Distance(base.Position, GameManager.Instance.PrimaryPlayer.transform.position);
-                            Exploder.DoDistortionWave(base.BulletBank.sprite.WorldCenter, 1, 0.1f, 40, 0.75f);
+                            var dist = Vector2.Distance(base.Position, GameManager.Instance.PrimaryPlayer.specRigidbody.UnitCenter);
+                            Exploder.DoDistortionWave(base.BulletBank.sprite.WorldCenter, 0.2f, 0.2f, 40, 0.75f);
                             base.PostWwiseEvent("Play_ENM_kali_shockwave_01", null);
                             float aim = AimDirection;
                             float t = (90 - (dist * 2)) * (BraveUtility.RandomBool() ? 1 : -1);
                             for (int l = 0; l < 6; l++)
                             {
-                                base.Fire(new Direction(0, DirectionType.Absolute, -1f), new Speed(0, SpeedType.Absolute), new CirclesOfDeath(t, l * 3, this, 180 + aim, dist));
+                                base.Fire(Offset.OverridePosition(base.BulletBank.sprite.WorldCenter), new Direction(0, DirectionType.Absolute, -1f), new Speed(0, SpeedType.Absolute), new CirclesOfDeath(t, l * 3, this, 180 + aim, dist));
                             }
                         }
                         
@@ -1753,7 +1753,7 @@ namespace Planetside
 				float t = 0;
                 for (float i = 0; i < 900; i++)
                 {
-					if (i < 30)
+					if (i <= 30)
 					{
 						t = Mathf.Lerp(0, m_radius, i / 30);
 					}
