@@ -15,13 +15,16 @@ namespace Planetside
         public void Start()
         {
             this.projectile = base.GetComponent<Projectile>();
+            if (projectile == null) { return; }
+            if (projectile.specRigidbody == null) { return; }
+
             projectile.baseData.range *= RangeMultiplier;
             this.projectile.BulletScriptSettings = new BulletScriptSettings()
             {
                 surviveTileCollisions = true
             };
             SpeculativeRigidbody specRigidbody = this.projectile.specRigidbody;
-            specRigidbody.OnPostRigidbodyMovement += (spec, vec, intvec) =>
+            this.projectile.specRigidbody.OnPostRigidbodyMovement += (spec, vec, intvec) =>
             {
                 if (lastFrameCheck == true)
                 {
@@ -33,10 +36,8 @@ namespace Planetside
             };
 
 
-            specRigidbody.OnPreTileCollision = (SpeculativeRigidbody.OnPreTileCollisionDelegate)Delegate.Combine(specRigidbody.OnPreTileCollision, new SpeculativeRigidbody.OnPreTileCollisionDelegate(delegate (SpeculativeRigidbody myRigidbody, PixelCollider myPixelCollider, PhysicsEngine.Tile tile, PixelCollider tilePixelCollider)
+            this.projectile.specRigidbody.OnPreTileCollision += (SpeculativeRigidbody myRigidbody, PixelCollider myPixelCollider, PhysicsEngine.Tile tile, PixelCollider tilePixelCollider) =>
             {
-
-
                 if (isIgnoringTillExit == false)
                 {
                     if (Warps < Cap)
@@ -79,7 +80,7 @@ namespace Planetside
                     PhysicsEngine.SkipCollision = true;
                 }
 
-            }));
+            };
         }
 
 
@@ -146,5 +147,4 @@ namespace Planetside
         public int Cap = 1;
         private Projectile projectile;
     }
-
 }

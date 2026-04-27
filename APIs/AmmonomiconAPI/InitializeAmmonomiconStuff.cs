@@ -113,21 +113,6 @@ namespace Planetside.APIs
                             AddEntryFast(ref list2, PickupObjectDatabase.GetById(perk.PickupObjectId), perk.CurrentStack);
                         }
                     }
-
-                    /*
-                    if (player.GetComponent<GreedController>()) { AddEntryFast(ref list2, PickupObjectDatabase.GetById(Greedy.GreedyID), player.GetComponent<GreedController>().Stack); }
-                    if (player.GetComponent<GunslingerController>()) { AddEntryFast(ref list2, PickupObjectDatabase.GetById(Gunslinger.GunslingerID), player.GetComponent<GunslingerController>().Stack); }
-                    if (CrossGameDataStorage.CrossGameStorage.AmountOfPerksToChooseFromOnRunStart > 0) { AddEntryFast(ref list2, PickupObjectDatabase.GetById(Patience.PatienceID), CrossGameDataStorage.CrossGameStorage.AmountOfPerksToChooseFromOnRunStart - 1); }
-                    if (player.GetComponent<AllSeeingEyeController>()) { AddEntryFast(ref list2, PickupObjectDatabase.GetById(AllSeeingEye.AllSeeingEyeID), player.GetComponent<AllSeeingEyeController>().Stacks); }
-                    if (player.GetComponent<BlastProjectilesCheck>()) { AddEntryFast(ref list2, PickupObjectDatabase.GetById(BlastProjectiles.BlastProjectilesID), player.GetComponent<BlastProjectilesCheck>().Stack); }
-                    if (player.GetComponent<ContractController>()) { AddEntryFast(ref list2, PickupObjectDatabase.GetById(Contract.ContractID), player.GetComponent<ContractController>().Boys.Count); }
-                    if (player.GetComponent<GlassComponent>()) { AddEntryFast(ref list2, PickupObjectDatabase.GetById(Glass.GlassID), player.GetComponent<GlassComponent>().Stack); }
-                    if (player.GetComponent<PitLordsPactController>()) { AddEntryFast(ref list2, PickupObjectDatabase.GetById(PitLordsPact.PitLordsPactID), player.GetComponent<PitLordsPactController>().Stacks); }
-                    if (player.GetComponent<ChaoticShiftController>()) { AddEntryFast(ref list2, PickupObjectDatabase.GetById(ChaoticShift.ChaoticShiftID), player.GetComponent<ChaoticShiftController>().AmountOfModules); }
-                    if (player.GetComponent<CorruptedWealthController>()) { AddEntryFast(ref list2, PickupObjectDatabase.GetById(CorruptedWealth.CorruptedWealthID), player.GetComponent<CorruptedWealthController>().StackCount); }
-                    if (player.GetComponent<UnbreakableSpiritController>()) { AddEntryFast(ref list2, PickupObjectDatabase.GetById(UnbreakableSpirit.UnbreakableSpiritID), player.GetComponent<UnbreakableSpiritController>().Stacks); }
-                    if (player.GetComponent<AllStatsUp.AllStatsTrackable>()) { AddEntryFast(ref list2, PickupObjectDatabase.GetById(AllStatsUp.AllStatsUpID), player.GetComponent<AllStatsUp.AllStatsTrackable>().Stacks); }
-                    */
                 }
                 if (list2.Count > 0)
                 {
@@ -138,7 +123,6 @@ namespace Planetside.APIs
                     panel.Height = component3.Height;
                     component3.Height = panel.Height;
                 }
-
             }
             return true;
         }

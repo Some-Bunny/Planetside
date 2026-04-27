@@ -220,20 +220,38 @@ namespace Planetside
 			GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(ResourceCache.Acquire("Global Prefabs/HoveringGun") as GameObject, player.CenterPosition.ToVector3ZisY(0f), Quaternion.identity);
 			gameObject.transform.parent = player.transform;
 			HoveringGunController hover = gameObject.GetComponent<HoveringGunController>();
-			hover.ConsumesTargetGunAmmo = false;
-			hover.ChanceToConsumeTargetGunAmmo = 0f;
-			hover.Position = HoveringGunController.HoverPosition.CIRCULATE;
-			hover.Aim = HoveringGunController.AimType.PLAYER_AIM;
-			hover.Trigger = HoveringGunController.FireType.ON_FIRED_GUN;
-			hover.CooldownTime = Mathf.Max(6.66f, gun.reloadTime * 3.5f);
-			hover.ShootDuration = ((float)gun.DefaultModule.numberOfShotsInClip * gun.DefaultModule.cooldownTime) * 0.25f;
-			
-			hover.Initialize(gun, player);
-			player.ownerlessStatModifiers.Add(item2);
-			shrine.GetComponent<CustomShrineController>().numUses++;
-			shrine.GetComponent<CustomShrineController>().GetRidOfMinimapIcon();
-			player.inventory.DestroyCurrentGun();
+            
+
+            UnityEngine.Object.Destroy(hover);
+
+            var _ = gameObject.GetOrAddComponent<CustomHoveringGunController>();
+            _.ConsumesTargetGunAmmo = false;
+            _.ChanceToConsumeTargetGunAmmo = 0f;
+            _.Position = CustomHoveringGunController.HoverPosition.CIRCULATE;
+            _.Aim = CustomHoveringGunController.AimType.PLAYER_AIM;
+            _.Trigger = CustomHoveringGunController.FireType.ON_FIRED_GUN;
+            _.CooldownTime = Mathf.Max(6.66f, gun.reloadTime * 3.5f);
+            _.ShootDuration = ((float)gun.DefaultModule.numberOfShotsInClip * gun.DefaultModule.cooldownTime) * 0.25f;
+
+            _.Initialize(gun, player);
+            player.ownerlessStatModifiers.Add(item2);
+            shrine.GetComponent<CustomShrineController>().numUses++;
+            shrine.GetComponent<CustomShrineController>().GetRidOfMinimapIcon();
+
+
+
+            /*
+
+			*/
+
+
+            player.inventory.DestroyCurrentGun();
 			AkSoundEngine.PostEvent("Play_OBJ_shrine_accept_01", shrine);
+
+
+
+
+
 			if (player.name == "PlayerShade(Clone)")
             {
 				ImprovedAfterImage yes = player.gameObject.AddComponent<ImprovedAfterImage>();

@@ -292,36 +292,44 @@ public class UmbraController : BraveBehaviour
             }
             if (isActive == false) {return;}
 
-			if (Vector2.Distance(p, Owner.sprite.WorldCenter.ToVector3ZisY()) < radius)
-			{
-                if (InRange == false)
-                {
-                    InRange = true;
-                    if (lockOnInst == null)
-                    {
-                        lockOnInst = UnityEngine.Object.Instantiate(UmbralLockOnSmall).GetComponent<LockOnEffect>();
-                        lockOnInst.LockInPos = p + new Vector3(0.625f, 0.625f);
-                    }
-                    AkSoundEngine.PostEvent("Play_ENM_iceslime_charge_01", lockOnInst.gameObject);
-                    lockOnInst.SetState(true);
-                }
-            }
-            else 
+            if (Owner)
             {
-                if (InRange == true)
-				{
-					if (lockOnInst != null)
-					{
-                        lockOnInst.SetState(false);
+                if (Vector2.Distance(p, Owner.sprite.WorldCenter.ToVector3ZisY()) < radius)
+                {
+                    if (InRange == false)
+                    {
+                        InRange = true;
+                        if (lockOnInst == null)
+                        {
+                            lockOnInst = UnityEngine.Object.Instantiate(UmbralLockOnSmall).GetComponent<LockOnEffect>();
+                            lockOnInst.LockInPos = p + new Vector3(0.625f, 0.625f);
+                        }
                         AkSoundEngine.PostEvent("Play_ENM_iceslime_charge_01", lockOnInst.gameObject);
+                        lockOnInst.SetState(true);
                     }
-                    InRange = false;
                 }
+                else
+                {
+                    if (InRange == true)
+                    {
+                        if (lockOnInst != null)
+                        {
+                            lockOnInst.SetState(false);
+                            AkSoundEngine.PostEvent("Play_ENM_iceslime_charge_01", lockOnInst.gameObject);
+                        }
+                        InRange = false;
+                    }
+                }
+
+            }
+            else
+            {
+                InRange = false;
             }
 
 
 
-            
+
         }
 
         public void FixedUpdate()
@@ -673,9 +681,7 @@ public class UmbraController : BraveBehaviour
             }
             base.aiActor.PlayEffectOnActor(ResourceCache.Acquire("Global VFX/VFX_Curse") as GameObject, Vector3.zero, false, false, false);
             EnemyToolbox.SpawnBulletScript(base.aiActor, base.aiActor.sprite.WorldCenter, OuroborosController.BulletBankDummy.GetComponent<AIBulletBank>(), new CustomBulletScriptSelector(typeof(Baboomer)), "Reflection");
-
         }
-
         base.OnDestroy();
 	}
 
@@ -700,9 +706,14 @@ public class UmbraController : BraveBehaviour
         {
             if (this == null)
             {
-                t.SetState(false);
-                Destroy(t.gameObject, 0.5f);
-                yield break; }
+                if (t)
+                {
+                    t.SetState(false);
+                    Destroy(t.gameObject, 0.5f);
+                }
+
+                yield break; 
+            }
             e += Time.deltaTime;
             var newPosition = Vector3.Lerp(start, end, e) + (m.ToVector3ZUp() * MathToolbox.EaseInAndBack(e));
             GlobalSparksDoer.DoSingleParticle(newPosition, Vector3.zero, (MathToolbox.EaseInAndBack(e) + 0.25f) * 0.5f, 2f, Color.red * 2, GlobalSparksDoer.SparksType.FLOATY_CHAFF);

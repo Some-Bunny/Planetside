@@ -696,7 +696,11 @@ namespace Planetside.DungeonPlaceables
 
         public void OnDestroy()
         {
-            room.Entered -= Room_Entered;
+            if (room != null)
+            {
+                //ok
+                room.Entered -= Room_Entered;
+            }
         }
     }
 }

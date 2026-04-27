@@ -16,6 +16,7 @@ using System.Collections.ObjectModel;
 
 using UnityEngine.Serialization;
 using Pathfinding;
+using Planetside.Components.Other_Components;
 
 
 namespace Planetside
@@ -35,6 +36,14 @@ namespace Planetside
 		private void OnPreDeath(Vector2 obj)
 		{
 			AkSoundEngine.PostEvent("Play_BOSS_wall_slam_01", base.gameObject);
+
+            float MaxHP = aiActor != null ? aiActor.healthHaver.GetMaxHealth() : 35;
+            float ZoneSize = (MaxHP / 66.6f) + 0.25f;
+            CustomDragunBoulderController.Instantiate(this.aiActor.sprite.WorldCenter, base.aiActor != null ? ((MaxHP / 75f) * Time) + 1 : Time, 0).UpdateScale(ZoneSize, 0.5f);
+
+
+            //what was i thinking
+            /*
 			GameObject dragunBoulder = EnemyDatabase.GetOrLoadByGuid("05b8afe0b6cc4fffa9dc6036fa24c8ec").GetComponent<DraGunController>().skyBoulder;
 			foreach (Component item in dragunBoulder.GetComponentsInChildren(typeof(Component)))
 			{
@@ -69,8 +78,9 @@ namespace Planetside
 					}
 				}
 			}
-		}
-		private IEnumerator IncreaseInSize(tk2dSprite CircleSprite, float SizeMultiplier=1)
+			*/
+        }
+        private IEnumerator IncreaseInSize(tk2dSprite CircleSprite, float SizeMultiplier=1)
 		{
 			float elapsed = 0f;
 			float duration = 0.75f;

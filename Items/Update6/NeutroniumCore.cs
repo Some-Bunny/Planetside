@@ -70,7 +70,7 @@ namespace Planetside
                 var ___ = (arg1.sprite.GetBounds().size.x * 32) * (arg1.sprite.GetBounds().size.y * 32);
                 float Pull = arg1.sprite == null ? 125f :Mathf.Max(256, Mathf.Sqrt(___) * 12);
                 well.gravitationalForce = Pull * 0.04f;
-                well.gravitationalForceActors = Pull;
+                well.gravitationalForceActors = Pull * 0.4f * arg1.AdditionalScaleMultiplier;
                 well.self = arg1;
                 well.RadiusVisual = ___ * 0.025f;
             }
@@ -86,7 +86,7 @@ namespace Planetside
                 var ___ = (beamC.projectile.sprite.GetBounds().size.x * 32) * (beamC.projectile.sprite.GetBounds().size.y * 32);
                 float Pull = beamC.projectile.sprite == null ? 125f : Mathf.Max(256, Mathf.Sqrt(___) * 4);
                 well.gravitationalForce = Pull * 0.04f;
-                well.gravitationalForceActors = Pull;
+                well.gravitationalForceActors = Pull * 0.4f * beamC.projectile.AdditionalScaleMultiplier;
                 well.self = beamC.projectile;
                 well.RadiusVisual = ___ * 0.01f;
                 well.basicBeamController = beamC.GetComponent<BasicBeamController>();
@@ -147,7 +147,13 @@ namespace Planetside
                                         {
                                             vector *= 0.02f / BraveTime.DeltaTime;
                                         }
-                                        other.Velocity = vector;
+                                        if (other.aiActor.knockbackDoer)
+                                        {
+                                            if (!other.aiActor.knockbackDoer.m_isImmobile.Value)
+                                            {
+                                                other.Velocity = vector / (Mathf.Max(other.aiActor.knockbackDoer.weight * 0.0004f, 1));
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -222,7 +228,6 @@ namespace Planetside
                 float num2 = Mathf.Sqrt(num);
                 if (num2 < 1)
                 {
-                    UnityEngine.Object.Destroy(debris.gameObject);
                     return true;
                 }
                 Vector2 frameAccelerationForRigidbody = this.GetFrameAccelerationForRigidbody(debris.sprite.WorldCenter, num2, g);
@@ -298,7 +303,13 @@ namespace Planetside
                                         {
                                             vector *= 0.02f / BraveTime.DeltaTime;
                                         }
-                                        other.Velocity = vector;
+                                        if (other.aiActor.knockbackDoer)
+                                        {
+                                            if (!other.aiActor.knockbackDoer.m_isImmobile.Value)
+                                            {
+                                                other.Velocity = vector / (Mathf.Max(other.aiActor.knockbackDoer.weight * 0.0004f, 1));
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -367,7 +378,6 @@ namespace Planetside
                 float num2 = Mathf.Sqrt(num);
                 if (num2 < 1)
                 {
-                    UnityEngine.Object.Destroy(debris.gameObject);
                     return true;
                 }
                 Vector2 frameAccelerationForRigidbody = this.GetFrameAccelerationForRigidbody(debris.sprite.WorldCenter, num2, g);

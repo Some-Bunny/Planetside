@@ -366,26 +366,28 @@ namespace Planetside
 			{
 				if (self.InfiniteAmmo == false)
                 {
-					if (UnityEngine.Random.value <= ChanceAccordingToGivenValues(0.01f, 1f, 100))
-					{
-						bool Check = self.CanGainAmmo == true || self.InfiniteAmmo == false;
-						if (self.HasBeenPickedUp == false && Check == true)
-						{
-							float H = self.GetBaseMaxAmmo() * ChanceAccordingToGivenValues(0.125f, UnityEngine.Random.Range(0.25f, 0.8f), 25);
+                    if (UnityEngine.Random.value <= ChanceAccordingToGivenValues(0.01f, 1f, 100))
+                    {
+                        bool Check = self.CanGainAmmo == true || self.InfiniteAmmo == false;
+                        if (self.HasBeenPickedUp == false && Check == true)
+                        {
+                            float H = self.GetBaseMaxAmmo() * ChanceAccordingToGivenValues(0.125f, UnityEngine.Random.Range(0.25f, 0.8f), 25);
 
                             self.ammo -= (int)H;
                             if (self.ammo < 0)
                             {
                                 self.ammo = 0;
                             }
-                            if (self.ClipShotsRemaining > self.ammo)
+							if (self.m_moduleData != null)
 							{
-								self.m_moduleData[self.DefaultModule].numberShotsFired -= self.ammo;//self.DefaultModule.GetModNumberOfShotsInClip(self.CurrentOwner) - value;
-                                //self.ClipShotsRemaining = self.ammo;
+                                if (self.ClipShotsRemaining > self.ammo)
+                                {
+                                    self.m_moduleData[self.DefaultModule].numberShotsFired -= self.ammo;//self.DefaultModule.GetModNumberOfShotsInClip(self.CurrentOwner) - value;
+                                }
                             }
                         }
-					}
-				}
+                    }
+                }
 			}
 		}
 		public static void StartTableHook(Action<FlippableCover> orig, FlippableCover self)
@@ -710,7 +712,6 @@ namespace Planetside
 			ArchGunjurer.guid,
         };
 
-      
         public static List<string> EliteBlackListDefault = new List<string>()
 		{
 			"deturretleft_enemy",
@@ -974,29 +975,30 @@ namespace Planetside
         }
         public override void OnPreDeath(Vector2 obj)
         {
-
-            SpawnManager.SpawnBulletScript(
-				null, 
+			if (!IsBoss && T <= 0)
+			{
+                SpawnManager.SpawnBulletScript(
+				null,
 				this.aiActor.sprite.WorldCenter + new Vector2(0, 0.25f),
-				OuroborosController.BulletBankDummy.GetComponent<AIBulletBank>(), 
-				new CustomBulletScriptSelector(typeof(SpewGrenades)), 
+				OuroborosController.BulletBankDummy.GetComponent<AIBulletBank>(),
+				new CustomBulletScriptSelector(typeof(SpewOuroborousGrenades)),
 				StringTableManager.GetEnemiesString("#TRAP", -1));
-
+            }
         }
-        public float Cooldown = 12;
+        public float Cooldown = 9;
         private float Timer = 3;
-
+		private float T = 1.5f;
 
 
         public override void OnDamaged(float resultValue, float maxValue, CoreDamageTypes damageTypes, DamageCategory damageCategory, Vector2 damageDirection)
         {
-            if (Timer == 0 | Timer <= 0)
+            if (Timer <= 0)
             {
                 Timer = Cooldown;
                 SpawnManager.SpawnBulletScript(null, 
 					this.aiActor.sprite.WorldCenter + new Vector2(0, 0.25f), 
 					OuroborosController.BulletBankDummy.GetComponent<AIBulletBank>(), 
-					new CustomBulletScriptSelector(typeof(SpewGrenade)), 
+					new CustomBulletScriptSelector(IsBoss ? typeof(SpewGrenadeBoss) : typeof(SpewGrenade)), 
 					StringTableManager.GetEnemiesString("#TRAP", -1), this.aiActor.specRigidbody);
 
             }
@@ -1004,23 +1006,76 @@ namespace Planetside
         public override void Update()
         {
             base.Update();
-            if (Timer >= 0) { Timer -= BraveTime.DeltaTime; }
-		}
+
+			if (base.aiActor != null && base.aiActor.State == AIActor.ActorState.Normal) 
+			{
+                if (Timer >= 0) { Timer -= BraveTime.DeltaTime; }
+				if (T >= 0) {  T -= BraveTime.DeltaTime; }
+            }
+        }
 
         public class SpewGrenade : Script
         {
             public override IEnumerator Top()
             {
-                float airTime = base.BulletBank.GetBullet("grenade").BulletObject.GetComponent<ArcProjectile>().GetTimeInFlight();
-                Vector2 vector = base.GetPredictedTargetPositionExact(1, 30);
+                //float airTime = base.BulletBank.GetBullet("grenade").BulletObject.GetComponent<ArcProjectile>().GetTimeInFlight();
+                Vector2 vector = base.GetPredictedTargetPositionExact(1, 15);
                 Bullet bullet2 = new Bullet("grenade", false, false, false);
                 float direction2 = (vector - base.Position).ToAngle();
                 base.Fire(new Direction(direction2, DirectionType.Absolute, -1f), new Speed(1f, SpeedType.Absolute), bullet2);
                 (bullet2.Projectile as ArcProjectile).AdjustSpeedToHit(vector);
                 bullet2.Projectile.ImmuneToSustainedBlanks = true;
+				if (IsHard)
+				{
+                    vector = base.GetPredictedTargetPosition(1, 18);
+                    bullet2 = new Bullet("grenade", false, false, false);
+                    direction2 = (vector - base.Position).ToAngle();
+                    base.Fire(new Direction(direction2, DirectionType.Absolute, -1f), new Speed(1f, SpeedType.Absolute), bullet2);
+                    (bullet2.Projectile as ArcProjectile).AdjustSpeedToHit(vector);
+                    bullet2.Projectile.ImmuneToSustainedBlanks = true;
+                }
+                yield break;
+            }
+
+            public virtual bool IsHard
+            {
+                get
+                {
+                    return false;
+                }
+            }
+
+        }
+		public class SpewGrenadeBoss : SpewGrenade
+		{
+            public override bool IsHard
+            {
+                get
+                {
+                    return true;
+                }
+            }
+        }
+
+        public class SpewOuroborousGrenades : Script
+        {
+            public override IEnumerator Top()
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("880bbe4ce1014740ba6b4e2ea521e49d").bulletBank.GetBullet("grenade"));
+                    float airTime = base.BulletBank.GetBullet("grenade").BulletObject.GetComponent<ArcProjectile>().GetTimeInFlight();
+                    Vector2 vector = base.BulletBank.transform.PositionVector2() + MathToolbox.GetUnitOnCircle(UnityEngine.Random.Range(-180, 180), UnityEngine.Random.Range(1, 6));
+                    Bullet bullet2 = new Bullet("grenade", false, false, false);
+                    float direction2 = (vector - base.Position).ToAngle();
+                    base.Fire(new Direction(direction2, DirectionType.Absolute, -1f), new Speed(1f, SpeedType.Absolute), bullet2);
+                    (bullet2.Projectile as ArcProjectile).AdjustSpeedToHit(vector);
+                    bullet2.Projectile.ImmuneToSustainedBlanks = true;
+                }
                 yield break;
             }
         }
+
     }
 
     public class FrenzyElite : BasicEliteType
@@ -1028,7 +1083,7 @@ namespace Planetside
         public override float DamageMultiplier => 1.35f;
         public override float HealthMultiplier => 1;
 		public override float CooldownMultiplier => 1.33f;
-		public override float MovementSpeedMultiplier => 1.25f;
+		public override float MovementSpeedMultiplier => 1.2f;
 		public override Color EliteOutlineColor => Color.yellow;
 		public override Color EliteParticleColor => Color.yellow;
 		public override Color SecondaryEliteParticleColor => Color.yellow;
@@ -1041,11 +1096,11 @@ namespace Planetside
 			{
 				if (aiActor.behaviorSpeculator) 
 				{
-					aiActor.behaviorSpeculator.LocalTimeScale *= IsBoss == true ? 1.33f : 1.2f;
-					if (IsBoss == true)
+					aiActor.behaviorSpeculator.LocalTimeScale *= IsBoss ? 1.25f : 1.2f;
+                    if (IsBoss == true)
 					{
 						aiActor.behaviorSpeculator.CooldownScale *= 1.1f;
-						aiActor.MovementSpeed *= 0.9f;
+						aiActor.MovementSpeed *= 0.85f;
 					}
                 }
 			}
@@ -1104,11 +1159,11 @@ namespace Planetside
 			if (this != null) { doCheck = true; }
 			
 			if (target != null && doCheck == false)
-            {
-				
+            {			
 				target.PlayEffectOnActor(StaticVFXStorage.HealingSparklesVFX, Vector3.zero, true, false, false);
 				target.healthHaver.FullHeal();
 				target.healthHaver.AllDamageMultiplier *= 0.8f;
+                target.RemoveAllEffects();
             }
 		}
 		private IEnumerator SpawnRadialPoofs(Vector2 centre, RoomHandler room)
@@ -1201,7 +1256,7 @@ namespace Planetside
 		public override void Update()
         {
             base.Update();
-			if (base.aiActor)
+			if (base.aiActor && base.aiActor.State == AIActor.ActorState.Normal)
 			{
 				if (Timer >= 0) { Timer -= BraveTime.DeltaTime; }
 				if (Timer == 0 | Timer <= 0)
@@ -1316,11 +1371,11 @@ namespace Planetside
 		};
 		public override void Start()
 		{
-			Timer = 0.75f;
+			Timer = 1.25f;
 			base.Start();
 			if (IsBoss == true)
 			{
-                Timer = 3f;
+                Timer = 3.5f;
             }
         }
 
@@ -1342,7 +1397,7 @@ namespace Planetside
         public override void Update()
 		{
 			base.Update();
-			if (base.aiActor)
+			if (base.aiActor && base.aiActor.State == AIActor.ActorState.Normal)
 			{
 				if (Timer > 0) { Timer -= BraveTime.DeltaTime; }
 			}
@@ -1384,8 +1439,8 @@ namespace Planetside
             float RNG = UnityEngine.Random.Range(0, 60);
             for (int i = 0; i <= 8; i++)
             {
-                this.Fire(new Direction((i * 45) + RNG, DirectionType.Aim, -1f), new Speed(1f, SpeedType.Absolute), new SkellBullet());
-                this.Fire(new Direction((i * 45) + RNG, DirectionType.Aim, -1f), new Speed(1.625f, SpeedType.Absolute), new SkellBullet());
+                this.Fire(new Direction(((i * 45) + RNG) - 4.5f, DirectionType.Aim, -1f), new Speed(1.625f, SpeedType.Absolute), new SkellBullet());
+                this.Fire(new Direction(((i * 45) + RNG) + 4.5f, DirectionType.Aim, -1f), new Speed(1.625f, SpeedType.Absolute), new SkellBullet());
                 this.Fire(new Direction((i * 45) + RNG, DirectionType.Aim, -1f), new Speed(2.25f, SpeedType.Absolute), new SkellBullet());
             }
             yield break;

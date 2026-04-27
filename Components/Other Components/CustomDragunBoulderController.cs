@@ -41,6 +41,7 @@ namespace Planetside.Components.Other_Components
                         var c = obj.AddComponent<CustomDragunBoulderController>();
                         c.CircleSprite = b.CircleSprite;
                         c.specRigidbody = b.specRigidbody;
+                        c.CircleSprite.gameObject.layer = Layers.FG_Nonsense;
 
 
                         List<PixelCollider> colliders = c.specRigidbody.PixelColliders.ToList();
@@ -113,8 +114,11 @@ namespace Planetside.Components.Other_Components
         {
             if (T <= 0)
             {
-                Scale = _Scale;
-                
+                //Scale = _Scale;
+
+                //this.transform.localScale = new Vector3(Scale, Scale, Scale);
+                //specRigidbody.Reinitialize();
+                Scale = _Scale;// Mathf.Lerp(v, SizeMultiplier, t);
                 this.transform.localScale = new Vector3(Scale, Scale, Scale);
                 specRigidbody.Reinitialize();
                 return;
